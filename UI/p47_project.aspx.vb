@@ -98,6 +98,7 @@ Public Class p47_project
 
 
     Private Sub SetupGrid()
+        grid1.Columns.Clear()
         With grid1.PagerStyle
             .PageSizeLabelText = ""
             .LastPageToolTip = "Poslední strana"
@@ -108,7 +109,6 @@ Public Class p47_project
         End With
 
         With grid1.MasterTableView
-            .Columns.Clear()
             .NoMasterRecordsText = "Žádné záznamy"
         End With
         Dim d1 As Date = Me.LimitD1, d2 As Date = Me.LimitD2
@@ -269,8 +269,7 @@ Public Class p47_project
     End Function
 
     Private Sub rpJ02_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpJ02.ItemCommand
-        grid1.Rebind()
-        Return
+
         If e.CommandName = "add" Then
             Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(e.CommandArgument)
             Dim cTemp As New BO.p85TempBox()
@@ -299,5 +298,11 @@ Public Class p47_project
         With CType(e.Item.FindControl("cmdInsert"), LinkButton)
             .CommandArgument = cRec.PID
         End With
+    End Sub
+
+    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
+        SetupGrid()
+        grid1.Rebind()
+
     End Sub
 End Class

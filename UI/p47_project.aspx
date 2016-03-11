@@ -82,7 +82,7 @@
     </div>
 
 
-    <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" EnableViewState="true" RenderMode="Lightweight" GridLines="Both" runat="server" PageSize="500" ShowFooter="true" AllowPaging="false" AllowSorting="true" Skin="Metro">
+    <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" EnableViewState="false" RenderMode="Lightweight" runat="server" PageSize="500" ShowFooter="true" AllowPaging="false" AllowSorting="true" Skin="Metro">
         <MasterTableView EditMode="Batch" ClientDataKeyNames="PID" >
        
             <BatchEditingSettings EditType="Cell" OpenEditingEvent="Click" />
