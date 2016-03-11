@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report DataSourceName="sqlDataSource1" Width="24.5774145131035cm" Name="report1" ShowSnapGrid="True" SnapToGrid="False" SnapToSnapLines="False" SnapGridSize="0.1cm" xmlns="http://schemas.telerik.com/reporting/2012/3.6">
+  <DataSources>
+    <SqlDataSource ConnectionString="ApplicationPrimary" SelectCommand="select a.*,p29.p29Name,p51.p51Name,dbo.p28_addresses_inline(a.p28ID) as adresy,dbo.[p28_medias_inline](a.p28ID) as media&#xD;&#xA;,j02owner.j02LastName+' '+j02owner.j02FirstName as Vlastnik&#xD;&#xA;FROM&#xD;&#xA;p28Contact a&#xD;&#xA;LEFT OUTER JOIN p29ContactType p29 ON a.p29ID=p29.p29ID&#xD;&#xA;LEFT OUTER JOIN p51PriceList p51 ON a.p51ID_Billing=p51.p51ID&#xD;&#xA;LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID&#xD;&#xA;WHERE a.p28ID=@pid" Name="sqlDataSource1" ParameterValues="{@pid:3}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@pid">
+          <Value>
+            <String>=Parameters.pid.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+    <SqlDataSource ConnectionString="ApplicationPrimary" SelectCommand="select p41Code,p41Name,p51Name,j18Name,dbo.p41_getroles_inline(a.p41ID) as roles_inline&#xD;&#xA;,convert(bit,case when getdate() between a.p41ValidFrom AND a.p41ValidUntil then 0 else 1 end) as IsClosed&#xD;&#xA;from&#xD;&#xA;p41Project a LEFT OUTER JOIN p51PriceList p51 ON a.p51ID_Billing=p51.p51ID&#xD;&#xA;LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID&#xD;&#xA;WHERE a.p28ID_Client=@pid" Name="sqlDataSource2" ParameterValues="{@pid:3}">
+      <Parameters>
+        <SqlDataSourceParameter DbType="Int32" Name="@pid">
+          <Value>
+            <String>=Parameters.pid.Value</String>
+          </Value>
+        </SqlDataSourceParameter>
+      </Parameters>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <PageHeaderSection Height="0.576666658255789cm" Name="pageHeader">
+      <Items>
+        <TextBox Width="5.30716654193335cm" Height="0.491999993944168cm" Left="0.173624410250303cm" Top="0.0423333321558105cm" Value="Karta klienta" Name="textBox17">
+          <Style>
+            <Font Italic="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </PageHeaderSection>
+    <PageFooterSection Height="1.10583343132006cm" Name="pageFooter">
+      <Items>
+        <TextBox Width="7.82770833832274cm" Height="1.00000010093053cm" Left="0.0529166651947631cm" Top="0.0529166651947631cm" Value="=NOW()" Name="currentTimeTextBox" StyleName="PageInfo" />
+        <TextBox Width="7.82770833832274cm" Height="1.00000010093053cm" Left="16.6330411226301cm" Top="0cm" Value="=PageNumber" Name="pageInfoTextBox" StyleName="PageInfo">
+          <Style TextAlign="Right" />
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="1cm" Name="reportHeader">
+      <Items>
+        <TextBox Width="15.8141666722298cm" Height="0.915208363507356cm" Left="0.126999996467431cm" Top="0cm" Value="= Fields.p28Name" Name="titleTextBox" StyleName="Title">
+          <Style>
+            <Font Name="Calibri" Size="14pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="4.42766714096069cm" Height="0.499999821186066cm" Left="19.9813327775426cm" Top="0.111000004541874cm" Value="= Fields.p29Name" Name="textBox19">
+          <Style VerticalAlign="Middle">
+            <Font Name="Calibri" Underline="False" />
+          </Style>
+        </TextBox>
+        <TextBox Width="2.20516720278064cm" Height="0.499999821186066cm" Left="17.4413328481939cm" Top="0.111000004541874cm" Value="= Fields.p28Code" Name="textBox1">
+          <Style VerticalAlign="Middle">
+            <Font Name="Calibri" Bold="True" Underline="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+    <ReportFooterSection Height="0.714374980129302cm" Name="reportFooter" />
+    <DetailSection Height="7.26010423095731cm" Name="detail">
+      <Items>
+        <TextBox Width="0.526333330137199cm" Height="0.499999828418101cm" Left="10.6658331689007cm" Top="0.23650009260376cm" Value="IČ:" Name="textBox3">
+          <Style VerticalAlign="Middle">
+            <Font Size="9pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="2.14166701908243cm" Height="0.499999828418101cm" Left="11.2709990557949cm" Top="0.23650009260376cm" Value="= Fields.p28RegID" Name="textBox4">
+          <Style VerticalAlign="Middle">
+            <Font Name="Calibri" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="2.49566671931876cm" Height="0.499999828418101cm" Left="14.4733332155811cm" Top="0.23650009260376cm" Value="= Fields.p28VatID" Name="textBox5">
+          <Style VerticalAlign="Middle">
+            <Font Name="Calibri" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="0.85333290269641cm" Height="0.499999828418101cm" Left="13.5681662689163cm" Top="0.23650009260376cm" Value="DIČ:" Name="textBox6">
+          <Style VerticalAlign="Middle">
+            <Font Size="9pt" />
+          </Style>
+        </TextBox>
+        <Table DataSourceName="sqlDataSource2" Width="24.2821994701236cm" Height="1cm" Left="0.0623747439518642cm" Top="2.35746844028521cm" RowHeadersPrintOnEveryPage="True" ColumnHeadersPrintOnEveryPage="False" NoDataMessage="Žádné svázané projekty." Name="table1" StyleName="Office.TableNormal">
+          <Body>
+            <Cells>
+              <TableCell RowIndex="0" ColumnIndex="0" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="1.47612418843736cm" Height="0.5cm" Left="0cm" Top="0cm" Value="= Fields.p41Code" Name="textBox12" StyleName="Office.TableBody">
+                    <Style>
+                      <Font Size="8pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Strikeout="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="=Fields.IsClosed" Operator="Equal" Value="true" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="1" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="5.85762173931353cm" Height="0.5cm" Left="0cm" Top="0cm" Value="= Fields.p41Name" Name="textBox13" StyleName="Office.TableBody">
+                    <Style>
+                      <Font Size="8pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Strikeout="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="=Fields.IsClosed" Operator="Equal" Value="true" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="2" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="3.08478913370302cm" Height="0.5cm" Left="0cm" Top="0cm" Value="= Fields.p51Name" Name="textBox14" StyleName="Office.TableBody">
+                    <Style>
+                      <Font Size="8pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Strikeout="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="=Fields.IsClosed" Operator="Equal" Value="true" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="3" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="2.93133304183216cm" Height="0.5cm" Left="0cm" Top="0cm" Value="= Fields.j18Name" Name="textBox15" StyleName="Office.TableBody">
+                    <Style Color="0, 0, 0">
+                      <Font Size="8pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Strikeout="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="=Fields.IsClosed" Operator="Equal" Value="true" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+              <TableCell RowIndex="0" ColumnIndex="4" RowSpan="1" ColumnSpan="1">
+                <ReportItem>
+                  <TextBox Width="10.9323322977013cm" Height="0.5cm" Left="0cm" Top="0cm" Value="= Fields.roles_inline" Name="textBox16" StyleName="Office.TableBody">
+                    <Style Color="0, 0, 0">
+                      <Font Name="Calibri" Size="8pt" />
+                    </Style>
+                    <ConditionalFormatting>
+                      <FormattingRule>
+                        <Style>
+                          <Font Strikeout="True" />
+                        </Style>
+                        <Filters>
+                          <Filter Expression="=Fields.IsClosed" Operator="Equal" Value="true" />
+                        </Filters>
+                      </FormattingRule>
+                    </ConditionalFormatting>
+                  </TextBox>
+                </ReportItem>
+              </TableCell>
+            </Cells>
+            <Columns>
+              <Column Width="1.47612444189986cm" />
+              <Column Width="5.85762013326931cm" />
+              <Column Width="3.0847915630569cm" />
+              <Column Width="2.93133222346335cm" />
+              <Column Width="10.9323321034748cm" />
+            </Columns>
+            <Rows>
+              <Row Height="0.5cm" />
+            </Rows>
+          </Body>
+          <Corner />
+          <Style Color="0, 0, 0">
+            <Font Name="Calibri" />
+          </Style>
+          <RowGroups>
+            <TableGroup Name="Detail">
+              <Groupings>
+                <Grouping />
+              </Groupings>
+            </TableGroup>
+          </RowGroups>
+          <ColumnGroups>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="1.47612418843736cm" Height="0.5cm" Left="0cm" Top="0cm" Value="Kód" Name="textBox7" StyleName="Office.TableHeader">
+                  <Style Color="0, 0, 0" TextAlign="Center">
+                    <Font Size="9pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="5.85762173931353cm" Height="0.5cm" Left="0cm" Top="0cm" KeepTogether="False" Value="Název projektu" Name="textBox8" StyleName="Office.TableHeader">
+                  <Style Color="0, 0, 0" TextAlign="Center">
+                    <Font Size="9pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="3.08478913370302cm" Height="0.5cm" Left="0cm" Top="0cm" Value="Fakturační ceník" Name="textBox9" StyleName="Office.TableHeader">
+                  <Style Color="0, 0, 0" TextAlign="Center">
+                    <Font Size="9pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="2.93133304183216cm" Height="0.5cm" Left="0cm" Top="0cm" Value="Skupina" Name="textBox10" StyleName="Office.TableHeader">
+                  <Style Color="0, 0, 0" TextAlign="Center">
+                    <Font Size="9pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+            <TableGroup>
+              <ReportItem>
+                <TextBox Width="10.9323322977013cm" Height="0.5cm" Left="0cm" Top="0cm" Value="Obsazení projektových rolí" Name="textBox11" StyleName="Office.TableHeader">
+                  <Style Color="0, 0, 0">
+                    <Font Size="9pt" />
+                  </Style>
+                </TextBox>
+              </ReportItem>
+            </TableGroup>
+          </ColumnGroups>
+        </Table>
+        <TextBox Width="2.4948334671504cm" Height="0.499999821186066cm" Left="0.169333328623242cm" Top="0.236500099835795cm" Value="Fakturační ceník:" Name="textBox2">
+          <Style VerticalAlign="Middle">
+            <Font Size="9pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="6.73483352111247cm" Height="0.499999821186066cm" Left="2.68816659189397cm" Top="0.23650009260376cm" Value="= Fields.p51Name" Name="textBox18">
+          <Style VerticalAlign="Middle">
+            <Font Name="Calibri" Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Width="23.9645009319736cm" Height="0.499999821186066cm" Left="0.190499994701147cm" Top="0.910166641349926cm" Value="= Fields.adresy" Name="textBox21">
+          <Style VerticalAlign="Middle">
+            <Font Name="Calibri" Size="9pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="23.9856674353632cm" Height="0.499999821186066cm" Left="0.211666660779052cm" Top="1.58749995584289cm" Value="= Fields.media" Name="textBox23">
+          <Style VerticalAlign="Middle">
+            <Font Name="Calibri" Size="9pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="1.34016619695094cm" Height="0.499999821186066cm" Left="17.4624995142718cm" Top="0.23650009260376cm" Value="Vlastník:" Name="textBox20">
+          <Style VerticalAlign="Middle">
+            <Font Size="9pt" />
+          </Style>
+        </TextBox>
+        <TextBox Width="4.04949946910011cm" Height="0.499999821186066cm" Left="18.8594994754136cm" Top="0.236500099835795cm" Value="= Fields.Vlastnik" Name="textBox22">
+          <Style VerticalAlign="Middle">
+            <Font Size="9pt" Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </DetailSection>
+  </Items>
+  <StyleSheet>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="18pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="Title" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black" VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="Caption" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="9pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="Data" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="8pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="PageInfo" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="20, 34, 77">
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Calibri" Size="9pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="Table" StyleName="Office.TableNormal" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style BackgroundColor="121, 167, 227" Color="20, 34, 77" VerticalAlign="Middle">
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Calibri" Size="10pt" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableHeader" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style>
+        <BorderStyle Default="Solid" />
+        <BorderColor Default="Black" />
+        <BorderWidth Default="1px" />
+        <Font Name="Calibri" Size="9pt" />
+      </Style>
+      <Selectors>
+        <DescendantSelector>
+          <Selectors>
+            <TypeSelector Type="Table" />
+            <StyleSelector Type="ReportItem" StyleName="Office.TableBody" />
+          </Selectors>
+        </DescendantSelector>
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <PageSettings>
+    <PageSettings PaperKind="A4" Landscape="True">
+      <Margins>
+        <MarginsU Left="25.4mm" Right="25.4mm" Top="25.4mm" Bottom="25.4mm" />
+      </Margins>
+    </PageSettings>
+  </PageSettings>
+  <ReportParameters>
+    <ReportParameter Name="pid" Type="Integer">
+      <Value>
+        <String>1</String>
+      </Value>
+    </ReportParameter>
+  </ReportParameters>
+</Report>

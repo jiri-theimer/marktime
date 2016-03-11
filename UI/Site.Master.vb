@@ -1,0 +1,270 @@
+﻿Imports Telerik.Web.UI
+
+Public Class Site
+    Inherits System.Web.UI.MasterPage
+    Public Property HelpTopicID As String = ""
+    Public Property neededPermission As BO.x53PermValEnum
+
+    Public Property _Factory As BL.Factory = Nothing
+
+   
+
+    Public ReadOnly Property Factory As BL.Factory
+        Get
+            Return _Factory
+        End Get
+    End Property
+
+    Public Property PageTitle() As String
+        Get            
+            Return hidPageTitle.Value
+        End Get
+        Set(ByVal value As String)
+            hidPageTitle.Value = "MARKTIME - " & value
+        End Set
+    End Property
+    Public Property SiteMenuValue() As String
+        Get
+            Return menu1.SelectedValue
+        End Get
+        Set(ByVal value As String)
+            If Not menu1.FindItemByValue(value) Is Nothing Then
+                menu1.FindItemByValue(value).HighlightPath()
+            
+            End If
+
+        End Set
+    End Property
+    Private Sub DoLogOut()
+        Response.Redirect("~/Account/Login.aspx?autologout=1") 'automatické odhlášení
+    End Sub
+
+    Public Sub Notify(ByVal strText As String, Optional ByVal msgLevel As NotifyLevel = NotifyLevel.InfoMessage, Optional ByVal strTitle As String = "")
+        basUI.NotifyMessage(Me.notify1, strText, msgLevel)
+    End Sub
+
+    Private Sub Page_Init(sender As Object, e As System.EventArgs) Handles Me.Init
+        If HttpContext.Current.User.Identity.IsAuthenticated And _Factory Is Nothing Then
+            Dim strLogin As String = HttpContext.Current.User.Identity.Name
+            _Factory = New BL.Factory(, strLogin)
+            If _Factory.SysUser Is Nothing Then DoLogOut()
+
+            PersonalizeMenu()
+        End If
+    End Sub
+
+    Private Sub PersonalizeMenu()
+
+        With _Factory.SysUser
+
+            If .Person = "" Then
+                menu1.FindItemByValue("me").Text = .j03Login
+            Else
+                menu1.FindItemByValue("me").Text = .Person
+            End If
+            menu1.ClickToOpen = .j03IsSiteMenuOnClick
+            If .j03SiteMenuSkin > "" Then menu1.Skin = .j03SiteMenuSkin
+
+            If .j04IsMenu_Worksheet Then
+                menu1.FindItemByValue("p31").Visible = True
+                ShowHideMI(Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot), "p31", "cmdP31_Pivot")
+
+            Else
+                menu1.Items.Remove(menu1.FindItemByValue("p31"))
+            End If
+            menu1.FindItemByValue("searchbox").Visible = .j04IsMenu_Project
+
+            If Not .j04IsMenu_Project Then
+                menu1.Items.Remove(menu1.FindItemByValue("p41"))
+            End If
+            If Not .j04IsMenu_Contact Then
+                menu1.Items.Remove(menu1.FindItemByValue("p28"))
+            End If
+            If Not .j04IsMenu_People Then
+                menu1.Items.Remove(menu1.FindItemByValue("j02"))
+            End If
+            If Not .j04IsMenu_Invoice Then
+                menu1.Items.Remove(menu1.FindItemByValue("p91"))
+            End If
+            If Not _Factory.SysUser.j04IsMenu_MyProfile Then
+                ShowHideMI(False, "me", "cmdMyProfile")
+            End If
+            If Not _Factory.SysUser.IsApprovingPerson Then
+                If Not _Factory.SysUser.IsAdmin Then ShowHideMI(False, "p31", "cmdP31_Approving")
+            End If
+            If .MessagesCount = 0 Then
+                menu1.Items.Remove(menu1.FindItemByValue("messages"))
+            Else
+                menu1.FindItemByValue("messages").Text = .MessagesCount.ToString
+            End If
+
+            If .HomeMenu = "" Then
+                menu1.FindItemByValue("dashboard").Text = "Úvod"
+            Else
+                menu1.FindItemByValue("dashboard").Text = .HomeMenu
+                RenderHomeMenu()
+            End If
+        End With
+
+        If Not _Factory.SysUser.j04IsMenu_More Then
+            menu1.Items.Remove(menu1.FindItemByValue("more"))
+        Else
+            With Factory
+                ShowHideMI(.SysUser.j04IsMenu_Report, "more", "cmdReports")
+                ShowHideMI(.SysUser.IsAdmin, "more", "cmdAdmin")
+                ShowHideMI(.SysUser.IsAdmin, "more", "cmdWorkflow")
+                ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P41_Owner), "more", "p47")
+                ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P51_Admin), "more", "p51")
+                ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P90_Reader), "more", "p90")
+                ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_O23_Creator), "more", "o23")
+                ShowHideMI((.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Or .TestPermission(BO.x53PermValEnum.GR_P48_Reader)), "more", "p48")
+                With menu1.FindItemByValue("more")
+                    If .Items.Count <= 8 Then .GroupSettings.RepeatColumns = 1
+                End With
+            End With
+        End If
+
+
+    End Sub
+
+    Private Sub RenderHomeMenu()
+        Dim lisJ62 As IEnumerable(Of BO.j62MenuHome) = _Factory.j62MenuHomeBL.GetList(New BO.myQuery)
+        For Each c In lisJ62
+            Dim n As New RadMenuItem(c.j62Name)
+            n.NavigateUrl = c.j62Url
+            If n.NavigateUrl.IndexOf("?") > 0 Then
+                n.NavigateUrl += "&j62id=" & c.PID.ToString
+            Else
+                n.NavigateUrl += "?j62id=" & c.PID.ToString
+            End If
+            n.ImageUrl = c.j62ImageUrl
+            n.Target = c.j62Target
+            n.Value = "hm" + c.PID.ToString
+            Dim nParent As RadMenuItem = Nothing
+            If c.j62ParentID > 0 Then
+                nParent = menu1.FindItemByValue("dashboard").Items.FindItemByValue("hm" + c.j62ParentID.ToString)
+            End If
+            If nParent Is Nothing Then nParent = menu1.FindItemByValue("dashboard")
+            nParent.Items.Add(n)
+            ''If nParent.ImageUrl = "" Then nParent.ImageUrl = "~/Images/menuarrow.png"
+        Next
+        If lisJ62.Count > 0 Then
+            With menu1.FindItemByValue("dashboard")
+                .ImageUrl = "~/Images/menuarrow.png"
+                If menu1.ClickToOpen Then .NavigateUrl = ""
+            End With
+
+
+        End If
+    End Sub
+
+    Private Sub ShowHideMI(bolVisible As Boolean, strGroupValue As String, strMenuValue As String)
+        Dim mg As RadMenuItem = menu1.FindItemByValue(strGroupValue)
+        If mg Is Nothing Then Return
+        With mg
+            Dim mi As RadMenuItem = .Items.FindItemByValue(strMenuValue)
+            If Not mi Is Nothing Then
+                If Not bolVisible Then
+                    .Items.Remove(mi)
+                Else
+                    mi.Visible = True
+                End If
+            End If
+
+
+        End With
+
+        'menu1.FindItemByValue(strGroupValue).Items.FindItemByValue(strMenuValue).Visible = bolVisible
+
+
+    End Sub
+
+
+    Private Function AM(strText As String, strURL As String, strValue As String) As RadMenuItem
+        Dim item As New RadMenuItem(strText, strURL)
+        item.Value = strValue
+        Return item
+    End Function
+
+    Private Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        title1.Text = hidPageTitle.Value
+        If _Factory.SysUser.j03IsLiveChatSupport Then
+            Dim s As New StringBuilder
+            s.AppendLine("<!-- Start of SmartSupp Live Chat script -->")
+            s.AppendLine("<script type='text/javascript'>")
+            s.AppendLine("var _smartsupp = _smartsupp || {};")
+            s.AppendLine("_smartsupp.key = 'f47180c069be93b0e812459452fea73be7887dde';")
+            s.AppendLine("window.smartsupp||(function(d) {")
+            s.AppendLine("var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];")
+            s.AppendLine("s=d.getElementsByTagName('script')[0];c=d.createElement('script');")
+            s.AppendLine("c.type='text/javascript';c.charset='utf-8';c.async=true;")
+            s.AppendLine("c.src='//www.smartsuppchat.com/loader.js';s.parentNode.insertBefore(c,s);")
+            s.AppendLine("})(document);")
+            s.AppendLine("</script>")
+            s.AppendLine("<!-- End of SmartSupp Live Chat script -->")
+
+            ''ScriptManager.RegisterStartupScript(Me.myHead, Me.GetType(), "LiveChat", s.ToString, False)
+            myHead.Controls.Add(New LiteralControl(s.ToString))
+        End If
+
+        'menu1.FindItemByValue("more").Items.FindItemByValue("cmdHelp").NavigateUrl = "javascript:help('" & Request.FilePath & "')"
+        If Me.HelpTopicID = "" Then
+            menu1.FindItemByValue("help").NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html"
+        Else
+            menu1.FindItemByValue("help").NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html?" & Me.HelpTopicID & ".htm"
+        End If
+        If Not menu1.FindItemByValue("more") Is Nothing Then
+            With menu1.FindItemByValue("more").Items.FindItemByValue("cmdHelp")
+                .NavigateUrl = menu1.FindItemByValue("help").NavigateUrl
+            End With
+        End If
+
+        SetupSearchbox()
+        
+    End Sub
+
+    Private Sub SetupSearchbox()
+        Dim template As New TextBoxTemplate()
+        template.InstantiateIn(menu1.FindItemByValue("searchbox"))
+        menu1.DataBind()
+
+        Dim mi As RadMenuItem = menu1.FindItemByValue("searchbox")
+        hidSearchBox1.Value = DirectCast(mi.FindControl("searchbox1"), TextBox).ClientID
+    End Sub
+    Public Sub TestNeededPermission(neededPerm As BO.x53PermValEnum)
+        If _Factory Is Nothing Then Return
+
+        If Not _Factory.TestPermission(neededPerm) Then
+            StopPage("Nedisponujete dostatečným oprávněním pro zobrazení této stránky.", True)
+        End If
+    End Sub
+
+
+    Public Sub StopPage(ByVal strMessage As String, Optional ByVal bolErrorInfo As Boolean = True)
+        Server.Transfer("~/stoppage_site.aspx?&err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage), False)
+    End Sub
+
+
+    Class TextBoxTemplate
+        Public Sub InstantiateIn(ByVal container As Control)
+            Dim txt1 As New TextBox()
+            txt1.ID = "searchbox1"
+            txt1.Text = "Najít projekt..."
+            txt1.Style.Item("width") = "110px"
+            txt1.Attributes.Item("onfocus") = "search1Focus()"
+            txt1.Attributes.Item("onblur") = "search1Blur()"
+
+            AddHandler txt1.DataBinding, AddressOf txt1_DataBinding
+            container.Controls.Add(txt1)
+
+        End Sub
+
+        Private Sub txt1_DataBinding(ByVal sender As Object, ByVal e As EventArgs)
+            ''Dim target As TextBox = DirectCast(sender, TextBox)
+            ''Dim item As RadMenuItem = DirectCast(target.BindingContainer, RadMenuItem)
+            ''Dim itemText As String = DirectCast(DataBinder.Eval(item, "Text"), String)
+            ''target.Text = itemText
+        End Sub
+    End Class
+End Class
+

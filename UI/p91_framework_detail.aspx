@@ -1,0 +1,729 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="p91_framework_detail.aspx.vb" Inherits="UI.p91_framework_detail" %>
+
+<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
+<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
+    <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        .ui-autocomplete {
+            width: 600px;
+            height: 300px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+            font-family: 'Microsoft Sans Serif';
+            z-index: 9900;
+        }
+
+        * html .ui-autocomplete {
+            height: 300px;
+        }
+
+
+        .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+            background: #DCDCDC;
+            border: none;
+            border-radius: 0;
+            font-weight: normal;
+        }
+
+        .RadMenu_Silk .rmItem :hover {
+            border-top-color: transparent !important;
+        }
+
+        .RadMenu_Silk .rmSelected .rmLink {
+            border-top-color: transparent !important;
+        }
+    </style>
+    <asp:PlaceHolder ID="placeBinMenuCss" runat="server"></asp:PlaceHolder>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".slidingDiv1").hide();
+            $(".show_hide1").show();
+
+            $('.show_hide1').click(function () {
+                $(".slidingDiv1").slideToggle();
+            });
+
+        });
+
+        function report(x31id) {
+            
+            sw_local("report_modal.aspx?prefix=p91&pid=<%=Master.DataPID%>&x31id="+x31id,"Images/reporting_32.png",true);
+
+        }
+
+        function p31_entry(p34id) {
+            
+            sw_local("p31_record.aspx?pid=0&p91id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet_32.png",true);
+
+        }
+
+        function record_new() {
+            
+            sw_local("p91_create.aspx","Images/invoice_32.png",true);
+
+        }
+
+        function record_edit() {
+            var pid = <%=master.DataPID%>;
+            if (pid == "" || pid == null) {
+                alert("Není vybrán záznam.");
+                return
+            }
+            sw_local("p91_record.aspx?pid=" + pid,"Images/invoice_32.png",true);
+
+        }
+
+        function record_new() {
+            var pid = <%=master.DataPID%>;            
+           
+            sw_local("p91_create_step1.aspx?prefix=p28","Images/invoice_32.png",true);
+        }
+
+        function changevat() {
+         
+            sw_local("p91_change_vat.aspx?pid=<%=Master.DataPID%>","Images/recalc_32.png");
+
+        }
+        function changecurrency() {
+         
+            sw_local("p91_change_currency.aspx?pid=<%=Master.DataPID%>","Images/recalc_32.png");
+
+        }
+
+        function pay() {
+           
+            sw_local("p91_pay.aspx?pid=<%=Master.DataPID%>","Images/payment_32.png");
+
+        }
+        
+        function p31_add() {           
+            sw_local("p91_add_worksheet_gateway.aspx?pid=<%=Master.DataPID%>","Images/worksheet_32.png");
+        }
+        function p31_remove(){       
+            var p31ids=GetAllSelectedPIDs();
+            if (p31ids==""){
+                alert("Musíte vybrat minimálně jeden záznam.");
+                return;
+            }
+            sw_local("p91_remove_worksheet.aspx?pid=<%=Master.DataPID%>&p31ids="+p31ids,"Images/cut_32.png");
+        }
+
+        function hardrefresh(pid, flag) {
+            if (flag=="p91-save"){
+                parent.window.location.replace("p91_framework.aspx?pid="+pid);
+                return;
+            }
+            if (flag=="p91-delete"){
+                parent.window.location.replace("p91_framework.aspx");
+                return;
+            }
+            
+            
+            document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
+            document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
+
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
+
+        }
+
+        
+        function GetAllSelectedPIDs() {
+
+            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
+            var sel = masterTable.get_selectedItems();
+            var pids = "";
+
+            for (i = 0; i < sel.length; i++) {
+                if (pids == "")
+                    pids = sel[i].getDataKeyValue("pid");
+                else
+                    pids = pids + "," + sel[i].getDataKeyValue("pid");
+            }
+
+            return (pids);
+        }
+        
+
+        function p31_RowSelected(sender, args) {
+
+            document.getElementById("<%=hiddatapid_p31.clientid%>").value = args.getDataKeyValue("pid");
+
+        }
+
+        function p31_RowDoubleClick(sender, args) {
+            record_p31_edit();
+        }
+
+        function record_p31_edit() {
+            var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
+            if (pid=="")
+            {
+                alert("Musíte vybrat položku z tabulky.");
+                return;
+            }
+            sw_local("p31_record_AI.aspx?pid="+pid,"Images/worksheet_32.png");
+
+        }
+
+     
+        function o23_record(pid) {
+            
+            sw_local("o23_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
+
+        }
+        function o22_record(pid) {
+            
+            sw_local("o22_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar_32.png",true);
+
+        }
+       
+       
+
+        function b07_comment() {
+            
+            sw_local("b07_create.aspx?masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment_32.png",true)
+            
+        }
+        function b07_reaction(b07id) {
+            sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment_32.png", true)
+           
+        }
+        function griddesigner() {
+            var j74id = "<%=Me.CurrentJ74ID%>";
+            sw_local("grid_designer.aspx?x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner_32.png");
+        }
+       
+        function proforma() {           
+            sw_local("p91_proforma.aspx?pid=<%=Master.DataPID%>","Images/proforma_32.png");
+        }
+        function creditnote() {           
+            sw_local("p91_creditnote.aspx?pid=<%=Master.DataPID%>","Images/correction_down.gif");
+        }
+        function export_pohoda() {           
+            sw_local("p91_export2pohoda.aspx?pid=<%=Master.DataPID%>","Images/export.png");
+        }
+    </script>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 40px;">
+
+        <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
+            <Items>
+                <telerik:RadMenuItem Value="begin">
+                    <ItemTemplate>
+                        <img src="Images/invoice_32.png" alt="Faktura" />
+                    </ItemTemplate>
+                </telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
+                </telerik:RadMenuItem>
+                <telerik:RadMenuItem Text="Záznam faktury" ImageUrl="Images/arrow_down_menu.png" Value="record">
+                    <ContentTemplate>
+                        <div style="padding: 10px; width: 450px;">
+
+                            <asp:Panel ID="panCommandEdit" runat="server" CssClass="div6">
+                                <asp:Image ID="imgEdit" ImageUrl="Images/edit.png" runat="server" />
+                                <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit nastavení faktury" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
+
+
+                                <asp:HyperLink ID="cmdCreateInvoice" runat="server" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new()" Style="float: right;"></asp:HyperLink>
+
+                                <div>
+                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do koše nebo nenávratného odstranění.</span>
+                                </div>
+
+                            </asp:Panel>
+
+                            <asp:Panel ID="panPay" runat="server">
+                                <div class="div6">
+                                    <img src="Images/payment.png" />
+                                    <asp:HyperLink ID="cmdPay" runat="server" Text="Zapsat úhradu faktury" NavigateUrl="javascript:pay()"></asp:HyperLink>
+                                    <div>
+                                        <span class="infoInForm">Je možné zapsat úplnou nebo částečnou úhradu faktury.</span>
+                                    </div>
+                                </div>
+                            </asp:Panel>
+                            <asp:Panel ID="panRecordCommands" runat="server">
+                                <div class="div6">
+                                    <img src="Images/worksheet.png" />
+                                    <asp:HyperLink ID="cmdAppendWorksheet" runat="server" Text="Přidat do faktury další položky (úkony)" NavigateUrl="javascript:p31_add()"></asp:HyperLink>
+                                    <div>
+                                        <span class="infoInForm">Způsob, jak do faktury přidat slevu, přirážku, fixní odměnu, další časové úkony, výdaje apod.</span>
+                                    </div>
+                                </div>
+                                <div class="div6">
+                                    <img src="Images/recalc.png" />
+                                    <asp:HyperLink ID="cmdChangeCurrency" runat="server" Text="Převést fakturu na jinou měnu" NavigateUrl="javascript:changecurrency()"></asp:HyperLink>
+
+                                </div>
+                                <div class="div6">
+                                    <img src="Images/recalc.png" />
+                                    <asp:HyperLink ID="cmdChangeVat" runat="server" Text="Převést fakturu kompletně na jinou DPH sazbu" NavigateUrl="javascript:changevat()"></asp:HyperLink>
+
+                                </div>
+                            </asp:Panel>
+                            <asp:Panel ID="panProforma" runat="server" CssClass="div6">
+                                <img src="Images/proforma.png" />
+                                <asp:HyperLink ID="cmdProforma" runat="server" Text="Spárovat fakturu s uhrazenou zálohou" NavigateUrl="javascript:proforma()"></asp:HyperLink>
+
+                            </asp:Panel>
+                            <asp:Panel ID="panCreditNote" runat="server" CssClass="div6">
+                                <img src="Images/correction_down.gif" />
+                                <asp:HyperLink ID="cmdCreditNote" runat="server" Text="Vytvořit k faktuře opravný doklad" NavigateUrl="javascript:creditnote()"></asp:HyperLink>
+
+                            </asp:Panel>
+                        </div>
+                    </ContentTemplate>
+
+                </telerik:RadMenuItem>
+
+
+
+                <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
+                    <ContentTemplate>
+                        <div style="float: left; min-width: 200px;">
+
+                            <div class="menu-group-title">Reporting</div>
+                            <div class="menu-group-item">
+                                <img src="Images/report.png" />
+                                <asp:HyperLink ID="cmdReport" runat="server" Text="Tiskové sestavy" NavigateUrl="javascript:report('')"></asp:HyperLink>
+
+                            </div>
+                            <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
+                                <img src="Images/pivot.png" />
+                                <a href="p31_pivot.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za fakturu</a>
+                            </asp:Panel>
+
+
+
+                            <div class="menu-group-title">Komunikace</div>
+                            <asp:Panel ID="panO23" runat="server" CssClass="menu-group-item">
+                                <img src="Images/notepad.png" />
+                                <asp:HyperLink ID="cmdO23" runat="server" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" />
+                            </asp:Panel>
+                            <asp:Panel ID="panO22" runat="server" CssClass="menu-group-item">
+                                <img src="Images/calendar.png" />
+                                <asp:HyperLink ID="cmdO22" runat="server" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" />
+                            </asp:Panel>
+                            <div class="menu-group-item">
+                                <img src="Images/comment.png" />
+                                <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat k faktuře komentář" NavigateUrl="javascript:b07_comment();" />
+                            </div>
+                            <div class="menu-group-title">Integrace</div>
+                            <div class="menu-group-item">
+                                <img src="Images/license.png" />
+                                <asp:HyperLink ID="cmdPohoda" runat="server" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" />
+                            </div>
+
+
+                        </div>
+                    </ContentTemplate>
+
+                </telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="searchbox">
+                    <ItemTemplate>
+
+                        <input id="search2" style="width: 100px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />
+
+                    </ItemTemplate>
+                </telerik:RadMenuItem>
+            </Items>
+        </telerik:RadMenu>
+
+    </asp:Panel>
+
+    <div style="height: 3px; page-break-after: always; clear: both;"></div>
+
+    <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Metro" MultiPageID="RadMultiPage1">
+        <Tabs>
+            <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Záznam faktury" Value="detail" Selected="true" ImageUrl="Images/properties.png"></telerik:RadTab>
+            <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Položky faktury" Value="p31" ImageUrl="Images/worksheet.png"></telerik:RadTab>
+            <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Ostatní " Value="other" ImageUrl="Images/more.png"></telerik:RadTab>
+
+        </Tabs>
+    </telerik:RadTabStrip>
+    <div style="min-height: 150px;">
+        <telerik:RadMultiPage ID="RadMultiPage1" runat="server" RenderMode="Lightweight">
+            <telerik:RadPageView ID="core" runat="server" Selected="true">
+                <asp:Image ID="imgDocType" runat="server" Style="position: absolute; top: 90px; left: 280px;" />
+                <table cellpadding="10" cellspacing="2" id="responsive">
+                    <tr valign="baseline">
+                        <td style="min-width: 120px;" id="rlbl">
+                            <asp:Label ID="lblCode" runat="server" Text="Číslo faktury:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td style="min-width: 200px; max-width: 350px;">
+                            <asp:Image ID="imgRecord" runat="server" Visible="false" />
+                            <asp:Label ID="p91Code" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Button ID="cmdConvertDraft" runat="server" CssClass="cmd" Text="Převést Draft na oficiální číslo" />
+                            <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
+                        </td>
+                        <td id="rlbl">
+                            <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Panel ID="panProjects" runat="server" Style="padding-right: 20px;">
+                                <asp:Repeater ID="rpProject" runat="server">
+                                    <ItemTemplate>
+                                        <div>
+                                            <asp:HyperLink ID="p41Name" runat="server" NavigateUrl="#" Target="_parent"></asp:HyperLink>
+                                            <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </asp:Panel>
+
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <asp:HyperLink ID="cmdReportInvoice" runat="server" Text="Sestava faktury"></asp:HyperLink>
+
+                        </td>
+                        <td>
+                            <asp:HyperLink ID="cmdReportAttachment" runat="server" Text="Sestava přílohy"></asp:HyperLink>
+
+                        </td>
+                        <td id="rlbl">
+
+                            <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>
+
+                        </td>
+                        <td>
+
+                            <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_parent"></asp:HyperLink>
+                            <asp:HyperLink ID="clue_client" runat="server" CssClass="reczoom" Text="i" title="Detail klienta"></asp:HyperLink>
+
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td id="rlbl">Typ faktury:
+                        </td>
+                        <td align="right">
+                            <asp:Label ID="p92Name" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:HyperLink ID="clue_p92name" runat="server" CssClass="reczoom" Text="i" title="Detail typu faktury" Style="margin-right: 80px;"></asp:HyperLink>
+                        </td>
+                        <td id="rlbl">Fakturační adresa:
+
+                        </td>
+                        <td>
+                            <asp:Label ID="BillingAddress" runat="server" CssClass="valbold"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td id="rlbl">
+                            <asp:Label ID="lblDebt" runat="server" Text="Celkový dluh:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td align="right">
+
+                            <asp:Label ID="p91Amount_Debt" runat="server" CssClass="valboldred"></asp:Label>
+                            <asp:Label ID="j27Code_debt" runat="server" CssClass="val" Style="margin-right: 60px;"></asp:Label>
+                        </td>
+                        <td id="rlbl">
+                            <asp:Label ID="Label12" runat="server" Text="Doručovací adresa:" CssClass="lbl"></asp:Label></td>
+                        <td>
+                            <asp:Label ID="PostAddress" runat="server" CssClass="valbold"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td id="rlbl">
+                            <asp:Label ID="Label2" runat="server" Text="Částka bez DPH:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td align="right">
+
+                            <asp:Label ID="p91Amount_WithoutVat" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Label ID="j27Code_withoutvat" runat="server" CssClass="val" Style="margin-right: 60px;"></asp:Label>
+                        </td>
+                        <td id="rlbl">
+                            <asp:Label ID="Label10" runat="server" Text="Bankovní účet:" CssClass="lbl"></asp:Label></td>
+                        <td>
+                            <asp:Label ID="BankAccount" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Label ID="BankName" runat="server" CssClass="val" Style="padding-left: 20px;"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="rlbl">
+                            <asp:Label ID="Label3" runat="server" Text="Částka DPH:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td align="right">
+
+                            <asp:Label ID="p91Amount_Vat" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Label ID="j27Code_vat" runat="server" CssClass="val" Style="margin-right: 60px;"></asp:Label>
+                        </td>
+                        <td id="rlbl">
+                            <asp:Label ID="Label6" runat="server" Text="Datum vystavení:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="p91Date" runat="server" CssClass="valbold"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="rlbl">
+                            <asp:Label ID="Label4" runat="server" Text="Částka vč.DPH:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td align="right">
+
+                            <asp:Label ID="p91Amount_WithVat" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Label ID="j27Code_withvat" runat="server" CssClass="val" Style="margin-right: 60px;"></asp:Label>
+                        </td>
+                        <td id="rlbl">
+                            <asp:Label ID="Label7" runat="server" Text="Datum plnění:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="p91DateSupply" runat="server" CssClass="valbold"></asp:Label>
+
+                            <asp:Label ID="lblExchangeRate" runat="server" Text="Měnový kurz:" CssClass="lbl" Style="margin-left: 30px;"></asp:Label>
+                            <asp:Label ID="p91ExchangeRate" runat="server" CssClass="valbold"></asp:Label>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td id="rlbl">
+                            <asp:Label ID="Label13" runat="server" Text="Zaokrouhlení:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td align="right">
+                            <asp:Label ID="p91RoundFitAmount" runat="server" CssClass="valbold" Style="margin-right: 80px;"></asp:Label>
+
+                        </td>
+                        <td id="rlbl">
+                            <asp:Label ID="lblp91DateMaturity" runat="server" Text="Datum splatnosti:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="p91DateMaturity" runat="server" CssClass="valbold"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="rlbl">
+                            <asp:Label ID="lblProforma" runat="server" Text="Částka zálohy:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td align="right">
+                            <asp:Label ID="p91ProformaAmount" runat="server" CssClass="valboldblue"></asp:Label>
+                            <asp:Label ID="j27Code_proforma" runat="server" CssClass="val" Style="margin-right: 60px;"></asp:Label>
+                        </td>
+                        <td id="rlbl">
+                            <asp:Label ID="lblp91DateBilled" runat="server" Text="Datum poslední úhrady:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="p91DateBilled" runat="server" CssClass="valbold"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+
+                            <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Zobrazovat pouze vyplněná pole" />
+
+                            <uc:freefields_readonly ID="ff1" runat="server" />
+
+                        </td>
+                    </tr>
+                </table>
+                <div class="div6">
+                    <a href="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Datový přehled vyfakturovaných úkonů</a>
+                </div>
+                <asp:Panel ID="panText1" runat="server" CssClass="content-box1">
+                    <div class="title">Text faktury</div>
+                    <div class="content" style="background-color: #ffffcc;">
+                        <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
+                    </div>
+                </asp:Panel>
+                <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p91Invoice"></uc:o23_list>
+                <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
+            </telerik:RadPageView>
+            <telerik:RadPageView ID="p31" runat="server">
+
+                <div class="div6">
+                    <asp:RadioButtonList ID="opgGroupBy" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
+                        <asp:ListItem Text="Bez souhrnů" Value="flat" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Fakturační oddíl" Value="p95"></asp:ListItem>
+                        <asp:ListItem Text="Fakturační status" Value="p70"></asp:ListItem>
+                        <asp:ListItem Text="Billing dávka" Value="p31ApprovingSet"></asp:ListItem>
+                        <asp:ListItem Text="Sešit" Value="p34"></asp:ListItem>
+                        <asp:ListItem Text="Aktivita" Value="p32"></asp:ListItem>
+                        <asp:ListItem Text="Osoba" Value="j02"></asp:ListItem>
+                        <asp:ListItem Text="Projekt" Value="p41"></asp:ListItem>
+                        <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
+                    </asp:RadioButtonList>
+                </div>
+                <div>
+                    <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
+                        <asp:ListItem Text="20" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="50"></asp:ListItem>
+                        <asp:ListItem Text="100"></asp:ListItem>
+                    </asp:DropDownList>
+
+                    <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
+
+                    <a href="javascript:griddesigner()" title="Návrhář sloupců">
+                        <img src="Images/griddesigner.png" border="0" class="button-link" /></a>
+
+
+                    <a href="javascript:record_p31_edit()" title="Upravit vybranou položku faktury">
+                        <img src="Images/edit.png" border="0" class="button-link" style="margin-left: 30px;" /></a>
+                    <a href="javascript:p31_add()" title="Přidat do faktury další položky">
+                        <img src="Images/new.png" border="0" class="button-link" /></a>
+                    <a href="javascript:p31_remove()" title="Zaškrtlé vyjmout z faktury">
+                        <img src="Images/cut.png" border="0" class="button-link" /></a>
+
+                </div>
+                <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick"></uc:datagrid>
+
+            </telerik:RadPageView>
+            <telerik:RadPageView ID="other" runat="server">
+                <table cellpadding="10" cellspacing="2" id="responsive">
+                    <tr>
+                        <td style="min-width: 120px;">
+                            <asp:Label ID="Label5" runat="server" Text="Vlastník záznamu:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td style="min-width: 200px; max-width: 350px;">
+
+                            <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
+
+                        </td>
+                        <td>
+                            <asp:Label ID="lblp91Datep31_From" runat="server" Text="Worksheet časový rámec:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="WorksheetRange" runat="server" CssClass="valbold"></asp:Label>
+                        </td>
+
+                    </tr>
+                    <tr valign="top">
+                        <td>
+                            <asp:Label ID="lblText2" runat="server" CssClass="lbl" Text="Technický text faktury:"></asp:Label>
+                        </td>
+                        <td colspan="3">
+                            <asp:Label ID="p91Text2" runat="server" CssClass="val" Font-Italic="true"></asp:Label>
+                        </td>
+                    </tr>
+                </table>
+
+                <div>
+                    <span class="framework_header_span">Rekapitulace DPH</span>
+                </div>
+                
+
+                <table cellpadding="10" border="1" class="tabulka" id="responsive">
+                    <thead>
+                        <tr>
+                            <th>Druh sazby</th>
+                            <th>Výše sazby</th>
+                            <th>Částka bez DPH</th>
+                            <th>Částka DPH</th>
+                            <th>Částka vč. DPH</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td collbl="Druh sazby">Nulová</td>
+                        <td collbl="Výše sazby">0%</td>
+                        <td collbl="Částka bez DPH" align="right">
+                            <td collbl="Částka DPH">
+                                <asp:Label ID="p91Amount_WithoutVat_None" runat="server" CssClass="val"></asp:Label></td>
+                            <td collbl="Částka vč. DPH"></td>
+                    </tr>
+                    <tr>
+                        <td collbl="Druh sazby">Snížená</td>
+                        <td collbl="Výše sazby">
+                            <asp:Label ID="p91VatRate_Low" runat="server" CssClass="val"></asp:Label></td>
+                        <td collbl="Částka bez DPH" align="right">
+                            <asp:Label ID="p91Amount_WithoutVat_Low" runat="server" CssClass="val"></asp:Label></td>
+                        <td collbl="Částka DPH" align="right">
+                            <asp:Label ID="p91Amount_Vat_Low" runat="server" CssClass="val"></asp:Label></td>
+                        <td collbl="Částka vč. DPH" align="right">
+                            <asp:Label ID="p91Amount_WithVat_Low" runat="server" CssClass="val"></asp:Label></td>
+                    </tr>
+                    <tr>
+                        <td collbl="Druh sazby">Základní</td>
+                        <td collbl="Výše sazby">
+                            <asp:Label ID="p91VatRate_Standard" runat="server" CssClass="val"></asp:Label></td>
+                        <td collbl="Částka bez DPH" align="right">
+                            <asp:Label ID="p91Amount_WithoutVat_Standard" runat="server" CssClass="val"></asp:Label></td>
+                        <td collbl="Částka DPH" align="right">
+                            <asp:Label ID="p91Amount_Vat_Standard" runat="server" CssClass="val"></asp:Label></td>
+                        <td collbl="Částka vč. DPH" align="right">
+                            <asp:Label ID="p91Amount_WithVat_Standard" runat="server" CssClass="val"></asp:Label></td>
+                    </tr>
+                </table>
+
+
+
+            </telerik:RadPageView>
+        </telerik:RadMultiPage>
+    </div>
+
+
+
+
+
+
+    <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
+    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
+    <asp:HiddenField ID="hiddatapid_p31" runat="server" />
+    <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#search2").autocomplete({
+                source: "Handler/handler_search_invoice.ashx",
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {                        
+                        window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
+                        return false;
+                    }
+                }
+
+
+
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var s = "<div>";
+                if (item.Closed == "1")
+                    s = s + "<a style='text-decoration:line-through;'>";
+                else
+                    s = s + "<a>";
+
+                s = s + __highlight(item.Project, item.FilterString);
+
+
+                s = s + "</a>";
+
+                if (item.Draft == "1")
+                    s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+                s = s + "</div>";
+
+
+                return $(s).appendTo(ul);
+
+
+            };
+        });
+
+        function __highlight(s, t) {
+            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+            return s.replace(matcher, "<strong>$1</strong>");
+        }
+
+        function search2Focus() {            
+            document.getElementById("search2").value=""; 
+            document.getElementById("search2").style.background = "yellow";
+        }
+        function search2Blur() {
+           
+            document.getElementById("search2").style.background = "";
+            document.getElementById("search2").value = "Najít fakturu...";
+        }
+    </script>
+</asp:Content>

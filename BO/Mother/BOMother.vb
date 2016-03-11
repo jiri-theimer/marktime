@@ -1,0 +1,94 @@
+﻿Public MustInherit Class BOMother
+    Protected Property _pid As Integer
+    Protected Property _DateUpdate As Date?
+    Protected Property _DateInsert As Date?
+    Protected Property _UserUpdate As String
+    Protected Property _UserInsert As String
+    Protected Property _ValidFrom As Date = Now
+    Protected Property _ValidUntil As Date = DateSerial(3000, 1, 1)
+   
+    Public Property PID As Integer
+        Get
+            Return _pid
+        End Get
+        Set(value As Integer)
+            'hodnota PID se nesmí přepisovat - SET je tu pouze kvůli web service
+        End Set
+    End Property
+    
+    Public ReadOnly Property DateUpdate As Date?
+        Get
+            If _DateUpdate Is Nothing Then Return _DateInsert
+            Return _DateUpdate
+        End Get
+    End Property
+    Public ReadOnly Property DateInsert As Date?
+        Get
+            Return _DateInsert
+        End Get
+    End Property
+    Public ReadOnly Property UserUpdate As String
+        Get
+            If _UserUpdate = "" Then Return _UserInsert
+            Return _UserUpdate
+        End Get
+    End Property
+    Public ReadOnly Property UserInsert As String
+        Get
+            Return _UserInsert
+        End Get
+    End Property
+    Public Property ValidFrom As Date
+        Get
+            Return _ValidFrom
+        End Get
+        Set(value As Date)
+            _ValidFrom = value
+        End Set
+    End Property
+    Public Property ValidUntil As Date
+        Get
+            Return _ValidUntil
+        End Get
+        Set(value As Date)
+            _ValidUntil = value
+        End Set
+    End Property
+    Public Overridable ReadOnly Property IsClosed As Boolean
+        Get
+            If _ValidFrom <= Now And _ValidUntil >= Now Then
+                Return False
+            Else
+                Return True
+            End If
+        End Get
+    End Property
+    Public ReadOnly Property Timestamp As String
+        Get
+            Dim s As String = "Založeno: <span style='color:black;'>" & _UserInsert & "/" & BO.BAS.FD(_DateInsert, True) & "</span>"
+            If _DateInsert < _DateUpdate Then
+                s += " | Aktualizováno: <span style='color:black;'>" & _UserUpdate & "/" & BO.BAS.FD(_DateUpdate, True) & "</span>"
+            End If
+            Return s
+        End Get
+    End Property
+    Public ReadOnly Property TimestampPlainText As String
+        Get
+            Dim s As String = "Založeno: " & _UserInsert & "/" & BO.BAS.FD(_DateInsert, True)
+            If _DateInsert < _DateUpdate Then
+                s += " | Poslední aktualizace: " & _UserUpdate & "/" & BO.BAS.FD(_DateUpdate, True)
+            End If
+            Return s
+        End Get
+    End Property
+    Public Sub ClearPID()
+        _pid = 0
+    End Sub
+    Public Sub SetPID(intNewPID As Integer)
+        _pid = intNewPID
+    End Sub
+    Public Sub SetUserInsert(strNewUserInsert As String)
+        _UserInsert = strNewUserInsert
+        _UserUpdate = strNewUserInsert
+    End Sub
+End Class

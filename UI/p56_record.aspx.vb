@@ -1,0 +1,247 @@
+﻿Public Class p56_record
+    Inherits System.Web.UI.Page
+    Protected WithEvents _MasterPage As ModalDataRecord
+
+    Public Property CurrentP41ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidP41ID.Value)
+        End Get
+        Set(value As Integer)
+            Me.hidP41ID.Value = value.ToString
+        End Set
+    End Property
+    Private Sub p56_record_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _MasterPage = Me.Master
+        Master.HelpTopicID = "p56_record"
+    End Sub
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        roles1.Factory = Master.Factory
+        ff1.Factory = Master.Factory
+
+        If Not Page.IsPostBack Then
+            With Master
+                .HeaderIcon = "Images/task_32.png"
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                .HeaderText = "Úkol"
+                Me.CurrentP41ID = BO.BAS.IsNullInt(Request.Item("p41id"))
+                If Me.CurrentP41ID = 0 And Request.Item("masterprefix") = "p41" And BO.BAS.IsNullInt(Request.Item("masterpid")) <> 0 Then
+                    Me.CurrentP41ID = BO.BAS.IsNullInt(Request.Item("masterpid"))
+                End If
+
+                If Me.CurrentP41ID = 0 And .DataPID = 0 Then
+                    If Request.Item("masterprefix") <> "" And Request.Item("masterpid") <> "" Then
+                        Server.Transfer("select_project.aspx?oper=createtask&masterprefix=" & Request.Item("masterprefix") & "&masterpid=" & Request.Item("masterpid"))
+                    Else
+                        .StopPage("Na vstupu chybí ID projektu.")
+                    End If
+
+                End If
+
+                Me.p57ID.DataSource = .Factory.p57TaskTypeBL.GetList(New BO.myQuery)
+                Me.p57ID.DataBind()
+                Me.p58ID.DataSource = .Factory.p58ProductBL.GetList(New BO.myQuery)
+                Me.p58ID.DataBind()
+                Me.p59ID_Submitter.DataSource = .Factory.p59PriorityBL.GetList(New BO.myQuery)
+                Me.p59ID_Submitter.DataBind()
+            End With
+
+
+            RefreshRecord()
+
+
+            If Master.IsRecordClone Then
+                Master.DataPID = 0
+
+            End If
+            If Me.p58ID.Rows <= 1 Then
+                lblP58ID.Visible = False : Me.p58ID.Visible = False   'produkty se nepoužívají - jsou prázdné
+            End If
+        End If
+    End Sub
+
+    Private Sub InhaleMyDefault()
+        If Master.DataPID <> 0 Then Return
+        Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
+        Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
+
+        Dim cRecLast As BO.p56Task = Master.Factory.p56TaskBL.LoadMyLastCreated()
+        If cRecLast Is Nothing Then Return
+        With cRecLast
+            Me.p57ID.SelectedValue = .p57ID.ToString
+            roles1.InhaleInitialData(.PID)
+        End With
+    End Sub
+
+    Private Sub RefreshRecord()
+        If Master.DataPID = 0 Then
+            InhaleMyDefault()
+            SetupO22Combo()
+            Me.Project.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Me.CurrentP41ID)
+            Handle_FF()
+            Return
+        End If
+
+
+        Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(Master.DataPID)
+        Handle_Permissions(cRec)
+        
+        With cRec
+            Me.CurrentP41ID = .p41ID
+            Me.Project.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Me.CurrentP41ID)
+
+            Me.p57ID.SelectedValue = .p57ID.ToString
+            Me.p58ID.SelectedValue = .p58ID.ToString
+            Me.p59ID_Submitter.SelectedValue = .p59ID_Submitter
+            Handle_FF()
+            SetupO22Combo()
+            Me.o22ID.SelectedValue = .o22ID.ToString
+
+            Me.p56Name.Text = .p56Name
+            If Not BO.BAS.IsNullDBDate(.p56PlanFrom) Is Nothing Then Me.p56PlanFrom.SelectedDate = .p56PlanFrom
+            If Not BO.BAS.IsNullDBDate(.p56PlanUntil) Is Nothing Then Me.p56PlanUntil.SelectedDate = .p56PlanUntil
+            If Not BO.BAS.IsNullDBDate(.p56ReminderDate) Is Nothing Then Me.p56ReminderDate.SelectedDate = .p56ReminderDate
+            Me.p56Description.Text = .p56Description
+            Me.j02ID_Owner.Value = .j02ID_Owner.ToString
+            Me.j02ID_Owner.Text = .Owner
+            Me.p56Ordinary.Value = .p56Ordinary
+            Me.p56Plan_Hours.Value = .p56Plan_Hours
+            Me.p56Plan_Expenses.Value = .p56Plan_Expenses
+            Me.p56CompletePercent.Value = .p56CompletePercent
+
+            Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
+            Master.Timestamp = .Timestamp
+        End With
+        roles1.InhaleInitialData(cRec.PID)
+    End Sub
+
+    Private Sub Handle_Permissions(cRec As BO.p56Task)
+        Dim cDisp As BO.p56RecordDisposition = Master.Factory.p56TaskBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then
+            Master.StopPage("Nedisponujete oprávněním číst tento úkol.")
+        End If
+        If cDisp.OwnerAccess Then Return 'editační práva
+
+        If cRec.b01ID <> 0 Then
+            Server.Transfer("workflow_dialog.aspx?prefix=p56&pid=" & cRec.PID.ToString)
+        Else
+            Server.Transfer("clue_p56_record.aspx?mode=readonly&pid=" & cRec.PID.ToString)
+        End If
+
+    End Sub
+
+    Private Sub p56_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Me.p57ID.SelectedIndex > 0 Then
+            Master.HeaderText = Me.p57ID.Text & " | " & Me.Project.Text
+        Else
+            Master.HeaderText = "Úkol | " & Me.Project.Text
+        End If
+        Dim b As Boolean = False
+        If Me.o22ID.Rows > 1 Then b = True
+        Me.lblO22ID.Visible = b : Me.o22ID.Visible = b
+
+    End Sub
+
+    Private Sub SetupO22Combo()
+        If Me.CurrentP41ID = 0 Then Return
+        Dim mq As New BO.myQueryO22
+        mq.p41ID = Me.CurrentP41ID
+        mq.Closed = BO.BooleanQueryMode.FalseQuery
+        Me.o22ID.DataSource = Master.Factory.o22MilestoneBL.GetList(mq).Where(Function(p) p.o22Name <> "")
+        Me.o22ID.DataBind()
+    End Sub
+
+    Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
+        With Master.Factory.p56TaskBL
+            If .Delete(Master.DataPID) Then
+                Master.DataPID = 0
+                Master.CloseAndRefreshParent("p56-delete")
+            Else
+                Master.Notify(.ErrorMessage, 2)
+            End If
+        End With
+    End Sub
+
+   
+    Private Sub o22ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles o22ID.NeedMissingItem
+        Dim cRec As BO.o22Milestone = Master.Factory.o22MilestoneBL.Load(CInt(strFoundedMissingItemValue))
+        strAddMissingItemText = cRec.NameWithDate
+    End Sub
+
+    Private Sub p57ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p57ID.NeedMissingItem
+        Dim cRec As BO.p57TaskType = Master.Factory.p57TaskTypeBL.Load(CInt(strFoundedMissingItemValue))
+        strAddMissingItemText = cRec.p57Name
+    End Sub
+
+    Private Sub _MasterPage_Master_OnRefresh() Handles _MasterPage.Master_OnRefresh
+        Server.Transfer("p56_record.aspx?pid=" & Master.DataPID.ToString & "&p41id=" & Me.CurrentP41ID.ToString)
+    End Sub
+
+    Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        roles1.SaveCurrentTempData()
+        With Master.Factory.p56TaskBL
+            Dim cRec As BO.p56Task = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.p56Task)
+            With cRec
+                .p41ID = Me.CurrentP41ID
+                .p56Name = Me.p56Name.Text
+
+                .p57ID = BO.BAS.IsNullInt(Me.p57ID.SelectedValue)
+                .p58ID = BO.BAS.IsNullInt(Me.p58ID.SelectedValue)
+                .o22ID = BO.BAS.IsNullInt(Me.o22ID.SelectedValue)
+                .p59ID_Submitter = BO.BAS.IsNullInt(Me.p59ID_Submitter.SelectedValue)
+
+                .p56PlanFrom = BO.BAS.IsNullDBDate(Me.p56PlanFrom.SelectedDate)
+                .p56PlanUntil = BO.BAS.IsNullDBDate(Me.p56PlanUntil.SelectedDate)
+                .p56ReminderDate = BO.BAS.IsNullDBDate(Me.p56ReminderDate.SelectedDate)
+
+
+                .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
+                .p56Description = Me.p56Description.Text
+                .p56Ordinary = BO.BAS.IsNullInt(Me.p56Ordinary.Value)
+                .p56Plan_Hours = BO.BAS.IsNullNum(Me.p56Plan_Hours.Value)
+                .p56Plan_Expenses = BO.BAS.IsNullNum(Me.p56Plan_Expenses.Value)
+                .p56CompletePercent = BO.BAS.IsNullInt(Me.p56CompletePercent.Value)
+
+                .ValidFrom = Master.RecordValidFrom
+                .ValidUntil = Master.RecordValidUntil
+            End With
+
+            Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
+            If roles1.ErrorMessage <> "" Then
+                Master.Notify(roles1.ErrorMessage, 2)
+                Return
+            End If
+            Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
+
+            If .Save(cRec, lisX69, lisFF, "") Then
+                Master.DataPID = .LastSavedPID
+                Master.CloseAndRefreshParent("p56-save")
+            Else
+                Master.Notify(.ErrorMessage, 2)
+            End If
+        End With
+    End Sub
+
+    Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
+        roles1.AddNewRow()
+    End Sub
+
+    Private Sub Handle_FF()
+        With RadTabStrip1.FindTabByValue("ff")
+            If .Visible Then
+                Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, BO.BAS.IsNullInt(Me.p57ID.SelectedValue))
+                ff1.FillData(fields)
+                .Text = BO.BAS.OM2(.Text, ff1.FieldsCount.ToString)
+            End If
+        End With
+    End Sub
+
+    Private Sub p57ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles p57ID.SelectedIndexChanged
+        Handle_FF()
+    End Sub
+
+    Private Sub p58ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p58ID.NeedMissingItem
+        Dim cRec As BO.p58Product = Master.Factory.p58ProductBL.Load(CInt(strFoundedMissingItemValue))
+        strAddMissingItemText = cRec.TreeMenuItem
+    End Sub
+End Class

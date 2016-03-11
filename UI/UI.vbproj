@@ -1,0 +1,2504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{8E4B28EB-6E91-4FCC-92B2-C95BEFCE0219}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>UI</RootNamespace>
+    <AssemblyName>UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MyType>Custom</MyType>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>UI.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>UI.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Words, Version=13.10.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="ceTe.DynamicPDF.35, Version=5.1.2.35, Culture=neutral, PublicKeyToken=09b5ce0d5c0a9d8b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ceTe.DynamicPDF.35.dll</HintPath>
+    </Reference>
+    <Reference Include="DropNet">
+      <HintPath>..\packages\DropNet.1.9.12.0\lib\net40\DropNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Independentsoft.Msg, Version=1.1.100.12483, Culture=neutral, PublicKeyToken=76be97fe952f1ec7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Independentsoft.Msg.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Rebex.Common, Version=2.0.4546.0, Culture=neutral, PublicKeyToken=1c4638788972655d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Rebex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebex.Imap, Version=2.0.4546.0, Culture=neutral, PublicKeyToken=1c4638788972655d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Rebex.Imap.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebex.Mail, Version=2.0.4546.0, Culture=neutral, PublicKeyToken=1c4638788972655d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Rebex.Mail.dll</HintPath>
+    </Reference>
+    <Reference Include="Rebex.Networking, Version=3.0.4546.0, Culture=neutral, PublicKeyToken=1c4638788972655d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Rebex.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Telerik.Reporting, Version=8.1.14.804, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Reporting.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.OpenXmlRendering, Version=8.1.14.804, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Reporting.OpenXmlRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.WebForms, Version=8.1.14.804, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.Design, Version=2013.2.611.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Web.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.Device.Detection, Version=2014.2.812.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Web.Device.Detection.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI, Version=2014.2.812.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2014.2.812.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Web.UI.Skins.dll</HintPath>
+    </Reference>
+    <Reference Include="wnvxls, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\wnvxls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Net" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About.aspx" />
+    <Content Include="admin_logofile.aspx" />
+    <Content Include="admin_workflow.aspx" />
+    <Content Include="approving_framework.aspx" />
+    <Content Include="b01_record.aspx" />
+    <Content Include="b02_record.aspx" />
+    <Content Include="b06_record.aspx" />
+    <Content Include="b65_record.aspx" />
+    <Content Include="clue_o24_record.aspx" />
+    <Content Include="entity_framework.aspx" />
+    <Content Include="entity_scheduler.aspx" />
+    <Content Include="fileupload_preview.aspx" />
+    <Content Include="imap_record.ascx" />
+    <Content Include="Integration\mtService.svc" />
+    <Content Include="j02_framework.aspx" />
+    <Content Include="j61_record.aspx" />
+    <Content Include="j62_record.aspx" />
+    <Content Include="o23_batch.aspx" />
+    <Content Include="o23_framework.aspx" />
+    <Content Include="o23_framework_detail.aspx" />
+    <Content Include="o23_queue.aspx" />
+    <Content Include="o24_record.aspx" />
+    <Content Include="o41_record.aspx" />
+    <Content Include="o42_record.aspx" />
+    <Content Include="p28_framework.aspx" />
+    <Content Include="p31_scheduler.aspx" />
+    <Content Include="p41_framework.aspx" />
+    <Content Include="p47_framework.aspx" />
+    <Content Include="ChangePassword.aspx" />
+    <Content Include="ChangePasswordSuccess.aspx" />
+    <Content Include="Account\Login.aspx" />
+    <Content Include="Account\Register.aspx" />
+    <Content Include="admin_dms.aspx" />
+    <Content Include="admin_framework.aspx" />
+    <Content Include="admin_p87.aspx" />
+    <Content Include="admin_robot.aspx" />
+    <Content Include="admin_smtp.aspx" />
+    <Content Include="b07_create.aspx" />
+    <Content Include="b07_list.ascx" />
+    <Content Include="binaryfile.aspx" />
+    <Content Include="c21_record.aspx" />
+    <Content Include="c26_record.aspx" />
+    <Content Include="capacity_plan_entry.aspx" />
+    <Content Include="capacity_plan_entry_item.aspx" />
+    <Content Include="clue_j02_capacity.aspx" />
+    <Content Include="clue_j02_oplan.aspx" />
+    <Content Include="clue_j02_record.aspx" />
+    <Content Include="clue_j02_month.aspx" />
+    <Content Include="clue_j18_record.aspx" />
+    <Content Include="clue_o22_record.aspx" />
+    <Content Include="clue_o23_record.aspx" />
+    <Content Include="clue_p28_record.aspx" />
+    <Content Include="clue_p31_record.aspx" />
+    <Content Include="clue_p40_record.aspx" />
+    <Content Include="clue_p41_record.aspx" />
+    <Content Include="clue_p41_record_billingsetting.aspx" />
+    <Content Include="clue_p42_record.aspx" />
+    <Content Include="clue_p51_record.aspx" />
+    <Content Include="clue_p56_record.aspx" />
+    <Content Include="clue_p90_record.aspx" />
+    <Content Include="clue_p92_record.aspx" />
+    <Content Include="clue_periodcombo.aspx" />
+    <Content Include="clue_quickquery.aspx" />
+    <Content Include="clue_x67_record.aspx" />
+    <Content Include="clue_x90_record.aspx" />
+    <Content Include="contact.ascx" />
+    <Content Include="contactpersons.ascx" />
+    <Content Include="datacheckbox.ascx" />
+    <Content Include="datacombo.ascx" />
+    <Content Include="datagrid.ascx" />
+    <Content Include="datalabel.ascx" />
+    <Content Include="datepicker.ascx" />
+    <Content Include="dr.aspx" />
+    <Content Include="dropbox.ascx" />
+    <Content Include="dropbox_clue_metadata.aspx" />
+    <Content Include="dropbox_folder.aspx" />
+    <Content Include="entityrole_assign_inline.ascx" />
+    <Content Include="entityrole_assign_preview.ascx" />
+    <Content Include="entity_framework_detail_missing.aspx" />
+    <Content Include="entity_modal_approving.aspx" />
+    <Content Include="entity_modal_scheduler.aspx" />
+    <Content Include="entity_timeline.aspx" />
+    <Content Include="entity_worksheet_summary.ascx" />
+    <Content Include="fileupload.ascx" />
+    <Content Include="fileupload_list.ascx" />
+    <Content Include="framework_detail_header.ascx" />
+    <Content Include="freefields.ascx" />
+    <Content Include="freefields_readonly.ascx" />
+    <Content Include="grid_designer.aspx" />
+    <Content Include="help.aspx" />
+    <Content Include="helpdesk_default.aspx" />
+    <Content Include="j02_batch.aspx" />
+    <Content Include="j02_framework_detail.aspx" />
+    <Content Include="j03_messages.aspx" />
+    <Content Include="j03_mypage.aspx" />
+    <Content Include="j03_mypage_greeting.aspx" />
+    <Content Include="j03_mypage_setting.aspx" />
+    <Content Include="j03_myprofile.aspx" />
+    <Content Include="j03_myprofile_defaultpage.aspx" />
+    <Content Include="j05_record.aspx" />
+    <Content Include="j17_record.aspx" />
+    <Content Include="j18_record.aspx" />
+    <Content Include="j23_record.aspx" />
+    <Content Include="j24_record.aspx" />
+    <Content Include="j25_record.aspx" />
+    <Content Include="kurzy_cnb.aspx" />
+    <Content Include="m62_record.aspx" />
+    <Content Include="Mobile\default.aspx" />
+    <Content Include="p31_framework_mobile.aspx" />
+    <Content Include="p28_batch.aspx" />
+    <Content Include="p28_import_xls.aspx" />
+    <Content Include="p30_binding.aspx" />
+    <Content Include="p31_bigsummary.ascx" />
+    <Content Include="p35_record.aspx" />
+    <Content Include="p40_record.aspx" />
+    <Content Include="p41_batch.aspx" />
+    <Content Include="p41_framework_mobile.aspx" />
+    <Content Include="p47_framework_record.aspx" />
+    <Content Include="p47_project.aspx" />
+    <Content Include="p49_plan.aspx" />
+    <Content Include="p49_record.aspx" />
+    <Content Include="p51_fpr.aspx" />
+    <Content Include="p56_batch.aspx" />
+    <Content Include="p56_framework.aspx" />
+    <Content Include="p56_framework_detail.aspx" />
+    <Content Include="p58_record.aspx" />
+    <Content Include="p59_record.aspx" />
+    <Content Include="p89_record.aspx" />
+    <Content Include="p90_framework.aspx" />
+    <Content Include="p90_record.aspx" />
+    <Content Include="p91_creditnote.aspx" />
+    <Content Include="p91_export2pohoda.aspx" />
+    <Content Include="p91_framework.aspx" />
+    <Content Include="p91_proforma.aspx" />
+    <Content Include="p97_record.aspx" />
+    <Content Include="panelmenu.ascx" />
+    <Content Include="pokus_mobile.aspx" />
+    <Content Include="pokus_select2x.aspx" />
+    <Content Include="pokus_service.asmx" />
+    <Content Include="query_builder.aspx" />
+    <Content Include="Public\mtservice_recovery.aspx" />
+    <Content Include="report_framework_detail4.aspx" />
+    <Content Include="Services\combo_external_datasource.asmx" />
+    <Content Include="Styles\SiteMobile_v1.css" />
+    <Content Include="Sys\dbupdate.aspx" />
+    <Content Include="Sys\dbupdate_reports.aspx" />
+    <Content Include="Sys\membership_framework.aspx" />
+    <Content Include="o21_record.aspx" />
+    <Content Include="o22_record.aspx" />
+    <Content Include="o22_scheduler.aspx" />
+    <Content Include="o23_list.ascx" />
+    <Content Include="o23_record.aspx" />
+    <Content Include="p28_address.ascx" />
+    <Content Include="p28_framework_detail.aspx" />
+    <Content Include="p28_medium.ascx" />
+    <Content Include="p31_approve_onerec.ascx" />
+    <Content Include="p31_approving_batch_p31text.aspx" />
+    <Content Include="p31_approving_step1.aspx" />
+    <Content Include="p31_approving_step2.aspx" />
+    <Content Include="p31_approving_step3.aspx" />
+    <Content Include="p31_framework.aspx" />
+    <Content Include="p31_framework_detail.aspx" />
+    <Content Include="p31_grid.aspx" />
+    <Content Include="p31_move2bin.aspx" />
+    <Content Include="p31_move2project.aspx" />
+    <Content Include="p31_pivot.aspx" />
+    <Content Include="p31_recalc.aspx" />
+    <Content Include="p31_record.aspx" />
+    <Content Include="p31_record_AA.aspx" />
+    <Content Include="p31_record_AI.aspx" />
+    <Content Include="p31_record_approve.aspx" />
+    <Content Include="p31_record_router.aspx" />
+    <Content Include="p31_setting.aspx" />
+    <Content Include="p31_subgrid.ascx" />
+    <Content Include="p31_subgrid_setting.aspx" />
+    <Content Include="p31_timeline.aspx" />
+    <Content Include="p31_timer.aspx" />
+    <Content Include="p34_after_create.aspx" />
+    <Content Include="p41_framework_detail.aspx" />
+    <Content Include="p48_framework.aspx" />
+    <Content Include="p48_multiple_create.aspx" />
+    <Content Include="p48_multiple_edit_delete.aspx" />
+    <Content Include="p51_framework.aspx" />
+    <Content Include="p53_record.aspx" />
+    <Content Include="p56_record.aspx" />
+    <Content Include="p56_subgrid.ascx" />
+    <Content Include="p57_record.aspx" />
+    <Content Include="p86_record.aspx" />
+    <Content Include="p91_add_worksheet.aspx" />
+    <Content Include="p91_add_worksheet_gateway.aspx" />
+    <Content Include="p91_change_currency.aspx" />
+    <Content Include="p91_change_vat.aspx" />
+    <Content Include="p91_create_step1.aspx" />
+    <Content Include="p91_create_step2.aspx" />
+    <Content Include="p91_framework_detail.aspx" />
+    <Content Include="p91_pay.aspx" />
+    <Content Include="p91_record.aspx" />
+    <Content Include="p91_remove_worksheet.aspx" />
+    <Content Include="p91_subgrid.ascx" />
+    <Content Include="p92_record.aspx" />
+    <Content Include="p93_record.aspx" />
+    <Content Include="period.ascx" />
+    <Content Include="periodcombo.ascx" />
+    <Content Include="periodcombo_setting.aspx" />
+    <Content Include="periodmonth.ascx" />
+    <Content Include="plugin_datatable.ascx" />
+    <Content Include="pokus_dock.aspx" />
+    <Content Include="project.ascx" />
+    <Content Include="j02_record.aspx" />
+    <Content Include="j03_create.aspx" />
+    <Content Include="j03_record.aspx" />
+    <Content Include="j04_record.aspx" />
+    <Content Include="j07_record.aspx" />
+    <Content Include="j11_record.aspx" />
+    <Content Include="license.aspx" />
+    <Content Include="p28_record.aspx" />
+    <Content Include="p29_record.aspx" />
+    <Content Include="p32_record.aspx" />
+    <Content Include="p34_record.aspx" />
+    <Content Include="p36_record.aspx" />
+    <Content Include="p41_create.aspx" />
+    <Content Include="entityrole_assign.ascx" />
+    <Content Include="p41_record.aspx" />
+    <Content Include="p42_record.aspx" />
+    <Content Include="p51_record.aspx" />
+    <Content Include="p52_record.aspx" />
+    <Content Include="p95_record.aspx" />
+    <Content Include="pageheader.ascx" />
+    <Content Include="pokus.aspx" />
+    <Content Include="pokus_okno.aspx" />
+    <Content Include="Public\kickoff.aspx" />
+    <Content Include="Public\kickoff_after1.aspx" />
+    <Content Include="Public\kickoff_after2.aspx" />
+    <Content Include="Public\report_on_behind.aspx" />
+    <Content Include="Public\robot.aspx" />
+    <Content Include="record_code.aspx" />
+    <Content Include="record_validity.aspx" />
+    <Content Include="report_framework.aspx" />
+    <Content Include="report_framework_detail1.aspx" />
+    <Content Include="report_modal.aspx" />
+    <Content Include="select_project.aspx" />
+    <Content Include="sendmail.aspx" />
+    <Content Include="Services\contact_service.asmx" />
+    <Content Include="Services\project_service.asmx" />
+    <Content Include="Services\person_service.asmx" />
+    <Content Include="stoppage.aspx" />
+    <Content Include="stoppage_site.aspx" />
+    <Content Include="Styles\Site_v1.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Sys\sys_dbobjects.aspx" />
+    <Content Include="timer.ascx" />
+    <Content Include="timesheet_calendar.ascx" />
+    <Content Include="treemenu.ascx" />
+    <Content Include="person.ascx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="p31_approving_step3_subform.aspx" />
+    <Content Include="WebForm2.aspx" />
+    <Content Include="workflow_dialog.aspx" />
+    <Content Include="x23_record.aspx" />
+    <Content Include="x25_record.aspx" />
+    <Content Include="x27_record.aspx" />
+    <Content Include="x28_record.aspx" />
+    <Content Include="x31_record.aspx" />
+    <Content Include="x35_record.aspx" />
+    <Content Include="x38_record.aspx" />
+    <Content Include="x40_record.aspx" />
+    <Content Include="x46_record.aspx" />
+    <Content Include="x50_record.aspx" />
+    <Content Include="x55_record.aspx" />
+    <Content Include="x67_record.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.aspx.designer.vb">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="About.aspx.vb">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin_logofile.aspx.designer.vb">
+      <DependentUpon>admin_logofile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_logofile.aspx.vb">
+      <DependentUpon>admin_logofile.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin_workflow.aspx.designer.vb">
+      <DependentUpon>admin_workflow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_workflow.aspx.vb">
+      <DependentUpon>admin_workflow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="approving_framework.aspx.designer.vb">
+      <DependentUpon>approving_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="approving_framework.aspx.vb">
+      <DependentUpon>approving_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="b01_record.aspx.designer.vb">
+      <DependentUpon>b01_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="b01_record.aspx.vb">
+      <DependentUpon>b01_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="b02_record.aspx.designer.vb">
+      <DependentUpon>b02_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="b02_record.aspx.vb">
+      <DependentUpon>b02_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="b06_record.aspx.designer.vb">
+      <DependentUpon>b06_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="b06_record.aspx.vb">
+      <DependentUpon>b06_record.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="b65_record.aspx.designer.vb">
+      <DependentUpon>b65_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="b65_record.aspx.vb">
+      <DependentUpon>b65_record.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="clue_o24_record.aspx.designer.vb">
+      <DependentUpon>clue_o24_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_o24_record.aspx.vb">
+      <DependentUpon>clue_o24_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework.aspx.designer.vb">
+      <DependentUpon>entity_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework.aspx.vb">
+      <DependentUpon>entity_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_scheduler.aspx.designer.vb">
+      <DependentUpon>entity_scheduler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_scheduler.aspx.vb">
+      <DependentUpon>entity_scheduler.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="fileupload_preview.aspx.designer.vb">
+      <DependentUpon>fileupload_preview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="fileupload_preview.aspx.vb">
+      <DependentUpon>fileupload_preview.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Handler\handler_search_notepad.ashx.vb">
+      <DependentUpon>handler_search_notepad.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_search_task.ashx.vb">
+      <DependentUpon>handler_search_task.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="imap_record.ascx.designer.vb">
+      <DependentUpon>imap_record.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="imap_record.ascx.vb">
+      <DependentUpon>imap_record.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Integration\ImtService.vb" />
+    <Compile Include="Integration\mtService.svc.vb">
+      <DependentUpon>mtService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="j02_framework.aspx.designer.vb">
+      <DependentUpon>j02_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j02_framework.aspx.vb">
+      <DependentUpon>j02_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j61_record.aspx.designer.vb">
+      <DependentUpon>j61_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j61_record.aspx.vb">
+      <DependentUpon>j61_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j62_record.aspx.designer.vb">
+      <DependentUpon>j62_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j62_record.aspx.vb">
+      <DependentUpon>j62_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o23_batch.aspx.designer.vb">
+      <DependentUpon>o23_batch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_batch.aspx.vb">
+      <DependentUpon>o23_batch.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o23_framework.aspx.designer.vb">
+      <DependentUpon>o23_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_framework.aspx.vb">
+      <DependentUpon>o23_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o23_framework_detail.aspx.designer.vb">
+      <DependentUpon>o23_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_framework_detail.aspx.vb">
+      <DependentUpon>o23_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o23_queue.aspx.designer.vb">
+      <DependentUpon>o23_queue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_queue.aspx.vb">
+      <DependentUpon>o23_queue.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o24_record.aspx.designer.vb">
+      <DependentUpon>o24_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o24_record.aspx.vb">
+      <DependentUpon>o24_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o41_record.aspx.designer.vb">
+      <DependentUpon>o41_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o41_record.aspx.vb">
+      <DependentUpon>o41_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o42_record.aspx.designer.vb">
+      <DependentUpon>o42_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o42_record.aspx.vb">
+      <DependentUpon>o42_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p28_framework.aspx.designer.vb">
+      <DependentUpon>p28_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_framework.aspx.vb">
+      <DependentUpon>p28_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_scheduler.aspx.designer.vb">
+      <DependentUpon>p31_scheduler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_scheduler.aspx.vb">
+      <DependentUpon>p31_scheduler.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_framework.aspx.designer.vb">
+      <DependentUpon>p41_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework.aspx.vb">
+      <DependentUpon>p41_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p47_framework.aspx.designer.vb">
+      <DependentUpon>p47_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p47_framework.aspx.vb">
+      <DependentUpon>p47_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.designer.vb">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.vb">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="ChangePasswordSuccess.aspx.designer.vb">
+      <DependentUpon>ChangePasswordSuccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePasswordSuccess.aspx.vb">
+      <DependentUpon>ChangePasswordSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Account\Login.aspx.designer.vb">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Login.aspx.vb">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register.aspx.designer.vb">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Register.aspx.vb">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin_dms.aspx.designer.vb">
+      <DependentUpon>admin_dms.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_dms.aspx.vb">
+      <DependentUpon>admin_dms.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin_framework.aspx.designer.vb">
+      <DependentUpon>admin_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_framework.aspx.vb">
+      <DependentUpon>admin_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin_p87.aspx.designer.vb">
+      <DependentUpon>admin_p87.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_p87.aspx.vb">
+      <DependentUpon>admin_p87.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin_robot.aspx.designer.vb">
+      <DependentUpon>admin_robot.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_robot.aspx.vb">
+      <DependentUpon>admin_robot.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="admin_smtp.aspx.designer.vb">
+      <DependentUpon>admin_smtp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin_smtp.aspx.vb">
+      <DependentUpon>admin_smtp.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Anonym.Master.designer.vb">
+      <DependentUpon>Anonym.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Anonym.Master.vb">
+      <DependentUpon>Anonym.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="b07_create.aspx.designer.vb">
+      <DependentUpon>b07_create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="b07_create.aspx.vb">
+      <DependentUpon>b07_create.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="b07_list.ascx.designer.vb">
+      <DependentUpon>b07_list.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="b07_list.ascx.vb">
+      <DependentUpon>b07_list.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="bas\basMemberShip.vb" />
+    <Compile Include="bas\basUIMT.vb" />
+    <Compile Include="bas\basUI.vb" />
+    <Compile Include="bas\clsAresImport.vb" />
+    <Compile Include="bas\clsExportToXls.vb" />
+    <Compile Include="bas\clsINI.vb" />
+    <Compile Include="bas\clsReportOnBehind.vb" />
+    <Compile Include="bas\clsTime.vb" />
+    <Compile Include="bas\clsTreeview.vb" />
+    <Compile Include="bas\UnitConverter.vb" />
+    <Compile Include="binaryfile.aspx.designer.vb">
+      <DependentUpon>binaryfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="binaryfile.aspx.vb">
+      <DependentUpon>binaryfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="c21_record.aspx.designer.vb">
+      <DependentUpon>c21_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c21_record.aspx.vb">
+      <DependentUpon>c21_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="c26_record.aspx.designer.vb">
+      <DependentUpon>c26_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="c26_record.aspx.vb">
+      <DependentUpon>c26_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="capacity_plan_entry.aspx.designer.vb">
+      <DependentUpon>capacity_plan_entry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="capacity_plan_entry.aspx.vb">
+      <DependentUpon>capacity_plan_entry.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="capacity_plan_entry_item.aspx.designer.vb">
+      <DependentUpon>capacity_plan_entry_item.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="capacity_plan_entry_item.aspx.vb">
+      <DependentUpon>capacity_plan_entry_item.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_j02_capacity.aspx.designer.vb">
+      <DependentUpon>clue_j02_capacity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_j02_capacity.aspx.vb">
+      <DependentUpon>clue_j02_capacity.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_j02_oplan.aspx.designer.vb">
+      <DependentUpon>clue_j02_oplan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_j02_oplan.aspx.vb">
+      <DependentUpon>clue_j02_oplan.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_j02_record.aspx.designer.vb">
+      <DependentUpon>clue_j02_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_j02_record.aspx.vb">
+      <DependentUpon>clue_j02_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_j02_month.aspx.designer.vb">
+      <DependentUpon>clue_j02_month.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_j02_month.aspx.vb">
+      <DependentUpon>clue_j02_month.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_j18_record.aspx.designer.vb">
+      <DependentUpon>clue_j18_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_j18_record.aspx.vb">
+      <DependentUpon>clue_j18_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_o22_record.aspx.designer.vb">
+      <DependentUpon>clue_o22_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_o22_record.aspx.vb">
+      <DependentUpon>clue_o22_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_o23_record.aspx.designer.vb">
+      <DependentUpon>clue_o23_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_o23_record.aspx.vb">
+      <DependentUpon>clue_o23_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p28_record.aspx.designer.vb">
+      <DependentUpon>clue_p28_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p28_record.aspx.vb">
+      <DependentUpon>clue_p28_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p31_record.aspx.designer.vb">
+      <DependentUpon>clue_p31_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p31_record.aspx.vb">
+      <DependentUpon>clue_p31_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p40_record.aspx.designer.vb">
+      <DependentUpon>clue_p40_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p40_record.aspx.vb">
+      <DependentUpon>clue_p40_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p41_record.aspx.designer.vb">
+      <DependentUpon>clue_p41_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p41_record.aspx.vb">
+      <DependentUpon>clue_p41_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p41_record_billingsetting.aspx.designer.vb">
+      <DependentUpon>clue_p41_record_billingsetting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p41_record_billingsetting.aspx.vb">
+      <DependentUpon>clue_p41_record_billingsetting.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p42_record.aspx.designer.vb">
+      <DependentUpon>clue_p42_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p42_record.aspx.vb">
+      <DependentUpon>clue_p42_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p51_record.aspx.designer.vb">
+      <DependentUpon>clue_p51_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p51_record.aspx.vb">
+      <DependentUpon>clue_p51_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p56_record.aspx.designer.vb">
+      <DependentUpon>clue_p56_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p56_record.aspx.vb">
+      <DependentUpon>clue_p56_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p90_record.aspx.designer.vb">
+      <DependentUpon>clue_p90_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p90_record.aspx.vb">
+      <DependentUpon>clue_p90_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p92_record.aspx.designer.vb">
+      <DependentUpon>clue_p92_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p92_record.aspx.vb">
+      <DependentUpon>clue_p92_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_periodcombo.aspx.designer.vb">
+      <DependentUpon>clue_periodcombo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_periodcombo.aspx.vb">
+      <DependentUpon>clue_periodcombo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_quickquery.aspx.designer.vb">
+      <DependentUpon>clue_quickquery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_quickquery.aspx.vb">
+      <DependentUpon>clue_quickquery.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_x67_record.aspx.designer.vb">
+      <DependentUpon>clue_x67_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_x67_record.aspx.vb">
+      <DependentUpon>clue_x67_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_x90_record.aspx.designer.vb">
+      <DependentUpon>clue_x90_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_x90_record.aspx.vb">
+      <DependentUpon>clue_x90_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="contact.ascx.designer.vb">
+      <DependentUpon>contact.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="contact.ascx.vb">
+      <DependentUpon>contact.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="contactpersons.ascx.designer.vb">
+      <DependentUpon>contactpersons.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="contactpersons.ascx.vb">
+      <DependentUpon>contactpersons.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="datacheckbox.ascx.designer.vb">
+      <DependentUpon>datacheckbox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="datacheckbox.ascx.vb">
+      <DependentUpon>datacheckbox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="datacombo.ascx.designer.vb">
+      <DependentUpon>datacombo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="datacombo.ascx.vb">
+      <DependentUpon>datacombo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="datagrid.ascx.designer.vb">
+      <DependentUpon>datagrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="datagrid.ascx.vb">
+      <DependentUpon>datagrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="datalabel.ascx.designer.vb">
+      <DependentUpon>datalabel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="datalabel.ascx.vb">
+      <DependentUpon>datalabel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="datepicker.ascx.designer.vb">
+      <DependentUpon>datepicker.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="datepicker.ascx.vb">
+      <DependentUpon>datepicker.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.vb">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.vb">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dr.aspx.designer.vb">
+      <DependentUpon>dr.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dr.aspx.vb">
+      <DependentUpon>dr.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="dropbox.ascx.designer.vb">
+      <DependentUpon>dropbox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="dropbox.ascx.vb">
+      <DependentUpon>dropbox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dropbox_clue_metadata.aspx.designer.vb">
+      <DependentUpon>dropbox_clue_metadata.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dropbox_clue_metadata.aspx.vb">
+      <DependentUpon>dropbox_clue_metadata.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="dropbox_folder.aspx.designer.vb">
+      <DependentUpon>dropbox_folder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dropbox_folder.aspx.vb">
+      <DependentUpon>dropbox_folder.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entityrole_assign_inline.ascx.designer.vb">
+      <DependentUpon>entityrole_assign_inline.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="entityrole_assign_inline.ascx.vb">
+      <DependentUpon>entityrole_assign_inline.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="entityrole_assign_preview.ascx.designer.vb">
+      <DependentUpon>entityrole_assign_preview.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="entityrole_assign_preview.ascx.vb">
+      <DependentUpon>entityrole_assign_preview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_detail_missing.aspx.designer.vb">
+      <DependentUpon>entity_framework_detail_missing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_detail_missing.aspx.vb">
+      <DependentUpon>entity_framework_detail_missing.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_modal_approving.aspx.designer.vb">
+      <DependentUpon>entity_modal_approving.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_modal_approving.aspx.vb">
+      <DependentUpon>entity_modal_approving.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_modal_scheduler.aspx.designer.vb">
+      <DependentUpon>entity_modal_scheduler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_modal_scheduler.aspx.vb">
+      <DependentUpon>entity_modal_scheduler.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_timeline.aspx.designer.vb">
+      <DependentUpon>entity_timeline.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_timeline.aspx.vb">
+      <DependentUpon>entity_timeline.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_worksheet_summary.ascx.designer.vb">
+      <DependentUpon>entity_worksheet_summary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_worksheet_summary.ascx.vb">
+      <DependentUpon>entity_worksheet_summary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fileupload.ascx.designer.vb">
+      <DependentUpon>fileupload.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="fileupload.ascx.vb">
+      <DependentUpon>fileupload.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="fileupload_list.ascx.designer.vb">
+      <DependentUpon>fileupload_list.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="fileupload_list.ascx.vb">
+      <DependentUpon>fileupload_list.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="framework_detail_header.ascx.designer.vb">
+      <DependentUpon>framework_detail_header.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="framework_detail_header.ascx.vb">
+      <DependentUpon>framework_detail_header.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="freefields.ascx.designer.vb">
+      <DependentUpon>freefields.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="freefields.ascx.vb">
+      <DependentUpon>freefields.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="freefields_readonly.ascx.designer.vb">
+      <DependentUpon>freefields_readonly.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="freefields_readonly.ascx.vb">
+      <DependentUpon>freefields_readonly.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.vb">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="grid_designer.aspx.designer.vb">
+      <DependentUpon>grid_designer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="grid_designer.aspx.vb">
+      <DependentUpon>grid_designer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Handler\handler_search_contact.ashx.vb">
+      <DependentUpon>handler_search_contact.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_search_invoice.ashx.vb">
+      <DependentUpon>handler_search_invoice.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_search_person.ashx.vb">
+      <DependentUpon>handler_search_person.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_search_project.ashx.vb">
+      <DependentUpon>handler_search_project.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_activity.ashx.vb">
+      <DependentUpon>handler_activity.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_tempbox.ashx.vb">
+      <DependentUpon>handler_tempbox.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_time.ashx.vb">
+      <DependentUpon>handler_time.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_userparam.ashx.vb">
+      <DependentUpon>handler_userparam.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="help.aspx.designer.vb">
+      <DependentUpon>help.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="help.aspx.vb">
+      <DependentUpon>help.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="helpdesk_default.aspx.designer.vb">
+      <DependentUpon>helpdesk_default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="helpdesk_default.aspx.vb">
+      <DependentUpon>helpdesk_default.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j02_batch.aspx.designer.vb">
+      <DependentUpon>j02_batch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j02_batch.aspx.vb">
+      <DependentUpon>j02_batch.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j02_framework_detail.aspx.designer.vb">
+      <DependentUpon>j02_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j02_framework_detail.aspx.vb">
+      <DependentUpon>j02_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_messages.aspx.designer.vb">
+      <DependentUpon>j03_messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_messages.aspx.vb">
+      <DependentUpon>j03_messages.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_mypage.aspx.designer.vb">
+      <DependentUpon>j03_mypage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_mypage.aspx.vb">
+      <DependentUpon>j03_mypage.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_mypage_greeting.aspx.designer.vb">
+      <DependentUpon>j03_mypage_greeting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_mypage_greeting.aspx.vb">
+      <DependentUpon>j03_mypage_greeting.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_mypage_setting.aspx.designer.vb">
+      <DependentUpon>j03_mypage_setting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_mypage_setting.aspx.vb">
+      <DependentUpon>j03_mypage_setting.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_myprofile.aspx.designer.vb">
+      <DependentUpon>j03_myprofile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_myprofile.aspx.vb">
+      <DependentUpon>j03_myprofile.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_myprofile_defaultpage.aspx.designer.vb">
+      <DependentUpon>j03_myprofile_defaultpage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_myprofile_defaultpage.aspx.vb">
+      <DependentUpon>j03_myprofile_defaultpage.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j05_record.aspx.designer.vb">
+      <DependentUpon>j05_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j05_record.aspx.vb">
+      <DependentUpon>j05_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j17_record.aspx.designer.vb">
+      <DependentUpon>j17_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j17_record.aspx.vb">
+      <DependentUpon>j17_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j18_record.aspx.designer.vb">
+      <DependentUpon>j18_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j18_record.aspx.vb">
+      <DependentUpon>j18_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j23_record.aspx.designer.vb">
+      <DependentUpon>j23_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j23_record.aspx.vb">
+      <DependentUpon>j23_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j24_record.aspx.designer.vb">
+      <DependentUpon>j24_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j24_record.aspx.vb">
+      <DependentUpon>j24_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j25_record.aspx.designer.vb">
+      <DependentUpon>j25_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j25_record.aspx.vb">
+      <DependentUpon>j25_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="kurzy_cnb.aspx.designer.vb">
+      <DependentUpon>kurzy_cnb.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="kurzy_cnb.aspx.vb">
+      <DependentUpon>kurzy_cnb.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="m62_record.aspx.designer.vb">
+      <DependentUpon>m62_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m62_record.aspx.vb">
+      <DependentUpon>m62_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Mobile\default.aspx.designer.vb">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mobile\default.aspx.vb">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Mobile.Master.designer.vb">
+      <DependentUpon>Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Mobile.Master.vb">
+      <DependentUpon>Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p31_framework_mobile.aspx.designer.vb">
+      <DependentUpon>p31_framework_mobile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_framework_mobile.aspx.vb">
+      <DependentUpon>p31_framework_mobile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p28_batch.aspx.designer.vb">
+      <DependentUpon>p28_batch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_batch.aspx.vb">
+      <DependentUpon>p28_batch.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p28_import_xls.aspx.designer.vb">
+      <DependentUpon>p28_import_xls.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_import_xls.aspx.vb">
+      <DependentUpon>p28_import_xls.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p30_binding.aspx.designer.vb">
+      <DependentUpon>p30_binding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p30_binding.aspx.vb">
+      <DependentUpon>p30_binding.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_bigsummary.ascx.designer.vb">
+      <DependentUpon>p31_bigsummary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_bigsummary.ascx.vb">
+      <DependentUpon>p31_bigsummary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p35_record.aspx.designer.vb">
+      <DependentUpon>p35_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p35_record.aspx.vb">
+      <DependentUpon>p35_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p40_record.aspx.designer.vb">
+      <DependentUpon>p40_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p40_record.aspx.vb">
+      <DependentUpon>p40_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_batch.aspx.designer.vb">
+      <DependentUpon>p41_batch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_batch.aspx.vb">
+      <DependentUpon>p41_batch.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_framework_mobile.aspx.designer.vb">
+      <DependentUpon>p41_framework_mobile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework_mobile.aspx.vb">
+      <DependentUpon>p41_framework_mobile.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p47_framework_record.aspx.designer.vb">
+      <DependentUpon>p47_framework_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p47_framework_record.aspx.vb">
+      <DependentUpon>p47_framework_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p47_project.aspx.designer.vb">
+      <DependentUpon>p47_project.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p47_project.aspx.vb">
+      <DependentUpon>p47_project.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p49_plan.aspx.designer.vb">
+      <DependentUpon>p49_plan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p49_plan.aspx.vb">
+      <DependentUpon>p49_plan.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p49_record.aspx.designer.vb">
+      <DependentUpon>p49_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p49_record.aspx.vb">
+      <DependentUpon>p49_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p51_fpr.aspx.designer.vb">
+      <DependentUpon>p51_fpr.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p51_fpr.aspx.vb">
+      <DependentUpon>p51_fpr.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p56_batch.aspx.designer.vb">
+      <DependentUpon>p56_batch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p56_batch.aspx.vb">
+      <DependentUpon>p56_batch.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p56_framework.aspx.designer.vb">
+      <DependentUpon>p56_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p56_framework.aspx.vb">
+      <DependentUpon>p56_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p56_framework_detail.aspx.designer.vb">
+      <DependentUpon>p56_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p56_framework_detail.aspx.vb">
+      <DependentUpon>p56_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p58_record.aspx.designer.vb">
+      <DependentUpon>p58_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p58_record.aspx.vb">
+      <DependentUpon>p58_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p59_record.aspx.designer.vb">
+      <DependentUpon>p59_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p59_record.aspx.vb">
+      <DependentUpon>p59_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p89_record.aspx.designer.vb">
+      <DependentUpon>p89_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p89_record.aspx.vb">
+      <DependentUpon>p89_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p90_framework.aspx.designer.vb">
+      <DependentUpon>p90_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p90_framework.aspx.vb">
+      <DependentUpon>p90_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p90_record.aspx.designer.vb">
+      <DependentUpon>p90_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p90_record.aspx.vb">
+      <DependentUpon>p90_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_creditnote.aspx.designer.vb">
+      <DependentUpon>p91_creditnote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_creditnote.aspx.vb">
+      <DependentUpon>p91_creditnote.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_export2pohoda.aspx.designer.vb">
+      <DependentUpon>p91_export2pohoda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_export2pohoda.aspx.vb">
+      <DependentUpon>p91_export2pohoda.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_framework.aspx.designer.vb">
+      <DependentUpon>p91_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_framework.aspx.vb">
+      <DependentUpon>p91_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_proforma.aspx.designer.vb">
+      <DependentUpon>p91_proforma.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_proforma.aspx.vb">
+      <DependentUpon>p91_proforma.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p97_record.aspx.designer.vb">
+      <DependentUpon>p97_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p97_record.aspx.vb">
+      <DependentUpon>p97_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="panelmenu.ascx.designer.vb">
+      <DependentUpon>panelmenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="panelmenu.ascx.vb">
+      <DependentUpon>panelmenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pokus_mobile.aspx.designer.vb">
+      <DependentUpon>pokus_mobile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pokus_mobile.aspx.vb">
+      <DependentUpon>pokus_mobile.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="pokus_select2x.aspx.designer.vb">
+      <DependentUpon>pokus_select2x.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pokus_select2x.aspx.vb">
+      <DependentUpon>pokus_select2x.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="pokus_service.asmx.vb">
+      <DependentUpon>pokus_service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="query_builder.aspx.designer.vb">
+      <DependentUpon>query_builder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="query_builder.aspx.vb">
+      <DependentUpon>query_builder.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Public\mtservice_recovery.aspx.designer.vb">
+      <DependentUpon>mtservice_recovery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\mtservice_recovery.aspx.vb">
+      <DependentUpon>mtservice_recovery.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="report_framework_detail4.aspx.designer.vb">
+      <DependentUpon>report_framework_detail4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="report_framework_detail4.aspx.vb">
+      <DependentUpon>report_framework_detail4.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Services\combo_external_datasource.asmx.vb">
+      <DependentUpon>combo_external_datasource.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Sys\dbupdate.aspx.designer.vb">
+      <DependentUpon>dbupdate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sys\dbupdate.aspx.vb">
+      <DependentUpon>dbupdate.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Sys\dbupdate_reports.aspx.designer.vb">
+      <DependentUpon>dbupdate_reports.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sys\dbupdate_reports.aspx.vb">
+      <DependentUpon>dbupdate_reports.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Sys\membership_framework.aspx.designer.vb">
+      <DependentUpon>membership_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sys\membership_framework.aspx.vb">
+      <DependentUpon>membership_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o21_record.aspx.designer.vb">
+      <DependentUpon>o21_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o21_record.aspx.vb">
+      <DependentUpon>o21_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o22_record.aspx.designer.vb">
+      <DependentUpon>o22_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o22_record.aspx.vb">
+      <DependentUpon>o22_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o22_scheduler.aspx.designer.vb">
+      <DependentUpon>o22_scheduler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o22_scheduler.aspx.vb">
+      <DependentUpon>o22_scheduler.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o23_list.ascx.designer.vb">
+      <DependentUpon>o23_list.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_list.ascx.vb">
+      <DependentUpon>o23_list.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="o23_record.aspx.designer.vb">
+      <DependentUpon>o23_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o23_record.aspx.vb">
+      <DependentUpon>o23_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p28_address.ascx.designer.vb">
+      <DependentUpon>p28_address.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_address.ascx.vb">
+      <DependentUpon>p28_address.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p28_framework_detail.aspx.designer.vb">
+      <DependentUpon>p28_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_framework_detail.aspx.vb">
+      <DependentUpon>p28_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p28_medium.ascx.designer.vb">
+      <DependentUpon>p28_medium.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_medium.ascx.vb">
+      <DependentUpon>p28_medium.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p31_approve_onerec.ascx.designer.vb">
+      <DependentUpon>p31_approve_onerec.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_approve_onerec.ascx.vb">
+      <DependentUpon>p31_approve_onerec.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p31_approving_batch_p31text.aspx.designer.vb">
+      <DependentUpon>p31_approving_batch_p31text.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_approving_batch_p31text.aspx.vb">
+      <DependentUpon>p31_approving_batch_p31text.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_approving_step1.aspx.designer.vb">
+      <DependentUpon>p31_approving_step1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_approving_step1.aspx.vb">
+      <DependentUpon>p31_approving_step1.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_approving_step2.aspx.designer.vb">
+      <DependentUpon>p31_approving_step2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_approving_step2.aspx.vb">
+      <DependentUpon>p31_approving_step2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_approving_step3.aspx.designer.vb">
+      <DependentUpon>p31_approving_step3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_approving_step3.aspx.vb">
+      <DependentUpon>p31_approving_step3.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_framework.aspx.designer.vb">
+      <DependentUpon>p31_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_framework.aspx.vb">
+      <DependentUpon>p31_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_framework_detail.aspx.designer.vb">
+      <DependentUpon>p31_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_framework_detail.aspx.vb">
+      <DependentUpon>p31_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_grid.aspx.designer.vb">
+      <DependentUpon>p31_grid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_grid.aspx.vb">
+      <DependentUpon>p31_grid.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_move2bin.aspx.designer.vb">
+      <DependentUpon>p31_move2bin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_move2bin.aspx.vb">
+      <DependentUpon>p31_move2bin.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_move2project.aspx.designer.vb">
+      <DependentUpon>p31_move2project.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_move2project.aspx.vb">
+      <DependentUpon>p31_move2project.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_pivot.aspx.designer.vb">
+      <DependentUpon>p31_pivot.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_pivot.aspx.vb">
+      <DependentUpon>p31_pivot.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_recalc.aspx.designer.vb">
+      <DependentUpon>p31_recalc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_recalc.aspx.vb">
+      <DependentUpon>p31_recalc.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_record.aspx.designer.vb">
+      <DependentUpon>p31_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_record.aspx.vb">
+      <DependentUpon>p31_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_record_AA.aspx.designer.vb">
+      <DependentUpon>p31_record_AA.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_record_AA.aspx.vb">
+      <DependentUpon>p31_record_AA.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_record_AI.aspx.designer.vb">
+      <DependentUpon>p31_record_AI.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_record_AI.aspx.vb">
+      <DependentUpon>p31_record_AI.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_record_approve.aspx.designer.vb">
+      <DependentUpon>p31_record_approve.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_record_approve.aspx.vb">
+      <DependentUpon>p31_record_approve.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_record_router.aspx.designer.vb">
+      <DependentUpon>p31_record_router.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_record_router.aspx.vb">
+      <DependentUpon>p31_record_router.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_setting.aspx.designer.vb">
+      <DependentUpon>p31_setting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_setting.aspx.vb">
+      <DependentUpon>p31_setting.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_subgrid.ascx.designer.vb">
+      <DependentUpon>p31_subgrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_subgrid.ascx.vb">
+      <DependentUpon>p31_subgrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p31_subgrid_setting.aspx.designer.vb">
+      <DependentUpon>p31_subgrid_setting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_subgrid_setting.aspx.vb">
+      <DependentUpon>p31_subgrid_setting.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_timeline.aspx.designer.vb">
+      <DependentUpon>p31_timeline.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_timeline.aspx.vb">
+      <DependentUpon>p31_timeline.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_timer.aspx.designer.vb">
+      <DependentUpon>p31_timer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_timer.aspx.vb">
+      <DependentUpon>p31_timer.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p34_after_create.aspx.designer.vb">
+      <DependentUpon>p34_after_create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p34_after_create.aspx.vb">
+      <DependentUpon>p34_after_create.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_framework_detail.aspx.designer.vb">
+      <DependentUpon>p41_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework_detail.aspx.vb">
+      <DependentUpon>p41_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p48_framework.aspx.designer.vb">
+      <DependentUpon>p48_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p48_framework.aspx.vb">
+      <DependentUpon>p48_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p48_multiple_create.aspx.designer.vb">
+      <DependentUpon>p48_multiple_create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p48_multiple_create.aspx.vb">
+      <DependentUpon>p48_multiple_create.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p48_multiple_edit_delete.aspx.designer.vb">
+      <DependentUpon>p48_multiple_edit_delete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p48_multiple_edit_delete.aspx.vb">
+      <DependentUpon>p48_multiple_edit_delete.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p51_framework.aspx.designer.vb">
+      <DependentUpon>p51_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p51_framework.aspx.vb">
+      <DependentUpon>p51_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p53_record.aspx.designer.vb">
+      <DependentUpon>p53_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p53_record.aspx.vb">
+      <DependentUpon>p53_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p56_record.aspx.designer.vb">
+      <DependentUpon>p56_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p56_record.aspx.vb">
+      <DependentUpon>p56_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p56_subgrid.ascx.designer.vb">
+      <DependentUpon>p56_subgrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p56_subgrid.ascx.vb">
+      <DependentUpon>p56_subgrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p57_record.aspx.designer.vb">
+      <DependentUpon>p57_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p57_record.aspx.vb">
+      <DependentUpon>p57_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p86_record.aspx.designer.vb">
+      <DependentUpon>p86_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p86_record.aspx.vb">
+      <DependentUpon>p86_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_add_worksheet.aspx.designer.vb">
+      <DependentUpon>p91_add_worksheet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_add_worksheet.aspx.vb">
+      <DependentUpon>p91_add_worksheet.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_add_worksheet_gateway.aspx.designer.vb">
+      <DependentUpon>p91_add_worksheet_gateway.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_add_worksheet_gateway.aspx.vb">
+      <DependentUpon>p91_add_worksheet_gateway.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_change_currency.aspx.designer.vb">
+      <DependentUpon>p91_change_currency.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_change_currency.aspx.vb">
+      <DependentUpon>p91_change_currency.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_change_vat.aspx.designer.vb">
+      <DependentUpon>p91_change_vat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_change_vat.aspx.vb">
+      <DependentUpon>p91_change_vat.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_create_step1.aspx.designer.vb">
+      <DependentUpon>p91_create_step1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_create_step1.aspx.vb">
+      <DependentUpon>p91_create_step1.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_create_step2.aspx.designer.vb">
+      <DependentUpon>p91_create_step2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_create_step2.aspx.vb">
+      <DependentUpon>p91_create_step2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_framework_detail.aspx.designer.vb">
+      <DependentUpon>p91_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_framework_detail.aspx.vb">
+      <DependentUpon>p91_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_pay.aspx.designer.vb">
+      <DependentUpon>p91_pay.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_pay.aspx.vb">
+      <DependentUpon>p91_pay.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_record.aspx.designer.vb">
+      <DependentUpon>p91_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_record.aspx.vb">
+      <DependentUpon>p91_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_remove_worksheet.aspx.designer.vb">
+      <DependentUpon>p91_remove_worksheet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_remove_worksheet.aspx.vb">
+      <DependentUpon>p91_remove_worksheet.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_subgrid.ascx.designer.vb">
+      <DependentUpon>p91_subgrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_subgrid.ascx.vb">
+      <DependentUpon>p91_subgrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p92_record.aspx.designer.vb">
+      <DependentUpon>p92_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p92_record.aspx.vb">
+      <DependentUpon>p92_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p93_record.aspx.designer.vb">
+      <DependentUpon>p93_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p93_record.aspx.vb">
+      <DependentUpon>p93_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="period.ascx.designer.vb">
+      <DependentUpon>period.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="period.ascx.vb">
+      <DependentUpon>period.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="periodcombo.ascx.designer.vb">
+      <DependentUpon>periodcombo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="periodcombo.ascx.vb">
+      <DependentUpon>periodcombo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="periodcombo_setting.aspx.designer.vb">
+      <DependentUpon>periodcombo_setting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="periodcombo_setting.aspx.vb">
+      <DependentUpon>periodcombo_setting.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="periodmonth.ascx.designer.vb">
+      <DependentUpon>periodmonth.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="periodmonth.ascx.vb">
+      <DependentUpon>periodmonth.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="plugin_datatable.ascx.designer.vb">
+      <DependentUpon>plugin_datatable.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="plugin_datatable.ascx.vb">
+      <DependentUpon>plugin_datatable.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pokus_dock.aspx.designer.vb">
+      <DependentUpon>pokus_dock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pokus_dock.aspx.vb">
+      <DependentUpon>pokus_dock.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="project.ascx.designer.vb">
+      <DependentUpon>project.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="project.ascx.vb">
+      <DependentUpon>project.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="j02_record.aspx.designer.vb">
+      <DependentUpon>j02_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j02_record.aspx.vb">
+      <DependentUpon>j02_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_create.aspx.designer.vb">
+      <DependentUpon>j03_create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_create.aspx.vb">
+      <DependentUpon>j03_create.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_record.aspx.designer.vb">
+      <DependentUpon>j03_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_record.aspx.vb">
+      <DependentUpon>j03_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j04_record.aspx.designer.vb">
+      <DependentUpon>j04_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j04_record.aspx.vb">
+      <DependentUpon>j04_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j07_record.aspx.designer.vb">
+      <DependentUpon>j07_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j07_record.aspx.vb">
+      <DependentUpon>j07_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j11_record.aspx.designer.vb">
+      <DependentUpon>j11_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j11_record.aspx.vb">
+      <DependentUpon>j11_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="license.aspx.designer.vb">
+      <DependentUpon>license.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="license.aspx.vb">
+      <DependentUpon>license.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="ModalDataRecord.Master.designer.vb">
+      <DependentUpon>ModalDataRecord.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ModalDataRecord.Master.vb">
+      <DependentUpon>ModalDataRecord.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModalForm.Master.designer.vb">
+      <DependentUpon>ModalForm.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ModalForm.Master.vb">
+      <DependentUpon>ModalForm.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWebExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.Web.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="p28_record.aspx.designer.vb">
+      <DependentUpon>p28_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_record.aspx.vb">
+      <DependentUpon>p28_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p29_record.aspx.designer.vb">
+      <DependentUpon>p29_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p29_record.aspx.vb">
+      <DependentUpon>p29_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p32_record.aspx.designer.vb">
+      <DependentUpon>p32_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p32_record.aspx.vb">
+      <DependentUpon>p32_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p34_record.aspx.designer.vb">
+      <DependentUpon>p34_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p34_record.aspx.vb">
+      <DependentUpon>p34_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p36_record.aspx.designer.vb">
+      <DependentUpon>p36_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p36_record.aspx.vb">
+      <DependentUpon>p36_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_create.aspx.designer.vb">
+      <DependentUpon>p41_create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_create.aspx.vb">
+      <DependentUpon>p41_create.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entityrole_assign.ascx.designer.vb">
+      <DependentUpon>entityrole_assign.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="entityrole_assign.ascx.vb">
+      <DependentUpon>entityrole_assign.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p41_record.aspx.designer.vb">
+      <DependentUpon>p41_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_record.aspx.vb">
+      <DependentUpon>p41_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p42_record.aspx.designer.vb">
+      <DependentUpon>p42_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p42_record.aspx.vb">
+      <DependentUpon>p42_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p51_record.aspx.designer.vb">
+      <DependentUpon>p51_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p51_record.aspx.vb">
+      <DependentUpon>p51_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p52_record.aspx.designer.vb">
+      <DependentUpon>p52_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p52_record.aspx.vb">
+      <DependentUpon>p52_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p95_record.aspx.designer.vb">
+      <DependentUpon>p95_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p95_record.aspx.vb">
+      <DependentUpon>p95_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="pageheader.ascx.designer.vb">
+      <DependentUpon>pageheader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="pageheader.ascx.vb">
+      <DependentUpon>pageheader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pokus.aspx.designer.vb">
+      <DependentUpon>pokus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pokus.aspx.vb">
+      <DependentUpon>pokus.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="pokus_okno.aspx.designer.vb">
+      <DependentUpon>pokus_okno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pokus_okno.aspx.vb">
+      <DependentUpon>pokus_okno.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Public\kickoff.aspx.designer.vb">
+      <DependentUpon>kickoff.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\kickoff.aspx.vb">
+      <DependentUpon>kickoff.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Public\kickoff_after1.aspx.designer.vb">
+      <DependentUpon>kickoff_after1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\kickoff_after1.aspx.vb">
+      <DependentUpon>kickoff_after1.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Public\kickoff_after2.aspx.designer.vb">
+      <DependentUpon>kickoff_after2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\kickoff_after2.aspx.vb">
+      <DependentUpon>kickoff_after2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Public\report_on_behind.aspx.designer.vb">
+      <DependentUpon>report_on_behind.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\report_on_behind.aspx.vb">
+      <DependentUpon>report_on_behind.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Public\robot.aspx.designer.vb">
+      <DependentUpon>robot.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\robot.aspx.vb">
+      <DependentUpon>robot.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="record_code.aspx.designer.vb">
+      <DependentUpon>record_code.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="record_code.aspx.vb">
+      <DependentUpon>record_code.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="record_validity.aspx.designer.vb">
+      <DependentUpon>record_validity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="record_validity.aspx.vb">
+      <DependentUpon>record_validity.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="report_framework.aspx.designer.vb">
+      <DependentUpon>report_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="report_framework.aspx.vb">
+      <DependentUpon>report_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="report_framework_detail1.aspx.designer.vb">
+      <DependentUpon>report_framework_detail1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="report_framework_detail1.aspx.vb">
+      <DependentUpon>report_framework_detail1.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="report_modal.aspx.designer.vb">
+      <DependentUpon>report_modal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="report_modal.aspx.vb">
+      <DependentUpon>report_modal.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="select_project.aspx.designer.vb">
+      <DependentUpon>select_project.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="select_project.aspx.vb">
+      <DependentUpon>select_project.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="sendmail.aspx.designer.vb">
+      <DependentUpon>sendmail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sendmail.aspx.vb">
+      <DependentUpon>sendmail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Services\contact_service.asmx.vb">
+      <DependentUpon>contact_service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\project_service.asmx.vb">
+      <DependentUpon>project_service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\person_service.asmx.vb">
+      <DependentUpon>person_service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.vb">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.vb">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="stoppage.aspx.designer.vb">
+      <DependentUpon>stoppage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="stoppage.aspx.vb">
+      <DependentUpon>stoppage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="stoppage_site.aspx.designer.vb">
+      <DependentUpon>stoppage_site.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="stoppage_site.aspx.vb">
+      <DependentUpon>stoppage_site.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="SubForm.Master.designer.vb">
+      <DependentUpon>SubForm.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm.Master.vb">
+      <DependentUpon>SubForm.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sys\sys_dbobjects.aspx.designer.vb">
+      <DependentUpon>sys_dbobjects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Sys\sys_dbobjects.aspx.vb">
+      <DependentUpon>sys_dbobjects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="timer.ascx.designer.vb">
+      <DependentUpon>timer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="timer.ascx.vb">
+      <DependentUpon>timer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="timesheet_calendar.ascx.designer.vb">
+      <DependentUpon>timesheet_calendar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="timesheet_calendar.ascx.vb">
+      <DependentUpon>timesheet_calendar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="treemenu.ascx.designer.vb">
+      <DependentUpon>treemenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="treemenu.ascx.vb">
+      <DependentUpon>treemenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="person.ascx.designer.vb">
+      <DependentUpon>person.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="person.ascx.vb">
+      <DependentUpon>person.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p31_approving_step3_subform.aspx.designer.vb">
+      <DependentUpon>p31_approving_step3_subform.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_approving_step3_subform.aspx.vb">
+      <DependentUpon>p31_approving_step3_subform.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="WebForm2.aspx.designer.vb">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm2.aspx.vb">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="workflow_dialog.aspx.designer.vb">
+      <DependentUpon>workflow_dialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="workflow_dialog.aspx.vb">
+      <DependentUpon>workflow_dialog.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x23_record.aspx.designer.vb">
+      <DependentUpon>x23_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x23_record.aspx.vb">
+      <DependentUpon>x23_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x25_record.aspx.designer.vb">
+      <DependentUpon>x25_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x25_record.aspx.vb">
+      <DependentUpon>x25_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x27_record.aspx.designer.vb">
+      <DependentUpon>x27_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x27_record.aspx.vb">
+      <DependentUpon>x27_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x28_record.aspx.designer.vb">
+      <DependentUpon>x28_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x28_record.aspx.vb">
+      <DependentUpon>x28_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x31_record.aspx.designer.vb">
+      <DependentUpon>x31_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x31_record.aspx.vb">
+      <DependentUpon>x31_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x35_record.aspx.designer.vb">
+      <DependentUpon>x35_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x35_record.aspx.vb">
+      <DependentUpon>x35_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x38_record.aspx.designer.vb">
+      <DependentUpon>x38_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x38_record.aspx.vb">
+      <DependentUpon>x38_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x40_record.aspx.designer.vb">
+      <DependentUpon>x40_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x40_record.aspx.vb">
+      <DependentUpon>x40_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x46_record.aspx.designer.vb">
+      <DependentUpon>x46_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x46_record.aspx.vb">
+      <DependentUpon>x46_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x50_record.aspx.designer.vb">
+      <DependentUpon>x50_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x50_record.aspx.vb">
+      <DependentUpon>x50_record.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="x55_record.aspx.designer.vb">
+      <DependentUpon>x55_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x55_record.aspx.vb">
+      <DependentUpon>x55_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x67_record.aspx.designer.vb">
+      <DependentUpon>x67_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x67_record.aspx.vb">
+      <DependentUpon>x67_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\j02_record.aspx.resx" />
+    <Content Include="App_LocalResources\p32_record.aspx.resx" />
+    <Content Include="App_LocalResources\j02_record.en-US.resx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\Web.config" />
+    <Content Include="Anonym.Master" />
+    <Content Include="ModalForm.Master" />
+    <Content Include="ModalDataRecord.Master" />
+    <Content Include="Handler\handler_activity.ashx" />
+    <Content Include="Handler\handler_search_project.ashx" />
+    <Content Include="Handler\handler_time.ashx" />
+    <Content Include="Handler\handler_userparam.ashx" />
+    <Content Include="Handler\handler_search_contact.ashx" />
+    <Content Include="Handler\handler_search_invoice.ashx" />
+    <Content Include="Handler\handler_tempbox.ashx" />
+    <Content Include="Handler\handler_search_person.ashx" />
+    <Content Include="Mobile.Master" />
+    <Content Include="Handler\handler_search_task.ashx" />
+    <Content Include="Handler\handler_search_notepad.ashx" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\PublishProfiles\marktime.pubxml" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <Content Include="Site.Master" />
+    <Content Include="SubForm.Master" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="App_GlobalResources\" />
+    <Folder Include="Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.vbproj">
+      <Project>{B23B29F6-03BD-4A6F-9B4A-5749C329EEB5}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BO\BO.vbproj">
+      <Project>{2081B1EA-B426-4107-898F-E953AECD89AA}</Project>
+      <Name>BO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>25344</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

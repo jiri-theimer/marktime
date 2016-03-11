@@ -1,0 +1,226 @@
+﻿Public Enum p31HoursEntryFlagENUM
+    Hodiny = 1
+    Minuty = 2
+    PresnyCasOdDo = 3
+    NeniCas = 0
+End Enum
+
+
+Public Class p31Worksheet
+    Inherits BOMother
+    Public Property p41ID As Integer
+    Public Property p41Name As String
+    Public Property p41NameShort As String
+    Public Property p28ID_Client As Integer
+    Public Property p28Name As String
+    Public Property p28CompanyShortName As String
+
+    Public Property j02ID As Integer
+    Public Property Person As String
+
+    Public Property p32ID As Integer
+    Public Property p32Name As String
+    Public Property p32IsBillable As Boolean
+    Public Property p34ID As Integer
+    Public Property p33ID As BO.p33IdENUM
+    Public Property p34Name As String
+    Public Property p34IncomeStatementFlag As p34IncomeStatementFlagENUM
+    Public Property p95ID As Integer
+    Public Property p95Name As String
+    Public Property p56ID As Integer
+    Public Property p56Name As String
+    Public Property p56Code As String
+
+
+    Public Property p91ID As Integer
+    Public Property p91Code As String
+
+    Public Property j02ID_Owner As Integer
+    Public Property Owner As String
+
+    Public Property p70ID As p70IdENUM
+    Public Property p70Name As String
+
+    Public Property p71ID As p71IdENUM
+    Public Property p71Name As String
+
+    Public Property p72ID_AfterApprove As p72IdENUM
+    Public Property approve_p72Name As String
+    Public Property p72ID_AfterTrimming As p72IdENUM
+    Public Property trim_p72Name As String
+
+    Public Property p31Date As Date
+    Public Property p31DateUntil As Date
+    Public Property p31DateTimeFrom_Orig As Date?
+    Public Property p31DateTimeUntil_Orig As Date?
+    Public Property p31Text As String
+
+    Public Property p31Value_Orig As Double
+    Public Property p31Value_Trimmed As Double
+    Public Property p31Value_Approved_Billing As Double
+    Public Property p31Value_Approved_Internal As Double
+    Public Property p31Value_Invoiced As Double
+
+    Public Property p31Minutes_Orig As Integer
+    Public Property p31Minutes_Trimmed As Integer
+    Public Property p31Minutes_Approved_Billing As Integer
+    Public Property p31Minutes_Approved_Internal As Integer
+    Public Property p31Minutes_Invoiced As Integer
+
+    Public Property p31Hours_Orig As Double
+    Public Property p31Hours_Trimmed As Double
+    Public Property p31Hours_Approved_Billing As Double
+    Public Property p31Hours_Approved_Internal As Double
+    Public Property p31Hours_Invoiced As Double
+
+    Public Property p31HHMM_Orig As String
+    Public Property p31HHMM_Trimmed As String
+    Public Property p31HHMM_Approved_Billing As String
+    Public Property p31HHMM_Approved_Internal As String
+    Public Property p31HHMM_Invoiced As String
+
+
+    Public Property p31Rate_Billing_Orig As Double
+    Public Property p31Rate_Internal_Orig As Double
+    Public Property p31Amount_Internal As Double
+    Public Property p31Rate_Billing_Approved As Double
+    Public Property p31Rate_Internal_Approved As Double
+    Public Property p31Rate_Billing_Invoiced As Double
+
+    Public Property p31Amount_WithoutVat_Orig As Double
+    Public Property p31Amount_WithVat_Orig As Double
+    Public Property p31Amount_Vat_Orig As Double
+    Public Property p31VatRate_Orig As Double
+    Public Property j27ID_Billing_Orig As Integer
+    Public Property j27ID_Internal As Integer
+
+    Public Property p31Amount_WithoutVat_Approved As Double
+    Public Property p31Amount_WithVat_Approved As Double
+    Public Property p31Amount_Vat_Approved As Double
+    Public Property p31VatRate_Approved As Double
+    
+    Public Property p31Amount_WithoutVat_Invoiced As Double
+    Public Property p31Amount_WithVat_Invoiced As Double
+    Public Property p31VatRate_Invoiced As Double
+    Public Property p31Amount_Vat_Invoiced As Double
+    Public Property p31ExchangeRate_Invoice As Double
+    Public Property j27ID_Billing_Invoiced As Integer
+
+    Public Property p31Amount_WithoutVat_Invoiced_Domestic As Double
+    Public Property p31Amount_WithVat_Invoiced_Domestic As Double
+    Public Property p31Amount_Vat_Invoiced_Domestic As Double
+    Public Property p31ExchangeRate_Domestic As Double
+    Public Property j27ID_Billing_Invoiced_Domestic As Integer
+
+    Public Property p31Amount_WithoutVat_FixedCurrency As Double
+
+
+
+
+    Public Property c11ID As Integer
+    Public Property j02ID_ApprovedBy As Integer
+
+    
+    Public Property p31Value_Orig_Entried As String
+
+    Public Property p31HoursEntryFlag As p31HoursEntryFlagENUM
+    Public Property p31Approved_When As Date?
+        
+    Public Property p31IsPlanRecord As Boolean
+
+    Public Property j27Code_Billing_Orig As String
+
+    Public Property p31Calc_Pieces As Double
+    Public Property p31Calc_PieceAmount As Double
+    Public Property p35ID As Integer
+    Public Property p31ApprovingSet As String
+    Public Property o23ID_First As Integer
+
+    Public ReadOnly Property TimeFrom As String
+        Get
+            If Me.p31DateTimeFrom_Orig Is Nothing Then
+                Return "00:00"
+            Else
+                Return Format(Me.p31DateTimeFrom_Orig, "HH:mm")
+            End If
+        End Get
+    End Property
+    Public ReadOnly Property TimeUntil As String
+        Get
+            If Me.p31DateTimeUntil_Orig Is Nothing Then
+                Return "00:00"
+            Else
+                Return Format(Me.p31DateTimeUntil_Orig, "HH:mm")
+            End If
+        End Get
+    End Property
+
+
+
+    '----uživatelská pole--------------------
+    Public Property p31FreeText01 As String
+    Public Property p31FreeText02 As String
+    Public Property p31FreeText03 As String
+    Public Property p31FreeText04 As String
+    Public Property p31FreeText05 As String
+    Public Property p31FreeText06 As String
+    Public Property p31FreeText07 As String
+    Public Property p31FreeText08 As String
+    Public Property p31FreeText09 As String
+    Public Property p31FreeText10 As String
+
+    Public Property p31FreeBoolean01 As Boolean
+    Public Property p31FreeBoolean02 As Boolean
+    Public Property p31FreeBoolean03 As Boolean
+    Public Property p31FreeBoolean04 As Boolean
+    Public Property p31FreeBoolean05 As Boolean
+    Public Property p31FreeBoolean06 As Boolean
+    Public Property p31FreeBoolean07 As Boolean
+    Public Property p31FreeBoolean08 As Boolean
+    Public Property p31FreeBoolean09 As Boolean
+    Public Property p31FreeBoolean10 As Boolean
+
+    Public Property p31FreeDate01 As DateTime?
+    Public Property p31FreeDate02 As DateTime?
+    Public Property p31FreeDate03 As DateTime?
+    Public Property p31FreeDate04 As DateTime?
+    Public Property p31FreeDate05 As DateTime?
+    Public Property p31FreeDate06 As DateTime?
+    Public Property p31FreeDate07 As DateTime?
+    Public Property p31FreeDate08 As DateTime?
+    Public Property p31FreeDate09 As DateTime?
+    Public Property p31FreeDate10 As DateTime?
+
+    Public Property p31FreeNumber01 As Double
+    Public Property p31FreeNumber02 As Double
+    Public Property p31FreeNumber03 As Double
+    Public Property p31FreeNumber04 As Double
+    Public Property p31FreeNumber05 As Double
+    Public Property p31FreeNumber06 As Double
+    Public Property p31FreeNumber07 As Double
+    Public Property p31FreeNumber08 As Double
+    Public Property p31FreeNumber09 As Double
+    Public Property p31FreeNumber10 As Double
+
+    Public Property p31FreeCombo01 As Integer?
+    Public Property p31FreeCombo02 As Integer?
+    Public Property p31FreeCombo03 As Integer?
+    Public Property p31FreeCombo04 As Integer?
+    Public Property p31FreeCombo05 As Integer?
+    Public Property p31FreeCombo06 As Integer?
+    Public Property p31FreeCombo07 As Integer?
+    Public Property p31FreeCombo08 As Integer?
+    Public Property p31FreeCombo09 As Integer?
+    Public Property p31FreeCombo10 As Integer?
+
+    Public Function IsRecommendedHHMM() As Boolean
+        If Me.p33ID = p33IdENUM.Cas Then
+            If Me.p31Value_Orig_Entried <> "" Then
+                If Me.p31Value_Orig_Entried.IndexOf(":") > 0 Then Return True 'původně zadaná hodnota obsahuje rovnou hodnota v HH:MM
+            End If
+            If Len(Me.p31Value_Orig.ToString) > 5 Then Return True 'desetinné číslo s velkým počtem desetinných míst
+        End If
+
+        Return False
+    End Function
+End Class

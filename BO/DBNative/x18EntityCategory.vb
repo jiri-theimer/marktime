@@ -1,0 +1,14 @@
+﻿Public Class x18EntityCategory
+    Inherits BOMother
+    Public Property x29ID As BO.x29IdEnum
+    Public Property x23ID As Integer
+    Public Property x18Name As String
+    Public Property x18Ordinary As Integer
+
+    Private Property _x23Name As String
+    Public ReadOnly Property x23Name As String
+        Get
+            Return _x23Name
+        End Get
+    End Property
+End Class

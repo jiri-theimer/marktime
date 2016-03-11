@@ -1,0 +1,82 @@
+﻿Public Interface Ix25EntityField_ComboValueBL
+    Inherits IFMother
+    Function Save(cRec As BO.x25EntityField_ComboValue) As Boolean
+    Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
+    Function LoadByExternalPID(strUserKey As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
+    Function Delete(intPID As Integer) As Boolean
+    Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x25EntityField_ComboValue)
+
+
+End Interface
+Class x25EntityField_ComboValueBL
+    Inherits BLMother
+    Implements Ix25EntityField_ComboValueBL
+    Private WithEvents _cDL As DL.x25EntityField_ComboValueDL
+
+
+    Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
+        _Error = strError
+    End Sub
+    Private Sub _cDL_OnSaveRecord(intLastSavedPID As Integer) Handles _cDL.OnSaveRecord
+        _LastSavedPID = intLastSavedPID
+    End Sub
+
+    Public Sub New(ServiceUser As BO.j03UserSYS)
+        _cDL = New DL.x25EntityField_ComboValueDL(ServiceUser)
+        _cUser = ServiceUser
+    End Sub
+    Public Function Save(cRec As BO.x25EntityField_ComboValue) As Boolean Implements Ix25EntityField_ComboValueBL.Save
+        With cRec
+            If Trim(.x25Name) = "" Then _Error = "Chybí název položky." : Return False
+            If .x23ID = 0 Then _Error = "Chybí vazba na číselník." : Return False
+
+            Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(.x23ID)
+            If cX23.x23DataSource <> "" Then
+                _Error = "Combo seznam [" & cX23.x23Name & "] má externí datový zdroj combo položek." : Return False
+            End If
+        End With
+
+        Dim cRecOld As BO.x25EntityField_ComboValue = Nothing
+        If cRec.PID <> 0 Then cRecOld = Load(cRec.PID)
+
+        If _cDL.Save(cRec) Then
+            If Not cRecOld Is Nothing Then
+                'zjistit, zda aktualizovat u combo volných polí statický text
+                cRec = Load(cRec.PID)
+                If cRec.x25Name <> cRecOld.x25Name Then
+                    'došlo ke změně názvu combo položky
+                    Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(cRec.x23ID)
+                    For Each c In lisX28
+                        _cDL.UpdateComboItemTextInData(c, cRec)
+                    Next
+                End If
+            End If
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+    Public Function Load(intPID As Integer) As BO.x25EntityField_ComboValue Implements Ix25EntityField_ComboValueBL.Load
+        Return _cDL.Load(intPID)
+    End Function
+    Public Function LoadByExternalPID(strUserKey As String, intX23ID As Integer) As BO.x25EntityField_ComboValue Implements Ix25EntityField_ComboValueBL.LoadByExternalPID
+        Return _cDL.LoadByExternalPID(strUserKey, intX23ID)
+    End Function
+    Public Function Delete(intPID As Integer) As Boolean Implements Ix25EntityField_ComboValueBL.Delete
+        Dim cRec As BO.x25EntityField_ComboValue = Load(intPID)
+        If _cDL.Delete(intPID) Then
+            Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(cRec.x23ID)
+            For Each c In lisX28
+                _cDL.ClearComboItemTextInData(c, intPID)
+            Next
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+    Public Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix25EntityField_ComboValueBL.GetList
+        Return _cDL.GetList(intX23ID)
+    End Function
+
+   
+End Class

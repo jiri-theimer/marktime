@@ -1,0 +1,48 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/ModalDataRecord.Master" CodeBehind="j11_record.aspx.vb" Inherits="UI.j11_record" %>
+
+<%@ MasterType VirtualPath="~/ModalDataRecord.Master" %>
+<%@ Register TagPrefix="uc" TagName="pageheader" Src="~/PageHeader.ascx" %>
+<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+
+    <div class="content-box2">
+        <div class="title">
+            Tým osob
+        </div>
+        <div class="content">
+            <div class="div6">
+                <asp:Label ID="lblJ11Name" Text="Název týmu:" runat="server" CssClass="lblReq" AssociatedControlID="j11name"></asp:Label>
+                <asp:TextBox ID="j11name" runat="server" Style="width: 300px;"></asp:TextBox>
+            </div>
+            <div class="div6">
+                <span class="lbl">Adresa pro IMAP robota:</span>
+                <asp:TextBox ID="j11RobotAddress" runat="server" Style="width: 200px;"></asp:TextBox>
+                <span class="infoInForm">E-mail adresa, podle které IMAP robot pozná, že nový úkol/dokument zakládaný automaticky z poštovní zprávy má vztah k týmu.</span>
+            </div>
+
+            <div class="div6">
+            </div>
+        </div>
+    </div>
+
+    <asp:Panel ID="panMembers" runat="server">
+        <div style="padding: 6px;">
+            <asp:Label ID="lblAdd" runat="server" Text="Vybrat osobu:" CssClass="lbl"></asp:Label>
+            <uc:person ID="j02id_search" runat="server" Width="400px" />
+
+            <asp:Button ID="cmdAdd" runat="server" Text="Přidat do týmu" CssClass="cmd" />
+            <span style="padding-left: 40px;"></span>
+            <asp:Button ID="cmdRemoveSelected" runat="server" Text="Odebrat vybrané členy" CssClass="cmd" />
+        </div>
+        <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" AllowMultiSelect="true"></uc:datagrid>
+    </asp:Panel>
+
+    <asp:CheckBox ID="j11IsAllPersons" runat="server" Visible="false" />
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
+</asp:Content>

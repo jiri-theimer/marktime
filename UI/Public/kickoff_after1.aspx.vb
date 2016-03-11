@@ -1,0 +1,630 @@
+﻿Public Class kickoff_after1
+    Inherits System.Web.UI.Page
+    Private _Factory As BL.Factory
+
+    Private Sub kickoff_after1_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _Factory = New BL.Factory(, "mtservice")
+    End Sub
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        If Not Page.IsPostBack Then
+            Me.lblError.Text = ""
+
+            Me.j27id.DataSource = _Factory.ftBL.GetList_J27()
+            Me.j27id.DataBind()
+        End If
+    End Sub
+
+    Private Sub PracovniCas(intP95ID As Integer)
+        Dim cP34 As New BO.p34ActivityGroup
+        With cP34
+            .p34Name = "Pracovní čas"
+            .p34Code = "TB"
+            .p33ID = BO.p33IdENUM.Cas
+            .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
+            .p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj
+        End With
+
+        If Not _Factory.p34ActivityGroupBL.Save(cP34) Then
+            WE(_Factory.p34ActivityGroupBL.ErrorMessage)
+        Else
+            Dim intP34ID As Integer = _Factory.p34ActivityGroupBL.LastSavedPID
+            CP32(intP34ID, "Jednání s klientem", True, True, intP95ID)
+            CP32(intP34ID, "Příprava na jednání", True, True, intP95ID)
+            CP32(intP34ID, "Ztráta času cestováním", True, True, intP95ID)
+
+            CP32(intP34ID, "Telefonování s klientem", True, True, intP95ID)
+            CP32(intP34ID, "Studium podkladů", True, True, intP95ID)
+            CP32(intP34ID, "Vedení projektu", True, True, intP95ID)
+            CP32(intP34ID, "Překlady", True, True, intP95ID)
+            CP32(intP34ID, "Zápis z jednání", True, True, intP95ID)
+            CP32(intP34ID, "Telekonference", True, True, intP95ID)
+            CP32(intP34ID, "Kompletování dokumentů", True, True, intP95ID)
+            CP32(intP34ID, "Návrh dokumentů", True, True, intP95ID)
+            Select Case Me.cbxBusiness.SelectedValue
+                Case "AK"
+                    CP32(intP34ID, "Právní stanovisko", True, True, intP95ID)
+                    CP32(intP34ID, "Sepis žaloby", True, True, intP95ID)
+                    CP32(intP34ID, "Návrh k insolvenci", True, True, intP95ID)
+                Case "IT"
+                    CP32(intP34ID, "Servisní výjezd", True, True, intP95ID)
+                    CP32(intP34ID, "Vzdálená správa", True, True, intP95ID)
+                    CP32(intP34ID, "Analýza", True, True, intP95ID)
+                    CP32(intP34ID, "Konfigurace SW", True, True, intP95ID)
+                    CP32(intP34ID, "Programování ASP.NET", True, True, intP95ID)
+                    CP32(intP34ID, "Programování SQL", True, True, intP95ID)
+                    CP32(intP34ID, "Grafické práce", True, True, intP95ID)
+                    CP32(intP34ID, "Testování", True, True, intP95ID)
+                    CP32(intP34ID, "Poskytování školení", True, True, intP95ID)
+                    CP32(intP34ID, "Psaní dokumentace/helpů", True, True, intP95ID)
+                    CP32(intP34ID, "Instalace nové verze/upgrade", True, True, intP95ID)
+                    CP32(intP34ID, "Tvorba tiskových sestav", True, True, intP95ID)
+                Case "UCTO"
+                    CP32(intP34ID, "Mzdové účetnictví", True, True, intP95ID)
+                    CP32(intP34ID, "Zastupování na úřadech", True, True, intP95ID)
+                    CP32(intP34ID, "Roční uzávěrky", True, True, intP95ID)
+                    CP32(intP34ID, "Daňové poradenství", True, True, intP95ID)
+                    CP32(intP34ID, "Práce auditora", True, True, intP95ID)
+                    CP32(intP34ID, "Pořizování dokladů", True, True, intP95ID)
+                    CP32(intP34ID, "Pravidelná hlášení", True, True, intP95ID)
+                Case "MEDIA"
+                    CP32(intP34ID, "Autorský dohled", True, True, intP95ID)
+                    CP32(intP34ID, "Ilustrace/Kresba", True, True, intP95ID)
+                    CP32(intP34ID, "Kalkulace", True, True, intP95ID)
+                    CP32(intP34ID, "DTP práce", True, True, intP95ID)
+                    CP32(intP34ID, "Monitoring", True, True, intP95ID)
+                    CP32(intP34ID, "Vyhledávání článků", True, True, intP95ID)
+                    CP32(intP34ID, "Tvorba textů", True, True, intP95ID)
+                    CP32(intP34ID, "Jazyková korekce", True, True, intP95ID)
+                    CP32(intP34ID, "Vazba článků", True, True, intP95ID)
+
+                Case "PRO"
+                    CP32(intP34ID, "Projekční práce", True, True, intP95ID)
+                    CP32(intP34ID, "Kompletace", True, True, intP95ID)
+                    CP32(intP34ID, "Dozor stavby", True, True, intP95ID)
+                    CP32(intP34ID, "Reklamace", True, True, intP95ID)
+                    CP32(intP34ID, "HIP", True, True, intP95ID)
+
+            End Select
+            CP32(intP34ID, "Ostatní fakturovatelné", True, True, intP95ID, 100)
+            CP32(intP34ID, "Ostatní nefakturovatelné", False, True, intP95ID, 101)
+        End If
+    End Sub
+    Private Sub NePracovniCas()
+        Dim cP34 As New BO.p34ActivityGroup
+        With cP34
+            .p34Name = "Interní/neúčtovatelný čas"
+            .p34Code = "TN"
+            .p33ID = BO.p33IdENUM.Cas
+            .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
+            .p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj
+            .p34Ordinary = 1
+        End With
+        If Not _Factory.p34ActivityGroupBL.Save(cP34) Then
+            WE(_Factory.p34ActivityGroupBL.ErrorMessage)
+        Else
+            Dim intP34ID As Integer = _Factory.p34ActivityGroupBL.LastSavedPID
+            CP32(intP34ID, "Dovolená", False, False, 0)
+            CP32(intP34ID, "E-maily", False, True, 0)
+            CP32(intP34ID, "Interní organizace", False, True, 0)
+            CP32(intP34ID, "Lékař", False, False, 0)
+            CP32(intP34ID, "Nemoc", False, False, 0)
+            CP32(intP34ID, "Oběd", False, True, 0)
+            CP32(intP34ID, "Samo-studium", False, True, 0)
+            CP32(intP34ID, "Příprava nabídky", False, True, 0)
+            CP32(intP34ID, "Akviziční činnosti", False, True, 0)
+            CP32(intP34ID, "Překlady", False, True, 0)
+            CP32(intP34ID, "Prostoje", False, True, 0)
+            CP32(intP34ID, "Pochůzka", False, True, 0)
+            CP32(intP34ID, "Pošta", False, True, 0)
+            CP32(intP34ID, "Školení/seminář", False, True, 0)
+            CP32(intP34ID, "Služení cesta", False, True, 0)
+            CP32(intP34ID, "Vykazování", False, True, 0)
+            CP32(intP34ID, "Ostatní", False, True, 100)
+        End If
+    End Sub
+    Private Sub Vydaje(intP95ID As Integer)
+        Dim cP34 As New BO.p34ActivityGroup
+        With cP34
+            .p34Name = "Výdaje"
+            .p34Code = "EX"
+            .p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu
+            .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
+            .p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj
+            .p34Ordinary = 2
+        End With
+        If Not _Factory.p34ActivityGroupBL.Save(cP34) Then
+            WE(_Factory.p34ActivityGroupBL.ErrorMessage)
+        Else
+            Dim intP34ID As Integer = _Factory.p34ActivityGroupBL.LastSavedPID
+            CP32(intP34ID, "Cestovní náklady", True, True, intP95ID)
+            CP32(intP34ID, "Kurýr", True, True, intP95ID)
+            CP32(intP34ID, "Notářské úkony", True, True, intP95ID)
+            CP32(intP34ID, "Překlady", True, True, intP95ID)
+            CP32(intP34ID, "Soudní a správní poplatky", True, True, intP95ID)
+            CP32(intP34ID, "Subdodávky", True, True, intP95ID)
+            CP32(intP34ID, "Nákup licencí", True, True, intP95ID)
+            CP32(intP34ID, "Kancelářské potřeby", True, True, intP95ID)
+            CP32(intP34ID, "Ostatní fakturovatelné", True, True, intP95ID, 100)
+            CP32(intP34ID, "Ostatní nefakturovatelné", False, True, intP95ID, 101)
+        End If
+    End Sub
+    Private Sub FixniOdmeny(intP95ID As Integer)
+        Dim cP34 As New BO.p34ActivityGroup
+        With cP34
+            .p34Name = "Odměny k fakturaci"
+            .p34Code = "FEE"
+            .p33ID = BO.p33IdENUM.PenizeBezDPH
+            .p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna
+            .p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem
+            .p34Ordinary = 4
+        End With
+        If Not _Factory.p34ActivityGroupBL.Save(cP34) Then
+            WE(_Factory.p34ActivityGroupBL.ErrorMessage)
+        Else
+            Dim intP34ID As Integer = _Factory.p34ActivityGroupBL.LastSavedPID
+            CP32(intP34ID, "Fixně domluvená odměna", True, True, intP95ID, -1)
+            CP32(intP34ID, "Dohodnutý (opakovaný) paušál", True, True, intP95ID)
+            CP32(intP34ID, "Sleva", True, True, intP95ID)
+            CP32(intP34ID, "Přirážka", True, True, intP95ID)
+            CP32(intP34ID, "Software Maintenance", True, True, intP95ID)
+            CP32(intP34ID, "Ostatní", True, True, intP95ID, 100)
+
+        End If
+    End Sub
+    Private Sub CP32(intP34ID As Integer, strName As String, bolBillable As Boolean, bolTextRequired As Boolean, intP95ID As Integer, Optional intOrdinary As Integer = 0)
+        Dim c As New BO.p32Activity
+        c.p34ID = intP34ID
+        c.p32Name = strName
+        c.p32IsBillable = bolBillable
+        c.p32IsTextRequired = bolTextRequired
+        c.p32Ordinary = intOrdinary
+        c.p95ID = intP95ID
+        _Factory.p32ActivityBL.Save(c)
+    End Sub
+
+    Private Sub WE(strError As String)
+        Me.lblError.Text += "<hr>" & strError
+    End Sub
+
+    Private Sub TypyProjektu()
+        Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = _Factory.p34ActivityGroupBL.GetList(New BO.myQuery)
+        Dim lisX38 As IEnumerable(Of BO.x38CodeLogic) = _Factory.x38CodeLogicBL.GetList(BO.x29IdEnum.p41Project)
+        If lisX38.Count = 0 Then
+            WE("Nedošlo k vygenerování nastavení číselných řad.")
+            Return
+        End If
+        Dim cRec As New BO.p42ProjectType
+        With cRec
+            .p42Name = "Fakturační projekt"
+            .p42IsDefault = True
+            .p42Code = "FP"
+            .x38ID = lisX38(0).PID
+        End With
+        Dim lis As New List(Of BO.p43ProjectType_Workload)
+        For Each cP34 In lisP34.Where(Function(p) p.p34Code <> "TN")
+            Dim c As New BO.p43ProjectType_Workload()
+            c.p34ID = cP34.PID
+            lis.Add(c)
+        Next
+        _Factory.p42ProjectTypeBL.Save(cRec, lis)
+
+        lis = New List(Of BO.p43ProjectType_Workload)
+        cRec = New BO.p42ProjectType
+        With cRec
+            .p42Name = "Režijní projekt"
+            .p42Code = "NP"
+            .x38ID = lisX38(0).PID
+        End With
+        For Each cP34 In lisP34.Where(Function(p) p.p34Code = "TN" Or p.p34Code = "EX")
+            Dim c As New BO.p43ProjectType_Workload()
+            c.p34ID = cP34.PID
+            lis.Add(c)
+        Next
+        _Factory.p42ProjectTypeBL.Save(cRec, lis)
+    End Sub
+    Private Sub CreateJ07(strName As String, intOrdinary As Integer)
+        Dim c As New BO.j07PersonPosition
+        c.j07Name = strName
+        c.j07Ordinary = intOrdinary
+        _Factory.j07PersonPositionBL.Save(c)
+    End Sub
+    Private Sub Pozice()
+        CreateJ07("Partner", 1)
+        CreateJ07("Senior", 2)
+        If Me.cbxBusiness.SelectedValue = "AK" Then
+            CreateJ07("Advokát", 3)
+        Else
+            CreateJ07("Konzultant", 3)
+        End If
+        CreateJ07("Office", 8)
+        CreateJ07("Student", 10)
+    End Sub
+    Private Sub Svatky()
+        CC26(1, 1, "Nový rok")
+        CC26(6, 4, "Velikonoční pondělí")
+        CC26(1, 5, "Svátek práce")
+        CC26(8, 5, "Den vítězství")
+        CC26(5, 7, "Den slovanských věrozvěstů Cyrila a Metoděje")
+        CC26(6, 7, "Den upálení mistra Jana Husa")
+        CC26(28, 9, "Den české státnosti")
+        CC26(28, 10, "Den vzniku samostatného československého státu")
+        CC26(17, 11, "Den boje za svobodu a demokracii")
+        CC26(24, 12, "Štědrý den")
+        CC26(25, 12, "1. svátek vánoční")
+        CC26(26, 12, "2. svátek vánoční")
+    End Sub
+    Private Sub CC26(den As Integer, mesic As Integer, strName As String)
+        Dim c As New BO.c26Holiday()
+        c.c26Date = DateSerial(Year(Now), mesic, den)
+        c.c26Name = strName
+        _Factory.c26HolidayBL.Save(c)
+
+        c = New BO.c26Holiday()
+        c.c26Date = DateSerial(Year(Now) + 1, mesic, den)
+        c.c26Name = strName
+        _Factory.c26HolidayBL.Save(c)
+    End Sub
+    Private Sub Fondy()
+        Dim c As New BO.c21FondCalendar()
+        c.c21Name = "FULL TIME"
+        c.c21Day1_Hours = 8
+        c.c21Day2_Hours = 8
+        c.c21Day3_Hours = 8
+        c.c21Day4_Hours = 8
+        c.c21Day5_Hours = 8
+        c.c21ScopeFlag = BO.c21ScopeFlagENUM.Basic
+        _Factory.c21FondCalendarBL.Save(c)
+        Dim intC21ID As Integer = _Factory.c21FondCalendarBL.LastSavedPID
+
+
+        c = New BO.c21FondCalendar
+        c.c21Name = "Po+St (2 dny v týdnu)"
+        c.c21Day1_Hours = 8
+        c.c21Day3_Hours = 8
+        c.c21ScopeFlag = BO.c21ScopeFlagENUM.Basic
+        _Factory.c21FondCalendarBL.Save(c)
+        
+        Dim lis As IEnumerable(Of BO.j02Person) = _Factory.j02PersonBL.GetList(New BO.myQueryJ02)
+        For Each person In lis
+            person.c21ID = intC21ID
+            _Factory.j02PersonBL.Save(person, Nothing)
+        Next
+    End Sub
+
+    Private Sub ProjektoveRole()
+        'výchozí situace je, že role jsou již založené, pouze aktualizovat o28
+        Dim cRole As BO.x67EntityRole = _Factory.x67EntityRoleBL.Load(3)
+        Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = _Factory.p34ActivityGroupBL.GetList(New BO.myQuery)
+
+        Dim lisO28 As New List(Of BO.o28ProjectRole_Workload)
+
+        For Each sesit In lisP34
+            Dim c As New BO.o28ProjectRole_Workload
+            c.p34ID = sesit.PID
+            c.o28EntryFlag = BO.o28EntryFlagENUM.ZapisovatDoProjektuIDoUloh
+            c.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu
+            lisO28.Add(c)
+        Next
+        _Factory.x67EntityRoleBL.SaveO28(cRole.PID, lisO28)
+
+        cRole = _Factory.x67EntityRoleBL.Load(5)
+        lisO28 = New List(Of BO.o28ProjectRole_Workload)
+        For Each sesit In lisP34
+            Dim c As New BO.o28ProjectRole_Workload
+            c.p34ID = sesit.PID
+            c.o28EntryFlag = BO.o28EntryFlagENUM.ZapisovatDoProjektuIDoUloh
+            c.o28PermFlag = BO.o28PermFlagENUM.PouzeVlastniWorksheet
+            lisO28.Add(c)
+        Next
+        _Factory.x67EntityRoleBL.SaveO28(cRole.PID, lisO28)
+    End Sub
+
+    Private Sub Rezije()
+        Dim intJ02ID As Integer = _Factory.j02PersonBL.GetList(New BO.myQueryJ02)(0).PID
+
+        Dim c As New BO.p28Contact
+        c.p28CompanyName = Me.txtCompany.Text
+        c.p28IsCompany = True
+        c.p28RegID = Me.txtIC.Text
+        c.p28VatID = Me.txtDIC.Text
+        c.j02ID_Owner = intJ02ID
+        c.p28CompanyShortName = "_Kancelář"
+
+        Dim lisO37 As New List(Of BO.o37Contact_Address)
+        Dim cc As New BO.o37Contact_Address
+        With cc
+            .o38Street = Me.txtStreet.Text
+            .o38City = Me.txtCity.Text
+            .o38ZIP = Me.txtPostCode.Text
+            .o36ID = BO.o36IdEnum.InvoiceAddress
+        End With
+        lisO37.Add(cc)
+
+        If _Factory.p28ContactBL.Save(c, lisO37, Nothing, Nothing, Nothing, Nothing, Nothing) Then
+            Dim intP28ID As Integer = _Factory.p28ContactBL.LastSavedPID
+            Dim intP42ID As Integer = _Factory.p42ProjectTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p42Code = "NP")(0).PID
+            CreateP41(intP28ID, "Vnitrofiremní režije", intP42ID, intJ02ID)
+
+        Else
+            WE(_Factory.p28ContactBL.ErrorMessage)
+        End If
+    End Sub
+    Private Sub Projekty()
+        Dim intJ02ID As Integer = _Factory.j02PersonBL.GetList(New BO.myQueryJ02)(0).PID
+        Dim c As New BO.p28Contact
+        c.p28CompanyName = Me.txtClient.Text
+        c.p28IsCompany = True
+        c.j02ID_Owner = intJ02ID
+
+        If _Factory.p28ContactBL.Save(c, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing) Then
+            Dim intP28ID As Integer = _Factory.p28ContactBL.LastSavedPID
+            Dim intP42ID As Integer = _Factory.p42ProjectTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p42Code = "FP")(0).PID
+            If Trim(Me.txtProject1.Text) = "" Then Me.txtProject1.Text = "General"
+            CreateP41(intP28ID, Me.txtProject1.Text, intP42ID, intJ02ID)
+            If Trim(Me.txtProject2.Text) <> "" Then
+                CreateP41(intP28ID, Me.txtProject2.Text, intP42ID, intJ02ID)
+            End If
+
+        Else
+            WE(_Factory.p28ContactBL.ErrorMessage)
+        End If
+    End Sub
+
+    Private Sub CreateP41(intP28ID As Integer, strName As String, intP42ID As Integer, intJ02ID As Integer)
+        Dim cP41 As New BO.p41Project
+        cP41.p42ID = intP42ID
+        cP41.p41Name = strName
+        cP41.p28ID_Client = intP28ID
+        cP41.j02ID_Owner = intJ02ID
+        Dim lisRoles As New List(Of BO.x69EntityRole_Assign)
+        Dim role As New BO.x69EntityRole_Assign
+        role.j02ID = intJ02ID
+        role.x67ID = 3
+        lisRoles.Add(role)
+        role = New BO.x69EntityRole_Assign
+        role.j11ID = _Factory.j11TeamBL.GetList()(0).PID
+        role.x67ID = 3
+        lisRoles.Add(role)
+        _Factory.p41ProjectBL.Save(cP41, Nothing, Nothing, lisRoles, Nothing)
+    End Sub
+    Private Sub TypyMilniku()
+        CO21(BO.x29IdEnum.p41Project, "Lhůta")
+        CO21(BO.x29IdEnum.p41Project, "Schůzka s klientem")
+        CO21(BO.x29IdEnum.p41Project, "Kontrolní den", 10)
+        CO21(BO.x29IdEnum.p41Project, "Vypršení licence", 10)
+        CO21(BO.x29IdEnum.p41Project, "Ostatní (projekt)", 100)
+
+        CO21(BO.x29IdEnum.p28Contact, "Schůzka s klientem")
+        CO21(BO.x29IdEnum.p28Contact, "Ostatní (klient)", 100)
+
+        CO21(BO.x29IdEnum.j02Person, "Narozeniny")
+        CO21(BO.x29IdEnum.j02Person, "Termín školení")
+        CO21(BO.x29IdEnum.j02Person, "Ostatní (osoba)", 100)
+    End Sub
+    Private Sub CO21(x29id As BO.x29IdEnum, strName As String, Optional intOrdinary As Integer = 0)
+        Dim c As New BO.o21MilestoneType
+        c.x29ID = x29id
+        c.o21Name = strName
+        c.o21Flag = BO.o21FlagEnum.DeadlineOrMilestone
+        c.o21Ordinary = intOrdinary
+        _Factory.o21MilestoneTypeBL.Save(c)
+    End Sub
+    Private Sub TypyUkolu()
+        CP57("Úkol")
+        CP57("Servisní výjezd")
+        CP57("Ostatní", 100)
+    End Sub
+    Private Sub CP57(strName As String, Optional intOrdinary As Integer = 0)
+        Dim c As New BO.p57TaskType
+        c.p57Name = strName
+        c.p57Ordinary = intOrdinary
+        If _Factory.x38CodeLogicBL.GetList(BO.x29IdEnum.p56Task).Count > 0 Then
+            c.x38ID = _Factory.x38CodeLogicBL.GetList(BO.x29IdEnum.p56Task)(0).PID
+        End If
+
+        _Factory.p57TaskTypeBL.Save(c)
+    End Sub
+
+    Private Sub NastaveniFakturace()
+        Dim c As New BO.p93InvoiceHeader
+        c.p93Name = Me.txtCompany.Text
+        c.p93Company = Me.txtCompany.Text
+        c.p93RegID = Me.txtIC.Text
+        c.p93VatID = Me.txtDIC.Text
+        c.p93Street = Me.txtStreet.Text
+        c.p93City = Me.txtCity.Text
+        c.p93Zip = Me.txtPostCode.Text
+
+        Dim ba As New BO.p86BankAccount
+        ba.p86Name = "Firemní účet"
+        ba.p86BankCode = Me.txtBankCode.Text
+        ba.p86BankAccount = Me.txtBankAccount.Text
+        _Factory.p86BankAccountBL.Save(ba)
+        Dim intP86ID As Integer = _Factory.p86BankAccountBL.LastSavedPID
+
+        Dim lisP88 As New List(Of BO.p88InvoiceHeader_BankAccount)
+        Dim cP88 As New BO.p88InvoiceHeader_BankAccount
+        cP88.j27ID = CInt(Me.j27id.SelectedValue)
+        cP88.p86ID = intP86ID
+        lisP88.Add(cP88)
+        _Factory.p93InvoiceHeaderBL.Save(c, lisP88)
+
+        _Factory.x35GlobalParam.UpdateValue("j27ID_Invoice", Me.j27id.SelectedValue)
+        _Factory.x35GlobalParam.UpdateValue("j27ID_Domestic", Me.j27id.SelectedValue)
+        _Factory.x35GlobalParam.UpdateValue("Round2Minutes", "5")
+
+        
+    End Sub
+
+    Private Sub DphSazby()
+        Dim intJ27ID As Integer = BO.BAS.IsNullInt(Me.j27id.SelectedValue)
+
+        CreateP53(BO.x15IdEnum.BezDPH, 0, intJ27ID)
+        CreateP53(BO.x15IdEnum.SnizenaSazba, BO.BAS.IsNullNum(Me.txtVatRateLow.Text), intJ27ID)
+        CreateP53(BO.x15IdEnum.ZakladniSazba, BO.BAS.IsNullNum(Me.txtVatRateStandard.Text), intJ27ID)
+
+        If intJ27ID = 2 Then
+            CreateP53(BO.x15IdEnum.BezDPH, 0, 3)
+        End If
+    End Sub
+
+    Private Sub CreateP53(x15id As BO.x15IdEnum, dblValue As Double, intJ27ID As Integer)
+        Dim cP53 As New BO.p53VatRate
+        cP53.x15ID = x15id
+        cP53.j27ID = intJ27ID
+        cP53.p53Value = dblValue
+        cP53.ValidFrom = DateSerial(Year(Now), 1, 1)
+        _Factory.p53VatRateBL.Save(cP53)
+    End Sub
+
+    Private Function CreateP95(strName As String) As Integer
+        Dim c As New BO.p95InvoiceRow
+        c.p95Name = strName
+
+        If _Factory.p95InvoiceRowBL.Save(c) Then
+            Return _Factory.p95InvoiceRowBL.LastSavedPID
+        End If
+    End Function
+
+    Private Sub cmdGo_Click(sender As Object, e As EventArgs) Handles cmdGo.Click
+        Me.lblError.Text = ""
+        If Me.cbxBusiness.SelectedItem Is Nothing Then
+            WE("Musíte vybrat odvětví podnikání.")
+            Return
+        End If
+        If Trim(Me.txtCompany.Text) = "" Then
+            WE("Musíte vyplnit název vaší společnosti.")
+            Return
+        End If
+        If Trim(Me.txtClient.Text) = "" Then
+            WE("Musíte vyplnit název jednoho z vašich klientů.")
+            Return
+        End If
+        If _Factory.p34ActivityGroupBL.GetList(New BO.myQuery).Count = 0 Then
+            Dim intP95ID As Integer = CreateP95("Pracovní čas")
+            PracovniCas(intP95ID)
+            NePracovniCas()
+            intP95ID = CreateP95("Výdaje")
+            Vydaje(intP95ID)
+            intP95ID = CreateP95("Odměny")
+            FixniOdmeny(intP95ID)
+        End If
+        If _Factory.p42ProjectTypeBL.GetList(New BO.myQuery).Count = 0 Then
+            TypyProjektu()
+        End If
+        If _Factory.j07PersonPositionBL.GetList().Count = 0 Then
+            Pozice()
+        End If
+        If _Factory.c26HolidayBL.GetList().Count = 0 Then
+            Svatky()
+        End If
+        If _Factory.c21FondCalendarBL.GetList().Count = 0 Then
+            Fondy()
+        End If
+
+        If _Factory.x67EntityRoleBL.GetList_o28(BO.BAS.ConvertInt2List(3)).Count = 0 Then
+            ProjektoveRole()
+        End If
+        If _Factory.p28ContactBL.GetList(New BO.myQueryP28).Count = 0 Then
+            Rezije()
+            Projekty()
+        End If
+        If _Factory.o21MilestoneTypeBL.GetList(New BO.myQuery).Count = 0 Then
+            TypyMilniku()
+        End If
+        If _Factory.p57TaskTypeBL.GetList().Count = 0 Then
+            TypyUkolu()
+        End If
+        If _Factory.p53VatRateBL.GetList(New BO.myQuery).Count = 0 Then
+            DphSazby()
+        End If
+        If _Factory.p93InvoiceHeaderBL.GetList().Count = 0 Then
+            NastaveniFakturace()
+        End If
+
+        Filtry()
+
+
+        If Me.lblError.Text = "" Then
+            Response.Redirect("kickoff_after2.aspx")
+        End If
+
+    End Sub
+
+    Private Sub Filtry()
+        
+        CreateQuery("Otevřené projekty", BO.x29IdEnum.p41Project, 1)
+        CreateQuery("Projekty v koši", BO.x29IdEnum.p41Project, 2)
+        CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p41Project, 0, "_other", 3)
+        CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p41Project, 0, "_other", 5)
+        CreateQuery("Projekty s fakturou", BO.x29IdEnum.p41Project, 0, "_other", 15)
+        CreateQuery("Projekty s otevřeným úkolem", BO.x29IdEnum.p41Project, 0, "_other", 6)
+        CreateQuery("Projekty s opakovanou odměnou/paušálem", BO.x29IdEnum.p41Project, 0, "_other", 10)
+        CreateQuery("Projekty v režimu DRAFT", BO.x29IdEnum.p41Project, 0, "_other", 11)
+        CreateQuery("Není přiřazen ceník sazeb", BO.x29IdEnum.p41Project, 0, "_other", 13)
+        CreateQuery("Projekty s kontaktní osobou", BO.x29IdEnum.p41Project, 0, "_other", 16)
+
+
+        CreateQuery("Otevření klienti", BO.x29IdEnum.p28Contact, 1)
+        CreateQuery("Klienti v koši", BO.x29IdEnum.p28Contact, 2)
+        CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p28Contact, 0, "_other", 3)
+        CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p28Contact, 0, "_other", 5)
+        CreateQuery("Klienti s kontaktní osobou", BO.x29IdEnum.p28Contact, 0, "_other", 16)
+
+        CreateQuery("Otevřené osoby", BO.x29IdEnum.j02Person, 1)
+        CreateQuery("Osoby v koši", BO.x29IdEnum.j02Person, 2)
+        CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.j02Person, 0, "_other", 3)
+        CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.j02Person, 0, "_other", 5)
+
+        CreateQuery("Výdaje", BO.x29IdEnum.p31Worksheet, 0, "p34id", 3, "Výdaje")
+        CreateQuery("Fixní odměny", BO.x29IdEnum.p31Worksheet, 0, "p34id", 4, "Odměny k fakturaci")
+
+    End Sub
+
+    Private Function Findj71RecordName(x29id As BO.x29IdEnum, intJ71RecordPID As Integer) As String
+        If _Factory.j70QueryTemplateBL.GetList_OtherQueryItem(x29id).Where(Function(p) p.pid = intJ71RecordPID).Count > 0 Then
+            Return _Factory.j70QueryTemplateBL.GetList_OtherQueryItem(x29id).Where(Function(p) p.pid = intJ71RecordPID)(0).Text
+        Else
+            Return ""
+        End If
+    End Function
+
+    Private Sub CreateQuery(strJ70Name As String, x29ID As BO.x29IdEnum, intBinFlag As Integer, Optional strJ71Field As String = "", Optional intJ71RecordPID As Integer = 0, Optional strJ71RecordName As String = "")
+        Dim intJ02ID As Integer = _Factory.j02PersonBL.GetList(New BO.myQueryJ02)(0).PID
+        Dim mq As New BO.myQueryJ03
+        mq.j02ID = intJ02ID
+        Dim intJ03ID As Integer = _Factory.j03UserBL.GetList(mq)(0).PID
+        Dim intJ11ID As Integer = _Factory.j11TeamBL.GetList()(0).PID
+        Dim c As New BO.j70QueryTemplate
+        c.j70Name = strJ70Name
+        c.j70BinFlag = intBinFlag
+        c.j02ID_Owner = intJ02ID
+        c.j03ID = intJ03ID
+        c.x29ID = x29ID
+
+        Dim lisJ71 As New List(Of BO.j71QueryTemplate_Item)
+        If strJ71Field <> "" Then
+            Dim cI As New BO.j71QueryTemplate_Item
+            cI.j71ValueType = "combo"
+            cI.j71RecordPID = intJ71RecordPID
+            cI.j71Field = strJ71Field
+            If strJ71Field = "_other" Then
+                cI.j71FieldLabel = "Různé"
+                cI.j71RecordName = Findj71RecordName(x29ID, cI.j71RecordPID)
+            Else
+                If strJ71Field = "p34id" Then cI.j71FieldLabel = "Sešit"
+                cI.j71RecordName = strJ71RecordName
+            End If
+            lisJ71.Add(cI)
+        End If
+
+        Dim lisX69 As New List(Of BO.x69EntityRole_Assign)
+        Dim cJ As New BO.x69EntityRole_Assign
+        cJ.x67ID = 9
+        cJ.j11ID = intJ11ID
+        lisX69.Add(cJ)
+        _Factory.j70QueryTemplateBL.Save(c, lisJ71, lisX69)
+    End Sub
+
+End Class
