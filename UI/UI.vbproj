@@ -537,6 +537,9 @@
       <DependentUpon>fileupload_preview.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Handler\handler_capacity_plan.ashx.vb">
+      <DependentUpon>handler_capacity_plan.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\handler_search_notepad.ashx.vb">
       <DependentUpon>handler_search_notepad.ashx</DependentUpon>
     </Compile>
@@ -2436,6 +2439,7 @@
     <Content Include="Mobile.Master" />
     <Content Include="Handler\handler_search_task.ashx" />
     <Content Include="Handler\handler_search_notepad.ashx" />
+    <Content Include="Handler\handler_capacity_plan.ashx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

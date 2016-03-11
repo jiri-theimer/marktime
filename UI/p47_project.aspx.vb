@@ -10,40 +10,40 @@ Public Class p47_project
         Public Property RowIndex As Integer
         Public Property Col1Fa As Double?
         Public Property Col1NeFa As Double?
-        Public Property Col1D As Date?
+        Public Property Col1P85ID As Integer?
         Public Property Col2Fa As Double?
         Public Property Col2NeFa As Double?
-        Public Property Col2D As Date?
+        Public Property Col2P85ID As Integer?
         Public Property Col3Fa As Double?
         Public Property Col3NeFa As Double?
-        Public Property Col3D As Date?
+        Public Property Col3P85ID As Integer?
         Public Property Col4Fa As Double?
         Public Property Col4NeFa As Double?
-        Public Property Col4D As Date?
+        Public Property Col4P85ID As Integer?
         Public Property Col5Fa As Double?
         Public Property Col5NeFa As Double?
-        Public Property Col5D As Date?
+        Public Property Col5P85ID As Integer?
         Public Property Col6Fa As Double?
         Public Property Col6NeFa As Double?
-        Public Property Col6D As Date?
+        Public Property Col6P85ID As Integer?
         Public Property Col7Fa As Double?
         Public Property Col7NeFa As Double?
-        Public Property Col7D As Date?
+        Public Property Col7P85ID As Integer?
         Public Property Col8Fa As Double?
         Public Property Col8NeFa As Double?
-        Public Property Col8D As Date?
+        Public Property Col8P85ID As Integer?
         Public Property Col9Fa As Double?
         Public Property Col9NeFa As Double?
-        Public Property Col9D As Date?
+        Public Property ColP9P85ID As Integer?
         Public Property Col10Fa As Double?
         Public Property Col10NeFa As Double?
-        Public Property Col10D As Date?
+        Public Property Col10P85ID As Integer?
         Public Property Col11Fa As Double?
         Public Property Col11NeFa As Double?
-        Public Property Col11D As Date?
+        Public Property Col11P85ID As Integer?
         Public Property Col12Fa As Double?
         Public Property Col12NeFa As Double?
-        Public Property Col12D As Date?
+        Public Property Col12P85ID As Integer?
     End Class
 
     Public Property LimitD1 As Date
@@ -63,15 +63,19 @@ Public Class p47_project
         End Set
     End Property
 
+    Private Sub p47_project_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _MasterPage = Me.Master
+        Master.HelpTopicID = "p47_project"
+    End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("guid") = BO.BAS.GetGUID
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .AddToolbarButton("Uložit změny", "ok", , "Images/save.png")
                 .HeaderText = "Kapacitní plán | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
             End With
-
+           
 
             RefreshRecord()
 
@@ -81,6 +85,7 @@ Public Class p47_project
 
     Private Sub AddGroupHeader(strName As String, strHeaderText As String)
         Dim group As New GridColumnGroup
+        grid1.MasterTableView.ColumnGroups.Add(group)
         With group
             With .HeaderStyle
                 .ForeColor = Drawing.Color.Black
@@ -93,12 +98,14 @@ Public Class p47_project
             .HeaderText = strHeaderText
             
         End With
-        grid1.MasterTableView.ColumnGroups.Add(group)
+
     End Sub
 
 
     Private Sub SetupGrid()
         grid1.Columns.Clear()
+        grid1.MasterTableView.GroupByExpressions.Clear()
+        grid1.MasterTableView.ColumnGroups.Clear()
         With grid1.PagerStyle
             .PageSizeLabelText = ""
             .LastPageToolTip = "Poslední strana"
@@ -131,12 +138,14 @@ Public Class p47_project
     
     Public Sub AddNumbericTextboxColumn(strField As String, strHeader As String, strColumnEditorID As String, bolAllowSorting As Boolean, Optional ByVal strUniqueName As String = "", Optional strGroupHeaderName As String = "")
         Dim col As New GridNumericColumn
-
         grid1.MasterTableView.Columns.Add(col)
+
         col.HeaderText = strHeader
         col.DataField = strField
         If strField.IndexOf("NeFa") > 0 Then
             col.ItemStyle.ForeColor = Drawing.Color.Red
+        Else
+            col.ItemStyle.ForeColor = Drawing.Color.Green
         End If
         col.ColumnEditorID = strColumnEditorID
         col.ColumnGroupName = strGroupHeaderName
@@ -145,17 +154,39 @@ Public Class p47_project
             col.SortExpression = strUniqueName
         End If
         col.AllowSorting = bolAllowSorting
+
+
     End Sub
     Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional strWidth As String = "")
         Dim col As New GridBoundColumn
-
         grid1.MasterTableView.Columns.Add(col)
+
         col.HeaderText = strHeader
         col.DataField = strField
         col.ReadOnly = True
         col.AllowSorting = True
         If strWidth <> "" Then col.ItemStyle.Width = Unit.Parse(strWidth)
 
+
+    End Sub
+
+    Private Sub grid1_DataBound(sender As Object, e As EventArgs) Handles grid1.DataBound
+        Dim footerItem As GridFooterItem = grid1.MasterTableView.GetItems(GridItemType.Footer)(0)
+
+        Dim lis As IEnumerable(Of PlanMatrix) = CType(grid1.DataSource, List(Of PlanMatrix))
+
+        footerItem.Item("Person").Text = "Celkem"
+        footerItem.Item("Col1Fa").Text = lis.Sum(Function(p) p.Col1Fa).ToString
+        footerItem.Item("Col1NeFa").Text = lis.Sum(Function(p) p.Col1NeFa).ToString
+    End Sub
+
+    Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
+        If TypeOf e.Item Is GridDataItem Then
+            Dim cRec As PlanMatrix = CType(e.Item.DataItem, PlanMatrix)
+            e.Item.Attributes.Item("j02id") = cRec.PID.ToString
+
+        End If
+        
     End Sub
 
    
@@ -173,7 +204,16 @@ Public Class p47_project
         mq.p41ID = Master.DataPID
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
         lblHeader.Text = BO.BAS.FD(cRec.p41PlanFrom) & " - " & BO.BAS.FD(cRec.p41PlanUntil) & " (" & DateDiff(DateInterval.Day, cRec.p41PlanFrom.Value, cRec.p41PlanUntil.Value).ToString & "d.)"
+        If Not Page.IsPostBack Then
+            Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+            If cDisp.p47_Create Then
+                Master.AddToolbarButton("Uložit změny", "save", 0, "Images/save.png")
 
+            Else
+                cmdAddPerson.Visible = False
+                Master.Notify("Kapacitní plán projektu můžete pouze číst, nikoliv upravovat.")
+            End If
+        End If
 
         With cRec
             d1 = DateSerial(Year(.p41PlanFrom), Month(.p41PlanFrom), 1)
@@ -184,21 +224,11 @@ Public Class p47_project
         Me.LimitD2 = d2
         SetupGrid()
 
-        If Not Page.IsPostBack Then
-            Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
-            If cDisp.p47_Create Then
-                Master.AddToolbarButton("Uložit změny", "save", 0, "Images/save.png")
-                ViewState("readonly") = "0"
-            Else
-                cmdAddPerson.Visible = False
-                Master.Notify("Kapacitní plán projektu můžete pouze číst, nikoliv upravovat.")
-            End If
-        End If
-
+        
         mq.DateFrom = d1
         mq.DateUntil = d2
 
-        Dim lis As IEnumerable(Of BO.p47CapacityPlan) = Master.Factory.p47CapacityPlanBL.GetList(mq).Where(Function(p) p.p47HoursBillable <> 0 Or p.p47HoursNonBillable <> 0).OrderBy(Function(p) p.Person).ThenBy(Function(p) p.j02ID)
+        Dim lis As IEnumerable(Of BO.p47CapacityPlan) = Master.Factory.p47CapacityPlanBL.GetList(mq).OrderBy(Function(p) p.Person).ThenBy(Function(p) p.j02ID)
         Dim intLastJ02ID As Integer = 0
         For Each c In lis
             If c.j02ID <> intLastJ02ID Then
@@ -254,12 +284,13 @@ Public Class p47_project
                 row.RowIndex = intRowIndex
                 row.PID = c.p85OtherKey1
                 lis.Add(row)
+                DisablePersonInOffeList(c.p85OtherKey1)
             End If
             For i As Integer = 0 To 11
                 If c.p85FreeDate01.Month = dats(i).Month And c.p85FreeDate01.Year = dats(i).Year Then
                     BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "Fa", c.p85FreeFloat01)
                     BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "NeFa", c.p85FreeFloat02)
-                    BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "D", c.p85FreeDate01)
+                    BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "P85ID", c.PID)
                 End If
             Next
             intLastJ02ID = c.p85OtherKey1
@@ -267,6 +298,14 @@ Public Class p47_project
 
         Return lis
     End Function
+
+    Private Sub DisablePersonInOffeList(intJ02ID As Integer)
+        For Each ri As RepeaterItem In rpJ02.Items
+            If CType(ri.FindControl("hidJ02ID"), HiddenField).Value = intJ02ID.ToString Then
+                ri.FindControl("cmdInsert").Visible = False : Return
+            End If
+        Next
+    End Sub
 
     Private Sub rpJ02_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpJ02.ItemCommand
 
@@ -300,9 +339,46 @@ Public Class p47_project
         End With
     End Sub
 
-    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        SetupGrid()
-        grid1.Rebind()
+    
 
+    Private Sub p47_project_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Page.IsPostBack Then
+            grid1.Rebind()
+        End If
+    End Sub
+
+   
+
+    Private Function SaveChanges() As Boolean
+        Dim lisP47 As New List(Of BO.p47CapacityPlan)
+        Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False)
+        For Each cTemp In lisTemp
+            Dim c As New BO.p47CapacityPlan
+            c.SetPID(cTemp.p85DataPID)
+            If cTemp.p85IsDeleted And cTemp.p85DataPID <> 0 Then
+                c.SetAsDeleted()
+            End If
+            c.j02ID = cTemp.p85OtherKey1
+            c.p41ID = Master.DataPID
+            c.p47DateFrom = cTemp.p85FreeDate01
+            c.p47DateUntil = cTemp.p85FreeDate02
+            c.p47HoursBillable = cTemp.p85FreeFloat01
+            c.p47HoursNonBillable = cTemp.p85FreeFloat02
+            c.p47HoursTotal = c.p47HoursBillable + c.p47HoursNonBillable
+
+
+            lisP47.Add(c)
+
+        Next
+        Return Master.Factory.p47CapacityPlanBL.SaveProjectPlan(Master.DataPID, lisP47)
+
+    End Function
+
+    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
+        If strButtonValue = "save" Then
+            If SaveChanges() Then
+                Master.CloseAndRefreshParent("p47-save")
+            End If
+        End If
     End Sub
 End Class

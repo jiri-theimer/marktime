@@ -29,13 +29,50 @@
             var columnUniqueName = args.get_columnUniqueName();
             var editorValue = args.get_editorValue();
             var cellValue = args.get_cellValue();
+            //alert(row.attributes["j02id"].value);
             
-            
-            alert(row.rowIndex + " - " + columnUniqueName + ": " + editorValue);
+            //alert(row.rowIndex + " - " + columnUniqueName + ": " + editorValue);
+            save_cellvalue(row.attributes["j02id"].value, columnUniqueName, editorValue)
     
         }
 
-        
+        function save_cellvalue(j02id,colName,cellValue) {
+            var guid = "<%=viewstate("guid")%>";
+            var d1 = document.getElementById("<%=hidLimD1.clientid%>").value;
+            var d2 = document.getElementById("<%=hidLimD2.ClientID%>").value;
+
+            $.post("Handler/handler_capacity_plan.ashx", {guid: guid,d1: d1,d2: d2, j02id: j02id,value: cellValue, colName: colName, oper: "capacity_plan_value" }, function (data) {
+                if (data == ' ') {
+                    return;
+                }
+
+                //document.getElementById("aa").innerHTML = data;
+
+                                
+                grid = $find("<%=grid1.ClientID%>");
+                var masterTableViewFooter = grid.get_masterTableViewFooter();
+                
+                var total = 0;
+
+                var MasterTable = grid.get_masterTableView();
+                var Rows = MasterTable.get_dataItems();
+                for (var col = 1; col<4; col++) {
+                    total = 0;
+
+                for (var i = 0; i < Rows.length; i++) {
+                    var row = Rows[i];
+                    var cell = row.get_element().cells[col].innerText;
+                    total += parseFloat(cell);
+                    
+                }
+                var footer = masterTableViewFooter.rows[0].cells[0].innerHTML;
+                alert(footer);
+
+
+                }
+
+            });
+        }
        
     </script>
 </asp:Content>
@@ -67,7 +104,7 @@
             <div class="content">
                 <asp:Repeater ID="rpJ02" runat="server">
                     <ItemTemplate>
-                        <div class="div6">
+                        <div style="padding:10px;">
                             <asp:HyperLink ID="clue_person" runat="server" CssClass="reczoom" Text="i" title="Kapacita osoby"></asp:HyperLink>
                             
                             <asp:label ID="Person" runat="server"></asp:label>
@@ -82,9 +119,9 @@
     </div>
 
 
-    <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" EnableViewState="false" RenderMode="Lightweight" runat="server" PageSize="500" ShowFooter="true" AllowPaging="false" AllowSorting="true" Skin="Metro">
+    <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" AutoGenerateHierarchy="false" AutoGenerateEditColumn="false" EnableViewState="true" RenderMode="Lightweight" runat="server" PageSize="500" ShowFooter="true" AllowPaging="false" AllowSorting="true" Skin="Metro">
         <MasterTableView EditMode="Batch" ClientDataKeyNames="PID" >
-       
+            <FooterStyle HorizontalAlign="left" BackColor="silver" Font-Bold="true" />
             <BatchEditingSettings EditType="Cell" OpenEditingEvent="Click" />
             <ItemStyle height="35px" />
             <AlternatingItemStyle Height="35px" />
@@ -94,23 +131,23 @@
         </ExportSettings>
         
         <ClientSettings AllowKeyboardNavigation="true" EnableAlternatingItems="true">
-            <Scrolling AllowScroll="true" FrozenColumnsCount="0" UseStaticHeaders="false" />
+            <Scrolling AllowScroll="false" FrozenColumnsCount="1" UseStaticHeaders="false" />
             <Selecting CellSelectionMode="SingleCell" AllowRowSelect="false" />
             <ClientEvents OnBatchEditCellValueChanged="BatchEditCellValueChanged" />
-            <KeyboardNavigationSettings/>
+            <KeyboardNavigationSettings EnableKeyboardShortcuts="false"/>
         </ClientSettings>
-        <PagerStyle Position="TopAndBottom" AlwaysVisible="false" />
-        <SortingSettings SortToolTip="Klikněte zde pro třídění" SortedDescToolTip="Setříděno sestupně" SortedAscToolTip="Setříděno vzestupně" />
+        <PagerStyle Position="TopAndBottom" AlwaysVisible="false" />        
         <FooterStyle BackColor="#bcc7d8" HorizontalAlign="Right" />
 
     </telerik:RadGrid>
     
     <telerik:GridNumericColumnEditor ID="gridnumber1" runat="server" NumericTextBox-Width="30px" NumericTextBox-BackColor="LightGoldenrodYellow">
-        <NumericTextBox NumberFormat-DecimalDigits="0"></NumericTextBox>
+        <NumericTextBox NumberFormat-DecimalDigits="0" IncrementSettings-InterceptArrowKeys="false"></NumericTextBox>
     </telerik:GridNumericColumnEditor>
    
     <asp:HiddenField ID="hidLimD1" runat="server" />
     <asp:HiddenField ID="hidLimD2" runat="server" />
+    
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>
