@@ -293,6 +293,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents cmdP49 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''cmdP48 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdP48 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''topLink0 control.
     '''</summary>
     '''<remarks>

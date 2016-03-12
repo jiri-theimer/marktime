@@ -60,7 +60,22 @@
             Return CType(CInt(cbxRozklad.SelectedValue), RozkladENUM)
         End Get
     End Property
-
+    Public Property CurrentMasterPrefix As String
+        Get
+            Return hidMasterPrefix.Value
+        End Get
+        Set(value As String)
+            hidMasterPrefix.Value = value
+        End Set
+    End Property
+    Public Property CurrentMasterPID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidMasterPID.Value)
+        End Get
+        Set(value As Integer)
+            hidMasterPID.Value = value.ToString
+        End Set
+    End Property
 
 
     Public ReadOnly Property CurrentD1 As Date
@@ -81,8 +96,10 @@
             With Master
                 .PageTitle = "Operativní plánování"
                 .SiteMenuValue = "p48"
-
             End With
+            If Request.Item("masterpid") <> "" Then
+                Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
+            End If
 
             With Master.Factory.j03UserBL
                 Dim lisPars As New List(Of String)
@@ -122,7 +139,15 @@
                 Me.j07ID_Add.Enabled = False
                 Me.panPersonScope.Visible = Master.Factory.SysUser.IsMasterPerson   'filtrovat osoby
             End If
+
+            If Me.CurrentMasterPID > 0 Then
+                Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
+                Me.MasterRecord.NavigateUrl = Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString
+            Else
+                Me.MasterRecord.Visible = False
+            End If
             
+
             RefreshData()
         End If
     End Sub
@@ -222,6 +247,11 @@
         mqP48.j02IDs = Me.CurrentJ02IDs
         mqP48.DateFrom = Me.CurrentD1
         mqP48.DateUntil = Me.CurrentD2
+        Select Case Me.CurrentMasterPrefix
+            Case "p41" : mqP48.p41ID = Me.CurrentMasterPID
+            Case "p28" : mqP48.p28ID = Me.CurrentMasterPID
+            Case "j02" : mqP48.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+        End Select
         _lisP48 = Master.Factory.p48OperativePlanBL.GetList(mqP48)
 
         _lisSum = Master.Factory.p48OperativePlanBL.GetList_SumPerPerson(mqP48)
@@ -254,7 +284,13 @@
         Dim mqP47 As New BO.myQueryP47
         mqP47.DateFrom = Me.CurrentD1
         mqP47.DateUntil = Me.CurrentD2
+        Select Case Me.CurrentMasterPrefix
+            Case "p41" : mqP47.p41ID = Me.CurrentMasterPID
+            Case "p28" : mqP47.p28ID = Me.CurrentMasterPID
+            Case "j02" : mqP47.j02ID = Me.CurrentMasterPID
+        End Select
         _lisP47 = Master.Factory.p47CapacityPlanBL.GetList(mqP47)
+
         
         rp1.DataSource = lisPlan.OrderBy(Function(p) p.Person).ThenBy(Function(p) p.Project)
         rp1.DataBind()

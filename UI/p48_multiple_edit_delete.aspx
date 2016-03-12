@@ -106,25 +106,26 @@
 
     <table cellpadding="6" cellspacing="2">
         <tr>            
-            <th>Osoba</th>
-            <th>Datum</th>
+            
+            <th>Datum/Osoba</th>
             
             <th>Projekt/Sešit/Aktivita</th>
+            <th>Hodiny</th>
             <th>Od</th>
             <th>Do</th>
-            <th>Hodiny</th>
+            
             <th>Text</th>
             <th></th>
         </tr>
         <asp:Repeater ID="rp1" runat="server">
             <ItemTemplate>
                 <tr class="trHover">                    
-                    <td>
-                            
-                        <asp:Label ID="Person" runat="server"></asp:Label>
-                    </td>
+                   
                     <td>
                         <asp:Label ID="p48Date" runat="server" ForeColor="blue"></asp:Label>
+                        <div>
+                            <asp:Label ID="Person" runat="server"></asp:Label>
+                        </div>
                         <asp:HiddenField ID="j02id" runat="server" />
                         <asp:HiddenField ID="p41id" runat="server" />
                         <asp:HiddenField ID="date" runat="server" />
@@ -148,6 +149,7 @@
                     <td>
                         <asp:TextBox ID="p48TimeUntil" runat="server" CssClass="presnycas" style="width:40px;text-align:center;"></asp:TextBox>
                     </td>
+                    
                     <td>
                         <asp:TextBox ID="p48Text" runat="server" Style="width: 250px;"></asp:TextBox>
                     </td>

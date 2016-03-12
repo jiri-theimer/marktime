@@ -171,8 +171,11 @@
                 alert("Musíte označit alespoň jednu buňku (den).")
                 return
             }
-
-            sw_master("p48_multiple_create.aspx?year=<%=Me.CurrentYear%>&month=<%=Me.CurrentMonth%>&input=" + s, "Images/oplan_32.png")
+            var url = "p48_multiple_create.aspx?year=<%=Me.CurrentYear%>&month=<%=Me.CurrentMonth%>&input=" + s
+            <%If Me.CurrentMasterPrefix="p41" then%>
+            url = url + "&p41id=<%=Me.CurrentMasterPID%>";
+            <%End If%>
+            sw_master(url, "Images/oplan_32.png")
 
         }
 
@@ -304,7 +307,9 @@
         <asp:Panel ID="panLayout" runat="server">
             <table cellpadding="3">
                 <tr>
-                    <td class="nondate" style="width: 270px;"></td>
+                    <td class="nondate" style="width: 270px;">
+                        <asp:hyperlink ID="MasterRecord" runat="server" Font-Bold="true" Target="_top"></asp:hyperlink>
+                    </td>
                     <td class="nondate" style="width: 30px; text-align: right;" title="Kapacitní plán celkem">
                         <img src="Images/plan.png" />
                     </td>
@@ -465,4 +470,6 @@
 
     <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
     <asp:HiddenField ID="hidJ02IDs" runat="server" />
+    <asp:HiddenField ID="hidMasterPrefix" runat="server" />
+    <asp:HiddenField ID="hidMasterPID" runat="server" />
 </asp:Content>

@@ -211,6 +211,9 @@
         function p47_plan(){            
             sw_local("p47_project.aspx?pid=<%=master.datapid%>","Images/plan_32.png",true);
         }
+        function p48_plan(){            
+            window.open("p48_framework.aspx?masterprefix=p41&masterpid=<%=master.datapid%>","_top");
+        }
 
         function workflow(){            
             sw_local("workflow_dialog.aspx?prefix=p41&pid=<%=master.datapid%>","Images/workflow_32.png",false);
@@ -398,6 +401,9 @@
                                 <img src="Images/finplan.png" />
                                 <asp:HyperLink ID="cmdP49" runat="server" Text="Finanční plán" NavigateUrl="javascript:p49_plan()"></asp:HyperLink>
 
+                                <img src="Images/oplan.png" />
+                                <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní plán" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
+
                             </div>
                         </div>
                     </ContentTemplate>
@@ -482,6 +488,8 @@
                         <a href="javascript: p47_plan()">Kapacitní plán</a>
                         <img src="Images/finplan.png" />
                         <a href="javascript: p49_plan()">Finanční plán</a>
+                        <img src="Images/oplan.png" />
+                        <a href="javascript: p48_plan()">Operativní plán</a>
                         </div>
 
                     </td>

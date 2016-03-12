@@ -149,6 +149,15 @@ Partial Public Class p48_framework
     Protected WithEvents panLayout As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''MasterRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''tdd1 control.
     '''</summary>
     '''<remarks>
@@ -732,6 +741,24 @@ Partial Public Class p48_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidJ02IDs As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMasterPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMasterPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.
