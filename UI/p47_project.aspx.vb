@@ -6,6 +6,7 @@ Public Class p47_project
 
     Public Class PlanMatrix
         Public Property Person As String
+        Public Property Total As String
         Public Property PID As Integer
         Public Property RowIndex As Integer
         Public Property Col1Fa As Double?
@@ -121,6 +122,7 @@ Public Class p47_project
         Dim d1 As Date = Me.LimitD1, d2 As Date = Me.LimitD2
         Dim d As Date = d1, x As Integer = 1
         AddColumn("Person", "Osoba")
+        AddColumn("Total", "<img src='Images/sum.png'/>")
         While d <= d2
 
             AddGroupHeader("M" & x.ToString, Format(d, "MM.yyyy"))
@@ -173,11 +175,9 @@ Public Class p47_project
     Private Sub grid1_DataBound(sender As Object, e As EventArgs) Handles grid1.DataBound
         Dim footerItem As GridFooterItem = grid1.MasterTableView.GetItems(GridItemType.Footer)(0)
 
-        Dim lis As IEnumerable(Of PlanMatrix) = CType(grid1.DataSource, List(Of PlanMatrix))
-
-        footerItem.Item("Person").Text = "Celkem"
-        footerItem.Item("Col1Fa").Text = lis.Sum(Function(p) p.Col1Fa).ToString
-        footerItem.Item("Col1NeFa").Text = lis.Sum(Function(p) p.Col1NeFa).ToString
+        
+        footerItem.Item("Person").Text = "<img src='Images/sum.png'/>"
+       
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
