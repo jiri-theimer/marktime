@@ -3,6 +3,7 @@
 Public Class p47_project
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As ModalForm
+    Private Property _bolNeedSetupGrid As Boolean = False
 
     Public Class PlanMatrix
         Public Property Person As String
@@ -49,7 +50,7 @@ Public Class p47_project
 
     Public Property LimitD1 As Date
         Get
-            Return BO.BAS.ConvertString2Date(Me.hidLimD1.Value)
+            Return BO.BAS.ConvertString2Date(Me.m1.SelectedValue)
         End Get
         Set(value As Date)
             Me.hidLimD1.Value = Format(value, "dd.MM.yyyy")
@@ -57,7 +58,7 @@ Public Class p47_project
     End Property
     Public Property LimitD2 As Date
         Get
-            Return BO.BAS.ConvertString2Date(Me.hidLimD2.Value)
+            Return BO.BAS.ConvertString2Date(Me.m2.SelectedValue)
         End Get
         Set(value As Date)
             Me.hidLimD2.Value = Format(value, "dd.MM.yyyy")
@@ -104,6 +105,12 @@ Public Class p47_project
 
 
     Private Sub SetupGrid()
+        If Me.m1.SelectedIndex > Me.m2.SelectedIndex Then
+            Me.m2.SelectedIndex = Me.m1.SelectedIndex
+        End If
+        If Math.Abs(Me.m1.SelectedIndex - Me.m2.SelectedIndex) >= 12 Then
+            Me.m2.SelectedIndex = Me.m1.SelectedIndex
+        End If
         grid1.Columns.Clear()
         grid1.MasterTableView.GroupByExpressions.Clear()
         grid1.MasterTableView.ColumnGroups.Clear()
@@ -192,7 +199,6 @@ Public Class p47_project
    
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
 
-
         grid1.DataSource = GetListMatrix()
 
     End Sub
@@ -203,6 +209,9 @@ Public Class p47_project
 
         mq.p41ID = Master.DataPID
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+        If cRec.p41PlanFrom Is Nothing Or cRec.p41PlanUntil Is Nothing Then
+            Master.StopPage("Pro kapacitní plánování je nutné mít v projektu nastavené datumy [Plánované zahájení] a [Plánované dokončení].")
+        End If
         lblHeader.Text = BO.BAS.FD(cRec.p41PlanFrom) & " - " & BO.BAS.FD(cRec.p41PlanUntil) & " (" & DateDiff(DateInterval.Day, cRec.p41PlanFrom.Value, cRec.p41PlanUntil.Value).ToString & "d.)"
         If Not Page.IsPostBack Then
             Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
@@ -218,8 +227,20 @@ Public Class p47_project
         With cRec
             d1 = DateSerial(Year(.p41PlanFrom), Month(.p41PlanFrom), 1)
             d2 = DateSerial(Year(.p41PlanUntil), Month(.p41PlanUntil), 1).AddMonths(1).AddDays(-1)
-
         End With
+        Dim d As Date = d1
+        Me.m1.Items.Clear() : Me.m2.Items.Clear()
+        While d <= d2
+            Me.m1.Items.Add(New ListItem(Format(d, "MM.yyyy"), Format(d, "dd.MM.yyyy")))
+            Me.m2.Items.Add(New ListItem(Format(d, "MM.yyyy"), Format(d.AddMonths(1).AddDays(-1), "MM.yyyy")))
+            d = d.AddMonths(1)
+        End While
+        Me.m2.SelectedIndex = Me.m2.Items.Count - 1
+
+        If DateDiff(DateInterval.Month, d1, d2) > 12 Then
+            d2 = d1.AddMonths(12).AddDays(-1)
+            Me.m2.SelectedIndex = 11
+        End If
         Me.LimitD1 = d1
         Me.LimitD2 = d2
         SetupGrid()
@@ -271,8 +292,8 @@ Public Class p47_project
         Dim d1 As Date = Me.LimitD1, d2 As Date = Me.LimitD2
         Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).OrderBy(Function(p) p.p85FreeText01).ThenBy(Function(p) p.p85OtherKey1).ThenBy(Function(p) p.p85FreeDate01)
         Dim dats As New List(Of Date), lis As New List(Of PlanMatrix)
-        For i As Integer = 0 To 11
-            dats.Add(d1.AddMonths(i))
+        For i As Integer = Me.m1.SelectedIndex To Me.m2.SelectedIndex
+            dats.Add(d1.AddMonths(i - Me.m1.SelectedIndex))
         Next
 
         Dim intRowIndex As Integer = 0, intLastJ02ID As Integer = 0, row As PlanMatrix = Nothing
@@ -286,7 +307,8 @@ Public Class p47_project
                 lis.Add(row)
                 DisablePersonInOffeList(c.p85OtherKey1)
             End If
-            For i As Integer = 0 To 11
+            For x As Integer = Me.m1.SelectedIndex To Me.m2.SelectedIndex
+                Dim i As Integer = x - Me.m1.SelectedIndex
                 If c.p85FreeDate01.Month = dats(i).Month And c.p85FreeDate01.Year = dats(i).Year Then
                     BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "Fa", c.p85FreeFloat01)
                     BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "NeFa", c.p85FreeFloat02)
@@ -342,6 +364,10 @@ Public Class p47_project
     
 
     Private Sub p47_project_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If _bolNeedSetupGrid Then
+            SetupGrid()
+        End If
+
         If Page.IsPostBack Then
             grid1.Rebind()
         End If
@@ -381,4 +407,24 @@ Public Class p47_project
             End If
         End If
     End Sub
+
+   
+    Private Sub m2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles m2.SelectedIndexChanged
+        _bolNeedSetupGrid = True
+        If Math.Abs(Me.m1.SelectedIndex - Me.m2.SelectedIndex) >= 12 Then
+            Me.m1.SelectedIndex = Me.m2.SelectedIndex
+        End If
+
+
+    End Sub
+
+    Private Sub m1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles m1.SelectedIndexChanged
+        _bolNeedSetupGrid = True
+        If Math.Abs(Me.m1.SelectedIndex - Me.m2.SelectedIndex) >= 12 Then
+            Me.m2.SelectedIndex = Me.m1.SelectedIndex
+        End If
+
+    End Sub
+
+    
 End Class

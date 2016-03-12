@@ -40,7 +40,7 @@
 
 
             With Master
-                .HeaderText = "Zadat operativní plán do vybraných dnů"
+                .HeaderText = "Zapsat operativní plán do vybraných dnů"
                 .AddToolbarButton("Uložit do plánu", "save", , "Images/save.png")
 
                 With .Factory.j03UserBL
@@ -48,7 +48,6 @@
                     With lisPars
                         .Add("p48_multiple_create-p34id")
                         .Add("p48_multiple_create-p32id")
-
                     End With
                     .InhaleUserParams(lisPars)
 
@@ -108,7 +107,20 @@
         CType(e.Item.FindControl("p48Date"), Label).Text = BO.BAS.FD(cRec.p85FreeDate01)
         CType(e.Item.FindControl("Person"), Label).Text = cRec.p85FreeText01
         CType(e.Item.FindControl("Project"), Label).Text = cRec.p85FreeText02
-        CType(e.Item.FindControl("p48Hours"), Telerik.Web.UI.RadNumericTextBox).Value = cRec.p85FreeFloat01
+        CType(e.Item.FindControl("p48Hours"), TextBox).Text = cRec.p85FreeFloat01.ToString
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Text = cRec.p85FreeText03
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Text = cRec.p85FreeText04
+
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Attributes.Item("cas_od") = e.Item.FindControl("p48TimeFrom").ClientID
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeUntil").ClientID
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Attributes.Item("hodiny") = e.Item.FindControl("p48Hours").ClientID
+
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Attributes.Item("cas_od") = e.Item.FindControl("p48TimeFrom").ClientID
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeUntil").ClientID
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Attributes.Item("hodiny") = e.Item.FindControl("p48Hours").ClientID
+
+        CType(e.Item.FindControl("p48Hours"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeFrom").ClientID
+        CType(e.Item.FindControl("p48Hours"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeUntil").ClientID
         CType(e.Item.FindControl("p48Text"), TextBox).Text = cRec.p85Message
 
     End Sub
@@ -130,10 +142,14 @@
     End Sub
 
     Private Sub Save2Temp()
+        Dim cT As New BO.clsTime
         For Each ri As RepeaterItem In rp1.Items
             Dim intP85ID As Integer = CInt(CType(ri.FindControl("p85id"), HiddenField).Value)
             Dim c As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(intP85ID)
-            c.p85FreeFloat01 = BO.BAS.IsNullNum(CType(ri.FindControl("p48Hours"), Telerik.Web.UI.RadNumericTextBox).Value)
+            Dim strHours As String = CType(ri.FindControl("p48Hours"), TextBox).Text
+            c.p85FreeFloat01 = cT.ShowAsDec(strHours)
+            c.p85FreeText03 = CType(ri.FindControl("p48TimeFrom"), TextBox).Text
+            c.p85FreeText04 = CType(ri.FindControl("p48TimeUntil"), TextBox).Text
             c.p85Message = CType(ri.FindControl("p48Text"), TextBox).Text
 
             Master.Factory.p85TempBoxBL.Save(c)
@@ -178,6 +194,8 @@
                     c.p34ID = intP34ID
                     c.p32ID = intP32ID
                     c.p48Hours = .p85FreeFloat01
+                    c.p48TimeFrom = .p85FreeText03
+                    c.p48TimeUntil = .p85FreeText04
                     c.p48Text = .p85Message
                 End With
                 lisP48.Add(c)
@@ -189,4 +207,6 @@
             Master.CloseAndRefreshParent()
         End If
     End Sub
+
+    
 End Class

@@ -15,11 +15,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
 
-    
-
-
-
-
     <hr />
     <asp:Button ID="cmdImap" runat="server" Text="TEST IMAP" />
     <hr />

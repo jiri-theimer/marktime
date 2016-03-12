@@ -90,6 +90,10 @@
 
             pars.Add("p48Date", .p48Date, DbType.DateTime)
             pars.Add("p48Hours", .p48Hours, DbType.Double)
+            pars.Add("p48TimeFrom", .p48TimeFrom, DbType.String)
+            pars.Add("p48TimeUntil", .p48TimeUntil, DbType.String)
+            pars.Add("p48DateTimeFrom", .p48DateTimeFrom, DbType.DateTime)
+            pars.Add("p48DateTimeUntil", .p48DateTimeUntil, DbType.DateTime)
 
             pars.Add("p48Text", .p48Text, DbType.String)
 

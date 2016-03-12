@@ -214,8 +214,6 @@
     <Content Include="binaryfile.aspx" />
     <Content Include="c21_record.aspx" />
     <Content Include="c26_record.aspx" />
-    <Content Include="capacity_plan_entry.aspx" />
-    <Content Include="capacity_plan_entry_item.aspx" />
     <Content Include="clue_j02_capacity.aspx" />
     <Content Include="clue_j02_oplan.aspx" />
     <Content Include="clue_j02_record.aspx" />
@@ -289,7 +287,6 @@
     <Content Include="p40_record.aspx" />
     <Content Include="p41_batch.aspx" />
     <Content Include="p41_framework_mobile.aspx" />
-    <Content Include="p47_framework_record.aspx" />
     <Content Include="p47_project.aspx" />
     <Content Include="p49_plan.aspx" />
     <Content Include="p49_record.aspx" />
@@ -768,20 +765,6 @@
     </Compile>
     <Compile Include="c26_record.aspx.vb">
       <DependentUpon>c26_record.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="capacity_plan_entry.aspx.designer.vb">
-      <DependentUpon>capacity_plan_entry.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="capacity_plan_entry.aspx.vb">
-      <DependentUpon>capacity_plan_entry.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="capacity_plan_entry_item.aspx.designer.vb">
-      <DependentUpon>capacity_plan_entry_item.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="capacity_plan_entry_item.aspx.vb">
-      <DependentUpon>capacity_plan_entry_item.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="clue_j02_capacity.aspx.designer.vb">
@@ -1334,13 +1317,6 @@
     </Compile>
     <Compile Include="p41_framework_mobile.aspx.vb">
       <DependentUpon>p41_framework_mobile.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p47_framework_record.aspx.designer.vb">
-      <DependentUpon>p47_framework_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p47_framework_record.aspx.vb">
-      <DependentUpon>p47_framework_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p47_project.aspx.designer.vb">

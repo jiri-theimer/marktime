@@ -33,14 +33,40 @@ Class p48OperativePlanBL
 
         If Not TestBeforeSave(lis) Then Return False
 
+        Handle_ExactTime(cRec)
         Return _cDL.Save(cRec)
     End Function
+
+    Private Sub Handle_ExactTime(ByRef cRec As BO.p48OperativePlan)
+        cRec.p48DateTimeFrom = Nothing : cRec.p48DateTimeUntil = Nothing
+        Dim cT As New BO.clsTime
+        Dim intTimeFrom As Integer = cT.ConvertTimeToSeconds(cRec.p48TimeFrom), intTimeUntil As Integer = cT.ConvertTimeToSeconds(cRec.p48TimeUntil)
+        Dim intHours As Integer = cRec.p48Hours * 60 * 60
+        cRec.p48TimeFrom = "" : cRec.p48TimeUntil = ""
+        If intTimeFrom < 0 Or intTimeFrom > 24 * 60 * 60 Then intTimeFrom = 0
+        If intTimeUntil < 0 Or intTimeUntil > 24 * 60 * 60 Then intTimeUntil = 0
+        If intTimeFrom > 0 Or intTimeUntil > 0 Then
+            If intTimeFrom > 0 And intTimeUntil = 0 Then intTimeUntil = intTimeFrom + intHours
+            If intTimeUntil > 0 And intTimeFrom = 0 Then intTimeFrom = intTimeUntil - intHours
+            If intTimeFrom > intTimeUntil Then intTimeUntil = intTimeFrom
+        End If
+        If intTimeUntil = intTimeFrom Or intTimeFrom = 0 Or intTimeUntil = 0 Then Return
+        If intHours <> (intTimeUntil - intTimeFrom) Then
+            intTimeUntil = intTimeFrom + intHours
+        End If
+        cRec.p48TimeFrom = cT.ShowAsHHMM(cT.GetDecTimeFromSeconds(intTimeFrom))
+        cRec.p48TimeUntil = cT.ShowAsHHMM(cT.GetDecTimeFromSeconds(intTimeUntil))
+        cRec.p48DateTimeFrom = cRec.p48Date.AddSeconds(intTimeFrom)
+        cRec.p48DateTimeUntil = cRec.p48Date.AddSeconds(intTimeUntil)
+
+    End Sub
     Public Function SaveBatch(lis As List(Of BO.p48OperativePlan)) As Boolean Implements Ip48OperativePlanBL.SaveBatch
         If Not TestBeforeSave(lis) Then Return False
         For Each c In lis
             If c.IsSetAsDeleted Then
                 If c.PID > 0 Then _cDL.Delete(c.PID)
             Else
+                Handle_ExactTime(c)
                 _cDL.Save(c)
             End If
         Next

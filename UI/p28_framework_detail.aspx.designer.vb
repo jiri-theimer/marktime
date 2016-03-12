@@ -104,15 +104,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents cmdNewP41 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''cmdReport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdReport As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''panCommandPivot control.
     '''</summary>
     '''<remarks>

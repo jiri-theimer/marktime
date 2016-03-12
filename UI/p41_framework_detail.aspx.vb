@@ -166,16 +166,11 @@ Public Class p41_framework_detail
                 Me.trWorkflow.Visible = False
             End If
 
-            If Not BO.BAS.IsNullDBDate(.p41PlanFrom) Is Nothing Then
+            If Not (.p41PlanFrom Is Nothing Or .p41PlanUntil Is Nothing) Then
                 Me.PlanPeriod.Text = "<b style='color:green;'>" & BO.BAS.FD(.p41PlanFrom.Value) & "</b> - <b style='color:red;'>" & BO.BAS.FD(.p41PlanUntil.Value) & "</b>"
-                ''Dim cDur As New BO.DatesDuration(.p41PlanFrom.Value, .p41PlanUntil.Value)
-                ''If cDur.Years = 0 Then
-                ''    Me.PlanPeriod.Text += " [" & cDur.Months.ToString & "m.]"
-                ''Else
-                ''    Me.PlanPeriod.Text += " [" & cDur.Years.ToString & "r. " & cDur.Months.ToString & "m.]"
-                ''End If
-                Me.PlanPeriod.Text = DateDiff(DateInterval.Day, .p41PlanFrom.Value, .p41PlanUntil.Value).ToString & "d."
-                Me.PlanPeriod.ToolTip = "Časový rozsah projektu: " & BO.BAS.FD(.p41PlanFrom.Value) & " - " & BO.BAS.FD(.p41PlanUntil.Value)
+                If DateDiff(DateInterval.Day, .p41PlanFrom.Value, .p41PlanUntil.Value) < 750 Then
+                    Me.PlanPeriod.Text += " [" & DateDiff(DateInterval.Day, .p41PlanFrom.Value, .p41PlanUntil.Value).ToString & "d.]"
+                End If
                 trPlan.Visible = True
             Else
                 trPlan.Visible = False
@@ -345,7 +340,7 @@ Public Class p41_framework_detail
             panCommandPivot.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
             panO23.Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
             panO22.Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
-
+            If cRec.b01ID <> 0 Then Me.panB07.Visible = False
 
             Dim bolCanApprove As Boolean = .TestPermission(BO.x53PermValEnum.GR_P31_Approver)
             If bolCanApprove = False And cDisp.x67IDs.Count > 0 Then

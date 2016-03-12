@@ -104,15 +104,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''cmdReport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdReport As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''panCommandPivot control.
     '''</summary>
     '''<remarks>
@@ -194,6 +185,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents cmdO22 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''panB07 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panB07 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''cmdB07 control.
     '''</summary>
     '''<remarks>
@@ -273,6 +273,24 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdP31MoveToOtherProject As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''cmdP47 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdP47 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''cmdP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdP49 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''topLink0 control.

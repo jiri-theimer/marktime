@@ -43,6 +43,8 @@
                     .p85OtherKey3 = cRec.p34ID
                     .p85FreeText04 = cRec.p32Name
                     .p85OtherKey4 = cRec.p32ID
+                    .p85FreeText05 = cRec.p48TimeFrom
+                    .p85FreeText06 = cRec.p48TimeUntil
                 End With
                 Master.Factory.p85TempBoxBL.Save(c)
             Next
@@ -82,9 +84,11 @@
         CType(e.Item.FindControl("p48Date"), Label).Text = BO.BAS.FD(cRec.p85FreeDate01)
         CType(e.Item.FindControl("Person"), Label).Text = cRec.p85FreeText01
         CType(e.Item.FindControl("Project"), Label).Text = cRec.p85FreeText02
-        CType(e.Item.FindControl("p48Hours"), Telerik.Web.UI.RadNumericTextBox).Value = cRec.p85FreeFloat01
+        CType(e.Item.FindControl("p48Hours"), TextBox).Text = cRec.p85FreeFloat01.ToString
         CType(e.Item.FindControl("p48Text"), TextBox).Text = cRec.p85Message
         CType(e.Item.FindControl("p34Name"), Label).Text = cRec.p85FreeText03
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Text = cRec.p85FreeText05
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Text = cRec.p85FreeText06
         If _lastP34ID <> cRec.p85OtherKey3 Then
             _lastP34ID = cRec.p85OtherKey3
             Dim mq As New BO.myQueryP32
@@ -101,6 +105,17 @@
             End Try
 
         End With
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Attributes.Item("cas_od") = e.Item.FindControl("p48TimeFrom").ClientID
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeUntil").ClientID
+        CType(e.Item.FindControl("p48TimeFrom"), TextBox).Attributes.Item("hodiny") = e.Item.FindControl("p48Hours").ClientID
+
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Attributes.Item("cas_od") = e.Item.FindControl("p48TimeFrom").ClientID
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeUntil").ClientID
+        CType(e.Item.FindControl("p48TimeUntil"), TextBox).Attributes.Item("hodiny") = e.Item.FindControl("p48Hours").ClientID
+
+        CType(e.Item.FindControl("p48Hours"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeFrom").ClientID
+        CType(e.Item.FindControl("p48Hours"), TextBox).Attributes.Item("cas_do") = e.Item.FindControl("p48TimeUntil").ClientID
+
         _lastP34ID = cRec.p85OtherKey3
     End Sub
 
@@ -126,6 +141,8 @@
                     cRec.p48Text = c.p85Message
                     cRec.p32ID = c.p85OtherKey4
                     cRec.p48Hours = c.p85FreeFloat01
+                    cRec.p48TimeFrom = c.p85FreeText05
+                    cRec.p48TimeUntil = c.p85FreeText06
                     lisP48.Add(cRec)
                 Next
                 If Master.Factory.p48OperativePlanBL.SaveBatch(lisP48) Then
@@ -133,30 +150,23 @@
                 Else
                     Master.Notify(Master.Factory.p48OperativePlanBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 End If
-                'For Each c In lis
-                '    Dim intPID As Integer = c.p85DataPID
-                '    If c.p85IsDeleted Then
-                '        Master.Factory.p48OperativePlanBL.Delete(intPID)
-                '    Else
-                '        Dim cRec As BO.p48OperativePlan = Master.Factory.p48OperativePlanBL.Load(intPID)
-                '        cRec.p48Text = c.p85Message
-                '        cRec.p32ID = c.p85OtherKey4
-                '        cRec.p48Hours = c.p85FreeFloat01
-                '        Master.Factory.p48OperativePlanBL.Save(cRec)
-                '    End If
-                'Next
-
+                
         End Select
     End Sub
 
     Private Sub Save2Temp()
+        Dim ct As New BO.clsTime
         For Each ri As RepeaterItem In rp1.Items
             Dim intP85ID As Integer = CInt(CType(ri.FindControl("p85id"), HiddenField).Value)
             Dim c As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(intP85ID)
-            c.p85FreeFloat01 = BO.BAS.IsNullNum(CType(ri.FindControl("p48Hours"), Telerik.Web.UI.RadNumericTextBox).Value)
+
             c.p85Message = CType(ri.FindControl("p48Text"), TextBox).Text
             c.p85OtherKey4 = BO.BAS.IsNullInt(CType(ri.FindControl("p32ID"), DropDownList).SelectedValue)
 
+            Dim strHours As String = CType(ri.FindControl("p48Hours"), TextBox).Text
+            c.p85FreeFloat01 = ct.ShowAsDec(strHours)
+            c.p85FreeText05 = CType(ri.FindControl("p48TimeFrom"), TextBox).Text
+            c.p85FreeText06 = CType(ri.FindControl("p48TimeUntil"), TextBox).Text
 
             Master.Factory.p85TempBoxBL.Save(c)
         Next

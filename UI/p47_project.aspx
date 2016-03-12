@@ -111,22 +111,19 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     
-    <table>
-        <tr>
-
-
-            <td>
-                <button type="button" class="show_hide1" id="cmdAddPerson" runat="server">Přidat osobu do plánu<img src="Images/arrow_down.gif" /></button>
-            </td>
-            <td>
-                <asp:RadioButtonList ID="opgPageIndex" runat="server" AutoPostBack="true" RepeatDirection="Horizontal"></asp:RadioButtonList>
-            </td>
-            <td>
-                <asp:Label ID="lblHeader" runat="server" CssClass="valboldblue"></asp:Label>
-            </td>
-
-        </tr>
-    </table>
+   <div style="float:left;padding:6px;">
+       <button type="button" class="show_hide1" id="cmdAddPerson" runat="server">Přidat osobu do plánu<img src="Images/arrow_down.gif" /></button>
+   </div>
+   <div style="float:left;padding:6px;">
+       <asp:Label ID="lblHeader" runat="server" CssClass="valboldblue"></asp:Label>
+   </div>     
+   <div style="float:left;padding:6px;">
+       <asp:DropDownList ID="m1" runat="server" AutoPostBack="true"></asp:DropDownList>
+       ->
+       <asp:DropDownList ID="m2" runat="server" AutoPostBack="true"></asp:DropDownList>
+   </div>      
+   <div style="clear:both;"></div>
+          
     <div class="slidingDiv1">
         <div class="content-box2">
             <div class="title">

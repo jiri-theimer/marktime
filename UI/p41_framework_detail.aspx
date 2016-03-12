@@ -208,8 +208,8 @@
         function p40_record(p40id){            
             sw_local("p40_record.aspx?p41id=<%=master.datapid%>&pid="+p40id,"Images/worksheet_recurrence_32.png",true);
         }
-        function capacityplan(){            
-            sw_local("capacity_plan_entry.aspx?pid=<%=master.datapid%>","Images/plan_32.png",true);
+        function p47_plan(){            
+            sw_local("p47_project.aspx?pid=<%=master.datapid%>","Images/plan_32.png",true);
         }
 
         function workflow(){            
@@ -337,22 +337,13 @@
                 <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
                     <ContentTemplate>
                         <div style="float: left; min-width: 200px;">
-                            <div class="menu-group-title">Reporting</div>
-
-                            <div class="menu-group-item">
-                                <img src="Images/report.png" />
-                                <asp:HyperLink ID="cmdReport" runat="server" Text="Tisková sestava projektu" NavigateUrl="javascript:report()"></asp:HyperLink>
-
-                            </div>
+                            
+                           
                             <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
                                 <img src="Images/pivot.png" />
                                 <a href="p31_pivot.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za projekt</a>
                             </asp:Panel>
 
-
-
-
-                            <div class="menu-group-title">Komunikace</div>
 
                             <asp:Panel ID="panP56" runat="server" CssClass="menu-group-item">
                                 <img src="Images/task.png" />
@@ -370,10 +361,10 @@
                                 <img src="Images/calendar.png" />
                                 <asp:HyperLink ID="cmdO22" runat="server" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" />
                             </asp:Panel>
-                            <div class="menu-group-item">
+                            <asp:panel ID="panB07" runat="server" cssclass="menu-group-item">
                                 <img src="Images/comment.png" />
                                 <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat k projektu komentář" NavigateUrl="javascript:b07_record();" />
-                            </div>
+                            </asp:panel>
 
 
                             <div class="menu-group-title">
@@ -396,8 +387,18 @@
                                 <asp:HyperLink ID="cmdP31MoveToOtherProject" runat="server" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project()"></asp:HyperLink>
                             </asp:Panel>
 
+                            <div class="menu-group-title">
+                                Plánování
+                            </div>
+                            <div class="menu-group-item">
+                                <img src="Images/plan.png" />
+                                <asp:HyperLink ID="cmdP47" runat="server" Text="Kapacitní plán" NavigateUrl="javascript:p47_plan()"></asp:HyperLink>
 
+                            
+                                <img src="Images/finplan.png" />
+                                <asp:HyperLink ID="cmdP49" runat="server" Text="Finanční plán" NavigateUrl="javascript:p49_plan()"></asp:HyperLink>
 
+                            </div>
                         </div>
                     </ContentTemplate>
 
@@ -470,17 +471,18 @@
                         <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
                     </td>
                 </tr>
-                <tr id="trPlan" runat="server">
+                <tr id="trPlan" runat="server" style="vertical-align:top;">
                     <td>
-                        <asp:Label ID="lblPlan" runat="server" Text="Kapacitní a finanční plán:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblPlan" runat="server" Text="Plánování:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <asp:Label ID="PlanPeriod" runat="server" CssClass="val"></asp:Label>
+                        <div>
                         <img src="Images/plan.png" />
-                        <a href="javascript: capacityplan()">Kapacitní plán</a>
+                        <a href="javascript: p47_plan()">Kapacitní plán</a>
                         <img src="Images/finplan.png" />
                         <a href="javascript: p49_plan()">Finanční plán</a>
-
+                        </div>
 
                     </td>
                 </tr>

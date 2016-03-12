@@ -279,20 +279,13 @@
                 <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
                     <ContentTemplate>
                         <div style="float: left; min-width: 200px;">
-                            <div class="menu-group-title">Reporting</div>
-
-                            <div class="menu-group-item">
-                                <img src="Images/report.png" />
-                                <asp:HyperLink ID="cmdReport" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()"></asp:HyperLink>
-
-                            </div>
+                           
                             <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
                                 <img src="Images/pivot.png" />
                                 <a href="p31_pivot.aspx?masterprefix=j02&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za osobu</a>
                             </asp:Panel>
 
-                            <div class="menu-group-title">Komunikace</div>
-
+                            
                             <asp:Panel ID="panO23" runat="server" CssClass="menu-group-item">
                                 <img src="Images/notepad.png" />
                                 <asp:HyperLink ID="cmdO23" runat="server" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" />

@@ -8,7 +8,13 @@
     Public Property p48Date As Date
     Public Property p48Hours As Double
     Public Property p48Text
+    Public Property p48TimeFrom As String
+    Public Property p48TimeUntil As String
 
+    Public Property p48DateTimeFrom As Date?
+    
+    Public Property p48DateTimeUntil As Date?
+      
     Private Property _Person As String
     Public ReadOnly Property Person As String
         Get

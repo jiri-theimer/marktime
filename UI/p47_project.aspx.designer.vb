@@ -23,15 +23,6 @@ Partial Public Class p47_project
     Protected WithEvents cmdAddPerson As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
-    '''opgPageIndex control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents opgPageIndex As Global.System.Web.UI.WebControls.RadioButtonList
-
-    '''<summary>
     '''lblHeader control.
     '''</summary>
     '''<remarks>
@@ -39,6 +30,24 @@ Partial Public Class p47_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''m1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents m1 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''m2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents m2 As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''rpJ02 control.
