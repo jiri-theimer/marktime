@@ -1,6 +1,6 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
-    Public Shared Sub SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True)
+    Public Shared Sub SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "")
 
         With grid
             .ClearColumns()
@@ -34,7 +34,7 @@ Public Class basUIMT
                     .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
                 End If
             Next
-
+            grid.SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
 
 

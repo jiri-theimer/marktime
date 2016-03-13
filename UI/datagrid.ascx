@@ -2,7 +2,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <div id="gogo1"></div>
 <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" runat="server" ShowFooter="true" EnableViewState="true" AllowPaging="true" AllowSorting="true" Skin="Default" EnableLinqExpressions="false">
-    
+  
     <ExportSettings ExportOnlyData="true" OpenInNewWindow="true" FileName="marktime_export" UseItemStyles="false">
         <Excel Format="Biff" />
     </ExportSettings>
@@ -10,7 +10,7 @@
 
     <ClientSettings>
         <Selecting AllowRowSelect="true" />
-        <ClientEvents OnRowContextMenu="ContextSelect" OnGridCreated="GridCreated" />
+        <ClientEvents OnRowContextMenu="ContextSelect" OnGridCreated="GridCreated" OnCommand="OnGridCommand" />
        
     </ClientSettings>
     <PagerStyle Position="TopAndBottom" AlwaysVisible="false" />
@@ -19,11 +19,21 @@
     
 </telerik:RadGrid>
 
+<telerik:RadAjaxLoadingPanel runat="server" ID="RadAjaxLoadingPanel1" RenderMode="Lightweight" Transparency="30" BackColor="#E0E0E0">
+    <div style="float:none;padding-top:80px;">
+    <img src="Images/loading.gif" />
+    <h2>LOADING...</h2>
+    </div>
+</telerik:RadAjaxLoadingPanel>
 
 <asp:HiddenField ID="hidAutoScrollHashID" runat="server" Value="" />
 
 <script type="text/javascript">
-
+    function OnGridCommand(sender, args) {
+        //alert(args.get_commandName());
+        var loadingPanel = $find("<%= RadAjaxLoadingPanel1.ClientID %>");
+        loadingPanel.show(sender.get_id());
+    }
 
 
     if (document.getElementById("<%=hidAutoScrollHashID.ClientID%>").value != "") {

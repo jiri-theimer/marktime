@@ -213,6 +213,7 @@ Public Class p31_grid
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
         _needRecalcVirtualCount = True
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-filter_setting", grid1.GetFilterExpression())
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
@@ -404,7 +405,8 @@ Public Class p31_grid
     End Sub
 
     Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
-        _needRecalcVirtualCount = True
+        
+        _needRecalcVirtualCount = True        
         grid1.ClearFilter()
         grid1.Rebind(False)
     End Sub

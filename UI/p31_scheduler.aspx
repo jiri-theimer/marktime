@@ -60,7 +60,11 @@
 
 
 
-
+        function OnSchedulerCommand(sender, args) {           
+            var loadingPanel = $find("<%= RadAjaxLoadingPanel1.ClientID %>");
+            loadingPanel.show(sender.get_id());
+            
+        }
 
 
 
@@ -340,7 +344,7 @@
                 Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" Localization-HeaderToday="Dnes" Localization-ShowMore="více..."
                 OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" OnClientTimeSlotContextMenuItemClicked="record_create"
                 Localization-AllDay="Bez času od/do" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"
-                HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd"
+                HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand"
                 DataSubjectField="p32Name" DataStartField="p31DateTimeFrom_Orig" DataEndField="p31DateTimeUntil_Orig" DataKeyField="pid">
 
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
@@ -367,7 +371,14 @@
                 <ExportSettings OpenInNewWindow="true" FileName="SchedulerExport">
                     <Pdf PageTitle="Schedule" Author="Telerik" Creator="Telerik" Title="Schedule" />
                 </ExportSettings>
+                
             </telerik:RadScheduler>
+            <telerik:RadAjaxLoadingPanel runat="server" ID="RadAjaxLoadingPanel1" RenderMode="Lightweight" Transparency="30" BackColor="#E0E0E0">
+    <div style="float:none;padding-top:80px;">
+    <img src="Images/loading.gif" />
+    <h2>LOADING...</h2>
+    </div>
+</telerik:RadAjaxLoadingPanel>
         </div>
 
     </div>

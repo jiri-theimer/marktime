@@ -5,6 +5,7 @@ Public Class p31_framework
     Protected WithEvents _MasterPage As Site
     Private Property _curJ74 As BO.j74SavedGridColTemplate
     Private _lastP41ID As Integer = 0
+    Private Property _needFilterIsChanged As Boolean = False
 
     Public Property CurrentJ74ID As Integer
         Get
@@ -52,7 +53,7 @@ Public Class p31_framework
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Zapisování úkonů"
-                .SiteMenuValue = "cmdP31_Calendar"
+                .SiteMenuValue = "p31_framework"
                 If Request.Item("tab") = "" Then
                     .Factory.j03UserBL.InhaleUserParams("p31_framework-tabindex")
                     tabs1.SelectedIndex = CInt(.Factory.j03UserBL.GetUserParam("p31_framework-tabindex", "0"))
@@ -65,13 +66,16 @@ Public Class p31_framework
                 With lisPars
                     .Add("p31_framework-pagesize-" & Me.GridPrefix)
                     .Add("p31_framework-search")
-
                     .Add("p31_framework-navigationPane_width")
                     .Add("p31_framework_detail-j02id")  'výchozí osoba pro nové úkony
                     .Add("p31_framework-j74id-" & Me.GridPrefix)
                     .Add("p31_framework-groupby-" & Me.GridPrefix)
                     .Add("p31_framework-sort-" & Me.GridPrefix)
                     .Add("p31_framework-groups-autoexpanded")
+                    If tabs1.SelectedIndex <> 1 Then    'v top10 se nefiltruje
+                        .Add("p31_framework-filter_setting_" & Me.GridPrefix)
+                        .Add("p31_framework-filter_sql_" & Me.GridPrefix)
+                    End If
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -88,12 +92,11 @@ Public Class p31_framework
                         chkGroupsAutoExpanded.Checked = True
                         chkGroupsAutoExpanded.Visible = False
                     End If
-
                     If .GetUserParam("p31_framework-sort-" & Me.GridPrefix) <> "" Then
                         grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam("p31_framework-sort-" & Me.GridPrefix))
                     End If
+                    
                 End With
-
             End With
 
             If Request.Item("search") <> "" Then
@@ -108,7 +111,10 @@ Public Class p31_framework
             RecalcVirtualRowCount()
             RecalcTasksCount()
             SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31_framework-j74id-" & Me.GridPrefix)))
-            SetupGrid()
+            With Master.Factory.j03UserBL
+                SetupGrid(.GetUserParam("p31_framework-filter_setting_" & Me.GridPrefix), .GetUserParam("p31_framework-filter_sql_" & Me.GridPrefix))
+            End With
+
             Handle_DefaultSelectedRecord()
 
 
@@ -141,7 +147,7 @@ Public Class p31_framework
         End With
     End Sub
 
-    Private Sub SetupGrid()
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With Master.Factory.j74SavedGridColTemplateBL
             Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
             If cJ74 Is Nothing Then
@@ -151,11 +157,13 @@ Public Class p31_framework
                 End If
             End If
             If tabs1.SelectedIndex = 0 Then
-                basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False)
+                basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression)
             Else
-                basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False)
+                basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression)
             End If
-
+            If tabs1.SelectedIndex = 1 Then grid1.AllowFilteringByColumn = False 'v top10 se nefiltruje
+            Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
+            cmdSearch.Visible = Me.txtSearch.Visible
         End With
         With grid1
             .radGridOrig.ShowFooter = False
@@ -164,6 +172,11 @@ Public Class p31_framework
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
+    End Sub
+
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needFilterIsChanged = True
+        
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
@@ -189,6 +202,13 @@ Public Class p31_framework
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, grid1.GetFilterSetting())
+                .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, grid1.GetFilterExpression())
+            End With
+            RecalcVirtualRowCount()
+        End If
         If Me.GridPrefix = "p41" Then
             Dim mq As New BO.myQueryP41
             With mq
@@ -271,7 +291,8 @@ Public Class p31_framework
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
-            .SearchExpression = Trim(Me.txtSearch.Text)
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
             If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then .j02ID_ExplicitQueryFor = Me.CurrentJ02ID
 
 
@@ -347,14 +368,28 @@ Public Class p31_framework
 
 
     Private Sub p31_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Trim(txtSearch.Text) = "" Then
-            txtSearch.Style.Item("background-color") = ""
-        Else
-            txtSearch.Style.Item("background-color") = "red"
+        If txtSearch.Visible Then
+            If Trim(txtSearch.Text) = "" Then
+                txtSearch.Style.Item("background-color") = ""
+            Else
+                txtSearch.Style.Item("background-color") = "red"
+            End If
         End If
         
-        
-      
+        Select Case Me.tabs1.SelectedIndex
+            Case 0, 1
+                img1.ImageUrl = "Images/project_32.png"
+                lblFormHeader.Text = "Projekty"
+            Case 2
+                img1.ImageUrl = "Images/task_32.png"
+                lblFormHeader.Text = "Úkoly"
+        End Select
+
+        If grid1.GetFilterExpression <> "" Then
+            cmdCĺearFilter.Visible = True
+        Else
+            cmdCĺearFilter.Visible = False
+        End If
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
@@ -466,7 +501,7 @@ Public Class p31_framework
 
     Private Sub tabs1_TabClick(sender As Object, e As RadTabStripEventArgs) Handles tabs1.TabClick
         Master.Factory.j03UserBL.SetUserParam("p31_framework-tabindex", tabs1.SelectedIndex.ToString)
-        Server.Transfer("p31_framework.aspx")
+        ReloadPage()
     End Sub
 
     
@@ -489,9 +524,15 @@ Public Class p31_framework
     End Function
 
     Private Sub InhaleMyTaskQuery(ByRef mq As BO.myQueryP56)
-        mq.j02ID = Me.CurrentJ02ID
-        mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
-        mq.Closed = BO.BooleanQueryMode.FalseQuery
+        With mq
+            .j02ID = Me.CurrentJ02ID
+            .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
+            .Closed = BO.BooleanQueryMode.FalseQuery
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
+        End With
+        
+
     End Sub
 
     ''Private Sub rpP56_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP56.ItemDataBound
@@ -529,4 +570,12 @@ Public Class p31_framework
     ''    End With
     ''    _lastP41ID = cRec.p41ID
     ''End Sub
+
+    Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, "")
+            .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, "")
+        End With
+        ReloadPage()
+    End Sub
 End Class

@@ -5,7 +5,7 @@ Public Class entity_framework
     Private Property _curJ74 As BO.j74SavedGridColTemplate
     Private Property _curJ62 As BO.j62MenuHome
     Private Property _x29id As BO.x29IdEnum
-    Private Property _needRecalcVirtualCount As Boolean = False
+    Private Property _needFilterIsChanged As Boolean = False
 
     Public Property CurrentX29ID As BO.x29IdEnum
         Get
@@ -97,6 +97,8 @@ Public Class entity_framework
                     .Add(Me.CurrentPrefix + "_framework-periodtype")
                     .Add(Me.CurrentPrefix + "_framework-period")
                     .Add(Me.CurrentPrefix + "_framework-queryflag")
+                    .Add(Me.CurrentPrefix + "_framework-filter_setting")
+                    .Add(Me.CurrentPrefix + "_framework-filter_sql")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
                 cbxGroupBy.DataBind()
@@ -105,7 +107,13 @@ Public Class entity_framework
 
 
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_framework-pagesize", "20"))
-                    Me.navigationPane.Width = Unit.Parse(.GetUserParam(Me.CurrentPrefix + "_framework-navigationPane_width", "415") & "px")
+                    Dim strDefWidth As String = "420"
+                    Select Case Me.CurrentPrefix
+                        Case "o23", "p56", "p91" : strDefWidth = "500"
+                        Case Else
+                    End Select
+                    Me.navigationPane.Width = Unit.Parse(.GetUserParam(Me.CurrentPrefix + "_framework-navigationPane_width", strDefWidth) & "px")
+
                     If Request.Item("blankwindow") = "1" Then Me.navigationPane.Collapsed = True
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam(Me.CurrentPrefix + "_framework-groupby"))
@@ -133,7 +141,9 @@ Public Class entity_framework
             SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "-j70id")))
             RecalcVirtualRowCount()
             SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "_framework-j74id")))
-            SetupGrid()
+            With Master.Factory.j03UserBL
+                SetupGrid(.GetUserParam(Me.CurrentPrefix + "_framework-filter_setting"), .GetUserParam(Me.CurrentPrefix + "_framework-filter_sql"))
+            End With
             If Me.CurrentMasterPID = 0 Then
                 Handle_DefaultSelectedRecord()
             Else
@@ -232,7 +242,7 @@ Public Class entity_framework
     End Sub
 
 
-    Private Sub SetupGrid()
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With Master.Factory.j74SavedGridColTemplateBL
             Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
             If cJ74 Is Nothing Then
@@ -242,7 +252,7 @@ Public Class entity_framework
                 End If
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked)
+            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -260,7 +270,8 @@ Public Class entity_framework
     End Sub
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
-        _needRecalcVirtualCount = True
+        _needFilterIsChanged = True
+
     End Sub
 
 
@@ -284,7 +295,11 @@ Public Class entity_framework
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        If _needRecalcVirtualCount Then
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam(Me.CurrentPrefix + "_framework-filter_setting", grid1.GetFilterSetting())
+                .SetUserParam(Me.CurrentPrefix + "_framework-filter_sql", grid1.GetFilterExpression())
+            End With
             RecalcVirtualRowCount()
         End If
         Select Case Me.CurrentX29ID
@@ -884,8 +899,7 @@ Public Class entity_framework
 
     Private Sub chkCheckboxSelector_CheckedChanged(sender As Object, e As EventArgs) Handles chkCheckboxSelector.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", BO.BAS.GB(Me.chkCheckboxSelector.Checked))
-        SetupGrid()
-        grid1.Rebind(True)
+        ReloadPage()
     End Sub
 
     Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
@@ -940,8 +954,10 @@ Public Class entity_framework
     End Sub
 
     Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
-        _needRecalcVirtualCount = True
-        grid1.ClearFilter()
-        grid1.Rebind(False)
+        With Master.Factory.j03UserBL
+            .SetUserParam(Me.CurrentPrefix + "_framework-filter_setting", "")
+            .SetUserParam(Me.CurrentPrefix + "_framework-filter_sql", "")
+        End With
+        ReloadPage()
     End Sub
 End Class

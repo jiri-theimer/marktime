@@ -131,6 +131,15 @@ Partial Public Class p31_scheduler
     Protected WithEvents scheduler1 As Global.Telerik.Web.UI.RadScheduler
 
     '''<summary>
+    '''RadAjaxLoadingPanel1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
+
+    '''<summary>
     '''cmdHardRefreshOnBehind control.
     '''</summary>
     '''<remarks>

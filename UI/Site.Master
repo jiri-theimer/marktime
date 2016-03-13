@@ -131,7 +131,7 @@
 
                     <telerik:RadMenuItem Text="Worksheet" Value="p31" ImageUrl="~/Images/menuarrow.png">
                         <Items>
-                            <telerik:RadMenuItem Value="cmdP31_Calendar" Text="Zapisovat" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="p31_framework" Text="Zapisovat" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
                             
                             <telerik:RadMenuItem Value="p31_scheduler" Text="Zapisovat přes KALENDÁŘ" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="p31_timeline" Text="Zapisovat přes DAYLINE" NavigateUrl="p31_timeline.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>

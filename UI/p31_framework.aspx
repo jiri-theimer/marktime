@@ -9,6 +9,8 @@
         div.divHover:hover {
             background-color: #ffffcc;
         }
+
+        
     </style>
 
     <script type="text/javascript">
@@ -153,20 +155,20 @@
             <asp:Panel ID="panSearch" runat="server" CssClass="div6" DefaultButton="cmdSearch" Style="height: 28px;">
 
                 <div style="float: left;">
-                    <img src="Images/worksheet_32.png" />
-
+                    <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
+                    <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Projekty" Style="vertical-align: top;"></asp:Label>
 
                 </div>
                 <div class="commandcell" style="padding-left: 20px;">
                     <asp:TextBox ID="txtSearch" runat="server" Style="width: 140px;" ToolTip="Filtrovat podle názvu/kódu projektu nebo klienta"></asp:TextBox>
-
+                    <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="margin-left: 10px; font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
                 </div>
                 <div class="commandcell">
                     <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" ToolTip="Spustit filtr" CssClass="button-link" />
                     <asp:HyperLink ID="cmdNewTask" runat="server" Text="Nový úkol" NavigateUrl="javascript:p56_create()"></asp:HyperLink>
                 </div>
 
-                <div class="commandcell" style="float:right;margin-right:10px;">
+                <div class="commandcell" style="float: right; margin-right: 10px;">
                     <button type="button" id="cmdSetting" class="show_hide1" style="float: right; padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Další nastavení přehledu">
 
                         <img src="Images/arrow_down.gif" alt="Nastavení" />
@@ -199,8 +201,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="div6">
+                    <img src="Images/help.png" /><i>Zápis úkonu do projektu/úkolu provedete dvojklikem na vybraný záznam v přehledu.</i>
+                </div>
             </div>
-            <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Metro"></uc:datagrid>
+            <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Default"></uc:datagrid>
 
 
             <asp:HiddenField ID="hiddatapid" runat="server" />

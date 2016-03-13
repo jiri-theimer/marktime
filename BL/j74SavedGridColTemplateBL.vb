@@ -75,6 +75,10 @@ Class j74SavedGridColTemplateBL
         c.j74Name = "Výchozí datový přehled"
         c.j74MasterPrefix = strMasterPrefix
         c.j74RecordState = recState
+        If c.j74MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j74MasterPrefix = "p31_grid") Or c.j74MasterPrefix = "p31_framework" Then
+            c.j74IsFilteringByColumn = True 'pro hlavní přehledy nahodit sloupcový auto-filter
+        End If
+
         Select Case x29id
             Case BO.x29IdEnum.p31Worksheet
                 Select Case strMasterPrefix

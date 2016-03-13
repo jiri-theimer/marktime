@@ -383,28 +383,21 @@ Public Class datagrid
     End Sub
 
     Private Sub grid1_Init(sender As Object, e As EventArgs) Handles grid1.Init
+        If grid1.AllowFilteringByColumn Then Return
         Dim menu As GridFilterMenu = grid1.FilterMenu
         Dim i As Integer = 0
         With menu.Items
             While i < .Count
                 With .Item(i)
                     Select Case .Text
-                        Case "NoFilter"
-                            .Text = "Nefiltrovat" : i += 1
-                        Case "Contains"
-                            .Text = "Obsahuje" : i += 1
-                        Case "EqualTo"
-                            .Text = "Je rovno" : i += 1
-                        Case "GreaterThan"
-                            .Text = "Je větší než" : i += 1
-                        Case "LessThan"
-                            .Text = "Je menší než" : i += 1
-                        Case "IsNull"
-                            .Text = "Je prázdné" : i += 1
-                        Case "NotIsNull"
-                            .Text = "Není prázdné" : i += 1
-                        Case "StartsWith"
-                            .Text = "Začíná na" : i += 1
+                        Case "NoFilter" : .Text = "Nefiltrovat" : i += 1
+                        Case "Contains" : .Text = "Obsahuje" : i += 1
+                        Case "EqualTo" : .Text = "Je rovno" : i += 1
+                        Case "GreaterThan" : .Text = "Je větší než" : i += 1
+                        Case "LessThan" : .Text = "Je menší než" : i += 1
+                        Case "IsNull" : .Text = "Je prázdné" : i += 1
+                        Case "NotIsNull" : .Text = "Není prázdné" : i += 1
+                        Case "StartsWith" : .Text = "Začíná na" : i += 1
                         Case Else
                             Dim ss As String = .Text
                             menu.Items.RemoveAt(i)
@@ -427,6 +420,18 @@ Public Class datagrid
             Dim filterBox As TextBox = CType((CType(e.Item, GridFilteringItem))(filterPair.Second.ToString()).Controls(0), TextBox)
 
             RaiseEvent FilterCommand(filterPair.First, filterPair.Second, filterBox.Text)
+        End If
+    End Sub
+
+    Private Sub grid1_ItemCreated(sender As Object, e As GridItemEventArgs) Handles grid1.ItemCreated
+        If TypeOf e.Item Is GridFilteringItem Then
+            If Not String.IsNullOrEmpty(grid1.MasterTableView.FilterExpression) Then
+                For Each col As GridColumn In grid1.MasterTableView.Columns
+                    If Not String.IsNullOrEmpty(col.CurrentFilterValue) Or col.CurrentFilterFunction = GridKnownFunction.IsNull Or col.CurrentFilterFunction = GridKnownFunction.NotIsNull Then
+                        DirectCast(e.Item, GridFilteringItem)(col.UniqueName).BackColor = Drawing.Color.Red
+                    End If
+                Next
+            End If
         End If
     End Sub
 
@@ -493,13 +498,6 @@ Public Class datagrid
     End Sub
 
     Public Function GetFilterExpression() As String
-
-        ''Dim s As New List(Of String)
-        ''For Each col As GridColumn In grid1.MasterTableView.Columns
-        ''    s.Add(col.CurrentFilterValue)
-        ''Next
-        ''Return System.String.Join(" AND ", s)
-
         Return grid1.MasterTableView.FilterExpression
     End Function
     Public Sub ClearFilter()
@@ -508,5 +506,34 @@ Public Class datagrid
             col.CurrentFilterFunction = GridKnownFunction.NoFilter
         Next
         grid1.MasterTableView.FilterExpression = ""
+    End Sub
+    Public Function GetFilterSetting() As String
+
+        Dim s As New List(Of String)
+        For Each col As GridColumn In grid1.MasterTableView.Columns
+            If Not String.IsNullOrEmpty(col.CurrentFilterValue) Or col.CurrentFilterFunction = GridKnownFunction.IsNull Or col.CurrentFilterFunction = GridKnownFunction.NotIsNull Then
+                s.Add(col.UniqueName & "##" & col.CurrentFilterFunction & "##" & col.CurrentFilterValue)
+            End If
+
+        Next
+        Return System.String.Join("|", s)
+    End Function
+    Public Sub SetFilterSetting(strSetting As String, strFilterExpression As String)
+        If strSetting = "" Then Return
+        Dim i As Integer = strSetting.IndexOf("$$")
+        If i >= 0 Then
+            strSetting = Split(strSetting, "$$")(1)
+        End If
+        Dim a() As String = Split(strSetting, "|")
+        For Each s In a
+            Dim b() As String = Split(s, "##")
+            Dim col As GridBoundColumn = grid1.MasterTableView.Columns.FindByUniqueName(b(0))
+            If Not col Is Nothing Then
+                col.CurrentFilterValue = b(2)
+                col.CurrentFilterFunction = DirectCast(CInt(b(1)), GridKnownFunction)
+
+            End If
+        Next
+        grid1.MasterTableView.FilterExpression = strFilterExpression
     End Sub
 End Class

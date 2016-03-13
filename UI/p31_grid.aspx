@@ -148,11 +148,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="height: 44px; background-color: white; border-bottom: solid 1px silver;">
-        <div class="commandcell">
+        <div style="float:left;padding-top:3px;">
             <img src="Images/worksheet_32.png" alt="Worksheet přehled" />
         </div>
-        <div class="commandcell" style="min-width:200px;">
-            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Worksheet" Style="vertical-align: top;"></asp:Label>
+        <div class="commandcell" style="min-width:200px;padding-left:10px;">
+            <asp:Label ID="lblFormHeader" runat="server" CssClass="framework_header_span" Text="Worksheet" Style="vertical-align: top;"></asp:Label>
         </div>
         <div class="commandcell">
             <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">

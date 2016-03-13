@@ -23,6 +23,15 @@ Partial Public Class datagrid
     Protected WithEvents grid1 As Global.Telerik.Web.UI.RadGrid
 
     '''<summary>
+    '''RadAjaxLoadingPanel1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
+
+    '''<summary>
     '''hidAutoScrollHashID control.
     '''</summary>
     '''<remarks>

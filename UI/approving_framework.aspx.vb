@@ -2,6 +2,7 @@
 Public Class approving_framework
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
+    Private Property _needFilterIsChanged As Boolean = False
 
     Public Property CurrentPrefix As String
         Get
@@ -38,8 +39,13 @@ Public Class approving_framework
                     .Add("approving_framework-groupby-p28")
                     .Add("approving_framework-kusovnik")
                     .Add("periodcombo-custom_query")
-
                     .Add("p31_grid-period")
+                    .Add("approving_framework-filter_setting-p41")
+                    .Add("approving_framework-filter_sql-p41")
+                    .Add("approving_framework-filter_setting-p28")
+                    .Add("approving_framework-filter_sql-p28")
+                    .Add("approving_framework-filter_setting-j02")
+                    .Add("approving_framework-filter_sql-j02")
                 End With
 
                 With .Factory.j03UserBL
@@ -66,21 +72,19 @@ Public Class approving_framework
                 End Select
 
             End With
-
-            SetupGrid()
+            With Master.Factory.j03UserBL
+                SetupGrid(.GetUserParam("approving_framework-filter_setting-" + Me.CurrentPrefix), .GetUserParam("approving_framework-filter_sql-" + Me.CurrentPrefix))
+            End With
 
         End If
     End Sub
 
-    Private Sub SetupGrid()
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With grid1
             .ClearColumns()
             .AllowMultiSelect = True
             .AddCheckboxSelector()
             .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
-            'If Me.cbxGroupBy.SelectedValue <> "Client" Then
-            '    .AddColumn("Client", "Klient")
-            'End If
 
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
@@ -124,7 +128,7 @@ Public Class approving_framework
                 .AddColumn("schvaleno_posledni", "Poslední", BO.cfENUM.DateOnly)
                 .AddColumn("schvaleno_pocet", "Počet", BO.cfENUM.Numeric0, , , , , True)
             End If
-
+            .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -153,6 +157,10 @@ Public Class approving_framework
 
     End Sub
 
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needFilterIsChanged = True
+    End Sub
+
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
         If Not TypeOf e.Item Is GridDataItem Then Return
 
@@ -179,6 +187,13 @@ Public Class approving_framework
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("approving_framework-filter_setting-" + Me.CurrentPrefix, grid1.GetFilterSetting())
+                .SetUserParam("approving_framework-filter_sql-" + Me.CurrentPrefix, grid1.GetFilterExpression())
+            End With
+        End If
+
         Dim mq As New BO.myQueryP31
         If Me.cbxScope.SelectedValue = "1" Then
             mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForDoApprove
@@ -188,7 +203,7 @@ Public Class approving_framework
         End If
         mq.DateFrom = period1.DateFrom
         mq.DateUntil = period1.DateUntil
-        
+
 
         Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq)
 

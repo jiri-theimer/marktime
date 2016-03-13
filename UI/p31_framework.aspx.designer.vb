@@ -50,6 +50,24 @@ Partial Public Class p31_framework
     Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''img1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''lblFormHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''txtSearch control.
     '''</summary>
     '''<remarks>
@@ -57,6 +75,15 @@ Partial Public Class p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cmdCĺearFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''cmdSearch control.
