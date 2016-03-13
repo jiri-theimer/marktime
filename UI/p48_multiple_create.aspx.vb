@@ -24,8 +24,8 @@
                     With c
                         .p85GUID = ViewState("guid")
                         .p85FreeDate01 = DateSerial(intYear, intMonth, CInt(b(0)))
-                        .p85OtherKey1 = CInt(b(1))
-                        .p85OtherKey2 = BO.BAS.IsNullInt(b(2))
+                        .p85OtherKey1 = CInt(b(1))  'j02id
+                        .p85OtherKey2 = BO.BAS.IsNullInt(b(2))  'p41id
                         If .p85OtherKey2 = 0 And Request.Item("p41id") <> "" Then
                             .p85OtherKey2 = BO.BAS.IsNullInt(Request.Item("p41id"))
                         End If
@@ -43,10 +43,29 @@
                 Next
             End If
             If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then
-                Dim dt As New BO.DateTimeByQuerystring(Request.Item("t1"))
-
+                Dim dt1 As New BO.DateTimeByQuerystring(Request.Item("t1")), dt2 As New BO.DateTimeByQuerystring(Request.Item("t2")), intJ02ID As Integer = BO.BAS.IsNullInt(Request.Item("j02id"))
+                If intJ02ID = 0 Then intJ02ID = Master.Factory.SysUser.j02ID
+                Dim d As Date = dt1.DateOnly, intLastP41ID As Integer = BO.BAS.IsNullInt(Request.Item("p41id"))
+                Dim strLastProject As String = ""
+                If intLastP41ID <> 0 Then strLastProject = Master.Factory.p41ProjectBL.Load(intLastP41ID).FullName
+                While d <= dt2.DateOnly
+                    Dim c As New BO.p85TempBox
+                    With c
+                        .p85GUID = ViewState("guid")
+                        .p85FreeDate01 = d
+                        .p85OtherKey1 = intJ02ID
+                        .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
+                        .p85OtherKey2 = intLastP41ID
+                        .p85FreeText02 = strLastProject
+                        .p85FreeFloat01 = 8
+                        .p85FreeText03 = dt1.TimeOnly
+                        .p85FreeText04 = dt2.TimeOnly
+                    End With
+                    Master.Factory.p85TempBoxBL.Save(c)
+                    d = d.AddDays(1)
+                End While
             End If
-            
+
 
 
             With Master

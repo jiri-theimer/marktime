@@ -85,6 +85,10 @@
             var lastSlot = sender.get_selectedSlots()[sender.get_selectedSlots().length - 1];
             var d1 = firstSlot.get_startTime()
             var d2 = lastSlot.get_endTime();
+            <%If Me.CurrentView=SchedulerViewType.MonthView then%>
+            d2.setDate(d2.getDate() - 1);
+            <%End If%>
+            
             var j02id = "<%=Master.Factory.SysUser.j02ID%>";
             
             <%If cbxNewRecType.SelectedValue="p48" then%>
@@ -93,7 +97,7 @@
             <%If cbxNewRecType.SelectedValue = "o22" Then%>
             var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;
             <%end if%>
-
+            
             sw_master(url, "Images/milestone_32.png")
 
         }
@@ -349,15 +353,15 @@
                 OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" OnClientTimeSlotContextMenuItemClicked="record_create"
                 Localization-AllDay="Celý den" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"
                 HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand"
-                DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
+                DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid" >
 
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <WeekView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <MultiDayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" NumberOfDays="10" />
                 <TimelineView UserSelectable="true" />
-                <AgendaView UserSelectable="true" />
+                <AgendaView UserSelectable="false" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
-                <TimelineView UserSelectable="false" />
+                <TimelineView UserSelectable="false" />               
                 <AppointmentTemplate>
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
