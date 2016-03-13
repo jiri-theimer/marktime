@@ -94,6 +94,9 @@
                 pars.Add("expr", myQuery.SearchExpression, DbType.String)
             End If
         End If
+        If myQuery.ColumnFilteringExpression <> "" Then
+            strW += " AND " & myQuery.ColumnFilteringExpression.Replace("p51", "[a.p51").Replace("[", "").Replace("]", "")
+        End If
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
         s += " ORDER BY a.p51IsMasterPriceList,a.p51Ordinary,a.p51Name"

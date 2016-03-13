@@ -118,6 +118,9 @@
                 strW += " AND (a.p90Code like '%'+@expr+'%' OR a.p90Text1 LIKE '%'+@expr+'%' OR p28.p28Name like '%'+@expr+'%')"
                 pars.Add("expr", myQuery.SearchExpression, DbType.String)
             End If
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & .ColumnFilteringExpression.Replace("[", "").Replace("]", "")
+            End If
           
             If .j27ID <> 0 Then
                 pars.Add("j27id", .j27ID, DbType.Int32)

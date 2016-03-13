@@ -26,7 +26,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
 
             $(".slidingDiv1").hide();
             $(".show_hide1").show();
@@ -54,7 +54,7 @@
             <%End If%>
 
             self.document.getElementById("divScheduler").style.height = hh + "px";
-            
+
         });
 
 
@@ -77,7 +77,7 @@
             sw_master("o22_record.aspx?clone=1&pid=" + pid, "Images/milestone_32.png")
         }
 
-       
+
 
         function record_create(sender, eventArgs) {
             var firstSlot = sender.get_selectedSlots()[0];
@@ -85,10 +85,16 @@
             var lastSlot = sender.get_selectedSlots()[sender.get_selectedSlots().length - 1];
             var d1 = firstSlot.get_startTime()
             var d2 = lastSlot.get_endTime();
-            var j02id="<%=Master.Factory.SysUser.j02ID%>";
-            //alert(firstSlot.get_startTime()+"****"+lastSlot.get_endTime());
+            var j02id = "<%=Master.Factory.SysUser.j02ID%>";
+            
+            <%If cbxNewRecType.SelectedValue="p48" then%>
+            var url = "p48_multiple_create.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;            
+            <%end if%>
+            <%If cbxNewRecType.SelectedValue = "o22" Then%>
+            var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;
+            <%end if%>
 
-            sw_master("o22_record.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2) + "&j02id="+j02id, "Images/milestone_32.png")
+            sw_master(url, "Images/milestone_32.png")
 
         }
 
@@ -137,9 +143,9 @@
             return (day + "." + month + "." + year + "_" + "0" + hour + "." + "0" + minute);
         }
 
-       
 
-        
+
+
 
         function isPartOfSchedulerAppointmentArea(htmlElement) {
             // Determines if an HTML element is part of the scheduler appointment area.
@@ -150,7 +156,7 @@
 
         window.nodeDropping = function (sender, eventArgs) {
             var htmlElement = eventArgs.get_htmlElement();
-            
+
             var scheduler = $find('<%=scheduler1.ClientID%>');
 
             if (isPartOfSchedulerAppointmentArea(htmlElement)) {
@@ -159,16 +165,21 @@
                 var d1 = timeSlot.get_startTime();
                 var d2 = new Date(d1);
                 <%If Me.CurrentView <> SchedulerViewType.MonthView Then%>
-                d2.setHours(d1.getHours()+1);
+                d2.setHours(d1.getHours() + 1);
                 <%End If%>
 
                 //Gets all the data needed for the an Appointment, from the TreeView node.
                 var node = eventArgs.get_sourceNode();
-                
-                var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2);
-               
-                sw_master(url, "Images/milestone_32.png");
-                
+                <%If cbxNewRecType.SelectedValue="p48" then%>
+                var url = "p48_multiple_create.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
+                alert(url);
+                <%end if%>
+                <%If cbxNewRecType.SelectedValue = "o22" Then%>
+                var url = "o22_record.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
+                <%end if%>
+
+                sw_master(url, "Images/oplan_32.png");
+
             }
             else {
                 //The node was dropped elsewhere on the document.
@@ -176,6 +187,13 @@
             }
         }
 
+        function OnSchedulerCommand(sender, args) {
+            var loadingPanel = $find("<%= RadAjaxLoadingPanel1.ClientID %>");
+            loadingPanel.show(sender.get_id());
+
+        }
+
+        
     </script>
 
 </asp:Content>
@@ -186,21 +204,21 @@
     <div id="divScheduler">
 
         <div id="left_panel" style="float: left; width: 250px;">
-            <div style="float:left;">
+            <div style="float: left;">
                 <img src="Images/calendar_32.png" />
             </div>
-            <div class="div6" style="float:left;">
-                
+            <div class="div6" style="float: left;">
+
                 <span class="page_header_span">Kalendář</span>
             </div>
-            <div class="show_hide1" style="float:left;margin-top:8px;">
+            <div class="show_hide1" style="float: left; margin-top: 8px;">
                 <button type="button">
                     <img src="Images/arrow_down.gif" alt="Nastavení" />
                     Nastavení
 
                 </button>
             </div>
-            <div style="clear:both;"></div>
+            <div style="clear: both;"></div>
 
             <asp:Panel ID="panMasterRecord" runat="server" CssClass="div6">
                 <asp:Image ID="imgMaster" runat="server" />
@@ -209,7 +227,7 @@
             <div class="div6">
                 <asp:Label ID="Persons" runat="server" CssClass="valbold"></asp:Label>
             </div>
-            
+
 
 
             <div class="slidingDiv1">
@@ -241,9 +259,19 @@
                     </div>
 
                 </asp:Panel>
+                <div>
+                        Na click v kalendáři založit:
+                    
+                    </div>
+                <div class="div6">
+                    <asp:DropDownList ID="cbxNewRecType" runat="server" AutoPostBack="true">
+                        <asp:ListItem Text="Operativní plán" Value="p48"></asp:ListItem>
+                        <asp:ListItem Text="Kalendářová událost" Value="o22"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
                 <div class="div6">
                     <img src="Images/oplan.png" />
-                    <asp:CheckBox ID="chkSetting_P48" runat="server" Checked="true" Text="Zobrazovat operatavní plán" AutoPostBack="true" CssClass="chk"  />
+                    <asp:CheckBox ID="chkSetting_P48" runat="server" Checked="true" Text="Zobrazovat operatavní plán" AutoPostBack="true" CssClass="chk" />
                 </div>
                 <div class="div6">
                     <img src="Images/calendar.png" />
@@ -320,7 +348,7 @@
                 Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" Localization-HeaderToday="Dnes" Localization-ShowMore="více..."
                 OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" OnClientTimeSlotContextMenuItemClicked="record_create"
                 Localization-AllDay="Celý den" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"
-                HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd"
+                HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand"
                 DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
 
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
@@ -340,8 +368,9 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Nová událost do kalendáře" ImageUrl="Images/milestone.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Nový úkol" ImageUrl="Images/task.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>                            
+                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png"></telerik:RadMenuItem>                            
+                            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>
@@ -351,6 +380,12 @@
                     <Pdf PageTitle="Schedule" Author="Telerik" Creator="Telerik" Title="Schedule" />
                 </ExportSettings>
             </telerik:RadScheduler>
+            <telerik:RadAjaxLoadingPanel runat="server" ID="RadAjaxLoadingPanel1" RenderMode="Lightweight" Transparency="30" BackColor="#E0E0E0">
+                <div style="float: none; padding-top: 80px;">
+                    <img src="Images/loading.gif" />
+                    <h2>LOADING...</h2>
+                </div>
+            </telerik:RadAjaxLoadingPanel>
         </div>
 
     </div>
@@ -361,7 +396,7 @@
     <asp:HiddenField ID="hidJ02IDs" runat="server" />
     <asp:HiddenField ID="hidJ07IDs" runat="server" />
     <asp:HiddenField ID="hidJ11IDs" runat="server" />
-    
+
     <asp:HiddenField ID="hidCurResource" runat="server" />
     <asp:HiddenField ID="hidCurTime" runat="server" />
 

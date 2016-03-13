@@ -14,33 +14,39 @@
             Dim intYear As Integer = BO.BAS.IsNullInt(Request.Item("year"))
             Dim intMonth As Integer = BO.BAS.IsNullInt(Request.Item("month"))
 
-            Dim s As String = Request.Item("input")
-            If s = "" Then Master.StopPage("input missing.")
-            Dim a() As String = Split(s, ","), strLastProject As String = "", intLastP41ID As Integer
-            ''If Request.Item("p41id") <> "" Then intLastP41ID = BO.BAS.IsNullInt(Request.Item("p41id"))
-            For i As Integer = 0 To UBound(a)
-                Dim b() As String = Split(a(i), "-")
-                Dim c As New BO.p85TempBox
-                With c
-                    .p85GUID = ViewState("guid")
-                    .p85FreeDate01 = DateSerial(intYear, intMonth, CInt(b(0)))
-                    .p85OtherKey1 = CInt(b(1))
-                    .p85OtherKey2 = BO.BAS.IsNullInt(b(2))
-                    If .p85OtherKey2 = 0 And Request.Item("p41id") <> "" Then
-                        .p85OtherKey2 = BO.BAS.IsNullInt(Request.Item("p41id"))
-                    End If
-                    .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
-                    If intLastP41ID <> .p85OtherKey2 And .p85OtherKey2 > 0 Then
-                        strLastProject = Master.Factory.p41ProjectBL.Load(.p85OtherKey2).FullName
-                    End If
-                    If .p85OtherKey2 <> 0 Then
-                        .p85FreeText02 = strLastProject
-                    End If
-                    .p85FreeFloat01 = 8
-                End With
-                Master.Factory.p85TempBoxBL.Save(c)
-                strLastProject = c.p85FreeText02 : intLastP41ID = c.p85OtherKey2
-            Next
+            If Request.Item("input") <> "" Then
+                Dim s As String = Request.Item("input")
+                Dim a() As String = Split(s, ","), strLastProject As String = "", intLastP41ID As Integer
+                ''If Request.Item("p41id") <> "" Then intLastP41ID = BO.BAS.IsNullInt(Request.Item("p41id"))
+                For i As Integer = 0 To UBound(a)
+                    Dim b() As String = Split(a(i), "-")
+                    Dim c As New BO.p85TempBox
+                    With c
+                        .p85GUID = ViewState("guid")
+                        .p85FreeDate01 = DateSerial(intYear, intMonth, CInt(b(0)))
+                        .p85OtherKey1 = CInt(b(1))
+                        .p85OtherKey2 = BO.BAS.IsNullInt(b(2))
+                        If .p85OtherKey2 = 0 And Request.Item("p41id") <> "" Then
+                            .p85OtherKey2 = BO.BAS.IsNullInt(Request.Item("p41id"))
+                        End If
+                        .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
+                        If intLastP41ID <> .p85OtherKey2 And .p85OtherKey2 > 0 Then
+                            strLastProject = Master.Factory.p41ProjectBL.Load(.p85OtherKey2).FullName
+                        End If
+                        If .p85OtherKey2 <> 0 Then
+                            .p85FreeText02 = strLastProject
+                        End If
+                        .p85FreeFloat01 = 8
+                    End With
+                    Master.Factory.p85TempBoxBL.Save(c)
+                    strLastProject = c.p85FreeText02 : intLastP41ID = c.p85OtherKey2
+                Next
+            End If
+            If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then
+                Dim dt As New BO.DateTimeByQuerystring(Request.Item("t1"))
+
+            End If
+            
 
 
             With Master

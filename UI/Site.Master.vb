@@ -115,7 +115,7 @@ Public Class Site
                 ShowHideMI(.SysUser.IsAdmin, "more", "cmdWorkflow")
                 ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P41_Owner), "more", "p47")
                 ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P51_Admin), "more", "p51")
-                ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P90_Reader), "more", "p90")
+                ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P90_Reader), "more", "p90_framework")
                 ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_O23_Creator), "more", "o23")
                 ShowHideMI((.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Or .TestPermission(BO.x53PermValEnum.GR_P48_Reader)), "more", "p48")
                 With menu1.FindItemByValue("more")

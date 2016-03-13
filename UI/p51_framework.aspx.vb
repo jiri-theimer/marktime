@@ -2,6 +2,7 @@
 Public Class p51_framework
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
+    Private Property _needFilterIsChanged As Boolean = False
 
     Private Sub p51_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -21,7 +22,8 @@ Public Class p51_framework
                     .Add("p51_framework-query-closed")
                     .Add("p51_framework-chkShowCustomTailor")
                     .Add("p51_framework-chkMasterPriceLists")
-                    .Add("p51_framework-search")
+                    .Add("p51_framework-filter_setting")
+                    .Add("p51_framework-filter_sql")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
 
@@ -33,20 +35,16 @@ Public Class p51_framework
                 Me.chkShowCustomTailor.Checked = BO.BAS.BG(.GetUserParam("p51_framework-chkShowCustomTailor", "0"))
                 basUI.SelectDropdownlistValue(Me.cbxValidity, .GetUserParam("p51_framework-query-closed", "1"))
                 Me.chkMasterPriceLists.Checked = BO.BAS.BG(.GetUserParam("p51_framework-chkMasterPriceLists", "0"))
-                Me.txtSearch.Text = .GetUserParam("p51_framework-search")
             End With
 
-            If Request.Item("search") <> "" Then
-                txtSearch.Text = Request.Item("search")   'externě předaná podmínka
-                txtSearch.Focus()
-            End If
-
-            SetupGrid()
-
+           
+            With Master.Factory.j03UserBL
+                SetupGrid(.GetUserParam("p51_framework-filter_setting"), .GetUserParam("p51_framework-filter_sql"))
+            End With
         End If
     End Sub
 
-    Private Sub SetupGrid()
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With grid1
             .ClearColumns()
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
@@ -56,8 +54,14 @@ Public Class p51_framework
             .AddColumn("j27Code", "Měna sazeb")
             .AddColumn("p51IsCustomTailor", "Sazby na míru", BO.cfENUM.Checkbox)
             .AddColumn("p51IsInternalPriceList", "Nákl.ceník", BO.cfENUM.Checkbox)
-            .AddColumn("p51Ordinary", "#", BO.cfENUM.Numeric0)
+            .AddColumn("p51Ordinary", "#", BO.cfENUM.Numeric0, , , , , , False)
+
+            .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
+    End Sub
+
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needFilterIsChanged = True
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
@@ -69,6 +73,12 @@ Public Class p51_framework
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("p51_framework-filter_setting", grid1.GetFilterSetting())
+                .SetUserParam("p51_framework-filter_sql", grid1.GetFilterExpression())
+            End With
+        End If
         Dim mq As New BO.myQuery
         Select Case Me.cbxValidity.SelectedValue
             Case "1"
@@ -78,7 +88,7 @@ Public Class p51_framework
             Case "3"
                 mq.Closed = BO.BooleanQueryMode.TrueQuery
         End Select
-        mq.SearchExpression = Trim(Me.txtSearch.Text)
+        mq.ColumnFilteringExpression = grid1.GetFilterExpression
 
         Dim lis As IEnumerable(Of BO.p51PriceList) = Master.Factory.p51PriceListBL.GetList(mq)
         If Not Me.chkShowCustomTailor.Checked Then
@@ -116,24 +126,6 @@ Public Class p51_framework
         grid1.Rebind(False)
     End Sub
 
-    Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
-        Handle_RunSearch()
 
-    End Sub
-
-    Private Sub Handle_RunSearch()
-        Master.Factory.j03UserBL.SetUserParam("p51_framework-search", txtSearch.Text)
-
-        grid1.Rebind(False)
-
-        txtSearch.Focus()
-    End Sub
-
-    Private Sub p51_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Trim(txtSearch.Text) = "" Then
-            txtSearch.Style.Item("background-color") = ""
-        Else
-            txtSearch.Style.Item("background-color") = "red"
-        End If
-    End Sub
+    
 End Class

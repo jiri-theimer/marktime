@@ -23,24 +23,6 @@ Partial Public Class p51_framework
     Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSearch As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>

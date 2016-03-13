@@ -274,13 +274,18 @@
         If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then Me.CurrentIsScheduler = True
         If Master.DataPID = 0 And Me.CurrentIsScheduler Then
             Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo   'požadavek na zápis hodin z denního kalendáře, přepnout na čas od/do
-            Dim a() As String = Split(Request.Item("t1"), "_")
-            Me.p31Date.SelectedDate = BO.BAS.ConvertString2Date(a(0))
-            a = Split(a(1), ".")
-            Me.TimeFrom.Text = Right("0" & a(0), 2) & ":" & Right("0" & a(1), 2)
+            Dim c As New BO.DateTimeByQuerystring(Request.Item("t1"))
+            Me.p31Date.SelectedDate = c.DateOnly
+            Me.TimeFrom.Text = c.TimeOnly
+            c = New BO.DateTimeByQuerystring(Request.Item("t2"))
+            Me.TimeUntil.Text = c.TimeOnly
+            'Dim a() As String = Split(Request.Item("t1"), "_")
+            'Me.p31Date.SelectedDate = BO.BAS.ConvertString2Date(a(0))
+            'a = Split(a(1), ".")
+            'Me.TimeFrom.Text = Right("0" & a(0), 2) & ":" & Right("0" & a(1), 2)
 
-            a = Split(Request.Item("t2"), "_") : a = Split(a(1), ".")
-            Me.TimeUntil.Text = Right("0" & a(0), 2) & ":" & Right("0" & a(1), 2)
+            'a = Split(Request.Item("t2"), "_") : a = Split(a(1), ".")
+            'Me.TimeUntil.Text = Right("0" & a(0), 2) & ":" & Right("0" & a(1), 2)
             Dim cT As New BO.clsTime
             Me.p31Value_Orig.Text = cT.ShowAsDec(Me.TimeUntil.Text) - cT.ShowAsDec(Me.TimeFrom.Text)
             Handle_ChangeHoursEntryFlag()

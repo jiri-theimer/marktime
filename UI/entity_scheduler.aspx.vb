@@ -87,6 +87,7 @@ Public Class entity_scheduler
                     .Add("entity_scheduler-o22")
                     .Add("entity_scheduler-p48")
                     .Add("entity_scheduler-p56")
+                    .Add("entity_scheduler-newrec_prefix")
                 End With
 
                 With .Factory.j03UserBL
@@ -101,6 +102,7 @@ Public Class entity_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_daystarttime, .GetUserParam("entity_scheduler-daystarttime", "8"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_dayendtime, .GetUserParam("entity_scheduler-dayendtime", "20"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_multidays, .GetUserParam("entity_scheduler-multidays", "2"))
+                    basUI.SelectDropdownlistValue(Me.cbxNewRecType, .GetUserParam("entity_scheduler-newrec_prefix", "p48"))
 
                     Me.chkSetting_P48.Checked = .GetUserParam("entity_scheduler-p48", "1")
                     Me.chkSetting_O22.Checked = .GetUserParam("entity_scheduler-o22", "1")
@@ -317,5 +319,9 @@ Public Class entity_scheduler
     Private Sub chkSetting_P56_CheckedChanged(sender As Object, e As EventArgs) Handles chkSetting_P56.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-p56", BO.BAS.GB(Me.chkSetting_P56.Checked))
         RefreshData(False)
+    End Sub
+
+    Private Sub cbxNewRecType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxNewRecType.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-newrec_prefix", Me.cbxNewRecType.SelectedValue)
     End Sub
 End Class

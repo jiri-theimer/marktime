@@ -104,6 +104,15 @@ Partial Public Class entity_scheduler
     Protected WithEvents j07ID_Add As Global.UI.datacombo
 
     '''<summary>
+    '''cbxNewRecType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxNewRecType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''chkSetting_P48 control.
     '''</summary>
     '''<remarks>
@@ -174,6 +183,15 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents scheduler1 As Global.Telerik.Web.UI.RadScheduler
+
+    '''<summary>
+    '''RadAjaxLoadingPanel1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
 
     '''<summary>
     '''cmdHardRefreshOnBehind control.

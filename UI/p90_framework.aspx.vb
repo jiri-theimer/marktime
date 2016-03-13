@@ -2,6 +2,7 @@
 Public Class p90_framework
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
+    Private Property _needFilterIsChanged As Boolean = False
 
     Private Sub p90_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -11,14 +12,15 @@ Public Class p90_framework
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Zálohové faktury"
-                .SiteMenuValue = "p90"
+                .SiteMenuValue = "p90_framework"
                 .TestNeededPermission(BO.x53PermValEnum.GR_P90_Reader)
 
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p90_framework-pagesize")
                     .Add("p90_framework-query-closed")
-                    .Add("p90_framework-search")
+                    .Add("p90_framework-filter_setting")
+                    .Add("p90_framework-filter_sql")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
 
@@ -28,20 +30,16 @@ Public Class p90_framework
             With Master.Factory.j03UserBL
                 cbxPaging.SelectedValue = .GetUserParam("p90_framework-pagesize", "20")
                 basUI.SelectDropdownlistValue(Me.cbxValidity, .GetUserParam("p90_framework-query-closed", "1"))
-                Me.txtSearch.Text = .GetUserParam("p90_framework-search")
             End With
 
-            If Request.Item("search") <> "" Then
-                txtSearch.Text = Request.Item("search")   'externě předaná podmínka
-                txtSearch.Focus()
-            End If
-
-            SetupGrid()
+            With Master.Factory.j03UserBL
+                SetupGrid(.GetUserParam("p90_framework-filter_setting"), .GetUserParam("p90_framework-filter_sql"))
+            End With
 
         End If
     End Sub
 
-    Private Sub SetupGrid()
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With grid1
             .ClearColumns()
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
@@ -55,7 +53,14 @@ Public Class p90_framework
             .AddColumn("p90Amount_Debt", "Dluh", BO.cfENUM.Numeric2)
             .AddColumn("p90Text1", "Text")
             .AddColumn("j27Code", "")
+
+            .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
+
+    End Sub
+
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needFilterIsChanged = True
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
@@ -70,6 +75,12 @@ Public Class p90_framework
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("p90_framework-filter_setting", grid1.GetFilterSetting())
+                .SetUserParam("p90_framework-filter_sql", grid1.GetFilterExpression())
+            End With
+        End If
         Dim mq As New BO.myQueryP90
         Select Case Me.cbxValidity.SelectedValue
             Case "1"
@@ -79,10 +90,10 @@ Public Class p90_framework
             Case "3"
                 mq.Closed = BO.BooleanQueryMode.TrueQuery
         End Select
-        mq.SearchExpression = Trim(Me.txtSearch.Text)
+        mq.ColumnFilteringExpression = grid1.GetFilterExpression
 
         Dim lis As IEnumerable(Of BO.p90Proforma) = Master.Factory.p90ProformaBL.GetList(mq)
-       
+
         grid1.DataSource = lis
     End Sub
 
@@ -102,23 +113,7 @@ Public Class p90_framework
         grid1.Rebind(False)
     End Sub
 
-    Private Sub Handle_RunSearch()
-        Master.Factory.j03UserBL.SetUserParam("p90_framework-search", txtSearch.Text)
+   
 
-        grid1.Rebind(False)
-
-        txtSearch.Focus()
-    End Sub
-
-    Private Sub p90_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Trim(txtSearch.Text) = "" Then
-            txtSearch.Style.Item("background-color") = ""
-        Else
-            txtSearch.Style.Item("background-color") = "red"
-        End If
-    End Sub
-
-    Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
-        Handle_RunSearch()
-    End Sub
+    
 End Class

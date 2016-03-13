@@ -416,10 +416,15 @@ Public Class datagrid
         End If
         If e.CommandName = RadGrid.FilterCommandName Then
             Dim filterPair As Pair = DirectCast(e.CommandArgument, Pair)
+            Dim ctl As Control = (CType(e.Item, GridFilteringItem))(filterPair.Second.ToString()).Controls(0)
+            If TypeOf ctl Is TextBox Then
+                RaiseEvent FilterCommand(filterPair.First, filterPair.Second, CType(ctl, TextBox).Text)
+            End If
+            If TypeOf ctl Is CheckBox Then
+                RaiseEvent FilterCommand(filterPair.First, filterPair.Second, BO.BAS.GB(CType(ctl, CheckBox).Checked))
+            End If
 
-            Dim filterBox As TextBox = CType((CType(e.Item, GridFilteringItem))(filterPair.Second.ToString()).Controls(0), TextBox)
 
-            RaiseEvent FilterCommand(filterPair.First, filterPair.Second, filterBox.Text)
         End If
     End Sub
 
@@ -498,7 +503,13 @@ Public Class datagrid
     End Sub
 
     Public Function GetFilterExpression() As String
-        Return grid1.MasterTableView.FilterExpression
+        With grid1.MasterTableView
+            If .FilterExpression = "" Then
+                Return ""
+            Else
+                Return .FilterExpression.Replace("True", "1").Replace("False", "0")
+            End If
+        End With
     End Function
     Public Sub ClearFilter()
         For Each col As GridColumn In grid1.MasterTableView.Columns
@@ -527,7 +538,7 @@ Public Class datagrid
         Dim a() As String = Split(strSetting, "|")
         For Each s In a
             Dim b() As String = Split(s, "##")
-            Dim col As GridBoundColumn = grid1.MasterTableView.Columns.FindByUniqueName(b(0))
+            Dim col As GridColumn = grid1.MasterTableView.Columns.FindByUniqueName(b(0))
             If Not col Is Nothing Then
                 col.CurrentFilterValue = b(2)
                 col.CurrentFilterFunction = DirectCast(CInt(b(1)), GridKnownFunction)

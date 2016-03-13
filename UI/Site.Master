@@ -184,7 +184,7 @@
 
                             
 
-                            <telerik:RadMenuItem Value="p90" Text="Zálohové faktury" NavigateUrl="p90_framework.aspx" ImageUrl="Images/proforma.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="p90_framework" Text="Zálohové faktury" NavigateUrl="p90_framework.aspx" ImageUrl="Images/proforma.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="p51" Text="Ceníky sazeb" NavigateUrl="p51_framework.aspx" ImageUrl="Images/billing.png"></telerik:RadMenuItem>
 
                             <telerik:RadMenuItem Value="cmdWorkflow" Text="Návrhář workflow" NavigateUrl="admin_workflow.aspx" ImageUrl="Images/workflow.png"></telerik:RadMenuItem>

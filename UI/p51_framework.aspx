@@ -77,91 +77,76 @@
 
 
     <div style="height: 44px; background-color: white; border-bottom: solid 1px silver">
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <td>
-                    <img src="Images/billing_32.png" alt="Ceníky sazeb" />
-                </td>
-                <td style="width: 220px;">
-                    <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Ceníky sazeb" Style="vertical-align: top;"></asp:Label>
+        <div style="float: left;">
+            <img src="Images/billing_32.png" alt="Ceníky sazeb" />
+        </div>
+        <div class="commandcell" style="padding-left: 10px;">
+            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Ceníky sazeb" Style="vertical-align: top;"></asp:Label>
+        </div>
+
+        <div style="float:left;padding-left:50px;">
+            <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
+                <Items>
+
+                    <telerik:RadMenuItem Text="Záznam" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
+                        <ContentTemplate>
+                            <div style="padding: 10px; min-width: 200px;">
+                                <div class="div6">
+                                    <img src="Images/new.png" />
+                                    <asp:HyperLink ID="cmdNew" Text="Nový" runat="server" NavigateUrl="javascript:record_new();"></asp:HyperLink>
+                                </div>
+                                <div class="div6">
+                                    <img src="Images/edit.png" />
+                                    <asp:HyperLink ID="cmdEdit" Text="Upravit" runat="server" NavigateUrl="javascript:record_edit();"></asp:HyperLink>
+
+                                </div>
+                                <div class="div6">
+                                    <img src="Images/copy.png" />
+                                    <asp:HyperLink ID="cmdClone" Text="Kopírovat" runat="server" NavigateUrl="javascript:record_clone();"></asp:HyperLink>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+
+                    </telerik:RadMenuItem>
 
 
-                </td>
-                <td style="width: 160px;">
-                    <asp:TextBox ID="txtSearch" runat="server" Style="width: 160px;" ToolTip="Hledat/filtrovat podle názvu nebo kódu ceníku"></asp:TextBox>
+                    <telerik:RadMenuItem Text="Obnovit" Visible="false" ImageUrl="Images/refresh.png" Value="refresh" NavigateUrl="p51_framework.aspx"></telerik:RadMenuItem>
 
-                </td>
-                <td align="left">
-                    <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" ToolTip="Spustit filtr" CssClass="button-link" />
+                    <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="columns" PostBack="false">
+                        <ContentTemplate>
+                            <div style="padding: 20px;">
+                                <div class="div6">
+                                    <asp:DropDownList ID="cbxValidity" runat="server" AutoPostBack="true">
+                                        <asp:ListItem Text="Zobrazovat otevřené i uzavřené" Value="1"></asp:ListItem>
+                                        <asp:ListItem Text="Zobrazovat pouze otevřené (mimo koš)" Value="2"></asp:ListItem>
+                                        <asp:ListItem Text="Zobrazovat pouze uzavřené (v koši)" Value="3"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <div class="div6">
+                                    <asp:CheckBox ID="chkShowCustomTailor" runat="server" Text="Zobrazovat i ceníky na míru" AutoPostBack="true" />
+                                </div>
+                                <div class="div6">
+                                    <asp:CheckBox ID="chkMasterPriceLists" runat="server" Text="Pouze MASTER ceníky" AutoPostBack="true" />
+                                </div>
+                                <div class="div6">
+                                    <span>Stránkování:</span>
+                                    <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
+                                        <asp:ListItem Text="20"></asp:ListItem>
+                                        <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                        <asp:ListItem Text="100"></asp:ListItem>
+                                        <asp:ListItem Text="200"></asp:ListItem>
+                                        <asp:ListItem Text="500"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </telerik:RadMenuItem>
+                </Items>
+            </telerik:RadMenu>
 
-                </td>
-
-                <td style="padding-left: 20px;">
-                    <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
-                        <Items>
-
-                            <telerik:RadMenuItem Text="Záznam" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
-                                <ContentTemplate>
-                                    <div style="padding: 10px; min-width: 200px;">
-                                        <div class="div6">
-                                            <img src="Images/new.png" />
-                                            <asp:HyperLink ID="cmdNew" Text="Nový" runat="server" NavigateUrl="javascript:record_new();"></asp:HyperLink>
-                                        </div>
-                                        <div class="div6">
-                                            <img src="Images/edit.png" />
-                                            <asp:HyperLink ID="cmdEdit" Text="Upravit" runat="server" NavigateUrl="javascript:record_edit();"></asp:HyperLink>
-
-                                        </div>
-                                        <div class="div6">
-                                            <img src="Images/copy.png" />
-                                            <asp:HyperLink ID="cmdClone" Text="Kopírovat" runat="server" NavigateUrl="javascript:record_clone();"></asp:HyperLink>
-                                        </div>
-                                    </div>
-                                </ContentTemplate>
-
-                            </telerik:RadMenuItem>
-
-
-                            <telerik:RadMenuItem Text="Obnovit" Visible="false" ImageUrl="Images/refresh.png" Value="refresh" NavigateUrl="p51_framework.aspx"></telerik:RadMenuItem>
-
-                            <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="columns" PostBack="false">
-                                <ContentTemplate>
-                                    <div style="padding: 20px;">
-                                        <div class="div6">
-                                            <asp:DropDownList ID="cbxValidity" runat="server" AutoPostBack="true">
-                                                <asp:ListItem Text="Zobrazovat otevřené i uzavřené" Value="1"></asp:ListItem>
-                                                <asp:ListItem Text="Zobrazovat pouze otevřené (mimo koš)" Value="2"></asp:ListItem>
-                                                <asp:ListItem Text="Zobrazovat pouze uzavřené (v koši)" Value="3"></asp:ListItem>
-                                            </asp:DropDownList>
-                                        </div>
-                                        <div class="div6">
-                                            <asp:CheckBox ID="chkShowCustomTailor" runat="server" Text="Zobrazovat i ceníky na míru" AutoPostBack="true" />
-                                        </div>
-                                        <div class="div6">
-                                            <asp:CheckBox ID="chkMasterPriceLists" runat="server" Text="Pouze MASTER ceníky" AutoPostBack="true" />
-                                        </div>
-                                        <div class="div6">
-                                            <span>Stránkování:</span>
-                                            <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
-                                                <asp:ListItem Text="20"></asp:ListItem>
-                                                <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                                <asp:ListItem Text="100"></asp:ListItem>
-                                                <asp:ListItem Text="200"></asp:ListItem>
-                                                <asp:ListItem Text="500"></asp:ListItem>
-                                            </asp:DropDownList>
-                                        </div>
-                                    </div>
-                                </ContentTemplate>
-                            </telerik:RadMenuItem>
-                        </Items>
-                    </telerik:RadMenu>
-
-                </td>
-
-            </tr>
-        </table>
+        </div>
     </div>
-    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
+    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" AllowFilteringByColumn="true"></uc:datagrid>
 
 
     <asp:HiddenField ID="hiddatapid" runat="server" />

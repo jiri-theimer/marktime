@@ -174,7 +174,7 @@
             var url = "p48_multiple_create.aspx?year=<%=Me.CurrentYear%>&month=<%=Me.CurrentMonth%>&input=" + s
             <%If Me.CurrentMasterPrefix="p41" then%>
             url = url + "&p41id=<%=Me.CurrentMasterPID%>";
-            <%End If%>
+            <%End If%>            
             sw_master(url, "Images/oplan_32.png")
 
         }

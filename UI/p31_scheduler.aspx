@@ -362,7 +362,7 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Nový úkon" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Zapsat úkon" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>
