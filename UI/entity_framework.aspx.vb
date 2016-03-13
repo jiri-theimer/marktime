@@ -5,6 +5,7 @@ Public Class entity_framework
     Private Property _curJ74 As BO.j74SavedGridColTemplate
     Private Property _curJ62 As BO.j62MenuHome
     Private Property _x29id As BO.x29IdEnum
+    Private Property _needRecalcVirtualCount As Boolean = False
 
     Public Property CurrentX29ID As BO.x29IdEnum
         Get
@@ -258,6 +259,10 @@ Public Class entity_framework
         End With
     End Sub
 
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needRecalcVirtualCount = True
+    End Sub
+
 
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
@@ -279,6 +284,9 @@ Public Class entity_framework
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needRecalcVirtualCount Then
+            RecalcVirtualRowCount()
+        End If
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
                 Dim mq As New BO.myQueryP41
@@ -366,7 +374,7 @@ Public Class entity_framework
             Case Else
 
         End Select
-        
+
 
 
 
@@ -376,7 +384,7 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_p91(ByRef mq As BO.myQueryP91)
         With mq
             .Closed = BO.BooleanQueryMode.NoQuery
-
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "p91DateSupply" : .PeriodType = BO.myQueryP91_PeriodType.p91DateSupply
                 Case "p91DateMaturity" : .PeriodType = BO.myQueryP91_PeriodType.p91DateMaturity
@@ -412,6 +420,7 @@ Public Class entity_framework
 
     Private Sub InhaleMyQuery_o23(ByRef mq As BO.myQueryO23)
         With mq
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
                 Case "j02" : .j02ID = Me.CurrentMasterPID
@@ -449,6 +458,7 @@ Public Class entity_framework
 
     Private Sub InhaleMyQuery_p56(ByRef mq As BO.myQueryP56)
         With mq
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
                 Case "j02" : .j02ID = Me.CurrentMasterPID
@@ -485,6 +495,7 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_p41(ByRef mq As BO.myQueryP41)
         With mq
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -516,6 +527,7 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_p28(ByRef mq As BO.myQueryP28)
         With mq
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -533,7 +545,7 @@ Public Class entity_framework
             End If
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
-                    .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil                
+                    .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
             End Select
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
@@ -545,6 +557,7 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_j02(ByRef mq As BO.myQueryJ02)
         With mq
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -919,5 +932,16 @@ Public Class entity_framework
         Else
             chkGroupsAutoExpanded.Visible = False
         End If
+        If grid1.GetFilterExpression <> "" Then
+            cmdCĺearFilter.Visible = True
+        Else
+            cmdCĺearFilter.Visible = False
+        End If
+    End Sub
+
+    Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
+        _needRecalcVirtualCount = True
+        grid1.ClearFilter()
+        grid1.Rebind(False)
     End Sub
 End Class

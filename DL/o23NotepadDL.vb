@@ -201,6 +201,9 @@
             If .QuickQuery > BO.myQueryO23_QuickQuery._NotSpecified Then
                 strW += " AND " & bas.GetQuickQuerySQL_o23(.QuickQuery)
             End If
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
+            End If
             If .SearchExpression <> "" Then
                 strW += " AND ("
                 'něco jako fulltext
@@ -270,7 +273,9 @@
         strSort = strSort.Replace("Owner", "j02owner.j02LastName").Replace("Project", "p41.p41Name").Replace("ProjectClient", "p28_client.p28Name").Replace("ReceiversInLine", "dbo.o23_getroles_inline(a.o23ID)")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
-
+    Private Function ParseFilterExpression(strFilter As String) As String
+        Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
+    End Function
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters, bolInhaleReceiversInLine As Boolean) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
 

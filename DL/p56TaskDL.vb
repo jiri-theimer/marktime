@@ -186,7 +186,9 @@
                         strW += ")"
                     End If
             End Select
-
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
+            End If
             If .SearchExpression <> "" Then
                 strW += " AND ("
                 'něco jako fulltext
@@ -256,7 +258,9 @@
         strSort = strSort.Replace("p59NameSubmitter", "p59submitter.p59name")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
-
+    Private Function ParseFilterExpression(strFilter As String) As String
+        Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
+    End Function
     Public Function GetList_WaitingOnReminder(datReminderFrom As Date, datReminderUntil As Date) As IEnumerable(Of BO.p56Task)
         Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
         pars.Add("datereminderfrom", datReminderFrom)

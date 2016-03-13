@@ -286,7 +286,7 @@ Public Class admin_framework
         With grid1
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
             .radGridOrig.ShowFooter = False
-
+            
             Select Case ViewState("prefix")
                 Case "j02"
                     bolSearch = True

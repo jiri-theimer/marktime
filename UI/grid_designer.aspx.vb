@@ -152,6 +152,8 @@
                     End If
                 End If
             End If
+            Me.j74IsFilteringByColumn.Checked = cRec.j74IsFilteringByColumn
+            Me.j74IsVirtualScrolling.Checked = cRec.j74IsVirtualScrolling
         End With
         colsSource.ClearSelection()
 
@@ -174,6 +176,8 @@
             Next
             .j74ColumnNames = BO.BAS.OM1(s)
             .j74OrderBy = GetOrderBy()
+            .j74IsFilteringByColumn = Me.j74IsFilteringByColumn.Checked
+            .j74IsVirtualScrolling = Me.j74IsVirtualScrolling.Checked
         End With
 
         If Master.Factory.j74SavedGridColTemplateBL.Save(cRec) Then

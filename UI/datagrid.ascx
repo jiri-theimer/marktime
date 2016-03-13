@@ -1,16 +1,17 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="datagrid.ascx.vb" Inherits="UI.datagrid" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<telerik:RadGrid ID="grid1" AutoGenerateColumns="false" runat="server" ShowFooter="true" EnableViewState="true" AllowFilteringByColumn="false" AllowPaging="true" AllowSorting="true" Skin="Default">
-   
+<div id="gogo1"></div>
+<telerik:RadGrid ID="grid1" AutoGenerateColumns="false" runat="server" ShowFooter="true" EnableViewState="true" AllowPaging="true" AllowSorting="true" Skin="Default" EnableLinqExpressions="false">
+    
     <ExportSettings ExportOnlyData="true" OpenInNewWindow="true" FileName="marktime_export" UseItemStyles="false">
         <Excel Format="Biff" />
     </ExportSettings>
     <GroupingSettings CaseSensitive="false" />
 
     <ClientSettings>
-        
         <Selecting AllowRowSelect="true" />
         <ClientEvents OnRowContextMenu="ContextSelect" OnGridCreated="GridCreated" />
+       
     </ClientSettings>
     <PagerStyle Position="TopAndBottom" AlwaysVisible="false" />
     <SortingSettings SortToolTip="Klikněte zde pro třídění" SortedDescToolTip="Setříděno sestupně" SortedAscToolTip="Setříděno vzestupně" />
@@ -58,7 +59,25 @@
 
 
         }
-
+        
+        <%if grid1.ClientSettings.Scrolling.EnableVirtualScrollPaging=True then%>
+        
+        var hx1 = new Number;
+        var hx2 = new Number;
+        var hx3 = new Number;
+        hx1 = $(window).height();
+        var scrollArea = sender.GridDataDiv;                
+        var ss = self.document.getElementById("gogo1");
+        var offset = $(ss).offset();        
+        hx2 = offset.top;        
+        hx3 = hx1 - hx2-100;
+        
+        var gridHeader = sender.GridHeaderDiv;
+        
+        scrollArea.style.height = hx3 - gridHeader.clientHeight + "px";
+        
+        <%end if%>
+        
     }
 
 </script>

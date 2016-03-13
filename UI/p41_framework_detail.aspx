@@ -395,14 +395,14 @@
                             </div>
                             <div class="menu-group-item">
                                 <img src="Images/plan.png" />
-                                <asp:HyperLink ID="cmdP47" runat="server" Text="Kapacitní plán" NavigateUrl="javascript:p47_plan()"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdP47" runat="server" Text="Kapacitní" NavigateUrl="javascript:p47_plan()"></asp:HyperLink>
 
                             
                                 <img src="Images/finplan.png" />
-                                <asp:HyperLink ID="cmdP49" runat="server" Text="Finanční plán" NavigateUrl="javascript:p49_plan()"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdP49" runat="server" Text="Finanční" NavigateUrl="javascript:p49_plan()"></asp:HyperLink>
 
                                 <img src="Images/oplan.png" />
-                                <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní plán" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
 
                             </div>
                         </div>

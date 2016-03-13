@@ -19,6 +19,7 @@ Public Class GridColumn
     Public Property IsSortable As Boolean = True
     Public Property ColumnDBName As String
     Public Property IsShowTotals As Boolean = False
+    Public Property IsAllowFiltering As Boolean = True
 
     Public Sub New(colX29ID As BO.x29IdEnum, strHeader As String, strName As String, Optional colType As cfENUM = cfENUM.AnyString, Optional bolSortable As Boolean = True)
         Me.x29ID = colX29ID

@@ -287,7 +287,9 @@
                         strW += "))"
                     End If
             End Select
-
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
+            End If
             If .SearchExpression <> "" Then
                 strW += " AND ("
                 'něco jako fulltext
@@ -346,7 +348,9 @@
         strSort = strSort.Replace("Owner", "j02owner.j02LastName").Replace("Debt_CZK", "p91Amount_Debt").Replace("Debt_EUR", "p91Amount_Debt")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
-    
+    Private Function ParseFilterExpression(strFilter As String) As String
+        Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
+    End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryP91) As Integer
         Dim s As String = "SELECT count(a.p91ID) as Value " & GetSQLPart2()
         Dim pars As New DL.DbParameters

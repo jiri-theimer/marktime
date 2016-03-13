@@ -46,7 +46,7 @@
             <td>
                 <telerik:RadColorPicker ID="p32Color" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default">
                 </telerik:RadColorPicker>
-                <span class="infoInForm">Barva pro odlišení aktivity v timeline zobrazení a v operativním plánování.</span>
+                <span class="infoInForm">Barva pro odlišení aktivity v DAYLINE zobrazení a v operativním plánování.</span>
             </td>
         </tr>
         <tr>

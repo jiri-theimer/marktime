@@ -260,6 +260,9 @@
                 return (false);
             }
         }
+        function p48_plan(){            
+            window.open("p48_framework.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","_top");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -339,7 +342,10 @@
                                 <img src="Images/comment.png" />
                                 <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" />
                             </div>
-
+                            <div class="menu-group-item">
+                                <img src="Images/oplan.png" />
+                                <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní plán" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
+                            </div>
 
                         </div>
                     </ContentTemplate>

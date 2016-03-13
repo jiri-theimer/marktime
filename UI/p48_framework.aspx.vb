@@ -123,6 +123,9 @@
                 basUI.SelectDropdownlistValue(Me.query_year, .GetUserParam("p48_framework-query-year", Year(Now).ToString))
                 basUI.SelectDropdownlistValue(Me.query_month, .GetUserParam("p48_framework-query-month", Month(Now).ToString))
                 Me.hidJ02IDs.Value = .GetUserParam("p48_framework_j02ids")
+                If Me.CurrentMasterPrefix = "j02" Then
+                    Me.hidJ02IDs.Value = Master.Factory.SysUser.j02ID.ToString
+                End If
                 Me.chkIncludeWeekend.Checked = BO.BAS.BG(.GetUserParam("p48_framework_weekend", "0"))
                 basUI.SelectDropdownlistValue(Me.cbxRozklad, .GetUserParam("p48_framework_rozklad", "1"))
                 Me.chkShowWorksheet.Checked = BO.BAS.BG(.GetUserParam("p48_framework_worksheet", "1"))
@@ -238,13 +241,13 @@
     Private Sub RefreshData()
         RenderGridHeader()
 
-        Dim mq As New BO.myQueryJ02
-        mq.PIDs = Me.CurrentJ02IDs
-        mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
-        Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
-
         Dim mqP48 As New BO.myQueryP48
-        mqP48.j02IDs = Me.CurrentJ02IDs
+        Select Case Me.CurrentMasterPrefix
+            Case "p41", "p28"
+            Case Else
+                mqP48.j02IDs = Me.CurrentJ02IDs
+        End Select
+
         mqP48.DateFrom = Me.CurrentD1
         mqP48.DateUntil = Me.CurrentD2
         Select Case Me.CurrentMasterPrefix
@@ -255,6 +258,20 @@
         _lisP48 = Master.Factory.p48OperativePlanBL.GetList(mqP48)
 
         _lisSum = Master.Factory.p48OperativePlanBL.GetList_SumPerPerson(mqP48)
+
+        'okruh osob
+        Dim mqJ02 As New BO.myQueryJ02
+        mqJ02.PIDs = Me.CurrentJ02IDs
+        mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+        Select Case Me.CurrentMasterPrefix
+            Case "p41", "p28"  'přidat všechny osoby, které v daném projektu/klientu mají operativní plán
+                Dim j02ids As List(Of Integer) = _lisP48.Select(Function(p) p.j02ID).Distinct.ToList
+                mqJ02.PIDs.AddRange(j02ids)
+            Case "j02"
+                mqJ02.PIDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+        End Select
+        Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mqJ02)
+
 
         Dim lisPlan As New List(Of PlanRow)
         For Each cJ02 In lisJ02

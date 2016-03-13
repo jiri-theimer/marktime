@@ -228,6 +228,9 @@
         function scheduler(){            
             window.open("entity_scheduler.aspx?masterprefix=j02&masterpid=<%=Master.DataPID%>","_top")
         }
+        function p48_plan(){            
+            window.open("p48_framework.aspx?masterprefix=j02&masterpid=<%=master.datapid%>","_top");
+        }
     </script>
 
 </asp:Content>
@@ -294,7 +297,11 @@
                                 <img src="Images/calendar.png" />
                                 <asp:HyperLink ID="cmdO22" runat="server" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" />
                             </asp:Panel>
-
+                            <div class="menu-group-item">
+                                <img src="Images/oplan.png" />
+                                <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní plán" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
+                            </div>
+                            
                         </div>
                     </ContentTemplate>
 

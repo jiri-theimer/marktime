@@ -14,6 +14,15 @@ Public Class basUIMT
             .PageSize = intPageSize
             .AddSystemColumn(5)
             .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
+            .AllowFilteringByColumn = cJ74.j74IsFilteringByColumn
+            If cJ74.j74IsVirtualScrolling Then
+                .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
+                .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+                .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
+                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+                .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
+                ''.radGridOrig.PagerStyle.Mode = GridPagerMode.NumericPages
+            End If
 
             Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID)
             For Each s In Split(cJ74.j74ColumnNames, ",")
@@ -22,7 +31,7 @@ Public Class basUIMT
                 Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
 
                 If Not c Is Nothing Then
-                    .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals)
+                    .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
                 End If
             Next
 

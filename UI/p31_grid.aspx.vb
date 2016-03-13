@@ -4,6 +4,7 @@ Public Class p31_grid
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
     Private Property _curJ74 As BO.j74SavedGridColTemplate
+    Private Property _needRecalcVirtualCount As Boolean = False
 
     Private Sub p31_grid_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -184,7 +185,9 @@ Public Class p31_grid
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy
             basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True)
-
+            Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
+            cmdSearch.Visible = Me.txtSearch.Visible
+            If Not Me.txtSearch.Visible Then Me.txtSearch.Text = ""
         End With
 
         With Me.cbxGroupBy.SelectedItem
@@ -208,11 +211,18 @@ Public Class p31_grid
         End With
     End Sub
 
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needRecalcVirtualCount = True
+    End Sub
+
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needRecalcVirtualCount Then
+            RecalcVirtualRowCount()
+        End If
         Dim mq As New BO.myQueryP31
         With mq
             .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
@@ -236,6 +246,7 @@ Public Class p31_grid
         InhaleMyQuery(mq)
 
         grid1.DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
+        'Master.Notify(grid1.GetFilterExpression())
 
     End Sub
 
@@ -258,6 +269,7 @@ Public Class p31_grid
             End Select
             .j70ID = Me.CurrentJ70ID
             .SearchExpression = Trim(Me.txtSearch.Text)
+            .ColumnFilteringExpression = grid1.GetFilterExpression()
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
             If period1.SelectedValue <> "" Then
                 .DateFrom = period1.DateFrom
@@ -311,10 +323,15 @@ Public Class p31_grid
         Else
             txtSearch.Style.Item("background-color") = "red"
         End If
+        If grid1.GetFilterExpression <> "" Then
+            cmdCĺearFilter.Visible = True
+        Else
+            cmdCĺearFilter.Visible = False
+        End If
 
         basUIMT.RenderQueryCombo(Me.j70ID)
 
-        
+
     End Sub
 
 
@@ -384,5 +401,11 @@ Public Class p31_grid
 
     Private Sub grid1_SortCommand(SortExpression As String) Handles grid1.SortCommand
         Master.Factory.j03UserBL.SetUserParam("p31_grid-sort", SortExpression)
+    End Sub
+
+    Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
+        _needRecalcVirtualCount = True
+        grid1.ClearFilter()
+        grid1.Rebind(False)
     End Sub
 End Class

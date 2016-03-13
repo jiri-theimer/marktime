@@ -104,6 +104,24 @@ Partial Public Class grid_designer
     Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
 
     '''<summary>
+    '''j74IsFilteringByColumn control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j74IsFilteringByColumn As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''j74IsVirtualScrolling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j74IsVirtualScrolling As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''cbxOrderBy1 control.
     '''</summary>
     '''<remarks>

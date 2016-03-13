@@ -30,6 +30,8 @@
             }
 
             $("#<%=Me.txtSearch.ClientID%>").focus(function () { $(this).select(); });
+
+           
         });
 
 
@@ -238,8 +240,11 @@
             </telerik:RadMenu>
 
         </div>
-
+        <div class="commandcell">
+            <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" style="margin-left:10px;font-weight:bold;color:red;"></asp:LinkButton>
+        </div>
     </div>
+    <div id="offsetY"></div>    
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
 

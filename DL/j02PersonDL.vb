@@ -186,7 +186,9 @@
                     strW += " AND a.j02DateInsert BETWEEN @d1 AND @d2"
                 End If
             End If
-
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
+            End If
             If .SearchExpression <> "" Then
                 strW += " AND (a.j02firstname like @expr+'%' OR a.j02LastName LIKE '%'+@expr+'%' OR a.j02Email LIKE '%'+@expr+'%')"
                 pars.Add("expr", .SearchExpression, DbType.String)
@@ -260,7 +262,9 @@
         strSort = strSort.Replace("FullNameDesc", "j02LastName").Replace("FullNameAsc", "j02LastName")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
-
+    Private Function ParseFilterExpression(strFilter As String) As String
+        Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
+    End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryJ02) As Integer
         Dim s As String = "SELECT count(a.j02ID) as Value FROM j02Person a"
         Dim pars As New DL.DbParameters

@@ -7,7 +7,7 @@ Public Class datagrid
     Public Event NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object)
     Public Event ItemCommand(sender As Object, e As GridCommandEventArgs, strPID As String)
     Public Event SortCommand(SortExpression As String)
-
+    Public Event FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String)
     Public Property Skin As String
         Get
             Return grid1.Skin
@@ -64,6 +64,14 @@ Public Class datagrid
             Else
                 grid1.PagerStyle.Mode = GridPagerMode.NextPrevAndNumeric
             End If
+        End Set
+    End Property
+    Public Property AllowFilteringByColumn As Boolean
+        Get
+            Return grid1.MasterTableView.AllowFilteringByColumn
+        End Get
+        Set(value As Boolean)
+            grid1.MasterTableView.AllowFilteringByColumn = value
         End Set
     End Property
     Public Property DataKeyNames As String
@@ -257,7 +265,7 @@ Public Class datagrid
         col.AllowSorting = bolAllowSorting
     End Sub
 
-    Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional ByVal colformat As BO.cfENUM = BO.cfENUM.AnyString, Optional ByVal bolAllowSorting As Boolean = True, Optional ByVal bolVisible As Boolean = True, Optional ByVal strUniqueName As String = "", Optional strHeaderTooltip As String = "", Optional bolShowTotals As Boolean = False)
+    Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional ByVal colformat As BO.cfENUM = BO.cfENUM.AnyString, Optional ByVal bolAllowSorting As Boolean = True, Optional ByVal bolVisible As Boolean = True, Optional ByVal strUniqueName As String = "", Optional strHeaderTooltip As String = "", Optional bolShowTotals As Boolean = False, Optional bolAllowFiltering As Boolean = True)
         Select Case colformat
             Case BO.cfENUM.Checkbox
                 AddCheckboxColumn(strField, strHeader, bolAllowSorting, bolVisible)
@@ -277,6 +285,11 @@ Public Class datagrid
         End If
         col.AllowSorting = bolAllowSorting
         col.Visible = bolVisible
+        col.AllowFiltering = bolAllowFiltering
+        If colformat = BO.cfENUM.AnyString And bolAllowFiltering Then
+            col.AutoPostBackOnFilter = True
+            col.CurrentFilterFunction = GridKnownFunction.StartsWith
+        End If
 
         Select Case colformat
             Case BO.cfENUM.DateOnly
@@ -390,7 +403,10 @@ Public Class datagrid
                             .Text = "Je prázdné" : i += 1
                         Case "NotIsNull"
                             .Text = "Není prázdné" : i += 1
+                        Case "StartsWith"
+                            .Text = "Začíná na" : i += 1
                         Case Else
+                            Dim ss As String = .Text
                             menu.Items.RemoveAt(i)
                     End Select
                 End With
@@ -405,7 +421,13 @@ Public Class datagrid
         If Not (TypeOf e.Item Is GridPagerItem Or TypeOf e.Item Is GridHeaderItem) Then
             RaiseEvent ItemCommand(sender, e, grid1.Items.Item(e.Item.ItemIndex).GetDataKeyValue("pid"))
         End If
+        If e.CommandName = RadGrid.FilterCommandName Then
+            Dim filterPair As Pair = DirectCast(e.CommandArgument, Pair)
 
+            Dim filterBox As TextBox = CType((CType(e.Item, GridFilteringItem))(filterPair.Second.ToString()).Controls(0), TextBox)
+
+            RaiseEvent FilterCommand(filterPair.First, filterPair.Second, filterBox.Text)
+        End If
     End Sub
 
 
@@ -468,5 +490,23 @@ Public Class datagrid
                 RaiseEvent SortCommand("")
         End Select
 
+    End Sub
+
+    Public Function GetFilterExpression() As String
+
+        ''Dim s As New List(Of String)
+        ''For Each col As GridColumn In grid1.MasterTableView.Columns
+        ''    s.Add(col.CurrentFilterValue)
+        ''Next
+        ''Return System.String.Join(" AND ", s)
+
+        Return grid1.MasterTableView.FilterExpression
+    End Function
+    Public Sub ClearFilter()
+        For Each col As GridColumn In grid1.MasterTableView.Columns
+            col.CurrentFilterValue = ""
+            col.CurrentFilterFunction = GridKnownFunction.NoFilter
+        Next
+        grid1.MasterTableView.FilterExpression = ""
     End Sub
 End Class

@@ -374,7 +374,9 @@
                     s.Append(" AND a.p71ID=1 AND a.p91ID IS NULL")    'zahrnout do faktury schvalené, ale dosud nefakturované úkony
                     
             End Select
-
+            If .ColumnFilteringExpression <> "" Then
+                s.Append(" AND " & ParseFilterExpression(.ColumnFilteringExpression))
+            End If
             If .SearchExpression <> "" Then
                 s.Append(" AND (p28Client.p28Name LIKE '%'+@expr+'%' OR p41.p41Code LIKE @expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR a.p31Text LIKE '%'+@expr+'%' OR p32.p32Name like '%'+@expr+'%' OR p28Client.p28CompanyName LIKE '%'+@expr+'%'")
                 s.Append(" OR j02.j02LastName LIKE '%'+@expr+'%')")
@@ -435,6 +437,10 @@
         s += " WHERE RowIndex BETWEEN @start AND @end"
         's += " ORDER BY " & strORDERBY
         Return s
+    End Function
+
+    Private Function ParseFilterExpression(strFilter As String) As String
+        Return strFilter.Replace("[", "").Replace("]", "")
     End Function
 
     Public Function GetVirtualCount(myQuery As BO.myQueryP31, Optional strGUID_TempData As String = "") As Integer

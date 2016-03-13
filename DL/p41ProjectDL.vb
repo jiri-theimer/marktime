@@ -192,6 +192,9 @@
         strSort = strSort.Replace("Client", "p28client.p28Name").Replace("Owner", "j02owner.j02LastName").Replace("p51Name_Billing", "p51billing.p51Name").Replace("FullName", "p28client.p28Name,p41Name").Replace("p51Name_Internal", "p51internal.p51Name")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
+    Private Function ParseFilterExpression(strFilter As String) As String
+        Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
+    End Function
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
         'strORDERBY = strORDERBY.Replace("UserInsert", "p41UserInsert").Replace("UserUpdate", "p41UserUpdate").Replace("DateInsert", "p41DateInsert").Replace("DateUpdate", "p41DateUpdate")
@@ -368,7 +371,9 @@
                     s.Append(" AND " & strQueryW)
                 End If
             End If
-
+            If .ColumnFilteringExpression <> "" Then
+                s.Append(" AND " & ParseFilterExpression(.ColumnFilteringExpression))
+            End If
             If .SearchExpression <> "" Then
                 s.Append(" AND (")
                 If Len(.SearchExpression) <= 1 Then

@@ -9,4 +9,6 @@
     Public Property j74OrderBy As String
     Public Property j74MasterPrefix As String
     Public Property j74RecordState As BO.p31RecordState = p31RecordState._NotExists
+    Public Property j74IsFilteringByColumn As Boolean
+    Public Property j74IsVirtualScrolling As Boolean
 End Class

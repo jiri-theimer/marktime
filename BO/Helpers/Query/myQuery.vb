@@ -19,6 +19,7 @@ Public Class myQuery
     
     Public Property TopRecordsOnly As Integer
     Public Property SearchExpression As String
+    Public Property ColumnFilteringExpression As String
 
     Public Property MyRecordsDisponible As Boolean
     Public Property MyRecordsToBeInformed As Boolean            'kde jsem čtenář

@@ -345,7 +345,7 @@
         </asp:Panel>
 
         <asp:Panel ID="panGRID" runat="server">
-            <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" PagerAlwaysVisible="true"></uc:datagrid>
+            <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" PagerAlwaysVisible="true" AllowFilteringByColumn="true"></uc:datagrid>
         </asp:Panel>
 
 

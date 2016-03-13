@@ -48,7 +48,7 @@
             <td>
                 <telerik:RadColorPicker ID="p34Color" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default" >
                 </telerik:RadColorPicker>
-                <span class="infoInForm">Barva pro odlišení sešitu v timeline zobrazení a v operativním plánování.</span>
+                <span class="infoInForm">Barva pro odlišení sešitu v DAYLINE zobrazení a v operativním plánování.</span>
             </td>
         </tr>
     </table>

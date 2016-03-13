@@ -86,6 +86,15 @@ Partial Public Class entity_framework
     Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''cmdCĺearFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''CurrentPeriodQuery control.
     '''</summary>
     '''<remarks>
