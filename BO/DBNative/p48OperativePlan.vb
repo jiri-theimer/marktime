@@ -33,6 +33,11 @@
             Return _Project
         End Get
     End Property
+    Public ReadOnly Property ClientAndProject As String
+        Get
+            If _Client = "" Then Return _Project Else Return _Client & " - " & _Project
+        End Get
+    End Property
     Private Property _p32Name As String
     Public ReadOnly Property p32Name As String
         Get

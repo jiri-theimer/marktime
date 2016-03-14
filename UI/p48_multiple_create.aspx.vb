@@ -57,7 +57,13 @@
                         .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
                         .p85OtherKey2 = intLastP41ID
                         .p85FreeText02 = strLastProject
-                        .p85FreeFloat01 = 8
+                        If dt1.TimeOnly <> dt2.TimeOnly Then
+                            Dim cT As New BO.clsTime
+                            .p85FreeFloat01 = cT.ShowAsDec(dt2.TimeOnly) - cT.ShowAsDec(dt1.TimeOnly)
+                        Else
+                            .p85FreeFloat01 = 8
+                        End If
+
                         .p85FreeText03 = dt1.TimeOnly
                         .p85FreeText04 = dt2.TimeOnly
                     End With

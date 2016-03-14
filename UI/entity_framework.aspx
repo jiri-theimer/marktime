@@ -56,11 +56,13 @@
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
             document.getElementById("<%=hiddatapid.clientid%>").value = pid;
+            
 
             var splitter = $find("<%= RadSplitter1.ClientID %>");
-            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
-            pane.set_contentUrl("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
+            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");            
 
+            pane.set_contentUrl("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
+            
 
         }
 
@@ -158,20 +160,20 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="offsetY"></div>
-    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro">
+    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" MaxWidth="1500" MinWidth="50" BackColor="white">
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;">
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
                 </div>
-                <div class="commandcell" style="padding-left: 10px;width:10px;">
+                <div class="commandcell" style="padding-left: 10px; width: 10px;">
                     <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
                 </div>
                 <div class="commandcell">
                     <asp:Label ID="j62Name" runat="server" CssClass="framework_header_span"></asp:Label>
                     <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
                     <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
-                    <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" style="font-weight:bold;color:red;" Visible="false"></asp:LinkButton>
+                    <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
                 </div>
                 <div style="float: right; margin-top: 10px;">
                     <button type="button" id="cmdPeriodQuery" class="show_hide2" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Filtr podle období">
@@ -234,13 +236,10 @@
             </div>
 
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
+            
             <span id="goto1"></span>
             <input type="hidden" id="goto2" />
-
             <asp:HiddenField ID="hiddatapid" runat="server" />
-
-
-
             <asp:HiddenField ID="hidDefaultSorting" runat="server" />
             <asp:HiddenField ID="hidJ62ID" runat="server" />
             <asp:HiddenField ID="hidX29ID" runat="server" Value="141" />
@@ -252,7 +251,7 @@
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>
-        <telerik:RadPane ID="contentPane" runat="server">
+        <telerik:RadPane ID="contentPane" runat="server" ShowContentDuringLoad="true">
             Detail projektu
         </telerik:RadPane>
     </telerik:RadSplitter>

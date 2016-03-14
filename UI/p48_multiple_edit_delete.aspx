@@ -119,7 +119,7 @@
         </tr>
         <asp:Repeater ID="rp1" runat="server">
             <ItemTemplate>
-                <tr class="trHover">                    
+                <tr class="trHover" style="vertical-align:bottom;">                    
                    
                     <td>
                         <asp:Label ID="p48Date" runat="server" ForeColor="blue"></asp:Label>

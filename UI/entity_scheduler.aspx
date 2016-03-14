@@ -22,6 +22,11 @@
                 display: none !important;
             }
         }
+
+        div.RadScheduler .rsMonthView .rsTodayCell {
+            background-color:skyblue;            
+            
+        }
     </style>
 
     <script type="text/javascript">
@@ -77,6 +82,30 @@
             sw_master("o22_record.aspx?clone=1&pid=" + pid, "Images/milestone_32.png")
         }
 
+        function p48_record(pid) {
+
+            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + pid, "Images/oplan_32.png")
+        }
+        function p48_clone(pid) {
+
+            sw_master("p48_multiple_edit_delete.aspx?clone=1&p48ids=" + pid, "Images/oplan_32.png")
+        }
+        function p56_record(pid) {
+
+            sw_master("p56_record.aspx?pid=" + pid, "Images/task_32.png")
+        }
+
+        function re(pid,prefix) {
+            if (prefix == 'o22')
+                o22_record(pid);
+
+            if (prefix == 'p48')
+                p48_record(pid);
+
+            if (prefix == 'p56')
+                p56_record(pid);
+        }
+
 
 
         function record_create(sender, eventArgs) {
@@ -85,19 +114,19 @@
             var lastSlot = sender.get_selectedSlots()[sender.get_selectedSlots().length - 1];
             var d1 = firstSlot.get_startTime()
             var d2 = lastSlot.get_endTime();
-            <%If Me.CurrentView=SchedulerViewType.MonthView then%>
+            <%If Me.CurrentView = SchedulerViewType.MonthView Then%>
             d2.setDate(d2.getDate() - 1);
             <%End If%>
-            
+
             var j02id = "<%=Master.Factory.SysUser.j02ID%>";
             
-            <%If cbxNewRecType.SelectedValue="p48" then%>
-            var url = "p48_multiple_create.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;            
-            <%end if%>
+            <%If cbxNewRecType.SelectedValue = "p48" Then%>
+            var url = "p48_multiple_create.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;
+            <%End If%>
             <%If cbxNewRecType.SelectedValue = "o22" Then%>
             var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;
-            <%end if%>
-            
+            <%End If%>
+
             sw_master(url, "Images/milestone_32.png")
 
         }
@@ -174,13 +203,13 @@
 
                 //Gets all the data needed for the an Appointment, from the TreeView node.
                 var node = eventArgs.get_sourceNode();
-                <%If cbxNewRecType.SelectedValue="p48" then%>
+                <%If cbxNewRecType.SelectedValue = "p48" Then%>
                 var url = "p48_multiple_create.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
                 alert(url);
-                <%end if%>
+                <%End If%>
                 <%If cbxNewRecType.SelectedValue = "o22" Then%>
                 var url = "o22_record.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
-                <%end if%>
+                <%End If%>
 
                 sw_master(url, "Images/oplan_32.png");
 
@@ -197,7 +226,7 @@
 
         }
 
-        
+
     </script>
 
 </asp:Content>
@@ -264,9 +293,9 @@
 
                 </asp:Panel>
                 <div>
-                        Na click v kalendáři založit:
+                    Na click v kalendáři založit:
                     
-                    </div>
+                </div>
                 <div class="div6">
                     <asp:DropDownList ID="cbxNewRecType" runat="server" AutoPostBack="true">
                         <asp:ListItem Text="Operativní plán" Value="p48"></asp:ListItem>
@@ -283,11 +312,11 @@
                 </div>
                 <div class="div6">
                     <img src="Images/task.png" />
-                    <asp:CheckBox ID="chkSetting_P56" runat="server" Checked="false" Text="Zobrazovat úkoly" AutoPostBack="true" CssClass="chk" />
+                    <asp:CheckBox ID="chkSetting_P56" runat="server" Checked="false" Text="Zobrazovat úkoly s termínem" AutoPostBack="true" CssClass="chk" />
                 </div>
 
                 <div class="div6">
-                    <span>Čas v kalendáři od:</span>
+                    <span>Začátek v rozhraní [Den/Týden/Multi]:</span>
                     <asp:DropDownList ID="entity_scheduler_daystarttime" runat="server" AutoPostBack="true">
                         <asp:ListItem Text="05:00" Value="5"></asp:ListItem>
                         <asp:ListItem Text="06:00" Value="6"></asp:ListItem>
@@ -300,7 +329,7 @@
                     </asp:DropDownList>
                 </div>
                 <div class="div6">
-                    <span>Čas v kalendáři do:</span>
+                    <span>Konec v rozhraní [Den/Týden/Multi]:</span>
                     <asp:DropDownList ID="entity_scheduler_dayendtime" runat="server" AutoPostBack="true">
                         <asp:ListItem Text="15:00" Value="15"></asp:ListItem>
                         <asp:ListItem Text="16:00" Value="16"></asp:ListItem>
@@ -351,9 +380,9 @@
             <telerik:RadScheduler ID="scheduler1" SelectedView="WeekView" RenderMode="Lightweight" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="100%" Height="90%" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="true" EnableAdvancedForm="false"
                 Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" Localization-HeaderToday="Dnes" Localization-ShowMore="více..."
                 OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" OnClientTimeSlotContextMenuItemClicked="record_create"
-                Localization-AllDay="Celý den" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"
+                Localization-AllDay="Bez času od/do" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"
                 HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand"
-                DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid" >
+                DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
 
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <WeekView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
@@ -361,7 +390,7 @@
                 <TimelineView UserSelectable="true" />
                 <AgendaView UserSelectable="false" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
-                <TimelineView UserSelectable="false" />               
+                <TimelineView UserSelectable="false" />
                 <AppointmentTemplate>
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
@@ -372,8 +401,8 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>                            
-                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png"></telerik:RadMenuItem>                            
+                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />

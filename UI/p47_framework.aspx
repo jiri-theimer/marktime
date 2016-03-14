@@ -70,7 +70,7 @@
                 return
             }
 
-            sw_master("p47_framework_record.aspx?year=<%=Me.CurrentYear%>&month=<%=Me.CurrentMonth%>&j02ids=<%=Me.hidJ02IDs.Value%>&p41id=" + p41id, false, "800", "600");
+            sw_master("p47_project.aspx?year=<%=Me.CurrentYear%>&month=<%=Me.CurrentMonth%>&j02ids=<%=Me.hidJ02IDs.Value%>&pid=" + p41id,"Images/plan.png", true);
 
         }
 
@@ -89,7 +89,7 @@
     <div style="background-color: white; padding: 10px;">
         <div style="float: left;">
             <img src="Images/plan_32.png" />
-            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Kapacitní plánování"></asp:Label>
+            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Kapacitní plán"></asp:Label>
         </div>
 
         <div class="commandcell" style="padding-left: 20px;">

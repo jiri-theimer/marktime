@@ -16,6 +16,10 @@ Public Class p47_framework
         Public Property p42Name As String
         Public Property j18Name As String
         Public Property Client As String
+        Public Property CelkemMesicFa As Double?
+        Public Property CelkemMesicNeFa As Double?
+        Public Property CelkemMesic As Double?
+        Public Property CelkemMimoMesic As Double?
         Public Property p1 As Double?
         Public Property p2 As Double?
         Public Property p3 As Double?
@@ -257,6 +261,9 @@ Public Class p47_framework
             End If
 
             .AddColumn("Project", "Projekt")
+            .AddColumn("CelkemMesicFa", "Fa", BO.cfENUM.Numeric0)
+            .AddColumn("CelkemMesicNeFa", "NeFa", BO.cfENUM.Numeric0)
+            .AddColumn("CelkemMesic", "Celkem", BO.cfENUM.Numeric0)
             For Each c In _lisJ02
                 x += 1
                 Dim s As String = c.j02Code
@@ -322,6 +329,9 @@ Public Class p47_framework
         Dim lisP41 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mqP41)
         For Each c In lisPlanRow
             With lisP41.First(Function(p) p.PID = c.pid)
+                c.CelkemMesicFa = lisP47.Where(Function(p) p.p41ID = c.pid).Sum(Function(p) p.p47HoursBillable)
+                c.CelkemMesicNeFa = lisP47.Where(Function(p) p.p41ID = c.pid).Sum(Function(p) p.p47HoursNonBillable)
+                c.CelkemMesic = c.CelkemMesicFa + c.CelkemMesicNeFa
                 c.p42Name = .p42Name
                 c.Client = .Client
                 c.j18Name = .j18Name
@@ -349,5 +359,11 @@ Public Class p47_framework
   
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
         grid1.radGridOrig.MasterTableView.ExportToExcel()
+    End Sub
+
+    Private Sub p47_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        With lblHeader
+            .Text = BO.BAS.OM2(.Text, Me.CurrentMonth.ToString & "/" & Me.CurrentYear.ToString)
+        End With
     End Sub
 End Class

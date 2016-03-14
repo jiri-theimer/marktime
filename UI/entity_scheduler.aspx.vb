@@ -218,6 +218,124 @@ Public Class entity_scheduler
         Dim d1 As Date = scheduler1.VisibleRangeStart.AddDays(-1), d2 As Date = scheduler1.VisibleRangeEnd.AddDays(1)
         
 
+        If Me.chkSetting_O22.Checked Then
+            Dim mq As New BO.myQueryO22
+            'mq.SpecificQuery = BO.myQueryO22_SpecificQuery.AllowedForRead
+            Select Case Me.CurrentMasterX29ID
+                Case BO.x29IdEnum.p28Contact
+                    mq.p28ID = Me.CurrentMasterPID
+                Case BO.x29IdEnum.p41Project
+                    mq.p41ID = Me.CurrentMasterPID
+                Case BO.x29IdEnum.j02Person
+                    mq.j02ID = Me.CurrentMasterPID
+            End Select
+            mq.DateFrom = d1 : mq.DateUntil = d2
+            Dim lis As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList(mq)
+            For Each cRec In lis
+                Dim c As New Appointment()
+                With cRec
+                    c.ID = .PID.ToString & ",'o22'"
+                    c.Description = "clue_o22_record.aspx?mode=timeline&pid=" & .PID.ToString
+                    c.Subject = .o22Name
+                    ''If .o22DateUntil < datFoundMin Then datFoundMin = .o22DateUntil
+                    Select Case .o21Flag
+                        Case BO.o21FlagEnum.DeadlineOrMilestone
+                            c.Description = "calendar.png"
+                            'c.BackColor = Drawing.Color.Aquamarine
+                            c.BackColor = Drawing.Color.Salmon
+                            c.Start = .o22DateUntil.Value
+                            c.End = .o22DateUntil.Value
+
+
+                        Case BO.o21FlagEnum.EventFromUntil
+                            c.Description = "event.png"
+                            c.BackColor = Drawing.Color.AntiqueWhite
+                            c.Start = .o22DateFrom
+                            c.End = .o22DateUntil
+                            If .o22IsAllDay Then
+                                c.Start = DateSerial(Year(c.Start), Month(c.Start), Day(c.Start))
+                                c.End = c.Start.AddDays(1)
+                            End If
+
+                    End Select
+                    c.BorderColor = Drawing.Color.Gray
+                    c.BorderStyle = BorderStyle.Dashed
+
+                    Select Case Me.CurrentView
+                        Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView, SchedulerViewType.WeekView
+                            If Len(.o22Name) > 0 Then c.Subject = BO.BAS.OM3(.o22Name, 15)
+
+                            c.ToolTip = BO.BAS.FD(.o22DateUntil, True)
+                    End Select
+                End With
+
+                scheduler1.InsertAppointment(c)
+            Next
+        End If
+        If Me.chkSetting_P48.Checked Then
+            Dim mq As New BO.myQueryP48
+            Select Case Me.CurrentMasterX29ID
+                Case BO.x29IdEnum.p28Contact
+                    mq.p28ID = Me.CurrentMasterPID
+                Case BO.x29IdEnum.p41Project
+                    mq.p41ID = Me.CurrentMasterPID
+                Case BO.x29IdEnum.j02Person
+                    mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+            End Select
+            mq.DateFrom = d1 : mq.DateUntil = d2
+            Dim lis As IEnumerable(Of BO.p48OperativePlan) = Master.Factory.p48OperativePlanBL.GetList(mq)
+            For Each cRec In lis
+                Dim c As New Appointment()
+                With cRec
+                    c.ID = .PID.ToString & ",'p48'"
+                    c.Description = "clue_p48_record.aspx?pid=" & .PID.ToString
+
+                    If Not .p48DateTimeFrom Is Nothing Then
+                        c.Start = .p48DateTimeFrom
+                    Else
+                        c.Start = .p48Date
+                    End If
+                    If Not .p48DateTimeUntil Is Nothing Then
+                        c.End = .p48DateTimeUntil
+                    Else
+                        c.End = .p48Date.AddDays(1)
+                    End If
+
+                    c.BorderColor = Drawing.Color.Silver
+                    'c.BorderStyle = BorderStyle.Dotted
+                    c.BackColor = Drawing.Color.WhiteSmoke
+
+                    c.Subject = .p48Hours.ToString & "h."
+                    Select Case Me.CurrentMasterX29ID
+                        Case BO.x29IdEnum.p41Project
+                            c.Subject += " " & .Person
+                        Case BO.x29IdEnum.p28Contact
+                            c.Subject += " " & .Person & ": " & .Project
+                        Case BO.x29IdEnum.j02Person
+                            c.Subject += " " & .ClientAndProject
+                        Case Else
+                            If Me.CurrentJ02IDs.Count = 1 Then
+                                c.Subject += " " & .ClientAndProject
+                            Else
+                                c.Subject += " " & .Person & ": " & .ClientAndProject
+                            End If
+
+                    End Select
+
+                    Select Case Me.CurrentView
+                        Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView
+                            c.ToolTip = c.Subject
+                            If Len(c.Subject) > 22 Then
+                                c.Subject = Left(c.Subject, 20) & "..."
+                            End If
+                        Case Else
+
+                    End Select
+                End With
+
+                scheduler1.InsertAppointment(c)
+            Next
+        End If
         
     End Sub
 

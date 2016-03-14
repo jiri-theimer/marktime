@@ -79,8 +79,7 @@
             });
 
 
-
-
+                        
         });
 
         function help(page) {
@@ -88,9 +87,7 @@
         }
 
 
-       
-
-
+     
     </script>
 
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
@@ -100,7 +97,7 @@
     <form id="form1" runat="server" style="height: 100%; margin: 0px;">
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
-
+        
         <div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
@@ -119,6 +116,13 @@
     </form>
 
     <script type="text/javascript">
+        $(window).load(function (e) {           
+            //document.getElementById("divMainContent").style.display = "block";
+            //document.getElementById("divLoading").style.display = "none";
+            
+
+        });
+
         function sw_local(url, iconUrl, is_maximize) {
             var wnd = $find("<%=okno1.clientid%>");
             wnd.setUrl(url);
