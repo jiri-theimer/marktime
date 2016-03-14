@@ -204,8 +204,6 @@ Class p31WorksheetBL
     
    
     Public Function InhaleRecordDisposition(intPID As Integer) As BO.p31WorksheetDisposition Implements Ip31WorksheetBL.InhaleRecordDisposition
-        Dim c As BO.p31WorksheetDisposition = _cDL.InhaleRecordDisposition(intPID)
-        
         Return _cDL.InhaleRecordDisposition(intPID)
     End Function
 

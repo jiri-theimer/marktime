@@ -18,10 +18,14 @@
                 imgEdit.Visible = True : cmdEdit.Visible = True : cmdEdit.NavigateUrl = "javascript: parent.window." & Request.Item("js_edit")
             End If
             If Request.Item("js_convert") <> "" Then
-                imgWorksheet.Visible = True : cmdWorksheet.Visible = True : cmdWorksheet.NavigateUrl = "javascript: parent.window." & Request.Item("js_convert")
+                cmdConvert.Visible = True : cmdConvert.NavigateUrl = "javascript: parent.window." & Request.Item("js_convert")
+            End If
+            If Request.Item("js_p31record") <> "" Then
+                cmdWorksheet.Visible = True : cmdWorksheet.NavigateUrl = "javascript: parent.window." & Request.Item("js_p31record")
             End If
 
             RefreshRecord()
+            If cmdConvert.Visible Or cmdWorksheet.Visible Then imgWorksheet.Visible = True
         End If
     End Sub
 
@@ -32,8 +36,10 @@
         If cRec Is Nothing Then Master.StopPage("record not found")
         With cRec
             If .p31ID > 0 Then
-                ph1.Text += " | <span style='color:red;'>Překlopeno do reality!</span>"
-                cmdWorksheet.Visible = False : imgWorksheet.Visible = False
+                ph1.Font.Strikeout = True
+                cmdConvert.Visible = False
+            Else
+                cmdWorksheet.Visible = False
             End If
             Me.Project.Text = .ClientAndProject
             If .p34Name <> "" Then

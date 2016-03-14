@@ -90,6 +90,10 @@
 
             sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet_32.png")
         }
+        function p31_record(pid) {
+
+            sw_master("p31_record.aspx?pid=" + pid, "Images/worksheet_32.png")
+        }
         
         function p56_record(pid) {
 

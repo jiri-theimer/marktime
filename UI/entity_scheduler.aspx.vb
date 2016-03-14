@@ -300,7 +300,10 @@ Public Class entity_scheduler
                     Else
                         c.End = .p48Date.AddDays(1)
                     End If
-                    If .p31ID > 0 Then c.Font.Strikeout = True 'plán byl zkonvertován do worksheetu
+                    If .p31ID > 0 Then
+                        c.Font.Strikeout = True 'plán byl zkonvertován do worksheetu
+                        c.Description += "&js_p31record=p31_record(" & .p31ID.ToString & ")"
+                    End If
                     c.BorderColor = Drawing.Color.Silver
                     'c.BorderStyle = BorderStyle.Dotted
                     c.BackColor = Drawing.Color.WhiteSmoke

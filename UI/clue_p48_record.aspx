@@ -17,7 +17,8 @@
             <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit" NavigateUrl="#" visible="false"></asp:HyperLink>
 
             <asp:Image ID="imgWorksheet" runat="server" ImageUrl="Images/worksheet.png" style="margin-left:20px;" Visible="false"/>
-            <asp:HyperLink ID="cmdWorksheet" runat="server" Text="Překlopit plán do reality" NavigateUrl="#" visible="false"></asp:HyperLink>
+            <asp:HyperLink ID="cmdConvert" runat="server" Text="Překlopit plán do reality" NavigateUrl="#" visible="false"></asp:HyperLink>
+            <asp:HyperLink ID="cmdWorksheet" runat="server" Text="Časový úkon (realita)" NavigateUrl="#" visible="false"></asp:HyperLink>
         </div>
         
         <table cellpadding="10" cellspacing="2">
