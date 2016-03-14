@@ -181,6 +181,7 @@
     <Content Include="b06_record.aspx" />
     <Content Include="b65_record.aspx" />
     <Content Include="clue_o24_record.aspx" />
+    <Content Include="clue_p48_record.aspx" />
     <Content Include="entity_framework.aspx" />
     <Content Include="entity_scheduler.aspx" />
     <Content Include="fileupload_preview.aspx" />
@@ -511,6 +512,13 @@
     </Compile>
     <Compile Include="clue_o24_record.aspx.vb">
       <DependentUpon>clue_o24_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p48_record.aspx.designer.vb">
+      <DependentUpon>clue_p48_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p48_record.aspx.vb">
+      <DependentUpon>clue_p48_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_framework.aspx.designer.vb">

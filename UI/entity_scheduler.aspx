@@ -86,10 +86,11 @@
 
             sw_master("p48_multiple_edit_delete.aspx?p48ids=" + pid, "Images/oplan_32.png")
         }
-        function p48_clone(pid) {
+        function p48_convert(pid) {
 
-            sw_master("p48_multiple_edit_delete.aspx?clone=1&p48ids=" + pid, "Images/oplan_32.png")
+            sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet_32.png")
         }
+        
         function p56_record(pid) {
 
             sw_master("p56_record.aspx?pid=" + pid, "Images/task_32.png")
@@ -114,9 +115,11 @@
             var lastSlot = sender.get_selectedSlots()[sender.get_selectedSlots().length - 1];
             var d1 = firstSlot.get_startTime()
             var d2 = lastSlot.get_endTime();
-            <%If Me.CurrentView = SchedulerViewType.MonthView Then%>
+            
+            if (d1.getHours() == 0 && d2.getHours() == 0)
+            {
             d2.setDate(d2.getDate() - 1);
-            <%End If%>
+            }
 
             var j02id = "<%=Master.Factory.SysUser.j02ID%>";
             

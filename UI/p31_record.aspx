@@ -493,6 +493,7 @@
     <asp:HiddenField ID="hidP33ID" runat="server" />
     <asp:HiddenField ID="hidHoursEntryFlag" runat="server" Value="1" />
     <asp:HiddenField ID="hidP91ID" runat="server" />
+    <asp:HiddenField ID="hidP48ID" runat="server" />
     <asp:HiddenField ID="hidP85ID" runat="server" />
     <asp:HiddenField ID="hidDocGUID" runat="server" />
     <asp:HiddenField ID="p31_default_HoursEntryFlag" runat="server" />

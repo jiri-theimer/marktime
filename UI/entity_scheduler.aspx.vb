@@ -288,7 +288,7 @@ Public Class entity_scheduler
                 Dim c As New Appointment()
                 With cRec
                     c.ID = .PID.ToString & ",'p48'"
-                    c.Description = "clue_p48_record.aspx?pid=" & .PID.ToString
+                    c.Description = "clue_p48_record.aspx?pid=" & .PID.ToString & "&js_edit=p48_record(" & .PID.ToString & ")&js_convert=p48_convert(" & .PID.ToString & ")"
 
                     If Not .p48DateTimeFrom Is Nothing Then
                         c.Start = .p48DateTimeFrom
@@ -300,7 +300,7 @@ Public Class entity_scheduler
                     Else
                         c.End = .p48Date.AddDays(1)
                     End If
-
+                    If .p31ID > 0 Then c.Font.Strikeout = True 'plán byl zkonvertován do worksheetu
                     c.BorderColor = Drawing.Color.Silver
                     'c.BorderStyle = BorderStyle.Dotted
                     c.BackColor = Drawing.Color.WhiteSmoke

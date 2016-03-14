@@ -136,6 +136,10 @@ Class p31WorksheetBL
             If .j02ID = 0 Then _Error = "V záznamu chybí osoba." : Return False
             If .p34ID = 0 Then _Error = "V záznamu chybí sešit." : Return False
             If .p32ID = 0 Then
+                Dim cP34 As BO.p34ActivityGroup = Factory.p34ActivityGroupBL.Load(.p34ID)
+                If cP34.p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna Then
+                    _Error = String.Format("Sešit [{0}] vyžaduje na vstupu zadání aktivity.", cP34.p34Name) : Return False
+                End If
                 Dim mq As New BO.myQueryP32 'zkusit najít výchozí systémovou aktivitu, pokud se aktivita nemá zadávat
                 mq.p34ID = .p34ID
                 Dim lis As IEnumerable(Of BO.p32Activity) = Me.Factory.p32ActivityBL.GetList(mq).Where(Function(p) p.p32IsSystemDefault = True)

@@ -55,6 +55,7 @@
             .Add("p56id", BO.BAS.IsNullDBKey(cRecTU.p56ID), DbType.Int32)
             .Add("p31date", cRecTU.p31Date, DbType.DateTime)
             .Add("p32id", BO.BAS.IsNullDBKey(cRecTU.p32ID), DbType.Int32)
+            .Add("p48id", BO.BAS.IsNullDBKey(cRecTU.p48ID), DbType.Int32)
             .Add("p31vatrate_orig", cRecTU.VatRate_Orig, DbType.Double)
             .Add("j27id_explicit", cRecTU.j27ID_Billing_Orig, DbType.Int32)
             .Add("p31text", cRecTU.p31Text, DbType.String)
@@ -185,21 +186,22 @@
             End With
 
             If _cDB.SaveRecord("p31Worksheet", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+                Dim intSavedP31ID As Integer = _cDB.LastSavedRecordPID
                 If Not lisFF Is Nothing Then    'volná pole
-                    bas.SaveFreeFields(_cDB, lisFF, "p31Worksheet_FreeField", _cDB.LastSavedRecordPID)
+                    bas.SaveFreeFields(_cDB, lisFF, "p31Worksheet_FreeField", intSavedP31ID)
                 End If
 
                 pars = New DbParameters
                 With pars
-                    .Add("p31id", _cDB.LastSavedRecordPID, DbType.Int32)
+                    .Add("p31id", intSavedP31ID, DbType.Int32)
                     .Add("j03id_sys", _curUser.PID, DbType.Int32)
                     .Add("guid", cRec.DocGUID, DbType.String)
+                    .Add("p48id", cRec.p48ID, DbType.Int32)
                     .Add("x45ids", , DbType.String, ParameterDirection.Output, 50)
                 End With
                 If _cDB.RunSP("p31_aftersave", pars) Then
                     sc.Complete()
                     strX45IDs_Handle = pars.Get(Of String)("x45ids")
-
                 Else
                     Return False
                 End If

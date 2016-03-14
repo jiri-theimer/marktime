@@ -68,6 +68,14 @@
             Me.hidP91ID.Value = value.ToString
         End Set
     End Property
+    Private Property CurrentP48ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidP48ID.Value)
+        End Get
+        Set(value As Integer)
+            Me.hidP48ID.Value = value.ToString
+        End Set
+    End Property
     Public Property CurrentP85ID As Integer
         Get
             Return BO.BAS.IsNullInt(Me.hidP85ID.Value)
@@ -168,9 +176,33 @@
 
         Dim intDefP41ID As Integer = BO.BAS.IsNullInt(Request.Item("p41id"))
         Dim intDefP56ID As Integer = BO.BAS.IsNullInt(Request.Item("p56id"))
+        If Request.Item("p48id") <> "" Then Me.CurrentP48ID = BO.BAS.IsNullInt(Request.Item("p48id"))
 
         'dál se pokračuje pouze pro nové záznamy
         If Master.DataPID = 0 Then
+            If Me.CurrentP48ID > 0 Then
+                'překlopení operativního plánu do reality
+                Dim cP48 As BO.p48OperativePlan = Master.Factory.p48OperativePlanBL.Load(Me.CurrentP48ID)
+                Me.j02ID.Value = cP48.j02ID.ToString
+                Me.j02ID.Text = cP48.Person
+                Me.p31Date.SelectedDate = cP48.p48Date
+                Me.p31Text.Text = cP48.p48Text
+                Me.p41ID.Value = cP48.p41ID.ToString
+                Me.p41ID.Text = cP48.ClientAndProject
+                Handle_ChangeP41(False)
+                If cP48.p34ID <> 0 Then
+                    Me.p34ID.SelectedValue = cP48.p34ID.ToString
+                    Handle_ChangeP34()
+                    If cP48.p32ID <> 0 Then Me.p32ID.SelectedValue = cP48.p32ID.ToString
+                End If
+                Me.p31Value_Orig.Text = cP48.p48Hours.ToString
+                If Not cP48.p48DateTimeFrom Is Nothing Then
+                    Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo
+                    Me.TimeFrom.Text = cP48.p48TimeFrom : Me.TimeUntil.Text = cP48.p48TimeUntil
+                End If
+                Return
+            End If
+
             If Request.Item("j02id") <> "" Then
                 Dim intJ02ID As Integer = BO.BAS.IsNullInt(Request.Item("j02id"))
                 'zápis za jinou osobu
@@ -211,10 +243,8 @@
 
             End If
         End If
-        If Request.Item("p91id") <> "" Then
-            Me.CurrentP91ID = BO.BAS.IsNullInt(Request.Item("p91id"))
+        If Request.Item("p91id") <> "" Then Me.CurrentP91ID = BO.BAS.IsNullInt(Request.Item("p91id"))
 
-        End If
         If Request.Item("p34id") <> "" Then
             'uživatel  požaduje zapisovat napřímo do konkrétního sešitu
             ViewState("last_p34id") = BO.BAS.IsNullInt(Request.Item("p34id"))
@@ -222,16 +252,16 @@
         If Request.Item("p31date") <> "" Then
             ViewState("last_p31date") = BO.BAS.ConvertString2Date(Request.Item("p31date"))
         End If
-        
+
         Me.CurrentJ02ID = Me.MyDefault_j02ID
         Me.j02ID.Text = Me.MyDefault_Person
         Me.p31Date.SelectedDate = Me.MyDefault_p31Date
 
-        
+
         If Master.DataPID = 0 And Request.Item("timelineinput") <> "" Then
             InhaleTimelineInput(intDefP41ID)    'zápis času pro hromadně označené dny v timeline
         End If
-        
+
         If Request.Item("p85id") <> "" Then
             'zakládání záznamu z časovače - uloženo v tempu
             Me.CurrentP85ID = BO.BAS.IsNullInt(Request.Item("p85id"))
@@ -291,7 +321,7 @@
             Handle_ChangeHoursEntryFlag()
 
         End If
-        
+
     End Sub
 
     Private Function FindDefaultP41ID_FromClient(intP28ID As Integer) As Integer
@@ -727,6 +757,7 @@
                 .p34ID = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
                 .p32ID = BO.BAS.IsNullInt(Me.p32ID.SelectedValue)
                 .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
+                .p48ID = Me.CurrentP48ID
                 .DocGUID = Me.DocGUID
                 If Me.p31Date.IsEmpty Then
                     .p31Date = Today

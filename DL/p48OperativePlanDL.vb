@@ -86,7 +86,8 @@
             pars.Add("p34ID", BO.BAS.IsNullDBKey(.p34ID), DbType.Int32)
             pars.Add("p32ID", BO.BAS.IsNullDBKey(.p32ID), DbType.Int32)
             pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
-            pars.Add("j02id", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
+            pars.Add("j02ID", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
+            pars.Add("p31ID", BO.BAS.IsNullDBKey(.p31ID), DbType.Int32)
 
             pars.Add("p48Date", .p48Date, DbType.DateTime)
             pars.Add("p48Hours", .p48Hours, DbType.Double)
@@ -121,7 +122,7 @@
     End Function
 
     Private Function GetSQLPart1() As String
-        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName+isnull(' '+j02.j02TitleBeforeName,'') as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project,p34.p34Name as _p34Name,p32.p32Name as _p32Name,p34.p34Color as _p34Color,p32.p32Color as _p32Color," & bas.RecTail("p48", "a")
+        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName+isnull(' '+j02.j02TitleBeforeName,'') as _Person,p28.p28Name as _Client,p41.p41Name as _Project,p34.p34Name as _p34Name,p32.p32Name as _p32Name,p34.p34Color as _p34Color,p32.p32Color as _p32Color," & bas.RecTail("p48", "a")
         s += " FROM p48OperativePlan a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
         s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
         s += " LEFT OUTER JOIN p32Activity p32 ON a.p32ID=p32.p32ID"

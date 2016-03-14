@@ -4,6 +4,7 @@
     Public Property p41ID As Integer
     Public Property p34ID As Integer
     Public Property p32ID As Integer
+    Public Property p31ID As Integer
 
     Public Property p48Date As Date
     Public Property p48Hours As Double
