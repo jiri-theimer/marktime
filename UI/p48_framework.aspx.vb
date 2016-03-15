@@ -466,13 +466,16 @@
                         Dim plans As New List(Of String)
                         Dim p48ids As New List(Of Integer)
                         For Each c In lis
-                            Dim strTooltip As String = c.Project & vbCrLf & c.p34Name
+                            Dim strTooltip As String = c.Project & vbCrLf & c.p34Name, strCss As String = "plan"
+                            If c.p31ID > 0 Then strCss = "reality"
                             If c.p32ID > 0 Then strTooltip += " - " & c.p32Name
                             If Len(c.p48Text) > 0 Then strTooltip += vbCrLf & c.p48Text
                             Dim strStyle As String = ""
                             If c.p34Color <> "" Then strStyle = "style='background-color:" & c.p34Color & ";'"
                             If c.p32Color <> "" Then strStyle = "style='background-color:" & c.p32Color & ";'"
-                            plans.Add("<div class='plan' " & strStyle & " title='" & strTooltip & "'>" & c.p48Hours.ToString & "</div>")
+                            'plans.Add("<div class='" & strCss & "' " & strStyle & " title='" & strTooltip & "'>" & c.p48Hours.ToString & "</div>")
+                            plans.Add("<div class='" & strCss & "' " & strStyle & " title='" & strTooltip & "'><a class='reczoom' rel='clue_p48_record.aspx?pid=" & c.PID.ToString & "'>" & c.p48Hours.ToString & "</a></div>")
+
                             p48ids.Add(c.PID)
                         Next
                         CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).InnerHtml = String.Join(" ", plans)
@@ -488,13 +491,15 @@
                     Dim plans As New List(Of String)
                     Dim p48ids As New List(Of Integer)
                     For Each c In lis
-                        Dim strTooltip As String = c.p34Name
+                        Dim strTooltip As String = c.p34Name, strCss As String = "plan"
+                        If c.p31ID > 0 Then strCss = "reality"
                         If c.p32ID > 0 Then strTooltip += " - " & c.p32Name
                         If Len(c.p48Text) > 0 Then strTooltip += vbCrLf & c.p48Text
                         Dim strStyle As String = ""
                         If c.p34Color <> "" Then strStyle = "style='background-color:" & c.p34Color & ";'"
                         If c.p32Color <> "" Then strStyle = "style='background-color:" & c.p32Color & ";'"
-                        plans.Add("<div class='plan' " & strStyle & " title='" & strTooltip & "'>" & c.p48Hours.ToString & "</div>")
+                        'plans.Add("<div class='" & strCss & "' " & strStyle & " title='" & strTooltip & "'>" & c.p48Hours.ToString & "</div>")
+                        plans.Add("<div class='" & strCss & "' " & strStyle & "><a class='reczoom' rel='clue_p48_record.aspx?pid=" & c.PID.ToString & "'>" & c.p48Hours.ToString & "</a></div>")
                         p48ids.Add(c.PID)
                     Next
                     CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).InnerHtml = String.Join(" ", plans)
@@ -540,5 +545,9 @@
 
     Private Sub cmdReplaceJ02IDs_Click(sender As Object, e As EventArgs) Handles cmdReplaceJ02IDs.Click
         Handle_ChangeJ02IDs(False)
+    End Sub
+
+    Private Sub p48_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        Me.lblHeader.Text = BO.BAS.OM2(Me.lblHeader.Text, Me.CurrentMonth.ToString & "/" & Me.CurrentYear.ToString)
     End Sub
 End Class

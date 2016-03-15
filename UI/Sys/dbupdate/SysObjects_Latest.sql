@@ -4937,6 +4937,7 @@ CREATE    PROCEDURE [dbo].[p31_aftersave]
 @p31id int
 ,@j03id_sys int
 ,@guid varchar(50)			---guid pro vazbu na pøípadné dokumenty k úkonu
+,@p48id int					---ID operativního plánu
 ,@x45ids varchar(50) OUTPUT	---pøípadné události, které se mají notifikovat (èárkou oddìlené x45id)
 
 AS
@@ -4959,7 +4960,9 @@ WHERE a.p31ID=@p31id
 
 if isnull(@p71id,0)<>0 or ISNULL(@p70id,0)<>0 or ISNULL(@p91id,0)<>0
  return	---pokud úkon prošel schvalováním nebo fakturací, není možné mìnit jeho atributy!!!!!
- 
+
+if @p48id is not null 
+ UPDATE p48OperativePlan SET p31ID=@p31id WHERE p48ID=@p48id
 
 declare @c11id_find int
 
@@ -5225,6 +5228,9 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY
+	if exists(select p48ID FROM p48OperativePlan WHERE p31ID=@pid)
+	 UPDATE p48OperativePlan SET p31ID=NULL WHERE p31ID=@pid
+
 	if exists(SELECT o27ID FROM o27Attachment WHERE p31ID=@pid)
 	 DELETE FROM o27Attachment WHERE p31ID=@pid
 
@@ -6560,6 +6566,7 @@ CREATE procedure [dbo].[p31_test_beforesave]
 ,@p56id int
 ,@p31date datetime
 ,@p32id int
+,@p48id int
 ,@p31vatrate_orig float
 ,@j27id_explicit int
 ,@p31text nvarchar(2000)
@@ -6595,6 +6602,13 @@ if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41WorksheetOperFl
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ValidFrom>getdate() OR p41ValidUntil<getdate()))
  set @err='Projekt byl pøesunut do koše, nelze do nìj zapisovat worksheet úkony.'
+
+if @p48id is not null
+ begin	---test operativního plánu
+  if exists(select p48ID FROM p48OperativePlan WHERE p48ID=@p48id AND p31ID IS NOT NULL)
+   set @err='Pøedávaný záznam operativního plánu byl již døíve pøeklopen do reality!'
+ end
+
 
 if @err<>''
  return
@@ -6637,6 +6651,12 @@ if @p32Value_Maximum<>0 and @value_orig>=@p32Value_Maximum
   if @p33id=1
    set @err=@err+'h.'
 
+  return
+ end
+
+if @p48id is not null and @p33id<>1
+ begin
+  set @err='Operativní plán mùže být pøeklopen pouze do èasového úkonu.'
   return
  end
 
@@ -6709,7 +6729,7 @@ if @err<>''
  return  
  
 if @o28entryflag=1
- return	--OK - právo zapisovat do projektu i všech úloh 
+ return	--OK - právo zapisovat do projektu i všech úkolù 
  
 if isnull(@o28entryflag,0)=0
  begin
@@ -6718,21 +6738,21 @@ if isnull(@o28entryflag,0)=0
  end
  
 if @o28entryflag=2 and @p56id is null
- return	  --OK - právo zapisovat do projektu pøímo nebo do úloh s WR
+ return	  --OK - právo zapisovat do projektu pøímo nebo do úkolu s WR
  
 if @o28entryflag=3 and @p56id is null
  begin
-   set @err='Projektová role osoby ['+@person+'] má povoleno zapisovat pouze do projektových úloh.'
+   set @err='Projektová role osoby ['+@person+'] má povoleno zapisovat pouze do projektových úkolù.'
    return
  end 
  
 if @p56id is null
  begin
-   set @err='Musíte vybrat úlohu.'
+   set @err='Musíte vybrat úkol.'
    return
  end 
 
---situace, kdy se zapisuje úkon do úlohy a osoba nemá právo zapisovat do projektu 
+--situace, kdy se zapisuje úkon do úkolu a osoba nemá právo zapisovat do projektu 
 SELECT @x69id=a.x69ID
 from x69EntityRole_Assign a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
 WHERE a.x69RecordPID=@p56id and x67.x29ID=356
@@ -6744,7 +6764,7 @@ AND (
   
 
 if @x69id is null 
-  set @err='Nejste øešitelem úlohy ['+dbo.GetObjectAlias('p56',@p56id)+'] a proto nemùžete zapisovat worksheet do zvoleného sešitu.'
+  set @err='Nejste øešitelem úkolu ['+dbo.GetObjectAlias('p56',@p56id)+'] a proto nemùžete zapisovat worksheet do zvoleného sešitu.'
   
  
 
@@ -10883,6 +10903,25 @@ VALUES(@x29id,@pid,@j03id_sys,getdate(),@flag,@j02id_sys,@validfrom,@validuntil)
 
 
 
+
+GO
+
+----------P---------------zzz_p28_aftersave-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('zzz_p28_aftersave') and type = 'P')
+ drop procedure zzz_p28_aftersave
+GO
+
+
+
+
+create    PROCEDURE [dbo].[zzz_p28_aftersave]
+@pid int
+,@j03id_sys int
+
+AS
+
+update p28contact set p28regid='hovado' where p28ID=@pid
 
 GO
 

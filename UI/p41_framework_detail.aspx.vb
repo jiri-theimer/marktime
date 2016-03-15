@@ -221,6 +221,9 @@ Public Class p41_framework_detail
             notepad1.RefreshData(lisO23, Master.DataPID)
             With Me.boxO23Title
                 .Text = BO.BAS.OM2(.Text, lisO23.Count.ToString)
+                If panO23.Visible Then
+                    .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
+                End If
             End With
         Else
             Me.boxO23.Visible = False
@@ -231,6 +234,9 @@ Public Class p41_framework_detail
             Me.persons1.FillData(lisP30)
             With Me.boxP30Title
                 .Text = BO.BAS.OM2(.Text, lisP30.Count.ToString)
+                If Master.Factory.SysUser.j04IsMenu_People Then
+                    .Text = "<a href='j02_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString & "' target='_top'>" & .Text & "</a>"
+                End If
             End With
         Else
             Me.boxP30.Visible = False
@@ -254,7 +260,10 @@ Public Class p41_framework_detail
 
         With Me.opgSubgrid.Tabs
             If Not .FindTabByValue("2") Is Nothing Then
-                If cProjectSum.p91_Count > 0 Then .FindTabByValue("2").Text += "<span class='badge1'>" & cProjectSum.p91_Count.ToString & "</span>"
+                If cProjectSum.p91_Count > 0 Then
+                    .FindTabByValue("2").Text += "<span class='badge1'>" & cProjectSum.p91_Count.ToString & "</span>"
+                    topLink6.Text += "<span class='badge1'>" & cProjectSum.p91_Count.ToString & "</span>"
+                End If
             End If
             With .FindTabByValue("4")
                 If cProjectSum.p56_Actual_Count > 0 Then .Text += "<span class='badge1'>" & cProjectSum.p56_Actual_Count.ToString & "</span>"
@@ -367,7 +376,9 @@ Public Class p41_framework_detail
             panEdit.Visible = .OwnerAccess
             panP40.Visible = .OwnerAccess
             panP30.Visible = .OwnerAccess
+            topLink6.Visible = Master.Factory.SysUser.j04IsMenu_Invoice
             If Not .p91_Read Then
+                topLink6.Visible = False
                 With Me.opgSubgrid.Tabs
                     If Not .FindTabByValue("2") Is Nothing Then
                         .Remove(.FindTabByValue("2"))  'nemá právo vidět vystavené faktury v projektu

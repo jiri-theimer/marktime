@@ -73,8 +73,10 @@ Public Class p31_framework
                     .Add("p31_framework-sort-" & Me.GridPrefix)
                     .Add("p31_framework-groups-autoexpanded")
                     If tabs1.SelectedIndex <> 1 Then    'v top10 se nefiltruje
-                        .Add("p31_framework-filter_setting_" & Me.GridPrefix)
-                        .Add("p31_framework-filter_sql_" & Me.GridPrefix)
+                        .Add("p31_framework-filter_setting_p41")
+                        .Add("p31_framework-filter_sql_p41")
+                        .Add("p31_framework-filter_setting_p56")
+                        .Add("p31_framework-filter_sql_p56")
                     End If
                 End With
                 With .Factory.j03UserBL
@@ -108,12 +110,18 @@ Public Class p31_framework
                 txtSearch.Visible = False : txtSearch.Text = "" : cmdSearch.Visible = False
             End If
 
+            grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p41")
             RecalcVirtualRowCount()
+
+            grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p56")
             RecalcTasksCount()
+
             SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31_framework-j74id-" & Me.GridPrefix)))
             With Master.Factory.j03UserBL
                 SetupGrid(.GetUserParam("p31_framework-filter_setting_" & Me.GridPrefix), .GetUserParam("p31_framework-filter_sql_" & Me.GridPrefix))
             End With
+
+
 
             Handle_DefaultSelectedRecord()
 
@@ -207,7 +215,12 @@ Public Class p31_framework
                 .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, grid1.GetFilterSetting())
                 .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, grid1.GetFilterExpression())
             End With
-            RecalcVirtualRowCount()
+            Select Case tabs1.SelectedIndex
+                Case 0
+                    RecalcVirtualRowCount()
+                Case 2
+                    RecalcTasksCount()
+            End Select
         End If
         If Me.GridPrefix = "p41" Then
             Dim mq As New BO.myQueryP41
@@ -460,8 +473,13 @@ Public Class p31_framework
     End Sub
 
     Private Sub SaveLastJ74Reference()
-        Master.Factory.j03UserBL.SetUserParam("p31_framework-j74id-" & Me.GridPrefix, Me.CurrentJ74ID.ToString)
-        Master.Factory.j03UserBL.SetUserParam("p31_framework-sort-" & Me.GridPrefix, "")
+        With Master.Factory.j03UserBL
+            .SetUserParam("p31_framework-j74id-" & Me.GridPrefix, Me.CurrentJ74ID.ToString)
+            .SetUserParam("p31_framework-sort-" & Me.GridPrefix, "")
+            .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, "")
+            .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, "")
+        End With
+        
     End Sub
     Private Sub ReloadPage()
         Response.Redirect("p31_framework.aspx")

@@ -326,14 +326,15 @@ Public Class p91_create_step1
     End Sub
 
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
-
+        Dim intPID As Integer = Master.DataPID
+        If intPID = 0 Then intPID = -666
         Select Case Me.CurrentPrefix
             Case "p28"
-                mq.p28ID = Master.DataPID
+                mq.p28ID = intPID
             Case "p41"
-                mq.p41ID = Master.DataPID
+                mq.p41ID = intPID
             Case "j02"
-                mq.j02ID = Master.DataPID
+                mq.j02ID = intPID
             Case "quick"
                 mq.AddItemToPIDs(Master.DataPID)
         End Select
@@ -350,7 +351,6 @@ Public Class p91_create_step1
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        If Master.DataPID = 0 Then Return
         Dim strSort As String = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
         Select Case Me.opgGroupBy.SelectedValue
             Case "p41"

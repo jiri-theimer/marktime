@@ -178,7 +178,14 @@ Public Class p28_framework_detail
             Me.boxP30.Visible = True
             Me.persons1.FillData(lisP30)
             With Me.boxP30Title
-                If lisP30.Count > 0 Then .Text = .Text & "<span class='badgebox1'>" & lisP30.Count.ToString & "</span>"
+                If lisP30.Count > 0 Then
+                    .Text = .Text & " (" & lisP30.Count.ToString & ")"
+                    If Master.Factory.SysUser.j04IsMenu_People Then
+                        .Text = "<a href='j02_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString & "' target='_top'>" & .Text & "</a>"
+                    End If
+
+                End If
+
             End With
         Else
             Me.boxP30.Visible = False
@@ -193,7 +200,10 @@ Public Class p28_framework_detail
             Me.boxO23.Visible = True
             notepad1.RefreshData(lisO23, Master.DataPID)
             With Me.boxO23Title
-                .Text = .Text & "<span class='badgebox1'>" & lisO23.Count.ToString & "</span>"
+                .Text = .Text & " (" & lisO23.Count.ToString & ")"
+                If panO23.Visible Then
+                    .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
+                End If
             End With
         Else
             Me.boxO23.Visible = False
@@ -265,7 +275,9 @@ Public Class p28_framework_detail
                 topLink1.Visible = False
 
             End If
+            If Not .SysUser.j04IsMenu_Project Then topLink5.Visible = False
             If Not .SysUser.j04IsMenu_Invoice Then
+                topLink6.Visible = False
                 With Me.opgSubgrid.Tabs
                     If Not .FindTabByValue("2") Is Nothing Then
                         .Remove(.FindTabByValue("2"))  'nemá právo vidět vystavené faktury
@@ -313,16 +325,20 @@ Public Class p28_framework_detail
             boxP41.Visible = False
         Else
             boxP41.Visible = True
-            Dim intClosed As Integer = lis.Where(Function(p) p.IsClosed = True).Count            
+            Dim intClosed As Integer = lis.Where(Function(p) p.IsClosed = True).Count
+            Dim intOpened As Integer = lis.Count - intClosed
             With boxP41Title
                 If intClosed > 0 Then
-                    .Text = .Text & "<span class='badgebox1'>" & lis.Where(Function(p) p.IsClosed = False).Count.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & "</span>"
+                    .Text = .Text & " (" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & ")"
+                    topLink5.Text += "<span class='badge1'>" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & "</span>"
                 Else
-                    .Text = .Text & "<span class='badgebox1'>" & lis.Count.ToString & "+0</span>"
-                End If
+                    .Text = .Text & " (" & intOpened.ToString & ")"
+                    topLink5.Text += "<span class='badge1'>" & intOpened.ToString & "</span>"
+                End If                
 
+                .Text = "<a href='javascript:projects()'>" & .Text & "</a>"
             End With
-            
+
         End If
 
         rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)

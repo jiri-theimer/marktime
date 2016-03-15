@@ -47,6 +47,18 @@
             font-family: Calibri;
             font-size: 100%;
         }
+        div.reality {
+            background-color: #E0FFFF;
+            width: 20px;
+            height: 15px;
+            padding: 1px;
+            cursor: default;
+            border: solid 1px gray;
+            text-align: center;
+            font-family: Calibri;
+            font-size: 100%;
+            text-decoration:line-through;
+        }
 
         div.sum {
             background-color: white;
@@ -81,6 +93,13 @@
             text-align: center;
             font-family: Calibri;
             font-size: 90%;
+        }
+
+        a.reczoom {
+            border:none !important;
+            font-family: Calibri !important;
+            font-size:100% !important;
+            padding:0px !important;
         }
     </style>
 
@@ -205,7 +224,7 @@
     <div style="background-color: white; padding: 10px;">
         <div style="float: left;">
             <img src="Images/oplan_32.png" />
-            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Operativní plánování"></asp:Label>
+            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Operativní plán"></asp:Label>
         </div>
 
 

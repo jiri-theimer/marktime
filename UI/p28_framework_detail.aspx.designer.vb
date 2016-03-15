@@ -194,6 +194,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents topLink0 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''topLink5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents topLink5 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''topLink1 control.
     '''</summary>
     '''<remarks>
@@ -219,6 +228,15 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents topLink2 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''topLink6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents topLink6 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''topLink3 control.

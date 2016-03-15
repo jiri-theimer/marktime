@@ -139,11 +139,13 @@ Public Class entity_framework
                 Master.SiteMenuValue = Me.CurrentPrefix
             End If
             SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "-j70id")))
-            RecalcVirtualRowCount()
+
             SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "_framework-j74id")))
             With Master.Factory.j03UserBL
                 SetupGrid(.GetUserParam(Me.CurrentPrefix + "_framework-filter_setting"), .GetUserParam(Me.CurrentPrefix + "_framework-filter_sql"))
             End With
+            RecalcVirtualRowCount()
+
             If Me.CurrentMasterPID = 0 Then
                 Handle_DefaultSelectedRecord()
             Else
@@ -221,7 +223,13 @@ Public Class entity_framework
         End If
         If Me.CurrentMasterPID > 0 Then
             Me.j70ID.Visible = False : cmdQuery.Visible = False : Me.clue_query.Visible = False
-            Me.j62Name.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
+            With Me.j62Name
+                .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
+                .CssClass = ""
+                .Text = "<a href='" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString & "'>" & .Text & "</a>"
+            End With
+
+
             Return 'pokud se zobrazuje přehled v rámci nadřazeného záznam, pak se nefiltruje
         End If
 
@@ -399,6 +407,11 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_p91(ByRef mq As BO.myQueryP91)
         With mq
             .Closed = BO.BooleanQueryMode.NoQuery
+            Select Case Me.CurrentMasterPrefix
+                Case "p41" : .p41ID = Me.CurrentMasterPID
+                Case "j02" : .j02ID = Me.CurrentMasterPID
+                Case "p28" : .p28ID = Me.CurrentMasterPID
+            End Select
             .ColumnFilteringExpression = grid1.GetFilterExpression()
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "p91DateSupply" : .PeriodType = BO.myQueryP91_PeriodType.p91DateSupply
@@ -440,6 +453,7 @@ Public Class entity_framework
                 Case "p41" : .p41ID = Me.CurrentMasterPID
                 Case "j02" : .j02ID = Me.CurrentMasterPID
                 Case "p28" : .p28ID = Me.CurrentMasterPID
+                Case "p56" : .p56ID = Me.CurrentMasterPID
             End Select
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
@@ -511,6 +525,9 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_p41(ByRef mq As BO.myQueryP41)
         With mq
             .ColumnFilteringExpression = grid1.GetFilterExpression()
+            Select Case Me.CurrentMasterPrefix
+                Case "p28" : .p28ID = Me.CurrentMasterPID
+            End Select
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -573,6 +590,10 @@ Public Class entity_framework
     Private Sub InhaleMyQuery_j02(ByRef mq As BO.myQueryJ02)
         With mq
             .ColumnFilteringExpression = grid1.GetFilterExpression()
+            Select Case Me.CurrentMasterPrefix
+                Case "p41" : .p41ID = Me.CurrentMasterPID
+                Case "p28" : .p28ID = Me.CurrentMasterPID
+            End Select
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -788,12 +809,18 @@ Public Class entity_framework
     End Sub
 
     Private Sub SaveLastJ74Reference()
-        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-j74id", Me.CurrentJ74ID.ToString)
-        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-sort", "")
+        With Master.Factory.j03UserBL
+            .SetUserParam(Me.CurrentPrefix + "_framework-j74id", Me.CurrentJ74ID.ToString)
+            .SetUserParam(Me.CurrentPrefix + "_framework-sort", "")
+            .SetUserParam(Me.CurrentPrefix + "_framework-filter_setting", "")
+            .SetUserParam(Me.CurrentPrefix + "_framework-filter_sql", "")
+        End With
+        
     End Sub
     Private Sub ReloadPage()
         Dim s As String = "entity_framework.aspx?prefix=" & Me.CurrentPrefix
         If Me.CurrentJ62ID > 0 Then s += "&j62id=" & Me.CurrentJ62ID.ToString
+        If Me.CurrentMasterPID > 0 Then s += "&masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString
         Response.Redirect(s, True)
     End Sub
 

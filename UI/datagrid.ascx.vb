@@ -536,15 +536,23 @@ Public Class datagrid
             strSetting = Split(strSetting, "$$")(1)
         End If
         Dim a() As String = Split(strSetting, "|")
+
         For Each s In a
             Dim b() As String = Split(s, "##")
-            Dim col As GridColumn = grid1.MasterTableView.Columns.FindByUniqueName(b(0))
-            If Not col Is Nothing Then
-                col.CurrentFilterValue = b(2)
-                col.CurrentFilterFunction = DirectCast(CInt(b(1)), GridKnownFunction)
-
-            End If
+            With grid1.MasterTableView.Columns
+                Try
+                    Dim col As GridColumn = .FindByUniqueName(b(0))
+                    If Not col Is Nothing Then
+                        col.CurrentFilterValue = b(2)
+                        col.CurrentFilterFunction = DirectCast(CInt(b(1)), GridKnownFunction)
+                    End If
+                Catch ex As Exception
+                    'sloupec neexistuje, raději vyčistíme celý filtr
+                    strFilterExpression = ""
+                End Try
+            End With
         Next
+
         grid1.MasterTableView.FilterExpression = strFilterExpression
     End Sub
 End Class

@@ -254,11 +254,12 @@ Public Class j02_framework_detail
             panO23.Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
             panO22.Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
             If Not .SysUser.j04IsMenu_Invoice Then
+                topLink6.Visible = False
                 If Not Me.opgSubgrid.Tabs.FindTabByValue("2") Is Nothing Then
                     Me.opgSubgrid.Tabs.Remove(Me.opgSubgrid.Tabs.FindTabByValue("2"))
                     If Me.CurrentSubgrid = SubgridType.p91 Then Me.CurrentSubgrid = SubgridType.p31
                 End If
-                
+
             End If
         End With
         

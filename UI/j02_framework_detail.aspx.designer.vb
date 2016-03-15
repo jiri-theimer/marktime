@@ -194,6 +194,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents topLink2 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''topLink6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents topLink6 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''topLink3 control.
     '''</summary>
     '''<remarks>

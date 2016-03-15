@@ -245,6 +245,17 @@
             window.open("p56_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
             
         }
+        function projects(){            
+            window.open("p41_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            
+        }
+        function invoices(){            
+            window.open("p91_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            
+        }
+        function notepads(){            
+            window.open("o23_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+        }
         function p31_grid(){            
             window.open("p31_grid.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
         }
@@ -367,10 +378,13 @@
     <div style="height: 3px; page-break-after: always; width: 100%;"></div>
     <div class="div_radiolist_metro">
         <asp:HyperLink ID="topLink0" runat="server" Text="Úkony" CssClass="toplink" NavigateUrl="javascript:p31_grid()" Style="margin-left: 6px;"></asp:HyperLink>
+        <asp:HyperLink ID="topLink5" runat="server" Text="Projekty" CssClass="toplink" NavigateUrl="javascript:projects()"></asp:HyperLink>
         <asp:HyperLink ID="topLink1" runat="server" Text="Schvalování/fakturační podklady/fakturace" CssClass="toplink" NavigateUrl="javascript:approve()"></asp:HyperLink>
         <asp:HyperLink ID="topLink4" runat="server" Text="Sestava" CssClass="toplink" NavigateUrl="javascript:report()"></asp:HyperLink>
         <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()"></asp:HyperLink>
+        <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()"></asp:HyperLink>
         <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář klienta" CssClass="toplink" NavigateUrl="javascript:scheduler()"></asp:HyperLink>
+        
     </div>
 
 
@@ -504,7 +518,7 @@
             <div class="title">
                 <img src="Images/person.png" style="margin-right: 10px;" />
                 <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby klienta"></asp:Label>
-                <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit"></asp:HyperLink>
+                <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" style="margin-left:20px;"></asp:HyperLink>
             </div>
             <div class="content">
                 <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>
@@ -528,7 +542,7 @@
         <asp:Panel ID="boxP41" runat="server" CssClass="content-box1" >
             <div class="title">
                 <img src="Images/project.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxP41Title" runat="server" Text="Projekty klienta"></asp:Label>
+                <asp:Label ID="boxP41Title" runat="server" Text="Projekty"></asp:Label>
             </div>
             <asp:Panel ID="panProjects" runat="server" CssClass="content" Style="overflow: auto; max-height: 200px;">
 

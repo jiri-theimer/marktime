@@ -405,19 +405,19 @@
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars, strGUID_TempData)
         With myQuery
-            Dim strSort As String = bas.NormalizeOrderByClause(.MG_SortString)
+            Dim strSort As String = .MG_SortString
             If strSort = "" Then
                 strSort = "a.p31ID DESC"
             End If
 
             If .MG_PageSize > 0 Then
                 'použít stránkování do gridu    
-                s = GetSQL_OFFSET(strW, strSort, .MG_PageSize, .MG_CurrentPageIndex, pars)
+                s = GetSQL_OFFSET(strW, ParseSortExpression(strSort), .MG_PageSize, .MG_CurrentPageIndex, pars)
             Else
                 'normální select
                 If strW <> "" Then s += " WHERE " & strW
                 If strSort <> "" Then
-                    s += " ORDER BY " & strSort
+                    s += " ORDER BY " & ParseSortExpression(strSort)
                 End If
             End If
         End With
@@ -427,10 +427,8 @@
 
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
-        strORDERBY = strORDERBY.Replace("UserInsert", "p31UserInsert").Replace("UserUpdate", "p31UserUpdate").Replace("DateInsert", "p31DateInsert").Replace("DateUpdate", "p31DateUpdate")
-        Dim strORDERBY_Primary As String = strORDERBY.Replace("Person", "j02.j02LastName").Replace("j27Code_Billing_Orig", "j27billing_orig.j27Code")
 
-        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY_Primary & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2()
+        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2()
 
         If strWHERE <> "" Then s += " WHERE " & strWHERE
         s += ") SELECT TOP " & intPageSize.ToString & " * FROM rst"
@@ -440,9 +438,15 @@
         's += " ORDER BY " & strORDERBY
         Return s
     End Function
+    Private Function ParseSortExpression(strSort As String) As String
+        strSort = strSort.Replace("UserInsert", "p31UserInsert").Replace("UserUpdate", "p31UserUpdate").Replace("DateInsert", "p31DateInsert").Replace("DateUpdate", "p31DateUpdate")
+        strSort = strSort.Replace("j27Code_Billing_Orig", "j27billing_orig.j27Code").Replace("Owner", "j02owner.j02LastName").Replace("Person", "j02.j02LastName")
+        Return bas.NormalizeOrderByClause(strSort)
+    End Function
 
     Private Function ParseFilterExpression(strFilter As String) As String
-        Return strFilter.Replace("[", "").Replace("]", "")
+        strFilter = strFilter.Replace("Person", "j02.j02LastName+j02.j02FirstName")
+        Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
     End Function
 
     Public Function GetVirtualCount(myQuery As BO.myQueryP31, Optional strGUID_TempData As String = "") As Integer

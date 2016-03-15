@@ -199,6 +199,12 @@
         function tasks(){            
             window.open("p56_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
         }
+        function notepads(){            
+            window.open("o23_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
+        }
+        function invoices(){            
+            window.open("p91_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")            
+        }
         function p31_grid(){            
             window.open("p31_grid.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
         }
@@ -421,6 +427,7 @@
         <asp:HyperLink ID="topLink1" runat="server" Text="Schvalování/fakturační podklady/fakturace" CssClass="toplink" NavigateUrl="javascript:approve()"></asp:HyperLink>
         <asp:HyperLink ID="topLink4" runat="server" Text="Sestava" CssClass="toplink" NavigateUrl="javascript:report()"></asp:HyperLink>
         <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()"></asp:HyperLink>
+        <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()"></asp:HyperLink>
         <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář projektu" CssClass="toplink" NavigateUrl="javascript:scheduler()"></asp:HyperLink>
     </div>
 
@@ -565,7 +572,7 @@
         <div class="title">
             <img src="Images/person.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby projektu"></asp:Label>
-            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit"></asp:HyperLink>
+            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" style="margin-left:20px;"></asp:HyperLink>
         </div>
         <div class="content">
             <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>

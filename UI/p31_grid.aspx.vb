@@ -4,7 +4,7 @@ Public Class p31_grid
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
     Private Property _curJ74 As BO.j74SavedGridColTemplate
-    Private Property _needRecalcVirtualCount As Boolean = False
+    Private Property _needFilterIsChanged As Boolean = False
 
     Private Sub p31_grid_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -37,7 +37,6 @@ Public Class p31_grid
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            ViewState("prefix") = Request.Item("prefix")
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
             End If
@@ -56,6 +55,8 @@ Public Class p31_grid
                     .Add("p31_grid-groupby")
                     .Add("p31_grid-search")
                     .Add("p31_grid-sort")
+                    .Add("p31_grid-filter_setting")
+                    .Add("p31_grid-filter_sql")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
                 cbxGroupBy.DataBind()
@@ -72,16 +73,20 @@ Public Class p31_grid
                 End If
             End With
 
-            SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31-j70id")))
-            SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31_grid-j74id")))
+            With Master.Factory.j03UserBL
+                SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
+                SetupJ74Combo(BO.BAS.IsNullInt(.GetUserParam("p31_grid-j74id")))
+                SetupGrid(.GetUserParam("p31_grid-filter_setting"), .GetUserParam("p31_grid-filter_sql"))
+            End With
 
-            SetupGrid()
             RecalcVirtualRowCount()
             Handle_Permissions()
             If Me.CurrentMasterPrefix <> "" Then
-                Me.lblFormHeader.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
                 With Me.lblFormHeader
+                    .CssClass = ""
+                    .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
                     If .Text.Length > 30 Then .Text = Left(.Text, 28) & "..."
+                    .Text = "<a href='" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString & "'>" & .Text & "</a>"
                 End With
             End If
         End If
@@ -162,8 +167,13 @@ Public Class p31_grid
     End Sub
 
     Private Sub SaveLastJ74Reference()
-        Master.Factory.j03UserBL.SetUserParam("p31_grid-j74id", Me.CurrentJ74ID.ToString)
-        Master.Factory.j03UserBL.SetUserParam("p31_grid-sort", "")
+        With Master.Factory.j03UserBL
+            .SetUserParam("p31_grid-j74id", Me.CurrentJ74ID.ToString)
+            .SetUserParam("p31_grid-sort", "")
+            .SetUserParam("p31_grid-filter_setting", "")
+            .SetUserParam("p31_grid-filter_sql", "")
+        End With
+        
     End Sub
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
@@ -174,7 +184,7 @@ Public Class p31_grid
         grid1.Rebind(True)
     End Sub
 
-    Private Sub SetupGrid()
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With Master.Factory.j74SavedGridColTemplateBL
             Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
             If cJ74 Is Nothing Then
@@ -184,7 +194,7 @@ Public Class p31_grid
                 End If
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True)
+            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression)
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
             If Not Me.txtSearch.Visible Then Me.txtSearch.Text = ""
@@ -212,8 +222,7 @@ Public Class p31_grid
     End Sub
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
-        _needRecalcVirtualCount = True
-        Master.Factory.j03UserBL.SetUserParam("p31_grid-filter_setting", grid1.GetFilterExpression())
+        _needFilterIsChanged = True
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
@@ -221,7 +230,11 @@ Public Class p31_grid
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        If _needRecalcVirtualCount Then
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("p31_grid-filter_setting", grid1.GetFilterSetting())
+                .SetUserParam("p31_grid-filter_sql", grid1.GetFilterExpression())
+            End With
             RecalcVirtualRowCount()
         End If
         Dim mq As New BO.myQueryP31
@@ -307,7 +320,12 @@ Public Class p31_grid
 
 
     Private Sub ReloadPage()
-        Response.Redirect("p31_grid.aspx")
+        If Me.CurrentMasterPID = 0 Then
+            Response.Redirect("p31_grid.aspx")
+        Else
+            Response.Redirect("p31_grid.aspx?masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString)
+        End If
+
     End Sub
 
     Private Sub p31_grid_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -405,9 +423,10 @@ Public Class p31_grid
     End Sub
 
     Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
-        
-        _needRecalcVirtualCount = True        
-        grid1.ClearFilter()
-        grid1.Rebind(False)
+        With Master.Factory.j03UserBL
+            .SetUserParam("p31_grid-filter_setting", "")
+            .SetUserParam("p31_grid-filter_sql", "")
+        End With
+        ReloadPage()
     End Sub
 End Class
