@@ -98,7 +98,7 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Label runat="server" ID="lblBin" Text="Z toho přesunuté do koše:"></asp:Label>
+                    <asp:Label runat="server" ID="lblBin" Text="Z toho přesunuté do archivu:"></asp:Label>
                 </td>
                 <td align="right">
                     <asp:Label runat="server" ID="CountBin" CssClass="valbold"></asp:Label>

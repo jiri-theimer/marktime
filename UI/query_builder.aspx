@@ -40,9 +40,9 @@
 
     <div class="div6">
         <asp:RadioButtonList ID="opgBin" runat="server" RepeatDirection="Horizontal" AutoPostBack="false">
-            <asp:ListItem Text="Otevřené i v koši" Value="0" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="Otevřené i v archivu" Value="0" Selected="true"></asp:ListItem>
             <asp:ListItem Text="Pouze otevřené" Value="1"></asp:ListItem>
-            <asp:ListItem Text="Pouze přesunuté do koše" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Pouze v archivu" Value="2"></asp:ListItem>
         </asp:RadioButtonList>
     </div>
 

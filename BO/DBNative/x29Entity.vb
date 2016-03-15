@@ -12,6 +12,7 @@
     j61TextTemplate = 161
     j62MenuHome = 162
     p41Project = 141
+    p45Budget = 345
     o22Milestone = 222
     o23Notepad = 223
     o24NotepadType = 224

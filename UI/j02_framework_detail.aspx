@@ -256,7 +256,7 @@
                                     <asp:Image ID="imgEdit" ImageUrl="Images/edit.png" runat="server" />
                                     <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit osobní profil" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
                                     <div>
-                                        <span class="infoInForm">Zahrnuje i možnost přesunutí do koše nebo nenávratného odstranění.</span>
+                                        <span class="infoInForm">Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.</span>
                                     </div>
 
                                 </div>

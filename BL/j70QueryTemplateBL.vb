@@ -104,7 +104,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(1, "Rozpracovanost, čeká na schvalování"))
                 lis.Add(New BO.OtherQueryItem(2, "Schváleno, čeká na fakturaci"))
                 lis.Add(New BO.OtherQueryItem(3, "Vyfakturováno"))
-                lis.Add(New BO.OtherQueryItem(4, "Rozpracovanost přesunutá do koše"))
+                lis.Add(New BO.OtherQueryItem(4, "Rozpracovanost přesunutá do archivu"))
             Case BO.x29IdEnum.p56Task
                 lis.Add(New BO.OtherQueryItem(3, "Obsahují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Obsahují schválené úkony, které čekají na fakturaci"))

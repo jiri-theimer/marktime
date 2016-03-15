@@ -15,31 +15,28 @@
             End If
             If .p41ID > 0 Then
                 pars.Add("p41id", .p41ID, DbType.Int32)
-                strW += " AND a.p41ID=@p41id"
+                strW += " AND a.p46ID IN (SELECT xa.p46ID FROM p46BudgetPerson xa INNER JOIN p45Budget xb ON xa.p45ID=xb.p45ID WHERE xb.p41ID=@p41id)"
             End If
-            If .p28ID > 0 Then
-                pars.Add("p28id", .p28ID, DbType.Int32)
-                strW += " AND a.p41ID IN (SELECT p41ID FROM p41Project WHERE p28ID_Client=@p28id)"
-            End If
+            
             If .j02ID > 0 Then
                 pars.Add("j02id", .j02ID, DbType.Int32)
-                strW += " AND a.j02ID=@j02id"
+                strW += " AND a.p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE j02ID=@j02id)"
             End If
             If Not .j02IDs Is Nothing Then
                 If .j02IDs.Count > 0 Then
-                    strW += " AND a.j02ID IN (" & String.Join(",", .j02IDs) & ")"
+                    strW += " AND a.p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE j02ID IN (" & String.Join(",", .j02IDs) & "))"
                 End If
             End If
-            If .p56ID > 0 Then
-                pars.Add("p56id", .p56ID, DbType.Int32)
-                strW += " AND a.p56ID=@p56id"
+            If .p45ID > 0 Then
+                pars.Add("p45id", .p45ID, DbType.Int32)
+                strW += " AND a.p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p45ID=@p45id)"
             End If
         End With
         strW = bas.TrimWHERE(strW)
 
-        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project," & bas.RecTail("p47", "a")
-        s += " FROM p47CapacityPlan a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
-        s += " LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
+        Dim s As String = "select a.*,p45.p41ID as _p41ID,p46.j02ID as _j02ID,j02.j02LastName+' '+j02.j02FirstName as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project," & bas.RecTail("p47", "a")
+        s += " FROM p47CapacityPlan a INNER JOIN p46BudgetPerson p46 ON a.p46ID=p46.p46ID INNER JOIN j02Person j02 ON p46.j02ID=j02.j02ID"
+        s += " INNER JOIN p45Budget p45 ON p46.p45ID=p45.p45ID INNER JOIN p41Project p41 ON p45.p41ID=p41.p41ID "
         s += " LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
         s += " WHERE " & strW
         s += " ORDER BY a.p47DateFrom"
@@ -61,8 +58,7 @@
                 strW = "p47ID=@pid"
                 pars.Add("pid", intPID)
             End If
-            pars.Add("j02ID", c.j02ID, DbType.Int32)
-            pars.Add("p41ID", c.p41ID, DbType.Int32)
+            pars.Add("p46ID", c.p46ID, DbType.Int32)
             pars.Add("p47DateFrom", c.p47DateFrom, DbType.DateTime)
             pars.Add("p47DateUntil", c.p47DateUntil, DbType.DateTime)
             pars.Add("p47HoursBillable", c.p47HoursBillable, DbType.Double)

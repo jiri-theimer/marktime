@@ -299,7 +299,7 @@
                                 <img src="Images/edit.png" />
                                 <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit nastavení klienta" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
                                 <div>
-                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do koše nebo nenávratného odstranění.</span>
+                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.</span>
                                 </div>
 
                             </asp:Panel>

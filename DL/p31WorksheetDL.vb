@@ -320,7 +320,7 @@
             End If
             Select Case .SpecificQuery
                 Case BO.myQueryP31_SpecificQuery.AllowedForDoApprove, BO.myQueryP31_SpecificQuery.AllowedForReApprove
-                    ''s.Append(" AND getdate() BETWEEN p41.p41ValidFrom AND p41.p41ValidUntil")   'vyloučit projekty z koše
+                    ''s.Append(" AND getdate() BETWEEN p41.p41ValidFrom AND p41.p41ValidUntil")   'vyloučit projekty z archivu
                     If .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForDoApprove Then
                         If .QuickQuery <> BO.myQueryP31_QuickQuery.Editing Then
                             s.Append(" AND a.p71ID IS NULL AND a.p91ID IS NULL")
@@ -329,7 +329,7 @@
                         s.Append(" AND a.p71ID=1 AND a.p91ID IS NULL")    'přeschválit již dříve schválený worksheet
                     End If
                     If .QuickQuery = BO.myQueryP31_QuickQuery._NotSpecified Then
-                        s.Append(" AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil")   'nabízet pouze platné záznamy, které nejsou v koši
+                        s.Append(" AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil")   'nabízet pouze platné záznamy, které nejsou v archivu
                     End If
 
                     If Not BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Approver) Then

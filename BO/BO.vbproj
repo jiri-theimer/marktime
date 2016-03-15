@@ -100,10 +100,12 @@
     <Compile Include="DBNative\p27ContactPersonRole.vb" />
     <Compile Include="DBNative\p39WorkSheet_Recurrence_Plan.vb" />
     <Compile Include="DBNative\p40WorkSheet_Recurrence.vb" />
+    <Compile Include="DBNative\p45Budget.vb" />
+    <Compile Include="DBNative\p46BudgetPerson.vb" />
     <Compile Include="DBNative\p58Product.vb" />
     <Compile Include="DBNative\p59Priority.vb" />
     <Compile Include="DBNative\x18EntityCategory.vb" />
-    <Compile Include="DBNative\p47ProjectCapacityPlan.vb" />
+    <Compile Include="DBNative\p47CapacityPlan.vb" />
     <Compile Include="DBNative\p48OperativePlan.vb" />
     <Compile Include="DBNative\p49FinancialPlan.vb" />
     <Compile Include="DBNative\x23EntityField_Combo.vb" />

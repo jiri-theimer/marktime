@@ -208,7 +208,7 @@
                 </div>
 
                 <div class="div6">
-                    <asp:CheckBox ID="chkSearchInBin" Text="Zahrnout do hledání i projekty přesunuté do koše" runat="server" />
+                    <asp:CheckBox ID="chkSearchInBin" Text="Zahrnout do hledání i projekty přesunuté do archivu" runat="server" />
                 </div>
                 <div class="div6">
                     <span>Kolik zobrazovat maximálně nalezených projektů:</span>

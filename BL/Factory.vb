@@ -7,6 +7,7 @@
     Private Property _j05 As Ij05MasterSlaveBL
     Private Property _p40 As Ip40WorkSheet_RecurrenceBL
     Private Property _p41 As Ip41ProjectBL
+    Private Property _p45 As Ip45BudgetBL
     Private Property _p47 As Ip47CapacityPlanBL
     Private Property _p48 As Ip48OperativePlanBL
     Private Property _p49 As Ip49FinancialPlanBL
@@ -176,6 +177,12 @@
         Get
             If _p41 Is Nothing Then _p41 = New p41ProjectBL(_cUser)
             Return _p41
+        End Get
+    End Property
+    Public ReadOnly Property p45BudgetBL As Ip45BudgetBL
+        Get
+            If _p45 Is Nothing Then _p45 = New p45BudgetBL(_cUser)
+            Return _p45
         End Get
     End Property
     Public ReadOnly Property p47CapacityPlanBL As Ip47CapacityPlanBL

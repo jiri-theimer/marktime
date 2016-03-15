@@ -384,8 +384,7 @@ Public Class p47_project
             If cTemp.p85IsDeleted And cTemp.p85DataPID <> 0 Then
                 c.SetAsDeleted()
             End If
-            c.j02ID = cTemp.p85OtherKey1
-            c.p41ID = Master.DataPID
+            c.p46ID = cTemp.p85OtherKey1
             c.p47DateFrom = cTemp.p85FreeDate01
             c.p47DateUntil = cTemp.p85FreeDate02
             c.p47HoursBillable = cTemp.p85FreeFloat01

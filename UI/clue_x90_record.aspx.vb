@@ -33,9 +33,9 @@
                 Case BO.x90EventFlagEnum.Created
                     Me.Event.Text = "Založení záznamu"
                 Case BO.x90EventFlagEnum.MovedToBin
-                    Me.Event.Text = "Přesunutí záznamu do koše"
+                    Me.Event.Text = "Přesunutí záznamu do archivu"
                 Case BO.x90EventFlagEnum.RestoreFromBin
-                    Me.Event.Text = "Obnova záznamu z koše"
+                    Me.Event.Text = "Obnova záznamu z archivu"
                 Case BO.x90EventFlagEnum.Updated
                     Me.Event.Text = "Aktualizace záznamu"
             End Select

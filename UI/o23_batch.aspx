@@ -17,8 +17,8 @@
         <div class="title">Předmět hromadné operace</div>
         <div class="content">
             <asp:RadioButtonList ID="opgTarget" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" RepeatColumns="3" CellPadding="5">
-                <asp:ListItem Text="Uzavřít dokumenty (přesunout do koše)" Value="bin"></asp:ListItem>
-                <asp:ListItem Text="Otevřít dokumenty (přesunout z koše)" Value="restore"></asp:ListItem>
+                <asp:ListItem Text="Uzavřít dokumenty (přesunout do archivu)" Value="bin"></asp:ListItem>
+                <asp:ListItem Text="Otevřít dokumenty (přesunout z archivu)" Value="restore"></asp:ListItem>
                 <asp:ListItem Text="Aktualizovat obsazení role v dokumentu" Value="role"></asp:ListItem>                
                 <asp:ListItem Text="Aktualizovat typ dokumentu" Value="o24id"></asp:ListItem>
                 <asp:ListItem Text="Aktualizovat workflow stav dokumentu" Value="b02id"></asp:ListItem>                

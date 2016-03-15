@@ -49,7 +49,7 @@
             Me.panJ02Update.Visible = True
             Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(cRec.j02ID)
             With cJ02
-                If .IsClosed Then Me.FullName.Font.Strikeout = True : Me.FullName.ToolTip = "Osobní profil byl přesunut do koše."
+                If .IsClosed Then Me.FullName.Font.Strikeout = True : Me.FullName.ToolTip = "Osobní profil byl přesunut do archivu."
                 Me.j02clue.Attributes("rel") = "clue_j02_record.aspx?pid=" & .PID.ToString
                 Me.j02Email.Text = .j02Email
                 Me.j02Mobile.Text = .j02Mobile
@@ -67,7 +67,7 @@
     Private Sub cmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
         Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID)
         If cRec.IsClosed Then
-            Master.Notify("Osobní profil byl přesunut do koše, nemůžete ho aktualizovat.", NotifyLevel.ErrorMessage)
+            Master.Notify("Osobní profil byl přesunut do archivu, nemůžete ho aktualizovat.", NotifyLevel.ErrorMessage)
             Return
         End If
         With cRec

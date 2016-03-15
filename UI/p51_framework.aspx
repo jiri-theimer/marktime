@@ -118,8 +118,8 @@
                                 <div class="div6">
                                     <asp:DropDownList ID="cbxValidity" runat="server" AutoPostBack="true">
                                         <asp:ListItem Text="Zobrazovat otevřené i uzavřené" Value="1"></asp:ListItem>
-                                        <asp:ListItem Text="Zobrazovat pouze otevřené (mimo koš)" Value="2"></asp:ListItem>
-                                        <asp:ListItem Text="Zobrazovat pouze uzavřené (v koši)" Value="3"></asp:ListItem>
+                                        <asp:ListItem Text="Zobrazovat pouze otevřené (mimo archiv)" Value="2"></asp:ListItem>
+                                        <asp:ListItem Text="Zobrazovat pouze uzavřené (v archivu)" Value="3"></asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
                                 <div class="div6">

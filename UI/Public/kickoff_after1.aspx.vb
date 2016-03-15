@@ -555,7 +555,7 @@
     Private Sub Filtry()
         
         CreateQuery("Otevřené projekty", BO.x29IdEnum.p41Project, 1)
-        CreateQuery("Projekty v koši", BO.x29IdEnum.p41Project, 2)
+        CreateQuery("Projekty v archivu", BO.x29IdEnum.p41Project, 2)
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p41Project, 0, "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p41Project, 0, "_other", 5)
         CreateQuery("Projekty s fakturou", BO.x29IdEnum.p41Project, 0, "_other", 15)
@@ -567,13 +567,13 @@
 
 
         CreateQuery("Otevření klienti", BO.x29IdEnum.p28Contact, 1)
-        CreateQuery("Klienti v koši", BO.x29IdEnum.p28Contact, 2)
+        CreateQuery("Klienti v archivu", BO.x29IdEnum.p28Contact, 2)
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p28Contact, 0, "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p28Contact, 0, "_other", 5)
         CreateQuery("Klienti s kontaktní osobou", BO.x29IdEnum.p28Contact, 0, "_other", 16)
 
         CreateQuery("Otevřené osoby", BO.x29IdEnum.j02Person, 1)
-        CreateQuery("Osoby v koši", BO.x29IdEnum.j02Person, 2)
+        CreateQuery("Osoby v archivu", BO.x29IdEnum.j02Person, 2)
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.j02Person, 0, "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.j02Person, 0, "_other", 5)
 

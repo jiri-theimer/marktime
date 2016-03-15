@@ -103,7 +103,7 @@
            
         </table>
         <div>
-            <asp:Button ID="cmdMove2Bin" runat="server" Text="Uzavřít (přesunout do koše)" CssClass="cmd" />
+            <asp:Button ID="cmdMove2Bin" runat="server" Text="Uzavřít (přesunout do archivu)" CssClass="cmd" />
         </div>
         <div class="div6">
             <asp:Label ID="p56Description" runat="server" CssClass="infoInForm"></asp:Label>

@@ -69,8 +69,9 @@
                 total = 0;
 
                 for (var i = 0; i < Rows.length; i++) {
-                    var row = Rows[i];
-                    var cell = row.get_element().cells[col].innerText;
+                    var row = Rows[i];                    
+                    var cell = row.get_element().cells[col].textContent;
+                    
                     if (IsNumeric(cell))
                         total += parseFloat(cell);
 
@@ -80,13 +81,14 @@
                 });
 
             }
+            
             var total_total = 0;            
             for (var i = 0; i < Rows.length; i++) {
                 var row = Rows[i];                
                 total = 0;
                 
                 for (var col = 2; col < cols; col++) {
-                    var cell = row.get_element().cells[col].innerText;
+                    var cell = row.get_element().cells[col].textContent;
                     if (IsNumeric(cell)) {
                         total += parseFloat(cell);
                         total_total += parseFloat(cell);
@@ -95,8 +97,9 @@
                     
                 }
                 
-                var cell = row.get_element().cells[1].innerText=total;
+                var cell = row.get_element().cells[1].textContent = total;
             }
+            
             $('tr.rgFooter').find('td').eq(1).text(total_total);
                
 

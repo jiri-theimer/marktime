@@ -31,8 +31,8 @@
         <tr>
             <td>
                 <asp:RadioButtonList ID="opgDirection" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" Font-Bold="true" CellPadding="10">
-                    <asp:ListItem Text="Přesunout rozpracovanost do koše" Value="1" Selected="true"></asp:ListItem>
-                    <asp:ListItem Text="Obnovit úkony z koše do rozpracovanosti" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Přesunout rozpracovanost do archivu" Value="1" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Obnovit úkony z archivu do rozpracovanosti" Value="2"></asp:ListItem>
                     
                 </asp:RadioButtonList>
             </td>

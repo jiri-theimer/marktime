@@ -39,7 +39,7 @@
                 <uc:periodcombo ID="period1" runat="server" Width="300px"></uc:periodcombo>
             </td>
             <td>
-                <asp:CheckBox ID="chkIncludeBin" runat="server" Text="Zobrazovat i úkony přesunuté do koše" AutoPostBack="true" />
+                <asp:CheckBox ID="chkIncludeBin" runat="server" Text="Zobrazovat i úkony přesunuté do archivu" AutoPostBack="true" />
             </td>
         </tr>
     </table>

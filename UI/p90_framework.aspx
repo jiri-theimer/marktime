@@ -134,9 +134,9 @@
                             <div style="padding: 20px;">
                                 <div class="div6">
                                     <asp:DropDownList ID="cbxValidity" runat="server" AutoPostBack="true">
-                                        <asp:ListItem Text="Zobrazovat otevřené i přesunuté do koše" Value="1"></asp:ListItem>
-                                        <asp:ListItem Text="Zobrazovat pouze otevřené (mimo koš)" Value="2"></asp:ListItem>
-                                        <asp:ListItem Text="Zobrazovat pouze přesunuté do koše" Value="3"></asp:ListItem>
+                                        <asp:ListItem Text="Zobrazovat otevřené i přesunuté do archivu" Value="1"></asp:ListItem>
+                                        <asp:ListItem Text="Zobrazovat pouze otevřené (mimo archiv)" Value="2"></asp:ListItem>
+                                        <asp:ListItem Text="Zobrazovat pouze přesunuté do archivu" Value="3"></asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
 

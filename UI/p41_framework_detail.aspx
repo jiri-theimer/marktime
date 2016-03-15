@@ -13,6 +13,7 @@
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p31_bigsummary" Src="~/p31_bigsummary.ascx" %>
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style type="text/css">
         .RadMenu_Silk .rmItem :hover {
@@ -297,7 +298,7 @@
                                 <img src="Images/edit.png" />
                                 <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
                                 <div>
-                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do koše nebo nenávratného odstranění.</span>
+                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění.</span>
                                 </div>
 
                             </asp:Panel>
@@ -389,7 +390,7 @@
                             </asp:Panel>
                             <asp:Panel ID="panP31MoveToBin" runat="server" CssClass="menu-group-item">
                                 <img src="Images/bin.png" />
-                                <asp:HyperLink ID="cmdP31Move2Bin" runat="server" Text="Přesunout rozpracovanost do/z koše" NavigateUrl="javascript: p31_move2bin()"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdP31Move2Bin" runat="server" Text="Přesunout rozpracovanost do/z archivu" NavigateUrl="javascript: p31_move2bin()"></asp:HyperLink>
                             </asp:Panel>
                             <asp:Panel ID="panP31Move2OtherProject" runat="server" CssClass="menu-group-item">
                                 <img src="Images/cut.png" />
@@ -621,9 +622,10 @@
             <telerik:RadTab Text="Worksheet summary" Value="-1" Selected="true"></telerik:RadTab>
             <telerik:RadTab Text="Worksheet přehled" Value="1"></telerik:RadTab>
             <telerik:RadTab Text="Úkoly" Value="4"></telerik:RadTab>
+            <telerik:RadTab Text="Rozpočet" Value="5"></telerik:RadTab>
             <telerik:RadTab Text="Vystavené faktury" Value="2"></telerik:RadTab>
             <telerik:RadTab Text="Komentáře a workflow" Value="3"></telerik:RadTab>
-            <telerik:RadTab Text="Žádný pod-přehled" Value="0"></telerik:RadTab>
+            <telerik:RadTab Text="x" Value="0"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
 

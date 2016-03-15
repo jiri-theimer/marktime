@@ -42,14 +42,14 @@
                 Me.curDatUntil.Text = BO.BAS.FD(Me.datUntil.SelectedDate, True)
                 .neededPermission = BO.x53PermValEnum.GR_Admin
                 If Me.IsClosed Then
-                    .HeaderText = "Záznam je v koši | Časová platnost záznamu je ukončena"
+                    .HeaderText = "Záznam je v archivu | Časová platnost záznamu je ukončena"
                     .HeaderIcon = "Images/bin_32.png"
-                    .AddToolbarButton("Obnovit z koše", "ok", , "Images/ok.png")
+                    .AddToolbarButton("Obnovit z archivu", "ok", , "Images/ok.png")
                     ViewState("isclosed") = "1"
                 Else
                     .HeaderText = "Záznam je otevřený"
                     .HeaderIcon = "Images/recycle_32.png"
-                    .AddToolbarButton("Přesunout do koše", "ok", , "Images/ok.png")
+                    .AddToolbarButton("Přesunout do archivu", "ok", , "Images/ok.png")
                     ViewState("isclosed") = "0"
                 End If
                 If Year(datUntil.SelectedDate) = 3000 Then
@@ -77,14 +77,14 @@
                 Me.datFrom.SelectedDate = Now
             End If
             If ViewState("isclosed") = "1" Then
-                'obnovit z koše
+                'obnovit z archivu
                 Me.datUntil.SelectedDate = DateSerial(3000, 1, 1)
                 If Me.datFrom.SelectedDate > Now Then
                     Me.datFrom.SelectedDate = Now
                 End If
             End If
             If ViewState("isclosed") = "0" Then
-                'přesunout do koše
+                'přesunout do archivu
                 Me.datUntil.SelectedDate = Now
             End If
 

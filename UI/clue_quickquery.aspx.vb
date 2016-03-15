@@ -24,7 +24,7 @@
             Case 1
                 lblBinFlag.Text = "Pouze otevřené záznamy"
             Case 2
-                lblBinFlag.Text = "<img src='Images/bin.png'/>Pouze záznamy v koši"
+                lblBinFlag.Text = "<img src='Images/bin.png'/>Pouze záznamy v archivu"
         End Select
         Select Case cRec.x29ID
             Case BO.x29IdEnum.p41Project

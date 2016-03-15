@@ -158,7 +158,7 @@
 
                     <telerik:RadToolBarButton Text="Odstranit" Value="delete" ImageUrl="Images/delete.png" PostBack="false"></telerik:RadToolBarButton>
 
-                    <telerik:RadToolBarButton Text="Přesunout do koše" Value="bin" ImageUrl="Images/bin.png" PostBack="false" Visible="false" CommandName="bin"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="Přesunout do archivu" Value="bin" ImageUrl="Images/bin.png" PostBack="false" Visible="false" CommandName="bin"></telerik:RadToolBarButton>
 
 
                     <telerik:RadToolBarButton Text="Obnovit" Value="refresh" ImageUrl="Images/refresh.png" CommandName="refresh"></telerik:RadToolBarButton>

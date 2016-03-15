@@ -240,7 +240,7 @@
                                 <asp:HyperLink ID="cmdCreateInvoice" runat="server" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new()" Style="float: right;"></asp:HyperLink>
 
                                 <div>
-                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do koše nebo nenávratného odstranění.</span>
+                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.</span>
                                 </div>
 
                             </asp:Panel>

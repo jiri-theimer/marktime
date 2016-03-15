@@ -121,9 +121,9 @@
         <uc:panelmenu ID="panelmenu1" runat="server" Skin="Metro"></uc:panelmenu>
 
         <asp:DropDownList ID="query_validity" runat="server" AutoPostBack="true" Style="width: 230px;">
-            <asp:ListItem Text="Bez filtrování otevřené/koš" Value=""></asp:ListItem>
+            <asp:ListItem Text="Bez filtrování otevřené/archiv" Value=""></asp:ListItem>
             <asp:ListItem Text="Pouze otevřené položky" Value="1"></asp:ListItem>
-            <asp:ListItem Text="Pouze přesunuté do koše" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Pouze přesunuté do archivu" Value="2"></asp:ListItem>
         </asp:DropDownList>
     </div>
 

@@ -92,15 +92,15 @@
         If RecordValidityIsClosed Then
             panRecValidity.Style.Item("display") = "block"
             toolbar1.Skin = "BlackMetroTouch"
-            cmd.Text = "Obnovit z koše"
+            cmd.Text = "Obnovit z archivu"
             cmd.ImageUrl = "Images/recycle.png"
 
-            lblValidity.Text = "Záznam je v koši (byl otevřený od " & s1 & " do " & s2 & ")"
+            lblValidity.Text = "Záznam je v archivu (byl otevřený od " & s1 & " do " & s2 & ")"
 
         Else
             panRecValidity.Style.Item("display") = "none"
             toolbar1.Skin = "Silk"
-            cmd.Text = "Přesunout do koše"
+            cmd.Text = "Přesunout do archivu"
             cmd.ImageUrl = "Images/bin.png"
             If Year(d2) = 3000 Then
                 lblValidity.Text = "Záznam je otevřený od " & s1

@@ -154,6 +154,7 @@
     <Compile Include="p40WorkSheet_RecurrenceBL.vb" />
     <Compile Include="p41ProjectBL.vb" />
     <Compile Include="p42ProjectTypeBL.vb" />
+    <Compile Include="p45BudgetBL.vb" />
     <Compile Include="p58ProductBL.vb" />
     <Compile Include="p59PriorityBL.vb" />
     <Compile Include="x18EntityCategoryBL.vb" />

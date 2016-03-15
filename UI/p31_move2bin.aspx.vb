@@ -27,7 +27,7 @@
                 Me.CurrentPrefix = Request.Item("prefix")
                 If Me.CurrentPrefix = "" Then .StopPage("prefix missing")
                 If .DataPID = 0 Then .StopPage("pid missing")
-                .HeaderText = "Přesunout rozpracovanost do koše | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
+                .HeaderText = "Přesunout rozpracovanost do archivu | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
 
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
@@ -137,9 +137,9 @@
         grid1.Rebind(False)
         With Master
             If Me.opgDirection.SelectedValue = "1" Then
-                .HeaderText = "Přesunout rozpracovanost do koše | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
+                .HeaderText = "Přesunout rozpracovanost do archivu | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
             Else
-                .HeaderText = "Přesunout úkony z koše do rozpracovanosti | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
+                .HeaderText = "Přesunout úkony z archivu do rozpracovanosti | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
             End If
         End With
         

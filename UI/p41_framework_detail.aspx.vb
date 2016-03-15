@@ -9,6 +9,7 @@ Public Class p41_framework_detail
         p91 = 2
         b07 = 3
         p56 = 4
+        p45 = 5
         _NotSpecified = 0
     End Enum
     Public Property CurrentSubgrid As SubgridType
@@ -202,7 +203,7 @@ Public Class p41_framework_detail
             End With
         Else
             If cRec.IsClosed Then
-                lblP31Message.Text = "Do projektu v koši nelze zapisovat nové úkony."
+                lblP31Message.Text = "Do projektu v archivu nelze zapisovat nové úkony."
                 ScriptManager.RegisterStartupScript(Me.placeBinMenuCss, Me.GetType(), "BinMenu", "<style type='text/css'>.RadMenu_Silk .rmItem {background-color:black !important;}</style>", False)
             End If
             If cRec.p41IsDraft Then Me.lblP31Message.Text = "Do projektu v režimu DRAFT nelze zapisovat úkony."
@@ -402,7 +403,7 @@ Public Class p41_framework_detail
         End If
 
 
-        If cRec.IsClosed Then panO22.Visible = False : panP40.Visible = False : panP56.Visible = False 'projekt je v koši
+        If cRec.IsClosed Then panO22.Visible = False : panP40.Visible = False : panP56.Visible = False 'projekt je v archivu
     End Sub
 
     Private Sub RefreshOtherBillingSetting(cRec As BO.p41Project, cClient As BO.p28Contact)

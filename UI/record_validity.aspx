@@ -56,8 +56,8 @@
     </asp:Panel>
 
     <p class="infoInForm" style="font-weight:bold;">Provedné změny se projeví až po uložení záznamu!</p>
-    <p class="infoInForm">Kromě přesunu záznamu do koše lze nastavit i přesný rozsah časové platnosti záznamu.</p>    
-    <p class="infoInForm">Situaci, kdy záznam není časově platný, označujeme jako 'ZÁZNAM JE V KOŠI'.</p>
+    <p class="infoInForm">Kromě přesunu záznamu do archivu lze nastavit i přesný rozsah časové platnosti záznamu.</p>    
+    <p class="infoInForm">Situaci, kdy záznam není časově platný, označujeme jako 'ZÁZNAM JE V ARCHIVu'.</p>
     <p class="infoInForm">Situaci, kdy záznam je časově platný, označujeme jako 'ZÁZNAM JE OTEVŘENÝ'.</p>
 
 </asp:Content>
