@@ -320,6 +320,42 @@ Partial Public Class p28_framework_detail
     Protected WithEvents panDraftCommands As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''trWorkflow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trWorkflow As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''lblB02ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblB02ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''b02Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdWorkflow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdWorkflow As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''lblX51 control.
     '''</summary>
     '''<remarks>

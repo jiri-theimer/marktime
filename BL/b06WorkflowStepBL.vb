@@ -201,6 +201,12 @@ Class b06WorkflowStepBL
                 If Not lisNominee Is Nothing Then
                     Me.Factory.p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, lisNominee, Nothing, Nothing)
                 End If
+            Case BO.x29IdEnum.o23Notepad
+                Dim cRec As BO.o23Notepad = Me.Factory.o23NotepadBL.Load(intRecordPID)
+                intCurB02ID = cRec.b02ID
+                If Not lisNominee Is Nothing Then
+                    Me.Factory.o23NotepadBL.Save(cRec, "", lisNominee, Nothing)
+                End If
         End Select
 
         If cB06.b02ID_Target <> 0 Then

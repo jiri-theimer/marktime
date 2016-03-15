@@ -4176,6 +4176,8 @@ AS
 BEGIN TRANSACTION
 
 BEGIN TRY
+	if exists(select b05ID FROM b05Workflow_History WHERE x29ID=223 AND b05RecordPID=@pid)
+	 DELETE FROM b05Workflow_History WHERE x29ID=223 AND b05RecordPID=@pid
 
 	if exists(select o27ID FROM o27Attachment WHERE o23ID=@pid)
 	 DELETE FROM o27Attachment WHERE o23ID=@pid
@@ -4183,7 +4185,7 @@ BEGIN TRY
 	if exists(select o27ID FROM o27Attachment WHERE b07ID IN (SELECT b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid))
 	 DELETE FROM o27Attachment WHERE b07ID IN (SELECT b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 
-    if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
+	if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid
 
 	if exists(select o23ID FROM o23Notepad_FreeField WHERE o23ID=@pid)
@@ -4757,6 +4759,12 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY
+	if exists(select b05ID FROM b05Workflow_History WHERE x29ID=228 AND b05RecordPID=@pid)
+	 DELETE FROM b05Workflow_History WHERE x29ID=228 AND b05RecordPID=@pid
+
+	if exists(select b07ID FROM b07Comment WHERE x29ID=228 AND b07RecordPID=@pid)
+	 DELETE FROM b07Comment WHERE x29ID=228 AND b07RecordPID=@pid	
+
 	if exists(SELECT o27ID FROM o27Attachment WHERE p28ID=@pid)
 	 DELETE FROM o27Attachment WHERE p28ID=@pid
 
@@ -7454,6 +7462,12 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY
+	if exists(select b05ID FROM b05Workflow_History WHERE x29ID=141 AND b05RecordPID=@pid)
+	 DELETE FROM b05Workflow_History WHERE x29ID=141 AND b05RecordPID=@pid
+
+	if exists(select b07ID FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid)
+	 DELETE FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid
+
 	if exists(SELECT o27ID FROM o27Attachment WHERE p41ID=@pid)
 	 DELETE FROM o27Attachment WHERE p41ID=@pid
 
@@ -7481,7 +7495,7 @@ BEGIN TRY
 	
 	DELETE FROM x90EntityLog WHERE x29ID=141 AND x90RecordPID=@pid
 
-
+	
 	delete from p41Project WHERE p41ID=@pid
 
 	

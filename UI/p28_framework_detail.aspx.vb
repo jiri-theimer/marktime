@@ -136,7 +136,7 @@ Public Class p28_framework_detail
                 Me.p29Name.Text = "[" & .p29Name & "]"
             End If
             imgDraft.Visible = .p28IsDraft
-            
+
         End With
 
 
@@ -220,6 +220,13 @@ Public Class p28_framework_detail
             bigsummary1.Visible = False
             Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
             p31summary1.RefreshData(cWorksheetSum, "p28", Master.DataPID)
+        End If
+
+        If cRec.b02ID > 0 Then
+            Me.trWorkflow.Visible = True
+            Me.b02Name.Text = cRec.b02Name
+        Else
+            Me.trWorkflow.Visible = False
         End If
        
         RefreshComments()

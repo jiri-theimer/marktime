@@ -252,12 +252,6 @@
                 End If
             End With
 
-            If .b02ID <> 0 Then
-                Me.trWorkflow.Visible = True
-                Me.b02Name.Text = .b02Name
-            Else
-                Me.trWorkflow.Visible = False
-            End If
             Me.o23Date.Text = BO.BAS.FD(.o23Date, True)
             imgDraft.Visible = .o23IsDraft
             If .o23LockedFlag > BO.o23LockedTypeENUM._NotSpecified Then
@@ -297,6 +291,13 @@
         If cO24.o24MaxOneFileSize > 0 Then upload1.MaxFileSize = cO24.o24MaxOneFileSize
         upload1.AllowedFileExtensions = cO24.o24AllowedFileExtensions
 
+        If cO24.b01ID <> 0 Then
+            Me.trWorkflow.Visible = True
+            Me.b02Name.Text = cRec.b02Name
+            panCommentAppend.Visible = False
+        Else
+            Me.trWorkflow.Visible = False
+        End If
 
         RefreshDropbox(cO24)
 

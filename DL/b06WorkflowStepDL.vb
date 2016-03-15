@@ -210,6 +210,8 @@
                 Return _cDB.SaveRecord("p91Invoice", pars, , "p91ID=@pid")
             Case BO.x29IdEnum.p28Contact
                 Return _cDB.SaveRecord("p28Contact", pars, , "p28ID=@pid")
+            Case BO.x29IdEnum.o23Notepad
+                Return _cDB.SaveRecord("o23Notepad", pars, , "o23ID=@pid")
             Case Else
                 Return False
         End Select

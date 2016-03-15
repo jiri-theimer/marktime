@@ -274,6 +274,9 @@
         function p48_plan(){            
             window.open("p48_framework.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","_top");
         }
+        function workflow(){            
+            sw_local("workflow_dialog.aspx?prefix=p28&pid=<%=master.datapid%>","Images/workflow_32.png",false);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -416,7 +419,16 @@
 
 
                     </tr>
-
+                    <tr id="trWorkflow" runat="server" visible="false">
+                        <td>
+                            <asp:Label ID="lblB02ID" runat="server" Text="Workflow stav:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
+                            <img src="Images/workflow.png" />
+                            <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
+                        </td>
+                    </tr>
                     <tr valign="top">
                         <td>
                             <asp:Label ID="lblX51" runat="server" Text="Fakturační ceník:" CssClass="lbl"></asp:Label>
