@@ -131,6 +131,15 @@ Partial Public Class p45_project
     Protected WithEvents cmdAddPerson As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''cmdInsertPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdInsertPersons As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''rpJ02 control.
     '''</summary>
     '''<remarks>

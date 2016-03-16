@@ -31,6 +31,14 @@
                 pars.Add("p45id", .p45ID, DbType.Int32)
                 strW += " AND a.p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p45ID=@p45id)"
             End If
+            If .p41ID > 0 Then
+                pars.Add("p41id", .p41ID, DbType.Int32)
+                strW += " AND a.p46ID IN (SELECT p46ID FROM p46BudgetPerson xa INNER JOIN p45Budget xb ON xa.p45ID=xb.p45ID WHERE xb.p41ID=@p41id)"
+            End If
+            If .p28ID > 0 Then
+                pars.Add("p28id", .p28ID, DbType.Int32)
+                strW += " AND a.p46ID IN (SELECT p46ID FROM p46BudgetPerson xa INNER JOIN p45Budget xb ON xa.p45ID=xb.p45ID INNER JOIN p41Project xc ON xb.p41ID=xc.p41ID WHERE xc.p28ID_Client=@p28id)"
+            End If
         End With
         strW = bas.TrimWHERE(strW)
 

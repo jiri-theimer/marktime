@@ -28,6 +28,7 @@ Class p45BudgetBL
         With cRec
             If BO.BAS.IsNullDBDate(.p45PlanFrom) Is Nothing Then _Error = "Chybí začátek rozpočtu." : Return False
             If BO.BAS.IsNullDBDate(.p45PlanUntil) Is Nothing Then _Error = "Chybí konec rozpočtu." : Return False
+            If .p45PlanFrom > .p45PlanUntil Then _Error = "Plánované dokončení musí být větší než než plánované zahájení." : Return False
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt." : Return False
             If .PID = 0 Then
                 .p45VersionIndex = GetList(.p41ID).Count + 1

@@ -860,6 +860,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents gridP91 As Global.UI.p91_subgrid
 
     '''<summary>
+    '''panP45 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panP45 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''hiddatapid_subform control.
     '''</summary>
     '''<remarks>

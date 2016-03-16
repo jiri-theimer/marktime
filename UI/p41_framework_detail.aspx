@@ -276,6 +276,11 @@
                 return (false);
             }
         }
+        function p45_detail(){
+            
+            sw_local("p45_project.aspx?pid=<%=master.datapid%>","Images/budget_32.png",true);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -638,7 +643,9 @@
     <uc:p56_subgrid ID="gridP56" runat="server" x29ID="p41Project" />
     <uc:p91_subgrid ID="gridP91" runat="server" x29ID="p41Project" />
 
-
+    <asp:Panel ID="panP45" runat="server" Visible="false">
+        <button type="button" onclick="p45_detail()" class="cmd">Upravit rozpočet</button>
+    </asp:Panel>
 
     <asp:HiddenField ID="hiddatapid_subform" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />

@@ -41,7 +41,7 @@
         <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName"></asp:DropDownList>
         <asp:Button ID="cmdNewVersion" runat="server" Text="Založit novou verzi rozpočtu" CssClass="cmd" />
         <asp:Button ID="cmdDeleteVersion" runat="server" Text="Odstranit tuto verzi rozpočtu" CssClass="cmd" />
-        <asp:Button ID="cmdSaveFirstVersion" runat="server" Text="Založit hlavičku rozpočtu" CssClass="cmd" />
+       <asp:Button ID="cmdSaveFirstVersion" runat="server" CssClass="cmd" Font-Bold="true" Text="Založit v projektu rozpočet" />
     </div>
     <asp:Panel ID="panRecordHeader" runat="server" CssClass="content-box2">
         <div class="title">
@@ -62,7 +62,7 @@
                 </telerik:RadDatePicker>
             </div>
             <div style="padding: 6px; float: left;">
-                <span>Název verze:</span>
+                <span>Popis:</span>
                 <asp:TextBox ID="p45Name" runat="server" Width="200px"></asp:TextBox>
             </div>
 
@@ -79,15 +79,16 @@
             <div class="content-box2">
                 <div class="title">
                     Osoby s rolí v projektu
+                    <asp:LinkButton ID="cmdInsertPersons" runat="server" CommandName="add" Text="Přidat zaškrtlé do rozpočtu"></asp:LinkButton>
                 </div>
                 <div class="content">
                     <asp:Repeater ID="rpJ02" runat="server">
                         <ItemTemplate>
                             <div style="padding: 10px;">
-                                <asp:HyperLink ID="clue_person" runat="server" CssClass="reczoom" Text="i" title="Kapacita osoby"></asp:HyperLink>
+                                <asp:HyperLink ID="clue_person" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
 
-                                <asp:Label ID="Person" runat="server"></asp:Label>
-                                <asp:LinkButton ID="cmdInsert" runat="server" CommandName="add" Text="Vložit do plánu"></asp:LinkButton>
+                                <asp:checkbox ID="Person" runat="server"></asp:checkbox>
+                                
                                 <asp:HiddenField ID="hidJ02ID" runat="server" />
                             </div>
                         </ItemTemplate>

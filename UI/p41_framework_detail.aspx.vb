@@ -131,7 +131,6 @@ Public Class p41_framework_detail
 
         Dim cClient As BO.p28Contact = Nothing
 
-        
         With cRec
             cmdNewWindow.NavigateUrl = "p41_framework.aspx?blankwindow=1&pid=" & .PID.ToString & "&title=" & .FullName
             ViewState("p28id_client") = .p28ID_Client.ToString
@@ -302,7 +301,11 @@ Public Class p41_framework_detail
             boxFF.Visible = False
         End If
 
-
+        If Me.CurrentSubgrid = SubgridType.p45 Then
+            panP45.Visible = True
+        Else
+            panP45.Visible = False
+        End If
 
 
         RefreshP40(cRec)
