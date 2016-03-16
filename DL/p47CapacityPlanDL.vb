@@ -34,7 +34,7 @@
         End With
         strW = bas.TrimWHERE(strW)
 
-        Dim s As String = "select a.*,p45.p41ID as _p41ID,p46.j02ID as _j02ID,j02.j02LastName+' '+j02.j02FirstName as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project," & bas.RecTail("p47", "a")
+        Dim s As String = "select a.*,p46.p45ID as _p45ID,p45.p41ID as _p41ID,p46.j02ID as _j02ID,j02.j02LastName+' '+j02.j02FirstName as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project," & bas.RecTail("p47", "a")
         s += " FROM p47CapacityPlan a INNER JOIN p46BudgetPerson p46 ON a.p46ID=p46.p46ID INNER JOIN j02Person j02 ON p46.j02ID=j02.j02ID"
         s += " INNER JOIN p45Budget p45 ON p46.p45ID=p45.p45ID INNER JOIN p41Project p41 ON p45.p41ID=p41.p41ID "
         s += " LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
@@ -56,7 +56,7 @@
             Dim pars As New DbParameters, strW As String = ""
             If intPID > 0 Then
                 strW = "p47ID=@pid"
-                pars.Add("pid", intPID)
+                pars.Add("pid", intPID, DbType.Int32)
             End If
             pars.Add("p46ID", c.p46ID, DbType.Int32)
             pars.Add("p47DateFrom", c.p47DateFrom, DbType.DateTime)

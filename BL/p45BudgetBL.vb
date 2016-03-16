@@ -1,10 +1,11 @@
 ﻿
 Public Interface Ip45BudgetBL
     Inherits IFMother
-    Function Save(cRec As BO.p45Budget) As Boolean
+    Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson)) As Boolean
     Function Load(intPID As Integer) As BO.p45Budget
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP41ID As Integer, Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget)
+    Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson)
 End Interface
 Class p45BudgetBL
     Inherits BLMother
@@ -23,7 +24,7 @@ Class p45BudgetBL
         _cDL = New DL.p45BudgetDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.p45Budget) As Boolean Implements Ip45BudgetBL.Save
+    Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson)) As Boolean Implements Ip45BudgetBL.Save
         With cRec
             If BO.BAS.IsNullDBDate(.p45PlanFrom) Is Nothing Then _Error = "Chybí začátek rozpočtu." : Return False
             If BO.BAS.IsNullDBDate(.p45PlanUntil) Is Nothing Then _Error = "Chybí konec rozpočtu." : Return False
@@ -33,7 +34,7 @@ Class p45BudgetBL
             End If
         End With
 
-        Return _cDL.Save(cRec)
+        Return _cDL.Save(cRec, lisP46)
     End Function
     Public Function Load(intPID As Integer) As BO.p45Budget Implements Ip45BudgetBL.Load
         Return _cDL.Load(intPID)
@@ -43,5 +44,8 @@ Class p45BudgetBL
     End Function
     Public Function GetList(intP41ID As Integer, Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget) Implements Ip45BudgetBL.GetList
         Return _cDL.GetList(intP41ID, mq)
+    End Function
+    Public Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson) Implements Ip45BudgetBL.GetList_p46
+        Return _cDL.GetList_p46(intPID)
     End Function
 End Class
