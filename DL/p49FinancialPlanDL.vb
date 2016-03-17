@@ -75,7 +75,8 @@
             pars.Add("p32ID", BO.BAS.IsNullDBKey(.p32ID), DbType.Int32)
             pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
             pars.Add("j27ID", BO.BAS.IsNullDBKey(.j27ID), DbType.Int32)
-            pars.Add("j02id", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
+            pars.Add("j02ID", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
+            pars.Add("p28ID_Supplier", BO.BAS.IsNullDBKey(.p28ID_Supplier), DbType.Int32)
 
             pars.Add("p49DateFrom", .p49DateFrom, DbType.DateTime)
             pars.Add("p49DateUntil", .p49DateUntil, DbType.DateTime)

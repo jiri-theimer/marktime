@@ -156,6 +156,7 @@
                 pars.Add("p56ID", BO.BAS.IsNullDBKey(.p56ID), DbType.Int32)
                 pars.Add("p32ID", BO.BAS.IsNullDBKey(.p32ID), DbType.Int32)
                 pars.Add("p72ID_AfterTrimming", BO.BAS.IsNullDBKey(.p72ID_AfterTrimming), DbType.Int32)
+                pars.Add("p28ID_Supplier", BO.BAS.IsNullDBKey(.p28ID_Supplier), DbType.Int32)
 
                 pars.Add("p31Text", .p31Text, DbType.String, , , True, "Popis úkonu")
                 pars.Add("p31HoursEntryflag", .p31HoursEntryflag, DbType.Int32)
@@ -440,7 +441,7 @@
     End Function
     Private Function ParseSortExpression(strSort As String) As String
         strSort = strSort.Replace("UserInsert", "p31UserInsert").Replace("UserUpdate", "p31UserUpdate").Replace("DateInsert", "p31DateInsert").Replace("DateUpdate", "p31DateUpdate")
-        strSort = strSort.Replace("j27Code_Billing_Orig", "j27billing_orig.j27Code").Replace("Owner", "j02owner.j02LastName").Replace("Person", "j02.j02LastName")
+        strSort = strSort.Replace("j27Code_Billing_Orig", "j27billing_orig.j27Code").Replace("Owner", "j02owner.j02LastName").Replace("Person", "j02.j02LastName").Replace("SupplierName", "supplier.p28Name")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
 
@@ -482,7 +483,7 @@
         s.Append(",a.p31DateTimeFrom_Orig,a.p31DateTimeUntil_Orig,a.p31Value_Orig_Entried,a.p31Calc_Pieces,a.p31Calc_PieceAmount,a.p35ID")
         s.Append(",p31free.*")
         s.Append(",j02.j02LastName+' '+j02.j02FirstName as Person,p32.p32Name,p32.p34ID,p32.p32IsBillable,p34.p33ID,p34.p34Name,p34.p34IncomeStatementFlag,p41.p41Name,p41.p41NameShort,p41.p28ID_Client,p28Client.p28Name,p28Client.p28CompanyShortName,p56.p56Name,p56.p56Code,j02owner.j02LastName+' '+j02owner.j02FirstName as Owner")
-        s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.o23ID_First," & bas.RecTail("p31", "a"))
+        s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.o23ID_First,a.p28ID_Supplier,supplier.p28Name as SupplierName," & bas.RecTail("p31", "a"))
         Return s.ToString
     End Function
     Private Function GetSF_SUM(bolIncludeWaiting4Approval As Boolean, bolIncludeWaiting4Invoice As Boolean) As String
@@ -518,7 +519,7 @@
         s.Append(" LEFT OUTER JOIN p28Contact p28Client ON p41.p28ID_Client=p28Client.p28ID")
         s.Append(" LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID")
         s.Append(" LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID LEFT OUTER JOIN p71ApproveStatus p71 ON a.p71ID=p71.p71ID LEFT OUTER JOIN p72PreBillingStatus p72trim ON a.p72ID_AfterTrimming=p72trim.p72ID LEFT OUTER JOIN p72PreBillingStatus p72approve ON a.p72ID_AfterApprove=p72approve.p72ID")
-        s.Append(" LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID")
+        s.Append(" LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID LEFT OUTER JOIN p28Contact supplier ON a.p28ID_Supplier=supplier.p28ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27billing_orig ON a.j27ID_Billing_Orig=j27billing_orig.j27ID")
         s.Append(" LEFT OUTER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID")
         s.Append(" LEFT OUTER JOIN p31WorkSheet_FreeField p31free ON a.p31ID=p31free.p31ID")

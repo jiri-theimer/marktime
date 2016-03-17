@@ -459,6 +459,8 @@
             Me.CurrentHoursEntryFlag = .p31HoursEntryFlag
             Handle_ChangeHoursEntryFlag()
 
+            Me.p28ID_Supplier.Value = .p28ID_Supplier.ToString
+            Me.p28ID_Supplier.Text = .SupplierName
             Select Case CurrentP33ID
                 Case BO.p33IdENUM.Cas
                     Select Case .p31HoursEntryFlag
@@ -758,6 +760,7 @@
                 .p32ID = BO.BAS.IsNullInt(Me.p32ID.SelectedValue)
                 .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
                 .p48ID = Me.CurrentP48ID
+                .p28ID_Supplier = BO.BAS.IsNullInt(Me.p28ID_Supplier.Value)
                 .DocGUID = Me.DocGUID
                 If Me.p31Date.IsEmpty Then
                     .p31Date = Today
@@ -953,6 +956,13 @@
 
     Private Sub p31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.p56ID.Visible = Me.chkBindToP56.Checked
+        If Not _Sheet Is Nothing And panM.Visible Then
+            If _Sheet.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem Then
+                lblSupplier.Visible = False : Me.p28ID_Supplier.Visible = False
+            Else
+                lblSupplier.Visible = True : Me.p28ID_Supplier.Visible = True
+            End If
+        End If
         ''imgTask.Visible = Me.p56ID.Visible
     End Sub
 

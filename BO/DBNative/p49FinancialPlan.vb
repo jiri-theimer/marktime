@@ -5,6 +5,7 @@
     Public Property p34ID As Integer
     Public Property p32ID As Integer
     Public Property j27ID As Integer
+    Public Property p28ID_Supplier As Integer
 
     Public Property p49DateFrom As Date
     Public Property p49DateUntil As Date

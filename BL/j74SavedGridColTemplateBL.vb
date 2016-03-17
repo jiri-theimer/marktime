@@ -297,7 +297,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Kód úkolu", "p56Code"))
 
             .Add(AGC("Text", "p31Text"))
-
+            .Add(AGC("Dodavatel", "SupplierName"))
 
             .Add(AGC("Schváleno", "p71Name"))
 

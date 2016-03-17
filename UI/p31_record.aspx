@@ -441,6 +441,14 @@
                 </td>
                 <td></td>
             </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="lblSupplier" runat="server" CssClass="lbl" Text="Dodavatel:"></asp:Label>
+                </td>
+                <td colspan="4">
+                    <uc:contact ID="p28ID_Supplier" runat="server" Width="400px" Flag="supplier" />
+                </td>
+            </tr>
         </table>
     </asp:Panel>
     <div class="div6">

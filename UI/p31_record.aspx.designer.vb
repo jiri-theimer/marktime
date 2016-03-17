@@ -356,6 +356,24 @@ Partial Public Class p31_record
     Protected WithEvents p31Calc_PieceAmount As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''lblSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblSupplier As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p28ID_Supplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28ID_Supplier As Global.UI.contact
+
+    '''<summary>
     '''lblP31Text control.
     '''</summary>
     '''<remarks>

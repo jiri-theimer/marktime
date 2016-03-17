@@ -19,6 +19,8 @@ Public Class p31Worksheet
     Public Property Person As String
 
     Public Property p32ID As Integer
+    Public Property p28ID_Supplier As Integer
+    Public Property SupplierName As String
     Public Property p32Name As String
     Public Property p32IsBillable As Boolean
     Public Property p34ID As Integer
@@ -30,7 +32,6 @@ Public Class p31Worksheet
     Public Property p56ID As Integer
     Public Property p56Name As String
     Public Property p56Code As String
-
 
     Public Property p91ID As Integer
     Public Property p91Code As String
