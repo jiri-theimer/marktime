@@ -1,6 +1,13 @@
-﻿Public Class p28Contact
+﻿Public Enum p28SupplierFlagENUM
+    _NotSpecified = 0
+    ClientOnly = 1
+    SupplierOnly = 2
+    ClientAndSupplier = 3
+End Enum
+
+Public Class p28Contact
     Inherits BOMother
-    Public Property p29ID As Integer
+    Public Property p29ID As Integer    
     Public Property p92ID As Integer
     Public Property p87ID As Integer
     Public Property p51ID_Billing As Integer
@@ -27,13 +34,15 @@
     Public p28LimitHours_Notification As Double
     Public p28LimitFee_Notification As Double
     Public Property p28RobotAddress As String
+    Public Property p28SupplierFlag As p28SupplierFlagENUM
+    Public Property p28SupplierID As String
     Private Property _p28name As String
     Private Property _Owner As String
 
-    
+
     Public ReadOnly Property p28Name As String
         Get
-            Return _p28Name
+            Return _p28name
         End Get
     End Property
 

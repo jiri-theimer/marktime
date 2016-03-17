@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class p45_project
 
     '''<summary>
+    '''panHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panHeader As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''lblP45 control.
     '''</summary>
     '''<remarks>
@@ -48,15 +57,6 @@ Partial Public Class p45_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdDeleteVersion As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdSaveFirstVersion control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSaveFirstVersion As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''panRecordHeader control.
@@ -131,6 +131,15 @@ Partial Public Class p45_project
     Protected WithEvents cmdAddPerson As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''lblInsertPersonsHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblInsertPersonsHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cmdInsertPersons control.
     '''</summary>
     '''<remarks>
@@ -165,6 +174,87 @@ Partial Public Class p45_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents gridnumber1 As Global.Telerik.Web.UI.GridNumericColumnEditor
+
+    '''<summary>
+    '''panCreateClone control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panCreateClone As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdSaveClone control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSaveClone As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdCreateCloneCancel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCreateCloneCancel As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p45ID_Template control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p45ID_Template As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkNewIsLast control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkNewIsLast As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkCloneP45 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkCloneP45 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkCloneP47 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkCloneP47 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkCloneP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkCloneP49 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''SharedCalendar control.

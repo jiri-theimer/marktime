@@ -28,15 +28,7 @@ Public Class handler_capacity_plan
 
         Dim factory As New BL.Factory(Nothing)
 
-        ''If HttpContext.Current.User.Identity.IsAuthenticated Then
-        ''    Dim strLogin As String = HttpContext.Current.User.Identity.Name
-        ''    factory = New BL.Factory(, strLogin)
-        ''End If
-        ''If factory Is Nothing Then
-        ''    context.Response.Write(" ")
-        ''    Return
-        ''End If
-
+      
         Dim lis As IEnumerable(Of BO.p85TempBox) = factory.p85TempBoxBL.GetList(strGUID).Where(Function(p) p.p85OtherKey1 = intJ02ID And p.p85FreeDate01 = d)
         Dim cTemp As New BO.p85TempBox
         If lis.Count > 0 Then cTemp = lis(0)
@@ -55,14 +47,6 @@ Public Class handler_capacity_plan
             cTemp.p85FreeText01 = cJ02.FullNameDesc
         End If
         If factory.p85TempBoxBL.Save(cTemp) Then
-            'd = datLimit1
-            'Dim sums As New List(Of Double)
-            'lis = factory.p85TempBoxBL.GetList(strGUID)
-            'While d <= datLimit2
-            '    Dim dbl As Double = lis.Where(Function(p) p.p85FreeDate01 = d).Sum(Function(p) p.p85FreeFloat01)
-            '    sums.Add(dbl)
-            '    d = d.AddMonths(1)
-            'End While
             context.Response.Write("1")
         End If
 

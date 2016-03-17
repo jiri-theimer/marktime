@@ -125,6 +125,8 @@
 
             Me.p28CompanyShortName.Text = .p28CompanyShortName
             Me.p28RobotAddress.Text = .p28RobotAddress
+            basUI.SelectRadiolistValue(Me.p28SupplierFlag, .p28SupplierFlag)
+            Me.p28SupplierID.Text = .p28SupplierID
             Master.Timestamp = .Timestamp
 
 
@@ -225,7 +227,12 @@
         Me.panLimits.Visible = Me.chkDefineLimits.Checked
         RefreshState_Pricelist()
 
-        
+        Select Case Me.p28SupplierFlag.SelectedValue
+            Case "2", "3"
+                lblSupplierID.Visible = True : p28SupplierID.Visible = True
+            Case Else
+                lblSupplierID.Visible = False : p28SupplierID.Visible = False
+        End Select
     End Sub
     Private Sub RefreshState_Pricelist()
         lblP51ID_Billing.Visible = True : Me.p51ID_Billing.Visible = True
@@ -348,6 +355,11 @@
                 .p28InvoiceDefaultText2 = Me.p28InvoiceDefaultText2.Text
                 .p51ID_Internal = BO.BAS.IsNullInt(Me.p51ID_Internal.SelectedValue)
                 .p28RobotAddress = Me.p28RobotAddress.Text
+                .p28SupplierFlag = CInt(Me.p28SupplierFlag.SelectedValue)
+                If .p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or .p28SupplierFlag = BO.p28SupplierFlagENUM.SupplierOnly Then
+                    .p28SupplierID = Me.p28SupplierID.Text
+                End If
+
                 If Me.chkDefineLimits.Checked Then
                     .p28LimitHours_Notification = BO.BAS.IsNullNum(Me.p28LimitHours_Notification.Value)
                     .p28LimitFee_Notification = BO.BAS.IsNullNum(Me.p28LimitFee_Notification.Value)

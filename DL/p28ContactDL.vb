@@ -37,6 +37,17 @@
         End If
         Return _cDB.GetRecord(Of BO.p28Contact)(s, pars)
     End Function
+    Public Function LoadBySupplierID(strRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        pars.Add("supplierid", strRegID, DbType.String)
+        s += " WHERE a.p28SupplierID LIKE @supplierid"
+        If intP28ID_Exclude <> 0 Then
+            s += " AND a.p28ID<>@p28id_exclude"
+            pars.Add("p28id_exclude", intP28ID_Exclude, DbType.Int32)
+        End If
+
+        Return _cDB.GetRecord(Of BO.p28Contact)(s, pars)
+    End Function
     Public Function LoadByPersonBirthRegID(strBirthRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
         Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
         pars.Add("p28Person_BirthRegID", strBirthRegID, DbType.String)
@@ -76,6 +87,8 @@
                 pars.Add("p51ID_Internal", BO.BAS.IsNullDBKey(.p51ID_Internal), DbType.Int32)
 
                 pars.Add("p28Code", .p28Code, DbType.String)
+                pars.Add("p28SupplierFlag", .p28SupplierFlag, DbType.Int32)
+                pars.Add("p28SupplierID", .p28SupplierID, DbType.String)
                 pars.Add("p28IsCompany", .p28IsCompany, DbType.Boolean)
                 pars.Add("p28FirstName", .p28FirstName, DbType.String, , , True, "Křestní jméno")
                 pars.Add("p28LastName", .p28LastName, DbType.String, , , True, "Příjmení")
@@ -223,8 +236,13 @@
             If .QuickQuery > BO.myQueryP28_QuickQuery._NotSpecified Then
                 s.Append(" AND " & bas.GetQuickQuerySQL_p28(.QuickQuery))
             End If
-            
-            
+            If .CanBeClient = BO.BooleanQueryMode.TrueQuery Then s.Append(" AND a.p28SupplierFlag IN (1,3)")
+            If .CanBeClient = BO.BooleanQueryMode.FalseQuery Then s.Append(" AND a.p28SupplierFlag=2")
+            If .CanBeSupplier = BO.BooleanQueryMode.TrueQuery Then s.Append(" AND a.p28SupplierFlag IN (2,3)")
+            If .CanBeSupplier = BO.BooleanQueryMode.FalseQuery Then s.Append(" AND a.p28SupplierFlag=1")
+
+
+
             Select Case .SpecificQuery
                 Case BO.myQueryP28_SpecificQuery.AllowedForRead
                     If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P28_Owner) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P28_Reader) Then
@@ -342,7 +360,7 @@
     End Function
     Private Function GetSF() As String
         Dim s As String = "a.p29ID,a.p92ID,a.j02ID_Owner,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.b02ID,a.p28IsCompany,a.p28IsDraft,a.p28Code,a.p28FirstName,a.p28LastName,a.p28TitleBeforeName,a.p28TitleAfterName,a.p28RegID,a.p28VatID,a.p28Person_BirthRegID,a.p28CompanyName,a.p28CompanyShortName,a.p28InvoiceDefaultText1,a.p28InvoiceDefaultText2,a.p28InvoiceMaturityDays,a.p28LimitHours_Notification,a.p28LimitFee_Notification,a.p28AvatarImage"
-        s += ",a.p28Name as _p28name,p29.p29Name as _p29Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,p87.p87Name as _p87Name,a.p28RobotAddress"
+        s += ",a.p28Name as _p28name,p29.p29Name as _p29Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,p87.p87Name as _p87Name,a.p28RobotAddress,a.p28SupplierID,a.p28SupplierFlag"
         s += ",p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner," & bas.RecTail("p28", "a") & ",p28free.*"
         Return s
     End Function

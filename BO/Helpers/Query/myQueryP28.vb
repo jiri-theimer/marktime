@@ -19,6 +19,7 @@ Public Enum myQueryP28_QuickQuery
     WithProjects = 18
     WithoutProjects = 19
     WIthNotepad = 20
+    SupplierSide = 21
 End Enum
 Public Class myQueryP28
     Inherits myQuery
@@ -27,6 +28,8 @@ Public Class myQueryP28
     Public Property j02ID As Integer
     Public Property b02ID As Integer
     Public Property j70ID As Integer
+    Public Property CanBeSupplier As BooleanQueryMode = BooleanQueryMode.NoQuery
+    Public Property CanBeClient As BooleanQueryMode = BooleanQueryMode.NoQuery
     Public Property MG_SelectPidFieldOnly As Boolean
     Public QuickQuery As myQueryP28_QuickQuery = myQueryP28_QuickQuery._NotSpecified
     Public SpecificQuery As myQueryP28_SpecificQuery = myQueryP28_SpecificQuery._NotSpecified

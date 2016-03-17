@@ -63,6 +63,7 @@
                     </td>
                     <td>
                         <asp:Label ID="lblp29ID" Text="Typ klienta:" runat="server" CssClass="lbl"></asp:Label>
+
                     </td>
                     <td>
                         <uc:datacombo ID="p29ID" runat="server" DataTextField="p29Name" DataValueField="pid" AutoPostBack="true" IsFirstEmptyRow="true"></uc:datacombo>
@@ -114,7 +115,7 @@
                     </tr>
                 </table>
             </asp:Panel>
-            <p></p>
+
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td style="width: 80px;">
@@ -134,6 +135,15 @@
                     <td></td>
                 </tr>
             </table>
+            <div class="div6">
+                <asp:RadioButtonList ID="p28SupplierFlag" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
+                    <asp:ListItem Text="Pouze klient" Value="1" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Pouze dodavatel" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Klient i dodavatel" Value="3"></asp:ListItem>
+                </asp:RadioButtonList>
+                <asp:Label ID="lblSupplierID" runat="server" Text="Kód dodavatele:"></asp:Label>
+                <asp:TextBox ID="p28SupplierID" runat="server"></asp:TextBox>
+            </div>
             <div class="div6">
                 <asp:CheckBox ID="chkDefineLimits" runat="server" AutoPostBack="true" Text="Definovat limity k upozornění" CssClass="chk" />
             </div>
@@ -380,7 +390,7 @@
                         <span class="infoInForm">Adresa v kopii (CC/BCC) , podle které robot pozná, že načtená poštovní zpráva má vazbu k tomuto klientovi.</span>
                     </td>
                 </tr>
-                
+
             </table>
             <div class="content-box2">
                 <div class="title">

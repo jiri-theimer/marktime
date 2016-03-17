@@ -92,6 +92,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(16, "Přiřazena minimálně jedna kontaktní osoba"))
                 lis.Add(New BO.OtherQueryItem(17, "Bez přiřazení kontaktních osob"))
                 lis.Add(New BO.OtherQueryItem(20, "Obsahují minimálně jeden notepad dokument"))
+                lis.Add(New BO.OtherQueryItem(21, "Vystupuje jako dodavatel"))
             Case BO.x29IdEnum.j02Person
                 lis.Add(New BO.OtherQueryItem(3, "Existují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Existují schválené úkony, které čekají na fakturaci"))

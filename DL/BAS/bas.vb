@@ -443,6 +443,8 @@
                 Return "a.p28ID IN (SELECT p28ID_Client FROM p41Project WHERE p28ID_Client IS NOT NULL)"
             Case BO.myQueryP28_QuickQuery.WithoutProjects
                 Return "a.p28ID NOT IN (SELECT p28ID_Client FROM p41Project WHERE p28ID_Client IS NOT NULL)"
+            Case BO.myQueryP28_QuickQuery.SupplierSide
+                Return "a.p28SupplierFlag IN (2,3)"
             Case Else
                 Return ""
         End Select

@@ -240,6 +240,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Název", "p28Name"))
             .Add(AGC("Společnost", "p28CompanyName"))
             .Add(AGC("Kód", "p28Code"))
+            .Add(AGC("Kód dodavatele", "p28SupplierID"))
             .Add(AGC("IČ", "p28RegID"))
             .Add(AGC("DIČ", "p28VatID"))
             .Add(AGC("Typ", "p29Name"))

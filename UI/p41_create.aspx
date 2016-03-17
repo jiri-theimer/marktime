@@ -92,7 +92,7 @@
 
                     </td>
                     <td>
-                        <uc:contact ID="p28ID_Client" runat="server" Width="400px" />
+                        <uc:contact ID="p28ID_Client" runat="server" Width="400px" Flag="client" />
                         <a href="javascript:p28_client_add()">Založit nového klienta</a>
 
                     </td>

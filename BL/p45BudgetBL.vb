@@ -32,6 +32,8 @@ Class p45BudgetBL
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt." : Return False
             If .PID = 0 Then
                 .p45VersionIndex = GetList(.p41ID).Count + 1
+                If lisP46 Is Nothing Then lisP46 = New List(Of BO.p46BudgetPerson)
+                If lisP46.Count = 0 Then _Error = "V rozpočtu musí být minimálně jedna osoba." : Return False
             End If
         End With
 

@@ -230,6 +230,33 @@ Partial Public Class p28_record
     Protected WithEvents p28VatID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''p28SupplierFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28SupplierFlag As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''lblSupplierID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblSupplierID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p28SupplierID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28SupplierID As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''chkDefineLimits control.
     '''</summary>
     '''<remarks>

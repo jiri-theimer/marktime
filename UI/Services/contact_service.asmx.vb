@@ -43,6 +43,10 @@ Public Class contact_service
                 mq.QuickQuery = BO.myQueryP28_QuickQuery.NonDraftCLients
             Case "draft"
                 mq.QuickQuery = BO.myQueryP28_QuickQuery.DraftClients
+            Case "client"
+                mq.CanBeClient = BO.BooleanQueryMode.TrueQuery
+            Case "supplier"
+                mq.CanBeSupplier = BO.BooleanQueryMode.TrueQuery
         End Select
 
         Dim lis As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mq)

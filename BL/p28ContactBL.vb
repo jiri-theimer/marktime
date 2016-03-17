@@ -5,6 +5,7 @@
     Function LoadByRegID(strRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
     Function LoadByVatID(strVatID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
     Function LoadByPersonBirthRegID(strBirthRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
+    Function LoadBySupplierID(strSupplierID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
     Function LoadByImapRobotAddress(strRobotAddress) As BO.p28Contact
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP28) As IEnumerable(Of BO.p28Contact)
@@ -53,6 +54,9 @@ Class p28ContactBL
     Public Function LoadByPersonBirthRegID(strBirthRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact Implements Ip28ContactBL.LoadByPersonBirthRegID
         Return _cDL.LoadByPersonBirthRegID(strBirthRegID, intP28ID_Exclude)
     End Function
+    Public Function LoadBySupplierID(strSupplierID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact Implements Ip28ContactBL.LoadBySupplierID
+        Return _cDL.LoadBySupplierID(strSupplierID, intP28ID_Exclude)
+    End Function
     Public Function LoadByImapRobotAddress(strRobotAddress) As BO.p28Contact Implements Ip28ContactBL.LoadByImapRobotAddress
         Return _cDL.LoadByImapRobotAddress(strRobotAddress)
     End Function
@@ -73,7 +77,17 @@ Class p28ContactBL
             End With
         End If
         With cRec
-
+            If .p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or .p28SupplierFlag = BO.p28SupplierFlagENUM.SupplierOnly Then
+                If Trim(.p28SupplierID) = "" Then _Error = "Musíte vyplnit kód dodavatele." : Return False
+            Else
+                .p28SupplierID = ""
+            End If
+            If .p28SupplierID <> "" Then
+                If Not LoadBySupplierID(.p28SupplierID, .PID) Is Nothing Then
+                    _Error = String.Format("Kód dodavatele [{0}] je již vyplněn u jiného subjektu ({1})!", .p28SupplierID, LoadBySupplierID(.p28SupplierID, .PID).p28Name)
+                    Return False
+                End If
+            End If
             If .p28IsCompany Then
                 If .p28CompanyName = "" Then _Error = "Chybí název společnosti!" : Return False
             Else

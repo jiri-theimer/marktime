@@ -546,6 +546,9 @@
     <Compile Include="Handler\handler_capacity_plan.ashx.vb">
       <DependentUpon>handler_capacity_plan.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\handler_p45_project.ashx.vb">
+      <DependentUpon>handler_p45_project.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\handler_search_notepad.ashx.vb">
       <DependentUpon>handler_search_notepad.ashx</DependentUpon>
     </Compile>
@@ -2432,6 +2435,7 @@
     <Content Include="Handler\handler_search_task.ashx" />
     <Content Include="Handler\handler_search_notepad.ashx" />
     <Content Include="Handler\handler_capacity_plan.ashx" />
+    <Content Include="Handler\handler_p45_project.ashx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

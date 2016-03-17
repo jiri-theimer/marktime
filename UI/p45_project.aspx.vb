@@ -11,6 +11,10 @@ Public Class p45_project
             basUI.SelectDropdownlistValue(Me.p45ID, value.ToString)
         End Set
     End Property
+
+    Private Sub p45_project_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _MasterPage = Me.Master
+    End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("guid") = BO.BAS.GetGUID
@@ -19,7 +23,7 @@ Public Class p45_project
                 .HeaderText = "Rozpočet projektu | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
             End With
             Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
-            If Not cRec.p41PlanFrom Is Nothing Then Me.p45PlanFrom.SelectedDate = cRec.p41PlanFrom
+            If Not cRec.p41PlanFrom Is Nothing Then Me.p45PlanFrom.SelectedDate = cRec.p41PlanFrom Else Me.p45PlanFrom.SelectedDate = DateSerial(Year(Now), Month(Now), 1).AddMonths(1)
             If Not cRec.p41PlanUntil Is Nothing Then Me.p45PlanUntil.SelectedDate = cRec.p41PlanUntil
 
             Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
@@ -33,6 +37,7 @@ Public Class p45_project
             SetupP45Combo()
             Me.CurrentP45ID = BO.BAS.IsNullInt(p45ID.SelectedValue)
 
+            
             RefreshRecord()
 
             SetupPersonsOffer()
@@ -47,17 +52,17 @@ Public Class p45_project
                 cmdDeleteVersion.Text = "Odstranit tuto verzi rozpočtu"
             End If
             cmdNewVersion.Text = "Založit novou verzi rozpočtu"
-            Master.HideShowToolbarButton("save", True)
+            Master.RenameToolbarButton("save", "Uložit změny")
             lblP45.Text = "Pracovat ve verzi rozpočtu:"
-            cmdSaveFirstVersion.Visible = False
+            cmdAddPerson.InnerText = "Přidat do rozpočtu další osoby"
         Else
             Me.p45ID.Visible = False
-            Master.HideShowToolbarButton("save", False)
-            cmdSaveFirstVersion.Visible = True
+            Master.RenameToolbarButton("save", "Založit v projektu rozpočet")
             lblP45.Text = ""
-            cmdInsertPersons.Visible = False
+            cmdAddPerson.InnerText = "Přidat do rozpočtu osoby"
 
         End If
+        cmdAddPerson.InnerHtml += "<img src='Images/arrow_down.gif' />"
         cmdNewVersion.Visible = Me.p45ID.Visible
         cmdDeleteVersion.Visible = Me.p45ID.Visible
 
@@ -83,10 +88,8 @@ Public Class p45_project
             Me.p45Name.Text = .p45Name
         End With
 
-
-        SetupGrid()
-
-
+        SetupTempData()
+        
 
 
 
@@ -96,16 +99,26 @@ Public Class p45_project
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, Master.DataPID)
         Dim j02ids As List(Of Integer) = lisX69.Select(Function(p) p.j02ID).Distinct.ToList
         Dim j11ids As List(Of Integer) = lisX69.Select(Function(p) p.j11ID).Distinct.ToList
-        Dim persons As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList_j02_join_j11(j02ids, j11ids)
+        Dim persons As List(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList_j02_join_j11(j02ids, j11ids).Where(Function(p) p.IsClosed = False).ToList
+        If persons.Count = 0 Then
+            Master.Notify("Projekt nemá obsazené projektové role osobami!", NotifyLevel.WarningMessage)
+        End If
+        Dim j02ids_used As List(Of Integer) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False).Select(Function(p) p.p85OtherKey1).ToList
+        For Each intJ02ID As Integer In j02ids_used
+            If persons.Where(Function(p) p.PID = intJ02ID).Count > 0 Then
+                persons.Remove(persons.First(Function(p) p.PID = intJ02ID))
+            End If
+        Next
         rpJ02.DataSource = persons
         rpJ02.DataBind()
         If rpJ02.Items.Count = 0 Then
-            Master.Notify("V projektových rolích projektu není nikdo přiřazen!", NotifyLevel.WarningMessage)
+            cmdInsertPersons.Visible = False
+            lblInsertPersonsHeader.Text = "Pro tento rozpočet nejsou další osoby k dispozici."
         End If
     End Sub
 
     Private Sub SetupTempData()
-        Dim lis As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Master.DataPID)
+        Dim lis As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Me.CurrentP45ID)
         For Each c In lis
             Dim cTemp As New BO.p85TempBox
             With cTemp
@@ -123,58 +136,21 @@ Public Class p45_project
         Next
     End Sub
 
-    Private Sub SetupGrid()
-        grid1.Columns.Clear()
-        grid1.MasterTableView.GroupByExpressions.Clear()
-        grid1.MasterTableView.ColumnGroups.Clear()
-        
-        AddColumn("p85FreeText01", "Osoba")
-       
-        AddNumbericTextboxColumn("p85FreeFloat01", "Hodiny Fa", "gridnumber1", True)
-        AddNumbericTextboxColumn("p85FreeFloat02", "Hodiny NeFa", "gridnumber1", True)
-        AddColumn("p85FreeFloat03", "Celkem")
+    
 
 
-    End Sub
-
-
-    Public Sub AddNumbericTextboxColumn(strField As String, strHeader As String, strColumnEditorID As String, bolAllowSorting As Boolean, Optional ByVal strUniqueName As String = "", Optional strGroupHeaderName As String = "")
-        Dim col As New GridNumericColumn
-        grid1.MasterTableView.Columns.Add(col)
-
-        col.HeaderText = strHeader
-        col.DataField = strField
-        If strField.IndexOf("NeFa") > 0 Then
-            col.ItemStyle.ForeColor = Drawing.Color.Red
-        Else
-            col.ItemStyle.ForeColor = Drawing.Color.Green
-        End If
-        col.ColumnEditorID = strColumnEditorID
-        col.ColumnGroupName = strGroupHeaderName
-        If strUniqueName <> "" Then
-            col.UniqueName = strUniqueName
-            col.SortExpression = strUniqueName
-        End If
-        col.AllowSorting = bolAllowSorting
-
-
-    End Sub
-    Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional strWidth As String = "")
-        Dim col As New GridBoundColumn
-        grid1.MasterTableView.Columns.Add(col)
-
-        col.HeaderText = strHeader
-        col.DataField = strField
-        col.ReadOnly = True
-        col.AllowSorting = True
-        If strWidth <> "" Then col.ItemStyle.Width = Unit.Parse(strWidth)
-
-
-    End Sub
+  
 
     
     Private Sub cmdNewVersion_Click(sender As Object, e As EventArgs) Handles cmdNewVersion.Click
-
+        panCreateClone.Visible = True
+        grid1.Visible = False
+        panRecordBody.Visible = False
+        panRecordHeader.Visible = False
+        Master.RadToolbar.Visible = False
+        panHeader.Visible = False
+        Me.p45ID_Template.DataSource = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
+        Me.p45ID_Template.DataBind()
     End Sub
 
     Private Sub rpJ02_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpJ02.ItemDataBound
@@ -183,28 +159,121 @@ Public Class p45_project
         With CType(e.Item.FindControl("Person"), CheckBox)
             .Text = cRec.FullNameDesc
             If cRec.IsClosed Then .Font.Strikeout = True
+            If Me.CurrentP45ID = 0 Then .Checked = True
         End With
         CType(e.Item.FindControl("clue_person"), HyperLink).Attributes("rel") = "clue_j02_capacity.aspx?pid=" & cRec.PID.ToString & "&p41id=" & Master.DataPID.ToString
     End Sub
 
    
-    Private Sub cmdSaveFirstVersion_Click(sender As Object, e As EventArgs) Handles cmdSaveFirstVersion.Click
-        Dim c As New BO.p45Budget
-        If Not Me.p45PlanFrom.IsEmpty Then c.p45PlanFrom = Me.p45PlanFrom.SelectedDate
-        If Not Me.p45PlanUntil.IsEmpty Then c.p45PlanUntil = Me.p45PlanUntil.SelectedDate
-        c.p45Name = Me.p45Name.Text
+   
 
-        Dim lisP46 As New List(Of BO.p46BudgetPerson)
+    Private Sub ReloadPage()
+        Server.Transfer("p45_project.aspx?pid=" & Master.DataPID.ToString)
+    End Sub
+
+   
+    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
+        Select Case strButtonValue
+            Case "save"
+                Dim c As New BO.p45Budget
+                If Me.CurrentP45ID <> 0 Then c = Master.Factory.p45BudgetBL.Load(Me.CurrentP45ID)
+
+                If Not Me.p45PlanFrom.IsEmpty Then c.p45PlanFrom = Me.p45PlanFrom.SelectedDate
+                If Not Me.p45PlanUntil.IsEmpty Then c.p45PlanUntil = Me.p45PlanUntil.SelectedDate
+                c.p45Name = Me.p45Name.Text
+                c.p41ID = Master.DataPID
+
+                Dim lisP46 As New List(Of BO.p46BudgetPerson)
+                Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), True)
+                For Each cTemp In lisTemp
+                    Dim item As New BO.p46BudgetPerson
+                    With cTemp
+                        item.SetPID(.p85DataPID)
+                        item.j02ID = .p85OtherKey1
+                        item.p46HoursBillable = .p85FreeFloat01
+                        item.p46HoursNonBillable = .p85FreeFloat02
+                        item.p46HoursTotal = item.p46HoursBillable + item.p46HoursNonBillable
+                        item.p46ExceedFlag = .p85OtherKey2
+                        item.p46Description = .p85FreeText02
+                        item.IsSetAsDeleted = .p85IsDeleted
+                    End With
+                    lisP46.Add(item)
+                Next
+
+                With Master.Factory.p45BudgetBL
+                    If .Save(c, lisP46) Then
+                        Master.CloseAndRefreshParent("p45-save")
+                    Else
+                        Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                    End If
+                End With
+        End Select
+    End Sub
+
+    Private Sub grid1_ItemCommand(sender As Object, e As GridCommandEventArgs) Handles grid1.ItemCommand
+        If e.CommandName = "delete" Then
+            Dim intP85ID As Integer = CInt(e.Item.Attributes("p85id"))
+            Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(intP85ID)
+            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+                SetupPersonsOffer()
+                grid1.Rebind()
+            End If
+        End If
+    End Sub
+
+    Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
+        If TypeOf e.Item Is GridDataItem Then
+            Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
+            With CType(CType(e.Item, GridDataItem)("p85OtherKey2").FindControl("combo1"), DropDownList)
+                If cRec.p85OtherKey2 > 0 Then
+                    .SelectedValue = cRec.p85OtherKey2.ToString
+                End If
+                .Attributes.Item("onchange") = "save_cellvalue(" & cRec.PID.ToString & ",'p85OtherKey2',this.value)"
+            End With
+          
+            e.Item.Attributes.Item("p85id") = cRec.PID.ToString
+        End If
+    End Sub
+
+    
+
+    Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        grid1.DataSource = lis
+    End Sub
+
+    Private Sub cmdInsertPersons_Click(sender As Object, e As EventArgs) Handles cmdInsertPersons.Click
+        Dim b As Boolean = False
         For Each ri As RepeaterItem In rpJ02.Items
             With CType(ri.FindControl("Person"), CheckBox)
                 If .Checked Then
-                    Dim item As New BO.p46BudgetPerson
-                    item.j02ID = CInt(CType(ri.FindControl("hidJ02ID"), HiddenField).Value)
-                    item.p46ExceedFlag = BO.p46ExceedFlagENUM.NoLimit
-                    lisP46.Add(item)
+                    b = True
+                    Dim intJ02ID As Integer = CInt(CType(ri.FindControl("hidJ02ID"), HiddenField).Value)
+                    Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(intJ02ID)
+                    Dim cTemp As New BO.p85TempBox()
+                    With cTemp
+                        .p85GUID = ViewState("guid")
+                        .p85OtherKey1 = intJ02ID
+                        .p85FreeText01 = cJ02.FullNameDesc
+                    End With
+                    Master.Factory.p85TempBoxBL.Save(cTemp)
                 End If
             End With
         Next
-        Master.Factory.p45BudgetBL.Save(c, lisP46)
+        If b Then
+            grid1.Rebind()
+        Else
+            Master.Notify("Musíte zaškrtnout minimálně jednu osobu.", NotifyLevel.WarningMessage)
+        End If
+
+    End Sub
+
+    Private Sub cmdCreateCloneCancel_Click(sender As Object, e As EventArgs) Handles cmdCreateCloneCancel.Click
+        ReloadPage()
+    End Sub
+
+    Private Sub cmdSaveClone_Click(sender As Object, e As EventArgs) Handles cmdSaveClone.Click
+
     End Sub
 End Class

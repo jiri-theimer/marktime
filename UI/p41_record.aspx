@@ -86,7 +86,7 @@
 
                     </td>
                     <td>
-                        <uc:contact ID="p28ID_Client" runat="server" Width="400px" />
+                        <uc:contact ID="p28ID_Client" runat="server" Width="400px" Flag="client" />
 
 
                     </td>
