@@ -50,15 +50,7 @@
                     .DataBind()
                     .SelectedValue = cRec.x35Value
                 End With
-            Case "p51ID_Internal"
-                With Me.x35Value_Combo
-                    .Visible = True
-                    .DataTextField = "NameWithCurr"
-                    .DataValueField = "pid"
-                    .DataSource = Master.Factory.p51PriceListBL.GetList(New BO.myQuery).Where(Function(p) p.p51IsInternalPriceList = True And p.p51IsMasterPriceList = False And p.p51IsCustomTailor = False)
-                    .DataBind()
-                    .SelectedValue = cRec.x35Value
-                End With
+            
             Case "UserAuthenticationMode"
                 With Me.x35Value_Combo
                     .RadCombo.Items.Add(New Telerik.Web.UI.RadComboBoxItem("Přihlašování povoleno pouze přes aplikační databázi účtů", "3"))

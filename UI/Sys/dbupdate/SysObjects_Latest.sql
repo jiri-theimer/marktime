@@ -4732,7 +4732,6 @@ AS
 --odstranìní záznamu kontaktu z tabulky p28Contact
 declare @ref_pid int
 
-
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p41ID from p41Project WHERE p28ID_Client=@pid OR p28ID_Billing=@pid
 if @ref_pid is not null
@@ -4752,6 +4751,13 @@ set @ref_pid=null
 SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE p28ID=@pid
 if @ref_pid is not null
  set @err_ret='Klient má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
+
+if @err_ret is null and exists(select p49ID FROM p49FinancialPlan WHERE p28ID_Supplier=@pid)
+ set @err_ret='Subjekt vystupuje jako dodavatel v minimálnì jednom rozpoètu (finanèním plánu).'
+
+if @err_ret is null and exists(select p31ID FROM p31Worksheet WHERE p28ID_Supplier=@pid)
+ set @err_ret='Subjekt vystupuje jako dodavatel v minimálnì jednom penìžním worksheet úkonu.'
+
 
 if isnull(@err_ret,'')<>''
  return 
@@ -7604,6 +7610,98 @@ BEGIN CATCH
   ROLLBACK TRANSACTION
   
 END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------P---------------p45_aftersave-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p45_aftersave') and type = 'P')
+ drop procedure p45_aftersave
+GO
+
+
+
+CREATE    PROCEDURE [dbo].[p45_aftersave]
+@p45id int
+,@j03id_sys int
+
+AS
+
+---automaticky se spouští po uložení záznamu rozpoètu
+
+
+
+declare @j02id int
+select @j02id=j02ID FROM j03User WHERE j03ID=@j03id_sys
+
+
+
+
+
+
+
+GO
+
+----------P---------------p45_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p45_delete') and type = 'P')
+ drop procedure p45_delete
+GO
+
+
+
+
+
+
+
+CREATE   procedure [dbo].[p45_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p45id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu rozpoètu z tabulky p45Budget
+declare @ref_pid int
+
+if exists(select p45ID FROM p45Budget WHERE p45ID=@pid AND getdate() BETWEEN p45ValidFrom AND p45ValidUntil)
+ set @err_ret='Nenávratnì odstranit rozpoèet lze pouze v pøípadì, že je pøesunutý do archivu.'
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+	DELETE FROM p47CapacityPlan WHERE p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p45ID=@pid)
+
+	DELETE FROM p49FinancialPlan WHERE p45ID=@pid
+
+	DELETE FROM p46BudgetPerson WHERE p45ID=@pid
+
+	DELETE from p45Budget where p45ID=@pid
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
 
 
 

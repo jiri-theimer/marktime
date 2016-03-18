@@ -191,16 +191,39 @@
 
             <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" AutoGenerateHierarchy="false" AutoGenerateEditColumn="false" EnableViewState="true" RenderMode="Lightweight" runat="server" PageSize="500" ShowFooter="true" AllowPaging="false" AllowSorting="true" Skin="Metro">
                 <MasterTableView EditMode="Batch" ClientDataKeyNames="PID" NoMasterRecordsText="Zatím žádné osoby v rozpočtu">
+                    <ColumnGroups>
+                        <telerik:GridColumnGroup Name="Hodiny" HeaderText="Hodiny">
+                            <HeaderStyle HorizontalAlign="Center" ForeColor="black" Font-Bold="true" BackColor="silver" />
+                        </telerik:GridColumnGroup>
+                        <telerik:GridColumnGroup Name="Billing" HeaderText="Fakturační cena">
+                            <HeaderStyle HorizontalAlign="Center" ForeColor="black" Font-Bold="true" BackColor="silver" />
+                        </telerik:GridColumnGroup>
+                        <telerik:GridColumnGroup Name="Cost" HeaderText="Nákladová cena">
+                            <HeaderStyle HorizontalAlign="Center" ForeColor="black" Font-Bold="true" BackColor="silver" />
+                        </telerik:GridColumnGroup>
+                    </ColumnGroups>
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Osoba" DataField="p85FreeText01" ReadOnly="true" AllowSorting="true"></telerik:GridBoundColumn>
-                        <telerik:GridNumericColumn HeaderText="Hodiny Fa" DataField="p85FreeFloat01" ColumnEditorID="gridnumber1">
+                        <telerik:GridNumericColumn HeaderText="Fa" DataField="p85FreeFloat01" ColumnEditorID="gridnumber1" ColumnGroupName="Hodiny">
                             <ItemStyle ForeColor="Green" />
                         </telerik:GridNumericColumn>
-                        <telerik:GridNumericColumn HeaderText="Hodiny NeFa" DataField="p85FreeFloat02" ColumnEditorID="gridnumber1">
+                        <telerik:GridNumericColumn HeaderText="NeFa" DataField="p85FreeFloat02" ColumnEditorID="gridnumber1" ColumnGroupName="Hodiny">
                             <ItemStyle ForeColor="Red" />
                         </telerik:GridNumericColumn>
-                        <telerik:GridBoundColumn HeaderText="Celkem" DataField="p85FreeFloat03" ReadOnly="true" AllowSorting="true">
+                        <telerik:GridBoundColumn HeaderText="Fa+Nefa" DataField="p85FreeFloat03" ReadOnly="true" AllowSorting="true" ColumnGroupName="Hodiny">
                             <ItemStyle Font-Bold="true" />
+                        </telerik:GridBoundColumn>
+                        <telerik:GridBoundColumn HeaderText="Sazba" DataField="p85FreeNumber01" ReadOnly="true" AllowSorting="true" ColumnGroupName="Billing"> 
+                            <ItemStyle ForeColor="green" />                          
+                        </telerik:GridBoundColumn>
+                         <telerik:GridBoundColumn HeaderText="Honorář" DataField="p85FreeNumber03" ReadOnly="true" AllowSorting="true" ColumnGroupName="Billing">                           
+                            <ItemStyle ForeColor="green" />
+                        </telerik:GridBoundColumn>
+                        <telerik:GridBoundColumn HeaderText="Sazba" DataField="p85FreeNumber02" ReadOnly="true" AllowSorting="true" ColumnGroupName="Cost">    
+                            <ItemStyle ForeColor="red" />                       
+                        </telerik:GridBoundColumn>                       
+                         <telerik:GridBoundColumn HeaderText="Honorář" DataField="p85FreeNumber04" ReadOnly="true" AllowSorting="true" ColumnGroupName="Cost">                           
+                             <ItemStyle ForeColor="red" />
                         </telerik:GridBoundColumn>
                         <telerik:GridTemplateColumn DataField="p85OtherKey2" UniqueName="p85OtherKey2">
                             <ItemTemplate>

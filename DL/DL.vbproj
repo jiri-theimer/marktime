@@ -105,6 +105,7 @@
     <Compile Include="p35UnitDL.vb" />
     <Compile Include="p40WorkSheet_RecurrenceDL.vb" />
     <Compile Include="p45BudgetDL.vb" />
+    <Compile Include="p50OfficePriceListDL.vb" />
     <Compile Include="p58ProductDL.vb" />
     <Compile Include="p59PriorityDL.vb" />
     <Compile Include="x18EntityCategoryDL.vb" />

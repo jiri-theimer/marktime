@@ -102,6 +102,7 @@
     <Compile Include="DBNative\p40WorkSheet_Recurrence.vb" />
     <Compile Include="DBNative\p45Budget.vb" />
     <Compile Include="DBNative\p46BudgetPerson.vb" />
+    <Compile Include="DBNative\p50OfficePriceList.vb" />
     <Compile Include="DBNative\p58Product.vb" />
     <Compile Include="DBNative\p59Priority.vb" />
     <Compile Include="DBNative\x18EntityCategory.vb" />

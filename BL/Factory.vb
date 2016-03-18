@@ -18,6 +18,7 @@
     Private Property _o22 As Io22MilestoneBL
     Private Property _o23 As Io23NotepadBL
     Private Property _p51 As Ip51PriceListBL
+    Private Property _p50 As Ip50OfficePriceListBL
     Private Property _p56 As Ip56TaskBL
     Private Property _j02 As Ij02PersonBL
     Private Property _j11 As Ij11TeamBL
@@ -207,6 +208,12 @@
         Get
             If _p51 Is Nothing Then _p51 = New p51PriceListBL(_cUser)
             Return _p51
+        End Get
+    End Property
+    Public ReadOnly Property p50OfficePriceListBL As Ip50OfficePriceListBL
+        Get
+            If _p50 Is Nothing Then _p50 = New p50OfficePriceListBL(_cUser)
+            Return _p50
         End Get
     End Property
     Public ReadOnly Property j07PersonPositionBL As Ij07PersonPositionBL

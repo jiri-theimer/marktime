@@ -160,6 +160,10 @@ Public Class p45_project
                 .p85FreeFloat02 = c.p46HoursNonBillable
                 .p85FreeFloat03 = c.p46HoursTotal
                 .p85FreeText02 = c.p46Description
+                .p85FreeNumber01 = c.p46BillingRate
+                .p85FreeNumber02 = c.p46CostRate
+                .p85FreeNumber03 = c.BillingAmount
+                .p85FreeNumber04 = c.CostAmount
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next

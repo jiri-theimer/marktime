@@ -14,6 +14,10 @@ Public Class p46BudgetPerson
     Public Property p46HoursTotal As Double
     Public Property p46ExceedFlag As p46ExceedFlagENUM = p46ExceedFlagENUM.NoLimit
     Public Property p46Description As String
+    Public Property p46BillingRate As Double
+    Public Property j27ID_BillingRate As Integer
+    Public Property p46CostRate As Double
+    Public Property j27ID_CostRate As Integer
 
     Public Property IsSetAsDeleted As Boolean
 
@@ -21,6 +25,17 @@ Public Class p46BudgetPerson
     Public ReadOnly Property Person As String
         Get
             Return _Person
+        End Get
+    End Property
+
+    Public ReadOnly Property CostAmount As Double
+        Get
+            Return Me.p46CostRate * Me.p46HoursTotal
+        End Get
+    End Property
+    Public ReadOnly Property BillingAmount As Double
+        Get
+            Return Me.p46BillingRate * Me.p46HoursBillable
         End Get
     End Property
 End Class

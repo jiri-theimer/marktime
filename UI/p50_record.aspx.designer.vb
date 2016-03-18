@@ -11,16 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p51_fpr
-
-    '''<summary>
-    '''lblP51ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblP51ID As Global.System.Web.UI.WebControls.Label
+Partial Public Class p50_record
 
     '''<summary>
     '''p51ID control.
@@ -41,6 +32,24 @@ Partial Public Class p51_fpr
     Protected WithEvents clue1 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''p50RatesFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p50RatesFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''panRecalcFPR control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRecalcFPR As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
@@ -50,13 +59,13 @@ Partial Public Class p51_fpr
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''cmdRecalcAll control.
+    '''cmdRecalcFPR control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdRecalcAll As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cmdRecalcFPR As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''okno1 control.
@@ -73,9 +82,9 @@ Partial Public Class p51_fpr
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.ModalForm
+    Public Shadows ReadOnly Property Master() As UI.ModalDataRecord
         Get
-            Return CType(MyBase.Master, UI.ModalForm)
+            Return CType(MyBase.Master, UI.ModalDataRecord)
         End Get
     End Property
 End Class

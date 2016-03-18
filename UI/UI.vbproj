@@ -293,7 +293,7 @@
     <Content Include="p47_project.aspx" />
     <Content Include="p49_plan.aspx" />
     <Content Include="p49_record.aspx" />
-    <Content Include="p51_fpr.aspx" />
+    <Content Include="p50_record.aspx" />
     <Content Include="p56_batch.aspx" />
     <Content Include="p56_framework.aspx" />
     <Content Include="p56_framework_detail.aspx" />
@@ -1367,11 +1367,11 @@
       <DependentUpon>p49_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="p51_fpr.aspx.designer.vb">
-      <DependentUpon>p51_fpr.aspx</DependentUpon>
+    <Compile Include="p50_record.aspx.designer.vb">
+      <DependentUpon>p50_record.aspx</DependentUpon>
     </Compile>
-    <Compile Include="p51_fpr.aspx.vb">
-      <DependentUpon>p51_fpr.aspx</DependentUpon>
+    <Compile Include="p50_record.aspx.vb">
+      <DependentUpon>p50_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p56_batch.aspx.designer.vb">

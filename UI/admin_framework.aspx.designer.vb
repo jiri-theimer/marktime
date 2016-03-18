@@ -140,15 +140,6 @@ Partial Public Class admin_framework
     Protected WithEvents DefMaturityDays As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''p51ID_Internal control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p51ID_Internal As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''p32ID_CreditNote control.
     '''</summary>
     '''<remarks>

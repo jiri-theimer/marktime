@@ -120,6 +120,7 @@ Public Class admin_framework
             .AddItem("Sešity", "p34", NU("p34"), "p31")
             .AddItem("Uzamknutá období", "p36", NU("p36"), "p31")
             .AddItem("Kusovníkové jednotky", "p35", NU("p35"), "p31")
+            .AddItem("Nastavení nákladových ceníků", "p50", NU("p50"), "p31")
 
             .AddItem("Projekty", "p41", , , "Images/project.png")
             .AddItem("Typy projektů", "p42", NU("p42"), "p41")
@@ -231,10 +232,7 @@ Public Class admin_framework
                 Dim cP32 As BO.p32Activity = Master.Factory.p32ActivityBL.Load(.GetValueInteger("p32ID_Overhead"))
                 If Not cP32 Is Nothing Then Me.p32ID_Overhead.Text = cP32.NameWithSheet
             End If
-            If .GetValueInteger("p51ID_Internal") <> 0 Then
-                Dim cP51 As BO.p51PriceList = Master.Factory.p51PriceListBL.Load(.GetValueInteger("p51ID_Internal"))
-                If Not cP51 Is Nothing Then Me.p51ID_Internal.Text = cP51.NameWithCurr
-            End If
+           
             Me.Upload_Folder.Text = .GetValueString("Upload_Folder")
             If Me.Upload_Folder.Text <> "" Then Me.Upload_Folder.Text = "*******************" & Right(Me.Upload_Folder.Text, 5)
             Me.robot_host.Text = .GetValueString("robot_host")
@@ -347,6 +345,11 @@ Public Class admin_framework
                 Case "j24"
                     .AddColumn("j24Name", "Název typu zdroje")
                     .AddColumn("j24Ordinary", "#")
+                Case "p50"
+                    .AddColumn("Binding", "Druh sazby")
+                    .AddColumn("p51Name", "Název ceníku")
+                    .AddColumn("ValidFrom", "Platí od", BO.cfENUM.DateTime)
+                    .AddColumn("ValidUntil", "Platí do", BO.cfENUM.DateTime)
                 Case "j25"
                     .AddColumn("j25Name", "Název kategorie")
                     .AddColumn("j25Ordinary", "#")
@@ -665,6 +668,9 @@ Public Class admin_framework
                     lisGRID = lis
                 Case "p29"
                     Dim lis As IEnumerable(Of BO.p29ContactType) = .p29ContactTypeBL.GetList(mqDef)
+                    grid1.DataSource = lis
+                Case "p50"
+                    Dim lis As IEnumerable(Of BO.p50OfficePriceList) = .p50OfficePriceListBL.GetList(mqDef)
                     grid1.DataSource = lis
                 Case "o24"
                     Dim lis As IEnumerable(Of BO.o24NotepadType) = .o24NotepadTypeBL.GetList(mqDef)

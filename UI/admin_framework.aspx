@@ -164,15 +164,7 @@
                 </div>
             </div>
 
-            <div class="content-box1">
-                <div class="title">
-                    Výchozí ceník nákladových sazeb
-                </div>
-                <div class="content">
-                    <asp:Label ID="p51ID_Internal" runat="server" CssClass="valbold"></asp:Label>
-                    <button type="button" onclick="sw_master('x35_record.aspx?key=p51ID_Internal','Images/setting_32.png')">Nastavit</button>
-                </div>
-            </div>
+            
 
             <div class="content-box1">
                 <div class="title">
@@ -192,12 +184,7 @@
                     <button type="button" onclick="sw_master('x35_record.aspx?key=p32ID_Overhead','Images/setting_32.png')">Nastavit</button>
                 </div>
             </div>
-            <div class="content-box1">
-                <div class="title">Výpočet efektivních sazeb</div>
-                <div class="content">
-                    <button type="button" onclick="sw_master('p51_fpr.aspx','Images/setting_32.png')">Nastavit výpočet efektivních sazeb</button>
-                </div>
-            </div>
+            
 
             <div class="content-box1" style="width: 100%; max-width: none;">
                 <div class="title">

@@ -27,16 +27,17 @@
                 End If
             End With
 
-            If Me.p34ID.Rows > 5 Then
-                'zjistit, zda nabízet checkbox p52IsPlusAllTimeSheets
-                Dim mq As New BO.myQueryP32
-                mq.p33ID = BO.p33IdENUM.Cas
-                mq.Billable = BO.BooleanQueryMode.TrueQuery
-                Dim lis As IEnumerable(Of BO.p32Activity) = Master.Factory.p32ActivityBL.GetList(mq)
-                If lis.Select(Function(p) p.p34ID).Distinct.Count > 1 Then
-                    Me.hidIsp52IsPlusAllTimeSheets.Value = "1"
-                End If
-            End If
+            Me.hidIsp52IsPlusAllTimeSheets.Value = "1"
+            'If Me.p34ID.Rows > 3 Then
+            '    'zjistit, zda nabízet checkbox p52IsPlusAllTimeSheets
+            '    Dim mq As New BO.myQueryP32
+            '    mq.p33ID = BO.p33IdENUM.Cas
+            '    mq.Billable = BO.BooleanQueryMode.TrueQuery
+            '    Dim lis As IEnumerable(Of BO.p32Activity) = Master.Factory.p32ActivityBL.GetList(mq)
+            '    If lis.Select(Function(p) p.p34ID).Distinct.Count > 1 Then
+            '        Me.hidIsp52IsPlusAllTimeSheets.Value = "1"
+            '    End If
+            'End If
 
             RefreshRecord()
 
