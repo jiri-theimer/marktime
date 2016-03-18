@@ -35,22 +35,28 @@
                 pars.Add("datefrom", .DateFrom, DbType.DateTime)
                 pars.Add("dateuntil", .DateUntil, DbType.DateTime)
             End If
-
+            If .p45ID <> 0 Then
+                pars.Add("p45id", .p45ID, DbType.Int32)
+                strW += " AND a.p45ID=@p45id"
+            End If
             If Not .p41IDs Is Nothing Then
                 If .p41IDs.Count > 0 Then
-                    strW += " AND a.p41ID IN (" & String.Join(",", .p41IDs) & ")"
+                    strW += " AND a.p45ID IN (SELECT p45ID FROM p45Budget WHERE p41ID IN (" & String.Join(",", .p41IDs) & "))"
                 End If
             End If
             If .p28ID > 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)
-                strW += " AND a.p41ID IN (SELECT p41ID FROM p41Project WHERE p28ID_Client=@p28id)"
+                strW += " AND a.p45ID IN (SELECT xb.p41ID FROM p45Budget xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID WHERE xb.p28ID_Client=@p28id)"
             End If
             If Not .j02IDs Is Nothing Then
                 If .j02IDs.Count > 0 Then
                     strW += " AND a.j02ID IN (" & String.Join(",", .j02IDs) & ")"
                 End If
             End If
-            
+            If Not .p34IncomeStatementFlag Is Nothing Then
+                pars.Add("flag", .p34IncomeStatementFlag, DbType.Int32)
+                strW += " AND a.p34ID IN (SELECT p34ID FROM p34ActivityGroup WHERE p34IncomeStatementFlag=@flag)"
+            End If
             If .p34ID > 0 Then
                 pars.Add("p34id", .p34ID, DbType.Int32)
                 strW += " AND a.p34ID=@p34id"
@@ -71,9 +77,9 @@
             pars.Add("pid", cRec.PID)
         End If
         With cRec
+            pars.Add("p45ID", BO.BAS.IsNullDBKey(.p45ID), DbType.Int32)
             pars.Add("p34ID", BO.BAS.IsNullDBKey(.p34ID), DbType.Int32)
             pars.Add("p32ID", BO.BAS.IsNullDBKey(.p32ID), DbType.Int32)
-            pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
             pars.Add("j27ID", BO.BAS.IsNullDBKey(.j27ID), DbType.Int32)
             pars.Add("j02ID", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
             pars.Add("p28ID_Supplier", BO.BAS.IsNullDBKey(.p28ID_Supplier), DbType.Int32)
@@ -110,12 +116,13 @@
     Private Function GetSQLPart1(intTOPRecs As Integer) As String
         Dim s As String = "SELECT"
         If intTOPRecs > 0 Then s += " TOP " & intTOPRecs.ToString
-        s += " a.*,j02.j02LastName+' '+j02.j02FirstName+isnull(' '+j02.j02TitleBeforeName,'') as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project,p34.p34Name as _p34Name,p32.p32Name as _p32Name,p34.p34Color as _p34Color,p32.p32Color as _p32Color,p34.p34IncomeStatementFlag as _p34IncomeStatementFlag,j27.j27Code as _j27Code," & bas.RecTail("p49", "a")
-        s += " FROM p49FinancialPlan a"
-        s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
+        s += " a.*,p41.p41ID as _p41ID,j02.j02LastName+' '+j02.j02FirstName+isnull(' '+j02.j02TitleBeforeName,'') as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project,p34.p34Name as _p34Name,p32.p32Name as _p32Name,p34.p34Color as _p34Color,p32.p32Color as _p32Color,p34.p34IncomeStatementFlag as _p34IncomeStatementFlag,j27.j27Code as _j27Code,supplier.p28Name as _SupplierName," & bas.RecTail("p49", "a")
+        s += " FROM p49FinancialPlan a INNER JOIN p45Budget p45 ON a.p45ID=p45.p45ID"
+        s += " INNER JOIN p41Project p41 ON p45.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
         s += " LEFT OUTER JOIN p32Activity p32 ON a.p32ID=p32.p32ID"
         s += " LEFT OUTER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN j27Currency j27 ON a.j27ID=j27.j27ID"
         s += " LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
+        s += " LEFT OUTER JOIN p28Contact supplier ON a.p28ID_Supplier=supplier.p28ID"
         Return s
     End Function
 End Class

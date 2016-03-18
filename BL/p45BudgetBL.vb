@@ -1,7 +1,7 @@
 ﻿
 Public Interface Ip45BudgetBL
     Inherits IFMother
-    Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson)) As Boolean
+    Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean
     Function Load(intPID As Integer) As BO.p45Budget
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP41ID As Integer, Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget)
@@ -24,7 +24,7 @@ Class p45BudgetBL
         _cDL = New DL.p45BudgetDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson)) As Boolean Implements Ip45BudgetBL.Save
+    Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean Implements Ip45BudgetBL.Save
         With cRec
             If BO.BAS.IsNullDBDate(.p45PlanFrom) Is Nothing Then _Error = "Chybí začátek rozpočtu." : Return False
             If BO.BAS.IsNullDBDate(.p45PlanUntil) Is Nothing Then _Error = "Chybí konec rozpočtu." : Return False
@@ -32,12 +32,34 @@ Class p45BudgetBL
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt." : Return False
             If .PID = 0 Then
                 .p45VersionIndex = GetList(.p41ID).Count + 1
-                If lisP46 Is Nothing Then lisP46 = New List(Of BO.p46BudgetPerson)
-                If lisP46.Count = 0 Then _Error = "V rozpočtu musí být minimálně jedna osoba." : Return False
+            End If
+            If Not lisP46 Is Nothing Then
+                Dim x As Integer = 1
+                For Each c In lisP46.Where(Function(p) p.IsSetAsDeleted = False)
+                    If c.p46HoursBillable = 0 And c.p46HoursNonBillable = 0 Then
+                        _Error = String.Format("Rozpočet hodin/řádek #{0}: chybí hodiny nebo vyhoďte osobu z rozpočtu hodin.", x) : Return False
+                    End If
+                    x += 1
+                Next
+            End If
+            If Not lisP49 Is Nothing Then
+                Dim x As Integer = 1
+                For Each c In lisP49.Where(Function(p) p.IsSetAsDeleted = False)
+                    If c.p49Amount = 0 Then
+                        _Error = String.Format("Finanční rozpočet/řádek #{0}: částka je nulová.", x) : Return False
+                    End If
+                    If c.p49DateFrom < cRec.p45PlanFrom Or c.p49DateFrom > cRec.p45PlanUntil Then
+                        _Error = String.Format("Finanční rozpočet: Měsíc [{0}] je mimo časové období rozpočtu.", c.Period) : Return False
+                    End If
+                    If c.p49DateUntil < cRec.p45PlanFrom Or c.p49DateUntil > cRec.p45PlanUntil Then
+                        _Error = String.Format("Finanční rozpočet: Měsíc [{0}] je mimo časové období rozpočtu.", c.Period) : Return False
+                    End If
+                    x += 1
+                Next
             End If
         End With
 
-        Return _cDL.Save(cRec, lisP46)
+        Return _cDL.Save(cRec, lisP46, lisP49)
     End Function
     Public Function Load(intPID As Integer) As BO.p45Budget Implements Ip45BudgetBL.Load
         Return _cDL.Load(intPID)

@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class periodmonth
 
     '''<summary>
-    '''query_month control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents query_month As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''query_year control.
     '''</summary>
     '''<remarks>
@@ -30,4 +21,13 @@ Partial Public Class periodmonth
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents query_year As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''query_month control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents query_month As Global.System.Web.UI.WebControls.DropDownList
 End Class

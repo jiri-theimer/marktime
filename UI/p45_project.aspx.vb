@@ -43,7 +43,35 @@ Public Class p45_project
             SetupPersonsOffer()
         End If
     End Sub
+    Private Sub SetupP49Grid()
+        With gridP49
+            .ClearColumns()
+            .radGridOrig.ShowFooter = False
+            .AddColumn("p85FreeText06", "Měsíc")
+            '.AddColumn("p34Name", "Sešit")
+            .AddColumn("p85FreeText03", "Aktivita")
+            '.AddColumn("p85FreeText01", "Osoba")
+            .AddColumn("p85FreeText05", "Dodavatel")
+            .AddColumn("p85Message", "Text")
+            .AddColumn("p85FreeFloat01", "Částka", BO.cfENUM.Numeric2)
+            .AddColumn("p85FreeText04", "Měna")
+        End With
+        With gridP49.radGridOrig.MasterTableView
+            .GroupByExpressions.Clear()
+            .ShowGroupFooter = False
+            Dim GGE As New GridGroupByExpression
+            Dim fld As New GridGroupByField
+            fld.FieldName = "p85FreeText02"
+            fld.HeaderText = "Sešit"
+
+            GGE.SelectFields.Add(fld)
+            GGE.GroupByFields.Add(fld)
+
+            .GroupByExpressions.Add(GGE)
+        End With
+    End Sub
     Private Sub p45_project_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+
         If Me.CurrentP45ID <> 0 Then
             Me.p45ID.Visible = True
             If Me.p45ID.Items.Count = 1 Then
@@ -66,7 +94,7 @@ Public Class p45_project
         cmdNewVersion.Visible = Me.p45ID.Visible
         cmdDeleteVersion.Visible = Me.p45ID.Visible
 
-        grid1.Visible = panRecordBody.Visible
+
 
     End Sub
 
@@ -90,7 +118,7 @@ Public Class p45_project
 
         SetupTempData()
         
-
+        SetupP49Grid()
 
 
     End Sub
@@ -103,7 +131,7 @@ Public Class p45_project
         If persons.Count = 0 Then
             Master.Notify("Projekt nemá obsazené projektové role osobami!", NotifyLevel.WarningMessage)
         End If
-        Dim j02ids_used As List(Of Integer) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False).Select(Function(p) p.p85OtherKey1).ToList
+        Dim j02ids_used As List(Of Integer) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False).Where(Function(p) p.p85Prefix = "p46").Select(Function(p) p.p85OtherKey1).ToList
         For Each intJ02ID As Integer In j02ids_used
             If persons.Where(Function(p) p.PID = intJ02ID).Count > 0 Then
                 persons.Remove(persons.First(Function(p) p.PID = intJ02ID))
@@ -118,11 +146,12 @@ Public Class p45_project
     End Sub
 
     Private Sub SetupTempData()
-        Dim lis As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Me.CurrentP45ID)
-        For Each c In lis
+        Dim lisP46 As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Me.CurrentP45ID)
+        For Each c In lisP46
             Dim cTemp As New BO.p85TempBox
             With cTemp
                 .p85GUID = ViewState("guid")
+                .p85Prefix = "p46"
                 .p85DataPID = c.PID
                 .p85OtherKey1 = c.j02ID
                 .p85OtherKey2 = c.p46ExceedFlag
@@ -131,6 +160,34 @@ Public Class p45_project
                 .p85FreeFloat02 = c.p46HoursNonBillable
                 .p85FreeFloat03 = c.p46HoursTotal
                 .p85FreeText02 = c.p46Description
+            End With
+            Master.Factory.p85TempBoxBL.Save(cTemp)
+        Next
+        Dim mq As New BO.myQueryP49
+        mq.p45ID = Me.CurrentP45ID
+        Dim lisP49 As IEnumerable(Of BO.p49FinancialPlan) = Master.Factory.p49FinancialPlanBL.GetList(mq, False)
+        For Each c In lisP49
+            Dim cTemp As New BO.p85TempBox
+            With cTemp
+                .p85GUID = ViewState("guid")
+                .p85Prefix = "p49"
+                .p85DataPID = c.PID
+                .p85OtherKey1 = c.j02ID
+                .p85OtherKey2 = c.p34ID
+                .p85OtherKey3 = c.p32ID
+                .p85OtherKey4 = c.j27ID
+                .p85OtherKey5 = c.p28ID_Supplier
+                .p85OtherKey6 = c.p34IncomeStatementFlag
+                .p85FreeFloat01 = c.p49Amount
+                .p85Message = c.p49Text
+                .p85FreeDate01 = c.p49DateFrom
+                .p85FreeDate02 = c.p49DateUntil
+                .p85FreeText01 = c.Person
+                .p85FreeText02 = c.p34Name
+                .p85FreeText03 = c.p32Name
+                .p85FreeText04 = c.j27Code
+                .p85FreeText05 = c.SupplierName
+                .p85FreeText06 = c.Period
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
@@ -145,8 +202,7 @@ Public Class p45_project
     Private Sub cmdNewVersion_Click(sender As Object, e As EventArgs) Handles cmdNewVersion.Click
         panCreateClone.Visible = True
         grid1.Visible = False
-        panRecordBody.Visible = False
-        panRecordHeader.Visible = False
+        tabs1.Visible = False
         Master.RadToolbar.Visible = False
         panHeader.Visible = False
         Me.p45ID_Template.DataSource = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
@@ -183,9 +239,9 @@ Public Class p45_project
                 c.p45Name = Me.p45Name.Text
                 c.p41ID = Master.DataPID
 
-                Dim lisP46 As New List(Of BO.p46BudgetPerson)
+                Dim lisP46 As New List(Of BO.p46BudgetPerson), lisP49 As New List(Of BO.p49FinancialPlan)
                 Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), True)
-                For Each cTemp In lisTemp
+                For Each cTemp In lisTemp.Where(Function(p) p.p85Prefix = "p46")
                     Dim item As New BO.p46BudgetPerson
                     With cTemp
                         item.SetPID(.p85DataPID)
@@ -199,9 +255,26 @@ Public Class p45_project
                     End With
                     lisP46.Add(item)
                 Next
+                For Each cTemp In lisTemp.Where(Function(p) p.p85Prefix = "p49")
+                    Dim item As New BO.p49FinancialPlan
+                    With cTemp
+                        item.SetPID(.p85DataPID)
+                        item.j02ID = .p85OtherKey1
+                        item.p34ID = .p85OtherKey2
+                        item.p32ID = .p85OtherKey3
+                        item.j27ID = .p85OtherKey4
+                        item.p49DateFrom = .p85FreeDate01
+                        item.p49DateUntil = .p85FreeDate02
+                        item.p28ID_Supplier = .p85OtherKey5
+                        item.p49Amount = .p85FreeFloat01
+                        item.p49Text = .p85Message
+                        If .p85IsDeleted Then item.SetAsDeleted()
+                    End With
+                    lisP49.Add(item)
+                Next
 
                 With Master.Factory.p45BudgetBL
-                    If .Save(c, lisP46) Then
+                    If .Save(c, lisP46, lisP49) Then
                         Master.CloseAndRefreshParent("p45-save")
                     Else
                         Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -217,6 +290,7 @@ Public Class p45_project
             If Master.Factory.p85TempBoxBL.Delete(cRec) Then
                 SetupPersonsOffer()
                 grid1.Rebind()
+                ShowNeedSaveMessage()
             End If
         End If
     End Sub
@@ -239,7 +313,7 @@ Public Class p45_project
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
 
-        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = "p46")
         grid1.DataSource = lis
     End Sub
 
@@ -254,6 +328,7 @@ Public Class p45_project
                     Dim cTemp As New BO.p85TempBox()
                     With cTemp
                         .p85GUID = ViewState("guid")
+                        .p85Prefix = "p46"
                         .p85OtherKey1 = intJ02ID
                         .p85FreeText01 = cJ02.FullNameDesc
                     End With
@@ -275,5 +350,22 @@ Public Class p45_project
 
     Private Sub cmdSaveClone_Click(sender As Object, e As EventArgs) Handles cmdSaveClone.Click
 
+    End Sub
+
+    Private Sub ShowNeedSaveMessage()
+        Master.master_show_message("Provedené změny je třeba uložit tlačítkem [Uložit změny].")
+    End Sub
+    
+    Private Sub gridP49_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridP49.NeedDataSource
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False).Where(Function(p) p.p85Prefix = "p49")
+        gridP49.DataSource = lis
+        Me.total_expense.Text = BO.BAS.FN(lis.Where(Function(p) p.p85OtherKey6 = 1).Sum(Function(p) p.p85FreeFloat01))
+        Me.total_income.Text = BO.BAS.FN(lis.Where(Function(p) p.p85OtherKey6 = 2).Sum(Function(p) p.p85FreeFloat01))
+
+    End Sub
+
+    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
+        gridP49.Rebind(True)
+        ShowNeedSaveMessage()
     End Sub
 End Class

@@ -201,6 +201,7 @@
     <Content Include="p31_scheduler.aspx" />
     <Content Include="p41_framework.aspx" />
     <Content Include="p45_project.aspx" />
+    <Content Include="p45_project_p49.aspx" />
     <Content Include="p47_framework.aspx" />
     <Content Include="ChangePassword.aspx" />
     <Content Include="ChangePasswordSuccess.aspx" />
@@ -662,6 +663,13 @@
     </Compile>
     <Compile Include="p45_project.aspx.vb">
       <DependentUpon>p45_project.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p45_project_p49.aspx.designer.vb">
+      <DependentUpon>p45_project_p49.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p45_project_p49.aspx.vb">
+      <DependentUpon>p45_project_p49.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p47_framework.aspx.designer.vb">

@@ -110,7 +110,6 @@
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
         With Master.Factory.p49FinancialPlanBL
             Dim cRec As BO.p49FinancialPlan = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.p49FinancialPlan)
-            cRec.p41ID = BO.BAS.IsNullInt(Me.p41ID.Value)
             cRec.j02ID = BO.BAS.IsNullInt(Me.j02ID.Value)
             cRec.p34ID = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
             cRec.p32ID = BO.BAS.IsNullInt(Me.p32ID.SelectedValue)

@@ -50,11 +50,12 @@ Class p49FinancialPlanBL
         Dim x As Integer = 1
         For Each c In lis
             With c
-                If .p49Amount = 0 Then _Error = "V záznamu plánu nesmí být nulová částka." : Return False
+                If .p45ID = 0 Then _Error = "Chybí vazba na rozpočet" : Return False
+                If .p49Amount = 0 Then _Error = "V záznamu rozpočtu nesmí být nulová částka." : Return False
                 If .p34ID = 0 Then _Error = "Chybí vazba na sešit aktivit" : Return False
-                If .p41ID = 0 Then _Error = "Chybí vazba na projekt" : Return False
+
                 If BO.BAS.IsNullDBDate(.p49DateFrom) Is Nothing Or BO.BAS.IsNullDBDate(.p49DateUntil) Is Nothing Then
-                    _Error = "Chybí specifikace začátku nebo konce záznamu plánu." : Return False
+                    _Error = "Chybí specifikace začátku nebo konce záznamu." : Return False
                 Else
                     If .p49DateUntil < .p49DateFrom Then
                         _Error = "Začátek plánu musí být menší než datum konce." : Return False

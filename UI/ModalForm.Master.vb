@@ -51,6 +51,8 @@
         End Set
     End Property
 
+    
+
     Public Sub StopPage(ByVal strMessage As String, Optional ByVal bolErrorInfo As Boolean = True, Optional ByVal strNeededPerms As String = "")
         Server.Transfer("~/stoppage.aspx?modal=1&err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage) & "&neededperms=" & strNeededPerms, False)
     End Sub
@@ -63,6 +65,8 @@
 
             'PersonalizeMenu()
         End If
+
+        
     End Sub
     Private Sub DoLogOut()
         Response.Redirect("~/Account/Login.aspx?autologout=1") 'automatické odhlášení
@@ -107,9 +111,9 @@
         If Not Page.IsPostBack Then
             With CType(toolbar1.FindItemByValue("help"), Telerik.Web.UI.RadToolBarButton)
                 If Me.HelpTopicID = "" Then
-                    .NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html"
+                    .NavigateUrl = "http://www.marktime.net/doc/html/index.html"
                 Else
-                    .NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html?" & Me.HelpTopicID & ".htm"
+                    .NavigateUrl = "http://www.marktime.net/doc/html/index.html?" & Me.HelpTopicID & ".htm"
                 End If
             End With
             'CType(toolbar1.FindItemByValue("help"), Telerik.Web.UI.RadToolBarButton).NavigateUrl = "javascript:help('" & Request.FilePath & "')"
@@ -117,6 +121,7 @@
             pageTitle.Text = Me.HeaderText
         End If
 
+        Me.lblRecordMessage.Text = Me.hidrecordMessage.Value
     End Sub
 
     Public Overloads Sub TestNeededPermission(neededPerm As BO.x53PermValEnum)
@@ -136,5 +141,12 @@
         End If
     End Sub
 
+    
+    
+    Public Sub master_show_message(strMessage As String)
+        Me.hidrecordMessage.Value = strMessage
+        lblRecordMessage.Text = strMessage
+    End Sub
+    
     
 End Class

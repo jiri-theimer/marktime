@@ -59,13 +59,31 @@ Partial Public Class p45_project
     Protected WithEvents cmdDeleteVersion As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''panRecordHeader control.
+    '''tabs1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panRecordHeader As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''p45 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p45 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''lblFrom control.
@@ -104,6 +122,15 @@ Partial Public Class p45_project
     Protected WithEvents p45PlanUntil As Global.Telerik.Web.UI.RadDatePicker
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''p45Name control.
     '''</summary>
     '''<remarks>
@@ -113,13 +140,13 @@ Partial Public Class p45_project
     Protected WithEvents p45Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''panRecordBody control.
+    '''p46 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panRecordBody As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents p46 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''cmdAddPerson control.
@@ -176,6 +203,78 @@ Partial Public Class p45_project
     Protected WithEvents gridnumber1 As Global.Telerik.Web.UI.GridNumericColumnEditor
 
     '''<summary>
+    '''p49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p49 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''cmdNewP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdNewP49 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''cmdEditP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdEditP49 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''cmdCloneP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCloneP49 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''total_expense control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_expense As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''total_income control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_income As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''gridP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gridP49 As Global.UI.datagrid
+
+    '''<summary>
+    '''hidP49_p85ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP49_p85ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''panCreateClone control.
     '''</summary>
     '''<remarks>
@@ -230,13 +329,13 @@ Partial Public Class p45_project
     Protected WithEvents chkNewIsLast As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''chkCloneP45 control.
+    '''chkCloneP46 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkCloneP45 As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents chkCloneP46 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''chkCloneP47 control.
@@ -255,6 +354,15 @@ Partial Public Class p45_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkCloneP49 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''cmdRefresh control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''SharedCalendar control.

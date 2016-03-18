@@ -13,16 +13,24 @@
         End With
     End Sub
 
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-
-    End Sub
+    Public Property AutoPostback As Boolean
+        Get
+            Return Me.query_year.AutoPostBack
+        End Get
+        Set(value As Boolean)
+            Me.query_year.AutoPostBack = value
+            Me.query_month.AutoPostBack = value
+        End Set
+    End Property
 
     Public Property SelectedYear As Integer
         Get
             Return CInt(Me.query_year.SelectedValue)
         End Get
         Set(value As Integer)
+            If Me.query_year.Items.FindByValue(value.ToString) Is Nothing Then
+                Me.query_year.Items.Add(value.ToString)
+            End If
             basUI.SelectDropdownlistValue(Me.query_year, value.ToString)
         End Set
     End Property
@@ -37,6 +45,16 @@
     Public ReadOnly Property SelectedDate As Date
         Get
             Return DateSerial(Me.SelectedYear, Me.SelectedMonth, 1)
+        End Get
+    End Property
+    Public ReadOnly Property SelectedDateFrom As Date
+        Get
+            Return Me.SelectedDate
+        End Get
+    End Property
+    Public ReadOnly Property SelectedDateUntil As Date
+        Get
+            Return Me.SelectedDate.AddMonths(1).AddDays(-1)
         End Get
     End Property
 

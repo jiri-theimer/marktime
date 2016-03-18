@@ -86,6 +86,15 @@ Partial Public Class ModalForm
     Protected WithEvents toolbar1 As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
+    '''lblRecordMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblRecordMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''spanHelp control.
     '''</summary>
     '''<remarks>
@@ -183,4 +192,13 @@ Partial Public Class ModalForm
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidCloseAndRefreshParent_JsFunction As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidrecordMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidrecordMessage As Global.System.Web.UI.WebControls.HiddenField
 End Class

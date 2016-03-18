@@ -23,7 +23,7 @@
         Return _cDB.RunSP("p45_delete", pars)
 
     End Function
-    Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson)) As Boolean
+    Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean
         Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
             Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
             If cRec.PID <> 0 Then
@@ -62,6 +62,32 @@
                             pars.Add("p46HoursTotal", c.p46HoursTotal, DbType.Double)
                             pars.Add("p46Description", c.p46Description, DbType.String)
                             _cDB.SaveRecord("p46BudgetPerson", pars, bolINSERT, strW, True, _curUser.j03Login, False)
+                        End If
+                    Next
+                End If
+                If Not lisP49 Is Nothing Then
+                    For Each c In lisP49
+                        pars = New DbParameters
+                        If c.PID = 0 Then
+                            bolINSERT = True : strW = ""
+                        Else
+                            bolINSERT = False : strW = "p49ID=@pid" : pars.Add("pid", c.PID, DbType.Int32)
+                        End If
+                        If c.PID <> 0 And c.IsSetAsDeleted Then
+                            _cDB.RunSQL("DELETE FROM p49FinancialPlan WHERE p49ID=@pid", pars)
+                        Else
+                            pars.Add("p45ID", intLastSavedP45ID, DbType.Int32)
+                            pars.Add("p28ID_Supplier", BO.BAS.IsNullDBKey(c.p28ID_Supplier), DbType.Int32)
+                            pars.Add("p34ID", BO.BAS.IsNullDBKey(c.p34ID), DbType.Int32)
+                            pars.Add("p32ID", BO.BAS.IsNullDBKey(c.p32ID), DbType.Int32)
+                            pars.Add("j27ID", BO.BAS.IsNullDBKey(c.j27ID), DbType.Int32)
+                            pars.Add("j02ID", BO.BAS.IsNullDBKey(c.j02ID), DbType.Int32)
+                            pars.Add("p49DateFrom", c.p49DateFrom, DbType.DateTime)
+                            pars.Add("p49DateUntil", c.p49DateUntil, DbType.DateTime)
+                            pars.Add("p49Amount", c.p49Amount, DbType.Double)
+                            pars.Add("p49Text", c.p49Text, DbType.String)
+
+                            _cDB.SaveRecord("p49FinancialPlan", pars, bolINSERT, strW, True, _curUser.j03Login, False)
                         End If
                     Next
                 End If

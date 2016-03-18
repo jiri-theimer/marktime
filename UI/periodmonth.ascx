@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="periodmonth.ascx.vb" Inherits="UI.periodmonth" %>
+<asp:DropDownList ID="query_year" runat="server" AutoPostBack="true"></asp:DropDownList>
 <asp:DropDownList ID="query_month" runat="server" AutoPostBack="true">
     <asp:ListItem Text="Leden" Value="1"></asp:ListItem>
     <asp:ListItem Text="Únor" Value="2"></asp:ListItem>
@@ -13,4 +14,4 @@
     <asp:ListItem Text="Listopad" Value="11"></asp:ListItem>
     <asp:ListItem Text="Prosinec" Value="12"></asp:ListItem>
 </asp:DropDownList>
-<asp:DropDownList ID="query_year" runat="server" AutoPostBack="true"></asp:DropDownList>
+

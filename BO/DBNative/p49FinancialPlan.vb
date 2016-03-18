@@ -1,6 +1,6 @@
 ﻿Public Class p49FinancialPlan
     Inherits BOMother
-    Public Property p41ID As Integer
+    Public Property p45ID As Integer
     Public Property j02ID As Integer
     Public Property p34ID As Integer
     Public Property p32ID As Integer
@@ -27,10 +27,22 @@
             Return _Client
         End Get
     End Property
+    Private Property _p41ID As Integer
+    Public ReadOnly Property p41ID As Integer
+        Get
+            Return _p41ID
+        End Get
+    End Property
     Private Property _Project As String
     Public ReadOnly Property Project As String
         Get
             Return _Project
+        End Get
+    End Property
+    Private Property _SupplierName As String
+    Public ReadOnly Property SupplierName As String
+        Get
+            Return _SupplierName
         End Get
     End Property
     Private Property _p32Name As String
@@ -67,6 +79,16 @@
     Public ReadOnly Property j27Code As String
         Get
             Return _j27Code
+        End Get
+    End Property
+    Public ReadOnly Property Period As String
+        Get
+            If Month(Me.p49DateFrom) = Month(Me.p49DateUntil) And Year(Me.p49DateFrom) = Year(Me.p49DateUntil) Then
+                Return Year(Me.p49DateFrom).ToString & "/" & Month(Me.p49DateFrom).ToString
+            Else
+                Return Year(Me.p49DateFrom).ToString & "/" & Month(Me.p49DateFrom).ToString & " - " & Year(Me.p49DateUntil).ToString & "/" & Month(Me.p49DateUntil).ToString
+            End If
+
         End Get
     End Property
     Private Property _setAsDeleted As Boolean
