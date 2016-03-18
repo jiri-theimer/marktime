@@ -50,6 +50,8 @@
             var total_fa = 0;
             var total_nefa = 0;
             var total_total = 0;
+            var total_fee_fa = 0;
+            var total_fee_nefa = 0;
 
             var MasterTable = grid.get_masterTableView();
 
@@ -71,13 +73,22 @@
                 row.get_element().cells[3].textContent = total_row;
                 total_total = total_total + total_row;
 
-
+                cell = row.get_element().cells[5].textContent;
+                if (IsNumeric(cell)) {
+                    total_fee_fa += parseFloat(cell);                    
+                }
+                cell = row.get_element().cells[7].textContent;
+                if (IsNumeric(cell)) {
+                    total_fee_nefa += parseFloat(cell);
+                }
 
             }
             $('tr.rgFooter').each(function () {
                 $(this).find('td').eq(1).text(total_fa);
                 $(this).find('td').eq(2).text(total_nefa);
                 $(this).find('td').eq(3).text(total_total);
+                $(this).find('td').eq(5).text(total_fee_fa);
+                $(this).find('td').eq(7).text(total_fee_nefa);
             });
 
 
