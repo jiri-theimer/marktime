@@ -618,6 +618,14 @@ Public Class p41_framework_detail
             .AddColumn("p32Name", "Aktivita")
             .AddColumn("AmountWithoutVat", "Vykázáno bez DPH", BO.cfENUM.Numeric, , , , , True)
             .AddColumn("Pocet", "Počet", BO.cfENUM.Numeric0)
+
+            Dim GGE As New Telerik.Web.UI.GridGroupByExpression
+            Dim fld As New GridGroupByField
+            fld.FieldName = "j27Code"
+            fld.HeaderText = "Měna"
+            GGE.SelectFields.Add(fld)
+            GGE.GroupByFields.Add(fld)
+            .radGridOrig.MasterTableView.GroupByExpressions.Add(GGE)
         End With
     End Sub
 
