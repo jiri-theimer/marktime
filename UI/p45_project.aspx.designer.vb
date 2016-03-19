@@ -239,24 +239,6 @@ Partial Public Class p45_project
     Protected WithEvents cmdCloneP49 As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''total_expense control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents total_expense As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''total_income control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents total_income As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''gridP49 control.
     '''</summary>
     '''<remarks>
@@ -354,6 +336,96 @@ Partial Public Class p45_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkCloneP49 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''cmdRefreshStatement control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRefreshStatement As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''total_costfee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_costfee As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''total_billingfee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_billingfee As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''total_expense control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_expense As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''total_income control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_income As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''total_cost control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_cost As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''total_billing control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents total_billing As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''imgEmotion control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgEmotion As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''result_lost control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents result_lost As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''result_profit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents result_profit As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdRefresh control.

@@ -209,9 +209,9 @@ Public Class Site
 
         'menu1.FindItemByValue("more").Items.FindItemByValue("cmdHelp").NavigateUrl = "javascript:help('" & Request.FilePath & "')"
         If Me.HelpTopicID = "" Then
-            menu1.FindItemByValue("help").NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html"
+            menu1.FindItemByValue("help").NavigateUrl = "http://www.marktime.net/doc/html"
         Else
-            menu1.FindItemByValue("help").NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html?" & Me.HelpTopicID & ".htm"
+            menu1.FindItemByValue("help").NavigateUrl = "http://www.marktime.net/doc/html/index.html?" & Me.HelpTopicID & ".htm"
         End If
         If Not menu1.FindItemByValue("more") Is Nothing Then
             With menu1.FindItemByValue("more").Items.FindItemByValue("cmdHelp")

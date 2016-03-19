@@ -37,7 +37,7 @@
 
             save_cellvalue(row.attributes["p85id"].value, columnUniqueName, editorValue);
 
-            
+
         }
 
         function show_needsave_message() {
@@ -59,28 +59,44 @@
 
             for (var i = 0; i < Rows.length; i++) {
                 var total_row = 0;
+                var rate_billing = 0;
+                var rate_cost = 0;
+                var hours_fa = 0;
+                var hours_nefa = 0;
                 var row = Rows[i];
                 var cell = row.get_element().cells[1].textContent;
                 if (IsNumeric(cell)) {
-                    total_fa += parseFloat(cell);
-                    total_row += parseFloat(cell);
+                    hours_fa = parseFloat(cell);
+                    total_fa += hours_fa;
+                    total_row += hours_fa;
                 }
                 cell = row.get_element().cells[2].textContent;
                 if (IsNumeric(cell)) {
-                    total_nefa += parseFloat(cell);
-                    total_row += parseFloat(cell);
+                    hours_nefa = parseFloat(cell);
+                    total_nefa += hours_nefa;
+                    total_row += hours_nefa;
                 }
                 row.get_element().cells[3].textContent = total_row;
                 total_total = total_total + total_row;
 
-                cell = row.get_element().cells[5].textContent;
+                cell = row.get_element().cells[4].textContent;
                 if (IsNumeric(cell)) {
-                    total_fee_fa += parseFloat(cell);                    
+                    rate_billing = parseFloat(cell);
                 }
-                cell = row.get_element().cells[7].textContent;
+
+                cell = row.get_element().cells[5];
+                cell.textContent = hours_fa * rate_billing;
+                total_fee_fa += hours_fa * rate_billing;
+
+                cell = row.get_element().cells[6].textContent;
                 if (IsNumeric(cell)) {
-                    total_fee_nefa += parseFloat(cell);
+                    rate_cost = parseFloat(cell);
                 }
+
+                cell = row.get_element().cells[7];
+                cell.textContent = (hours_nefa + hours_fa) * rate_cost;
+                total_fee_nefa += (hours_nefa + hours_fa) * rate_cost;
+
 
             }
             $('tr.rgFooter').each(function () {
@@ -144,7 +160,7 @@
                 </div>
                 <div class="content">
 
-                    <div style="padding: 10px;"">
+                    <div style="padding: 10px;">
                         <asp:Label ID="lblFrom" Text="Plánované zahájení:" runat="server" CssClass="lbl" Width="140px"></asp:Label>
                         <telerik:RadDatePicker ID="p45PlanFrom" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
@@ -224,17 +240,17 @@
                         <telerik:GridBoundColumn HeaderText="Fa+Nefa" DataField="p85FreeFloat03" ReadOnly="true" AllowSorting="true" ColumnGroupName="Hodiny">
                             <ItemStyle Font-Bold="true" />
                         </telerik:GridBoundColumn>
-                        <telerik:GridBoundColumn HeaderText="Sazba" DataField="p85FreeNumber01" ReadOnly="true" AllowSorting="true" ColumnGroupName="Billing"> 
-                            <ItemStyle ForeColor="green" />                          
-                        </telerik:GridBoundColumn>
-                         <telerik:GridBoundColumn HeaderText="Honorář" DataField="p85FreeNumber03" ReadOnly="true" AllowSorting="true" ColumnGroupName="Billing">                           
+                        <telerik:GridBoundColumn HeaderText="Sazba" DataField="p85FreeNumber01" ReadOnly="true" AllowSorting="true" ColumnGroupName="Billing">
                             <ItemStyle ForeColor="green" />
                         </telerik:GridBoundColumn>
-                        <telerik:GridBoundColumn HeaderText="Sazba" DataField="p85FreeNumber02" ReadOnly="true" AllowSorting="true" ColumnGroupName="Cost">    
-                            <ItemStyle ForeColor="red" />                       
-                        </telerik:GridBoundColumn>                       
-                         <telerik:GridBoundColumn HeaderText="Honorář" DataField="p85FreeNumber04" ReadOnly="true" AllowSorting="true" ColumnGroupName="Cost">                           
-                             <ItemStyle ForeColor="red" />
+                        <telerik:GridBoundColumn HeaderText="Honorář" DataField="p85FreeNumber03" ReadOnly="true" AllowSorting="true" ColumnGroupName="Billing">
+                            <ItemStyle ForeColor="green" />
+                        </telerik:GridBoundColumn>
+                        <telerik:GridBoundColumn HeaderText="Sazba" DataField="p85FreeNumber02" ReadOnly="true" AllowSorting="true" ColumnGroupName="Cost">
+                            <ItemStyle ForeColor="red" />
+                        </telerik:GridBoundColumn>
+                        <telerik:GridBoundColumn HeaderText="Honorář" DataField="p85FreeNumber04" ReadOnly="true" AllowSorting="true" ColumnGroupName="Cost">
+                            <ItemStyle ForeColor="red" />
                         </telerik:GridBoundColumn>
                         <telerik:GridTemplateColumn DataField="p85OtherKey2" UniqueName="p85OtherKey2">
                             <ItemTemplate>
@@ -278,13 +294,10 @@
                 <asp:ImageButton ID="cmdNewP49" runat="server" ImageUrl="Images/new.png" ToolTip="Nová položka" OnClientClick="return p49_new()" CssClass="button-link" />
                 <asp:ImageButton ID="cmdEditP49" runat="server" ImageUrl="Images/edit.png" ToolTip="Upravit" OnClientClick="return p49_record(false)" CssClass="button-link" />
                 <asp:ImageButton ID="cmdCloneP49" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat položku" OnClientClick="return p49_clone()" CssClass="button-link" />
-                <span>Výdaje celkem:</span>
-                <asp:Label ID="total_expense" runat="server" CssClass="valboldred"></asp:Label>
-                <span>Příjmy celkem:</span>
-                <asp:Label ID="total_income" runat="server" CssClass="valboldblue"></asp:Label>
+
             </div>
             <uc:datagrid ID="gridP49" runat="server" ClientDataKeyNames="pid" OnRowDblClick="RowDoubleClick" OnRowSelected="RowSelected"></uc:datagrid>
-            
+
             <asp:HiddenField ID="hidP49_p85ID" runat="server" />
         </telerik:RadPageView>
     </telerik:RadMultiPage>
@@ -310,6 +323,80 @@
             </div>
         </div>
     </asp:Panel>
+
+    <div class="content-box2" style="margin-top:20px;">
+        <div class="title">
+            Výsledovka rozpočtu
+            <asp:Button ID="cmdRefreshStatement" runat="server" CssClass="cmd" Text="Přepočítat" />
+        </div>
+        <div class="content">
+            <table cellpadding="10">
+                <tr>
+                    <th colspan="2">Náklady</th>
+                    
+                    <th colspan="2">Výnosy</th>
+                    
+                </tr>
+                <tr>
+                    <td>Nákladová cena hodin:
+
+                    </td>
+                    <td align="right">
+                        <asp:Label ID="total_costfee" runat="server" CssClass="valboldred"></asp:Label>
+                    </td>
+                    <td>Fakturační cena hodin:
+
+                    </td>
+                    <td align="right">
+                        <asp:Label ID="total_billingfee" runat="server" CssClass="valbold" style="color:green;"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Peněžní výdaje:
+
+                    </td>
+                    <td align="right">
+                        <asp:Label ID="total_expense" runat="server" CssClass="valboldred"></asp:Label>
+                    </td>
+                    <td>Peněžní odměny:
+
+                    </td>
+                    <td align="right">
+                        <asp:Label ID="total_income" runat="server" CssClass="valboldblue"></asp:Label>
+                    </td>
+                </tr>
+                <tr style="border-top:solid 1px gray;">
+                    <td>
+                        <img src="Images/sum.png" />
+                    </td>
+                    <td>
+                        <asp:Label ID="total_cost" runat="server" CssClass="valboldred"></asp:Label>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <asp:Label ID="total_billing" runat="server" CssClass="valboldblue"></asp:Label>
+                    </td>
+                </tr>
+                <tr style="border-top:solid 1px gray;">
+                    <td>
+                        <img src="Images/finplan.png" />
+                        <asp:Image ID="imgEmotion" runat="server" ImageUrl="Images/emotion_amazing.png" />
+                    </td>
+                    <td>
+                        <asp:Label ID="result_lost" runat="server" CssClass="valboldred"></asp:Label>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <asp:Label ID="result_profit" runat="server" CssClass="valboldblue"></asp:Label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">

@@ -317,12 +317,19 @@ Public Class p45_project
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
 
-        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = "p46")
-        grid1.DataSource = lis
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        grid1.DataSource = lis.Where(Function(p) p.p85Prefix = "p46")
+
+        RecalcStatement(lis)
     End Sub
 
     Private Sub cmdInsertPersons_Click(sender As Object, e As EventArgs) Handles cmdInsertPersons.Click
-        Dim b As Boolean = False
+        Dim b As Boolean = False, mq As New BO.myQueryP32
+        mq.p33ID = BO.p33IdENUM.Cas
+        mq.Billable = BO.BooleanQueryMode.TrueQuery
+        Dim lisP32 As IEnumerable(Of BO.p32Activity) = Master.Factory.p32ActivityBL.GetList(mq)
+        Dim datRate As Date = Now, intP32ID As Integer = lisP32(0).PID
+        If Not Me.p45PlanFrom.IsEmpty Then datRate = Me.p45PlanFrom.SelectedDate
         For Each ri As RepeaterItem In rpJ02.Items
             With CType(ri.FindControl("Person"), CheckBox)
                 If .Checked Then
@@ -335,6 +342,8 @@ Public Class p45_project
                         .p85Prefix = "p46"
                         .p85OtherKey1 = intJ02ID
                         .p85FreeText01 = cJ02.FullNameDesc
+                        .p85FreeNumber01 = Master.Factory.p31WorksheetBL.LoadRate(False, datRate, intJ02ID, Master.DataPID, intP32ID, 0)    'fakturační sazba
+                        .p85FreeNumber02 = Master.Factory.p31WorksheetBL.LoadRate(True, datRate, intJ02ID, Master.DataPID, intP32ID, 0)    'nákladová sazba
                     End With
                     Master.Factory.p85TempBoxBL.Save(cTemp)
                 End If
@@ -361,15 +370,52 @@ Public Class p45_project
     End Sub
     
     Private Sub gridP49_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridP49.NeedDataSource
-        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False).Where(Function(p) p.p85Prefix = "p49")
-        gridP49.DataSource = lis
-        Me.total_expense.Text = BO.BAS.FN(lis.Where(Function(p) p.p85OtherKey6 = 1).Sum(Function(p) p.p85FreeFloat01))
-        Me.total_income.Text = BO.BAS.FN(lis.Where(Function(p) p.p85OtherKey6 = 2).Sum(Function(p) p.p85FreeFloat01))
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False)
+        gridP49.DataSource = lis.Where(Function(p) p.p85Prefix = "p49")
+        RecalcStatement(lis)
 
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         gridP49.Rebind(True)
         ShowNeedSaveMessage()
+    End Sub
+
+    Private Sub cmdRefreshStatement_Click(sender As Object, e As EventArgs) Handles cmdRefreshStatement.Click
+        RecalcStatement(Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False))
+        
+    End Sub
+
+    Private Sub RecalcStatement(lis As IEnumerable(Of BO.p85TempBox))
+        Me.result_profit.Text = "" : Me.result_lost.Text = ""
+        Dim dblExpenses As Double = lis.Where(Function(p) p.p85Prefix = "p49" And p.p85OtherKey6 = 1).Sum(Function(p) p.p85FreeFloat01)
+        Dim dblIncome As Double = lis.Where(Function(p) p.p85Prefix = "p49" And p.p85OtherKey6 = 2).Sum(Function(p) p.p85FreeFloat01)
+
+        Me.total_expense.Text = BO.BAS.FN(dblExpenses)
+        Me.total_income.Text = BO.BAS.FN(dblIncome)
+
+        lis = lis.Where(Function(p) p.p85Prefix = "p46")
+        Dim dblCostFee As Double = lis.Sum(Function(p) (p.p85FreeFloat01 + p.p85FreeFloat02) * p.p85FreeNumber02)
+        Dim dblBillingFee As Double = lis.Sum(Function(p) p.p85FreeFloat01 * p.p85FreeNumber01)
+        Me.total_costfee.Text = BO.BAS.FN(dblCostFee)
+        Me.total_billingfee.Text = BO.BAS.FN(dblBillingFee)
+
+        Me.total_cost.Text = BO.BAS.FN(dblExpenses + dblCostFee)
+        Me.total_billing.Text = BO.BAS.FN(dblIncome + dblBillingFee)
+
+        Dim dblResult As Double = (dblIncome + dblBillingFee) - (dblExpenses + dblCostFee)
+        Select Case dblResult
+            Case Is > 0
+                Me.result_profit.Text = BO.BAS.FN(dblResult)
+                imgEmotion.ImageUrl = "Images/emotion_happy.png"
+            Case Is < 0
+                Me.result_lost.Text = BO.BAS.FN(dblResult)
+                imgEmotion.ImageUrl = "Images/emotion_unhappy.png"
+            Case 0
+                Me.result_profit.Text = "?"
+                imgEmotion.ImageUrl = "Images/emotion_amazing.png"
+        End Select
+        
+
     End Sub
 End Class

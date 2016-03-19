@@ -26,8 +26,8 @@ Class p45BudgetBL
     End Sub
     Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean Implements Ip45BudgetBL.Save
         With cRec
-            If BO.BAS.IsNullDBDate(.p45PlanFrom) Is Nothing Then _Error = "Chybí začátek rozpočtu." : Return False
-            If BO.BAS.IsNullDBDate(.p45PlanUntil) Is Nothing Then _Error = "Chybí konec rozpočtu." : Return False
+            If BO.BAS.IsNullDBDate(.p45PlanFrom) Is Nothing Then _Error = "Chybí datum plánovaného zahájení." : Return False
+            If BO.BAS.IsNullDBDate(.p45PlanUntil) Is Nothing Then _Error = "Chybí datum plánovaného dokončení." : Return False
             If .p45PlanFrom > .p45PlanUntil Then _Error = "Plánované dokončení musí být větší než než plánované zahájení." : Return False
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt." : Return False
             If .PID = 0 Then

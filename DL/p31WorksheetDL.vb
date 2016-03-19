@@ -839,4 +839,30 @@
 
         Return _cDB.GetList(Of BO.ApprovingFramework)(s, pars)
     End Function
+
+    Public Function LoadRate(bolCostRate As Boolean, dat As Date, intJ02ID As Integer, intP41ID As Integer, intP32ID As Integer, ByRef intRetJ27ID As Integer) As Double
+        Dim pars As New DbParameters, dblRate As Double = 0
+        intRetJ27ID = 0
+        With pars
+            .Add("date_rate", dat, DbType.DateTime)
+            If bolCostRate Then
+                .Add("pricelisttype", 2, DbType.Int32)
+            Else
+                .Add("pricelisttype", 1, DbType.Int32)
+            End If
+            .Add("p41id", BO.BAS.IsNullDBKey(intP41ID), DbType.Int32)
+            .Add("j02id", BO.BAS.IsNullDBKey(intJ02ID), DbType.Int32)
+            .Add("p32id", BO.BAS.IsNullDBKey(intP32ID), DbType.Int32)
+            .Add("ret_j27id", , DbType.Int32, ParameterDirection.Output)
+            .Add("ret_rate", , DbType.Double, ParameterDirection.Output)
+        End With
+        If _cDB.RunSP("p31_getrate_tu", pars) Then
+            intRetJ27ID = pars.Get(Of Integer)("ret_j27id")
+            dblRate = pars.Get(Of Double)("ret_rate")
+
+            Return dblRate
+        Else
+            Return 0
+        End If
+    End Function
 End Class
