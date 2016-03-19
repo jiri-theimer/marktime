@@ -869,6 +869,42 @@ Partial Public Class p41_framework_detail
     Protected WithEvents panP45 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''p45ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p45ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdP45 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdP45 As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''gridP46 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gridP46 As Global.UI.datagrid
+
+    '''<summary>
+    '''gridBudgetExpense control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gridBudgetExpense As Global.UI.datagrid
+
+    '''<summary>
     '''hiddatapid_subform control.
     '''</summary>
     '''<remarks>

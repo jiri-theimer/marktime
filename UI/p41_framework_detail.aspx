@@ -12,6 +12,7 @@
 <%@ Register TagPrefix="uc" TagName="p56_subgrid" Src="~/p56_subgrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p31_bigsummary" Src="~/p31_bigsummary.ascx" %>
+<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -352,8 +353,8 @@
                 <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
                     <ContentTemplate>
                         <div style="float: left; min-width: 200px;">
-                            
-                           
+
+
                             <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
                                 <img src="Images/pivot.png" />
                                 <a href="p31_pivot.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za projekt</a>
@@ -376,10 +377,10 @@
                                 <img src="Images/calendar.png" />
                                 <asp:HyperLink ID="cmdO22" runat="server" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" />
                             </asp:Panel>
-                            <asp:panel ID="panB07" runat="server" cssclass="menu-group-item">
+                            <asp:Panel ID="panB07" runat="server" CssClass="menu-group-item">
                                 <img src="Images/comment.png" />
                                 <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat k projektu komentář" NavigateUrl="javascript:b07_record();" />
-                            </asp:panel>
+                            </asp:Panel>
 
 
                             <div class="menu-group-title">
@@ -409,7 +410,7 @@
                                 <img src="Images/plan.png" />
                                 <asp:HyperLink ID="cmdP47" runat="server" Text="Kapacitní" NavigateUrl="javascript:p47_plan()"></asp:HyperLink>
 
-                            
+
                                 <img src="Images/finplan.png" />
                                 <asp:HyperLink ID="cmdP49" runat="server" Text="Finanční" NavigateUrl="javascript:p49_plan()"></asp:HyperLink>
 
@@ -437,7 +438,7 @@
         <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář projektu" CssClass="toplink" NavigateUrl="javascript:scheduler()"></asp:HyperLink>
     </div>
 
-    
+
 
     <div class="content-box1">
         <div class="title">
@@ -490,19 +491,19 @@
                         <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
                     </td>
                 </tr>
-                <tr id="trPlan" runat="server" style="vertical-align:top;">
+                <tr id="trPlan" runat="server" style="vertical-align: top;">
                     <td>
                         <asp:Label ID="lblPlan" runat="server" Text="Plánování:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <asp:Label ID="PlanPeriod" runat="server" CssClass="val"></asp:Label>
                         <div>
-                        <img src="Images/plan.png" />
-                        <a href="javascript: p47_plan()">Kapacitní plán</a>
-                        <img src="Images/finplan.png" />
-                        <a href="javascript: p49_plan()">Finanční plán</a>
-                        <img src="Images/oplan.png" />
-                        <a href="javascript: p48_plan()">Operativní plán</a>
+                            <img src="Images/plan.png" />
+                            <a href="javascript: p47_plan()">Kapacitní plán</a>
+                            <img src="Images/finplan.png" />
+                            <a href="javascript: p49_plan()">Finanční plán</a>
+                            <img src="Images/oplan.png" />
+                            <a href="javascript: p48_plan()">Operativní plán</a>
                         </div>
 
                     </td>
@@ -540,13 +541,13 @@
             </table>
             <div>
                 <asp:HyperLink ID="cmdLog" runat="server" Text="Historie projektu" NavigateUrl="javascript: timeline()"></asp:HyperLink>
-                
-                
+
+
             </div>
 
         </div>
     </div>
-    
+
     <asp:Panel ID="boxP40" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/worksheet_recurrence.png" style="margin-right: 10px;" />
@@ -578,13 +579,13 @@
         <div class="title">
             <img src="Images/person.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby projektu"></asp:Label>
-            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" style="margin-left:20px;"></asp:HyperLink>
+            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" Style="margin-left: 20px;"></asp:HyperLink>
         </div>
         <div class="content">
             <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>
         </div>
     </asp:Panel>
-    
+
     <asp:Panel ID="boxFF" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/form.png" style="margin-right: 10px;" />
@@ -630,7 +631,7 @@
             <telerik:RadTab Text="Rozpočet" Value="5"></telerik:RadTab>
             <telerik:RadTab Text="Vystavené faktury" Value="2"></telerik:RadTab>
             <telerik:RadTab Text="Komentáře a workflow" Value="3"></telerik:RadTab>
-            <telerik:RadTab Text="x" Value="0"></telerik:RadTab>
+            <telerik:RadTab Text="x" Value="0" ToolTip="Nezobrazovat pod-přehled"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
 
@@ -644,7 +645,12 @@
     <uc:p91_subgrid ID="gridP91" runat="server" x29ID="p41Project" />
 
     <asp:Panel ID="panP45" runat="server" Visible="false">
-        <button type="button" onclick="p45_detail()" class="cmd">Upravit rozpočet</button>
+        <div>
+            <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName"></asp:DropDownList>
+            <button type="button" id="cmdP45" runat="server" onclick="p45_detail()" class="cmd">Nastavení rozpočtu</button>
+        </div>
+        <uc:datagrid ID="gridP46" runat="server"></uc:datagrid>
+        <uc:datagrid ID="gridBudgetExpense" runat="server"></uc:datagrid>
     </asp:Panel>
 
     <asp:HiddenField ID="hiddatapid_subform" runat="server" />

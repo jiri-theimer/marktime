@@ -406,7 +406,7 @@ Public Class p45_project
         Dim dblResult As Double = (dblIncome + dblBillingFee) - (dblExpenses + dblCostFee)
         Select Case dblResult
             Case Is > 0
-                Me.result_profit.Text = BO.BAS.FN(dblResult)
+                Me.result_profit.Text = "+" + BO.BAS.FN(dblResult)
                 imgEmotion.ImageUrl = "Images/emotion_happy.png"
             Case Is < 0
                 Me.result_lost.Text = BO.BAS.FN(dblResult)

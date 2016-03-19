@@ -128,4 +128,16 @@
         s += " WHERE a.p45ID=@p45id ORDER BY j02.j02LastName,j02.j02FirstName"
         Return _cDB.GetList(Of BO.p46BudgetPerson)(s, New With {.p45id = intPID})
     End Function
+    Public Function GetList_p46_extended(intPID As Integer, intP41ID As Integer) As IEnumerable(Of BO.p46BudgetPersonExtented)
+        Dim pars As New DbParameters
+        pars.Add("p45id", intPID, DbType.Int32)
+        pars.Add("p41id", intP41ID, DbType.Int32)
+        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as _Person,timesheet.TimesheetFa,timesheet.TimesheetNeFa," & bas.RecTail("p46", "a")
+        s += ",timesheet.TimeshetAmountBilling,timesheet.TimesheetAmountCost"
+        s += " FROM p46BudgetPerson a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
+        s += " LEFT OUTER JOIN (select xa.j02ID,sum(case when p32.p32IsBillable=1 THEN xa.p31Hours_Orig end) as TimesheetFa,sum(case when p32.p32IsBillable=0 THEN xa.p31Hours_Orig end) as TimesheetNeFa,sum(xa.p31Amount_WithoutVat_Orig) as TimeshetAmountBilling,sum(xa.p31Amount_Internal) as TimesheetAmountCost"
+        s += " FROM p31Worksheet xa INNER JOIN p32Activity p32 ON xa.p32ID=p32.p32ID WHERE xa.p41ID=@p41id GROUP BY xa.j02ID) timesheet ON a.j02ID=timesheet.j02ID"
+        s += " WHERE a.p45ID=@p45id ORDER BY j02.j02LastName,j02.j02FirstName"
+        Return _cDB.GetList(Of BO.p46BudgetPersonExtented)(s, pars)
+    End Function
 End Class

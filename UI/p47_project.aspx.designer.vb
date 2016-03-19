@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class p47_project
 
     '''<summary>
+    '''panHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panHeader As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''lblP45 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblP45 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p45ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p45ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cmdAddPerson control.
     '''</summary>
     '''<remarks>

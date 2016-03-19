@@ -21,7 +21,7 @@ Public Class p46BudgetPerson
 
     Public Property IsSetAsDeleted As Boolean
 
-    Private Property _Person As String
+    Friend Property _Person As String
     Public ReadOnly Property Person As String
         Get
             Return _Person
@@ -36,6 +36,40 @@ Public Class p46BudgetPerson
     Public ReadOnly Property BillingAmount As Double
         Get
             Return Me.p46BillingRate * Me.p46HoursBillable
+        End Get
+    End Property
+End Class
+
+Public Class p46BudgetPersonExtented
+    Inherits p46BudgetPerson
+
+    Public Property TimesheetFa As Double?
+    Public Property TimesheetNeFa As Double?
+    Public Property OperFa As Double?
+    Public Property OperNeFa As Double?
+
+    Public ReadOnly Property TimesheetAll As Double?
+        Get
+            If Me.TimesheetFa Is Nothing Then
+                Return Me.TimesheetNeFa
+            Else
+                If Me.TimesheetNeFa Is Nothing Then
+                    Return Me.TimesheetFa
+                Else
+                    Return Me.TimesheetNeFa + Me.TimesheetFa
+                End If
+            End If
+        End Get
+    End Property
+    Public Property TimeshetAmountBilling As Double?
+    Public Property TimesheetAmountCost As Double?
+    Public ReadOnly Property TimesheetAllVersusBudget As Double
+        Get
+            If Me.TimesheetAll Is Nothing Then
+                Return Me.p46HoursTotal * -1
+            Else
+                Return Me.TimesheetAll - Me.p46HoursTotal
+            End If
         End Get
     End Property
 End Class

@@ -291,18 +291,10 @@
             If .DateUntil < DateSerial(3000, 1, 1) Then
                 s.Append(" AND a.p31Date<=@dateuntil") : pars.Add("dateuntil", .DateUntil, DbType.DateTime)
             End If
-            ''Select Case .QuickQuery
-            ''    Case BO.myQueryP31_QuickQuery.Approved
-            ''        s.Append(" AND a.p71ID=1 AND a.p91ID IS NULL")
-            ''    Case BO.myQueryP31_QuickQuery.Editing
-            ''        s.Append(" AND a.p71ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil")
-            ''    Case BO.myQueryP31_QuickQuery.Invoiced
-            ''        s.Append(" AND a.p91ID IS NOT NULL")
-            ''    Case BO.myQueryP31_QuickQuery.MovedToBin
-            ''        s.Append(" AND getdate() NOT BETWEEN a.p31ValidFrom AND a.p31ValidUntil")
-            ''    Case BO.myQueryP31_QuickQuery.EditingOrMovedToBin
-            ''        s.Append(" AND a.p71ID IS NULL")
-            ''End Select
+            If Not .IsExpenses Is Nothing Then
+                If .IsExpenses Then s.Append(" AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1")
+            End If
+       
             If .j70ID > 0 Then
                 Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID)
                 If strQueryW <> "" Then
@@ -865,4 +857,22 @@
             Return 0
         End If
     End Function
+
+    Public Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
+        Dim pars As New DbParameters
+
+        Dim s As String = "select a.p32ID,min(p32.p34ID) as p34ID, min(j27.j27Code) as j27Code,SUM(a.p31Amount_WithoutVat_Orig) as AmountWithoutVat,COUNT(a.p31ID) as Pocet"
+        s += ",MIN(p34.p34Name) as p34Name,MIN(p32.p32Name) as p32Name"
+        s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
+        s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
+
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        If strW <> "" Then s += " WHERE " & strW
+
+
+        s += " GROUP BY a.j27ID_Billing_Orig,a.p32ID"
+
+        Return _cDB.GetList(Of BO.WorksheetExpenseSummary)(s, pars)
+    End Function
+
 End Class

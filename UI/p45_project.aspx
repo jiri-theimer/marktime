@@ -149,7 +149,7 @@
         <Tabs>
             <telerik:RadTab Text="Základní vlastnosti" Value="p45"></telerik:RadTab>
             <telerik:RadTab Text="Rozpočet hodin" Selected="true" Value="p46"></telerik:RadTab>
-            <telerik:RadTab Text="Rozpočet peněžních výdajů a příjmů" Value="p49"></telerik:RadTab>
+            <telerik:RadTab Text="Rozpočet peněžních výdajů a fixních příjmů" Value="p49"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
@@ -358,7 +358,7 @@
                     <td align="right">
                         <asp:Label ID="total_expense" runat="server" CssClass="valboldred"></asp:Label>
                     </td>
-                    <td>Peněžní odměny:
+                    <td>Fixní odměny:
 
                     </td>
                     <td align="right">
@@ -385,13 +385,14 @@
                         <asp:Image ID="imgEmotion" runat="server" ImageUrl="Images/emotion_amazing.png" />
                     </td>
                     <td>
+                        
+                    </td>
+                    <td>
                         <asp:Label ID="result_lost" runat="server" CssClass="valboldred"></asp:Label>
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
                         <asp:Label ID="result_profit" runat="server" CssClass="valboldblue"></asp:Label>
+                    </td>
+                    <td>
+                        
                     </td>
                 </tr>
             </table>

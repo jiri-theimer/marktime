@@ -265,7 +265,7 @@ Public Class datagrid
         col.AllowSorting = bolAllowSorting
     End Sub
 
-    Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional ByVal colformat As BO.cfENUM = BO.cfENUM.AnyString, Optional ByVal bolAllowSorting As Boolean = True, Optional ByVal bolVisible As Boolean = True, Optional ByVal strUniqueName As String = "", Optional strHeaderTooltip As String = "", Optional bolShowTotals As Boolean = False, Optional bolAllowFiltering As Boolean = True)
+    Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional ByVal colformat As BO.cfENUM = BO.cfENUM.AnyString, Optional ByVal bolAllowSorting As Boolean = True, Optional ByVal bolVisible As Boolean = True, Optional ByVal strUniqueName As String = "", Optional strHeaderTooltip As String = "", Optional bolShowTotals As Boolean = False, Optional bolAllowFiltering As Boolean = True, Optional strGroupName As String = "")
         Select Case colformat
             Case BO.cfENUM.Checkbox
                 AddCheckboxColumn(strField, strHeader, bolAllowSorting, bolVisible)
@@ -290,7 +290,7 @@ Public Class datagrid
             col.AutoPostBackOnFilter = True
             col.CurrentFilterFunction = GridKnownFunction.StartsWith
         End If
-
+        If strGroupName <> "" Then col.ColumnGroupName = strGroupName
         Select Case colformat
             Case BO.cfENUM.DateOnly
                 col.DataFormatString = "{0:dd.MM.yyyy}"

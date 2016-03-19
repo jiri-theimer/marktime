@@ -64,6 +64,14 @@ Public Class p47_project
             Me.hidLimD2.Value = Format(value, "dd.MM.yyyy")
         End Set
     End Property
+    Public Property CurrentP45ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.p45ID.SelectedValue)
+        End Get
+        Set(value As Integer)
+            basUI.SelectDropdownlistValue(Me.p45ID, value.ToString)
+        End Set
+    End Property
 
     Private Sub p47_project_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -78,11 +86,19 @@ Public Class p47_project
                 .HeaderText = "Kapacitní plán | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
             End With
            
+            SetupP45Combo()
+            Me.CurrentP45ID = BO.BAS.IsNullInt(p45ID.SelectedValue)
 
             RefreshRecord()
 
 
         End If
+    End Sub
+
+    Private Sub SetupP45Combo()
+        Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
+        Me.p45ID.DataSource = lis
+        Me.p45ID.DataBind()
     End Sub
 
     Private Sub AddGroupHeader(strName As String, strHeaderText As String)
@@ -207,14 +223,13 @@ Public Class p47_project
     Private Sub RefreshRecord()
         Dim mq As New BO.myQueryP47, d1 As Date = DateSerial(Year(Now), 1, 1), d2 As Date = DateSerial(Year(Now), 12, 31)
 
-        mq.p41ID = Master.DataPID
-        Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
-        If cRec.p41PlanFrom Is Nothing Or cRec.p41PlanUntil Is Nothing Then
-            Master.StopPage("Pro kapacitní plánování je nutné mít v projektu nastavené datumy [Plánované zahájení] a [Plánované dokončení].")
-        End If
-        lblHeader.Text = BO.BAS.FD(cRec.p41PlanFrom) & " - " & BO.BAS.FD(cRec.p41PlanUntil) & " (" & DateDiff(DateInterval.Day, cRec.p41PlanFrom.Value, cRec.p41PlanUntil.Value).ToString & "d.)"
+        mq.p45ID = Me.CurrentP45ID
+        Dim cRec As BO.p45Budget = Master.Factory.p45BudgetBL.Load(Me.CurrentP45ID)
+        
+        lblHeader.Text = BO.BAS.FD(cRec.p45PlanFrom) & " - " & BO.BAS.FD(cRec.p45PlanUntil) & " (" & DateDiff(DateInterval.Day, cRec.p45PlanFrom, cRec.p45PlanUntil).ToString & "d.)"
         If Not Page.IsPostBack Then
-            Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+            Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(cRec.p41ID)
+            Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)
             If cDisp.p47_Create Then
                 Master.AddToolbarButton("Uložit změny", "save", 0, "Images/save.png")
 
@@ -225,8 +240,8 @@ Public Class p47_project
         End If
 
         With cRec
-            d1 = DateSerial(Year(.p41PlanFrom), Month(.p41PlanFrom), 1)
-            d2 = DateSerial(Year(.p41PlanUntil), Month(.p41PlanUntil), 1).AddMonths(1).AddDays(-1)
+            d1 = DateSerial(Year(.p45PlanFrom), Month(.p45PlanFrom), 1)
+            d2 = DateSerial(Year(.p45PlanUntil), Month(.p45PlanUntil), 1).AddMonths(1).AddDays(-1)
         End With
         Dim d As Date = d1
         Me.m1.Items.Clear() : Me.m2.Items.Clear()

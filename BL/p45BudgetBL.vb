@@ -6,6 +6,7 @@ Public Interface Ip45BudgetBL
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP41ID As Integer, Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget)
     Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson)
+    Function GetList_p46_extended(intPID As Integer, intP41ID As Integer) As IEnumerable(Of BO.p46BudgetPersonExtented)
 End Interface
 Class p45BudgetBL
     Inherits BLMother
@@ -72,5 +73,8 @@ Class p45BudgetBL
     End Function
     Public Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson) Implements Ip45BudgetBL.GetList_p46
         Return _cDL.GetList_p46(intPID)
+    End Function
+    Public Function GetList_p46_extended(intPID As Integer, intP41ID As Integer) As IEnumerable(Of BO.p46BudgetPersonExtented) Implements Ip45BudgetBL.GetList_p46_extended
+        Return _cDL.GetList_p46_extended(intPID, intP41ID)
     End Function
 End Class

@@ -189,6 +189,7 @@
     <Compile Include="BAS\clsFile.vb" />
     <Compile Include="BAS\clsTime.vb" />
     <Compile Include="Helpers\Worksheet\p31ValidateBeforeSave.vb" />
+    <Compile Include="Helpers\Worksheet\WorksheetExpenseSummary.vb" />
     <Compile Include="Mother\BOMother.vb" />
     <Compile Include="Mother\BOMotherFT.vb" />
     <Compile Include="Mother\BOMotherNN.vb" />

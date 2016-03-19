@@ -36,6 +36,8 @@ Public Class myQueryP31
     Public Property p71ID As p71IdENUM?
     Public Property p72ID As p72IdENUM?
 
+    Public Property IsExpenses As Boolean? = Nothing
+
 
 
     Public Property Billable As BooleanQueryMode = BooleanQueryMode.NoQuery

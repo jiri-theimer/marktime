@@ -59,21 +59,6 @@ Public Class p41_framework_detail
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-                    ''If Request.Item("force") = "" Then
-                    ''    If Request.Item("changemode") = "1" Then
-                    ''        .SetUserParam("p41_framework_detail-mode", "detail")
-                    ''    Else
-                    ''        Select Case .GetUserParam("p41_framework_detail-mode", "detail")
-                    ''            Case "timeline"
-                    ''                'přesměrovat na timeline
-                    ''                Server.Transfer("entity_framework_detail_timeline.aspx?prefix=p41&pid=" & Master.DataPID.ToString)
-                    ''            Case "tasks"
-                    ''                Server.Transfer("entity_framework_detail_tasks.aspx?prefix=p41&pid=" & Master.DataPID.ToString)
-                    ''            Case "approving"
-                    ''                Server.Transfer("entity_framework_detail_approving.aspx?prefix=p41&pid=" & Master.DataPID.ToString)
-                    ''        End Select
-                    ''    End If
-                    ''End If
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
 
@@ -104,6 +89,8 @@ Public Class p41_framework_detail
                     gridP56.Visible = True
                 Case SubgridType.p91
                     gridP91.Visible = True
+                Case SubgridType.p45
+                    SetupGridBudget()
             End Select
 
             RefreshRecord()
@@ -303,6 +290,16 @@ Public Class p41_framework_detail
 
         If Me.CurrentSubgrid = SubgridType.p45 Then
             panP45.Visible = True
+            Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
+            If lis.Count > 0 Then
+                Me.p45ID.DataSource = lis
+                Me.p45ID.DataBind()
+                cmdP45.InnerText = "Nastavení rozpočtu"
+            Else
+                Me.p45ID.Visible = False
+                cmdP45.InnerText = "Založit rozpočet"
+            End If
+
         Else
             panP45.Visible = False
         End If
@@ -575,5 +572,84 @@ Public Class p41_framework_detail
     Private Sub opgSubgrid_TabClick(sender As Object, e As RadTabStripEventArgs) Handles opgSubgrid.TabClick
         Master.Factory.j03UserBL.SetUserParam("p41_framework_detail-subgrid", Me.opgSubgrid.SelectedTab.Value)
         ReloadPage(Master.DataPID.ToString)
+    End Sub
+
+    Private Sub SetupGridBudget()
+        With gridP46
+            .ClearColumns()
+            .radGridOrig.ShowFooter = True
+            .radGridOrig.AllowSorting = False
+            .radGridOrig.HeaderStyle.HorizontalAlign = HorizontalAlign.Center
+            .PageSize = 20
+            Dim group As New Telerik.Web.UI.GridColumnGroup
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "rozpocet_hodiny" : group.HeaderText = "Hodiny rozpočtu"
+            group = New Telerik.Web.UI.GridColumnGroup
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "rozpocet_cena" : group.HeaderText = "Cena rozpočtu"
+            group = New Telerik.Web.UI.GridColumnGroup
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "timesheet_hodiny" : group.HeaderText = "Vykázané hodiny"
+            group = New Telerik.Web.UI.GridColumnGroup
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "timesheet_cena" : group.HeaderText = "Cena"
+
+            .AddColumn("Person", "Osoba", , True)
+            .AddColumn("p46HoursBillable", "Fa", BO.cfENUM.Numeric0, , , , , True, , "rozpocet_hodiny")
+            .AddColumn("p46HoursNonBillable", "NeFa", BO.cfENUM.Numeric0, , , , , True, , "rozpocet_hodiny")
+            .AddColumn("p46HoursTotal", "Celkem", BO.cfENUM.Numeric0, , , , , True, , "rozpocet_hodiny")
+
+            .AddColumn("BillingAmount", "Fakturační", BO.cfENUM.Numeric, , , , , True, , "rozpocet_cena")
+            .AddColumn("CostAmount", "Nákladová", BO.cfENUM.Numeric, , , , , True, , "rozpocet_cena")
+           
+            .AddColumn("TimesheetFa", "Fa", BO.cfENUM.Numeric2, , , , , True, , "timesheet_hodiny")
+            .AddColumn("TimesheetNeFa", "NeFa", BO.cfENUM.Numeric2, , , , , True, , "timesheet_hodiny")
+            .AddColumn("TimesheetAll", "Celkem", BO.cfENUM.Numeric2, , , , , True, , "timesheet_hodiny")
+            .AddColumn("TimesheetAllVersusBudget", "+-", BO.cfENUM.Numeric, False, , , , True, , "timesheet_hodiny")
+            
+            .AddColumn("TimeshetAmountBilling", "Fakturační", BO.cfENUM.Numeric2, , , , , True, , "timesheet_cena")
+            .AddColumn("TimesheetAmountCost", "Nákladová", BO.cfENUM.Numeric2, , , , , True, , "timesheet_cena")
+
+        End With
+        With Me.gridBudgetExpense
+            .ClearColumns()
+            .radGridOrig.ShowFooter = True
+            .AddColumn("p34Name", "Sešit")
+            .AddColumn("p32Name", "Aktivita")
+            .AddColumn("AmountWithoutVat", "Vykázáno bez DPH", BO.cfENUM.Numeric, , , , , True)
+            .AddColumn("Pocet", "Počet", BO.cfENUM.Numeric0)
+        End With
+    End Sub
+
+    Private Sub gridP46_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridP46.ItemDataBound
+        If Not TypeOf e.Item Is GridDataItem Or gridP46.Visible = False Then Return
+        
+        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        Dim cRec As BO.p46BudgetPersonExtented = CType(e.Item.DataItem, BO.p46BudgetPersonExtented)
+        If cRec.TimesheetAllVersusBudget > 0 Then
+            'vykázáno přes rozpočet
+            dataItem.ForeColor = Drawing.Color.Red
+        End If
+    End Sub
+
+    Private Sub gridP46_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridP46.NeedDataSource
+        If Me.p45ID.Items.Count = 0 Then
+            gridP46.Visible = False
+            Return
+        End If
+        Dim intP45ID As Integer = CInt(Me.p45ID.SelectedValue)
+        Dim lis As IEnumerable(Of BO.p46BudgetPersonExtented) = Master.Factory.p45BudgetBL.GetList_p46_extended(intP45ID, Master.DataPID)
+        gridP46.DataSource = lis
+
+
+    End Sub
+
+    Private Sub gridBudgetExpense_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridBudgetExpense.NeedDataSource
+        Dim mq As New BO.myQueryP31
+        mq.p41ID = Master.DataPID
+        mq.IsExpenses = True
+        Dim lis As IEnumerable(Of BO.WorksheetExpenseSummary) = Master.Factory.p31WorksheetBL.GetList_ExpenseSummary(mq)
+        Me.gridBudgetExpense.DataSource = lis
+
     End Sub
 End Class
