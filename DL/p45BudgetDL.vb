@@ -48,7 +48,7 @@
             If _cDB.SaveRecord("p45Budget", pars, bolINSERT, strW, True, _curUser.j03Login) Then
                 Dim intLastSavedP45ID As Integer = _cDB.LastSavedRecordPID
                 If Not lisP46 Is Nothing Then
-                    For Each c In lisP46
+                    For Each c In lisP46.Where(Function(p) p.PID <> 0 Or (p.PID = 0 And p.IsSetAsDeleted = False))
                         pars = New DbParameters
                         If c.PID = 0 Then
                             bolINSERT = True : strW = ""

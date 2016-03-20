@@ -128,7 +128,22 @@
             });
         }
 
+        function trydel() {
+            
+            if (confirm("Opravdu odstranit tuto verzi rozpočtu?")) {
+                hardrefresh(0, "delete");
+                return (true);
+            }
+            else {
+                return (false);
+            }
+        }
+        function hardrefresh(pid, flag) {
+            
 
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
@@ -136,7 +151,7 @@
         <asp:Label ID="lblP45" runat="server" CssClass="lbl" Text="Pracovat ve verzi rozpočtu:"></asp:Label>
         <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName"></asp:DropDownList>
         <asp:Button ID="cmdNewVersion" runat="server" Text="Založit novou verzi rozpočtu" CssClass="cmd" />
-        <asp:Button ID="cmdDeleteVersion" runat="server" Text="Odstranit tuto verzi rozpočtu" CssClass="cmd" />
+        <asp:Button ID="cmdDeleteVersion" runat="server" Text="Odstranit tuto verzi rozpočtu" CssClass="cmd" OnClientClick="return trydel()" />
 
     </asp:Panel>
 
@@ -399,7 +414,7 @@
         </div>
     </div>
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
-
+    
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 
         <SpecialDays>
@@ -440,12 +455,7 @@
             dialog_master("p45_project_p49.aspx?p45id=<%=Me.CurrentP45ID%>&guid=<%=ViewState("guid")%>&clone=1&pid=" + pid, false, "800", "600");
             return (false);
         }
-        function hardrefresh(pid, flag) {
-
-
-            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
-
-        }
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

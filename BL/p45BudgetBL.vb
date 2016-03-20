@@ -48,7 +48,7 @@ Class p45BudgetBL
                         Dim lis As IEnumerable(Of BO.p47CapacityPlan) = lisP47.Where(Function(p) p.j02ID = c.j02ID)
                         If lis.Count > 0 Then
                             If lis.Sum(Function(p) p.p47HoursTotal) > c.p46HoursTotal Then
-                                _Error = String.Format("[{0}]: Již existuje kapacitní plán({1}), který by překročil hodiny v rozpočtu ({2}).", Factory.j02PersonBL.Load(c.j02ID).FullNameAsc, lis.Sum(Function(p) p.p47HoursTotal), c.p46HoursTotal) : Return False
+                                _Error = String.Format("[{0}]: Již existuje kapacitní plán({1}h.), který by překročil hodiny v rozpočtu ({2}h.).", Factory.j02PersonBL.Load(c.j02ID).FullNameAsc, lis.Sum(Function(p) p.p47HoursTotal), c.p46HoursTotal) : Return False
                             End If
                         End If
                     Next

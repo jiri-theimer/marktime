@@ -399,6 +399,8 @@ Public Class p45_project
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         gridP49.Rebind(True)
         ShowNeedSaveMessage()
+
+        
     End Sub
 
     Private Sub cmdRefreshStatement_Click(sender As Object, e As EventArgs) Handles cmdRefreshStatement.Click
@@ -437,5 +439,13 @@ Public Class p45_project
         End Select
         
 
+    End Sub
+
+    Private Sub cmdDeleteVersion_Click(sender As Object, e As EventArgs) Handles cmdDeleteVersion.Click
+        If Master.Factory.p45BudgetBL.Delete(Me.CurrentP45ID) Then
+            Master.CloseAndRefreshParent("p45-delete")
+        Else
+            Master.Notify(Master.Factory.p45BudgetBL.ErrorMessage, NotifyLevel.ErrorMessage)
+        End If
     End Sub
 End Class
