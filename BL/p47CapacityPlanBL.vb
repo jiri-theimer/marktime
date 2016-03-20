@@ -24,6 +24,19 @@ Class p47CapacityPlanBL
     End Sub
 
     Public Function SaveProjectPlan(intP45ID As Integer, lisP47 As List(Of BO.p47CapacityPlan)) As Boolean Implements Ip47CapacityPlanBL.SaveProjectPlan
+        Dim lisP46 As IEnumerable(Of BO.p46BudgetPerson) = Factory.p45BudgetBL.GetList_p46(intP45ID)
+        For Each c In lisP46
+            Dim lis As IEnumerable(Of BO.p47CapacityPlan) = lisP47.Where(Function(p) p.p46ID = c.PID)
+            If lis.Sum(Function(p) p.p47HoursTotal) > c.p46HoursTotal Then
+                _Error = String.Format("[{0}]: Kapacitní plán by překročil celkový limit hodin v rozpočtu ({1})", c.Person, c.p46HoursTotal) : Return False
+            End If
+            If lis.Sum(Function(p) p.p47HoursBillable) > c.p46HoursBillable Then
+                _Error = String.Format("[{0}]: Kapacitní plán fakturovatelných hodin by překročil celkový limit fakturovatelných hodin v rozpočtu ({1})", c.Person, c.p46HoursBillable) : Return False
+            End If
+            If lis.Sum(Function(p) p.p47HoursNonBillable) > c.p46HoursNonBillable Then
+                _Error = String.Format("[{0}]: Kapacitní plán ne-fakturovatelných hodin by překročil celkový limit ne-fakturovatelných hodin v rozpočtu ({1})", c.Person, c.p46HoursNonBillable) : Return False
+            End If
+        Next
         Return _cDL.SaveProjectPlan(intP45ID, lisP47)
     End Function
     Public Function GetList(mq As BO.myQueryP47) As IEnumerable(Of BO.p47CapacityPlan) Implements Ip47CapacityPlanBL.GetList

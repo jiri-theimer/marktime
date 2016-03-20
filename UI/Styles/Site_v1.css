@@ -114,7 +114,9 @@ fieldset {
     margin: 0px;
 }
 
-
+input[type="radio"], label {
+    cursor: pointer;
+}
 
 input.cmd {
     font-size: 100%;
@@ -875,7 +877,7 @@ div.commandcell {
 /* Responsivní styly pro šířku menší než 600px
 ----------------------------------------------------------*/
 @media screen and (max-width: 600px) {
-  
+
 
     table#responsive {
         border: 0;
@@ -930,21 +932,23 @@ div.commandcell {
     }
 
     input[type="text"] {
-    width:100%;
-    }
-    input[type="password"] {
-    width:100%;
+        width: 100%;
     }
 
-    .RadComboBox  {
-    width:100% !important;
+    input[type="password"] {
+        width: 100%;
     }
+
+    .RadComboBox {
+        width: 100% !important;
+    }
+
     .RadPicker {
-    width:100% !important;
+        width: 100% !important;
     }
 
     #responsive_hide {
-    display:none;
+        display: none;
     }
 }
 

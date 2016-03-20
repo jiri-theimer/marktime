@@ -72,6 +72,7 @@ Public Class p47_project
             basUI.SelectDropdownlistValue(Me.p45ID, value.ToString)
         End Set
     End Property
+    
 
     Private Sub p47_project_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -81,13 +82,14 @@ Public Class p47_project
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("guid") = BO.BAS.GetGUID
+
             With Master
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p41id
                 .HeaderText = "Kapacitní plán | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
             End With
            
             SetupP45Combo()
-            Me.CurrentP45ID = BO.BAS.IsNullInt(p45ID.SelectedValue)
+            Me.CurrentP45ID = BO.BAS.IsNullInt(Request.Item("p45id"))
 
             RefreshRecord()
 
@@ -206,7 +208,7 @@ Public Class p47_project
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
         If TypeOf e.Item Is GridDataItem Then
             Dim cRec As PlanMatrix = CType(e.Item.DataItem, PlanMatrix)
-            e.Item.Attributes.Item("j02id") = cRec.PID.ToString
+            e.Item.Attributes.Item("p46id") = cRec.PID.ToString
 
         End If
         
@@ -222,7 +224,6 @@ Public Class p47_project
 
     Private Sub RefreshRecord()
         Dim mq As New BO.myQueryP47, d1 As Date = DateSerial(Year(Now), 1, 1), d2 As Date = DateSerial(Year(Now), 12, 31)
-
         mq.p45ID = Me.CurrentP45ID
         Dim cRec As BO.p45Budget = Master.Factory.p45BudgetBL.Load(Me.CurrentP45ID)
         
@@ -232,9 +233,7 @@ Public Class p47_project
             Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)
             If cDisp.p47_Create Then
                 Master.AddToolbarButton("Uložit změny", "save", 0, "Images/save.png")
-
             Else
-                cmdAddPerson.Visible = False
                 Master.Notify("Kapacitní plán projektu můžete pouze číst, nikoliv upravovat.")
             End If
         End If
@@ -264,17 +263,14 @@ Public Class p47_project
         mq.DateFrom = d1
         mq.DateUntil = d2
 
-        Dim lis As IEnumerable(Of BO.p47CapacityPlan) = Master.Factory.p47CapacityPlanBL.GetList(mq).OrderBy(Function(p) p.Person).ThenBy(Function(p) p.j02ID)
-        Dim intLastJ02ID As Integer = 0
-        For Each c In lis
-            If c.j02ID <> intLastJ02ID Then
 
-            End If
+        Dim lisP47 As IEnumerable(Of BO.p47CapacityPlan) = Master.Factory.p47CapacityPlanBL.GetList(mq).OrderBy(Function(p) p.Person).ThenBy(Function(p) p.j02ID)
+        For Each c In lisP47
             Dim cTemp As New BO.p85TempBox()
             With cTemp
                 .p85GUID = ViewState("guid")
                 .p85DataPID = c.PID
-                .p85OtherKey1 = c.j02ID
+                .p85OtherKey1 = c.p46ID
                 .p85OtherKey2 = c.p41ID
 
                 .p85FreeDate01 = c.p47DateFrom
@@ -286,19 +282,33 @@ Public Class p47_project
                 .p85FreeFloat03 = c.p47HoursBillable + c.p47HoursNonBillable
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
-            intLastJ02ID = c.j02ID
+        Next
+        Dim j02ids As IEnumerable(Of Integer) = lisP47.Select(Function(p) p.j02ID).Distinct
+        Dim lisP46 As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Me.CurrentP45ID)
+        For Each c In lisP46
+            If j02ids.Where(Function(p) p = c.j02ID).Count = 0 Then
+                Dim cTemp As New BO.p85TempBox()
+                With cTemp
+                    .p85GUID = ViewState("guid")
+                    .p85OtherKey1 = c.PID
+                    .p85OtherKey2 = Master.DataPID
+
+                    .p85FreeDate01 = Me.LimitD1
+                    .p85FreeDate02 = Me.LimitD1.AddMonths(1).AddDays(-1)
+                    .p85FreeText01 = c.Person
+                End With
+                Master.Factory.p85TempBoxBL.Save(cTemp)
+            End If
         Next
 
+        ''Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, Master.DataPID)
+        ''Dim j02ids As List(Of Integer) = lisX69.Select(Function(p) p.j02ID).Distinct.ToList
+        ''Dim j11ids As List(Of Integer) = lisX69.Select(Function(p) p.j11ID).Distinct.ToList
+        ''Dim persons As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList_j02_join_j11(j02ids, j11ids)
 
-        Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, Master.DataPID)
-        Dim j02ids As List(Of Integer) = lisX69.Select(Function(p) p.j02ID).Distinct.ToList
-        Dim j11ids As List(Of Integer) = lisX69.Select(Function(p) p.j11ID).Distinct.ToList
-        Dim persons As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList_j02_join_j11(j02ids, j11ids)
-        rpJ02.DataSource = persons
-        rpJ02.DataBind()
-        If rpJ02.Items.Count = 0 Then
-            Master.Notify("V projektových rolích projektu nejsou přiřazeny osoby!", NotifyLevel.WarningMessage)
-        End If
+        ''If persons.Count = 0 Then
+        ''    Master.Notify("V rozpočtu hodin nejsou přiřazeny osoby!", NotifyLevel.WarningMessage)
+        ''End If
 
 
     End Sub
@@ -311,16 +321,16 @@ Public Class p47_project
             dats.Add(d1.AddMonths(i - Me.m1.SelectedIndex))
         Next
 
-        Dim intRowIndex As Integer = 0, intLastJ02ID As Integer = 0, row As PlanMatrix = Nothing
+        Dim intRowIndex As Integer = 0, intLastP46ID As Integer = 0, row As PlanMatrix = Nothing
         For Each c In lisTemp
-            If c.p85OtherKey1 <> intLastJ02ID Then
+            If c.p85OtherKey1 <> intLastP46ID Then
                 intRowIndex += 1
                 row = New PlanMatrix()
                 row.Person = c.p85FreeText01
                 row.RowIndex = intRowIndex
                 row.PID = c.p85OtherKey1
                 lis.Add(row)
-                DisablePersonInOffeList(c.p85OtherKey1)
+
             End If
             For x As Integer = Me.m1.SelectedIndex To Me.m2.SelectedIndex
                 Dim i As Integer = x - Me.m1.SelectedIndex
@@ -330,51 +340,45 @@ Public Class p47_project
                     BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "P85ID", c.PID)
                 End If
             Next
-            intLastJ02ID = c.p85OtherKey1
+            intLastP46ID = c.p85OtherKey1
         Next
 
         Return lis
     End Function
 
-    Private Sub DisablePersonInOffeList(intJ02ID As Integer)
-        For Each ri As RepeaterItem In rpJ02.Items
-            If CType(ri.FindControl("hidJ02ID"), HiddenField).Value = intJ02ID.ToString Then
-                ri.FindControl("cmdInsert").Visible = False : Return
-            End If
-        Next
-    End Sub
+    
 
-    Private Sub rpJ02_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpJ02.ItemCommand
+    ''Private Sub rpJ02_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpJ02.ItemCommand
 
-        If e.CommandName = "add" Then
-            Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(e.CommandArgument)
-            Dim cTemp As New BO.p85TempBox()
-            With cTemp
-                .p85GUID = ViewState("guid")
-                .p85OtherKey1 = cJ02.PID
-                .p85OtherKey2 = Master.DataPID
-                .p85FreeDate01 = Me.LimitD1
-                .p85FreeDate02 = Me.LimitD1.AddMonths(1).AddDays(-1)
-                .p85FreeText01 = cJ02.FullNameDesc
+    ''    If e.CommandName = "add" Then
+    ''        Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(e.CommandArgument)
+    ''        Dim cTemp As New BO.p85TempBox()
+    ''        With cTemp
+    ''            .p85GUID = ViewState("guid")
+    ''            .p85OtherKey1 = cJ02.PID
+    ''            .p85OtherKey2 = Master.DataPID
+    ''            .p85FreeDate01 = Me.LimitD1
+    ''            .p85FreeDate02 = Me.LimitD1.AddMonths(1).AddDays(-1)
+    ''            .p85FreeText01 = cJ02.FullNameDesc
 
 
-            End With
-            Master.Factory.p85TempBoxBL.Save(cTemp)
-            grid1.Rebind()
-        End If
-    End Sub
+    ''        End With
+    ''        Master.Factory.p85TempBoxBL.Save(cTemp)
+    ''        grid1.Rebind()
+    ''    End If
+    ''End Sub
 
-    Private Sub rpJ02_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpJ02.ItemDataBound
-        Dim cRec As BO.j02Person = CType(e.Item.DataItem, BO.j02Person)
-        CType(e.Item.FindControl("hidJ02ID"), HiddenField).Value = cRec.PID.ToString
-        With CType(e.Item.FindControl("Person"), Label)
-            .Text = cRec.FullNameDesc
-        End With
-        CType(e.Item.FindControl("clue_person"), HyperLink).Attributes("rel") = "clue_j02_capacity.aspx?pid=" & cRec.PID.ToString & "&p41id=" & Master.DataPID.ToString
-        With CType(e.Item.FindControl("cmdInsert"), LinkButton)
-            .CommandArgument = cRec.PID
-        End With
-    End Sub
+    ''Private Sub rpJ02_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpJ02.ItemDataBound
+    ''    Dim cRec As BO.j02Person = CType(e.Item.DataItem, BO.j02Person)
+    ''    CType(e.Item.FindControl("hidJ02ID"), HiddenField).Value = cRec.PID.ToString
+    ''    With CType(e.Item.FindControl("Person"), Label)
+    ''        .Text = cRec.FullNameDesc
+    ''    End With
+    ''    CType(e.Item.FindControl("clue_person"), HyperLink).Attributes("rel") = "clue_j02_capacity.aspx?pid=" & cRec.PID.ToString & "&p41id=" & Master.DataPID.ToString
+    ''    With CType(e.Item.FindControl("cmdInsert"), LinkButton)
+    ''        .CommandArgument = cRec.PID
+    ''    End With
+    ''End Sub
 
     
 
@@ -410,7 +414,15 @@ Public Class p47_project
             lisP47.Add(c)
 
         Next
-        Return Master.Factory.p47CapacityPlanBL.SaveProjectPlan(Master.DataPID, lisP47)
+        With Master.Factory.p47CapacityPlanBL
+            If .SaveProjectPlan(Me.CurrentP45ID, lisP47) Then
+                Return True
+            Else
+                Master.Notify(.ErrorMessage, NotifyLevel.WarningMessage)
+                Return False
+            End If
+        End With
+        
 
     End Function
 
@@ -441,4 +453,7 @@ Public Class p47_project
     End Sub
 
     
+    Private Sub p45ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p45ID.SelectedIndexChanged
+        Server.Transfer("p47_project.aspx?pid=" & Master.DataPID.ToString & "&p45id=" & Me.CurrentP45ID.ToString)
+    End Sub
 End Class

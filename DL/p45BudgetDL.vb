@@ -127,6 +127,11 @@
 
     End Function
 
+    Public Function LoadP46(intP46ID As Integer) As BO.p46BudgetPerson
+        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as _Person," & bas.RecTail("p46", "a") & " FROM p46BudgetPerson a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
+        s += " WHERE a.p46ID=@pid"
+        Return _cDB.GetRecord(Of BO.p46BudgetPerson)(s, New With {.pid = intP46ID})
+    End Function
     Public Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson)
         Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as _Person," & bas.RecTail("p46", "a") & " FROM p46BudgetPerson a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
         s += " WHERE a.p45ID=@p45id ORDER BY j02.j02LastName,j02.j02FirstName"

@@ -107,7 +107,7 @@ Public Class p45_project
         cmdNewVersion.Visible = Me.p45ID.Visible
         cmdDeleteVersion.Visible = Me.p45ID.Visible
 
-
+        grid1.Rebind()
 
     End Sub
 

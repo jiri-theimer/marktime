@@ -4,6 +4,7 @@ Public Interface Ip45BudgetBL
     Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean
     Function Load(intPID As Integer) As BO.p45Budget
     Function LoadByProject(intP41ID As Integer) As BO.p45Budget
+    Function LoadP46(intP46ID As Integer) As BO.p46BudgetPerson
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP41ID As Integer, Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget)
     Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson)
@@ -35,13 +36,27 @@ Class p45BudgetBL
             If .PID = 0 Then
                 .p45VersionIndex = GetList(.p41ID).Count + 1
             End If
+            If Not lisP46 Is Nothing And Not lisP49 Is Nothing Then
+                If lisP46.Count = 0 And lisP49.Count = 0 Then _Error = "V rozpočtu musíte definovat buď rozpočet hodin nebo peněžní rozpočet nebo obojí." : Return False
+            End If
             If Not lisP46 Is Nothing Then
-                Dim x As Integer = 1
+                If cRec.PID <> 0 Then
+                    Dim mqP47 As New BO.myQueryP47
+                    mqP47.p45ID = cRec.PID
+                    Dim lisP47 As IEnumerable(Of BO.p47CapacityPlan) = Factory.p47CapacityPlanBL.GetList(mqP47)
+                    For Each c In lisP46.Where(Function(p) p.PID <> 0)
+                        Dim lis As IEnumerable(Of BO.p47CapacityPlan) = lisP47.Where(Function(p) p.j02ID = c.j02ID)
+                        If lis.Count > 0 Then
+                            If lis.Sum(Function(p) p.p47HoursTotal) > c.p46HoursTotal Then
+                                _Error = String.Format("[{0}]: Již existuje kapacitní plán({1}), který by překročil hodiny v rozpočtu ({2}).", Factory.j02PersonBL.Load(c.j02ID).FullNameAsc, lis.Sum(Function(p) p.p47HoursTotal), c.p46HoursTotal) : Return False
+                            End If
+                        End If
+                    Next
+                End If
                 For Each c In lisP46.Where(Function(p) p.IsSetAsDeleted = False)
                     If c.p46HoursBillable = 0 And c.p46HoursNonBillable = 0 Then
-                        _Error = String.Format("Rozpočet hodin/řádek #{0}: chybí hodiny nebo vyhoďte osobu z rozpočtu hodin.", x) : Return False
+                        _Error = String.Format("Rozpočet hodin [{0}]: Chybí hodiny nebo vyhoďte osobu z rozpočtu hodin.", Factory.j02PersonBL.Load(c.j02ID).FullNameAsc) : Return False
                     End If
-                    x += 1
                 Next
             End If
             If Not lisP49 Is Nothing Then
@@ -73,6 +88,9 @@ Class p45BudgetBL
     End Function
     Public Function LoadByProject(intP41ID As Integer) As BO.p45Budget Implements Ip45BudgetBL.LoadByProject
         Return _cDL.LoadByProject(intP41ID)
+    End Function
+    Public Function LoadP46(intP46ID As Integer) As BO.p46BudgetPerson Implements Ip45BudgetBL.LoadP46
+        Return _cDL.LoadP46(intP46ID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ip45BudgetBL.Delete
         Return _cDL.Delete(intPID)

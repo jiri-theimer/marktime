@@ -24,6 +24,7 @@
         .RadMenu_Silk .rmSelected .rmLink {
             border-top-color: transparent !important;
         }
+        
     </style>
     <asp:PlaceHolder ID="placeBinMenuCss" runat="server"></asp:PlaceHolder>
 
@@ -217,7 +218,7 @@
             sw_local("p40_record.aspx?p41id=<%=master.datapid%>&pid="+p40id,"Images/worksheet_recurrence_32.png",true);
         }
         function p47_plan(){            
-            sw_local("p47_project.aspx?pid=<%=master.datapid%>","Images/plan_32.png",true);
+            sw_local("p47_project.aspx?pid=<%=Master.DataPID%>&p45id=<%=Me.p45ID.SelectedValue%>","Images/plan_32.png",true);
         }
         function p48_plan(){            
             window.open("p48_framework.aspx?masterprefix=p41&masterpid=<%=master.datapid%>","_top");
@@ -281,6 +282,10 @@
             
             sw_local("p45_project.aspx?pid=<%=master.datapid%>","Images/budget_32.png",true);
 
+        }
+        function OnChangeBudgetView(prefix)
+        {                       
+            location.replace("p41_framework_detail.aspx?budgetprefix="+prefix);
         }
     </script>
 </asp:Content>
@@ -403,21 +408,8 @@
                                 <asp:HyperLink ID="cmdP31MoveToOtherProject" runat="server" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project()"></asp:HyperLink>
                             </asp:Panel>
 
-                            <div class="menu-group-title">
-                                Plánování
-                            </div>
-                            <div class="menu-group-item">
-                                <img src="Images/plan.png" />
-                                <asp:HyperLink ID="cmdP47" runat="server" Text="Kapacitní" NavigateUrl="javascript:p47_plan()"></asp:HyperLink>
-
-
-                                <img src="Images/finplan.png" />
-                                <asp:HyperLink ID="cmdP49" runat="server" Text="Finanční" NavigateUrl="javascript:p49_plan()"></asp:HyperLink>
-
-                                <img src="Images/oplan.png" />
-                                <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
-
-                            </div>
+                            
+                            
                         </div>
                     </ContentTemplate>
 
@@ -493,17 +485,13 @@
                 </tr>
                 <tr id="trPlan" runat="server" style="vertical-align: top;">
                     <td>
-                        <asp:Label ID="lblPlan" runat="server" Text="Plánování:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblPlan" runat="server" Text="Zahájení/dokončení:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <asp:Label ID="PlanPeriod" runat="server" CssClass="val"></asp:Label>
                         <div>
-                            <img src="Images/plan.png" />
-                            <a href="javascript: p47_plan()">Kapacitní plán</a>
-                            <img src="Images/finplan.png" />
-                            <a href="javascript: p49_plan()">Finanční plán</a>
-                            <img src="Images/oplan.png" />
-                            <a href="javascript: p48_plan()">Operativní plán</a>
+                           
+                            <a href="javascript: p48_plan()">Operativní plán projektu</a>
                         </div>
 
                     </td>
@@ -645,11 +633,18 @@
     <uc:p91_subgrid ID="gridP91" runat="server" x29ID="p41Project" />
 
     <asp:Panel ID="panP45" runat="server" Visible="false">
-        <div>
+        <div style="float:left;">
             <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName"></asp:DropDownList>
             <button type="button" id="cmdP45" runat="server" onclick="p45_detail()" class="cmd">Nastavení rozpočtu</button>
+            
         </div>
-        <uc:datagrid ID="gridP46" runat="server"></uc:datagrid>
+        <div style="float:left;">
+            <asp:RadioButton ID="cmdBudgetP46" Text="Rozpočet hodin" AutoPostBack="false" runat="server" onclick="OnChangeBudgetView('p46')" />
+            <asp:RadioButton ID="cmdBudgetP49" Text="Rozpočet výdajů a fixních příjmů" AutoPostBack="false" runat="server" onclick="OnChangeBudgetView('p49')" />
+            <button type="button" id="cmdP47" runat="server" onclick="p47_plan()" class="cmd" visible="false">Kapacitní plán projektu</button>
+        </div>
+        <div style="clear:both;"></div>
+        <uc:datagrid ID="gridBudget" runat="server"></uc:datagrid>
         
     </asp:Panel>
 

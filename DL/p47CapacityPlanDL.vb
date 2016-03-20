@@ -57,7 +57,7 @@
         Dim lisSaved As IEnumerable(Of BO.p47CapacityPlan) = GetList(mq)
         For Each c In lisP47
             Dim intPID As Integer = 0, bolNew As Boolean = True
-            Dim lisFound As IEnumerable(Of BO.p47CapacityPlan) = lisSaved.Where(Function(p) p.p45ID = c.p45ID And p.j02ID = c.j02ID And p.p47DateFrom = c.p47DateFrom And p.p47DateUntil = c.p47DateUntil)
+            Dim lisFound As IEnumerable(Of BO.p47CapacityPlan) = lisSaved.Where(Function(p) p.p46ID = c.p46ID And p.p47DateFrom = c.p47DateFrom And p.p47DateUntil = c.p47DateUntil)
             If lisFound.Count > 0 Then
                 intPID = lisFound(0).PID : bolNew = False
             End If

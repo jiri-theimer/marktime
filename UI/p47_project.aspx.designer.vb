@@ -41,15 +41,6 @@ Partial Public Class p47_project
     Protected WithEvents p45ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cmdAddPerson control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAddPerson As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
     '''lblHeader control.
     '''</summary>
     '''<remarks>
@@ -75,15 +66,6 @@ Partial Public Class p47_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents m2 As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''rpJ02 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpJ02 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''grid1 control.

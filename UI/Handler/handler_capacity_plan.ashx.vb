@@ -9,12 +9,12 @@ Public Class handler_capacity_plan
         context.Response.ContentType = "text/plain"
         Dim strD1 As String = context.Request.Item("d1")
         Dim strD2 As String = context.Request.Item("d2")
-        Dim intJ02ID As Integer = BO.BAS.IsNullInt(context.Request.Item("j02id"))
+        Dim intP46ID As Integer = BO.BAS.IsNullInt(context.Request.Item("p46id"))
         Dim strColName As String = Trim(context.Request.Item("colName"))
         Dim dblValue As Double = BO.BAS.IsNullNum(context.Request.Item("value"))
         Dim strOper As String = Trim(context.Request.Item("oper"))
         Dim strGUID As String = Trim(context.Request.Item("guid"))
-        If strGUID = "" Or intJ02ID = 0 Or strColName = "" Or strD1 = "" Then
+        If strGUID = "" Or intP46ID = 0 Or strColName = "" Or strD1 = "" Then
             context.Response.Write(" ")
             Return
         End If
@@ -29,11 +29,11 @@ Public Class handler_capacity_plan
         Dim factory As New BL.Factory(Nothing)
 
       
-        Dim lis As IEnumerable(Of BO.p85TempBox) = factory.p85TempBoxBL.GetList(strGUID).Where(Function(p) p.p85OtherKey1 = intJ02ID And p.p85FreeDate01 = d)
+        Dim lis As IEnumerable(Of BO.p85TempBox) = factory.p85TempBoxBL.GetList(strGUID).Where(Function(p) p.p85OtherKey1 = intP46ID And p.p85FreeDate01 = d)
         Dim cTemp As New BO.p85TempBox
         If lis.Count > 0 Then cTemp = lis(0)
         cTemp.p85GUID = strGUID
-        cTemp.p85OtherKey1 = intJ02ID
+        cTemp.p85OtherKey1 = intP46ID
         If bolFa Then
             cTemp.p85FreeFloat01 = dblValue
         Else
@@ -43,8 +43,8 @@ Public Class handler_capacity_plan
         cTemp.p85FreeDate01 = d
         cTemp.p85FreeDate02 = d.AddMonths(1).AddDays(-1)
         If cTemp.p85FreeText01 = "" Then
-            Dim cJ02 As BO.j02Person = factory.j02PersonBL.Load(intJ02ID)
-            cTemp.p85FreeText01 = cJ02.FullNameDesc
+            Dim cP46 As BO.p46BudgetPerson = factory.p45BudgetBL.LoadP46(intP46ID)
+            cTemp.p85FreeText01 = cP46.Person
         End If
         If factory.p85TempBoxBL.Save(cTemp) Then
             context.Response.Write("1")

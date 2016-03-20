@@ -275,33 +275,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents cmdP31MoveToOtherProject As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''cmdP47 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdP47 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cmdP49 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdP49 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cmdP48 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdP48 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''topLink0 control.
     '''</summary>
     '''<remarks>
@@ -887,13 +860,40 @@ Partial Public Class p41_framework_detail
     Protected WithEvents cmdP45 As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
-    '''gridP46 control.
+    '''cmdBudgetP46 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gridP46 As Global.UI.datagrid
+    Protected WithEvents cmdBudgetP46 As Global.System.Web.UI.WebControls.RadioButton
+
+    '''<summary>
+    '''cmdBudgetP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBudgetP49 As Global.System.Web.UI.WebControls.RadioButton
+
+    '''<summary>
+    '''cmdP47 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdP47 As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''gridBudget control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gridBudget As Global.UI.datagrid
 
     '''<summary>
     '''hiddatapid_subform control.

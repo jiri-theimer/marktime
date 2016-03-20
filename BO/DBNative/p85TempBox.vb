@@ -35,9 +35,9 @@
     Public Property p85FreeNumber02 As Double
     Public Property p85FreeNumber03 As Double
     Public Property p85FreeNumber04 As Double
-    Public Property p85FreeFloat01 As Double?
-    Public Property p85FreeFloat02 As Double?
-    Public Property p85FreeFloat03 As Double?
+    Public Property p85FreeFloat01 As Double
+    Public Property p85FreeFloat02 As Double
+    Public Property p85FreeFloat03 As Double
 
     Public Property p85FreeBoolean01 As Boolean
     Public Property p85FreeBoolean02 As Boolean
