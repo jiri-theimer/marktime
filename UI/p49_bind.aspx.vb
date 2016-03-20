@@ -90,6 +90,7 @@ Public Class p49_bind
                 .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly, , , , , , , "real")
                 .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , , , "real")
                 .AddColumn("p31Code", "Kód dokladu", , , , , , , , "real")
+                .AddColumn("p31Count", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
             End If
         End With
         ''With gridP49.radGridOrig.MasterTableView
@@ -111,7 +112,7 @@ Public Class p49_bind
         Dim mq As New BO.myQueryP49
         mq.p34ID = Me.CurrentP34ID
         mq.p45ID = Me.CurrentP45ID
-        Dim lis As IEnumerable(Of BO.p49FinancialPlanExtended) = Master.Factory.p49FinancialPlanBL.GetList_Extended(mq)
+        Dim lis As IEnumerable(Of BO.p49FinancialPlanExtended) = Master.Factory.p49FinancialPlanBL.GetList_Extended(mq, Me.CurrentP41ID)
         If Not Me.chkIncludeExtended.Checked Then lis = lis.Where(Function(p) p.p31ID = 0)
         grid1.DataSource = lis
 

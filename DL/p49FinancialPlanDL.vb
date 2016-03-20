@@ -9,6 +9,12 @@
 
         Return _cDB.GetRecord(Of BO.p49FinancialPlan)(s, New With {.p49id = intPID})
     End Function
+    Public Function LoadExtended(intPID As Integer) As BO.p49FinancialPlanExtended
+        Dim s As String = GetSQLPart1(0, True)
+        s += " WHERE a.p49ID=@p49id"
+
+        Return _cDB.GetRecord(Of BO.p49FinancialPlanExtended)(s, New With {.p49id = intPID})
+    End Function
     Public Function LoadMyLastCreated() As BO.p49FinancialPlan
         Dim s As String = GetSQLPart1(1, False)
         s += " WHERE a.p49UserInsert=@login ORDER BY a.p49ID DESC"
@@ -25,17 +31,17 @@
         s += " ORDER BY a.p34ID,p32.p32Name,a.p49DateFrom"
         Return _cDB.GetList(Of BO.p49FinancialPlan)(s, pars)
     End Function
-    Public Function GetList_Extended(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlanExtended)
+    Public Function GetList_Extended(mq As BO.myQueryP49, Optional intP41ID_OptimizeSQL As Integer = 0) As IEnumerable(Of BO.p49FinancialPlanExtended)
         Dim pars As New DbParameters
         Dim strW As String = GetSqlWhere(mq, pars)
-        Dim s As String = GetSQLPart1(0, True)
+        Dim s As String = GetSQLPart1(0, True, intP41ID_OptimizeSQL)
         s += " WHERE " & strW
         s += " ORDER BY a.p34ID,p32.p32Name,a.p49DateFrom"
         Return _cDB.GetList(Of BO.p49FinancialPlanExtended)(s, pars)
     End Function
 
     Private Function GetSqlWhere(mq As BO.myQueryp49, ByRef pars As DbParameters) As String
-        Dim strW As String = bas.ParseWhereMultiPIDs("p49ID", mq)
+        Dim strW As String = bas.ParseWhereMultiPIDs("a.p49ID", mq)
         With mq
             If .DateFrom > DateSerial(1900, 1, 1) And .DateUntil < DateSerial(3000, 1, 1) Then
                 strW += " AND (@datefrom BETWEEN a.p49DateFrom AND a.p49DateUntil OR @dateuntil BETWEEN a.p49DateFrom AND a.p49DateUntil)"
@@ -120,12 +126,12 @@
         Return _cDB.RunSP("p49_delete", pars)
     End Function
 
-    Private Function GetSQLPart1(intTOPRecs As Integer, bolExtended As Boolean) As String
+    Private Function GetSQLPart1(intTOPRecs As Integer, bolExtended As Boolean, Optional intP41ID_OptimizeSQL As Integer = 0) As String
         Dim s As String = "SELECT"
         If intTOPRecs > 0 Then s += " TOP " & intTOPRecs.ToString
         s += " a.*,p41.p41ID as _p41ID,j02.j02LastName+' '+j02.j02FirstName+isnull(' '+j02.j02TitleBeforeName,'') as _Person,isnull(p28.p28Name+' - ','') + p41.p41Name as _Project,p34.p34Name as _p34Name,p32.p32Name as _p32Name,p34.p34Color as _p34Color,p32.p32Color as _p32Color,p34.p34IncomeStatementFlag as _p34IncomeStatementFlag,j27.j27Code as _j27Code,supplier.p28Name as _SupplierName," & bas.RecTail("p49", "a")
         If bolExtended Then
-            s += ",p31.p31ID,p31.p31Code,p31.p31Date,p31.p31Amount_WithoutVat_Orig"
+            s += ",p31.p31ID,p31.p31Code,p31.p31Date,p31.p31Amount_WithoutVat_Orig,p31.p31Count"
         End If
         s += " FROM p49FinancialPlan a INNER JOIN p45Budget p45 ON a.p45ID=p45.p45ID"
         s += " INNER JOIN p41Project p41 ON p45.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
@@ -134,7 +140,9 @@
         s += " LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
         s += " LEFT OUTER JOIN p28Contact supplier ON a.p28ID_Supplier=supplier.p28ID"
         If bolExtended Then
-            s += " LEFT OUTER JOIN p31Worksheet p31 ON a.p49ID=p31.p49ID"
+            s += " LEFT OUTER JOIN (select p49ID,COUNT(*) as p31Count,max(p31ID) as p31ID,max(p31Date) as p31Date,max(p31Code) as p31Code,sum(p31Amount_WithoutVat_Orig) as p31Amount_WithoutVat_Orig FROM p31Worksheet WHERE p49ID IS NOT NULL"
+            If intP41ID_OptimizeSQL > 0 Then s += " AND p41ID=" & intP41ID_OptimizeSQL.ToString
+            s += " GROUP BY p49ID) p31 ON a.p49ID=p31.p49ID"
         End If
         Return s
     End Function

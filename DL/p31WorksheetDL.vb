@@ -294,9 +294,9 @@
             If .DateUntil < DateSerial(3000, 1, 1) Then
                 s.Append(" AND a.p31Date<=@dateuntil") : pars.Add("dateuntil", .DateUntil, DbType.DateTime)
             End If
-            If Not .IsExpenses Is Nothing Then
-                If .IsExpenses Then s.Append(" AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1")
-            End If
+            ''If Not .IsExpenses Is Nothing Then
+            ''    If .IsExpenses Then s.Append(" AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1")
+            ''End If
        
             If .j70ID > 0 Then
                 Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID)

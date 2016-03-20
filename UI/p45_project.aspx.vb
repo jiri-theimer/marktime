@@ -46,15 +46,28 @@ Public Class p45_project
     Private Sub SetupP49Grid()
         With gridP49
             .ClearColumns()
+            .radGridOrig.MasterTableView.HeaderStyle.HorizontalAlign = HorizontalAlign.Center
+            Dim group As New Telerik.Web.UI.GridColumnGroup
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "plan" : group.HeaderText = "Rozpočet"
+            group = New Telerik.Web.UI.GridColumnGroup
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "real" : group.HeaderText = "Vykázaná realita"
+
             .radGridOrig.ShowFooter = False
-            .AddColumn("p85FreeText06", "Měsíc")
+            .AddColumn("p85FreeText06", "Měsíc", , , , , , , , "plan")
             '.AddColumn("p34Name", "Sešit")
-            .AddColumn("p85FreeText03", "Aktivita")
+            .AddColumn("p85FreeText03", "Aktivita", , , , , , , , "plan")
             '.AddColumn("p85FreeText01", "Osoba")
-            .AddColumn("p85FreeText05", "Dodavatel")
-            .AddColumn("p85Message", "Text")
-            .AddColumn("p85FreeFloat01", "Částka", BO.cfENUM.Numeric2)
-            .AddColumn("p85FreeText04", "Měna")
+            .AddColumn("p85FreeText05", "Dodavatel", , , , , , , , "plan")
+            .AddColumn("p85Message", "Text", , , , , , , , "plan")
+            .AddColumn("p85FreeFloat01", "Částka", BO.cfENUM.Numeric2, , , , , , , "plan")
+            .AddColumn("p85FreeText04", "Měna", , , , , , , , "plan")
+
+            .AddColumn("p85FreeDate03", "Datum", BO.cfENUM.DateOnly, , , , , , , "real")
+            .AddColumn("p85FreeFloat02", "Částka", BO.cfENUM.Numeric, , , , , , , "real")
+            .AddColumn("p85FreeText07", "Kód dokladu", , , , , , , , "real")
+            .AddColumn("p85FreeNumber01", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
         End With
         With gridP49.radGridOrig.MasterTableView
             .GroupByExpressions.Clear()
@@ -169,7 +182,7 @@ Public Class p45_project
         Next
         Dim mq As New BO.myQueryP49
         mq.p45ID = Me.CurrentP45ID
-        Dim lisP49 As IEnumerable(Of BO.p49FinancialPlan) = Master.Factory.p49FinancialPlanBL.GetList(mq)
+        Dim lisP49 As IEnumerable(Of BO.p49FinancialPlanExtended) = Master.Factory.p49FinancialPlanBL.GetList_Extended(mq, Master.DataPID)
         For Each c In lisP49
             Dim cTemp As New BO.p85TempBox
             With cTemp
@@ -192,6 +205,13 @@ Public Class p45_project
                 .p85FreeText04 = c.j27Code
                 .p85FreeText05 = c.SupplierName
                 .p85FreeText06 = c.Period
+                If c.p31ID > 0 Then
+                    .p85FreeDate03 = c.p31Date
+                    .p85FreeText07 = c.p31Code
+                    .p85FreeFloat02 = c.p31Amount_WithoutVat_Orig
+                    .p85FreeNumber01 = c.p31Count
+                End If
+
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next

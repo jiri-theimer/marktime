@@ -98,6 +98,15 @@
 
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(Master.DataPID)
+        If cRec.p85DataPID <> 0 Then
+            Dim mq As New BO.myQueryP49
+            mq.AddItemToPIDs(cRec.p85DataPID)
+            Dim lis As IEnumerable(Of BO.p49FinancialPlanExtended) = Master.Factory.p49FinancialPlanBL.GetList_Extended(mq)
+            If lis(0).p31ID <> 0 Then
+                Master.Notify("Záznam rozpočtu má již vazbu na reálně vykázaný worksheet úkon.", NotifyLevel.WarningMessage)
+                Return
+            End If
+        End If
         With Master.Factory.p85TempBoxBL
             If .Delete(cRec) Then
                 Master.CloseAndRefreshParent("p49-delete")

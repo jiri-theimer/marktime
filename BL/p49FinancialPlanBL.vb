@@ -4,10 +4,11 @@ Public Interface Ip49FinancialPlanBL
     Function Save(cRec As BO.p49FinancialPlan) As Boolean
     Function SaveBatch(lis As List(Of BO.p49FinancialPlan)) As Boolean
     Function Load(intPID As Integer) As BO.p49FinancialPlan
+    Function LoadExtended(intPID As Integer) As BO.p49FinancialPlanExtended
     Function LoadMyLastCreated() As BO.p49FinancialPlan
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlan)
-    Function GetList_Extended(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlanExtended)
+    Function GetList_Extended(mq As BO.myQueryP49, Optional intP41ID_OptimizeSQL As Integer = 0) As IEnumerable(Of BO.p49FinancialPlanExtended)
     Function TestBeforeSave(lis As List(Of BO.p49FinancialPlan)) As Boolean
 
 End Interface
@@ -86,6 +87,9 @@ Class p49FinancialPlanBL
     Public Function Load(intPID As Integer) As BO.p49FinancialPlan Implements Ip49FinancialPlanBL.Load
         Return _cDL.Load(intPID)
     End Function
+    Public Function LoadExtended(intPID As Integer) As BO.p49FinancialPlanExtended Implements Ip49FinancialPlanBL.LoadExtended
+        Return _cDL.LoadExtended(intPID)
+    End Function
     Public Function LoadMyLastCreated() As BO.p49FinancialPlan Implements Ip49FinancialPlanBL.LoadMyLastCreated
         Return _cDL.LoadMyLastCreated()
     End Function
@@ -122,7 +126,7 @@ Class p49FinancialPlanBL
 
         Return lis
     End Function
-    Public Function GetList_Extended(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlanExtended) Implements Ip49FinancialPlanBL.GetList_Extended
-        Return _cDL.GetList_Extended(mq)
+    Public Function GetList_Extended(mq As BO.myQueryP49, Optional intP41ID_OptimizeSQL As Integer = 0) As IEnumerable(Of BO.p49FinancialPlanExtended) Implements Ip49FinancialPlanBL.GetList_Extended
+        Return _cDL.GetList_Extended(mq, intP41ID_OptimizeSQL)
     End Function
 End Class

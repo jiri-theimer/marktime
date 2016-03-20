@@ -58,6 +58,11 @@ Class p45BudgetBL
                     End If
                     x += 1
                 Next
+                For Each c In lisP49.Where(Function(p) p.IsSetAsDeleted = True And p.PID <> 0)
+                    If Factory.p49FinancialPlanBL.LoadExtended(c.PID).p31ID > 0 Then
+                        _Error = String.Format("[{0}: Nelze odstranit položku rozpočtu, která již má vazbu na reálný worksheet úkon.", Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, c.PID)) : Return False
+                    End If
+                Next
             End If
         End With
 

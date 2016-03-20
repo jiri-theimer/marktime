@@ -107,4 +107,5 @@ Public Class p49FinancialPlanExtended
     Public Property p31Code As String
     Public Property p31Date As Date?
     Public Property p31Amount_WithoutVat_Orig As Double?
+    Public Property p31Count As Integer?
 End Class
