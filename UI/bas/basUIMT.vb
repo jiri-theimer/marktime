@@ -228,7 +228,7 @@ Public Class basUIMT
                 Case BO.p70IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a2"
                 Case BO.p70IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a3"
             End Select
-            If .o23ID_First > 0 Then dataItem("systemcolumn").Text += "<img src='Images/attachment.png' width='12px' height='12px'/>"
+            If .o23ID_First > 0 And .p49ID = 0 Then dataItem("systemcolumn").Text += "<img src='Images/attachment.png' width='12px' height='12px'/>"
             If .IsClosed Then dataItem.Font.Strikeout = True
 
             Select Case .p33ID
@@ -238,7 +238,10 @@ Public Class basUIMT
                     Else
                         dataItem.ForeColor = Drawing.Color.Brown    'výdaje
                     End If
-
+                    If .p49ID > 0 Then
+                        If .o23ID_First = 0 Then dataItem("systemcolumn").Text += "<img src='Images/finplan.png' width='12px' height='12px'/>"
+                        If .o23ID_First > 0 Then dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' width='12px' height='12px'/>"
+                    End If
                 Case BO.p33IdENUM.Kusovnik
                     dataItem.ForeColor = Drawing.Color.Green  'kusovník
                 Case Else

@@ -34,7 +34,7 @@
     Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31) As IEnumerable(Of BO.ApprovingFramework)
     Function LoadRate(bolCostRate As Boolean, dat As Date, intJ02ID As Integer, intP41ID As Integer, intP32ID As Integer, ByRef intRetJ27ID As Integer) As Double
 
-    Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
+    ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
 End Interface
 Class p31WorksheetBL
     Inherits BLMother
@@ -369,7 +369,7 @@ Class p31WorksheetBL
         Return _cDL.LoadRate(bolCostRate, dat, intJ02ID, intP41ID, intP32ID, intRetJ27ID)
     End Function
 
-    Public Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary) Implements Ip31WorksheetBL.GetList_ExpenseSummary
-        Return _cDL.GetList_ExpenseSummary(myQuery)
-    End Function
+    ''Public Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary) Implements Ip31WorksheetBL.GetList_ExpenseSummary
+    ''    Return _cDL.GetList_ExpenseSummary(myQuery)
+    ''End Function
 End Class

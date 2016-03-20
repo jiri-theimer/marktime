@@ -169,7 +169,7 @@ Public Class p45_project
         Next
         Dim mq As New BO.myQueryP49
         mq.p45ID = Me.CurrentP45ID
-        Dim lisP49 As IEnumerable(Of BO.p49FinancialPlan) = Master.Factory.p49FinancialPlanBL.GetList(mq, False)
+        Dim lisP49 As IEnumerable(Of BO.p49FinancialPlan) = Master.Factory.p49FinancialPlanBL.GetList(mq)
         For Each c In lisP49
             Dim cTemp As New BO.p85TempBox
             With cTemp

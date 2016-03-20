@@ -20,6 +20,10 @@
     p28Contact = 328
     p31Worksheet = 331
     p40WorkSheet_Recurrence = 340
+    p47CapacityPlan = 347
+    p48OperativePlan = 348
+    p49FinancialPlan = 349
+
     p51PriceList = 351
     p56Task = 356
     p57TaskType = 357

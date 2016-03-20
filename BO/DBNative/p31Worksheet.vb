@@ -32,6 +32,7 @@ Public Class p31Worksheet
     Public Property p56ID As Integer
     Public Property p56Name As String
     Public Property p56Code As String
+    Public Property p49ID As Integer
 
     Public Property p91ID As Integer
     Public Property p91Code As String
@@ -55,6 +56,7 @@ Public Class p31Worksheet
     Public Property p31DateTimeFrom_Orig As Date?
     Public Property p31DateTimeUntil_Orig As Date?
     Public Property p31Text As String
+    Public Property p31Code As String
 
     Public Property p31Value_Orig As Double
     Public Property p31Value_Trimmed As Double

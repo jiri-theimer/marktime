@@ -6,7 +6,8 @@ Public Interface Ip49FinancialPlanBL
     Function Load(intPID As Integer) As BO.p49FinancialPlan
     Function LoadMyLastCreated() As BO.p49FinancialPlan
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(mq As BO.myQueryP49, bolIncludeWorksheetSums As Boolean) As IEnumerable(Of BO.p49FinancialPlan)
+    Function GetList(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlan)
+    Function GetList_Extended(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlanExtended)
     Function TestBeforeSave(lis As List(Of BO.p49FinancialPlan)) As Boolean
 
 End Interface
@@ -91,35 +92,37 @@ Class p49FinancialPlanBL
     Public Function Delete(intPID As Integer) As Boolean Implements Ip49FinancialPlanBL.Delete
         Return _cDL.Delete(intPID)
     End Function
-    Public Function GetList(mq As BO.myQueryP49, bolIncludeWorksheetSums As Boolean) As IEnumerable(Of BO.p49FinancialPlan) Implements Ip49FinancialPlanBL.GetList
+    Public Function GetList(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlan) Implements Ip49FinancialPlanBL.GetList
         Dim lis As IEnumerable(Of BO.p49FinancialPlan) = _cDL.GetList(mq)
 
-        If bolIncludeWorksheetSums Then
-            Dim mqP31 As New BO.myQueryP31
-            mqP31.p41IDs = mq.p41IDs
-            mqP31.p34IDs = lis.Select(Function(p) p.p34ID).Distinct.ToList
-            Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mqP31)
-            Dim cLast As BO.p49FinancialPlan = Nothing
+        ''If bolIncludeWorksheetSums Then
+        ''    Dim mqP31 As New BO.myQueryP31
+        ''    mqP31.p41IDs = mq.p41IDs
+        ''    mqP31.p34IDs = lis.Select(Function(p) p.p34ID).Distinct.ToList
+        ''    Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mqP31)
+        ''    Dim cLast As BO.p49FinancialPlan = Nothing
 
-            For Each c In lis
-                Dim bolGo As Boolean = True
-                If Not cLast Is Nothing Then
-                    If cLast.p34ID = c.p34ID And cLast.p32ID = c.p32ID And cLast.j02ID = c.j02ID And cLast.p49DateFrom = c.p49DateFrom Then bolGo = False
-                End If
-                If bolGo Then
-                    Dim lisQ As IEnumerable(Of BO.p31Worksheet) = lisP31.Where(Function(p) p.p41ID = c.p41ID And p.p34ID = c.p34ID And p.p31Date >= c.p49DateFrom And p.p31Date <= c.p49DateUntil)
-                    If c.p32ID > 0 Then lisQ = lisQ.Where(Function(p) p.p32ID = c.p32ID)
-                    If c.j02ID > 0 Then lisQ = lisQ.Where(Function(p) p.j02ID = c.j02ID)
+        ''    For Each c In lis
+        ''        Dim bolGo As Boolean = True
+        ''        If Not cLast Is Nothing Then
+        ''            If cLast.p34ID = c.p34ID And cLast.p32ID = c.p32ID And cLast.j02ID = c.j02ID And cLast.p49DateFrom = c.p49DateFrom Then bolGo = False
+        ''        End If
+        ''        If bolGo Then
+        ''            Dim lisQ As IEnumerable(Of BO.p31Worksheet) = lisP31.Where(Function(p) p.p41ID = c.p41ID And p.p34ID = c.p34ID And p.p31Date >= c.p49DateFrom And p.p31Date <= c.p49DateUntil)
+        ''            If c.p32ID > 0 Then lisQ = lisQ.Where(Function(p) p.p32ID = c.p32ID)
+        ''            If c.j02ID > 0 Then lisQ = lisQ.Where(Function(p) p.j02ID = c.j02ID)
 
-                    c.Amount_Orig = lisQ.Sum(Function(p) p.p31Amount_WithoutVat_Orig)
-                    c.Amount_Approved = lisQ.Sum(Function(p) p.p31Amount_WithoutVat_Approved)
-                    c.Amount_Invoiced = lisQ.Sum(Function(p) p.p31Amount_WithoutVat_Invoiced)
-                End If
-                cLast = c
-            Next
-        End If
-        
+        ''            c.Amount_Orig = lisQ.Sum(Function(p) p.p31Amount_WithoutVat_Orig)
+        ''            c.Amount_Approved = lisQ.Sum(Function(p) p.p31Amount_WithoutVat_Approved)
+        ''            c.Amount_Invoiced = lisQ.Sum(Function(p) p.p31Amount_WithoutVat_Invoiced)
+        ''        End If
+        ''        cLast = c
+        ''    Next
+        ''End If
+
         Return lis
     End Function
-    
+    Public Function GetList_Extended(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlanExtended) Implements Ip49FinancialPlanBL.GetList_Extended
+        Return _cDL.GetList_Extended(mq)
+    End Function
 End Class

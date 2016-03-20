@@ -374,6 +374,24 @@ Partial Public Class p31_record
     Protected WithEvents p28ID_Supplier As Global.UI.contact
 
     '''<summary>
+    '''lblCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCode As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p31Code control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31Code As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lblP31Text control.
     '''</summary>
     '''<remarks>
@@ -444,6 +462,51 @@ Partial Public Class p31_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents notepad1 As Global.UI.o23_list
+
+    '''<summary>
+    '''panP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panP49 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdP49 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''p49_record control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p49_record As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdClearP49ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClearP49ID As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''p49ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p49ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''SharedCalendar control.

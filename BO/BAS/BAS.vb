@@ -51,7 +51,10 @@
             Case "b07" : Return x29IdEnum.b07Comment
             Case "app" : Return x29IdEnum.Approving
             Case "j18" : Return x29IdEnum.j18Region
-
+            Case "p45" : Return x29IdEnum.p45Budget
+            Case "p49" : Return x29IdEnum.p49FinancialPlan
+            Case "p48" : Return x29IdEnum.p48OperativePlan
+            Case "p47" : Return x29IdEnum.p47CapacityPlan
             Case Else
                 Return x29IdEnum._NotSpecified
         End Select

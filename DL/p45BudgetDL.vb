@@ -7,6 +7,10 @@
         Dim s As String = GetSQLPart1() & " WHERE a.p45ID=@pid"
         Return _cDB.GetRecord(Of BO.p45Budget)(s, New With {.pid = intPID})
     End Function
+    Public Function LoadByProject(intP41ID As Integer) As BO.p45Budget
+        Dim s As String = GetSQLPart1() & " WHERE a.p41ID=@p41id AND getdate() BETWEEN a.p45ValidFrom and a.p45ValidUntil"
+        Return _cDB.GetRecord(Of BO.p45Budget)(s, New With {.p41id = intP41ID})
+    End Function
     Private Function GetSQLPart1() As String
         Dim s As String = "SELECT a.*," & bas.RecTail("p45", "a")
         s += ",p41.p41Name as _p41Name FROM p45Budget a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"

@@ -290,6 +290,11 @@
         function o23_record(pid) {
             dialog_master("o23_record.aspx?masterprefix=p31&pid=" + pid, true);
         }
+        function p49_bind() {
+            var p41id = "<%=me.p41ID.value%>";
+            var p34id = "<%=Me.p34ID.SelectedValue%>";
+            dialog_master("p49_bind.aspx?p34id="+p34id+"&p41id="+p41id, true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -446,7 +451,9 @@
                     <asp:Label ID="lblSupplier" runat="server" CssClass="lbl" Text="Dodavatel:"></asp:Label>
                 </td>
                 <td colspan="4">
-                    <uc:contact ID="p28ID_Supplier" runat="server" Width="400px" Flag="supplier" />
+                    <uc:contact ID="p28ID_Supplier" runat="server" Width="250px" Flag="supplier" />
+                    <asp:Label ID="lblCode" runat="server" CssClass="lbl" Text="Kód dokladu:"></asp:Label>
+                    <asp:TextBox ID="p31Code" runat="server" Width="100px"></asp:TextBox>
                 </td>
             </tr>
         </table>
@@ -459,7 +466,7 @@
         <asp:TextBox ID="p31Text" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
         <uc:freefields ID="ff1" runat="server" />
     </div>
-    <div class="content-box1">
+    <div class="content-box1" style="min-width:270px;">
         <div class="title">
             <img src="Images/task.png" alt="Úkol" />
             <asp:CheckBox ID="chkBindToP56" runat="server" Text="Zapsat úkon k úkolu projektu" AutoPostBack="true" />
@@ -470,7 +477,7 @@
         </div>
 
     </div>
-    <div class="content-box1">
+    <div class="content-box1" style="min-width:270px;">
         <div class="title">
             <img src="Images/notepad.png" alt="Dokument" />Dokumenty
             <asp:HyperLink ID="cmdDoc" runat="server" Text="Nahrát/Spárovat dokument" NavigateUrl="javascript:o23_record()"></asp:HyperLink>
@@ -479,6 +486,17 @@
             <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p31Worksheet"></uc:o23_list>
         </div>
     </div>
+    <asp:panel ID="panP49" runat="server" cssclass="content-box1" style="min-width:270px;" Visible="false">
+        <div class="title">
+            <img src="Images/finplan.png" alt="Rozpočet" />rozpočet
+            <asp:HyperLink ID="cmdP49" runat="server" Text="Spárovat" NavigateUrl="javascript:p49_bind()"></asp:HyperLink>
+        </div>
+        <div class="content">
+            <asp:Label ID="p49_record" runat="server" CssClass="valboldblue"></asp:Label>           
+            <asp:Button ID="cmdClearP49ID" runat="server" Text="Vyčistit vazbu na rozpočet" CssClass="cmd" />
+            <asp:HiddenField ID="p49ID" runat="server" />
+        </div>
+    </asp:panel>
     <div style="clear: both;"></div>
     <div class="div6">
 

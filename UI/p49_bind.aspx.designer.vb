@@ -11,43 +11,34 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p49_plan
+Partial Public Class p49_bind
 
     '''<summary>
-    '''lblCount control.
+    '''Budget control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblCount As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Budget As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdNew control.
+    '''Sheet control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNew As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents Sheet As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdEdit control.
+    '''chkIncludeExtended control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdEdit As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdClone control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdClone As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents chkIncludeExtended As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''grid1 control.
@@ -59,13 +50,40 @@ Partial Public Class p49_plan
     Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
-    '''hiddatapid control.
+    '''hidP41ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidP41ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP34ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP34ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP49ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP49ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP45ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP45ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

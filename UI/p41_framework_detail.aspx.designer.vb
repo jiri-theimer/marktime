@@ -896,15 +896,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents gridP46 As Global.UI.datagrid
 
     '''<summary>
-    '''gridBudgetExpense control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridBudgetExpense As Global.UI.datagrid
-
-    '''<summary>
     '''hiddatapid_subform control.
     '''</summary>
     '''<remarks>

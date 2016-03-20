@@ -174,6 +174,8 @@
                 pars.Add("p31DateTimeUntil_Orig", BO.BAS.IsNullDBDate(.p31DateTimeUntil_Orig), DbType.DateTime)
                 pars.Add("p31Value_Orig_Entried", Left(.Value_Orig_Entried, 20), DbType.String)
 
+                pars.Add("p31Code", .p31Code, DbType.String)
+
                 If p33ID = BO.p33IdENUM.PenizeBezDPH Or p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
                     pars.Add("p31Amount_WithoutVat_Orig", .p31Amount_WithoutVat_Orig, DbType.Double)
                     pars.Add("p31VatRate_Orig", .VatRate_Orig, DbType.Double)
@@ -183,6 +185,7 @@
                     pars.Add("p31Calc_Pieces", .p31Calc_Pieces, DbType.Double)
                     pars.Add("p31Calc_PieceAmount", .p31Calc_PieceAmount, DbType.Double)
                     pars.Add("p35ID", BO.BAS.IsNullDBKey(.p35ID), DbType.Int32)
+                    pars.Add("p49ID", BO.BAS.IsNullDBKey(.p49ID), DbType.Int32)
                 End If
             End With
 
@@ -475,7 +478,7 @@
         s.Append(",a.p31DateTimeFrom_Orig,a.p31DateTimeUntil_Orig,a.p31Value_Orig_Entried,a.p31Calc_Pieces,a.p31Calc_PieceAmount,a.p35ID")
         s.Append(",p31free.*")
         s.Append(",j02.j02LastName+' '+j02.j02FirstName as Person,p32.p32Name,p32.p34ID,p32.p32IsBillable,p34.p33ID,p34.p34Name,p34.p34IncomeStatementFlag,p41.p41Name,p41.p41NameShort,p41.p28ID_Client,p28Client.p28Name,p28Client.p28CompanyShortName,p56.p56Name,p56.p56Code,j02owner.j02LastName+' '+j02owner.j02FirstName as Owner")
-        s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.o23ID_First,a.p28ID_Supplier,supplier.p28Name as SupplierName," & bas.RecTail("p31", "a"))
+        s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.o23ID_First,a.p28ID_Supplier,supplier.p28Name as SupplierName,a.p49ID," & bas.RecTail("p31", "a"))
         Return s.ToString
     End Function
     Private Function GetSF_SUM(bolIncludeWaiting4Approval As Boolean, bolIncludeWaiting4Invoice As Boolean) As String
@@ -858,21 +861,21 @@
         End If
     End Function
 
-    Public Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
-        Dim pars As New DbParameters
+    ''Public Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
+    ''    Dim pars As New DbParameters
 
-        Dim s As String = "select a.p32ID,min(p32.p34ID) as p34ID, min(j27.j27Code) as j27Code,SUM(a.p31Amount_WithoutVat_Orig) as AmountWithoutVat,COUNT(a.p31ID) as Pocet"
-        s += ",MIN(p34.p34Name) as p34Name,MIN(p32.p32Name) as p32Name"
-        s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
-        s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
+    ''    Dim s As String = "select a.p32ID,min(p32.p34ID) as p34ID, min(j27.j27Code) as j27Code,SUM(a.p31Amount_WithoutVat_Orig) as AmountWithoutVat,COUNT(a.p31ID) as Pocet"
+    ''    s += ",MIN(p34.p34Name) as p34Name,MIN(p32.p32Name) as p32Name"
+    ''    s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
+    ''    s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
 
-        Dim strW As String = GetSQLWHERE(myQuery, pars)
-        If strW <> "" Then s += " WHERE " & strW
+    ''    Dim strW As String = GetSQLWHERE(myQuery, pars)
+    ''    If strW <> "" Then s += " WHERE " & strW
 
 
-        s += " GROUP BY a.j27ID_Billing_Orig,a.p32ID"
+    ''    s += " GROUP BY a.j27ID_Billing_Orig,a.p32ID"
 
-        Return _cDB.GetList(Of BO.WorksheetExpenseSummary)(s, pars)
-    End Function
+    ''    Return _cDB.GetList(Of BO.WorksheetExpenseSummary)(s, pars)
+    ''End Function
 
 End Class

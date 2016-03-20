@@ -3,6 +3,7 @@ Public Interface Ip45BudgetBL
     Inherits IFMother
     Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean
     Function Load(intPID As Integer) As BO.p45Budget
+    Function LoadByProject(intP41ID As Integer) As BO.p45Budget
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP41ID As Integer, Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget)
     Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson)
@@ -64,6 +65,9 @@ Class p45BudgetBL
     End Function
     Public Function Load(intPID As Integer) As BO.p45Budget Implements Ip45BudgetBL.Load
         Return _cDL.Load(intPID)
+    End Function
+    Public Function LoadByProject(intP41ID As Integer) As BO.p45Budget Implements Ip45BudgetBL.LoadByProject
+        Return _cDL.LoadByProject(intP41ID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ip45BudgetBL.Delete
         Return _cDL.Delete(intPID)

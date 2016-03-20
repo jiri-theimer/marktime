@@ -144,6 +144,7 @@
             If Master.IsRecordClone Then
                 Master.DataPID = 0
                 If Not Me.CurrentIsScheduler Then p31Date.SelectedDate = MyDefault_p31Date
+                If Me.p49ID.Value <> "" Then Me.p49ID.Value = "" : Me.p49_record.Text = ""
             End If
 
             If Master.DataPID = 0 Then
@@ -461,6 +462,7 @@
 
             Me.p28ID_Supplier.Value = .p28ID_Supplier.ToString
             Me.p28ID_Supplier.Text = .SupplierName
+            Me.p31Code.Text = .p31Code
             Select Case CurrentP33ID
                 Case BO.p33IdENUM.Cas
                     Select Case .p31HoursEntryFlag
@@ -508,6 +510,11 @@
                 SetupP56Combo()
                 Me.p56ID.SelectedValue = .p56ID.ToString
             End If
+            If .p49ID > 0 Then
+                Me.p49ID.Value = .p49ID.ToString
+                Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, .p49ID) & "</br>"
+            End If
+
 
             Master.Timestamp = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"
             Master.HeaderText = .p34Name & " | " & BO.BAS.FD(.p31Date) & " | " & .Person & " | " & .p41Name
@@ -768,6 +775,8 @@
                     .p31Date = Me.p31Date.SelectedDate
                 End If
                 .p31Text = Me.p31Text.Text
+                .p31Code = Me.p31Code.Text
+                .p49ID = BO.BAS.IsNullInt(Me.p49ID.Value)
               
                 Select Case Me.CurrentP33ID
                     Case BO.p33IdENUM.Cas
@@ -897,11 +906,15 @@
             Case "o23-save"
                 Dim cRec As BO.o23Notepad = Master.Factory.o23NotepadBL.Load(BO.BAS.IsNullInt(Me.HardRefreshPID.Value))
                 If cRec.p31ID = 0 Then
-                    Master.Notify("Vazbu úkonu na dokument potvrdíte až tlačítkem [Uložit změny].")
+                    Master.Notify("Vazbu úkonu na dokument potvrdíte tlačítkem [Uložit změny].")
                 End If
                 RefreshListO23()
             Case "o23-queue"
                 RefreshListO23()
+            Case "p49-bind"
+                Me.p49ID.Value = Me.HardRefreshPID.Value
+                Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, CInt(Me.p49ID.Value)) & "</br>"
+                Master.Notify("Vazbu úkonu na rozpočet potvrdíte tlačítkem [Uložit změny].")
         End Select
 
 
@@ -956,14 +969,19 @@
 
     Private Sub p31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.p56ID.Visible = Me.chkBindToP56.Checked
+        Me.panP49.Visible = panM.Visible
         If Not _Sheet Is Nothing And panM.Visible Then
-            If _Sheet.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem Then
-                lblSupplier.Visible = False : Me.p28ID_Supplier.Visible = False
-            Else
-                lblSupplier.Visible = True : Me.p28ID_Supplier.Visible = True
-            End If
+            Dim bolVydaj As Boolean = False
+            If _Sheet.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj Then bolVydaj = True
+
+            lblSupplier.Visible = bolVydaj : Me.p28ID_Supplier.Visible = bolVydaj : p31Code.Visible = bolVydaj : lblCode.Visible = bolVydaj
         End If
-        ''imgTask.Visible = Me.p56ID.Visible
+        If Me.panP49.Visible Then
+            If Me.p49ID.Value <> "" Then cmdClearP49ID.Visible = True Else Me.cmdClearP49ID.Visible = False
+        End If
+
+
+
     End Sub
 
     Private Sub chkBindToP56_CheckedChanged(sender As Object, e As EventArgs) Handles chkBindToP56.CheckedChanged
@@ -1040,5 +1058,10 @@
             Next
             ViewState("times_offer") = s
         End With
+    End Sub
+
+    Private Sub cmdClearP49ID_Click(sender As Object, e As EventArgs) Handles cmdClearP49ID.Click
+        Me.p49ID.Value = "" : Me.p49_record.Text = ""
+        Master.Notify("Vyčištění vazby na rozpočet je třeba potvrdit tlačítkem [Uložit změny].")
     End Sub
 End Class

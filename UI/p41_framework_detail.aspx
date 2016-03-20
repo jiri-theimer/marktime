@@ -650,7 +650,7 @@
             <button type="button" id="cmdP45" runat="server" onclick="p45_detail()" class="cmd">Nastavení rozpočtu</button>
         </div>
         <uc:datagrid ID="gridP46" runat="server"></uc:datagrid>
-        <uc:datagrid ID="gridBudgetExpense" runat="server"></uc:datagrid>
+        
     </asp:Panel>
 
     <asp:HiddenField ID="hiddatapid_subform" runat="server" />

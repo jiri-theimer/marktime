@@ -10,24 +10,21 @@
     Public Property p49DateFrom As Date
     Public Property p49DateUntil As Date
     Public Property p49Amount As Double
-    Public Property p49Text
-    Public Property Amount_Orig As Double
-    Public Property Amount_Approved As Double
-    Public Property Amount_Invoiced As Double
-
-    Private Property _Person As String
+    Public Property p49Text As String
+    
+    Friend Property _Person As String
     Public ReadOnly Property Person As String
         Get
             Return _Person
         End Get
     End Property
-    Private Property _Client As String
+    Friend Property _Client As String
     Public ReadOnly Property Client As String
         Get
             Return _Client
         End Get
     End Property
-    Private Property _p41ID As Integer
+    Friend Property _p41ID As Integer
     Public ReadOnly Property p41ID As Integer
         Get
             Return _p41ID
@@ -39,43 +36,43 @@
             Return _Project
         End Get
     End Property
-    Private Property _SupplierName As String
+    Friend Property _SupplierName As String
     Public ReadOnly Property SupplierName As String
         Get
             Return _SupplierName
         End Get
     End Property
-    Private Property _p32Name As String
+    Friend Property _p32Name As String
     Public ReadOnly Property p32Name As String
         Get
             Return _p32Name
         End Get
     End Property
-    Private Property _p34Name As String
+    Friend Property _p34Name As String
     Public ReadOnly Property p34Name As String
         Get
             Return _p34Name
         End Get
     End Property
-    Private Property _p34Color As String
+    Friend Property _p34Color As String
     Public ReadOnly Property p34Color As String
         Get
             Return _p34Color
         End Get
     End Property
-    Private Property _p34IncomeStatementFlag As Integer
+    Friend Property _p34IncomeStatementFlag As Integer
     Public ReadOnly Property p34IncomeStatementFlag As p34IncomeStatementFlagENUM
         Get
             Return CType(_p34IncomeStatementFlag, BO.p34IncomeStatementFlagENUM)
         End Get
     End Property
-    Private Property _p32Color As String
+    Friend Property _p32Color As String
     Public ReadOnly Property p32Color As String
         Get
             Return _p32Color
         End Get
     End Property
-    Private Property _j27Code As String
+    Friend Property _j27Code As String
     Public ReadOnly Property j27Code As String
         Get
             Return _j27Code
@@ -102,4 +99,12 @@
     End Property
 
     
+End Class
+
+Public Class p49FinancialPlanExtended
+    Inherits p49FinancialPlan
+    Public Property p31ID As Integer
+    Public Property p31Code As String
+    Public Property p31Date As Date?
+    Public Property p31Amount_WithoutVat_Orig As Double?
 End Class

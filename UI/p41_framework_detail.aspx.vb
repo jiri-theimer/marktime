@@ -611,22 +611,22 @@ Public Class p41_framework_detail
             .AddColumn("TimesheetAmountCost", "Nákladová", BO.cfENUM.Numeric2, , , , , True, , "timesheet_cena")
 
         End With
-        With Me.gridBudgetExpense
-            .ClearColumns()
-            .radGridOrig.ShowFooter = True
-            .AddColumn("p34Name", "Sešit")
-            .AddColumn("p32Name", "Aktivita")
-            .AddColumn("AmountWithoutVat", "Vykázáno bez DPH", BO.cfENUM.Numeric, , , , , True)
-            .AddColumn("Pocet", "Počet", BO.cfENUM.Numeric0)
+        ''With Me.gridBudgetExpense
+        ''    .ClearColumns()
+        ''    .radGridOrig.ShowFooter = True
+        ''    .AddColumn("p34Name", "Sešit")
+        ''    .AddColumn("p32Name", "Aktivita")
+        ''    .AddColumn("AmountWithoutVat", "Vykázáno bez DPH", BO.cfENUM.Numeric, , , , , True)
+        ''    .AddColumn("Pocet", "Počet", BO.cfENUM.Numeric0)
 
-            Dim GGE As New Telerik.Web.UI.GridGroupByExpression
-            Dim fld As New GridGroupByField
-            fld.FieldName = "j27Code"
-            fld.HeaderText = "Měna"
-            GGE.SelectFields.Add(fld)
-            GGE.GroupByFields.Add(fld)
-            .radGridOrig.MasterTableView.GroupByExpressions.Add(GGE)
-        End With
+        ''    Dim GGE As New Telerik.Web.UI.GridGroupByExpression
+        ''    Dim fld As New GridGroupByField
+        ''    fld.FieldName = "j27Code"
+        ''    fld.HeaderText = "Měna"
+        ''    GGE.SelectFields.Add(fld)
+        ''    GGE.GroupByFields.Add(fld)
+        ''    .radGridOrig.MasterTableView.GroupByExpressions.Add(GGE)
+        ''End With
     End Sub
 
     Private Sub gridP46_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridP46.ItemDataBound
@@ -652,12 +652,12 @@ Public Class p41_framework_detail
 
     End Sub
 
-    Private Sub gridBudgetExpense_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridBudgetExpense.NeedDataSource
-        Dim mq As New BO.myQueryP31
-        mq.p41ID = Master.DataPID
-        mq.IsExpenses = True
-        Dim lis As IEnumerable(Of BO.WorksheetExpenseSummary) = Master.Factory.p31WorksheetBL.GetList_ExpenseSummary(mq)
-        Me.gridBudgetExpense.DataSource = lis
+    ''Private Sub gridBudgetExpense_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridBudgetExpense.NeedDataSource
+    ''    Dim mq As New BO.myQueryP31
+    ''    mq.p41ID = Master.DataPID
+    ''    mq.IsExpenses = True
+    ''    Dim lis As IEnumerable(Of BO.WorksheetExpenseSummary) = Master.Factory.p31WorksheetBL.GetList_ExpenseSummary(mq)
+    ''    Me.gridBudgetExpense.DataSource = lis
 
-    End Sub
+    ''End Sub
 End Class
