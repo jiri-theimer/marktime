@@ -210,6 +210,9 @@
 
 
                                 </div>
+                                <div>
+                                    <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" />
+                                </div>
                                 <div class="div6">
                                     <img src="Images/approve.png" />
                                     <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();"></asp:HyperLink>

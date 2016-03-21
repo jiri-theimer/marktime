@@ -50,24 +50,11 @@ Public Class j02_framework_detail
                     .Add("j02_framework_detail-pid")
                     .Add("j02_framework_detail-subgrid")
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
-                    '.Add("j02_framework_detail-chkLockedDocks")
+                    .Add("j02_framework_detail-switch")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
 
-                    ''If Request.Item("changemode") = "1" Then
-                    ''    .SetUserParam("j02_framework_detail-mode", "detail")
-                    ''Else
-                    ''    Select Case .GetUserParam("j02_framework_detail-mode", "detail")
-                    ''        Case "timeline"
-                    ''            'přesměrovat na timeline
-                    ''            Server.Transfer("entity_framework_detail_timeline.aspx?prefix=j02&pid=" & Master.DataPID.ToString)
-                    ''        Case "tasks"
-                    ''            Server.Transfer("entity_framework_detail_tasks.aspx?prefix=j02&pid=" & Master.DataPID.ToString)
-                    ''        Case "approving"
-                    ''            Server.Transfer("entity_framework_detail_approving.aspx?prefix=j02&pid=" & Master.DataPID.ToString)
-                    ''    End Select
-                    ''End If
                 End With
                 If .DataPID = 0 Then
                     .DataPID = BO.BAS.IsNullInt(.Factory.j03UserBL.GetUserParam("j02_framework_detail-pid", "O"))
@@ -80,7 +67,7 @@ Public Class j02_framework_detail
 
                
                 With .Factory.j03UserBL
-                    'Me.chkLockedDocks.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkLockedDocks", "0"))
+                    panSwitch.Style.Item("display") = .GetUserParam("j02_framework_detail-switch", "block")
                     Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("j02_framework_detail-subgrid", "1")), SubgridType)
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With

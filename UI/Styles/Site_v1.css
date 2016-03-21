@@ -626,6 +626,17 @@ html .RadMenu_Silk ul.rmRootGroup {
     background-position: center;
 }
 
+.a20 {
+    background-image: url('../Images/a20.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.a30 {
+    background-image: url('../Images/a30.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .corr_236 {
     background-image: url('../Images/correction_down.gif');
     background-repeat: no-repeat;

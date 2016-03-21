@@ -489,6 +489,7 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Faktura", "p91Code"))
                 lis.Add(New BO.GridGroupByColumn("Schváleno", "p71Name"))
                 lis.Add(New BO.GridGroupByColumn("Fakt.status", "p70Name"))
+                lis.Add(New BO.GridGroupByColumn("Dodavatel", "SupplierName"))
                 lis.Add(New BO.GridGroupByColumn("Billing dávka", "p31ApprovingSet"))
             Case BO.x29IdEnum.p56Task
                 lis.Add(New BO.GridGroupByColumn("Typ úkolu", "p57Name"))

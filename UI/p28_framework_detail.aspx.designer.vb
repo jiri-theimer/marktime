@@ -248,6 +248,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents topLink3 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''panSwitch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSwitch As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''boxCoreTitle control.
     '''</summary>
     '''<remarks>

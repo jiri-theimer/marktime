@@ -58,11 +58,13 @@ Public Class p41_framework_detail
                     .Add("p41_framework_detail-subgrid")
                     .Add("p41_framework_detail-chkFFShowFilledOnly")
                     .Add("p41_framework_detail-budget-prefix")
+                    .Add("p41_framework_detail-switch")
                 End With
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkFFShowFilledOnly", "0"))
+                    panSwitch.Style.Item("display") = .GetUserParam("p41_framework_detail-switch", "block")
                 End With
 
 
@@ -390,11 +392,15 @@ Public Class p41_framework_detail
             If Not .p91_Read Then
                 topLink6.Visible = False
                 With Me.opgSubgrid.Tabs
-                    If Not .FindTabByValue("2") Is Nothing Then
-                        .Remove(.FindTabByValue("2"))  'nemá právo vidět vystavené faktury v projektu
-                    End If
+                    If Not .FindTabByValue("2") Is Nothing Then .Remove(.FindTabByValue("2")) 'nemá právo vidět vystavené faktury v projektu
                 End With
                 If Me.CurrentSubgrid = SubgridType.p91 Then Me.CurrentSubgrid = SubgridType.p31
+            End If
+            If Not .p45_Read Then
+                With Me.opgSubgrid.Tabs
+                    If Not .FindTabByValue("5") Is Nothing Then .Remove(.FindTabByValue("5")) 'nemá právo vidět rozpočet projektu
+                End With
+                If Me.CurrentSubgrid = SubgridType.p45 Then Me.CurrentSubgrid = SubgridType.p31
             End If
         End With
 

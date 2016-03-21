@@ -122,6 +122,15 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdCopy As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''chkGroupsAutoExpanded control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''cbxPaging control.
     '''</summary>
     '''<remarks>

@@ -568,6 +568,9 @@ if @prefix='p34'
 if @prefix='p51'
   select @ret=p51Name+' ('+j27Code+')' from p51PriceList a INNER JOIN j27Currency b ON a.j27ID=b.j27ID WHERE a.p51ID=@pid
 
+if @prefix='p49'
+  select @ret=right(convert(varchar(20),a.p49DateFrom,104),7)+'/'+ convert(varchar(10),a.p49Amount)+',-'+b.j27Code+isnull('/'+p49Text,'') from p49FinancialPlan a INNER JOIN j27Currency b ON a.j27ID=b.j27ID INNER JOIN p45Budget c ON a.p45ID=c.p45ID WHERE a.p49ID=@pid
+
 if @prefix='p36'
  select @ret=convert(varchar(20),p36DateFrom,104)+' - '+convert(varchar(20),p36DateUntil,104) from p36LockPeriod WHERE p36ID=@pid
 
@@ -5002,9 +5005,9 @@ if @c11id is null OR @c11id_find is null OR isnull(@c11id_find,0)<>isnull(@c11id
 
 if @p33id=1 or @p33id=3	---1 - èas, 3 - kusovník
  BEGIN        
-	exec p31_getrate_tu 1, @p41id, @j02id_rec, @p32id, @j27id_billing_orig OUTPUT , @p31rate_billing_orig OUTPUT
+	exec p31_getrate_tu @p31date,1, @p41id, @j02id_rec, @p32id, @j27id_billing_orig OUTPUT , @p31rate_billing_orig OUTPUT
 
-	exec p31_getrate_tu 2, @p41id, @j02id_rec, @p32id, @j27id_internal OUTPUT , @p31rate_internal_orig OUTPUT  
+	exec p31_getrate_tu @p31date,2, @p41id, @j02id_rec, @p32id, @j27id_internal OUTPUT , @p31rate_internal_orig OUTPUT  
 	
 	select @p31vatrate_orig=dbo.p32_get_vatrate(@p32id,@p41id,@p31date)
 	
@@ -5299,8 +5302,9 @@ GO
 
 
 
+
 CREATE procedure [dbo].[p31_getrate_tu]
-@pricelisttype int,@p41id int,@j02id int,@p32id int
+@date_rate datetime,@pricelisttype int,@p41id int,@j02id int,@p32id int
 ,@ret_j27id int OUTPUT,@ret_rate float OUTPUT
 
 ---@pricelisttype=1 - fakturaèní ceník
@@ -5308,6 +5312,7 @@ CREATE procedure [dbo].[p31_getrate_tu]
 AS
 
   set @pricelisttype=isnull(@pricelisttype,1)
+  set @date_rate=isnull(@date_rate,getdate())
    
   declare @p51id int,@p34id int,@j07id int,@isbillable bit,@p28id int,@p33id int
     
@@ -5331,8 +5336,8 @@ AS
 
 	 if @p51id is null	
 	  begin	--zjistit, zda neexistuje výchozí nákladový ceník v globálních promìnných
-	   if exists(select x35ID FROM x35GlobalParam WHERE x35Key LIKE 'p51ID_Internal' and x35Value is not null)
-	    select @p51id=convert(int,x35Value) FROM x35GlobalParam WHERE x35Key LIKE 'p51ID_Internal'
+	    select @p51id=p51ID FROM p50OfficePriceList WHERE p50RatesFlag=1 AND @date_rate BETWEEN p50ValidFrom AND p50ValidUntil
+		
 	  end
 	  
 	  
@@ -5352,6 +5357,7 @@ AS
   select @p34id=a.p34id,@isbillable=a.p32IsBillable,@p33id=b.p33id
   FROM p32Activity a inner join p34activitygroup b on a.p34id=b.p34id
   where a.p32id=@p32id
+
   
   if @isbillable=0 and @pricelisttype=1
    begin
@@ -7642,10 +7648,38 @@ AS
 
 ---automaticky se spouští po uložení záznamu rozpoètu
 
+declare @j02id int,@p45planfrom datetime
 
-
-declare @j02id int
 select @j02id=j02ID FROM j03User WHERE j03ID=@j03id_sys
+
+
+declare @rate_billing float,@rate_cost float,@p41id int,@p32id int,@j27id_costrate int,@j27id_billingrate int,@p46id int,@dat datetime
+
+set @dat=getdate()
+
+select top 1 @p32id=p32ID FROM p32Activity WHERE p32IsBillable=1 and p34ID IN (SELECT p34ID FROM p34ActivityGroup WHERE p33ID=1)
+
+DECLARE curW CURSOR FOR 
+	select a.p46ID,a.j02ID,b.p41ID from p46BudgetPerson a INNER JOIN p45Budget b ON a.p45ID=b.p45ID WHERE a.p45ID=@p45id
+	
+	OPEN curW
+	FETCH NEXT FROM curW 
+	INTO @p46id,@j02id,@p41id
+	WHILE @@FETCH_STATUS = 0
+	BEGIN				
+
+	    exec dbo.p31_getrate_tu @dat,1,@p41id,@j02id,@p32id,@j27id_billingrate OUTPUT,@rate_billing OUTPUT
+
+		exec dbo.p31_getrate_tu @dat,2,@p41id,@j02id,@p32id,@j27id_costrate OUTPUT,@rate_cost OUTPUT
+
+		update p46BudgetPerson set p46BillingRate=@rate_billing,p46CostRate=@rate_cost,j27ID_BillingRate=@j27id_billingrate,j27ID_CostRate=@j27id_costrate
+		WHERE p46ID=@p46id
+
+   	  FETCH NEXT FROM curW 
+   	  INTO @p46id,@j02id,@p41id
+	END
+	CLOSE curW
+	DEALLOCATE curW
 
 
 
@@ -7674,10 +7708,20 @@ CREATE   procedure [dbo].[p45_delete]
 
 AS
 --odstranìní záznamu rozpoètu z tabulky p45Budget
-declare @ref_pid int
+declare @ref_pid int,@p41id int,@count int
 
-if exists(select p45ID FROM p45Budget WHERE p45ID=@pid AND getdate() BETWEEN p45ValidFrom AND p45ValidUntil)
- set @err_ret='Nenávratnì odstranit rozpoèet lze pouze v pøípadì, že je pøesunutý do archivu.'
+select @p41id=p41ID FROM p45Budget WHERE p45ID=@pid
+select @count=count(*) FROM p45Budget WHERE p41ID=@p41id
+
+if @count>1 AND exists(select p45ID FROM p45Budget WHERE p45ID=@pid AND getdate() BETWEEN p45ValidFrom AND p45ValidUntil)
+ set @err_ret='Odstranit verzi rozpoètu lze pouze v pøípadì, že je pøesunutá do archivu.'
+
+if exists(select p47ID FROM p47CapacityPlan WHERE p47HoursTotal>0 AND p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p45ID=@pid))
+ set @err_ret='Pro odstranìní rozpoètu je tøeba vyèistit jeho kapacitní plán.'
+
+
+if exists(select p31ID FROM p31Worksheet WHERE p49ID IN (SELECT p49ID FROM p49FinancialPlan WHERE p45ID=@pid))
+ set @err_ret='Minimálnì jedna položka finanèního rozpoètu má vazbu s reálnì vykázanými worksheet úkony.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -7788,6 +7832,11 @@ CREATE   procedure [dbo].[p49_delete]
 
 AS
 --odstranìní záznamu finanèního plánu z tabulky p49FinancialPlan
+if exists(select p31ID FROM p31Worksheet WHERE p49ID=@pid)
+ set @err_ret='Záznam rozpoètu má vazbu na worksheet úkon.'
+
+if isnull(@err_ret,'')<>''
+ return 
 
 
 BEGIN TRANSACTION
@@ -7807,6 +7856,59 @@ BEGIN CATCH
 END CATCH  
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------P---------------p50_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p50_delete') and type = 'P')
+ drop procedure p50_delete
+GO
+
+
+
+
+CREATE   procedure [dbo].[p50_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p50id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu z tabulky p50OfficePriceList
+
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+
+	
+	delete from p50OfficePriceList where p50ID=@pid
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
 
 
 
@@ -9118,10 +9220,10 @@ declare @p91id int
 
 if isnull(@p51id,0)=0
  begin
-  if not exists(select x35ID FROM x35GlobalParam WHERE x35Key LIKE 'p51ID_FPR')
-   return
+  select @p51id=p51ID FROM p50OfficePriceList WHERE p50RatesFlag=1 AND getdate() BETWEEN p50ValidFrom AND p50ValidUntil
 
-  select @p51id=convert(int,x35Value) FROM x35GlobalParam WHERE x35Key LIKE 'p51ID_FPR'
+  if @p51id is null
+   return
  end
 
 

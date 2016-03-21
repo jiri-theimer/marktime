@@ -290,6 +290,20 @@
         {                       
             location.replace("p41_framework_detail.aspx?budgetprefix="+prefix);
         }
+        function OnSwitch()
+        {       
+            var s="none";
+            if (document.getElementById("<%=Me.panSwitch.ClientID%>").style.display=="none")
+                s="block";
+           
+            document.getElementById("<%=Me.panSwitch.ClientID%>").style.display=s;
+
+            $.post("Handler/handler_userparam.ashx", { x36value: s, x36key: "p41_framework_detail-switch", oper: "set" }, function (data) {
+                if (data == ' ') {
+                    return;
+                }                
+            });            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -302,7 +316,10 @@
                         <img src="Images/project_32.png" alt="Projekt" />
                     </ItemTemplate>
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
+                <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
+                </telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" ImageUrl="Images/switch_24.png" ToolTip="Skrýt/zobrazit horní polovinu detailu projektu (boxy)">
+                    
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="Záznam projektu" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <ContentTemplate>
@@ -434,7 +451,7 @@
     </div>
 
 
-
+    <asp:panel id="panSwitch" runat="server">
     <div class="content-box1">
         <div class="title">
             <img src="Images/properties.png" style="margin-right: 10px;" />
@@ -611,7 +628,7 @@
 
         </div>
     </asp:Panel>
-
+    </asp:panel>
 
     <div style="clear: both; width: 100%;"></div>
     <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="true">
@@ -637,7 +654,7 @@
 
     <asp:Panel ID="panP45" runat="server" Visible="false">
         <div style="float:left;">
-            <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName"></asp:DropDownList>
+            <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName" BackColor="yellow"></asp:DropDownList>
             <button type="button" id="cmdP45" runat="server" onclick="p45_detail()" class="cmd">Nastavení rozpočtu</button>
             
         </div>

@@ -219,11 +219,13 @@
 
     Private Sub RefreshState()
         Dim b As Boolean = False
-        If Me.CurrentP71ID = BO.p71IdENUM.Neschvaleno Or Me.CurrentP71ID = BO.p71IdENUM.Nic Then
-            b = False
-        Else
-            b = True
-        End If
+        Select Case Me.CurrentP71ID
+            Case BO.p71IdENUM.Neschvaleno, BO.p71IdENUM.Nic, BO.p71IdENUM.Schvaleno_Fakturovat_Pozdeji
+                b = False
+            Case Else
+                b = True
+        End Select
+       
         p72id.Visible = b
         value_approved.Visible = b
         lblFakturovat.Visible = b

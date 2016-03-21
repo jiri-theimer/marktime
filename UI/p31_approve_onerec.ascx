@@ -10,10 +10,12 @@
     </div>
     <div class="content">
         <div class="div6">
-            <asp:RadioButtonList ID="p71id" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
+            <asp:RadioButtonList ID="p71id" runat="server" AutoPostBack="true" RepeatDirection="Vertical" RepeatColumns="2">
 
                 <asp:ListItem Text="Schváleno" Value="1"></asp:ListItem>
                 <asp:ListItem Text="Nerozhodnuto (zůstane rozpracované)" Value="0"></asp:ListItem>
+                <asp:ListItem Text="Neschváleno" Value="2"></asp:ListItem>
+                <asp:ListItem Text="Schváleno, fakturovat později" Value="3"></asp:ListItem>
             </asp:RadioButtonList>
         </div>
         <table cellpadding="0">

@@ -49,29 +49,13 @@ Public Class p28_framework_detail
                     .Add("p28_framework_detail-pid")
                     .Add("p28_framework_detail-subgrid")
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
-                    '.Add("p28_framework_detail-chkLockedDocks")
+                    .Add("p28_framework_detail-switch")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-                    ''If Request.Item("force") = "" Then
-                    ''    If Request.Item("changemode") = "1" Then
-                    ''        .SetUserParam("p28_framework_detail-mode", "detail")
-                    ''    Else
-                    ''        Select Case .GetUserParam("p28_framework_detail-mode", "detail")
-                    ''            Case "timeline"
-                    ''                'přesměrovat na timeline
-                    ''                Server.Transfer("entity_framework_detail_timeline.aspx?prefix=p28&pid=" & Master.DataPID.ToString)
-                    ''            Case "tasks"
-                    ''                Server.Transfer("entity_framework_detail_tasks.aspx?prefix=p28&pid=" & Master.DataPID.ToString)
-                    ''            Case "approving"
-                    ''                Server.Transfer("entity_framework_detail_approving.aspx?prefix=p28&pid=" & Master.DataPID.ToString)
-                    ''        End Select
-                    ''    End If
-                    ''End If
-
                 End With
                 With .Factory.j03UserBL
-
+                    panSwitch.Style.Item("display") = .GetUserParam("p28_framework_detail-switch", "block")
 
                     Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p28_framework_detail-subgrid", "1")), SubgridType)
                     If Master.DataPID = 0 Then

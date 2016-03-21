@@ -53,6 +53,7 @@ Public Class p31_grid
                     .Add("p31_grid-period")
                     .Add("periodcombo-custom_query")
                     .Add("p31_grid-groupby")
+                    .Add("p31_grid-groups-autoexpanded")
                     .Add("p31_grid-search")
                     .Add("p31_grid-sort")
                     .Add("p31_grid-filter_setting")
@@ -74,9 +75,11 @@ Public Class p31_grid
             End With
 
             With Master.Factory.j03UserBL
+                Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_grid-groups-autoexpanded", "0"))
                 SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
                 SetupJ74Combo(BO.BAS.IsNullInt(.GetUserParam("p31_grid-j74id")))
                 SetupGrid(.GetUserParam("p31_grid-filter_setting"), .GetUserParam("p31_grid-filter_sql"))
+
             End With
 
             RecalcVirtualRowCount()
@@ -205,20 +208,22 @@ Public Class p31_grid
         End With
     End Sub
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
+        grid1.radGridOrig.GroupingSettings.RetainGroupFootersVisibility = True
         With grid1.radGridOrig.MasterTableView
             .GroupByExpressions.Clear()
             If strGroupField = "" Then Return
             .ShowGroupFooter = True
+            .GroupsDefaultExpanded = chkGroupsAutoExpanded.Checked
             Dim GGE As New GridGroupByExpression
             Dim fld As New GridGroupByField
             fld.FieldName = strGroupField
             fld.HeaderText = strFieldHeader
-
             GGE.SelectFields.Add(fld)
             GGE.GroupByFields.Add(fld)
 
             .GroupByExpressions.Add(GGE)
         End With
+
     End Sub
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
@@ -427,6 +432,10 @@ Public Class p31_grid
             .SetUserParam("p31_grid-filter_setting", "")
             .SetUserParam("p31_grid-filter_sql", "")
         End With
+        ReloadPage()
+    End Sub
+    Private Sub chkGroupsAutoExpanded_CheckedChanged(sender As Object, e As EventArgs) Handles chkGroupsAutoExpanded.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-groups-autoexpanded", BO.BAS.GB(Me.chkGroupsAutoExpanded.Checked))
         ReloadPage()
     End Sub
 End Class

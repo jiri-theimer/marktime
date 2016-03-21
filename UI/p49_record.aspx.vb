@@ -47,8 +47,8 @@
         Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
 
         Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)
-        If Not cDisp.p49_Create Then
-            Master.StopPage("Nedisponujete oprávněním k zapisování finančního plánu do tohoto projektu.")
+        If Not cDisp.p45_Owner Then
+            Master.StopPage("Nedisponujete oprávněním pro úpravu projektového rozpočtu.")
         End If
 
         If Master.DataPID = 0 Then

@@ -27,10 +27,13 @@ Public Class p45_project
             If Not cRec.p41PlanUntil Is Nothing Then Me.p45PlanUntil.SelectedDate = cRec.p41PlanUntil
 
             Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
-            If cDisp.p47_Create Then
+            If cDisp.p45_Owner Then
                 Master.AddToolbarButton("Uložit změny", "save", 0, "Images/save.png")
-            Else
+            Else                
+                If Not cDisp.p45_Read Then Master.StopPage("Nemáte oprávnění pro čtení projektového rozpočtu.")
                 cmdAddPerson.Visible = False
+                cmdMakeActualVersion.Visible = False
+                cmdNewVersion.Visible = False
                 Master.Notify("Rozpočet projektu můžete pouze číst, nikoliv upravovat.")
             End If
 
@@ -42,7 +45,7 @@ Public Class p45_project
             End If
 
 
-            
+
             RefreshRecord()
 
             SetupPersonsOffer()

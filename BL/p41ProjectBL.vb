@@ -226,13 +226,13 @@ Class p41ProjectBL
             End If
 
             If c.OwnerAccess Then
-                'vlastník má automaticky právo na kapacitní plán i finanční plán
-                c.p47_Create = True
-                c.p49_Create = True : c.p49_Read = True
+                'vlastník má automaticky právo na rozpočet a kapacitní plán
+                c.p45_Owner = True : c.p47_Owner = True : c.p45_Read = True
             Else
-                c.p47_Create = .TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.PID, BO.x53PermValEnum.PR_P47_Create, True)
-                c.p49_Read = .TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.PID, BO.x53PermValEnum.PR_P49_Reader, True)
-                c.p49_Create = .TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.PID, BO.x53PermValEnum.PR_P49_Create, True)
+                c.p45_Owner = .TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.PID, BO.x53PermValEnum.PR_P45_Owner, True)
+                c.p47_Owner = .TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.PID, BO.x53PermValEnum.PR_P47_Owner, True)
+                c.p45_Read = .TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.PID, BO.x53PermValEnum.PR_P45_Reader, True)
+
             End If
             c.x67IDs = .TestedX67IDs()
         End With

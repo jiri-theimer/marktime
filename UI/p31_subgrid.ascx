@@ -62,6 +62,7 @@
 <div style="clear:both; width: 100%;"></div>
 <div class="slidingDiv1xx" style="padding: 20px;">
     <button type="button" onclick="p31_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
+    <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" Visible="false" />
     <span style="padding-left: 40px;">Stránkování:</span>
     <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
         <asp:ListItem Text="10"></asp:ListItem>
@@ -73,7 +74,7 @@
     </asp:DropDownList>
     <span style="padding-left: 20px;"></span>
     <img src="Images/export.png" />
-    <asp:LinkButton ID="cmdExport" runat="server" Text="Export do MS Excel" />
+    <asp:LinkButton ID="cmdExport" runat="server" Text="MS Excel" />
 
     <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
     <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();"></asp:HyperLink>

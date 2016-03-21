@@ -6,7 +6,7 @@
     <ExportSettings ExportOnlyData="true" OpenInNewWindow="true" FileName="marktime_export" UseItemStyles="false">
         <Excel Format="Biff" />
     </ExportSettings>
-    <GroupingSettings CaseSensitive="false" />
+    <GroupingSettings CaseSensitive="false" ExpandTooltip="Rozbalit řádky" CollapseTooltip="Sbalit řádky" />
 
     <ClientSettings>
         <Selecting AllowRowSelect="true" />

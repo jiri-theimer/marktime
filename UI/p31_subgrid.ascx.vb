@@ -127,6 +127,7 @@ Public Class p31_subgrid
                     .Add("p31_subgrid-pagesize")
                     .Add("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID))
                     .Add("p31_subgrid-search")
+                    .Add("p31_subgrid-groups-autoexpanded")
                     .Add(strKey)
                 End With
                 .InhaleUserParams(lisPars)
@@ -147,6 +148,7 @@ Public Class p31_subgrid
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID)))
                 Me.txtSearch.Text = .GetUserParam("p31_subgrid-search")
+                Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-groups-autoexpanded", "0"))
             End With
 
             SetupJ70Combo(BO.BAS.IsNullInt(Factory.j03UserBL.GetUserParam("p31_subgrid-j70id")))
@@ -183,16 +185,22 @@ Public Class p31_subgrid
         basUIMT.SetupGrid(Me.Factory, Me.gridP31, cJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
 
         Me.lblHeaderP31.ToolTip = cJ74.j74Name
+        If cJ74.j74IsFilteringByColumn Then
+            Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
+        End If
+       
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
 
     End Sub
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
+        gridP31.radGridOrig.GroupingSettings.RetainGroupFootersVisibility = True
         With gridP31.radGridOrig.MasterTableView
             .GroupByExpressions.Clear()
             If strGroupField = "" Then Return
             .ShowGroupFooter = True
+            .GroupsDefaultExpanded = chkGroupsAutoExpanded.Checked
             Dim GGE As New GridGroupByExpression
             Dim fld As New GridGroupByField
             fld.FieldName = strGroupField
@@ -373,6 +381,9 @@ Public Class p31_subgrid
         Else
             txtSearch.Style.Item("background-color") = "red"
         End If
+        With Me.chkGroupsAutoExpanded
+            If Me.cbxGroupBy.SelectedIndex > 0 Then .Visible = True Else .Visible = False
+        End With
     End Sub
     Private Sub cmdExplicitPeriod_Click(sender As Object, e As EventArgs) Handles cmdExplicitPeriod.Click
         Me.ExplicitDateFrom = DateSerial(1900, 1, 1)
@@ -420,5 +431,13 @@ Public Class p31_subgrid
 
     Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
         Handle_RunSearch()
+    End Sub
+
+    Private Sub chkGroupsAutoExpanded_CheckedChanged(sender As Object, e As EventArgs) Handles chkGroupsAutoExpanded.CheckedChanged
+        Factory.j03UserBL.SetUserParam("p31_subgrid-groups-autoexpanded", BO.BAS.GB(Me.chkGroupsAutoExpanded.Checked))
+        With Me.cbxGroupBy.SelectedItem
+            SetupGrouping(.Value, .Text)
+        End With
+        gridP31.Rebind(True)
     End Sub
 End Class

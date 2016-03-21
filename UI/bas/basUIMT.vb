@@ -221,6 +221,8 @@ Public Class basUIMT
                 Case BO.p72IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a12"
                 Case BO.p72IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a13"
                 Case Else
+                    If .p71ID = BO.p71IdENUM.Neschvaleno Then dataItem("systemcolumn").CssClass = "a20"
+                    If .p71ID = BO.p71IdENUM.Schvaleno_Fakturovat_Pozdeji Then dataItem("systemcolumn").CssClass = "a30"
             End Select
             Select Case .p70ID
                 Case BO.p70IdENUM.Vyfakturovano : dataItem("systemcolumn").CssClass = "a4"

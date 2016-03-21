@@ -113,7 +113,7 @@ Public Class Site
                 ShowHideMI(.SysUser.j04IsMenu_Report, "more", "cmdReports")
                 ShowHideMI(.SysUser.IsAdmin, "more", "cmdAdmin")
                 ShowHideMI(.SysUser.IsAdmin, "more", "cmdWorkflow")
-                ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P41_Owner), "more", "p47")
+                ''ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P41_Owner), "more", "p47")
                 ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P51_Admin), "more", "p51")
                 ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_P90_Reader), "more", "p90_framework")
                 ShowHideMI(.TestPermission(BO.x53PermValEnum.GR_O23_Creator), "more", "o23")

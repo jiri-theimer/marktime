@@ -44,13 +44,13 @@
     PR_P91_Reader = 7                     'Přístup k vystaveným fakturám projektu
     PR_P31_RecalcRates = 8              'Zpětný přepočet sazeb úkonů v projektu
     PR_P31_MoveToOtherProject = 9       'Hromadně přesouvat  rozpracovanost na jiný projekt
-
+    PR_P31_LimitPerBudget = 10            'Limit vykázatelných hodin kontrolovat striktně podle rozpočtu projektu
     PR_P56_Bin = 11                     'Uzavírat všechny úkoly v projektu (přesouvat do koše)
     PR_P31_Recurrence = 12              'Definovat šablony opakovaných worksheet úkonů/paušálů
     PR_P31_Move2Bin = 13                'hromadně přesouvat rozpracovanost do koše
-    PR_P47_Create = 14                  'vytvářet kapacitní plán projektu
-    PR_P49_Create = 15                  'vytvářet finanční plán projektu
-    PR_P49_Reader = 16                    'číst finanční plán projektu
+    PR_P47_Owner = 14                  'vytvářet kapacitní plán projektu
+    PR_P45_Owner = 15                  'vytvářet a upravovat rozpočet projektu
+    PR_P45_Reader = 16                    'číst rozpočet projektu
 
    
 

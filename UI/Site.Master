@@ -180,8 +180,7 @@
                             <telerik:RadMenuItem Value="o23" Text="Dokumenty" NavigateUrl="o23_framework.aspx" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="entity_scheduler" Text="Kalendář" NavigateUrl="entity_scheduler.aspx" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="p48" Text="Operativní plánování" NavigateUrl="p48_framework.aspx" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="p47" Text="Kapacitní plánování" NavigateUrl="p47_framework.aspx" ImageUrl="Images/plan.png"></telerik:RadMenuItem>
-
+                            
                             
 
                             <telerik:RadMenuItem Value="p90_framework" Text="Zálohové faktury" NavigateUrl="p90_framework.aspx" ImageUrl="Images/proforma.png"></telerik:RadMenuItem>

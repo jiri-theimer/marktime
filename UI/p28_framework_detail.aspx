@@ -277,6 +277,20 @@
         function workflow(){            
             sw_local("workflow_dialog.aspx?prefix=p28&pid=<%=master.datapid%>","Images/workflow_32.png",false);
         }
+        function OnSwitch()
+        {       
+            var s="none";
+            if (document.getElementById("<%=Me.panSwitch.ClientID%>").style.display=="none")
+                s="block";
+           
+            document.getElementById("<%=Me.panSwitch.ClientID%>").style.display=s;
+
+            $.post("Handler/handler_userparam.ashx", { x36value: s, x36key: "p28_framework_detail-switch", oper: "set" }, function (data) {
+                if (data == ' ') {
+                    return;
+                }                
+            });            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -289,8 +303,9 @@
                         <img src="Images/contact_32.png" alt="Klient" />
                     </ItemTemplate>
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
+                <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
                 </telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" ImageUrl="Images/switch_24.png" ToolTip="Skrýt/zobrazit horní polovinu detailu klienta (boxy)" />
                 <telerik:RadMenuItem Text="Záznam klienta" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <ContentTemplate>
                         <div style="padding: 10px; width: 450px;">
@@ -390,7 +405,7 @@
         
     </div>
 
-
+    <asp:panel id="panSwitch" runat="server">
         <div class="content-box1">
             <div class="title">
                 <img src="Images/properties.png" style="margin-right: 10px;" />
@@ -574,7 +589,7 @@
 
         </asp:Panel>
 
-   
+   </asp:panel>
     <div style="clear:both; width: 100%;"></div>
     <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="true">
         <Tabs>

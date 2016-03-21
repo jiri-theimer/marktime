@@ -231,10 +231,11 @@ Public Class p47_project
         If Not Page.IsPostBack Then
             Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(cRec.p41ID)
             Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)
-            If cDisp.p47_Create Then
+            If cDisp.p47_Owner Then
                 Master.AddToolbarButton("Uložit změny", "save", 0, "Images/save.png")
             Else
-                Master.Notify("Kapacitní plán projektu můžete pouze číst, nikoliv upravovat.")
+                If Not cDisp.p45_Read Then Master.StopPage("Nemáte oprávnění pro čtení projektového rozpočtu.")
+                Master.Notify("Kapacitní plán můžete pouze číst, nikoliv upravovat.")
             End If
         End If
 
