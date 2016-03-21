@@ -456,4 +456,15 @@ Public Class p47_project
     Private Sub p45ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p45ID.SelectedIndexChanged
         Server.Transfer("p47_project.aspx?pid=" & Master.DataPID.ToString & "&p45id=" & Me.CurrentP45ID.ToString)
     End Sub
+
+    Private Sub cmdClear_Click(sender As Object, e As EventArgs) Handles cmdClear.Click
+        Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        For Each c In lisTemp
+            c.p85FreeFloat01 = 0
+            c.p85FreeFloat02 = 0
+            Master.Factory.p85TempBoxBL.Save(c)
+        Next
+        grid1.Rebind()
+        Master.Notify("Vyčištění je třeba potvrdit tlačítkem [Uložit změny].")
+    End Sub
 End Class

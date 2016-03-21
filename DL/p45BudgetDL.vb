@@ -121,7 +121,7 @@
             strW += bas.ParseWhereValidity("p45", "", myQuery)
             If strW <> "" Then s += " AND " & bas.TrimWHERE(strW)
         End If
-        s += " ORDER BY p45VersionIndex DESC"
+        s += " ORDER BY a.p45ValidUntil DESC"
 
         Return _cDB.GetList(Of BO.p45Budget)(s, pars)
 

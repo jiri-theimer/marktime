@@ -193,7 +193,9 @@
                         <asp:Label ID="Label2" Text="Popis:" runat="server" CssClass="lbl" Width="140px"></asp:Label>
                         <asp:TextBox ID="p45Name" runat="server" Width="400px"></asp:TextBox>
                     </div>
-
+                    <div style="padding: 10px;">
+                        <asp:Button ID="cmdMakeActualVersion" runat="server" Text="Nastavit tuto verzi jako [aktuální]" CssClass="cmd" />
+                    </div>
 
                 </div>
             </div>

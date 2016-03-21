@@ -279,8 +279,11 @@
             }
         }
         function p45_detail(){
-            
-            sw_local("p45_project.aspx?pid=<%=master.datapid%>","Images/budget_32.png",true);
+            var p45id="";
+            <%If Me.p45ID.Items.Count>0 then%>
+            p45id=document.getElementById("<%=Me.p45ID.ClientID%>").value;
+            <%end If%>
+            sw_local("p45_project.aspx?pid=<%=master.datapid%>&p45id="+p45id,"Images/budget_32.png",true);
 
         }
         function OnChangeBudgetView(prefix)

@@ -35,7 +35,12 @@ Public Class p45_project
             End If
 
             SetupP45Combo()
-            Me.CurrentP45ID = BO.BAS.IsNullInt(p45ID.SelectedValue)
+            If Request.Item("p45id") <> "" Then
+                Me.CurrentP45ID = BO.BAS.IsNullInt(Request.Item("p45id"))
+            Else
+                Me.CurrentP45ID = BO.BAS.IsNullInt(p45ID.SelectedValue)
+            End If
+
 
             
             RefreshRecord()
@@ -106,7 +111,11 @@ Public Class p45_project
         cmdAddPerson.InnerHtml += "<img src='Images/arrow_down.gif' />"
         cmdNewVersion.Visible = Me.p45ID.Visible
         cmdDeleteVersion.Visible = Me.p45ID.Visible
-
+        If Me.p45ID.Items.Count > 1 Then
+            cmdMakeActualVersion.Visible = True
+        Else
+            cmdMakeActualVersion.Visible = False
+        End If
         grid1.Rebind()
 
     End Sub
@@ -115,6 +124,7 @@ Public Class p45_project
         Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
         Me.p45ID.DataSource = lis
         Me.p45ID.DataBind()
+        
     End Sub
 
 
@@ -247,8 +257,9 @@ Public Class p45_project
    
    
 
-    Private Sub ReloadPage()
-        Server.Transfer("p45_project.aspx?pid=" & Master.DataPID.ToString)
+    Private Sub ReloadPage(Optional strGoToP45ID As String = "")
+        If strGoToP45ID = "" Then strGoToP45ID = Me.CurrentP45ID.ToString
+        Server.Transfer("p45_project.aspx?pid=" & Master.DataPID.ToString & "&p45id=" & strGoToP45ID)
     End Sub
 
    
@@ -382,7 +393,45 @@ Public Class p45_project
     End Sub
 
     Private Sub cmdSaveClone_Click(sender As Object, e As EventArgs) Handles cmdSaveClone.Click
+        Dim cRec As BO.p45Budget = Master.Factory.p45BudgetBL.Load(CInt(Me.p45ID_Template.SelectedValue))
+        Dim lisP46 As New List(Of BO.p46BudgetPerson)
+        If Me.chkCloneP46.Checked Then lisP46 = Master.Factory.p45BudgetBL.GetList_p46(cRec.PID).ToList
+        Dim mqP49 As New BO.myQueryP49
+        mqP49.p45ID = cRec.PID
+        Dim lisP49 As New List(Of BO.p49FinancialPlan)
+        If Me.chkCloneP49.Checked Then lisP49 = Master.Factory.p49FinancialPlanBL.GetList(mqP49).ToList
+        For Each c In lisP46
+            c.SetPID(0)
+        Next
+        For Each c In lisP49
+            c.SetPID(0)
+        Next
+        Dim mqP47 As New BO.myQueryP47
+        mqP47.p45ID = cRec.PID
+        Dim lisP47 As List(Of BO.p47CapacityPlan) = Master.Factory.p47CapacityPlanBL.GetList(mqP47)
 
+        cRec.SetPID(0)
+        Dim intNewP45ID As Integer = 0
+        With Master.Factory.p45BudgetBL
+            If Not .Save(cRec, lisP46, lisP49) Then
+                Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                Return
+            Else
+                intNewP45ID = .LastSavedPID
+                If Me.chkNewIsLast.Checked Then
+                    .MakeActualVersion(intNewP45ID)
+                End If
+                If Me.chkCloneP47.Checked Then
+                    lisP46 = .GetList_p46(intNewP45ID).ToList
+                    For Each c In lisP47
+                        c.p46ID = lisP46.First(Function(p) p.j02ID = c.j02ID).PID
+                    Next
+                    Master.Factory.p47CapacityPlanBL.SaveProjectPlan(intNewP45ID, lisP47)
+                End If
+                ReloadPage(intNewP45ID.ToString)
+            End If
+        End With
+        
     End Sub
 
     Private Sub ShowNeedSaveMessage()
@@ -447,5 +496,21 @@ Public Class p45_project
         Else
             Master.Notify(Master.Factory.p45BudgetBL.ErrorMessage, NotifyLevel.ErrorMessage)
         End If
+    End Sub
+
+    Private Sub p45ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p45ID.SelectedIndexChanged
+        ReloadPage()
+    End Sub
+
+    Private Sub cmdMakeActualVersion_Click(sender As Object, e As EventArgs) Handles cmdMakeActualVersion.Click
+        With Master.Factory.p45BudgetBL
+            If Not .MakeActualVersion(Me.CurrentP45ID) Then
+                Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+            Else
+                Dim x As Integer = Me.CurrentP45ID
+                SetupP45Combo()
+                Me.CurrentP45ID = x
+            End If
+        End With
     End Sub
 End Class

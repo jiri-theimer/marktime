@@ -140,6 +140,15 @@ Partial Public Class p45_project
     Protected WithEvents p45Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cmdMakeActualVersion control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdMakeActualVersion As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''p46 control.
     '''</summary>
     '''<remarks>

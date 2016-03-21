@@ -150,7 +150,9 @@
     <telerik:GridNumericColumnEditor ID="gridnumber1" runat="server" NumericTextBox-Width="30px" NumericTextBox-BackColor="LightGoldenrodYellow">
         <NumericTextBox NumberFormat-DecimalDigits="0" IncrementSettings-InterceptArrowKeys="false"></NumericTextBox>
     </telerik:GridNumericColumnEditor>
-
+    <div class="div6">
+        <asp:Button ID="cmdClear" runat="server" Text="Komplet vyčistit" CssClass="cmd" />
+    </div>
     <asp:HiddenField ID="hidLimD1" runat="server" />
     <asp:HiddenField ID="hidLimD2" runat="server" />
     

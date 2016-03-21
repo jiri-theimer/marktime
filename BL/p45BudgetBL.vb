@@ -9,6 +9,7 @@ Public Interface Ip45BudgetBL
     Function GetList(intP41ID As Integer, Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget)
     Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson)
     Function GetList_p46_extended(intPID As Integer, intP41ID As Integer) As IEnumerable(Of BO.p46BudgetPersonExtented)
+    Function MakeActualVersion(intP45ID As Integer) As Boolean
 End Interface
 Class p45BudgetBL
     Inherits BLMother
@@ -27,7 +28,8 @@ Class p45BudgetBL
         _cDL = New DL.p45BudgetDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean Implements Ip45BudgetBL.Save
+
+    Private Function ValidateBeforeSave(ByRef cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean
         With cRec
             If BO.BAS.IsNullDBDate(.p45PlanFrom) Is Nothing Then _Error = "Chybí datum plánovaného zahájení." : Return False
             If BO.BAS.IsNullDBDate(.p45PlanUntil) Is Nothing Then _Error = "Chybí datum plánovaného dokončení." : Return False
@@ -81,8 +83,16 @@ Class p45BudgetBL
             End If
         End With
 
+        Return True
+    End Function
+    Public Function Save(cRec As BO.p45Budget, lisP46 As List(Of BO.p46BudgetPerson), lisP49 As List(Of BO.p49FinancialPlan)) As Boolean Implements Ip45BudgetBL.Save
+        If Not ValidateBeforeSave(cRec, lisP46, lisP49) Then
+            Return False
+        End If
+
         Return _cDL.Save(cRec, lisP46, lisP49)
     End Function
+    
     Public Function Load(intPID As Integer) As BO.p45Budget Implements Ip45BudgetBL.Load
         Return _cDL.Load(intPID)
     End Function
@@ -103,5 +113,22 @@ Class p45BudgetBL
     End Function
     Public Function GetList_p46_extended(intPID As Integer, intP41ID As Integer) As IEnumerable(Of BO.p46BudgetPersonExtented) Implements Ip45BudgetBL.GetList_p46_extended
         Return _cDL.GetList_p46_extended(intPID, intP41ID)
+    End Function
+
+    Public Function MakeActualVersion(intP45ID As Integer) As Boolean Implements Ip45BudgetBL.MakeActualVersion
+        Dim cRec As BO.p45Budget = Load(intP45ID)
+        Dim lis As IEnumerable(Of BO.p45Budget) = GetList(cRec.p41ID).Where(Function(p) p.PID <> intP45ID)
+        ''If Not cRec.IsClosed Then
+        ''    _Error = "Tato verze již je nastavena jako [aktuální]." : Return False
+        ''End If
+        cRec.ValidFrom = Now
+        cRec.ValidUntil = DateSerial(3000, 1, 1)
+        If Save(cRec, Nothing, Nothing) Then
+            For Each c In lis
+                c.ValidUntil = Now
+                Save(c, Nothing, Nothing)
+            Next
+        End If
+        Return True
     End Function
 End Class

@@ -86,6 +86,15 @@ Partial Public Class p47_project
     Protected WithEvents gridnumber1 As Global.Telerik.Web.UI.GridNumericColumnEditor
 
     '''<summary>
+    '''cmdClear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClear As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''hidLimD1 control.
     '''</summary>
     '''<remarks>
