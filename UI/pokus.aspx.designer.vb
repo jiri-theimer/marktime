@@ -14,42 +14,6 @@ Option Explicit On
 Partial Public Class pokus
 
     '''<summary>
-    '''cmdImap control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdImap As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmd1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmd1 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cbx1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
-    '''RadRadialGauge1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadRadialGauge1 As Global.Telerik.Web.UI.RadRadialGauge
-
-    '''<summary>
     '''cmdPokus control.
     '''</summary>
     '''<remarks>
@@ -59,49 +23,22 @@ Partial Public Class pokus
     Protected WithEvents cmdPokus As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''txtIC control.
+    '''grid1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtIC As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
-    '''cmdARES control.
+    '''hiddatapid control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdARES As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''aresRESULT control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents aresRESULT As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdPostback control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdPostback As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdPDF control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

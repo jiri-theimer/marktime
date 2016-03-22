@@ -79,11 +79,13 @@
                     </EmptyMessageTemplate>
                 </telerik:RadListBox>
                 <div style="margin-top:20px;">
-                    <asp:CheckBox ID="j74IsFilteringByColumn" runat="server" CssClass="chk" Text="Nabízet sloupcový auto-filtr" />
+                    <span>Drill-down v přehledu:</span>
+                    <asp:DropDownList ID="j74DrillDownField1" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnField"></asp:DropDownList>
                 </div>
                 <div style="margin-top:20px;">
-                    <asp:CheckBox ID="j74IsVirtualScrolling" runat="server" CssClass="chk" Text="Zapnutá funkce [Virtual Scrolling]" />
+                    <asp:CheckBox ID="j74IsFilteringByColumn" runat="server" CssClass="chk" Text="Nabízet sloupcový auto-filtr" />
                 </div>
+                
                 <div style="margin-top:10px;">
                     <span>Automaticky třídit podle 1):</span>
                     <asp:DropDownList ID="cbxOrderBy1" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnName"></asp:DropDownList>
@@ -99,6 +101,9 @@
                         <asp:ListItem text="" Value=""></asp:ListItem>
                         <asp:ListItem text="Sestupně" Value="DESC"></asp:ListItem>
                     </asp:DropDownList>
+                </div>
+                <div style="margin-top:20px;">
+                    <asp:CheckBox ID="j74IsVirtualScrolling" runat="server" CssClass="chk" Text="Zapnutá funkce [Virtual Scrolling]" />
                 </div>
             </td>
 

@@ -245,7 +245,8 @@
                         <telerik:GridColumnGroup Name="Cost" HeaderText="Nákladová cena">
                             <HeaderStyle HorizontalAlign="Center" ForeColor="black" Font-Bold="true" BackColor="silver" />
                         </telerik:GridColumnGroup>
-                    </ColumnGroups>
+                    </ColumnGroups>                    
+                    
                     <Columns>
                         <telerik:GridBoundColumn HeaderText="Osoba" DataField="p85FreeText01" ReadOnly="true" AllowSorting="true"></telerik:GridBoundColumn>
                         <telerik:GridNumericColumn HeaderText="Fa" DataField="p85FreeFloat01" ColumnEditorID="gridnumber1" ColumnGroupName="Hodiny">

@@ -309,9 +309,6 @@
     <Content Include="p91_proforma.aspx" />
     <Content Include="p97_record.aspx" />
     <Content Include="panelmenu.ascx" />
-    <Content Include="pokus_mobile.aspx" />
-    <Content Include="pokus_select2x.aspx" />
-    <Content Include="pokus_service.asmx" />
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
@@ -379,7 +376,6 @@
     <Content Include="periodcombo_setting.aspx" />
     <Content Include="periodmonth.ascx" />
     <Content Include="plugin_datatable.ascx" />
-    <Content Include="pokus_dock.aspx" />
     <Content Include="project.ascx" />
     <Content Include="j02_record.aspx" />
     <Content Include="j03_create.aspx" />
@@ -402,7 +398,6 @@
     <Content Include="p95_record.aspx" />
     <Content Include="pageheader.ascx" />
     <Content Include="pokus.aspx" />
-    <Content Include="pokus_okno.aspx" />
     <Content Include="Public\kickoff.aspx" />
     <Content Include="Public\kickoff_after1.aspx" />
     <Content Include="Public\kickoff_after2.aspx" />
@@ -1480,24 +1475,6 @@
       <DependentUpon>panelmenu.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="pokus_mobile.aspx.designer.vb">
-      <DependentUpon>pokus_mobile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pokus_mobile.aspx.vb">
-      <DependentUpon>pokus_mobile.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="pokus_select2x.aspx.designer.vb">
-      <DependentUpon>pokus_select2x.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pokus_select2x.aspx.vb">
-      <DependentUpon>pokus_select2x.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="pokus_service.asmx.vb">
-      <DependentUpon>pokus_service.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="query_builder.aspx.designer.vb">
       <DependentUpon>query_builder.aspx</DependentUpon>
     </Compile>
@@ -1957,13 +1934,6 @@
       <DependentUpon>plugin_datatable.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="pokus_dock.aspx.designer.vb">
-      <DependentUpon>pokus_dock.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pokus_dock.aspx.vb">
-      <DependentUpon>pokus_dock.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="project.ascx.designer.vb">
       <DependentUpon>project.ascx</DependentUpon>
     </Compile>
@@ -2149,13 +2119,6 @@
     </Compile>
     <Compile Include="pokus.aspx.vb">
       <DependentUpon>pokus.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="pokus_okno.aspx.designer.vb">
-      <DependentUpon>pokus_okno.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pokus_okno.aspx.vb">
-      <DependentUpon>pokus_okno.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Public\kickoff.aspx.designer.vb">

@@ -5,6 +5,7 @@ Public Class datagrid
     Public Event NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs)
     Public Event ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
     Public Event NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object)
+    Public Event DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs)
     Public Event ItemCommand(sender As Object, e As GridCommandEventArgs, strPID As String)
     Public Event SortCommand(SortExpression As String)
     Public Event FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String)
@@ -104,6 +105,15 @@ Public Class datagrid
             Return grid1.DataSource
         End Get
         Set(ByVal value As IEnumerable)
+            grid1.DataSource = value
+
+        End Set
+    End Property
+    Public Overridable Property DataSourceDataTable As DataTable
+        Get
+            Return grid1.DataSource
+        End Get
+        Set(ByVal value As DataTable)
             grid1.DataSource = value
 
         End Set
@@ -265,7 +275,8 @@ Public Class datagrid
         col.AllowSorting = bolAllowSorting
     End Sub
 
-    Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional ByVal colformat As BO.cfENUM = BO.cfENUM.AnyString, Optional ByVal bolAllowSorting As Boolean = True, Optional ByVal bolVisible As Boolean = True, Optional ByVal strUniqueName As String = "", Optional strHeaderTooltip As String = "", Optional bolShowTotals As Boolean = False, Optional bolAllowFiltering As Boolean = True, Optional strGroupName As String = "")
+
+    Public Sub AddColumn(ByVal strField As String, ByVal strHeader As String, Optional ByVal colformat As BO.cfENUM = BO.cfENUM.AnyString, Optional ByVal bolAllowSorting As Boolean = True, Optional ByVal bolVisible As Boolean = True, Optional ByVal strUniqueName As String = "", Optional strHeaderTooltip As String = "", Optional bolShowTotals As Boolean = False, Optional bolAllowFiltering As Boolean = True, Optional strGroupName As String = "", Optional gtv As GridTableView = Nothing)
         Select Case colformat
             Case BO.cfENUM.Checkbox
                 AddCheckboxColumn(strField, strHeader, bolAllowSorting, bolVisible)
@@ -273,8 +284,12 @@ Public Class datagrid
             Case Else
         End Select
         Dim col As New GridBoundColumn
+        If Not gtv Is Nothing Then
+            gtv.Columns.Add(col)
+        Else
+            grid1.MasterTableView.Columns.Add(col)
+        End If
 
-        grid1.MasterTableView.Columns.Add(col)
         col.HeaderText = strHeader
         col.DataField = strField
         col.HeaderTooltip = strHeaderTooltip
@@ -380,6 +395,10 @@ Public Class datagrid
         Dim footerItem As GridFooterItem = grid1.MasterTableView.GetItems(GridItemType.Footer)(0)
         RaiseEvent NeedFooterSource(footerItem, Nothing)
 
+    End Sub
+
+    Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
+        RaiseEvent DetailTableDataBind(sender, e)
     End Sub
 
     Private Sub grid1_Init(sender As Object, e As EventArgs) Handles grid1.Init

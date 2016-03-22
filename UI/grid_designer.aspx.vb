@@ -103,6 +103,11 @@
         Me.cbxOrderBy2.DataSource = lisAllCols.Where(Function(p) p.IsSortable = True)
         Me.cbxOrderBy2.DataBind()
         Me.cbxOrderBy2.Items.Insert(0, "")
+
+        Dim lisDrillDownFields As List(Of BO.GridGroupByColumn) = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
+        Me.j74DrillDownField1.DataSource = lisDrillDownFields.Where(Function(p) p.ColumnField <> "")
+        Me.j74DrillDownField1.DataBind()
+        Me.j74DrillDownField1.Items.Insert(0, "")
     End Sub
     Private Sub RefreshRecord()
         cmdDelete.Visible = False : cmdNew.Visible = False
@@ -154,6 +159,7 @@
             End If
             Me.j74IsFilteringByColumn.Checked = cRec.j74IsFilteringByColumn
             Me.j74IsVirtualScrolling.Checked = cRec.j74IsVirtualScrolling
+            basUI.SelectDropdownlistValue(Me.j74DrillDownField1, .j74DrillDownField1)
         End With
         colsSource.ClearSelection()
 
@@ -178,6 +184,7 @@
             .j74OrderBy = GetOrderBy()
             .j74IsFilteringByColumn = Me.j74IsFilteringByColumn.Checked
             .j74IsVirtualScrolling = Me.j74IsVirtualScrolling.Checked
+            .j74DrillDownField1 = Me.j74DrillDownField1.SelectedValue
         End With
 
         If Master.Factory.j74SavedGridColTemplateBL.Save(cRec) Then

@@ -35,9 +35,13 @@ End Class
 Public Class GridGroupByColumn
     Public Property ColumnHeader As String
     Public Property ColumnField As String
+    Public Property FieldSqlGroupBy As String
+    Public Property AggregateSQL As String
 
-    Public Sub New(strHeader As String, strField As String)
+    Public Sub New(strHeader As String, strField As String, strFieldSqlGroupBy As String, strAggregateSQL As String)
         Me.ColumnHeader = strHeader
         Me.ColumnField = strField
+        Me.FieldSqlGroupBy = strFieldSqlGroupBy
+        Me.AggregateSQL = strAggregateSQL
     End Sub
 End Class

@@ -9,63 +9,52 @@
 
 
     <script type="text/javascript">
-      
+        function RowSelected(sender, args) {
+
+            document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");
+
+            
+        }
+
+        function RowDoubleClick(sender, args) {
+            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+            alert(pid);
+            
+            //if (args.get_tableView().get_name() == "level1") {
+            //    alert("Event executed only once for each double-clicked row in the hierarchy");
+                //execute some custom logic here     
+            //}
+            
+        }
+
+        function GetAllSelectedPIDs() {
+
+            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
+            var sel = masterTable.get_selectedItems();
+            var pids = "";
+
+            for (i = 0; i < sel.length; i++) {
+                if (pids == "")
+                    pids = sel[i].getDataKeyValue("pid");
+                else
+                    pids = pids + "," + sel[i].getDataKeyValue("pid");
+            }
+
+            return (pids);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
 
-    <hr />
-    <asp:Button ID="cmdImap" runat="server" Text="TEST IMAP" />
-    <hr />
-    <asp:Button ID="cmd1" runat="server" Text="Zaškrtnuté položky" />
-    <telerik:RadComboBox ID="cbx1" runat="server" CheckBoxes="true" Width="300px">
-        <Items>
-            <telerik:RadComboBoxItem Text="Arts" Value="1" />
-            <telerik:RadComboBoxItem Text="Biographies" Value="2" />
-            <telerik:RadComboBoxItem Text="Children's Books" Value="3" />
-            <telerik:RadComboBoxItem Text="Computers &amp; Internet" Value="4" />
-            <telerik:RadComboBoxItem Text="Cooking" Value="5" />
-            <telerik:RadComboBoxItem Text="History" Value="6" />
-            <telerik:RadComboBoxItem Text="Fiction" Value="7" />
-            <telerik:RadComboBoxItem Text="Mystery" Value="8" />
-            <telerik:RadComboBoxItem Text="Nonfiction" Value="9" />
-            <telerik:RadComboBoxItem Text="Romance" Value="10" />
-            <telerik:RadComboBoxItem Text="Science Fiction" Value="11" />
-            <telerik:RadComboBoxItem Text="Travel" Value="12" />
-        </Items>
-    </telerik:RadComboBox>
-
-    <hr />
-
-    <telerik:RadRadialGauge runat="server" ID="RadRadialGauge1" Width="250px" Height="200px">
-        <Pointer Value="130" Cap-Color="red"></Pointer>
-
-        <Scale Min="0" Max="130" MajorUnit="15" MinorUnit="10">
-            <Labels Template="#=value# %" />
-            <Ranges>
-                <telerik:GaugeRange Color="Red" From="0" To="33" />
-                <telerik:GaugeRange Color="Green" From="33" To="130" />
+    <asp:Button ID="cmdPokus" runat="server" Text="test" />
 
 
-            </Ranges>
-        </Scale>
-    </telerik:RadRadialGauge>
-    <hr />
+    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
-    <asp:Button ID="cmdPokus" runat="server" Text="test mobile device" />
 
-    <hr />
-    <asp:TextBox ID="txtIC" runat="server" Text="25722034"></asp:TextBox>
-    <asp:Button ID="cmdARES" runat="server" Text="ARES" />
-    <asp:Label ID="aresRESULT" runat="server">
-    </asp:Label>
-    <hr />
-    <asp:Button ID="cmdPostback" runat="server" Text="Načíst dataset z xml souboru" />
 
-    <hr />
-    <asp:Button ID="cmdPDF" runat="server" Text="PDF pokus" />
-
+    <asp:HiddenField ID="hiddatapid" runat="server" />
 </asp:Content>
 
 
