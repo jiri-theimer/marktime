@@ -7495,8 +7495,15 @@ BEGIN TRY
 	if exists(select p30ID FROM p30Contact_Person WHERE p41ID=@pid)
 	 DELETE FROM p30Contact_Person WHERE p41ID=@pid
 
-	if exists(select p47ID FROM p47CapacityPlan WHERE p41ID=@pid)
-	 DELETE FROM p47CapacityPlan WHERE p41ID=@pid
+	if exists(select p45ID FROM p45Budget WHERE p41ID=@pid)
+	 begin
+		DELETE FROM p47CapacityPlan WHERE p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p45ID IN (select p45ID FROM p45Budget WHERE p41ID=@pid))
+
+		DELETE FROM p46BudgetPerson WHERE p45ID IN (SELECT p45ID FROM p45Budget WHERE p41ID=@pid)
+		DELETE FROM p49FinancialPlan WHERE p45ID IN (SELECT p45ID FROM p45Budget WHERE p41ID=@pid)
+
+		DELETE FROM p45Budget WHERE p41ID=@pid
+	 end
 
 	if exists(select p48ID FROM p48OperativePlan WHERE p41ID=@pid)
 	 DELETE FROM p48OperativePlan WHERE p41ID=@pid
@@ -8373,6 +8380,71 @@ BEGIN TRY
 
 	DELETE from p59Priority where p59ID=@pid
 
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------P---------------p61_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p61_delete') and type = 'P')
+ drop procedure p61_delete
+GO
+
+
+
+
+CREATE   procedure [dbo].[p61_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p61id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu týmu osob z tabulky p61ActivityCluster
+declare @ref_pid int
+
+
+set @ref_pid=null
+SELECT TOP 1 @ref_pid=p41ID FROM p41Project WHERE p61ID=@pid
+
+if @ref_pid is not null
+ set @err_ret='Tento cluster aktivit je pøiøazen u projektu ('+dbo.GetObjectAlias('p41',@ref_pid)+')'
+
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+	
+	DELETE FROM p62ActivityCluster_Item WHERE p61ID=@pid
+
+	DELETE FROM p61ActivityCluster WHERE p61ID=@pid
+
+	
 	COMMIT TRANSACTION
 
 END TRY

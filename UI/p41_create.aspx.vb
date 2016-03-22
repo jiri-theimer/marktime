@@ -38,6 +38,8 @@
             End If
             Me.j18ID.DataSource = Master.Factory.j18RegionBL.GetList(New BO.myQuery)
             Me.j18ID.DataBind()
+            Me.p61ID.DataSource = Master.Factory.p61ActivityClusterBL.GetList(New BO.myQuery)
+            Me.p61ID.DataBind()
 
             basUI.SetupP87Combo(Master.Factory, Me.p87ID)
             SetupPriceList()
@@ -281,7 +283,7 @@
                 .p42ID = BO.BAS.IsNullInt(Me.p42ID.SelectedValue)
                 .j18ID = BO.BAS.IsNullInt(Me.j18ID.SelectedValue)
                 .p28ID_Client = BO.BAS.IsNullInt(Me.p28ID_Client.Value)
-
+                .p61ID = BO.BAS.IsNullInt(Me.p61id.selectedvalue)
                 Select Case Me.opgPriceList.SelectedValue
                     Case "1"
                         'projekt bez ceníku

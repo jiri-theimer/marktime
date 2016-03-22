@@ -97,6 +97,10 @@
                 pars.Add("p34id", .p34ID, DbType.Int32)
                 strW += " AND a.p34ID=@p34id"
             End If
+            If .p61ID > 0 Then
+                pars.Add("p61id", .p61ID, DbType.Int32)
+                strW += " AND a.p32ID IN (SELECT p32ID FROM p62ActivityCluster_Item WHERE p61ID=@p61id)"
+            End If
             If Not .x15ID Is Nothing Then
                 pars.Add("x15id", .x15ID, DbType.Int32)
                 strW += " AND a.x15ID=@x15id"

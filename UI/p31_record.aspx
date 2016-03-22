@@ -521,6 +521,7 @@
     <asp:HiddenField ID="hidP91ID" runat="server" />
     <asp:HiddenField ID="hidP48ID" runat="server" />
     <asp:HiddenField ID="hidP85ID" runat="server" />
+    <asp:HiddenField ID="hidP61ID" runat="server" />
     <asp:HiddenField ID="hidDocGUID" runat="server" />
     <asp:HiddenField ID="p31_default_HoursEntryFlag" runat="server" />
     <asp:HiddenField ID="hidCurIsScheduler" runat="server" Value="0" />

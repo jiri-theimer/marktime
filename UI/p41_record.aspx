@@ -269,6 +269,22 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label ID="Label1" runat="server" Text="Výběr povolených aktivit:" CssClass="lbl"></asp:Label>
+
+                    </td>
+                    <td>
+                        <uc:datacombo ID="p61ID" runat="server" DataTextField="p61Name" AutoPostBack="false" DataValueField="pid" IsFirstEmptyRow="true" Width="300px" />
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span class="infoInForm">Uplatňuje se pro zapisování worksheet úkonů.</span>
+                        <span class="infoInForm">Cílem výběru aktivit je ještě více zúžit nabídku povolených aktivit z povolených, které vyplývají z typu projektu a role osoby v projektu.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="lblp41NameShort" runat="server" Text="Zkrácený název:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>

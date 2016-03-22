@@ -15,6 +15,7 @@ Public Class p41Project
     Public Property p51ID_Internal As Integer
     Public Property p92ID As Integer
     Public Property j18ID As Integer
+    Public Property p61ID As Integer
 
     Public Property j02ID_Owner As Integer
 

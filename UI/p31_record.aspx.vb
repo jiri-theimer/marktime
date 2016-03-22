@@ -549,12 +549,14 @@
         If intDefP32ID = 0 And Master.DataPID = 0 Then
             intDefP32ID = Me.MyDefault_p32ID
         End If
+        Me.hidP61ID.Value = ""
 
         If _Project Is Nothing Then
             Me.p34ID.Clear()
             Me.p32ID.Clear()
             Me.clue_project.Visible = False
         Else
+            If _Project.p61ID > 0 Then Me.hidP61ID.Value = _Project.p61ID.ToString
             Me.clue_project.Visible = True
             Me.clue_project.Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & _Project.PID.ToString
             Dim intLangIndex As Integer = 0
@@ -624,6 +626,7 @@
         _Sheet = Master.Factory.p34ActivityGroupBL.Load(Me.CurrentP34ID)
         Dim mq As New BO.myQueryP32
         mq.p34ID = Me.CurrentP34ID
+        If Me.hidP61ID.Value <> "" Then mq.p61ID = CInt(Me.hidP61ID.Value)
         Me.p32ID.DataSource = Master.Factory.p32ActivityBL.GetList(mq)
         Me.p32ID.DataBind()
 

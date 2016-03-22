@@ -299,6 +299,7 @@
     <Content Include="p56_framework_detail.aspx" />
     <Content Include="p58_record.aspx" />
     <Content Include="p59_record.aspx" />
+    <Content Include="p61_record.aspx" />
     <Content Include="p89_record.aspx" />
     <Content Include="p90_framework.aspx" />
     <Content Include="p90_record.aspx" />
@@ -1407,6 +1408,13 @@
     </Compile>
     <Compile Include="p59_record.aspx.vb">
       <DependentUpon>p59_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p61_record.aspx.designer.vb">
+      <DependentUpon>p61_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p61_record.aspx.vb">
+      <DependentUpon>p61_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p89_record.aspx.designer.vb">

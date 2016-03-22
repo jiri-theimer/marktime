@@ -38,7 +38,8 @@
             Me.p87ID.ChangeItemText("", "--Dědit z nastavení klienta projektu--")
             Me.j18ID.DataSource = Master.Factory.j18RegionBL.GetList(New BO.myQuery)
             Me.j18ID.DataBind()
-
+            Me.p61ID.DataSource = Master.Factory.p61ActivityClusterBL.GetList(New BO.myQuery)
+            Me.p61ID.DataBind()
             
 
             RefreshRecord()
@@ -79,6 +80,7 @@
             Me.p41Code.NavigateUrl = "javascript:recordcode()"
             Me.p42ID.SelectedValue = .p42ID.ToString
             Me.j18ID.SelectedValue = .j18ID.ToString
+            Me.p61id.selectedvalue = .p61ID.ToString
             Me.j02ID_Owner.Value = .j02ID_Owner.ToString
             Me.j02ID_Owner.Text = .Owner
             If .p28ID_Client <> 0 Then
@@ -239,6 +241,7 @@
             .p41NameShort = Me.p41NameShort.Text
             .p42ID = BO.BAS.IsNullInt(Me.p42ID.SelectedValue)
             .j18ID = BO.BAS.IsNullInt(Me.j18ID.SelectedValue)
+            .p61ID = BO.BAS.IsNullInt(Me.p61id.selectedvalue)
             .p28ID_Client = BO.BAS.IsNullInt(Me.p28ID_Client.Value)
 
             Select Case Me.opgPriceList.SelectedValue

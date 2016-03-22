@@ -220,7 +220,7 @@
     Private Sub RefreshState()
         Dim b As Boolean = False
         Select Case Me.CurrentP71ID
-            Case BO.p71IdENUM.Neschvaleno, BO.p71IdENUM.Nic, BO.p71IdENUM.Schvaleno_Fakturovat_Pozdeji
+            Case BO.p71IdENUM.Neschvaleno, BO.p71IdENUM.Nic
                 b = False
             Case Else
                 b = True

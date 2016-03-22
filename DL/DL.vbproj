@@ -108,6 +108,7 @@
     <Compile Include="p50OfficePriceListDL.vb" />
     <Compile Include="p58ProductDL.vb" />
     <Compile Include="p59PriorityDL.vb" />
+    <Compile Include="p61ActivityClusterDL.vb" />
     <Compile Include="x18EntityCategoryDL.vb" />
     <Compile Include="p47CapacityPlanDL.vb" />
     <Compile Include="p48OperativePlanDL.vb" />

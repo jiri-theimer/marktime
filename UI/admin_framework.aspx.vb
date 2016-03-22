@@ -115,9 +115,10 @@ Public Class admin_framework
 
             '.AddItem("Časové fondy", "j11", NU("j11"), "user")
 
-            .AddItem("Worksheet", "p31", , , "Images/worksheet.png")
-            .AddItem("Aktivity", "p32", NU("p32"), "p31")
+            .AddItem("Worksheet", "p31", , , "Images/worksheet.png")            
             .AddItem("Sešity", "p34", NU("p34"), "p31")
+            .AddItem("Aktivity", "p32", NU("p32"), "p31")
+            .AddItem("Pojmenované výběry aktivit", "p61", NU("p61"), "p31")
             .AddItem("Uzamknutá období", "p36", NU("p36"), "p31")
             .AddItem("Kusovníkové jednotky", "p35", NU("p35"), "p31")
             .AddItem("Nastavení nákladových ceníků", "p50", NU("p50"), "p31")
@@ -420,7 +421,8 @@ Public Class admin_framework
                     .AddColumn("p33Name", "Vstupní data")
                     .AddColumn("p34Color", "Barva")
                     .AddColumn("p34Ordinary", "#", BO.cfENUM.Numeric0)
-
+                Case "p61"
+                    .AddColumn("p61Name", "Název výběru")
                 Case "p36"
                     .AddColumn("p36DateFrom", "Od", BO.cfENUM.DateOnly)
                     .AddColumn("p36DateUntil", "Do", BO.cfENUM.DateOnly)
@@ -653,6 +655,8 @@ Public Class admin_framework
                 Case "p34"
                     Dim lis As IEnumerable(Of BO.p34ActivityGroup) = .p34ActivityGroupBL.GetList(mqDef)
                     grid1.DataSource = lis
+                Case "p61"
+                    grid1.DataSource = .p61ActivityClusterBL.GetList(mqDef)
                 Case "p36"
                     Dim lis As IEnumerable(Of BO.p36LockPeriod) = .p36LockPeriodBL.GetList(mqDef)
                     grid1.DataSource = lis

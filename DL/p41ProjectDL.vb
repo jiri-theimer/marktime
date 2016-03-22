@@ -65,6 +65,7 @@
                 pars.Add("p51ID_Billing", BO.BAS.IsNullDBKey(.p51ID_Billing), DbType.Int32)
                 pars.Add("p51ID_Internal", BO.BAS.IsNullDBKey(.p51ID_Internal), DbType.Int32)
                 pars.Add("j18ID", BO.BAS.IsNullDBKey(.j18ID), DbType.Int32)
+                pars.Add("p61ID", BO.BAS.IsNullDBKey(.p61ID), DbType.Int32)
 
                 pars.Add("p41Code", .p41Code, DbType.String)
                 pars.Add("p41Name", .p41Name, DbType.String, , , True, "Název projektu")
@@ -254,6 +255,10 @@
                 pars.Add("p28id", .p28ID, DbType.Int32)
                 s.Append(" AND (a.p28ID_Client=@p28id OR a.p28ID_Billing=@p28id)")
             End If
+            If .p61ID > 0 Then
+                pars.Add("p61id", .b02ID, DbType.Int32)
+                s.Append(" AND a.p61ID=@p61id")
+            End If
             If Not .DateInsertFrom Is Nothing Then
                 pars.Add("d1", .DateInsertFrom)
                 pars.Add("d2", .DateInsertUntil)
@@ -400,7 +405,7 @@
     End Function
 
     Private Function GetSF() As String
-        Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"
+        Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"
         s += ",p28client.p28Name as _Client,p28billing.p28Name as _ClientBilling,p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal"
         s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name," & bas.RecTail("p41", "a")
         s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41RobotAddress,p41free.*"

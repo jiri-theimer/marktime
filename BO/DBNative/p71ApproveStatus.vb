@@ -1,7 +1,6 @@
 ﻿Public Enum p71IdENUM
     Schvaleno = 1
     Neschvaleno = 2
-    Schvaleno_Fakturovat_Pozdeji = 3
     Nic = 0
 End Enum
 Public Class p71ApproveStatus

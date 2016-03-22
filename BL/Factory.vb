@@ -39,6 +39,7 @@
     Private Property _x40 As Ix40MailQueueBL
     Private Property _p32 As Ip32ActivityBL
     Private Property _p34 As Ip34ActivityGroupBL
+    Private Property _p61 As Ip61ActivityClusterBL
     Private Property _p53 As Ip53VatRateBL
     Private Property _p42 As Ip42ProjectTypeBL
     Private Property _p57 As Ip57TaskTypeBL
@@ -347,6 +348,12 @@
         Get
             If _p34 Is Nothing Then _p34 = New p34ActivityGroupBL(_cUser)
             Return _p34
+        End Get
+    End Property
+    Public ReadOnly Property p61ActivityClusterBL As Ip61ActivityClusterBL
+        Get
+            If _p61 Is Nothing Then _p61 = New p61ActivityClusterBL(_cUser)
+            Return _p61
         End Get
     End Property
     Public ReadOnly Property p53VatRateBL As Ip53VatRateBL

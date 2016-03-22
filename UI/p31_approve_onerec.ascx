@@ -15,7 +15,7 @@
                 <asp:ListItem Text="Schváleno" Value="1"></asp:ListItem>
                 <asp:ListItem Text="Nerozhodnuto (zůstane rozpracované)" Value="0"></asp:ListItem>
                 <asp:ListItem Text="Neschváleno" Value="2"></asp:ListItem>
-                <asp:ListItem Text="Schváleno, fakturovat později" Value="3"></asp:ListItem>
+                
             </asp:RadioButtonList>
         </div>
         <table cellpadding="0">

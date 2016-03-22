@@ -34,6 +34,7 @@ Public Class myQueryP41
 
     Public Property b02ID As Integer
     Public Property p51ID As Integer
+    Public Property p61ID As Integer
     Public Property p41PlanFrom_D1 As Date?
     Public Property p41PlanFrom_D2 As Date?
     Public Property p41PlanUntil_D1 As Date?
