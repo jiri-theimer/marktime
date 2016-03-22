@@ -256,6 +256,7 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidDefaultSorting" runat="server" />
+    <asp:HiddenField ID="hidDrillDownField" runat="server" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
 

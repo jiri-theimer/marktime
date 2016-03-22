@@ -230,6 +230,15 @@ Partial Public Class p31_grid
     Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidDrillDownField control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDrillDownField As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidMasterPrefix control.
     '''</summary>
     '''<remarks>

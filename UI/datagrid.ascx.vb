@@ -445,6 +445,15 @@ Public Class datagrid
 
 
         End If
+
+        If e.CommandName = RadGrid.ExpandCollapseCommandName Then
+            Dim item As GridItem
+            For Each item In e.Item.OwnerTableView.Items
+                If item.Expanded AndAlso Not item Is e.Item Then
+                    item.Expanded = False
+                End If
+            Next item
+        End If
     End Sub
 
     Private Sub grid1_ItemCreated(sender As Object, e As GridItemEventArgs) Handles grid1.ItemCreated

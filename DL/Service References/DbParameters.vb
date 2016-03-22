@@ -61,6 +61,13 @@ Public Class DbParameters
         Next
         Return s
     End Function
+    Public Function Convert2PluginDbParameters() As List(Of BO.PluginDbParameter)
+        Dim prs As New List(Of BO.PluginDbParameter)
+        For Each par As DbParameter In _lis
+            prs.Add(New BO.PluginDbParameter(par.Name, par.DbValue))
+        Next
+        Return prs
+    End Function
 
     Public Function TestRecordValidity(strTable As String) As Boolean
         _Error = ""

@@ -196,7 +196,7 @@ Public Class p31_grid
                     SetupJ74Combo(cJ74.PID)
                 End If
             End If
-            Me.hidDefaultSorting.Value = cJ74.j74OrderBy
+            Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
             basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression)
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
@@ -226,21 +226,51 @@ Public Class p31_grid
 
     End Sub
 
+    Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
+        Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
+        Dim mq As New BO.myQueryP31
+        With mq
+            .j02ID = dataItem.GetDataKeyValue("pid")
+            .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
+            .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
+            If Me.hidDefaultSorting.Value <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.hidDefaultSorting.Value
+                Else
+                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+                End If
+            End If
+            If Me.cbxGroupBy.SelectedValue <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                Else
+                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                End If
+            End If
+        End With
+        InhaleMyQuery(mq)
+        With e.DetailTableView
+            .AllowCustomPaging = True
+            .AllowSorting = True
+            If .VirtualItemCount = 0 Then .VirtualItemCount = GetRowsCount(mq)
+            .DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
+
+        End With
+    End Sub
+
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
         _needFilterIsChanged = True
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
+        Return
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        If _needFilterIsChanged Then
-            With Master.Factory.j03UserBL
-                .SetUserParam("p31_grid-filter_setting", grid1.GetFilterSetting())
-                .SetUserParam("p31_grid-filter_sql", grid1.GetFilterExpression())
-            End With
-            RecalcVirtualRowCount()
+        If e.IsFromDetailTable Then
+            Return
         End If
         Dim mq As New BO.myQueryP31
         With mq
@@ -264,8 +294,29 @@ Public Class p31_grid
         End With
         InhaleMyQuery(mq)
 
+        If Me.hidDrillDownField.Value <> "" Then
+            'drill down úroveň
+            Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
+            
+            Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq)
+            grid1.VirtualRowCount = dt.Rows.Count
+            grid1.DataSourceDataTable = dt
+            Return
+        End If
+
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("p31_grid-filter_setting", grid1.GetFilterSetting())
+                .SetUserParam("p31_grid-filter_sql", grid1.GetFilterExpression())
+            End With
+            RecalcVirtualRowCount()
+        End If
+
+
+
+        
+
         grid1.DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
-        'Master.Notify(grid1.GetFilterExpression())
 
     End Sub
 
@@ -297,22 +348,24 @@ Public Class p31_grid
         End With
     End Sub
 
+    Private Function GetRowsCount(mq As BO.myQueryP31) As Integer
+        Dim cSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
+        Return cSum.RowsCount
+    End Function
     Private Sub RecalcVirtualRowCount()
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
-
         Dim cSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
         If Not cSum Is Nothing Then
             grid1.VirtualRowCount = cSum.RowsCount
-            
+
             ViewState("footersum") = grid1.GenerateFooterItemString(cSum)
         Else
             ViewState("footersum") = ""
             grid1.VirtualRowCount = 0
         End If
-        
-        'grid1.VirtualRowCount = Master.Factory.p31WorksheetBL.GetVirtualCount(mq)
+
         grid1.radGridOrig.CurrentPageIndex = 0
         If grid1.VirtualRowCount > 100000 Then
             Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"

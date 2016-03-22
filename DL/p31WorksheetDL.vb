@@ -462,6 +462,23 @@
 
         Return _cDB.GetRecord(Of BO.p31WorksheetSum)(s, pars)
     End Function
+
+    Public Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31) As DataTable
+        Dim s As String = "select " & colDrill.FieldSqlGroupBy & " as pid," & colDrill.AggregateSQL & " as " & colDrill.ColumnField
+        s += ",count(*) as RowsCount"
+        s += " " & GetSQLPart2()
+        
+        Dim pars As New DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        Dim prs As List(Of BO.PluginDbParameter) = pars.Convert2PluginDbParameters()
+        If strW <> "" Then s += " WHERE " & strW
+        s += " GROUP BY " & colDrill.FieldSqlGroupBy
+        s += " ORDER BY " & colDrill.AggregateSQL
+
+        Return _cDB.GetDataSet(s, , prs).Tables(0)
+
+
+    End Function
     
 
     Private Function GetSQLPart1(intTOP As Integer) As String

@@ -1,47 +1,88 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
     Public Shared Sub SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "")
-
         With grid
             .ClearColumns()
-
             .AllowMultiSelect = bolAllowMultiSelect
-            .AllowCustomPaging = bolCustomPaging
-            If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
-            '.AddSystemColumn(5)
-
             .DataKeyNames = "pid"
-            .PageSize = intPageSize
-            .AddSystemColumn(5)
-            .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
-            .AllowFilteringByColumn = cJ74.j74IsFilteringByColumn
-            If cJ74.j74IsVirtualScrolling Then
-                .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
-                .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
-                .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
-                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
-                .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
-                ''.radGridOrig.PagerStyle.Mode = GridPagerMode.NumericPages
+
+            If cJ74.j74DrillDownField1 = "" Then
+                'bez drill-down
+                .AllowCustomPaging = bolCustomPaging
+                If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
+                '.AddSystemColumn(5)
+
+                .PageSize = intPageSize
+                .AddSystemColumn(5)
+                .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
+                .AllowFilteringByColumn = cJ74.j74IsFilteringByColumn
+                If cJ74.j74IsVirtualScrolling Then
+                    .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
+                    .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+                    .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
+                    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+                    .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
+                End If
+            Else
+                'hiearchický grid - drill-down
+                .AllowCustomPaging = False
+                .DataKeyNames = "pid"
+                .PageSize = intPageSize
+                .AllowFilteringByColumn = False
+                .AddSystemColumn(5)
+               
             End If
 
             Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID)
-            For Each s In Split(cJ74.j74ColumnNames, ",")
-                Dim strField As String = Trim(s)
 
-                Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
+            If cJ74.j74DrillDownField1 = "" Then
+                For Each s In Split(cJ74.j74ColumnNames, ",")
+                    Dim strField As String = Trim(s)
 
-                If Not c Is Nothing Then
-                    .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
-                End If
-            Next
-            grid.SetFilterSetting(strFilterSetting, strFilterExpression)
+                    Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
+
+                    If Not c Is Nothing Then
+                        .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
+                    End If
+                Next
+                grid.SetFilterSetting(strFilterSetting, strFilterExpression)
+            Else
+                Dim colDrill As BO.GridGroupByColumn = factory.j74SavedGridColTemplateBL.GroupByPallet(cJ74.x29ID).Where(Function(p) p.ColumnField = cJ74.j74DrillDownField1).First
+                .AddColumn(colDrill.ColumnField, colDrill.ColumnHeader)
+                .AddColumn("RowsCount", "Počet", BO.cfENUM.Numeric0)
+
+                Dim gtv As New GridTableView(.radGridOrig)
+                With gtv
+                    .HierarchyLoadMode = GridChildLoadMode.ServerOnDemand
+                    .Name = "level1"
+                    .AllowCustomPaging = True
+                    .AllowFilteringByColumn = False
+                    .AllowSorting = True
+                    .PageSize = 20
+                    .DataKeyNames = Split("pid", ",")
+                    .ClientDataKeyNames = Split("pid", ",")
+                    .ShowHeadersWhenNoRecords = False
+                    .ShowFooter = False
+                End With
+                .radGridOrig.MasterTableView.DetailTables.Add(gtv)
+                For Each s In Split(cJ74.j74ColumnNames, ",")
+                    Dim strField As String = Trim(s)
+
+                    Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
+
+                    If Not c Is Nothing Then
+                        .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering, , gtv)
+                    End If
+                Next
+            End If
+            
         End With
 
 
     End Sub
 
     Public Shared Sub MakeDockZonesUserFriendly(rdl As RadDockLayout, bolLockedInteractivity As Boolean)
-       
+
         For Each zone In rdl.RegisteredZones
             zone.BorderStyle = BorderStyle.Solid
             zone.BorderColor = Drawing.Color.Silver
