@@ -2,28 +2,14 @@
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 
-<asp:Panel runat="server" ID="panCommand" cssclass="div6">
+<asp:Panel runat="server" ID="panCommand" CssClass="div6">
     <div style="float: left;">
         <img src="Images/worksheet.png" alt="Worksheet" />
         <asp:Label ID="lblHeaderP31" CssClass="framework_header_span" runat="server" Text=""></asp:Label>
     </div>
-    <div class="commandcell" style="padding-left: 20px;">
-        <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny">
-            <asp:ListItem Text="Bez souhrnů" Value=""></asp:ListItem>
-            <asp:ListItem Text="Sešit" Value="p34Name"></asp:ListItem>
-            <asp:ListItem Text="Aktivita" Value="p32Name"></asp:ListItem>
-            <asp:ListItem Text="Osoba" Value="Person"></asp:ListItem>
-            <asp:ListItem Text="Klient" Value="p28Name"></asp:ListItem>
-            <asp:ListItem Text="Projekt" Value="p41Name"></asp:ListItem>
-            <asp:ListItem Text="Faktura" Value="p91Code"></asp:ListItem>
-            <asp:ListItem Text="Úkol" Value="p56Name"></asp:ListItem>
-            <asp:ListItem Text="Schvalování" Value="p71Name"></asp:ListItem>
-            <asp:ListItem Text="Fakt.status" Value="p70Name"></asp:ListItem>
-            <asp:ListItem Text="Billing dávka" Value="p31ApprovingSet"></asp:ListItem>
-        </asp:DropDownList>
-    </div>
+
     <div class="commandcell">
-        <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
+        <uc:periodcombo ID="period1" runat="server" Width="150px"></uc:periodcombo>
 
         <asp:LinkButton ID="cmdExplicitPeriod" ToolTip="Zrušit filtr podle kalendáře" runat="server" Style="font-size: 120%; font-weight: bold; color: red; padding-left: 10px; padding-right: 10px;"></asp:LinkButton>
 
@@ -36,7 +22,7 @@
         <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
     </div>
     <div class="commandcell">
-        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
 
         <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
@@ -50,7 +36,7 @@
 
     </div>
     <div class="commandcell" style="padding-left: 10px;">
-        <button type="button" id="cmdSetting" class="show_hide1xx" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface; height: 23px;" title="Další">
+        <button type="button" id="cmdSetting" class="show_hide1xx" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface; height: 23px;" title="Více nastavení k přehledu">
 
             <img src="Images/arrow_down.gif" alt="Nastavení" />
         </button>
@@ -59,10 +45,13 @@
 
 
 </asp:Panel>
-<div style="clear:both; width: 100%;"></div>
+<div style="clear: both; width: 100%;"></div>
 <div class="slidingDiv1xx" style="padding: 20px;">
-    <button type="button" onclick="p31_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
-    <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" Visible="false" />
+    <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
+    <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return p31_subgrid_columns()" ImageUrl="Images/grid.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
+
+
+
     <span style="padding-left: 40px;">Stránkování:</span>
     <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
         <asp:ListItem Text="10"></asp:ListItem>
@@ -72,13 +61,32 @@
         <asp:ListItem Text="200"></asp:ListItem>
         <asp:ListItem Text="500"></asp:ListItem>
     </asp:DropDownList>
-    <span style="padding-left: 20px;"></span>
-    <img src="Images/export.png" />
-    <asp:LinkButton ID="cmdExport" runat="server" Text="MS Excel" />
 
-    <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
-    <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();"></asp:HyperLink>
+    <asp:Panel ID="panGroupBy" runat="server" Style="margin-top: 20px;">
+        <span>Datové souhrny:</span>
+        <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true">
+            <asp:ListItem Text="Bez souhrnů" Value=""></asp:ListItem>
+            <asp:ListItem Text="Sešit" Value="p34Name"></asp:ListItem>
+            <asp:ListItem Text="Aktivita" Value="p32Name"></asp:ListItem>
+            <asp:ListItem Text="Osoba" Value="Person"></asp:ListItem>
+            <asp:ListItem Text="Klient" Value="p28Name"></asp:ListItem>
+            <asp:ListItem Text="Projekt" Value="p41Name"></asp:ListItem>
+            <asp:ListItem Text="Faktura" Value="p91Code"></asp:ListItem>
+            <asp:ListItem Text="Úkol" Value="p56Name"></asp:ListItem>
+            <asp:ListItem Text="Schvalování" Value="p71Name"></asp:ListItem>
+            <asp:ListItem Text="Fakt.status" Value="p70Name"></asp:ListItem>
+            <asp:ListItem Text="Billing dávka" Value="p31ApprovingSet"></asp:ListItem>
+        </asp:DropDownList>
+        <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
+    </asp:Panel>
+    <div style="margin-top:20px;">
+        <img src="Images/export.png" />
+        <asp:LinkButton ID="cmdExport" runat="server" Text="MS Excel" />
 
+        <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
+        <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();"></asp:HyperLink>
+
+    </div>
 </div>
 <uc:datagrid ID="gridP31" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" HeaderText="Projektový worksheet"></uc:datagrid>
 <asp:HiddenField ID="hidMasterDataPID" runat="server" />
@@ -88,6 +96,8 @@
 <asp:HiddenField ID="hidExplicitDateUntil" runat="server" Value="01.01.3000" />
 <asp:HiddenField ID="hidJ74RecordState" runat="server" />
 <asp:HiddenField ID="hidDefaultSorting" runat="server" />
+<asp:HiddenField ID="hidJ74ID" runat="server" />
+<asp:HiddenField ID="hidDrillDownField" runat="server" />
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -167,5 +177,10 @@
         }
 
         return (pids);
+    }
+
+    function p31_subgrid_columns() {
+        p31_subgrid_setting(document.getElementById("<%=Me.j74id.ClientID%>").value);
+        return (false);
     }
 </script>

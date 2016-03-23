@@ -4,6 +4,7 @@ Public Class p31_subgrid
 
     Public Property Factory As BL.Factory           'proměnná nedrží stav!
     Public Property ExplicitMyQuery As BO.myQueryP31    'proměnná nedrží stav!
+    Private Property _curJ74 As BO.j74SavedGridColTemplate
     Public Property MasterDataPID As Integer
         Get
             Return BO.BAS.IsNullInt(Me.hidMasterDataPID.Value)
@@ -29,7 +30,15 @@ Public Class p31_subgrid
             basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
         End Set
     End Property
-
+    Public Property CurrentJ74ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidJ74ID.Value)
+        End Get
+        Set(value As Integer)
+            Me.hidJ74ID.Value = value.ToString
+            If Me.j74id.Items.Count > 0 Then basUI.SelectDropdownlistValue(Me.j74id, value.ToString)
+        End Set
+    End Property
     Public Property j74RecordState As BO.p31RecordState
         Get
             Return CType(BO.BAS.IsNullInt(Me.hidJ74RecordState.Value), BO.p31RecordState)
@@ -116,7 +125,6 @@ Public Class p31_subgrid
         If Me.MasterDataPID = 0 Then Return
 
         If Not Page.IsPostBack Then
-            ViewState("j74id") = ""
             With Factory.j03UserBL
                 Dim lisPars As New List(Of String), strKey As String = "p31_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.EntityX29ID)
                 If Me.hidJ74RecordState.Value <> "" Then strKey += "-" & Me.hidJ74RecordState.Value
@@ -131,24 +139,24 @@ Public Class p31_subgrid
                     .Add(strKey)
                 End With
                 .InhaleUserParams(lisPars)
-                ViewState("j74id") = .GetUserParam(strKey, "0")
+                Me.CurrentJ74ID = CInt(.GetUserParam(strKey, "0"))
 
-                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
+                If Me.CurrentJ74ID = 0 Then
                     Me.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.j74RecordState)
                     Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.j74RecordState)
-                    ViewState("j74id") = cJ74.PID
-                    .SetUserParam(strKey, ViewState("j74id"))
+                    _curJ74 = cJ74
+                    .SetUserParam(strKey, cJ74.PID.ToString)
+                    Me.hidDrillDownField.Value = _curJ74.j74DrillDownField1
                 End If
-                ''txtSearch.Text = .GetUserParam("p31_subgrid-search")
+                SetupJ74Combo()
                 period1.SetupData(Me.Factory, .GetUserParam("periodcombo-custom_query"))
 
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
-                ''Me.hidQuickQuery.Value = .GetUserParam("p31_subgrid-quickquery", "0")
-                ''Me.clue_quickquery.Attributes("rel") = "clue_quickquery.aspx?key=p31_subgrid-quickquery&prefix=p31&def=" & Me.hidQuickQuery.Value
+               
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID)))
                 Me.txtSearch.Text = .GetUserParam("p31_subgrid-search")
-                Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-groups-autoexpanded", "0"))
+                Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-groups-autoexpanded", "1"))
             End With
 
             SetupJ70Combo(BO.BAS.IsNullInt(Factory.j03UserBL.GetUserParam("p31_subgrid-j70id")))
@@ -156,15 +164,15 @@ Public Class p31_subgrid
             RecalcVirtualRowCount()
         End If
 
-        ''With Me.clue_quickquery
-        ''    If Me.CurrentQuickQuery > BO.myQueryP31_QuickQuery._NotSpecified Then
-        ''        .BackColor = Drawing.Color.Red
-        ''        .ForeColor = Drawing.Color.White
-        ''    Else
-        ''        .BackColor = Nothing
-        ''        .ForeColor = Nothing
-        ''    End If
-        ''End With
+    End Sub
+    Private Sub SetupJ74Combo()
+        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = BO.BAS.GetDataPrefix(Me.EntityX29ID) And p.j74RecordState = Me.j74RecordState)
+        j74id.DataSource = lisJ74
+        j74id.DataBind()
+
+        If Me.CurrentJ74ID > 0 Then
+            basUI.SelectDropdownlistValue(Me.j74id, Me.CurrentJ74ID.ToString)
+        End If
 
     End Sub
     Private Sub SetupJ70Combo(intDef As Integer)
@@ -177,15 +185,18 @@ Public Class p31_subgrid
     End Sub
 
     Private Sub SetupP31Grid()
-        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
-        If cJ74 Is Nothing Then
-            cJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.EntityX29ID))
+        If _curJ74 Is Nothing Then _curJ74 = Me.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
+        If _curJ74 Is Nothing Then
+            _curJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.EntityX29ID))
+            Me.CurrentJ74ID = _curJ74.PID
         End If
-        Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-        basUIMT.SetupGrid(Me.Factory, Me.gridP31, cJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
+        hidDrillDownField.Value = _curJ74.j74DrillDownField1
+        gridP31.ClearColumns()
 
-        Me.lblHeaderP31.ToolTip = cJ74.j74Name
-        If cJ74.j74IsFilteringByColumn Then
+        Me.hidDefaultSorting.Value = _curJ74.j74OrderBy
+        basUIMT.SetupGrid(Me.Factory, Me.gridP31, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
+
+        If _curJ74.j74IsFilteringByColumn Then
             Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
         End If
        
@@ -214,12 +225,15 @@ Public Class p31_subgrid
     End Sub
 
     Private Sub gridP31_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles gridP31.ItemDataBound
+        If TypeOf e.Item.DataItem Is DataRowView Then Return
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
     End Sub
 
     Private Sub gridP31_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles gridP31.NeedDataSource
-
         If Me.MasterDataPID = 0 Or Me.EntityX29ID = BO.x29IdEnum._NotSpecified Then Return
+        If e.IsFromDetailTable Then
+            Return
+        End If
 
         Dim mq As New BO.myQueryP31
         p31_InhaleMyQuery(mq)
@@ -242,7 +256,15 @@ Public Class p31_subgrid
                 End If
             End If
         End With
+        If Me.hidDrillDownField.Value <> "" Then
+            'drill down úroveň
+            Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
 
+            Dim dt As DataTable = Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, gridP31.radGridOrig.MasterTableView.Attributes("sumfields"))
+            gridP31.VirtualRowCount = dt.Rows.Count
+            gridP31.DataSourceDataTable = dt
+            Return
+        End If
 
         gridP31.DataSource = Me.Factory.p31WorksheetBL.GetList(mq)
 
@@ -250,8 +272,13 @@ Public Class p31_subgrid
 
     Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
         Me.Factory.j03UserBL.SetUserParam("p31_grid-period", Me.period1.SelectedValue)
-        RecalcVirtualRowCount()
-        gridP31.Rebind(False)
+        If Me.hidDrillDownField.Value = "" Then
+            RecalcVirtualRowCount()
+            gridP31.Rebind(False)
+        Else
+            ReloadPage()
+        End If
+        
     End Sub
 
     Private Sub gridP31_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles gridP31.NeedFooterSource
@@ -327,8 +354,12 @@ Public Class p31_subgrid
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Me.Factory.j03UserBL.SetUserParam("p31_subgrid-pagesize", Me.cbxPaging.SelectedValue)
-        SetupP31Grid()
-        gridP31.Rebind(True)
+        If Me.hidDrillDownField.Value = "" Then
+            SetupP31Grid()
+            gridP31.Rebind(True)
+        Else
+            ReloadPage()
+        End If
     End Sub
 
 
@@ -381,9 +412,7 @@ Public Class p31_subgrid
         Else
             txtSearch.Style.Item("background-color") = "red"
         End If
-        With Me.chkGroupsAutoExpanded
-            If Me.cbxGroupBy.SelectedIndex > 0 Then .Visible = True Else .Visible = False
-        End With
+       
     End Sub
     Private Sub cmdExplicitPeriod_Click(sender As Object, e As EventArgs) Handles cmdExplicitPeriod.Click
         Me.ExplicitDateFrom = DateSerial(1900, 1, 1)
@@ -399,13 +428,10 @@ Public Class p31_subgrid
         End With
         gridP31.Rebind(True)
     End Sub
-    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
-        Factory.j03UserBL.SetUserParam("p31_subgrid-j70id", Me.CurrentJ70ID.ToString)
-        gridP31.Rebind(True)
-    End Sub
+    
 
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
-        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
+        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
         Dim cXLS As New clsExportToXls(Me.Factory)
 
         Dim mq As New BO.myQueryP31
@@ -424,7 +450,11 @@ Public Class p31_subgrid
     Private Sub Handle_RunSearch()
         Factory.j03UserBL.SetUserParam("p31_subgrid-search", Trim(txtSearch.Text))
 
-        gridP31.Rebind(False)
+        If Me.hidDrillDownField.Value = "" Then
+            gridP31.Rebind(False)
+        Else
+            ReloadPage()
+        End If
 
         txtSearch.Focus()
     End Sub
@@ -439,5 +469,24 @@ Public Class p31_subgrid
             SetupGrouping(.Value, .Text)
         End With
         gridP31.Rebind(True)
+    End Sub
+
+    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Factory.j03UserBL.SetUserParam("p31_subgrid-j70id", Me.CurrentJ70ID.ToString)
+        If Me.hidDrillDownField.Value = "" Then
+            gridP31.Rebind(True)
+        Else
+            ReloadPage()
+        End If
+
+    End Sub
+
+    Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
+        Factory.j03UserBL.SetUserParam("p31_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.j74id.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub ReloadPage()
+        Response.Redirect(Request.Url.AbsoluteUri.ToString())
     End Sub
 End Class

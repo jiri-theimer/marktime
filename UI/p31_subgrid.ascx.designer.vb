@@ -32,15 +32,6 @@ Partial Public Class p31_subgrid
     Protected WithEvents lblHeaderP31 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxGroupBy control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
@@ -122,13 +113,22 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdCopy As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''chkGroupsAutoExpanded control.
+    '''j74id control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdGridDesigner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdGridDesigner As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
     '''cbxPaging control.
@@ -138,6 +138,33 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''panGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panGroupBy As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbxGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkGroupsAutoExpanded control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''cmdExport control.
@@ -237,4 +264,22 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidJ74ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidJ74ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDrillDownField control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDrillDownField As Global.System.Web.UI.WebControls.HiddenField
 End Class

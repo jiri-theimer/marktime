@@ -153,6 +153,7 @@
         function p31_subgrid_setting(j74id) {
             ///volá se z p31_subgrid
             sw_local("grid_designer.aspx?prefix=p31&masterprefix=p41&pid="+j74id, "Images/griddesigner_32.png",true);
+            
         }
         function p56_subgrid_setting(j74id) {
             ///volá se z p56_subgrid
