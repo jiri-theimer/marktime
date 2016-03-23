@@ -21,6 +21,8 @@ Public Class p31Worksheet
     Public Property p32ID As Integer
     Public Property p28ID_Supplier As Integer
     Public Property SupplierName As String
+    Public Property j02ID_ContactPerson As Integer
+    Public Property ContactPerson As String
     Public Property p32Name As String
     Public Property p32IsBillable As Boolean
     Public Property p34ID As Integer

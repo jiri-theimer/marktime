@@ -2704,6 +2704,12 @@ if exists(select p31ID FROM p31Worksheet where j02ID=@pid)
 if isnull(@err_ret,'')<>''
  return 
 
+if exists(select p31ID FROM p31Worksheet where j02ID_ContactPerson=@pid)
+ set @err_ret='Je kontaktní osobou minimálnì v jednom worksheet záznamu.'
+
+if isnull(@err_ret,'')<>''
+ return 
+
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p31ID from p31Worksheet WHERE j02ID_Owner=@pid
 if @ref_pid is not null

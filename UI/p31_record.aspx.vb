@@ -388,7 +388,6 @@
     End Sub
    
     Private Sub RefreshRecord()
-
         If Master.DataPID = 0 Then
             Handle_FF()
             Return
@@ -461,8 +460,14 @@
             Handle_ChangeHoursEntryFlag()
 
             Me.p28ID_Supplier.Value = .p28ID_Supplier.ToString
-            Me.p28ID_Supplier.Text = .SupplierName
+            Me.p28ID_Supplier.Text = .SupplierName            
             Me.p31Code.Text = .p31Code
+            If .j02ID_ContactPerson > 0 Then
+                Me.chkBindToContactPerson.Checked = True
+                RefreshContactPersonCombo(False, .j02ID_ContactPerson)
+            Else
+                Me.chkBindToContactPerson.Checked = False
+            End If
             Select Case CurrentP33ID
                 Case BO.p33IdENUM.Cas
                     Select Case .p31HoursEntryFlag
@@ -609,7 +614,7 @@
                     If cP32.p32IsTextRequired Then Me.lblP31Text.CssClass = "lblReq" Else lblP31Text.CssClass = "lbl"
                 End If
             End If
-
+            Me.chkBindToContactPerson.Checked = False : Me.j02ID_ContactPerson.Visible = False
             If Me.chkBindToP56.Checked Then
                 SetupP56Combo()
             End If
@@ -771,6 +776,11 @@
                 .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
                 .p48ID = Me.CurrentP48ID
                 .p28ID_Supplier = BO.BAS.IsNullInt(Me.p28ID_Supplier.Value)
+                If Me.chkBindToContactPerson.Checked Then
+                    .j02ID_ContactPerson = BO.BAS.IsNullInt(Me.j02ID_ContactPerson.SelectedValue)
+                Else
+                    .j02ID_ContactPerson = 0
+                End If
                 .DocGUID = Me.DocGUID
                 If Me.p31Date.IsEmpty Then
                     .p31Date = Today
@@ -1066,5 +1076,40 @@
     Private Sub cmdClearP49ID_Click(sender As Object, e As EventArgs) Handles cmdClearP49ID.Click
         Me.p49ID.Value = "" : Me.p49_record.Text = ""
         Master.Notify("Vyčištění vazby na rozpočet je třeba potvrdit tlačítkem [Uložit změny].")
+    End Sub
+
+    Private Sub chkBindToContactPerson_CheckedChanged(sender As Object, e As EventArgs) Handles chkBindToContactPerson.CheckedChanged
+        RefreshContactPersonCombo(False, 0)
+
+    End Sub
+
+    Private Sub RefreshContactPersonCombo(bolSilent As Boolean, intDefJ02ID As Integer)
+        Me.j02ID_ContactPerson.Visible = False
+        If Not Me.chkBindToContactPerson.Checked Then
+            Me.j02ID_ContactPerson.DataSource = Nothing
+            Me.j02ID_ContactPerson.DataBind()
+            Return
+        End If
+        If Me.CurrentP41ID = 0 Then
+            If Not bolSilent Then Master.Notify("Chybí projekt.")
+            Return
+        End If
+        Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
+        Dim mq As New BO.myQueryJ02
+        If cRec.p28ID_Client > 0 Then mq.p28ID = cRec.p28ID_Client Else mq.p41ID = cRec.PID
+
+        Dim lisJ02 As List(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq).ToList
+        If intDefJ02ID > 0 And lisJ02.Where(Function(p) p.PID = intDefJ02ID).Count = 0 Then
+            Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(intDefJ02ID)
+            If Not c Is Nothing Then lisJ02.Add(c)
+        End If
+        If lisJ02.Count = 0 Then
+            If Not bolSilent Then Master.Notify(String.Format("K projektu [{0}] nebo ke klientovi [{1}] nejsou zavedeny kontaktní osoby.", cRec.p41Name, cRec.Client))
+        Else
+            Me.j02ID_ContactPerson.DataSource = lisJ02
+            Me.j02ID_ContactPerson.DataBind()
+            If intDefJ02ID > 0 Then basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson, intDefJ02ID.ToString)
+            Me.j02ID_ContactPerson.Visible = True
+        End If
     End Sub
 End Class

@@ -8,6 +8,7 @@ Public Class p31WorksheetEntryInput
     Public Property p34ID As Integer
     Public Property p48ID As Integer
     Public Property p28ID_Supplier As Integer
+    Public Property j02ID_ContactPerson As Integer
 
     Public Property Value_Orig As String     'vstupní čas nebo počet kusovníku
     Public Property Value_Trimmed As String  'po korekci vstupní čas nebo počet kusovníku

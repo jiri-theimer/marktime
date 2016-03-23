@@ -446,6 +446,24 @@ Partial Public Class p31_record
     Protected WithEvents p56ID As Global.UI.datacombo
 
     '''<summary>
+    '''chkBindToContactPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkBindToContactPerson As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''j02ID_ContactPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02ID_ContactPerson As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cmdDoc control.
     '''</summary>
     '''<remarks>

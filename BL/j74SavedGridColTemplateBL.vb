@@ -299,6 +299,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Text", "p31Text"))
             .Add(AGC("Dodavatel", "SupplierName"))
             .Add(AGC("Kód dokladu", "p31Code"))
+            .Add(AGC("Kontaktní osoba", "ContactPerson"))
 
             .Add(AGC("Schváleno", "p71Name"))
 

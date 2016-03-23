@@ -477,6 +477,15 @@
         </div>
 
     </div>
+    <div class="content-box1" style="min-width:50px;">
+        <div class="title">
+            <img src="Images/contactperson.png" alt="Kontaktní osoba" />
+            <asp:CheckBox ID="chkBindToContactPerson" runat="server" Text="Kontaktní osoba" AutoPostBack="true" />
+        </div>
+        <div class="content">
+            <asp:DropDownList ID="j02ID_ContactPerson" runat="server" Visible="false" DataValueField="pid" DataTextField="FullNameDescWithEmail"></asp:DropDownList>
+        </div>
+    </div>
     <div class="content-box1" style="min-width:270px;">
         <div class="title">
             <img src="Images/notepad.png" alt="Dokument" />Dokumenty

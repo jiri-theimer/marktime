@@ -129,7 +129,7 @@
 
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_master("grid_designer.aspx?prefix=<%=me.gridprefix%>&masterprefix=p31_framework&pid=" + j74id, "Images/griddesigner_32.png");
+            sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=me.gridprefix%>&masterprefix=p31_framework&pid=" + j74id, "Images/griddesigner_32.png");
         }
 
 
