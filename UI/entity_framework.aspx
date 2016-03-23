@@ -121,7 +121,7 @@
 
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_master("grid_designer.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j74id, "Images/griddesigner_32.png");
+            sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=Me.CurrentPrefix%>&pid=" + j74id, "Images/griddesigner_32.png");
         }
 
         function querybuilder() {
@@ -248,6 +248,7 @@
             <asp:HiddenField ID="hidUIFlag" runat="server" />
             <asp:HiddenField ID="hidMasterPrefix" runat="server" />
             <asp:HiddenField ID="hidMasterPID" runat="server" />
+            
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

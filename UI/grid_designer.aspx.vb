@@ -49,10 +49,15 @@
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
 
             End With
+            
 
             SetupJ74Combo()
             RefreshRecord()
 
+            If Request.Item("nodrilldown") = "1" Then
+                'drilldown nepodporovat
+                Me.j74DrillDownField1.Enabled = False : Me.j74DrillDownField1.SelectedIndex = 0 : Me.j74DrillDownField1.Items(0).Text = "Přehled bez podpory drill-down"
+            End If
         End If
     End Sub
 

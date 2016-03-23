@@ -241,7 +241,6 @@ Public Class p31_grid
 
 
         With mq
-            '.j02ID = dataItem.GetDataKeyValue("pid")
             .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
             .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
             .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()

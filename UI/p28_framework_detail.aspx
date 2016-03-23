@@ -139,15 +139,18 @@
 
 
         function p31_RowSelected(sender, args) {
-
+            ///volá se z p31_subgrid
             document.getElementById("<%=hiddatapid_p31.clientid%>").value = args.getDataKeyValue("pid");
 
         }
 
         function p31_RowDoubleClick(sender, args) {
+            ///volá se z p31_subgrid
             record_p31_edit();
+            
         }
 
+        
         function record_p31_edit() {
             var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
             sw_local("p31_record.aspx?pid="+pid,"Images/worksheet_32.png");
@@ -606,7 +609,7 @@
 
     <uc:p31_bigsummary ID="bigsummary1" runat="server" MasterDataPrefix="p28" />
 
-    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p28Contact" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowMultiSelect="true"></uc:p31_subgrid>
+    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p28Contact" AllowMultiSelect="true"></uc:p31_subgrid>
     <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
     <uc:p56_subgrid ID="gridP56" runat="server" x29ID="p28Contact" />
     <uc:p91_subgrid ID="gridP91" runat="server" x29ID="p28Contact" />

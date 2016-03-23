@@ -48,7 +48,7 @@
 <div style="clear: both; width: 100%;"></div>
 <div class="slidingDiv1xx" style="padding: 20px;">
     <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
-    <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return p31_subgrid_columns()" ImageUrl="Images/grid.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
+    <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return p31_subgrid_columns()" ImageUrl="Images/griddesigner.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
 
 
 
@@ -88,7 +88,7 @@
 
     </div>
 </div>
-<uc:datagrid ID="gridP31" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" HeaderText="Projektový worksheet"></uc:datagrid>
+<uc:datagrid ID="gridP31" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first" HeaderText="Projektový worksheet"></uc:datagrid>
 <asp:HiddenField ID="hidMasterDataPID" runat="server" />
 <asp:HiddenField ID="hidX29ID" runat="server" />
 <asp:HiddenField ID="hidNeedRefreshP31_subgrid" runat="server" />
@@ -182,5 +182,22 @@
     function p31_subgrid_columns() {
         p31_subgrid_setting(document.getElementById("<%=Me.j74id.ClientID%>").value);
         return (false);
+    }
+
+    function p31_RowDoubleClick_first(sender, args) {        
+        if (args.get_tableView().get_name() == "grid") {
+            p31_RowDoubleClick();
+        }
+        if (args.get_tableView().get_name() == "drilldown") {
+            var item = sender.get_masterTableView().get_dataItems()[args.get_itemIndexHierarchical()];
+
+            var rowid = item.get_id();
+            var firstInput = $('#' + rowid).find('input[type=submit]').filter(':visible:first');
+            if (firstInput != null) {
+                firstInput.click();
+            }
+
+        }
+
     }
 </script>

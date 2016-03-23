@@ -539,7 +539,7 @@
 
 
     <uc:p31_bigsummary ID="bigsummary1" runat="server" MasterDataPrefix="j02" />
-    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="j02Person" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowMultiSelect="true"></uc:p31_subgrid>
+    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="j02Person" AllowMultiSelect="true"></uc:p31_subgrid>
     <uc:p56_subgrid ID="gridP56" runat="server" x29ID="j02Person" />
     <uc:p91_subgrid ID="gridP91" runat="server" x29ID="j02Person" />
 

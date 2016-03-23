@@ -142,6 +142,7 @@
         function p31_RowDoubleClick(sender, args) {
             ///volá se z p31_subgrid
             record_p31_edit();
+            
         }
 
         function record_p31_edit() {
@@ -647,7 +648,7 @@
 
     <uc:p31_bigsummary ID="bigsummary1" runat="server" MasterDataPrefix="p41" />
 
-    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p41Project" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowMultiSelect="true"></uc:p31_subgrid>
+    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p41Project" AllowMultiSelect="true"></uc:p31_subgrid>
     <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
 
     <uc:p56_subgrid ID="gridP56" runat="server" x29ID="p41Project" />

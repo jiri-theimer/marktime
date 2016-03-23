@@ -16258,14 +16258,14 @@
     <TableName>j74SavedGridColTemplate</TableName>
   </Table>
   <Table>
-    <name>j74DateInsert</name>
+    <name>j74DrillDownField1</name>
     <id>468196718</id>
-    <xtype>61</xtype>
-    <typestat>0</typestat>
-    <xusertype>61</xusertype>
-    <length>8</length>
-    <xprec>23</xprec>
-    <xscale>3</xscale>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
     <colid>13</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -16276,22 +16276,22 @@
     <number>0</number>
     <colorder>13</colorder>
     <offset>-9</offset>
-    <collationid>0</collationid>
+    <collationid>53252</collationid>
     <language>0</language>
-    <status>8</status>
-    <type>111</type>
-    <usertype>12</usertype>
-    <prec>23</prec>
-    <scale>3</scale>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>datetime</type_name>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
     <TableName>j74SavedGridColTemplate</TableName>
   </Table>
   <Table>
-    <name>j74DateUpdate</name>
+    <name>j74DateInsert</name>
     <id>468196718</id>
     <xtype>61</xtype>
     <typestat>0</typestat>
@@ -16324,14 +16324,14 @@
     <TableName>j74SavedGridColTemplate</TableName>
   </Table>
   <Table>
-    <name>j74UserInsert</name>
+    <name>j74DateUpdate</name>
     <id>468196718</id>
-    <xtype>231</xtype>
-    <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>50</length>
-    <xprec>0</xprec>
-    <xscale>0</xscale>
+    <xtype>61</xtype>
+    <typestat>0</typestat>
+    <xusertype>61</xusertype>
+    <length>8</length>
+    <xprec>23</xprec>
+    <xscale>3</xscale>
     <colid>15</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -16342,22 +16342,22 @@
     <number>0</number>
     <colorder>15</colorder>
     <offset>-11</offset>
-    <collationid>53252</collationid>
+    <collationid>0</collationid>
     <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>0</usertype>
-    <prec>50</prec>
+    <status>8</status>
+    <type>111</type>
+    <usertype>12</usertype>
+    <prec>23</prec>
+    <scale>3</scale>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>nvarchar</type_name>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>datetime</type_name>
     <TableName>j74SavedGridColTemplate</TableName>
   </Table>
   <Table>
-    <name>j74UserUpdate</name>
+    <name>j74UserInsert</name>
     <id>468196718</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
@@ -16390,6 +16390,39 @@
     <TableName>j74SavedGridColTemplate</TableName>
   </Table>
   <Table>
+    <name>j74UserUpdate</name>
+    <id>468196718</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>17</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>17</colorder>
+    <offset>-13</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>j74SavedGridColTemplate</TableName>
+  </Table>
+  <Table>
     <name>j74ValidFrom</name>
     <id>468196718</id>
     <xtype>61</xtype>
@@ -16398,7 +16431,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>17</colid>
+    <colid>18</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -16406,8 +16439,8 @@
     <cdefault>548197003</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>17</colorder>
-    <offset>-13</offset>
+    <colorder>18</colorder>
+    <offset>-14</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -16431,7 +16464,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>18</colid>
+    <colid>19</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -16439,8 +16472,8 @@
     <cdefault>564197060</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>18</colorder>
-    <offset>-14</offset>
+    <colorder>19</colorder>
+    <offset>-15</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>

@@ -182,7 +182,7 @@
         <div class="commandcell">
             <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
             
-            <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return griddesigner()" ImageUrl="Images/grid.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
+            <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return griddesigner()" ImageUrl="Images/griddesigner.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
         </div>
         <div class="commandcell" style="padding-left:10px;">
             <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>

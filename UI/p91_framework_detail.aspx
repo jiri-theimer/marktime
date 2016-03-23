@@ -201,7 +201,7 @@
         }
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_local("grid_designer.aspx?x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner_32.png");
+            sw_local("grid_designer.aspx?nodrilldown=1&x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner_32.png");
         }
        
         function proforma() {           

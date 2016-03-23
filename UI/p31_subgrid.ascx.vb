@@ -74,22 +74,7 @@ Public Class p31_subgrid
             Me.lblHeaderP31.Text = value
         End Set
     End Property
-    Public Property OnRowSelected As String
-        Get
-            Return gridP31.OnRowSelected
-        End Get
-        Set(value As String)
-            gridP31.OnRowSelected = value
-        End Set
-    End Property
-    Public Property OnRowDblClick As String
-        Get
-            Return gridP31.OnRowDblClick
-        End Get
-        Set(value As String)
-            gridP31.OnRowDblClick = value
-        End Set
-    End Property
+    
 
     Public Property AllowMultiSelect As Boolean
         Get
@@ -199,6 +184,7 @@ Public Class p31_subgrid
         If _curJ74.j74IsFilteringByColumn Then
             Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
         End If
+        If _curJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
        
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -223,6 +209,53 @@ Public Class p31_subgrid
             .GroupByExpressions.Add(GGE)
         End With
     End Sub
+
+    Private Sub gridP31_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles gridP31.DetailTableDataBind
+        Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
+        Dim mq As New BO.myQueryP31
+        Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
+        Select Case LCase(colDrill.LinqQueryField)
+            Case "p71id"
+                mq.p71ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p71IdENUM)
+            Case "p70id"
+                mq.p70ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p70IdENUM)
+            Case Else
+                BO.BAS.SetPropertyValue(mq, colDrill.LinqQueryField, BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")))
+        End Select
+
+
+        With mq
+            .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
+            .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
+            If Me.hidDefaultSorting.Value <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.hidDefaultSorting.Value
+                Else
+                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+                End If
+            End If
+            If Me.cbxGroupBy.SelectedValue <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                Else
+                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                End If
+            End If
+        End With
+        p31_InhaleMyQuery(mq)
+        With e.DetailTableView
+            .AllowCustomPaging = True
+            .AllowSorting = True
+            If .VirtualItemCount = 0 Then .VirtualItemCount = GetRowsCount(mq)
+            .DataSource = Factory.p31WorksheetBL.GetList(mq)
+
+        End With
+    End Sub
+    Private Function GetRowsCount(mq As BO.myQueryP31) As Integer
+        Dim cSum As BO.p31WorksheetSum = Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
+        Return cSum.RowsCount
+    End Function
 
     Private Sub gridP31_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles gridP31.ItemDataBound
         If TypeOf e.Item.DataItem Is DataRowView Then Return
