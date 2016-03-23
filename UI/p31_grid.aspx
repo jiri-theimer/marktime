@@ -79,7 +79,18 @@
         function GetAllSelectedPIDs() {
 
             var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
-            var sel = masterTable.get_selectedItems();
+            <%If Me.hidDrillDownField.Value = "" Then%>
+            var sel = masterTable.get_selectedItems();            
+            <%Else%>
+
+            var dataItems = masterTable.get_dataItems();
+            for (var i = 0; i < dataItems.length; i++) {
+                if (dataItems[i].get_nestedViews().length > 0) {
+                    var sel = dataItems[i].get_nestedViews()[0].get_selectedItems();                    
+                }
+            }
+
+            <%End If%>
             var pids = "";
 
             for (i = 0; i < sel.length; i++) {
@@ -130,6 +141,7 @@
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
             sw_master("grid_designer.aspx?prefix=p31&masterprefix=p31_grid&pid=" + j74id, "Images/griddesigner_32.png");
+            return (false);
         }
 
         function periodcombo_setting() {
@@ -169,8 +181,10 @@
 
         <div class="commandcell">
             <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
+            
+            <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return griddesigner()" ImageUrl="Images/grid.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
         </div>
-        <div class="commandcell">
+        <div class="commandcell" style="padding-left:10px;">
             <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
         </div>
 
@@ -218,7 +232,7 @@
                             <div style="padding: 20px;">
                                 <div class="div6">
 
-                                    <button type="button" onclick="griddesigner()">Sloupce</button>
+                                    
 
 
                                 </div>

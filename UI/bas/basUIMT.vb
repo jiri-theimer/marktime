@@ -30,7 +30,7 @@ Public Class basUIMT
                 .AddSystemColumn(5)
                 .AllowCustomPaging = False
                 .DataKeyNames = "pid"
-                .PageSize = intPageSize
+                .PageSize = 100
                 .AllowFilteringByColumn = False
                 .radGridOrig.MasterTableView.Name = "drilldown"
 
@@ -52,7 +52,7 @@ Public Class basUIMT
             Else
                 Dim colDrill As BO.GridGroupByColumn = factory.j74SavedGridColTemplateBL.GroupByPallet(cJ74.x29ID).Where(Function(p) p.ColumnField = cJ74.j74DrillDownField1).First
                 .AddColumn(colDrill.ColumnField, colDrill.ColumnHeader)
-                .AddColumn("RowsCount", "Počet", BO.cfENUM.Numeric0)
+                .AddColumn("RowsCount", "Počet", BO.cfENUM.Numeric0, , , , , True)
                 Dim strSumFields As String = ""
                 For Each s In Split(cJ74.j74ColumnNames, ",")   'součtové sloupce
                     Dim strField As String = Trim(s)

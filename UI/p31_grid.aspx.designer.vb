@@ -32,6 +32,15 @@ Partial Public Class p31_grid
     Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cmdGridDesigner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdGridDesigner As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
