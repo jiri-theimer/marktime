@@ -193,7 +193,7 @@ Public Class p28_framework_detail
             Me.boxO23.Visible = False
         End If
         Dim mq As New BO.myQueryP31
-        mq.p28ID = cRec.PID
+        mq.p28ID_Client = cRec.PID
 
         If Me.CurrentSubgrid = SubgridType.summary Then
             bigsummary1.Visible = True

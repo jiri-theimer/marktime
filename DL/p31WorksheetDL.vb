@@ -273,20 +273,37 @@
                 End Select
             End If
 
-            If .p28ID <> 0 Then
-                pars.Add("p28id", .p28ID, DbType.Int32) : s.Append(" AND p41.p28ID_Client=@p28id")
+            If .p28ID_Client <> 0 Then
+                pars.Add("p28id", .p28ID_Client, DbType.Int32) : s.Append(" AND p41.p28ID_Client=@p28id")
             End If
-            If Not .p28IDs Is Nothing Then
-                s.Append(" AND p41.p28ID_Client IN (" & String.Join(",", .p28IDs) & ")")
+            If Not .p28IDs_Client Is Nothing Then
+                s.Append(" AND p41.p28ID_Client IN (" & String.Join(",", .p28IDs_Client) & ")")
+            End If
+            If Not .p28ID_Supplier Is Nothing Then
+                If .p28ID_Supplier > 0 Then
+                    pars.Add("p28id_supplier", .p28ID_Supplier, DbType.Int32)
+                    s.Append(" AND a.p28ID_Supplier=@p28id_supplier")
+                Else
+                    s.Append(" AND a.p28ID_Supplier IS NULL")
+                End If
             End If
             If .p91ID <> 0 Then
                 pars.Add("p91id", .p91ID, DbType.Int32) : s.Append(" AND a.p91ID=@p91id")
             End If
             If Not .p70ID Is Nothing Then
-                pars.Add("p70id", .p70ID, DbType.Int32) : s.Append(" AND a.p70ID=@p70id")
+                If .p70ID > 0 Then
+                    pars.Add("p70id", .p70ID, DbType.Int32) : s.Append(" AND a.p70ID=@p70id")
+                Else
+                    s.Append(" AND a.p70ID IS NULL")
+                End If
+
             End If
             If Not .p71ID Is Nothing Then
-                pars.Add("p71id", .p71ID, DbType.Int32) : s.Append(" AND a.p71ID=@p71id")
+                If .p71ID > 0 Then
+                    pars.Add("p71id", .p71ID, DbType.Int32) : s.Append(" AND a.p71ID=@p71id")
+                Else
+                    s.Append(" AND a.p71ID IS NULL")
+                End If
             End If
             If .DateFrom > DateSerial(1900, 1, 1) Then
                 s.Append(" AND a.p31Date>=@datefrom") : pars.Add("datefrom", .DateFrom, DbType.DateTime)
@@ -463,11 +480,18 @@
         Return _cDB.GetRecord(Of BO.p31WorksheetSum)(s, pars)
     End Function
 
-    Public Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31) As DataTable
+    Public Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31, strSumFieldsList As String) As DataTable
         Dim s As String = "select " & colDrill.FieldSqlGroupBy & " as pid," & colDrill.AggregateSQL & " as " & colDrill.ColumnField
         s += ",count(*) as RowsCount"
+        If strSumFieldsList <> "" Then
+            Dim a() As String = Split(strSumFieldsList, "|")
+            For Each strF In a
+                s += ",sum(" & strF & ") as " & strF
+            Next
+        End If
+
         s += " " & GetSQLPart2()
-        
+
         Dim pars As New DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         Dim prs As List(Of BO.PluginDbParameter) = pars.Convert2PluginDbParameters()

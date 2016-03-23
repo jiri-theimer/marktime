@@ -124,7 +124,7 @@ Public Class p31_pivot
                 Case "j02"
                     .j02ID = BO.BAS.IsNullInt(ViewState("masterpid"))
                 Case "p28"
-                    .p28ID = BO.BAS.IsNullInt(ViewState("masterpid"))
+                    .p28ID_Client = BO.BAS.IsNullInt(ViewState("masterpid"))
                 Case "p91"
                     .p91ID = BO.BAS.IsNullInt(ViewState("masterpid"))
             End Select

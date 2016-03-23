@@ -503,9 +503,7 @@ Public Class p31_framework
     End Sub
 
 
-    Private Sub grid1_SortCommand(SortExpression As String) Handles grid1.SortCommand
-        Master.Factory.j03UserBL.SetUserParam("p31_framework-sort-" & Me.GridPrefix, SortExpression)
-    End Sub
+   
 
     Private Sub chkGroupsAutoExpanded_CheckedChanged(sender As Object, e As EventArgs) Handles chkGroupsAutoExpanded.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p31_framework-groups-autoexpanded", BO.BAS.GB(Me.chkGroupsAutoExpanded.Checked))
@@ -595,5 +593,9 @@ Public Class p31_framework
             .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, "")
         End With
         ReloadPage()
+    End Sub
+
+    Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
+        Master.Factory.j03UserBL.SetUserParam("p31_framework-sort-" & Me.GridPrefix, SortExpression)
     End Sub
 End Class

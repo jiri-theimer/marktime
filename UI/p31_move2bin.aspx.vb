@@ -71,7 +71,7 @@
 
         Select Case Me.CurrentPrefix
             Case "p28"
-                mq.p28ID = Master.DataPID
+                mq.p28ID_Client = Master.DataPID
             Case "p41"
                 mq.p41ID = Master.DataPID
             Case "j02"

@@ -1,6 +1,6 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
-    Public Shared Sub SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "")
+    Public Shared Sub SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "")
         With grid
             .ClearColumns()
             .AllowMultiSelect = bolAllowMultiSelect
@@ -23,14 +23,17 @@ Public Class basUIMT
                     .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
                     .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
                 End If
+                .radGridOrig.MasterTableView.Name = "grid"
+                If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
             Else
                 'hiearchický grid - drill-down
+                .AddSystemColumn(5)
                 .AllowCustomPaging = False
                 .DataKeyNames = "pid"
                 .PageSize = intPageSize
                 .AllowFilteringByColumn = False
-                .AddSystemColumn(5)
-               
+                .radGridOrig.MasterTableView.Name = "drilldown"
+
             End If
 
             Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID)
@@ -50,32 +53,44 @@ Public Class basUIMT
                 Dim colDrill As BO.GridGroupByColumn = factory.j74SavedGridColTemplateBL.GroupByPallet(cJ74.x29ID).Where(Function(p) p.ColumnField = cJ74.j74DrillDownField1).First
                 .AddColumn(colDrill.ColumnField, colDrill.ColumnHeader)
                 .AddColumn("RowsCount", "Počet", BO.cfENUM.Numeric0)
-
+                Dim strSumFields As String = ""
+                For Each s In Split(cJ74.j74ColumnNames, ",")   'součtové sloupce
+                    Dim strField As String = Trim(s)
+                    Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField And p.IsShowTotals = True)
+                    If Not c Is Nothing Then
+                        .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , True)
+                        strSumFields += "|" & c.ColumnName
+                    End If
+                Next
+                If strSumFields <> "" Then grid.radGridOrig.MasterTableView.Attributes("sumfields") = BO.BAS.OM1(strSumFields)
                 Dim gtv As New GridTableView(.radGridOrig)
                 With gtv
                     .HierarchyLoadMode = GridChildLoadMode.ServerOnDemand
-                    .Name = "level1"
+                    .RetainExpandStateOnRebind = True
+                    .Name = "grid"
                     .AllowCustomPaging = True
                     .AllowFilteringByColumn = False
                     .AllowSorting = True
-                    .PageSize = 20
+                    .PageSize = intPageSize
                     .DataKeyNames = Split("pid", ",")
                     .ClientDataKeyNames = Split("pid", ",")
                     .ShowHeadersWhenNoRecords = False
                     .ShowFooter = False
+                    If strSortExpression <> "" Then .SortExpressions.AddSortExpression(strSortExpression)
                 End With
+
                 .radGridOrig.MasterTableView.DetailTables.Add(gtv)
+                .AddSystemColumn(5, , gtv)
                 For Each s In Split(cJ74.j74ColumnNames, ",")
                     Dim strField As String = Trim(s)
 
                     Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
-
                     If Not c Is Nothing Then
                         .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering, , gtv)
                     End If
                 Next
             End If
-            
+
         End With
 
 

@@ -865,9 +865,7 @@ Public Class entity_framework
 
     
 
-    Private Sub grid1_SortCommand(SortExpression As String) Handles grid1.SortCommand
-        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-sort", SortExpression)
-    End Sub
+   
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "-j70id", Me.CurrentJ70ID.ToString)
@@ -986,5 +984,9 @@ Public Class entity_framework
             .SetUserParam(Me.CurrentPrefix + "_framework-filter_sql", "")
         End With
         ReloadPage()
+    End Sub
+
+    Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
+        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-sort", SortExpression)
     End Sub
 End Class

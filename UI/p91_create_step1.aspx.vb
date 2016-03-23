@@ -330,7 +330,7 @@ Public Class p91_create_step1
         If intPID = 0 Then intPID = -666
         Select Case Me.CurrentPrefix
             Case "p28"
-                mq.p28ID = intPID
+                mq.p28ID_Client = intPID
             Case "p41"
                 mq.p41ID = intPID
             Case "j02"

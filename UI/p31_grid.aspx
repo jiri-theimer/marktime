@@ -31,7 +31,7 @@
 
             $("#<%=Me.txtSearch.ClientID%>").focus(function () { $(this).select(); });
 
-           
+
         });
 
 
@@ -55,13 +55,25 @@
         }
 
         function RowSelected(sender, args) {
-
             document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");
 
         }
 
         function RowDoubleClick(sender, args) {
-            record_edit();
+            if (args.get_tableView().get_name() == "grid") {
+
+                record_edit();
+            }
+            if (args.get_tableView().get_name() == "drilldown") {
+                var item = sender.get_masterTableView().get_dataItems()[args.get_itemIndexHierarchical()];
+
+                var rowid = item.get_id();
+                var firstInput = $('#' + rowid).find('input[type=submit]').filter(':visible:first');
+                if (firstInput != null) {
+                    firstInput.click();
+                }
+
+            }
         }
 
         function GetAllSelectedPIDs() {
@@ -148,15 +160,15 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="height: 44px; background-color: white; border-bottom: solid 1px silver;">
-        <div style="float:left;padding-top:3px;">
+        <div style="float: left; padding-top: 3px;">
             <img src="Images/worksheet_32.png" alt="Worksheet přehled" />
         </div>
-        <div class="commandcell" style="min-width:200px;padding-left:10px;">
+        <div class="commandcell" style="min-width: 150px; padding-left: 10px;">
             <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Worksheet" Style="vertical-align: top;"></asp:Label>
         </div>
+
         <div class="commandcell">
-            <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
-            </asp:DropDownList>
+            <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
         </div>
         <div class="commandcell">
             <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
@@ -174,7 +186,7 @@
             <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
         </div>
 
-        <div style="float:left;padding-left: 20px;">
+        <div style="float: left; padding-left: 20px;">
             <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
 
@@ -205,14 +217,20 @@
                         <ContentTemplate>
                             <div style="padding: 20px;">
                                 <div class="div6">
-                                    <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 200px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
+
                                     <button type="button" onclick="griddesigner()">Sloupce</button>
 
 
                                 </div>
-                                <div>
-                                    <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" />
-                                </div>
+                                <asp:Panel ID="panGroupBy" runat="server" CssClass="div6">
+                                    <span>Datové souhrny:</span>
+                                    <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
+                                    </asp:DropDownList>
+                                    <div>
+                                        <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
+                                    </div>
+                                </asp:Panel>
+
                                 <div class="div6">
                                     <img src="Images/approve.png" />
                                     <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();"></asp:HyperLink>
@@ -244,10 +262,10 @@
 
         </div>
         <div class="commandcell">
-            <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" style="margin-left:10px;font-weight:bold;color:red;"></asp:LinkButton>
+            <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="margin-left: 10px; font-weight: bold; color: red;"></asp:LinkButton>
         </div>
     </div>
-    <div id="offsetY"></div>    
+    <div id="offsetY"></div>
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
 

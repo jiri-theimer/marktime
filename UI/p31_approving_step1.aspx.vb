@@ -35,9 +35,9 @@
                     End If
                 Case "p28"
                     If masterpids.Count = 1 Then
-                        mq.p28ID = masterpids(0)
+                        mq.p28ID_Client = masterpids(0)
                     Else
-                        mq.p28IDs = masterpids
+                        mq.p28IDs_Client = masterpids
                     End If
                 Case "j02"
                     If masterpids.Count = 1 Then

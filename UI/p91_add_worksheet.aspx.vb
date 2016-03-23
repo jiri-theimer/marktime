@@ -83,7 +83,7 @@
         grid1.DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
     End Sub
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
-        If ViewState("p28id") <> 0 Then mq.p28ID = ViewState("p28id")
+        If ViewState("p28id") <> 0 Then mq.p28ID_Client = ViewState("p28id")
         If ViewState("p41id") <> 0 Then mq.p41ID = ViewState("p41id")
 
 

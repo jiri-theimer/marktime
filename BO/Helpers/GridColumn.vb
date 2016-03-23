@@ -44,4 +44,16 @@ Public Class GridGroupByColumn
         Me.FieldSqlGroupBy = strFieldSqlGroupBy
         Me.AggregateSQL = strAggregateSQL
     End Sub
+
+    Public ReadOnly Property LinqQueryField As String
+        Get
+            If Me.FieldSqlGroupBy.IndexOf(".") > 0 Then
+                Dim a() As String = Split(FieldSqlGroupBy, ".")
+                Return a(1)
+            Else
+                Return Me.FieldSqlGroupBy
+            End If
+
+        End Get
+    End Property
 End Class

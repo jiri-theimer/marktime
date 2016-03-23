@@ -482,15 +482,15 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "o23IsDraft", "a.o23IsDraft", "a.o23IsDraft"))
             Case BO.x29IdEnum.p31Worksheet
                 lis.Add(New BO.GridGroupByColumn("Sešit", "p34Name", "p32.p34ID", "min(p34.p34Name)"))
-                lis.Add(New BO.GridGroupByColumn("Aktivita", "p32Name", "a.p32ID", "min(p32.p32Name)"))
+                lis.Add(New BO.GridGroupByColumn("Aktivita", "p32Name", "a.p32ID", "min(p34.p34Name+' - '+p32.p32Name)"))
                 lis.Add(New BO.GridGroupByColumn("Osoba", "Person", "a.j02ID", "min(j02.j02LastName+' '+j02.j02Firstname)"))
                 lis.Add(New BO.GridGroupByColumn("Klient projektu", "p28Name", "p41.p28ID_Client", "min(p28Client.p28Name)"))
                 lis.Add(New BO.GridGroupByColumn("Projekt", "p41Name", "a.p41ID", "min(isnull(p28Client.p28Name+' - ','')+p41.p41Name)"))
                 lis.Add(New BO.GridGroupByColumn("Faktura", "p91Code", "a.p91ID", "min(p91.p91Code)"))
                 lis.Add(New BO.GridGroupByColumn("Schváleno", "p71Name", "a.p71ID", "min(p71.p71Name)"))
-                lis.Add(New BO.GridGroupByColumn("Fakt.status", "p70Name", "a.p70ID", "min(p70.p70Name)"))
+                lis.Add(New BO.GridGroupByColumn("Fakturační status", "p70Name", "a.p70ID", "min(p70.p70Name)"))
                 lis.Add(New BO.GridGroupByColumn("Dodavatel", "SupplierName", "a.p28ID_Supplier", "min(supplier.p28Name)"))
-                lis.Add(New BO.GridGroupByColumn("Billing dávka", "p31ApprovingSet", "a.p31ApprovingSet", "min(a.p31ApprovingSet)"))
+                ''lis.Add(New BO.GridGroupByColumn("Billing dávka", "p31ApprovingSet", "a.p31ApprovingSet", "min(a.p31ApprovingSet)"))
             Case BO.x29IdEnum.p56Task
                 lis.Add(New BO.GridGroupByColumn("Typ úkolu", "p57Name", "a.p57ID", "min(p57.p57Name)"))
                 lis.Add(New BO.GridGroupByColumn("Klient", "Client", "p41.p28ID_Client", "min(p28client.p28Name)"))

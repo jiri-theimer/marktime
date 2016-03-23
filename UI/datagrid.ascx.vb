@@ -7,7 +7,7 @@ Public Class datagrid
     Public Event NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object)
     Public Event DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs)
     Public Event ItemCommand(sender As Object, e As GridCommandEventArgs, strPID As String)
-    Public Event SortCommand(SortExpression As String)
+    Public Event SortCommand(SortExpression As String, strOwnerTableName As String)
     Public Event FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String)
     Public Property Skin As String
         Get
@@ -159,6 +159,32 @@ Public Class datagrid
 
     Public Overridable Sub Rebind(bolKeepSelectedItems As Boolean, Optional intExplicitSelectedPID As Integer = 0)
         Dim ie As IEnumerable(Of GridDataItem) = Nothing
+        If grid1.MasterTableView.DetailTables.Count > 0 Then
+            grid1.MasterTableView.DetailTables(0).Rebind()
+            For Each di As GridDataItem In grid1.MasterTableView.Items
+                If di.Expanded Then
+                    ''If bolKeepSelectedItems And intExplicitSelectedPID = 0 Then ie = di.ChildItem.NestedTableViews(0).GetSelectedItems.AsEnumerable()
+                    di.Expanded = False
+                    ''If bolKeepSelectedItems Then
+                    ''    If intExplicitSelectedPID <> 0 Then
+                    ''        For Each it As GridDataItem In di.ChildItem.NestedTableViews(0).Items
+                    ''            If it.GetDataKeyValue("pid") = intExplicitSelectedPID Then
+                    ''                it.Selected = True
+                    ''                Return
+                    ''            End If
+                    ''        Next
+                    ''    Else
+                    ''        For Each it As GridDataItem In ie
+                    ''            it.Selected = True
+                    ''        Next
+                    ''    End If
+
+                    ''End If
+                End If
+            Next
+            Return
+        End If
+
         If bolKeepSelectedItems And intExplicitSelectedPID = 0 Then ie = grid1.MasterTableView.GetSelectedItems.AsEnumerable()
 
         grid1.Rebind()
@@ -355,10 +381,14 @@ Public Class datagrid
         col.Visible = bolVisible
     End Sub
 
-    Public Sub AddSystemColumn(ByVal intWidth As Integer, Optional strFieldName As String = "systemcolumn")
+    Public Sub AddSystemColumn(ByVal intWidth As Integer, Optional strFieldName As String = "systemcolumn", Optional gtv As GridTableView = Nothing)
         Dim col As GridBoundColumn
         col = New GridBoundColumn
-        grid1.MasterTableView.Columns.Add(col)
+        If Not gtv Is Nothing Then
+            gtv.Columns.Add(col)
+        Else
+            grid1.MasterTableView.Columns.Add(col)
+        End If
         col.DataField = strFieldName
         col.AllowFiltering = False
         col.AllowSorting = False
@@ -521,11 +551,11 @@ Public Class datagrid
     Private Sub grid1_SortCommand(sender As Object, e As GridSortCommandEventArgs) Handles grid1.SortCommand
         Select Case e.NewSortOrder
             Case GridSortOrder.Ascending
-                RaiseEvent SortCommand(e.SortExpression)
+                RaiseEvent SortCommand(e.SortExpression, e.Item.OwnerTableView.Name)
             Case GridSortOrder.Descending
-                RaiseEvent SortCommand(e.SortExpression & " DESC")
+                RaiseEvent SortCommand(e.SortExpression & " DESC", e.Item.OwnerTableView.Name)
             Case GridSortOrder.None
-                RaiseEvent SortCommand("")
+                RaiseEvent SortCommand("", e.Item.OwnerTableView.Name)
         End Select
 
     End Sub

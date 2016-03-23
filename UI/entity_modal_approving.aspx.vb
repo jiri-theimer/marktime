@@ -600,8 +600,8 @@
                 mq.j02ID = Master.DataPID
                 If Me.CurrentInputPIDs <> "" Then mq.j02IDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
             Case BO.x29IdEnum.p28Contact
-                mq.p28ID = Master.DataPID
-                If Me.CurrentInputPIDs <> "" Then mq.p28IDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
+                mq.p28ID_Client = Master.DataPID
+                If Me.CurrentInputPIDs <> "" Then mq.p28IDs_Client = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
             Case BO.x29IdEnum.p56Task
                 If Me.CurrentInputPIDs <> "" Then
                     mq.p56IDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)

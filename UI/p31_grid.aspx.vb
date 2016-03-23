@@ -69,16 +69,16 @@ Public Class p31_grid
                 period1.SelectedValue = .Factory.j03UserBL.GetUserParam("p31_grid-period")
                 Me.txtSearch.Text = .Factory.j03UserBL.GetUserParam("p31_grid-search")
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .Factory.j03UserBL.GetUserParam("p31_grid-groupby"))
-                If .Factory.j03UserBL.GetUserParam("p31_grid-sort") <> "" Then
-                    grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.Factory.j03UserBL.GetUserParam("p31_grid-sort"))
-                End If
+                ''If .Factory.j03UserBL.GetUserParam("p31_grid-sort") <> "" Then
+                ''    grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.Factory.j03UserBL.GetUserParam("p31_grid-sort"))
+                ''End If
             End With
 
             With Master.Factory.j03UserBL
-                Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_grid-groups-autoexpanded", "0"))
+                Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_grid-groups-autoexpanded", "1"))
                 SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
                 SetupJ74Combo(BO.BAS.IsNullInt(.GetUserParam("p31_grid-j74id")))
-                SetupGrid(.GetUserParam("p31_grid-filter_setting"), .GetUserParam("p31_grid-filter_sql"))
+                SetupGrid(.GetUserParam("p31_grid-filter_setting"), .GetUserParam("p31_grid-filter_sql"), .GetUserParam("p31_grid-sort"))
 
             End With
 
@@ -151,6 +151,7 @@ Public Class p31_grid
                 grid1.Rebind(False)
             Case "p31-save"
                 grid1.Rebind(True)
+
             Case "p31-delete"
 
                 ReloadPage()
@@ -182,12 +183,10 @@ Public Class p31_grid
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-pagesize", Me.cbxPaging.SelectedValue)
 
-        grid1.PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
-        If grid1.radGridOrig.CurrentPageIndex > 0 Then grid1.radGridOrig.CurrentPageIndex = 0
-        grid1.Rebind(True)
+        ReloadPage()
     End Sub
 
-    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String, strSortExpression As String)
         With Master.Factory.j74SavedGridColTemplateBL
             Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
             If cJ74 Is Nothing Then
@@ -197,10 +196,11 @@ Public Class p31_grid
                 End If
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression)
+            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression, strSortExpression)
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
             If Not Me.txtSearch.Visible Then Me.txtSearch.Text = ""
+            If cJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
         End With
 
         With Me.cbxGroupBy.SelectedItem
@@ -229,8 +229,19 @@ Public Class p31_grid
     Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
         Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
         Dim mq As New BO.myQueryP31
+        Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
+        Select Case LCase(colDrill.LinqQueryField)
+            Case "p71id"
+                mq.p71ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p71IdENUM)
+            Case "p70id"
+                mq.p70ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p70IdENUM)
+            Case Else
+                BO.BAS.SetPropertyValue(mq, colDrill.LinqQueryField, BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")))
+        End Select
+
+
         With mq
-            .j02ID = dataItem.GetDataKeyValue("pid")
+            '.j02ID = dataItem.GetDataKeyValue("pid")
             .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
             .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
             .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
@@ -264,7 +275,8 @@ Public Class p31_grid
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
-        Return
+        If TypeOf e.Item.DataItem Is DataRowView Then Return
+
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
     End Sub
 
@@ -297,8 +309,8 @@ Public Class p31_grid
         If Me.hidDrillDownField.Value <> "" Then
             'drill down úroveň
             Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
-            
-            Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq)
+
+            Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid1.radGridOrig.MasterTableView.Attributes("sumfields"))
             grid1.VirtualRowCount = dt.Rows.Count
             grid1.DataSourceDataTable = dt
             Return
@@ -326,7 +338,7 @@ Public Class p31_grid
                 Case "p41"
                     .p41ID = Me.CurrentMasterPID
                 Case "p28"
-                    .p28ID = Me.CurrentMasterPID
+                    .p28ID_Client = Me.CurrentMasterPID
                 Case "j02"
                     .j02ID = Me.CurrentMasterPID
                 Case "p56"
@@ -353,6 +365,7 @@ Public Class p31_grid
         Return cSum.RowsCount
     End Function
     Private Sub RecalcVirtualRowCount()
+        If Me.hidDrillDownField.Value <> "" Then Return 'pro drill-down nepočítat
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
@@ -476,9 +489,7 @@ Public Class p31_grid
         Handle_RunSearch()
     End Sub
 
-    Private Sub grid1_SortCommand(SortExpression As String) Handles grid1.SortCommand
-        Master.Factory.j03UserBL.SetUserParam("p31_grid-sort", SortExpression)
-    End Sub
+    
 
     Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
         With Master.Factory.j03UserBL
@@ -490,5 +501,10 @@ Public Class p31_grid
     Private Sub chkGroupsAutoExpanded_CheckedChanged(sender As Object, e As EventArgs) Handles chkGroupsAutoExpanded.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-groups-autoexpanded", BO.BAS.GB(Me.chkGroupsAutoExpanded.Checked))
         ReloadPage()
+    End Sub
+
+    Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
+        If strOwnerTableName = "drilldown" Then Return 'neukládat třídění z drill-down
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-sort", SortExpression)
     End Sub
 End Class

@@ -74,7 +74,7 @@
             Case "p41"
                 mq.p41ID = Me.MasterDataPID
             Case "p28"
-                mq.p28ID = Me.MasterDataPID
+                mq.p28ID_Client = Me.MasterDataPID
             Case "j02"
                 mq.j02ID = Me.MasterDataPID
         End Select

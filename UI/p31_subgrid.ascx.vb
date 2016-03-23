@@ -299,7 +299,7 @@ Public Class p31_subgrid
                 Case BO.x29IdEnum.p41Project
                     .p41ID = Me.MasterDataPID
                 Case BO.x29IdEnum.p28Contact
-                    .p28ID = Me.MasterDataPID
+                    .p28ID_Client = Me.MasterDataPID
                 Case BO.x29IdEnum.j02Person
                     .j02ID = Me.MasterDataPID
                 Case BO.x29IdEnum.p56Task

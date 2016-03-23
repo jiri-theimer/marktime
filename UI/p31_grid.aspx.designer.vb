@@ -23,13 +23,13 @@ Partial Public Class p31_grid
     Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxGroupBy control.
+    '''j74id control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''period1 control.
@@ -122,13 +122,22 @@ Partial Public Class p31_grid
     Protected WithEvents cmdClone As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''j74id control.
+    '''panGroupBy control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents panGroupBy As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbxGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''chkGroupsAutoExpanded control.
