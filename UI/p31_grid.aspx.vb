@@ -77,7 +77,14 @@ Public Class p31_grid
             With Master.Factory.j03UserBL
                 Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_grid-groups-autoexpanded", "1"))
                 SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
-                SetupJ74Combo(BO.BAS.IsNullInt(.GetUserParam("p31_grid-j74id")))
+                Dim intJ74ID As Integer = BO.BAS.IsNullInt(.GetUserParam("p31_grid-j74id"))
+                If intJ74ID = 0 Then
+                    If Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p31_grid") Then
+                        _curJ74 = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p31_grid")
+                        .SetUserParam("p31_grid-j74id", _curJ74.PID)
+                    End If
+                End If
+                SetupJ74Combo(intJ74ID)
                 SetupGrid(.GetUserParam("p31_grid-filter_setting"), .GetUserParam("p31_grid-filter_sql"), .GetUserParam("p31_grid-sort"))
 
             End With
@@ -191,9 +198,7 @@ Public Class p31_grid
             Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
             If cJ74 Is Nothing Then
                 cJ74 = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p31_grid")
-                If Not cJ74 Is Nothing Then
-                    SetupJ74Combo(cJ74.PID)
-                End If
+                If Not cJ74 Is Nothing Then SetupJ74Combo(cJ74.PID)
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
             basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression, strSortExpression)

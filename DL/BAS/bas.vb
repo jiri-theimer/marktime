@@ -68,7 +68,7 @@
     Shared Sub SaveX69(cDB As DbHandler, x29id As BO.x29IdEnum, intDataRecord As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), bolAfterInsert As Boolean, Optional intOnlyX67ID_Update As Integer = 0)
         Dim strSQLDel As String = "DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE b.x29ID=" & CInt(x29id).ToString & " AND a.x69RecordPID=" & intDataRecord.ToString
         If intOnlyX67ID_Update <> 0 Then
-            strSQLDel += " AND a.x67ID=" & intOnlyX67ID_Update.ToString   'jedná se o aktualizaci pouze jedné projektové role (x67id)
+            strSQLDel += " AND a.x67ID=" & intOnlyX67ID_Update.ToString   'jedná se o aktualizaci pouze jedné role (x67id)
         End If
         If Not bolAfterInsert Or intOnlyX67ID_Update <> 0 Then
             cDB.RunSQL(strSQLDel)

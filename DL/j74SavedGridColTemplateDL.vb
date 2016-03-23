@@ -26,7 +26,7 @@
         Return _cDB.GetRecord(Of BO.j74SavedGridColTemplate)(s, pars)
     End Function
 
-    Public Function Save(cRec As BO.j74SavedGridColTemplate) As Boolean
+    Public Function Save(cRec As BO.j74SavedGridColTemplate, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
         _Error = ""
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
         If cRec.PID <> 0 Then
@@ -56,6 +56,9 @@
 
 
         If _cDB.SaveRecord("j74SavedGridColTemplate", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+            If Not lisX69 Is Nothing Then   'přiřazení rolí k šabloně sloupců
+                bas.SaveX69(_cDB, BO.x29IdEnum.j74SavedGridColTemplate, _cDB.LastSavedRecordPID, lisX69, bolINSERT)
+            End If
             Return True
         Else
             Return False
@@ -66,8 +69,10 @@
         Dim s As String = GetSQLPart1()
         Dim pars As New DbParameters
 
+        Dim strW As String = "(a.j03ID=@j03id OR a.j74ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=174 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query))))"
         pars.Add("j03id", _curUser.PID, DbType.Int32)
-        Dim strW As String = "a.j03ID=@j03id"
+        pars.Add("j02id_query", _curUser.j02ID, DbType.Int32)
+
 
         If _x29id > BO.x29IdEnum._NotSpecified Then
             pars.Add("x29id", _x29id, DbType.Int32)

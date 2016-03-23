@@ -31,6 +31,8 @@
   
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        roles1.Factory = Master.Factory
+
         If Not Page.IsPostBack Then
             If Request.Item("x29id") = "" Then
                 If Request.Item("prefix") <> "" Then
@@ -49,20 +51,20 @@
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
 
             End With
-            
+
 
             SetupJ74Combo()
             RefreshRecord()
 
             If Request.Item("nodrilldown") = "1" Then
                 'drilldown nepodporovat
-                Me.j74DrillDownField1.Enabled = False : Me.j74DrillDownField1.SelectedIndex = 0 : Me.j74DrillDownField1.Items(0).Text = "Přehled bez podpory drill-down"
+                Me.j74DrillDownField1.Visible = False : Me.j74DrillDownField1.SelectedIndex = 0 : lblDrillDown.Visible = False
             End If
         End If
     End Sub
 
     Private Sub SetupJ74Combo()
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j74RecordState = BO.p31RecordState._NotExists)
+        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j02ID_Owner = Master.Factory.SysUser.j02ID And p.j74RecordState = BO.p31RecordState._NotExists)
         If ViewState("masterprefix") <> "" Then
             lisJ74 = lisJ74.Where(Function(p) p.j74MasterPrefix = ViewState("masterprefix"))
         End If
@@ -165,10 +167,11 @@
             Me.j74IsFilteringByColumn.Checked = cRec.j74IsFilteringByColumn
             Me.j74IsVirtualScrolling.Checked = cRec.j74IsVirtualScrolling
             basUI.SelectDropdownlistValue(Me.j74DrillDownField1, .j74DrillDownField1)
+            panRoles.Visible = Not .j74IsSystem
         End With
         colsSource.ClearSelection()
 
-
+        roles1.InhaleInitialData(cRec.PID)
     End Sub
 
 
@@ -191,8 +194,13 @@
             .j74IsVirtualScrolling = Me.j74IsVirtualScrolling.Checked
             .j74DrillDownField1 = Me.j74DrillDownField1.SelectedValue
         End With
+        Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
+        If roles1.ErrorMessage <> "" Then
+            Master.Notify(roles1.ErrorMessage, 2)
+            Return False
+        End If
 
-        If Master.Factory.j74SavedGridColTemplateBL.Save(cRec) Then
+        If Master.Factory.j74SavedGridColTemplateBL.Save(cRec, lisX69) Then
             Return Master.Factory.j74SavedGridColTemplateBL.LastSavedPID
         Else
             Master.Notify(Master.Factory.j74SavedGridColTemplateBL.ErrorMessage, 2)
@@ -231,6 +239,7 @@
         Else
             cRec = Master.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
         End If
+        
 
         Dim intJ74ID As Integer = SaveRecord(cRec)
         If intJ74ID > 0 Then
@@ -276,6 +285,7 @@
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
+            roles1.SaveCurrentTempData()
             'If Me.colsDest.ClientChanges.Count > 0 Then
             '    SaveCompleteChanges()
             'End If
@@ -336,6 +346,7 @@
     End Sub
 
     Private Sub cmdSave_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSave.Click
+        roles1.SaveCurrentTempData()
         If SaveCompleteChanges() Then
             ClearUserParams()
             RefreshRecord()
@@ -344,5 +355,10 @@
 
     Private Sub j74ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles j74ID.SelectedIndexChanged
         Handle_ChangeJ74()
+
+    End Sub
+
+    Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
+        roles1.AddNewRow()
     End Sub
 End Class

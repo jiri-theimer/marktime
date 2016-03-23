@@ -1,6 +1,6 @@
 ﻿Public Interface Ij74SavedGridColTemplateBL
     Inherits IFMother
-    Function Save(cRec As BO.j74SavedGridColTemplate) As Boolean
+    Function Save(cRec As BO.j74SavedGridColTemplate, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
     Function Load(intPID As Integer) As BO.j74SavedGridColTemplate
     Function LoadSystemTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "", Optional recState As BO.p31RecordState = BO.p31RecordState._NotExists) As BO.j74SavedGridColTemplate
     Function Delete(intPID As Integer) As Boolean
@@ -50,7 +50,7 @@ Class j74SavedGridColTemplateBL
         End If
         Return cRec
     End Function
-    Public Function Save(cRec As BO.j74SavedGridColTemplate) As Boolean Implements Ij74SavedGridColTemplateBL.Save
+    Public Function Save(cRec As BO.j74SavedGridColTemplate, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean Implements Ij74SavedGridColTemplateBL.Save
         With cRec
             If .j03ID = 0 Then .j03ID = _cUser.PID
             If Trim(.j74Name) = "" Then _Error = "Chybí název šablony sloupců."
@@ -62,7 +62,7 @@ Class j74SavedGridColTemplateBL
 
         If _Error <> "" Then Return False
 
-        Return _cDL.Save(cRec)
+        Return _cDL.Save(cRec, lisX69)
 
     End Function
 
@@ -154,7 +154,7 @@ Class j74SavedGridColTemplateBL
                 c.j74ColumnNames = "o24Name,o23Name,Project"
         End Select
         c.j03ID = intJ03ID
-        Return Save(c)
+        Return Save(c, Nothing)
     End Function
 
     Public Function GetColumns(x29id As BO.x29IdEnum) As List(Of BO.GridColumn) Implements Ij74SavedGridColTemplateBL.ColumnsPallete

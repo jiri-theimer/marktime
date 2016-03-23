@@ -224,7 +224,7 @@
                     Case "all"
                         If lisJ11_ALL Is Nothing Then lisJ11_ALL = _Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = True)
                         If lisJ11_ALL.Count = 0 Then
-                            _Error = "Z neznámých důvodů nelze přidělit projektovou roli paušálně všem osobám."
+                            _Error = "Z neznámých důvodů nelze přidělit roli paušálně všem osobám."
                             Return Nothing
                         Else
                             c.j11ID = lisJ11_ALL(0).PID

@@ -2,7 +2,7 @@
 <%@ MasterType VirtualPath="~/ModalForm.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="entityrole_assign" Src="~/entityrole_assign.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -62,7 +62,7 @@
         <tr valign="top">
             <td>
                 <div>Dostupné sloupce</div>
-                <telerik:RadListBox ID="colsSource" Height="450px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
+                <telerik:RadListBox ID="colsSource" Height="380px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
                     <ButtonSettings TransferButtons="All" ShowTransferAll="false" />
                    
                     <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
@@ -79,7 +79,7 @@
                     </EmptyMessageTemplate>
                 </telerik:RadListBox>
                 <div style="margin-top:20px;">
-                    <span>Drill-down v přehledu:</span>
+                    <asp:label ID="lblDrillDown" runat="server" Text="Drill-down v přehledu:"></asp:label>
                     <asp:DropDownList ID="j74DrillDownField1" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnField"></asp:DropDownList>
                 </div>
                 <div style="margin-top:20px;">
@@ -109,6 +109,18 @@
 
         </tr>
     </table>
+
+    <asp:panel ID="panRoles" runat="server" cssclass="content-box2">
+        <div class="title">
+            <img src="Images/projectrole.png" width="16px" height="16px" />
+            <asp:Label ID="Label1" runat="server" Text="Přístupová práva k přehledu pro další osoby"></asp:Label>
+            <asp:Button ID="cmdAddX69" runat="server" CssClass="cmd" Text="Přidat" />
+        </div>
+        <div class="content">
+            <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="j74SavedGridColTemplate" EmptyDataMessage="K šabloně nejsou definována přístupová práva, proto bude přístupná pouze Vám."></uc:entityrole_assign>
+
+        </div>
+    </asp:panel>
 
 
 </asp:Content>

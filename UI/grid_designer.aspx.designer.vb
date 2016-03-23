@@ -104,6 +104,15 @@ Partial Public Class grid_designer
     Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
 
     '''<summary>
+    '''lblDrillDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDrillDown As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''j74DrillDownField1 control.
     '''</summary>
     '''<remarks>
@@ -165,6 +174,42 @@ Partial Public Class grid_designer
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j74IsVirtualScrolling As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panRoles control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRoles As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdAddX69 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddX69 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''roles1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents roles1 As Global.UI.entityrole_assign
 
     '''<summary>
     '''Master property.

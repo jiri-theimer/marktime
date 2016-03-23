@@ -138,10 +138,17 @@ Public Class entity_framework
             Else
                 Master.SiteMenuValue = Me.CurrentPrefix
             End If
-            SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "-j70id")))
 
-            SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "_framework-j74id")))
             With Master.Factory.j03UserBL
+                SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "-j70id")))
+                Dim intJ74ID As Integer = BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "_framework-j74id"))
+                If intJ74ID = 0 Then
+                    If Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID) Then
+                        _curJ74 = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID)
+                        .SetUserParam(Me.CurrentPrefix + "_framework-j74id", _curJ74.PID)
+                    End If
+                End If
+                SetupJ74Combo(intJ74ID)
                 SetupGrid(.GetUserParam(Me.CurrentPrefix + "_framework-filter_setting"), .GetUserParam(Me.CurrentPrefix + "_framework-filter_sql"))
             End With
             RecalcVirtualRowCount()
