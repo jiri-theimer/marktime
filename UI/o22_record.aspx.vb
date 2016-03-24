@@ -330,6 +330,14 @@
             Me.CurrentO21Flag = .o21Flag
           
         End With
+
+        If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then
+            Dim dt1 As New BO.DateTimeByQuerystring(Request.Item("t1")), dt2 As New BO.DateTimeByQuerystring(Request.Item("t2")), intJ02ID As Integer = BO.BAS.IsNullInt(Request.Item("j02id"))
+            Me.o22DateFrom.SelectedDate = dt1.DateWithTime
+            Me.o22DateUntil.SelectedDate = dt2.DateWithTime
+
+        End If
+
     End Sub
 
     Private Sub cbxSelectJ23ID_ItemDataBound(sender As Object, e As Telerik.Web.UI.RadComboBoxItemEventArgs) Handles cbxSelectJ23ID.ItemDataBound

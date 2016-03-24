@@ -116,9 +116,37 @@
                 p56_record(pid);
         }
 
+        function record_create_contextmenu(sender, eventArgs) {
+            var clickedItem = eventArgs.get_item();
+            var val = clickedItem.get_value();            
+            
+            var firstSlot = sender.get_selectedSlots()[0];
+            
+            var lastSlot = sender.get_selectedSlots()[sender.get_selectedSlots().length - 1];
+            var d1 = firstSlot.get_startTime()
+            var d2 = lastSlot.get_endTime();
 
+            if (d1.getHours() == 0 && d2.getHours() == 0) {
+                d2.setDate(d2.getDate() - 1);
+            }
+            
+            if (val == "p56")
+                return;
+            
+            var url = "";
+            var j02id = "<%=Master.Factory.SysUser.j02ID%>";
+            if (val=="p48")
+            {
+                url = "p48_multiple_create.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;                
+            }
+            if (val == "o22") {
+                url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id + "&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>";
+            }
+            sw_master(url, "Images/calendar_32.png")
+        }
 
         function record_create(sender, eventArgs) {
+            
             var firstSlot = sender.get_selectedSlots()[0];
 
             var lastSlot = sender.get_selectedSlots()[sender.get_selectedSlots().length - 1];
@@ -139,7 +167,7 @@
             var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id+"&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>";
             <%End If%>
 
-            sw_master(url, "Images/milestone_32.png")
+            sw_master(url, "Images/calendar_32.png")
 
         }
 
@@ -217,7 +245,7 @@
                 var node = eventArgs.get_sourceNode();
                 <%If cbxNewRecType.SelectedValue = "p48" Then%>
                 var url = "p48_multiple_create.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
-                alert(url);
+                
                 <%End If%>
                 <%If cbxNewRecType.SelectedValue = "o22" Then%>
                 var url = "o22_record.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
@@ -390,17 +418,16 @@
         </div>
         <div id="right_panel" style="margin-left: 250px;">
             <telerik:RadScheduler ID="scheduler1" SelectedView="WeekView" RenderMode="Lightweight" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="100%" Height="90%" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="true" EnableAdvancedForm="false"
-                Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" Localization-HeaderToday="Dnes" Localization-ShowMore="více..."
-                OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" 
-                Localization-AllDay="Bez času od/do" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"
-                HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand"
+                Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false"
+                OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create"                 
+                HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand" OnClientTimeSlotContextMenuItemClicked="record_create_contextmenu"
                 DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
-
+                <Localization HeaderAgendaDate="Datum" AllDay="Bez času od/do" HeaderMonth="Měsíc" HeaderDay="Den" HeaderMultiDay="Multi-den" HeaderWeek="Týden" ShowMore="více..." HeaderToday="Dnes" HeaderAgendaAppointment="Událost" HeaderAgendaTime="Čas"/>
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <WeekView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <MultiDayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" NumberOfDays="10" />
                 <TimelineView UserSelectable="true" NumberOfSlots="7" />
-                <AgendaView UserSelectable="true" NumberOfDays="10" />
+                <AgendaView UserSelectable="true" NumberOfDays="20" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
                 
                 <AppointmentTemplate>
@@ -413,9 +440,9 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png" NavigateUrl="javascript:p48_record(0)"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png" NavigateUrl="javascript:o22_record(0)"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png" NavigateUrl="javascript:p56_record(0)"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png" Value="p48"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png" Value="o22"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png" NavigateUrl="javascript:p56_record(0)" Value="p56"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>

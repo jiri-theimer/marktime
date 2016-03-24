@@ -442,5 +442,6 @@ Public Class entity_scheduler
 
     Private Sub cbxNewRecType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxNewRecType.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-newrec_prefix", Me.cbxNewRecType.SelectedValue)
+        RefreshData(False)
     End Sub
 End Class

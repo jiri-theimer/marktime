@@ -2929,7 +2929,7 @@ declare @p56_count int,@o22_count int,@o23_count int,@p39_count int,@d1 datetime
 declare @homemenu varchar(50)
 
 set @d1=dateadd(day,-1,getdate())
-set @d2=dateadd(day,1,getdate())
+set @d2=dateadd(day,2,getdate())
 set @is_approve=0
 set @homemenu=null
 
@@ -2951,13 +2951,13 @@ end
 
 ---poèet úkolù
 select @p56_count=count(p56ID) FROM p56Task
-WHERE (p56PlanUntil BETWEEN @d1 AND @d2 OR p56ReminderDate between @d1 AND @d2)
+WHERE ((p56PlanUntil BETWEEN @d1 AND @d2 and getdate() between p56ValidFrom and p56ValidUntil) OR p56ReminderDate between @d1 AND @d2)
 AND (j02ID_Owner=@j02id OR p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))))
  
 
 ---poèet událostí
 select @o22_count=count(o22ID) FROM o22Milestone
-WHERE (o22DateFrom BETWEEN @d1 AND @d2 OR o22ReminderDate BETWEEN @d1 AND @d2)
+WHERE (o22DateFrom BETWEEN @d1 AND @d2 OR o22DateUntil BETWEEN @d1 AND @d2 OR o22ReminderDate BETWEEN @d1 AND @d2)
 AND (j02ID_Owner=@j02id OR j02ID=@j02id OR o22ID IN (SELECT o22ID FROM o20Milestone_Receiver WHERE j02ID=@j02id OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id)))
 
 --poèet poznámek

@@ -58,10 +58,7 @@
                 location.replace("p91_framework.aspx?pid=" + pid);
                 return;
             }
-            if (flag == "p31-save") {
-                location.replace("p31_framework.aspx?pid=" + pid);
-                return;
-            }
+            
             if (flag == "p28-save" || flag == "p28-create") {
                 location.replace("p28_framework.aspx?pid=" + pid);
                 return;
@@ -228,7 +225,7 @@
                                 <asp:Label ID="p48Date" runat="server" ForeColor="green"></asp:Label>
                                 <asp:Label ID="p48Hours" runat="server" CssClass="valboldblue"></asp:Label>
                                 <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                
+                                 <asp:HyperLink ID="convert1" runat="server" Text="Překlopit" ForeColor="green"></asp:HyperLink>
                                 
                             </div>
                         </ItemTemplate>

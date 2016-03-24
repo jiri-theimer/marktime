@@ -215,8 +215,10 @@
             If cRec.p48TimeFrom <> "" Then .Text += " " & cRec.p48TimeFrom & " - " & cRec.p48TimeUntil
         End With
         With CType(e.Item.FindControl("p48Hours"), Label)
-            .Text = BO.BAS.FN(cRec.p48Hours)
+            .Text = BO.BAS.FN(cRec.p48Hours) & "h."
         End With
-
+        With CType(e.Item.FindControl("convert1"), HyperLink)
+            .NavigateUrl = "javascript: p48_convert(" & cRec.PID.ToString & ")"
+        End With
     End Sub
 End Class
