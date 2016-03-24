@@ -352,6 +352,7 @@
                 <MultiDayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" NumberOfDays="10" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
                 <TimelineView UserSelectable="false" />
+                <AgendaView UserSelectable="true" NumberOfDays="5" />
                 <AppointmentTemplate>
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>

@@ -136,7 +136,7 @@
             var url = "p48_multiple_create.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;
             <%End If%>
             <%If cbxNewRecType.SelectedValue = "o22" Then%>
-            var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id;
+            var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id+"&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>";
             <%End If%>
 
             sw_master(url, "Images/milestone_32.png")
@@ -413,7 +413,7 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png" NavigateUrl="javascript:p48_record(0)"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png" NavigateUrl="javascript:o22_record(0)"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png" NavigateUrl="javascript:p56_record(0)"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>

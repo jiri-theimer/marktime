@@ -140,6 +140,33 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents rpP39 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''panP48 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panP48 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p48Count control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p48Count As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''rpP48 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpP48 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''imgWelcome control.
     '''</summary>
     '''<remarks>
