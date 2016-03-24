@@ -46,7 +46,7 @@
                 location.replace("p41_framework.aspx?pid=" + pid);
                 return;
             }
-            if (flag == "p56-save" || flag=="p56-create") {
+            if (flag == "p56-save" || flag == "p56-create") {
                 location.replace("p31_framework.aspx");
                 return;
             }
@@ -58,11 +58,11 @@
                 location.replace("p31_framework.aspx?pid=" + pid);
                 return;
             }
-            if (flag == "p28-save" || flag=="p28-create") {
+            if (flag == "p28-save" || flag == "p28-create") {
                 location.replace("p28_framework.aspx?pid=" + pid);
                 return;
             }
-            if (flag == "o23-save" || flag=="o23-create") {
+            if (flag == "o23-save" || flag == "o23-create") {
                 location.replace("o23_framework.aspx?pid=" + pid);
                 return;
             }
@@ -76,76 +76,147 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <div style="padding: 10px; background-color: white;">
-        <table cellpadding="5">
-            <tr>
-
-                <td>
-                    <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
-
-                </td>
-                <td>
-                    <img src="Images/logo_transparent.png" />
-                </td>
-
-            </tr>
-        </table>
+        <div style="float: left;">
+            <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
+        </div>
+        <div style="float: left; margin-top: 7px; padding-left: 10px;">
+            <img src="Images/logo_transparent.png" />
+        </div>
+        <div style="clear: both;"></div>
 
 
-
-        <div style="min-height:430px;">
-            <table style="width: 100%;">
-                <tr valign="top">
-                    <td>
-                        <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Lightweight" Skin="Metro" Width="300px">
+        <div style="min-height: 430px;">
+            <div style="float: left;">
+                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Lightweight" Skin="Metro" Width="300px">
+                    <Items>
+                        <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
                             <Items>
-                                <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
-                                    <Items>
-                                        <telerik:RadPanelItem Text="Založit nového klienta" Value="p28_create" NavigateUrl="javascript:p28_create()" ImageUrl="Images/contact.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Založit nový projekt" Value="p41_create" NavigateUrl="javascript:p41_create()" ImageUrl="Images/project.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Zapsat worksheet úkon" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Založit nového klienta" Value="p28_create" NavigateUrl="javascript:p28_create()" ImageUrl="Images/contact.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Založit nový projekt" Value="p41_create" NavigateUrl="javascript:p41_create()" ImageUrl="Images/project.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Zapsat worksheet úkon" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
 
-                                        <telerik:RadPanelItem Text="Vytvořit nový úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Vytvořit nový dokument" Value="o23_create" NavigateUrl="javascript:o23_create()" ImageUrl="Images/notepad.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Vytvořit nový úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Vytvořit nový dokument" Value="o23_create" NavigateUrl="javascript:o23_create()" ImageUrl="Images/notepad.png"></telerik:RadPanelItem>
 
-                                        <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Vystavit fakturu" Value="p91_create" NavigateUrl="javascript:p91_create()" ImageUrl="Images/invoice.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Vystavit fakturu" Value="p91_create" NavigateUrl="javascript:p91_create()" ImageUrl="Images/invoice.png"></telerik:RadPanelItem>
 
-                                        <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
-                                    </Items>
-                                </telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Osobní nastavení">
-                                    <Items>
-                                        <telerik:RadPanelItem Text="Zvolit si jinou startovací (výchozí) stránku" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
-                                        <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
-                                    </Items>
-                                </telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
                             </Items>
+                        </telerik:RadPanelItem>
+                        <telerik:RadPanelItem Text="Osobní nastavení">
+                            <Items>
+                                <telerik:RadPanelItem Text="Zvolit si jinou startovací (výchozí) stránku" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
+                            </Items>
+                        </telerik:RadPanelItem>
+                    </Items>
 
-                        </telerik:RadPanelBar>
-                    </td>
-                    <td style="text-align: left;">
-                        <asp:Image runat="server" ID="imgWelcome" ImageUrl="Images/welcome/start.jpg" />
-                    </td>
+                </telerik:RadPanelBar>
+            </div>
+            <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
+                <div class="title">
+                    <img src="Images/task.png" alt="Úkol" />
+                    Blízké úkoly (otevřené) s termínem (+-1 den)
+                    <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
+                </div>
+                <div class="content">
+                    <asp:Repeater ID="rpP56" runat="server">
+                        <ItemTemplate>
+                            <div class="div6">
+                                <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
+                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                                <asp:Label ID="p56PlanUntil" runat="server"></asp:Label>
+                                <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </asp:Panel>
+            <asp:Panel ID="panO22" runat="server" CssClass="content-box1">
+                <div class="title">
+                    <img src="Images/milestone.png" alt="Kalendářová událost" />
+                    Blízké kalendářové události/milníky (+-1 den)
+                    <asp:Label ID="o22Count" runat="server" CssClass="badge1"></asp:Label>
+                </div>
+                <div class="content">
+                    <asp:Repeater ID="rpO22" runat="server">
+                        <ItemTemplate>
+                            <div class="div6">
+                                <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail milníku"></asp:HyperLink>
+                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                                <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </asp:Panel>
+            <asp:Panel ID="panO23" runat="server" CssClass="content-box1">
+                <div class="title">
+                    <img src="Images/notepad.png" alt="Dokument" />
+                    Dokumenty s připomenutím +-1 den
+                    
+                    <asp:Label ID="o23Count" runat="server" CssClass="badge1"></asp:Label>
+                </div>
+                <div class="content">
+                    <asp:Repeater ID="rpO23" runat="server">
+                        <ItemTemplate>
+                            <div class="div6">
+                                <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail dokumentu"></asp:HyperLink>
+                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                                <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </asp:Panel>
+
+            <asp:Panel ID="panP39" runat="server" CssClass="content-box1">
+                <div class="title">
+                    <img src="Images/worksheet_recurrence.png" />
+                    Blízké generování opakovaných odměn/paušálů/úkonů
+                    <asp:Label ID="p39Count" runat="server" CssClass="badge1"></asp:Label>
+                </div>
+                <div class="content">
+
+                    <asp:Repeater ID="rpP39" runat="server">
+                        <ItemTemplate>
+                            <div class="div6">
+                                <asp:HyperLink ID="cmdProject" runat="server"></asp:HyperLink>
+
+                                <asp:Label ID="p39Text" runat="server" Font-Italic="true"></asp:Label>
+                            </div>
+                            <div class="div6">
+                                <span>Kdy generovat:</span>
+                                <asp:Label ID="p39DateCreate" runat="server" ForeColor="red"></asp:Label>
+                                <span>Datum úkonu:</span>
+                                <asp:Label ID="p39Date" runat="server" ForeColor="green"></asp:Label>
+                            </div>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+                </div>
+            </asp:Panel>
+
+            <div style="float: right;">
+
+                <asp:Image runat="server" ID="imgWelcome" ImageUrl="Images/welcome/start.jpg" />
+            </div>
 
 
-                </tr>
-            </table>
 
 
+            <div style="clear: both;"></div>
+
+            <div style="margin-top: 20px;">
+                <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
+
+
+            </div>
         </div>
-
-
-
-        <div style="margin-top: 20px;">
-            <asp:label ID="lblBuild" runat="server" style="color:gray;"/>
-
-            
-        </div>
-    </div>
-
-
 </asp:Content>
 

@@ -294,13 +294,7 @@
         End If
         If intDefP56ID > 0 Then
             Me.chkBindToP56.Checked = True
-            SetupP56Combo()
-            If Not Me.p56ID.RadCombo.Items.FindItemByValue(intDefP56ID.ToString) Is Nothing Then
-                Me.p56ID.SelectedValue = intDefP56ID.ToString
-            Else
-                Master.Notify("V kontextu projektu a osoby není tento úkol dostupný k zapisování úkonu.", NotifyLevel.WarningMessage)
-            End If
-
+            SetupP56Combo(False, intDefP56ID)
         End If
         If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then Me.CurrentIsScheduler = True
         If Master.DataPID = 0 And Me.CurrentIsScheduler Then
@@ -512,8 +506,7 @@
             End If
             If .p56ID > 0 Then
                 Me.chkBindToP56.Checked = True
-                SetupP56Combo()
-                Me.p56ID.SelectedValue = .p56ID.ToString
+                SetupP56Combo(True, .p56ID)
             End If
             If .p49ID > 0 Then
                 Me.p49ID.Value = .p49ID.ToString
@@ -616,7 +609,7 @@
             End If
             Me.chkBindToContactPerson.Checked = False : Me.j02ID_ContactPerson.Visible = False
             If Me.chkBindToP56.Checked Then
-                SetupP56Combo()
+                SetupP56Combo(True, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
             End If
         End If
     End Sub
@@ -773,7 +766,7 @@
                 .p41ID = Me.CurrentP41ID
                 .p34ID = BO.BAS.IsNullInt(Me.p34ID.SelectedValue)
                 .p32ID = BO.BAS.IsNullInt(Me.p32ID.SelectedValue)
-                .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
+                If Me.chkBindToP56.Checked Then .p56ID = BO.BAS.IsNullInt(Me.p56ID.SelectedValue)
                 .p48ID = Me.CurrentP48ID
                 .p28ID_Supplier = BO.BAS.IsNullInt(Me.p28ID_Supplier.Value)
                 If Me.chkBindToContactPerson.Checked Then
@@ -981,7 +974,7 @@
     End Sub
 
     Private Sub p31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        Me.p56ID.Visible = Me.chkBindToP56.Checked
+        If Me.p56ID.Items.Count <= 1 Or Me.chkBindToP56.Checked = False Then Me.p56ID.Visible = False Else Me.p56ID.Visible = True
         Me.panP49.Visible = panM.Visible
         If Not _Sheet Is Nothing And panM.Visible Then
             Dim bolVydaj As Boolean = False
@@ -999,16 +992,15 @@
 
     Private Sub chkBindToP56_CheckedChanged(sender As Object, e As EventArgs) Handles chkBindToP56.CheckedChanged
         If Me.chkBindToP56.Checked Then
-            SetupP56Combo()
-            If Me.p56ID.Rows <= 1 Then
-                Master.Notify("Pro vybranou osobu a projekt není dostupný ani jeden otevřený úkol k vykazování.", NotifyLevel.WarningMessage)
-            End If
+            SetupP56Combo(False, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
+            
         End If
     End Sub
 
-    Private Sub SetupP56Combo()
-        If Me.CurrentP41ID = 0 Then
-            Master.Notify("Seznam úkolů je možné zobrazit až po výběru projektu.", NotifyLevel.WarningMessage)
+    Private Sub SetupP56Combo(bolSilent As Boolean, intDefP56ID As Integer)
+        Me.p56ID.Visible = False
+        If Me.CurrentP41ID = 0 And Not bolSilent Then
+            Master.Notify("Seznam úkolů je možné zobrazit až po výběru projektu.")
             Return
         End If
         Dim mq As New BO.myQueryP56
@@ -1019,15 +1011,24 @@
 
         Me.p56ID.DataSource = Master.Factory.p56TaskBL.GetList(mq)
         Me.p56ID.DataBind()
+        Me.p56ID.Items.Insert(0, "")
 
-    End Sub
+        If intDefP56ID > 0 Then basUI.SelectDropdownlistValue(Me.p56ID, intDefP56ID.ToString)
 
-    Private Sub p56ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p56ID.NeedMissingItem
-        Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(CInt(strFoundedMissingItemValue))
-        If Not cRec Is Nothing Then
-            strAddMissingItemText = cRec.p56Name
+        If intDefP56ID > 0 And Me.p56ID.SelectedValue <> intDefP56ID.ToString And bolSilent Then
+            Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(intDefP56ID)
+            If Not cRec Is Nothing Then
+                Me.p56ID.Items.Add(New ListItem(cRec.NameWithTypeAndCode, cRec.PID.ToString))
+            End If
         End If
+
+        If Me.p56ID.Items.Count <= 1 And Not bolSilent Then
+            Master.Notify("Pro vybranou osobu a projekt není dostupný ani jeden otevřený úkol k vykazování.")
+        End If
+
     End Sub
+
+    
 
     Private Sub InhaleWorksheetSetting()
         Dim lisPars As New List(Of String)
@@ -1096,6 +1097,7 @@
         End If
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
         Dim mq As New BO.myQueryJ02
+        mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
         If cRec.p28ID_Client > 0 Then mq.p28ID = cRec.p28ID_Client Else mq.p41ID = cRec.PID
 
         Dim lisJ02 As List(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq).ToList

@@ -108,14 +108,17 @@
 
         Return _cDB.GetList(Of BO.o23Notepad)(s, pars)
     End Function
-    Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23Notepad)
-        Dim s As String = GetSQLPart1(0), pars As New DbParameters
-        s += " WHERE o23ReminderDate BETWEEN @d1 AND @d2 AND (a.j02ID_Owner=@j02id OR a.j02ID=@j02id)"
+    Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23NotepadGrid)
+
+        Dim s As String = GetSQLPart1_Grid(0) & " " & GetSQLPart2_Grid(), pars As New DbParameters
+        s += " WHERE a.o23ReminderDate BETWEEN @d1 AND @d2"
+        s += " AND (a.j02ID_Owner=@j02id OR a.j02ID=@j02id OR a.o23ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=223 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))))"
+
         pars.Add("j02id", intJ02ID, DbType.Int32)
         pars.Add("d1", DateAdd(DateInterval.Day, -1, Now), DbType.DateTime)
-        pars.Add("d2", DateAdd(DateInterval.Day, 1, Now), DbType.DateTime)
+        pars.Add("d2", DateAdd(DateInterval.Day, 2, Now), DbType.DateTime)
 
-        Return _cDB.GetList(Of BO.o23Notepad)(s, pars)
+        Return _cDB.GetList(Of BO.o23NotepadGrid)(s, pars)
     End Function
 
     Private Function GetSQLWHERE(myQuery As BO.myQueryO23, ByRef pars As DL.DbParameters) As String

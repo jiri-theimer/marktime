@@ -68,6 +68,15 @@ Partial Public Class clue_o23_record
     Protected WithEvents o23Date As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''o23ReminderDate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o23ReminderDate As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''trBind control.
     '''</summary>
     '''<remarks>

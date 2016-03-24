@@ -44,6 +44,10 @@
             End If
 
             Me.o23Date.Text = BO.BAS.FD(.o23Date)
+            If Not .o23ReminderDate Is Nothing Then
+                Me.o23ReminderDate.Text = "Čas připomenutí: " & BO.BAS.FD(.o23ReminderDate, True, True)
+            End If
+
             If .b02ID <> 0 Then
                 Me.b02Name.Text = .b02Name
             Else

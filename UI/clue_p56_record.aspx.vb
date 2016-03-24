@@ -9,26 +9,10 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-            If Request.Item("noclue") = "1" Or Request.Item("dr") = "1" Then
-                ViewState("noclue") = "1"
-            End If
-
+            
             RefreshRecord()
 
-            If Request.Item("mode") = "readonly" Then
-                panContainer.Style.Clear()
-                cmDetail.Visible = False
-                Master.HeaderText = ph1.Text
-                ph1.Visible = False
-                cmdMove2Bin.Visible = False
-                cmdWorkflow.Visible = False
-            End If
-
-            If Not cmdWorkflow.Visible Then
-                comments1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
-            Else
-                comments1.Visible = False
-            End If
+            
 
         End If
     End Sub
@@ -42,10 +26,20 @@
         Me.Project.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, cRec.p41ID)
         With cRec
             Master.HeaderText = .p57Name & ": " & .p56Code
-            ph1.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p56Task, .PID, True)
+            ph1.Text = cRec.p57Name & ": " & .p56Code
             Me.p56Name.Text = .p56Name
             Me.p56Name.Font.Strikeout = .IsClosed
-            Me.p56Description.Text = .p56Description
+            If .p56Description <> "" Then
+                Me.p56Description.Text = BO.BAS.CrLfText2Html(.p56Description)
+            Else
+                panBody.Visible = False
+            End If
+            If .p59ID_Submitter > 0 Then
+                Me.p59name_submitter.Text = .p59NameSubmitter
+            Else
+                trP59.Visible = False
+            End If
+
             Me.Hours_Orig.Text = BO.BAS.FN(.Hours_Orig)
             Me.b02Name.Text = .b02Name
             Me.Timestamp.Text = .Timestamp
@@ -101,43 +95,17 @@
         End If
 
 
-        If Not cRec.IsClosed Then
-            cmdMove2Bin.Visible = Master.Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.p41ID, BO.x53PermValEnum.PR_P56_Bin, True)
-            If Not cmdMove2Bin.Visible Then
-                cmdMove2Bin.Visible = Master.Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.p41ID, BO.x53PermValEnum.PR_P56_Owner, True)
-            End If
-        Else
+        If cRec.IsClosed Then
             img1.ImageUrl = "Images/bin_32.png"
             p56Name.Font.Strikeout = True
-            cmdMove2Bin.Visible = False
         End If
-        If cRec.b01ID <> 0 Then
-            cmdWorkflow.Visible = True
-        Else
-            cmdWorkflow.Visible = False
-        End If
-        trWorkflow.Visible = cmdWorkflow.Visible
-        trName.Visible = Not cmdWorkflow.Visible
-        If cmdWorkflow.Visible Then cmdMove2Bin.Visible = False
+       
 
     End Sub
 
-    Private Sub cmdMove2Bin_Click(sender As Object, e As EventArgs) Handles cmdMove2Bin.Click
-        Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(Master.DataPID)
-        cRec.ValidUntil = Now.AddMinutes(-1)
-        If Not Master.Factory.p56TaskBL.Save(cRec, Nothing, Nothing, "") Then
-            Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
-            Return
-        End If
-        RefreshRecord()
-    End Sub
+    
 
     Private Sub clue_p56_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If ViewState("noclue") = "1" Then
-            panContainer.Style.Clear()  'stránka nemá mít chování info bubliny
-            panHeader.Visible = False
-        Else
-            panHeader.Visible = True
-        End If
+      
     End Sub
 End Class

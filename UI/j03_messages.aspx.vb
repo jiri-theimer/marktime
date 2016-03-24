@@ -101,26 +101,15 @@
     End Sub
 
     Private Sub rpO23_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO23.ItemDataBound
-        Dim cRec As BO.o23Notepad = CType(e.Item.DataItem, BO.o23Notepad)
+        Dim cRec As BO.o23NotepadGrid = CType(e.Item.DataItem, BO.o23NotepadGrid)
         With CType(e.Item.FindControl("cmdO23"), HyperLink)
-            .Text = cRec.o23Name
+            .Text = cRec.o24Name & ": " & cRec.o23Name
             .NavigateUrl = "javascript: o23_detail(" & cRec.PID.ToString & ")"
             If cRec.IsClosed Then .Font.Strikeout = True
         End With
 
         With CType(e.Item.FindControl("Project"), Label)
-            If cRec.p41ID <> 0 Then
-                .Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, cRec.p41ID)
-            End If
-            If cRec.p28ID <> 0 Then
-                .Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, cRec.p28ID)
-            End If
-            If cRec.p91ID <> 0 Then
-                .Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, cRec.p91ID)
-            End If
-            If cRec.j02ID <> 0 Then
-                .Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.j02Person, cRec.j02ID)
-            End If
+            .Text = Trim(cRec.ProjectClient & " " & cRec.Project & " " & cRec.Person & " " & cRec.p91Code)
         End With
     End Sub
 End Class

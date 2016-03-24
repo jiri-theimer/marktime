@@ -30,8 +30,8 @@
                 menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
                 menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
             End With
-            'Me.panSearchContact.Visible = Master.Factory.SysUser.j04IsMenu_Contact
-            'Me.panSearchProject.Visible = Master.Factory.SysUser.j04IsMenu_Project
+
+            RefreshBoxes()
         End If
     End Sub
 
@@ -67,6 +67,121 @@
 
     End Sub
 
+    Private Sub RefreshBoxes()
 
+        Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+        If lisP56.Count > 0 Then
+            Me.panP56.Visible = True
+            Me.p56Count.Text = lisP56.Count.ToString
+            rpP56.DataSource = lisP56
+            rpP56.DataBind()
+        Else
+            Me.panP56.Visible = False
+        End If
+        Dim lisO22 As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+        If lisO22.Count > 0 Then
+            Me.panO22.Visible = True
+            Me.o22Count.Text = lisO22.Count.ToString
+            rpO22.DataSource = lisO22
+            rpO22.DataBind()
+        Else
+            Me.panO22.Visible = False
+        End If
+        Dim lisO23 As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+        If lisO23.Count > 0 Then
+            Me.panO23.Visible = True
+            Me.o23Count.Text = lisO23.Count.ToString
+            rpO23.DataSource = lisO23
+            rpO23.DataBind()
+        Else
+            Me.panO23.Visible = False
+        End If
+        rpP39.DataSource = Master.Factory.p40WorkSheet_RecurrenceBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+        rpP39.DataBind()
+        If rpP39.Items.Count = 0 Then
+            panP39.Visible = False
+        Else
+            p39Count.Text = rpP39.Items.Count.ToString
+            panP39.Visible = True
+        End If
+    End Sub
 
+    Private Sub rpP56_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP56.ItemDataBound
+        Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
+        With CType(e.Item.FindControl("link1"), HyperLink)
+            .Text = cRec.NameWithTypeAndCode
+            .NavigateUrl = "p56_framework.aspx?pid=" & cRec.PID.ToString
+            If cRec.IsClosed Then .Font.Strikeout = True
+        End With
+        With CType(e.Item.FindControl("clue1"), HyperLink)
+            .Attributes.Item("rel") = "clue_p56_record.aspx?&pid=" & cRec.PID.ToString
+        End With
+        If Not cRec.p56ReminderDate Is Nothing Then
+            e.Item.FindControl("img1").Visible = True
+        Else
+            e.Item.FindControl("img1").Visible = False
+        End If
+        If Not BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
+            With CType(e.Item.FindControl("p56PlanUntil"), Label)
+                .Text = BO.BAS.FD(cRec.p56PlanUntil, True, True)
+                If cRec.p56PlanUntil < Now Then
+                    .Text += "...je po termínu!" : .ForeColor = Drawing.Color.Red
+                Else
+                    .ForeColor = Drawing.Color.Green
+                End If
+            End With
+
+        End If
+    End Sub
+
+    Private Sub rpO22_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO22.ItemDataBound
+        Dim cRec As BO.o22Milestone = CType(e.Item.DataItem, BO.o22Milestone)
+        With CType(e.Item.FindControl("link1"), HyperLink)
+            .Text = cRec.NameWithDate
+            .NavigateUrl = "dr.aspx?prefix=o22&pid=" & cRec.PID.ToString
+            If cRec.IsClosed Then .Font.Strikeout = True
+        End With
+        With CType(e.Item.FindControl("clue1"), HyperLink)
+            .Attributes.Item("rel") = "clue_o22_record.aspx?&pid=" & cRec.PID.ToString
+        End With
+        If Not cRec.o22ReminderDate Is Nothing Then
+            e.Item.FindControl("img1").Visible = True
+        Else
+            e.Item.FindControl("img1").Visible = False
+        End If
+        
+    End Sub
+
+    Private Sub rpO23_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO23.ItemDataBound
+        Dim cRec As BO.o23NotepadGrid = CType(e.Item.DataItem, BO.o23NotepadGrid)
+        With CType(e.Item.FindControl("link1"), HyperLink)
+            .Text = cRec.o24Name & ": "
+            If cRec.o23Name <> "" Then
+                .Text += cRec.o23Name
+            Else
+                .Text += cRec.ProjectClient
+            End If
+            .NavigateUrl = "o23_framework.aspx?pid=" & cRec.PID.ToString
+            If cRec.IsClosed Then .Font.Strikeout = True
+
+        End With
+        With CType(e.Item.FindControl("clue1"), HyperLink)
+            .Attributes.Item("rel") = "clue_o23_record.aspx?&pid=" & cRec.PID.ToString
+        End With
+
+        
+    End Sub
+
+    Private Sub rpP39_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP39.ItemDataBound
+        Dim cRec As BO.p39WorkSheet_Recurrence_Plan = CType(e.Item.DataItem, BO.p39WorkSheet_Recurrence_Plan)
+        With CType(e.Item.FindControl("cmdProject"), HyperLink)
+            .Text = cRec.p41Name
+            If cRec.p28Name <> "" Then .Text = cRec.p28Name & " - " & cRec.p41Name
+            .NavigateUrl = "p41_framework.aspx?pid=" & cRec.p41ID.ToString
+        End With
+        CType(e.Item.FindControl("p39DateCreate"), Label).Text = BO.BAS.FD(cRec.p39DateCreate, True)
+        CType(e.Item.FindControl("p39Date"), Label).Text = BO.BAS.FD(cRec.p39Date)
+        CType(e.Item.FindControl("p39Text"), Label).Text = cRec.p39Text
+
+    End Sub
 End Class

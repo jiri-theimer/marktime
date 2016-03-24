@@ -7,7 +7,7 @@ Public Interface Io23NotepadBL
     Function LoadMyLastCreated() As BO.o23Notepad
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryO23) As IEnumerable(Of BO.o23Notepad)
-    Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23Notepad)
+    Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23NotepadGrid)
     Function GetVirtualCount(myQuery As BO.myQueryO23) As Integer
     Function GetList4Grid(myQuery As BO.myQueryO23) As IEnumerable(Of BO.o23NotepadGrid)
     Sub Handle_Reminder()
@@ -182,7 +182,7 @@ Class o23NotepadBL
         Next
 
     End Sub
-    Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23Notepad) Implements Io23NotepadBL.GetList_forMessagesDashboard
+    Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23NotepadGrid) Implements Io23NotepadBL.GetList_forMessagesDashboard
         Return _cDL.GetList_forMessagesDashboard(intJ02ID)
     End Function
 

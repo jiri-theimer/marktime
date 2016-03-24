@@ -136,10 +136,10 @@
                 Return dur.Days.ToString & "d"
             End If
         Else
-            Return Format(hours, "Standard") & "d."
+            Return Format(hours, "Standard") & "hod."
         End If
 
-       
+
     End Function
     
     Shared Function FD(ByVal val As Object, Optional ByVal bolShowTimeIfIsFilled As Boolean = False, Optional ByVal bolShowDiff2Now As Boolean = False) As String

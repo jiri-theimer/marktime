@@ -32,10 +32,10 @@
                 Záznam dokumentu
                
                 
-                 <a style="margin-left:20px;" href="javascript:go2module()">Přejít do rozhraní [Dokumenty]</a>
+                 <a style="margin-left:20px;" href="javascript:go2module()">Skočit na detail dokumentu</a>
             </div>
             <div class="content">
-                <table cellpadding="6">
+                <table cellpadding="6" id="responsive">
                     
                     <tr id="trO23Name" runat="server">
                         <td>Název:</td>
@@ -47,6 +47,8 @@
                         <td>Datum:</td>
                         <td>
                             <asp:Label ID="o23Date" runat="server" CssClass="valbold"></asp:Label>
+
+                            <asp:Label ID="o23ReminderDate" runat="server" CssClass="val" ForeColor="green"></asp:Label>
                         </td>
                     </tr>
                     <tr id="trBind" runat="server">

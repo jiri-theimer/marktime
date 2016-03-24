@@ -20,4 +20,10 @@
             Return _p41Name
         End Get
     End Property
+    Private Property _p28Name As String
+    Public ReadOnly Property p28Name As String
+        Get
+            Return _p28Name
+        End Get
+    End Property
 End Class

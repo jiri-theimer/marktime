@@ -89,7 +89,8 @@
 
     Public ReadOnly Property NameWithDate As String
         Get
-            Return Me.o22Name & " (" & _o21Name & ") " & Me.Period
+            Return _o21Name & ": " & Me.o22Name & " (" & Me.Period & ")"
         End Get
     End Property
+   
 End Class

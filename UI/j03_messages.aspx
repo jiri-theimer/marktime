@@ -87,7 +87,7 @@
     <asp:Panel ID="boxO23" runat="server" CssClass="content-box2">
         <div class="title">
             <img src="Images/notepad.png" />
-            <asp:Label ID="titleO23" runat="server" Text="Poznámky s připomenutím" Style="display: inline-block; min-width: 150px;"></asp:Label>
+            <asp:Label ID="titleO23" runat="server" Text="Dokumenty s připomenutím" Style="display: inline-block; min-width: 150px;"></asp:Label>
             
         </div>
         <div class="content">

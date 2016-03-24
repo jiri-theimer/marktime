@@ -107,11 +107,11 @@
 
     Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o22Milestone)
         Dim s As String = GetSQLPart1(0), pars As New DbParameters
-        s += " WHERE (o22DateFrom BETWEEN @d1 AND @d2 OR o22ReminderDate BETWEEN @d1 AND @d2)"
+        s += " WHERE (o22DateFrom BETWEEN @d1 AND @d2 OR o22DateUntil BETWEEN @d1 AND @d2 OR o22ReminderDate BETWEEN @d1 AND @d2)"
         s += "AND (a.j02ID_Owner=@j02id OR a.j02ID=@j02id OR o22ID IN (SELECT o22ID FROM o20Milestone_Receiver WHERE j02ID=@j02id OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id)))"
         pars.Add("j02id", intJ02ID, DbType.Int32)
         pars.Add("d1", DateAdd(DateInterval.Day, -1, Now), DbType.DateTime)
-        pars.Add("d2", DateAdd(DateInterval.Day, 1, Now), DbType.DateTime)
+        pars.Add("d2", DateAdd(DateInterval.Day, 2, Now), DbType.DateTime)
 
         Return _cDB.GetList(Of BO.o22Milestone)(s, pars)
     End Function

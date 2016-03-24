@@ -132,7 +132,7 @@
     End Property
     Public ReadOnly Property NameWithTypeAndCode As String
         Get
-            Return _p57Name & " - " & Me.p56Name & " (" & Me.p56Code & ")"
+            Return _p57Name & ": " & Me.p56Name & " (" & Me.p56Code & ")"
         End Get
     End Property
 

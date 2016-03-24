@@ -466,14 +466,14 @@
         <asp:TextBox ID="p31Text" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
         <uc:freefields ID="ff1" runat="server" />
     </div>
-    <div class="content-box1" style="min-width:270px;">
+    <div class="content-box1" style="min-width:50px;">
         <div class="title">
             <img src="Images/task.png" alt="Úkol" />
-            <asp:CheckBox ID="chkBindToP56" runat="server" Text="Zapsat úkon k úkolu projektu" AutoPostBack="true" />
+            <asp:CheckBox ID="chkBindToP56" runat="server" Text="Projektový úkol" AutoPostBack="true" />
         </div>
         <div class="content">
-
-            <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" Filter="Contains" />
+            <asp:DropDownList ID="p56ID" runat="server" DataTextField="NameWithTypeAndCode" DataValueField="pid" Visible="false" ></asp:DropDownList>
+            
         </div>
 
     </div>

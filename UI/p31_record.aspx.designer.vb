@@ -443,7 +443,7 @@ Partial Public Class p31_record
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p56ID As Global.UI.datacombo
+    Protected WithEvents p56ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''chkBindToContactPerson control.

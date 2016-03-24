@@ -23,15 +23,6 @@ Partial Public Class clue_p56_record
     Protected WithEvents panContainer As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''panHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panHeader As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''img1 control.
     '''</summary>
     '''<remarks>
@@ -50,42 +41,6 @@ Partial Public Class clue_p56_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdWorkflow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdWorkflow As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cmDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmDetail As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''Project control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Project As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''trName control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trName As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
     '''p56Name control.
     '''</summary>
     '''<remarks>
@@ -93,15 +48,6 @@ Partial Public Class clue_p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p56Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''trWorkflow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trWorkflow As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
     '''b02Name control.
@@ -138,6 +84,33 @@ Partial Public Class clue_p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p56PlanFrom As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Project control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Project As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''trP59 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trP59 As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''p59name_submitter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p59name_submitter As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''RolesInLine control.
@@ -230,13 +203,13 @@ Partial Public Class clue_p56_record
     Protected WithEvents PlanExpensesSummary As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdMove2Bin control.
+    '''panBody control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdMove2Bin As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents panBody As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''p56Description control.
@@ -255,15 +228,6 @@ Partial Public Class clue_p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''comments1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents comments1 As Global.UI.b07_list
 
     '''<summary>
     '''Master property.
