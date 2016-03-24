@@ -63,7 +63,9 @@
         });
 
 
-
+        function sw_local(url, img, is_maximize) {
+            sw_master(url, img, is_maximize);
+        }
 
 
         function hardrefresh(pid, flag) {
@@ -73,8 +75,8 @@
         }
 
         function o22_record(pid) {
-
-            sw_master("o22_record.aspx?pid=" + pid, "Images/milestone_32.png")
+           
+            sw_master("o22_record.aspx?pid=" + pid+"&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>", "Images/calendar_32.png")
         }
 
         function o22_clone(pid) {
@@ -96,8 +98,11 @@
         }
         
         function p56_record(pid) {
-
-            sw_master("p56_record.aspx?pid=" + pid, "Images/task_32.png")
+            var masterpid = "0";
+            <%If Me.CurrentMasterPrefix="p41" then%>
+            masterpid = "<%=me.CurrentMasterPID%>";
+            <%End If%>
+            sw_master("p56_record.aspx?masterprefix=p41&masterpid="+masterpid+"&pid=" + pid, "Images/task_32.png")
         }
 
         function re(pid,prefix) {
@@ -386,7 +391,7 @@
         <div id="right_panel" style="margin-left: 250px;">
             <telerik:RadScheduler ID="scheduler1" SelectedView="WeekView" RenderMode="Lightweight" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="100%" Height="90%" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="true" EnableAdvancedForm="false"
                 Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" Localization-HeaderToday="Dnes" Localization-ShowMore="více..."
-                OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" OnClientTimeSlotContextMenuItemClicked="record_create"
+                OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" 
                 Localization-AllDay="Bez času od/do" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"
                 HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand"
                 DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
@@ -394,10 +399,10 @@
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <WeekView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <MultiDayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" NumberOfDays="10" />
-                <TimelineView UserSelectable="true" />
-                <AgendaView UserSelectable="false" />
+                <TimelineView UserSelectable="true" NumberOfSlots="7" />
+                <AgendaView UserSelectable="true" NumberOfDays="10" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
-                <TimelineView UserSelectable="false" />
+                
                 <AppointmentTemplate>
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
@@ -409,8 +414,8 @@
                     <telerik:RadSchedulerContextMenu>
                         <Items>
                             <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png" NavigateUrl="javascript:o22_record(0)"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png" NavigateUrl="javascript:p56_record(0)"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>

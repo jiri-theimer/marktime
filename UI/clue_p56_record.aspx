@@ -64,6 +64,13 @@
 
                         </td>
                     </tr>
+                    <tr id="trP58" runat="server">
+                        <td>Produkt:</td>
+                        <td>
+                            <asp:Label ID="p58Name" runat="server" CssClass="valbold"></asp:Label>
+
+                        </td>
+                    </tr>
                     <tr id="trP59" runat="server">
                         <td>Priorita zadavatele:</td>
                         <td>

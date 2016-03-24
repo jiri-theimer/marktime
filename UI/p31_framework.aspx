@@ -93,7 +93,7 @@
         }
 
         function sw_local(url, img, is_maximize) {
-            sw_master(url, is_maximize, 800, 600);
+            sw_master(url,img,is_maximize);
         }
 
         function AfterPaneResized(sender, args) {

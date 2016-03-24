@@ -39,16 +39,29 @@
             With Master
                 .HeaderIcon = "Images/calendar_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .HeaderText = "Událost do kalendáře"
+                .HeaderText = "Kalendářová událost"
+
 
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("masterprefix"))
+                Me.CurrentMasterDataPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
+
+                If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified And .DataPID <> 0 Then
+                    Dim cRec As BO.o22Milestone = .Factory.o22MilestoneBL.Load(.DataPID)
+                    Me.CurrentX29ID = cRec.x29ID
+                End If
+                If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified And .DataPID = 0 Then
+                    Me.CurrentX29ID = BO.x29IdEnum.j02Person
+                    Me.CurrentMasterDataPID = .Factory.SysUser.j02ID
+                End If
                 If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified Then
                     .StopPage("masterprefix missing.")
                 End If
-                Me.CurrentMasterDataPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
-                If Me.CurrentMasterDataPID = 0 Then
+
+                If Me.CurrentMasterDataPID = 0 And .DataPID = 0 Then
                     .StopPage("masterpid missing.")
                 End If
+
+
 
 
             End With
@@ -62,7 +75,7 @@
                 Master.DataPID = 0
 
             End If
-            
+
         End If
     End Sub
 
@@ -71,6 +84,7 @@
             Me.BoundObject.Text = ""
             Return
         End If
+
         Me.BoundObject.Text = Master.Factory.GetRecordCaption(Me.CurrentX29ID, Me.CurrentMasterDataPID)
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.j02Person
@@ -105,6 +119,7 @@
                 Case BO.x29IdEnum.p56Task : Me.CurrentMasterDataPID = .p56ID
                 Case BO.x29IdEnum.p91Invoice : Me.CurrentMasterDataPID = .p56ID
                 Case BO.x29IdEnum.p90Proforma : Me.CurrentMasterDataPID = .p90ID
+
             End Select
             InhaleObject()
 
@@ -313,21 +328,7 @@
         With cRecLast
             Me.o21ID.SelectedValue = .o21ID.ToString
             Me.CurrentO21Flag = .o21Flag
-            ''Select Case Me.CurrentO21Flag
-            ''    Case BO.o21FlagEnum.DeadlineOrMilestone
-            ''        If .o22DateUntil > Now Then
-            ''            Me.o22DateUntil.SelectedDate = .o22DateUntil.Value.AddHours(1)
-            ''        End If
-            ''    Case BO.o21FlagEnum.EventFromUntil
-            ''        Me.o22IsAllDay.Checked = .o22IsAllDay
-            ''        If Not .o22IsAllDay Then
-            ''            If .o22DateFrom > Now Then
-            ''                Me.o22DateFrom.SelectedDate = .o22DateUntil.Value.AddHours(1)
-            ''                Me.o22DateUntil.SelectedDate = .o22DateUntil.Value.AddHours(2)
-            ''            End If
-            ''        End If
-
-            ''End Select
+          
         End With
     End Sub
 

@@ -39,6 +39,11 @@
             Else
                 trP59.Visible = False
             End If
+            If .p58ID > 0 Then
+                Me.p58Name.Text = .p58Name
+            Else
+                trP58.Visible = False
+            End If
 
             Me.Hours_Orig.Text = BO.BAS.FN(.Hours_Orig)
             Me.b02Name.Text = .b02Name

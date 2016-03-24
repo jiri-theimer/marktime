@@ -235,12 +235,11 @@ Public Class entity_scheduler
                 Dim c As New Appointment()
                 With cRec
                     c.ID = .PID.ToString & ",'o22'"
-                    c.Description = "clue_o22_record.aspx?mode=timeline&pid=" & .PID.ToString
+                    c.Description = "clue_o22_record.aspx?pid=" & .PID.ToString
                     c.Subject = .o22Name
                     ''If .o22DateUntil < datFoundMin Then datFoundMin = .o22DateUntil
                     Select Case .o21Flag
                         Case BO.o21FlagEnum.DeadlineOrMilestone
-                            c.Description = "calendar.png"
                             'c.BackColor = Drawing.Color.Aquamarine
                             c.BackColor = Drawing.Color.Salmon
                             c.Start = .o22DateUntil.Value
@@ -248,7 +247,6 @@ Public Class entity_scheduler
 
 
                         Case BO.o21FlagEnum.EventFromUntil
-                            c.Description = "event.png"
                             c.BackColor = Drawing.Color.AntiqueWhite
                             c.Start = .o22DateFrom
                             c.End = .o22DateUntil
@@ -263,7 +261,7 @@ Public Class entity_scheduler
 
                     Select Case Me.CurrentView
                         Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView, SchedulerViewType.WeekView
-                            If Len(.o22Name) > 0 Then c.Subject = BO.BAS.OM3(.o22Name, 15)
+                            If Len(.o22Name) > 0 Then c.Subject = BO.BAS.OM3(.o22Name, 25)
 
                             c.ToolTip = BO.BAS.FD(.o22DateUntil, True)
                     End Select

@@ -8,6 +8,10 @@
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
     <script type="text/javascript">
+        function sw_local(url, img, is_maximize) {
+            sw_master(url,img, is_maximize);
+        }
+
         function personalpage() {
             sw_master("j03_myprofile_defaultpage.aspx", "Images/plugin_32.png");
 
@@ -138,9 +142,10 @@
             </asp:Panel>
             <asp:Panel ID="panO22" runat="server" CssClass="content-box1">
                 <div class="title">
-                    <img src="Images/milestone.png" alt="Kalendářová událost" />
+                    <img src="Images/calendar.png" alt="Kalendářová událost" />
                     Blízké kalendářové události/milníky (+-1 den)
                     <asp:Label ID="o22Count" runat="server" CssClass="badge1"></asp:Label>
+                    <a href="entity_scheduler.aspx">Kalendář</a>
                 </div>
                 <div class="content">
                     <asp:Repeater ID="rpO22" runat="server">
