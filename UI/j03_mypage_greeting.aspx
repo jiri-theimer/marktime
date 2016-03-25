@@ -232,7 +232,7 @@
                     </asp:Repeater>
                 </div>
             </asp:Panel>
-            <asp:Panel ID="panChart" runat="server" Style="float: right;" Visible="false">
+            <asp:Panel ID="panChart1" runat="server" Style="float: right;" Visible="false">
                 <telerik:RadHtmlChart runat="server" ID="chart1" Height="300px">
                     <PlotArea>
                         <Series>
@@ -248,7 +248,22 @@
                     </PlotArea>
                 </telerik:RadHtmlChart>
             </asp:Panel>
-            
+            <asp:Panel ID="panChart2" runat="server" Style="float: right;" Visible="false">
+                <telerik:RadHtmlChart runat="server" ID="chart2" >  
+                    <Legend>
+                        <Appearance Position="Right"></Appearance>
+                    </Legend>                  
+                    <PlotArea>
+                        <Series>
+                            <telerik:PieSeries NameField="Podle" DataFieldY="Hodiny" StartAngle="90">                                
+                                <LabelsAppearance Position="OutsideEnd" DataFormatString="{0} h.">                                   
+                        </LabelsAppearance>                                                  
+                            </telerik:PieSeries>
+                        </Series>
+                       
+                    </PlotArea>
+                </telerik:RadHtmlChart>
+            </asp:Panel>
 
             <div style="float: right;">
 

@@ -194,13 +194,13 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdApprove As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''gridP31 control.
+    '''grid2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gridP31 As Global.UI.datagrid
+    Protected WithEvents grid2 As Global.UI.datagrid
 
     '''<summary>
     '''hidMasterDataPID control.

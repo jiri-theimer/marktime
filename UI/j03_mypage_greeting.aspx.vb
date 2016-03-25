@@ -33,16 +33,28 @@
             End With
 
             With Master.Factory.j03UserBL
-                If .GetUserParam("j03_mypage_greeting-last_step", "0") = "0" Then
-                    ShowImage()
-                    .SetUserParam("j03_mypage_greeting-last_step", "1")
-                Else
-                    ShowChart()
-                    .SetUserParam("j03_mypage_greeting-last_step", "0")
-
-                End If
+                Select Case .GetUserParam("j03_mypage_greeting-last_step", "0")
+                    Case "0"
+                        ShowImage()
+                        .SetUserParam("j03_mypage_greeting-last_step", "1")
+                    Case "1"
+                        ShowChart1()
+                        .SetUserParam("j03_mypage_greeting-last_step", "2")
+                    Case "2"
+                        ShowChart2("2")
+                        .SetUserParam("j03_mypage_greeting-last_step", "3")
+                    Case "3"
+                        ShowChart2("3")
+                        .SetUserParam("j03_mypage_greeting-last_step", "4")
+                    Case "4"
+                        ShowChart2("4")
+                        .SetUserParam("j03_mypage_greeting-last_step", "5")
+                    Case "5"
+                        ShowChart2("5")
+                        .SetUserParam("j03_mypage_greeting-last_step", "0")
+                End Select
+               
             End With
-
             RefreshBoxes()
 
         End If
@@ -238,16 +250,52 @@
         End With
     End Sub
 
-    Private Sub ShowChart()
-        panChart.Visible = True
+    Private Sub ShowChart1()
+        panChart1.Visible = True
         Dim s As String = "select sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end) as HodinyFa,sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end) as HodinyNeFa,convert(varchar(10),p31Date,104) as Datum FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID WHERE a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date ORDER BY a.p31Date"
-        
+
         Dim pars As New List(Of BO.PluginDbParameter)
         pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-5)))
         pars.Add(New BO.PluginDbParameter("d2", Today.AddDays(1)))
         pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
+        If dt.Rows.Count = 0 Then
+            panChart1.Visible = False : Return
+        End If
         With chart1
+            .DataSource = dt
+            .DataBind()
+        End With
+
+
+    End Sub
+
+    Private Sub ShowChart2(strFlag As String)
+        panChart2.Visible = True
+        Dim s As String = "select sum(p31Hours_Orig) as Hodiny,left(min(p28name),20) as Podle FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY p41.p28ID_Client ORDER BY min(p28Name)"
+        Select Case strFlag
+            Case "3"
+                s = "select sum(p31Hours_Orig) as Hodiny,left(min(p32Name),20) as Podle FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p32ID ORDER BY min(p32Name)"
+            Case "4"
+                s = "select sum(p31Hours_Orig) as Hodiny,left(min(p34Name),20) as Podle FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY p32.p34ID ORDER BY min(p34Name)"
+            Case "5"
+                s = "select sum(p31Hours_Orig) as Hodiny,left(min(isnull(p28name+' - ','')+p41Name),40) as Podle FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p41ID ORDER BY min(p28Name),min(p41Name)"
+        End Select
+        Dim d0 As Date = Now
+        If Day(Now) <= 2 Then d0 = Now.AddDays(-10)
+
+        Dim d1 As Date = DateSerial(Year(d0), Month(d0), 1)
+        Dim d2 As Date = d1.AddMonths(1).AddDays(-1)
+        Dim pars As New List(Of BO.PluginDbParameter)
+        pars.Add(New BO.PluginDbParameter("d1", d1))
+        pars.Add(New BO.PluginDbParameter("d2", d2))
+        pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
+        Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
+        If dt.Rows.Count = 0 Then
+            panChart2.Visible = False : Return
+        End If
+        With chart2
+            .ChartTitle.Text = "Měsíc " & Month(d0).ToString & "/" & Year(d0).ToString & ": " & dt.Compute("Sum(Hodiny)", "").ToString & "h."
             .DataSource = dt
             .DataBind()
         End With

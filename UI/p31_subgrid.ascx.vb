@@ -78,10 +78,10 @@ Public Class p31_subgrid
 
     Public Property AllowMultiSelect As Boolean
         Get
-            Return gridP31.AllowMultiSelect
+            Return grid2.AllowMultiSelect
         End Get
         Set(value As Boolean)
-            gridP31.AllowMultiSelect = value
+            grid2.AllowMultiSelect = value
         End Set
     End Property
     Public Property AllowApproving As Boolean
@@ -176,10 +176,10 @@ Public Class p31_subgrid
             Me.CurrentJ74ID = _curJ74.PID
         End If
         hidDrillDownField.Value = _curJ74.j74DrillDownField1
-        gridP31.ClearColumns()
+        grid2.ClearColumns()
 
         Me.hidDefaultSorting.Value = _curJ74.j74OrderBy
-        basUIMT.SetupGrid(Me.Factory, Me.gridP31, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
+        basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
 
         If _curJ74.j74IsFilteringByColumn Then
             Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
@@ -192,8 +192,8 @@ Public Class p31_subgrid
 
     End Sub
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
-        gridP31.radGridOrig.GroupingSettings.RetainGroupFootersVisibility = True
-        With gridP31.radGridOrig.MasterTableView
+        grid2.radGridOrig.GroupingSettings.RetainGroupFootersVisibility = True
+        With grid2.radGridOrig.MasterTableView
             .GroupByExpressions.Clear()
             If strGroupField = "" Then Return
             .ShowGroupFooter = True
@@ -210,7 +210,7 @@ Public Class p31_subgrid
         End With
     End Sub
 
-    Private Sub gridP31_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles gridP31.DetailTableDataBind
+    Private Sub grid2_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid2.DetailTableDataBind
         Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
         Dim mq As New BO.myQueryP31
         Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
@@ -257,12 +257,12 @@ Public Class p31_subgrid
         Return cSum.RowsCount
     End Function
 
-    Private Sub gridP31_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles gridP31.ItemDataBound
+    Private Sub grid2_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid2.ItemDataBound
         If TypeOf e.Item.DataItem Is DataRowView Then Return
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
     End Sub
 
-    Private Sub gridP31_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles gridP31.NeedDataSource
+    Private Sub grid2_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid2.NeedDataSource
         If Me.MasterDataPID = 0 Or Me.EntityX29ID = BO.x29IdEnum._NotSpecified Then Return
         If e.IsFromDetailTable Then
             Return
@@ -272,8 +272,8 @@ Public Class p31_subgrid
         p31_InhaleMyQuery(mq)
         With mq
             .MG_PageSize = CInt(Me.cbxPaging.SelectedValue)
-            .MG_CurrentPageIndex = gridP31.radGridOrig.MasterTableView.CurrentPageIndex
-            .MG_SortString = gridP31.radGridOrig.MasterTableView.SortExpressions.GetSortString()
+            .MG_CurrentPageIndex = grid2.radGridOrig.MasterTableView.CurrentPageIndex
+            .MG_SortString = grid2.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
                     .MG_SortString = Me.hidDefaultSorting.Value
@@ -293,13 +293,13 @@ Public Class p31_subgrid
             'drill down úroveň
             Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
 
-            Dim dt As DataTable = Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, gridP31.radGridOrig.MasterTableView.Attributes("sumfields"))
-            gridP31.VirtualRowCount = dt.Rows.Count
-            gridP31.DataSourceDataTable = dt
+            Dim dt As DataTable = Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid2.radGridOrig.MasterTableView.Attributes("sumfields"))
+            grid2.VirtualRowCount = dt.Rows.Count
+            grid2.DataSourceDataTable = dt
             Return
         End If
 
-        gridP31.DataSource = Me.Factory.p31WorksheetBL.GetList(mq)
+        grid2.DataSource = Me.Factory.p31WorksheetBL.GetList(mq)
 
     End Sub
 
@@ -307,25 +307,25 @@ Public Class p31_subgrid
         Me.Factory.j03UserBL.SetUserParam("p31_grid-period", Me.period1.SelectedValue)
         If Me.hidDrillDownField.Value = "" Then
             RecalcVirtualRowCount()
-            gridP31.Rebind(False)
+            grid2.Rebind(False)
         Else
             ReloadPage()
         End If
         
     End Sub
 
-    Private Sub gridP31_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles gridP31.NeedFooterSource
+    Private Sub grid2_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles grid2.NeedFooterSource
         footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
 
 
-        gridP31.ParseFooterItemString(footerItem, ViewState("footersum"))
+        grid2.ParseFooterItemString(footerItem, ViewState("footersum"))
     End Sub
 
     Public Sub Rebind(bolKeepSelectedItems As Boolean, Optional intExplicitSelectedPID As Integer = 0)
-        If gridP31.radGridOrig.Columns.Count = 0 Then
+        If grid2.radGridOrig.Columns.Count = 0 Then
             Return
         End If
-        gridP31.Rebind(bolKeepSelectedItems, intExplicitSelectedPID)
+        grid2.Rebind(bolKeepSelectedItems, intExplicitSelectedPID)
     End Sub
     Public Sub RecalcVirtualRowCount()
 
@@ -335,17 +335,17 @@ Public Class p31_subgrid
 
         Dim cSum As BO.p31WorksheetSum = Me.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
         If Not cSum Is Nothing Then
-            gridP31.VirtualRowCount = cSum.RowsCount
+            grid2.VirtualRowCount = cSum.RowsCount
 
-            ViewState("footersum") = gridP31.GenerateFooterItemString(cSum)
+            ViewState("footersum") = grid2.GenerateFooterItemString(cSum)
         Else
             ViewState("footersum") = ""
-            gridP31.VirtualRowCount = 0
+            grid2.VirtualRowCount = 0
         End If
 
         'grid1.VirtualRowCount = Master.Factory.p31WorksheetBL.GetVirtualCount(mq)
-        gridP31.radGridOrig.CurrentPageIndex = 0
-        Me.lblHeaderP31.Text = BO.BAS.OM2(Me.lblHeaderP31.Text, BO.BAS.FNI(gridP31.VirtualRowCount))
+        grid2.radGridOrig.CurrentPageIndex = 0
+        Me.lblHeaderP31.Text = BO.BAS.OM2(Me.lblHeaderP31.Text, BO.BAS.FNI(grid2.VirtualRowCount))
     End Sub
 
     Private Sub p31_InhaleMyQuery(ByRef mq As BO.myQueryP31)
@@ -389,7 +389,7 @@ Public Class p31_subgrid
         Me.Factory.j03UserBL.SetUserParam("p31_subgrid-pagesize", Me.cbxPaging.SelectedValue)
         If Me.hidDrillDownField.Value = "" Then
             SetupP31Grid()
-            gridP31.Rebind(True)
+            grid2.Rebind(True)
         Else
             ReloadPage()
         End If
@@ -451,7 +451,7 @@ Public Class p31_subgrid
         Me.ExplicitDateFrom = DateSerial(1900, 1, 1)
         Me.ExplicitDateUntil = DateSerial(3000, 1, 1)
         RecalcVirtualRowCount()
-        gridP31.Rebind(False)
+        grid2.Rebind(False)
     End Sub
 
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
@@ -459,7 +459,7 @@ Public Class p31_subgrid
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
-        gridP31.Rebind(True)
+        grid2.Rebind(True)
     End Sub
     
 
@@ -484,7 +484,7 @@ Public Class p31_subgrid
         Factory.j03UserBL.SetUserParam("p31_subgrid-search", Trim(txtSearch.Text))
 
         If Me.hidDrillDownField.Value = "" Then
-            gridP31.Rebind(False)
+            grid2.Rebind(False)
         Else
             ReloadPage()
         End If
@@ -501,13 +501,13 @@ Public Class p31_subgrid
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
-        gridP31.Rebind(True)
+        grid2.Rebind(True)
     End Sub
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-j70id", Me.CurrentJ70ID.ToString)
         If Me.hidDrillDownField.Value = "" Then
-            gridP31.Rebind(True)
+            grid2.Rebind(True)
         Else
             ReloadPage()
         End If

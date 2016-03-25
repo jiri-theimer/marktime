@@ -3,22 +3,22 @@
     Public Event OnChanged(DateFrom As Date, DateUntil As Date)
     Public Property Width As String
         Get
-            Return Me.period1.Style.Item("width")
+            Return Me.per1.Style.Item("width")
         End Get
         Set(value As String)
-            Me.period1.Style.Item("width") = value
+            Me.per1.Style.Item("width") = value
         End Set
     End Property
     Public Property x21ID As BO.x21IdEnum
         Get
-            If Me.period1.SelectedValue = "" Then Return BO.x21IdEnum._NoQuery
+            If Me.per1.SelectedValue = "" Then Return BO.x21IdEnum._NoQuery
 
-            Dim a() As String = Me.period1.SelectedValue.Split("-")
+            Dim a() As String = Me.per1.SelectedValue.Split("-")
 
             Return CType(CInt(a(0)), BO.x21IdEnum)
         End Get
         Set(value As BO.x21IdEnum)
-            basUI.SelectDropdownlistValue(Me.period1, CInt(value).ToString)
+            basUI.SelectDropdownlistValue(Me.per1, CInt(value).ToString)
         End Set
     End Property
     Public ReadOnly Property CurrentX21 As BO.x21DatePeriod
@@ -36,17 +36,17 @@
     End Property
     Public ReadOnly Property CustomQueryIndex As Integer
         Get
-            Dim a() As String = Me.period1.SelectedValue.Split("-")
+            Dim a() As String = Me.per1.SelectedValue.Split("-")
 
             Return CInt(a(1))
         End Get
     End Property
     Public Property SelectedValue As String
         Get
-            Return period1.SelectedValue
+            Return per1.SelectedValue
         End Get
         Set(value As String)
-            basUI.SelectDropdownlistValue(Me.period1, value)
+            basUI.SelectDropdownlistValue(Me.per1, value)
             Me.clue_period.Attributes.Item("rel") = "clue_periodcombo.aspx?value=" & value & "&d1=" & Format(Me.DateFrom, "dd.MM.yyyy") & "&d2=" & Format(Me.DateUntil, "dd.MM.yyyy")
         End Set
     End Property
@@ -83,14 +83,14 @@
 
     End Sub
 
-    Private Sub period1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles period1.SelectedIndexChanged
+    Private Sub per1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles per1.SelectedIndexChanged
         RaiseEvent OnChanged(Me.DateFrom, Me.DateUntil)
 
     End Sub
 
     Public ReadOnly Property RowsCount As Integer
         Get
-            Return Me.period1.Items.Count
+            Return Me.per1.Items.Count
         End Get
     End Property
     Public Sub SetupData(factory As BL.Factory, strCustomQueries As String)
@@ -110,17 +110,17 @@
             Next
         End If
 
-        Me.period1.DataSource = lis
-        Me.period1.DataBind()
+        Me.per1.DataSource = lis
+        Me.per1.DataBind()
 
     End Sub
 
     Public Property BackColor As System.Drawing.Color
         Get
-            Return Me.period1.BackColor
+            Return Me.per1.BackColor
         End Get
         Set(value As System.Drawing.Color)
-            Me.period1.BackColor = value
+            Me.per1.BackColor = value
         End Set
     End Property
 
@@ -131,7 +131,7 @@
             'nutnost kompletně naplnit combo
             Dim factory As New BL.Factory(, Me.hidLogin.Value)
             SetupData(factory, factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
-            Me.period1.SelectedIndex = Me.period1.Items.Count - 1
+            Me.per1.SelectedIndex = Me.per1.Items.Count - 1
             RaiseEvent OnChanged(Me.DateFrom, Me.DateUntil)
             Me.hidExplicitValue.Value = ""
             Return

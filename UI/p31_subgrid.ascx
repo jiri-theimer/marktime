@@ -88,7 +88,7 @@
 
     </div>
 </div>
-<uc:datagrid ID="gridP31" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first" HeaderText="Projektový worksheet"></uc:datagrid>
+<uc:datagrid ID="grid2" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first" HeaderText="Projektový worksheet"></uc:datagrid>
 <asp:HiddenField ID="hidMasterDataPID" runat="server" />
 <asp:HiddenField ID="hidX29ID" runat="server" />
 <asp:HiddenField ID="hidNeedRefreshP31_subgrid" runat="server" />
@@ -165,7 +165,7 @@
 
     function GetAllSelectedPIDs() {
 
-        var masterTable = $find("<%=gridP31.radGridOrig.ClientID%>").get_masterTableView();
+        var masterTable = $find("<%=grid2.radGridOrig.ClientID%>").get_masterTableView();
         var sel = masterTable.get_selectedItems();
         var pids = "";
 
