@@ -141,6 +141,7 @@
             }
             if (val == "o22") {
                 url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id + "&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>";
+                
             }
             sw_master(url, "Images/calendar_32.png")
         }

@@ -56,7 +56,9 @@
                 .Rebind(False)
             End With
 
-            'RefreshStatistic()
+            cmdReport.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)
+
+
         End If
         gridP31.MasterDataPID = Me.CurrentJ02ID
 

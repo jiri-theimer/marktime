@@ -167,6 +167,24 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents rpP48 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''panChart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panChart As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chart1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chart1 As Global.Telerik.Web.UI.RadHtmlChart
+
+    '''<summary>
     '''imgWelcome control.
     '''</summary>
     '''<remarks>

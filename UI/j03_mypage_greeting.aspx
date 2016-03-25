@@ -9,7 +9,7 @@
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
     <script type="text/javascript">
         function sw_local(url, img, is_maximize) {
-            sw_master(url,img, is_maximize);
+            sw_master(url, img, is_maximize);
         }
 
         function personalpage() {
@@ -58,7 +58,7 @@
                 location.replace("p91_framework.aspx?pid=" + pid);
                 return;
             }
-            
+
             if (flag == "p28-save" || flag == "p28-create") {
                 location.replace("p28_framework.aspx?pid=" + pid);
                 return;
@@ -225,17 +225,34 @@
                                 <asp:Label ID="p48Date" runat="server" ForeColor="green"></asp:Label>
                                 <asp:Label ID="p48Hours" runat="server" CssClass="valboldblue"></asp:Label>
                                 <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                 <asp:HyperLink ID="convert1" runat="server" Text="Překlopit" ForeColor="green"></asp:HyperLink>
-                                
+                                <asp:HyperLink ID="convert1" runat="server" Text="Překlopit" ForeColor="green"></asp:HyperLink>
+
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
                 </div>
             </asp:Panel>
+            <asp:Panel ID="panChart" runat="server" Style="float: right;" Visible="false">
+                <telerik:RadHtmlChart runat="server" ID="chart1" Height="300px">
+                    <PlotArea>
+                        <Series>
+                            <telerik:ColumnSeries Name="Hodiny Fa" DataFieldY="HodinyFa" Stacked="true">
+                                <Appearance FillStyle-BackgroundColor="LightGreen"></Appearance>
+                            </telerik:ColumnSeries>
+                            <telerik:ColumnSeries Name="Hodiny NeFa" DataFieldY="HodinyNeFa">
+                                <Appearance FillStyle-BackgroundColor="#ff9999"></Appearance>
+                            </telerik:ColumnSeries>
+                        </Series>
+                        <XAxis DataLabelsField="Datum"></XAxis>
+                        <YAxis></YAxis>
+                    </PlotArea>
+                </telerik:RadHtmlChart>
+            </asp:Panel>
+            
 
             <div style="float: right;">
 
-                <asp:Image runat="server" ID="imgWelcome" ImageUrl="Images/welcome/start.jpg" />
+                <asp:Image runat="server" ID="imgWelcome" ImageUrl="Images/welcome/start.jpg" Visible="false" />
             </div>
 
 

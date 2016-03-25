@@ -90,6 +90,11 @@
             //var item = eventArgs.get_item();
             p31_entry();
         }
+
+        function report() {
+            
+            sw_local("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting_32.png", true);
+        }
     </script>
 
 </asp:Content>
@@ -118,7 +123,7 @@
                     <div class="title">
                         <asp:HyperLink ID="clue_timesheet" runat="server" CssClass="reczoom" Text="i" ToolTip="Statistika vykázaných hodin v měsíci"></asp:HyperLink>
                         <asp:Label ID="StatHeader" runat="server"></asp:Label>
-                        
+                        <asp:HyperLink ID="cmdReport" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()" style="float:right;"></asp:HyperLink>
                     </div>
                     <div class="content">
                         <div class="div6">

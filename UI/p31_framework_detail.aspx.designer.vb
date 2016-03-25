@@ -68,6 +68,15 @@ Partial Public Class p31_framework_detail
     Protected WithEvents StatHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cmdReport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdReport As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''Hours_All control.
     '''</summary>
     '''<remarks>

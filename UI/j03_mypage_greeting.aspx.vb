@@ -16,9 +16,10 @@
                 lblHeader.Text = cRec.j02FirstName & ", vítejte v systému"
             End If
 
-            ShowImage()
+
 
             With Master.Factory
+                .j03UserBL.InhaleUserParams("j03_mypage_greeting-last_step")
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p41_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
@@ -31,11 +32,24 @@
                 menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
             End With
 
+            With Master.Factory.j03UserBL
+                If .GetUserParam("j03_mypage_greeting-last_step", "0") = "0" Then
+                    ShowImage()
+                    .SetUserParam("j03_mypage_greeting-last_step", "1")
+                Else
+                    ShowChart()
+                    .SetUserParam("j03_mypage_greeting-last_step", "0")
+
+                End If
+            End With
+
             RefreshBoxes()
+
         End If
     End Sub
 
     Private Sub ShowImage()
+        imgWelcome.Visible = True
         If Request.Item("image") <> "" Then
             imgWelcome.ImageUrl = "Images/Welcome/" & Request.Item("image")
             Return
@@ -120,6 +134,8 @@
             Me.panP48.Visible = False
         End If
     End Sub
+
+    
 
     Private Sub rpP56_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP56.ItemDataBound
         Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
@@ -220,5 +236,22 @@
         With CType(e.Item.FindControl("convert1"), HyperLink)
             .NavigateUrl = "javascript: p48_convert(" & cRec.PID.ToString & ")"
         End With
+    End Sub
+
+    Private Sub ShowChart()
+        panChart.Visible = True
+        Dim s As String = "select sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end) as HodinyFa,sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end) as HodinyNeFa,convert(varchar(10),p31Date,104) as Datum FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID WHERE a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date ORDER BY a.p31Date"
+        
+        Dim pars As New List(Of BO.PluginDbParameter)
+        pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-5)))
+        pars.Add(New BO.PluginDbParameter("d2", Today.AddDays(1)))
+        pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
+        Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
+        With chart1
+            .DataSource = dt
+            .DataBind()
+        End With
+
+
     End Sub
 End Class
