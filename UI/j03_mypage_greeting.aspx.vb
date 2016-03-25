@@ -280,6 +280,7 @@
                 s = "select round(sum(p31Hours_Orig),2) as Hodiny,left(min(p34Name),20) as Podle FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY p32.p34ID ORDER BY min(p34Name)"
             Case "5"
                 s = "select round(sum(p31Hours_Orig),2) as Hodiny,left(min(isnull(p28name+' - ','')+p41Name),40) as Podle FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p41ID ORDER BY min(p28Name),min(p41Name)"
+
         End Select
         Dim d0 As Date = Now
         If Day(Now) <= 2 Then d0 = Now.AddDays(-10)
@@ -292,7 +293,7 @@
         pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
         If strFlag = "5" And dt.Rows.Count > 20 Then ShowChart2("") 'nad 20 projektů->graf podle klientů
-
+        If strFlag = "4" And dt.Rows.Count <= 1 Then ShowChart2("3") 'pokud pracuje v jednom sešitě, pak graf nemá smysl
 
         If dt.Rows.Count = 0 Then
             panChart2.Visible = False : Return

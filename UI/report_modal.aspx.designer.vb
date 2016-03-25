@@ -131,6 +131,15 @@ Partial Public Class report_modal
     Protected WithEvents cmdMergePDF_Preview As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''multiple_records control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents multiple_records As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''rv1 control.
     '''</summary>
     '''<remarks>
@@ -174,6 +183,15 @@ Partial Public Class report_modal
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidPIDS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPIDS As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefreshOnBehind control.

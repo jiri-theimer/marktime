@@ -91,6 +91,7 @@
             Dim cJ74 As BO.j74SavedGridColTemplate = .LoadSystemTemplate(BO.x29IdEnum.p28Contact, Master.Factory.SysUser.PID)
 
             basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, False)
+            grid1.AllowFilteringByColumn = False
         End With
 
         grid1.radGridOrig.ShowFooter = False
@@ -248,4 +249,5 @@
 
         Return True
     End Function
+
 End Class

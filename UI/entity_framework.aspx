@@ -152,6 +152,17 @@
 
         }
 
+        function report() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Není vybrán ani jeden záznam.");
+                return;
+            }
+            
+            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pids=" + pids, "Images/report_32.png", true);            
+
+        }
+
         function periodcombo_setting() {
 
             sw_master("periodcombo_setting.aspx");
@@ -206,7 +217,7 @@
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                         </asp:DropDownList>
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
-
+                        <button type="button" onclick="report()" title="Tisková sestava">Hromadný report</button>
                     </div>
                     <div class="content">
                         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">

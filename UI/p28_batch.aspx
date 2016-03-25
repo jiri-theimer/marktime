@@ -13,7 +13,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="content-box2">
-        <div class="title">Předmět hromadné operace</div>
+        <div class="title">
+            Předmět hromadné operace            
+        </div>
         <div class="content">
             <asp:RadioButtonList ID="opgTarget" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" RepeatColumns="3" CellPadding="5">
                 <asp:ListItem Text="Přesunout klienty do archivu" Value="bin"></asp:ListItem>

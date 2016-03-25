@@ -38,7 +38,9 @@
 
             self.document.getElementById("divReportViewer").style.height = hh + "px";
 
-
+            <%If Me.MultiPIDs<>"" then%>
+            self.document.getElementById("divReportViewer").style.display = "none";
+            <%end If%>
 
         })
 
@@ -63,13 +65,13 @@
         <tr>
 
             <td>
-                <asp:Label ID="lblX31ID" runat="server" Text="Vyberte sestavu:" CssClass="lbl"></asp:Label>
+                <asp:Label ID="lblX31ID" runat="server" Text="Sestava:" CssClass="lbl"></asp:Label>
             </td>
             <td>
-                <asp:DropDownList ID="x31ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="x31Name" Style="width: 400px;" BackColor="yellow"></asp:DropDownList>
+                <asp:DropDownList ID="x31ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="x31Name" Style="width: 350px;" BackColor="yellow"></asp:DropDownList>
             </td>
             <td>
-                <uc:periodcombo ID="period1" runat="server" Width="300px" Visible="false"></uc:periodcombo>
+                <uc:periodcombo ID="period1" runat="server" Width="250px" Visible="false"></uc:periodcombo>
             </td>
 
             <td>
@@ -123,15 +125,17 @@
             </div>
         </div>
     </div>
+    <asp:Label ID="multiple_records" runat="server"></asp:Label>
     <div id="divReportViewer" style="height: 300px;">
         <telerik:ReportViewer ID="rv1" runat="server" Width="100%" Height="100%" ShowParametersButton="true" ShowHistoryButtons="false">
-        </telerik:ReportViewer>
-
+        </telerik:ReportViewer>        
     </div>
+    
     <asp:HiddenField ID="hidX29ID" runat="server" Value="141" />
     <asp:HiddenField ID="hidPrefix" runat="server" Value="p41" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
+    <asp:HiddenField ID="hidPIDS" runat="server" />
     <asp:LinkButton ID="cmdRefreshOnBehind" runat="server" Text="refreshonbehind" Style="display: none;"></asp:LinkButton>
 
 

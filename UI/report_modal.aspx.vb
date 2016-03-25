@@ -12,6 +12,14 @@ Public Class report_modal
             basUI.SelectDropdownlistValue(Me.x31ID, value.ToString)
         End Set
     End Property
+    Public Property MultiPIDs As String
+        Get
+            Return Me.hidPIDS.Value
+        End Get
+        Set(value As String)
+            Me.hidPIDS.Value = value
+        End Set
+    End Property
 
     Private Sub InhaleLic()
         ceTe.DynamicPDF.Document.AddLicense("DPS50NPDFHMIDOmx0oPeZ+nF3z6VFeFQHDwPiglUKQ/xyRdT8Uvdb5Moivhseqj3bxlt//+w6FtkfFfsGjYwOAJOXNbss5x7huJQ")
@@ -42,10 +50,12 @@ Public Class report_modal
             If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified Then
                 Master.StopPage("prefix missing")
             End If
-
+            ViewState("guid") = BO.BAS.GetGUID
+            Me.MultiPIDs = Request.Item("pids")
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                If .DataPID = 0 And Request.Item("guid") = "" Then .StopPage("pid missing")
+                ''If .DataPID = 0 And Request.Item("guid") = "" Then .StopPage("pid missing")
+                If .DataPID = 0 And Me.MultiPIDs = "" And Request.Item("guid") = "" Then .StopPage("pid missing")
                 .AddToolbarButton("PDF merge", "merge", "0", "Images/merge.png", False)
                 .AddToolbarButton("PDF export", "pdf", "0", "Images/pdf.png")
                 .AddToolbarButton("Odeslat poštou jako PDF", "mail", "0", "Images/email.png")
@@ -62,7 +72,7 @@ Public Class report_modal
                 .Add("report_modal-x31id-merge3-" & Me.CurrentPrefix)
             End With
             With Master
-                .HeaderText = "Report | " & .Factory.GetRecordCaption(Me.CurrentX29ID, .DataPID)
+                If .DataPID <> 0 Then .HeaderText = "Report | " & .Factory.GetRecordCaption(Me.CurrentX29ID, .DataPID)
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
@@ -83,8 +93,49 @@ Public Class report_modal
 
 
             InhaleOtherInputParameters()
-            RenderReport()
+            If Me.MultiPIDs <> "" Then
+                period1.Visible = True
+                Master.HideShowToolbarButton("mail", False)
+
+                Select Case Me.CurrentX29ID
+                    Case BO.x29IdEnum.p28Contact
+                        Dim mq As New BO.myQueryP28
+                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        Me.multiple_records.Text = String.Join("<hr>", Master.Factory.p28ContactBL.GetList(mq).Select(Function(p) p.p28Name))
+                    Case BO.x29IdEnum.p41Project
+                        Dim mq As New BO.myQueryP41
+                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        Me.multiple_records.Text = String.Join("<hr>", Master.Factory.p41ProjectBL.GetList(mq).Select(Function(p) p.FullName))
+                    Case BO.x29IdEnum.p91Invoice
+                        Dim mq As New BO.myQueryP91
+                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        Me.multiple_records.Text = String.Join("<hr>", Master.Factory.p91InvoiceBL.GetList(mq).Select(Function(p) p.p91Code))
+                    Case BO.x29IdEnum.j02Person
+                        Dim mq As New BO.myQueryJ02
+                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        Me.multiple_records.Text = String.Join("<hr>", Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.FullNameDesc))
+                End Select
+            Else
+                RenderReport()
+                multiple_records.Visible = False
+            End If
+
         End If
+    End Sub
+
+    Private Sub MultiPidsGeneratePDF()
+        InhaleLic()
+        Dim doc1 As New ceTe.DynamicPDF.Merger.MergeDocument()
+        doc1.Author = "MARKTIME"
+
+        Dim a() As String = Split(Me.MultiPIDs, ",")
+        For Each strPID As String In a
+            Master.DataPID = CInt(strPID)
+            Dim strPdfFileName As String = GenerateOnePDF2Temp(Me.CurrentX31ID, ViewState("guid") & "_" & strPID & ".pdf")
+            doc1.Append(Master.Factory.x35GlobalParam.TempFolder & "\" & strPdfFileName)
+        Next
+        Master.DataPID = 0
+        doc1.DrawToWeb("MARKTIME_REPORT_MULTIPLE.pdf", True)
     End Sub
 
     Private Sub SetupX31Combo(strDefX31ID As String)
@@ -117,7 +168,7 @@ Public Class report_modal
 
 
     Private Sub RenderReport()
-        If Me.CurrentX31ID = 0 Then Return
+        If Me.CurrentX31ID = 0 Or Me.MultiPIDs <> "" Then Return
 
         Dim cRec As BO.x31Report = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
         If cRec Is Nothing Then
@@ -191,7 +242,12 @@ Public Class report_modal
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
-        RenderReport()
+        If Me.MultiPIDs <> "" Then
+            MultiPidsGeneratePDF()
+        Else
+            RenderReport()
+        End If
+
     End Sub
 
     Private Sub cmdRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdRefreshOnBehind.Click
@@ -209,6 +265,10 @@ Public Class report_modal
             Case "mail"
                 Server.Transfer("sendmail.aspx?x31id=" & Me.CurrentX31ID.ToString & "&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString)
             Case "pdf"
+                If Me.MultiPIDs <> "" Then
+                    MultiPidsGeneratePDF()
+                    Return
+                End If
                 InhaleLic()
                 Dim doc1 As New ceTe.DynamicPDF.Merger.MergeDocument()
                 With doc1
@@ -264,6 +324,54 @@ Public Class report_modal
         doc1.DrawToWeb("MARKTIME_REPORT.pdf", bolForceDownload)
 
     End Sub
+    Private Sub MultiPidsGenerateMerge(bolForceDownload As Boolean, bolSendByMail As Boolean)
+        Master.Factory.j03UserBL.SetUserParam("report_modal-x31id-merge1-" & Me.CurrentPrefix, Me.x31ID_Merge1.SelectedValue)
+        Master.Factory.j03UserBL.SetUserParam("report_modal-x31id-merge2-" & Me.CurrentPrefix, Me.x31ID_Merge2.SelectedValue)
+        Master.Factory.j03UserBL.SetUserParam("report_modal-x31id-merge3-" & Me.CurrentPrefix, Me.x31ID_Merge3.SelectedValue)
+
+        InhaleLic()
+        Dim doc1 As New ceTe.DynamicPDF.Merger.MergeDocument()
+        doc1.Author = "MARKTIME"
+
+        Dim a() As String = Split(Me.MultiPIDs, ",")
+        For Each strPID As String In a
+            Master.DataPID = CInt(strPID)
+            
+            Dim reps As New List(Of String)
+            Dim s As String = ""
+            If Me.CurrentX31ID > 0 Then
+                s = GenerateOnePDF2Temp(Me.CurrentX31ID)
+                If s <> "" Then reps.Add(s)
+            End If
+            If Me.x31ID_Merge1.SelectedValue <> "" Then
+                s = GenerateOnePDF2Temp(CInt(Me.x31ID_Merge1.SelectedValue))
+                If s <> "" Then reps.Add(s)
+            End If
+            If Me.x31ID_Merge2.SelectedValue <> "" Then
+                s = GenerateOnePDF2Temp(CInt(Me.x31ID_Merge2.SelectedValue))
+                If s <> "" Then reps.Add(s)
+            End If
+            If Me.x31ID_Merge3.SelectedValue <> "" Then
+                s = GenerateOnePDF2Temp(CInt(Me.x31ID_Merge3.SelectedValue))
+                If s <> "" Then reps.Add(s)
+            End If
+            
+
+            For Each strFile As String In reps
+                doc1.Append(Master.Factory.x35GlobalParam.TempFolder & "\" & strFile)
+            Next
+        Next
+
+        Master.DataPID = 0
+
+        ''If bolSendByMail Then
+        ''    Dim strFileName As String = BO.BAS.GetGUID & ".pdf"
+        ''    doc1.Draw(Master.Factory.x35GlobalParam.TempFolder & "\" & strFileName)
+        ''    Server.Transfer("sendmail.aspx?prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString & "&tempfile=" & strFileName, False)
+        ''End If
+        doc1.DrawToWeb("MARKTIME_REPORT_MULTIPLE.pdf", bolForceDownload)
+
+    End Sub
 
     Private Function GenerateOnePDF2Temp(intX31ID As Integer, Optional strOutputFileName As String = "") As String
         Dim cRec As BO.x31Report = Master.Factory.x31ReportBL.Load(intX31ID)
@@ -292,11 +400,21 @@ Public Class report_modal
     End Function
 
     Private Sub cmdMergePDF_Download_Click(sender As Object, e As EventArgs) Handles cmdMergePDF_Download.Click
-        GenerateMerge(True, False)
+        If Me.MultiPIDs <> "" Then
+            MultiPidsGenerateMerge(True, False)
+        Else
+            GenerateMerge(True, False)
+        End If
+
     End Sub
 
     Private Sub cmdMergePDF_Preview_Click(sender As Object, e As EventArgs) Handles cmdMergePDF_Preview.Click
-        GenerateMerge(False, False)
+        If Me.MultiPIDs <> "" Then
+            MultiPidsGenerateMerge(False, False)
+        Else
+            GenerateMerge(False, False)
+        End If
+
     End Sub
 
     Private Sub report_modal_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -308,6 +426,11 @@ Public Class report_modal
     End Sub
 
     Private Sub cmdMergePDF_SendMail_Click(sender As Object, e As EventArgs) Handles cmdMergePDF_SendMail.Click
-        GenerateMerge(True, True)
+        If Me.MultiPIDs <> "" Then
+            MultiPidsGenerateMerge(True, True)
+        Else
+            GenerateMerge(True, True)
+        End If
+
     End Sub
 End Class
