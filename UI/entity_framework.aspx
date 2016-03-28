@@ -217,7 +217,7 @@
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                         </asp:DropDownList>
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
-                        <button type="button" onclick="report()" title="Tisková sestava">Hromadný report</button>
+                        <button type="button" onclick="report()" title="Tisková sestava">Sestava (hromadně)</button>
                     </div>
                     <div class="content">
                         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">

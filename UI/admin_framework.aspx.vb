@@ -357,9 +357,9 @@ Public Class admin_framework
                 Case "rep_x31", "plugin_x31"
                     .AddColumn("FormatName", "Formát")
                     .AddColumn("x31Name", "Název sestavy")
-                    .AddColumn("x31Code", "Kód sestavy")
-                    .AddColumn("j25Name", "Kategorie")
-                    .AddColumn("x29Name", "Entita")
+                    .AddColumn("x31FileName", "Soubor šablony")
+                    '.AddColumn("j25Name", "Kategorie")
+                    .AddColumn("x29Name", "Kontext")
                     .AddColumn("x31Ordinary", "#")
                 Case "x38"
                     .AddColumn("x38Name", "Název")

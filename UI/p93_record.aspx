@@ -54,7 +54,7 @@
 
             </td>
             <td>
-                <asp:TextBox ID="p93Contact" runat="server" Style="width: 400px; height: 40px;" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="p93Contact" runat="server" Style="width: 400px; height: 50px;" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -125,40 +125,28 @@
         </div>
     </div>
 
-
-
-    <table cellpadding="6" cellspacing="2">
-        <tr>
-            <td style="width: 180px;">
-                <asp:Label ID="Label11" runat="server" CssClass="lbl" Text="Volné pole #1:"></asp:Label></td>
-            <td>
-                <asp:TextBox ID="p93FreeText01" runat="server" Style="width: 400px;"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:Label ID="Label12" runat="server" CssClass="lbl" Text="Volné pole #2:"></asp:Label></td>
-            <td>
-                <asp:TextBox ID="p93FreeText02" runat="server" Style="width: 400px;"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:Label ID="Label13" runat="server" CssClass="lbl" Text="Volné pole #3:"></asp:Label></td>
-            <td>
-                <asp:TextBox ID="p93FreeText03" runat="server" Style="width: 400px;"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:Label ID="Label14" runat="server" CssClass="lbl" Text="Volné pole #4:"></asp:Label></td>
-            <td>
-                <asp:TextBox ID="p93FreeText04" runat="server" Style="width: 400px;"></asp:TextBox>
-            </td>
-        </tr>
-    </table>
-
-
+    <div>
+        <asp:Label ID="Label11" runat="server" CssClass="lbl" Text="Volné pole #1:"></asp:Label>
+    </div>
+    <div>
+    <asp:TextBox ID="p93FreeText01" runat="server" TextMode="MultiLine" Style="width: 100%;height:60px;"></asp:TextBox>
+    </div>
+    <div>
+        <asp:Label ID="Label12" runat="server" CssClass="lbl" Text="Volné pole #2:"></asp:Label>
+    </div>
+    <div>
+    <asp:TextBox ID="p93FreeText02" runat="server" TextMode="MultiLine" Style="width: 100%;height:50px;"></asp:TextBox>
+    </div>
+    <div>
+        <asp:Label ID="Label13" runat="server" CssClass="lbl" Text="Volné pole #3:"></asp:Label>
+    </div>
+    <asp:TextBox ID="p93FreeText03" runat="server" Style="width: 100%;"></asp:TextBox>
+    <div>
+        <asp:Label ID="Label14" runat="server" CssClass="lbl" Text="Volné pole #4:"></asp:Label>
+    </div>
+    <div>
+    <asp:TextBox ID="p93FreeText04" runat="server" Style="width: 100%;"></asp:TextBox>
+    </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

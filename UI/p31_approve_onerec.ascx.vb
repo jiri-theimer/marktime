@@ -138,9 +138,10 @@
 
         With cRec
             SetValue(.p31Value_Orig, False)
+            VatRate_Approved.Value = .p31VatRate_Orig
             Select Case .p33ID
-                Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
-                    VatRate_Approved.Value = .p31VatRate_Orig
+                'Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
+                '    VatRate_Approved.Value = .p31VatRate_Orig
                 Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                     Rate_Billing_Approved.Value = .p31Rate_Billing_Orig
                     Rate_Internal_Approved.Value = .p31Rate_Internal_Orig

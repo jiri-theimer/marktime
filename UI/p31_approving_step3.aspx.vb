@@ -197,6 +197,7 @@ Public Class p31_approving_step3
                             Select Case .p33ID
                                 Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                                     .Rate_Billing_Approved = cRec.p31Rate_Billing_Orig
+                                    .VatRate_Approved = cRec.p31VatRate_Orig
                                     If cRec.p31Rate_Billing_Orig = 0 Then
                                         .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
                                     End If
@@ -560,6 +561,7 @@ Public Class p31_approving_step3
                     Case BO.p33IdENUM.Kusovnik, BO.p33IdENUM.Cas
                         .Rate_Billing_Approved = cRec.p31Rate_Billing_Approved
                         .Rate_Internal_Approved = cRec.p31Rate_Internal_Approved
+                        .VatRate_Approved = cRec.p31VatRate_Approved
                     Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
                         .VatRate_Approved = cRec.p31VatRate_Approved
                 End Select

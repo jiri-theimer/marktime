@@ -13,6 +13,7 @@ Public Class x31Report
     Public Property x31Name As String
     Public Property x31Description As String
     Public Property x31Ordinary As Integer
+    Public Property x31FileName As String
     
     Public Property x31IsPeriodRequired As Boolean
     Public Property x31IsUsableAsPersonalPage As Boolean
@@ -73,7 +74,7 @@ Public Class x31Report
                 Case x31FormatFlagENUM.ASPX : Return "PLUGIN"
                 Case x31FormatFlagENUM.DOCX : Return "DOCX"
                 Case x31FormatFlagENUM.Telerik : Return "REPORT"
-
+                Case x31FormatFlagENUM.XLSX : Return "XLSX"
                 Case Else : Return ""
             End Select
             

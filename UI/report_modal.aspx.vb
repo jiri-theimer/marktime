@@ -94,25 +94,27 @@ Public Class report_modal
 
             InhaleOtherInputParameters()
             If Me.MultiPIDs <> "" Then
+                Dim pids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                If pids.Count > 50 Then Master.StopPage("Generovat hromadně sestavu lze maximálně pro 50 záznamů.")
                 period1.Visible = True
                 Master.HideShowToolbarButton("mail", False)
 
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
                         Dim mq As New BO.myQueryP28
-                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        mq.PIDs = pids
                         Me.multiple_records.Text = String.Join("<hr>", Master.Factory.p28ContactBL.GetList(mq).Select(Function(p) p.p28Name))
                     Case BO.x29IdEnum.p41Project
                         Dim mq As New BO.myQueryP41
-                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        mq.PIDs = pids
                         Me.multiple_records.Text = String.Join("<hr>", Master.Factory.p41ProjectBL.GetList(mq).Select(Function(p) p.FullName))
                     Case BO.x29IdEnum.p91Invoice
                         Dim mq As New BO.myQueryP91
-                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        mq.PIDs = pids
                         Me.multiple_records.Text = String.Join("<hr>", Master.Factory.p91InvoiceBL.GetList(mq).Select(Function(p) p.p91Code))
                     Case BO.x29IdEnum.j02Person
                         Dim mq As New BO.myQueryJ02
-                        mq.PIDs = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
+                        mq.PIDs = pids
                         Me.multiple_records.Text = String.Join("<hr>", Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.FullNameDesc))
                 End Select
             Else

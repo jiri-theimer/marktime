@@ -292,7 +292,7 @@
         pars.Add(New BO.PluginDbParameter("d2", d2))
         pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
-        If strFlag = "5" And dt.Rows.Count > 20 Then ShowChart2("") 'nad 20 projektů->graf podle klientů
+        If strFlag = "5" And dt.Rows.Count > 17 Then ShowChart2("") 'nad 17 projektů->graf podle klientů
         If strFlag = "4" And dt.Rows.Count <= 1 Then ShowChart2("3") 'pokud pracuje v jednom sešitě, pak graf nemá smysl
 
         If dt.Rows.Count = 0 Then
