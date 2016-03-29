@@ -47,8 +47,8 @@
                 
                 pars.Add("b06IsRunOneInstanceOnly", .b06IsRunOneInstanceOnly, DbType.Boolean)
 
-                pars.Add("b06validfrom", cRec.ValidFrom, DbType.DateTime2)
-                pars.Add("b06validuntil", cRec.ValidUntil, DbType.DateTime2)
+                pars.Add("b06validfrom", cRec.ValidFrom, DbType.DateTime)
+                pars.Add("b06validuntil", cRec.ValidUntil, DbType.DateTime)
                 
             End With
 

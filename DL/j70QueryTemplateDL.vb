@@ -27,8 +27,8 @@
             pars.Add("j70IsSystem", .j70IsSystem, DbType.Boolean)
             pars.Add("j70BinFlag", .j70BinFlag, DbType.Int32)
 
-            pars.Add("j70validfrom", cRec.ValidFrom, DbType.DateTime2)
-            pars.Add("j70validuntil", cRec.ValidUntil, DbType.DateTime2)
+            pars.Add("j70validfrom", cRec.ValidFrom, DbType.DateTime)
+            pars.Add("j70validuntil", cRec.ValidUntil, DbType.DateTime)
 
         End With
 

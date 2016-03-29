@@ -154,8 +154,8 @@ Public Class j03UserDL
                 .Add("j03IsDomainAccount", cRec.j03IsDomainAccount, DbType.Boolean)
                 .Add("j03IsSystemAccount", cRec.j03IsSystemAccount, DbType.Boolean)
                 .Add("j03MembershipUserId", cRec.j03MembershipUserId, DbType.String)
-                .Add("j03validfrom", cRec.ValidFrom, DbType.DateTime2)
-                .Add("j03validuntil", cRec.ValidUntil, DbType.DateTime2)
+                .Add("j03validfrom", cRec.ValidFrom, DbType.DateTime)
+                .Add("j03validuntil", cRec.ValidUntil, DbType.DateTime)
                 .Add("j03Aspx_PersonalPage", cRec.j03Aspx_PersonalPage, DbType.String)
                 .Add("j03Aspx_PersonalPage_Mobile", cRec.j03Aspx_PersonalPage_Mobile, DbType.String)
             End With

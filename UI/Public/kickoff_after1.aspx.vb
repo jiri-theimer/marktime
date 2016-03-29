@@ -12,6 +12,13 @@
 
             Me.j27id.DataSource = _Factory.ftBL.GetList_J27()
             Me.j27id.DataBind()
+
+            If Request.Item("akce") = "filtry" Then
+                Filtry()
+            End If
+            If Request.Item("akce") = "svatky" Then
+                Svatky()
+            End If
         End If
     End Sub
 

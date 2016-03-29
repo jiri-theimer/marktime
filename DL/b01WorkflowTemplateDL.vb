@@ -20,8 +20,8 @@
         With cRec
             pars.Add("b01Name", .b01Name, DbType.String, , , True, "Název šablony")
             pars.Add("b01Code", .b01code, DbType.String)
-            pars.Add("b01validfrom", .ValidFrom, DbType.DateTime2)
-            pars.Add("b01validuntil", .ValidUntil, DbType.DateTime2)
+            pars.Add("b01validfrom", .ValidFrom, DbType.DateTime)
+            pars.Add("b01validuntil", .ValidUntil, DbType.DateTime)
             pars.Add("x29ID", BO.BAS.IsNullDBKey(.x29ID), DbType.Int32)
         End With
 

@@ -68,8 +68,8 @@ Public Class o27AttachmentDL
             pars.Add("strFileExtension", strFileExtension, DbType.String, , , True)
             pars.Add("o27ContentType", .o27ContentType, DbType.String, , , True)
 
-            pars.Add("o27validfrom", cRec.ValidFrom, DbType.DateTime2)
-            pars.Add("o27validuntil", cRec.ValidUntil, DbType.DateTime2)
+            pars.Add("o27validfrom", cRec.ValidFrom, DbType.DateTime)
+            pars.Add("o27validuntil", cRec.ValidUntil, DbType.DateTime)
         End With
 
 
@@ -213,8 +213,8 @@ Public Class o27AttachmentDL
             pars.Add("o27FileExtension", strOrigExtension, DbType.String, , , True)
             pars.Add("o27ContentType", .o27ContentType, DbType.String, , , True)
 
-            pars.Add("o27validfrom", cRec.ValidFrom, DbType.DateTime2)
-            pars.Add("o27validuntil", cRec.ValidUntil, DbType.DateTime2)
+            pars.Add("o27validfrom", cRec.ValidFrom, DbType.DateTime)
+            pars.Add("o27validuntil", cRec.ValidUntil, DbType.DateTime)
         End With
 
 

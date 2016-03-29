@@ -26,8 +26,8 @@
                 pars.Add("b02IsDurationSLA", .b02IsDurationSLA, DbType.Boolean)
                 pars.Add("b02TimeOut_Total", .b02TimeOut_Total, DbType.Int32)
                 pars.Add("b02TimeOut_SLA", .b02TimeOut_SLA, DbType.Int32)
-                pars.Add("b02validfrom", .ValidFrom, DbType.DateTime2)
-                pars.Add("b02validuntil", .ValidUntil, DbType.DateTime2)
+                pars.Add("b02validfrom", .ValidFrom, DbType.DateTime)
+                pars.Add("b02validuntil", .ValidUntil, DbType.DateTime)
             End With
 
             If _cDB.SaveRecord("b02WorkflowStatus", pars, bolINSERT, strW, True, _curUser.j03Login) Then

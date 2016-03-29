@@ -20,8 +20,8 @@
         With cRec
             pars.Add("x18Name", .x18Name, DbType.String, , , True, "Název")
             pars.Add("x18Ordinary", .x18Ordinary, DbType.Int32)
-            pars.Add("x18validfrom", .ValidFrom, DbType.DateTime2)
-            pars.Add("x18validuntil", .ValidUntil, DbType.DateTime2)
+            pars.Add("x18validfrom", .ValidFrom, DbType.DateTime)
+            pars.Add("x18validuntil", .ValidUntil, DbType.DateTime)
             pars.Add("x29ID", BO.BAS.IsNullDBKey(.x29ID), DbType.Int32)
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
         End With

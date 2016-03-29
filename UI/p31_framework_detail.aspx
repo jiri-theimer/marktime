@@ -93,7 +93,8 @@
 
         function report() {
             
-            sw_local("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting_32.png", true);
+            sw_local("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting_32.png", true);
+
         }
     </script>
 

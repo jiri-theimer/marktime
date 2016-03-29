@@ -21,8 +21,8 @@
             pars.Add("b65Name", .b65Name, DbType.String, , , True, "Název šablony")
             pars.Add("b65MessageSubject", .b65MessageSubject, DbType.String, , , True, "Předmět zprávy")
             pars.Add("b65MessageBody", .b65MessageBody, DbType.String, , , True, "Tělo zprávy")
-            pars.Add("b65validfrom", .ValidFrom, DbType.DateTime2)
-            pars.Add("b65validuntil", .ValidUntil, DbType.DateTime2)
+            pars.Add("b65validfrom", .ValidFrom, DbType.DateTime)
+            pars.Add("b65validuntil", .ValidUntil, DbType.DateTime)
         End With
 
 

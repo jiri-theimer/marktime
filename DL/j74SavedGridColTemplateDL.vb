@@ -49,8 +49,8 @@
             pars.Add("j74IsVirtualScrolling", .j74IsVirtualScrolling, DbType.Boolean)
             pars.Add("j74DrillDownField1", .j74DrillDownField1, DbType.String)
 
-            pars.Add("j74validfrom", cRec.ValidFrom, DbType.DateTime2)
-            pars.Add("j74validuntil", cRec.ValidUntil, DbType.DateTime2)
+            pars.Add("j74validfrom", cRec.ValidFrom, DbType.DateTime)
+            pars.Add("j74validuntil", cRec.ValidUntil, DbType.DateTime)
 
         End With
 

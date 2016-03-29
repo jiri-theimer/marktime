@@ -29,8 +29,8 @@
             pars.Add("x50ExternalURL", .x50ExternalURL, DbType.String, , , True, "Externí URL")
             pars.Add("x50Html", .x50Html, DbType.String)
             pars.Add("x50PlainText", .x50PlainText, DbType.String)
-            pars.Add("x50validfrom", cRec.ValidFrom, DbType.DateTime2)
-            pars.Add("x50validuntil", cRec.ValidUntil, DbType.DateTime2)
+            pars.Add("x50validfrom", cRec.ValidFrom, DbType.DateTime)
+            pars.Add("x50validuntil", cRec.ValidUntil, DbType.DateTime)
         End With
 
         If _cDB.SaveRecord("x50Help", pars, bolINSERT, strW, True, _curUser.j03Login) Then
