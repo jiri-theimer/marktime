@@ -213,13 +213,17 @@
                 <div class="content-box2">
                     <div class="title">
                         Datový přehled
-                        <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
-                            <asp:ListItem Text="" Value=""></asp:ListItem>
-                        </asp:DropDownList>
+                        
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
                         <button type="button" onclick="report()" title="Tisková sestava">Sestava (hromadně)</button>
+                        
                     </div>
                     <div class="content">
+                        <div>
+                            <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
+                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
                         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                         </asp:DropDownList>
                         <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
