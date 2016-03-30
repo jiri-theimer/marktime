@@ -253,7 +253,6 @@
     <Content Include="entityrole_assign_preview.ascx" />
     <Content Include="entity_framework_detail_missing.aspx" />
     <Content Include="entity_modal_approving.aspx" />
-    <Content Include="entity_modal_scheduler.aspx" />
     <Content Include="entity_timeline.aspx" />
     <Content Include="entity_worksheet_summary.ascx" />
     <Content Include="fileupload.ascx" />
@@ -1047,13 +1046,6 @@
     </Compile>
     <Compile Include="entity_modal_approving.aspx.vb">
       <DependentUpon>entity_modal_approving.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_modal_scheduler.aspx.designer.vb">
-      <DependentUpon>entity_modal_scheduler.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_modal_scheduler.aspx.vb">
-      <DependentUpon>entity_modal_scheduler.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_timeline.aspx.designer.vb">

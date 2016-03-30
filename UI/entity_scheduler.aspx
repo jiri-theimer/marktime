@@ -353,7 +353,7 @@
                 </div>
                 <div class="div6">
                     <img src="Images/task.png" />
-                    <asp:CheckBox ID="chkSetting_P56" runat="server" Checked="false" Text="Zobrazovat úkoly s termínem" AutoPostBack="true" CssClass="chk" />
+                    <asp:CheckBox ID="chkSetting_P56" runat="server" Checked="true" Text="Zobrazovat úkoly s termínem" AutoPostBack="true" CssClass="chk" />
                 </div>
 
                 <div class="div6">
@@ -401,6 +401,16 @@
                         <asp:ListItem Text="16" Value="16"></asp:ListItem>
                         <asp:ListItem Text="18" Value="18"></asp:ListItem>
                         <asp:ListItem Text="20" Value="20"></asp:ListItem>
+
+                    </asp:DropDownList>
+                </div>
+                <div class="div6">
+                    <span>Počet dní v [Agenda]:</span>
+                    <asp:DropDownList ID="entity_scheduler_agendadays" runat="server" AutoPostBack="true">
+                        <asp:ListItem Text="20" Value="20"></asp:ListItem>
+                        <asp:ListItem Text="50" Value="50"></asp:ListItem>
+                        <asp:ListItem Text="100" Value="100"></asp:ListItem>
+                        
 
                     </asp:DropDownList>
                 </div>

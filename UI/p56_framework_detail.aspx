@@ -81,7 +81,7 @@
         }
 
         function hardrefresh(pid, flag) {
-            if (flag=="p56-save"){                
+            if (flag=="p56-save" || flag=="workflow-dialog"){                
                 parent.window.location.replace("p56_framework.aspx?pid="+pid);
                 return;
             }

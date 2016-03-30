@@ -5152,7 +5152,8 @@ WHERE p91ID is null AND p71id=1 and isnull(p72ID_AfterApprove,0)=0 and p31id in 
 update p31worksheet set p31Minutes_Invoiced=p31Minutes_Approved_Billing,p31Hours_Invoiced=p31Hours_Approved_Billing,p31HHMM_Invoiced=p31HHMM_Approved_Billing
 ,p31Value_Invoiced=p31Value_Approved_Billing
 ,p31Amount_WithoutVat_Invoiced=p31Amount_WithoutVat_Approved,p31Amount_WithVat_Invoiced=p31Amount_WithVat_Approved
-,p31Amount_Vat_Invoiced=p31Amount_Vat_Approved,p31VatRate_Invoiced=case when @x15id is not null then @p91fixedvatrate else p31VatRate_Approved end
+,p31Amount_Vat_Invoiced=p31Amount_Vat_Approved
+,p31VatRate_Invoiced=case when @x15id is not null then @p91fixedvatrate else p31VatRate_Approved end
 ,p31Rate_Billing_Invoiced=p31Rate_Billing_Approved
 where p91ID=@p91id AND p31id in (select p85datapid from p85TempBox where p85guid=@guid and p85Prefix='p31')
 

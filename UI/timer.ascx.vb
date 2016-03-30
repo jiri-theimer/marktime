@@ -30,8 +30,8 @@
 
                 CurrentDuration = CInt(.p85FreeNumber01)
                 CurrentDurationSeconds = CurrentDuration / 100
-                DateLastStart = .p85FreeDate02
-                DateLastDuration = .p85FreeDate03
+                If Not .p85FreeDate02 Is Nothing Then DateLastStart = .p85FreeDate02
+                If Not .p85FreeDate03 Is Nothing Then DateLastDuration = .p85FreeDate03
                 p31Text = .p85Message
                 p41ID = .p85OtherKey1
                 Project = .p85FreeText01

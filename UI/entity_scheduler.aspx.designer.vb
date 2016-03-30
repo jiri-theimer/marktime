@@ -167,6 +167,15 @@ Partial Public Class entity_scheduler
     Protected WithEvents entity_scheduler_multidays As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''entity_scheduler_agendadays control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents entity_scheduler_agendadays As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cmdExportICalendar control.
     '''</summary>
     '''<remarks>

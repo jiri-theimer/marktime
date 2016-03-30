@@ -88,6 +88,7 @@ Public Class entity_scheduler
                     .Add("entity_scheduler-p48")
                     .Add("entity_scheduler-p56")
                     .Add("entity_scheduler-newrec_prefix")
+                    .Add("entity_scheduler-agendadays")
                 End With
 
                 With .Factory.j03UserBL
@@ -102,11 +103,12 @@ Public Class entity_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_daystarttime, .GetUserParam("entity_scheduler-daystarttime", "8"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_dayendtime, .GetUserParam("entity_scheduler-dayendtime", "20"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_multidays, .GetUserParam("entity_scheduler-multidays", "2"))
-                    basUI.SelectDropdownlistValue(Me.cbxNewRecType, .GetUserParam("entity_scheduler-newrec_prefix", "p48"))
+                    basUI.SelectDropdownlistValue(Me.cbxNewRecType, .GetUserParam("entity_scheduler-newrec_prefix", "o22"))
+                    basUI.SelectDropdownlistValue(Me.entity_scheduler_agendadays, .GetUserParam("entity_scheduler-agendadays", "20"))
 
                     Me.chkSetting_P48.Checked = .GetUserParam("entity_scheduler-p48", "1")
                     Me.chkSetting_O22.Checked = .GetUserParam("entity_scheduler-o22", "1")
-                    Me.chkSetting_P56.Checked = .GetUserParam("entity_scheduler-p56", "0")
+                    Me.chkSetting_P56.Checked = .GetUserParam("entity_scheduler-p56", "1")
 
                 End With
 
@@ -209,6 +211,7 @@ Public Class entity_scheduler
             .MultiDayView.DayEndTime = .DayView.DayEndTime
             .MultiDayView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_multidays.SelectedValue)
             .Localization.HeaderMultiDay = "Multi-den (" & .MultiDayView.NumberOfDays.ToString & ")"
+            .AgendaView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_agendadays.SelectedValue)
             ''If .SelectedView = SchedulerViewType.MonthView Then
             ''    .RowHeight = Unit.Parse("40px")
             ''Else
@@ -337,7 +340,40 @@ Public Class entity_scheduler
                 scheduler1.InsertAppointment(c)
             Next
         End If
-        
+        If chkSetting_P56.Checked Then  'termíny úkolů
+            Dim mq As New BO.myQueryP56
+            Select Case Me.CurrentMasterX29ID
+                Case BO.x29IdEnum.p28Contact
+                    mq.p28ID = Me.CurrentMasterPID
+                Case BO.x29IdEnum.p41Project
+                    mq.p41ID = Me.CurrentMasterPID
+                Case BO.x29IdEnum.j02Person
+                    mq.j02ID = Me.CurrentMasterPID
+            End Select
+            mq.p56PlanUntil_D1 = d1 : mq.p56PlanUntil_D2 = d2
+            Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq)
+            For Each cRec In lis
+                Dim c As New Appointment()
+                With cRec
+                    c.ID = .PID.ToString & ",'p56'"
+                    c.Description = "clue_p56_record.aspx?pid=" & .PID.ToString
+                    c.Subject = .p56Name
+                    c.Start = .p56PlanUntil
+                    c.End = .p56PlanUntil
+
+                    c.BackColor = Drawing.Color.FromName("#3CB371")
+
+                    Select Case Me.CurrentView
+                        Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView, SchedulerViewType.WeekView
+                            If Len(.p56Name) > 0 Then c.Subject = BO.BAS.OM3(.p56Name, 15)
+
+
+                    End Select
+                End With
+
+                scheduler1.InsertAppointment(c)
+            Next
+        End If
     End Sub
 
     Private Sub RefreshRecord()
@@ -443,5 +479,11 @@ Public Class entity_scheduler
     Private Sub cbxNewRecType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxNewRecType.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-newrec_prefix", Me.cbxNewRecType.SelectedValue)
         RefreshData(False)
+    End Sub
+
+    Private Sub entity_scheduler_agendadays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_agendadays.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-agendadays", Me.entity_scheduler_agendadays.SelectedValue)
+        RefreshData(False)
+
     End Sub
 End Class
