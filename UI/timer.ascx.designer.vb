@@ -57,4 +57,22 @@ Partial Public Class timer
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''hidIsPanelView control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsPanelView As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsIframe control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsIframe As Global.System.Web.UI.WebControls.HiddenField
 End Class

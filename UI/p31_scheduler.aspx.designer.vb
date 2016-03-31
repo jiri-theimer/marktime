@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class p31_scheduler
 
     '''<summary>
+    '''tabs1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''core control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents core As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''j02ID control.
     '''</summary>
     '''<remarks>
@@ -21,51 +48,6 @@ Partial Public Class p31_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''p31_scheduler_daystarttime control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31_scheduler_daystarttime As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''p31_scheduler_dayendtime control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31_scheduler_dayendtime As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''p31_scheduler_multidays control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31_scheduler_multidays As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''p31_scheduler_tasks control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31_scheduler_tasks As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdExportICalendar control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdExportICalendar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''rp1 control.
@@ -120,6 +102,78 @@ Partial Public Class p31_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents tasks As Global.Telerik.Web.UI.RadTreeView
+
+    '''<summary>
+    '''timer control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents timer As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''timer1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents timer1 As Global.UI.timer
+
+    '''<summary>
+    '''setting control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents setting As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''p31_scheduler_daystarttime control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31_scheduler_daystarttime As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''p31_scheduler_dayendtime control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31_scheduler_dayendtime As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''p31_scheduler_multidays control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31_scheduler_multidays As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''p31_scheduler_tasks control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31_scheduler_tasks As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdExportICalendar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdExportICalendar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''scheduler1 control.

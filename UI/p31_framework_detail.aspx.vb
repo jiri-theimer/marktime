@@ -21,11 +21,13 @@
             With lisPars
                 .Add("p31_framework_detail-calendarcolumns")
                 .Add("p31_framework_detail-j02id")
+                .Add("p31_framework-timer")
             End With
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
                 cal1.CalendarColumns = BO.BAS.IsNullInt(.GetUserParam("p31_framework_detail-calendarcolumns", "1"))
                 SetupComboPersons(.GetUserParam("p31_framework_detail-j02id"))
+                Me.chkTimer.Checked = BO.BAS.BG(.GetUserParam("p31_framework-timer", "1"))
             End With
 
             
@@ -177,4 +179,12 @@
     'Private Sub j02ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j02ID.SelectedIndexChanged
     '    Master.Factory.j03UserBL.SetUserParam("p31_framework_detail-j02id", Me.j02ID.SelectedValue)
     'End Sub
+
+    ''Private Sub chkTimer_CheckedChanged(sender As Object, e As EventArgs) Handles chkTimer.CheckedChanged
+    ''    Master.Factory.j03UserBL.SetUserParam("p31_framework-timer", BO.BAS.GB(Me.chkTimer.Checked))
+    ''End Sub
+
+    Private Sub cal1_ViewChanged() Handles cal1.ViewChanged
+
+    End Sub
 End Class

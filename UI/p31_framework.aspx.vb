@@ -54,6 +54,9 @@ Public Class p31_framework
             With Master
                 .PageTitle = "Zapisování úkonů"
                 .SiteMenuValue = "p31_framework"
+                If Request.Item("showtimer") <> "" Then
+                    .Factory.j03UserBL.SetUserParam("p31_framework-timer", Request.Item("showtimer"))
+                End If
                 If Request.Item("tab") = "" Then
                     .Factory.j03UserBL.InhaleUserParams("p31_framework-tabindex")
                     tabs1.SelectedIndex = CInt(.Factory.j03UserBL.GetUserParam("p31_framework-tabindex", "0"))
@@ -72,6 +75,7 @@ Public Class p31_framework
                     .Add("p31_framework-groupby-" & Me.GridPrefix)
                     .Add("p31_framework-sort-" & Me.GridPrefix)
                     .Add("p31_framework-groups-autoexpanded")
+                    .Add("p31_framework-timer")
                     If tabs1.SelectedIndex <> 1 Then    'v top10 se nefiltruje
                         .Add("p31_framework-filter_setting_p41")
                         .Add("p31_framework-filter_sql_p41")
@@ -97,7 +101,13 @@ Public Class p31_framework
                     If .GetUserParam("p31_framework-sort-" & Me.GridPrefix) <> "" Then
                         grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam("p31_framework-sort-" & Me.GridPrefix))
                     End If
-                    
+                    If .GetUserParam("p31_framework-timer", "1") = "1" Then
+                        rightPane.ContentUrl = "p31_framework_timer.aspx"
+                    Else
+                        rightPane.ContentUrl = ""
+                        rightPane.Visible = False
+                        RadSplitter1.Items.Remove(rightPane)
+                    End If
                 End With
             End With
 

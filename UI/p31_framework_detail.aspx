@@ -11,12 +11,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-
+           
 
 
 
         });
 
+        
         function p31_entry() {
             var p41id = <%=me.p41ID.ClientID%>_get_value();
             var b = false;
@@ -96,23 +97,31 @@
             sw_local("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting_32.png", true);
 
         }
+
+        function timer_change(ctl) {
+            if (ctl.checked==true)
+                window.open("p31_framework.aspx?showtimer=1", "_top");
+            else
+                window.open("p31_framework.aspx?showtimer=0", "_top");
+        }
+
     </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <table cellpadding="10">
-        <tr>
-            <td>
-                <asp:Image ID="img1" runat="server" ImageUrl="Images/worksheet_32.png" />
-            </td>
-            <td>
-                <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Worksheet kalendář pro zapisování úkonů"></asp:Label>
-            </td>
-            <td>
-                <asp:DropDownList ID="j02ID" runat="server" onChange="j02id_onchange()"></asp:DropDownList>
-            </td>
-        </tr>
-    </table>
+    <div style="float:left;">
+        <asp:Image ID="img1" runat="server" ImageUrl="Images/worksheet_32.png" />
+    </div>
+    <div style="float:left;padding-left:5px;">
+        <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Worksheet kalendář pro zapisování úkonů"></asp:Label>
+    </div>     
+    <div style="float:left;padding-left:5px;padding-top:5px;">
+        <asp:DropDownList ID="j02ID" runat="server" onChange="j02id_onchange()"></asp:DropDownList>
+    </div>
+    <div style="float:left;padding-left:5px;padding-top:5px;">
+        <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat ČASOVAČ" AutoPostBack="false" Checked="true" onClick="timer_change(this)" />
+    </div>
+    <div style="clear:both;"></div>
 
     <table cellpadding="10">
         <tr>

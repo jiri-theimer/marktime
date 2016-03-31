@@ -7,6 +7,7 @@ DropDownWidth="400"
 EnableTextSelection="true" 
 MarkFirstMatch="true" 
 EnableLoadOnDemand="true"
+ToolTip="Projekt"
 Width="250px">
 <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
 

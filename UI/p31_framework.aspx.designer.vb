@@ -239,6 +239,15 @@ Partial Public Class p31_framework
     Protected WithEvents contentPane As Global.Telerik.Web.UI.RadPane
 
     '''<summary>
+    '''rightPane control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rightPane As Global.Telerik.Web.UI.RadPane
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

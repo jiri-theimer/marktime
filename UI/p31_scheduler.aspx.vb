@@ -30,6 +30,7 @@ Public Class p31_scheduler
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        timer1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
                 .SiteMenuValue = "p31_scheduler"
@@ -331,7 +332,9 @@ Public Class p31_scheduler
     Private Sub cmdHardRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdHardRefreshOnBehind.Click
 
         RefreshData(False)
-
+        If timer1.RowsCount > 0 Then
+            timer1.RefreshList()
+        End If
     End Sub
 
     
@@ -357,6 +360,13 @@ Public Class p31_scheduler
             Me.j02ID.BackColor = Drawing.Color.Red
         Else
             Me.j02ID.BackColor = Nothing
+        End If
+        Me.tabs1.Tabs(0).Text = Me.j02ID.SelectedItem.Text
+        If Not Page.IsPostBack Then
+            If timer1.RowsCount > 0 Then
+                tabs1.SelectedIndex = 1
+                RadMultiPage1.SelectedIndex = 1
+            End If
         End If
     End Sub
 

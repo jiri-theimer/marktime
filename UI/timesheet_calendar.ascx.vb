@@ -13,7 +13,7 @@ Public Class timesheet_calendar
    
     Public ReadOnly Property CurrentPocetMesicu As Integer
         Get
-            Return BO.BAS.IsNullInt(Me.CalCols.SelectedValue) * BO.BAS.IsNullInt(Me.CalRows.SelectedValue)
+            Return BO.BAS.IsNullInt(Me.CalCols.SelectedValue)
         End Get
     End Property
     Public Property CalendarColumns As Integer
@@ -34,26 +34,44 @@ Public Class timesheet_calendar
 
         End Set
     End Property
+    Public Property CurrentD1 As Date
+        Get
+            If Me.hidD1.Value = "" Then SetupDefaultVisibleDates()
+            Return BO.BAS.ConvertString2Date(hidD1.Value)
+        End Get
+        Set(value As Date)
+            hidD1.Value = Format(value, "dd.MM.yyyy")
+        End Set
+    End Property
+    Public Property CurrentD2 As Date
+        Get
+            If Me.hidD2.Value = "" Then SetupDefaultVisibleDates()
+            Return BO.BAS.ConvertString2Date(hidD2.Value)
+        End Get
+        Set(value As Date)
+            hidD2.Value = Format(value, "dd.MM.yyyy")
+        End Set
+    End Property
+
     Public ReadOnly Property VisibleStartDate As Date
         Get
-            If BO.BAS.IsNullDBDate(ViewState("d1")) Is Nothing Then SetupDefaultVisibleDates()
-            Return ViewState("d1")
+            Return Me.CurrentD1
         End Get
     End Property
     Public ReadOnly Property VisibleEndDate As Date
         Get
-            If BO.BAS.IsNullDBDate(ViewState("d2")) Is Nothing Then SetupDefaultVisibleDates()
-            Return ViewState("d2")
+            Return Me.CurrentD2
         End Get
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         With Me.cal1
             .MultiViewColumns = BO.BAS.IsNullInt(Me.CalCols.SelectedValue)
-            .MultiViewRows = BO.BAS.IsNullInt(Me.CalRows.SelectedValue)
+            .MultiViewRows = 1
         End With
 
         If Not Page.IsPostBack Then
+           
             If BO.BAS.IsNullDBDate(cal1.SelectedDate) Is Nothing Then
                 Me.SelectedDate = Today
             End If
@@ -67,8 +85,8 @@ Public Class timesheet_calendar
 
     Private Sub SetupDefaultVisibleDates()
 
-        ViewState("d1") = cal1.SelectedDate.AddDays(-30)
-        ViewState("d2") = cal1.SelectedDate.AddDays(Me.CurrentPocetMesicu * 30)
+        Me.CurrentD1 = cal1.SelectedDate.AddDays(-30)
+        Me.CurrentD2 = cal1.SelectedDate.AddDays(Me.CurrentPocetMesicu * 30)
     End Sub
 
     'Public Sub AddHolidayDays(dates As List(Of BO.c26Holiday))
@@ -114,25 +132,32 @@ Public Class timesheet_calendar
 
     Private Sub InhaleHours()
         RaiseEvent NeedDataSource(_lisHours, _lisHolidays)
-        '_lisHours = factory.p31WorksheetBL.GetList_CalendarHours(.SysUser.j02ID, ViewState("d1"), ViewState("d2"))
     End Sub
 
     Private Sub cal1_DefaultViewChanged(sender As Object, e As Calendar.DefaultViewChangedEventArgs) Handles cal1.DefaultViewChanged
         If cal1.SelectedDates.Count > 1 Then
             cal1.SelectedDate = cal1.SelectedDates(cal1.SelectedDates.Count - 1).Date
         End If
-
-        ViewState("d1") = cal1.CalendarView.ViewStartDate
-        ViewState("d2") = cal1.CalendarView.ViewEndDate
-
+        With cal1.CalendarView
+            Me.CurrentD1 = .ViewStartDate
+            Me.CurrentD2 = .ViewEndDate
+            If cal1.SelectedDate >= .ViewStartDate And cal1.SelectedDate <= .ViewEndDate Then
+                'ok, aktuální datum je vidět
+            Else
+                Dim d As Date = .ViewStartDate.AddDays(15)  'změnit aktuální datum
+                cal1.SelectedDate = DateSerial(Year(d), Month(d), 1)
+                Handle_SelectedDateChanged(cal1.SelectedDate)
+            End If
+        End With
+        
         RaiseEvent ViewChanged()
     End Sub
 
     Private Sub RefreshMatrix()
         cal1.SelectedDate = Today
 
-        ViewState("d1") = Today.AddDays(-30)
-        ViewState("d2") = Today.AddDays(Me.CurrentPocetMesicu * 31)
+        Me.CurrentD1 = Today.AddDays(-30)
+        Me.CurrentD2 = Today.AddDays(Me.CurrentPocetMesicu * 31)
     End Sub
 
     Private Sub CalCols_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CalCols.SelectedIndexChanged
@@ -140,21 +165,19 @@ Public Class timesheet_calendar
         RaiseEvent CalendarColumnsChanged(Me.CalendarColumns)
     End Sub
 
-    Private Sub CalRows_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CalRows.SelectedIndexChanged
-        RefreshMatrix()
-    End Sub
+    
 
     Private Sub cal1_SelectionChanged(sender As Object, e As Calendar.SelectedDatesEventArgs) Handles cal1.SelectionChanged
         If e.SelectedDates.Count = 0 Then Return
         Dim d As Date = e.SelectedDates(0).Date
         Handle_SelectedDateChanged(d)
-
+    
     End Sub
 
     Private Sub cmdToday_Click(sender As Object, e As EventArgs) Handles cmdToday.Click
         Me.SelectedDate = Today
-        ViewState("d1") = cal1.CalendarView.ViewStartDate
-        ViewState("d2") = cal1.CalendarView.ViewEndDate
+        Me.CurrentD1 = cal1.CalendarView.ViewStartDate
+        Me.CurrentD2 = cal1.CalendarView.ViewEndDate
         If Month(Me.SelectedDate) <> Month(cal1.CalendarView.ViewStartDate) Then
             RaiseEvent ViewChanged()
         End If

@@ -33,7 +33,7 @@
         $(init);
     });
     <%End If%>
-    <%next%>
+    <%Next%>
 
 
     // Common functions
@@ -127,85 +127,78 @@
     }
 
     function p31_save(p85id) {
+        <%If Me.IsIFrame = False Then%>
         ///volá se z p31_subgrid
         sw_master("p31_record.aspx?p85id="+p85id,"Images/worksheet_32.png",false);
         return(false);
-
+        <%end if%>
+        <%If Me.IsIFrame = True Then%>
+        ///volá se z p31_framework.aspx
+        window.parent.sw_local("p31_record.aspx?p85id="+p85id,"Images/worksheet_32.png",false);
+        return(false);
+        <%end if%>
     }
 </script>
 
-<div class="div6">
-    <table style="width:100%;">
-        <tr>
-            <td style="width:100px;">
-                 <asp:Button ID="cmdAddRow" runat="server" CssClass="cmd" Text="Přidat" />
-            </td>
-            <td style="width:100px;">
-                <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit" />
-            </td>
-            <td></td>
-            <td style="text-align:right;">
-                <asp:DropDownList ID="cbxTimerMode" runat="server" onchange="ChangeTimerMode()">
-                    <asp:ListItem Text="Povolit spuštění více časovačů souběžně" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="V jednom okamžiku pouze jeden spuštěný časovač" Value="2"></asp:ListItem>
-                   
-                </asp:DropDownList>
-                
-            </td>
-        </tr>
-    </table>
-   
-    
-</div>
+<div>
+    <div style="float: left; width: 100px;">
+        <asp:Button ID="cmdAddRow" runat="server" CssClass="cmd" Text="Přidat" />
+    </div>
+    <div style="float: left; width: 100px;">
+        <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit" />
+    </div>
+    <div style="float: right;" id="setting">
+        <asp:DropDownList ID="cbxTimerMode" runat="server" onchange="ChangeTimerMode()">
+            <asp:ListItem Text="Povolit spuštění více časovačů souběžně" Value="1"></asp:ListItem>
+            <asp:ListItem Text="V jednom okamžiku pouze jeden spuštěný časovač" Value="2"></asp:ListItem>
 
-<asp:Panel ID="panContainer" runat="server">
-<table cellpadding="4">
-    <tr>
-        <th style="width:23px;"></th>
-        <th></th>
-        <th>Projekt</th>
-        
-       
-        <th>Popis</th>
-        <th></th>
-    </tr>
+        </asp:DropDownList>
+    </div>
+</div>
+<div style="clear: both;"></div>
+<asp:Panel ID="panContainer" runat="server" style="margin-top:10px;">
+
     <asp:Repeater ID="rp1" runat="server">
         <ItemTemplate>
-            <tr style="vertical-align:top;">
-                <td>
-                    <asp:ImageButton ID="cmdFinalSave" runat="server" ImageUrl="Images/save.png" CssClass="button-link" />
-                </td>
-                <td>
-                    <asp:Label ID="RowIndex" runat="server"></asp:Label>
-                </td>
-                <td>
-                    <uc:project ID="p41ID" runat="server" Width="400px" AutoPostBack="false" Flag="p31_entry" />
-                    <div style="padding-top:4px;">
-                        
-                        <asp:label ID="timer" runat="server" style="font-weight:bold;" Text="00:00:00" Width="70px"></asp:label>
-                        
-                        <asp:ImageButton ID="cmdStart" runat="server" ImageUrl="Images/timer_start_24.png" ToolTip="Start" CommandName="start" />
-                        <asp:ImageButton ID="cmdPause" runat="server" ImageUrl="Images/timer_pause_24.png" ToolTip="Pozastavit" CommandName="pause" />
-                        <span style="margin-left:20px;"></span>
-                        <asp:ImageButton ID="cmdReset" runat="server" ImageUrl="Images/timer_reset_24.png" ToolTip="Zastavit a vynulovat"  CommandName="reset"/>
-                        
-                    </div>
-                </td>
-           
+            <asp:panel ID="panSave" runat="server" style="float:left;width:45px;">
+                <asp:Label ID="RowIndex" runat="server" style="padding-right:2px;"></asp:Label>
+                <asp:ImageButton ID="cmdFinalSave" runat="server" ImageUrl="Images/save.png" CssClass="button-link" ToolTip="Uložit úkon a vyjmout ho z časovače" />
+               
                 
-                <td>
-                    <asp:TextBox ID="p31Text" runat="server" TextMode="MultiLine" style="width:450px;height:60px;"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" CommandName="delete" />
-                    <asp:HiddenField ID="p85id" runat="server" />                   
-                    <asp:TextBox ID="isrunning" runat="server" value="false" style="display:none;"></asp:TextBox>
-                    <asp:TextBox ID="CurrentDuration" runat="server" value="0" style="display:none;"></asp:TextBox>
-                    <asp:TextBox ID="DateLastDuration" runat="server" Width="400px" style="display:none;"></asp:TextBox>
-                </td>
-            </tr>
+            </asp:panel>
+            
+            <div style="float: left;">
+                <uc:project ID="p41ID" runat="server" Width="400px" AutoPostBack="false" Flag="p31_entry" />
+                
+               
+                <div style="padding-top: 4px;">
+
+                    <asp:Label ID="timer" runat="server" Style="font-weight: bold;" Text="00:00:00" Width="70px"></asp:Label>
+
+                    <asp:ImageButton ID="cmdStart" runat="server" ImageUrl="Images/timer_start_24.png" ToolTip="Start" CommandName="start" />
+                    <asp:ImageButton ID="cmdPause" runat="server" ImageUrl="Images/timer_pause_24.png" ToolTip="Pozastavit" CommandName="pause" />
+                    <span style="margin-left: 20px;"></span>
+                    <asp:ImageButton ID="cmdReset" runat="server" ImageUrl="Images/timer_reset_24.png" ToolTip="Zastavit a vynulovat" CommandName="reset" />
+
+                    <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit řádek" CssClass="button-link" CommandName="delete" style="float:right;" />
+                </div>
+            </div>
+
+
+            <div style="float: left;">
+                <asp:TextBox ID="p31Text" runat="server" TextMode="MultiLine" Style="width: 450px; height: 60px;" ToolTip="Podrobný popis úkonu"></asp:TextBox>
+
+                <asp:HiddenField ID="p85id" runat="server" />
+                <asp:TextBox ID="isrunning" runat="server" value="false" Style="display: none;"></asp:TextBox>
+                <asp:TextBox ID="CurrentDuration" runat="server" value="0" Style="display: none;"></asp:TextBox>
+                <asp:TextBox ID="DateLastDuration" runat="server" Width="400px" Style="display: none;"></asp:TextBox>
+            </div>
+           
+            <div style="clear: both;"></div>
         </ItemTemplate>
     </asp:Repeater>
-</table>
-   
+
+
 </asp:Panel>
+<asp:HiddenField ID="hidIsPanelView" runat="server" Value="0" />
+<asp:HiddenField ID="hidIsIframe" runat="server" Value="0" />

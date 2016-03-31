@@ -180,6 +180,7 @@
     <Content Include="b02_record.aspx" />
     <Content Include="b06_record.aspx" />
     <Content Include="b65_record.aspx" />
+    <Content Include="blank.aspx" />
     <Content Include="clue_o24_record.aspx" />
     <Content Include="clue_p48_record.aspx" />
     <Content Include="entity_framework.aspx" />
@@ -198,6 +199,7 @@
     <Content Include="o41_record.aspx" />
     <Content Include="o42_record.aspx" />
     <Content Include="p28_framework.aspx" />
+    <Content Include="p31_framework_timer.aspx" />
     <Content Include="p31_scheduler.aspx" />
     <Content Include="p41_framework.aspx" />
     <Content Include="p45_project.aspx" />
@@ -504,6 +506,13 @@
       <DependentUpon>b65_record.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="blank.aspx.designer.vb">
+      <DependentUpon>blank.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="blank.aspx.vb">
+      <DependentUpon>blank.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="clue_o24_record.aspx.designer.vb">
       <DependentUpon>clue_o24_record.aspx</DependentUpon>
     </Compile>
@@ -637,6 +646,13 @@
     </Compile>
     <Compile Include="p28_framework.aspx.vb">
       <DependentUpon>p28_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_framework_timer.aspx.designer.vb">
+      <DependentUpon>p31_framework_timer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_framework_timer.aspx.vb">
+      <DependentUpon>p31_framework_timer.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31_scheduler.aspx.designer.vb">

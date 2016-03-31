@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class timesheet_calendar
 
     '''<summary>
-    '''CalRows control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CalRows As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''CalCols control.
     '''</summary>
     '''<remarks>
@@ -48,4 +39,22 @@ Partial Public Class timesheet_calendar
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cal1 As Global.Telerik.Web.UI.RadCalendar
+
+    '''<summary>
+    '''hidD1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidD1 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidD2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidD2 As Global.System.Web.UI.WebControls.HiddenField
 End Class

@@ -3,6 +3,7 @@
     Public Property Factory As BL.Factory
     Private Property _curRowIndex As Integer
 
+
     Public Class TimerRecord
         Public Property PID As Integer
         Public Property DateInit As Date
@@ -44,6 +45,24 @@
         Get
             Return rp1.Items.Count
         End Get
+    End Property
+    Public Property IsPanelView As Boolean
+        Get
+            Return BO.BAS.BG(Me.hidIsPanelView.Value)
+        End Get
+        Set(value As Boolean)
+            Me.hidIsPanelView.Value = BO.BAS.GB(value)
+            cbxTimerMode.Visible = Not value
+        End Set
+    End Property
+    Public Property IsIFrame As Boolean
+        Get
+            Return BO.BAS.BG(Me.hidIsIframe.Value)
+        End Get
+        Set(value As Boolean)
+            Me.hidIsIframe.Value = BO.BAS.GB(value)
+
+        End Set
     End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -90,7 +109,7 @@
         Return "timer-" & Factory.SysUser.j02ID.ToString
     End Function
 
-    Private Sub RefreshList()
+    Public Sub RefreshList()
         _curRowIndex = 0
         Dim lis As IEnumerable(Of BO.p85TempBox) = Factory.p85TempBoxBL.GetList(GetGUID())
         rp1.DataSource = lis
@@ -146,6 +165,27 @@
         End Select
        
         RefreshList()
+    End Sub
+
+    Private Sub rp1_ItemCreated(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemCreated
+        With CType(e.Item.FindControl("p41ID"), UI.project)
+            If Me.IsPanelView Then
+                .Width = "290px"
+                .radComboBoxOrig.DropDownWidth = Unit.Parse("285px")
+            End If
+        End With
+        With CType(e.Item.FindControl("panSave"), Panel)
+            If Me.IsPanelView Then
+                .Style.Item("width") = "342px"
+                .Style.Item("background-color") = "#F1F1F1"
+                .Style.Item("padding") = "2px"
+            End If
+        End With
+        With CType(e.Item.FindControl("p31Text"), TextBox)
+            If Me.IsPanelView Then
+                .Style.Item("width") = "335px"
+            End If
+        End With
     End Sub
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound

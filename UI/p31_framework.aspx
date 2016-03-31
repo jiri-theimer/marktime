@@ -120,6 +120,11 @@
                 var splitter = $find("<%= RadSplitter1.ClientID %>");
                 var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
                 pane.set_contentUrl("p31_framework_detail.aspx?pid=" + pid);
+
+                <%If RadSplitter1.GetPanes.count=3 then%>
+                pane = splitter.getPaneById("<%=rightPane.ClientID%>");
+                pane.set_contentUrl("p31_framework_timer.aspx");               
+                <%End If%>
                 return;
             }
             location.replace("p31_framework.aspx");
@@ -220,6 +225,9 @@
         </telerik:RadSplitBar>
         <telerik:RadPane ID="contentPane" runat="server" ContentUrl="p31_framework_detail.aspx">
             Detail projektu
+        </telerik:RadPane>
+        <telerik:RadPane ID="rightPane" runat="server" Width="350px" ContentUrl="blank.aspx">
+            Časovač
         </telerik:RadPane>
     </telerik:RadSplitter>
 
