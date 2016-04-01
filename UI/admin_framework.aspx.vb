@@ -72,14 +72,12 @@ Public Class admin_framework
             menu1.FindItemByValue("clone").Visible = True
             menu1.FindItemByValue("new").Visible = True
             Select Case ViewState("prefix")
-                Case "x40"
-                    menu1.FindItemByValue("clone").Visible = False
-                    menu1.FindItemByValue("new").Visible = False
+               
                 Case Else
                     menu1.Visible = True
             End Select
             Select Case ViewState("prefix")
-                Case "x40", "x28", "x25", "j05", "c26", "p36"
+                Case "x28", "x25", "j05", "c26", "p36"
                     query_validity.Visible = False
                 Case Else
                     query_validity.Visible = True
@@ -181,7 +179,7 @@ Public Class admin_framework
 
             .AddItem("Odeslaná pošta", "smtp", , , "Images/email.png")
             .AddItem("Notifikační pravidla", "x46", NU("x46"), "smtp")
-            .AddItem("Odeslané zprávy/fronta", "x40", NU("x40"), "smtp")
+            .AddItem("Odeslané zprávy/fronta", "x40", "x40_framework.aspx", "smtp")
 
             .AddItem("IMAP robot", "imap", , , "Images/imap.png")
             .AddItem("IMAP účty", "o41", NU("o41"), "imap")
@@ -484,16 +482,16 @@ Public Class admin_framework
                     .AddColumn("j11Name", "Příjemce (tým osob)")
                     .AddColumn("x67Name", "Příjemce (role)")
                     .AddColumn("x29NameSingle", "Referenční entita")
-                Case "x40"
-                    .AddSystemColumn(20, "UserInsert")
-                    .AddColumn("DateUpdate", "Čas", BO.cfENUM.DateTime)
-                    .AddColumn("x40State", "Stav")
-                    .AddColumn("x40SenderName", "Odesílatel")
-                    '.AddColumn("x40SenderAddress", "Adresa")
-                    .AddColumn("x40Recipient", "Příjemce")
-                    .AddColumn("x40Subject", "Předmět zprávy")
-                    .AddColumn("x40WhenProceeded", "Zpracováno", BO.cfENUM.DateTime)
-                    .AddColumn("x40ErrorMessage", "Chyba")
+                    ''Case "x40"
+                    ''    .AddSystemColumn(20, "UserInsert")
+                    ''    .AddColumn("DateUpdate", "Čas", BO.cfENUM.DateTime)
+                    ''    .AddColumn("x40State", "Stav")
+                    ''    .AddColumn("x40SenderName", "Odesílatel")
+                    ''    '.AddColumn("x40SenderAddress", "Adresa")
+                    ''    .AddColumn("x40Recipient", "Příjemce")
+                    ''    .AddColumn("x40Subject", "Předmět zprávy")
+                    ''    .AddColumn("x40WhenProceeded", "Zpracováno", BO.cfENUM.DateTime)
+                    ''    .AddColumn("x40ErrorMessage", "Chyba")
                 
                 Case "p53"
                     .AddColumn("x15Name", "Hladina")
@@ -507,7 +505,7 @@ Public Class admin_framework
                     .AddColumn("x67Ordinary", "#", BO.cfENUM.Numeric0)
             End Select
             Select Case ViewState("prefix")
-                Case "x40", "p35"
+                Case "p35"
                 Case Else
                     .AddColumn("DateUpdate", "Posl.aktualizace", BO.cfENUM.DateTime)
                     .AddColumn("UserUpdate", "Aktualizoval")
@@ -540,8 +538,8 @@ Public Class admin_framework
                     Case BO.o21FlagEnum.MemoOnly
                         dataItem("systemcolumn").CssClass = "o21_3"
                 End Select
-            Case "x40"
-                basUIMT.x40_grid_Handle_ItemDataBound(sender, e)
+                ''Case "x40"
+                ''    basUIMT.x40_grid_Handle_ItemDataBound(sender, e)
             Case "x55"
                 Dim cRec As BO.x55HtmlSnippet = CType(e.Item.DataItem, BO.x55HtmlSnippet)
                 Select Case cRec.x55TypeFlag
@@ -755,9 +753,12 @@ Public Class admin_framework
                 Case "x46"
                     Dim lis As IEnumerable(Of BO.x46EventNotification) = .x46EventNotificationBL.GetList(mqDef)
                     grid1.DataSource = lis
-                Case "x40"
-                    Dim lis As IEnumerable(Of BO.x40MailQueue) = .x40MailQueueBL.GetList(BO.x29IdEnum._NotSpecified, 0, BO.x40StateENUM._NotSpecified)
-                    grid1.DataSource = lis
+                    ''Case "x40"
+                    ''    Dim mq As New BO.myQueryX40
+                    ''    mq.SearchExpression = grid1.GetFilterExpression()
+                    ''    mq.TopRecordsOnly = 500
+                    ''    Dim lis As IEnumerable(Of BO.x40MailQueue) = .x40MailQueueBL.GetList(mq)
+                    ''    grid1.DataSource = lis
                 Case "plugin_x31"
                     Dim lis As IEnumerable(Of BO.x31Report) = .x31ReportBL.GetList(mqDef).Where(Function(p) p.x31FormatFlag = BO.x31FormatFlagENUM.ASPX)
                     grid1.DataSource = lis

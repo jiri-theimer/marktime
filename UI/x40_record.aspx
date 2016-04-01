@@ -90,7 +90,7 @@
         <uc:fileupload_list ID="uploadlist1" runat="server" />
     </div>
     <div class="div6">
-        <asp:Label ID="x40ErrorMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>
+        <asp:Label ID="x40ErrorMessage" runat="server" Font-Bold="true" ForeColor="Red" Font-Italic="true"></asp:Label>
     </div>
 
 </asp:Content>

@@ -57,10 +57,8 @@
                 Me.j02Office.Text = .j02Office
                 Me.j02EmailSignature.Text = .j02EmailSignature
             End With
-            SetupGrid()
         Else
             Me.panJ02Update.Visible = False
-            grid1.Visible = False
         End If
     End Sub
 
@@ -104,30 +102,30 @@
         hidHardRefreshPID.Value = ""
     End Sub
 
-    Private Sub SetupGrid()
-        With grid1
-            .PageSize = 20
-            .radGridOrig.ShowFooter = False
+    ''Private Sub SetupGrid()
+    ''    With grid1
+    ''        .PageSize = 20
+    ''        .radGridOrig.ShowFooter = False
 
-            .AddSystemColumn(20, "UserInsert")
-            .AddColumn("DateUpdate", "Čas", BO.cfENUM.DateTime)
-            .AddColumn("x40State", "Stav")
-            .AddColumn("x40SenderName", "Odesílatel")
-            .AddColumn("x40Recipient", "Příjemce")
-            .AddColumn("x40Subject", "Předmět zprávy")
-            .AddColumn("x40WhenProceeded", "Zpracováno", BO.cfENUM.DateTime)
-            .AddColumn("x40ErrorMessage", "Chyba")
-        End With
-    End Sub
+    ''        .AddSystemColumn(20, "UserInsert")
+    ''        .AddColumn("DateUpdate", "Čas", BO.cfENUM.DateTime)
+    ''        .AddColumn("x40State", "Stav")
+    ''        .AddColumn("x40SenderName", "Odesílatel")
+    ''        .AddColumn("x40Recipient", "Příjemce")
+    ''        .AddColumn("x40Subject", "Předmět zprávy")
+    ''        .AddColumn("x40WhenProceeded", "Zpracováno", BO.cfENUM.DateTime)
+    ''        .AddColumn("x40ErrorMessage", "Chyba")
+    ''    End With
+    ''End Sub
 
-    Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
-        basUIMT.x40_grid_Handle_ItemDataBound(sender, e)
-    End Sub
+    ''Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
+    ''    basUIMT.x40_grid_Handle_ItemDataBound(sender, e)
+    ''End Sub
 
-    Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        Dim lis As IEnumerable(Of BO.x40MailQueue) = Master.Factory.x40MailQueueBL.GetList_AllHisMessages(Master.Factory.SysUser.PID, Master.Factory.SysUser.j02ID)
-        grid1.DataSource = lis
-    End Sub
+    ''Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+    ''    Dim lis As IEnumerable(Of BO.x40MailQueue) = Master.Factory.x40MailQueueBL.GetList_AllHisMessages(Master.Factory.SysUser.PID, Master.Factory.SysUser.j02ID)
+    ''    grid1.DataSource = lis
+    ''End Sub
 
   
     Private Sub cmdSaveSearch_Click(sender As Object, e As EventArgs) Handles cmdSaveSearch.Click

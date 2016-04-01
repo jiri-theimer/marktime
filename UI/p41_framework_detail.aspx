@@ -330,10 +330,10 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" ImageUrl="Images/switch_24.png" style="padding-top:8px;" ToolTip="Skrýt/zobrazit horní polovinu detailu projektu (boxy)">
+                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu projektu (boxy)">
                     
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Záznam projektu" ImageUrl="Images/arrow_down_menu.png" Value="record" style="margin-top:6px;">
+                <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" style="margin-top:6px;">
                     <ContentTemplate>
                         <div style="padding: 10px; width: 450px;">
 
@@ -369,7 +369,7 @@
                 </telerik:RadMenuItem>
 
 
-                <telerik:RadMenuItem Text="Nový worksheet" ImageUrl="Images/worksheet.png" Value="p31">
+                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31">
                     <ContentTemplate>
                         <div style="float: left; padding: 10px;">
                             <asp:Label ID="lblP31Message" CssClass="failureNotification" runat="server"></asp:Label>
@@ -387,7 +387,7 @@
 
                 </telerik:RadMenuItem>
 
-                <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
                     <ContentTemplate>
                         <div style="float: left; min-width: 200px;">
 

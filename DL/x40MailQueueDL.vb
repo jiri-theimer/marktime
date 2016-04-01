@@ -93,40 +93,62 @@
         End If
     End Function
 
-    Public Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
-        Dim s As String = GetSQLPart1(intTopRecs)
-        Dim pars As New DbParameters, strW As String = ""
-        strW += " AND (a.x40RecordPID=@j02id AND a.x29ID=102) OR a.j03ID_Sys=@j03id"
-        pars.Add("j02id", intJ02ID_Person, DbType.Int32)
-        pars.Add("j03id", intJ03ID_Sender, DbType.Int32)
+    ''Public Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
+    ''    Dim s As String = GetSQLPart1(intTopRecs)
+    ''    Dim pars As New DbParameters, strW As String = ""
+    ''    strW += " AND (a.x40RecordPID=@j02id AND a.x29ID=102) OR a.j03ID_Sys=@j03id"
+    ''    pars.Add("j02id", intJ02ID_Person, DbType.Int32)
+    ''    pars.Add("j03id", intJ03ID_Sender, DbType.Int32)
 
-        s += " WHERE " & bas.TrimWHERE(strW)
-        s += " ORDER BY a.x40ID DESC"
+    ''    s += " WHERE " & bas.TrimWHERE(strW)
+    ''    s += " ORDER BY a.x40ID DESC"
 
-        Return _cDB.GetList(Of BO.x40MailQueue)(s, pars)
-    End Function
-    Public Function GetList(x29id As BO.x29IdEnum, intRecordPID As Integer, x40State As BO.x40StateENUM, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
-        Dim s As String = GetSQLPart1(intTopRecs)
-
-        Dim pars As New DbParameters, strW As String = ""
-        If intRecordPID <> 0 Then
-            strW += " AND a.x40RecordPID=@pid"
-            pars.Add("pid", intRecordPID, DbType.Int32)
-        End If
-        If x29id <> 0 Then
-            strW += " AND a.x29ID=@x29id"
-            pars.Add("x29id", x29id, DbType.Int32)
-        End If
-        If x40State > BO.x40StateENUM._NotSpecified Then
-            strW += " AND a.x40State=@x40state"
-            pars.Add("x40state", x40State, DbType.Int32)
-        End If
+    ''    Return _cDB.GetList(Of BO.x40MailQueue)(s, pars)
+    ''End Function
+    Public Function GetList(myQuery As BO.myQueryX40) As IEnumerable(Of BO.x40MailQueue)
+        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly)
+        Dim strW As String = bas.ParseWhereMultiPIDs("a.x40ID", myQuery), pars As New DbParameters
+        
+        With myQuery
+            If .SearchExpression <> "" Then
+                strW += " AND (a.x40Recipient like '%'+@expr+'%' OR a.x40Subject LIKE '%'+@expr+'%')"
+                pars.Add("expr", .SearchExpression, DbType.String)
+            End If
+            If .RecordPID <> 0 Then
+                strW += " AND a.x40RecordPID=@pid"
+                pars.Add("pid", .RecordPID, DbType.Int32)
+            End If
+            If Not .x29ID Is Nothing Then
+                strW += " AND a.x29ID=@x29id"
+                pars.Add("x29id", .x29ID, DbType.Int32)
+            End If
+            If Not .x40State Is Nothing Then
+                strW += " AND a.x40State=@x40state"
+                pars.Add("x40state", .x40State, DbType.Int32)
+            End If
+            If .j03ID_MyRecords <> 0 Then
+                strW += " AND (a.x40RecordPID IN (SELECT j02ID FROM j03User WHERE j03ID=@j03id) AND a.x29ID=102) OR a.j03ID_Sys=@j03id"
+                pars.Add("j03id", .j03ID_MyRecords, DbType.Int32)
+            End If
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
+            End If
+        End With
+        
 
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
         s += " ORDER BY a.x40ID DESC"
 
         Return _cDB.GetList(Of BO.x40MailQueue)(s, pars)
 
+    End Function
+    Private Function ParseFilterExpression(strFilter As String) As String
+        Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
+    End Function
+    Private Function ParseSortExpression(strSort As String) As String
+        strSort = strSort.Replace("UserInsert", "x40UserInsert").Replace("UserUpdate", "x40UserUpdate").Replace("DateInsert", "x40DateInsert").Replace("DateUpdate", "x40DateUpdate")
+
+        Return bas.NormalizeOrderByClause(strSort)
     End Function
 
     Public Function GetList_Recipients(intPID As Integer) As IEnumerable(Of BO.x43MailQueue_Recipient)

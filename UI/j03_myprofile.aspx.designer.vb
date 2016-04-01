@@ -320,24 +320,6 @@ Partial Public Class j03_myprofile
     Protected WithEvents ShowTopFoundRecords As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''page3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents page3 As Global.Telerik.Web.UI.RadPageView
-
-    '''<summary>
-    '''grid1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents grid1 As Global.UI.datagrid
-
-    '''<summary>
     '''hiddatapid control.
     '''</summary>
     '''<remarks>

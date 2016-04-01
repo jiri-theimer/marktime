@@ -2,7 +2,7 @@
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -70,7 +70,7 @@
             <Tabs>
                 <telerik:RadTab Text="Můj profil" Selected="true" Value="core"></telerik:RadTab>
                 <telerik:RadTab Text="Nastavit funkci [Najít projekt...]" Value="search"></telerik:RadTab>
-                <telerik:RadTab Text="Historie odeslané pošty" Value="outbox"></telerik:RadTab>
+                
             </Tabs>
         </telerik:RadTabStrip>
         <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
@@ -128,6 +128,7 @@
                             <asp:DropDownList ID="j03SiteMenuSkin" runat="server">
                                 <asp:ListItem Text="--Výchozí--" Value="Windows7" Selected="true"></asp:ListItem>
                                 <asp:ListItem Text="Metro" Value="Metro"></asp:ListItem>
+                                <asp:ListItem Text="WebBlue" Value="WebBlue"></asp:ListItem>
                                 <asp:ListItem Text="Outlook" Value="Outlook"></asp:ListItem>
                                 <asp:ListItem Text="Office2007" Value="Office2007"></asp:ListItem>
                                 <asp:ListItem Text="Office2010Blue" Value="Office2010Blue"></asp:ListItem>
@@ -136,6 +137,7 @@
                                 <asp:ListItem Text="Simple" Value="Simple"></asp:ListItem>
                                 <asp:ListItem Text="Black" Value="Black"></asp:ListItem>
                                  <asp:ListItem Text="Glow" Value="Glow"></asp:ListItem>
+                                <asp:ListItem Text="Web20" Value="Web20"></asp:ListItem>                                
                             </asp:DropDownList>
                             <asp:CheckBox ID="j03IsSiteMenuOnClick" runat="server" Text="Hlavní aplikační menu se otevírá až na click myši" CssClass="chk" />
                         </div>
@@ -230,10 +232,7 @@
 
             </telerik:RadPageView>
 
-            <telerik:RadPageView ID="page3" runat="server">
-
-                <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
-            </telerik:RadPageView>
+          
         </telerik:RadMultiPage>
     </div>
     <asp:HiddenField ID="hiddatapid" runat="server" />

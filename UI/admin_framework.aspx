@@ -104,11 +104,11 @@
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 2900;">
                 <Items>
 
-                    <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Upravit" ImageUrl="Images/edit.png" NavigateUrl="javascript:Edit();" Value="edit" PostBack="false"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Kopírovat" ImageUrl="Images/copy.png" NavigateUrl="javascript:CloneRecord();" Value="clone"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/export.png" PostBack="true"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Obnovit" ImageUrl="Images/refresh.png" Value="refresh"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="NOVÝ ZÁZNAM" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="UPRAVIT" ImageUrl="Images/edit.png" NavigateUrl="javascript:Edit();" Value="edit" PostBack="false"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="KOPÍROVAT" ImageUrl="Images/copy.png" NavigateUrl="javascript:CloneRecord();" Value="clone"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="EXPORT" Value="export" ImageUrl="Images/export.png" PostBack="true"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="OBNOVIT" ImageUrl="Images/refresh.png" Value="refresh"></telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenu>
 
@@ -240,7 +240,7 @@
                     <asp:Label ID="boxMailLabel" Text="Odesílání poštovních zpráv" runat="server"></asp:Label>
                 </div>
                 <div class="content">
-                    <button type="button" onclick="lp('x40')">Historie/fronta zpráv</button>
+                    <button type="button" onclick="location.replace('x40_framework.aspx')">Historie/fronta zpráv</button>
                     <button type="button" onclick="lp('x46')">Notifikační pravidla pro události v systému</button>
                     <button type="button" onclick="sw_master('admin_smtp.aspx','Images/setting_32.png')" style="margin-left: 40px;">Nastavit odesílání pošty</button>
 

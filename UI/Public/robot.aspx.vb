@@ -31,8 +31,11 @@
     End Sub
 
     Private Sub Handle_MailQueque()
+        Dim mq As New BO.myQueryX40
+        mq.x40State = BO.x40StateENUM.InQueque
+        mq.TopRecordsOnly = 10
 
-        Dim lisX40 As IEnumerable(Of BO.x40MailQueue) = _Factory.x40MailQueueBL.GetList(BO.x29IdEnum._NotSpecified, 0, BO.x40StateENUM.InQueque, 10)
+        Dim lisX40 As IEnumerable(Of BO.x40MailQueue) = _Factory.x40MailQueueBL.GetList(mq)
         If lisX40.Count > 0 Then
             've frontě čekají smtp zprávy k odeslání - maximálně 10 zpráv najednou
             For Each cMessage In lisX40

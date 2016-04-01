@@ -8,7 +8,8 @@
     <title runat="server" id="title1" enableviewstate="true">MARKTIME 5.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="x-ua-compatible" content="IE=edge" />
-    <link href="~/Styles/Site_v1.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="~/Styles/Site_v2.css" rel="stylesheet" type="text/css" />
     <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -23,6 +24,7 @@
         html .RadMenu_Windows7 .rmRootGroup {
             background-image: none;
             color:white;
+            
         }
  
         html .RadMenu_Windows7 ul.rmRootGroup {
@@ -128,20 +130,15 @@
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
 
-        <div style="background-color: #25a0da;height:30px;">
+        <div style="background-color: #25a0da;height:32px;">
 
             <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Auto" Skin="Windows7" ClickToOpen="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2900;background-color:blue !important;">
                 <Items>
-                    <telerik:RadMenuItem runat="server" Value="begin" ImageUrl="Images/logo_transparent.png" Style="padding-left:5px;margin-top:5px;margin-bottom:4px;border: 0px; text-decoration: none; " NavigateUrl="default.aspx">                        
-                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem runat="server" Value="begin"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="ÚVOD" Value="dashboard" NavigateUrl="default.aspx"></telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Value="searchbox">
-                     
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Úvod" Value="dashboard" NavigateUrl="default.aspx">
-                    </telerik:RadMenuItem>
-
-                    <telerik:RadMenuItem Text="Worksheet" Value="p31" ImageUrl="~/Images/menuarrow.png">
+                    <telerik:RadMenuItem Text="WORKSHEET" Value="p31" ImageUrl="~/Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Value="p31_framework" Text="Zapisovat" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
                             
@@ -157,13 +154,13 @@
 
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="Projekty" Value="p41" NavigateUrl="p41_framework.aspx" >
+                    <telerik:RadMenuItem Text="PROJEKTY" Value="p41" NavigateUrl="p41_framework.aspx" >
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Klienti" Value="p28" NavigateUrl="p28_framework.aspx" >
+                    <telerik:RadMenuItem Text="KLIENTI" Value="p28" NavigateUrl="p28_framework.aspx" >
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Lidé" Value="j02" NavigateUrl="j02_framework.aspx" >
+                    <telerik:RadMenuItem Text="LIDÉ" Value="j02" NavigateUrl="j02_framework.aspx" >
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Faktury" Value="p91" NavigateUrl="p91_framework.aspx" >
+                    <telerik:RadMenuItem Text="FAKTURY" Value="p91" NavigateUrl="p91_framework.aspx" >
                     </telerik:RadMenuItem>
 
 
@@ -177,7 +174,7 @@
 
 
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Další" Value="more" ImageUrl="~/Images/menuarrow.png" >
+                    <telerik:RadMenuItem Text="DALŠÍ" Value="more" ImageUrl="~/Images/menuarrow.png" >
                         <GroupSettings RepeatColumns="2" RepeatDirection="Vertical" />
                         <Items>
                             <telerik:RadMenuItem Value="cmdAdmin" Text="Administrace systému" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadMenuItem>
@@ -197,6 +194,7 @@
 
                             <telerik:RadMenuItem Value="p90_framework" Text="Zálohové faktury" NavigateUrl="p90_framework.aspx" ImageUrl="Images/proforma.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="p51" Text="Ceníky sazeb" NavigateUrl="p51_framework.aspx" ImageUrl="Images/billing.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="x40" Text="Odeslaná pošta" NavigateUrl="x40_framework.aspx" ImageUrl="Images/email.png"></telerik:RadMenuItem>
 
                             <telerik:RadMenuItem Value="cmdWorkflow" Text="Návrhář workflow" NavigateUrl="admin_workflow.aspx" ImageUrl="Images/workflow.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdHelpdeskDefault" Text="Helpdesk (zapisování požadavků)" NavigateUrl="helpdesk_default.aspx" ImageUrl="Images/helpdesk.png"></telerik:RadMenuItem>
@@ -208,7 +206,7 @@
                     <telerik:RadMenuItem Text="8" ImageUrl="Images/messages.png" Value="messages" ForeColor="#ffffff" ToolTip="Upozornění ze systému" NavigateUrl="javascript:messages();">
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Value="help" Target="_blank" Text="Nápověda">
+                    <telerik:RadMenuItem Value="help" Target="_blank" Text="?">
                     </telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenu>

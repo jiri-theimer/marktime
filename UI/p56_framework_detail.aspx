@@ -204,7 +204,7 @@
                     </ItemTemplate>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="250px"></telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Záznam úkolu" ImageUrl="Images/arrow_down_menu.png" Value="record">
+                <telerik:RadMenuItem Text="ZÁZNAM ÚKOLU" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <ContentTemplate>
                         <div style="padding: 10px; width: 450px;">
 
@@ -236,7 +236,7 @@
                     </ContentTemplate>
 
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Nový worksheet" ImageUrl="Images/worksheet.png" Value="p31">
+                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31">
                     <ContentTemplate>
                         <div style="float: left; padding: 10px;">
                             <asp:Label ID="lblP31Message" CssClass="failureNotification" runat="server"></asp:Label>
@@ -255,7 +255,7 @@
                 </telerik:RadMenuItem>
 
 
-                <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
                     <ContentTemplate>
                         <div style="float: left; min-width: 200px;">
                             <div class="menu-group-title">Reporting</div>

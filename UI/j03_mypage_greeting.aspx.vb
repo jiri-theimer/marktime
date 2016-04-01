@@ -252,7 +252,7 @@
 
     Private Sub ShowChart1()
         panChart1.Visible = True
-        Dim s As String = "select sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end) as HodinyFa,sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end) as HodinyNeFa,convert(varchar(10),p31Date,104) as Datum FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID WHERE a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date ORDER BY a.p31Date"
+        Dim s As String = "select round(sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end),2) as HodinyFa,round(sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end),2) as HodinyNeFa,convert(varchar(10),p31Date,104) as Datum FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID WHERE a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date ORDER BY a.p31Date"
 
         Dim pars As New List(Of BO.PluginDbParameter)
         pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-5)))

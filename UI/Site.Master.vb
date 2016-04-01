@@ -60,7 +60,7 @@ Public Class Site
             If .Person = "" Then
                 menu1.FindItemByValue("me").Text = .j03Login
             Else
-                menu1.FindItemByValue("me").Text = .Person
+                menu1.FindItemByValue("me").Text = .Person.ToUpper
             End If
             menu1.ClickToOpen = .j03IsSiteMenuOnClick
             If .j03SiteMenuSkin > "" Then menu1.Skin = .j03SiteMenuSkin
@@ -99,7 +99,7 @@ Public Class Site
             End If
 
             If .HomeMenu = "" Then
-                menu1.FindItemByValue("dashboard").Text = "Úvod"
+                menu1.FindItemByValue("dashboard").Text = "ÚVOD"
             Else
                 menu1.FindItemByValue("dashboard").Text = .HomeMenu
                 RenderHomeMenu()
@@ -266,5 +266,12 @@ Public Class Site
             ''target.Text = itemText
         End Sub
     End Class
+
+    Private Sub menu1_ItemCreated(sender As Object, e As RadMenuEventArgs) Handles menu1.ItemCreated
+        If Not TypeOf (e.Item) Is RadMenuItem Then Return
+        If e.Item.Value = "begin" Then
+            e.Item.Controls.Add(New LiteralControl("<a href='default.aspx' title='ÚVOD'><img src='Images/logo_transparent.png' style='border:0px;' /></a>"))
+        End If
+    End Sub
 End Class
 

@@ -8,8 +8,8 @@ Public Interface Ix40MailQueueBL
     Function UpdateMessageState(intX40ID As Integer, NewState As BO.x40StateENUM) As Boolean
     Function Load(intPID As Integer) As BO.x40MailQueue
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(x29id As BO.x29IdEnum, intRecordPID As Integer, x40State As BO.x40StateENUM, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
-    Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
+    Function GetList(myQuery As BO.myQueryX40) As IEnumerable(Of BO.x40MailQueue)
+    ''Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue)
     Function SendMessageWithoutQueque(strRecipient As String, strBody As String, strSubject As String) As Boolean
 End Interface
 
@@ -35,8 +35,8 @@ Class x40MailQueueBL
     Public Function Delete(intPID As Integer) As Boolean Implements Ix40MailQueueBL.Delete
         Return _cDL.Delete(intPID)
     End Function
-    Public Function GetList(x29id As BO.x29IdEnum, intRecordPID As Integer, x40State As BO.x40StateENUM, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue) Implements Ix40MailQueueBL.GetList
-        Return _cDL.GetList(x29id, intRecordPID, x40State)
+    Public Function GetList(myQuery As BO.myQueryX40) As IEnumerable(Of BO.x40MailQueue) Implements Ix40MailQueueBL.GetList
+        Return _cDL.GetList(myQuery)
     End Function
 
     Public Function SaveMessageToQueue(mes As BO.smtpMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer Implements Ix40MailQueueBL.SaveMessageToQueque
@@ -248,7 +248,7 @@ Class x40MailQueueBL
         End If
         Return _cDL.UpdateMessageState(intX40ID, NewState)
     End Function
-    Public Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue) Implements Ix40MailQueueBL.GetList_AllHisMessages
-        Return _cDL.GetList_AllHisMessages(intJ03ID_Sender, intJ02ID_Person)
-    End Function
+    ''Public Function GetList_AllHisMessages(intJ03ID_Sender As Integer, intJ02ID_Person As Integer, Optional intTopRecs As Integer = 500) As IEnumerable(Of BO.x40MailQueue) Implements Ix40MailQueueBL.GetList_AllHisMessages
+    ''    Return _cDL.GetList_AllHisMessages(intJ03ID_Sender, intJ02ID_Person)
+    ''End Function
 End Class

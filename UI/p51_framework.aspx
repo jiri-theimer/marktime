@@ -89,7 +89,7 @@
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
                 <Items>
 
-                    <telerik:RadMenuItem Text="Záznam" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
+                    <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
                         <ContentTemplate>
                             <div style="padding: 10px; min-width: 200px;">
                                 <div class="div6">
@@ -113,7 +113,7 @@
 
                     <telerik:RadMenuItem Text="Obnovit" Visible="false" ImageUrl="Images/refresh.png" Value="refresh" NavigateUrl="p51_framework.aspx"></telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="columns" PostBack="false">
+                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="columns" PostBack="false">
                         <ContentTemplate>
                             <div style="padding: 20px;">
                                 <div class="div6">

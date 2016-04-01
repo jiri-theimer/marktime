@@ -175,7 +175,7 @@
                     </ItemTemplate>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px"></telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Záznam dokumentu" ImageUrl="Images/arrow_down_menu.png" Value="record">
+                <telerik:RadMenuItem Text="ZÁZNAM DOKUMENTU" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <ContentTemplate>
                         <div style="padding: 10px; width: 450px;">
                             <asp:Label ID="lblPermissionMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>

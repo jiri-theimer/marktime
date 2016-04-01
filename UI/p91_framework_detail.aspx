@@ -241,7 +241,7 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Záznam faktury" ImageUrl="Images/arrow_down_menu.png" Value="record">
+                <telerik:RadMenuItem Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <ContentTemplate>
                         <div style="padding: 10px; width: 450px;">
 
@@ -303,7 +303,7 @@
 
 
 
-                <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
                     <ContentTemplate>
                         <div style="float: left; min-width: 200px;">
 
@@ -317,8 +317,10 @@
                                 <img src="Images/pivot.png" />
                                 <a href="p31_pivot.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za fakturu</a>
                             </asp:Panel>
-
-
+                            <div class="menu-group-item">
+                            <img src="Images/email.png" />
+                            <a href="x40_framework.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Historie odeslané pošty</a>
+                            </div>
 
                             <div class="menu-group-title">Komunikace</div>
                             <asp:Panel ID="panO23" runat="server" CssClass="menu-group-item">

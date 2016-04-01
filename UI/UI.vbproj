@@ -314,7 +314,7 @@
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
     <Content Include="Services\combo_external_datasource.asmx" />
-    <Content Include="Styles\SiteMobile_v1.css" />
+    <Content Include="Styles\SiteMobile_v2.css" />
     <Content Include="Sys\dbupdate.aspx" />
     <Content Include="Sys\dbupdate_reports.aspx" />
     <Content Include="Sys\membership_framework.aspx" />
@@ -416,7 +416,7 @@
     <Content Include="Services\person_service.asmx" />
     <Content Include="stoppage.aspx" />
     <Content Include="stoppage_site.aspx" />
-    <Content Include="Styles\Site_v1.css" />
+    <Content Include="Styles\Site_v2.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Sys\sys_dbobjects.aspx" />
@@ -443,6 +443,7 @@
     <Content Include="x31_record.aspx" />
     <Content Include="x35_record.aspx" />
     <Content Include="x38_record.aspx" />
+    <Content Include="x40_framework.aspx" />
     <Content Include="x40_record.aspx" />
     <Content Include="x46_record.aspx" />
     <Content Include="x50_record.aspx" />
@@ -2356,6 +2357,13 @@
     </Compile>
     <Compile Include="x38_record.aspx.vb">
       <DependentUpon>x38_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x40_framework.aspx.designer.vb">
+      <DependentUpon>x40_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x40_framework.aspx.vb">
+      <DependentUpon>x40_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="x40_record.aspx.designer.vb">

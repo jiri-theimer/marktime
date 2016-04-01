@@ -204,7 +204,7 @@
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
 
-                    <telerik:RadMenuItem Text="Záznam" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
+                    <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
                         <ContentTemplate>
                             <div style="padding: 10px; min-width: 200px;">
                                 <div class="div6">
@@ -227,7 +227,7 @@
 
 
 
-                    <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="columns" PostBack="false">
+                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="columns" PostBack="false">
                         <ContentTemplate>
                             <div style="padding: 20px;">
                                 <div class="div6">

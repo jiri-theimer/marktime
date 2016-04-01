@@ -318,8 +318,8 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" ImageUrl="Images/switch_24.png" style="padding-top:8px;" ToolTip="Skrýt/zobrazit horní polovinu detailu klienta (boxy)" />
-                <telerik:RadMenuItem Text="Záznam klienta" ImageUrl="Images/arrow_down_menu.png" Value="record">
+                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu klienta (boxy)" />
+                <telerik:RadMenuItem Text="ZÁZNAM KLIENTA" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <ContentTemplate>
                         <div style="padding: 10px; width: 450px;">
 
@@ -358,7 +358,7 @@
 
 
 
-                <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" Value="more">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
                     <ContentTemplate>
                         <div style="float: left; min-width: 200px;">
                            
@@ -388,7 +388,10 @@
                                 <img src="Images/oplan.png" />
                                 <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní plán" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
                             </div>
-
+                            <div class="menu-group-item">
+                            <img src="Images/email.png" />
+                            <a href="x40_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>" target="_top">Historie odeslané pošty</a>
+                            </div>
                         </div>
                     </ContentTemplate>
 
