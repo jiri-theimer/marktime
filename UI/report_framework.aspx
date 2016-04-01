@@ -127,7 +127,7 @@
                 </div>
             </div>
 
-            <uc:panelmenu ID="tree1" runat="server" Skin="Metro" width="100%"></uc:panelmenu>
+            <uc:panelmenu ID="tree1" runat="server" width="100%"></uc:panelmenu>
 
             <asp:HiddenField ID="hidx31id" runat="server" />
             <asp:HiddenField ID="hidformat" runat="server" />

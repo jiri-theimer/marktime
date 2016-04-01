@@ -15,8 +15,28 @@
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
     <style type="text/css">
+        html .RadMenu_Metro .rmRootGroup {
+            background-image: none;
+            
+        }
+ 
+        html .RadMenu_Metro ul.rmRootGroup {
+            <%if me.hidisbin.value="1" then%>
+            background-color: black;
+            <%else%>
+            background-color: white;
+            <%End If%>
+            
+        }
+
+        .rmLink {
+            margin-top:6px;
+           
+        }
+
+
         .ui-autocomplete {
-            width: 600px;
+            width: 400px;
             height: 300px;
             overflow-y: auto;
             /* prevent horizontal scrollbar */
@@ -37,7 +57,7 @@
             font-weight: normal;
         }
     </style>
-    <asp:PlaceHolder ID="placeBinMenuCss" runat="server"></asp:PlaceHolder>
+    
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -147,7 +167,7 @@
 
     <asp:Panel ID="panMenuContainer" runat="server" Style="height: 40px;">
 
-        <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
+        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" width="100%" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>
                 <telerik:RadMenuItem Value="begin">
                     <ItemTemplate>
@@ -395,7 +415,7 @@
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-
+    <asp:HiddenField ID="hidIsBin" runat="server" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

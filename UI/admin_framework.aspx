@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/pageheader.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -99,8 +100,8 @@
             </asp:DropDownList>
         </div>
 
-        <div style="float:left;margin-left: 20px;">
-            <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" runat="server" Style="z-index: 2900;">
+        <div class="commandcell" style="margin-left: 20px;">
+            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 2900;">
                 <Items>
 
                     <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
@@ -118,7 +119,7 @@
 
     <div class="left_panel">
 
-        <uc:panelmenu ID="panelmenu1" runat="server" Skin="Metro"></uc:panelmenu>
+        <uc:panelmenu ID="panelmenu1" runat="server"></uc:panelmenu>
 
         <asp:DropDownList ID="query_validity" runat="server" AutoPostBack="true" Style="width: 230px;">
             <asp:ListItem Text="Bez filtrování otevřené/archiv" Value=""></asp:ListItem>
@@ -127,7 +128,7 @@
         </asp:DropDownList>
     </div>
 
-    <div class="right_panel">
+    <div class="right_panel" style="margin-left:270px;">
 
         <asp:Panel ID="panDashboard" runat="server" Style="background-color: white; padding: 10px; display: table;">
 

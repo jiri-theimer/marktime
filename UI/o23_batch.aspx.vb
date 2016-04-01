@@ -254,7 +254,7 @@
     Private Sub SetupGrid()
         With Master.Factory.j74SavedGridColTemplateBL
             Dim cJ74 As BO.j74SavedGridColTemplate = .LoadSystemTemplate(BO.x29IdEnum.o23Notepad, Master.Factory.SysUser.PID)
-
+            cJ74.j74IsFilteringByColumn = False
             basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, False)
         End With
 

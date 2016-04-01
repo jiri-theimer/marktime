@@ -58,7 +58,7 @@ Public Class panelmenu
 
             Dim nParent As RadPanelItem = menu1.FindItemByValue(strParentNodeValue)
             If Not nParent Is Nothing Then
-                nParent.Font.Bold = True
+                ''nParent.Font.Bold = True
                 nParent.Items.Add(n)
             End If
         End If

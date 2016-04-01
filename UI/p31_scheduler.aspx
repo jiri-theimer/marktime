@@ -210,8 +210,8 @@
     <div id="offsetY"></div>
     <div id="divScheduler">
 
-        <div id="left_panel" style="float: left; width: 350px;">
-            <div style="padding-top:6px;"></div>
+        <div id="left_panel" style="float: left; width: 350px;background-color:white;">
+            <div style="padding-top:12px;"></div>
             <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true" Skin="Default">
                 <Tabs>
                     <telerik:RadTab Text="Kalendář" Selected="true" Value="core"></telerik:RadTab>
@@ -347,7 +347,7 @@
         </div>
 
         <div id="right_panel" style="margin-left: 350px;">
-            <telerik:RadScheduler ID="scheduler1" SelectedView="WeekView" RenderMode="Lightweight" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="100%" Height="90%" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="true" EnableAdvancedForm="false"
+            <telerik:RadScheduler ID="scheduler1" SelectedView="WeekView" RenderMode="Auto" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="100%" Height="90%" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="true" EnableAdvancedForm="false"
                 Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false" Localization-HeaderToday="Dnes" Localization-ShowMore="více..."
                 OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create" OnClientTimeSlotContextMenuItemClicked="record_create"
                 Localization-AllDay="Bez času od/do" Localization-HeaderMonth="Měsíc" Localization-HeaderDay="Den" Localization-HeaderWeek="Týden" Localization-HeaderMultiDay="Multi-den"

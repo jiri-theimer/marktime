@@ -89,7 +89,7 @@
                 End With
             Else
                 lblP31Message.Text = "Do uzavřeného úkolu nelze zapisovat nové úkony."
-                ScriptManager.RegisterStartupScript(Me.placeBinMenuCss, Me.GetType(), "BinMenu", "<style type='text/css'>.RadMenu_Silk .rmItem {background-color:black !important;}</style>", False)
+                Me.hidIsBin.Value = "1"
             End If
 
         End If

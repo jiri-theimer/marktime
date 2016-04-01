@@ -428,7 +428,7 @@
 
         </div>
         <div id="right_panel" style="margin-left: 250px;">
-            <telerik:RadScheduler ID="scheduler1" SelectedView="WeekView" RenderMode="Lightweight" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="100%" Height="90%" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="true" EnableAdvancedForm="false"
+            <telerik:RadScheduler ID="scheduler1" SelectedView="WeekView" RenderMode="Auto" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="100%" Height="90%" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="true" EnableAdvancedForm="false"
                 Culture="cs-CZ" AllowEdit="false" AllowDelete="false" AllowInsert="false"
                 OnClientAppointmentEditing="OnClientAppointmentEditing" OnClientTimeSlotClick="record_create"                 
                 HoursPanelTimeFormat="HH:mm" ShowNavigationPane="true" OnClientAppointmentMoveEnd="OnClientAppointmentMoveEnd" OnClientNavigationCommand="OnSchedulerCommand" OnClientTimeSlotContextMenuItemClicked="record_create_contextmenu"

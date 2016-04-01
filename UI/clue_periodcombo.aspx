@@ -44,14 +44,14 @@
             <tr valign="top">
 
                 <td>
-                    <telerik:RadDatePicker ID="d1" runat="server" SharedCalendarID="SharedCalendar" RenderMode="Lightweight" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
+                    <telerik:RadDatePicker ID="d1" runat="server" SharedCalendarID="SharedCalendar" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
                         <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                     </telerik:RadDatePicker>
                 </td>
                 <td style="width: 10px;">-
                 </td>
                 <td>
-                    <telerik:RadDatePicker ID="d2" runat="server" SharedCalendarID="SharedCalendar" RenderMode="Lightweight" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
+                    <telerik:RadDatePicker ID="d2" runat="server" SharedCalendarID="SharedCalendar" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
                         <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                     </telerik:RadDatePicker>
                 </td>

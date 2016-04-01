@@ -259,9 +259,9 @@
 
             End If
             
-            If .IsClosed Then
-                ScriptManager.RegisterStartupScript(Me.placeBinMenuCss, Me.GetType(), "BinMenu", "<style type='text/css'>.RadMenu_Silk .rmItem {background-color:black !important;}</style>", False)
-            End If
+            If .IsClosed Then Me.hidIsBin.Value = "1"
+
+
         End With
 
         Me.Fileupload_list__readonly.RefreshData_O23(Master.DataPID)

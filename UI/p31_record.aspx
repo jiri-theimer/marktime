@@ -337,7 +337,7 @@
                 <asp:Label ID="lblDate" runat="server" Text="Datum:" CssClass="lblReq"></asp:Label>
             </td>
             <td>
-                <telerik:RadDatePicker ID="p31Date" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
+                <telerik:RadDatePicker ID="p31Date" runat="server" Width="120px" SharedCalendarID="SharedCalendar" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
                     <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                 </telerik:RadDatePicker>
                 <asp:Label ID="MultiDateInput" runat="server" Visible="false" ForeColor="blue"></asp:Label>

@@ -97,8 +97,8 @@
         </div>
 
 
-        <div style="float: left; padding-left: 50px;">
-            <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
+        <div class="commandcell" style="padding-left: 50px;">
+            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
                 <Items>
 
                     <telerik:RadMenuItem Text="Záznam" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">

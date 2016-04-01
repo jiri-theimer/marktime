@@ -308,7 +308,7 @@ Public Class entity_scheduler
                     c.BorderColor = Drawing.Color.Silver
                     'c.BorderStyle = BorderStyle.Dotted
                     c.BackColor = Drawing.Color.WhiteSmoke
-
+                    c.ForeColor = Drawing.Color.Black
                     c.Subject = .p48Hours.ToString & "h."
                     Select Case Me.CurrentMasterX29ID
                         Case BO.x29IdEnum.p41Project

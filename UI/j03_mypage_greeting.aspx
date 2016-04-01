@@ -95,7 +95,7 @@
 
         <div style="min-height: 430px;">
             <div style="float: left;">
-                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Lightweight" Skin="Metro" Width="300px">
+                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px">
                     <Items>
                         <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
                             <Items>
@@ -233,7 +233,7 @@
                 </div>
             </asp:Panel>
             <asp:Panel ID="panChart1" runat="server" Style="float: right;" Visible="false">
-                <telerik:RadHtmlChart runat="server" ID="chart1" Height="300px">
+                <telerik:RadHtmlChart runat="server" ID="chart1" width="400px">
                     <PlotArea>
                         <Series>
                             <telerik:ColumnSeries Name="Hodiny Fa" DataFieldY="HodinyFa" Stacked="true">
@@ -249,7 +249,7 @@
                 </telerik:RadHtmlChart>
             </asp:Panel>
             <asp:Panel ID="panChart2" runat="server" Style="float: right;" Visible="false">
-                <telerik:RadHtmlChart runat="server" ID="chart2" >  
+                <telerik:RadHtmlChart runat="server" ID="chart2" Width="500px" >  
                     <Legend>
                         <Appearance Position="Right"></Appearance>
                     </Legend>                  

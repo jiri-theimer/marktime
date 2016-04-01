@@ -126,9 +126,16 @@
                         <div class="div6">
                             <span class="lbl">Vzhled hlavního aplikačního menu:</span>
                             <asp:DropDownList ID="j03SiteMenuSkin" runat="server">
-                                <asp:ListItem Text="MetroTouch (větší font/modro-bílé)" Value="MetroTouch" Selected="true"></asp:ListItem>
-                                <asp:ListItem Text="Metro (menší font/modro-bílé)" Value="Metro"></asp:ListItem>
-                                <asp:ListItem Text="BlackMetroTouch (větší font/modro-bílo-černé)" Value="BlackMetroTouch"></asp:ListItem>
+                                <asp:ListItem Text="--Výchozí--" Value="Windows7" Selected="true"></asp:ListItem>
+                                <asp:ListItem Text="Metro" Value="Metro"></asp:ListItem>
+                                <asp:ListItem Text="Outlook" Value="Outlook"></asp:ListItem>
+                                <asp:ListItem Text="Office2007" Value="Office2007"></asp:ListItem>
+                                <asp:ListItem Text="Office2010Blue" Value="Office2010Blue"></asp:ListItem>
+                                <asp:ListItem Text="Telerik" Value="Telerik"></asp:ListItem>
+                                <asp:ListItem Text="Sunset" Value="Sunset"></asp:ListItem>
+                                <asp:ListItem Text="Simple" Value="Simple"></asp:ListItem>
+                                <asp:ListItem Text="Black" Value="Black"></asp:ListItem>
+                                 <asp:ListItem Text="Glow" Value="Glow"></asp:ListItem>
                             </asp:DropDownList>
                             <asp:CheckBox ID="j03IsSiteMenuOnClick" runat="server" Text="Hlavní aplikační menu se otevírá až na click myši" CssClass="chk" />
                         </div>

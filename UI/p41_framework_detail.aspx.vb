@@ -199,8 +199,8 @@ Public Class p41_framework_detail
             End With
         Else
             If cRec.IsClosed Then
+                hidIsBin.Value = "1"
                 lblP31Message.Text = "Do projektu v archivu nelze zapisovat nové úkony."
-                ScriptManager.RegisterStartupScript(Me.placeBinMenuCss, Me.GetType(), "BinMenu", "<style type='text/css'>.RadMenu_Silk .rmItem {background-color:black !important;}</style>", False)
             End If
             If cRec.p41IsDraft Then Me.lblP31Message.Text = "Do projektu v režimu DRAFT nelze zapisovat úkony."
         End If

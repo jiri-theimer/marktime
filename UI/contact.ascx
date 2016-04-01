@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="contact.ascx.vb" Inherits="UI.contact" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<telerik:RadComboBox ID="cbx1" 
+<telerik:RadComboBox ID="cbx1" Skin="Default"
 runat="server" 
-rendermode="Lightweight"
+rendermode="Auto"
 DropDownWidth="400" 
 EnableTextSelection="true" 
 MarkFirstMatch="true" 

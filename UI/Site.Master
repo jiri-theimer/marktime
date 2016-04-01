@@ -20,6 +20,18 @@
 
 
     <style type="text/css">
+        html .RadMenu_Windows7 .rmRootGroup {
+            background-image: none;
+            color:white;
+        }
+ 
+        html .RadMenu_Windows7 ul.rmRootGroup {
+            background-color: #25a0da;
+            
+        }
+
+       
+
         .ui-autocomplete {
             width: 600px;
             height: 300px;
@@ -116,17 +128,17 @@
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
 
-        <div style="background-color: #25a0da; height: 43px;">
+        <div style="background-color: #25a0da;height:30px;">
 
-            <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Lightweight" Skin="MetroTouch" ClickToOpen="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2900;">
+            <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Auto" Skin="Windows7" ClickToOpen="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2900;background-color:blue !important;">
                 <Items>
-                    <telerik:RadMenuItem runat="server" Value="begin" ImageUrl="Images/logo_metro.png" Height="33px" Style="border: 0px; text-decoration: none; padding-top: 5px;padding-left:5px;" NavigateUrl="default.aspx">
+                    <telerik:RadMenuItem runat="server" Value="begin" ImageUrl="Images/logo_transparent.png" Style="padding-left:5px;margin-top:5px;margin-bottom:4px;border: 0px; text-decoration: none; " NavigateUrl="default.aspx">                        
                     </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem Value="searchbox">
                      
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Úvod" Value="dashboard" NavigateUrl="default.aspx" SelectedCssClass="menu_selected">
+                    <telerik:RadMenuItem Text="Úvod" Value="dashboard" NavigateUrl="default.aspx">
                     </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem Text="Worksheet" Value="p31" ImageUrl="~/Images/menuarrow.png">
@@ -145,18 +157,18 @@
 
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="Projekty" Value="p41" NavigateUrl="p41_framework.aspx" SelectedCssClass="menu_selected">
+                    <telerik:RadMenuItem Text="Projekty" Value="p41" NavigateUrl="p41_framework.aspx" >
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Klienti" Value="p28" NavigateUrl="p28_framework.aspx" SelectedCssClass="menu_selected">
+                    <telerik:RadMenuItem Text="Klienti" Value="p28" NavigateUrl="p28_framework.aspx" >
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Lidé" Value="j02" NavigateUrl="j02_framework.aspx" SelectedCssClass="menu_selected">
+                    <telerik:RadMenuItem Text="Lidé" Value="j02" NavigateUrl="j02_framework.aspx" >
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Faktury" Value="p91" NavigateUrl="p91_framework.aspx" SelectedCssClass="menu_selected">
+                    <telerik:RadMenuItem Text="Faktury" Value="p91" NavigateUrl="p91_framework.aspx" >
                     </telerik:RadMenuItem>
 
 
 
-                    <telerik:RadMenuItem Text="Já" Value="me" ImageUrl="~/Images/menuarrow.png" SelectedCssClass="menu_selected">
+                    <telerik:RadMenuItem Text="Já" Value="me" ImageUrl="~/Images/menuarrow.png" >
                         <Items>
                             <telerik:RadMenuItem Value="cmdMyProfile" Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdChangePassword" Text="Změnit heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadMenuItem>
@@ -165,7 +177,7 @@
 
 
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Další" Value="more" ImageUrl="~/Images/menuarrow.png" SelectedCssClass="menu_selected">
+                    <telerik:RadMenuItem Text="Další" Value="more" ImageUrl="~/Images/menuarrow.png" >
                         <GroupSettings RepeatColumns="2" RepeatDirection="Vertical" />
                         <Items>
                             <telerik:RadMenuItem Value="cmdAdmin" Text="Administrace systému" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadMenuItem>
@@ -196,7 +208,7 @@
                     <telerik:RadMenuItem Text="8" ImageUrl="Images/messages.png" Value="messages" ForeColor="#ffffff" ToolTip="Upozornění ze systému" NavigateUrl="javascript:messages();">
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Value="help" Target="_blank" ToolTip="Nápověda" ImageUrl="Images/help2_24.png">
+                    <telerik:RadMenuItem Value="help" Target="_blank" Text="Nápověda">
                     </telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenu>
@@ -208,7 +220,7 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
 
-        <telerik:RadWindow ID="okno1" runat="server" RenderMode="Lightweight" Width="900px" Height="650px" Modal="false" VisibleStatusbar="false" Skin="MetroTouch" IconUrl="Images/setting.png" ShowContentDuringLoad="false" InitialBehaviors="None" Behaviors="Close,Move,Resize,Maximize" Style="z-index: 9000;">
+        <telerik:RadWindow ID="okno1" runat="server" Width="900px" Height="650px" Modal="false" VisibleStatusbar="false" Skin="MetroTouch" IconUrl="Images/setting.png" ShowContentDuringLoad="false" InitialBehaviors="None" Behaviors="Close,Move,Resize,Maximize" Style="z-index: 9000;">
             <Shortcuts>
                 <telerik:WindowShortcut CommandName="Close" Shortcut="Esc" />
             </Shortcuts>

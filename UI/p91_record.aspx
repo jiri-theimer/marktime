@@ -51,7 +51,7 @@
                         <asp:Label ID="lblp91DateSupply" Text="Datum zdanitelného plnění:" runat="server" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
-                        <telerik:RadDatePicker ID="p91DateSupply" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p91DateSupply" runat="server" RenderMode="Auto" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
 

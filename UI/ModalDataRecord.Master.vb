@@ -99,7 +99,7 @@
 
         Else
             panRecValidity.Style.Item("display") = "none"
-            toolbar1.Skin = "Silk"
+            toolbar1.Skin = "Bootstrap"
             cmd.Text = "Přesunout do archivu"
             cmd.ImageUrl = "Images/bin.png"
             If Year(d2) = 3000 Then
@@ -219,9 +219,9 @@
             'CType(toolbar1.FindItemByValue("help"), Telerik.Web.UI.RadToolBarButton).NavigateUrl = "javascript:help('" & Request.FilePath & "')"
             With CType(toolbar1.FindItemByValue("help"), Telerik.Web.UI.RadToolBarButton)
                 If Me.HelpTopicID = "" Then
-                    .NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html"
+                    .NavigateUrl = "http://www.marktime.net/doc/html/index.html"
                 Else
-                    .NavigateUrl = "http://www.marktime.cz/domains/marktime.cz/doc/html/index.html?" & Me.HelpTopicID & ".htm"
+                    .NavigateUrl = "http://www.marktime.net/doc/html/index.html?" & Me.HelpTopicID & ".htm"
                 End If
             End With
 

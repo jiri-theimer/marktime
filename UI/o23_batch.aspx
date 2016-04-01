@@ -55,7 +55,7 @@
 
     <div class="content-box2" style="margin-top: 20px;">
         <div class="title">Vybrané záznamy dokumentů (<asp:Label ID="lblCount" runat="server"></asp:Label>)</div>
-        <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
+        <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" ></uc:datagrid>
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

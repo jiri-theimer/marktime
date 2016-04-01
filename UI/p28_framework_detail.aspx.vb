@@ -298,7 +298,7 @@ Public Class p28_framework_detail
 
         If cRec.IsClosed Then
             panO22.Visible = False : panNewP41.Visible = False : panP30.Visible = False 'klient je v archivu
-            ScriptManager.RegisterStartupScript(Me.placeBinMenuCss, Me.GetType(), "BinMenu", "<style type='text/css'>.RadMenu_Silk .rmItem {background-color:black !important;}</style>", False)
+            Me.hidIsBin.Value = "1"
         End If
 
     End Sub

@@ -73,12 +73,12 @@
                 <asp:Label ID="lblp40FirstSupplyDate" runat="server" Text="První rozhodné datum:" CssClass="lblReq"></asp:Label>
             </td>
             <td>
-                <telerik:RadDatePicker ID="p40FirstSupplyDate" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
+                <telerik:RadDatePicker ID="p40FirstSupplyDate" runat="server" Width="120px" SharedCalendarID="SharedCalendar" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
                     <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                 </telerik:RadDatePicker>
 
                 <asp:Label ID="lblp40LastSupplyDate" runat="server" Text="Poslední rozhodné datum:" CssClass="lblReq"></asp:Label>
-                <telerik:RadDatePicker ID="p40LastSupplyDate" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
+                <telerik:RadDatePicker ID="p40LastSupplyDate" runat="server" Width="120px" SharedCalendarID="SharedCalendar" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
                     <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                 </telerik:RadDatePicker>
 

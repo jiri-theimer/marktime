@@ -279,7 +279,7 @@ Public Class datacombo
 
     End Sub
     Private Sub AddFirstEmptyRow()
-        Dim item As New RadComboBoxItem(".", "")
+        Dim item As New RadComboBoxItem("", "")
         cbx1.Items.Insert(0, item)
     End Sub
     Public Sub Clear()

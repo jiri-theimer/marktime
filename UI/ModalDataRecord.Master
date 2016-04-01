@@ -9,6 +9,7 @@
     <title runat="server" id="pageTitle">MARKTIME 5.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
     <meta http-equiv="x-ua-compatible" content="IE=edge" >
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="~/Styles/Site_v1.css" rel="stylesheet" type="text/css" />
     <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -151,7 +152,7 @@
 
 
 
-            <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Silk" AutoPostBack="true" OnClientButtonClicked="clicked" RenderMode="Lightweight">
+            <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" OnClientButtonClicked="clicked" RenderMode="Auto">
                 <Items>
 
                     <telerik:RadToolBarButton Text="Uložit změny" Value="save" ImageUrl="Images/save.png"></telerik:RadToolBarButton>
@@ -167,7 +168,7 @@
 
                     <telerik:RadToolBarButton Text="Jít zpět" Value="goback" ImageUrl="Images/back.png"></telerik:RadToolBarButton>
 
-                    <telerik:RadToolBarButton Text="Nápověda" Value="help" ImageUrl="Images/help.png" PostBack="false" NavigateUrl="http://www.marktime.cz/domains/marktime.cz/doc/html/index.html" Target="_blank"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="Nápověda" Value="help" ImageUrl="Images/help.png" PostBack="false" NavigateUrl="http://www.marktime.net/doc/html/index.html" Target="_blank"></telerik:RadToolBarButton>
                 </Items>
             </telerik:RadToolBar>
 

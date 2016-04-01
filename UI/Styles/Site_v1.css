@@ -444,28 +444,8 @@ TH {
     cursor: pointer;
 }
 
-html .RadMenu_Silk .rmRootGroup {
-    background-image: none;
-}
-
-html .RadMenu_Silk ul.rmRootGroup {
-    background: white !important;
-}
-
-.RadMenu_Silk .rmLink:hover,
-.RadMenu_Silk .rmFocused, .rmLink .RadMenu_Default .rmSelected {
-    background-color: transparent !important;
-    background-image: none !important;
-    background-position: 0px 0px !important;
-    background-border: none;
-}
-
-.RadMenu_Silk .rmItem :hover {
-    border-top-color: transparent !important;
-}
-
-.RadMenu_Silk .rmSelected .rmLink {
-    border-top-color: transparent !important;
+.RadToolBar .rtbText:hover {
+    cursor: pointer;
 }
 
 
@@ -475,7 +455,6 @@ html .RadMenu_Silk ul.rmRootGroup {
 .nc {
     cursor: pointer;
 }
-
 
 
 

@@ -26,13 +26,13 @@
                         <asp:TextBox ID="txtName" runat="server" style="width:120px;"></asp:TextBox>
                     </td>
                     <td>
-                        <telerik:RadDatePicker ID="datFrom" runat="server" RenderMode="Lightweight" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
+                        <telerik:RadDatePicker ID="datFrom" runat="server" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
                     </td>
                  
                     <td>
-                        <telerik:RadDatePicker ID="datUntil" runat="server" RenderMode="Lightweight" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
+                        <telerik:RadDatePicker ID="datUntil" runat="server" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
                             <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
                     </td>

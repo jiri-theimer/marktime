@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class p91_framework_detail
 
     '''<summary>
-    '''placeBinMenuCss control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents placeBinMenuCss As Global.System.Web.UI.WebControls.PlaceHolder
-
-    '''<summary>
     '''panMenuContainer control.
     '''</summary>
     '''<remarks>
@@ -975,6 +966,15 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hiddatapid_p31 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsBin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsBin As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

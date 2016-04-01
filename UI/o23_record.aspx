@@ -165,7 +165,7 @@
 
                         </td>
                         <td>
-                            <telerik:RadDateTimePicker ID="o23Date" runat="server" RenderMode="Lightweight" Width="160px" DateInput-EmptyMessage="Povinný údaj" SharedCalendarID="SharedCalendar">
+                            <telerik:RadDateTimePicker ID="o23Date" runat="server" Width="160px" DateInput-EmptyMessage="Povinný údaj" SharedCalendarID="SharedCalendar">
                                 <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                                 <TimePopupButton Visible="false" />
                             </telerik:RadDateTimePicker>
@@ -267,7 +267,7 @@
                         <td>Čas připomenutí:
                         </td>
                         <td>
-                            <telerik:RadDateTimePicker ID="o23ReminderDate" runat="server" RenderMode="Lightweight" Width="180px" SharedCalendarID="SharedCalendar">
+                            <telerik:RadDateTimePicker ID="o23ReminderDate" runat="server" Width="180px" SharedCalendarID="SharedCalendar">
                                 <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                                 <TimePopupButton Visible="true" />                               
                             </telerik:RadDateTimePicker>

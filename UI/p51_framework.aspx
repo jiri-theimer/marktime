@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+   
     <script type="text/javascript">
         function record_edit() {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
@@ -84,8 +85,8 @@
             <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Ceníky sazeb" Style="vertical-align: top;"></asp:Label>
         </div>
 
-        <div style="float:left;padding-left:50px;">
-            <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
+        <div class="commandcell" style="padding-left:50px;">
+            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
                 <Items>
 
                     <telerik:RadMenuItem Text="Záznam" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">

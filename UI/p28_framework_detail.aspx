@@ -21,10 +21,27 @@
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
     <style type="text/css">
-       
+       html .RadMenu_Metro .rmRootGroup {
+            background-image: none;
+            
+        }
+ 
+        html .RadMenu_Metro ul.rmRootGroup {
+            <%if me.hidisbin.value="1" then%>
+            background-color: black;
+            <%else%>
+            background-color: white;
+            <%End If%>
+            
+        }
+
+        .rmLink {
+            margin-top:6px;
+           
+        }
 
         .ui-autocomplete {
-            width: 600px;
+            width: 400px;
             height: 300px;
             overflow-y: auto;
             /* prevent horizontal scrollbar */
@@ -45,16 +62,9 @@
             font-weight: normal;
         }
 
-        .RadMenu_Silk .rmItem :hover {
-            border-top-color: transparent !important;
-        }
-
-        .RadMenu_Silk .rmSelected .rmLink {
-            border-top-color: transparent !important;
-        }
+       
     </style>
-    <asp:PlaceHolder ID="placeBinMenuCss" runat="server"></asp:PlaceHolder>
-
+    
     <script type="text/javascript">
         $(document).ready(function () {
             $(".slidingDiv1").hide();
@@ -299,7 +309,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Panel ID="panMenuContainer" runat="server" Style="height: 40px;">
 
-        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Silk" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
+        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>
                 <telerik:RadMenuItem Value="begin">
                     <ItemTemplate>
@@ -308,7 +318,7 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" ImageUrl="Images/switch_24.png" ToolTip="Skrýt/zobrazit horní polovinu detailu klienta (boxy)" />
+                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" ImageUrl="Images/switch_24.png" style="padding-top:8px;" ToolTip="Skrýt/zobrazit horní polovinu detailu klienta (boxy)" />
                 <telerik:RadMenuItem Text="Záznam klienta" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <ContentTemplate>
                         <div style="padding: 10px; width: 450px;">
@@ -620,6 +630,7 @@
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
     <asp:HiddenField ID="hidDetailMode" runat="server" Value="detail" />
+    <asp:HiddenField ID="hidIsBin" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 

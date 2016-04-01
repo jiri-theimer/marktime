@@ -269,7 +269,7 @@ Public Class j02_framework_detail
 
         If cRec.IsClosed Then
             panO22.Visible = False
-            ScriptManager.RegisterStartupScript(Me.placeBinMenuCss, Me.GetType(), "BinMenu", "<style type='text/css'>.RadMenu_Silk .rmItem {background-color:black !important;}</style>", False)
+            Me.hidIsBin.Value = "1"
         End If
     End Sub
 

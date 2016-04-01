@@ -2398,6 +2398,7 @@
     <Content Include="App_LocalResources\j02_record.aspx.resx" />
     <Content Include="App_LocalResources\p32_record.aspx.resx" />
     <Content Include="App_LocalResources\j02_record.en-US.resx" />
+    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>

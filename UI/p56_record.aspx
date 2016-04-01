@@ -68,7 +68,7 @@
                         <asp:Label ID="lblDateUntil" Text="Termín splnění úkolu:" runat="server" AssociatedControlID="p56PlanUntil" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
-                        <telerik:RadDateTimePicker ID="p56PlanUntil" runat="server" RenderMode="Lightweight" Width="190px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDateTimePicker ID="p56PlanUntil" runat="server"  Width="190px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                             <TimePopupButton Visible="true" />
                             <TimeView StartTime="06:00" EndTime="22:00" ShowHeader="false" ShowFooter="false"></TimeView>
@@ -87,7 +87,7 @@
                     <td>
                         <asp:Label ID="lblDateFrom" Text="Plánované zahájení:" runat="server" AssociatedControlID="p56PlanFrom" CssClass="lbl"></asp:Label></td>
                     <td>
-                        <telerik:RadDateTimePicker ID="p56PlanFrom" runat="server" RenderMode="Lightweight" Width="190px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDateTimePicker ID="p56PlanFrom" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                             <TimePopupButton Visible="true" />
                             <TimeView StartTime="06:00" EndTime="22:00" ShowHeader="false" ShowFooter="false"></TimeView>
@@ -168,7 +168,7 @@
                     <td>
                         <asp:Label ID="lblp56ReminderDate" Text="Čas připomenutí:" runat="server" AssociatedControlID="p56ReminderDate" CssClass="lbl"></asp:Label></td>
                     <td>
-                        <telerik:RadDateTimePicker ID="p56ReminderDate" runat="server" RenderMode="Lightweight" Width="190px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDateTimePicker ID="p56ReminderDate" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput3" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                             <TimePopupButton Visible="true" />
                             <TimeView runat="server" StartTime="06:00" EndTime="22:00" ShowHeader="false" ShowFooter="false"></TimeView>

@@ -255,7 +255,8 @@ Public Class p31_scheduler
                     c.BorderColor = Drawing.Color.Red
 
                 End If
-
+                c.BackColor = Drawing.Color.WhiteSmoke
+                c.ForeColor = Drawing.Color.Black
                 c.BorderStyle = BorderStyle.Dashed
 
 

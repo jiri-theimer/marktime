@@ -77,7 +77,7 @@
             <td>
                 <asp:Label ID="lblDateFrom" Text="Začátek:" runat="server" AssociatedControlID="o22DateFrom" CssClass="lbl"></asp:Label></td>
             <td>
-                <telerik:RadDateTimePicker ID="o22DateFrom" runat="server" RenderMode="Lightweight" Width="190px" SharedCalendarID="SharedCalendar">
+                <telerik:RadDateTimePicker ID="o22DateFrom" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
                     <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                     <TimePopupButton Visible="true" />
                     <TimeView StartTime="06:00" EndTime="23:59" ShowHeader="false" ShowFooter="false"></TimeView>
@@ -91,7 +91,7 @@
                 <asp:Label ID="lblDateUntil" Text="Konec:" runat="server" AssociatedControlID="o22DateUntil" CssClass="lbl"></asp:Label>
             </td>
             <td>
-                <telerik:RadDateTimePicker ID="o22DateUntil" runat="server" RenderMode="Lightweight" Width="190px" SharedCalendarID="SharedCalendar">
+                <telerik:RadDateTimePicker ID="o22DateUntil" runat="server"  Width="190px" SharedCalendarID="SharedCalendar">
                     <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                     <TimePopupButton Visible="true" />
                     <TimeView StartTime="06:00" EndTime="23:59" ShowHeader="false" ShowFooter="false"></TimeView>
@@ -113,7 +113,7 @@
             <td>
                 <asp:Label ID="lblo22ReminderDate" Text="Čas připomenutí:" runat="server" AssociatedControlID="o22ReminderDate" CssClass="lbl"></asp:Label></td>
             <td>
-                <telerik:RadDateTimePicker ID="o22ReminderDate" runat="server" RenderMode="Lightweight" Width="190px" SharedCalendarID="SharedCalendar">
+                <telerik:RadDateTimePicker ID="o22ReminderDate" runat="server"  Width="190px" SharedCalendarID="SharedCalendar">
                     <DateInput ID="DateInput3" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                     <TimePopupButton Visible="true" />
                     <TimeView runat="server" StartTime="06:00" EndTime="23:59" ShowHeader="false" ShowFooter="false"></TimeView>

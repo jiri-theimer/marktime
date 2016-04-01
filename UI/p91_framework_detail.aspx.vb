@@ -88,10 +88,10 @@ Public Class p91_framework_detail
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Me.p91Code.Text = .p91Code
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString, .IsClosed)
-            If .IsClosed Then
-                ScriptManager.RegisterStartupScript(Me.placeBinMenuCss, Me.GetType(), "BinMenu", "<style type='text/css'>.RadMenu_Silk .rmItem {background-color:black !important;}</style>", False)
-            End If
-            
+            If .IsClosed Then Me.hidIsBin.Value = "1"
+
+
+
             Me.p92Name.Text = .p92Name
             Me.clue_p92name.Attributes("rel") = "clue_p92_record.aspx?pid=" & cRec.p92ID.ToString
             With Me.Client
@@ -99,7 +99,7 @@ Public Class p91_framework_detail
                 .NavigateUrl = "p28_framework.aspx?pid=" & cRec.p28ID.ToString
             End With
             Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
-            
+
 
 
             Me.p91Amount_Debt.Text = BO.BAS.FN(.p91Amount_Debt)

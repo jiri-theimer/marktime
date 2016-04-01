@@ -92,7 +92,7 @@
                 <tr>
                     <td>Datum:</td>
                     <td>
-                        <telerik:RadDatePicker ID="p31Date_Quick" runat="server" RenderMode="Lightweight" Width="120px" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
+                        <telerik:RadDatePicker ID="p31Date_Quick" runat="server" Width="120px" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                             <Calendar runat="server">
                                 <SpecialDays>
