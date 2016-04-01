@@ -108,7 +108,7 @@
                         <asp:Label ID="lblp91DateSupply" Text="Datum plnění:" runat="server" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
-                        <telerik:RadDatePicker ID="p91DateSupply" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p91DateSupply" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
 
@@ -126,7 +126,7 @@
                     <td>
                         <asp:Label ID="lblp91Date" Text="Datum vystavení:" runat="server" CssClass="lbl"></asp:Label></td>
                     <td>
-                        <telerik:RadDatePicker ID="p91Date" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p91Date" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
 
@@ -144,18 +144,18 @@
                     <td>
                         <asp:Label ID="lblp91DateMaturity" Text="Datum splatnosti:" runat="server" CssClass="lbl"></asp:Label></td>
                     <td>
-                        <telerik:RadDatePicker ID="p91DateMaturity" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p91DateMaturity" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput3" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
 
                     </td>
                     <td>
                         <span>Worksheet časový rámec faktury, začátek:</span>
-                        <telerik:RadDatePicker ID="p91Datep31_From" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p91Datep31_From" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput4" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
                         <span>Konec:</span>
-                        <telerik:RadDatePicker ID="p91Datep31_Until" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p91Datep31_Until" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput5" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
                     </td>
