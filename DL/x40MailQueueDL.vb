@@ -114,12 +114,17 @@
                 strW += " AND (a.x40Recipient like '%'+@expr+'%' OR a.x40Subject LIKE '%'+@expr+'%')"
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
-            If .RecordPID <> 0 Then
-                strW += " AND a.x40RecordPID=@pid"
-                pars.Add("pid", .RecordPID, DbType.Int32)
-            End If
+          
             If Not .x29ID Is Nothing Then
-                strW += " AND a.x29ID=@x29id"
+                Select Case .x29ID
+                    Case BO.x29IdEnum.p28Contact
+                        strW += " AND ((a.x40RecordPID=@pid and a.x29ID=328) OR (a.x29ID=391 AND a.x40RecordPID IN (SELECT p91ID FROM p91Invoice WHERE p28ID=@pid)))"
+                    Case BO.x29IdEnum.p41Project
+                        strW += " AND ((a.x40RecordPID=@pid and a.x29ID=141) OR (a.x29ID=391 AND a.x40RecordPID IN (SELECT p91ID FROM p91Invoice WHERE p28ID IN (SELECT p28ID_Client FROM p41Project WHERE p41ID=@pid))))"
+                    Case Else
+                        strW += " AND a.x29ID=@x29id AND a.x40RecordPID=@pid"
+                End Select
+                pars.Add("pid", .RecordPID, DbType.Int32)
                 pars.Add("x29id", .x29ID, DbType.Int32)
             End If
             If Not .x40State Is Nothing Then

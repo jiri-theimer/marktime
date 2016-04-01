@@ -418,7 +418,10 @@
                                 <img src="Images/comment.png" />
                                 <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat k projektu komentář" NavigateUrl="javascript:b07_record();" />
                             </asp:Panel>
-
+                            <div class="menu-group-item">
+                            <img src="Images/email.png" />
+                            <a href="x40_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>" target="_top">Historie odeslané pošty</a>
+                            </div>
 
                             <div class="menu-group-title">
                                 Worksheet operace
