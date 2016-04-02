@@ -596,16 +596,16 @@ Public Class p41_framework_detail
             Dim group As New Telerik.Web.UI.GridColumnGroup
             .radGridOrig.MasterTableView.ColumnGroups.Add(group)
             If Me.cmdBudgetP46.Checked Then
-                group.Name = "rozpocet_hodiny" : group.HeaderText = "Hodiny rozpočtu"
+                group.Name = "rozpocet_hodiny" : group.HeaderText = "Limity hodin"
                 group = New Telerik.Web.UI.GridColumnGroup
                 .radGridOrig.MasterTableView.ColumnGroups.Add(group)
-                group.Name = "rozpocet_cena" : group.HeaderText = "Cena rozpočtu"
+                group.Name = "rozpocet_cena" : group.HeaderText = "Cena hodin v rozpočtu"
                 group = New Telerik.Web.UI.GridColumnGroup
                 .radGridOrig.MasterTableView.ColumnGroups.Add(group)
                 group.Name = "timesheet_hodiny" : group.HeaderText = "Vykázané hodiny"
                 group = New Telerik.Web.UI.GridColumnGroup
                 .radGridOrig.MasterTableView.ColumnGroups.Add(group)
-                group.Name = "timesheet_cena" : group.HeaderText = "Cena"
+                group.Name = "timesheet_cena" : group.HeaderText = "Cena vykázaných hodin"
 
                 .AddColumn("Person", "Osoba", , True)
                 .AddColumn("p46HoursBillable", "Fa", BO.cfENUM.Numeric0, , , , , True, , "rozpocet_hodiny")

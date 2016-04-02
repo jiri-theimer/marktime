@@ -163,7 +163,7 @@
     <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true" Skin="Default">
         <Tabs>
             <telerik:RadTab Text="Základní vlastnosti" Value="p45"></telerik:RadTab>
-            <telerik:RadTab Text="Rozpočet hodin" Selected="true" Value="p46"></telerik:RadTab>
+            <telerik:RadTab Text="Limity hodin" Selected="true" Value="p46"></telerik:RadTab>
             <telerik:RadTab Text="Rozpočet peněžních výdajů a fixních příjmů" Value="p49"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -177,14 +177,14 @@
 
                     <div style="padding: 10px;">
                         <asp:Label ID="lblFrom" Text="Plánované zahájení:" runat="server" CssClass="lbl" Width="140px"></asp:Label>
-                        <telerik:RadDatePicker ID="p45PlanFrom" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p45PlanFrom" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                             <ClientEvents OnDateSelected="show_needsave_message" />
                         </telerik:RadDatePicker>
                     </div>
                     <div style="padding: 10px;">
                         <asp:Label ID="lblUntil" Text="Plánované dokončení:" runat="server" CssClass="lbl" Width="140px"></asp:Label>
-                        <telerik:RadDatePicker ID="p45PlanUntil" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar" MaxDate="1.1.3000">
+                        <telerik:RadDatePicker ID="p45PlanUntil" runat="server" Width="120px" SharedCalendarID="SharedCalendar" MaxDate="1.1.3000">
                             <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                             <ClientEvents OnDateSelected="show_needsave_message" />
                         </telerik:RadDatePicker>
@@ -331,7 +331,7 @@
             <asp:DropDownList ID="p45ID_Template" runat="server" DataValueField="pid" DataTextField="VersionWithName"></asp:DropDownList>
             <asp:CheckBox ID="chkNewIsLast" runat="server" Text="Nová verze bude aktuální verzí" Checked="true" />
             <div>
-                <asp:CheckBox ID="chkCloneP46" runat="server" Text="Zkopírovat rozpočet hodin" Checked="true" />
+                <asp:CheckBox ID="chkCloneP46" runat="server" Text="Zkopírovat limity hodin" Checked="true" />
             </div>
             <div>
                 <asp:CheckBox ID="chkCloneP47" runat="server" Text="Zkopírovat kapacitní plán" Checked="true" />

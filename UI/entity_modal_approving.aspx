@@ -171,71 +171,26 @@
         </div>
     </div>
 
-    <table>
-        <tr valign="top">
-            <td>
-                <uc:plugin_datatable ID="plugin1" TableID="gridData" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Worksheet rozpracovanost" NoDataMessage="Ani jeden rozpracovaný úkon." />
-
-            </td>
-            <td>
-                <asp:Repeater ID="rpCommandAll" runat="server">
-                    <ItemTemplate>
-                        <div class="div6">
-                            <button type="button" style="width: 170px; text-align: left; font-weight: bold;" onclick="approve_all()">
-                                <img src="Images/approve.png" />
-                                Schvalovat [vše] <%#Eval("RowCount")%>x</button>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-                <asp:Repeater ID="rpCommandP34" runat="server">
-                    <ItemTemplate>
-                        <div class="div6">
-                            <button type="button" style="min-width: 170px; text-align: left;" onclick="approve_p34(<%#Eval("PID")%>)">
-                                <img src="Images/approve.png" />
-                                [<%#Eval("Name")%>] <%#Eval("RowCount")%>x</button>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-                <asp:Repeater ID="rpCommandJ02" runat="server">
-                    <ItemTemplate>
-                        <div class="div6">
-                            <button type="button" style="min-width: 170px; text-align: left;" onclick="approve_j02(<%#Eval("PID")%>)">
-                                <img src="Images/approve.png" />
-                                [<%#Eval("Name")%>] <%#Eval("RowCount")%>x</button>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-                <asp:Repeater ID="rpCommandP28" runat="server">
-                    <ItemTemplate>
-                        <div class="div6">
-                            <button type="button" style="min-width: 170px; max-width: 250px; text-align: left;" onclick="approve_p28(<%#Eval("PID")%>)">
-                                <img src="Images/approve.png" />
-                                [<%#Eval("Name")%>] <%#Eval("RowCount")%>x</button>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </td>
-        </tr>
-    </table>
+    <div style="clear:both;"></div>
+    <div style="float:left;">
+        <uc:plugin_datatable ID="plugin1" TableID="gridData" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Worksheet rozpracovanost" NoDataMessage="Ani jeden rozpracovaný úkon." />
+    </div>
+    <div style="float:left;">
+        <telerik:RadToolBar ID="tlb1" runat="server" Skin="Bootstrap" Orientation="Vertical">
+                    <Items>
+                        <telerik:RadToolBarButton Value="all" Text="Schvalovat [vše]" NavigateUrl="javascript:approve_all()" ImageUrl="Images/approve.png"></telerik:RadToolBarButton>
+                    </Items>
+                </telerik:RadToolBar>
+    </div>
+    <div style="clear:both;"></div>
+    
 
 
 
     <div class="content-box2" style="padding-top: 10px;">
         <div class="title" style="padding-bottom:10px;">
             <img src="Images/invoice.png" />
-            Schválené úkony - čeká na fakturaci
-
-            <button type="button" id="cmdReApprove" runat="server" onclick="reapprove_all()">
-                <img src="Images/approve.png" />Pře-schválit již schválené úkony</button>
-            <button type="button" id="cmdClearApprove" runat="server" onclick="clearapprove_all()">
-                <img src="Images/break.png" />Vyčistit schvalování</button>
-            
-
-            <button type="button" runat="server" id="cmdCreateP91" onclick="invoice()">
-                    <img src="Images/invoice.png" />Vystavit fakturu</button>
-
-            <button type="button" runat="server" id="cmdAppendP91" onclick="invoice_append()">
-                    <img src="Images/invoice.png" />Přidat do existující faktury</button>
+            Schválené úkony - čeká na fakturaci                      
 
             <a href="#top" style="margin-left: 300px; padding: 5px;">Nahoru</a>
         </div>
@@ -289,8 +244,21 @@
                 </tr>
             </table>
 
+            <div style="float:left;">
+                <uc:plugin_datatable ID="plugin2" TableID="gridApproved" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Prošlo schvalováním, čeká na fakturaci" NoDataMessage="Žádný schválený worksheet čekající na fakturaci." />
+            </div>
+            <div style="float:left;">
+                <telerik:RadToolBar ID="tlb2" runat="server" Skin="Bootstrap" Orientation="Vertical">
+                <Items>
+                    <telerik:RadToolBarButton Value="cmdReApprove" Text="Pře-schválit již schválené" NavigateUrl="javascript:reapprove_all()" ImageUrl="Images/approve.png"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Value="cmdClearApprove" Text="Vyčistit schvalování" NavigateUrl="javascript:clearapprove_all()" ImageUrl="Images/break.png"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Value="cmdCreateP91" Text="Vystavit fakturu" NavigateUrl="javascript:invoice()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Value="cmdAppendP91" Text="Přidat do existující faktury" NavigateUrl="javascript:invoice_append()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>
+                    
+                </Items>
+            </telerik:RadToolBar>
+            </div>
             
-            <uc:plugin_datatable ID="plugin2" TableID="gridApproved" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Prošlo schvalováním, čeká na fakturaci" NoDataMessage="Žádný schválený worksheet čekající na fakturaci." />
         </div>
     </div>
 

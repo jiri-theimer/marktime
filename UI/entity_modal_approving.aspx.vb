@@ -431,19 +431,21 @@
             Next
             .GenerateTable(Master.Factory, sA)
             If .GeneratedRowsCount > 0 Then
-                cmdReApprove.Visible = True
+                tlb2.FindItemByValue("cmdReApprove").Visible = True
+                tlb2.Visible = True
             Else
-                cmdReApprove.Visible = False
+                tlb2.FindItemByValue("cmdReApprove").Visible = False
+                tlb2.Visible = False
             End If
-            cmdClearApprove.Visible = cmdReApprove.Visible
+            tlb2.FindItemByValue("cmdClearApprove").Visible = tlb2.FindItemByValue("cmdReApprove").Visible
             If .GeneratedRowsCount > 0 Then
-                cmdCreateP91.Visible = ViewState("can_create_invoice")
+                tlb2.FindItemByValue("cmdCreateP91").Visible = ViewState("can_create_invoice")
 
             Else
-                cmdCreateP91.Visible = False
+                tlb2.FindItemByValue("cmdCreateP91").Visible = False
             End If
         End With
-        cmdAppendP91.Visible = cmdCreateP91.Visible
+        tlb2.FindItemByValue("cmdAppendP91").Visible = tlb2.FindItemByValue("cmdCreateP91").Visible
 
 
 
@@ -611,6 +613,10 @@
                 End If
 
         End Select
+        For i As Integer = 1 To tlb1.Items.Count - 1
+            tlb1.Items.RemoveAt(1)
+        Next
+
 
         Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
         'Dim qry = From p In lisP31 Select p.j02ID, p.Person Distinct
@@ -618,19 +624,16 @@
         'Dim qry2 = From p In lisP31 Group By p.j02ID Into Hovado = Group, Count()
 
         Dim lis As New List(Of CommandRow)
-        'For Each c In qry2
-        '    lis.Add(New Command_j02(c.j02ID, c.Hovado(0).Person, c.Hovado.Count))
-        'Next
-        rpCommandJ02.DataSource = Nothing : rpCommandJ02.DataBind()
+
         If Me.chkCommandsJ02.Checked And Me.chkCommandsJ02.Visible Then
             'tlačítka za osoby
             For Each sada In lisP31.GroupBy(Function(p) p.j02ID)
-                lis.Add(New CommandRow(sada(0).j02ID, sada(0).Person, sada.Count))
+                Dim cmd As New Telerik.Web.UI.RadToolBarButton(String.Format("{0}<span class='badge1'>{1}x</span>", sada(0).Person, sada.Count))
+                cmd.NavigateUrl = "javascript:approve_j02(" & sada(0).j02ID.ToString & ")"
+                cmd.Value = sada(0).j02ID.ToString
+                cmd.ImageUrl = "Images/approve.png"
+                tlb1.Items.Add(cmd)
             Next
-            If lis.Count > 1 Then
-                rpCommandJ02.DataSource = lis
-                rpCommandJ02.DataBind()
-            End If
         End If
 
         'If Me.CurrentX29ID <> BO.x29IdEnum.j02Person Then
@@ -646,28 +649,24 @@
         '        rpCommandP28.DataBind()
         '    End If
         'End If
-        rpCommandP34.DataSource = Nothing : rpCommandP34.DataBind()
+
         If Me.chkCommandsP34.Checked And Me.chkCommandsP34.Visible Then
-            lis = New List(Of CommandRow)
             For Each sada In lisP31.GroupBy(Function(p) p.p34ID)
-                lis.Add(New CommandRow(sada(0).p34ID, sada(0).p34Name, sada.Count))
+                Dim cmd As New Telerik.Web.UI.RadToolBarButton(String.Format("{0} <span class='badge1'>{1}x</span>", sada(0).p34Name, sada.Count))
+                cmd.NavigateUrl = "javascript:approve_p34(" & sada(0).p34ID.ToString & ")"
+                cmd.Value = sada(0).j02ID.ToString
+                cmd.ImageUrl = "Images/approve.png"
+                tlb1.Items.Add(cmd)
             Next
-            If lis.Count > 1 Then
-                rpCommandP34.DataSource = lis
-                rpCommandP34.DataBind()
-            End If
+           
         End If
 
         If lisP31.Count > 0 Then
-            lis = New List(Of CommandRow)
-            lis.Add(New CommandRow(0, "", lisP31.Count))
-            rpCommandAll.DataSource = lis
-            rpCommandAll.DataBind()
+            tlb1.Visible = True
             Master.HideShowToolbarButton("continue", True)
             Master.RenameToolbarButton("continue", "Schvalovat [vše] " & lisP31.Count.ToString & "x")
         Else
-            rpCommandAll.DataSource = Nothing
-            rpCommandAll.DataBind()
+            tlb1.Visible = False
             Master.HideShowToolbarButton("continue", False)
         End If
 

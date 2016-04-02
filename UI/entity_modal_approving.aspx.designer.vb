@@ -95,76 +95,13 @@ Partial Public Class entity_modal_approving
     Protected WithEvents plugin1 As Global.UI.plugin_datatable
 
     '''<summary>
-    '''rpCommandAll control.
+    '''tlb1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpCommandAll As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''rpCommandP34 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpCommandP34 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''rpCommandJ02 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpCommandJ02 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''rpCommandP28 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpCommandP28 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''cmdReApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdReApprove As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cmdClearApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdClearApprove As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cmdCreateP91 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCreateP91 As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cmdAppendP91 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAppendP91 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents tlb1 As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
     '''col1x control.
@@ -201,6 +138,15 @@ Partial Public Class entity_modal_approving
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents plugin2 As Global.UI.plugin_datatable
+
+    '''<summary>
+    '''tlb2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tlb2 As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
     '''hidX29ID control.
