@@ -545,6 +545,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents opgSubgrid As Global.Telerik.Web.UI.RadTabStrip
 
     '''<summary>
+    '''fraSubform control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fraSubform As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''bigsummary1 control.
     '''</summary>
     '''<remarks>
@@ -552,15 +561,6 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents bigsummary1 As Global.UI.p31_bigsummary
-
-    '''<summary>
-    '''gridP31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridP31 As Global.UI.p31_subgrid
 
     '''<summary>
     '''comments1 control.
@@ -644,6 +644,24 @@ Partial Public Class p41_framework_detail
     Protected WithEvents cmdP47 As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''cmdNewP49 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdNewP49 As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''cmdConvert2P31 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdConvert2P31 As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''gridBudget control.
     '''</summary>
     '''<remarks>
@@ -680,15 +698,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hiddatapid_p31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hiddatapid_p31 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''hidIsBin control.
     '''</summary>
     '''<remarks>
@@ -696,6 +705,15 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidIsBin As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidBudgetPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidBudgetPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

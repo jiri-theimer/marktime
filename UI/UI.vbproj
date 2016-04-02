@@ -184,6 +184,7 @@
     <Content Include="clue_o24_record.aspx" />
     <Content Include="clue_p48_record.aspx" />
     <Content Include="entity_framework.aspx" />
+    <Content Include="entity_framework_p31subform.aspx" />
     <Content Include="entity_scheduler.aspx" />
     <Content Include="fileupload_preview.aspx" />
     <Content Include="imap_record.ascx" />
@@ -533,6 +534,13 @@
     </Compile>
     <Compile Include="entity_framework.aspx.vb">
       <DependentUpon>entity_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_p31subform.aspx.designer.vb">
+      <DependentUpon>entity_framework_p31subform.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_p31subform.aspx.vb">
+      <DependentUpon>entity_framework_p31subform.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_scheduler.aspx.designer.vb">

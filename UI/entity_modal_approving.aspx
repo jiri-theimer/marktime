@@ -262,6 +262,24 @@
         </div>
     </div>
 
+     <asp:panel ID="panQuickInvoice" runat="server" cssclass="content-box2" style="padding-top: 10px;">
+        <div class="title" style="padding-bottom:10px;">
+            <img src="Images/invoice.png" />
+            Zrychlená fakturace jednou částkou                    
+
+            <a href="#top" style="margin-left: 300px; padding: 5px;">Nahoru</a>
+        </div>
+        <div class="content">
+            
+            <asp:Button ID="cmdQuickInvoice" runat="server" Text="Vytvořit fakturu" CssClass="cmd" />
+            <div>Jedno rozhraní pro následující proces:</div>
+            <ul>
+                <li>1. Založíte peněžní worksheet úkon.</li>
+                <li>2. Ihned úkon schválíte.</li>
+                <li>3. Vytvoříte fakturu.</li>
+            </ul>
+        </div>
+    </asp:panel>
 
     <asp:HiddenField ID="hidX29ID" runat="server" Value="141" />
     <asp:HiddenField ID="hidPrefix" runat="server" Value="p41" />

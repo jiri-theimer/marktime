@@ -49,17 +49,15 @@
 
         });
 
+        
+
         function report() {
             
             sw_local("report_modal.aspx?prefix=p41&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
 
         }
 
-        function p31_entry() {
-            ///volá se z p31_subgrid
-            sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>","Images/worksheet_32.png",true);
-            return(false);
-        }
+        
         function p31_entry_p56() {
             ///volá se z gridu úkolů
             var p56id=document.getElementById("<%=hiddatapid_subform.clientid%>").value;
@@ -80,12 +78,7 @@
             sw_local("p56_record.aspx?clone=1&p41id=<%=Master.DataPID%>&pid="+pid,"Images/task_32.png",true);
             return(false);
         }
-        function p31_clone() {
-            ///volá se z p31_subgrid
-            var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?clone=1&pid="+pid,"Images/worksheet_32.png",true);
-            return(false);
-        }
+        
         function p31_entry_menu(p34id) {
             ///z menu1
             sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet_32.png",true);
@@ -139,33 +132,11 @@
 
         }
 
-        
+              
 
         
 
-        function p31_RowSelected(sender, args) {
-            ///volá se z p31_subgrid
-            document.getElementById("<%=hiddatapid_p31.clientid%>").value = args.getDataKeyValue("pid");
-
-        }
-
-        function p31_RowDoubleClick(sender, args) {
-            ///volá se z p31_subgrid
-            record_p31_edit();
-            
-        }
-
-        function record_p31_edit() {
-            var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?pid="+pid,"Images/worksheet_32.png");
-
-        }
-
-        function p31_subgrid_setting(j74id) {
-            ///volá se z p31_subgrid
-            sw_local("grid_designer.aspx?prefix=p31&masterprefix=p41&pid="+j74id, "Images/griddesigner_32.png",true);
-            
-        }
+        
         function p56_subgrid_setting(j74id) {
             ///volá se z p56_subgrid
             sw_local("grid_designer.aspx?prefix=p56&masterprefix=p41&pid="+j74id, "Images/griddesigner_32.png",true);
@@ -315,6 +286,36 @@
                     return;
                 }                
             });            
+        }
+        function RowSelected_budget(sender, args) {
+            document.getElementById("<%=hidBudgetPID.clientid%>").value = args.getDataKeyValue("pid");            
+        }
+
+        function RowDoubleClick_budget(sender, args) {
+            budget_edit();
+            
+        }
+        function budget_edit() {
+            var pid = document.getElementById("<%=hidBudgetPID.clientid%>").value;
+            <%If Me.cmdBudgetP46.Checked Then%>
+            p45_detail();
+            <%end if%>
+            <%If Me.cmdBudgetP49.Checked Then%>
+            p49_record(pid);            
+            <%end if%>
+        }
+        function p49_record(pid) {            
+            var p45id=document.getElementById("<%=Me.p45ID.ClientID%>").value;
+            sw_local("p49_record.aspx?pid=" + pid+"&p45id="+p45id, "Images/budget_32.png");
+        }
+        function p49_to_p31() {
+            var p49id = document.getElementById("<%=hidBudgetPID.clientid%>").value;
+            if (p49id == "" || p49id == null) {
+                alert("Musíte vybrat položku rozpočtu.");
+                return
+            }
+            sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p49id="+p49id,"Images/worksheet_32.png",true);
+            return(false);
         }
     </script>
 </asp:Content>
@@ -573,11 +574,11 @@
             <telerik:RadTab Text="x" Value="0" ToolTip="Nezobrazovat pod-přehled"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
-
+    <iframe frameborder="0" id="fraSubform" runat="server" width="100%" height="300px"></iframe>
 
     <uc:p31_bigsummary ID="bigsummary1" runat="server" MasterDataPrefix="p41" />
 
-    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p41Project" AllowMultiSelect="true"></uc:p31_subgrid>
+    
     <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
 
     <uc:p56_subgrid ID="gridP56" runat="server" x29ID="p41Project" />
@@ -593,17 +594,20 @@
             <asp:RadioButton ID="cmdBudgetP46" Text="Rozpočet hodin" AutoPostBack="false" runat="server" onclick="OnChangeBudgetView('p46')" />
             <asp:RadioButton ID="cmdBudgetP49" Text="Rozpočet výdajů a fixních příjmů" AutoPostBack="false" runat="server" onclick="OnChangeBudgetView('p49')" />
             <button type="button" id="cmdP47" runat="server" onclick="p47_plan()" class="cmd" visible="false">Kapacitní plán projektu</button>
+            <button type="button" id="cmdNewP49" runat="server" onclick="p49_record(0)" class="cmd" visible="false" title="Nová položka peněžního rozpočtu"><img src="Images/new.png" alt="Nový" /></button>
+            <button type="button" id="cmdConvert2P31" runat="server" onclick="p49_to_p31()" class="cmd" visible="false" title="Konvertovat položku rozpočtu do worksheet úkonu"><img src="Images/worksheet.png" alt="Worksheet" /></button>
         </div>
         <div style="clear:both;"></div>
-        <uc:datagrid ID="gridBudget" runat="server"></uc:datagrid>
+        <uc:datagrid ID="gridBudget" runat="server" OnRowSelected="RowSelected_budget" OnRowDblClick="RowDoubleClick_budget"></uc:datagrid>
         
     </asp:Panel>
 
     <asp:HiddenField ID="hiddatapid_subform" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-    <asp:HiddenField ID="hiddatapid_p31" runat="server" />
+    
     <asp:HiddenField ID="hidIsBin" runat="server" />
+    <asp:HiddenField ID="hidBudgetPID" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 

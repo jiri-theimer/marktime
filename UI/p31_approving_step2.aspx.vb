@@ -26,9 +26,9 @@
 
                 End If
                 ViewState("clearapprove") = Request.Item("clearapprove")
-                Dim s As String = "Schvalování worksheet úkonů"
+                Dim s As String = "Rekapitulace úkonů pro schvalování"
                 If ViewState("clearapprove") = "1" Then
-                    s = "Vyčištění schvalovacího příznaku"
+                    s = "Rekapitulace úkonů pro vyčištění schvalovacího statusu"
                 End If
 
                 If ViewState("masterprefix") <> "" Then

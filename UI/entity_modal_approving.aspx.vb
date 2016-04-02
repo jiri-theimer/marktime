@@ -202,9 +202,9 @@
         End Select
 
         If ViewState("can_create_invoice") Then
-            If Master.RadToolbar.Items.FindItemByValue("quick") Is Nothing Then
-                Master.AddToolbarButton("Zrychlená fakturace jednou částkou", "quick", 1, "Images/invoice.png")
-            End If
+            panQuickInvoice.Visible = True
+        Else
+            panQuickInvoice.Visible = False
         End If
 
         If Not bolCanApprove Then
@@ -692,9 +692,8 @@
 
     
    
-    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        If strButtonValue = "quick" Then
-            Response.Redirect("p91_create_step1.aspx?quick=1&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString)
-        End If
+  
+    Private Sub cmdQuickInvoice_Click(sender As Object, e As EventArgs) Handles cmdQuickInvoice.Click
+        Response.Redirect("p91_create_step1.aspx?quick=1&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString)
     End Sub
 End Class

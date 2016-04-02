@@ -140,13 +140,13 @@
     }
 
     function periodcombo_setting() {
-
-        sw_local("periodcombo_setting.aspx", "Images/settings_32.png");
+        p31_subgrid_periodcombo();
+        
     }
 
     function querybuilder() {
         var j70id = "<%=Me.CurrentJ70ID%>";
-        sw_local("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query_32.png", true);
+        p31_subgrid_querybuilder(j70id);
         return (false);
     }
 
@@ -157,9 +157,8 @@
             return;
 
         }
-
-        window.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
-
+        p31_subgrid_approving(pids);
+        
 
     }
 

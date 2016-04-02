@@ -5,7 +5,7 @@ Public Interface Ip49FinancialPlanBL
     Function SaveBatch(lis As List(Of BO.p49FinancialPlan)) As Boolean
     Function Load(intPID As Integer) As BO.p49FinancialPlan
     Function LoadExtended(intPID As Integer) As BO.p49FinancialPlanExtended
-    Function LoadMyLastCreated() As BO.p49FinancialPlan
+    Function LoadMyLastCreated(intP45ID As Integer) As BO.p49FinancialPlan
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP49) As IEnumerable(Of BO.p49FinancialPlan)
     Function GetList_Extended(mq As BO.myQueryP49, Optional intP41ID_OptimizeSQL As Integer = 0) As IEnumerable(Of BO.p49FinancialPlanExtended)
@@ -90,8 +90,8 @@ Class p49FinancialPlanBL
     Public Function LoadExtended(intPID As Integer) As BO.p49FinancialPlanExtended Implements Ip49FinancialPlanBL.LoadExtended
         Return _cDL.LoadExtended(intPID)
     End Function
-    Public Function LoadMyLastCreated() As BO.p49FinancialPlan Implements Ip49FinancialPlanBL.LoadMyLastCreated
-        Return _cDL.LoadMyLastCreated()
+    Public Function LoadMyLastCreated(intP45ID As Integer) As BO.p49FinancialPlan Implements Ip49FinancialPlanBL.LoadMyLastCreated
+        Return _cDL.LoadMyLastCreated(intP45ID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ip49FinancialPlanBL.Delete
         Return _cDL.Delete(intPID)

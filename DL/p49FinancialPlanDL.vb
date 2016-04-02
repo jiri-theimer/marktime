@@ -15,9 +15,9 @@
 
         Return _cDB.GetRecord(Of BO.p49FinancialPlanExtended)(s, New With {.p49id = intPID})
     End Function
-    Public Function LoadMyLastCreated() As BO.p49FinancialPlan
+    Public Function LoadMyLastCreated(intP45ID As Integer) As BO.p49FinancialPlan
         Dim s As String = GetSQLPart1(1, False)
-        s += " WHERE a.p49UserInsert=@login ORDER BY a.p49ID DESC"
+        s += " WHERE a.p45ID=" & intP45ID.ToString & " AND a.p49UserInsert=@login ORDER BY a.p49ID DESC"
 
         Return _cDB.GetRecord(Of BO.p49FinancialPlan)(s, New With {.login = _curUser.j03Login})
     End Function

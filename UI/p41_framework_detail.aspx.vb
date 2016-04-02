@@ -32,7 +32,7 @@ Public Class p41_framework_detail
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         With Master
-            gridP31.Factory = .Factory
+            ''gridP31.Factory = .Factory
             p31summary1.Factory = .Factory
 
             gridP91.Factory = .Factory
@@ -107,12 +107,13 @@ Public Class p41_framework_detail
 
         End If
 
-        gridP31.MasterDataPID = 0     'uvnitř prvku nebude docházet k plnění gridu
+        ''gridP31.MasterDataPID = 0     'uvnitř prvku nebude docházet k plnění gridu
         Select Case Me.CurrentSubgrid
             Case SubgridType.p56
                 gridP56.MasterDataPID = Master.DataPID
             Case SubgridType.p31
-                gridP31.MasterDataPID = Master.DataPID
+                fraSubform.Attributes.Item("src") = "entity_framework_p31subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString
+                ''gridP31.MasterDataPID = Master.DataPID
             Case SubgridType.p91
                 gridP91.MasterDataPID = Master.DataPID
             Case SubgridType.b07
@@ -309,6 +310,7 @@ Public Class p41_framework_detail
                 Me.p45ID.DataBind()
                 cmdP45.InnerText = "Nastavení rozpočtu"
                 cmdP47.Visible = cmdBudgetP46.Checked
+                cmdNewP49.Visible = cmdBudgetP49.Checked : cmdConvert2P31.Visible = cmdBudgetP49.Checked
             Else
                 Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
                 cmdP45.InnerText = "Založit rozpočet"
@@ -381,7 +383,7 @@ Public Class p41_framework_detail
             If Not bolCanApprove Then Me.p31summary1.DisableApprovingButton()
 
             Me.bigsummary1.IsApprovingPerson = bolCanApprove
-            gridP31.AllowApproving = bolCanApprove
+            ''gridP31.AllowApproving = bolCanApprove
             gridP56.AllowApproving = bolCanApprove
         End With
         With cDisp
@@ -520,8 +522,8 @@ Public Class p41_framework_detail
                     Case SubgridType.summary
                         RefreshRecord()
                     Case SubgridType.p31
-                        gridP31.RecalcVirtualRowCount()
-                        gridP31.Rebind(True)
+                        ''gridP31.RecalcVirtualRowCount()
+                        ''gridP31.Rebind(True)
                     Case SubgridType.p56
                         gridP56.Rebind(True)
                 End Select
@@ -544,10 +546,10 @@ Public Class p41_framework_detail
     End Sub
 
     Private Sub p41_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        Me.gridP31.Visible = False : comments1.Visible = False
+        ''Me.gridP31.Visible = False : comments1.Visible = False
         Select Case Me.CurrentSubgrid
             Case SubgridType.p31
-                Me.gridP31.Visible = True
+                ''Me.gridP31.Visible = True
             Case SubgridType.b07
                 comments1.Visible = True
         End Select
@@ -595,6 +597,7 @@ Public Class p41_framework_detail
             .PageSize = 20
             Dim group As New Telerik.Web.UI.GridColumnGroup
             .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            .ClientDataKeyNames = "pid"
             If Me.cmdBudgetP46.Checked Then
                 group.Name = "rozpocet_hodiny" : group.HeaderText = "Limity hodin"
                 group = New Telerik.Web.UI.GridColumnGroup
@@ -639,7 +642,7 @@ Public Class p41_framework_detail
                 .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , , , "real")
                 .AddColumn("p31Code", "Kód dokladu", , , , , , , , "real")
                 .AddColumn("p31Count", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
-                
+
             End If
             
 

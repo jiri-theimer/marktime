@@ -49,7 +49,7 @@
         End If
        
         If Master.DataPID = 0 Then
-            Dim cRecLast As BO.p49FinancialPlan = Master.Factory.p49FinancialPlanBL.LoadMyLastCreated()
+            Dim cRecLast As BO.p49FinancialPlan = Master.Factory.p49FinancialPlanBL.LoadMyLastCreated(Me.CurrentP45ID)
             If Not cRecLast Is Nothing Then
                 With cRecLast
                     Me.j27ID.SelectedValue = .j27ID.ToString

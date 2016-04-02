@@ -3,8 +3,9 @@
 <%@ MasterType VirtualPath="~/ModalDataRecord.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
-<%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
+<%@ Register TagPrefix="uc" TagName="periodmonth" Src="~/periodmonth.ascx" %>
+<%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -12,10 +13,12 @@
     <table cellpadding="6">
         <tr>
             <td>
-                <asp:Label ID="lblP41ID" runat="server" CssClass="lblReq" Text="Projekt:"></asp:Label>
+                <asp:Label ID="lblP45ID" runat="server" CssClass="lblReq" Text="Rozpočet:"></asp:Label>
             </td>
             <td>
-                <uc:project ID="p41ID" runat="server" Width="400px" AutoPostBack="false" />
+                <asp:Label ID="p45Name" runat="server" CssClass="valbold"></asp:Label>
+                <asp:HiddenField ID="p45ID" runat="server" />
+                <asp:HiddenField id="p41ID" runat="server"></asp:HiddenField>
             </td>
         </tr>
         <tr>
@@ -29,6 +32,17 @@
             <td><span class="lbl">Aktivita:</span></td>
             <td>
                 <uc:datacombo ID="p32ID" runat="server" DataTextField="p32Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+            </td>
+        </tr>
+        <tr valign="top">
+            <td>
+                <asp:Label ID="lblSupplier" runat="server" Text="Dodavatel:" CssClass="lbl" Visible="false"></asp:Label>
+
+            </td>
+            <td>
+                <uc:contact ID="p28ID_Supplier" runat="server" Width="400px" Flag="supplier" Visible="false" />
+
+
             </td>
         </tr>
         <tr>
@@ -45,15 +59,9 @@
             </td>
         </tr>
         <tr>
-            <td><span class="lblReq">Datum od:</span></td>
+            <td><span class="lblReq">Měsíc:</span></td>
             <td>
-                <telerik:RadDatePicker ID="p49DateFrom" runat="server" RenderMode="Lightweight" Width="120px" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red" SharedCalendarID="SharedCalendar">
-                    <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
-                </telerik:RadDatePicker>
-                <span class="lblReq">Do:</span>
-                <telerik:RadDatePicker ID="p49DateUntil" runat="server" RenderMode="Lightweight" Width="120px" DateInput-EmptyMessage="Povinný údaj." DateInput-EmptyMessageStyle-ForeColor="red" SharedCalendarID="SharedCalendar">
-                    <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
-                </telerik:RadDatePicker>
+                <uc:periodmonth ID="month1" runat="server" AutoPostback="false" />
             </td>
         </tr>
         <tr valign="top">
@@ -64,12 +72,7 @@
         </tr>
     </table>
     
-     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
-        
-        <SpecialDays>
-                    <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
-                </SpecialDays>
-    </telerik:RadCalendar>
+     
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

@@ -14,13 +14,31 @@ Option Explicit On
 Partial Public Class p49_record
 
     '''<summary>
-    '''lblP41ID control.
+    '''lblP45ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblP41ID As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblP45ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p45Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p45Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p45ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p45ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''p41ID control.
@@ -29,7 +47,7 @@ Partial Public Class p49_record
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p41ID As Global.UI.project
+    Protected WithEvents p41ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''p34ID control.
@@ -48,6 +66,24 @@ Partial Public Class p49_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p32ID As Global.UI.datacombo
+
+    '''<summary>
+    '''lblSupplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblSupplier As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p28ID_Supplier control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28ID_Supplier As Global.UI.contact
 
     '''<summary>
     '''j02ID control.
@@ -77,22 +113,13 @@ Partial Public Class p49_record
     Protected WithEvents j27ID As Global.UI.datacombo
 
     '''<summary>
-    '''p49DateFrom control.
+    '''month1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p49DateFrom As Global.Telerik.Web.UI.RadDatePicker
-
-    '''<summary>
-    '''p49DateUntil control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p49DateUntil As Global.Telerik.Web.UI.RadDatePicker
+    Protected WithEvents month1 As Global.UI.periodmonth
 
     '''<summary>
     '''p49Text control.
@@ -102,15 +129,6 @@ Partial Public Class p49_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p49Text As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''SharedCalendar control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
 
     '''<summary>
     '''Master property.
