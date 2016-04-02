@@ -186,23 +186,26 @@ Public Class p41_framework_detail
         If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
             Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, Master.Factory.SysUser.j02ID)
             With menu1.FindItemByValue("p31")
-                Dim rp As Repeater = CType(.ContentTemplateContainer.FindControl("rp1"), Repeater)
-                AddHandler rp.ItemDataBound, AddressOf Me.p34_ItemDataBound
-                With rp
-                    .DataSource = lisP34
-                    .DataBind()
-                End With
+                For Each c In lisP34
+                    Dim mi As New Telerik.Web.UI.RadMenuItem(String.Format("Zapsat úkon do [{0}]", c.p34Name), "javascript:p31_entry_menu(" & c.PID.ToString & ")")
+                    mi.ImageUrl = "Images/worksheet.png"
+                    .Items.Add(mi)
+                Next
                 If lisP34.Count = 0 Then
-                    lblP31Message.Text = "V tomto projektu nedisponujete oprávněním k zapisování úkonů."
+                    Dim mi As New Telerik.Web.UI.RadMenuItem("V tomto projektu nedisponujete oprávněním k zapisování úkonů.")
+                    mi.ForeColor = Drawing.Color.Red
+                    menu1.FindItemByValue("p31").Items.Add(mi)
                 End If
-
             End With
         Else
+            Dim mi As New Telerik.Web.UI.RadMenuItem("V projektu nemůžete zapisovat worksheet úkony.")
             If cRec.IsClosed Then
                 hidIsBin.Value = "1"
-                lblP31Message.Text = "Do projektu v archivu nelze zapisovat nové úkony."
+                mi.Text = "Do projektu v archivu nelze zapisovat nové úkony."
             End If
-            If cRec.p41IsDraft Then Me.lblP31Message.Text = "Do projektu v režimu DRAFT nelze zapisovat úkony."
+            If cRec.p41IsDraft Then mi.Text = "Do projektu v režimu DRAFT nelze zapisovat úkony."
+            mi.ForeColor = Drawing.Color.Red
+            menu1.FindItemByValue("p31").Items.Add(mi)
         End If
         
 
@@ -218,7 +221,7 @@ Public Class p41_framework_detail
             notepad1.RefreshData(lisO23, Master.DataPID)
             With Me.boxO23Title
                 .Text = BO.BAS.OM2(.Text, lisO23.Count.ToString)
-                If panO23.Visible Then
+                If menu1.FindItemByValue("cmdO23").Visible Then
                     .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
                 End If
             End With
@@ -353,15 +356,19 @@ Public Class p41_framework_detail
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.p41Project)
+        menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString
+
         Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
-        cmdLog.Visible = cDisp.OwnerAccess
+        menu1.FindItemByValue("cmdLog").Visible = cDisp.OwnerAccess
 
         With Master.Factory
-            panCreateCommands.Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
-            panCommandPivot.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
-            panO23.Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
-            panO22.Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
-            If cRec.b01ID <> 0 Then Me.panB07.Visible = False
+            menu1.FindItemByValue("cmdNew").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
+            menu1.FindItemByValue("cmdCopy").Visible = menu1.FindItemByValue("cmdNew").Visible
+            menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+            menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString
+            menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
+            menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
+            If cRec.b01ID <> 0 Then menu1.FindItemByValue("cmdB07").Visible = False
 
             Dim bolCanApprove As Boolean = .TestPermission(BO.x53PermValEnum.GR_P31_Approver)
             If bolCanApprove = False And cDisp.x67IDs.Count > 0 Then
@@ -378,16 +385,16 @@ Public Class p41_framework_detail
             gridP56.AllowApproving = bolCanApprove
         End With
         With cDisp
-            panP56.Visible = .P56_Create
+            menu1.FindItemByValue("cmdP56").Visible = .P56_Create
             gridP56.IsAllowedCreateTasks = .P56_Create
 
             boxP30.Visible = .OwnerAccess
-            panP31Recalc.Visible = .P31_RecalcRates
-            panP31MoveToBin.Visible = .P31_Move2Bin
-            panP31Move2OtherProject.Visible = .P31_MoveToOtherProject
-            panEdit.Visible = .OwnerAccess
-            panP40.Visible = .OwnerAccess
-            panP30.Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdP31Recalc").Visible = .P31_RecalcRates
+            menu1.FindItemByValue("cmdP31Move2Bin").Visible = .P31_Move2Bin
+            menu1.FindItemByValue("cmdP31MoveToOtherProject").Visible = .P31_MoveToOtherProject
+            menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdP40Create").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdP30").Visible = .OwnerAccess
             topLink6.Visible = Master.Factory.SysUser.j04IsMenu_Invoice
             If Not .p91_Read Then
                 topLink6.Visible = False
@@ -404,7 +411,7 @@ Public Class p41_framework_detail
             End If
         End With
 
-        If Not (panEdit.Visible Or panCreateCommands.Visible) Then
+        If Not (menu1.FindItemByValue("cmdEdit").Visible Or menu1.FindItemByValue("cmdNew").Visible) Then
             Try
                 menu1.Items.Remove(menu1.FindItemByValue("record"))
             Catch ex As Exception
@@ -418,7 +425,7 @@ Public Class p41_framework_detail
         End If
 
 
-        If cRec.IsClosed Then panO22.Visible = False : panP40.Visible = False : panP56.Visible = False 'projekt je v archivu
+        If cRec.IsClosed Then menu1.FindItemByValue("cmdO22").Visible = False : menu1.FindItemByValue("cmdP40Create").Visible = False : menu1.FindItemByValue("cmdP56").Visible = False 'projekt je v archivu
     End Sub
 
     Private Sub RefreshOtherBillingSetting(cRec As BO.p41Project, cClient As BO.p28Contact)
@@ -493,16 +500,6 @@ Public Class p41_framework_detail
         End With
     End Sub
 
-    Private Sub p34_ItemDataBound(sender As Object, e As RepeaterItemEventArgs)
-        Dim cRec As BO.p34ActivityGroup = CType(e.Item.DataItem, BO.p34ActivityGroup)
-        With CType(e.Item.FindControl("aP34"), HyperLink)
-            .Text = "Zapsat úkon do [" & cRec.p34Name & "]"
-            .NavigateUrl = "javascript:p31_entry_menu(" & cRec.PID.ToString & ")"
-        End With
-
-    End Sub
-
-
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         If Me.hidHardRefreshFlag.Value = "" And Me.hidHardRefreshPID.Value = "" Then Return
 
@@ -537,7 +534,7 @@ Public Class p41_framework_detail
 
             Case "p51-save"
                 Master.Notify("Pokud jste změnili sazby v ceníku a potřebujete přepočítat sazby u již uložené rozpracovanosti, použijte k tomu nástroj [Přepočítat sazby rozpracovaných úkonů].", NotifyLevel.InfoMessage)
-            
+
 
             Case Else
                 ReloadPage(Master.DataPID.ToString)

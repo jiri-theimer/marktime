@@ -206,7 +206,7 @@
                     <telerik:RadMenuItem Text="8" ImageUrl="Images/messages.png" Value="messages" ForeColor="#ffffff" ToolTip="Upozornění ze systému" NavigateUrl="javascript:messages();">
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Value="help" Target="_blank" Text="?">
+                    <telerik:RadMenuItem Value="help" Target="_blank" Text="?" ToolTip="Nápověda">
                     </telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenu>

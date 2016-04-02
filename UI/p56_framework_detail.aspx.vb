@@ -62,36 +62,39 @@
             If Not .ReadAccess Then
                 Master.StopPage("Nedisponujete oprávněním číst tento úkol.")
             End If
-            panEdit.Visible = .OwnerAccess
-            panClone.Visible = .OwnerAccess
-            panCreate.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
-            If Not (panEdit.Visible And panClone.Visible And panCreate.Visible) Then
-                menu1.FindItemByValue("record").Visible = False
-            End If
-            If Not .P31_Create Then lblP31Message.Text = "V úkolu nedisponujete oprávněním k zapisování úkonů."
-
+            menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdCopy").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdNew").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
+            
         End With
+        menu1.FindItemByValue("cmdPivot").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+        menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString
 
         If cDisp.P31_Create Then
             If Not cRec.IsClosed Then
                 Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.p41ID, cP41.p42ID, cP41.j18ID, Master.Factory.SysUser.j02ID)
                 With menu1.FindItemByValue("p31")
-                    Dim rp As Repeater = CType(.ContentTemplateContainer.FindControl("rp1"), Repeater)
-                    AddHandler rp.ItemDataBound, AddressOf Me.p34_ItemDataBound
-                    With rp
-                        .DataSource = lisP34
-                        .DataBind()
-                    End With
+                    For Each c In lisP34
+                        Dim mi As New Telerik.Web.UI.RadMenuItem(String.Format("Zapsat úkon do [{0}]", c.p34Name), "javascript:p31_entry_menu(" & c.PID.ToString & ")")
+                        mi.ImageUrl = "Images/worksheet.png"
+                        .Items.Add(mi)
+                    Next
                     If lisP34.Count = 0 Then
-                        lblP31Message.Text = "V projektu úkolu nedisponujete oprávněním k zapisování úkonů."
+                        Dim mi As New Telerik.Web.UI.RadMenuItem("V projektu úkolu nedisponujete oprávněním k zapisování úkonů.")
+                        mi.ForeColor = Drawing.Color.Red
+                        menu1.FindItemByValue("p31").Items.Add(mi)
                     End If
-
                 End With
             Else
-                lblP31Message.Text = "Do uzavřeného úkolu nelze zapisovat nové úkony."
+                Dim mi As New Telerik.Web.UI.RadMenuItem("Do uzavřeného úkolu nelze zapisovat nové úkony.")
+                mi.ForeColor = Drawing.Color.Red
+                menu1.FindItemByValue("p31").Items.Add(mi)
                 Me.hidIsBin.Value = "1"
             End If
-
+        Else
+            Dim mi As New Telerik.Web.UI.RadMenuItem("V úkolu nedisponujete oprávněním k zapisování úkonů.")
+            mi.ForeColor = Drawing.Color.Red
+            menu1.FindItemByValue("p31").Items.Add(mi)
         End If
         Dim bolCanApprove As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
         Dim cDispP41 As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)
@@ -103,6 +106,9 @@
             End If
         End If
         topLink1.Visible = bolCanApprove
+        If cRec.b01ID <> 0 Then
+            menu1.FindItemByValue("cmdB07").Visible = False
+        End If
     End Sub
 
     Private Sub RefreshRecord()
@@ -236,14 +242,7 @@
             boxIMAP.Visible = False
         End If
     End Sub
-    Private Sub p34_ItemDataBound(sender As Object, e As RepeaterItemEventArgs)
-        Dim cRec As BO.p34ActivityGroup = CType(e.Item.DataItem, BO.p34ActivityGroup)
-        With CType(e.Item.FindControl("aP34"), HyperLink)
-            .Text = "Zapsat úkon do [" & cRec.p34Name & "]"
-            .NavigateUrl = "javascript:p31_entry_menu(" & cRec.PID.ToString & ")"
-        End With
-
-    End Sub
+    
 
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click

@@ -238,8 +238,8 @@ Public Class j02_framework_detail
 
     Private Sub Handle_Permissions(cRec As BO.j02Person)
         With Master.Factory
-            panO23.Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
-            panO22.Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
+            menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
+            menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
             If Not .SysUser.j04IsMenu_Invoice Then
                 topLink6.Visible = False
                 If Not Me.opgSubgrid.Tabs.FindTabByValue("2") Is Nothing Then
@@ -252,8 +252,9 @@ Public Class j02_framework_detail
         
 
         Dim b As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
-
-        panAdminCommands.Visible = b
+        menu1.FindItemByValue("cmdNew").Visible = b
+        menu1.FindItemByValue("cmdEdit").Visible = b
+        menu1.FindItemByValue("cmdCopy").Visible = b
         With cmdAccount
             .Visible = b
             If Me.CurrentJ03ID = 0 And b Then
@@ -265,10 +266,13 @@ Public Class j02_framework_detail
             End If
         End With
         
-        panCommandPivot.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
-
+        menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString
+        With menu1.FindItemByValue("cmdPivot")
+            .Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+            If .Visible Then .NavigateUrl = "p31_pivot.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString
+        End With
         If cRec.IsClosed Then
-            panO22.Visible = False
+            menu1.FindItemByValue("cmdO22").Visible = False
             Me.hidIsBin.Value = "1"
         End If
     End Sub

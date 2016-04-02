@@ -185,7 +185,7 @@ Public Class p28_framework_detail
             notepad1.RefreshData(lisO23, Master.DataPID)
             With Me.boxO23Title
                 .Text = .Text & " (" & lisO23.Count.ToString & ")"
-                If panO23.Visible Then
+                If menu1.FindItemByValue("cmdO23").Visible Then
                     .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
                 End If
             End With
@@ -246,19 +246,22 @@ Public Class p28_framework_detail
         End If
     End Sub
     Private Sub Handle_Permissions(cRec As BO.p28Contact)
+        menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString
         Dim cDisp As BO.p28RecordDisposition = Master.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
         If Not cDisp.ReadAccess Then
             Master.StopPage("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
-        
+
 
         With Master.Factory
-            panO23.Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)
-            panO22.Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
+            menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)
+            menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
 
-            panCreateCommands.Visible = .TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator)
-            panCommandPivot.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
-            panNewP41.Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
+            menu1.FindItemByValue("cmdNew").Visible = .TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator)
+            menu1.FindItemByValue("cmdCopy").Visible = menu1.FindItemByValue("cmdNew").Visible
+            menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+            menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString
+            menu1.FindItemByValue("cmdNewP41").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
 
             bigsummary1.IsApprovingPerson = .SysUser.IsApprovingPerson
             If Not .SysUser.IsApprovingPerson Then
@@ -281,14 +284,12 @@ Public Class p28_framework_detail
         End With
 
 
-        panEdit.Visible = cDisp.OwnerAccess
-        If Not (panEdit.Visible Or panCreateCommands.Visible Or panNewP41.Visible) Then
-            menu1.Items.Remove(menu1.FindItemByValue("record"))
-        End If
+        menu1.FindItemByValue("cmdEdit").Visible = cDisp.OwnerAccess
+        menu1.FindItemByValue("cmdCopy").Visible = cDisp.OwnerAccess
 
         cmdEditP30.Visible = cDisp.OwnerAccess
-        panP30.Visible = cDisp.OwnerAccess
-        cmdLog.Visible = cDisp.OwnerAccess
+        menu1.FindItemByValue("cmdP30").Visible = cDisp.OwnerAccess
+        menu1.FindItemByValue("cmdLog").Visible = cDisp.OwnerAccess
 
         If cRec.b02ID = 0 And cRec.p28IsDraft And cDisp.OwnerAccess Then
             panDraftCommands.Visible = True 'pokud je vlastník a projekt nemá workflow šablonu
@@ -297,7 +298,7 @@ Public Class p28_framework_detail
         End If
 
         If cRec.IsClosed Then
-            panO22.Visible = False : panNewP41.Visible = False : panP30.Visible = False 'klient je v archivu
+            menu1.FindItemByValue("cmdO22").Visible = False : menu1.FindItemByValue("cmdNewP41").Visible = False : menu1.FindItemByValue("cmdP30").Visible = False 'klient je v archivu
             Me.hidIsBin.Value = "1"
         End If
 

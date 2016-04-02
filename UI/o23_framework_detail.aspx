@@ -176,47 +176,16 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZÁZNAM DOKUMENTU" ImageUrl="Images/arrow_down_menu.png" Value="record">
-                    <ContentTemplate>
-                        <div style="padding: 10px; width: 450px;">
-                            <asp:Label ID="lblPermissionMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>
-                            <asp:Panel ID="panEdit" runat="server" CssClass="div6">
-                                <img src="Images/edit.png" />
-                                <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit nastavení dokumentu" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
-                                <div>
-                                    <span class="infoInForm">Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění.</span>
-                                </div>
-
-                            </asp:Panel>
-                            <asp:Panel ID="panCreate" runat="server">
-                                <div class="div6">
-                                    <img src="Images/new.png" />
-                                    <asp:HyperLink ID="cmdNew" runat="server" Text="Vytvořit nový dokument" NavigateUrl="javascript:record_new()"></asp:HyperLink>
-
-                                </div>
-                            </asp:Panel>
-                            <asp:Panel ID="panClone" runat="server">
-
-                                <div class="div6">
-                                    <img src="Images/copy.png" />
-                                    <asp:HyperLink ID="cmdCopy" runat="server" Text="Vytvořit dokument kopírováním" NavigateUrl="javascript:record_clone()"></asp:HyperLink>
-                                    <div>
-                                        <span class="infoInForm">Nový dokument se kompletně předvyplní podle vzoru tohoto záznamu.</span>
-                                    </div>
-                                </div>
-                            </asp:Panel>
-
-                            <asp:Panel ID="panLockUnlockFlag1" runat="server" CssClass="div6">
-                                <asp:Image ID="imgLockUnlockFlag1" runat="server" ImageUrl="Images/lock.png" />
-                                <asp:LinkButton ID="cmdLockUnlockFlag1" runat="server" Text="Uzamknout přístup ke všem souborům dokumentu" Visible="true"></asp:LinkButton>
-
-                            </asp:Panel>
-                            <asp:Panel ID="panCommentAppend" runat="server" CssClass="div6">
-                                <img src="Images/comment.png" />
-                                <a href="javascript:b07_record();">Zapsat komentář</a>
-                            </asp:Panel>
-                        </div>
-                    </ContentTemplate>
-
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení dokumentu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdNew" Text="Vytvořit nový dokument" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdCopy" Text="Vytvořit dokument kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový dokument se kompletně předvyplní podle vzoru tohoto záznamu."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdLockUnlockFlag1" Text="Uzamknout přístup ke všem souborům dokumentu" ImageUrl="Images/lock.png" NavigateUrl="javascript:hardrefresh(-1,'lockunlock')"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                    </Items>
+                   
                 </telerik:RadMenuItem>
 
 
@@ -229,6 +198,7 @@
 
                     </ItemTemplate>
                 </telerik:RadMenuItem>
+                
             </Items>
         </telerik:RadMenu>
 
@@ -243,6 +213,7 @@
                 <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
             </div>
             <div class="content">
+                <asp:Label ID="lblPermissionMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="top">
                         <td style="min-width: 90px;">

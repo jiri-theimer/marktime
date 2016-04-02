@@ -60,15 +60,15 @@
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.o23Notepad)
-        panCreate.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator)
+        menu1.FindItemByValue("cmdNew").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator)
 
         Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23NotepadBL.InhaleRecordDisposition(cRec)
         With cDisp
             If Not .ReadAccess Then
                 Master.StopPage("Nedisponujete oprávněním přistupovat k tomuto dokumentu.")
             End If
-            panEdit.Visible = .OwnerAccess
-            panClone.Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdCopy").Visible = .OwnerAccess
             If Not .OwnerAccess Then
                 lblPermissionMessage.Text = "Disponujete základní úrovní přístupu k dokumentu."
             End If
@@ -78,21 +78,21 @@
         Else
             panDraftCommands.Visible = False
         End If
-        panCommentAppend.Visible = cDisp.Comments
+        menu1.FindItemByValue("cmdB07").Visible = cDisp.Comments
         upload1.Visible = cDisp.FileAppender
-        panLockUnlockFlag1.Visible = cDisp.LockUnlockFiles_Flag1
+        menu1.FindItemByValue("cmdLockUnlockFlag1").Visible = cDisp.LockUnlockFiles_Flag1
 
         Select Case cRec.o23LockedFlag
             Case BO.o23LockedTypeENUM.LockAllFiles
-                imgLockUnlockFlag1.ImageUrl = "Images/unlock.png"
+                menu1.FindItemByValue("cmdLockUnlockFlag1").ImageUrl = "Images/unlock.png"
                 upload1.Visible = False   'přístup k souborům dokumentu uzamčen
                 Fileupload_list__readonly.LockFlag = CInt(cRec.o23LockedFlag)
-                cmdLockUnlockFlag1.Text = "Otevřít přístup k souborům dokumentu"
+                menu1.FindItemByValue("cmdLockUnlockFlag1").Text = "Otevřít přístup k souborům dokumentu"
                 filesPreview.Visible = False
             Case Else
-                imgLockUnlockFlag1.ImageUrl = "Images/lock.png"
+                menu1.FindItemByValue("cmdLockUnlockFlag1").ImageUrl = "Images/lock.png"
                 Fileupload_list__readonly.LockFlag = 0
-                cmdLockUnlockFlag1.Text = "Dočasně uzavřít přístup k souborům dokumentu"
+                menu1.FindItemByValue("cmdLockUnlockFlag1").Text = "Dočasně uzavřít přístup k souborům dokumentu"
         End Select
 
 
@@ -294,7 +294,7 @@
         If cO24.b01ID <> 0 Then
             Me.trWorkflow.Visible = True
             Me.b02Name.Text = cRec.b02Name
-            panCommentAppend.Visible = False
+            menu1.FindItemByValue("cmdB07").Visible = False
         Else
             Me.trWorkflow.Visible = False
         End If
@@ -322,6 +322,8 @@
                 Master.DataPID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
             Case "o23-delete"
                 Response.Redirect("entity_framework_detail_missing.aspx?prefix=o23")
+            Case "lockunlock"
+                LockUnlockDocument()
             Case Else
 
         End Select
@@ -385,7 +387,19 @@
         End If
     End Sub
 
-    Private Sub cmdLockUnlockFlag1_Click(sender As Object, e As EventArgs) Handles cmdLockUnlockFlag1.Click
+    
+
+    Private Sub RefreshImapBox(cRec As BO.o23Notepad)
+        If cRec.o43ID <> 0 Then
+            'dokument byl založen IMAP robotem
+            imap1.RefreshData(Master.Factory.o42ImapRuleBL.LoadHistoryByID(cRec.o43ID))
+            boxIMAP.Visible = True
+        Else
+            boxIMAP.Visible = False
+        End If
+    End Sub
+
+    Private Sub LockUnlockDocument()
         With Master.Factory.o23NotepadBL
             Dim cRec As BO.o23Notepad = .Load(Master.DataPID), b As Boolean = False
             If cRec.o23LockedFlag = BO.o23LockedTypeENUM._NotSpecified Then
@@ -399,16 +413,5 @@
                 ReloadPage(Master.DataPID.ToString)
             End If
         End With
-        
-    End Sub
-
-    Private Sub RefreshImapBox(cRec As BO.o23Notepad)
-        If cRec.o43ID <> 0 Then
-            'dokument byl založen IMAP robotem
-            imap1.RefreshData(Master.Factory.o42ImapRuleBL.LoadHistoryByID(cRec.o43ID))
-            boxIMAP.Visible = True
-        Else
-            boxIMAP.Visible = False
-        End If
     End Sub
 End Class

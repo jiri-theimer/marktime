@@ -242,108 +242,38 @@
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" Value="record">
-                    <ContentTemplate>
-                        <div style="padding: 10px; width: 450px;">
-
-                            <asp:Panel ID="panCommandEdit" runat="server" CssClass="div6">
-                                <asp:Image ID="imgEdit" ImageUrl="Images/edit.png" runat="server" />
-                                <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit nastavení faktury" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
-
-
-                                <asp:HyperLink ID="cmdCreateInvoice" runat="server" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new()" Style="float: right;"></asp:HyperLink>
-
-                                <div>
-                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.</span>
-                                </div>
-
-                            </asp:Panel>
-
-                            <asp:Panel ID="panPay" runat="server">
-                                <div class="div6">
-                                    <img src="Images/payment.png" />
-                                    <asp:HyperLink ID="cmdPay" runat="server" Text="Zapsat úhradu faktury" NavigateUrl="javascript:pay()"></asp:HyperLink>
-                                    <div>
-                                        <span class="infoInForm">Je možné zapsat úplnou nebo částečnou úhradu faktury.</span>
-                                    </div>
-                                </div>
-                            </asp:Panel>
-                            <asp:Panel ID="panRecordCommands" runat="server">
-                                <div class="div6">
-                                    <img src="Images/worksheet.png" />
-                                    <asp:HyperLink ID="cmdAppendWorksheet" runat="server" Text="Přidat do faktury další položky (úkony)" NavigateUrl="javascript:p31_add()"></asp:HyperLink>
-                                    <div>
-                                        <span class="infoInForm">Způsob, jak do faktury přidat slevu, přirážku, fixní odměnu, další časové úkony, výdaje apod.</span>
-                                    </div>
-                                </div>
-                                <div class="div6">
-                                    <img src="Images/recalc.png" />
-                                    <asp:HyperLink ID="cmdChangeCurrency" runat="server" Text="Převést fakturu na jinou měnu" NavigateUrl="javascript:changecurrency()"></asp:HyperLink>
-
-                                </div>
-                                <div class="div6">
-                                    <img src="Images/recalc.png" />
-                                    <asp:HyperLink ID="cmdChangeVat" runat="server" Text="Převést fakturu kompletně na jinou DPH sazbu" NavigateUrl="javascript:changevat()"></asp:HyperLink>
-
-                                </div>
-                            </asp:Panel>
-                            <asp:Panel ID="panProforma" runat="server" CssClass="div6">
-                                <img src="Images/proforma.png" />
-                                <asp:HyperLink ID="cmdProforma" runat="server" Text="Spárovat fakturu s uhrazenou zálohou" NavigateUrl="javascript:proforma()"></asp:HyperLink>
-
-                            </asp:Panel>
-                            <asp:Panel ID="panCreditNote" runat="server" CssClass="div6">
-                                <img src="Images/correction_down.gif" />
-                                <asp:HyperLink ID="cmdCreditNote" runat="server" Text="Vytvořit k faktuře opravný doklad" NavigateUrl="javascript:creditnote()"></asp:HyperLink>
-
-                            </asp:Panel>
-                        </div>
-                    </ContentTemplate>
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdCreateInvoice" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPay" Text="Zapsat úhradu faktury" NavigateUrl="javascript:pay();" ImageUrl="Images/payment.png" ToolTip="Je možné zapsat úplnou nebo částečnou úhradu faktury."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdAppendWorksheet" Text="Přidat do faktury další položky (úkony)" NavigateUrl="javascript:p31_add();" ImageUrl="Images/worksheet.png" ToolTip="Způsob, jak do faktury přidat slevu, přirážku, fixní odměnu, další časové úkony, výdaje apod."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdChangeCurrency" Text="Převést fakturu na jinou měnu" NavigateUrl="javascript:changecurrency();" ImageUrl="Images/recalc.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdChangeVat" Text="Převést fakturu kompletně na jinou DPH sazbu" NavigateUrl="javascript:changevat();" ImageUrl="Images/recalc.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdProforma" Text="Spárovat fakturu s uhrazenou zálohou" NavigateUrl="javascript:proforma();" ImageUrl="Images/proforma.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdCreditNote" Text="Vytvořit k faktuře opravný doklad" NavigateUrl="javascript:creditnote();" ImageUrl="Images/correction_down.gif"></telerik:RadMenuItem>
+                    </Items>                    
 
                 </telerik:RadMenuItem>
 
 
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
-                    <ContentTemplate>
-                        <div style="float: left; min-width: 200px;">
-
-                            <div class="menu-group-title">Reporting</div>
-                            <div class="menu-group-item">
-                                <img src="Images/report.png" />
-                                <asp:HyperLink ID="cmdReport" runat="server" Text="Tiskové sestavy" NavigateUrl="javascript:report('')"></asp:HyperLink>
-
-                            </div>
-                            <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
-                                <img src="Images/pivot.png" />
-                                <a href="p31_pivot.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za fakturu</a>
-                            </asp:Panel>
-                            <div class="menu-group-item">
-                            <img src="Images/email.png" />
-                            <a href="x40_framework.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Historie odeslané pošty</a>
-                            </div>
-
-                            <div class="menu-group-title">Komunikace</div>
-                            <asp:Panel ID="panO23" runat="server" CssClass="menu-group-item">
-                                <img src="Images/notepad.png" />
-                                <asp:HyperLink ID="cmdO23" runat="server" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" />
-                            </asp:Panel>
-                            <asp:Panel ID="panO22" runat="server" CssClass="menu-group-item">
-                                <img src="Images/calendar.png" />
-                                <asp:HyperLink ID="cmdO22" runat="server" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" />
-                            </asp:Panel>
-                            <div class="menu-group-item">
-                                <img src="Images/comment.png" />
-                                <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat k faktuře komentář" NavigateUrl="javascript:b07_comment();" />
-                            </div>
-                            <div class="menu-group-title">Integrace</div>
-                            <div class="menu-group-item">
-                                <img src="Images/license.png" />
-                                <asp:HyperLink ID="cmdPohoda" runat="server" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" />
-                            </div>
-
-
-                        </div>
-                    </ContentTemplate>
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report('');" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za fakturu" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat k faktuře komentář" NavigateUrl="javascript:b07_comment();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPohoda" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" ImageUrl="Images/license.png"></telerik:RadMenuItem>
+                    </Items>
+                  
 
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="searchbox">

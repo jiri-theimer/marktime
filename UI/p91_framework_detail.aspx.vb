@@ -219,33 +219,40 @@ Public Class p91_framework_detail
 
 
     Private Sub Handle_Permissions(cRec As BO.p91Invoice)
+        menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
         Dim cDisp As BO.p91RecordDisposition = Master.Factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
 
         With Master.Factory
-            cmdCreateInvoice.Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
-            panO23.Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
-            panO22.Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
-            panCommandPivot.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+            menu1.FindItemByValue("cmdCreateInvoice").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
+            menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
+            menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
+            menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+            menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
         End With
         With cDisp
-            panPay.Visible = .OwnerAccess
-            panCommandEdit.Visible = .OwnerAccess
-            panRecordCommands.Visible = .OwnerAccess
-            panProforma.Visible = .OwnerAccess
-            panCreditNote.Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdPay").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdCreateInvoice").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdPay").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdAppendWorksheet").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdChangeCurrency").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdChangeVat").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdProforma").Visible = .OwnerAccess
+            menu1.FindItemByValue("cmdCreditNote").Visible = .OwnerAccess
         End With
-        
+
 
         If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.CreditNote Then
-            panPay.Visible = False
-            panProforma.Visible = False
-            panCreditNote.Visible = False
+            menu1.FindItemByValue("cmdPay").Visible = False
+            menu1.FindItemByValue("cmdProforma").Visible = False
+            menu1.FindItemByValue("cmdCreditNote").Visible = False
             lblp91DateBilled.Visible = False
             p91DateMaturity.Visible = False : lblp91DateMaturity.Visible = False
             imgRecord.Visible = True : imgRecord.ImageUrl = "Images\correction_down.gif"
             lblExchangeRate.Visible = False : p91ExchangeRate.Visible = False
         End If
     End Sub
+    
 
 
     Private Sub SetupGrid()

@@ -32,105 +32,6 @@ Partial Public Class o23_framework_detail
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''lblPermissionMessage control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblPermissionMessage As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''panEdit control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panEdit As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cmdEdit control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdEdit As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''panCreate control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panCreate As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cmdNew control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNew As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''panClone control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panClone As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cmdCopy control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCopy As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''panLockUnlockFlag1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panLockUnlockFlag1 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''imgLockUnlockFlag1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgLockUnlockFlag1 As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''cmdLockUnlockFlag1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdLockUnlockFlag1 As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''panCommentAppend control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panCommentAppend As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''tableRecord control.
     '''</summary>
     '''<remarks>
@@ -165,6 +66,15 @@ Partial Public Class o23_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdNewWindow As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''lblPermissionMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPermissionMessage As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''lblName control.

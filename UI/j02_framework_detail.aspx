@@ -275,69 +275,24 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu osoby (boxy)" />
-                <telerik:RadMenuItem Text="ZÁZNAM OSOBY" ImageUrl="Images/arrow_down_menu.png">
-                    <ContentTemplate>
-                        <div style="padding: 10px; width: 450px;">
-                            <asp:Panel ID="panAdminCommands" runat="server">
-                                <div class="div6">
-                                    <asp:Image ID="imgEdit" ImageUrl="Images/edit.png" runat="server" />
-                                    <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit osobní profil" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
-                                    <div>
-                                        <span class="infoInForm">Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.</span>
-                                    </div>
-
-                                </div>
-
-                                <div class="div6">
-                                    <asp:Image ID="imgNew" ImageUrl="Images/new.png" runat="server" />
-                                    <asp:HyperLink ID="cmdNew" runat="server" Text="Založit novou osobu" NavigateUrl="javascript:record_new()"></asp:HyperLink>
-
-                                </div>
-                                <div class="div6">
-                                    <asp:Image ID="imgCopy" ImageUrl="Images/copy.png" runat="server" />
-                                    <asp:HyperLink ID="cmdCopy" runat="server" Text="Založit novou osobu kopírováním" NavigateUrl="javascript:record_clone()"></asp:HyperLink>
-                                    <div>
-                                        <span class="infoInForm">Nově zakládaná osoba se kompletně předvyplní nastavením z aktuálního profilu.</span>
-                                    </div>
-                                </div>
-
-                            </asp:Panel>
-                        </div>
-                    </ContentTemplate>
-
+                <telerik:RadMenuItem Text="ZÁZNAM OSOBY" ImageUrl="Images/arrow_down_menu.png">                    
+                    <Items>                        
+                        <telerik:RadMenuItem Value="cmdNew" Text="Založit novou osobu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit osobní profil" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdCopy" Text="Založit novou osobu kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nově zakládaná osoba se kompletně předvyplní nastavením z aktuálního profilu."></telerik:RadMenuItem>
+                    </Items>
                 </telerik:RadMenuItem>
 
 
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
-                    <ContentTemplate>
-                        <div style="float: left; min-width: 200px;">
-                           
-                            <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
-                                <img src="Images/pivot.png" />
-                                <a href="p31_pivot.aspx?masterprefix=j02&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za osobu</a>
-                            </asp:Panel>
-
-                            
-                            <asp:Panel ID="panO23" runat="server" CssClass="menu-group-item">
-                                <img src="Images/notepad.png" />
-                                <asp:HyperLink ID="cmdO23" runat="server" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" />
-                            </asp:Panel>
-                            <asp:Panel ID="panO22" runat="server" CssClass="menu-group-item">
-                                <img src="Images/calendar.png" />
-                                <asp:HyperLink ID="cmdO22" runat="server" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" />
-                            </asp:Panel>
-                            <div class="menu-group-item">
-                                <img src="Images/oplan.png" />
-                                <asp:HyperLink ID="cmdP48" runat="server" Text="Operativní plán" NavigateUrl="javascript:p48_plan()"></asp:HyperLink>
-                            </div>
-                            <div class="menu-group-item">
-                            <img src="Images/email.png" />
-                            <a href="x40_framework.aspx?masterprefix=j02&masterpid=<%=Master.DataPID%>" target="_top">Historie odeslané pošty</a>
-                            </div>
-                        </div>
-                    </ContentTemplate>
-
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za osobu" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
+                    </Items>                    
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="searchbox">
                     <ItemTemplate>

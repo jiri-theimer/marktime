@@ -205,84 +205,25 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="250px"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZÁZNAM ÚKOLU" ImageUrl="Images/arrow_down_menu.png" Value="record">
-                    <ContentTemplate>
-                        <div style="padding: 10px; width: 450px;">
-
-                            <asp:Panel ID="panEdit" runat="server" CssClass="div6">
-                                <img src="Images/edit.png" />
-                                <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit nastavení úkolu" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
-                                <div>
-                                    <span class="infoInForm">Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění.</span>
-                                </div>
-
-                            </asp:Panel>
-
-                            <asp:Panel ID="panCreate" runat="server">
-                                <img src="Images/new.png" />
-                                <asp:HyperLink ID="cmdNew" runat="server" Text="Založit úkol" NavigateUrl="javascript:record_new()"></asp:HyperLink>
-
-                            </asp:Panel>
-                            <asp:Panel ID="panClone" runat="server" CssClass="div6">
-                                <img src="Images/copy.png" />
-                                <asp:HyperLink ID="cmdCopy" runat="server" Text="Založit úkol kopírováním" NavigateUrl="javascript:record_clone()"></asp:HyperLink>
-                                <div>
-                                    <span class="infoInForm">Nový úkol se kompletně předvyplní podle vzoru tohoto záznamu.</span>
-                                </div>
-                            </asp:Panel>
-
-
-
-                        </div>
-                    </ContentTemplate>
-
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení úkolu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdNew" Text="Založit úkol" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                        
+                        <telerik:RadMenuItem Value="cmdCopy" Text="Založit úkol kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový úkol se kompletně předvyplní podle vzoru tohoto záznamu."></telerik:RadMenuItem>
+                        
+                    </Items>                   
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31">
-                    <ContentTemplate>
-                        <div style="float: left; padding: 10px;">
-                            <asp:Label ID="lblP31Message" CssClass="failureNotification" runat="server"></asp:Label>
-                            <asp:Repeater ID="rp1" runat="server">
-                                <ItemTemplate>
-                                    <div class="div6">
-                                        <img src="Images/worksheet.png" />
-                                        <asp:HyperLink ID="aP34" runat="server" Text=""></asp:HyperLink>
-                                    </div>
-
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </div>
-                    </ContentTemplate>
-
-                </telerik:RadMenuItem>
-
-
+                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
-                    <ContentTemplate>
-                        <div style="float: left; min-width: 200px;">
-                            <div class="menu-group-title">Reporting</div>
-                            <div class="menu-group-item">
-                                <img src="Images/report.png" />
-                                <asp:HyperLink ID="cmdReport" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()"></asp:HyperLink>
-                            </div>
-                            <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
-                                <img src="Images/pivot.png" />
-                                <a href="p31_pivot.aspx?masterprefix=p56&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot úkolu</a>
-                            </asp:Panel>
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za úkol" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>                        
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>                        
+                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
 
-                            <div class="menu-group-title">Komunikace</div>
-
-                            <asp:Panel ID="panO23" runat="server" CssClass="menu-group-item">
-                                <img src="Images/notepad.png" />
-                                <asp:HyperLink ID="cmdO23" runat="server" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" />
-                            </asp:Panel>
-
-                            <div class="menu-group-item">
-                                <img src="Images/comment.png" />
-                                <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" />
-                            </div>
-
-
-                        </div>
-                    </ContentTemplate>
+                    </Items>
+                  
 
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="searchbox">

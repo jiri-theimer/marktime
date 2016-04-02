@@ -121,6 +121,12 @@
                         strW += " AND ((a.x40RecordPID=@pid and a.x29ID=328) OR (a.x29ID=391 AND a.x40RecordPID IN (SELECT p91ID FROM p91Invoice WHERE p28ID=@pid)))"
                     Case BO.x29IdEnum.p41Project
                         strW += " AND ((a.x40RecordPID=@pid and a.x29ID=141) OR (a.x29ID=391 AND a.x40RecordPID IN (SELECT p91ID FROM p91Invoice WHERE p28ID IN (SELECT p28ID_Client FROM p41Project WHERE p41ID=@pid))))"
+                    Case BO.x29IdEnum.j02Person
+                        Dim prs As New DbParameters
+                        prs.Add("pid", .RecordPID, DbType.Int32)
+                        Dim strEmail As String = _cDB.GetValueFromSQL("select j02Email FROM j02Person WHERE j02ID=@pid", prs)
+                        pars.Add("email", strEmail, DbType.String)
+                        strW += " AND ((a.x40RecordPID=@pid and a.x29ID=102) OR (a.x40Recipient LIKE '%'+@email+'%'))"
                     Case Else
                         strW += " AND a.x29ID=@x29id AND a.x40RecordPID=@pid"
                 End Select

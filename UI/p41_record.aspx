@@ -102,13 +102,13 @@
                         <td style="width: 120px;">
                             <asp:Label ID="lblPlanFrom" Text="Plánované zahájení:" runat="server" AssociatedControlID="p41PlanFrom" CssClass="lbl"></asp:Label></td>
                         <td>
-                            <telerik:RadDatePicker ID="p41PlanFrom" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                            <telerik:RadDatePicker ID="p41PlanFrom" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                                 <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                             </telerik:RadDatePicker>
 
                             <asp:Label ID="lblPlanUntil" Text="Plánované dokončení:" runat="server" AssociatedControlID="p41PlanUntil" CssClass="lbl"></asp:Label>
 
-                            <telerik:RadDatePicker ID="p41PlanUntil" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar" MaxDate="1.1.3000">
+                            <telerik:RadDatePicker ID="p41PlanUntil" runat="server" Width="120px" SharedCalendarID="SharedCalendar" MaxDate="1.1.3000">
                                 <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                             </telerik:RadDatePicker>
 

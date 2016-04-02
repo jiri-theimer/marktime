@@ -334,120 +334,40 @@
                     
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" style="margin-top:6px;">
-                    <ContentTemplate>
-                        <div style="padding: 10px; width: 450px;">
-
-                            <asp:Panel ID="panEdit" runat="server" CssClass="div6">
-                                <img src="Images/edit.png" />
-                                <asp:HyperLink ID="cmdEdit" runat="server" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit()"></asp:HyperLink>
-                                <div>
-                                    <span class="infoInForm">Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění.</span>
-                                </div>
-
-                            </asp:Panel>
-                            <asp:Panel ID="panCreateCommands" runat="server">
-                                <div class="div6">
-                                    <img src="Images/new.png" />
-                                    <asp:HyperLink ID="cmdNew" runat="server" Text="Založit nový projekt" NavigateUrl="javascript:record_new()"></asp:HyperLink>
-                                    <div>
-                                        <span class="infoInForm">Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury.</span>
-                                    </div>
-                                </div>
-                                <div class="div6">
-                                    <img src="Images/copy.png" />
-                                    <asp:HyperLink ID="cmdCopy" runat="server" Text="Založit nový projekt kopírováním" NavigateUrl="javascript:record_clone()"></asp:HyperLink>
-                                    <div>
-                                        <span class="infoInForm">Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu.</span>
-                                    </div>
-                                </div>
-
-                            </asp:Panel>
-
-                        </div>
-                    </ContentTemplate>
-
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdNew" Text="Založit nový projekt" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png" ToolTip="Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury."></telerik:RadMenuItem>
+                        
+                        <telerik:RadMenuItem Value="cmdCopy" Text="Založit nový projekt kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu."></telerik:RadMenuItem>
+                        
+                    </Items>                    
                 </telerik:RadMenuItem>
 
 
-                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31">
-                    <ContentTemplate>
-                        <div style="float: left; padding: 10px;">
-                            <asp:Label ID="lblP31Message" CssClass="failureNotification" runat="server"></asp:Label>
-                            <asp:Repeater ID="rp1" runat="server">
-                                <ItemTemplate>
-                                    <div class="div6">
-                                        <img src="Images/worksheet.png" />
-                                        <asp:HyperLink ID="aP34" runat="server" Text=""></asp:HyperLink>
-                                    </div>
-
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </div>
-                    </ContentTemplate>
-
-                </telerik:RadMenuItem>
+                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31"></telerik:RadMenuItem>
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
-                    <ContentTemplate>
-                        <div style="float: left; min-width: 200px;">
+                    <Items>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za projekt" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>                        
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP30" Text="Přiřadit k projektu kontaktní osobu" NavigateUrl="javascript:p30_record(0);" ImageUrl="Images/person.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP56" Text="Vytvořit úkol" NavigateUrl="javascript:p56_record(0);" ImageUrl="Images/task.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP40Create" Text="Zapsat opakovanou odměnu/paušál/úkon" NavigateUrl="javascript:p40_record(0);" ImageUrl="Images/worksheet_recurrence.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP31Recalc" Text="Přepočítat sazby rozpracovaných úkonů" NavigateUrl="javascript:p31_recalc();" ImageUrl="Images/recalc.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP31Move2Bin" Text="Přesunout rozpracovanost do/z archivu" NavigateUrl="javascript:p31_move2bin();" ImageUrl="Images/bin.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP31MoveToOtherProject" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project();" ImageUrl="Images/cut.png"></telerik:RadMenuItem>
 
-
-                            <asp:Panel ID="panCommandPivot" runat="server" CssClass="menu-group-item">
-                                <img src="Images/pivot.png" />
-                                <a href="p31_pivot.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>" target="_top">Worksheet Pivot za projekt</a>
-                            </asp:Panel>
-
-
-                            <asp:Panel ID="panP56" runat="server" CssClass="menu-group-item">
-                                <img src="Images/task.png" />
-                                <asp:HyperLink ID="cmdP56" runat="server" Text="Vytvořit úkol" NavigateUrl="javascript:p56_record(0);" />
-                            </asp:Panel>
-                            <asp:Panel ID="panP30" runat="server" CssClass="menu-group-item">
-                                <img src="Images/person.png" />
-                                <asp:HyperLink ID="cmdP30" runat="server" Text="Přiřadit k projektu kontaktní osobu" NavigateUrl="javascript:p30_record(0);" />
-                            </asp:Panel>
-                            <asp:Panel ID="panO23" runat="server" CssClass="menu-group-item">
-                                <img src="Images/notepad.png" />
-                                <asp:HyperLink ID="cmdO23" runat="server" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" />
-                            </asp:Panel>
-                            <asp:Panel ID="panO22" runat="server" CssClass="menu-group-item">
-                                <img src="Images/calendar.png" />
-                                <asp:HyperLink ID="cmdO22" runat="server" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" />
-                            </asp:Panel>
-                            <asp:Panel ID="panB07" runat="server" CssClass="menu-group-item">
-                                <img src="Images/comment.png" />
-                                <asp:HyperLink ID="cmdB07" runat="server" Text="Zapsat k projektu komentář" NavigateUrl="javascript:b07_record();" />
-                            </asp:Panel>
-                            <div class="menu-group-item">
-                            <img src="Images/email.png" />
-                            <a href="x40_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>" target="_top">Historie odeslané pošty</a>
-                            </div>
-
-                            <div class="menu-group-title">
-                                Worksheet operace
-                            </div>
-                            <asp:Panel ID="panP40" runat="server" CssClass="menu-group-item">
-                                <img src="Images/worksheet_recurrence.png" />
-                                <asp:HyperLink ID="cmdP40Create" runat="server" Text="Zapsat opakovanou odměnu/paušál/úkon" NavigateUrl="javascript: p40_record(0)"></asp:HyperLink>
-                            </asp:Panel>
-                            <asp:Panel ID="panP31Recalc" runat="server" CssClass="menu-group-item">
-                                <img src="Images/recalc.png" />
-                                <asp:HyperLink ID="cmdP31Recalc" runat="server" Text="Přepočítat sazby rozpracovaných úkonů" NavigateUrl="javascript: p31_recalc()"></asp:HyperLink>
-                            </asp:Panel>
-                            <asp:Panel ID="panP31MoveToBin" runat="server" CssClass="menu-group-item">
-                                <img src="Images/bin.png" />
-                                <asp:HyperLink ID="cmdP31Move2Bin" runat="server" Text="Přesunout rozpracovanost do/z archivu" NavigateUrl="javascript: p31_move2bin()"></asp:HyperLink>
-                            </asp:Panel>
-                            <asp:Panel ID="panP31Move2OtherProject" runat="server" CssClass="menu-group-item">
-                                <img src="Images/cut.png" />
-                                <asp:HyperLink ID="cmdP31MoveToOtherProject" runat="server" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project()"></asp:HyperLink>
-                            </asp:Panel>
-
-                            
-                            
-                        </div>
-                    </ContentTemplate>
-
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdLog" Text="Historie záznamu" NavigateUrl="javascript: timeline()" ImageUrl="Images/event.png"></telerik:RadMenuItem>
+                    </Items>
+                    
                 </telerik:RadMenuItem>
 
             </Items>
@@ -562,11 +482,7 @@
 
 
             </table>
-            <div>
-                <asp:HyperLink ID="cmdLog" runat="server" Text="Historie projektu" NavigateUrl="javascript: timeline()"></asp:HyperLink>
-
-
-            </div>
+            
 
         </div>
     </div>
