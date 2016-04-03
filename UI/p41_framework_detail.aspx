@@ -236,8 +236,8 @@
             
                 
         }
-        function switchHeight_change(val){
-            location.replace("p41_framework_detail.aspx?switchHeight="+val);
+        function page_setting(){
+            sw_local("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting_32.png",false);
         }
     </script>
 </asp:Content>
@@ -271,15 +271,7 @@
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
                     <Items>
-                        <telerik:RadMenuItem Value="switchHeight" Text="Výška horní poloviny stránky (boxy)" ImageUrl="Images/setting.png">                                                     
-                            <Items>                               
-                                <telerik:RadMenuItem Text="auto" NavigateUrl="javascript:switchHeight_change('auto')"></telerik:RadMenuItem>
-                                <telerik:RadMenuItem Text="200" NavigateUrl="javascript:switchHeight_change('200')"></telerik:RadMenuItem>
-                                <telerik:RadMenuItem Text="300" NavigateUrl="javascript:switchHeight_change('300')"></telerik:RadMenuItem>
-                                <telerik:RadMenuItem Text="400" NavigateUrl="javascript:switchHeight_change('400')"></telerik:RadMenuItem>
-                                <telerik:RadMenuItem Text="500" NavigateUrl="javascript:switchHeight_change('500')"></telerik:RadMenuItem>
-                                <telerik:RadMenuItem Text="600" NavigateUrl="javascript:switchHeight_change('600')"></telerik:RadMenuItem>
-                            </Items>
+                        <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">                           
                         </telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za projekt" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>

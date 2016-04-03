@@ -1,9 +1,12 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="entity_framework_p31subform.aspx.vb" Inherits="UI.entity_framework_p31subform" %>
 <%@ MasterType VirtualPath="~/SubForm.Master" %>
+
 <%@ Register TagPrefix="uc" TagName="p31_subgrid" Src="~/p31_subgrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
+        
+
         function p31_RowSelected(sender, args) {
             ///volá se z p31_subgrid
             document.getElementById("<%=hiddatapid_p31.clientid%>").value = args.getDataKeyValue("pid");
@@ -50,11 +53,13 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div id="load1"></div>
     <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p41Project" AllowMultiSelect="true"></uc:p31_subgrid>
 
 
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
+
 
 </asp:Content>

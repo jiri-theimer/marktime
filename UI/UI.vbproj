@@ -185,6 +185,7 @@
     <Content Include="clue_p48_record.aspx" />
     <Content Include="entity_framework.aspx" />
     <Content Include="entity_framework_b07subform.aspx" />
+    <Content Include="entity_framework_detail_setting.aspx" />
     <Content Include="entity_framework_p31subform.aspx" />
     <Content Include="entity_framework_p31summary.aspx" />
     <Content Include="entity_framework_p56subform.aspx" />
@@ -546,6 +547,13 @@
     </Compile>
     <Compile Include="entity_framework_b07subform.aspx.vb">
       <DependentUpon>entity_framework_b07subform.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_detail_setting.aspx.designer.vb">
+      <DependentUpon>entity_framework_detail_setting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_detail_setting.aspx.vb">
+      <DependentUpon>entity_framework_detail_setting.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_framework_p31subform.aspx.designer.vb">

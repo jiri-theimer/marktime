@@ -25,23 +25,7 @@ Public Class p41_framework_detail
             Return BO.BAS.IsNullInt(ViewState("p28id_client"))
         End Get
     End Property
-    Private Property SwitchHeight As String
-        Get
-            For Each c As RadMenuItem In menu1.FindItemByValue("switchHeight").Items
-                If c.Font.Bold Then Return c.Text
-            Next
-            Return "auto"
-        End Get
-        Set(value As String)
-            Try
-                With menu1.FindItemByValue("switchHeight").Items.FindItemByText(value)
-                    .Font.Bold = True
-                    .ForeColor = Drawing.Color.Blue
-                End With
-            Catch ex As Exception
-            End Try
-        End Set
-    End Property
+    
     Private Sub p41_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
 
@@ -58,9 +42,7 @@ Public Class p41_framework_detail
                 If Request.Item("tab") <> "" Then
                     .Factory.j03UserBL.SetUserParam("p41_framework_detail-subgrid", Request.Item("tab"))
                 End If
-                If Request.Item("switchHeight") <> "" Then
-                    .Factory.j03UserBL.SetUserParam("p41_framework_detail-switchHeight", Request.Item("switchHeight"))
-                End If
+                
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneProjectPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneProjectPage, "pid=" & .DataPID.ToString))
@@ -91,7 +73,12 @@ Public Class p41_framework_detail
                     End If
                 End If
                 With .Factory.j03UserBL
-                    Me.SwitchHeight = .GetUserParam("p41_framework_detail-switchHeight", "auto")                    
+                    Dim strHeight As String = .GetUserParam("p41_framework_detail-switchHeight", "auto")
+                    If strHeight = "auto" Then
+                        panSwitch.Style.Item("height") = "" : panSwitch.Style.Item("overflow") = ""
+                    Else
+                        panSwitch.Style.Item("height") = strHeight & "px"
+                    End If
                     Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p41_framework_detail-subgrid", "1")), SubgridType)
                     If Request.Item("force") = "comment" Then
                         Me.CurrentSubgrid = SubgridType.b07
@@ -121,15 +108,9 @@ Public Class p41_framework_detail
                 Me.opgSubgrid.Tabs(i).NavigateUrl = ""
             Next
         Else
-            If Me.SwitchHeight <> "auto" Then
-                panSwitch.Style.Item("height") = Me.SwitchHeight & "px"
-            Else
-                panSwitch.Style.Item("height") = ""
-            End If
             fraSubform.Visible = True
             fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
         End If
-        If panSwitch.Style.Item("height") = "" Then panSwitch.Style.Item("overflow") = ""
     End Sub
     
 
