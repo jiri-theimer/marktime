@@ -109,7 +109,11 @@ Public Class p41_framework_detail
             Next
         Else
             fraSubform.Visible = True
+
             fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
+            If Me.CurrentSubgrid = SubgridType.p31 And Me.hidHardRefreshPID.Value <> "" Then
+                fraSubform.Attributes.Item("src") += "&p31id=" & Me.hidHardRefreshPID.Value
+            End If
         End If
     End Sub
     
@@ -506,6 +510,7 @@ Public Class p41_framework_detail
                     Case SubgridType.summary
                         RefreshRecord()
                     Case SubgridType.p31
+                        
                         ''gridP31.RecalcVirtualRowCount()
                         ''gridP31.Rebind(True)
                     Case SubgridType.p56

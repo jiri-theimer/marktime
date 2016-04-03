@@ -31,8 +31,7 @@
     <script type="text/javascript">
         $(document).ready(function () {           
 
-            AdjustHeight();
-           
+            AdjustHeight();
         });
 
         function AdjustHeight(){
@@ -239,6 +238,7 @@
         function page_setting(){
             sw_local("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting_32.png",false);
         }
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -500,7 +500,7 @@
     </telerik:RadTabStrip>
     <div id="offsetY"></div>
     <iframe frameborder="0" id="fraSubform" name="fraSubform" runat="server" width="100%" height="300px"></iframe>
-
+   
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />

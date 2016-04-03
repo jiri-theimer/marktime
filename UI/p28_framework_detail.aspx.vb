@@ -27,17 +27,16 @@ Public Class p28_framework_detail
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         With Master
-            gridP31.Factory = .Factory
             p31summary1.Factory = .Factory
-            gridP56.Factory = .Factory
-            gridP91.Factory = .Factory
             ff1.Factory = .Factory
-            bigsummary1.Factory = .Factory
         End With
         
 
         If Not Page.IsPostBack Then
             With Master
+                If Request.Item("tab") <> "" Then
+                    .Factory.j03UserBL.SetUserParam("p28_framework_detail-subgrid", Request.Item("tab"))
+                End If
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneContactPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneContactPage, "pid=" & .DataPID.ToString))
@@ -50,13 +49,19 @@ Public Class p28_framework_detail
                     .Add("p28_framework_detail-subgrid")
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail-switch")
+                    .Add("p28_framework_detail-switchHeight")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                 End With
                 With .Factory.j03UserBL
                     panSwitch.Style.Item("display") = .GetUserParam("p28_framework_detail-switch", "block")
-
+                    Dim strHeight As String = .GetUserParam("p28_framework_detail-switchHeight", "auto")
+                    If strHeight = "auto" Then
+                        panSwitch.Style.Item("height") = "" : panSwitch.Style.Item("overflow") = ""
+                    Else
+                        panSwitch.Style.Item("height") = strHeight & "px"
+                    End If
                     Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p28_framework_detail-subgrid", "1")), SubgridType)
                     If Master.DataPID = 0 Then
                         Master.DataPID = BO.BAS.IsNullInt(.GetUserParam("p28_framework_detail-pid", "O"))
@@ -71,26 +76,28 @@ Public Class p28_framework_detail
 
             End With
 
-            gridP91.Visible = False : gridP56.Visible = False
-            Select Case Me.CurrentSubgrid
-                Case SubgridType.p56
-                    gridP56.Visible = True
-                Case SubgridType.p91
-                    gridP91.Visible = True
-            End Select
+            
             RefreshRecord()
 
         End If
 
-        gridP31.MasterDataPID = 0     'uvnitř prvku nebude docházet k plnění gridu
-        Select Case Me.CurrentSubgrid
-            Case SubgridType.p31
-                gridP31.MasterDataPID = Master.DataPID
-            Case SubgridType.p91
-                gridP91.MasterDataPID = Master.DataPID
-            Case SubgridType.p56
-                gridP56.MasterDataPID = Master.DataPID
-        End Select
+        With Me.opgSubgrid.Tabs
+            .FindTabByValue("-1").NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("1").NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("2").NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("3").NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("4").NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+        End With
+        If Me.CurrentSubgrid = SubgridType._NotSpecified Then
+            fraSubform.Visible = False
+            panSwitch.Style.Item("height") = ""
+            For i As Integer = 0 To Me.opgSubgrid.Tabs.Count - 1
+                Me.opgSubgrid.Tabs(i).NavigateUrl = ""
+            Next
+        Else
+            fraSubform.Visible = True
+            fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
+        End If
     End Sub
 
     Private Sub RefreshRecord()
@@ -196,12 +203,8 @@ Public Class p28_framework_detail
         mq.p28ID_Client = cRec.PID
 
         If Me.CurrentSubgrid = SubgridType.summary Then
-            bigsummary1.Visible = True
-            bigsummary1.MasterDataPID = cRec.PID
-            bigsummary1.RefreshData()
             boxP31Summary.Visible = False
         Else
-            bigsummary1.Visible = False
             Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
             p31summary1.RefreshData(cWorksheetSum, "p28", Master.DataPID)
         End If
@@ -226,23 +229,14 @@ Public Class p28_framework_detail
     End Sub
 
     Private Sub RefreshComments()
-        If Me.CurrentSubgrid = SubgridType.b07 Then
-            comments1.RefreshData(Master.Factory, BO.x29IdEnum.p28Contact, Master.DataPID)
-            If comments1.RowsCount > 0 Then
-                'With Me.opgSubgrid.Items.FindByValue("3")
-                '    .Text = BO.BAS.OM2(.Text, comments1.RowsCount.ToString)
-                'End With
-            End If
-        Else
-            Dim mqB07 As New BO.myQueryB07
-            mqB07.RecordDataPID = Master.DataPID
-            mqB07.x29id = BO.x29IdEnum.p28Contact
-            Dim lisB07 As IEnumerable(Of BO.b07Comment) = Master.Factory.b07CommentBL.GetList(mqB07)
-            If lisB07.Count > 0 Then
-                'With Me.opgSubgrid.Items.FindByValue("3")
-                '    .Text = BO.BAS.OM2(.Text, lisB07.Count.ToString)
-                'End With
-            End If
+        Dim mqB07 As New BO.myQueryB07
+        mqB07.RecordDataPID = Master.DataPID
+        mqB07.x29id = BO.x29IdEnum.p28Contact
+        Dim lisB07 As IEnumerable(Of BO.b07Comment) = Master.Factory.b07CommentBL.GetList(mqB07)
+        If lisB07.Count > 0 Then
+            With Me.opgSubgrid.Tabs.FindTabByValue("3")
+                .Text = BO.BAS.OM2(.Text, lisB07.Count.ToString)
+            End With
         End If
     End Sub
     Private Sub Handle_Permissions(cRec As BO.p28Contact)
@@ -263,7 +257,6 @@ Public Class p28_framework_detail
             menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString
             menu1.FindItemByValue("cmdNewP41").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
 
-            bigsummary1.IsApprovingPerson = .SysUser.IsApprovingPerson
             If Not .SysUser.IsApprovingPerson Then
                 'schovat záložku pro schvalování
                 topLink1.Visible = False
@@ -279,8 +272,6 @@ Public Class p28_framework_detail
                 End With
                 If Me.CurrentSubgrid = SubgridType.p91 Then Me.CurrentSubgrid = SubgridType.p31
             End If
-            gridP31.AllowApproving = .SysUser.IsApprovingPerson
-            gridP56.AllowApproving = .SysUser.IsApprovingPerson
         End With
 
 
@@ -393,11 +384,6 @@ Public Class p28_framework_detail
                         Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
                     End If
                 End With
-            Case "p31-save", "p31-delete"
-                If Me.CurrentSubgrid = SubgridType.p31 Then
-                    gridP31.RecalcVirtualRowCount()
-                    gridP31.Rebind(True)
-                End If
 
             Case Else
                 ReloadPage(Master.DataPID.ToString)
@@ -414,13 +400,6 @@ Public Class p28_framework_detail
 
 
     Private Sub p28_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        Me.gridP31.Visible = False : Me.comments1.Visible = False
-        Select Case Me.CurrentSubgrid
-            Case SubgridType.p31
-                Me.gridP31.Visible = True
-            Case SubgridType.b07
-                Me.comments1.Visible = True
-        End Select
         If Me.CurrentSubgrid = SubgridType._NotSpecified Then
             panProjects.Style.Item("max-height") = ""
             panProjects.Style.Item("overflow") = ""
@@ -449,73 +428,10 @@ Public Class p28_framework_detail
         CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
     End Sub
 
-    'Private Function SaveState() As String
-    '    Dim dockStates As List(Of DockState) = RadDockLayout1.GetRegisteredDocksState()
-    '    Dim serializer As New JavaScriptSerializer()
-    '    Dim converters As New List(Of JavaScriptConverter)()
-    '    converters.Add(New UnitConverter())
-    '    serializer.RegisterConverters(converters)
-
-    '    Dim stateString As String = [String].Empty
-    '    For Each state As DockState In dockStates
-    '        Dim ser As String = serializer.Serialize(state)
-    '        stateString = stateString + "|" + ser
-    '    Next
-    '    Return stateString
-    'End Function
-
-    
-
-    
-
-    'Private Sub LoadState(myDockState As String, dockParents As Dictionary(Of String, String), dockIndices As Dictionary(Of String, Integer))
-    '    Dim dock As New RadDock()
-    '    Dim serializer As New JavaScriptSerializer()
-    '    Dim converters As New List(Of JavaScriptConverter)()
-    '    converters.Add(New UnitConverter())
-    '    serializer.RegisterConverters(converters)
-    '    For Each str As String In myDockState.Split("|"c)
-    '        If str <> [String].Empty Then
-    '            Dim state As DockState = serializer.Deserialize(Of DockState)(str)
-    '            dock = TryCast(RadDockLayout1.FindControl(state.UniqueName), RadDock)
-    '            dock.ApplyState(state)
-    '            dockParents(state.UniqueName) = state.DockZoneID
-    '            dockIndices(state.UniqueName) = state.Index
-    '        End If
-    '    Next
-    'End Sub
-
-    'Private Sub RadDockLayout1_LoadDockLayout(sender As Object, e As Telerik.Web.UI.DockLayoutEventArgs) Handles RadDockLayout1.LoadDockLayout
-    '    If Not Page.IsPostBack Then
-    '        Dim s As String = Master.Factory.j03UserBL.LoadDockState("p28_framework_detail.aspx")
-    '        If s <> "" Then
-    '            LoadState(s, e.Positions, e.Indices)
-    '        End If
-
-    '    End If
-    'End Sub
-
-
-    'Private Sub cmdResetDockState_Click(sender As Object, e As EventArgs) Handles cmdResetDockState.Click
-    '    Master.Factory.j03UserBL.SaveDockState("p28_framework_detail.aspx", "")
-    '    ReloadPage(Master.DataPID.ToString)
-    'End Sub
-
-    'Private Sub cmdSaveDockState_Click(sender As Object, e As EventArgs) Handles cmdSaveDockState.Click
-    '    Master.Factory.j03UserBL.SaveDockState("p28_framework_detail.aspx", SaveState())
-    'End Sub
-
-    
-
-    
-
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p28_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
         ReloadPage(Master.DataPID.ToString)
     End Sub
 
-    Private Sub opgSubgrid_TabClick(sender As Object, e As RadTabStripEventArgs) Handles opgSubgrid.TabClick
-        Master.Factory.j03UserBL.SetUserParam("p28_framework_detail-subgrid", Me.opgSubgrid.SelectedTab.Value)
-        ReloadPage(Master.DataPID.ToString)
-    End Sub
+   
 End Class
