@@ -4,26 +4,10 @@
 <script type="text/javascript">
     function periodcombo_setting() {
 
-        sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+        window.parent.sw_local("periodcombo_setting.aspx", "Images/settings_32.png");
     }
 
-    function p31_bs_approve_all() {
-
-        window.parent.sw_master("p31_approving_step1.aspx?masterprefix=<%=Me.MasterDataPrefix%>&masterpid=<%=Me.MasterDataPID%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>", "Images/approve_32.png", true);
-    }
-
-    function p31_bs_reapprove_all() {
-
-        window.parent.sw_master("p31_approving_step1.aspx?reapprove=1&masterprefix=<%=Me.MasterDataPrefix%>&masterpid=<%=Me.MasterDataPID%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>", "Images/approve_32.png", true);
-    }
-    function p31_bs_clearapprove_all() {
-
-        window.parent.sw_master("p31_approving_step1.aspx?clearapprove=1&masterprefix=<%=Me.MasterDataPrefix%>&masterpid=<%=Me.MasterDataPID%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>", "Images/clear_32.png", true);
-    }
-    function p31_bs_invoice() {
-
-        window.parent.sw_master("p91_create_step1.aspx?nogateway=1&prefix=<%=Me.MasterDataPrefix%>&pid=<%=Me.MasterDataPID%>", "Images/invoice_32.png", true);
-    }
+    
 </script>
 
 <div class="div6">

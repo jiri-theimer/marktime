@@ -114,8 +114,8 @@
             return;
 
         }
-
-        window.parent.sw_master("p31_approving_step1.aspx?masterpid=<%=Me.MasterDataPID%>&masterprefix=<%=BO.BAS.GetDataPrefix(Me.x29ID)%>&prefix=p56&pid=" + pids, "Images/approve_32.png", true);
+        p56_subgrid_approving(pids);
+        
 
 
     }

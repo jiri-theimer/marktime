@@ -554,132 +554,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents fraSubform As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
-    '''bigsummary1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents bigsummary1 As Global.UI.p31_bigsummary
-
-    '''<summary>
-    '''comments1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents comments1 As Global.UI.b07_list
-
-    '''<summary>
-    '''gridP56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridP56 As Global.UI.p56_subgrid
-
-    '''<summary>
-    '''gridP91 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridP91 As Global.UI.p91_subgrid
-
-    '''<summary>
-    '''panP45 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panP45 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''p45ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p45ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdP45 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdP45 As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cmdBudgetP46 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBudgetP46 As Global.System.Web.UI.WebControls.RadioButton
-
-    '''<summary>
-    '''cmdBudgetP49 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBudgetP49 As Global.System.Web.UI.WebControls.RadioButton
-
-    '''<summary>
-    '''cmdP47 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdP47 As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cmdNewP49 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewP49 As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cmdConvert2P31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdConvert2P31 As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''gridBudget control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridBudget As Global.UI.datagrid
-
-    '''<summary>
-    '''hiddatapid_subform control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hiddatapid_subform As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''hidHardRefreshFlag control.
     '''</summary>
     '''<remarks>
@@ -707,13 +581,13 @@ Partial Public Class p41_framework_detail
     Protected WithEvents hidIsBin As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidBudgetPID control.
+    '''hidIsCanApprove control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidBudgetPID As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidIsCanApprove As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

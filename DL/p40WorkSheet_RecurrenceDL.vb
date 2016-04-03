@@ -108,7 +108,7 @@
     End Function
 
     Function GetList_p39(intPID As Integer) As IEnumerable(Of BO.p39WorkSheet_Recurrence_Plan)
-        Dim s As String = "select a.*,b.p41ID as _p41ID,p41.p41Name as _p41Name,p28.p28Name as _p28Name FROM p39WorkSheet_Recurrence_Plan a INNER JOIN p40WorkSheet_Recurrence b ON a.p40ID=b.p40ID INNER JOIN p41Project p41 ON b.p41ID=p41.p41IDLEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
+        Dim s As String = "select a.*,b.p41ID as _p41ID,p41.p41Name as _p41Name,p28.p28Name as _p28Name FROM p39WorkSheet_Recurrence_Plan a INNER JOIN p40WorkSheet_Recurrence b ON a.p40ID=b.p40ID INNER JOIN p41Project p41 ON b.p41ID=p41.p41ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
         s += " WHERE a.p40ID=@pid"
         Return _cDB.GetList(Of BO.p39WorkSheet_Recurrence_Plan)(s, New With {.pid = intPID})
     End Function

@@ -29,11 +29,7 @@
 
             h2 = offset.top;
 
-        <%If LCase(Request.Browser.Browser) = "ie" Then%>
-            hh = h1 - h2 - 60-10;
-        <%Else%>
-            hh = h1 - h2 - 60-10;
-        <%End If%>
+            hh = h1 - h2 - 60 - 10;
 
 
             self.document.getElementById("divReportViewer").style.height = hh + "px";

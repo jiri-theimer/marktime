@@ -25,6 +25,23 @@ Public Class p41_framework_detail
             Return BO.BAS.IsNullInt(ViewState("p28id_client"))
         End Get
     End Property
+    Private Property SwitchHeight As String
+        Get
+            For Each c As RadMenuItem In menu1.FindItemByValue("switchHeight").Items
+                If c.Font.Bold Then Return c.Text
+            Next
+            Return "auto"
+        End Get
+        Set(value As String)
+            Try
+                With menu1.FindItemByValue("switchHeight").Items.FindItemByText(value)
+                    .Font.Bold = True
+                    .ForeColor = Drawing.Color.Blue
+                End With
+            Catch ex As Exception
+            End Try
+        End Set
+    End Property
     Private Sub p41_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
 
@@ -32,33 +49,30 @@ Public Class p41_framework_detail
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         With Master
-            ''gridP31.Factory = .Factory
             p31summary1.Factory = .Factory
-
-            gridP91.Factory = .Factory
-            gridP56.Factory = .Factory
             ff1.Factory = .Factory
-            bigsummary1.Factory = .Factory
         End With
-        
-
         If Not Page.IsPostBack Then
             ViewState("p28id_client") = ""
             With Master
+                If Request.Item("tab") <> "" Then
+                    .Factory.j03UserBL.SetUserParam("p41_framework_detail-subgrid", Request.Item("tab"))
+                End If
+                If Request.Item("switchHeight") <> "" Then
+                    .Factory.j03UserBL.SetUserParam("p41_framework_detail-switchHeight", Request.Item("switchHeight"))
+                End If
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneProjectPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneProjectPage, "pid=" & .DataPID.ToString))
                 End If
-                If Request.Item("budgetprefix") <> "" Then
-                    .Factory.j03UserBL.SetUserParam("p41_framework_detail-budget-prefix", Request.Item("budgetprefix"))
-                End If
+
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p41_framework_detail-pid")
                     .Add("p41_framework_detail-subgrid")
                     .Add("p41_framework_detail-chkFFShowFilledOnly")
-                    .Add("p41_framework_detail-budget-prefix")
                     .Add("p41_framework_detail-switch")
+                    .Add("p41_framework_detail-switchHeight")
                 End With
 
                 With .Factory.j03UserBL
@@ -77,7 +91,7 @@ Public Class p41_framework_detail
                     End If
                 End If
                 With .Factory.j03UserBL
-                    'Me.chkLockedDocks.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkLockedDocks", "0"))
+                    Me.SwitchHeight = .GetUserParam("p41_framework_detail-switchHeight", "auto")                    
                     Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p41_framework_detail-subgrid", "1")), SubgridType)
                     If Request.Item("force") = "comment" Then
                         Me.CurrentSubgrid = SubgridType.b07
@@ -87,40 +101,38 @@ Public Class p41_framework_detail
 
 
             End With
-           
-            gridP91.Visible = False : gridP56.Visible = False
-            Select Case Me.CurrentSubgrid
-                Case SubgridType.p56
-                    gridP56.Visible = True
-                Case SubgridType.p91
-                    gridP91.Visible = True
-                Case SubgridType.p45
-                    If Master.Factory.j03UserBL.GetUserParam("p41_framework_detail-budget-prefix", "p46") = "p46" Then
-                        cmdBudgetP46.Checked = True : cmdBudgetP46.Font.Bold = True
-                    Else
-                        cmdBudgetP49.Checked = True : cmdBudgetP49.Font.Bold = True
-                    End If
-                    SetupGridBudget()
-            End Select
 
             RefreshRecord()
 
         End If
 
-        ''gridP31.MasterDataPID = 0     'uvnitř prvku nebude docházet k plnění gridu
-        Select Case Me.CurrentSubgrid
-            Case SubgridType.p56
-                gridP56.MasterDataPID = Master.DataPID
-            Case SubgridType.p31
-                fraSubform.Attributes.Item("src") = "entity_framework_p31subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString
-                ''gridP31.MasterDataPID = Master.DataPID
-            Case SubgridType.p91
-                gridP91.MasterDataPID = Master.DataPID
-            Case SubgridType.b07
-
-        End Select
-        
+        With Me.opgSubgrid.Tabs
+            .FindTabByValue("-1").NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+            .FindTabByValue("1").NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+            .FindTabByValue("2").NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+            .FindTabByValue("3").NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("4").NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+            .FindTabByValue("5").NavigateUrl = "p41_framework_detail_budget.aspx?masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+        End With
+        If Me.CurrentSubgrid = SubgridType._NotSpecified Then
+            fraSubform.Visible = False
+            panSwitch.Style.Item("height") = ""
+            For i As Integer = 0 To Me.opgSubgrid.Tabs.Count - 1
+                Me.opgSubgrid.Tabs(i).NavigateUrl = ""
+            Next
+        Else
+            If Me.SwitchHeight <> "auto" Then
+                panSwitch.Style.Item("height") = Me.SwitchHeight & "px"
+            Else
+                panSwitch.Style.Item("height") = ""
+            End If
+            fraSubform.Visible = True
+            fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
+        End If
+        If panSwitch.Style.Item("height") = "" Then panSwitch.Style.Item("overflow") = ""
     End Sub
+    
+
 
     Private Sub RefreshRecord()
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
@@ -208,7 +220,7 @@ Public Class p41_framework_detail
             mi.ForeColor = Drawing.Color.Red
             menu1.FindItemByValue("p31").Items.Add(mi)
         End If
-        
+
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, cRec.PID)
         Me.roles_project.RefreshData(lisX69, cRec.PID)
@@ -245,16 +257,16 @@ Public Class p41_framework_detail
 
         Dim mq As New BO.myQueryP31
         mq.p41ID = cRec.PID
-        
+
         Dim cProjectSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
 
         If Me.CurrentSubgrid = SubgridType.summary Then
-            bigsummary1.Visible = True
-            bigsummary1.MasterDataPID = cRec.PID
-            bigsummary1.RefreshData()
+            ''bigsummary1.Visible = True
+            ''bigsummary1.MasterDataPID = cRec.PID
+            ''bigsummary1.RefreshData()
             boxP31Summary.Visible = False
         Else
-            bigsummary1.Visible = False
+            ''bigsummary1.Visible = False
             Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
             p31summary1.RefreshData(cWorksheetSum, "p41", Master.DataPID, cRec.p41LimitHours_Notification)
         End If
@@ -270,16 +282,16 @@ Public Class p41_framework_detail
                 If cProjectSum.p56_Actual_Count > 0 Then .Text += "<span class='badge1'>" & cProjectSum.p56_Actual_Count.ToString & "</span>"
             End With
         End With
-        
+
 
         If cProjectSum.p56_Actual_Count > 0 Or cProjectSum.o22_Actual_Count > 0 Then
             If cProjectSum.p56_Actual_Count > 0 Then topLink2.Text = topLink2.Text & "<span title='Otevřené úkoly' class='badge1'>" & cProjectSum.p56_Actual_Count.ToString & "</span>"
             If cProjectSum.o22_Actual_Count > 0 Then topLink3.Text = topLink3.Text & "<span title='Události v kalendáři' class='badge1'>" & cProjectSum.o22_Actual_Count.ToString & "</span>"
 
         End If
-        
-        
-        
+
+
+
         basUIMT.RenderHeaderMenu(cRec.IsClosed, Me.panMenuContainer, menu1)
         Dim strLevel1 As String = cRec.FullName
         If Len(cRec.Client) > 30 Then
@@ -302,23 +314,23 @@ Public Class p41_framework_detail
             boxFF.Visible = False
         End If
 
-        If Me.CurrentSubgrid = SubgridType.p45 Then
-            panP45.Visible = True
-            Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
-            If lis.Count > 0 Then
-                Me.p45ID.DataSource = lis
-                Me.p45ID.DataBind()
-                cmdP45.InnerText = "Nastavení rozpočtu"
-                cmdP47.Visible = cmdBudgetP46.Checked
-                cmdNewP49.Visible = cmdBudgetP49.Checked : cmdConvert2P31.Visible = cmdBudgetP49.Checked
-            Else
-                Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
-                cmdP45.InnerText = "Založit rozpočet"
-            End If
+        ''If Me.CurrentSubgrid = SubgridType.p45 Then
+        ''    panP45.Visible = True
+        ''    Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
+        ''    If lis.Count > 0 Then
+        ''        Me.p45ID.DataSource = lis
+        ''        Me.p45ID.DataBind()
+        ''        cmdP45.InnerText = "Nastavení rozpočtu"
+        ''        cmdP47.Visible = cmdBudgetP46.Checked
+        ''        cmdNewP49.Visible = cmdBudgetP49.Checked : cmdConvert2P31.Visible = cmdBudgetP49.Checked
+        ''    Else
+        ''        Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
+        ''        cmdP45.InnerText = "Založit rozpočet"
+        ''    End If
 
-        Else
-            panP45.Visible = False
-        End If
+        ''Else
+        ''    panP45.Visible = False
+        ''End If
 
 
         RefreshP40(cRec)
@@ -335,25 +347,16 @@ Public Class p41_framework_detail
         End If
     End Sub
 
-   
+
     Private Sub RefreshComments()
-        If Me.CurrentSubgrid = SubgridType.b07 Then
-            comments1.RefreshData(Master.Factory, BO.x29IdEnum.p41Project, Master.DataPID)
-            If comments1.RowsCount > 0 Then
-                With Me.opgSubgrid.Tabs.FindTabByValue("3")
-                    .Text += "<span class='badge1'>" & comments1.RowsCount.ToString & "</span>"
-                End With
-            End If
-        Else
-            Dim mqB07 As New BO.myQueryB07
-            mqB07.RecordDataPID = Master.DataPID
-            mqB07.x29id = BO.x29IdEnum.p41Project
-            Dim lisB07 As IEnumerable(Of BO.b07Comment) = Master.Factory.b07CommentBL.GetList(mqB07)
-            If lisB07.Count > 0 Then
-                With Me.opgSubgrid.Tabs.FindTabByValue("3")
-                    .Text += "<span class='badge1'>" & lisB07.Count.ToString & "</span>"
-                End With
-            End If
+        Dim mqB07 As New BO.myQueryB07
+        mqB07.RecordDataPID = Master.DataPID
+        mqB07.x29id = BO.x29IdEnum.p41Project
+        Dim lisB07 As IEnumerable(Of BO.b07Comment) = Master.Factory.b07CommentBL.GetList(mqB07)
+        If lisB07.Count > 0 Then
+            With Me.opgSubgrid.Tabs.FindTabByValue("3")
+                .Text += "<span class='badge1'>" & lisB07.Count.ToString & "</span>"
+            End With
         End If
     End Sub
 
@@ -381,14 +384,14 @@ Public Class p41_framework_detail
             End If
             topLink1.Visible = bolCanApprove
             If Not bolCanApprove Then Me.p31summary1.DisableApprovingButton()
-
-            Me.bigsummary1.IsApprovingPerson = bolCanApprove
+            Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApprove)
+            ''Me.bigsummary1.IsApprovingPerson = bolCanApprove
             ''gridP31.AllowApproving = bolCanApprove
-            gridP56.AllowApproving = bolCanApprove
+            ''gridP56.AllowApproving = bolCanApprove
         End With
         With cDisp
             menu1.FindItemByValue("cmdP56").Visible = .P56_Create
-            gridP56.IsAllowedCreateTasks = .P56_Create
+            ''gridP56.IsAllowedCreateTasks = .P56_Create
 
             boxP30.Visible = .OwnerAccess
             menu1.FindItemByValue("cmdP31Recalc").Visible = .P31_RecalcRates
@@ -525,7 +528,7 @@ Public Class p41_framework_detail
                         ''gridP31.RecalcVirtualRowCount()
                         ''gridP31.Rebind(True)
                     Case SubgridType.p56
-                        gridP56.Rebind(True)
+                        ''gridP56.Rebind(True)
                 End Select
                 If Me.CurrentSubgrid = SubgridType.p31 Then
 
@@ -545,27 +548,18 @@ Public Class p41_framework_detail
         Me.hidHardRefreshPID.Value = ""
     End Sub
 
-    Private Sub p41_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        ''Me.gridP31.Visible = False : comments1.Visible = False
-        Select Case Me.CurrentSubgrid
-            Case SubgridType.p31
-                ''Me.gridP31.Visible = True
-            Case SubgridType.b07
-                comments1.Visible = True
-        End Select
-       
-    End Sub
 
-    
+
+
 
     Private Sub ReloadPage(strPID As String)
         Response.Redirect("p41_framework_detail.aspx?pid=" & strPID)
     End Sub
 
-  
 
 
-    
+
+
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p41_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
         ReloadPage(Master.DataPID.ToString)
@@ -583,135 +577,11 @@ Public Class p41_framework_detail
 
     End Sub
 
-    Private Sub opgSubgrid_TabClick(sender As Object, e As RadTabStripEventArgs) Handles opgSubgrid.TabClick
-        Master.Factory.j03UserBL.SetUserParam("p41_framework_detail-subgrid", Me.opgSubgrid.SelectedTab.Value)
-        ReloadPage(Master.DataPID.ToString)
-    End Sub
 
-    Private Sub SetupGridBudget()
-        With gridBudget
-            .ClearColumns()
-            .radGridOrig.ShowFooter = True
-            .radGridOrig.AllowSorting = False
-            .radGridOrig.HeaderStyle.HorizontalAlign = HorizontalAlign.Center
-            .PageSize = 20
-            Dim group As New Telerik.Web.UI.GridColumnGroup
-            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
-            .ClientDataKeyNames = "pid"
-            If Me.cmdBudgetP46.Checked Then
-                group.Name = "rozpocet_hodiny" : group.HeaderText = "Limity hodin"
-                group = New Telerik.Web.UI.GridColumnGroup
-                .radGridOrig.MasterTableView.ColumnGroups.Add(group)
-                group.Name = "rozpocet_cena" : group.HeaderText = "Cena hodin v rozpočtu"
-                group = New Telerik.Web.UI.GridColumnGroup
-                .radGridOrig.MasterTableView.ColumnGroups.Add(group)
-                group.Name = "timesheet_hodiny" : group.HeaderText = "Vykázané hodiny"
-                group = New Telerik.Web.UI.GridColumnGroup
-                .radGridOrig.MasterTableView.ColumnGroups.Add(group)
-                group.Name = "timesheet_cena" : group.HeaderText = "Cena vykázaných hodin"
 
-                .AddColumn("Person", "Osoba", , True)
-                .AddColumn("p46HoursBillable", "Fa", BO.cfENUM.Numeric0, , , , , True, , "rozpocet_hodiny")
-                .AddColumn("p46HoursNonBillable", "NeFa", BO.cfENUM.Numeric0, , , , , True, , "rozpocet_hodiny")
-                .AddColumn("p46HoursTotal", "Celkem", BO.cfENUM.Numeric0, , , , , True, , "rozpocet_hodiny")
 
-                .AddColumn("BillingAmount", "Fakturační", BO.cfENUM.Numeric, , , , , True, , "rozpocet_cena")
-                .AddColumn("CostAmount", "Nákladová", BO.cfENUM.Numeric, , , , , True, , "rozpocet_cena")
 
-                .AddColumn("TimesheetFa", "Fa", BO.cfENUM.Numeric2, , , , , True, , "timesheet_hodiny")
-                .AddColumn("TimesheetNeFa", "NeFa", BO.cfENUM.Numeric2, , , , , True, , "timesheet_hodiny")
-                .AddColumn("TimesheetAll", "Celkem", BO.cfENUM.Numeric2, , , , , True, , "timesheet_hodiny")
-                .AddColumn("TimesheetAllVersusBudget", "+-", BO.cfENUM.Numeric, False, , , , True, , "timesheet_hodiny")
 
-                .AddColumn("TimeshetAmountBilling", "Fakturační", BO.cfENUM.Numeric2, , , , , True, , "timesheet_cena")
-                .AddColumn("TimesheetAmountCost", "Nákladová", BO.cfENUM.Numeric2, , , , , True, , "timesheet_cena")
-            Else
-                group.Name = "plan" : group.HeaderText = "Rozpočet"
-                group = New Telerik.Web.UI.GridColumnGroup
-                .radGridOrig.MasterTableView.ColumnGroups.Add(group)
-                group.Name = "real" : group.HeaderText = "Vykázaná realita"
-                .AddColumn("Period", "Měsíc", , , , , , , , "plan")
-                '.AddColumn("p34Name", "Sešit")
-                .AddColumn("p32Name", "Aktivita", , , , , , , , "plan")
-                .AddColumn("SupplierName", "Dodavatel", , , , , , , , "plan")
-                .AddColumn("p49Text", "Text", , , , , , , , "plan")
-                .AddColumn("p49Amount", "Částka", BO.cfENUM.Numeric2, , , , , , , "plan")
-                .AddColumn("j27Code", "Měna", , , , , , , , "plan")
 
-                .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly, , , , , , , "real")
-                .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , , , "real")
-                .AddColumn("p31Code", "Kód dokladu", , , , , , , , "real")
-                .AddColumn("p31Count", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
 
-            End If
-            
-
-        End With
-        ''With Me.gridBudgetExpense
-        ''    .ClearColumns()
-        ''    .radGridOrig.ShowFooter = True
-        ''    .AddColumn("p34Name", "Sešit")
-        ''    .AddColumn("p32Name", "Aktivita")
-        ''    .AddColumn("AmountWithoutVat", "Vykázáno bez DPH", BO.cfENUM.Numeric, , , , , True)
-        ''    .AddColumn("Pocet", "Počet", BO.cfENUM.Numeric0)
-
-        ''    Dim GGE As New Telerik.Web.UI.GridGroupByExpression
-        ''    Dim fld As New GridGroupByField
-        ''    fld.FieldName = "j27Code"
-        ''    fld.HeaderText = "Měna"
-        ''    GGE.SelectFields.Add(fld)
-        ''    GGE.GroupByFields.Add(fld)
-        ''    .radGridOrig.MasterTableView.GroupByExpressions.Add(GGE)
-        ''End With
-    End Sub
-
-    Private Sub gridBudget_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridBudget.ItemDataBound
-        If Not TypeOf e.Item Is GridDataItem Or gridBudget.Visible = False Then Return
-
-        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
-        If Me.cmdBudgetP46.Checked Then
-            Dim cRec As BO.p46BudgetPersonExtented = CType(e.Item.DataItem, BO.p46BudgetPersonExtented)
-            If cRec.TimesheetAllVersusBudget > 0 Then
-                'vykázáno přes rozpočet
-                dataItem.ForeColor = Drawing.Color.Red
-            End If
-        End If
-        
-    End Sub
-
-    Private Sub gridBudget_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridBudget.NeedDataSource
-        If Me.p45ID.Items.Count = 0 Then
-            gridBudget.Visible = False
-            Return
-        End If
-        Dim intP45ID As Integer = CInt(Me.p45ID.SelectedValue)
-        If Me.cmdBudgetP46.Checked Then
-            Dim lis As IEnumerable(Of BO.p46BudgetPersonExtented) = Master.Factory.p45BudgetBL.GetList_p46_extended(intP45ID, Master.DataPID)
-            gridBudget.DataSource = lis
-        Else
-            Dim mq As New BO.myQueryP49
-            mq.p45ID = intP45ID
-            Dim lis As IEnumerable(Of BO.p49FinancialPlanExtended) = Master.Factory.p49FinancialPlanBL.GetList_Extended(mq, Master.DataPID)
-            gridBudget.DataSource = lis
-            If lis.Count > 0 Then
-                With gridBudget.radGridOrig.MasterTableView
-                    .GroupByExpressions.Clear()
-                    .ShowGroupFooter = False
-                    Dim GGE As New GridGroupByExpression
-                    Dim fld As New GridGroupByField
-                    fld.FieldName = "p34Name"
-                    fld.HeaderText = "Sešit"
-
-                    GGE.SelectFields.Add(fld)
-                    GGE.GroupByFields.Add(fld)
-
-                    .GroupByExpressions.Add(GGE)
-                End With
-            End If
-        End If
-
-    End Sub
-
-   
-    
 End Class

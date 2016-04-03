@@ -121,6 +121,7 @@ Public Class p31_subgrid
                     .Add("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID))
                     .Add("p31_subgrid-search")
                     .Add("p31_subgrid-groups-autoexpanded")
+                    .Add("p31_subgrid-sort")
                     .Add(strKey)
                 End With
                 .InhaleUserParams(lisPars)
@@ -137,7 +138,9 @@ Public Class p31_subgrid
                 period1.SetupData(Me.Factory, .GetUserParam("periodcombo-custom_query"))
 
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
-               
+                If .GetUserParam("p31_subgrid-sort") <> "" Then
+                    grid2.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam("p31_subgrid-sort"))
+                End If
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID)))
                 Me.txtSearch.Text = .GetUserParam("p31_subgrid-search")
@@ -515,11 +518,16 @@ Public Class p31_subgrid
     End Sub
 
     Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
+        Factory.j03UserBL.SetUserParam("p31_subgrid-sort", "")
         Factory.j03UserBL.SetUserParam("p31_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.j74id.SelectedValue)
         ReloadPage()
     End Sub
 
     Private Sub ReloadPage()
         Response.Redirect(Request.Url.AbsoluteUri.ToString())
+    End Sub
+
+    Private Sub grid2_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid2.SortCommand
+        Factory.j03UserBL.SetUserParam("p31_subgrid-sort", SortExpression)
     End Sub
 End Class

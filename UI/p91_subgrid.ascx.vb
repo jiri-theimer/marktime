@@ -28,6 +28,14 @@ Public Class p91_subgrid
                 period1.SelectedValue = .GetUserParam("p91_framework-period")
             End With
         End If
+
+        With Me.period1
+            If .SelectedValue <> "" Then
+                .BackColor = Drawing.Color.Red
+            Else
+                .BackColor = Nothing
+            End If
+        End With
     End Sub
 
 
