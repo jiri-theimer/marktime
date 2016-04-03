@@ -25,7 +25,11 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gridP31.Factory = Master.Factory
+        
         If Not Page.IsPostBack Then
+            If Request.Item("pid") <> "" Then
+                gridP31.DefaultSelectedPID = BO.BAS.IsNullInt(Request.Item("pid"))
+            End If
             Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
             Me.CurrentMasterPrefix = Request.Item("masterprefix")
             If Me.CurrentMasterPID = 0 Or Me.CurrentMasterPrefix = "" Then Master.StopPage("masterpid or masterprefix missing.")
@@ -39,12 +43,12 @@
         Else
             gridP31.AllowApproving = BO.BAS.BG(Request.Item("IsApprovingPerson"))
         End If
-
+        
     End Sub
 
     Private Sub entity_framework_p31subform_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Request.Item("pid") <> "" Then
-            gridP31.Rebind(True, BO.BAS.IsNullInt(Request.Item("pid")))
-        End If
+        
     End Sub
+
+   
 End Class

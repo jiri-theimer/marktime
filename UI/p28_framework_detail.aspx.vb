@@ -97,6 +97,9 @@ Public Class p28_framework_detail
         Else
             fraSubform.Visible = True
             fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
+            If Me.CurrentSubgrid = SubgridType.p31 And Me.hidHardRefreshFlag.Value = "p31-save" Then
+                fraSubform.Attributes.Item("src") += "&pid=" & Me.hidHardRefreshPID.Value
+            End If
         End If
     End Sub
 
@@ -384,7 +387,8 @@ Public Class p28_framework_detail
                         Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
                     End If
                 End With
-
+            Case "p31-save"
+                'je třeba kvůli obnově pod-přehledu
             Case Else
                 ReloadPage(Master.DataPID.ToString)
         End Select

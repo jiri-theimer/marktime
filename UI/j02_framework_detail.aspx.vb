@@ -30,17 +30,15 @@ Public Class j02_framework_detail
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         With Master
-            gridP31.Factory = .Factory
-            gridP56.Factory = .Factory
-            gridP91.Factory = .Factory
             ff1.Factory = .Factory
-            bigsummary1.Factory = .Factory
         End With
-        
 
         If Not Page.IsPostBack Then
             ViewState("j03id") = 0
             With Master
+                If Request.Item("tab") <> "" Then
+                    .Factory.j03UserBL.SetUserParam("j02_framework_detail-subgrid", Request.Item("tab"))
+                End If
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OnePersonPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OnePersonPage, "pid=" & .DataPID.ToString))
@@ -51,6 +49,7 @@ Public Class j02_framework_detail
                     .Add("j02_framework_detail-subgrid")
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
                     .Add("j02_framework_detail-switch")
+                    .Add("j02_framework_detail-switchHeight")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -65,52 +64,60 @@ Public Class j02_framework_detail
                     End If
                 End If
 
-               
                 With .Factory.j03UserBL
                     panSwitch.Style.Item("display") = .GetUserParam("j02_framework_detail-switch", "block")
+                    Dim strHeight As String = .GetUserParam("j02_framework_detail-switchHeight", "auto")
+                    If strHeight = "auto" Then
+                        panSwitch.Style.Item("height") = "" : panSwitch.Style.Item("overflow") = ""
+                    Else
+                        panSwitch.Style.Item("height") = strHeight & "px"
+                    End If
                     Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("j02_framework_detail-subgrid", "1")), SubgridType)
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
-                gridP31.AllowApproving = .Factory.SysUser.IsApprovingPerson
-                gridP56.AllowApproving = .Factory.SysUser.IsApprovingPerson
+                
             End With
 
-            
-            gridP91.Visible = False : gridP56.Visible = False
-            Select Case Me.CurrentSubgrid
-                Case SubgridType.p56
-                    gridP56.Visible = True
-                Case SubgridType.p91
-                    gridP91.Visible = True
-            End Select
 
             RefreshRecord()
 
         End If
 
-        gridP31.MasterDataPID = 0     'uvnitř prvku nebude docházet k plnění gridu
-        Select Case Me.CurrentSubgrid
-            Case SubgridType.p31
-                gridP31.MasterDataPID = Master.DataPID
-            Case SubgridType.p56
-                gridP56.MasterDataPID = Master.DataPID
-            Case SubgridType.p91
-                gridP91.MasterDataPID = Master.DataPID
-            Case SubgridType.summary
-                bigsummary1.MasterDataPID = Master.DataPID
-        End Select
+        With Me.opgSubgrid.Tabs
+            .FindTabByValue("-1").NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=j02&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("1").NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=j02&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("2").NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=j02&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("3").NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=j02&masterpid=" & Master.DataPID.ToString
+            .FindTabByValue("4").NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=j02&masterpid=" & Master.DataPID.ToString
+        End With
+        If Me.CurrentSubgrid = SubgridType._NotSpecified Then
+            fraSubform.Visible = False
+            panSwitch.Style.Item("height") = ""
+            For i As Integer = 0 To Me.opgSubgrid.Tabs.Count - 1
+                Me.opgSubgrid.Tabs(i).NavigateUrl = ""
+            Next
+        Else
+            fraSubform.Visible = True
+            fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
+            If Me.CurrentSubgrid = SubgridType.p31 And Me.hidHardRefreshFlag.Value = "p31-save" Then
+                fraSubform.Attributes.Item("src") += "&pid=" & Me.hidHardRefreshPID.Value
+            End If
+        End If
     End Sub
 
     Private Sub RefreshRecord()
         Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=j02")
-
-        Me.panIntraPerson.Visible = cRec.j02IsIntraPerson
-        Me.boxJ05.Visible = cRec.j02IsIntraPerson
-        Me.topLink1.Visible = cRec.j02IsIntraPerson
-        Me.topLink2.Visible = cRec.j02IsIntraPerson
-        Me.topLink3.Visible = cRec.j02IsIntraPerson
-        Me.topLink0.Visible = cRec.j02IsIntraPerson
+        With cRec
+            Me.panIntraPerson.Visible = .j02IsIntraPerson
+            Me.boxJ05.Visible = .j02IsIntraPerson
+            Me.topLink1.Visible = .j02IsIntraPerson
+            Me.topLink2.Visible = .j02IsIntraPerson
+            Me.topLink3.Visible = .j02IsIntraPerson
+            Me.topLink0.Visible = .j02IsIntraPerson
+            Me.topLink6.Visible = .j02IsIntraPerson
+        End With
+        
 
         With Me.panIntraPerson
             Me.c21Name.Visible = .Visible
@@ -138,10 +145,9 @@ Public Class j02_framework_detail
                 AccountMessage.Text = "Tento osobní profil není svázán s uživatelským účtem."
                 cmdLog.Visible = False
             End If
-            If Me.CurrentSubgrid = SubgridType.summary Then
-                bigsummary1.RefreshData()
-
-            End If
+        Else
+            Me.CurrentSubgrid = SubgridType._NotSpecified
+            Me.opgSubgrid.Visible = False
         End If
         
 
@@ -284,11 +290,7 @@ Public Class j02_framework_detail
 
         Select Case Me.hidHardRefreshFlag.Value
             Case "p31-save", "p31-delete"
-                If Me.CurrentSubgrid = SubgridType.p31 Then
-                    gridP31.RecalcVirtualRowCount()
-                    gridP31.Rebind(True)
-                End If
-
+               
             Case Else
                 ReloadPage(Master.DataPID.ToString)
         End Select
@@ -303,67 +305,7 @@ Public Class j02_framework_detail
     End Sub
 
 
-   
     
-    'Private Function SaveState() As String
-    '    Dim dockStates As List(Of DockState) = RadDockLayout1.GetRegisteredDocksState()
-    '    Dim serializer As New JavaScriptSerializer()
-    '    Dim converters As New List(Of JavaScriptConverter)()
-    '    converters.Add(New UnitConverter())
-    '    serializer.RegisterConverters(converters)
-
-    '    Dim stateString As String = [String].Empty
-    '    For Each state As DockState In dockStates
-    '        Dim ser As String = serializer.Serialize(state)
-    '        stateString = stateString + "|" + ser
-    '    Next
-    '    Return stateString
-    'End Function
-
-
-
-
-
-    
-
-    'Private Sub RadDockLayout1_LoadDockLayout(sender As Object, e As Telerik.Web.UI.DockLayoutEventArgs) Handles RadDockLayout1.LoadDockLayout
-    '    If Not Page.IsPostBack Then
-    '        Dim s As String = Master.Factory.j03UserBL.LoadDockState("j02_framework_detail.aspx")
-    '        If s <> "" Then
-    '            LoadState(s, e.Positions, e.Indices)
-    '        End If
-
-    '    End If
-    'End Sub
-
-
-    'Private Sub cmdResetDockState_Click(sender As Object, e As EventArgs) Handles cmdResetDockState.Click
-    '    Master.Factory.j03UserBL.SaveDockState("j02_framework_detail.aspx", "")
-    '    ReloadPage(Master.DataPID.ToString)
-    'End Sub
-
-    'Private Sub cmdSaveDockState_Click(sender As Object, e As EventArgs) Handles cmdSaveDockState.Click
-    '    Master.Factory.j03UserBL.SaveDockState("j02_framework_detail.aspx", SaveState())
-    'End Sub
-
-    Private Sub j02_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        Me.opgSubgrid.Visible = Me.panIntraPerson.Visible
-        Me.gridP31.Visible = False
-        Me.bigsummary1.Visible = False
-        If Not Me.panIntraPerson.Visible Then Return
-
-        Select Case Me.CurrentSubgrid
-            Case SubgridType.p31
-                Me.gridP31.Visible = True
-            Case SubgridType.summary
-                Me.bigsummary1.Visible = True
-        End Select
-       
-    End Sub
-
-   
-    
-
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("j02_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
         ReloadPage(Master.DataPID.ToString)
@@ -381,8 +323,5 @@ Public Class j02_framework_detail
         End With
     End Sub
 
-    Private Sub opgSubgrid_TabClick(sender As Object, e As RadTabStripEventArgs) Handles opgSubgrid.TabClick
-        Master.Factory.j03UserBL.SetUserParam("j02_framework_detail-subgrid", Me.opgSubgrid.SelectedTab.Value)
-        ReloadPage(Master.DataPID.ToString)
-    End Sub
+   
 End Class

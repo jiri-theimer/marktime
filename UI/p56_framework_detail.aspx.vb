@@ -253,6 +253,10 @@
                 Master.DataPID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
             Case "p56-delete"
                 Response.Redirect("entity_framework_detail_missing.aspx?prefix=p56")
+            Case "p31-save"
+                gridP31.DefaultSelectedPID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
+                gridP31.Rebind(False)
+                Return
             Case Else
 
         End Select

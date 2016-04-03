@@ -473,49 +473,13 @@ Partial Public Class j02_framework_detail
     Protected WithEvents opgSubgrid As Global.Telerik.Web.UI.RadTabStrip
 
     '''<summary>
-    '''bigsummary1 control.
+    '''fraSubform control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents bigsummary1 As Global.UI.p31_bigsummary
-
-    '''<summary>
-    '''gridP31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridP31 As Global.UI.p31_subgrid
-
-    '''<summary>
-    '''gridP56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridP56 As Global.UI.p56_subgrid
-
-    '''<summary>
-    '''gridP91 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gridP91 As Global.UI.p91_subgrid
-
-    '''<summary>
-    '''hiddatapid_subform control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hiddatapid_subform As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents fraSubform As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''hidHardRefreshFlag control.
@@ -534,15 +498,6 @@ Partial Public Class j02_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hiddatapid_p31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hiddatapid_p31 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidIsBin control.

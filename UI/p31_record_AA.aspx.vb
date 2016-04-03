@@ -207,7 +207,7 @@
         If strErr <> "" Then
             Master.Notify(strErr, 2)
         Else
-            Master.CloseAndRefreshParent()
+            Master.CloseAndRefreshParent("p31-save")
         End If
         cmdApprove.Visible = True
     End Sub

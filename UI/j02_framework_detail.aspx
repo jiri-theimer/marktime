@@ -2,12 +2,8 @@
 
 <%@ MasterType VirtualPath="~/SubForm.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="p31_subgrid" Src="~/p31_subgrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
-<%@ Register TagPrefix="uc" TagName="p56_subgrid" Src="~/p56_subgrid.ascx" %>
-<%@ Register TagPrefix="uc" TagName="p91_subgrid" Src="~/p91_subgrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
-<%@ Register TagPrefix="uc" TagName="p31_bigsummary" Src="~/p31_bigsummary.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
@@ -62,8 +58,28 @@
     <script type="text/javascript">
         $(document).ready(function () {
           
-
+            AdjustHeight();
         });
+
+        function AdjustHeight(){
+            var h1 = new Number;
+            var h2 = new Number;
+            var hh = new Number;
+
+            h1 = $(window).height();
+
+            ss = self.document.getElementById("offsetY");
+            var offset = $(ss).offset();
+
+            h2 = offset.top;
+            hh = h1 - h2;
+
+            if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
+                hh=hh-10;
+            }
+            
+            document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
+        }
 
         function report() {
             
@@ -115,55 +131,6 @@
 
         }
 
-        
-        function p31_entry() {
-            ///volá se z p31_subgrid
-            sw_local("p31_record.aspx?pid=0","Images/worksheet_32.png",true);
-            return(false);
-
-        }
-        function p31_clone() {
-            ///volá se z p31_subgrid
-            var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?clone=1&pid="+pid,"Images/worksheet_32.png",true);
-            return(false);
-        }
-       
-
-        function p31_RowSelected(sender, args) {
-
-            document.getElementById("<%=hiddatapid_p31.clientid%>").value = args.getDataKeyValue("pid");
-
-        }
-
-        function p31_RowDoubleClick(sender, args) {
-            record_p31_edit();
-        }
-
-        function record_p31_edit() {
-            var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?pid="+pid,"Images/worksheet_32.png");
-
-        }
-
-        function p31_subgrid_setting(j74id) {
-            
-            sw_local("grid_designer.aspx?prefix=p31&masterprefix=j02&pid="+j74id, "Images/griddesigner_32.png",true);
-        }
-        function p56_subgrid_setting(j74id) {
-            ///volá se z p56_subgrid
-            sw_local("grid_designer.aspx?prefix=p56&masterprefix=j02&pid="+j74id, "Images/griddesigner_32.png",true);
-        }
-        function p56_clone() {
-            ///volá se z gridu úkolů
-            var pid=document.getElementById("<%=hiddatapid_subform.ClientID%>").value;
-            if (pid == "" || pid == null) {
-                alert("Není vybrán záznam.");
-                return(false);
-            }
-            sw_local("p56_record.aspx?clone=1&j02id=<%=Master.DataPID%>&pid="+pid,"Images/task_32.png",true);
-            return(false);
-        }
        
 
         function o23_record(pid) {
@@ -197,37 +164,7 @@
             sw_local("entity_timeline.aspx?prefix=j02&pid=<%=master.datapid%>","Images/timeline_32.png",true);
         }
        
-        function RowSelected_p56(sender, args) {
-            document.getElementById("<%=hiddatapid_subform.clientid%>").value = args.getDataKeyValue("pid");
-        }
-
-        function RowDoubleClick_p56(sender, args) {
-            p56_record(document.getElementById("<%=hiddatapid_subform.clientid%>").value);
-        }
-        function p56_record(pid,bolReturnFalse) {
-            sw_local("p56_record.aspx?masterprefix=j02&masterpid=<%=master.datapid%>&pid="+pid,"Images/task_32.png",true);
-            if (bolReturnFalse==true)
-                return(false)
-        }
-        function p31_entry_p56() {
-            ///volá se z gridu úkolů
-            var p56id=document.getElementById("<%=hiddatapid_subform.clientid%>").value;
-            if (p56id == "" || p56id == null) {
-                alert("Není vybrán úkol.");
-                return(false);
-            }            
-            sw_local("p31_record.aspx?pid=0&p56id="+p56id,"Images/worksheet_32.png",true);
-            return(false);
-        }
-        function RowSelected_p91(sender, args) {
-            document.getElementById("<%=hiddatapid_subform.clientid%>").value = args.getDataKeyValue("pid");
-        }
-
-        function RowDoubleClick_p91(sender, args) {
-            <%If Master.Factory.SysUser.j04IsMenu_Invoice Then%>
-            window.open("p91_framework.aspx?pid="+document.getElementById("<%=hiddatapid_subform.clientid%>").value,"_top")
-            <%End If%>            
-        }
+        
         function approve(){            
             window.parent.sw_master("entity_modal_approving.aspx?prefix=j02&pid=<%=master.datapid%>","Images/approve_32.png",true);
         }
@@ -258,7 +195,29 @@
                 if (data == ' ') {
                     return;
                 }                
-            });            
+            });  
+            AdjustHeight();
+        }
+        function OnClientTabSelected(sender, eventArgs)
+        {
+            var tab = eventArgs.get_tab();
+            var s=tab.get_value();            
+            $.post("Handler/handler_userparam.ashx", { x36value: s, x36key: "j02_framework_detail-subgrid", oper: "set" }, function (data) {
+                if (data == ' ') {
+                    return;
+                }                
+            });
+            <%If Me.fraSubform.Visible = False Then%>
+            location.replace("j02_framework_detail.aspx?tab="+s);           
+            <%End If%>
+            if (s=="0")
+                location.replace("j02_framework_detail.aspx?tab="+s)
+            
+            
+                
+        }
+        function page_setting(){
+            sw_local("entity_framework_detail_setting.aspx?prefix=j02", "Images/setting_32.png",false);
         }
     </script>
 
@@ -287,6 +246,9 @@
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
                     <Items>
+                        <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
+                        </telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za osobu" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
@@ -494,29 +456,23 @@
 
     </asp:panel>
     <div style="clear:both; width: 100%;"></div>
-    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="true">
+    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="false" OnClientTabSelected="OnClientTabSelected">
         <Tabs>
-            <telerik:RadTab Text="Worksheet summary" Value="-1"></telerik:RadTab>
-            <telerik:RadTab Text="Worksheet přehled" Value="1" Selected="true"></telerik:RadTab>
-            <telerik:RadTab Text="Úkoly" Value="4"></telerik:RadTab>
-            <telerik:RadTab Text="Vystavené faktury s úkony osoby" Value="2"></telerik:RadTab>
-            <telerik:RadTab Text="Komentáře" Value="3"></telerik:RadTab>
-            <telerik:RadTab Text="Žádný pod-přehled" Value="0"></telerik:RadTab>
+            <telerik:RadTab Text="Worksheet summary" Value="-1" Target="fraSubform"></telerik:RadTab>
+            <telerik:RadTab Text="Worksheet přehled" Value="1" Selected="true" Target="fraSubform"></telerik:RadTab>
+            <telerik:RadTab Text="Úkoly" Value="4" Target="fraSubform"></telerik:RadTab>
+            <telerik:RadTab Text="Vystavené faktury s úkony osoby" Value="2" Target="fraSubform"></telerik:RadTab>
+            <telerik:RadTab Text="Komentáře" Value="3" Target="fraSubform"></telerik:RadTab>
+            <telerik:RadTab Text="Žádný pod-přehled" Value="0" Target="fraSubform"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
+    <div id="offsetY"></div>
+    <iframe frameborder="0" id="fraSubform" name="fraSubform" runat="server" width="100%" height="300px"></iframe>
+
+
     
-
-
-
-    <uc:p31_bigsummary ID="bigsummary1" runat="server" MasterDataPrefix="j02" />
-    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="j02Person" AllowMultiSelect="true"></uc:p31_subgrid>
-    <uc:p56_subgrid ID="gridP56" runat="server" x29ID="j02Person" />
-    <uc:p91_subgrid ID="gridP91" runat="server" x29ID="j02Person" />
-
-    <asp:HiddenField ID="hiddatapid_subform" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
-    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-    <asp:HiddenField ID="hiddatapid_p31" runat="server" />
+    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />    
     <asp:HiddenField ID="hidIsBin" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

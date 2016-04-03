@@ -3,8 +3,10 @@ Public Class p31_subgrid
     Inherits System.Web.UI.UserControl
 
     Public Property Factory As BL.Factory           'proměnná nedrží stav!
+    Public Property DefaultSelectedPID As Integer = 0
     Public Property ExplicitMyQuery As BO.myQueryP31    'proměnná nedrží stav!
     Private Property _curJ74 As BO.j74SavedGridColTemplate
+
     Public Property MasterDataPID As Integer
         Get
             Return BO.BAS.IsNullInt(Me.hidMasterDataPID.Value)
@@ -148,8 +150,9 @@ Public Class p31_subgrid
             End With
 
             SetupJ70Combo(BO.BAS.IsNullInt(Factory.j03UserBL.GetUserParam("p31_subgrid-j70id")))
-            SetupP31Grid()
             RecalcVirtualRowCount()
+            SetupP31Grid()
+
         End If
 
     End Sub
@@ -270,27 +273,11 @@ Public Class p31_subgrid
         If e.IsFromDetailTable Then
             Return
         End If
-
         Dim mq As New BO.myQueryP31
         p31_InhaleMyQuery(mq)
         With mq
             .MG_PageSize = CInt(Me.cbxPaging.SelectedValue)
             .MG_CurrentPageIndex = grid2.radGridOrig.MasterTableView.CurrentPageIndex
-            .MG_SortString = grid2.radGridOrig.MasterTableView.SortExpressions.GetSortString()
-            If Me.hidDefaultSorting.Value <> "" Then
-                If .MG_SortString = "" Then
-                    .MG_SortString = Me.hidDefaultSorting.Value
-                Else
-                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
-                End If
-            End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
-                Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
-                End If
-            End If
         End With
         If Me.hidDrillDownField.Value <> "" Then
             'drill down úroveň
@@ -301,8 +288,32 @@ Public Class p31_subgrid
             grid2.DataSourceDataTable = dt
             Return
         End If
-
-        grid2.DataSource = Me.Factory.p31WorksheetBL.GetList(mq)
+        Dim lis As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mq)
+        If Me.DefaultSelectedPID <> 0 Then
+            If lis.Where(Function(p) p.PID = Me.DefaultSelectedPID).Count > 0 Then
+                'záznam je na první stránce
+            Else
+                Dim mqAll As New BO.myQueryP31
+                mqAll.TopRecordsOnly = 0
+                p31_InhaleMyQuery(mqAll)
+                Dim lisAll As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mqAll)
+                Dim pids As IEnumerable(Of Integer) = lisAll.Select(Function(p) p.PID)
+                Dim x As Integer, intNewPageIndex As Integer = 0
+                For Each intPID As Integer In pids
+                    x += 1
+                    If x > grid2.PageSize Then
+                        intNewPageIndex += 1 : x = 1
+                    End If
+                    If intPID = Me.DefaultSelectedPID Then
+                        grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
+                        mq.MG_CurrentPageIndex = intNewPageIndex
+                        lis = Me.Factory.p31WorksheetBL.GetList(mq) 'nový zdroj pro grid
+                        Exit For
+                    End If
+                Next
+            End If
+        End If
+        grid2.DataSource = lis
 
     End Sub
 
@@ -322,6 +333,10 @@ Public Class p31_subgrid
 
 
         grid2.ParseFooterItemString(footerItem, ViewState("footersum"))
+
+        If Me.DefaultSelectedPID <> 0 Then
+            grid2.SelectRecords(Me.DefaultSelectedPID)
+        End If
     End Sub
 
     Public Sub Rebind(bolKeepSelectedItems As Boolean, Optional intExplicitSelectedPID As Integer = 0)
@@ -330,6 +345,31 @@ Public Class p31_subgrid
         End If
         grid2.Rebind(bolKeepSelectedItems, intExplicitSelectedPID)
     End Sub
+
+    ''Public Sub SelectRecord(intSelPID As Integer)
+    ''    grid2.SelectRecords(intSelPID)
+    ''    If grid2.GetSelectedPIDs.Count > 0 Then Return 'záznam byl nalezen na první stránce
+    ''    'je třeba najít záznam na dalších stránkách
+    ''    Dim mq As New BO.myQueryP31
+    ''    mq.TopRecordsOnly = 0
+    ''    p31_InhaleMyQuery(mq)
+
+    ''    Dim lis As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mq)
+    ''    Dim pids As IEnumerable(Of Integer) = lis.Select(Function(p) p.PID)
+    ''    Dim x As Integer, intNewPageIndex As Integer = 0
+    ''    For Each intPID As Integer In pids
+    ''        x += 1
+    ''        If x > grid2.PageSize Then
+    ''            intNewPageIndex += 1 : x = 1
+    ''        End If
+    ''        If intPID = intSelPID Then
+    ''            grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
+    ''            Rebind(False, intSelPID)
+    ''            Exit For
+    ''        End If
+
+    ''    Next
+    ''End Sub
     Public Sub RecalcVirtualRowCount()
 
         If Me.MasterDataPID = 0 Or Me.EntityX29ID = BO.x29IdEnum._NotSpecified Then Return
@@ -370,8 +410,6 @@ Public Class p31_subgrid
                     .p56IDs.Add(Me.MasterDataPID)
             End Select
             .j70ID = Me.CurrentJ70ID
-            ''.SearchExpression = Trim(Me.txtSearch.Text)
-            ''.QuickQuery = Me.CurrentQuickQuery
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
             If period1.Visible Then
                 If period1.SelectedValue <> "" Then
@@ -383,6 +421,23 @@ Public Class p31_subgrid
                 .DateUntil = Me.ExplicitDateUntil
             End If
             .SearchExpression = Trim(Me.txtSearch.Text)
+
+            .MG_SortString = grid2.radGridOrig.MasterTableView.SortExpressions.GetSortString()
+
+            If Me.hidDefaultSorting.Value <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.hidDefaultSorting.Value
+                Else
+                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+                End If
+            End If
+            If Me.cbxGroupBy.SelectedValue <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                Else
+                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                End If
+            End If
         End With
     End Sub
 

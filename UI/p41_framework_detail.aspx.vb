@@ -111,8 +111,8 @@ Public Class p41_framework_detail
             fraSubform.Visible = True
 
             fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
-            If Me.CurrentSubgrid = SubgridType.p31 And Me.hidHardRefreshPID.Value <> "" Then
-                fraSubform.Attributes.Item("src") += "&p31id=" & Me.hidHardRefreshPID.Value
+            If Me.CurrentSubgrid = SubgridType.p31 And Me.hidHardRefreshFlag.Value = "p31-save" Then
+                fraSubform.Attributes.Item("src") += "&pid=" & Me.hidHardRefreshPID.Value
             End If
         End If
     End Sub
@@ -299,23 +299,7 @@ Public Class p41_framework_detail
             boxFF.Visible = False
         End If
 
-        ''If Me.CurrentSubgrid = SubgridType.p45 Then
-        ''    panP45.Visible = True
-        ''    Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
-        ''    If lis.Count > 0 Then
-        ''        Me.p45ID.DataSource = lis
-        ''        Me.p45ID.DataBind()
-        ''        cmdP45.InnerText = "Nastavení rozpočtu"
-        ''        cmdP47.Visible = cmdBudgetP46.Checked
-        ''        cmdNewP49.Visible = cmdBudgetP49.Checked : cmdConvert2P31.Visible = cmdBudgetP49.Checked
-        ''    Else
-        ''        Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
-        ''        cmdP45.InnerText = "Založit rozpočet"
-        ''    End If
-
-        ''Else
-        ''    panP45.Visible = False
-        ''End If
+      
 
 
         RefreshP40(cRec)
@@ -425,13 +409,7 @@ Public Class p41_framework_detail
                 b = True
             End If
         End With
-        'If Not cClient Is Nothing Then
-        '    With cClient
-        '        If .p87ID > 0 Or .p92ID > 0 Then
-        '            b = True
-        '        End If
-        '    End With
-        'End If
+      
         Me.clue_p41_billing.Visible = b
         If b Then
             Me.clue_p41_billing.Attributes("rel") = "clue_p41_record_billingsetting.aspx?pid=" & cRec.PID.ToString
@@ -506,22 +484,7 @@ Public Class p41_framework_detail
 
                 ReloadPage(Me.hidHardRefreshPID.Value)
             Case "p31-save", "p31-delete"
-                Select Case Me.CurrentSubgrid
-                    Case SubgridType.summary
-                        RefreshRecord()
-                    Case SubgridType.p31
-                        
-                        ''gridP31.RecalcVirtualRowCount()
-                        ''gridP31.Rebind(True)
-                    Case SubgridType.p56
-                        ''gridP56.Rebind(True)
-                End Select
-                If Me.CurrentSubgrid = SubgridType.p31 Then
-
-                End If
-                If Me.CurrentSubgrid = SubgridType.p56 Then
-
-                End If
+                
 
             Case "p51-save"
                 Master.Notify("Pokud jste změnili sazby v ceníku a potřebujete přepočítat sazby u již uložené rozpracovanosti, použijte k tomu nástroj [Přepočítat sazby rozpracovaných úkonů].", NotifyLevel.InfoMessage)
