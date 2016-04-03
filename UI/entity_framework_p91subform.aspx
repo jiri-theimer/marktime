@@ -3,6 +3,10 @@
 <%@ Register TagPrefix="uc" TagName="p91_subgrid" Src="~/p91_subgrid.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
+        $(document).ready(function () {
+            window.parent.stoploading();
+
+        });
         function periodcombo_setting() {
 
             window.parent.sw_local("periodcombo_setting.aspx", "Images/settings_32.png");

@@ -5,6 +5,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
+        $(document).ready(function () {
+            window.parent.stoploading();
+
+        });
         function p45_detail() {
             var p45id = "";
             <%If Me.p45ID.Items.Count > 0 Then%>
@@ -65,7 +69,7 @@
             <button type="button" id="cmdP47" runat="server" onclick="p47_plan()" class="cmd" visible="false">Kapacitní plán projektu</button>
             <button type="button" id="cmdNewP49" runat="server" onclick="p49_record(0)" class="cmd" visible="false" title="Nová položka peněžního rozpočtu">
                 <img src="Images/new.png" alt="Nový" /></button>
-            <button type="button" id="cmdConvert2P31" runat="server" onclick="p49_to_p31()" class="cmd" visible="false" title="Konvertovat položku rozpočtu do worksheet úkonu">
+            <button type="button" id="cmdConvert2P31" runat="server" onclick="p49_to_p31()" class="cmd" visible="false" title="Překlopit položku rozpočtu do worksheet úkonu">
                 <img src="Images/worksheet.png" alt="Worksheet" /></button>
         </div>
     </div>

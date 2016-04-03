@@ -89,7 +89,7 @@ Public Class p28_framework_detail
             .FindTabByValue("4").NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
         End With
         If Me.CurrentSubgrid = SubgridType._NotSpecified Then
-            fraSubform.Visible = False
+            fraSubform.Visible = False : imgLoading.Visible = False
             panSwitch.Style.Item("height") = ""
             For i As Integer = 0 To Me.opgSubgrid.Tabs.Count - 1
                 Me.opgSubgrid.Tabs(i).NavigateUrl = ""

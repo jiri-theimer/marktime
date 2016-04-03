@@ -189,7 +189,9 @@
         function p31_grid(){            
             window.open("p31_grid.aspx?masterprefix=p56&masterpid=<%=Master.DataPID%>","_top")
         }
-        
+        function p31_subgrid_approving(pids) {
+            window.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

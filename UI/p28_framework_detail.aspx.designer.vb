@@ -545,6 +545,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents fraSubform As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
+    '''imgLoading control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgLoading As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''hidHardRefreshFlag control.
     '''</summary>
     '''<remarks>

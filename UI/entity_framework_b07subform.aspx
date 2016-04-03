@@ -5,6 +5,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
+        $(document).ready(function () {
+            window.parent.stoploading();
+
+        });
         function b07_record() {
 
             window.parent.sw_local("b07_create.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>", "Images/comment_32.png", true);

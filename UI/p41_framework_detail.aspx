@@ -238,7 +238,9 @@
         function page_setting(){
             sw_local("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting_32.png",false);
         }
-        
+        function stoploading(){            
+            document.getElementById("<%=me.imgLoading.clientid%>").style.display="none";
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -500,7 +502,7 @@
     </telerik:RadTabStrip>
     <div id="offsetY"></div>
     <iframe frameborder="0" id="fraSubform" name="fraSubform" runat="server" width="100%" height="300px"></iframe>
-   
+    <asp:Image ID="imgLoading" runat="server" ImageUrl="Images/loading.gif" style="position:absolute;top:500px;left:200px;" />
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />

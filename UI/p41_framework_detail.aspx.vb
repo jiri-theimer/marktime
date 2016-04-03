@@ -102,7 +102,7 @@ Public Class p41_framework_detail
             .FindTabByValue("5").NavigateUrl = "p41_framework_detail_budget.aspx?masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
         End With
         If Me.CurrentSubgrid = SubgridType._NotSpecified Then
-            fraSubform.Visible = False
+            fraSubform.Visible = False : imgLoading.Visible = False
             panSwitch.Style.Item("height") = ""
             For i As Integer = 0 To Me.opgSubgrid.Tabs.Count - 1
                 Me.opgSubgrid.Tabs(i).NavigateUrl = ""

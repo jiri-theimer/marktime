@@ -5,7 +5,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
-        
+        $(document).ready(function () {
+            window.parent.stoploading();
+
+        });
 
         function p31_RowSelected(sender, args) {
             ///volá se z p31_subgrid

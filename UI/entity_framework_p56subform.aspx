@@ -4,6 +4,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
+        $(document).ready(function () {
+            window.parent.stoploading();
+
+        });
         function p56_subgrid_setting(j74id) {
             ///volá se z p56_subgrid
             window.parent.sw_local("grid_designer.aspx?prefix=p56&masterprefix=p41&pid=" + j74id, "Images/griddesigner_32.png", true);

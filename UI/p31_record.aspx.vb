@@ -276,7 +276,32 @@
                 Me.p31Date.SelectedDate = .p85FreeDate05
             End With
         End If
-
+        If Request.Item("p49id") <> "" Then
+            'překlopit peněžní rozpočet do úkonu
+            Dim cP49 As BO.p49FinancialPlan = Master.Factory.p49FinancialPlanBL.Load(BO.BAS.IsNullInt(Request.Item("p49id")))
+            If cP49 Is Nothing Then Master.StopPage("Nelze načíst položku rozpočtu.")
+            With cP49
+                Me.p41ID.Value = .p41ID
+                Me.p41ID.Text = .Client & " - " & .Project
+                Handle_ChangeP41(False)
+                Me.p34ID.SelectedValue = .p34ID.ToString
+                Handle_ChangeP34()
+                Me.p32ID.SelectedValue = .p32ID.ToString
+                If .p28ID_Supplier <> 0 Then
+                    Me.p28ID_Supplier.Value = .p28ID_Supplier.ToString
+                    Me.p28ID_Supplier.Text = .SupplierName
+                End If
+                Me.p31Text.Text = .p49Text
+                Me.p31Amount_WithoutVat_Orig.Value = .p49Amount
+                If _Sheet.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
+                    Me.p31Amount_Vat_Orig.Value = .p49Amount * BO.BAS.IsNullNum(Me.p31VatRate_Orig.Text) / 100
+                    Me.p31Amount_WithVat_Orig.Value = Me.p31Amount_WithoutVat_Orig.Value + Me.p31Amount_Vat_Orig.Value
+                End If
+                Me.p49ID.Value = .PID.ToString
+                Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, .PID) & "</br>"
+            End With
+            
+        End If
         If intDefP56ID > 0 Then
             Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(BO.BAS.IsNullInt(Request.Item("p56id")))
             If Not cP56 Is Nothing Then intDefP41ID = cP56.p41ID
@@ -304,13 +329,7 @@
             Me.TimeFrom.Text = c.TimeOnly
             c = New BO.DateTimeByQuerystring(Request.Item("t2"))
             Me.TimeUntil.Text = c.TimeOnly
-            'Dim a() As String = Split(Request.Item("t1"), "_")
-            'Me.p31Date.SelectedDate = BO.BAS.ConvertString2Date(a(0))
-            'a = Split(a(1), ".")
-            'Me.TimeFrom.Text = Right("0" & a(0), 2) & ":" & Right("0" & a(1), 2)
-
-            'a = Split(Request.Item("t2"), "_") : a = Split(a(1), ".")
-            'Me.TimeUntil.Text = Right("0" & a(0), 2) & ":" & Right("0" & a(1), 2)
+            
             Dim cT As New BO.clsTime
             Me.p31Value_Orig.Text = cT.ShowAsDec(Me.TimeUntil.Text) - cT.ShowAsDec(Me.TimeFrom.Text)
             Handle_ChangeHoursEntryFlag()

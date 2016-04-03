@@ -322,6 +322,9 @@
                     s.Append(" AND " & strQueryW)
                 End If
             End If
+            If .p49ID > 0 Then
+                pars.Add("p49id", .p49ID, DbType.Int32) : s.Append(" AND a.p49ID=@p49id")
+            End If
             If .QuickQuery > BO.myQueryP31_QuickQuery._NotSpecified Then
                 s.Append(" AND " & bas.GetQuickQuerySQL_p31(.QuickQuery))
             End If
