@@ -82,11 +82,11 @@ Public Class p28_framework_detail
         End If
 
         With Me.opgSubgrid.Tabs
-            .FindTabByValue("-1").NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-            .FindTabByValue("1").NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-            .FindTabByValue("2").NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-            .FindTabByValue("3").NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-            .FindTabByValue("4").NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            If Not .FindTabByValue("-1") Is Nothing Then .FindTabByValue("-1").NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            If Not .FindTabByValue("1") Is Nothing Then .FindTabByValue("1").NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            If Not .FindTabByValue("2") Is Nothing Then .FindTabByValue("2").NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            If Not .FindTabByValue("3") Is Nothing Then .FindTabByValue("3").NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
+            If Not .FindTabByValue("4") Is Nothing Then .FindTabByValue("4").NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
         End With
         If Me.CurrentSubgrid = SubgridType._NotSpecified Then
             fraSubform.Visible = False : imgLoading.Visible = False

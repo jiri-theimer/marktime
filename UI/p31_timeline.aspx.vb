@@ -205,6 +205,7 @@
         Dim mq As New BO.myQueryJ02
         mq.PIDs = Me.CurrentJ02IDs
         mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+        mq.Closed = BO.BooleanQueryMode.NoQuery
         Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
 
         _lisP31 = Master.Factory.p31WorksheetBL.GetDataSourceForTimeline(Me.CurrentJ02IDs, Me.CurrentD1, Me.CurrentD2)
@@ -233,7 +234,13 @@
             For Each row In qry
                 Dim c As New PlanRow(row.j02ID)
                 c.p41ID = row.p41ID
-                c.Person = lisJ02.Where(Function(pp) pp.PID = row.j02ID)(0).FullNameDesc
+                Try
+                    c.Person = lisJ02.Where(Function(pp) pp.PID = row.j02ID)(0).FullNameDesc
+                Catch ex As Exception
+                    c.Person = "???"
+                End Try
+                
+
                 c.Project = row.ClientAndProject
                 lisData.Add(c)
             Next
@@ -243,7 +250,12 @@
             For Each row In qry
                 Dim c As New PlanRow(row.j02ID)
                 c.p41ID = row.p28ID
-                c.Person = lisJ02.Where(Function(pp) pp.PID = row.j02ID)(0).FullNameDesc
+                Try
+                    c.Person = lisJ02.Where(Function(pp) pp.PID = row.j02ID)(0).FullNameDesc
+                Catch ex As Exception
+                    c.Person = "???"
+                End Try
+
                 c.Project = row.Client
                 If c.p41ID = 0 Then c.Project = "[Projekt bez klienta]" : c.p41ID = -1
                 lisData.Add(c)
