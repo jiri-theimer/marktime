@@ -231,6 +231,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Založil", "UserInsert"))
             .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
             .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC("Externí kód", "p41ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p41Project, lis)
 
@@ -255,6 +256,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Založil", "UserInsert"))
             .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
             .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC("Externí kód", "p28ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p28Contact, lis)
     End Sub
@@ -275,6 +277,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Založil", "UserInsert"))
             .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
             .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC("Externí kód", "j02ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.j02Person, lis)
     End Sub
@@ -421,6 +424,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Založil", "UserInsert"))
             .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
             .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC("Externí kód", "p56ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p56Task, lis)
     End Sub

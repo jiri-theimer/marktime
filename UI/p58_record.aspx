@@ -44,7 +44,17 @@
                 <uc:datacombo ID="p58ParentID" runat="server" DataTextField="TreeMenuItem" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
             </td>
         </tr>
-       
+       <tr>
+            <td>
+                <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Externí kód:"></asp:Label>
+            </td>
+            <td>
+
+
+                <asp:TextBox ID="p58ExternalPID" runat="server" Style="width: 100px;"></asp:TextBox>
+               
+            </td>
+        </tr>
        
     </table>
 

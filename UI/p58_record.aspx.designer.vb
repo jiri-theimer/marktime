@@ -86,6 +86,24 @@ Partial Public Class p58_record
     Protected WithEvents p58ParentID As Global.UI.datacombo
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p58ExternalPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p58ExternalPID As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

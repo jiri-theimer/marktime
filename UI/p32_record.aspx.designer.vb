@@ -302,6 +302,24 @@ Partial Public Class p32_record
     Protected WithEvents p95id As Global.UI.datacombo
 
     '''<summary>
+    '''Datalabel4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Datalabel4 As Global.UI.datalabel
+
+    '''<summary>
+    '''p32ExternalPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32ExternalPID As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Page3 control.
     '''</summary>
     '''<remarks>

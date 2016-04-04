@@ -38,7 +38,7 @@
             Me.p58Ordinary.Value = .p58Ordinary
             Master.Timestamp = .Timestamp
             Me.p58Code.Text = .p58Code
-
+            Me.p58ExternalPID.Text = .p58ExternalPID
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
 
@@ -66,7 +66,7 @@
                 .p58ParentID = BO.BAS.IsNullInt(Me.p58ParentID.SelectedValue)
                 .p58Name = Me.p58Name.Text
                 .p58Code = Trim(Me.p58Code.Text)
-                
+                .p58ExternalPID = Me.p58ExternalPID.Text
 
                 .p58Ordinary = BO.BAS.IsNullInt(Me.p58Ordinary.Value)
                 .ValidFrom = Master.RecordValidFrom

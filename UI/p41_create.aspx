@@ -318,6 +318,16 @@
                         <span class="infoInForm">Adresa v kopii (CC/BCC) , podle které robot pozná, že načtená poštovní zpráva má vazbu k tomuto projektu.</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="Externí kód:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p41ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
+                       
+                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>                   
+                    </td>
+                </tr>
             </table>
         </telerik:RadPageView>
     </telerik:RadMultiPage>

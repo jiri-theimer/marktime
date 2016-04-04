@@ -108,7 +108,7 @@
             Me.p56Plan_Hours.Value = .p56Plan_Hours
             Me.p56Plan_Expenses.Value = .p56Plan_Expenses
             Me.p56CompletePercent.Value = .p56CompletePercent
-
+            Me.p56ExternalPID.Text = .p56ExternalPID
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
         End With
@@ -201,6 +201,7 @@
                 .p56Plan_Hours = BO.BAS.IsNullNum(Me.p56Plan_Hours.Value)
                 .p56Plan_Expenses = BO.BAS.IsNullNum(Me.p56Plan_Expenses.Value)
                 .p56CompletePercent = BO.BAS.IsNullInt(Me.p56CompletePercent.Value)
+                .p56ExternalPID = Me.p56ExternalPID.Text
 
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil

@@ -6557,6 +6557,39 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
+    <name>j02ExternalPID</name>
+    <id>423672557</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>40</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>27</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>27</colorder>
+    <offset>-25</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>40</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>j02Person</TableName>
+  </Table>
+  <Table>
     <name>j02ID</name>
     <id>702625546</id>
     <xtype>56</xtype>
@@ -29194,6 +29227,39 @@
     <TableName>p28Contact</TableName>
   </Table>
   <Table>
+    <name>p28ExternalPID</name>
+    <id>887674210</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>40</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>37</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>37</colorder>
+    <offset>-34</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>40</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>p28Contact</TableName>
+  </Table>
+  <Table>
     <name>p28ID</name>
     <id>84195350</id>
     <xtype>56</xtype>
@@ -41225,6 +41291,39 @@
     <TableName>p32Activity</TableName>
   </Table>
   <Table>
+    <name>p32ExternalPID</name>
+    <id>1243151474</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>40</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>36</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>36</colorder>
+    <offset>-30</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>40</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>p32Activity</TableName>
+  </Table>
+  <Table>
     <name>p33ID</name>
     <id>1413580074</id>
     <xtype>56</xtype>
@@ -44844,6 +44943,39 @@
     <isnullable>1</isnullable>
     <tdscollation>AAAAAAA=</tdscollation>
     <type_name>datetime</type_name>
+    <TableName>p41Project</TableName>
+  </Table>
+  <Table>
+    <name>p41ExternalPID</name>
+    <id>1111675008</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>40</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>32</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>32</colorder>
+    <offset>-29</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>40</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
     <TableName>p41Project</TableName>
   </Table>
   <Table>
@@ -52636,6 +52768,39 @@
     <TableName>p56Task</TableName>
   </Table>
   <Table>
+    <name>p56ExternalPID</name>
+    <id>176719682</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>40</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>29</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>29</colorder>
+    <offset>-26</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>40</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>p56Task</TableName>
+  </Table>
+  <Table>
     <name>p56ID</name>
     <id>752721734</id>
     <xtype>56</xtype>
@@ -55591,6 +55756,39 @@
     <isnullable>1</isnullable>
     <tdscollation>AAAAAAA=</tdscollation>
     <type_name>datetime</type_name>
+    <TableName>p58Product</TableName>
+  </Table>
+  <Table>
+    <name>p58ExternalPID</name>
+    <id>1982630106</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>40</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>16</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>16</colorder>
+    <offset>-14</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>40</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
     <TableName>p58Product</TableName>
   </Table>
   <Table>
@@ -68203,7 +68401,7 @@
     <xtype>231</xtype>
     <typestat>2</typestat>
     <xusertype>231</xusertype>
-    <length>255</length>
+    <length>500</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>13</colid>
@@ -68221,7 +68419,7 @@
     <status>24</status>
     <type>39</type>
     <usertype>0</usertype>
-    <prec>255</prec>
+    <prec>500</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
@@ -68236,7 +68434,7 @@
     <xtype>231</xtype>
     <typestat>2</typestat>
     <xusertype>231</xusertype>
-    <length>255</length>
+    <length>500</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>14</colid>
@@ -68254,7 +68452,7 @@
     <status>24</status>
     <type>39</type>
     <usertype>0</usertype>
-    <prec>255</prec>
+    <prec>500</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>

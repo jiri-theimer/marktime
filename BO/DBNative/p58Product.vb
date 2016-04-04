@@ -4,6 +4,7 @@
     Public Property p58Name As String
     Public Property p58Code As String
     Public Property p58Ordinary As Integer
+    Public Property p58ExternalPID As String
     Private Property _p58TreeIndex As Integer
     Public ReadOnly Property p58TreeIndex As Integer
         Get

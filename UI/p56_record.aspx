@@ -184,6 +184,16 @@
                         <telerik:RadNumericTextBox ID="p56Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="Externí kód:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p56ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
+                       
+                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>                   
+                    </td>
+                </tr>
             </table>
         </telerik:RadPageView>
     </telerik:RadMultiPage>

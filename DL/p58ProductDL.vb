@@ -32,6 +32,7 @@
             pars.Add("p58ParentID", BO.BAS.IsNullDBKey(.p58ParentID), DbType.Int32)
             pars.Add("p58Name", .p58Name, DbType.String)
             pars.Add("p58Code", .p58Code, DbType.String)
+            pars.Add("p58ExternalPID", .p58ExternalPID, DbType.String)
            
             pars.Add("p58Ordinary", .p58Ordinary, DbType.Int32)
             pars.Add("p58ValidFrom", .ValidFrom, DbType.DateTime)

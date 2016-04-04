@@ -129,6 +129,7 @@
                                 <asp:ListItem Text="--Výchozí--" Value="Windows7" Selected="true"></asp:ListItem>
                                 <asp:ListItem Text="Metro" Value="Metro"></asp:ListItem>
                                 <asp:ListItem Text="WebBlue" Value="WebBlue"></asp:ListItem>
+                                <asp:ListItem Text="Silk" Value="Silk"></asp:ListItem> 
                                 <asp:ListItem Text="Outlook" Value="Outlook"></asp:ListItem>
                                 <asp:ListItem Text="Office2007" Value="Office2007"></asp:ListItem>
                                 <asp:ListItem Text="Office2010Blue" Value="Office2010Blue"></asp:ListItem>
@@ -138,6 +139,7 @@
                                 <asp:ListItem Text="Black" Value="Black"></asp:ListItem>
                                  <asp:ListItem Text="Glow" Value="Glow"></asp:ListItem>
                                 <asp:ListItem Text="Web20" Value="Web20"></asp:ListItem>                                
+                                
                             </asp:DropDownList>
                             <asp:CheckBox ID="j03IsSiteMenuOnClick" runat="server" Text="Hlavní aplikační menu se otevírá až na click myši" CssClass="chk" />
                         </div>

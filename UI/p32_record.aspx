@@ -130,7 +130,14 @@
                         <uc:datacombo ID="p95id" Width="300px" runat="server" DataTextField="p95Name"></uc:datacombo>
                     </td>
                 </tr>
-
+                <tr>
+                    <td>
+                        <uc:datalabel runat="server" ID="Datalabel4" Text="Externí kód:"></uc:datalabel>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p32ExternalPID" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
 
 
             </table>

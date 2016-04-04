@@ -120,6 +120,7 @@
             Me.p41LimitFee_Notification.Value = .p41LimitFee_Notification
             If .p41LimitHours_Notification > 0 Or .p41LimitFee_Notification > 0 Then Me.chkDefineLimits.Checked = True Else Me.chkDefineLimits.Checked = False
             Me.p41RobotAddress.Text = .p41RobotAddress
+            Me.p41ExternalPID.Text = .p41ExternalPID
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -274,6 +275,7 @@
                 .p41LimitHours_Notification = 0 : .p41LimitFee_Notification = 0
             End If
             .p41RobotAddress = Me.p41RobotAddress.Text
+            .p41ExternalPID = Me.p41ExternalPID.Text
 
             .ValidFrom = Master.RecordValidFrom
             .ValidUntil = Master.RecordValidUntil

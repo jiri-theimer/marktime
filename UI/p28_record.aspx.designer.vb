@@ -644,6 +644,24 @@ Partial Public Class p28_record
     Protected WithEvents p28RobotAddress As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p28ExternalPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28ExternalPID As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''ph1 control.
     '''</summary>
     '''<remarks>

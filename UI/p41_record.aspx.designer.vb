@@ -572,6 +572,24 @@ Partial Public Class p41_record
     Protected WithEvents p41RobotAddress As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p41ExternalPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41ExternalPID As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''hidP51ID_Tailor control.
     '''</summary>
     '''<remarks>

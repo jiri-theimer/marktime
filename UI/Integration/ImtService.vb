@@ -20,6 +20,8 @@ Public Interface ImtService
     Function LoadTaskExtended(intPID As Integer, strLogin As String, strPassword As String) As BO.p56TaskWsExtended
     <OperationContract()>
     Function LoadTask(intPID As Integer, strLogin As String, strPassword As String) As BO.p56Task
+    <OperationContract()>
+    Function LoadTaskByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.p56Task
 
     <OperationContract()>
     Function SaveWorksheet(intPID As Integer, fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult
@@ -29,11 +31,15 @@ Public Interface ImtService
     <OperationContract()>
     Function LoadProject(intPID As Integer, strLogin As String, strPassword As String) As BO.p41Project
     <OperationContract()>
+    Function LoadProjectByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.p41Project
+    <OperationContract()>
     Function SaveProject(intPID As Integer, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), strLogin As String, strPassword As String) As BO.ServiceResult
     <OperationContract()>
     Function ListClients(strLogin As String, strPassword As String) As IEnumerable(Of BO.p28Contact)
     <OperationContract()>
     Function LoadClient(intPID As Integer, strLogin As String, strPassword As String) As BO.p28Contact
+    <OperationContract()>
+    Function LoadClientByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.p28Contact
     <OperationContract()>
     Function SaveClient(intPID As Integer, fields As Dictionary(Of String, Object), addresses As List(Of BO.o37Contact_Address), p58ids As List(Of Integer), strLogin As String, strPassword As String) As BO.ServiceResult
 

@@ -96,7 +96,10 @@ Class mtService
         Return _factory.p56TaskBL.Load(intPID)
 
     End Function
-
+    Public Function LoadTaskByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.p56Task Implements ImtService.LoadTaskByExternalPID
+        VerifyUser(strLogin, strPassword)
+        Return _factory.p56TaskBL.LoadByExternalPID(strExternalPID)
+    End Function
     Public Function ListProjects(intP28ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p41Project) Implements ImtService.ListProjects
         VerifyUser(strLogin, strPassword)
 
@@ -159,9 +162,17 @@ Class mtService
         VerifyUser(strLogin, strPassword)
         Return _factory.p41ProjectBL.Load(intPID)
     End Function
+    Public Function LoadProjectByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.p41Project Implements ImtService.LoadProjectByExternalPID
+        VerifyUser(strLogin, strPassword)
+        Return _factory.p41ProjectBL.LoadByExternalPID(strExternalPID)
+    End Function
     Public Function LoadClient(intPID As Integer, strLogin As String, strPassword As String) As BO.p28Contact Implements ImtService.LoadClient
         VerifyUser(strLogin, strPassword)
         Return _factory.p28ContactBL.Load(intPID)
+    End Function
+    Public Function LoadClientByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.p28Contact Implements ImtService.LoadClientByExternalPID
+        VerifyUser(strLogin, strPassword)
+        Return _factory.p28ContactBL.LoadByExternalPID(strExternalPID)
     End Function
     Public Function SaveWorksheet(intPID As Integer, fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveWorksheet
         VerifyUser(strLogin, strPassword)

@@ -390,7 +390,16 @@
                         <span class="infoInForm">Adresa v kopii (CC/BCC) , podle které robot pozná, že načtená poštovní zpráva má vazbu k tomuto klientovi.</span>
                     </td>
                 </tr>
-
+                <tr>
+                    <td>
+                        <asp:Label ID="Label1" runat="server" Text="Externí kód:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p28ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
+                       
+                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>                   
+                    </td>
+                </tr>
             </table>
             <div class="content-box2">
                 <div class="title">

@@ -73,6 +73,7 @@
             Me.j02IsIntraPerson.SelectedValue = BO.BAS.GB(.j02IsIntraPerson)
             Me.j02JobTitle.SetText(.j02JobTitle)
             Me.j02RobotAddress.Text = .j02RobotAddress
+            Me.j02ExternalPID.Text = .j02ExternalPID
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
 
@@ -126,6 +127,7 @@
                 .j02IsIntraPerson = BO.BAS.BG(Me.j02IsIntraPerson.SelectedValue)
                 .j02JobTitle = Me.j02JobTitle.Text
                 .j02RobotAddress = Me.j02RobotAddress.Text
+                .j02ExternalPID = Me.j02ExternalPID.Text
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
             End With

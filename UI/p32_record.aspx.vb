@@ -69,6 +69,7 @@
             Me.p32DefaultWorksheetText_Lang3.Text = .p32DefaultWorksheetText_Lang3
             Me.p32DefaultWorksheetText_Lang4.Text = .p32DefaultWorksheetText_Lang4
             Me.p35id.SelectedValue = .p35ID.ToString
+            Me.p32ExternalPID.Text = .p32ExternalPID
 
             basUI.SetColorToPicker(Me.p32Color, .p32Color)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -122,6 +123,7 @@
             cRec.p32Color = basUI.GetColorFromPicker(Me.p32Color)
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
+            cRec.p32ExternalPID = Me.p32ExternalPID.Text
 
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID

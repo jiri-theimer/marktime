@@ -856,7 +856,9 @@ Public Class entity_framework
                 grid1.VirtualRowCount = cSum.Count
                 Me.hidFooterSum.Value = grid1.GenerateFooterItemString(cSum)
             Case BO.x29IdEnum.j02Person
-                'nepočítá se
+                Dim mq As New BO.myQueryJ02
+                InhaleMyQuery_j02(mq)
+                grid1.VirtualRowCount = Master.Factory.j02PersonBL.GetList(mq).Count
         End Select
         
 

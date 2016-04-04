@@ -6,6 +6,7 @@
     Function LoadByVatID(strVatID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
     Function LoadByPersonBirthRegID(strBirthRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
     Function LoadBySupplierID(strSupplierID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
+    Function LoadByExternalPID(strExternalPID As String) As BO.p28Contact
     Function LoadByImapRobotAddress(strRobotAddress) As BO.p28Contact
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP28) As IEnumerable(Of BO.p28Contact)
@@ -60,7 +61,9 @@ Class p28ContactBL
     Public Function LoadByImapRobotAddress(strRobotAddress) As BO.p28Contact Implements Ip28ContactBL.LoadByImapRobotAddress
         Return _cDL.LoadByImapRobotAddress(strRobotAddress)
     End Function
-    
+    Public Function LoadByExternalPID(strExternalPID As String) As BO.p28Contact Implements Ip28ContactBL.LoadByExternalPID
+        Return _cDL.LoadByExternalPID(strExternalPID)
+    End Function
 
     Private Function ValidateBeforeSave(ByRef cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
         If cRec.PID = 0 Then

@@ -311,6 +311,7 @@
                     .p41LimitFee_Notification = BO.BAS.IsNullNum(Me.p41LimitFee_Notification.Value)
                 End If
                 .p41RobotAddress = Me.p41RobotAddress.Text
+                .p41ExternalPID = Me.p41ExternalPID.Text
             End With
 
             Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()

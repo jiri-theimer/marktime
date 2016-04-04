@@ -64,6 +64,7 @@
             pars.Add("j02Code", .j02Code, DbType.String, , , True, "Osobní číslo")
             pars.Add("j02Office", .j02Office, DbType.String, , , True, "Kancelář")
             pars.Add("j02mobile", .j02Mobile, DbType.String, , , True, "Mobil")
+            pars.Add("j02ExternalPID", .j02ExternalPID, DbType.String)
             pars.Add("j02Description", .j02Description, DbType.String, , , True, "Poznámka")
             pars.Add("j02validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("j02validuntil", .ValidUntil, DbType.DateTime)
@@ -278,7 +279,7 @@
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
         s += " a.j07ID,a.j17ID,a.j18ID,a.c21ID,a.j02IsIntraPerson,a.j02FirstName,a.j02LastName,a.j02TitleBeforeName,a.j02TitleAfterName,a.j02Code,a.j02JobTitle,a.j02Email,a.j02Mobile,a.j02Phone,a.j02Office,a.j02EmailSignature,a.j02Description,a.j02AvatarImage"
-        s += ",j02free.*,j07.j07Name as _j07Name,c21.c21Name as _c21Name,j18.j18Name as _j18Name,a.j02RobotAddress," & bas.RecTail("j02", "a")
+        s += ",j02free.*,j07.j07Name as _j07Name,c21.c21Name as _c21Name,j18.j18Name as _j18Name,a.j02RobotAddress,a.j02ExternalPID," & bas.RecTail("j02", "a")
         s += " FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID"
 
         Return s

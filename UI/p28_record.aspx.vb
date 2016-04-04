@@ -127,6 +127,7 @@
             Me.p28RobotAddress.Text = .p28RobotAddress
             basUI.SelectRadiolistValue(Me.p28SupplierFlag, .p28SupplierFlag)
             Me.p28SupplierID.Text = .p28SupplierID
+            Me.p28ExternalPID.Text = .p28ExternalPID
             Master.Timestamp = .Timestamp
 
 
@@ -355,6 +356,7 @@
                 .p28InvoiceDefaultText2 = Me.p28InvoiceDefaultText2.Text
                 .p51ID_Internal = BO.BAS.IsNullInt(Me.p51ID_Internal.SelectedValue)
                 .p28RobotAddress = Me.p28RobotAddress.Text
+                .p28ExternalPID = Me.p28ExternalPID.Text
                 .p28SupplierFlag = CInt(Me.p28SupplierFlag.SelectedValue)
                 If .p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or .p28SupplierFlag = BO.p28SupplierFlagENUM.SupplierOnly Then
                     .p28SupplierID = Me.p28SupplierID.Text

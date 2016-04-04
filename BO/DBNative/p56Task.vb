@@ -24,7 +24,7 @@
     Public Property p56Plan_Expenses As Double
     Public Property p56CompletePercent As Integer
     Public Property p56RatingValue As Integer?
-
+    Public Property p56ExternalPID As String
     Friend Property _ReceiversInLine As String
     Public ReadOnly Property ReceiversInLine As String
         Get

@@ -165,6 +165,17 @@
                         <span class="infoInForm">Adresa, podle které IMAP robot pozná, že načtená poštovní zpráva má vztah osobě.</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="Externí kód:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="j02ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
+                    </td>
+                    <td>
+                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>
+                    </td>
+                </tr>
             </table>
         </telerik:RadPageView>
     </telerik:RadMultiPage>

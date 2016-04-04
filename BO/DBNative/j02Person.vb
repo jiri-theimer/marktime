@@ -19,6 +19,7 @@
     Public Property j02Description As String
     Public Property j02IsIntraPerson As Boolean
     Public Property j02RobotAddress As String
+    Public Property j02ExternalPID As String
 
     Public ReadOnly Property FullNameAsc As String
         Get

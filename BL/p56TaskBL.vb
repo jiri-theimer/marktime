@@ -3,6 +3,7 @@
     Function Save(cRec As BO.p56Task, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField), strUploadGUID As String) As Boolean
     Function Load(intPID As Integer) As BO.p56Task
     Function LoadMyLastCreated() As BO.p56Task
+    Function LoadByExternalPID(strExternalPID As String) As BO.p56Task
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56Task)
     Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56TaskWithWorksheetSum)
@@ -108,6 +109,9 @@ Class p56TaskBL
     End Function
     Public Function LoadMyLastCreated() As BO.p56Task Implements Ip56TaskBL.LoadMyLastCreated
         Return _cDL.LoadMyLastCreated()
+    End Function
+    Public Function LoadByExternalPID(strExternalPID As String) As BO.p56Task Implements Ip56TaskBL.LoadByExternalPID
+        Return _cDL.LoadByExternalPID(strExternalPID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ip56TaskBL.Delete
         Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.p56Task, intPID) 'úschova kvůli logování historie

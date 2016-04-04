@@ -4,6 +4,7 @@
     Function Load(intPID As Integer) As BO.p41Project
     Function LoadMyLastCreated() As BO.p41Project
     Function LoadByImapRobotAddress(strRobotAddress) As BO.p41Project
+    Function LoadByExternalPID(strExternalPID As String) As BO.p41Project
     Function LoadSumRow(intPID As Integer) As BO.p41ProjectSum
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP41) As IEnumerable(Of BO.p41Project)
@@ -41,6 +42,9 @@ Class p41ProjectBL
     End Function
     Public Function LoadByImapRobotAddress(strRobotAddress) As BO.p41Project Implements Ip41ProjectBL.LoadByImapRobotAddress
         Return _cDL.LoadByImapRobotAddress(strRobotAddress)
+    End Function
+    Public Function LoadByExternalPID(strExternalPID As String) As BO.p41Project Implements Ip41ProjectBL.LoadByExternalPID
+        Return _cDL.LoadByExternalPID(strExternalPID)
     End Function
     Public Function LoadSumRow(intPID As Integer) As BO.p41ProjectSum Implements Ip41ProjectBL.LoadSumRow
         Return _cDL.LoadSumRow(intPID)
