@@ -23,13 +23,31 @@ Partial Public Class entity_framework_p31summary
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''rpWorksheet control.
+    '''rpWaiting control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpWorksheet As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents rpWaiting As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''panApproved control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panApproved As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''rpApproved control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpApproved As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''hidIsApprovingPerson control.

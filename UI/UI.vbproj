@@ -293,7 +293,6 @@
     <Content Include="p28_batch.aspx" />
     <Content Include="p28_import_xls.aspx" />
     <Content Include="p30_binding.aspx" />
-    <Content Include="p31_bigsummary.ascx" />
     <Content Include="p35_record.aspx" />
     <Content Include="p40_record.aspx" />
     <Content Include="p41_batch.aspx" />
@@ -1371,13 +1370,6 @@
     <Compile Include="p30_binding.aspx.vb">
       <DependentUpon>p30_binding.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p31_bigsummary.ascx.designer.vb">
-      <DependentUpon>p31_bigsummary.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="p31_bigsummary.ascx.vb">
-      <DependentUpon>p31_bigsummary.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p35_record.aspx.designer.vb">
       <DependentUpon>p35_record.aspx</DependentUpon>

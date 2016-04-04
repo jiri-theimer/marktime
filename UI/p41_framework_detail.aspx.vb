@@ -93,19 +93,22 @@ Public Class p41_framework_detail
 
         End If
 
-        With Me.opgSubgrid.Tabs
-            If Not .FindTabByValue("-1") Is Nothing Then .FindTabByValue("-1").NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
-            If Not .FindTabByValue("1") Is Nothing Then .FindTabByValue("1").NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
-            If Not .FindTabByValue("2") Is Nothing Then .FindTabByValue("2").NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
-            If Not .FindTabByValue("3") Is Nothing Then .FindTabByValue("3").NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString
-            If Not .FindTabByValue("4") Is Nothing Then .FindTabByValue("4").NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
-            If Not .FindTabByValue("5") Is Nothing Then .FindTabByValue("5").NavigateUrl = "p41_framework_detail_budget.aspx?masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
-        End With
+        For Each t As RadTab In Me.opgSubgrid.Tabs
+            Select Case t.Value
+                Case "-1" : t.NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+                Case "1" : t.NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+                Case "2" : t.NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+                Case "3" : t.NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString
+                Case "4" : t.NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p41&masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+                Case "5" : t.NavigateUrl = "p41_framework_detail_budget.aspx?masterpid=" & Master.DataPID.ToString & "&IsApprovingPerson=" & Me.hidIsCanApprove.Value
+            End Select
+
+        Next
         If Me.CurrentSubgrid = SubgridType._NotSpecified Then
             fraSubform.Visible = False : imgLoading.Visible = False
             panSwitch.Style.Item("height") = ""
-            For i As Integer = 0 To Me.opgSubgrid.Tabs.Count - 1
-                Me.opgSubgrid.Tabs(i).NavigateUrl = ""
+            For Each t As RadTab In Me.opgSubgrid.Tabs
+                t.NavigateUrl = ""
             Next
         Else
             fraSubform.Visible = True

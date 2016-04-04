@@ -5033,7 +5033,7 @@ if @p33id=1 or @p33id=3	---1 - èas, 3 - kusovník
  
 
  ----otestování limitù k notifikaci
- declare @limit_hours float,@limit_fee float,@real_hours float,@real_fee float,@p28id int
+ declare @limit_hours float,@limit_fee float,@waiting_hours float,@waiting_fee float,@p28id int
 
  select @p28id=p28ID_Client,@limit_hours=convert(float,p41LimitHours_Notification),@limit_fee=convert(float,p41LimitFee_Notification)
  FROM p41Project
@@ -5041,14 +5041,14 @@ if @p33id=1 or @p33id=3	---1 - èas, 3 - kusovník
 
  if @limit_hours>0 OR @limit_fee>0	---notifikaèní limity nastavené u projektu
   begin
-    select @real_hours=sum(p31Hours_Orig),@real_fee=sum(p31Hours_Orig*p31Rate_Billing_Orig)
+    select @waiting_hours=sum(p31Hours_Orig),@waiting_fee=sum(p31Hours_Orig*p31Rate_Billing_Orig)
 	FROM p31Worksheet
-	where p41ID=@p41id AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil
+	where p41ID=@p41id AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil AND p71ID IS NULL AND p91ID IS NULL
 
-	if @real_hours>@limit_hours and @limit_hours>0
+	if @waiting_hours>@limit_hours and @limit_hours>0
 	 set @x45ids=@x45ids+',14110'
 
-	if @real_fee>@limit_fee and @limit_fee>0
+	if @waiting_fee>@limit_fee and @limit_fee>0
 	 set @x45ids=@x45ids+',14111'
   end
 
@@ -5060,14 +5060,14 @@ if @p28id is not null
 
 if @limit_hours>0 OR @limit_fee>0	---notifikaèní limit nastavené u klienta projektu
   begin
-    select @real_hours=sum(p31Hours_Orig),@real_fee=sum(p31Hours_Orig*p31Rate_Billing_Orig)
+    select @waiting_hours=sum(p31Hours_Orig),@waiting_fee=sum(p31Hours_Orig*p31Rate_Billing_Orig)
 	FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID
-	where b.p28ID_Client=@p28id AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil
+	where b.p28ID_Client=@p28id AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil AND a.p71ID IS NULL AND a.p91ID IS NULL
 
-	if @real_hours>@limit_hours and @limit_hours>0
+	if @waiting_hours>@limit_hours and @limit_hours>0
 	 set @x45ids=@x45ids+',32810'
 
-	if @real_fee>@limit_fee and @limit_fee>0
+	if @waiting_fee>@limit_fee and @limit_fee>0
 	 set @x45ids=@x45ids+',32811'
   end
 
@@ -7847,7 +7847,7 @@ CREATE   procedure [dbo].[p49_delete]
 AS
 --odstranìní záznamu finanèního plánu z tabulky p49FinancialPlan
 if exists(select p31ID FROM p31Worksheet WHERE p49ID=@pid)
- set @err_ret='Záznam rozpoètu má vazbu na worksheet úkon.'
+ set @err_ret='Záznam rozpoètu již má vazbu na reálný worksheet úkon.'
 
 if isnull(@err_ret,'')<>''
  return 

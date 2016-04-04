@@ -39,7 +39,7 @@
 
         <table border="1" class="tabulka" cellpadding="4" cellspacing="2">
             <tr>
-                <td colspan="7" style="text-align: center; background-color: ThreeDFace;">Rozpracovanost (čeká na schvalování)</td>
+                <td colspan="7" style="text-align: center; background-color: ThreeDFace;">Rozpracováno (čeká na schvalování)</td>
             </tr>
             <tr style="font-weight: bold;">
                 <td></td>
@@ -51,7 +51,7 @@
                 <td></td>
 
             </tr>
-            <asp:Repeater ID="rpWorksheet" runat="server">
+            <asp:Repeater ID="rpWaiting" runat="server">
                 <ItemTemplate>
                     <tr>
                         <td>
@@ -84,54 +84,69 @@
 
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="7" style="text-align: center; background-color: ThreeDFace;">Schváleno | Čeká na fakturaci</td>
-                    </tr>
-                    <tr style="font-weight: bold;">
-                        <td></td>
-                        <td style="text-align: right;">Hodiny</td>
-                        <td style="text-align: right;">Výdaje</td>
-                        <td style="text-align: right;">Odměny</td>
-                        <td style="text-align: right;">Celkem</td>
-                        <td style="text-align: right;">#</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="schvaleno_j27Code" runat="server" Font-Bold="true"></asp:Label>
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="schvaleno_hodiny" runat="server"></asp:Label>
 
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="schvaleno_vydaje" runat="server"></asp:Label>
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="schvaleno_odmeny" runat="server"></asp:Label>
-
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="schvaleno_celkem" runat="server"></asp:Label>
-
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="schvaleno_pocet" ForeColor="red" runat="server"></asp:Label>
-                            <asp:Label ID="schvaleno_obdobi" runat="server"></asp:Label>
-
-                        </td>
-                        <td>
-                            <asp:HyperLink ID="cmdReApprove" runat="server" Text="Pře-schválit" NavigateUrl="javascript:p31_bs_reapprove_all()"></asp:HyperLink>
-                            <asp:HyperLink ID="cmdClearApprove" runat="server" Text="Vrátit do rozpracovanosti" NavigateUrl="javascript:p31_bs_clearapprove_all()" ForeColor="DarkOrange"></asp:HyperLink>
-                            <asp:HyperLink ID="cmdInvoice" runat="server" Text="Vyfakturovat" NavigateUrl="javascript:p31_bs_invoice()" ForeColor="green"></asp:HyperLink>
-
-
-                        </td>
-
-                    </tr>
                 </ItemTemplate>
             </asp:Repeater>
         </table>
+
+
+
+        <asp:Panel ID="panApproved" runat="server" style="padding-top:10px;">
+            <table border="1" class="tabulka" cellpadding="4" cellspacing="2">
+                <tr>
+                    <td colspan="7" style="text-align: center; background-color: ThreeDFace;">Schváleno | Čeká na fakturaci</td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td></td>
+                    <td style="text-align: right;">Hodiny</td>
+                    <td style="text-align: right;">Výdaje</td>
+                    <td style="text-align: right;">Odměny</td>
+                    <td style="text-align: right;">Celkem</td>
+                    <td style="text-align: center;">#</td>
+                    <td></td>
+
+                </tr>
+                <asp:Repeater ID="rpApproved" runat="server">
+                    <ItemTemplate>
+
+
+                        <tr>
+                            <td>
+                                <asp:Label ID="schvaleno_j27Code" runat="server" Font-Bold="true"></asp:Label>
+                            </td>
+                            <td style="text-align: right;">
+                                <asp:Label ID="schvaleno_hodiny" runat="server"></asp:Label>
+
+                            </td>
+                            <td style="text-align: right;">
+                                <asp:Label ID="schvaleno_vydaje" runat="server"></asp:Label>
+                            </td>
+                            <td style="text-align: right;">
+                                <asp:Label ID="schvaleno_odmeny" runat="server"></asp:Label>
+
+                            </td>
+                            <td style="text-align: right;">
+                                <asp:Label ID="schvaleno_celkem" runat="server"></asp:Label>
+
+                            </td>
+                            <td style="text-align: right;">
+                                <asp:Label ID="schvaleno_pocet" ForeColor="red" runat="server"></asp:Label>
+                                <asp:Label ID="schvaleno_obdobi" runat="server"></asp:Label>
+
+                            </td>
+                            <td>
+                                <asp:HyperLink ID="cmdReApprove" runat="server" Text="Pře-schválit" NavigateUrl="javascript:p31_bs_reapprove_all()"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdClearApprove" runat="server" Text="Vrátit do rozpracovanosti" NavigateUrl="javascript:p31_bs_clearapprove_all()" ForeColor="DarkOrange"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdInvoice" runat="server" Text="Vyfakturovat" NavigateUrl="javascript:p31_bs_invoice()" ForeColor="green"></asp:HyperLink>
+
+
+                            </td>
+
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </table>
+        </asp:Panel>
     </div>
 
 

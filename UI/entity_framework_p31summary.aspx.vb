@@ -91,17 +91,26 @@
         mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
 
         Dim lis As IEnumerable(Of BO.p31WorksheetBigSummary) = Master.Factory.p31WorksheetBL.GetList_BigSummary(mq)
-        rpWorksheet.DataSource = lis
-        rpWorksheet.DataBind()
+        rpWaiting.DataSource = lis.Where(Function(p) p.rozpracovano_pocet > 0)
+        rpWaiting.DataBind()
 
+        rpApproved.DataSource = lis.Where(Function(p) p.schvaleno_pocet > 0)
+        rpApproved.DataBind()
+        If rpApproved.Items.Count = 0 Then panApproved.Visible = False
     End Sub
 
 
 
-    Private Sub rpWorksheet_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpWorksheet.ItemDataBound
+   
+    Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-period", period1.SelectedValue)
+        RefreshData()
+    End Sub
+
+    Private Sub rpWaiting_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpWaiting.ItemDataBound
         Dim cRec As BO.p31WorksheetBigSummary = CType(e.Item.DataItem, BO.p31WorksheetBigSummary)
         CType(e.Item.FindControl("rozpracovano_j27Code"), Label).Text = cRec.j27Code
-        CType(e.Item.FindControl("schvaleno_j27Code"), Label).Text = cRec.j27Code
+
         If cRec.rozpracovano_hodiny <> 0 Then CType(e.Item.FindControl("rozpracovano_hodiny"), Label).Text = BO.BAS.FN(cRec.rozpracovano_hodiny)
         If cRec.rozpracovano_odmeny <> 0 Then CType(e.Item.FindControl("rozpracovano_odmeny"), Label).Text = BO.BAS.FN(cRec.rozpracovano_odmeny)
         If cRec.rozpracovano_vydaje <> 0 Then CType(e.Item.FindControl("rozpracovano_vydaje"), Label).Text = BO.BAS.FN(cRec.rozpracovano_vydaje)
@@ -118,6 +127,23 @@
         If Not (BO.BAS.IsNullDBDate(cRec.rozpracovano_prvni) Is Nothing Or BO.BAS.IsNullDBDate(cRec.rozpracovano_posledni) Is Nothing) Then
             CType(e.Item.FindControl("rozpracovano_obdobi"), Label).Text = BO.BAS.FD(cRec.rozpracovano_prvni) & " - " & BO.BAS.FD(cRec.rozpracovano_posledni)
         End If
+
+        If cRec.rozpracovano_pocet > 0 Then
+            CType(e.Item.FindControl("rozpracovano_pocet"), Label).Text = BO.BAS.FNI(cRec.rozpracovano_pocet) & "x"
+        Else
+            e.Item.FindControl("rozpracovano_pocet").Visible = False
+            CType(e.Item.FindControl("cmdApprove"), HyperLink).Visible = False
+        End If
+
+        CType(e.Item.FindControl("cmdApprove"), HyperLink).Visible = Me.IsApprovingPerson
+
+    End Sub
+
+    Private Sub rpApproved_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpApproved.ItemDataBound
+        Dim cRec As BO.p31WorksheetBigSummary = CType(e.Item.DataItem, BO.p31WorksheetBigSummary)
+        CType(e.Item.FindControl("schvaleno_j27Code"), Label).Text = cRec.j27Code
+       
+        
         If cRec.schvaleno_hodiny <> 0 Then CType(e.Item.FindControl("schvaleno_hodiny"), Label).Text = BO.BAS.FN(cRec.schvaleno_hodiny)
         If cRec.schvaleno_odmeny <> 0 Then CType(e.Item.FindControl("schvaleno_odmeny"), Label).Text = BO.BAS.FN(cRec.schvaleno_odmeny)
         If cRec.schvaleno_vydaje <> 0 Then CType(e.Item.FindControl("schvaleno_vydaje"), Label).Text = BO.BAS.FN(cRec.schvaleno_vydaje)
@@ -133,17 +159,12 @@
         If Not (BO.BAS.IsNullDBDate(cRec.schvaleno_prvni) Is Nothing Or BO.BAS.IsNullDBDate(cRec.schvaleno_posledni) Is Nothing) Then
             CType(e.Item.FindControl("schvaleno_obdobi"), Label).Text = BO.BAS.FD(cRec.schvaleno_prvni) & " - " & BO.BAS.FD(cRec.schvaleno_posledni)
         End If
-        CType(e.Item.FindControl("cmdApprove"), HyperLink).Visible = Me.IsApprovingPerson
+
         CType(e.Item.FindControl("cmdReApprove"), HyperLink).Visible = Me.IsApprovingPerson
         CType(e.Item.FindControl("cmdClearApprove"), HyperLink).Visible = Me.IsApprovingPerson
         CType(e.Item.FindControl("cmdInvoice"), HyperLink).Visible = Me.IsInvoicingPerson
 
-        If cRec.rozpracovano_pocet > 0 Then
-            CType(e.Item.FindControl("rozpracovano_pocet"), Label).Text = BO.BAS.FNI(cRec.rozpracovano_pocet) & "x"
-        Else
-            e.Item.FindControl("rozpracovano_pocet").Visible = False
-            CType(e.Item.FindControl("cmdApprove"), HyperLink).Visible = False
-        End If
+     
         If cRec.schvaleno_pocet > 0 Then
             CType(e.Item.FindControl("schvaleno_pocet"), Label).Text = BO.BAS.FNI(cRec.schvaleno_pocet) & "x"
         Else
@@ -151,11 +172,5 @@
             CType(e.Item.FindControl("cmdClearApprove"), HyperLink).Visible = False
             CType(e.Item.FindControl("cmdInvoice"), HyperLink).Visible = False
         End If
-
-    End Sub
-
-    Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_grid-period", period1.SelectedValue)
-        RefreshData()
     End Sub
 End Class

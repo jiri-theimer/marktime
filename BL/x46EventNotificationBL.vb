@@ -86,7 +86,9 @@ Class x46EventNotificationBL
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
                 If cX47.x45ID = BO.x45IDEnum.p41_limitfee_over Or cX47.x45ID = BO.x45IDEnum.p41_limithours_over Then
-                    objects.Add(Factory.p41ProjectBL.LoadSumRow(cX47.x47RecordPID))
+                    Dim mq As New BO.myQueryP31
+                    mq.p41ID = cX47.x47RecordPID
+                    objects.Add(Factory.p31WorksheetBL.LoadSumRow(mq, True, True))
                 End If
                 strLinkUrl += "/p41_framework.aspx?pid=" & cRec.PID.ToString & "&force=detail"
             Case BO.x29IdEnum.p56Task
@@ -103,6 +105,11 @@ Class x46EventNotificationBL
                 Dim cRec As BO.p28Contact = Factory.p28ContactBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
+                If cX47.x45ID = BO.x45IDEnum.p28_limitfee_over Or cX47.x45ID = BO.x45IDEnum.p28_limithours_over Then
+                    Dim mq As New BO.myQueryP31
+                    mq.p28ID_Client = cX47.x47RecordPID
+                    objects.Add(Factory.p31WorksheetBL.LoadSumRow(mq, True, True))
+                End If
                 strLinkUrl += "/p28_framework.aspx?pid=" & cRec.PID.ToString & "&force=detail"
             Case BO.x29IdEnum.j02Person
                 objects.Add(Factory.j02PersonBL.Load(cX47.x47RecordPID))
