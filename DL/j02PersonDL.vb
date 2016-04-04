@@ -16,6 +16,11 @@
 
         Return _cDB.GetRecord(Of BO.j02Person)(s, New With {.robotkey = strRobotAddress})
     End Function
+    Public Function LoadByExternalPID(strExternalPID As String) As BO.j02Person
+        Dim s As String = GetSQLPart1(1)
+        s += " WHERE a.j02ExternalPID LIKE @externalpid"
+        Return _cDB.GetRecord(Of BO.j02Person)(s, New With {.externalpid = strExternalPID})
+    End Function
     Public Function LoadByEmail(strEmailAddress As String, Optional intJ02ID_Exclude As Integer = 0) As BO.j02Person
         Dim s As String = GetSQLPart1(0), pars As New DbParameters
         pars.Add("email", strEmailAddress, DbType.String)

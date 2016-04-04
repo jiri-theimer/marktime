@@ -150,6 +150,20 @@ Class mtService
         mq.Closed = BO.BooleanQueryMode.NoQuery
         Return _factory.j02PersonBL.GetList(mq)
     End Function
+    Public Function ListContactPersons(strLogin As String, strPassword As String, intP28ID As Integer) As IEnumerable(Of BO.j02Person) Implements ImtService.ListContactPersons
+        VerifyUser(strLogin, strPassword)
+        Dim mq As New BO.myQueryJ02
+        mq.p28ID = intP28ID
+        Return _factory.j02PersonBL.GetList(mq)
+    End Function
+    Public Function LoadPerson(intPID As Integer, strLogin As String, strPassword As String) As BO.j02Person Implements ImtService.LoadPerson
+        VerifyUser(strLogin, strPassword)
+        Return _factory.j02PersonBL.Load(intPID)
+    End Function
+    Public Function LoadPersonByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.j02Person Implements ImtService.LoadPersonByExternalPID
+        VerifyUser(strLogin, strPassword)
+        Return _factory.j02PersonBL.LoadByExternalPID(strExternalPID)
+    End Function
     Public Function ListPersonTeams(strLogin As String, strPassword As String) As IEnumerable(Of BO.j11Team) Implements ImtService.ListPersonTeams
         VerifyUser(strLogin, strPassword)
         Return _factory.j11TeamBL.GetList(_mqDef)
@@ -291,5 +305,41 @@ Class mtService
     Public Function ListPossibleWorkflowSteps(intRecordPID As Integer, strRecordPrefix As String, intJ02ID As Integer, strLogin As String, strPassword As String) As List(Of BO.WorkflowStepPossible4User) Implements ImtService.ListPossibleWorkflowSteps
         VerifyUser(strLogin, strPassword)
         Return _factory.b06WorkflowStepBL.GetPossibleWorkflowSteps4Person(strRecordPrefix, intRecordPID, intJ02ID)
+    End Function
+
+    Public Function SavePerson(intPID As Integer, fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SavePerson
+        VerifyUser(strLogin, strPassword)
+        Dim sr As New BO.ServiceResult()
+        If fields Is Nothing Then
+            sr.ErrorMessage = "fields is nothing" : Return sr
+        End If
+        Dim cRec As New BO.j02Person
+
+        If intPID <> 0 Then cRec = _factory.j02PersonBL.Load(intPID)
+        If cRec Is Nothing Then
+            sr.ErrorMessage = "record not found" : Return sr
+        End If
+        For Each c In fields
+            Try
+                BO.BAS.SetPropertyValue(cRec, c.Key, c.Value)
+            Catch ex As Exception
+                sr.ErrorMessage = "Property [" & c.Key & "], error: " & ex.Message : Return sr
+            End Try
+        Next
+        Try
+            If _factory.j02PersonBL.Save(cRec, Nothing) Then
+                sr.PID = _factory.j02PersonBL.LastSavedPID
+                sr.IsSuccess = True
+            Else
+                sr.ErrorMessage = _factory.j02PersonBL.ErrorMessage
+                sr.IsSuccess = False
+            End If
+        Catch ex As Exception
+            Throw New FaultException(ex.Message)
+
+        End Try
+
+
+        Return sr
     End Function
 End Class

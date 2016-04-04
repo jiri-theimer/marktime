@@ -5,6 +5,7 @@
     Function Load(intPID As Integer) As BO.j02Person
     Function LoadByEmail(strEmailAddress As String, Optional intJ02ID_Exclude As Integer = 0) As BO.j02Person
     Function LoadByImapRobotAddress(strRobotAddress) As BO.j02Person
+    Function LoadByExternalPID(strExternalPID As String) As BO.j02Person
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryJ02) As IEnumerable(Of BO.j02Person)
     Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
@@ -73,6 +74,9 @@ Class j02PersonBL
     End Function
     Public Function LoadByImapRobotAddress(strRobotAddress) As BO.j02Person Implements Ij02PersonBL.LoadByImapRobotAddress
         Return _cDL.LoadByImapRobotAddress(strRobotAddress)
+    End Function
+    Public Function LoadByExternalPID(strExternalPID As String) As BO.j02Person Implements Ij02PersonBL.LoadByExternalPID
+        Return _cDL.LoadByExternalPID(strExternalPID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ij02PersonBL.Delete
         Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.j02Person, intPID)

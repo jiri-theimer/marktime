@@ -65,7 +65,14 @@ Public Interface ImtService
     Function ListWorkflowSteps(intB01ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.b06WorkflowStep)
     <OperationContract()>
     Function ListPossibleWorkflowSteps(intRecordPID As Integer, strRecordPrefix As String, intJ02ID As Integer, strLogin As String, strPassword As String) As List(Of BO.WorkflowStepPossible4User)
-
+    <OperationContract()>
+    Function ListContactPersons(strLogin As String, strPassword As String, intP28ID As Integer) As IEnumerable(Of BO.j02Person)
+    <OperationContract()>
+    Function LoadPerson(intPID As Integer, strLogin As String, strPassword As String) As BO.j02Person
+    <OperationContract()>
+    Function LoadPersonByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.j02Person
+    <OperationContract()>
+    Function SavePerson(intPID As Integer, fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult
 End Interface
 
 
