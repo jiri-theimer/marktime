@@ -8,6 +8,7 @@ End Enum
 Public Class p97Invoice_Round_Setting
     Inherits BOMother
     Public Property j27ID As Integer
+    Public Property p98ID As Integer
     Public Property p97AmountFlag As p97AmountFlagEnum
     Public Property p97Scale As Integer
 

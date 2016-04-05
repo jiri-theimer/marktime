@@ -11,61 +11,43 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p97_record
+Partial Public Class p98_record
 
     '''<summary>
-    '''lblJ27ID control.
+    '''lblName control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblJ27ID As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblName As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''j27ID control.
+    '''p98Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j27ID As Global.UI.datacombo
+    Protected WithEvents p98Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lblp97AmountFlag control.
+    '''p98IsDefault control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblp97AmountFlag As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents p98IsDefault As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''p97AmountFlag control.
+    '''rp1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p97AmountFlag As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''lblp97Scale control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblp97Scale As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p97Scale control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p97Scale As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''Master property.

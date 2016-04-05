@@ -716,6 +716,15 @@ Partial Public Class p28_record
     Protected WithEvents HardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidDistinctCountries control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDistinctCountries As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdHardRefresh control.
     '''</summary>
     '''<remarks>

@@ -186,7 +186,7 @@
                                             <asp:ListItem Text="Jiné" Value="3"></asp:ListItem>
                                         </asp:DropDownList>
                                         <div>
-                                            <asp:TextBox ID="o38name" runat="server" Style="width: 140px"></asp:TextBox>
+                                            <asp:TextBox ID="o38name" runat="server" Style="width: 140px" ToolTip="Název"></asp:TextBox>
                                         </div>
                                     </td>
                                     <td>
@@ -199,7 +199,8 @@
                                         <asp:TextBox ID="o38ZIP" runat="server" Style="width: 50px;"></asp:TextBox>
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="o38country" runat="server" TextMode="SingleLine" Style="width: 170px;"></asp:TextBox>
+                                        
+                                        <uc:datacombo ID="o38country" runat="server" Width="170px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains"></uc:datacombo>
                                     </td>
                                     <td>
                                         <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
@@ -418,6 +419,7 @@
     <asp:HiddenField ID="HardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidP51ID_Tailor" runat="server" />
     <asp:HiddenField ID="HardRefreshFlag" runat="server" />
+    <asp:HiddenField ID="hidDistinctCountries" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

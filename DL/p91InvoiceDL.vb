@@ -60,6 +60,7 @@
                 pars.Add("p92ID", BO.BAS.IsNullDBKey(.p92ID), DbType.Int32)
                 pars.Add("j19ID", BO.BAS.IsNullDBKey(.j19ID), DbType.Int32)
                 pars.Add("p28ID", BO.BAS.IsNullDBKey(.p28ID), DbType.Int32)
+                pars.Add("p98ID", BO.BAS.IsNullDBKey(.p98ID), DbType.Int32)
                 pars.Add("j02ID_ContactPerson", BO.BAS.IsNullDBKey(.j02ID_ContactPerson), DbType.Int32)
                 pars.Add("o38ID_Primary", BO.BAS.IsNullDBKey(.o38ID_Primary), DbType.Int32)
                 pars.Add("o38ID_Delivery", BO.BAS.IsNullDBKey(.o38ID_Delivery), DbType.Int32)

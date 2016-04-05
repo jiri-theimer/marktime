@@ -30,7 +30,7 @@
     Private Property _j07 As Ij07PersonPositionBL
     Private Property _p35 As Ip35UnitBL
     Private Property _o13 As Io13AttachmentTypeBL
-    Private Property _p97 As Ip97Invoice_Round_SettingBL
+    Private Property _p98 As Ip98Invoice_Round_Setting_TemplateBL
     Private Property _j23 As Ij23NonPersonBL
     Private Property _j24 As Ij24NonPersonTypeBL
     Private Property _j18 As Ij18RegionBL
@@ -272,10 +272,10 @@
             Return _j23
         End Get
     End Property
-    Public ReadOnly Property p97Invoice_Round_SettingBL As Ip97Invoice_Round_SettingBL
+    Public ReadOnly Property p98Invoice_Round_Setting_TemplateBL As Ip98Invoice_Round_Setting_TemplateBL
         Get
-            If _p97 Is Nothing Then _p97 = New p97Invoice_Round_SettingBL(_cUser)
-            Return _p97
+            If _p98 Is Nothing Then _p98 = New p98Invoice_Round_Setting_TemplateBL(_cUser)
+            Return _p98
         End Get
     End Property
     Public ReadOnly Property j25ReportCategoryBL As Ij25ReportCategoryBL

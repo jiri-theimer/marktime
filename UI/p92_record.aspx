@@ -37,6 +37,16 @@
                 <uc:datacombo ID="x38ID_Draft" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="200px"></uc:datacombo>
             </td>
         </tr>
+        <tr valign="top" >
+            <td>
+                <asp:Label ID="lblJ27ID" Text="Výchozí měna faktury:" runat="server" CssClass="lblReq"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="j27ID" runat="server" AutoPostBack="false" DataTextField="j27Code" DataValueField="pid" IsFirstEmptyRow="true"></uc:datacombo>
+                <span class="infoInForm">Měnu lze později měnit i ve faktuře.</span>
+
+            </td>
+        </tr>
         <tr valign="top" id="trX15ID" runat="server">
             <td>
                 <asp:Label ID="lblX15ID" Text="Cílová DPH sazba faktury:" runat="server" CssClass="lbl"></asp:Label>
@@ -47,32 +57,15 @@
 
             </td>
         </tr>
-        <tr valign="top" >
-            <td>
-                <asp:Label ID="lblJ27ID" Text="Cílová měna:" runat="server" CssClass="lblReq"></asp:Label>
-            </td>
-            <td>
-                <uc:datacombo ID="j27ID" runat="server" AutoPostBack="false" DataTextField="j27Code" DataValueField="pid" IsFirstEmptyRow="true"></uc:datacombo>
-                <span class="infoInForm">Měnu lze později měnit i ve faktuře.</span>
-
-            </td>
-        </tr>
-        <tr valign="top" id="trJ17ID" runat="server">
-            <td>
-                <asp:Label ID="lblJ17ID" Text="Cílový stát:" runat="server" CssClass="lbl"></asp:Label>
-            </td>
-            <td>
-                <uc:datacombo ID="j17ID" runat="server" AutoPostBack="false" DataTextField="j17Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                <span class="infoInForm">Cílový stát lze později měnit i ve faktuře.</span>
-            </td>
-        </tr>
+        
+       
         <tr valign="top">
             <td>
                 <asp:Label ID="lblP93ID" Text="Hlavička vystavovatele faktury:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
                 <uc:datacombo ID="p93ID" runat="server" AutoPostBack="false" DataTextField="p93Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                <span class="infoInForm">Hlavičku vystavovatele lze později měnit i ve faktuře.</span>
+                
             </td>
         </tr>
         <tr valign="top">
@@ -94,7 +87,15 @@
                 <span class="infoInForm">Sestavu přílohy je možné pořizovat i přes ostatní šablony fakturačních sestav.</span>
             </td>
         </tr>
-
+         <tr valign="top" id="trJ17ID" runat="server">
+            <td>
+                <asp:Label ID="lblJ17ID" Text="Výchozí DPH region faktury:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="j17ID" runat="server" AutoPostBack="false" DataTextField="j17Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                <span class="infoInForm">DPH region lze později změnit v samotné faktuře.</span>
+            </td>
+        </tr>
     </table>
 
 

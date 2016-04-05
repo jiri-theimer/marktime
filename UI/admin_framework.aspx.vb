@@ -142,16 +142,15 @@ Public Class admin_framework
 
 
             .AddItem("Fakturace", "p91", , , "Images/billing.png")
-
+            .AddItem("Typy faktur", "p92", NU("p92"), "p91")
             .AddItem("DPH sazby", "p53", NU("p53"), "p91")
-            .AddItem("Státy", "j17", NU("j17"), "p91")
 
             .AddItem("Bankovní účty", "p86", NU("p86"), "p91")
             .AddItem("Vystavovatelé faktur", "p93", NU("p93"), "p91")
-            .AddItem("Typy faktur", "p92", NU("p92"), "p91")
+
             .AddItem("Měnové kurzy", "m62", NU("m62"), "p91")
             .AddItem("Fakturační oddíly", "p95", NU("p95"), "p91")
-            .AddItem("Zaokrouhlování", "p97", NU("p97"), "p91")
+            .AddItem("Zaokrouhlovací pravidla", "p98", NU("p98"), "p91")
 
             .AddItem("Typy záloh", "p89", NU("p89"), "p91")
 
@@ -193,8 +192,9 @@ Public Class admin_framework
             .AddItem("Skupiny uživatelských polí", "x27", NU("x27"), "ff")
 
             .AddItem("Ostatní nastavení", "other", , , "Images/more.png")
-            .AddItem("Střediska", "j18", NU("j18"), "other")
             .AddItem("Číselné řady", "x38", NU("x38"), "other")
+            .AddItem("Střediska", "j18", NU("j18"), "other")
+            .AddItem("Regiony", "j17", NU("j17"), "other")
             .AddItem("Textové šablony", "j61", NU("j61"), "other")
             .AddItem("Konfigurace menu [Úvod]", "j62", NU("j62"), "other")
 
@@ -309,7 +309,7 @@ Public Class admin_framework
                     .AddColumn("j07Name", "Název pozice")
                     .AddColumn("j07Ordinary", "#")
                 Case "j17"
-                    .AddColumn("j17Name", "Název státu")
+                    .AddColumn("j17Name", "Název")
                     .AddColumn("j17Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "j18"
                     .AddColumn("j18Name", "Název střediska")
@@ -333,7 +333,7 @@ Public Class admin_framework
                 Case "c26"
                     .AddColumn("c26Name", "Název svátku")
                     .AddColumn("c26Date", "Den", BO.cfENUM.DateOnly)
-                    .AddColumn("j17Name", "Stát")
+                    .AddColumn("j17Name", "Region")
                 Case "j11"
                     .AddColumn("j11Name", "Název týmu")
                 Case "j23"
@@ -370,14 +370,14 @@ Public Class admin_framework
                     .AddColumn("p95Name", "Název fakturačního oddílu")
                     .AddColumn("p95Code", "Kód")
                     .AddColumn("p95Ordinary", "#")
-                Case "p97"
-                    .AddColumn("j27Code", "Měna")
-                   
+                Case "p98"
+                    .AddColumn("p98Name", "Název pravidla")
+                    .AddColumn("p98IsDefault", "Výchozí pravidlo", BO.cfENUM.Checkbox)
                 Case "p92"
                     .AddColumn("p92Name", "Název")
                     .AddColumn("j27Code", "Cílová měna")
                     .AddColumn("p93Name", "Vystavovatel")
-                    .AddColumn("j17Name", "Cílová země")
+                    .AddColumn("j17Name", "DPH region")
                 Case "p89"
                     .AddColumn("p89Name", "Název")
                     '.AddColumn("j27Code", "Cílová měna")
@@ -497,7 +497,7 @@ Public Class admin_framework
                     .AddColumn("x15Name", "Hladina")
                     .AddColumn("p53Value", "Hodnota sazby", BO.cfENUM.Numeric)
                     .AddColumn("j27Code", "Měna")
-                    .AddColumn("j17Name", "Země")
+                    .AddColumn("j17Name", "DPH region")
                     .AddColumn("ValidFrom", "Platnost od", BO.cfENUM.DateTime)
                     .AddColumn("ValidUntil", "Platnost do", BO.cfENUM.DateOnly)
                 Case "p41_x67", "p56_x67", "x31_x67", "p28_x67", "p91_x67", "p90_x67", "o23_x67"
@@ -696,8 +696,8 @@ Public Class admin_framework
                 Case "o42"
                     Dim lis As IEnumerable(Of BO.o42ImapRule) = .o42ImapRuleBL.GetList(mqDef)
                     grid1.DataSource = lis
-                Case "p97"
-                    Dim lis As IEnumerable(Of BO.p97Invoice_Round_Setting) = .p97Invoice_Round_SettingBL.GetList(mqDef)
+                Case "p98"
+                    Dim lis As IEnumerable(Of BO.p98Invoice_Round_Setting_Template) = .p98Invoice_Round_Setting_TemplateBL.GetList(mqDef)
                     grid1.DataSource = lis
                 Case "p92"
                     Dim lis As IEnumerable(Of BO.p92InvoiceType) = .p92InvoiceTypeBL.GetList(mqDef)

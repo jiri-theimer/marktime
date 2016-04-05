@@ -71,5 +71,9 @@
         Return _cDB.GetList(Of BO.o38Address)(s, pars)
 
     End Function
-    
+
+    Public Function GetList_DistinctCountries() As List(Of String)
+        Return _cDB.GetList(Of BO.GetString)("SELECT distinct o38Country as Value FROM o38Address WHERE o38Country IS NOT NULL").Select(Function(p) p.Value).ToList
+        
+    End Function
 End Class

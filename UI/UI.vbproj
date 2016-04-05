@@ -314,7 +314,7 @@
     <Content Include="p91_export2pohoda.aspx" />
     <Content Include="p91_framework.aspx" />
     <Content Include="p91_proforma.aspx" />
-    <Content Include="p97_record.aspx" />
+    <Content Include="p98_record.aspx" />
     <Content Include="panelmenu.ascx" />
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
@@ -1518,11 +1518,11 @@
       <DependentUpon>p91_proforma.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="p97_record.aspx.designer.vb">
-      <DependentUpon>p97_record.aspx</DependentUpon>
+    <Compile Include="p98_record.aspx.designer.vb">
+      <DependentUpon>p98_record.aspx</DependentUpon>
     </Compile>
-    <Compile Include="p97_record.aspx.vb">
-      <DependentUpon>p97_record.aspx</DependentUpon>
+    <Compile Include="p98_record.aspx.vb">
+      <DependentUpon>p98_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="panelmenu.ascx.designer.vb">

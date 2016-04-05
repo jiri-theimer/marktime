@@ -12,6 +12,7 @@
     Public Property o38ID_Primary As Integer
     Public Property o38ID_Delivery As Integer
     Public Property b02ID As Integer
+    Public Property p98ID As Integer
 
     Public Property p91Code As String
     Public Property p91IsDraft As Boolean

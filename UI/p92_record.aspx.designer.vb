@@ -86,6 +86,24 @@ Partial Public Class p92_record
     Protected WithEvents x38ID_Draft As Global.UI.datacombo
 
     '''<summary>
+    '''lblJ27ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblJ27ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j27ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j27ID As Global.UI.datacombo
+
+    '''<summary>
     '''trX15ID control.
     '''</summary>
     '''<remarks>
@@ -111,51 +129,6 @@ Partial Public Class p92_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x15ID As Global.UI.datacombo
-
-    '''<summary>
-    '''lblJ27ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblJ27ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j27ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j27ID As Global.UI.datacombo
-
-    '''<summary>
-    '''trJ17ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trJ17ID As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''lblJ17ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblJ17ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j17ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j17ID As Global.UI.datacombo
 
     '''<summary>
     '''lblP93ID control.
@@ -210,6 +183,33 @@ Partial Public Class p92_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x31ID_Attachment As Global.UI.datacombo
+
+    '''<summary>
+    '''trJ17ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trJ17ID As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''lblJ17ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblJ17ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j17ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j17ID As Global.UI.datacombo
 
     '''<summary>
     '''Master property.

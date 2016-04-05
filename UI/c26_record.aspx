@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblJ17ID" Text="Stát:" runat="server" CssClass="lbl"></asp:Label></td>
+                <asp:Label ID="lblJ17ID" Text="Region:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <uc:datacombo ID="j17ID" runat="server" DataTextField="j17Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
 

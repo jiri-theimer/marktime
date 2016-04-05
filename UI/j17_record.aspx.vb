@@ -13,7 +13,7 @@
                 .neededPermission = BO.x53PermValEnum.GR_Admin
                 .HeaderIcon = "Images/settings_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .HeaderText = "Stát"
+                .HeaderText = "Region"
             End With
 
             RefreshRecord()

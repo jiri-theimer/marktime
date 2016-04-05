@@ -192,14 +192,20 @@
             .CommandArgument = cRec.PID.ToString
             .CommandName = "delete"
         End With
-
+        If Me.hidDistinctCountries.Value = "" Then
+            Me.hidDistinctCountries.Value = ";" & String.Join(";", Master.Factory.o38AddressBL.GetList_DistinctCountries())
+        End If
         With cRec
             CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
             basUI.SelectDropdownlistValue(CType(e.Item.FindControl("o36id"), DropDownList), .p85OtherKey1.ToString)
             CType(e.Item.FindControl("o38City"), TextBox).Text = .p85FreeText01
             CType(e.Item.FindControl("o38Street"), TextBox).Text = .p85FreeText02
             CType(e.Item.FindControl("o38ZIP"), TextBox).Text = .p85FreeText03
-            CType(e.Item.FindControl("o38Country"), TextBox).Text = .p85FreeText04
+            With CType(e.Item.FindControl("o38Country"), UI.datacombo)
+                .SetText(cRec.p85FreeText04())
+                .DefaultValues = Me.hidDistinctCountries.Value
+            End With
+
             CType(e.Item.FindControl("o38Name"), TextBox).Text = .p85FreeText05
         End With
     End Sub
@@ -207,6 +213,7 @@
     Private Sub RefreshTempO37()
         rpO37.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o37"))
         rpO37.DataBind()
+        
     End Sub
     Private Sub RefreshTempO32()
         rpO32.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o32"))
@@ -294,7 +301,7 @@
                 .p85FreeText01 = CType(ri.FindControl("o38City"), TextBox).Text
                 .p85FreeText02 = CType(ri.FindControl("o38Street"), TextBox).Text
                 .p85FreeText03 = CType(ri.FindControl("o38ZIP"), TextBox).Text
-                .p85FreeText04 = CType(ri.FindControl("o38Country"), TextBox).Text
+                .p85FreeText04 = CType(ri.FindControl("o38Country"), UI.datacombo).Text
                 .p85FreeText05 = CType(ri.FindControl("o38Name"), TextBox).Text
             End With
             Master.Factory.p85TempBoxBL.Save(cRec)

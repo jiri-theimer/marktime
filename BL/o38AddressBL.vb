@@ -4,6 +4,7 @@
     Function Load(intPID As Integer) As BO.o38Address
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryO38) As IEnumerable(Of BO.o38Address)
+    Function GetList_DistinctCountries() As List(Of String)
 End Interface
 Class o38AddressBL
     Inherits BLMother
@@ -37,5 +38,8 @@ Class o38AddressBL
     End Function
     Public Function GetList(mq As BO.myQueryO38) As IEnumerable(Of BO.o38Address) Implements Io38AddressBL.GetList
         Return _cDL.GetList(mq)
+    End Function
+    Public Function GetList_DistinctCountries() As List(Of String) Implements Io38AddressBL.GetList_DistinctCountries
+        Return _cDL.GetList_DistinctCountries()
     End Function
 End Class

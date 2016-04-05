@@ -115,7 +115,7 @@
 
                 <tr valign="top">
                     <td>
-                        <asp:Label ID="lblJ17ID" Text="Země:" runat="server" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblJ17ID" Text="DPH region:" runat="server" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <uc:datacombo ID="j17ID" runat="server" AutoPostBack="false" DataTextField="j17Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>

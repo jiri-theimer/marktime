@@ -109,6 +109,7 @@
     <Compile Include="p58ProductDL.vb" />
     <Compile Include="p59PriorityDL.vb" />
     <Compile Include="p61ActivityClusterDL.vb" />
+    <Compile Include="p98Invoice_Round_Setting_TemplateDL.vb" />
     <Compile Include="x18EntityCategoryDL.vb" />
     <Compile Include="p47CapacityPlanDL.vb" />
     <Compile Include="p48OperativePlanDL.vb" />
@@ -119,7 +120,6 @@
     <Compile Include="p91InvoiceDL.vb" />
     <Compile Include="p92InvoiceTypeDL.vb" />
     <Compile Include="p93InvoiceHeaderDL.vb" />
-    <Compile Include="p97Invoice_Round_SettingDL.vb" />
     <Compile Include="PluginSupportDL.vb" />
     <Compile Include="Service References\DbHandler.vb" />
     <Compile Include="Service References\DbParameters.vb" />

@@ -24,6 +24,7 @@
                 pars.Add("x15ID", BO.BAS.IsNullDBKey(.x15ID), DbType.Int32)
                 pars.Add("j17ID", BO.BAS.IsNullDBKey(.j17ID), DbType.Int32)
                 pars.Add("x38ID", BO.BAS.IsNullDBKey(.x38ID), DbType.Int32)
+                pars.Add("p98ID", BO.BAS.IsNullDBKey(.p98ID), DbType.Int32)
                 pars.Add("x38ID_Draft", BO.BAS.IsNullDBKey(.x38ID_Draft), DbType.Int32)
                 pars.Add("p93ID", BO.BAS.IsNullDBKey(.p93ID), DbType.Int32)
                 pars.Add("j19ID", BO.BAS.IsNullDBKey(.j19ID), DbType.Int32)
