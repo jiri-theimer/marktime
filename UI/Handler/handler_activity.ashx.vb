@@ -59,7 +59,9 @@ Public Class handler_activity
                 Dim strDefText As String = cRec.p32DefaultWorksheetText
                 If intP41ID > 0 Then
                     cP41 = factory.p41ProjectBL.Load(intP41ID)
-                    Select Case cP41.p87ID
+                    Dim intP87ID As Integer = cP41.p87ID_Client 'fakturační jazyk klienta projektu
+                    If cP41.p87ID > 0 Then intP87ID = cP41.p87ID 'fakturační jazyk projektu má přednost
+                    Select Case intP87ID
                         Case 1 : strDefText = cRec.p32DefaultWorksheetText_Lang1
                         Case 2 : strDefText = cRec.p32DefaultWorksheetText_Lang2
                         Case 3 : strDefText = cRec.p32DefaultWorksheetText_Lang3

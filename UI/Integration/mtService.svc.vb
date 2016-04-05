@@ -338,8 +338,57 @@ Class mtService
             Throw New FaultException(ex.Message)
 
         End Try
+        Return sr
+    End Function
 
+    Public Function SaveContactPerson(intJ02ID As Integer, intP28ID As Integer, strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveContactPerson
+        VerifyUser(strLogin, strPassword)
+        Dim sr As New BO.ServiceResult()
+        If intJ02ID = 0 Or intP28ID = 0 Then
+            sr.ErrorMessage = "intJ02ID or intP28ID is nothing" : Return sr
+        End If
+        Dim lis As IEnumerable(Of BO.p30Contact_Person) = _factory.p30Contact_PersonBL.GetList(intP28ID, 0, 0)
+        Dim cRec As New BO.p30Contact_Person
 
+        If lis.Where(Function(p) p.j02ID = intJ02ID).Count > 0 Then
+            cRec = lis.Where(Function(p) p.j02ID = intJ02ID).First
+        Else
+            cRec.p28ID = intP28ID
+            cRec.j02ID = intJ02ID
+        End If
+        Try
+            If _factory.p30Contact_PersonBL.Save(cRec) Then
+                sr.PID = _factory.p30Contact_PersonBL.LastSavedPID
+                sr.IsSuccess = True
+            Else
+                sr.ErrorMessage = _factory.p30Contact_PersonBL.ErrorMessage
+                sr.IsSuccess = False
+            End If
+        Catch ex As Exception
+            Throw New FaultException(ex.Message)
+        End Try
+        Return sr
+    End Function
+    Public Function DeleteContactPerson(intJ02ID As Integer, intP28ID As Integer, strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.DeleteContactPerson
+        VerifyUser(strLogin, strPassword)
+        Dim sr As New BO.ServiceResult()
+        If intJ02ID = 0 Or intP28ID = 0 Then
+            sr.ErrorMessage = "intJ02ID or intP28ID is nothing" : Return sr
+        End If
+        Dim lis As IEnumerable(Of BO.p30Contact_Person) = _factory.p30Contact_PersonBL.GetList(intP28ID, 0, intJ02ID)
+        If lis.Count = 0 Then
+            sr.ErrorMessage = "Vazba této osoby na klienta neexistuje." : Return sr
+        End If
+        Try
+            If _factory.p30Contact_PersonBL.Delete(lis(0).PID) Then
+                sr.IsSuccess = True
+            Else
+                sr.ErrorMessage = _factory.p30Contact_PersonBL.ErrorMessage
+                sr.IsSuccess = False
+            End If
+        Catch ex As Exception
+            Throw New FaultException(ex.Message)
+        End Try
         Return sr
     End Function
 End Class

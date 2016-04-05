@@ -73,6 +73,11 @@ Public Interface ImtService
     Function LoadPersonByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.j02Person
     <OperationContract()>
     Function SavePerson(intPID As Integer, fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult
+
+    <OperationContract()>
+    Function SaveContactPerson(intJ02ID As Integer, intP28ID As Integer, strLogin As String, strPassword As String) As BO.ServiceResult
+    <OperationContract()>
+    Function DeleteContactPerson(intJ02ID As Integer, intP28ID As Integer, strLogin As String, strPassword As String) As BO.ServiceResult
 End Interface
 
 
