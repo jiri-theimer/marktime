@@ -49,7 +49,10 @@
 
         }
 
-
+        function x31_record() {
+            dialog_master("x31_record.aspx?pid=<%=me.CurrentX31ID%>",true)
+            
+        }
 
     </script>
 
@@ -73,7 +76,7 @@
             <td>
                 <asp:Button ID="cmdRefresh" runat="server" Text="Obnovit" CssClass="cmd" />
             </td>
-
+          
 
             <td align="right"></td>
         </tr>

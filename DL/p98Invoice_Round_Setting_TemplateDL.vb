@@ -27,7 +27,7 @@
         End If
         With cRec
             pars.Add("p98Name", .p98Name, DbType.String, , , True, "Název")
-            pars.Add("p98IsDefault", .p98IsDefault, DbType.Int32)
+            pars.Add("p98IsDefault", .p98IsDefault, DbType.Boolean)
             pars.Add("p98ValidFrom", .ValidFrom, DbType.DateTime)
             pars.Add("p98ValidUntil", .ValidUntil, DbType.DateTime)
         End With
@@ -48,6 +48,7 @@
                     End If
                 Next
             End If
+            If cRec.p98IsDefault Then _cDB.RunSQL("UPDATE p98Invoice_Round_Setting_Template set p98IsDefault=0 WHERE p98ID<>" & intLastSavedP98ID.ToString)
             Return True
         Else
             Return False
@@ -63,7 +64,7 @@
             strW += bas.ParseWhereValidity("p98", "", myQuery)
             If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
         End If
-        s += " ORDER BY p98IsDefault DESC,p98Name"
+        s += " ORDER BY p98Name"
 
         Return _cDB.GetList(Of BO.p98Invoice_Round_Setting_Template)(s)
 

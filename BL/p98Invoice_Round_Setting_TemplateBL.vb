@@ -33,8 +33,11 @@ Class p98Invoice_Round_Setting_TemplateBL
                     _Error = "Jedno zaokrouhlovací pravidlo musí být nastavené jako [Výchozí]." : Return False
                 End If
             End If
-            If lisP97.GroupBy(Function(p) p.j27ID).Count > 1 Then
-                _Error = "Pro jednu měnu může existovat pouze jedno zaokrouhlovací pravidlo." : Return False
+            If lisP97.Count = 0 Then
+                _Error = "V pravidle musí být minimálně jeden řádek (měna)." : Return False
+            End If
+            If lisP97.GroupBy(Function(p) p.j27ID).Count = 1 And lisP97.Count > 1 Then
+                _Error = "Pro jednu měnu může existovat pouze jeden řádek." : Return False
             End If
         End With
 

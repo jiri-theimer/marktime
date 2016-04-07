@@ -96,6 +96,15 @@
                 <span class="infoInForm">DPH region lze později změnit v samotné faktuře.</span>
             </td>
         </tr>
+        <tr valign="top">
+            <td>
+                <asp:Label ID="Label3" Text="Výchozí zaokrouhlovací pravidlo faktury:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="p98ID" runat="server" AutoPostBack="false" DataTextField="p98Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                <span class="infoInForm">Zaokrouhlovací pravidlo lze později změnit v samotné faktuře.</span>
+            </td>
+        </tr>
     </table>
 
 

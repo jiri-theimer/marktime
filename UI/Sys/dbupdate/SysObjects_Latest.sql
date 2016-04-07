@@ -3383,14 +3383,24 @@ AS
 --odstranìní záznamu státu z tabulky j17Country
 declare @ref_pid int
 
+SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE j17ID=@pid
+if @ref_pid is not null
+ set @err_ret='Minimálnì jedna vystavená faktura má vazbu na tento DPH region ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+
+
 SELECT TOP 1 @ref_pid=c26ID from c26Holiday WHERE j17ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jeden den svátku je svázaný s tímto státem ('+dbo.GetObjectAlias('c26',@ref_pid)+')'
+ set @err_ret='Minimálnì jeden den svátku je svázaný s tímto regionem ('+dbo.GetObjectAlias('c26',@ref_pid)+')'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=j02ID from j02Person WHERE j17ID=@pid
 if @ref_pid is not null
- set @err_ret='Minimálnì jedna osoba má vazbu na tento stát ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
+ set @err_ret='Minimálnì jedna osoba má vazbu na tento region ('+dbo.GetObjectAlias('j02',@ref_pid)+')'
+
+set @ref_pid=null
+SELECT TOP 1 @ref_pid=p92ID from p92InvoiceType WHERE j17ID=@pid
+if @ref_pid is not null
+ set @err_ret='Minimálnì jeden typ faktury má vazbu na tento DPH region.'
 
 
 if isnull(@err_ret,'')<>''
@@ -8913,10 +8923,10 @@ set @login=dbo.j03_getlogin(@j03id_sys)
 select @j02id_owner=j02ID FROM j03User WHERE j03ID=@j03id_sys
 
 
-declare @j27id int,@j19id int,@x15id int,@j17id int
+declare @j27id int,@j19id int,@x15id int,@j17id int,@p98id int
 
 
-select @j27id=j27id,@j19id=j19id,@x15id=x15id,@j17id=j17ID
+select @j27id=j27id,@j19id=j19id,@x15id=x15id,@j17id=j17ID,@p98id=p98ID
 from p92InvoiceType where p92id=@p92id  
 
 if isnull(@j27id,0)=0
@@ -8935,7 +8945,7 @@ insert into p91invoice(p91code,p91dateinsert,p91userinsert,p91Date,p91DateSupply
 SELECT @ret_p91id=@@IDENTITY
 
 	
-update p91invoice set p91IsDraft=@p91isdraft,j17ID=@j17id
+update p91invoice set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id
 ,p91userupdate=@login,p91dateupdate=getdate()
 ,p91Text1=@p91text1
 ,p91Datep31_From=@p91datep31_from,p91Datep31_Until=@p91datep31_until,j19id=@j19id
@@ -9722,9 +9732,9 @@ CREATE procedure [dbo].[p91_recalc_amount]
 
 AS
 
-declare @j27id_dest int,@datSupply datetime,@j27id_domestic int,@p92invoicetype int,@p92id int,@p41id_first int,@j17id int
+declare @j27id_dest int,@datSupply datetime,@j27id_domestic int,@p92invoicetype int,@p92id int,@p41id_first int,@j17id int,@p98id int
 
-select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID
+select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID,@p98id=a.p98ID
 from p91invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
 where a.p91id=@p91id
 
@@ -9739,6 +9749,8 @@ if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'j27ID_Domestic')
 else
  set @j27id_domestic=2
 
+if @p98id is null
+ select @p98id=p98ID FROM p98Invoice_Round_Setting_Template WHERE p98IsDefault=1	---výchozí zaokrouhlovací pravidlo v systému
 
 declare @exchangedate datetime
 if @j27id_domestic<>@j27id_dest
@@ -9902,12 +9914,8 @@ declare @p97amountflag int	---jaká èástka je pøedmìtem zaokrouhlování: 1-èástka 
 
 set @p91roundfitamount=0
 
-if @j17id is not null
- select top 1 @p97id=p97id,@p97amountflag=p97AmountFlag,@p97scale=p97Scale from p97Invoice_Round_Setting where j17ID=@j17id and j27id=@j27id_dest
-
-if @p97id is null
- select top 1 @p97id=p97id,@p97amountflag=p97AmountFlag,@p97scale=p97Scale from p97Invoice_Round_Setting where j17ID is null and j27id=@j27id_dest
-
+if @p98id is not null
+ select @p97id=p97ID,@p97amountflag=p97AmountFlag,@p97scale=p97Scale FROM p97Invoice_Round_Setting WHERE p98ID=@p98id AND j27ID=@j27id_dest
 
 
 if @p97id is not null
@@ -10246,6 +10254,71 @@ AS
 
 
 DELETE from p97Invoice_Round_Setting where p97ID=@pid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------P---------------p98_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p98_delete') and type = 'P')
+ drop procedure p98_delete
+GO
+
+
+
+CREATE   procedure [dbo].[p98_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p98id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu zaokrouhlovacího pravidla: p98Invoice_Round_Setting_Template
+declare @ref_pid int
+
+SELECT TOP 1 @ref_pid=p91ID from p91Invoice WHERE p98ID=@pid
+if @ref_pid is not null
+ set @err_ret='Minimálnì jedna vystavená faktura má vazbu na toto zaokrouhlovací pravidlo ('+dbo.GetObjectAlias('p91',@ref_pid)+')'
+
+
+set @ref_pid=null
+SELECT TOP 1 @ref_pid=p92ID from p92InvoiceType WHERE p98ID=@pid
+if @ref_pid is not null
+ set @err_ret='Minimálnì jeden typ faktury má vazbu na toto zaokrouhlovací pravidlo.'
+
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+	delete from p97Invoice_Round_Setting WHERE p98ID=@pid
+
+	delete from p98Invoice_Round_Setting_Template where p98ID=@pid
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
 
 
 

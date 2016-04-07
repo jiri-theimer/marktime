@@ -23,7 +23,8 @@
                 Me.j17ID.DataBind()
                 Me.p92ID.DataSource = .Factory.p92InvoiceTypeBL.GetList(New BO.myQuery)
                 Me.p92ID.DataBind()
-
+                Me.p98ID.DataSource = .Factory.p98Invoice_Round_Setting_TemplateBL.GetList()
+                Me.p98ID.DataBind()
             End With
            
 
@@ -41,6 +42,7 @@
             Me.p91Code.Text = .p91Code
             Me.p91Code.NavigateUrl = "javascript:recordcode()"
             Me.j17ID.SelectedValue = .j17ID.ToString
+            Me.p98ID.SelectedValue = .p98ID.ToString
             Me.p92ID.SelectedValue = .p92ID.ToString
             Me.p28ID.Value = .p28ID.ToString
             Me.p28ID.Text = .p28Name
@@ -108,6 +110,7 @@
             With cRec
                 .p92ID = BO.BAS.IsNullInt(Me.p92ID.SelectedValue)
                 .j17ID = BO.BAS.IsNullInt(Me.j17ID.SelectedValue)
+                .p98ID = BO.BAS.IsNullInt(Me.p98ID.SelectedValue)
                 .p28ID = BO.BAS.IsNullInt(Me.p28ID.Value)
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .o38ID_Primary = BO.BAS.IsNullInt(Me.o38ID_Primary.SelectedValue)

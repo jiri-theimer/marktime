@@ -122,6 +122,15 @@
 
                     </td>
                 </tr>
+                <tr valign="top">
+                    <td>
+                        <asp:Label ID="Label5" Text="Zaokrouhlovací pravidlo:" runat="server" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <uc:datacombo ID="p98ID" runat="server" AutoPostBack="false" DataTextField="p98Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq"></asp:Label>

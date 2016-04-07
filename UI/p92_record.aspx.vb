@@ -32,6 +32,8 @@
                 Me.x31ID_Attachment.DataBind()
                 Me.p93ID.DataSource = .Factory.p93InvoiceHeaderBL.GetList(New BO.myQuery)
                 Me.p93ID.DataBind()
+                Me.p98ID.DataSource = .Factory.p98Invoice_Round_Setting_TemplateBL.GetList(New BO.myQuery)
+                Me.p98ID.DataBind()
             End With
 
             RefreshRecord()
@@ -68,6 +70,7 @@
             Me.x31ID_Attachment.SelectedValue = .x31ID_Attachment.ToString
             Me.x31ID_Invoice.SelectedValue = .x31ID_Invoice.ToString
             Me.p93ID.SelectedValue = .p93ID.ToString
+            Me.p98ID.SelectedValue = .p98ID.ToString
             basUI.SelectRadiolistValue(Me.p92InvoiceType, CInt(.p92InvoiceType).ToString)
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -100,6 +103,7 @@
                 .x15ID = BO.BAS.IsNullInt(Me.x15ID.SelectedValue)
                 .j27ID = BO.BAS.IsNullInt(Me.j27ID.SelectedValue)
                 .j17ID = BO.BAS.IsNullInt(Me.j17ID.SelectedValue)
+                .p98ID = BO.BAS.IsNullInt(Me.p98ID.SelectedValue)
                 .x31ID_Invoice = BO.BAS.IsNullInt(Me.x31ID_Invoice.SelectedValue)
                 .x31ID_Attachment = BO.BAS.IsNullInt(Me.x31ID_Attachment.SelectedValue)
                 .p93ID = BO.BAS.IsNullInt(Me.p93ID.SelectedValue)

@@ -25,8 +25,12 @@
     </table>
 
 
-
-    <table cellpadding="5" cellspacing="2">
+    <div class="content-box2">
+        <div class="title">
+            <asp:Button ID="cmdAddRow" runat="server" CssClass="cmd" Text="Přidat řádek" />
+        </div>
+        <div class="content">
+            <table cellpadding="5" cellspacing="2">
         <asp:Repeater ID="rp1" runat="server">
             <ItemTemplate>
                 <tr valign="top">
@@ -68,6 +72,9 @@
         </asp:Repeater>
 
     </table>
+        </div>
+    </div>
+    
 
 
 

@@ -56,6 +56,9 @@ Public Class report_modal
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 ''If .DataPID = 0 And Request.Item("guid") = "" Then .StopPage("pid missing")
                 If .DataPID = 0 And Me.MultiPIDs = "" And Request.Item("guid") = "" Then .StopPage("pid missing")
+                If .Factory.SysUser.IsAdmin Then
+                    .AddToolbarButton("Nastavení šablony", "setting", "0", "Images/setting.png", False, "javascript:x31_record()")
+                End If
                 .AddToolbarButton("PDF merge", "merge", "0", "Images/merge.png", False)
                 .AddToolbarButton("PDF export", "pdf", "0", "Images/pdf.png")
                 .AddToolbarButton("Odeslat poštou jako PDF", "mail", "0", "Images/email.png")

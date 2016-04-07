@@ -194,6 +194,24 @@ Partial Public Class p91_record
     Protected WithEvents j17ID As Global.UI.datacombo
 
     '''<summary>
+    '''Label5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p98ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p98ID As Global.UI.datacombo
+
+    '''<summary>
     '''lblOwner control.
     '''</summary>
     '''<remarks>

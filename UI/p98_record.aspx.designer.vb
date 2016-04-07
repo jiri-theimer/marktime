@@ -41,6 +41,15 @@ Partial Public Class p98_record
     Protected WithEvents p98IsDefault As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''cmdAddRow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddRow As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''rp1 control.
     '''</summary>
     '''<remarks>
