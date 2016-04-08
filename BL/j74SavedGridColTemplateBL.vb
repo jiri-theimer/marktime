@@ -342,7 +342,7 @@ Class j74SavedGridColTemplateBL
 
             .Add(AGC("Vyfakt.sazba DPH", "p31VatRate_Invoiced", BO.cfENUM.Numeric0))
 
-            If Not bolHideRatesColumns Then .Add(AGC("Vyfakt.bez DPH CZK", "p31Amount_WithoutVat_Invoiced_Domestic", BO.cfENUM.Numeric2, , , True))
+            If Not bolHideRatesColumns Then .Add(AGC("Vyfakt.bez DPH x Kurz", "p31Amount_WithoutVat_Invoiced_Domestic", BO.cfENUM.Numeric2, , , True))
             .Add(AGC("Faktura", "p91Code"))
             .Add(AGC("Fakt.oddíl", "p95Name"))
             .Add(AGC("Billing dávka", "p31ApprovingSet"))
@@ -371,13 +371,17 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Stát", "j17Name"))
 
             .Add(AGC("Bez dph", "p91Amount_WithoutVat", BO.cfENUM.Numeric, , , True))
+            .Add(AGC("Bez dph x Kurz", "WithoutVat_Krat_Kurz", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Dluh", "p91Amount_Debt", BO.cfENUM.Numeric, , , True))
+            .Add(AGC("Dluh x Kurz", "Debt_Krat_Kurz", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Celkem", "p91Amount_TotalDue", BO.cfENUM.Numeric, , , True))
+            .Add(AGC("Celkem x Kurz", "p91Amount_TotalDue_Krat_Kurz", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Celk.dph", "p91Amount_Vat", BO.cfENUM.Numeric, , , True))
-            .Add(AGC("Bez dph CZK", "WithoutVat_CZK", BO.cfENUM.Numeric, , , True))
-            .Add(AGC("Bez dph EUR", "WithoutVat_EUR", BO.cfENUM.Numeric, , , True))
-            .Add(AGC("Dluh CZK", "Debt_CZK", BO.cfENUM.Numeric, , , True))
-            .Add(AGC("Dluh EUR", "Debt_EUR", BO.cfENUM.Numeric, , , True))
+            ''.Add(AGC("Bez dph CZK", "WithoutVat_CZK", BO.cfENUM.Numeric, , , True))
+            ''.Add(AGC("Bez dph EUR", "WithoutVat_EUR", BO.cfENUM.Numeric, , , True))
+            ''.Add(AGC("Dluh CZK", "Debt_CZK", BO.cfENUM.Numeric, , , True))
+            ''.Add(AGC("Dluh EUR", "Debt_EUR", BO.cfENUM.Numeric, , , True))
+
 
             .Add(AGC("Datum", "p91Date", BO.cfENUM.DateOnly))
             .Add(AGC("Plnění", "p91DateSupply", BO.cfENUM.DateOnly))

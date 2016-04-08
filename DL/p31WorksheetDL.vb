@@ -534,6 +534,8 @@
         s.Append(",SUM(p31Amount_WithoutVat_Invoiced) as p31Amount_WithoutVat_Invoiced,SUM(p31Amount_WithVat_Invoiced) as p31Amount_WithVat_Invoiced,SUM(p31Amount_Vat_Invoiced) as p31Amount_Vat_Invoiced,SUM(p31Hours_Invoiced) as p31Hours_Invoiced")
         s.Append(",SUM(p31Amount_WithoutVat_Approved) as p31Amount_WithoutVat_Approved,SUM(p31Amount_WithVat_Approved) as p31Amount_WithVat_Approved,SUM(p31Amount_Vat_Approved) as p31Amount_Vat_Approved")
         s.Append(",SUM(case when p32.p32IsBillable=1 THEN p31Hours_Orig END) as Hours_Orig_Billable")
+        s.Append(",SUM(p31Amount_WithoutVat_Invoiced_Domestic) as p31Amount_WithoutVat_Invoiced_Domestic,SUM(p31Amount_WithVat_Invoiced_Domestic) as p31Amount_WithVat_Invoiced_Domestic")
+
 
         If bolIncludeWaiting4Approval Then
             Dim strInW As String = "a.p71ID IS NULL AND a.P91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"

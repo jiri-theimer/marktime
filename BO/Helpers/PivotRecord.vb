@@ -27,6 +27,8 @@ Public Enum PivotSumFieldType
     p31Amount_WithoutVat_Approved = 22
     p31Amount_WithoutVat_Invoiced = 23
     p31Amount_WithoutVat_FixedCurrency = 24
+    p31Amount_WithoutVat_Invoiced_Domestic = 25
+
 End Enum
 Public Class PivotRowColumnField
     Public FieldType As PivotRowColumnFieldType
@@ -150,6 +152,9 @@ Public Class PivotSumField
             Case PivotSumFieldType.p31Amount_WithoutVat_Invoiced
                 _SelectField = "sum(p31Amount_WithoutVat_Invoiced)"
                 s = "Vyfakturováno bez DPH"
+            Case PivotSumFieldType.p31Amount_WithoutVat_Invoiced_Domestic
+                _SelectField = "sum(p31Amount_WithoutVat_Invoiced_Domestic)"
+                s = "Vyfakturováno bez DPH x Kurz"
             Case PivotSumFieldType.p31Amount_WithoutVat_FixedCurrency
                 _SelectField = "sum(p31Amount_WithoutVat_FixedCurrency)"
                 s = "Přepočteno fixním kurzem"

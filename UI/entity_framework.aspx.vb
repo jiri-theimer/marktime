@@ -379,6 +379,10 @@ Public Class entity_framework
                 End If
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
+                With mq
+                    .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+                    .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                End With
                 InhaleMyQuery_j02(mq)
 
                 Dim lis As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)

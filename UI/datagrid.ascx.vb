@@ -329,7 +329,7 @@ Public Class datagrid
         col.AllowFiltering = bolAllowFiltering
         If colformat = BO.cfENUM.AnyString And bolAllowFiltering Then
             col.AutoPostBackOnFilter = True
-            col.CurrentFilterFunction = GridKnownFunction.StartsWith
+            col.CurrentFilterFunction = GridKnownFunction.Contains
         End If
         If strGroupName <> "" Then col.ColumnGroupName = strGroupName
         Select Case colformat

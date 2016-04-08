@@ -346,7 +346,9 @@
     End Function
     Private Function ParseSortExpression(strSort As String) As String
         strSort = strSort.Replace("UserInsert", "p91UserInsert").Replace("UserUpdate", "p91UserUpdate").Replace("DateInsert", "p91DateInsert").Replace("DateUpdate", "p91DateUpdate")
-        strSort = strSort.Replace("Owner", "j02owner.j02LastName").Replace("Debt_CZK", "p91Amount_Debt").Replace("Debt_EUR", "p91Amount_Debt")
+        strSort = strSort.Replace("Owner", "j02owner.j02LastName")
+        strSort = strSort.Replace("WithoutVat_Krat_Kurz", "p91Amount_WithoutVat * p91ExchangeRate").Replace("Debt_Krat_Kurz", "p91Amount_Debt * p91ExchangeRate").Replace("p91Amount_TotalDue_Krat_Kurz", "p91Amount_TotalDue * p91ExchangeRate")
+        ''.Replace("Debt_CZK", "p91Amount_Debt").Replace("Debt_EUR", "p91Amount_Debt").Replace("WithoutVat_CZK", "CASE WHEN a.j27ID=2 THEN p91Amount_WithoutVat END").Replace("WithoutVat_EUR", "CASE WHEN a.j27ID=3 THEN p91Amount_WithoutVat END")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
     Private Function ParseFilterExpression(strFilter As String) As String
@@ -363,8 +365,9 @@
     Public Function GetSumRow(myQuery As BO.myQueryP91) As BO.p91InvoiceSum
         Dim s As String = "SELECT count(a.p91ID) as Count,sum(p91Amount_WithoutVat) as p91Amount_WithoutVat,sum(p91Amount_Vat) as p91Amount_Vat,sum(p91Amount_WithVat) as p91Amount_WithVat"
         s += ",sum(p91Amount_Billed) as p91Amount_Billed,sum(p91Amount_Debt) as p91Amount_Debt,sum(p91ProformaAmount) as p91ProformaAmount,sum(p91Amount_TotalDue) as p91Amount_TotalDue"
-        s += ",sum(case when a.j27ID=2 THEN p91Amount_WithoutVat end) as WithoutVat_CZK,sum(case when a.j27ID=3 THEN p91Amount_WithoutVat end) as WithoutVat_EUR"
-        s += ",sum(case when a.j27ID=2 THEN p91Amount_Debt end) as Debt_CZK,sum(case when a.j27ID=3 THEN p91Amount_Debt end) as Debt_EUR"
+        s += ",sum(p91Amount_WithoutVat*p91ExchangeRate) as WithoutVat_Krat_Kurz,sum(p91Amount_Debt*p91ExchangeRate) as Debt_Krat_Kurz,sum(p91Amount_TotalDue*p91ExchangeRate) as p91Amount_TotalDue_Krat_Kurz"
+        ''s += ",sum(case when a.j27ID=2 THEN p91Amount_WithoutVat end) as WithoutVat_CZK,sum(case when a.j27ID=3 THEN p91Amount_WithoutVat end) as WithoutVat_EUR"
+        ''s += ",sum(case when a.j27ID=2 THEN p91Amount_Debt end) as Debt_CZK,sum(case when a.j27ID=3 THEN p91Amount_Debt end) as Debt_EUR"
 
         s += " " & GetSQLPart2()
         Dim pars As New DL.DbParameters
@@ -379,8 +382,8 @@
         s.Append("a.p92ID,a.p28ID,a.j27ID,a.j19ID,a.j02ID_Owner,a.p41ID_First,a.p91ID_CreditNoteBind,a.j17ID,a.p98ID,a.o38ID_Primary,a.o38ID_Delivery,a.x15ID,a.b02ID,a.j02ID_ContactPerson,a.p91FixedVatRate,a.p91Code,a.p91IsDraft,a.p91Date,a.p91DateBilled,a.p91DateMaturity,a.p91DateSupply,a.p91DateExchange,a.p91ExchangeRate")
         s.Append(",a.p91Datep31_From,a.p91Datep31_Until,a.p91Amount_WithoutVat,a.p91Amount_Vat,a.p91Amount_Billed,a.p91Amount_WithVat,a.p91Amount_Debt,a.p91RoundFitAmount,a.p91Text1,a.p91Text2,a.p91ProformaAmount,a.p91ProformaBilledAmount,a.p91Amount_WithoutVat_None,a.p91VatRate_Low,a.p91Amount_WithVat_Low,a.p91Amount_WithoutVat_Low,a.p91Amount_Vat_Low")
         s.Append(",a.p91VatRate_Standard,a.p91Amount_WithVat_Standard,a.p91Amount_WithoutVat_Standard,a.p91Amount_Vat_Standard,a.p91VatRate_Special,a.p91Amount_WithVat_Special,a.p91Amount_WithoutVat_Special,a.p91Amount_Vat_Special,a.p91Amount_TotalDue")
-        s.Append("," & bas.RecTail("p91", "a") & ",p91free.*,p28client.p28Name as _p28Name,p92.p92Name as _p92Name,p92.p93ID as _p93ID,p41.p41Name as _p41Name,b02.b02Name as _b02Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,j17.j17Name as _j17Name,j27.j27Code as _j27Code")
-        s.Append(",case when a.j27ID=2 THEN p91Amount_WithoutVat END as WithoutVat_CZK,case when a.j27ID=3 THEN p91Amount_WithoutVat END as WithoutVat_EUR,p92.p92InvoiceType as _p92InvoiceType")
+        s.Append("," & bas.RecTail("p91", "a") & ",p91free.*,p28client.p28Name as _p28Name,p92.p92Name as _p92Name,p92.p93ID as _p93ID,p41.p41Name as _p41Name,b02.b02Name as _b02Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,j17.j17Name as _j17Name,j27.j27Code as _j27Code,p92.p92InvoiceType as _p92InvoiceType")
+        ''s.Append(",case when a.j27ID=2 THEN p91Amount_WithoutVat END as WithoutVat_CZK,case when a.j27ID=3 THEN p91Amount_WithoutVat END as WithoutVat_EUR")
         Return s.ToString
 
     End Function

@@ -214,9 +214,11 @@
                             <asp:ListItem Text="Schváleno bez DPH" Value="22"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>                                                       
                             <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                            
                             <asp:ListItem Text="Schválená hodnota" Value="12"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
+                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>                                                                 
                         </asp:DropDownList>
                         
@@ -228,9 +230,11 @@
                             <asp:ListItem Text="Schváleno bez DPH" Value="22"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>                                                       
                             <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                            
                             <asp:ListItem Text="Schválená hodnota" Value="12"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
+                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>           
                         </asp:DropDownList>
                         
@@ -242,9 +246,11 @@
                             <asp:ListItem Text="Schváleno bez DPH" Value="22"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>                                                       
                             <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                            
                             <asp:ListItem Text="Schválená hodnota" Value="12"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
+                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>           
                         </asp:DropDownList>
                         <asp:DropDownList ID="sum4" runat="server" AutoPostBack="true">
@@ -255,9 +261,11 @@
                             <asp:ListItem Text="Schváleno bez DPH" Value="22"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>                                                       
                             <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                            
                             <asp:ListItem Text="Schválená hodnota" Value="12"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
+                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>           
                         </asp:DropDownList>
                             

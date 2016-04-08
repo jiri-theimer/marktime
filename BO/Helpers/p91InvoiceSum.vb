@@ -9,8 +9,12 @@
     Public Property p91Amount_Debt As Double
     Public Property p91ProformaAmount As Double
     Public Property p91Amount_TotalDue As Double
-    Public Property WithoutVat_CZK As Double
-    Public Property WithoutVat_EUR As Double
-    Public Property Debt_CZK As Double
-    Public Property Debt_EUR As Double
+    Public Property WithoutVat_Krat_Kurz As Double
+    Public Property Debt_Krat_Kurz As Double
+    Public Property p91Amount_TotalDue_Krat_Kurz As Double
+
+    ''Public Property WithoutVat_CZK As Double
+    ''Public Property WithoutVat_EUR As Double
+    ''Public Property Debt_CZK As Double
+    ''Public Property Debt_EUR As Double
 End Class

@@ -128,16 +128,31 @@
     End Property
    
 
-    Public Property WithoutVat_CZK As Double
-    Public Property WithoutVat_EUR As Double
-    Public ReadOnly Property Debt_CZK As Double
+    'Public Property WithoutVat_CZK As Double
+    'Public Property WithoutVat_EUR As Double
+    'Public ReadOnly Property Debt_CZK As Double
+    '    Get
+    '        If j27ID = 2 Then Return p91Amount_Debt Else Return 0
+    '    End Get
+    'End Property
+    'Public ReadOnly Property Debt_EUR As Double
+    '    Get
+    '        If j27ID = 3 Then Return p91Amount_Debt Else Return 0
+    '    End Get
+    'End Property
+    Public ReadOnly Property WithoutVat_Krat_Kurz As Double
         Get
-            If j27ID = 2 Then Return p91Amount_Debt Else Return 0
+            Return Me.p91Amount_WithoutVat * Me.p91ExchangeRate
         End Get
     End Property
-    Public ReadOnly Property Debt_EUR As Double
+    Public ReadOnly Property Debt_Krat_Kurz As Double
         Get
-            If j27ID = 3 Then Return p91Amount_Debt Else Return 0
+            Return Me.p91Amount_Debt * Me.p91ExchangeRate
+        End Get
+    End Property
+    Public ReadOnly Property p91Amount_TotalDue_Krat_Kurz As Double
+        Get
+            Return Me.p91Amount_TotalDue * Me.p91ExchangeRate
         End Get
     End Property
 
