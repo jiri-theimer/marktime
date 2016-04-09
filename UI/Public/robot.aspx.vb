@@ -23,6 +23,11 @@
             Handle_o22Reminder()
             Handle_p56Reminder()
 
+            If Now > Today.AddHours(15) And Now < Today.AddHours(17) And Now.DayOfWeek <> DayOfWeek.Sunday And Now.DayOfWeek <> DayOfWeek.Saturday Then
+                Handle_CnbKurzy()
+            End If
+
+
             log4net.LogManager.GetLogger("robotlog").Info("End")
 
             Me.lblMessage.Text = Format(Now, "dd.MM.yyyy HH:mm:ss") & " - robot spuštěn."
@@ -115,5 +120,14 @@
             _Factory.o42ImapRuleBL.HandleWaitingImapMessages(c)
         Next
 
+    End Sub
+
+    Public Sub Handle_CnbKurzy()
+        Dim datImport As Date = DateSerial(Year(Now), Month(Now), Day(Now))
+
+        Dim lisM62 As IEnumerable(Of BO.m62ExchangeRate) = _Factory.m62ExchangeRateBL.GetList().Where(Function(p) p.m62RateType = BO.m62RateTypeENUM.InvoiceRate And p.m62Date = datImport And p.UserInsert = "robot")
+        If lisM62.Count = 0 Then
+            _Factory.m62ExchangeRateBL.ImportRateList_CNB(datImport)
+        End If
     End Sub
 End Class

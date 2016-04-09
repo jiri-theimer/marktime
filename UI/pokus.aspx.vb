@@ -87,7 +87,7 @@ Public Class pokus
 
    
     Private Sub cmdPokus_Click(sender As Object, e As EventArgs) Handles cmdPokus.Click
-
+        Master.Factory.m62ExchangeRateBL.ImportRateList_CNB(Now)
 
 
         

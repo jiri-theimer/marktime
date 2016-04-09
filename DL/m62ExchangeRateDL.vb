@@ -36,8 +36,9 @@
             pars.Add("m62ValidFrom", .ValidFrom, DbType.DateTime)
             pars.Add("m62ValidUntil", .ValidUntil, DbType.DateTime)
         End With
-
-        If _cDB.SaveRecord("m62ExchangeRate", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+        Dim strLogin As String = _curUser.j03Login
+        If cRec.PID = 0 And cRec.UserInsert <> "" Then strLogin = cRec.UserInsert
+        If _cDB.SaveRecord("m62ExchangeRate", pars, bolINSERT, strW, True, strLogin) Then
             Return True
         Else
             Return False
