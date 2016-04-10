@@ -249,12 +249,8 @@ Public Class p41_framework_detail
         Dim cProjectSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
 
         If Me.CurrentSubgrid = SubgridType.summary Then
-            ''bigsummary1.Visible = True
-            ''bigsummary1.MasterDataPID = cRec.PID
-            ''bigsummary1.RefreshData()
             boxP31Summary.Visible = False
         Else
-            ''bigsummary1.Visible = False
             Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
             p31summary1.RefreshData(cWorksheetSum, "p41", Master.DataPID, cRec.p41LimitHours_Notification)
         End If
@@ -270,7 +266,15 @@ Public Class p41_framework_detail
                 If cProjectSum.p56_Actual_Count > 0 Then .Text += "<span class='badge1'>" & cProjectSum.p56_Actual_Count.ToString & "</span>"
             End With
         End With
-
+        If Not Me.opgSubgrid.Tabs.FindTabByValue("5") Is Nothing Then
+            Dim x As Integer = Master.Factory.p45BudgetBL.GetList(cRec.PID).Count
+            If x > 0 Then
+                With Me.opgSubgrid.Tabs.FindTabByValue("5")
+                    .Text += "<span class='badge1'>" & x.ToString & "</span>"
+                End With
+            End If
+        End If
+        
 
         If cProjectSum.p56_Actual_Count > 0 Or cProjectSum.o22_Actual_Count > 0 Then
             If cProjectSum.p56_Actual_Count > 0 Then topLink2.Text = topLink2.Text & "<span title='Otevřené úkoly' class='badge1'>" & cProjectSum.p56_Actual_Count.ToString & "</span>"

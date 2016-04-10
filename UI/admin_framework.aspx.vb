@@ -45,6 +45,12 @@ Public Class admin_framework
                 SetupGrid()
                 panelmenu1.SelectedValue = ViewState("prefix")
             End If
+            Select Case ViewState("prefix")
+                Case "m62"
+                    Dim cmd As New RadMenuItem("Import kurzů z ČNB", "javascript: sw_master('m62_import_setting.aspx','Images/setting.png',false)")
+                    cmd.PostBack = False
+                    menu1.Items.Add(cmd)
+            End Select
 
             Dim cF As New BO.clsFile
             imgLogoPreview.DataValue = cF.GetBinaryContent(BO.ASS.GetApplicationRootFolder & "\Plugins\company_logo.png")
@@ -399,11 +405,12 @@ Public Class admin_framework
                     .AddColumn("p86SWIFT", "SWIFT")
                     .AddColumn("p86IBAN", "IBAN")
                 Case "m62"
+                    .AddColumn("RateType", "Typ kurzu")
                     .AddColumn("m62Date", "Datum kurzu", BO.cfENUM.DateOnly)
                     .AddColumn("m62Rate", "Kurz", BO.cfENUM.Numeric3)
                     .AddColumn("j27Code_Slave", "Cílová měna")
                     .AddColumn("j27Code_Master", "Zdrojová měna")
-                    .AddColumn("RateType", "Typ kurzu")
+
                 Case "p32"
                     bolSearch = True
                     .AddColumn("p32name", "Název aktivity")

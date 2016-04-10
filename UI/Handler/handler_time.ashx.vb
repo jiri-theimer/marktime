@@ -72,6 +72,7 @@ Public Class handler_time
                 Else
                     strRetMsg = cT.GetTimeFromSeconds(seconds) & " (HH:mm) -> " & cT.GetDecTimeFromSeconds(seconds) & "h. (dekadicky)"
                 End If
+                
 
                 Dim round2minutes As Integer = factory.x35GlobalParam.GetValueString("Round2Minutes")
                 Dim seconds_rounded As Integer = cT.RoundSeconds(seconds, round2minutes * 60)

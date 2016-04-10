@@ -4,7 +4,7 @@
     Function Load(intPID As Integer) As BO.m62ExchangeRate
     Function Delete(intPID As Integer) As Boolean
     Function GetList(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.m62ExchangeRate)
-    Sub ImportRateList_CNB(datImport As Date)
+    Sub ImportRateList_CNB(datImport As Date, Optional strExplicitJ27Codes As String = "")
 End Interface
 
 Class m62ExchangeRateBL
@@ -44,13 +44,18 @@ Class m62ExchangeRateBL
         Return _cDL.GetList(mq)
     End Function
 
-    Public Sub ImportRateList_CNB(datImport As Date) Implements Im62ExchangeRateBL.ImportRateList_CNB
+    Public Sub ImportRateList_CNB(datImport As Date, Optional strExplicitJ27Codes As String = "") Implements Im62ExchangeRateBL.ImportRateList_CNB
         datImport = DateSerial(Year(datImport), Month(datImport), Day(datImport))
         Dim lisM62 As IEnumerable(Of BO.m62ExchangeRate) = GetList().Where(Function(p) p.m62RateType = BO.m62RateTypeENUM.InvoiceRate And p.m62Date = datImport)
         Dim lisJ27 As IEnumerable(Of BO.j27Currency) = Factory.ftBL.GetList_J27()
 
-        Dim strStaty As String = "EMU,USA"
-        Dim staty() As String = Split(strStaty, ",")
+        Dim strMeny As String = strExplicitJ27Codes
+        If strMeny = "" Then
+            'načíst z globálního nastavení
+            strMeny = Factory.x35GlobalParam.GetValueString("j27Codes_Import_CNB")
+        End If
+        If strMeny = "" Then Return
+        Dim meny() As String = Split(strMeny, ",")
 
         Dim url As String = String.Format("http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt?date={0:dd.MM.yyyy}", datImport)
         Dim rq As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create(url)
@@ -69,11 +74,10 @@ Class m62ExchangeRateBL
                     lisM62 = GetList().Where(Function(p) p.m62RateType = BO.m62RateTypeENUM.InvoiceRate And p.m62Date = datImport)
                 End If
             End If
-            For i As Integer = 0 To UBound(staty)
-                Dim strStat As String = staty(i)
-                If s.StartsWith(strStat & "|") Then
+            For i As Integer = 0 To UBound(meny)
+                Dim strMena As String = meny(i)
+                If s.Contains("|" & strMena & "|") Then
                     Dim radek() As String = Split(s, "|")
-
                     Dim cRec As New BO.m62ExchangeRate
                     cRec.m62Date = datImport
                     cRec.j27ID_Master = 2

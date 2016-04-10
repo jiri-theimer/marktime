@@ -27,9 +27,9 @@
             With Master.Factory.j03UserBL
                 Select Case .GetUserParam("p31_default_HoursEntryFlag", "1")
                     Case "1"
-                        Me.opgHoursEntryFlag.SelectedValue = "1"
+                        Me.opgHoursEntryFlag.SelectedValue = "1"    'hodiny
                     Case "2"
-                        Me.opgHoursEntryFlag.SelectedValue = "2"
+                        Me.opgHoursEntryFlag.SelectedValue = "2"    'minuty
                     Case "3"
                         Me.opgHoursEntryFlag.SelectedValue = "1"
                         Me.chkShowTimeInterval.Checked = True

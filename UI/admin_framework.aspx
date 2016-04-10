@@ -57,7 +57,7 @@
                 return
             }
             sw_master("<%=ViewState("page")%>?clone=1&pid=" + pid, "Images/setting_32.png");
-
+            
         }
 
         function hardrefresh(pid, flag) {
