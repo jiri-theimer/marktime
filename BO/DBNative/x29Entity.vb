@@ -55,6 +55,7 @@
     p70BillingStatus = 370
     j70QueryTemplate = 170
     j74SavedGridColTemplate = 174
+    x18EntityCategory = 918
     Approving = 999
     _NotSpecified = 0
 End Enum

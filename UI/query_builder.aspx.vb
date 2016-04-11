@@ -85,6 +85,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p28id_client", "Klient projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p28id_billing", "Odběratel faktury"))
                 lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p28client.p29id", "Typ klienta"))
+
             Case BO.x29IdEnum.p28Contact
                 ph1.Text = "Návrhář filtrů nad přehledem klientů"
 
