@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
@@ -13,21 +14,16 @@
     <style type="text/css">
         html .RadMenu_Metro .rmRootGroup {
             background-image: none;
-            
         }
- 
+
         html .RadMenu_Metro ul.rmRootGroup {
-            <%if me.hidisbin.value="1" then%>
-            background-color: black;
-            <%else%>
-            background-color: white;
-            <%End If%>
-            
+            <%if me.hidisbin.value="1" then%> background-color: black;
+            <%else%> background-color: white;
+            <%End If%>;
         }
 
         .rmLink {
-            margin-top:6px;
-           
+            margin-top: 6px;
         }
 
         .ui-autocomplete {
@@ -51,9 +47,8 @@
             border-radius: 0;
             font-weight: normal;
         }
-
     </style>
-    
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -236,9 +231,9 @@
                     </ItemTemplate>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px"></telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu osoby (boxy)" />
-                <telerik:RadMenuItem Text="ZÁZNAM OSOBY" ImageUrl="Images/arrow_down_menu.png">                    
-                    <Items>                        
+                <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" Text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu osoby (boxy)" />
+                <telerik:RadMenuItem Text="ZÁZNAM OSOBY" ImageUrl="Images/arrow_down_menu.png">
+                    <Items>
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit novou osobu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit osobní profil" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdCopy" Text="Založit novou osobu kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nově zakládaná osoba se kompletně předvyplní nastavením z aktuálního profilu."></telerik:RadMenuItem>
@@ -257,7 +252,7 @@
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
-                    </Items>                    
+                    </Items>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="searchbox">
                     <ItemTemplate>
@@ -284,181 +279,191 @@
 
 
 
-    <asp:panel id="panSwitch" runat="server">
-    <div class="content-box1">
-        <div class="title">
-            <img src="Images/properties.png" style="margin-right: 10px;" />Záznam osobního profilu
+    <asp:Panel ID="panSwitch" runat="server">
+        <div class="content-box1">
+            <div class="title">
+                <img src="Images/properties.png" style="margin-right: 10px;" />Záznam osobního profilu
                         <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
-        </div>
-        <div class="content">
-            <table cellpadding="10" cellspacing="2" id="responsive">
-                <tr valign="top">
-                    <td style="min-width: 120px;" >
-                        <asp:Label ID="lblPerson" runat="server" Text="Osoba:" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
-
-                        <asp:Label ID="FullNameAsc" runat="server" CssClass="valbold"></asp:Label>
-
-                        <div>
-                            <asp:Label ID="j02Code" runat="server" CssClass="valbold" ForeColor="gray"></asp:Label>
-                        </div>
-                    </td>
-                    <td >
-                        <asp:Label ID="lblJ07Name" runat="server" Text="Pozice:" CssClass="lbl"></asp:Label>
-                        <div>
-                            <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl"></asp:Label>
-                        </div>
-                        <div>
-                            <asp:Label ID="lblJ17Name" runat="server" Text="Stát:" CssClass="lbl"></asp:Label>
-                        </div>
-                    </td>
-                    <td>
-                        <asp:Label ID="j07Name" runat="server" CssClass="valbold"></asp:Label>
-                        <div>
-                            <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
-                        </div>
-                        <div>
-                            <asp:Label ID="j17Name" runat="server" CssClass="valbold"></asp:Label>
-                        </div>
-                    </td>
-
-                </tr>
-                <tr valign="top">
-                    <td >
-                        <asp:Label ID="lblEmail" runat="server" Text="E-mail:" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
-
-                    </td>
-                    <td>
-                        <asp:Label ID="lblFond" runat="server" Text="Fond hodin:" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="c21Name" runat="server" CssClass="valbold"></asp:Label>
-
-                    </td>
-                </tr>
-
-
-            </table>
-
-            <asp:Label ID="Mediums" runat="server" CssClass="valbold"></asp:Label>
-
-        </div>
-    </div>
-    <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/user.png" style="margin-right: 10px;" />Uživatelský účet
-        </div>
-        <div class="content">
-            <asp:Panel ID="panAccount" runat="server">
-                <table cellpadding="10" cellspacing="2">
+            </div>
+            <div class="content">
+                <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="top">
                         <td style="min-width: 120px;">
-                            <asp:Label ID="lblLogin" runat="server" Text="Přihlašovací jméno:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblPerson" runat="server" Text="Osoba:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
 
-                            <asp:Label ID="j03Login" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Label ID="FullNameAsc" runat="server" CssClass="valbold"></asp:Label>
+
+                            <div>
+                                <asp:Label ID="j02Code" runat="server" CssClass="valbold" ForeColor="gray"></asp:Label>
+                            </div>
                         </td>
+                        <td>
+                            <asp:Label ID="lblJ07Name" runat="server" Text="Pozice:" CssClass="lbl"></asp:Label>
+                            <div>
+                                <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl"></asp:Label>
+                            </div>
+                            <div>
+                                <asp:Label ID="lblJ17Name" runat="server" Text="Stát:" CssClass="lbl"></asp:Label>
+                            </div>
+                        </td>
+                        <td>
+                            <asp:Label ID="j07Name" runat="server" CssClass="valbold"></asp:Label>
+                            <div>
+                                <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
+                            </div>
+                            <div>
+                                <asp:Label ID="j17Name" runat="server" CssClass="valbold"></asp:Label>
+                            </div>
+                        </td>
+
                     </tr>
-                    <tr>
+                    <tr valign="top">
                         <td>
-                            <asp:Label ID="lblJ04Name" runat="server" Text="Aplikační role:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblEmail" runat="server" Text="E-mail:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
-                            <asp:Label ID="j04Name" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
 
                         </td>
+                        <td>
+                            <asp:Label ID="lblFond" runat="server" Text="Fond hodin:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="c21Name" runat="server" CssClass="valbold"></asp:Label>
 
+                        </td>
                     </tr>
 
 
                 </table>
-            </asp:Panel>
-            <asp:Label ID="AccountMessage" runat="server" CssClass="infoInForm"></asp:Label>
-            <asp:HyperLink ID="cmdLog" runat="server" Text="Historie aktivit" NavigateUrl="javascript: timeline()"></asp:HyperLink>
-            <span style="padding-left: 40px;"></span>
-            <asp:HyperLink ID="cmdAccount" runat="server" Text="Založit uživatelský účet" Visible="false"></asp:HyperLink>
-        </div>
-    </asp:Panel>
-    <asp:Panel ID="boxJ05" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/masterslave.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxJ05Title" runat="server" Text="Nadřízenost | Podřízenost"></asp:Label>
-            <asp:HyperLink ID="cmdAddJ05" runat="server" Text="Přidat" NavigateUrl="javascript:j05_record(0)"></asp:HyperLink>
-        </div>
-        <div class="content">
 
-            <asp:Panel ID="panSlaves" runat="server" CssClass="div6">
-                <img src="Images/slave.png" /><span>Podřízení:</span>
-                <asp:Repeater ID="rpSlaves" runat="server">
+                <asp:Label ID="Mediums" runat="server" CssClass="valbold"></asp:Label>
+
+            </div>
+        </div>
+        <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/user.png" style="margin-right: 10px;" />Uživatelský účet
+            </div>
+            <div class="content">
+                <asp:Panel ID="panAccount" runat="server">
+                    <table cellpadding="10" cellspacing="2">
+                        <tr valign="top">
+                            <td style="min-width: 120px;">
+                                <asp:Label ID="lblLogin" runat="server" Text="Přihlašovací jméno:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+
+                                <asp:Label ID="j03Login" runat="server" CssClass="valbold"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblJ04Name" runat="server" Text="Aplikační role:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="j04Name" runat="server" CssClass="valbold"></asp:Label>
+
+                            </td>
+
+                        </tr>
+
+
+                    </table>
+                </asp:Panel>
+                <asp:Label ID="AccountMessage" runat="server" CssClass="infoInForm"></asp:Label>
+                <asp:HyperLink ID="cmdLog" runat="server" Text="Historie aktivit" NavigateUrl="javascript: timeline()"></asp:HyperLink>
+                <span style="padding-left: 40px;"></span>
+                <asp:HyperLink ID="cmdAccount" runat="server" Text="Založit uživatelský účet" Visible="false"></asp:HyperLink>
+            </div>
+        </asp:Panel>
+        <asp:Panel ID="boxJ05" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/masterslave.png" style="margin-right: 10px;" />
+                <asp:Label ID="boxJ05Title" runat="server" Text="Nadřízenost | Podřízenost"></asp:Label>
+                <asp:HyperLink ID="cmdAddJ05" runat="server" Text="Přidat" NavigateUrl="javascript:j05_record(0)"></asp:HyperLink>
+            </div>
+            <div class="content">
+
+                <asp:Panel ID="panSlaves" runat="server" CssClass="div6">
+                    <img src="Images/slave.png" /><span>Podřízení:</span>
+                    <asp:Repeater ID="rpSlaves" runat="server">
+                        <ItemTemplate>
+                            <a href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonSlave")%><%#Eval("TeamSlave")%></a>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                    <asp:Label ID="SlavesInLine" runat="server"></asp:Label>
+                </asp:Panel>
+                <asp:Panel ID="panMasters" runat="server" CssClass="div6">
+                    <img src="Images/master.png" /><span>Nadřízení:</span>
+                    <asp:Repeater ID="rpMasters" runat="server">
+                        <ItemTemplate>
+                            <a href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonMaster")%></a>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </asp:Panel>
+            </div>
+
+        </asp:Panel>
+        <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/label.png" style="margin-right: 10px;" />
+                <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
+                <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
+            </div>
+            <div class="content">
+                <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+            </div>
+        </asp:Panel>
+        <asp:Panel ID="boxFF" runat="server" CssClass="content-box1">
+
+            <div class="title">
+                <img src="Images/form.png" style="margin-right: 10px;" />
+                <asp:Label ID="boxFFTitle" runat="server" Text="Uživatelská pole"></asp:Label>
+                <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Zobrazovat pouze vyplněná pole" />
+            </div>
+            <div class="content">
+                <uc:freefields_readonly ID="ff1" runat="server" />
+            </div>
+
+        </asp:Panel>
+
+
+        <asp:Panel ID="panP30" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/contact.png" style="margin-right: 10px;" />Svázané firmy (klienti)
+            </div>
+            <div class="content">
+                <asp:Repeater ID="rpP30" runat="server">
                     <ItemTemplate>
-                        <a href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonSlave")%><%#Eval("TeamSlave")%></a>
+                        <div class="div6">
+                            <asp:HyperLink ID="Company" runat="server" Target="_top"></asp:HyperLink>
+                        </div>
                     </ItemTemplate>
                 </asp:Repeater>
-                <asp:Label ID="SlavesInLine" runat="server"></asp:Label>
-            </asp:Panel>
-            <asp:Panel ID="panMasters" runat="server" CssClass="div6">
-                <img src="Images/master.png" /><span>Nadřízení:</span>
-                <asp:Repeater ID="rpMasters" runat="server">
-                    <ItemTemplate>
-                        <a href="javascript:j05_record(<%#Eval("pid")%>)"><%#Eval("PersonMaster")%></a>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </asp:Panel>
-        </div>
+            </div>
+        </asp:Panel>
+
+
+
+
+
+        <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
+
+            <div class="title">
+                <img src="Images/notepad.png" style="margin-right: 10px;" />
+                <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
+            </div>
+            <div class="content" style="overflow: auto; max-height: 200px;">
+                <uc:o23_list ID="notepad1" runat="server" EntityX29ID="j02Person"></uc:o23_list>
+            </div>
+
+        </asp:Panel>
 
     </asp:Panel>
-    <asp:Panel ID="boxFF" runat="server" CssClass="content-box1">
-
-        <div class="title">
-            <img src="Images/form.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxFFTitle" runat="server" Text="Uživatelská pole"></asp:Label>
-            <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Zobrazovat pouze vyplněná pole" />
-        </div>
-        <div class="content">
-            <uc:freefields_readonly ID="ff1" runat="server" />
-        </div>
-
-    </asp:Panel>
-
-
-    <asp:Panel ID="panP30" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/contact.png" style="margin-right: 10px;" />Svázané firmy (klienti)
-        </div>
-        <div class="content">
-            <asp:Repeater ID="rpP30" runat="server">
-                <ItemTemplate>
-                    <div class="div6">
-                        <asp:HyperLink ID="Company" runat="server" Target="_top"></asp:HyperLink>
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>
-        </div>
-    </asp:Panel>
-
-
-
-    
-
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
-
-        <div class="title">
-            <img src="Images/notepad.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
-        </div>
-        <div class="content" style="overflow: auto; max-height: 200px;">
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="j02Person"></uc:o23_list>
-        </div>
-
-    </asp:Panel>
-
-    </asp:panel>
-    <div style="clear:both; width: 100%;"></div>
+    <div style="clear: both; width: 100%;"></div>
     <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="false" OnClientTabSelected="OnClientTabSelected">
         <Tabs>
             <telerik:RadTab Text="Worksheet summary" Value="-1" Target="fraSubform"></telerik:RadTab>
@@ -471,11 +476,11 @@
     </telerik:RadTabStrip>
     <div id="offsetY"></div>
     <iframe frameborder="0" id="fraSubform" name="fraSubform" runat="server" width="100%" height="300px"></iframe>
-    <asp:Image ID="imgLoading" runat="server" ImageUrl="Images/loading.gif" style="position:absolute;top:500px;left:200px;" />
+    <asp:Image ID="imgLoading" runat="server" ImageUrl="Images/loading.gif" Style="position: absolute; top: 500px; left: 200px;" />
 
-    
+
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
-    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />    
+    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidIsBin" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

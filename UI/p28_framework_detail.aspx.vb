@@ -223,6 +223,12 @@ Public Class p28_framework_detail
        
         RefreshComments()
 
+        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact).Count > 0 Then
+            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=p28&pid={0}','Images/label_32.png',false);", cRec.PID)
+            labels1.RefreshData(BO.x29IdEnum.p28Contact, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p28Contact, cRec.PID))
+        Else
+            boxX18.Visible = False
+        End If
 
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p28Contact, Master.DataPID, cRec.p29ID)
         If lisFF.Count > 0 Then
@@ -250,7 +256,7 @@ Public Class p28_framework_detail
         If Not cDisp.ReadAccess Then
             Master.StopPage("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
-
+        x18_binding.Visible = cDisp.OwnerAccess
 
         With Master.Factory
             menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)

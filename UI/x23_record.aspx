@@ -59,6 +59,21 @@
             </table>
         </div>
     </asp:panel>
+    <asp:Panel ID="panItems" runat="server" CssClass="content-box2" Visible="false">
+        <div class="title">
+            Položky seznamu
+            <asp:Button ID="cmdAddItem" runat="server" CssClass="cmd" Text="Přidat" />
+        </div>
+        <div class="content">
+        <asp:DataList ID="rp1" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" CellPadding="5">
+            <ItemTemplate>
+                
+                <asp:HyperLink ID="x25Name" runat="server"></asp:HyperLink>
+                
+            </ItemTemplate>
+        </asp:DataList>
+        </div>
+    </asp:Panel>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

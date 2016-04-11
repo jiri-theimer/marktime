@@ -12,6 +12,7 @@
             </td>
             <td>
                 <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true"></uc:datacombo>
+                <asp:HyperLink ID="cmdX23" runat="server" Visible="false" Text="Nastavení combo seznamu"></asp:HyperLink>
             </td>
         </tr>
         <tr>

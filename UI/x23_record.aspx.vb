@@ -46,6 +46,10 @@
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
 
+        If Not Me.chkIsDatasource.Checked Then
+            Me.rp1.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(cRec.PID)
+            Me.rp1.DataBind()
+        End If
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x23EntityField_ComboBL
@@ -88,5 +92,21 @@
 
     Private Sub x23_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.panDataSource.Visible = Me.chkIsDatasource.Checked
+        If Master.DataPID <> 0 Then
+            Me.panItems.Visible = Not Me.panDataSource.Visible
+        End If
+
+    End Sub
+
+    Private Sub rp1_ItemDataBound(sender As Object, e As DataListItemEventArgs) Handles rp1.ItemDataBound
+        Dim cRec As BO.x25EntityField_ComboValue = CType(e.Item.DataItem, BO.x25EntityField_ComboValue)
+        With CType(e.Item.FindControl("x25Name"), HyperLink)
+            .Text = cRec.x25Name
+            .NavigateUrl = "x25_record.aspx?pid=" & cRec.PID.ToString
+        End With
+    End Sub
+
+    Private Sub cmdAddItem_Click(sender As Object, e As EventArgs) Handles cmdAddItem.Click
+        Server.Transfer("x25_record.aspx?pid=0&x23id=" & Master.DataPID.ToString)
     End Sub
 End Class

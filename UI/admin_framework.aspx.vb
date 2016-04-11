@@ -190,9 +190,9 @@ Public Class admin_framework
             .AddItem("IMAP účty", "o41", NU("o41"), "imap")
             .AddItem("IMAP pravidla", "o42", NU("o42"), "imap")
 
-            .AddItem("Uživatelská pole a kategorie", "ff", , , "Images/form.png")
+            .AddItem("Uživatelská pole a štítky", "ff", , , "Images/form.png")
             .AddItem("Katalog polí", "x28", NU("x28"), "ff")
-            .AddItem("Katalog kategorií", "x18", NU("x18"), "ff")
+            .AddItem("Katalog štítků", "x18", NU("x18"), "ff")
             .AddItem("Combo seznamy", "x23", NU("x23"), "ff")
             .AddItem("Combo položky", "x25", NU("x25"), "ff")
             .AddItem("Skupiny uživatelských polí", "x27", NU("x27"), "ff")
@@ -463,8 +463,8 @@ Public Class admin_framework
                     .AddColumn("x23Name", "Název")
                     .AddColumn("x23Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "x18"
-                    .AddColumn("x18Name", "Název kategorie")
-                    .AddColumn("x23Name", "Combo seznam")
+                    .AddColumn("x18Name", "Název štítku")
+                    .AddColumn("x23Name", "Zdroj hodnot")
                     .AddColumn("x18Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "x27"
                     .AddColumn("x27Name", "Název skupiny")

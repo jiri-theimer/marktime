@@ -443,6 +443,9 @@
     <Content Include="p31_approving_step3_subform.aspx" />
     <Content Include="WebForm2.aspx" />
     <Content Include="workflow_dialog.aspx" />
+    <Content Include="x18_binding.aspx" />
+    <Content Include="x18_readonly.ascx" />
+    <Content Include="x18_record.aspx" />
     <Content Include="x23_record.aspx" />
     <Content Include="x25_record.aspx" />
     <Content Include="x27_record.aspx" />
@@ -2364,6 +2367,27 @@
     </Compile>
     <Compile Include="workflow_dialog.aspx.vb">
       <DependentUpon>workflow_dialog.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x18_binding.aspx.designer.vb">
+      <DependentUpon>x18_binding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x18_binding.aspx.vb">
+      <DependentUpon>x18_binding.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x18_readonly.ascx.designer.vb">
+      <DependentUpon>x18_readonly.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="x18_readonly.ascx.vb">
+      <DependentUpon>x18_readonly.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="x18_record.aspx.designer.vb">
+      <DependentUpon>x18_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x18_record.aspx.vb">
+      <DependentUpon>x18_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="x23_record.aspx.designer.vb">

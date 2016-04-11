@@ -17,6 +17,7 @@ Public Class datacombo
         End Get
         Set(ByVal value As String)
             Me.cbx1.OnClientTextChange = value
+
         End Set
     End Property
     Public Property OnClientSelectedIndexChanged() As String

@@ -62,6 +62,7 @@
             If Not .ReadAccess Then
                 Master.StopPage("Nedisponujete oprávněním číst tento úkol.")
             End If
+            x18_binding.Visible = .OwnerAccess
             menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdCopy").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdNew").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
@@ -221,7 +222,12 @@
         basUIMT.RenderHeaderMenu(cRec.IsClosed, Me.panMenuContainer, menu1)
         basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & Master.DataPID.ToString, cRec.IsClosed)
 
-       
+        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p56Task).Count > 0 Then
+            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=p56&pid={0}','Images/label_32.png',false);", cRec.PID)
+            labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID))
+        Else
+            boxX18.Visible = False
+        End If
 
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, cRec.p57ID)
         If lisFF.Count > 0 Then

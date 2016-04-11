@@ -8,6 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="imap_record" Src="~/imap_record.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -16,21 +17,16 @@
     <style type="text/css">
         html .RadMenu_Metro .rmRootGroup {
             background-image: none;
-            
         }
- 
+
         html .RadMenu_Metro ul.rmRootGroup {
-            <%if me.hidisbin.value="1" then%>
-            background-color: black;
-            <%else%>
-            background-color: white;
-            <%End If%>
-            
+            <%if me.hidisbin.value="1" then%> background-color: black;
+            <%else%> background-color: white;
+            <%End If%>;
         }
 
         .rmLink {
-            margin-top:6px;
-           
+            margin-top: 6px;
         }
 
 
@@ -56,7 +52,7 @@
             font-weight: normal;
         }
     </style>
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
            
@@ -211,21 +207,21 @@
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení úkolu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit úkol" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
-                        
+
                         <telerik:RadMenuItem Value="cmdCopy" Text="Založit úkol kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový úkol se kompletně předvyplní podle vzoru tohoto záznamu."></telerik:RadMenuItem>
-                        
-                    </Items>                   
+
+                    </Items>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
                     <Items>
-                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za úkol" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>                        
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za úkol" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>                        
+                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
 
                     </Items>
-                  
+
 
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="searchbox">
@@ -281,7 +277,7 @@
                     </td>
                     <td>
                         <asp:Label ID="p57Name" runat="server" CssClass="valbold"></asp:Label>
-                        
+
                         <asp:Label ID="lblp59NameSubmitter" runat="server" CssClass="lbl" Text="Priorita zadavatele:"></asp:Label>
                         <asp:Label ID="p59NameSubmitter" runat="server" CssClass="valbold"></asp:Label>
                     </td>
@@ -345,7 +341,16 @@
         </div>
     </div>
 
-
+    <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/label.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
+            <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
+        </div>
+        <div class="content">
+            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+        </div>
+    </asp:Panel>
 
 
     <asp:Panel ID="boxVysledovka" runat="server" CssClass="content-box1">
@@ -435,19 +440,19 @@
 
     <div style="clear: both; width: 100%;"></div>
 
-    <asp:Panel ID="panDescription" runat="server" CssClass="content-box1" style="width:99%;max-width:none;">
+    <asp:Panel ID="panDescription" runat="server" CssClass="content-box1" Style="width: 99%; max-width: none;">
         <div class="title">Podrobný popis</div>
         <div class="content" style="background-color: #ffffcc;">
             <asp:Label ID="p56Description" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
         </div>
     </asp:Panel>
 
-    <div style="clear: both; width: 100%;"></div>    
+    <div style="clear: both; width: 100%;"></div>
     <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="false">
         <Tabs>
-            
+
             <telerik:RadTab Text="Worksheet přehled" Value="1" Selected="true"></telerik:RadTab>
-            
+
         </Tabs>
     </telerik:RadTabStrip>
     <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p56Task" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowMultiSelect="true"></uc:p31_subgrid>

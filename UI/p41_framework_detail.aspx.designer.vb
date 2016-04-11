@@ -356,6 +356,42 @@ Partial Public Class p41_framework_detail
     Protected WithEvents clue_j18name As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''boxX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''boxX18Title control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxX18Title As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x18_binding control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18_binding As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
+
+    '''<summary>
     '''boxP40 control.
     '''</summary>
     '''<remarks>

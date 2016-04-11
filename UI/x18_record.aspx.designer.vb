@@ -11,7 +11,25 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class x25_record
+Partial Public Class x18_record
+
+    '''<summary>
+    '''lblName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblName As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x18Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lblX23ID control.
@@ -41,22 +59,22 @@ Partial Public Class x25_record
     Protected WithEvents cmdX23 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''lblName control.
+    '''x29IDs control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblName As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents x29IDs As Global.System.Web.UI.WebControls.CheckBoxList
 
     '''<summary>
-    '''x25Name control.
+    '''x18IsMultiSelect control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x25Name As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents x18IsMultiSelect As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''lblOrdinary control.
@@ -68,31 +86,13 @@ Partial Public Class x25_record
     Protected WithEvents lblOrdinary As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x25Ordinary control.
+    '''x18Ordinary control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x25Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
-
-    '''<summary>
-    '''lblx25UserKey control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblx25UserKey As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x25UserKey control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x25UserKey As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents x18Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
     '''Master property.

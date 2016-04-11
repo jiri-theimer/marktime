@@ -224,12 +224,18 @@ Public Class j02_framework_detail
 
         Handle_Permissions(cRec)
 
-
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.j02Person, Master.DataPID, cRec.j07ID)
         If lisFF.Count > 0 Then
             ff1.FillData(lisFF, Not Me.chkFFShowFilledOnly.Checked)
         Else
             boxFF.Visible = False
+        End If
+
+        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person).Count > 0 Then
+            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=j02&pid={0}','Images/label_32.png',false);", cRec.PID)
+            labels1.RefreshData(BO.x29IdEnum.j02Person, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.j02Person, cRec.PID))
+        Else
+            boxX18.Visible = False
         End If
 
         Me.rpP30.DataSource = Master.Factory.p30Contact_PersonBL.GetList(0, 0, Master.DataPID)
@@ -260,6 +266,7 @@ Public Class j02_framework_detail
         
 
         Dim b As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
+        x18_binding.Visible = b
         menu1.FindItemByValue("cmdNew").Visible = b
         menu1.FindItemByValue("cmdEdit").Visible = b
         menu1.FindItemByValue("cmdCopy").Visible = b

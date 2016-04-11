@@ -1,8 +1,8 @@
 ﻿Public Class x18EntityCategory
     Inherits BOMother
-    Public Property x29ID As BO.x29IdEnum
     Public Property x23ID As Integer
     Public Property x18Name As String
+    Public Property x18IsMultiSelect As Boolean
     Public Property x18Ordinary As Integer
 
     Private Property _x23Name As String

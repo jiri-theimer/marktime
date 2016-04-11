@@ -9,7 +9,7 @@
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entity_worksheet_summary" Src="~/entity_worksheet_summary.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
@@ -393,6 +393,16 @@
             </div>
 
         </div>
+        <asp:panel ID="boxX18" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/label.png" style="margin-right: 10px;" />
+                <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
+                <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
+            </div>
+            <div class="content">
+                <uc:x18_readonly id="labels1" runat="server"></uc:x18_readonly>
+            </div>
+        </asp:panel>
 
         <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
             <div class="title">

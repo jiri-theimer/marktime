@@ -174,6 +174,7 @@ Public Class p41_framework_detail
                 trPlan.Visible = False
 
             End If
+
             Me.imgDraft.Visible = .p41IsDraft
 
         End With
@@ -306,7 +307,13 @@ Public Class p41_framework_detail
             boxFF.Visible = False
         End If
 
-      
+        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project).Count > 0 Then
+            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=p41&pid={0}','Images/label_32.png',false);", cRec.PID)
+            labels1.RefreshData(BO.x29IdEnum.p41Project, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p41Project, cRec.PID))
+        Else
+            boxX18.Visible = False
+        End If
+
 
 
         RefreshP40(cRec)
@@ -341,7 +348,7 @@ Public Class p41_framework_detail
 
         Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
         menu1.FindItemByValue("cmdLog").Visible = cDisp.OwnerAccess
-
+        x18_binding.Visible = cDisp.OwnerAccess
         With Master.Factory
             menu1.FindItemByValue("cmdNew").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
             menu1.FindItemByValue("cmdCopy").Visible = menu1.FindItemByValue("cmdNew").Visible

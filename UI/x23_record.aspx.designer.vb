@@ -104,6 +104,33 @@ Partial Public Class x23_record
     Protected WithEvents x23DataSourceFieldTEXT As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panItems control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panItems As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdAddItem control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddItem As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.DataList
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

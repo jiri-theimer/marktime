@@ -137,7 +137,7 @@
             </telerik:RadToolBar>
             <asp:Label ID="lblRecordMessage" runat="server" style="color:red;position:absolute;top:50px;left:400px;z-index:9000;"></asp:Label>
             <asp:Label ID="spanHelp" runat="server" CssClass="formInfoStatic" Style="position: absolute; left: 85%; top: 40px;" Visible="false"></asp:Label>
-            <asp:Image runat="server" ID="icon1" Style="position: absolute; left: 93%; top: 40px;" Visible="false" />
+            <asp:Image runat="server" ID="icon1" Style="position: absolute; left: 93%; top: 40px;z-index:9000;" Visible="false" />
             <div style="padding: 6px;">
                 <asp:ContentPlaceHolder ID="MainContent" runat="server">
                 </asp:ContentPlaceHolder>
