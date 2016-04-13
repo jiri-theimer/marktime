@@ -151,6 +151,15 @@
     Shared Function CompleteSqlJ70(cDB As DL.DbHandler, intJ70ID As Integer) As String
         Dim s As String = "select *," & bas.RecTail("j70") & " from j70QueryTemplate WHERE j70ID=@pid"
         Dim cRec As BO.j70QueryTemplate = cDB.GetRecord(Of BO.j70QueryTemplate)(s, New With {.pid = intJ70ID}), sql As New System.Text.StringBuilder
+        Dim strFK As String = ""
+        Select Case cRec.x29ID
+            Case BO.x29IdEnum.p41Project : strFK = "a.p41ID"
+            Case BO.x29IdEnum.p28Contact : strFK = "a.p28ID"
+            Case BO.x29IdEnum.p91Invoice : strFK = "a.p91ID"
+            Case BO.x29IdEnum.p56Task : strFK = "a.p56ID"
+            Case BO.x29IdEnum.o23Notepad : strFK = "a.o23ID"
+            Case BO.x29IdEnum.j02Person : strFK = "a.j02ID"
+        End Select
         Select Case cRec.j70BinFlag
             Case 1  'otevřené záznamy
                 Select Case cRec.x29ID
@@ -202,7 +211,8 @@
                 Case "j11id"
                     sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j12Team_Person WHERE j11ID IN (" & strIN & "))")
                     
-                
+                Case "x25id"    'štítky
+                    sql.Append(" AND " & strFK & " IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=" & CInt(cRec.x29ID).ToString & " AND x25ID IN (" & strIN & "))")
                 Case "p34id"
                     sql.Append(" AND p32.p34ID IN (" & strIN & ")")
                 Case "p95id"

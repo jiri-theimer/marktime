@@ -10,4 +10,10 @@
             Return _x23Name
         End Get
     End Property
+
+    Public ReadOnly Property NameWithComboName As String
+        Get
+            Return _x23Name & ": " & Me.x25Name
+        End Get
+    End Property
 End Class

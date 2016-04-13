@@ -27,6 +27,7 @@ Public Class myQueryJ02
     Public Property j70ID As Integer
     Public Property p28ID As Integer
     Public Property p91ID As Integer
+    Public Property x25ID As Integer    'štítek
     Public SpecificQuery As myQueryJ02_SpecificQuery = myQueryJ02_SpecificQuery._NotSpecified
     Public IntraPersons As myQueryJ02_IntraPersons = myQueryJ02_IntraPersons.IntraOnly
     Public QuickQuery As myQueryJ02_QuickQuery = myQueryJ02_QuickQuery._NotSpecified

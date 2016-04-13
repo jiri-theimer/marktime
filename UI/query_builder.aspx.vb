@@ -150,6 +150,8 @@
                 lis.Add(New myItem(BO.x29IdEnum.p95InvoiceRow, "p95id", "Fakturační oddíl"))
         End Select
 
+        lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
+
         Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1)
         For Each cField In lisFF
             lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Field, cField.x28Name))
@@ -305,6 +307,9 @@
                         mqP28.QuickQuery = BO.myQueryP28_QuickQuery.ProjectInvoiceReceiver
                 End Select
                 Me.cbxItems.DataSource = Master.Factory.p28ContactBL.GetList(mqP28)
+            Case BO.x29IdEnum.x25EntityField_ComboValue 'štítky
+                Me.cbxItems.DataTextField = "NameWithComboName"
+                Me.cbxItems.DataSource = Master.Factory.x18EntityCategoryBL.GetList_X25(Me.CurrentX29ID)
             Case Else
                 Me.cbxItems.DataSource = Nothing
         End Select

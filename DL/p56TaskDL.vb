@@ -173,6 +173,7 @@
                     strW += " AND " & strQueryW
                 End If
             End If
+            If .x25ID > 0 Then strW += " AND a.p56ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=356 AND x25ID=" & .x25ID.ToString & ")"
             Select Case .SpecificQuery
                 Case BO.myQueryP56_SpecificQuery.AllowedForWorksheetEntry
                     strW += " AND a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=356 AND x68.x53ID=63 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))"          'Zapisovat k úkolu worksheet úkony

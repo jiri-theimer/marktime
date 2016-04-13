@@ -14,7 +14,6 @@
         pars.Add("x29id", CInt(x29id), DbType.Int32)
         pars.Add("recordpid", intRecordPID, DbType.Int32)
         Return _cDB.GetList(Of BO.x19EntityCategory_Binding)("select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x18.x18Name as _x18Name from x19EntityCategory_Binding a INNER JOIN x18EntityCategory x18 ON a.x18ID=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID WHERE a.x29ID=@x29id AND a.x19RecordPID=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID", pars)
-
     End Function
 
     Public Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
@@ -107,4 +106,15 @@
         Return s
     End Function
 
+    Public Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)
+        Dim s As String = "select a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name"
+        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID INNER JOIN x18EntityCategory x18 ON x23.x23ID=x18.x23ID"
+        s += " WHERE x18.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=@x29id)"
+        s += " ORDER BY x18.x18Ordinary,x18.x18Name,a.x25Ordinary,a.x25Name"
+
+        Dim pars As New DbParameters
+        pars.Add("x29id", CInt(x29id), DbType.Int32)
+        Return _cDB.GetList(Of BO.x25EntityField_ComboValue)(s, pars)
+
+    End Function
 End Class

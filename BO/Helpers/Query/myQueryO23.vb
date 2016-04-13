@@ -32,7 +32,7 @@ Public Class myQueryO23
     Public Property b02ID As Integer
 
     Public Property j70ID As Integer
-
+    Public Property x25ID As Integer    'štítek
     Public SpecificQuery As myQueryO23_SpecificQuery = myQueryO23_SpecificQuery._NotSpecified
     Public QuickQuery As myQueryO23_QuickQuery = myQueryO23_QuickQuery._NotSpecified
 

@@ -349,32 +349,6 @@
             If .QuickQuery > BO.myQueryP41_QuickQuery._NotSpecified Then
                 s.Append(" AND " & bas.GetQuickQuerySQL_p41(.QuickQuery))
             End If
-            ''Select Case .QuickQuery
-            ''    Case BO.myQueryP41_QuickQuery.OpenProjects
-            ''        s.Append(" AND getdate() BETWEEN a.p41ValidFrom AND a.p41ValidUntil")
-            ''    Case BO.myQueryP41_QuickQuery.Removed2Bin
-            ''        s.Append(" AND getdate() NOT BETWEEN a.p41ValidFrom AND a.p41ValidUntil")
-            ''    Case BO.myQueryP41_QuickQuery.WaitingOnApproval
-            ''        s.Append(" AND a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p71ID IS NULL AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)")
-            ''    Case BO.myQueryP41_QuickQuery.WaitingOnInvoice
-            ''        s.Append(" AND a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)")
-            ''    Case BO.myQueryP41_QuickQuery.OverWorksheetLimit
-            ''        s.Append(" AND a.p41ID IN (")
-            ''        s.Append("SELECT xa.p41ID")
-            ''        s.Append(" FROM p31Worksheet xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID")
-            ''        s.Append(" WHERE (xb.p41LimitHours_Notification>0 OR xb.p41LimitFee_Notification>0) AND xa.p71ID IS NULL AND getdate() BETWEEN xa.p31ValidFrom AND xa.p31ValidUntil")
-            ''        s.Append(" GROUP BY xa.p41ID")
-            ''        s.Append(" HAVING sum(xa.p31Hours_Orig)>min(xb.p41LimitHours_Notification) OR sum(xa.p31Amount_WithoutVat_Orig)>min(xb.p41LimitFee_Notification)")
-            ''        s.Append(")")
-            ''    Case BO.myQueryP41_QuickQuery.WithOpenTasks
-            ''        s.Append(" AND a.p41ID IN (SELECT p41ID FROM p56Task WHERE getdate() BETWEEN p56ValidFrom AND p56ValidUntil)")
-            ''    Case BO.myQueryP41_QuickQuery.WithAnyTasks
-            ''        s.Append(" AND a.p41ID IN (SELECT p41ID FROM p56Task)")
-            ''    Case BO.myQueryP41_QuickQuery.WithFutureMilestones
-            ''        s.Append(" AND a.p41ID IN (SELECT p41ID FROM o22Milestone WHERE o22DateUntil>getdate() AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil)")
-            ''    Case BO.myQueryP41_QuickQuery.WithNotepad
-            ''        s.Append(" AND a.p41ID IN (SELECT p41ID FROM o23Notepad WHERE getdate() BETWEEN o23ValidFrom AND o23ValidUntil)")
-            ''End Select
 
             If .j70ID > 0 Then
                 Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID)
@@ -382,6 +356,8 @@
                     s.Append(" AND " & strQueryW)
                 End If
             End If
+            If .x25ID > 0 Then s.Append(" AND a.p41ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=141 AND x25ID=" & .x25ID.ToString & ")")
+
             If .ColumnFilteringExpression <> "" Then
                 s.Append(" AND " & ParseFilterExpression(.ColumnFilteringExpression))
             End If

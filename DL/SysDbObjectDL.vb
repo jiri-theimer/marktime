@@ -79,8 +79,10 @@
         Dim errs As New List(Of String)
         Dim a() As String = Split(strSQL, vbCrLf & "GO" & vbCrLf)
         For i As Integer = 0 To UBound(a)
-            If Not _cDB.RunSQL(a(i)) Then
-                errs.Add(_cDB.ErrorMessage)
+            If Trim(a(i)) <> "" Then
+                If Not _cDB.RunSQL(a(i)) Then
+                    errs.Add(_cDB.ErrorMessage)
+                End If
             End If
         Next
         If errs.Count = 0 Then

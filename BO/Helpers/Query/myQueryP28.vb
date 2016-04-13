@@ -33,5 +33,6 @@ Public Class myQueryP28
     Public Property MG_SelectPidFieldOnly As Boolean
     Public QuickQuery As myQueryP28_QuickQuery = myQueryP28_QuickQuery._NotSpecified
     Public SpecificQuery As myQueryP28_SpecificQuery = myQueryP28_SpecificQuery._NotSpecified
-    Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat kontakty, pokud je 0, pak přihlášený uživatel
+    Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat klienty, pokud je 0, pak přihlášený uživatel
+    Public Property x25ID As Integer    'štítek
 End Class

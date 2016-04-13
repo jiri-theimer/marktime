@@ -225,7 +225,7 @@
                 pars.Add("b02id", .b02ID, DbType.Int32)
                 strW += " AND a.b02ID=@b02id"
             End If
-            
+            If .x25ID > 0 Then strW += " AND a.p91ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=391 AND x25ID=" & .x25ID.ToString & ")"
             
             If .SpecificQuery > BO.myQueryp91_SpecificQuery._NotSpecified Then
                 If .j02ID_ExplicitQueryFor > 0 Then
@@ -260,20 +260,7 @@
             If .QuickQuery > BO.myQueryP91_QuickQuery._NotSpecified Then
                 strW += " AND " & bas.GetQuickQuerySQL_p91(.QuickQuery)
             End If
-            ''Select Case .QuickQuery
-            ''    Case BO.myQueryP91_QuickQuery.OpenInvoices
-            ''        strW += " AND getdate() BETWEEN a.p91ValidFrom AND a.p91ValidUntil"
-            ''    Case BO.myQueryP91_QuickQuery.Removed2Bin
-            ''        strW += " AND getdate() NOT BETWEEN a.p91ValidFrom AND a.p91ValidUntil"
-            ''    Case BO.myQueryP91_QuickQuery.DebtAfterMaturity
-            ''        strW += " AND a.p91Amount_Debt>10 AND a.p91DateMaturity<dbo.convert_to_dateserial(getdate())"
-            ''    Case BO.myQueryP91_QuickQuery.InMaturity
-            ''        strW += " AND a.p91DateMaturity>=dbo.convert_to_dateserial(getdate())"
-            ''    Case BO.myQueryP91_QuickQuery.IsDraft
-            ''        strW += " AND a.p91IsDraft=1"
-            ''    Case BO.myQueryP91_QuickQuery.IsOficialCode
-            ''        strW += " AND a.p91IsDraft=0"
-            ''End Select
+          
             Select Case .SpecificQuery
                 
                 Case BO.myQueryp91_SpecificQuery.AllowedForRead

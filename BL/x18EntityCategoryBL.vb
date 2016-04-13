@@ -7,6 +7,7 @@
     Function GetList_x29(intX18ID As Integer) As IEnumerable(Of BO.x29Entity)
     Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
     Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer) As IEnumerable(Of BO.x19EntityCategory_Binding)
+    Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)
 End Interface
 Class x18EntityCategoryBL
     Inherits BLMother
@@ -54,5 +55,8 @@ Class x18EntityCategoryBL
     End Function
     Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer) As IEnumerable(Of BO.x19EntityCategory_Binding) Implements Ix18EntityCategoryBL.GetList_X19
         Return _cDL.GetList_X19(x29id, intRecordPID)
+    End Function
+    Public Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix18EntityCategoryBL.GetList_X25
+        Return _cDL.GetList_X25(x29id)
     End Function
 End Class

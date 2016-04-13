@@ -32,7 +32,6 @@
                     <asp:CheckBoxList ID="x29IDs" runat="server" RepeatDirection="Horizontal">
                         <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
                         <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
-                        <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
                         <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
                         <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
                         <asp:ListItem Text="Vystavená faktura" Value="391"></asp:ListItem>

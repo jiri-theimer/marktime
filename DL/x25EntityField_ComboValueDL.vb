@@ -63,7 +63,7 @@
     End Sub
     Public Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x25EntityField_ComboValue)
         Dim s As String = "select a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name"
-        s += " FROM x25EntityField_ComboValue a LEFT OUTER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID"
+        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID"
         If intX23ID <> 0 Then
             s += " WHERE a.x23ID=@x23id"
         End If

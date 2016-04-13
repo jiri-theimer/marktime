@@ -196,7 +196,7 @@
                             <telerik:RadMenuItem Value="x40" Text="Odeslaná pošta" NavigateUrl="x40_framework.aspx" ImageUrl="Images/email.png"></telerik:RadMenuItem>
 
                             <telerik:RadMenuItem Value="cmdWorkflow" Text="Návrhář workflow" NavigateUrl="admin_workflow.aspx" ImageUrl="Images/workflow.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdHelpdeskDefault" Text="Helpdesk (zapisování požadavků)" NavigateUrl="helpdesk_default.aspx" ImageUrl="Images/helpdesk.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="x18" Text="Štítky" NavigateUrl="x18_framework.aspx" ImageUrl="Images/label.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdHelp" Text="Nápověda" NavigateUrl="http://www.marktime.net/doc/html" ImageUrl="Images/help.png" Target="_blank"></telerik:RadMenuItem>
 
                         </Items>

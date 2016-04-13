@@ -56,6 +56,7 @@
     j70QueryTemplate = 170
     j74SavedGridColTemplate = 174
     x18EntityCategory = 918
+    x25EntityField_ComboValue = 925
     Approving = 999
     _NotSpecified = 0
 End Enum

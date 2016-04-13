@@ -48,4 +48,6 @@ Public Class myQueryP41
     
     Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat projekty, pokud je 0, pak přihlášený uživatel
     Public Property j02ID_ContactPerson As Integer          'Kontaktní osoba projektu nebo klienta projektu
+
+    Public Property x25ID As Integer    'štítek
 End Class

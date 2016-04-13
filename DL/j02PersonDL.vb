@@ -186,6 +186,7 @@
                 pars.Add("p91id", .p91ID, DbType.Int32)
                 strW += " AND a.j02ID IN (select a1.j02ID FROM p30Contact_Person a1 INNER JOIN p91Invoice a2 ON a1.p28ID=a2.p28ID WHERE a2.p91ID=@p91id)"
             End If
+            If .x25ID > 0 Then strW += " AND a.j02ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=102 AND x25ID=" & .x25ID.ToString & ")"
             If Not .DateInsertFrom Is Nothing Then
                 If Year(.DateInsertFrom) > 1900 Then
                     pars.Add("d1", .DateInsertFrom) : pars.Add("d2", .DateInsertUntil)
