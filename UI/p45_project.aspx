@@ -164,7 +164,7 @@
         <Tabs>
             <telerik:RadTab Text="Základní vlastnosti" Value="p45"></telerik:RadTab>
             <telerik:RadTab Text="Limity hodin" Selected="true" Value="p46"></telerik:RadTab>
-            <telerik:RadTab Text="Rozpočet peněžních výdajů a fixních příjmů" Value="p49"></telerik:RadTab>
+            <telerik:RadTab Text="Rozpočet peněžních výdajů a fixních odměn" Value="p49"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
@@ -337,7 +337,7 @@
                 <asp:CheckBox ID="chkCloneP47" runat="server" Text="Zkopírovat kapacitní plán" Checked="true" />
             </div>
             <div>
-                <asp:CheckBox ID="chkCloneP49" runat="server" Text="Zkopírovat rozpočet výdajů a příjmů" Checked="true" />
+                <asp:CheckBox ID="chkCloneP49" runat="server" Text="Zkopírovat rozpočet výdajů a odměn" Checked="true" />
             </div>
         </div>
     </asp:Panel>

@@ -8,7 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <table cellpadding="3" cellspacing="2">	    
 <tr>
-	<td><asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název státu:"></asp:Label></td>
+	<td><asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název pozice:"></asp:Label></td>
 	<td>
 	<asp:TextBox ID="j07Name" Runat="server" style="width:400px;"></asp:TextBox>
 	</td>

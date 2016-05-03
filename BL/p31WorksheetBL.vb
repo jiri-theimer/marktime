@@ -165,6 +165,7 @@ Class p31WorksheetBL
                         _Error = cRec.ErrorMessage
                         Return False
                     End If
+
                 Case BO.p33IdENUM.Kusovnik
                     If Not cRec.ValidateEntryKusovnik() Then
                         _Error = cRec.ErrorMessage
@@ -246,11 +247,14 @@ Class p31WorksheetBL
                     If .p72id = BO.p72IdENUM.Fakturovat And .Rate_Billing_Approved = 0 Then
                         _Error = "U statusu [Fakturovat] nesmí být nulová fakturační sazba." : Return False
                     End If
-                    If .p72id = BO.p72IdENUM.Fakturovat And .Value_Approved_Billing = 0 And .p33ID = BO.p33IdENUM.Kusovnik Then
-                        _Error = "U statusu [Fakturovat] nesmí být nulový počet kusů." : Return False
+                    If (.p72id = BO.p72IdENUM.Fakturovat Or .p72id = BO.p72IdENUM.FakturovatPozdeji) And .Value_Approved_Billing = 0 And .p33ID = BO.p33IdENUM.Kusovnik Then
+                        _Error = "U statusu [Fakturovat] nebo [Fakturovat později] nesmí být nulový počet kusů." : Return False
                     End If
                     If .p72id = BO.p72IdENUM.Fakturovat And .Value_Approved_Billing = 0 And .p33ID = BO.p33IdENUM.Cas Then
                         _Error = "U statusu [Fakturovat] nesmí být nulové hodiny." : Return False
+                    End If
+                    If .p72id = BO.p72IdENUM.FakturovatPozdeji And .Value_Approved_Billing = 0 And .p33ID = BO.p33IdENUM.Cas Then
+                        _Error = "U statusu [Fakturovat později] nesmí být nulové hodiny." : Return False
                     End If
                 Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
                     If .p72id = BO.p72IdENUM.Fakturovat And .Value_Approved_Billing = 0 Then

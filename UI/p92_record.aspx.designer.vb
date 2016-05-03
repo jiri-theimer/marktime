@@ -230,6 +230,24 @@ Partial Public Class p92_record
     Protected WithEvents p98ID As Global.UI.datacombo
 
     '''<summary>
+    '''lblB01ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblB01ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''b01ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b01ID As Global.UI.datacombo
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

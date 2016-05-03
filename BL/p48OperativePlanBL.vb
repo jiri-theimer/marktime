@@ -33,6 +33,8 @@ Class p48OperativePlanBL
 
         If Not TestBeforeSave(lis) Then Return False
 
+
+
         Handle_ExactTime(cRec)
         Return _cDL.Save(cRec)
     End Function
@@ -92,6 +94,40 @@ Class p48OperativePlanBL
                 End If
             End With
             x += 1
+        Next
+        'test oproti kapacitnímu plánu
+        For Each intP41ID As Integer In lis.Select(Function(p) p.p41ID).Distinct
+            Dim cP45 As BO.p45Budget = Factory.p45BudgetBL.LoadByProject(intP41ID)
+            If Not cP45 Is Nothing Then
+                Dim p48ids_exclude As List(Of Integer) = lis.Where(Function(p) p.p41ID = intP41ID And p.PID <> 0).Select(Function(p) p.PID).ToList
+                Dim mq As New BO.myQueryP48
+                mq.p41ID = intP41ID
+                Dim lisSavedP48 As List(Of BO.p48OperativePlan) = Factory.p48OperativePlanBL.GetList(mq).ToList
+                For Each intP48ID As Integer In p48ids_exclude
+                    lisSavedP48.Remove(lisSavedP48.First(Function(p) p.PID = intP48ID))
+                Next
+                'existuje v projektu rozpočet
+                Dim lisP46 As IEnumerable(Of BO.p46BudgetPerson) = Factory.p45BudgetBL.GetList_p46(cP45.PID)
+                For Each cP46 In lisP46
+                    If lis.Where(Function(p) p.p41ID = intP41ID And p.j02ID = cP46.j02ID).Count > 0 Then
+                        Dim dblTestHours1 As Double = lis.Where(Function(p) p.p41ID = intP41ID And p.j02ID = cP46.j02ID).Sum(Function(p) p.p48Hours)
+                        Dim dblTestHours2 As Double = lisSavedP48.Where(Function(p) p.p41ID = intP41ID And p.j02ID = cP46.j02ID).Sum(Function(p) p.p48Hours)
+                        Dim dblTestHours As Double = dblTestHours1 + dblTestHours2
+                        Select Case cP46.p46ExceedFlag
+
+                            Case BO.p46ExceedFlagENUM.StrictTotal
+                                If dblTestHours > cP46.p46HoursTotal Then
+                                    Dim strProject As String = Factory.p41ProjectBL.Load(intP41ID).FullName
+                                    _Error = String.Format("Hodiny operativního plánu ({2}h.) by překročili hodiny rozpočtu ({3}h.) u projektu [{0}] a osoby [{1}].", strProject, cP46.Person, dblTestHours, cP46.p46HoursTotal) : Return False
+                                End If
+                        End Select
+                    End If
+
+                Next
+                For Each c In lis.Where(Function(p) p.p41ID = intP41ID)
+
+                Next
+            End If
         Next
         Return True
     End Function

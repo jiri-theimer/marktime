@@ -56,7 +56,7 @@
 
         function report() {
             
-            sw_local("report_modal.aspx?prefix=p41&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
+            sw_local("report_modal.aspx?prefix=p41&pid=<%=Master.DataPID%>","Images/reporting.png",true);
 
         }
 
@@ -64,15 +64,15 @@
         
         
         function p31_entry_menu(p34id) {
-            ///z menu1
-            sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet_32.png",true);
+            ///z menu1           
+            sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
             
 
         }
 
         function record_new() {
             
-            sw_local("p41_create.aspx?client_family=1&pid=<%=Master.DataPID%>","Images/project_32.png",true);
+            sw_local("p41_create.aspx?client_family=1&pid=<%=Master.DataPID%>","Images/project.png",true);
 
         }
 
@@ -82,7 +82,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p41_record.aspx?pid=" + pid,"Images/project_32.png",true);
+            sw_local("p41_record.aspx?pid=" + pid,"Images/project.png",true);
 
         }
         
@@ -93,7 +93,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p41_create.aspx?clone=1&pid=" + pid,"Images/project_32.png",true);
+            sw_local("p41_create.aspx?clone=1&pid=" + pid,"Images/project.png",true);
 
         }
 
@@ -118,32 +118,32 @@
 
         function o23_record(pid) {
             
-            sw_local("o23_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
+            sw_local("o23_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad.png",true);
 
         }
         function o22_record(pid) {
             
-            sw_local("o22_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar_32.png",true);
+            sw_local("o22_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar.png",true);
 
         }
         function p56_record(pid,bolReturnFalse) {
-            sw_local("p56_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/task_32.png",true);
+            sw_local("p56_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/task.png",true);
             if (bolReturnFalse==true)
                 return(false)
         }
         
         
         function p31_move2bin(){            
-            sw_local("p31_move2bin.aspx?prefix=p41&pid=<%=master.datapid%>","Images/bin_32.png",true);
+            sw_local("p31_move2bin.aspx?prefix=p41&pid=<%=master.datapid%>","Images/bin.png",true);
         }
         function p31_move2project(){            
-            sw_local("p31_move2project.aspx?prefix=p41&pid=<%=master.datapid%>","Images/cut_32.png",true);
+            sw_local("p31_move2project.aspx?prefix=p41&pid=<%=master.datapid%>","Images/cut.png",true);
         }
         function p31_recalc(){            
-            sw_local("p31_recalc.aspx?prefix=p41&pid=<%=master.datapid%>","Images/recalc_32.png",true);
+            sw_local("p31_recalc.aspx?prefix=p41&pid=<%=master.datapid%>","Images/recalc.png",true);
         }
         function timeline(){            
-            sw_local("entity_timeline.aspx?prefix=p41&pid=<%=master.datapid%>","Images/timeline_32.png",true);
+            sw_local("entity_timeline.aspx?prefix=p41&pid=<%=master.datapid%>","Images/timeline.png",true);
         }
         function approve(){            
             window.parent.sw_master("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
@@ -164,7 +164,7 @@
             window.open("entity_scheduler.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
         }
         function p40_record(p40id){            
-            sw_local("p40_record.aspx?p41id=<%=master.datapid%>&pid="+p40id,"Images/worksheet_recurrence_32.png",true);
+            sw_local("p40_record.aspx?p41id=<%=master.datapid%>&pid="+p40id,"Images/worksheet_recurrence.png",true);
         }
         
         function p48_plan(){            
@@ -172,20 +172,20 @@
         }
 
         function workflow(){            
-            sw_local("workflow_dialog.aspx?prefix=p41&pid=<%=master.datapid%>","Images/workflow_32.png",false);
+            sw_local("workflow_dialog.aspx?prefix=p41&pid=<%=master.datapid%>","Images/workflow.png",false);
         }
 
         
         
         function p31_recurrence_record(pid) {            
-            sw_local("p31_record.aspx?pid="+pid,"Images/worksheet_32.png");
+            sw_local("p31_record.aspx?pid="+pid,"Images/worksheet.png");
 
         }
         function p30_binding() {            
-            sw_local("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>","Images/person_32.png",false);
+            sw_local("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>","Images/person.png",false);
         }
         function p30_record(pid) {            
-            sw_local("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/person_32.png",true);
+            sw_local("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/person.png",true);
         }
         
         function draft2normal() {
@@ -215,7 +215,7 @@
         }
         function b07_record() {
 
-            sw_local("b07_create.aspx?masterprefix=p41&masterpid=<%=master.datapid%>", "Images/comment_32.png", true);
+            sw_local("b07_create.aspx?masterprefix=p41&masterpid=<%=master.datapid%>", "Images/comment.png", true);
 
         }
         function OnClientTabSelected(sender, eventArgs)
@@ -236,7 +236,7 @@
                 
         }
         function page_setting(){
-            sw_local("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting_32.png",false);
+            sw_local("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting.png",false);
         }
         function stoploading(){            
             document.getElementById("<%=me.imgLoading.clientid%>").style.display="none";

@@ -3,6 +3,7 @@
     SkrytyOdpis = 3
     Fakturovat = 4
     ZahrnoutDoPausalu = 6
+    FakturovatPozdeji = 7
     _NotSpecified = 0
 End Enum
 Public Class p72PreBillingStatus

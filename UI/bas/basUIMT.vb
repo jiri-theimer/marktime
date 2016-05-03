@@ -273,6 +273,7 @@ Public Class basUIMT
             End Select
             Select Case .p72ID_AfterApprove
                 Case BO.p72IdENUM.Fakturovat : dataItem("systemcolumn").CssClass = "a14"
+                Case BO.p72IdENUM.FakturovatPozdeji : dataItem("systemcolumn").CssClass = "a17"
                 Case BO.p72IdENUM.ZahrnoutDoPausalu : dataItem("systemcolumn").CssClass = "a16"
                 Case BO.p72IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a12"
                 Case BO.p72IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a13"

@@ -65,7 +65,7 @@
         <div style="float: left;">
 
             <asp:RadioButton ID="cmdBudgetP46" Text="Rozpočet hodin" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p46')" />
-            <asp:RadioButton ID="cmdBudgetP49" Text="Rozpočet výdajů a fixních příjmů" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p49')" />
+            <asp:RadioButton ID="cmdBudgetP49" Text="Rozpočet výdajů a fixních odměn" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p49')" />
             <button type="button" id="cmdP47" runat="server" onclick="p47_plan()" class="cmd" visible="false">Kapacitní plán projektu</button>
             <button type="button" id="cmdNewP49" runat="server" onclick="p49_record(0)" class="cmd" visible="false" title="Nová položka peněžního rozpočtu">
                 <img src="Images/new.png" alt="Nový" /></button>

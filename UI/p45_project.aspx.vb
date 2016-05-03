@@ -287,7 +287,11 @@ Public Class p45_project
                         item.p46HoursBillable = .p85FreeFloat01
                         item.p46HoursNonBillable = .p85FreeFloat02
                         item.p46HoursTotal = item.p46HoursBillable + item.p46HoursNonBillable
-                        item.p46ExceedFlag = .p85OtherKey2
+                        If .p85OtherKey2 = 0 Then
+                            item.p46ExceedFlag = BO.p46ExceedFlagENUM.StrictFaStrictNefa
+                        Else
+                            item.p46ExceedFlag = .p85OtherKey2
+                        End If
                         item.p46Description = .p85FreeText02
                         item.IsSetAsDeleted = .p85IsDeleted
                     End With
@@ -429,7 +433,7 @@ Public Class p45_project
                     For Each c In lisP47
                         c.p46ID = lisP46.First(Function(p) p.j02ID = c.j02ID).PID
                     Next
-                    Master.Factory.p47CapacityPlanBL.SaveProjectPlan(intNewP45ID, lisP47)
+                    Master.Factory.p47CapacityPlanBL.SaveProjectPlan(intNewP45ID, lisP47, Nothing)
                 End If
                 ReloadPage(intNewP45ID.ToString)
             End If

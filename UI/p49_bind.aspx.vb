@@ -38,7 +38,7 @@ Public Class p49_bind
             With Master
                 If Me.CurrentP41ID = 0 Or Me.CurrentP34ID = 0 Then .StopPage("p41id or p34id missing...")
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p49ID
-                .HeaderText = "Spárovat peněžní výdaj/příjem s položkou v rozpočtu | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Me.CurrentP41ID)
+                .HeaderText = "Spárovat peněžní výdaj/odměnu s položkou v rozpočtu | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Me.CurrentP41ID)
 
                 .Factory.j03UserBL.InhaleUserParams("p49_bind-IncludeExtended")
                 Dim cRec As BO.p45Budget = .Factory.p45BudgetBL.LoadByProject(Me.CurrentP41ID)

@@ -105,6 +105,16 @@
                 <span class="infoInForm">Zaokrouhlovací pravidlo lze později změnit v samotné faktuře.</span>
             </td>
         </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblB01ID" Text="Workflow šablona:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="b01ID" runat="server" AutoPostBack="false" DataTextField="b01Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+
+
+            </td>
+        </tr>
     </table>
 
 

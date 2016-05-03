@@ -10,7 +10,7 @@
         });
         function p56_subgrid_setting(j74id) {
             ///volá se z p56_subgrid
-            window.parent.sw_local("grid_designer.aspx?prefix=p56&masterprefix=p41&pid=" + j74id, "Images/griddesigner_32.png", true);
+            window.parent.sw_local("grid_designer.aspx?prefix=p56&masterprefix=p41&pid=" + j74id, "Images/griddesigner.png", true);
         }
         function RowSelected_p56(sender, args) {
             document.getElementById("<%=hiddatapid_p56.ClientID%>").value = args.getDataKeyValue("pid");
@@ -18,7 +18,7 @@
 
         function RowDoubleClick_p56(sender, args) {
             var pid = document.getElementById("<%=hiddatapid_p56.ClientID%>").value;
-            window.parent.sw_local("p56_record.aspx?pid=" + pid, "Images/task_32.png", false);
+            window.parent.sw_local("p56_record.aspx?pid=" + pid, "Images/task.png", false);
         }
         function p56_subgrid_approving(pids) {
             window.parent.parent.sw_master("p31_approving_step1.aspx?masterpid=<%=Me.CurrentMasterPID%>&masterprefix=<%=Me.CurrentMasterPrefix%>&prefix=p56&pid=" + pids, "Images/approve_32.png", true);
@@ -33,11 +33,11 @@
                 alert("Není vybrán úkol.");
                 return (false);
             }
-            window.parent.sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p56id=" + p56id, "Images/worksheet_32.png", true);
+            window.parent.sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p56id=" + p56id, "Images/worksheet.png", true);
             return (false);
         }
         function p56_record(pid, bolReturnFalse) {
-            window.parent.sw_local("p56_record.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&pid=" + pid, "Images/task_32.png", true);
+            window.parent.sw_local("p56_record.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&pid=" + pid, "Images/task.png", true);
             if (bolReturnFalse == true)
                 return (false)
 
@@ -49,7 +49,7 @@
                 alert("Není vybrán záznam.");
                 return (false);
             }
-            window.parent.sw_local("p56_record.aspx?clone=1&p41id=<%=Master.DataPID%>&pid=" + pid, "Images/task_32.png", true);
+            window.parent.sw_local("p56_record.aspx?clone=1&p41id=<%=Master.DataPID%>&pid=" + pid, "Images/task.png", true);
             return (false);
         }
     </script>

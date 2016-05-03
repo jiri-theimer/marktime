@@ -293,9 +293,13 @@
                 End If
                 Me.p31Text.Text = .p49Text
                 Me.p31Amount_WithoutVat_Orig.Value = .p49Amount
-                If _Sheet.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
+                Dim b As Boolean = True
+                If Not _Sheet Is Nothing Then
+                    If _Sheet.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then b = True Else b = False
+                End If
+                If b Then
                     Me.p31Amount_Vat_Orig.Value = .p49Amount * BO.BAS.IsNullNum(Me.p31VatRate_Orig.Text) / 100
-                    Me.p31Amount_WithVat_Orig.Value = Me.p31Amount_WithoutVat_Orig.Value + Me.p31Amount_Vat_Orig.Value
+                    Me.p31Amount_WithVat_Orig.Value = BO.BAS.IsNullNum(Me.p31Amount_WithoutVat_Orig.Value) + BO.BAS.IsNullNum(Me.p31Amount_Vat_Orig.Value)
                 End If
                 Me.p49ID.Value = .PID.ToString
                 Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, .PID) & "</br>"
@@ -809,9 +813,10 @@
                         .Value_Orig = Me.p31Value_Orig.Text
                         .Value_Orig_Entried = .Value_Orig
 
-                        If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo Then
+                        If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo Or (TimeFrom.Visible And TimeUntil.Visible) Then
                             .TimeFrom = Me.TimeFrom.Text
                             .TimeUntil = Me.TimeUntil.Text
+                            .p31HoursEntryflag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo
                         End If
                         If Not .ValidateEntryTime(5) Then
                             Master.Notify(.ErrorMessage, 2)

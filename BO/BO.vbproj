@@ -100,6 +100,7 @@
     <Compile Include="DBNative\p27ContactPersonRole.vb" />
     <Compile Include="DBNative\p39WorkSheet_Recurrence_Plan.vb" />
     <Compile Include="DBNative\p40WorkSheet_Recurrence.vb" />
+    <Compile Include="DBNative\p44CapacityPlan_Exception.vb" />
     <Compile Include="DBNative\p45Budget.vb" />
     <Compile Include="DBNative\p46BudgetPerson.vb" />
     <Compile Include="DBNative\p50OfficePriceList.vb" />

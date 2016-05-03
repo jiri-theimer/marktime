@@ -8,6 +8,8 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    
+
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -21,16 +23,16 @@
         function p31_entry() {
             var p41id = <%=me.p41ID.ClientID%>_get_value();
             var b = false;
-            if (screen.availWidth < 1000)
+            if (screen.availWidth < 1300)
                 b = true;
 
-            sw_local("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id="+p41id, "Images/worksheet_32.png",b);
+            sw_local("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id="+p41id, "Images/worksheet.png",b);
             return (false);
         }
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet_32.png", true);
+            sw_local("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png", true);
             return (false);
         }
 
@@ -65,12 +67,12 @@
 
         function record_p31_edit() {
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?pid=" + pid, "Images/worksheet_32.png");
+            sw_local("p31_record.aspx?pid=" + pid, "Images/worksheet.png");
 
         }
 
         function p31_subgrid_setting(j74id) {
-            sw_local("grid_designer.aspx?prefix=p31&masterprefix=j02&pid=" + j74id, "Images/griddesigner_32.png", true);
+            sw_local("grid_designer.aspx?prefix=p31&masterprefix=j02&pid=" + j74id, "Images/griddesigner.png", true);
 
         }
 
@@ -94,7 +96,7 @@
 
         function report() {
             
-            sw_local("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting_32.png", true);
+            sw_local("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting.png", true);
 
         }
 
@@ -118,7 +120,7 @@
     <div style="float:left;padding-left:5px;padding-top:5px;">
         <asp:DropDownList ID="j02ID" runat="server" onChange="j02id_onchange()"></asp:DropDownList>
     </div>
-    <div style="float:left;padding-left:5px;padding-top:5px;">
+    <div style="float:left;padding-left:5px;padding-top:5px;" id="timer_panel">
         <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat ČASOVAČ" AutoPostBack="false" Checked="true" onClick="timer_change(this)" />
     </div>
     <div style="clear:both;"></div>

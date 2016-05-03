@@ -20,13 +20,13 @@
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
             
-            window.parent.sw_local("p31_record.aspx?pid=" + pid, "Images/worksheet_32.png",false);
+            window.parent.sw_local("p31_record.aspx?pid=" + pid, "Images/worksheet.png",false);
 
         }
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            window.parent.sw_local("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet_32.png", false);
+            window.parent.sw_local("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png", false);
             return (false);
         }
         function p31_entry() {
@@ -35,7 +35,7 @@
             <%if Me.CurrentMasterPrefix="p41" then%>
             p41id = "<%=me.CurrentMasterPID%>";
             <%End If%>
-            window.parent.sw_local("p31_record.aspx?pid=0&p41id="+p41id, "Images/worksheet_32.png", false);
+            window.parent.sw_local("p31_record.aspx?pid=0&p41id="+p41id, "Images/worksheet.png", false);
             return (false);
         }
         function p31_subgrid_setting(j74id) {

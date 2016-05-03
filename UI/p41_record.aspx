@@ -144,13 +144,13 @@
                 </div>
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="p41Project"></uc:entityrole_assign>
-                    <div class="div6">
+
+                </div>
+            </div>
+            <div class="div6">
                         <asp:Label ID="lblRegionRoles" runat="server" CssClass="framework_header_span" Text="Oprávnění k projektu plynoucí z přiřazeného střediska"></asp:Label>
                     </div>
                     <uc:entityrole_assign_preview ID="roles_region" runat="server" EntityX29ID="j18Region" NoDataText="V přiřazeném středisku nejsou nastaveny projektové role."></uc:entityrole_assign_preview>
-                </div>
-            </div>
-            
             
         </telerik:RadPageView>
 

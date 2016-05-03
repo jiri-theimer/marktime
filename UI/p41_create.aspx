@@ -100,7 +100,7 @@
 
             </table>
             <div class="div6">
-                <asp:CheckBox ID="chkPlanDates" runat="server" AutoPostBack="true" Text="Definovat plán zahájení a dokončení (k tomu případně kapacitní plán)" CssClass="chk" />
+                <asp:CheckBox ID="chkPlanDates" runat="server" AutoPostBack="true" Text="Definovat plán zahájení a dokončení" CssClass="chk" />
             </div>
             <asp:Panel ID="panPlanDates" runat="server">
                 <table cellpadding="5" cellspacing="2">

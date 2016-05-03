@@ -82,7 +82,7 @@ Public Class p47_project
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("guid") = BO.BAS.GetGUID
-
+            ViewState("guid_p44") = BO.BAS.GetGUID
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p41id
                 .HeaderText = "Kapacitní plán | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
@@ -302,15 +302,7 @@ Public Class p47_project
             End If
         Next
 
-        ''Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, Master.DataPID)
-        ''Dim j02ids As List(Of Integer) = lisX69.Select(Function(p) p.j02ID).Distinct.ToList
-        ''Dim j11ids As List(Of Integer) = lisX69.Select(Function(p) p.j11ID).Distinct.ToList
-        ''Dim persons As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList_j02_join_j11(j02ids, j11ids)
-
-        ''If persons.Count = 0 Then
-        ''    Master.Notify("V rozpočtu hodin nejsou přiřazeny osoby!", NotifyLevel.WarningMessage)
-        ''End If
-
+        
 
     End Sub
 
@@ -415,8 +407,9 @@ Public Class p47_project
             lisP47.Add(c)
 
         Next
+        Dim lisP44 As New List(Of BO.p44CapacityPlan_Exception)
         With Master.Factory.p47CapacityPlanBL
-            If .SaveProjectPlan(Me.CurrentP45ID, lisP47) Then
+            If .SaveProjectPlan(Me.CurrentP45ID, lisP47, lisP44) Then
                 Return True
             Else
                 Master.Notify(.ErrorMessage, NotifyLevel.WarningMessage)

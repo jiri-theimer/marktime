@@ -51,7 +51,7 @@
         Return _cDB.GetList(Of BO.p47CapacityPlan)(s, pars)
     End Function
 
-    Public Function SaveProjectPlan(intP45ID As Integer, lisP47 As List(Of BO.p47CapacityPlan)) As Boolean
+    Public Function SaveProjectPlan(intP45ID As Integer, lisP47 As List(Of BO.p47CapacityPlan), lisP44 As List(Of BO.p44CapacityPlan_Exception)) As Boolean
         Dim mq As New BO.myQueryP47
         mq.p45ID = intP45ID
         Dim lisSaved As IEnumerable(Of BO.p47CapacityPlan) = GetList(mq)
@@ -80,6 +80,23 @@
 
 
         Next
+        If Not lisP44 Is Nothing Then
+            _cDB.RunSQL("DELETE FROM p44CapacityPlan_Exception WHERE p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p45ID=p45ID=" & intP45ID.ToString & ")")
+            For Each c In lisP44
+                Dim pars As New DbParameters
+                pars.Add("p46ID", c.p46ID, DbType.Int32)
+                pars.Add("p44ExceptionFlag", CInt(c.p44ExceptionFlag), DbType.Int32)
+                pars.Add("p44DateFrom", c.p44DateFrom, DbType.DateTime)
+                pars.Add("p44DateUntil", c.p44DateUntil, DbType.DateTime)
+                _cDB.SaveRecord("p44CapacityPlan_Exception", pars, True, "", True, _curUser.j03Login, False)
+            Next
+        End If
         Return True
     End Function
+
+    'Public Function GetList_p44(intP45ID As Integer) As IEnumerable(Of BO.p44CapacityPlan_Exception)
+    '    Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName as _Person," & bas.RecTail("p46", "a") & " FROM p46BudgetPerson a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
+    '    s += " WHERE a.p45ID=@p45id ORDER BY j02.j02LastName,j02.j02FirstName"
+    '    Return _cDB.GetList(Of BO.p46BudgetPerson)(s, New With {.p45id = intPID})
+    'End Function
 End Class

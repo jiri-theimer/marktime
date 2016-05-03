@@ -27,6 +27,7 @@
                         <asp:ListItem Text="<img src='Images/a16.gif'/>Zahrnout do paušálu" Value="6"></asp:ListItem>
                         <asp:ListItem Text="<img src='Images/a12.gif'/>Viditelný odpis" Value="2"></asp:ListItem>
                         <asp:ListItem Text="<img src='Images/a13.gif'/>Skrytý odpis" Value="3"></asp:ListItem>
+                        <asp:ListItem Text="<img src='Images/a17.gif'/>Fakturovat později" Value="7"></asp:ListItem>
                     </asp:RadioButtonList>
                 </td>
                 <asp:PlaceHolder ID="place1" runat="server"></asp:PlaceHolder>

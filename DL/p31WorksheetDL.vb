@@ -49,6 +49,7 @@
     Public Function ValidateBeforeSaveOrigRecord(cRecTU As BO.p31WorksheetEntryInput, lisFF As List(Of BO.FreeField)) As BO.p31ValidateBeforeSave
         Dim pars As New DbParameters
         With pars
+            .Add("p31id", cRecTU.PID, DbType.Int32)
             .Add("j03id_sys", _curUser.PID, DbType.Int32)
             .Add("j02id_rec", cRecTU.j02ID, DbType.Int32)
             .Add("p41id", BO.BAS.IsNullDBKey(cRecTU.p41ID), DbType.Int32)
@@ -59,7 +60,7 @@
             .Add("p31vatrate_orig", cRecTU.VatRate_Orig, DbType.Double)
             .Add("j27id_explicit", cRecTU.j27ID_Billing_Orig, DbType.Int32)
             .Add("p31text", cRecTU.p31Text, DbType.String)
-           
+
             .Add("value_orig", cRecTU.p31Value_Orig, DbType.Double)
 
             .Add("err", , DbType.String, ParameterDirection.Output, 500)
@@ -79,7 +80,7 @@
                 c.p33ID = pars.Get(Of Int32)("p33id")
                 c.VatRate = BO.BAS.IsNullNum(pars.Get(Of Double)("vatrate"))
             End If
-            
+
         Else
             c.ErrorMessage = _cDB.ErrorMessage
         End If
@@ -390,7 +391,7 @@
                         s.Append(")")
                     End If
                 Case BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
-                    s.Append(" AND a.p71ID=1 AND a.p91ID IS NULL")    'zahrnout do faktury schvalené, ale dosud nefakturované úkony
+                    s.Append(" AND a.p71ID=1 AND a.p72ID_AfterApprove NOT IN (7) AND a.p91ID IS NULL")    'zahrnout do faktury schvalené, ale dosud nefakturované úkony
                     
             End Select
             If .ColumnFilteringExpression <> "" Then

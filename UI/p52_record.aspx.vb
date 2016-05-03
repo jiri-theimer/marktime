@@ -129,9 +129,9 @@
             If opgSubject.SelectedValue = "j07" And BO.BAS.IsNullInt(Me.j07ID.SelectedValue) = 0 Then
                 Master.Notify("Chybí specifikace pozice osoby.", 1) : Return
             End If
-            If BO.BAS.IsNullNum(Me.p52Rate.Value) = 0 Then
-                Master.Notify("Hodnota sazby je nula.", 1) : Return
-            End If
+            ''If BO.BAS.IsNullNum(Me.p52Rate.Value) = 0 Then
+            ''    Master.Notify("Hodnota sazby je nula.", 1) : Return
+            ''End If
             With Master.Factory.j03UserBL
                 .SetUserParam("p52_record-p34id", Me.p34ID.SelectedValue)
                 .SetUserParam("p52_record-subject", Me.opgSubject.SelectedValue)

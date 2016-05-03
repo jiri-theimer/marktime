@@ -300,6 +300,7 @@
     <Content Include="p41_framework_mobile.aspx" />
     <Content Include="p47_project.aspx" />
     <Content Include="p49_bind.aspx" />
+    <Content Include="p49_framework.aspx" />
     <Content Include="p49_record.aspx" />
     <Content Include="p50_record.aspx" />
     <Content Include="p56_batch.aspx" />
@@ -519,6 +520,7 @@
       <DependentUpon>b65_record.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="bas\clsMergeDOC.vb" />
     <Compile Include="blank.aspx.designer.vb">
       <DependentUpon>blank.aspx</DependentUpon>
     </Compile>
@@ -1424,6 +1426,13 @@
     </Compile>
     <Compile Include="p49_bind.aspx.vb">
       <DependentUpon>p49_bind.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p49_framework.aspx.designer.vb">
+      <DependentUpon>p49_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p49_framework.aspx.vb">
+      <DependentUpon>p49_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p49_record.aspx.designer.vb">

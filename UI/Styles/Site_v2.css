@@ -604,6 +604,11 @@ TH {
     background-repeat: no-repeat;
     background-position: center;
 }
+.a17 {
+    background-image: url('../Images/a17.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 .a20 {
     background-image: url('../Images/a20.png');

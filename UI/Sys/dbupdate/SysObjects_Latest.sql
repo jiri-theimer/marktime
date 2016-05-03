@@ -2748,6 +2748,17 @@ BEGIN TRANSACTION
 BEGIN TRY
 	UPDATE j03User SET j02ID=NULL WHERE j02ID=@pid
 
+	if exists(select b05ID FROM b05Workflow_History WHERE x29ID=102 AND b05RecordPID=@pid)
+	 DELETE FROM b05Workflow_History WHERE x29ID=102 AND b05RecordPID=@pid
+
+	DELETE FROM b05Workflow_History WHERE b07ID IN (SELECT b07ID FROM b07Comment WHERE j02ID_Owner=@pid)
+
+	if exists(select b07ID FROM b07Comment WHERE x29ID=102 AND b07RecordPID=@pid)
+	 DELETE FROM b07Comment WHERE x29ID=102 AND b07RecordPID=@pid
+
+	if exists(select b07ID FROM b07Comment WHERE j02ID_Owner=@pid)
+	 DELETE FROM b07Comment WHERE j02ID_Owner=@pid
+
 	if exists(SELECT x69ID FROM x69EntityRole_Assign WHERE j02ID=@pid)
 	 DELETE FROM x69EntityRole_Assign WHERE j02ID=@pid
 
@@ -6597,7 +6608,8 @@ GO
 
 
 CREATE procedure [dbo].[p31_test_beforesave]
-@j03id_sys int
+@p31id int
+,@j03id_sys int
 ,@j02id_rec int
 ,@p41id int
 ,@p56id int
@@ -6764,9 +6776,12 @@ if @o28id is null
    
 if @err<>''
  return  
+
+declare @test_todo bit
+set @test_todo=1
  
 if @o28entryflag=1
- return	--OK - právo zapisovat do projektu i všech úkolù 
+ set @test_todo=0	--OK - právo zapisovat do projektu i všech úkolù 
  
 if isnull(@o28entryflag,0)=0
  begin
@@ -6775,36 +6790,87 @@ if isnull(@o28entryflag,0)=0
  end
  
 if @o28entryflag=2 and @p56id is null
- return	  --OK - právo zapisovat do projektu pøímo nebo do úkolu s WR
- 
-if @o28entryflag=3 and @p56id is null
- begin
-   set @err='Projektová role osoby ['+@person+'] má povoleno zapisovat pouze do projektových úkolù.'
-   return
- end 
- 
-if @p56id is null
- begin
-   set @err='Musíte vybrat úkol.'
-   return
- end 
+ set @test_todo=0	  --OK - právo zapisovat do projektu pøímo nebo do úkolu s WR
 
---situace, kdy se zapisuje úkon do úkolu a osoba nemá právo zapisovat do projektu 
-SELECT @x69id=a.x69ID
-from x69EntityRole_Assign a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
-WHERE a.x69RecordPID=@p56id and x67.x29ID=356
-AND (
- isnull(a.j02ID,0)=@j02id_rec
- OR isnull(a.j11ID,0) IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_rec)
- OR isnull(a.j07ID,0)=@j07id_rec
-)
+if @test_todo=1
+ begin
+	if @o28entryflag=3 and @p56id is null
+	 begin
+		set @err='Projektová role osoby ['+@person+'] má povoleno zapisovat pouze do projektových úkolù.'
+		return
+	 end 
+ 
+	if @p56id is null
+	 begin
+		set @err='Musíte vybrat úkol.'
+		return
+	 end 
+
+	--situace, kdy se zapisuje úkon do úkolu a osoba nemá právo zapisovat do projektu 
+	SELECT @x69id=a.x69ID
+	from x69EntityRole_Assign a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
+	WHERE a.x69RecordPID=@p56id and x67.x29ID=356
+	AND (
+	isnull(a.j02ID,0)=@j02id_rec
+	OR isnull(a.j11ID,0) IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_rec)
+	OR isnull(a.j07ID,0)=@j07id_rec
+	)
   
 
-if @x69id is null 
-  set @err='Nejste øešitelem úkolu ['+dbo.GetObjectAlias('p56',@p56id)+'] a proto nemùžete zapisovat worksheet do zvoleného sešitu.'
-  
- 
+	if @x69id is null 
+	 set @err='Nejste øešitelem úkolu ['+dbo.GetObjectAlias('p56',@p56id)+'] a proto nemùžete zapisovat worksheet do zvoleného sešitu.'
+ end
 
+if @err<>''
+ return 
+
+
+if @p33id<>1
+ return	---nejedná se o èasový úkon, není tøeba testovat limit rozpoètu projektu
+
+---test limitù kapacitního plánu
+declare @p45id int,@p46id int,@p46ExceedFlag int,@p46HoursTotal float,@real_total float,@real_billable float,@real_nonbillable float,@p32IsBillable bit
+declare @p46HoursBillable float,@p46HoursNonBillable float
+select @p45id=p45ID FROM p45Budget WHERE p41ID=@p41id and getdate() BETWEEN p45ValidFrom AND p45ValidUntil
+
+if @p45id is null
+ return
+
+select @p46id=p46ID,@p46ExceedFlag=p46ExceedFlag,@p46HoursTotal=p46HoursTotal,@p46HoursBillable=p46HoursBillable,@p46HoursNonBillable=p46HoursNonBillable
+FROM p46BudgetPerson WHERE p45ID=@p45id AND j02ID=@j02id_rec AND p46ExceedFlag<>5
+
+if @p46id is null
+ return
+
+select @real_total=sum(a.p31Hours_Orig),@real_billable=sum(case when b.p32IsBillable=1 THEN a.p31Hours_Orig end),@real_nonbillable=sum(case when b.p32IsBillable=0 THEN a.p31Hours_Orig end)
+from p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID
+WHERE a.p41ID=@p41id AND a.j02ID=@j02id_rec AND a.p31ID<>@p31id
+
+set @real_nonbillable=isnull(@real_nonbillable,0)
+set @real_billable=isnull(@real_billable,0)
+set @real_total=isnull(@real_total,0)
+
+if @p46ExceedFlag=2 AND @real_total+@value_orig>@p46HoursTotal
+ begin
+  set @err='Vykázané hodiny by pøekroèili plán hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursTotal)+'h.).'
+  return
+ end
+
+select @p32IsBillable=p32IsBillable FROM p32Activity WHERE p32ID=@p32id
+
+set @err=convert(varchar(10),@real_billable+@value_orig)
+
+if @p46ExceedFlag IN (1,3) AND @p32IsBillable=1 AND @real_billable+@value_orig>@p46HoursBillable
+ begin
+  set @err='Vykázané fakturovatelné hodiny by pøekroèili plán fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursBillable)+'h.).'
+  return
+ end
+
+if @p46ExceedFlag IN (1,4) AND @p32IsBillable=0 AND @real_nonbillable+@value_orig>@p46HoursNonBillable
+ begin
+  set @err='Vykázané ne-fakturovatelné hodiny by pøekroèili plán ne-fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursNonBillable)+'h.).'
+  return
+ end
 
 GO
 
@@ -11347,185 +11413,6 @@ create    PROCEDURE [dbo].[zzz_p28_aftersave]
 AS
 
 update p28contact set p28regid='hovado' where p28ID=@pid
-
-GO
-
-----------V---------------WL_for6k_Clients-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('WL_for6k_Clients') and type = 'V')
- drop view WL_for6k_Clients
-GO
-
-
-CREATE view dbo.WL_for6k_Clients
-as
-select a.p28ID as j10ID
-,a.p28Code as j10Ident
-,a.p28RegID as j10CompanyID1
-,a.p28VatID as j10CompanyID2
-,adresa1.o38Street as j10Street
-,adresa1.o38City as j10City
-,adresa1.o38ZIP as j10ZIP
-,adresa1.o38Country as m38name
-,NULL as j10BankName
-,NULL as j10BankAccount
-,NULL as j10BankSWIFT
-,NULL as j10BankIBAN
-,p28free.p28FreeText01 as j10FreeText01		--6K ID klienta
-FROM
-p28Contact a
-LEFT OUTER JOIN (select * from o37Contact_Address WHERE o36ID=1) o37_a ON a.p28ID=o37_a.p28ID
-LEFT OUTER JOIN (select * from o38Address) adresa1 ON o37_a.o38ID=adresa1.o38ID
-LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID
-
-GO
-
-----------V---------------WL_for6k_Invoices-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('WL_for6k_Invoices') and type = 'V')
- drop view WL_for6k_Invoices
-GO
-
-
-
-CREATE view [dbo].[WL_for6k_Invoices]
-as
----p91FreeBoolean01: Importováno do 6K
----p91FreeBoolean02: Exportováno z MT
-
-select a.p91ID as c13ID
-,a.p91Code as c13Ident
-,a.p91Code as c13VS
-,a.p28ID as j10ID
-,p28.p28CompanyName as ClientName
-,NULL as ClientPerson
-,adresa1.o38Street as c13ClientAddress_Street
-,adresa1.o38City as c13ClientAddress_City
-,adresa1.o38ZIP as c13ClientAddress_ZIP
-,adresa1.o38Country as m38Name
-,p28.p28RegID as c13ClientCompanyID1
-,p28.p28VatID as c13ClientCompanyID2
-,a.p91Date as c13Date
-,a.p91DateSupply as c13DateTax
-,a.p91DateMaturity as c13DateMaturity
-,a.p91Amount_TotalDue as c13Amount
-,a.p91Amount_WithoutVat as c13WithoutTax
-,a.p91Amount_Vat as c13TaxAmount
-,a.p91Amount_WithoutVat_None as c13Amount_None
-,a.p91Amount_WithoutVat_Low as c13WithoutTax_Low
-,a.p91Amount_WithoutVat_Standard as c13WithoutTax_High
-,a.p91Amount_WithVat_Low as c13Amount_Low
-,a.p91Amount_WithVat_Standard as c13Amount_High
-FROM
-p91Invoice a INNER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID
-LEFT OUTER JOIN p28Contact p28 ON a.p28ID=p28.p28ID
-LEFT OUTER JOIN o38Address adresa1 ON a.o38ID_Primary=adresa1.o38ID
-LEFT OUTER JOIN p91Invoice_FreeField p91free ON a.p91ID=p91free.p91ID
-WHERE a.p91IsDraft=0 AND p91free.p91FreeBoolean02=1 AND p91free.p91FreeBoolean01=0
-
-
-
-GO
-
-----------V---------------WL_for6k_InvoicesItems-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('WL_for6k_InvoicesItems') and type = 'V')
- drop view WL_for6k_InvoicesItems
-GO
-
-
-
-
-
-CREATE view [dbo].[WL_for6k_InvoicesItems]
-as
----p91FreeBoolean01: Importováno do 6K
----p91FreeBoolean02: Exportováno z MT
-
-select min('1'+right('00000000'+convert(varchar(10),a.p91ID),4)+right('00000000'+convert(varchar(10),p32.p95ID),3)) as c18ID
-,min(case when p34.p33ID=1 then 'c01' else case when p34.p34IncomeStatementFlag=2 THEN 'c19' else 'j01' end end) as c18Prefix
-,a.p91ID as c13ID
-,min(p91.p91Code) as c13Ident
-,min(p95.p95Name) as c18Text
-,1 as c18Count
-,sum(a.p31Amount_WithoutVat_Invoiced) as c18PiecePrice
-,a.p31VatRate_Invoiced as c18TaxRate
-,sum(a.p31Amount_WithoutVat_Invoiced) as c18WithoutTax
-,sum(a.p31Amount_Vat_Invoiced) as c18TaxAmount
-,sum(a.p31Amount_WithVat_Invoiced) as c18Amount
-FROM
-p31Worksheet a INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
-INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
-INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
-INNER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID
-LEFT OUTER JOIN p91Invoice_FreeField p91free ON a.p91ID=p91free.p91ID
-WHERE p91.p91IsDraft=0 AND p91free.p91FreeBoolean02=1 AND p91free.p91FreeBoolean01=0
-GROUP BY a.p91ID,p32.p95ID,a.p31VatRate_Invoiced
-
-
-
-GO
-
-----------V---------------WL_for6k_InvoicesItems_project-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('WL_for6k_InvoicesItems_project') and type = 'V')
- drop view WL_for6k_InvoicesItems_project
-GO
-
-
-
-CREATE     view [dbo].[WL_for6k_InvoicesItems_project] as
-
-select 
-min('1'+right('00000000'+convert(varchar(10),a.p91ID),4)+right('00000000'+convert(varchar(10),a.p41ID),4)) as c16ID
-,min(case when p34.p33ID=1 then 'c01' else case when p34.p34IncomeStatementFlag=2 THEN 'c19' else 'j01' end end) as c16Prefix
-,a.p91ID as c13ID
-,min(p91.p91Code) as c13Ident
-,a.p41ID as j06ID
-,min(p41.p41Code) as j06ident
-,a.p31VatRate_Invoiced as c16TaxRate
-,sum(a.p31Amount_WithoutVat_Invoiced) as c16WithoutTax
-,sum(a.p31Amount_Vat_Invoiced) as c16TaxAmount
-,sum(a.p31Amount_WithVat_Invoiced) as c16Amount
-,min(r11.x25Name) as md
---case when c16customer_invoice_accounting.j05id is null then r61name else j33description end as dal 
-,min(r61.x25Name) as dal
-FROM
-p31Worksheet a INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
-INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
-LEFT OUTER JOIN p41Project_FreeField p41free ON p41.p41ID=p41free.p41ID
-INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
-INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
-INNER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID
-LEFT OUTER JOIN p28Contact_FreeField p28free ON p91.p28ID=p28free.p28ID
-LEFT OUTER JOIN (select * from x25EntityField_ComboValue WHERE x23ID=3) r11 ON p28free.p28FreeCombo01=r11.x25ID
-LEFT OUTER JOIN (select * from x25EntityField_ComboValue where x23ID=2) r61 ON p41free.p41FreeCombo01=r61.x25ID
-LEFT OUTER JOIN p91Invoice_FreeField p91free ON a.p91ID=p91free.p91ID
-WHERE p91.p91IsDraft=0 AND p91free.p91FreeBoolean02=1 AND p91free.p91FreeBoolean01=0
-GROUP BY a.p91ID,a.p41ID,a.p31VatRate_Invoiced
-
-
-
-GO
-
-----------V---------------WL_for6k_Tasks-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('WL_for6k_Tasks') and type = 'V')
- drop view WL_for6k_Tasks
-GO
-
-
-CREATE view dbo.WL_for6k_Tasks
-as
-select p41ID as j06id
-,p41Name as j06Name
-,p41Code as j06Ident
-,manager1.j02LastName+' '+manager1.j02FirstName as j03nameManager
-,NULL as j03namePartner
-FROM
-p41Project a
-LEFT OUTER JOIN (select x69.x69RecordPID,a1.j02LastName,a1.j02FirstName from x69EntityRole_Assign x69 INNER JOIN j02Person a1 ON x69.x69RecordPID=a1.j02ID where x69.x67ID=3) manager1 ON a.p41ID=manager1.x69RecordPID
-
 
 GO
 
