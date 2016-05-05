@@ -100,6 +100,12 @@ Public Class p91_framework_detail
             End With
             Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
 
+            If .b01ID <> 0 Then
+                Me.trWorkflow.Visible = True
+                Me.b02Name.Text = .b02Name
+            Else
+                Me.trWorkflow.Visible = False
+            End If
 
 
             Me.p91Amount_Debt.Text = BO.BAS.FN(.p91Amount_Debt)

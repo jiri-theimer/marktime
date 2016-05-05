@@ -61,6 +61,12 @@
     Public Property p91Text1 As String
     Public Property p91Text2 As String
 
+    Private Property _b01ID As Integer
+    Public ReadOnly Property b01ID As Integer
+        Get
+            Return _b01ID
+        End Get
+    End Property
 
     Private Property _j27Code As String
     Public ReadOnly Property j27Code As String

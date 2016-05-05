@@ -298,8 +298,19 @@ Public Class basUIMT
                         dataItem.ForeColor = Drawing.Color.Brown    'výdaje
                     End If
                     If .p49ID > 0 Then
-                        If .o23ID_First = 0 Then dataItem("systemcolumn").Text += "<img src='Images/finplan.png' width='12px' height='12px'/>"
-                        If .o23ID_First > 0 Then dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' width='12px' height='12px'/>"
+                        If .p71ID > BO.p71IdENUM.Nic Then
+                            If .o23ID_First = 0 Then
+                                dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px;padding-left:7px;'/>"
+                            Else
+                                dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px;padding-left:7px;'/>"
+                            End If
+                        Else
+                            If .o23ID_First = 0 Then
+                                dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px'/>"
+                            Else
+                                dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px'/>"
+                            End If
+                        End If
                     End If
                 Case BO.p33IdENUM.Kusovnik
                     dataItem.ForeColor = Drawing.Color.Green  'kusovník

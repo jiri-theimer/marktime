@@ -644,6 +644,78 @@ Partial Public Class p31_record
     Protected WithEvents hidCurIsScheduler As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidCurPerson_J02ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCurPerson_J02ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCurPerson_Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCurPerson_Name As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDefaultP34ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDefaultP34ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDefaultP32ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDefaultP32ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDefaultP31Date control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDefaultP31Date As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDefaultJ27ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDefaultJ27ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDefaultVatRate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDefaultVatRate As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidGuidApprove control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidGuidApprove As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

@@ -17,7 +17,7 @@
     Function LoadJ27(intJ27ID As Integer) As BO.j27Currency
     Function GetList_J27(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.j27Currency)
     Function GetList_C11(datFrom As Date, datUntil As Date, levelFrom As BO.PeriodLevel, levelUntil As BO.PeriodLevel) As IEnumerable(Of BO.c11StatPeriod)
-    Function GetList_X21_NonDB() As List(Of BO.x21DatePeriod)
+    Function GetList_X21_NonDB(bolIncludeFuture As Boolean) As List(Of BO.x21DatePeriod)
     Function LoadX90(intX90ID As Integer) As BO.x90EntityLog
     Function LoadX45(intX45ID As Integer) As BO.x45Event
     Function GetList_X45(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x45Event)
@@ -100,7 +100,7 @@ Class FtBL
     Public Function GetList_X21(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21
         Return _cDL.GetList_X21(mq)
     End Function
-    Public Function GetList_X21_NonDB() As List(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21_NonDB
+    Public Function GetList_X21_NonDB(bolIncludeFuture As Boolean) As List(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21_NonDB
         Dim lis As New List(Of BO.x21DatePeriod)
         With lis
             .Add(AC(BO.x21IdEnum._NoQuery))
@@ -114,7 +114,7 @@ Class FtBL
             .Add(AC(BO.x21IdEnum.MesicMinus2))
 
             .Add(AC(BO.x21IdEnum.MesicMinuly))
-            
+
             .Add(AC(BO.x21IdEnum.MesicTento))
             .Add(AC(BO.x21IdEnum.KvartalMinuly))
             .Add(AC(BO.x21IdEnum.KvartalTento))
@@ -128,6 +128,12 @@ Class FtBL
             .Add(AC(BO.x21IdEnum.DoMinulyMesic))
             .Add(AC(BO.x21IdEnum.DoDnes))
 
+            If bolIncludeFuture Then
+                .Add(AC(BO.x21IdEnum.TydenPristi))
+                .Add(AC(BO.x21IdEnum.MesicPristi))
+                .Add(AC(BO.x21IdEnum.KvartalPristi))
+                .Add(AC(BO.x21IdEnum.RokPristi))
+            End If
         End With
         Return lis
     End Function

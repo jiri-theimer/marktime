@@ -13,6 +13,8 @@
             Select Case ViewState("oper")
                 Case "createtask"
                     Me.p41ID.Flag = "createtask"
+                Case "createp49"
+                    Me.p41ID.Flag = "createp49"
                 Case Else
 
             End Select
@@ -33,6 +35,8 @@
             Select Case ViewState("oper")
                 Case "createtask"
                     Server.Transfer("p56_record.aspx?p41id=" & intP41ID.ToString, False)
+                Case "createp49"
+                    Server.Transfer("p49_record.aspx?p41id=" & intP41ID.ToString, False)
                 Case Else
                     Master.Notify("Neznámá operace: " & ViewState("oper"), NotifyLevel.ErrorMessage)
             End Select

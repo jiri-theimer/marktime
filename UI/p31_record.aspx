@@ -308,7 +308,7 @@
         <tr>
             <td>
                 <asp:Label ID="lblP41ID" runat="server" Text="Projekt:" CssClass="lblReq"></asp:Label>
-                <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu" Visible="false"></asp:HyperLink>
+                <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" Visible="false"></asp:HyperLink>
             </td>
             <td>
                 <uc:project ID="p41ID" runat="server" Width="400px" AutoPostBack="true" Flag="p31_entry" />
@@ -532,6 +532,14 @@
     <asp:HiddenField ID="hidDocGUID" runat="server" />
     <asp:HiddenField ID="p31_default_HoursEntryFlag" runat="server" />
     <asp:HiddenField ID="hidCurIsScheduler" runat="server" Value="0" />
+    <asp:HiddenField ID="hidCurPerson_J02ID" runat="server" />
+    <asp:HiddenField ID="hidCurPerson_Name" runat="server" />
+    <asp:HiddenField ID="hidDefaultP34ID" runat="server" />
+    <asp:HiddenField ID="hidDefaultP32ID" runat="server" />
+    <asp:HiddenField ID="hidDefaultP31Date" runat="server" />
+    <asp:HiddenField ID="hidDefaultJ27ID" runat="server" />
+    <asp:HiddenField ID="hidDefaultVatRate" runat="server" />
+    <asp:HiddenField ID="hidGuidApprove" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

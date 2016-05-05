@@ -12,11 +12,9 @@
                 Response.Write("Service user is not inhaled!")
                 Return
             End If
-
+            Handle_p40Queue()
 
             Handle_MailQueque()
-
-            Handle_p40Queue()
 
             Handle_ImapRobot()
 
@@ -52,7 +50,9 @@
 
     Private Sub Handle_p40Queue()
         Dim datNow As Date = Now
-
+        If Request.Item("now") <> "" Then
+            datNow = BO.BAS.ConvertString2Date(Request.Item("now"))
+        End If
         Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList_WaitingForGenerate(datNow)
         If lisP40.Count = 0 Then Return
 

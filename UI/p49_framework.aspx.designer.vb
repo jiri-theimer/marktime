@@ -23,6 +23,15 @@ Partial Public Class p49_framework
     Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''period1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents period1 As Global.UI.periodcombo
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>

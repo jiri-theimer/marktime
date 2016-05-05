@@ -386,6 +386,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Datum", "p91Date", BO.cfENUM.DateOnly))
             .Add(AGC("Plnění", "p91DateSupply", BO.cfENUM.DateOnly))
             .Add(AGC("Splatnost", "p91DateMaturity", BO.cfENUM.DateOnly))
+            .Add(AGC("Aktuální stav", "b02Name"))
 
             .Add(AGC("Text", "p91Text1"))
 

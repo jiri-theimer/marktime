@@ -56,6 +56,7 @@
                             bolINSERT = False : strW = "p46ID=@pid" : pars.Add("pid", c.PID, DbType.Int32)
                         End If
                         If c.PID <> 0 And c.IsSetAsDeleted Then
+                            _cDB.RunSQL("DELETE FROM p47CapacityPlan WHERE p46ID IN (SELECT p46ID FROM p46BudgetPerson WHERE p46ID=@pid)", pars)
                             _cDB.RunSQL("DELETE FROM p46BudgetPerson WHERE p46ID=@pid", pars)
                         Else
                             pars.Add("p45ID", intLastSavedP45ID, DbType.Int32)

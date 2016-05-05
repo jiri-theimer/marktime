@@ -30,7 +30,7 @@
             Return _p41ID
         End Get
     End Property
-    Private Property _Project As String
+    Friend Property _Project As String
     Public ReadOnly Property Project As String
         Get
             Return _Project

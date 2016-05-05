@@ -20,14 +20,17 @@ Public Class p49_framework
                     .Add("p49_framework-pagesize")
                     .Add("p49_framework-filter_setting")
                     .Add("p49_framework-filter_sql")
+                    .Add("p49_framework-period")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
 
-
-
+               
             End With
             With Master.Factory.j03UserBL
                 cbxPaging.SelectedValue = .GetUserParam("p49_framework-pagesize", "20")
+                period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"), True)
+                period1.SelectedValue = .GetUserParam("p49_framework-period")
+
             End With
 
             With Master.Factory.j03UserBL
@@ -38,19 +41,33 @@ Public Class p49_framework
     End Sub
 
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
+        Dim group As New Telerik.Web.UI.GridColumnGroup
+
         With grid1
             .ClearColumns()
-            .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
-            .radGridOrig.ShowFooter = False
-            .AddSystemColumn(20)
-            .AddColumn("p90Code", "Číslo")
-            .AddColumn("p90Date", "Datum", BO.cfENUM.DateOnly)
-            .AddColumn("p28Name", "Klient")
 
-            .AddColumn("p90Amount", "Částka", BO.cfENUM.Numeric2)
-            .AddColumn("p90Amount_Debt", "Dluh", BO.cfENUM.Numeric2)
-            .AddColumn("p90Text1", "Text")
-            .AddColumn("j27Code", "")
+            .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
+
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "plan" : group.HeaderText = "Rozpočet"
+            group = New Telerik.Web.UI.GridColumnGroup
+            .radGridOrig.MasterTableView.ColumnGroups.Add(group)
+            group.Name = "real" : group.HeaderText = "Vykázaná realita"
+
+            .radGridOrig.ShowFooter = True
+            .AddSystemColumn(20)
+            .AddColumn("Period", "Měsíc", , , , , , , , "plan")
+            .AddColumn("Project", "Projekt", , , , , , , , "plan")
+            .AddColumn("p32Name", "Aktivita", , , , , , , , "plan")
+            .AddColumn("SupplierName", "Dodavatel", , , , , , , , "plan")
+            .AddColumn("p49Text", "Text", , , , , , , , "plan")
+            .AddColumn("p49Amount", "Částka", BO.cfENUM.Numeric2, , , , , True, , "plan")
+            .AddColumn("j27Code", "Měna", , , , , , , , "plan")
+
+            .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly, , , , , , , "real")
+            .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , , , "real")
+            ''.AddColumn("p31Code", "Kód dokladu", , , , , , , , "real")
+            .AddColumn("p31Count", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
 
             .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
@@ -65,11 +82,9 @@ Public Class p49_framework
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
-        Dim cRec As BO.p90Proforma = CType(e.Item.DataItem, BO.p90Proforma)
+        Dim cRec As BO.p49FinancialPlan = CType(e.Item.DataItem, BO.p49FinancialPlanExtended)
         If cRec.IsClosed Then dataItem.Font.Strikeout = True
-        If cRec.p90Amount_Debt > 0 Then
-            dataItem.Item("systemcolumn").BackColor = Drawing.Color.Red
-        End If
+        
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
@@ -81,7 +96,11 @@ Public Class p49_framework
         End If
         Dim mq As New BO.myQueryP49
         mq.ColumnFilteringExpression = grid1.GetFilterExpression
-
+        If period1.SelectedValue <> "" Then
+            mq.DateFrom = period1.DateFrom
+            mq.DateUntil = period1.DateUntil
+        End If
+        
         Dim lis As IEnumerable(Of BO.p49FinancialPlanExtended) = Master.Factory.p49FinancialPlanBL.GetList_Extended(mq)
 
         grid1.DataSource = lis
@@ -99,4 +118,18 @@ Public Class p49_framework
     End Sub
 
 
+    Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
+        Master.Factory.j03UserBL.SetUserParam("p49_framework-period", Me.period1.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub p49_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        With Me.period1
+            If .SelectedValue <> "" Then
+                .BackColor = Drawing.Color.Red
+            Else
+                .BackColor = Nothing
+            End If
+        End With
+    End Sub
 End Class

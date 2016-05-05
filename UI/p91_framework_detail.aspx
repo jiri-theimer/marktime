@@ -65,19 +65,19 @@
 
         function report(x31id) {
             
-            sw_local("report_modal.aspx?prefix=p91&pid=<%=Master.DataPID%>&x31id="+x31id,"Images/reporting_32.png",true);
+            sw_local("report_modal.aspx?prefix=p91&pid=<%=Master.DataPID%>&x31id="+x31id,"Images/reporting.png",true);
 
         }
 
         function p31_entry(p34id) {
             
-            sw_local("p31_record.aspx?pid=0&p91id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet_32.png",true);
+            sw_local("p31_record.aspx?pid=0&p91id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
 
         }
 
         function record_new() {
             
-            sw_local("p91_create.aspx","Images/invoice_32.png",true);
+            sw_local("p91_create.aspx","Images/invoice.png",true);
 
         }
 
@@ -87,35 +87,35 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p91_record.aspx?pid=" + pid,"Images/invoice_32.png",true);
+            sw_local("p91_record.aspx?pid=" + pid,"Images/invoice.png",true);
 
         }
 
         function record_new() {
             var pid = <%=master.DataPID%>;            
            
-            sw_local("p91_create_step1.aspx?prefix=p28","Images/invoice_32.png",true);
+            sw_local("p91_create_step1.aspx?prefix=p28","Images/invoice.png",true);
         }
 
         function changevat() {
          
-            sw_local("p91_change_vat.aspx?pid=<%=Master.DataPID%>","Images/recalc_32.png");
+            sw_local("p91_change_vat.aspx?pid=<%=Master.DataPID%>","Images/recalc.png");
 
         }
         function changecurrency() {
          
-            sw_local("p91_change_currency.aspx?pid=<%=Master.DataPID%>","Images/recalc_32.png");
+            sw_local("p91_change_currency.aspx?pid=<%=Master.DataPID%>","Images/recalc.png");
 
         }
 
         function pay() {
            
-            sw_local("p91_pay.aspx?pid=<%=Master.DataPID%>","Images/payment_32.png");
+            sw_local("p91_pay.aspx?pid=<%=Master.DataPID%>","Images/payment.png");
 
         }
         
         function p31_add() {           
-            sw_local("p91_add_worksheet_gateway.aspx?pid=<%=Master.DataPID%>","Images/worksheet_32.png");
+            sw_local("p91_add_worksheet_gateway.aspx?pid=<%=Master.DataPID%>","Images/worksheet.png");
         }
         function p31_remove(){       
             var p31ids=GetAllSelectedPIDs();
@@ -123,11 +123,11 @@
                 alert("Musíte vybrat minimálně jeden záznam.");
                 return;
             }
-            sw_local("p91_remove_worksheet.aspx?pid=<%=Master.DataPID%>&p31ids="+p31ids,"Images/cut_32.png");
+            sw_local("p91_remove_worksheet.aspx?pid=<%=Master.DataPID%>&p31ids="+p31ids,"Images/cut.png");
         }
 
-        function hardrefresh(pid, flag) {
-            if (flag=="p91-save"){
+        function hardrefresh(pid, flag) {           
+            if (flag=="p91-save" || flag=="workflow-dialog"){
                 parent.window.location.replace("p91_framework.aspx?pid="+pid);
                 return;
             }
@@ -179,19 +179,19 @@
                 alert("Musíte vybrat položku z tabulky.");
                 return;
             }
-            sw_local("p31_record_AI.aspx?pid="+pid,"Images/worksheet_32.png");
+            sw_local("p31_record_AI.aspx?pid="+pid,"Images/worksheet.png");
 
         }
 
      
         function o23_record(pid) {
             
-            sw_local("o23_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
+            sw_local("o23_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad.png",true);
 
         }
         function o22_record(pid) {
             
-            sw_local("o22_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar_32.png",true);
+            sw_local("o22_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar.png",true);
 
         }
        
@@ -199,26 +199,29 @@
 
         function b07_comment() {
             
-            sw_local("b07_create.aspx?masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment_32.png",true)
+            sw_local("b07_create.aspx?masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment.png",true)
             
         }
         function b07_reaction(b07id) {
-            sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment_32.png", true)
+            sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment.png", true)
            
         }
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_local("grid_designer.aspx?nodrilldown=1&x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner_32.png");
+            sw_local("grid_designer.aspx?nodrilldown=1&x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner.png");
         }
        
         function proforma() {           
-            sw_local("p91_proforma.aspx?pid=<%=Master.DataPID%>","Images/proforma_32.png");
+            sw_local("p91_proforma.aspx?pid=<%=Master.DataPID%>","Images/proforma.png");
         }
         function creditnote() {           
             sw_local("p91_creditnote.aspx?pid=<%=Master.DataPID%>","Images/correction_down.gif");
         }
         function export_pohoda() {           
             sw_local("p91_export2pohoda.aspx?pid=<%=Master.DataPID%>","Images/export.png");
+        }
+        function workflow(){            
+            sw_local("workflow_dialog.aspx?prefix=p91&pid=<%=master.datapid%>","Images/workflow.png",false);
         }
     </script>
 
@@ -360,6 +363,16 @@
                         </td>
                         <td>
                             <asp:Label ID="BillingAddress" runat="server" CssClass="valbold"></asp:Label></td>
+                    </tr>
+                    <tr id="trWorkflow" runat="server">
+                        <td>
+                            <asp:Label ID="lblB02ID" runat="server" Text="Workflow stav:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td colspan="3">
+                            <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
+                            <img src="Images/workflow.png" />
+                            <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
+                        </td>                       
                     </tr>
                     <tr>
                         <td id="rlbl">

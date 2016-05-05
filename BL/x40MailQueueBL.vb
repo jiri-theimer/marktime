@@ -185,14 +185,19 @@ Class x40MailQueueBL
         End With
 
         For Each c In recipients
-            Select Case c.x43RecipientFlag
-                Case BO.x43RecipientIdEnum.recTO
-                    mail.To.Add(New MailAddress(c.x43Email, c.x43DisplayName))
-                Case BO.x43RecipientIdEnum.recBCC
-                    mail.Bcc.Add(New MailAddress(c.x43Email, c.x43DisplayName))
-                Case BO.x43RecipientIdEnum.recCC
-                    mail.CC.Add(New MailAddress(c.x43Email, c.x43DisplayName))
-            End Select
+            Try
+                Select Case c.x43RecipientFlag
+                    Case BO.x43RecipientIdEnum.recTO
+                        mail.To.Add(New MailAddress(c.x43Email, c.x43DisplayName))
+                    Case BO.x43RecipientIdEnum.recBCC
+                        mail.Bcc.Add(New MailAddress(c.x43Email, c.x43DisplayName))
+                    Case BO.x43RecipientIdEnum.recCC
+                        mail.CC.Add(New MailAddress(c.x43Email, c.x43DisplayName))
+                End Select
+            Catch ex As Exception
+                'chyba v mail adrese příjemce
+            End Try
+            
         Next
 
         Dim mqO27 As New BO.myQueryO27

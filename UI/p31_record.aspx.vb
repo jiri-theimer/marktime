@@ -15,11 +15,22 @@
     End Property
     Private Property CurrentJ02ID As Integer
         Get
-            Return BO.BAS.IsNullInt(Me.j02ID.Value)
+            If Me.hidCurPerson_J02ID.Value = "" Then Me.hidCurPerson_J02ID.Value = Master.Factory.SysUser.j02ID.ToString
+            Return BO.BAS.IsNullInt(Me.hidCurPerson_J02ID.Value)
         End Get
         Set(value As Integer)
+            Me.hidCurPerson_J02ID.Value = value.ToString
             Me.j02ID.Value = value.ToString
             Me.p41ID.J02ID_Explicit = Me.j02ID.Value
+            If value > 0 Then
+                If value = Master.Factory.SysUser.j02ID Then
+                    Me.hidCurPerson_Name.Value = Master.Factory.SysUser.PersonDesc
+                Else
+                    Me.hidCurPerson_Name.Value = Master.Factory.j02PersonBL.Load(value).FullNameDesc
+                End If
+            Else
+                Me.hidCurPerson_Name.Value = ""
+            End If
         End Set
     End Property
     Private Property CurrentP34ID As Integer
@@ -90,40 +101,60 @@
             Return Me.hidDocGUID.Value
         End Get
     End Property
-    Private ReadOnly Property MyDefault_p34ID As Integer
+    Public Property MyDefault_p34ID As Integer
         Get
-            Return ViewState("last_p34id")
+            Return BO.BAS.IsNullInt(Me.hidDefaultP34ID.Value)
         End Get
+        Set(value As Integer)
+            Me.hidDefaultP34ID.Value = value.ToString
+        End Set
     End Property
-    Private ReadOnly Property MyDefault_p31Date As Date
+    Private Property MyDefault_p31Date As Date
         Get
-            Return ViewState("last_p31date")
+            Return BO.BAS.ConvertString2Date(Me.hidDefaultP31Date.Value)
         End Get
+        Set(value As Date)
+            Me.hidDefaultP31Date.Value = BO.BAS.ConvertString2Date(value)
+        End Set
     End Property
-    Private ReadOnly Property MyDefault_p32ID As Integer
+    Private Property MyDefault_p32ID As Integer
         Get
-            Return ViewState("last_p32id")
+            Return BO.BAS.IsNullInt(Me.hidDefaultP32ID.Value)
         End Get
+        Set(value As Integer)
+            Me.hidDefaultP32ID.Value = value.ToString
+        End Set
     End Property
-    Private ReadOnly Property MyDefault_j02ID As Integer
+    Private Property GuidApprove As String
         Get
-            Return ViewState("last_j02id")
+            Return Me.hidGuidApprove.Value
         End Get
+        Set(value As String)
+            Me.hidGuidApprove.Value = value
+        End Set
     End Property
-    Private ReadOnly Property MyDefault_Person As String
+    
+    Private ReadOnly Property CurrentPerson As String
         Get
-            Return ViewState("last_person")
+            Return Me.hidCurPerson_Name.Value
         End Get
+
     End Property
-    Public ReadOnly Property MyDefault_j27ID As Integer
+    Public Property MyDefault_j27ID As Integer
         Get
-            Return ViewState("last_j27id")
+            Return BO.BAS.IsNullInt(Me.hidDefaultJ27ID.Value)
         End Get
+        Set(value As Integer)
+            Me.hidDefaultJ27ID.Value = value.ToString
+        End Set
     End Property
-    Public ReadOnly Property MyDefault_VatRate As Double
+    Public Property MyDefault_VatRate As Double
         Get
-            Return ViewState("last_vatrate")
+            Return BO.BAS.IsNullNum(Me.hidDefaultVatRate.Value)
         End Get
+        Set(value As Double)
+            Me.hidDefaultVatRate.Value = value.ToString
+        End Set
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -164,12 +195,9 @@
 
     Private Sub InhaleMyDefault()
         With Master.Factory.SysUser
-            ViewState("last_j02id") = .j02ID
-            ViewState("last_person") = .PersonDesc
+            Me.CurrentJ02ID = .j02ID
         End With
-        ViewState("last_p34id") = 0
-        ViewState("last_p32id") = 0
-        ViewState("last_p31date") = Today
+        Me.MyDefault_p31Date = Today
         If Request.Item("scheduler") = "1" Then
             Me.CurrentIsScheduler = True
         End If
@@ -184,7 +212,8 @@
             If Me.CurrentP48ID > 0 Then
                 'překlopení operativního plánu do reality
                 Dim cP48 As BO.p48OperativePlan = Master.Factory.p48OperativePlanBL.Load(Me.CurrentP48ID)
-                Me.j02ID.Value = cP48.j02ID.ToString
+                Me.CurrentJ02ID = cP48.j02ID
+                Me.j02ID.Value = cP48.j02ID
                 Me.j02ID.Text = cP48.Person
                 Me.p31Date.SelectedDate = cP48.p48Date
                 Me.p31Text.Text = cP48.p48Text
@@ -208,23 +237,22 @@
                 Dim intJ02ID As Integer = BO.BAS.IsNullInt(Request.Item("j02id"))
                 'zápis za jinou osobu
                 If intJ02ID > 0 Then
-                    ViewState("last_j02id") = intJ02ID
-                    ViewState("last_person") = Master.Factory.j02PersonBL.Load(intJ02ID).FullNameDesc
+                    Me.CurrentJ02ID = intJ02ID
                 End If
             End If
             If Request.Item("guid_approve") <> "" Then
                 'zápis vyvolaný z rozhraní schvalování
-                ViewState("guid_approve") = Request.Item("guid_approve")
+                Me.GuidApprove = Request.Item("guid_approve")
             End If
             'načíst mnou naposledy zapsaný worksheet záznam
             Dim cRecLast As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadMyLastCreated(True, intDefP41ID)
             If Not cRecLast Is Nothing Then
                 With cRecLast
-                    ViewState("last_p34id") = .p34ID
-                    ViewState("last_p32id") = .p32ID
+                    Me.MyDefault_p34ID = .p34ID
+                    Me.MyDefault_p32ID = .p32ID
                     If DateDiff(DateInterval.Hour, .DateInsert.Value, Now) < 1 Then
                         'do hodiny starý záznam bere jako výchozí datum posledního úkonu + uživatele posledního úkonu
-                        ViewState("last_p31date") = .p31Date
+                        Me.MyDefault_p31Date = .p31Date
                     End If
                     If .p33ID = BO.p33IdENUM.Cas Then
                         If .p31HoursEntryFlag = BO.p31HoursEntryFlagENUM.NeniCas Then
@@ -235,8 +263,8 @@
                     Else
                         Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.NeniCas
                     End If
-                    ViewState("last_j27id") = .j27ID_Billing_Orig
-                    ViewState("last_vatrate") = .p31VatRate_Orig
+                    Me.MyDefault_j27ID = .j27ID_Billing_Orig
+                    Me.MyDefault_VatRate = .p31VatRate_Orig
                 End With
             Else
                 'uživatel zatím nezapsal žádný worksheet úkon
@@ -248,14 +276,13 @@
 
         If Request.Item("p34id") <> "" Then
             'uživatel  požaduje zapisovat napřímo do konkrétního sešitu
-            ViewState("last_p34id") = BO.BAS.IsNullInt(Request.Item("p34id"))
+            Me.MyDefault_p34ID = BO.BAS.IsNullInt(Request.Item("p34id"))
         End If
         If Request.Item("p31date") <> "" Then
-            ViewState("last_p31date") = BO.BAS.ConvertString2Date(Request.Item("p31date"))
+            Me.MyDefault_p31Date = BO.BAS.ConvertString2Date(Request.Item("p31date"))
         End If
 
-        Me.CurrentJ02ID = Me.MyDefault_j02ID
-        Me.j02ID.Text = Me.MyDefault_Person
+        Me.j02ID.Text = Me.CurrentPerson
         Me.p31Date.SelectedDate = Me.MyDefault_p31Date
 
 
@@ -272,7 +299,7 @@
                 Me.p31Text.Text = .p85Message
                 Dim cT As New BO.clsTime
                 Me.p31Value_Orig.Text = cT.GetTimeFromSeconds(.p85FreeNumber01 / 100)
-                ViewState("last_p31date") = .p85FreeDate05
+                Me.MyDefault_p31Date = .p85FreeDate05
                 Me.p31Date.SelectedDate = .p85FreeDate05
             End With
         End If
@@ -368,7 +395,7 @@
             dats.Add(Format(d, "dd.MM.yyyy"))
             If i = 0 Then
                 Me.p31Date.SelectedDate = d
-                ViewState("last_p31date") = d
+                Me.MyDefault_p31Date = d
             End If
 
             If intLastP41ID <> intP41ID And intLastP41ID > 0 Then
@@ -389,10 +416,8 @@
             End If
         End If
         If intLastJ02ID > 0 Then
-            ViewState("last_j02id") = intLastJ02ID
-            ViewState("last_person") = Master.Factory.j02PersonBL.Load(intLastJ02ID).FullNameDesc
-            Me.CurrentJ02ID = Me.MyDefault_j02ID
-            Me.j02ID.Text = Me.MyDefault_Person
+            Me.CurrentJ02ID = intLastJ02ID
+            Me.j02ID.Text = Me.CurrentPerson
         End If
         If dats.Count = 1 Then
             'pouze jeden datum na vstupu - normální režim bez multi-day vstupu
@@ -595,7 +620,7 @@
                 End If
             End If
 
-            Me.p34ID.DataSource = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(_Project.PID, _Project.p42ID, _Project.j18ID, Master.Factory.SysUser.j02ID)
+            Me.p34ID.DataSource = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(_Project.PID, _Project.p42ID, _Project.j18ID, Me.CurrentJ02ID)
             Me.p34ID.DataBind()
 
             If Not bolTryRun_Handle_P34 Then Return 'dál už se nemá pokračovat
@@ -873,10 +898,10 @@
                     Server.Transfer("p31_record_approve.aspx?pid=" & Master.DataPID.ToString & "&p91id=" & Me.CurrentP91ID.ToString, False)
                     Return
                 End If
-                If ViewState("guid_approve") <> "" Then
+                If Me.GuidApprove <> "" Then
                     'zařadit úkon do rozpracovaného schvalování
                     Dim c As New BO.p85TempBox()
-                    c.p85GUID = ViewState("guid_approve")
+                    c.p85GUID = Me.GuidApprove
                     c.p85DataPID = Master.DataPID
                     Master.Factory.p85TempBoxBL.Save(c)
                     AddRecord2Approving()
@@ -896,7 +921,7 @@
         Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(Master.DataPID)
         Dim cApprove As New BO.p31WorksheetApproveInput(Master.DataPID, cRec.p33ID)
         With cApprove
-            .GUID_TempData = ViewState("guid_approve")
+            .GUID_TempData = Me.GuidApprove
             .p71id = BO.p71IdENUM.Schvaleno
             If cRec.p32IsBillable Then
                 .p72id = BO.p72IdENUM.Fakturovat
@@ -981,7 +1006,7 @@
     End Sub
 
     Private Sub Handle_ChangeJ02()
-       
+        Handle_ChangeP41(True)
 
     End Sub
 

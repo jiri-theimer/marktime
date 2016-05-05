@@ -4,9 +4,14 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
+        function periodcombo_setting() {
+
+            sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+        }
         function record_edit() {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             if (pid == "" || pid == null) {
@@ -95,7 +100,9 @@
             <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Rozpočty výdajů a fixních odměn" Style="vertical-align: top;"></asp:Label>
 
         </div>
-
+        <div class="commandcell" style="padding-left:10px;">
+            <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
+        </div>
 
         <div class="commandcell" style="padding-left: 50px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">

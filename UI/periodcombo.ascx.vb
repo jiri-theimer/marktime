@@ -93,10 +93,10 @@
             Return Me.per1.Items.Count
         End Get
     End Property
-    Public Sub SetupData(factory As BL.Factory, strCustomQueries As String)
+    Public Sub SetupData(factory As BL.Factory, strCustomQueries As String, Optional bolIncludeFuture As Boolean = False)
         Me.hidLogin.Value = factory.SysUser.j03Login
 
-        Dim lis As List(Of BO.x21DatePeriod) = factory.ftBL.GetList_X21_NonDB()
+        Dim lis As List(Of BO.x21DatePeriod) = factory.ftBL.GetList_X21_NonDB(bolIncludeFuture)
         Me.hidCustomQueries.Value = strCustomQueries
 
         If strCustomQueries <> "" Then

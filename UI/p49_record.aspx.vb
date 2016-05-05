@@ -30,8 +30,19 @@
                 .HeaderText = "Záznam položky peněžního rozpočtu"
                 Me.CurrentP45ID = BO.BAS.IsNullInt(Request.Item("p45id"))
                 If Me.CurrentP45ID = 0 Then
-                    .StopPage("p45id is missing")
+                    If .DataPID <> 0 Then
+                        Me.CurrentP45ID = .Factory.p49FinancialPlanBL.Load(.DataPID).p45ID
+                    Else
+                        If Request.Item("p41id") <> "" Then
+                            Dim cP45 As BO.p45Budget = .Factory.p45BudgetBL.LoadByProject(CInt(Request.Item("p41id")))
+                            If cP45 Is Nothing Then .StopPage("Tento projekt nemá založený rozpočet!")
+                            Me.CurrentP45ID = cP45.PID
+                        Else
+                            Server.Transfer("select_project.aspx?oper=createp49")
+                        End If
+                    End If
                 End If
+                If Me.CurrentP45ID = 0 Then .StopPage("p45id is missing")
             End With
 
             RefreshRecord()

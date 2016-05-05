@@ -27,7 +27,7 @@
         Dim pars As New DbParameters
         Dim strW As String = GetSqlWhere(mq, pars)
         Dim s As String = GetSQLPart1(0, False)
-        s += " WHERE " & strW
+        If strW <> "" Then s += " WHERE " & strW
         s += " ORDER BY a.p34ID,p32.p32Name,a.p49DateFrom"
         Return _cDB.GetList(Of BO.p49FinancialPlan)(s, pars)
     End Function
@@ -35,7 +35,7 @@
         Dim pars As New DbParameters
         Dim strW As String = GetSqlWhere(mq, pars)
         Dim s As String = GetSQLPart1(0, True, intP41ID_OptimizeSQL)
-        s += " WHERE " & strW
+        If strW <> "" Then s += " WHERE " & strW
         s += " ORDER BY a.p34ID,p32.p32Name,a.p49DateFrom"
         Return _cDB.GetList(Of BO.p49FinancialPlanExtended)(s, pars)
     End Function
