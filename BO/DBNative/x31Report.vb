@@ -28,7 +28,8 @@ Public Class x31Report
     Public Property x31IsRunInDay6 As Boolean
     Public Property x31IsRunInDay7 As Boolean
     Public Property x31RunInTime As String
-
+    Public Property x31DocSqlSource As String
+    Public Property x31DocSqlSourceTabs As String
 
     Private Property _x29Name As String
     Private Property _j25Name As String

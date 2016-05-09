@@ -65,7 +65,7 @@ Public Class p49_framework
             .AddColumn("j27Code", "Měna", , , , , , , , "plan")
 
             .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly, , , , , , , "real")
-            .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , , , "real")
+            .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , True, , "real")
             ''.AddColumn("p31Code", "Kód dokladu", , , , , , , , "real")
             .AddColumn("p31Count", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
 

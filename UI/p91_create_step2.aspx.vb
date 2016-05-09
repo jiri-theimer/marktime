@@ -36,6 +36,7 @@ Public Class p91_create_step2
                     .Add(strGridKey)
                     .Add("p91_create-pagesize")
                     .Add("p91_create-rememberdates")
+                    .Add("p91_create-chkSearchByClientOnly")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 ViewState("j74id") = .Factory.j03UserBL.GetUserParam(strGridKey, "0")
@@ -46,7 +47,7 @@ Public Class p91_create_step2
                     .Factory.j03UserBL.SetUserParam(strGridKey, ViewState("j74id"))
                 End If
                 .AddToolbarButton("Uložit fakturu", "save", , "Images/save.png")
-
+                Me.chkSearchByClientOnly.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-chkSearchByClientOnly", "0"))
                 basUI.SelectRadiolistValue(Me.opgGroupBy, .Factory.j03UserBL.GetUserParam("p91_create-group"))
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .Factory.j03UserBL.GetUserParam("p91_create-pagesize", "20"))
                 Me.chkRememberDates.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-rememberdates", "0"))
@@ -378,5 +379,9 @@ Public Class p91_create_step2
 
 
         End If
+    End Sub
+
+    Private Sub chkSearchByClientOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkSearchByClientOnly.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p91_create-chkSearchByClientOnly", BO.BAS.GB(Me.chkSearchByClientOnly.Checked))
     End Sub
 End Class

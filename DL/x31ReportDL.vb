@@ -49,7 +49,8 @@
             pars.Add("x31IsRunInDay6", .x31IsRunInDay6, DbType.Boolean)
             pars.Add("x31IsRunInDay7", .x31IsRunInDay7, DbType.Boolean)
             pars.Add("x31RunInTime", .x31RunInTime, DbType.String)
-
+            pars.Add("x31DocSqlSource", .x31DocSqlSource, DbType.String)
+            pars.Add("x31DocSqlSourceTabs", .x31DocSqlSourceTabs, DbType.String)
 
             pars.Add("x31validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("x31validuntil", .ValidUntil, DbType.DateTime)

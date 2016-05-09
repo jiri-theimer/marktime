@@ -76,6 +76,8 @@
             Me.CurrentFormat = .x31FormatFlag
             Me.x31IsPeriodRequired.Checked = .x31IsPeriodRequired
             Me.x31IsUsableAsPersonalPage.Checked = .x31IsUsableAsPersonalPage
+            Me.x31DocSqlSource.Text = .x31DocSqlSource
+            Me.x31DocSqlSourceTabs.Text = .x31DocSqlSourceTabs
 
             Master.Factory.o27AttachmentBL.CopyRecordsToTemp(upload1.GUID, Master.DataPID, BO.x29IdEnum.x31Report)
             uploadlist1.RefreshData_TEMP()
@@ -114,6 +116,8 @@
                 .x31Ordinary = BO.BAS.IsNullInt(Me.x31Ordinary.Value)
                 .x31IsPeriodRequired = Me.x31IsPeriodRequired.Checked
                 .x31IsUsableAsPersonalPage = Me.x31IsUsableAsPersonalPage.Checked
+                .x31DocSqlSource = Me.x31DocSqlSource.Text
+                .x31DocSqlSourceTabs = Me.x31DocSqlSourceTabs.Text
             End With
             If Me.uploadlist1.ItemsCount = 0 Then
                 Master.Notify("Chybí soubor šablony sestavy", NotifyLevel.WarningMessage)
@@ -182,6 +186,12 @@
 
     Private Sub x31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.x31FormatFlag.SelectedItem.Attributes.Item("style") = "font-weight:bold;color:blue;"
+        x31IsPeriodRequired.Visible = True : x31IsUsableAsPersonalPage.Visible = True : panDocFormat.Visible = False
+
+        Select Case Me.CurrentFormat
+            Case BO.x31FormatFlagENUM.DOCX
+                x31IsPeriodRequired.Visible = False : x31IsUsableAsPersonalPage.Visible = False : panDocFormat.Visible = True
+        End Select
     End Sub
 
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click

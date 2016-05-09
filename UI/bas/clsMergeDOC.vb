@@ -1,9 +1,16 @@
 ﻿Imports Aspose.Words
 
+Public Class clsMergeRegion
+    Public Property SqlData As String
+    Public Property SqlNoData As String
+    Public Property RegionName As String
+
+End Class
 Public Class clsMergeDOC
     Private Property _Error As String
     Private _factory As BL.Factory
-
+    Private _MergeRegions As List(Of clsMergeRegion)
+    
     Public Sub New(factory As BL.Factory)
         factory.x35GlobalParam.InhaleParams("AsposeWordsLicense")
         Dim strLicFile As String = factory.x35GlobalParam.GetValueString("AsposeWordsLicense")
@@ -69,7 +76,7 @@ Public Class clsMergeDOC
         log4net.LogManager.GetLogger("debuglog").Error(strText)
     End Sub
 
-    Private Function MailMerge(ByVal strSourceDocFullPath As String, ByVal dt As DataTable, ByVal strDestFile As String, Optional ByVal strDestFormat As String = "pdf") As Boolean
+    Private Function MailMerge(ByVal strSourceDocFullPath As String, intRecordPID As Integer, ByVal dt As DataTable, ByVal strDestFile As String, Optional ByVal strDestFormat As String = "pdf") As Boolean
         Dim doc As Document = Nothing
         Try
             doc = New Document(strSourceDocFullPath)
@@ -88,11 +95,13 @@ Public Class clsMergeDOC
                 Dim rowDoc As Document = doc.Clone()
                 rowDoc.MailMerge.Execute(dbRow)
 
+                MergeInnerTable(rowDoc, intRecordPID)
+
                 AppendDoc(dstDoc, rowDoc)
 
             Next
         End If
-        
+
 
         If SaveDoc(dstDoc, strDestFile, strDestFormat) Then
             Return True
@@ -103,10 +112,16 @@ Public Class clsMergeDOC
         Return False
     End Function
 
-    Public Function MergeReport(cX31 As BO.x31Report, dt As DataTable, Optional ByVal strExplicitDestFormat As String = "") As String
+    
+
+    Public Function MergeReport(cX31 As BO.x31Report, intRecordPID As Integer, Optional ByVal strExplicitDestFormat As String = "") As String
         If strExplicitDestFormat = "" Then strExplicitDestFormat = "pdf"
 
-
+        Dim strSQL As String = Replace(cX31.x31DocSqlSource, "#pid#", intRecordPID.ToString, , , CompareMethod.Text)
+        Dim pars As New List(Of BO.PluginDbParameter)
+        pars.Add(New BO.PluginDbParameter("pid", intRecordPID))
+        Dim dt As DataTable = _factory.pluginBL.GetDataTable(strSQL, pars)
+        _factory.x35GlobalParam.InhaleParams("Upload_Folder")
         Dim strRepFullPath As String = _factory.x35GlobalParam.UploadFolder
         If cX31.ReportFolder <> "" Then
             strRepFullPath += "\" & cX31.ReportFolder
@@ -114,11 +129,49 @@ Public Class clsMergeDOC
         strRepFullPath += "\" & cX31.ReportFileName
         Dim strDestFileName As String = BO.BAS.GetGUID() & "." & strExplicitDestFormat
         Dim strDestFileFullPath As String = _factory.x35GlobalParam.TempFolder & "\" & strDestFileName
-        If MailMerge(strRepFullPath, dt, strDestFileFullPath, strExplicitDestFormat) Then
+        If MailMerge(strRepFullPath, intRecordPID, dt, strDestFileFullPath, strExplicitDestFormat) Then
             Return strDestFileName
         Else
             Return ""
         End If
 
     End Function
+
+    Private Sub MergeInnerTable(ByRef rowDoc As Document, intRecordPID As Integer)
+        If _MergeRegions Is Nothing Then Return
+        For Each cTab In _MergeRegions
+            Dim strSQL As String = Replace(cTab.SqlData, "#pid#", intRecordPID.ToString, , , CompareMethod.Text)
+            Dim pars As New List(Of BO.PluginDbParameter)
+            pars.Add(New BO.PluginDbParameter("pid", intRecordPID))
+            Dim dt As DataTable = _factory.pluginBL.GetDataTable(strSQL, pars)
+            If _factory.pluginBL.ErrorMessage <> "" Then
+                _Error = _factory.pluginBL.ErrorMessage
+                Return
+            End If
+            If dt.Rows.Count = 0 And cTab.SqlNoData = "" Then
+                For i As Integer = 0 To dt.Columns.Count - 1
+                    If cTab.SqlNoData = "" Then
+                        cTab.SqlNoData = "SELECT NULL as " & dt.Columns(i).ColumnName
+                    Else
+                        cTab.SqlNoData += ",NULL as " & dt.Columns(i).ColumnName
+                    End If
+                Next
+            End If
+            If dt.Rows.Count = 0 Then
+                pars = New List(Of BO.PluginDbParameter)
+                dt = _factory.pluginBL.GetDataTable(cTab.SqlNoData, pars)
+            End If
+            rowDoc.MailMerge.ExecuteWithRegions(dt, cTab.RegionName)
+        Next
+
+    End Sub
+    Public Sub AddMergeRegion(ByVal strTabRegionName As String, ByVal strSQL As String, Optional ByVal strSQL_NoData As String = "")
+        If _MergeRegions Is Nothing Then _MergeRegions = New List(Of clsMergeRegion)
+        With _MergeRegions(_MergeRegions.Count - 1)
+            .RegionName = strTabRegionName
+            .SqlData = strSQL
+            .SqlNoData = strSQL_NoData
+        End With
+       
+    End Sub
 End Class

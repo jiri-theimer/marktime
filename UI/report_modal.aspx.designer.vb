@@ -140,6 +140,24 @@ Partial Public Class report_modal
     Protected WithEvents multiple_records As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''opgDocResultType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgDocResultType As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''cmdDocMergeResult control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDocMergeResult As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''rv1 control.
     '''</summary>
     '''<remarks>

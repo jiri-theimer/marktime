@@ -5,9 +5,28 @@
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
+    <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        .ui-autocomplete {
+            width: 600px;
+            height: 300px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+            font-family: 'Microsoft Sans Serif';
+            z-index: 9900;
+        }
+
+        * html .ui-autocomplete {
+            height: 300px;
+        }
+
+    </style>
     <script type="text/javascript">
         $(document).ready(function () {
             $(".slidingDiv1").hide();
@@ -41,6 +60,64 @@
         }
 
 
+        $(function () {
+
+            $("#search2").autocomplete({
+                <%If chkSearchByClientOnly.Checked then%>
+                source: "Handler/handler_search_invoice.ashx?p28id=<%=Me.p28id.Value%>",
+                <%else%>
+                source: "Handler/handler_search_invoice.ashx",
+                <%End If%>
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {
+                        //alert(ui.item.PID);
+                        
+                        document.getElementById("<%=p91text1.clientid%>").value = ui.item.p91Text1;
+                        return false;
+                    }
+                }
+
+
+
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var s = "<div>";
+                if (item.Closed == "1")
+                    s = s + "<a style='text-decoration:line-through;'>";
+                else
+                    s = s + "<a>";
+
+                s = s + __highlight(item.Invoice+"<br>"+item.p91Text1, item.FilterString);
+
+
+                s = s + "</a>";
+
+                if (item.Draft == "1")
+                    s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+                s = s + "</div>";
+
+
+                return $(s).appendTo(ul);
+
+
+            };
+        });
+
+        function __highlight(s, t) {
+            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+            return s.replace(matcher, "<strong>$1</strong>");
+        }
+
+        function search2Focus() {
+            document.getElementById("search2").value = "";
+            document.getElementById("search2").style.background = "yellow";
+        }
+        function search2Blur() {
+
+            document.getElementById("search2").style.background = "";
+            document.getElementById("search2").value = "Najít text faktury...";
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
@@ -161,8 +238,14 @@
                     </td>
                 </tr>
             </table>
-            <div class="div6">Text faktury
-                <asp:CheckBox ID="chkRememberDates" runat="server" Text="V mé další faktuře nabízet ty samé datumy" Style="padding-left: 50px;" /></div>
+            <div>
+            <asp:CheckBox ID="chkRememberDates" runat="server" Text="V mé další faktuře nabízet ty samé datumy" CssClass="div6" /></div>
+            </div>
+            <div class="div6">
+            Text faktury
+            <input id="search2" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />
+            <asp:CheckBox ID="chkSearchByClientOnly" runat="server" AutoPostBack="true" Text="Hledat pouze ve fakturách klienta" />
+            <br />
             <asp:TextBox ID="p91text1" runat="server" TextMode="MultiLine" Style="height: 50px; width: 90%;"></asp:TextBox>
         </div>
     </div>

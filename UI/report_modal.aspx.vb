@@ -146,7 +146,7 @@ Public Class report_modal
     Private Sub SetupX31Combo(strDefX31ID As String)
         Dim mq As New BO.myQuery
         mq.Closed = BO.BooleanQueryMode.FalseQuery
-        Dim lisX31 As IEnumerable(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID And p.x31FormatFlag = BO.x31FormatFlagENUM.Telerik)
+        Dim lisX31 As IEnumerable(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID And (p.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or p.x31FormatFlag = BO.x31FormatFlagENUM.DOCX))
         Me.x31ID.DataSource = lisX31
         Me.x31ID.DataBind()
         If strDefX31ID <> "" Then Me.x31ID.SelectedValue = strDefX31ID
@@ -181,8 +181,9 @@ Public Class report_modal
             Return
         End If
         Master.HeaderText = cRec.x31Name
-        If cRec.x31FormatFlag <> BO.x31FormatFlagENUM.Telerik Then
-            Master.StopPage("NOT TRDX format.")
+        
+        If Not (cRec.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX) Then
+            Master.StopPage("NOT TRDX/DOCX format.")
         End If
         Dim strRepFullPath As String = Master.Factory.x35GlobalParam.UploadFolder
         If cRec.ReportFolder <> "" Then
@@ -192,8 +193,30 @@ Public Class report_modal
 
         Dim cF As New BO.clsFile
         If Not cF.FileExist(strRepFullPath) Then
-            Master.Notify("XML soubor šablony tiskové sestavy nelze načíst.", 2)
+            Master.Notify("XML/DOCX soubor šablony tiskové sestavy nelze načíst.", 2)
             Return
+        End If
+
+        cmdDocMergeResult.Visible = False : opgDocResultType.Visible = False
+        If cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Then
+            'DOCX
+            rv1.Visible = False
+            Master.HideShowToolbarButton("pdf", False)
+            Master.HideShowToolbarButton("merge", False)
+            Dim cDoc As New clsMergeDOC(Master.Factory)
+            Dim strRet As String = cDoc.MergeReport(cRec, Master.DataPID, Me.opgDocResultType.SelectedValue)
+            If strRet = "" Then
+                Master.Notify(cDoc.ErrorMessage, NotifyLevel.ErrorMessage)
+                Return
+            Else
+                cmdDocMergeResult.Visible = True : cmdDocMergeResult.NavigateUrl = "binaryfile.aspx?tempfile=" & strRet & "&disposition=inline"
+                opgDocResultType.Visible = True
+            End If
+            Return
+        Else
+            Master.HideShowToolbarButton("pdf", True)
+            Master.HideShowToolbarButton("merge", True)
+            rv1.Visible = True
         End If
 
         Dim strXmlContent As String = cF.GetFileContents(strRepFullPath, , False), bolPeriod As Boolean = False
@@ -437,5 +460,9 @@ Public Class report_modal
             GenerateMerge(True, True)
         End If
 
+    End Sub
+
+    Private Sub opgDocResultType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgDocResultType.SelectedIndexChanged
+        RenderReport()
     End Sub
 End Class

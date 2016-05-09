@@ -95,6 +95,7 @@ Class x40MailQueueBL
         If mes.o27UploadGUID <> "" Or Not mes.AttachmentFiles_FullPath Is Nothing Then
             Dim mq As New BO.myQueryO27
             mq.x40ID = cX40.PID
+            Threading.Thread.Sleep(1000 * 2) 'počkat po dobu 2 sekundy, jinak to zlobí
             mes.o27Attachments = Me.Factory.o27AttachmentBL.GetList(mq)
         End If
         If Not mes.o27Attachments Is Nothing Then
@@ -227,6 +228,9 @@ Class x40MailQueueBL
             Try
                 .Send(mail)
                 log4net.LogManager.GetLogger("smtplog").Info("Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+                For i As Integer = 1 To mail.Attachments.Count
+                    log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
+                Next
                 cRec.x40State = BO.x40StateENUM.IsProceeded
                 cRec.x40WhenProceeded = Now
                 cRec.x40ErrorMessage = ""

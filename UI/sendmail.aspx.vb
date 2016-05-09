@@ -279,7 +279,14 @@
         If strOutputFileName = "" Then
             Master.Notify("Chyba při generování PDF.", NotifyLevel.ErrorMessage) : Return
         End If
-        Me.txtSubject.Text = cRec.x31Name
+        Select Case Me.CurrentX29ID
+            Case BO.x29IdEnum.p91Invoice
+                Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
+                Me.txtSubject.Text = String.Format("Faktura {0} | {1}", cP91.p91Code, cP91.p28Name)
+            Case Else
+                Me.txtSubject.Text = cRec.x31Name
+        End Select
+
 
         Dim cTemp As New BO.p85TempBox(), cF As New BO.clsFile
         Dim lisO13 As IEnumerable(Of BO.o13AttachmentType) = Master.Factory.o13AttachmentTypeBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.x40MailQueue)

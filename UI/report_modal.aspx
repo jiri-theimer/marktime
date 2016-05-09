@@ -125,6 +125,13 @@
         </div>
     </div>
     <asp:Label ID="multiple_records" runat="server"></asp:Label>
+    <asp:RadioButtonList ID="opgDocResultType" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" Visible="false">
+        <asp:ListItem Text="PDF dokument" Value="pdf" Selected="true"></asp:ListItem>
+        <asp:ListItem Text="DOCX dokument" Value="docx"></asp:ListItem>
+        <asp:ListItem Text="RTF dokument" Value="rtf"></asp:ListItem>
+    </asp:RadioButtonList>
+    <asp:HyperLink ID="cmdDocMergeResult" runat="server" Text="Zobrazit výsledek" Visible="false"></asp:HyperLink>
+    
     <div id="divReportViewer" style="height: 300px;">
         <telerik:ReportViewer ID="rv1" runat="server" Width="100%" Height="100%" ShowParametersButton="true" ShowHistoryButtons="false" ValidateRequestMode="Disabled">            
             <Resources PrintToolTip="Tisk" ExportSelectFormatText="Exportovat do zvoleného formátu" TogglePageLayoutToolTip="Přepnout na náhled k tisku" NextPageToolTip="Další strana" PreviousPageToolTip="Předchozí strana" RefreshToolTip="Obnovit" LastPageToolTip="Poslední strana" FirstPageToolTip="První strana" ></Resources>

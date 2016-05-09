@@ -29,7 +29,7 @@
         }
 
         .ui-autocomplete {
-            width: 600px;
+            width: 900px;
             height: 300px;
             overflow-y: auto;
             /* prevent horizontal scrollbar */
@@ -658,7 +658,7 @@
                 else
                     s = s + "<a>";
 
-                s = s + __highlight(item.Project, item.FilterString);
+                s = s + __highlight(item.Invoice, item.FilterString);
 
 
                 s = s + "</a>";

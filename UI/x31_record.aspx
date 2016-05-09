@@ -97,7 +97,18 @@
 
         </div>
     </div>
-
+    <asp:Panel ID="panDocFormat" runat="server" CssClass="content-box2">
+        <div class="title">
+            <img src="Images/doc_32.png" />
+        </div>
+        <div class="content">
+            <span>Zdrojový SQL dotaz:</span>
+            <asp:TextBox ID="x31DocSqlSource" runat="server" style="width:99%;height:200px;" TextMode="MultiLine"></asp:TextBox>
+            <br />
+            <span>SQL vnořených tabulek (Název oblasti|SQL dotaz + ENTER):</span>
+            <asp:TextBox ID="x31DocSqlSourceTabs" runat="server" style="width:99%;height:100px;" TextMode="MultiLine"></asp:TextBox>
+        </div>
+    </asp:Panel>
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

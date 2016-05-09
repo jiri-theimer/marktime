@@ -176,6 +176,33 @@ Partial Public Class x31_record
     Protected WithEvents roles1 As Global.UI.entityrole_assign
 
     '''<summary>
+    '''panDocFormat control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panDocFormat As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x31DocSqlSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31DocSqlSource As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''x31DocSqlSourceTabs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31DocSqlSourceTabs As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
