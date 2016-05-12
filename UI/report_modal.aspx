@@ -67,7 +67,7 @@
                 <asp:Label ID="lblX31ID" runat="server" Text="Sestava:" CssClass="lbl"></asp:Label>
             </td>
             <td>
-                <asp:DropDownList ID="x31ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="x31Name" Style="width: 350px;" BackColor="yellow"></asp:DropDownList>
+                <asp:DropDownList ID="x31ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="NameWithFormat" Style="width: 350px;" BackColor="yellow"></asp:DropDownList>
             </td>
             <td>
                 <uc:periodcombo ID="period1" runat="server" Width="250px" Visible="false"></uc:periodcombo>
@@ -131,6 +131,7 @@
         <asp:ListItem Text="RTF dokument" Value="rtf"></asp:ListItem>
     </asp:RadioButtonList>
     <asp:HyperLink ID="cmdDocMergeResult" runat="server" Text="Zobrazit výsledek" Visible="false"></asp:HyperLink>
+    <asp:HyperLink ID="cmdXlsResult" runat="server" Text="XLS výstup" Visible="false"></asp:HyperLink>
     
     <div id="divReportViewer" style="height: 300px;">
         <telerik:ReportViewer ID="rv1" runat="server" Width="100%" Height="100%" ShowParametersButton="true" ShowHistoryButtons="false" ValidateRequestMode="Disabled">            

@@ -207,6 +207,7 @@
     <Content Include="o42_record.aspx" />
     <Content Include="p28_framework.aspx" />
     <Content Include="p31_framework_timer.aspx" />
+    <Content Include="p31_record_split.aspx" />
     <Content Include="p31_scheduler.aspx" />
     <Content Include="p41_framework.aspx" />
     <Content Include="p41_framework_detail_budget.aspx" />
@@ -717,6 +718,13 @@
     </Compile>
     <Compile Include="p31_framework_timer.aspx.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_record_split.aspx.designer.vb">
+      <DependentUpon>p31_record_split.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_record_split.aspx.vb">
+      <DependentUpon>p31_record_split.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31_scheduler.aspx.designer.vb">

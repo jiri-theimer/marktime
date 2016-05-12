@@ -8,7 +8,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <div>
+    <button type="button" ID="cmdSplitRecord" runat="server" onclick="javascript:split_record()">Rozdělit úkon na 2 kusy</button>    
+    </div>
 
     <uc:p31_approve_onerec ID="approve1" runat="server" IsVertical="true" CommandSaveText="Potvrdit" HeaderText="Vybraný úkon" showCancelCommand="false" />
     <table cellpadding="5" cellspacing="2">
@@ -99,11 +101,16 @@
             window.parent.sw_orig("b07_create.aspx?masterprefix=p31&masterpid=<%=Master.DataPID%>");
 
         }
+
         function p31_comment_reaction(b07id) {
 
             window.parent.sw_orig("b07_create.aspx?parentpid="+b07id+"&masterprefix=p31&masterpid=<%=Master.DataPID%>");
 
 
+        }
+
+        function split_record() {
+            window.parent.sw_orig("p31_record_split.aspx?pid=<%=Master.DataPID%>");
         }
 
         <%If hidRefreshParent.Value = "1" Then%>

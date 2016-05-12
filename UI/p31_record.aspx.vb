@@ -477,9 +477,11 @@
 
             If Me.CurrentJ02ID <> .j02ID Then
                 Me.CurrentJ02ID = .j02ID
-                Me.j02ID.Text = .Person
+
                 Handle_ChangeJ02()
             End If
+
+            Me.j02ID.Text = .Person
 
             If .p41ID <> Me.CurrentP41ID Then
                 Me.p41ID.Value = .p41ID.ToString

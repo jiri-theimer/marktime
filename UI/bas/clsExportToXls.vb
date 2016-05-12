@@ -152,8 +152,6 @@ Public Class clsExportToXls
 
     Public Sub MergeSheetWithDataTable(ByRef sheet As ExcelWorksheet, dt As DataTable, intStartRow As Integer, intStartColumn As Integer)
         Dim dbRow As DataRow
-
-
         For i As Integer = 0 To dt.Columns.Count - 1
             Dim row As Integer = intStartRow
             For Each dbRow In dt.Rows

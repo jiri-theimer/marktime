@@ -33,6 +33,11 @@
         approve1.InhaleRecord(cRec, False)
 
         With cRec
+            If .p33ID = BO.p33IdENUM.Cas Then
+                cmdSplitRecord.Visible = True
+            Else
+                cmdSplitRecord.Visible = False
+            End If
             Me.Person.Text = .Person
             Me.p34name.Text = .p34Name
             Me.p32name.Text = .p32Name
@@ -45,7 +50,7 @@
             Me.p41Name.Text = .p41Name
 
             Me.p31value_orig.Text = BO.BAS.FN(.p31Value_Orig)
-            Select Case .p33ID                  
+            Select Case .p33ID
                 Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                     If .p33ID = BO.p33IdENUM.Cas And .IsRecommendedHHMM() Then
                         Dim cT As New BO.clsTime

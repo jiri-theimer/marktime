@@ -95,6 +95,16 @@ Public Class x31Report
             Return Me.x31Name & " [" & Me.x31Code & "]"
         End Get
     End Property
+    Public ReadOnly Property NameWithFormat As String
+        Get
+            Select Case Me.x31FormatFlag
+                Case x31FormatFlagENUM.ASPX : Return Me.x31Name & " (PLUGIN)"
+                Case x31FormatFlagENUM.DOCX : Return Me.x31Name & " (DOCX)"
+                Case x31FormatFlagENUM.XLSX : Return Me.x31Name & " (XLSX)"
+                Case Else : Return Me.x31Name
+            End Select
+        End Get
+    End Property
 
     Public Sub SetPluginUrl(strURL As String, intExplicitJ25Ordinary As Integer)
         _ReportFileName = strURL

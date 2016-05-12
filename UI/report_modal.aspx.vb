@@ -146,7 +146,7 @@ Public Class report_modal
     Private Sub SetupX31Combo(strDefX31ID As String)
         Dim mq As New BO.myQuery
         mq.Closed = BO.BooleanQueryMode.FalseQuery
-        Dim lisX31 As IEnumerable(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID And (p.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or p.x31FormatFlag = BO.x31FormatFlagENUM.DOCX))
+        Dim lisX31 As IEnumerable(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID And (p.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or p.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Or p.x31FormatFlag = BO.x31FormatFlagENUM.XLSX))
         Me.x31ID.DataSource = lisX31
         Me.x31ID.DataBind()
         If strDefX31ID <> "" Then Me.x31ID.SelectedValue = strDefX31ID
@@ -182,8 +182,8 @@ Public Class report_modal
         End If
         Master.HeaderText = cRec.x31Name
         
-        If Not (cRec.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX) Then
-            Master.StopPage("NOT TRDX/DOCX format.")
+        If Not (cRec.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.XLSX) Then
+            Master.StopPage("NOT TRDX/DOCX/XLSX format.")
         End If
         Dim strRepFullPath As String = Master.Factory.x35GlobalParam.UploadFolder
         If cRec.ReportFolder <> "" Then
@@ -193,11 +193,11 @@ Public Class report_modal
 
         Dim cF As New BO.clsFile
         If Not cF.FileExist(strRepFullPath) Then
-            Master.Notify("XML/DOCX soubor šablony tiskové sestavy nelze načíst.", 2)
+            Master.Notify("XML/DOCX/XLSX soubor šablony tiskové sestavy nelze načíst.", 2)
             Return
         End If
 
-        cmdDocMergeResult.Visible = False : opgDocResultType.Visible = False
+        cmdDocMergeResult.Visible = False : opgDocResultType.Visible = False : cmdXlsResult.Visible = False
         If cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Then
             'DOCX
             rv1.Visible = False
@@ -209,15 +209,27 @@ Public Class report_modal
                 Master.Notify(cDoc.ErrorMessage, NotifyLevel.ErrorMessage)
                 Return
             Else
-                cmdDocMergeResult.Visible = True : cmdDocMergeResult.NavigateUrl = "binaryfile.aspx?tempfile=" & strRet & "&disposition=inline"
+                cmdDocMergeResult.Visible = True : cmdDocMergeResult.NavigateUrl = "binaryfile.aspx?tempfile=" & strRet
                 opgDocResultType.Visible = True
             End If
             Return
-        Else
-            Master.HideShowToolbarButton("pdf", True)
-            Master.HideShowToolbarButton("merge", True)
-            rv1.Visible = True
         End If
+        If cRec.x31FormatFlag = BO.x31FormatFlagENUM.XLSX Then
+            'XLSX
+            rv1.Visible = False
+            Master.HideShowToolbarButton("pdf", False)
+            Master.HideShowToolbarButton("merge", False)
+            period1.Visible = cRec.x31IsPeriodRequired
+            Dim strRet As String = GenerateXLS(strRepFullPath)
+            If strRet <> "" Then
+                cmdXlsResult.Visible = True : cmdXlsResult.NavigateUrl = "binaryfile.aspx?tempfile=" & strRet
+            End If
+            Return
+        End If
+        Master.HideShowToolbarButton("pdf", True)
+        Master.HideShowToolbarButton("merge", True)
+        rv1.Visible = True
+
 
         Dim strXmlContent As String = cF.GetFileContents(strRepFullPath, , False), bolPeriod As Boolean = False
 
@@ -465,4 +477,75 @@ Public Class report_modal
     Private Sub opgDocResultType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgDocResultType.SelectedIndexChanged
         RenderReport()
     End Sub
+
+
+    Private Function GenerateXLS(strSourceXlsFullPath As String) As String
+        Dim cXLS As New clsExportToXls(Master.Factory)
+        Dim sheetDef As Winnovative.ExcelLib.ExcelWorksheet = cXLS.LoadSheet(strSourceXlsFullPath, 0, "marktime_definition")
+        If sheetDef Is Nothing Then
+            Master.Notify("XLS soubor neobsahuje sešit s názvem [marktime_definition].", NotifyLevel.ErrorMessage)
+            Return ""
+        End If
+        Dim sheetData As Winnovative.ExcelLib.ExcelWorksheet = Nothing
+        Dim book As Winnovative.ExcelLib.ExcelWorkbook = cXLS.LoadWorkbook(strSourceXlsFullPath)
+        For i As Integer = 0 To book.Worksheets.Count - 1
+            If LCase(book.Worksheets(i).Name) <> "marktime_definition" Then
+                sheetData = book.Worksheets(i)
+                Exit For
+            End If
+        Next
+        If sheetData Is Nothing Then
+            Master.Notify("XLS soubor neobsahuje volný datový sešit.", NotifyLevel.ErrorMessage)
+            Return ""
+        End If
+        Dim dtRecord As DataTable = Nothing
+        For i = 1 To 1000
+            Select Case LCase(sheetDef.Item(i, 1).Text)
+                Case "x31name", "x31code"
+                Case "recordsql"
+                    Dim strSQL As String = sheetDef.Item(i, 2).Value
+                    Dim pars As New List(Of BO.PluginDbParameter)
+                    pars.Add(New BO.PluginDbParameter("pid", Master.DataPID))
+                    pars.Add(New BO.PluginDbParameter("datfrom", period1.DateFrom))
+                    pars.Add(New BO.PluginDbParameter("datuntil", period1.DateUntil))
+                    dtRecord = Master.Factory.pluginBL.GetDataTable(strSQL, pars)
+                Case Else
+                    Dim strRange As String = sheetDef.Item(i, 1).Text
+                    If strRange <> "" Then
+                        Dim intRow As Integer = sheetData.Item(strRange).TopRowIndex
+                        Dim intCol As Integer = sheetData.Item(strRange).LeftColumnIndex
+                        Select Case LCase(sheetDef.Item(i, 3).Text)
+                            Case "field"
+                                If Not dtRecord Is Nothing Then
+                                    Try
+                                        sheetData.Item(intRow, intCol).Value = dtRecord.Rows(0).Item(sheetDef(i, 2).Value)
+                                    Catch ex As Exception
+                                        sheetData.Item(intRow, intCol).Value = "N/A"
+                                    End Try
+                                End If
+                            Case Else
+                                Dim strSQL As String = sheetDef.Item(i, 2).Value
+                                Dim pars As New List(Of BO.PluginDbParameter)
+                                pars.Add(New BO.PluginDbParameter("pid", Master.DataPID))
+                                pars.Add(New BO.PluginDbParameter("datfrom", period1.DateFrom))
+                                pars.Add(New BO.PluginDbParameter("datuntil", period1.DateUntil))
+                                Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(strSQL, pars)
+                                If Master.Factory.pluginBL.ErrorMessage <> "" Then
+                                    sheetData.Item(intRow, intCol).AddComment(Master.Factory.pluginBL.ErrorMessage)
+                                    sheetData.Item(intRow, intCol).Value = "N/A"
+                                Else
+                                    cXLS.MergeSheetWithDataTable(sheetData, dt, intRow, intCol)
+
+                                End If
+
+                        End Select
+                    End If
+                    
+            End Select
+        Next
+        book.Worksheets.RemoveWorksheet("marktime_definition")
+        Dim strResult As String = cXLS.SaveAsFile(sheetData)
+        Dim cF As New BO.clsFile
+        Return cF.GetNameFromFullpath(strResult)
+    End Function
 End Class

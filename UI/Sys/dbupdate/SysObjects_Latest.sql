@@ -6084,7 +6084,7 @@ if @p71id is not null
 	,p31amount_withvat_approved=@rate_billing_approved*@hours+@rate_billing_approved*@hours*@vatrate_approved/100
 	,p31Minutes_Approved_Internal=@minutes_internal,p31HHMM_Approved_Internal=dbo.Minutes2HHMM(@minutes_internal)
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id=4 then @hours else 0 end
+	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @hours else 0 end
 	,p31Hours_Approved_Billing=@hours,p31Hours_Approved_Internal=@hours_internal
 	where p31id=@p31id
 
@@ -6094,7 +6094,7 @@ if @p71id is not null
 	,p31amount_withoutvat_approved=@rate_billing_approved*@value_approved_billing,p31vatrate_approved=@vatrate_approved,p31amount_vat_approved=@rate_billing_approved*@value_approved_billing*@vatrate_approved/100
 	,p31amount_withvat_approved=@rate_billing_approved*@value_approved_billing+@rate_billing_approved*@value_approved_billing*@vatrate_approved/100
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id =4 then @value_approved_billing else 0 end
+	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @value_approved_billing else 0 end
 	where p31id=@p31id
 
    if @p33code='M' or @p33code='MV'
@@ -6102,7 +6102,7 @@ if @p71id is not null
  	update p31worksheet set p31Amount_WithoutVat_Approved=@value_approved_billing,p31vatrate_approved=@vatrate_approved
 	,p31amount_withvat_approved=(case when p31vatrate_orig<>@vatrate_approved or @value_approved_billing<>p31amount_withoutvat_orig then @value_approved_billing+@value_approved_billing*@vatrate_approved/100 else p31amount_withvat_orig end)
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id=4 then @value_approved_billing else 0 end
+	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @value_approved_billing else 0 end
 	where p31id=@p31id
    end
 
@@ -6311,7 +6311,7 @@ if @p71id is not null
 	,p31amount_withvat_approved=@rate_billing_approved*@hours+@rate_billing_approved*@hours*@vatrate_approved/100
 	,p31Minutes_Approved_Internal=@minutes_internal,p31HHMM_Approved_Internal=dbo.Minutes2HHMM(@minutes_internal)
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id=4 then @hours else 0 end
+	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @hours else 0 end
 	,p31Hours_Approved_Billing=@hours,p31Hours_Approved_Internal=@hours_internal
 	where p31GUID=@guid AND p31id=@p31id
 
@@ -6321,7 +6321,7 @@ if @p71id is not null
 	,p31amount_withoutvat_approved=@rate_billing_approved*@value_approved_billing,p31vatrate_approved=@vatrate_approved,p31amount_vat_approved=@rate_billing_approved*@value_approved_billing*@vatrate_approved/100
 	,p31amount_withvat_approved=@rate_billing_approved*@value_approved_billing+@rate_billing_approved*@value_approved_billing*@vatrate_approved/100
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id =4 then @value_approved_billing else 0 end
+	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @value_approved_billing else 0 end
 	where p31GUID=@guid AND p31id=@p31id
 
    if @p33code='M' or @p33code='MV'
@@ -6329,7 +6329,7 @@ if @p71id is not null
  	update p31worksheet_Temp set p31Amount_WithoutVat_Approved=@value_approved_billing,p31vatrate_approved=@vatrate_approved
 	,p31amount_withvat_approved=(case when p31vatrate_orig<>@vatrate_approved or @value_approved_billing<>p31amount_withoutvat_orig then @value_approved_billing+@value_approved_billing*@vatrate_approved/100 else p31amount_withvat_orig end)
 	,p31value_approved_internal=@value_approved_internal
-	,p31Value_Approved_Billing=case when @p72id=4 then @value_approved_billing else 0 end
+	,p31Value_Approved_Billing=case when @p72id IN (4,7) then @value_approved_billing else 0 end
 	where p31GUID=@guid AND p31id=@p31id
    end
 
@@ -6858,7 +6858,6 @@ if @p46ExceedFlag=2 AND @real_total+@value_orig>@p46HoursTotal
 
 select @p32IsBillable=p32IsBillable FROM p32Activity WHERE p32ID=@p32id
 
-set @err=convert(varchar(10),@real_billable+@value_orig)
 
 if @p46ExceedFlag IN (1,3) AND @p32IsBillable=1 AND @real_billable+@value_orig>@p46HoursBillable
  begin
