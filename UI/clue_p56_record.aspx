@@ -47,6 +47,8 @@
                         <td>
                             <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
 
+                            <asp:Label ID="lblPriority" runat="server" Text="Priorita zadavatele:" style="margin-left:20px;"></asp:Label>
+                            <asp:Label ID="p59name_submitter" runat="server" CssClass="valbold"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -62,22 +64,12 @@
                         <td>
                             <asp:Label ID="Project" runat="server" CssClass="valbold"></asp:Label>
 
-                        </td>
-                    </tr>
-                    <tr id="trP58" runat="server">
-                        <td>Produkt:</td>
-                        <td>
+                            <asp:Label ID="lblProduct" runat="server" Text="Produkt:" style="margin-left:20px;"></asp:Label>
                             <asp:Label ID="p58Name" runat="server" CssClass="valbold"></asp:Label>
-
                         </td>
                     </tr>
-                    <tr id="trP59" runat="server">
-                        <td>Priorita zadavatele:</td>
-                        <td>
-                            <asp:Label ID="p59name_submitter" runat="server" CssClass="valbold"></asp:Label>
-
-                        </td>
-                    </tr>
+                  
+                  
                     <tr>
                         <td>Příjemci úkolu:</td>
                         <td>

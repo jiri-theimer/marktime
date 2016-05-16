@@ -36,6 +36,8 @@
 
     Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31, strSumFieldsList As String) As DataTable
 
+    Function SplitRecord(intP31ID As Integer, dblRec1Hours As Double, strRec1Text As String, dblRec2Hours As Double, strRec2Text As String) As Integer
+
     ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
 End Interface
 Class p31WorksheetBL
@@ -377,5 +379,12 @@ Class p31WorksheetBL
 
     Public Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31, strSumFieldsList As String) As DataTable Implements Ip31WorksheetBL.GetDrillDownDataTable
         Return _cDL.GetDrillDownDataTable(colDrill, myQuery, strSumFieldsList)
+    End Function
+
+    Public Function SplitRecord(intP31ID As Integer, dblRec1Hours As Double, strRec1Text As String, dblRec2Hours As Double, strRec2Text As String) As Integer Implements Ip31WorksheetBL.SplitRecord
+        If dblRec1Hours = 0 Or dblRec2Hours = 0 Or Trim(strRec1Text) = "" Or Trim(strRec2Text) = "" Then
+            _Error = "U obou úkonů je třeba vyplnit hodiny a podrobný popis." : Return False
+        End If
+        Return _cDL.SplitRecord(intP31ID, dblRec1Hours, strRec1Text, dblRec2Hours, strRec2Text)
     End Function
 End Class

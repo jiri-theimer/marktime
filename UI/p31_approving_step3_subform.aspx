@@ -110,7 +110,7 @@
         }
 
         function split_record() {
-            window.parent.sw_orig("p31_record_split.aspx?pid=<%=Master.DataPID%>");
+            window.parent.sw_orig("p31_record_split.aspx?pid=<%=Master.DataPID%>&guid=<%=ViewState("guid")%>");
         }
 
         <%If hidRefreshParent.Value = "1" Then%>

@@ -14,7 +14,7 @@
                     .StopPage("PID is missing.")
                 End If
                 ViewState("guid") = Request.Item("guid")
-                If ViewState("guid") = "" Then Master.StopPage("guid is missing")
+                ''If ViewState("guid") = "" Then Master.StopPage("guid is missing")
 
                 .HeaderText = "Rozdělení časového úkonu na 2 kusy"
                 .HeaderIcon = "Images/worksheet_32.png"
@@ -34,7 +34,7 @@
         End If
         With cRec
             If .p33ID <> BO.p33IdENUM.Cas Then
-                Master.StopPage("Rozdělit lze pouze časový úkon.", True)
+                Master.StopPage("Funkce [Rozdělit] funguje pouze pro časové úkony.", True)
             End If
             If .p71ID > BO.p71IdENUM.Nic Then Master.StopPage("Záznam byl již dříve schválen.")
             If .p91ID <> 0 Then Master.StopPage("Záznam byl již dříve vyfakturován.")
@@ -42,7 +42,7 @@
         
         Dim cD As BO.p31WorksheetDisposition = Master.Factory.p31WorksheetBL.InhaleRecordDisposition(Master.DataPID)
         Select Case cD.RecordDisposition
-            Case BO.p31RecordDisposition.CanApprove, BO.p31RecordDisposition.CanApproveAndEdit
+            Case BO.p31RecordDisposition.CanApprove, BO.p31RecordDisposition.CanApproveAndEdit, BO.p31RecordDisposition.CanEdit
             Case Else
                 Master.StopPage("Nedisponujete oprávněním rozdělit tento úkon.", True)
         End Select
@@ -63,7 +63,42 @@
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "save" Then
             Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(Master.DataPID)
+            Dim intP31ID_New As Integer = Master.Factory.p31WorksheetBL.SplitRecord(Master.DataPID, BO.BAS.IsNullNum(Me.hours1.Value), Me.txt1.Text, BO.BAS.IsNullNum(Me.hours2.Value), Me.txt2.Text)
+            If intP31ID_New > 0 Then
 
+                If ViewState("guid") <> "" Then
+                    Dim c As New BO.p85TempBox()
+                    c.p85GUID = ViewState("guid")
+                    c.p85DataPID = Master.DataPID
+                    Master.Factory.p85TempBoxBL.Save(c)
+                End If
+                AddRecord2Approving(intP31ID_New)
+                AddRecord2Approving(Master.DataPID)
+                Master.CloseAndRefreshParent()
+            Else
+                Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
+            End If
         End If
+    End Sub
+
+    Private Sub AddRecord2Approving(intP31ID As Integer)
+        Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(intP31ID)
+        Dim cApprove As New BO.p31WorksheetApproveInput(cRec.PID, cRec.p33ID)
+        With cApprove
+            .GUID_TempData = ViewState("guid")
+            .p71id = BO.p71IdENUM.Schvaleno
+            If cRec.p32IsBillable Then
+                .p72id = BO.p72IdENUM.Fakturovat
+                .Value_Approved_Billing = cRec.p31Value_Orig
+                .Value_Approved_Internal = cRec.p31Value_Orig
+                .Rate_Billing_Approved = cRec.p31Rate_Billing_Orig
+                If cRec.p31Rate_Billing_Orig = 0 Then
+                    .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
+                End If
+            Else
+                .p72id = BO.p72IdENUM.SkrytyOdpis
+            End If
+        End With
+        Master.Factory.p31WorksheetBL.Save_Approving(cApprove, True)
     End Sub
 End Class

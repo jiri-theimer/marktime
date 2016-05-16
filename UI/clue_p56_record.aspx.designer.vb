@@ -59,6 +59,24 @@ Partial Public Class clue_p56_record
     Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblPriority control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPriority As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p59name_submitter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p59name_submitter As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''p56PlanUntil control.
     '''</summary>
     '''<remarks>
@@ -95,13 +113,13 @@ Partial Public Class clue_p56_record
     Protected WithEvents Project As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''trP58 control.
+    '''lblProduct control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents trP58 As Global.System.Web.UI.HtmlControls.HtmlTableRow
+    Protected WithEvents lblProduct As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p58Name control.
@@ -111,24 +129,6 @@ Partial Public Class clue_p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p58Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''trP59 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trP59 As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''p59name_submitter control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p59name_submitter As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''RolesInLine control.

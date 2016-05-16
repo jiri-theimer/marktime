@@ -113,6 +113,16 @@
 
         }
 
+        function record_split() {
+            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+            if (pid == "" || pid == null) {
+                alert("Není vybrán záznam.");
+                return
+            }
+            sw_master("p31_record_split.aspx?pid=" + pid, "Images/worksheet_32.png");
+
+        }
+
         function search() {
             var s = document.getElementById("<%=Me.txtSearch.ClientID%>").value;
 
@@ -209,6 +219,7 @@
                             <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdSplit" Text="Rozdělit na 2 kusy" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
                         </Items>                       
                     </telerik:RadMenuItem>
 

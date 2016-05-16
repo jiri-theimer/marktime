@@ -37,12 +37,12 @@
             If .p59ID_Submitter > 0 Then
                 Me.p59name_submitter.Text = .p59NameSubmitter
             Else
-                trP59.Visible = False
+                Me.p59name_submitter.Visible = False : Me.lblPriority.Visible = False
             End If
             If .p58ID > 0 Then
                 Me.p58Name.Text = .p58Name
             Else
-                trP58.Visible = False
+                Me.p58Name.Visible = False : lblProduct.Visible = False
             End If
 
             Me.Hours_Orig.Text = BO.BAS.FN(.Hours_Orig)

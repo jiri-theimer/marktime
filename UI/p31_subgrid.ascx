@@ -33,6 +33,7 @@
     <div class="commandcell" style="padding-left: 20px;">
         <asp:ImageButton ID="cmdNew" runat="server" ImageUrl="Images/new.png" ToolTip="Nový úkon" OnClientClick="return p31_entry()" CssClass="button-link" />
         <asp:ImageButton ID="cmdCopy" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat do nového úkonu" OnClientClick="return p31_clone()" CssClass="button-link" />
+        <asp:ImageButton ID="cmdSplit" runat="server" ImageUrl="Images/split.png" ToolTip="Rozdělit časový úkon na 2 kusy" OnClientClick="return p31_split()" CssClass="button-link" />
 
     </div>
     <div class="commandcell" style="padding-left: 10px;">

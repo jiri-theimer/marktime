@@ -26,7 +26,22 @@
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
+            if (pid == "") {
+                alert("Musíte vybrat záznam")
+                return (false);
+            }
             window.parent.sw_local("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png", false);
+            return (false);
+        }
+        function p31_split() {
+            ///volá se z p31_subgrid
+            var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
+            if (pid == "")
+            {
+                alert("Musíte vybrat záznam")
+                return (false);
+            }
+            window.parent.sw_local("p31_record_split.aspx?pid=" + pid, "Images/split.png", false);
             return (false);
         }
         function p31_entry() {

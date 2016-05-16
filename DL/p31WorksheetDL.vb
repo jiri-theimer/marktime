@@ -682,6 +682,25 @@
         Next
         Return True
     End Function
+    Public Function SplitRecord(intP31ID As Integer, dblRec1Hours As Double, strRec1Text As String, dblRec2Hours As Double, strRec2Text As String) As Integer
+        Dim pars As New DbParameters
+        With pars
+            .Add("p31id", intP31ID, DbType.Int32)
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("rec1_hours", dblRec1Hours, DbType.Double)
+            .Add("rec1_text", strRec1Text, DbType.String)
+            .Add("rec2_hours", dblRec2Hours, DbType.Double)
+            .Add("rec2_text", strRec2Text, DbType.String)
+            .Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
+            .Add("p31id_new", , DbType.Int32, ParameterDirection.Output)
+        End With
+        If _cDB.RunSP("p31_split", pars) Then
+            Return pars.Get(Of Integer)("p31id_new")
+        Else
+            Return 0
+        End If
+
+    End Function
     Public Function AppendToInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean
         Dim strGUID As String = BO.BAS.GetGUID
         _cDB.RunSQL("INSERT INTO p85TempBox(p85GUID,p85Prefix,p85DataPID) SELECT '" & strGUID & "','p31',p31ID FROM p31Worksheet WHERE p31ID IN (" & String.Join(",", pids) & ")")

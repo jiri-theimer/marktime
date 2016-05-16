@@ -113,6 +113,15 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdCopy As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''cmdSplit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSplit As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''j74id control.
     '''</summary>
     '''<remarks>
