@@ -6599,6 +6599,297 @@ SELECT @guid
 
 GO
 
+----------P---------------p31_split-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_split') and type = 'P')
+ drop procedure p31_split
+GO
+
+
+
+
+CREATE  procedure [dbo].[p31_split]
+@p31id int
+,@j03id_sys int
+,@rec1_hours float
+,@rec1_text nvarchar(2000)
+,@rec2_hours float
+,@rec2_text nvarchar(2000)
+,@err_ret varchar(1000) OUTPUT
+,@p31id_new int OUTPUT
+
+AS
+set @p31id_new=0
+
+declare @login varchar(50)
+
+select @login=j03Login FROM j03User where j03ID=@j03id_sys
+
+INSERT INTO p31Worksheet(
+	[p41ID]
+      ,[j02ID]
+      ,[p32ID]
+      ,[p56ID]
+      ,[j02ID_Owner]
+      ,[j02ID_ApprovedBy]
+      ,[p31Code]
+      ,[p70ID]
+      ,[p71ID]
+      ,[p72ID_AfterApprove]
+      ,[p72ID_AfterTrimming]
+      ,[j27ID_Billing_Orig]
+      ,[j27ID_Billing_Invoiced]
+      ,[j27ID_Billing_Invoiced_Domestic]
+      ,[j27ID_Internal]
+      ,[p91ID]
+      ,[c11ID]
+      ,[p31Date]
+      ,[p31DateUntil]
+      ,[p31HoursEntryFlag]
+      ,[p31Approved_When]
+      ,[p31IsPlanRecord]
+      ,[p31Text]
+      ,[p31Value_Orig]
+      ,[p31Value_Trimmed]
+      ,[p31Value_Approved_Billing]
+      ,[p31Value_Approved_Internal]
+      ,[p31Value_Invoiced]
+      ,[p31Amount_WithoutVat_Orig]
+      ,[p31Amount_WithVat_Orig]
+      ,[p31Amount_Vat_Orig]
+      ,[p31VatRate_Orig]
+      ,[p31Amount_WithoutVat_FixedCurrency]
+      ,[p31Amount_WithoutVat_Invoiced]
+      ,[p31Amount_WithVat_Invoiced]
+      ,[p31Amount_Vat_Invoiced]
+      ,[p31VatRate_Invoiced]
+      ,[p31Amount_WithoutVat_Invoiced_Domestic]
+      ,[p31Amount_WithVat_Invoiced_Domestic]
+      ,[p31Amount_Vat_Invoiced_Domestic]
+      ,[p31Minutes_Orig]
+      ,[p31Minutes_Trimmed]
+      ,[p31Minutes_Approved_Billing]
+      ,[p31Minutes_Approved_Internal]
+      ,[p31Minutes_Invoiced]
+      ,[p31Hours_Orig]
+      ,[p31Hours_Trimmed]
+      ,[p31Hours_Approved_Billing]
+      ,[p31Hours_Approved_Internal]
+      ,[p31Hours_Invoiced]
+      ,[p31HHMM_Orig]
+      ,[p31HHMM_Trimmed]
+      ,[p31HHMM_Approved_Billing]
+      ,[p31HHMM_Approved_Internal]
+      ,[p31HHMM_Invoiced]
+      ,[p31Rate_Billing_Orig]
+      ,[p31Rate_Internal_Orig]
+      ,[p31Rate_Billing_Approved]
+      ,[p31Rate_Internal_Approved]
+      ,[p31Rate_Billing_Invoiced]
+      ,[p31Amount_WithoutVat_Approved]
+      ,[p31Amount_WithVat_Approved]
+      ,[p31Amount_Vat_Approved]
+      ,[p31VatRate_Approved]
+      ,[p31Amount_Internal]
+      ,[p31Amount_Internal_Approved]
+      ,[p31ExchangeRate_Domestic]
+      ,[p31ExchangeRate_Invoice]
+      ,[p31ExchangeRate_Fixed]
+      ,[p31ExchangeRate_InvoiceManual]
+      ,[p31DateTimeFrom_Orig]
+      ,[p31DateTimeUntil_Orig]
+      ,[p31Value_Orig_Entried]
+      ,[p31IsInvoiceManual]
+      ,[j02ID_InvoiceManual]
+      ,[p31DateUpdate_InvoiceManual]
+      ,[p31DateInsert]
+      ,[p31UserInsert]
+      ,[p31DateUpdate]
+      ,[p31UserUpdate]
+      ,[p31ValidFrom]
+      ,[p31ValidUntil]
+      ,[p31AKDS_FPR_BODY]
+      ,[p31AKDS_FPR_PODIL]
+      ,[p31AKDS_FPR_OBRAT]
+      ,[p31AKDS_FPR_OBRAT_FixedCurrency]
+      ,[p31Calc_Pieces]
+      ,[p31Calc_PieceAmount]
+      ,[p35ID]
+      ,[p31ApprovingSet]
+      ,[o23ID_First]
+      ,[p28ID_Supplier]
+      ,[p49ID]
+      ,[j02ID_ContactPerson]
+	  )
+SELECT [p41ID]
+      ,[j02ID]
+      ,[p32ID]
+      ,[p56ID]
+      ,[j02ID_Owner]
+      ,[j02ID_ApprovedBy]
+      ,[p31Code]
+      ,[p70ID]
+      ,[p71ID]
+      ,[p72ID_AfterApprove]
+      ,[p72ID_AfterTrimming]
+      ,[j27ID_Billing_Orig]
+      ,[j27ID_Billing_Invoiced]
+      ,[j27ID_Billing_Invoiced_Domestic]
+      ,[j27ID_Internal]
+      ,[p91ID]
+      ,[c11ID]
+      ,[p31Date]
+      ,[p31DateUntil]
+      ,[p31HoursEntryFlag]
+      ,[p31Approved_When]
+      ,[p31IsPlanRecord]
+      ,[p31Text]
+      ,[p31Value_Orig]
+      ,[p31Value_Trimmed]
+      ,[p31Value_Approved_Billing]
+      ,[p31Value_Approved_Internal]
+      ,[p31Value_Invoiced]
+      ,[p31Amount_WithoutVat_Orig]
+      ,[p31Amount_WithVat_Orig]
+      ,[p31Amount_Vat_Orig]
+      ,[p31VatRate_Orig]
+      ,[p31Amount_WithoutVat_FixedCurrency]
+      ,[p31Amount_WithoutVat_Invoiced]
+      ,[p31Amount_WithVat_Invoiced]
+      ,[p31Amount_Vat_Invoiced]
+      ,[p31VatRate_Invoiced]
+      ,[p31Amount_WithoutVat_Invoiced_Domestic]
+      ,[p31Amount_WithVat_Invoiced_Domestic]
+      ,[p31Amount_Vat_Invoiced_Domestic]
+      ,[p31Minutes_Orig]
+      ,[p31Minutes_Trimmed]
+      ,[p31Minutes_Approved_Billing]
+      ,[p31Minutes_Approved_Internal]
+      ,[p31Minutes_Invoiced]
+      ,[p31Hours_Orig]
+      ,[p31Hours_Trimmed]
+      ,[p31Hours_Approved_Billing]
+      ,[p31Hours_Approved_Internal]
+      ,[p31Hours_Invoiced]
+      ,[p31HHMM_Orig]
+      ,[p31HHMM_Trimmed]
+      ,[p31HHMM_Approved_Billing]
+      ,[p31HHMM_Approved_Internal]
+      ,[p31HHMM_Invoiced]
+      ,[p31Rate_Billing_Orig]
+      ,[p31Rate_Internal_Orig]
+      ,[p31Rate_Billing_Approved]
+      ,[p31Rate_Internal_Approved]
+      ,[p31Rate_Billing_Invoiced]
+      ,[p31Amount_WithoutVat_Approved]
+      ,[p31Amount_WithVat_Approved]
+      ,[p31Amount_Vat_Approved]
+      ,[p31VatRate_Approved]
+      ,[p31Amount_Internal]
+      ,[p31Amount_Internal_Approved]
+      ,[p31ExchangeRate_Domestic]
+      ,[p31ExchangeRate_Invoice]
+      ,[p31ExchangeRate_Fixed]
+      ,[p31ExchangeRate_InvoiceManual]
+      ,[p31DateTimeFrom_Orig]
+      ,[p31DateTimeUntil_Orig]
+      ,[p31Value_Orig_Entried]
+      ,[p31IsInvoiceManual]
+      ,[j02ID_InvoiceManual]
+      ,[p31DateUpdate_InvoiceManual]
+      ,[p31DateInsert]
+      ,[p31UserInsert]
+      ,[p31DateUpdate]
+      ,[p31UserUpdate]
+      ,[p31ValidFrom]
+      ,[p31ValidUntil]
+      ,[p31AKDS_FPR_BODY]
+      ,[p31AKDS_FPR_PODIL]
+      ,[p31AKDS_FPR_OBRAT]
+      ,[p31AKDS_FPR_OBRAT_FixedCurrency]
+      ,[p31Calc_Pieces]
+      ,[p31Calc_PieceAmount]
+      ,[p35ID]
+      ,[p31ApprovingSet]
+      ,[o23ID_First]
+      ,[p28ID_Supplier]
+      ,[p49ID]
+      ,[j02ID_ContactPerson]
+FROM p31Worksheet
+WHERE p31ID=@p31id
+
+
+SELECT @p31id_new=@@IDENTITY
+
+
+UPDATE p31Worksheet SET p31Text=@rec1_text,p31Value_Orig=@rec1_hours,p31Hours_Orig=@rec1_hours,p31HHMM_Orig=dbo.Hours2HHMM(@rec1_hours)
+WHERE p31ID=@p31id
+
+
+UPDATE p31Worksheet SET p31Text=@rec2_text,p31Value_Orig=@rec2_hours,p31Hours_Orig=@rec2_hours,p31HHMM_Orig=dbo.Hours2HHMM(@rec2_hours)
+WHERE p31ID=@p31id_new
+
+
+EXEC [dbo].[p31_aftersave] @p31id,@j03id_sys,null,null,null
+
+EXEC [dbo].[p31_aftersave] @p31id_new,@j03id_sys,null,null,null
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p31_test_beforesave-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_test_beforesave') and type = 'P')
@@ -11412,6 +11703,131 @@ create    PROCEDURE [dbo].[zzz_p28_aftersave]
 AS
 
 update p28contact set p28regid='hovado' where p28ID=@pid
+
+GO
+
+----------P---------------zzz_p41_fsr_report-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('zzz_p41_fsr_report') and type = 'P')
+ drop procedure zzz_p41_fsr_report
+GO
+
+
+
+
+
+
+CREATE    PROCEDURE [dbo].[zzz_p41_fsr_report]
+@pid int
+,@datfrom datetime
+,@datuntil datetime
+
+AS
+
+declare @odmeny float,@odmeny_obdobi float,@odmeny_plan float,@odmeny_plan_obdobi float
+declare @vynosy_rozpracovanost float,@vynosy_rozpracovanost_obdobi float
+declare @primarni_naklady float,@primarni_naklady_obdobi float,@primarni_naklady_plan float,@primarni_naklady_plan_obdobi float
+declare @penezni_vydaje float,@penezni_vydaje_obdobi float,@penezni_vydaje_plan float,@penezni_vydaje_plan_obdobi float
+
+select @odmeny=sum(a.p31Amount_WithoutVat_Orig)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND a.p41ID=@pid
+
+
+select @odmeny_obdobi=sum(a.p31Amount_WithoutVat_Orig)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND a.p41ID=@pid
+AND a.p31Date BETWEEN @datfrom AND @datuntil
+
+
+select @odmeny_plan=sum(a.p49Amount)
+FROM
+p49FinancialPlan a INNER JOIN p45Budget p45 ON a.p45ID=p45.p45ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID
+WHERE p34.p34IncomeStatementFlag=2 AND p45.p41ID=@pid AND getdate() BETWEEN p45.p45ValidFrom AND p45.p45ValidUntil
+
+select @odmeny_plan_obdobi=sum(a.p49Amount)
+FROM
+p49FinancialPlan a INNER JOIN p45Budget p45 ON a.p45ID=p45.p45ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID
+WHERE p34.p34IncomeStatementFlag=2 AND p45.p41ID=@pid AND getdate() BETWEEN p45.p45ValidFrom AND p45.p45ValidUntil
+AND a.p49DateFrom BETWEEN @datfrom AND @datuntil AND a.p49DateUntil BETWEEN @datfrom AND @datuntil
+
+
+select @vynosy_rozpracovanost=sum(a.p31Amount_WithoutVat_Orig)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p33ID IN (1) AND a.p71ID IS NULL AND a.p91ID IS NULL AND a.p41ID=@pid
+
+
+select @vynosy_rozpracovanost_obdobi=sum(a.p31Amount_WithoutVat_Orig)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p33ID IN (1) AND a.p71ID IS NULL AND a.p91ID IS NULL AND a.p41ID=@pid
+AND a.p31Date BETWEEN @datfrom AND @datuntil
+
+
+select @primarni_naklady=sum(a.p31Amount_Internal)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p33ID IN (1) AND a.p41ID=@pid
+
+
+select @primarni_naklady_obdobi=sum(a.p31Amount_Internal)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p33ID IN (1) AND a.p41ID=@pid
+AND a.p31Date BETWEEN @datfrom AND @datuntil
+
+select @primarni_naklady_plan=sum(a.p46HoursTotal*a.p46CostRate)
+FROM
+p46BudgetPerson a INNER JOIN p45Budget p45 ON a.p45ID=p45.p45ID
+WHERE p45.p41ID=@pid AND getdate() BETWEEN p45.p45ValidFrom AND p45.p45ValidUntil
+
+select @primarni_naklady_plan_obdobi=sum(a.p47HoursTotal*p46.p46CostRate)
+FROM
+p47CapacityPlan a INNER JOIN p46BudgetPerson p46 ON a.p46ID=p46.p46ID
+INNER JOIN p45Budget p45 ON p46.p45ID=p45.p45ID
+WHERE p45.p41ID=@pid AND getdate() BETWEEN p45.p45ValidFrom AND p45.p45ValidUntil
+AND a.p47DateFrom BETWEEN @datfrom AND @datuntil AND a.p47DateUntil BETWEEN @datfrom AND @datuntil
+
+
+select @penezni_vydaje=sum(a.p31Amount_WithoutVat_Orig)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.p41ID=@pid
+
+
+select @penezni_vydaje_obdobi=sum(a.p31Amount_WithoutVat_Orig)
+FROM
+p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.p41ID=@pid
+AND a.p31Date BETWEEN @datfrom AND @datuntil
+
+select @penezni_vydaje_plan=sum(a.p49Amount)
+FROM
+p49FinancialPlan a INNER JOIN p45Budget p45 ON a.p45ID=p45.p45ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID
+WHERE p34.p34IncomeStatementFlag=1 AND p45.p41ID=@pid AND getdate() BETWEEN p45.p45ValidFrom AND p45.p45ValidUntil
+
+
+select @penezni_vydaje_plan_obdobi=sum(a.p49Amount)
+FROM
+p49FinancialPlan a INNER JOIN p45Budget p45 ON a.p45ID=p45.p45ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID
+WHERE p34.p34IncomeStatementFlag=1 AND p45.p41ID=@pid AND getdate() BETWEEN p45.p45ValidFrom AND p45.p45ValidUntil
+AND a.p49DateFrom BETWEEN @datfrom AND @datuntil AND a.p49DateUntil BETWEEN @datfrom AND @datuntil
+
+
+
+select a.*,p28.*
+,isnull(@odmeny,0) as Odmeny,isnull(@odmeny_obdobi,0) as Odmeny_Obdobi,isnull(@odmeny_plan,0) as Odmeny_Plan,isnull(@odmeny_plan_obdobi,0) as Odmeny_Plan_Obdobi
+,isnull(@vynosy_rozpracovanost,0) as Vynosy_Rozpracovanost,isnull(@vynosy_rozpracovanost_obdobi,0) as Vynosy_Rozpracovanost_Obdobi
+,isnull(@primarni_naklady,0) as Primarni_Naklady,isnull(@primarni_naklady_obdobi,0) as Primarni_Naklady_Obdobi,isnull(@primarni_naklady_plan,0) as Primarni_Naklady_Plan,isnull(@primarni_naklady_plan_obdobi,0) as Primarni_Naklady_Plan_Obdobi
+,isnull(@penezni_vydaje,0) as Penezni_Vydaje,isnull(@penezni_vydaje_obdobi,0) as Penezni_Vydaje_Obdobi,isnull(@penezni_vydaje_plan,0) as Penezni_Vydaje_Plan,isnull(@penezni_vydaje_plan_obdobi,0) as Penezni_Vydaje_Plan_Obdobi
+from
+p41Project a LEFT OUTER JOIN p28Contact p28 ON a.p28ID_Client=p28.p28ID
+WHERE a.p41ID=@pid
+
+
 
 GO
 

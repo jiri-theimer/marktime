@@ -71,9 +71,14 @@
                     c.p85GUID = ViewState("guid")
                     c.p85DataPID = Master.DataPID
                     Master.Factory.p85TempBoxBL.Save(c)
+
+                    AddRecord2Approving(intP31ID_New)
+                    AddRecord2Approving(Master.DataPID)
+                    Master.Factory.p31WorksheetBL.UpdateTempField("p31Value_Orig", Me.hours1.Value, ViewState("guid"), Master.DataPID)
+                    Master.Factory.p31WorksheetBL.UpdateTempField("p31Hours_Orig", Me.hours1.Value, ViewState("guid"), Master.DataPID)
+                    Master.Factory.p31WorksheetBL.UpdateTempField("p31Text", Me.txt1.Text, ViewState("guid"), Master.DataPID)
                 End If
-                AddRecord2Approving(intP31ID_New)
-                AddRecord2Approving(Master.DataPID)
+                
                 Master.CloseAndRefreshParent()
             Else
                 Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)

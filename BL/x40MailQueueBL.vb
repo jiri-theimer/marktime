@@ -228,7 +228,7 @@ Class x40MailQueueBL
             Try
                 .Send(mail)
                 log4net.LogManager.GetLogger("smtplog").Info("Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
-                For i As Integer = 1 To mail.Attachments.Count
+                For i As Integer = 0 To mail.Attachments.Count - 1
                     log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
                 Next
                 cRec.x40State = BO.x40StateENUM.IsProceeded

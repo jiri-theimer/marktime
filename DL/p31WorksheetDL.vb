@@ -108,6 +108,14 @@
         End If
         
     End Function
+
+    Public Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("pid", intP31ID, DbType.Int32)
+        pars.Add("guid", strGUID, DbType.String)
+        pars.Add("val", dbValue)
+        Return _cDB.RunSQL("UPDATE p31Worksheet_Temp SET " & strField & "=@val WHERE p31GUID=@guid AND p31ID=@pid", pars)
+    End Function
     Public Function Save_Approving(strGUID_TempData As String, intPID As Integer, p71id As BO.p71IdENUM, p72id As BO.p72IdENUM, dblValue_Approved_Billing As Double, dblRate_Billing_Approved As Double, dblValue_Approved_Internal As Double, dblRate_Internal_Approved As Double, strP31Text As String, dblVatRate_Approved As Double, strApprovingSet As String) As Boolean
         Dim pars As New DbParameters
         With pars

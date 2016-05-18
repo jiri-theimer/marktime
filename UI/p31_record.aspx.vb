@@ -518,7 +518,12 @@
                         Case BO.p31HoursEntryFlagENUM.Minuty
                             Me.p31Value_Orig.Text = .p31Minutes_Orig.ToString
                         Case BO.p31HoursEntryFlagENUM.PresnyCasOdDo
-                            Me.p31Value_Orig.Text = .p31Value_Orig.ToString
+                            If .IsRecommendedHHMM() Then
+                                Me.p31Value_Orig.Text = .p31HHMM_Orig
+                            Else
+                                Me.p31Value_Orig.Text = .p31Value_Orig.ToString
+                            End If
+                            ''Me.p31Value_Orig.Text = .p31Value_Orig.ToString
                             Me.TimeFrom.Text = .TimeFrom
                             Me.TimeUntil.Text = .TimeUntil()
                         Case Else

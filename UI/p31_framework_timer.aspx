@@ -17,13 +17,22 @@
 
     <script src="Scripts/jquery.timer.js" type="text/javascript"></script>
 
+    <script type="text/javascript">
+        function timer_change(ctl) {
+            if (ctl.checked == true)
+                window.open("p31_framework.aspx?showtimer=1", "_top");
+            else
+                window.open("p31_framework.aspx?showtimer=0", "_top");
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="content-box2">
         <div class="title">
             <img src="Images/stopwatch.png" alt="Časovač" />
-            <asp:Label ID="lblItemsHeader" runat="server" Text="Časovač"></asp:Label>
+            
+            <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat ČASOVAČ" AutoPostBack="false" Checked="true" onClick="timer_change(this)" />
         </div>
         <div class="content">
             <uc:timer ID="timer1" runat="server" IsPanelView="true" IsIFrame="true"></uc:timer>

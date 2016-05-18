@@ -29,6 +29,14 @@ Public Enum PivotSumFieldType
     p31Amount_WithoutVat_FixedCurrency = 24
     p31Amount_WithoutVat_Invoiced_Domestic = 25
 
+    p31Hours_Approved_FixedPrice = 126
+    p31Hours_Approved_WriteOff = 123
+    p31Hours_Approved_InvoiceLater = 127
+
+    p31Hours_Invoiced_FixedPrice = 36
+    p31Hours_Invoiced_WriteOff = 33
+
+
 End Enum
 Public Class PivotRowColumnField
     Public FieldType As PivotRowColumnFieldType
@@ -140,9 +148,15 @@ Public Class PivotSumField
             Case PivotSumFieldType.p31Hours_Invoiced
                 _SelectField = "sum(p31Hours_Invoiced)"
                 s = "Vyfakt.hodiny"
+            Case PivotSumFieldType.p31Hours_Invoiced_FixedPrice
+                _SelectField = "sum(case when a.p70ID=6 THEN p31Hours_Orig end)"
+                s = "Vyfakt.hodiny [Paušál]"
+            Case PivotSumFieldType.p31Hours_Invoiced_WriteOff
+                _SelectField = "sum(case when a.p70ID IN (2,3) THEN p31Hours_Orig end)"
+                s = "Vyfakt.hodiny [Odpis]"
             Case PivotSumFieldType.p31Hours_Approved_Billing
                 _SelectField = "sum(p31Hours_Approved_Billing)"
-                s = "Schválené hodiny"
+                s = "Schválené hodiny [Fakturovat]"
             Case PivotSumFieldType.p31Amount_WithoutVat_Orig
                 _SelectField = "sum(p31Amount_WithoutVat_Orig)"
                 s = "Částka bez DPH"
@@ -166,7 +180,16 @@ Public Class PivotSumField
                 s = "Vyfakturovaná hodnota"
             Case PivotSumFieldType.p31Value_Approved_Billing
                 _SelectField = "sum(p31Value_Approved_Billing)"
-                s = "Schválená hodnota"
+                s = "Schválená hodnota [Fakturovat]"
+            Case PivotSumFieldType.p31Hours_Approved_FixedPrice
+                _SelectField = "sum(case when a.p72ID_AfterApprove=6 THEN p31Hours_Orig end)"
+                s = "Schválené hodiny [Paušál]"
+            Case PivotSumFieldType.p31Hours_Approved_WriteOff
+                _SelectField = "sum(case when a.p72ID_AfterApprove IN (2,3) THEN p31Hours_Orig end)"
+                s = "Schválené hodiny [Odpis]"
+            Case PivotSumFieldType.p31Hours_Approved_InvoiceLater
+                _SelectField = "sum(case when a.p72ID_AfterApprove=7 THEN p31Hours_Orig end)"
+                s = "Schválené hodiny [Fakt.později]"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

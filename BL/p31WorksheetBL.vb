@@ -38,6 +38,7 @@
 
     Function SplitRecord(intP31ID As Integer, dblRec1Hours As Double, strRec1Text As String, dblRec2Hours As Double, strRec2Text As String) As Integer
 
+    Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean
     ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
 End Interface
 Class p31WorksheetBL
@@ -386,5 +387,8 @@ Class p31WorksheetBL
             _Error = "U obou úkonů je třeba vyplnit hodiny a podrobný popis." : Return False
         End If
         Return _cDL.SplitRecord(intP31ID, dblRec1Hours, strRec1Text, dblRec2Hours, strRec2Text)
+    End Function
+    Public Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean Implements Ip31WorksheetBL.UpdateTempField
+        Return _cDL.UpdateTempField(strField, dbValue, strGUID, intP31ID)
     End Function
 End Class

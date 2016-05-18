@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class p31_framework_timer
 
     '''<summary>
-    '''lblItemsHeader control.
+    '''chkTimer control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblItemsHeader As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents chkTimer As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''timer1 control.
