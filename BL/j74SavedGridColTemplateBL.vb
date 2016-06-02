@@ -377,6 +377,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Celkem", "p91Amount_TotalDue", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Celkem x Kurz", "p91Amount_TotalDue_Krat_Kurz", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Celk.dph", "p91Amount_Vat", BO.cfENUM.Numeric, , , True))
+            .Add(AGC("Vč.dph", "p91Amount_WithVat", BO.cfENUM.Numeric, , , True))
             ''.Add(AGC("Bez dph CZK", "WithoutVat_CZK", BO.cfENUM.Numeric, , , True))
             ''.Add(AGC("Bez dph EUR", "WithoutVat_EUR", BO.cfENUM.Numeric, , , True))
             ''.Add(AGC("Dluh CZK", "Debt_CZK", BO.cfENUM.Numeric, , , True))

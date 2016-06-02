@@ -140,12 +140,12 @@
     <div>
         <asp:Label ID="Label13" runat="server" CssClass="lbl" Text="Volné pole #3:"></asp:Label>
     </div>
-    <asp:TextBox ID="p93FreeText03" runat="server" Style="width: 100%;"></asp:TextBox>
+    <asp:TextBox ID="p93FreeText03" runat="server" Style="width: 100%;height:50px;" TextMode="MultiLine"></asp:TextBox>
     <div>
         <asp:Label ID="Label14" runat="server" CssClass="lbl" Text="Volné pole #4:"></asp:Label>
     </div>
     <div>
-    <asp:TextBox ID="p93FreeText04" runat="server" Style="width: 100%;"></asp:TextBox>
+    <asp:TextBox ID="p93FreeText04" runat="server" Style="width: 100%;height:50px;" TextMode="MultiLine"></asp:TextBox>
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
