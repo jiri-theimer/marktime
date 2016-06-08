@@ -484,16 +484,18 @@
             <asp:DropDownList ID="j02ID_ContactPerson" runat="server" Visible="false" DataValueField="pid" DataTextField="FullNameDescWithEmail"></asp:DropDownList>
         </div>
     </div>
-    <div class="content-box1" style="min-width:270px;">
+    <div class="content-box1" style="min-width:170px;">
         <div class="title">
             <img src="Images/notepad.png" alt="Dokument" />Dokumenty
-            <asp:HyperLink ID="cmdDoc" runat="server" Text="Nahrát/Spárovat dokument" NavigateUrl="javascript:o23_record()"></asp:HyperLink>
+            
         </div>
         <div class="content">
+            <div><asp:HyperLink ID="cmdDoc" runat="server" Text="Nahrát/Spárovat dokument" NavigateUrl="javascript:o23_record()"></asp:HyperLink></div>
             <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p31Worksheet"></uc:o23_list>
         </div>
     </div>
-    <asp:panel ID="panP49" runat="server" cssclass="content-box1" style="min-width:270px;" Visible="false">
+
+    <asp:panel ID="panP49" runat="server" cssclass="content-box1" style="min-width:170px;" Visible="false">
         <div class="title">
             <img src="Images/finplan.png" alt="Rozpočet" />rozpočet
             <asp:HyperLink ID="cmdP49" runat="server" Text="Spárovat" NavigateUrl="javascript:p49_bind()"></asp:HyperLink>
@@ -504,6 +506,24 @@
             <asp:HiddenField ID="p49ID" runat="server" />
         </div>
     </asp:panel>
+    <asp:panel ID="panTrimming" runat="server" cssclass="content-box1" style="min-width:100px;" Visible="false">
+        <div class="title">
+            <img src="Images/correction_down.gif" alt="Korekce pro schvalování" />
+            <img src="Images/correction_up.gif" alt="Korekce pro schvalování" />
+            <asp:CheckBox ID="chkTrimming" runat="server" Text="Korekce" AutoPostBack="true" />
+        </div>
+        <div class="content">
+            <asp:RadioButtonList ID="p72ID_AfterTrimming" runat="server" AutoPostBack="true" RepeatDirection="Vertical" Visible="false">
+                <asp:ListItem Text="Fakturovat" Value="4"></asp:ListItem>
+                <asp:ListItem Text="Zahrnout do paušálu" Value="6" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
+            </asp:RadioButtonList>
+            <asp:Label ID="lblValueTrimmed" Text="Hodiny k fakturaci:" runat="server" Visible="false"></asp:Label>
+            <asp:TextBox ID="p31Value_Trimmed" runat="server" style="width:40px;text-align:left;" Visible="false"></asp:TextBox>
+        </div>
+    </asp:panel>
+
     <div style="clear: both;"></div>
     <div class="div6">
 

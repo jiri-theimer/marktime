@@ -181,6 +181,7 @@ Public Class report_modal
             Return
         End If
         Master.HeaderText = cRec.x31Name
+        Me.x31ID.ToolTip = String.Format("Kód sestavy: {0}", cRec.x31Code)
         
         If Not (cRec.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.XLSX) Then
             Master.StopPage("NOT TRDX/DOCX/XLSX format.")
@@ -204,6 +205,13 @@ Public Class report_modal
             Master.HideShowToolbarButton("pdf", False)
             Master.HideShowToolbarButton("merge", False)
             Dim cDoc As New clsMergeDOC(Master.Factory)
+            If Trim(cRec.x31DocSqlSourceTabs) <> "" Then
+                Dim a() As String = Split(Trim(cRec.x31DocSqlSourceTabs), "||")
+                For i As Integer = 0 To UBound(a)
+                    Dim b() As String = Split(a(i) & "|", "|")
+                    cDoc.AddMergeRegion(b(0), b(1), b(2))
+                Next
+            End If
             Dim strRet As String = cDoc.MergeReport(cRec, Master.DataPID, Me.opgDocResultType.SelectedValue)
             If strRet = "" Then
                 Master.Notify(cDoc.ErrorMessage, NotifyLevel.ErrorMessage)

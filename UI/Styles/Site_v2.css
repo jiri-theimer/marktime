@@ -627,8 +627,13 @@ TH {
     background-position: center;
 }
 
-.corr_4 {
-    background-image: url('../Images/correction.gif');
+.corr_4_down {
+    background-image: url('../Images/correction_down.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.corr_4_up {
+    background-image: url('../Images/correction_up.gif');
     background-repeat: no-repeat;
     background-position: center;
 }

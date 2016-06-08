@@ -143,6 +143,7 @@ Public Class clsMergeDOC
             Dim strSQL As String = Replace(cTab.SqlData, "#pid#", intRecordPID.ToString, , , CompareMethod.Text)
             Dim pars As New List(Of BO.PluginDbParameter)
             pars.Add(New BO.PluginDbParameter("pid", intRecordPID))
+
             Dim dt As DataTable = _factory.pluginBL.GetDataTable(strSQL, pars)
             If _factory.pluginBL.ErrorMessage <> "" Then
                 _Error = _factory.pluginBL.ErrorMessage
@@ -159,14 +160,22 @@ Public Class clsMergeDOC
             End If
             If dt.Rows.Count = 0 Then
                 pars = New List(Of BO.PluginDbParameter)
+
                 dt = _factory.pluginBL.GetDataTable(cTab.SqlNoData, pars)
             End If
-            rowDoc.MailMerge.ExecuteWithRegions(dt, cTab.RegionName)
+            dt.TableName = cTab.RegionName
+            rowDoc.MailMerge.ExecuteWithRegions(dt)
+            
+            
+            ''rowDoc.MailMerge.ExecuteWithRegions(dt.CreateDataReader(), cTab.RegionName)
         Next
 
     End Sub
     Public Sub AddMergeRegion(ByVal strTabRegionName As String, ByVal strSQL As String, Optional ByVal strSQL_NoData As String = "")
-        If _MergeRegions Is Nothing Then _MergeRegions = New List(Of clsMergeRegion)
+        If _MergeRegions Is Nothing Then
+            _MergeRegions = New List(Of clsMergeRegion)
+        End If
+        _MergeRegions.Add(New clsMergeRegion())
         With _MergeRegions(_MergeRegions.Count - 1)
             .RegionName = strTabRegionName
             .SqlData = strSQL

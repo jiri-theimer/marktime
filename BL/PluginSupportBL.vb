@@ -7,6 +7,7 @@ Public Interface IPluginSupportBL
     Function CreateDataTableIntoString(tab As BO.PluginDataTable) As String
     Function MergeRecordSQL(strSQL As String, strTemplateContent As String) As String
     Function GetDataTable(strSQL As String, pars As List(Of BO.PluginDbParameter)) As DataTable
+
     Function GetDataSet(strSQL As String, pars As List(Of BO.PluginDbParameter), Optional strTablesNameList As String = "") As DataSet
 
     ReadOnly Property RowsCount As Integer

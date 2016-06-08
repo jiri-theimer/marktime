@@ -527,6 +527,51 @@ Partial Public Class p31_record
     Protected WithEvents p49ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''panTrimming control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panTrimming As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chkTrimming control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkTrimming As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p72ID_AfterTrimming control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p72ID_AfterTrimming As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''lblValueTrimmed control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblValueTrimmed As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p31Value_Trimmed control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31Value_Trimmed As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''SharedCalendar control.
     '''</summary>
     '''<remarks>

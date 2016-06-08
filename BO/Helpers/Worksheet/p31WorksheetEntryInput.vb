@@ -129,6 +129,27 @@ Public Class p31WorksheetEntryInput
         End If
         Return True
     End Function
+    Public Function ValidateTrimming(status As BO.p72IdENUM, strValue As String) As Boolean
+        Me.p72ID_AfterTrimming = status
+        Select Case Me.p72ID_AfterTrimming
+            Case p72IdENUM.Fakturovat
+                Dim cTime As New BO.clsTime()
+                _p31Minutes_Trimmed = cTime.ConvertTimeToSeconds(strValue) / 60
+                If _p31Minutes_Trimmed = 0 Then
+                    _Error = "Pro korekci statusu [Fakturovat] musí být hodiny větší než nula."
+                    Return False
+                End If
+                _p31Value_Trimmed = _p31Minutes_Trimmed / 60
+                Me.p31HHMM_Trimmed = cTime.ShowAsHHMM(strValue)
+                Return True
+            Case Else
+                _p31Minutes_Trimmed = 0
+                _p31Value_Trimmed = 0
+                Me.p31HHMM_Trimmed = ""
+                Me.Value_Trimmed = ""
+                Return True
+        End Select
+    End Function
     Public Function ValidateEntryTime(intRound2Minutes As Integer) As Boolean
 
         'časový úkon
@@ -177,7 +198,6 @@ Public Class p31WorksheetEntryInput
         _p31Minutes_Orig = intSeconds_Orig / 60
         _p31HHMM_Orig = cTime.GetTimeFromSeconds(intSeconds_Orig)
         _p31Value_Orig = CDbl(intSeconds_Orig / 60 / 60)
-
 
         Return True
     End Function

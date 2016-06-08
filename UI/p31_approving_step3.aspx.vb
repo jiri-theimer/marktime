@@ -201,6 +201,16 @@ Public Class p31_approving_step3
                                     If cRec.p31Rate_Billing_Orig = 0 Then
                                         .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
                                     End If
+                                    If cRec.p72ID_AfterTrimming > BO.p72IdENUM._NotSpecified Then
+                                        'uživatel zadal v úkonu výchozí korekci pro schvalování
+                                        .p72id = cRec.p72ID_AfterTrimming
+                                        If .p72id = BO.p72IdENUM.Fakturovat Then
+                                            .Value_Approved_Billing = cRec.p31Value_Trimmed
+                                        Else
+                                            .Rate_Billing_Approved = 0
+                                            .Value_Approved_Billing = 0
+                                        End If
+                                    End If
                                 Case BO.p33IdENUM.PenizeBezDPH
                                     If cRec.p31Value_Orig = 0 Then
                                         .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
@@ -212,7 +222,12 @@ Public Class p31_approving_step3
                                     End If
                             End Select
                         Else
-                            .p72id = BO.p72IdENUM.SkrytyOdpis
+                            If cRec.p72ID_AfterTrimming = BO.p72IdENUM._NotSpecified Or cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat Then
+                                .p72id = BO.p72IdENUM.SkrytyOdpis
+                            Else
+                                .p72id = cRec.p72ID_AfterTrimming
+                            End If
+
                         End If
                     Else
                         'již dříve schválený záznam

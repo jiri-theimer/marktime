@@ -156,6 +156,7 @@ Class p31WorksheetBL
                 End If
             End If
             If .PID = 0 And .Value_Orig_Entried = "" Then .Value_Orig_Entried = .Value_Orig
+
         End With
         Dim cValidate As BO.p31ValidateBeforeSave = _cDL.ValidateBeforeSaveOrigRecord(cRec, lisFF)
         With cValidate
@@ -168,7 +169,20 @@ Class p31WorksheetBL
                         _Error = cRec.ErrorMessage
                         Return False
                     End If
-
+                    If cRec.p72ID_AfterTrimming > BO.p72IdENUM._NotSpecified Then
+                        If Not cRec.ValidateTrimming(cRec.p72ID_AfterTrimming, cRec.Value_Trimmed) Then
+                            _Error = cRec.ErrorMessage
+                            Return False
+                        End If
+                        If cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat And cRec.p31Hours_Orig = cRec.p31Hours_Trimmed Then
+                            _Error = "Proč v rámci korekce jsou hodiny k fakturaci shodné s vykázanými hodinami?" : Return False
+                        End If
+                        If cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat And cRec.p32ID <> 0 Then
+                            If Not Factory.p32ActivityBL.Load(cRec.p32ID).p32IsBillable Then
+                                _Error = "Pro nefakturovatelnou aktivitu nemůžete nastavit fakturační status [Fakturovat]." : Return False
+                            End If
+                        End If
+                    End If
                 Case BO.p33IdENUM.Kusovnik
                     If Not cRec.ValidateEntryKusovnik() Then
                         _Error = cRec.ErrorMessage

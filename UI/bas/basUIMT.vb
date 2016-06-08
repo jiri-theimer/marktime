@@ -269,7 +269,12 @@ Public Class basUIMT
                 Case BO.p72IdENUM.SkrytyOdpis, BO.p72IdENUM.ViditelnyOdpis, BO.p72IdENUM.ZahrnoutDoPausalu
                     dataItem("systemcolumn").CssClass = "corr_236"
                 Case BO.p72IdENUM.Fakturovat
-                    dataItem("systemcolumn").CssClass = "corr_4"
+                    If .p31Hours_Trimmed < .p31Hours_Orig Then
+                        dataItem("systemcolumn").CssClass = "corr_4_down"
+                    End If
+                    If .p31Hours_Trimmed > .p31Hours_Orig Then
+                        dataItem("systemcolumn").CssClass = "corr_4_up"
+                    End If
             End Select
             Select Case .p72ID_AfterApprove
                 Case BO.p72IdENUM.Fakturovat : dataItem("systemcolumn").CssClass = "a14"

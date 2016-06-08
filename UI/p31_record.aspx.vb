@@ -512,6 +512,12 @@
             Else
                 Me.chkBindToContactPerson.Checked = False
             End If
+            If .p72ID_AfterTrimming > BO.p72IdENUM._NotSpecified Then
+                Me.chkTrimming.Checked = True
+            Else
+                Me.chkTrimming.Checked = False
+            End If
+            RefreshTrimming(cRec)
             Select Case CurrentP33ID
                 Case BO.p33IdENUM.Cas
                     Select Case .p31HoursEntryFlag
@@ -844,6 +850,14 @@
                         .p31HoursEntryflag = Me.CurrentHoursEntryFlag
                         .Value_Orig = Me.p31Value_Orig.Text
                         .Value_Orig_Entried = .Value_Orig
+                        If chkTrimming.Checked Then
+                            .p72ID_AfterTrimming = DirectCast(CInt(Me.p72ID_AfterTrimming.SelectedValue), BO.p72IdENUM)
+                            .Value_Trimmed = Me.p31Value_Trimmed.Text
+                            If Not .ValidateTrimming(.p72ID_AfterTrimming, .Value_Trimmed) Then
+                                Master.Notify(.ErrorMessage, 2)
+                                Return
+                            End If
+                        End If
 
                         If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo Or (TimeFrom.Visible And TimeUntil.Visible) Then
                             .TimeFrom = Me.TimeFrom.Text
@@ -1032,6 +1046,7 @@
     Private Sub p31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Me.p56ID.Items.Count <= 1 Or Me.chkBindToP56.Checked = False Then Me.p56ID.Visible = False Else Me.p56ID.Visible = True
         Me.panP49.Visible = panM.Visible
+        Me.panTrimming.Visible = panT.Visible
         If Not _Sheet Is Nothing And panM.Visible Then
             Dim bolVydaj As Boolean = False
             If _Sheet.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj Then bolVydaj = True
@@ -1139,7 +1154,7 @@
         RefreshContactPersonCombo(False, 0)
 
     End Sub
-
+    
     Private Sub RefreshContactPersonCombo(bolSilent As Boolean, intDefJ02ID As Integer)
         Me.j02ID_ContactPerson.Visible = False
         If Not Me.chkBindToContactPerson.Checked Then
@@ -1169,5 +1184,41 @@
             If intDefJ02ID > 0 Then basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson, intDefJ02ID.ToString)
             Me.j02ID_ContactPerson.Visible = True
         End If
+    End Sub
+
+    Private Sub chkTrimming_CheckedChanged(sender As Object, e As EventArgs) Handles chkTrimming.CheckedChanged
+        RefreshTrimming(Nothing)
+    End Sub
+    Private Sub RefreshTrimming(cRec As BO.p31Worksheet)
+        Me.p72ID_AfterTrimming.Visible = Me.chkTrimming.Checked
+        Me.lblValueTrimmed.Visible = Me.chkTrimming.Checked
+        Me.p31Value_Trimmed.Visible = Me.chkTrimming.Checked
+        If Not Me.chkTrimming.Checked Then Return
+
+        If Not cRec Is Nothing Then
+            If cRec.p72ID_AfterTrimming > BO.p72IdENUM._NotSpecified Then basUI.SelectRadiolistValue(Me.p72ID_AfterTrimming, CInt(cRec.p72ID_AfterTrimming).ToString)
+            If cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat Then
+                If cRec.IsRecommendedHHMM() Then
+                    Me.p31Value_Trimmed.Text = cRec.p31HHMM_Trimmed
+                Else
+                    Me.p31Value_Trimmed.Text = CStr(cRec.p31Value_Trimmed)
+                End If
+            End If
+        End If
+        Select Case Me.p72ID_AfterTrimming.SelectedValue
+            Case "4"
+                Me.p31Value_Trimmed.Enabled = True
+                Dim cT As New BO.clsTime
+                If cT.ShowAsDec(Me.p31Value_Trimmed.Text) = 0 Then
+                    Me.p31Value_Trimmed.Text = Me.p31Value_Orig.Text
+                End If
+            Case Else
+                Me.p31Value_Trimmed.Text = "0"
+                Me.p31Value_Trimmed.Enabled = False
+        End Select
+    End Sub
+
+    Private Sub p72ID_AfterTrimming_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p72ID_AfterTrimming.SelectedIndexChanged
+        RefreshTrimming(Nothing)
     End Sub
 End Class

@@ -12,6 +12,5 @@
         strSP = bas.ClearSqlForAttacks(strSP)
         Return _cDB.GetDataSetBySP(strSP, intRetRows, dbPars)
     End Function
-
     
 End Class
