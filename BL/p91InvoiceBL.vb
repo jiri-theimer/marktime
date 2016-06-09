@@ -57,6 +57,8 @@ Class p91InvoiceBL
         End If
         Dim intP91ID As Integer = _cDL.Create(cCreate)
         If intP91ID <> 0 Then
+            Me.RaiseAppEvent_TailoringAfterSave(intP91ID, "p91", "_aftercreate")
+
             Me.RaiseAppEvent(BO.x45IDEnum.p91_new, intP91ID)
             Return intP91ID
         Else

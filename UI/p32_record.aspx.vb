@@ -70,6 +70,9 @@
             Me.p32DefaultWorksheetText_Lang4.Text = .p32DefaultWorksheetText_Lang4
             Me.p35id.SelectedValue = .p35ID.ToString
             Me.p32ExternalPID.Text = .p32ExternalPID
+            Me.p32FreeText01.Text = .p32FreeText01
+            Me.p32FreeText02.Text = .p32FreeText02
+            Me.p32FreeText03.Text = .p32FreeText03
 
             basUI.SetColorToPicker(Me.p32Color, .p32Color)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -119,6 +122,9 @@
             cRec.p32DefaultWorksheetText_Lang2 = Me.p32DefaultWorksheetText_Lang2.Text
             cRec.p32DefaultWorksheetText_Lang3 = Me.p32DefaultWorksheetText_Lang3.Text
             cRec.p32DefaultWorksheetText_Lang4 = Me.p32DefaultWorksheetText_Lang4.Text
+            cRec.p32FreeText01 = Me.p32FreeText01.Text
+            cRec.p32FreeText02 = Me.p32FreeText02.Text
+            cRec.p32FreeText03 = Me.p32FreeText03.Text
 
             cRec.p32Color = basUI.GetColorFromPicker(Me.p32Color)
             cRec.ValidFrom = Master.RecordValidFrom

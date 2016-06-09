@@ -31,6 +31,10 @@ Public Class p32Activity
     Public Property p32DefaultWorksheetText_Lang3 As String
     Public Property p32DefaultWorksheetText_Lang4 As String
 
+    Public Property p32FreeText01 As String
+    Public Property p32FreeText02 As String
+    Public Property p32FreeText03 As String
+
     Public Property p32IsSystemDefault As Boolean
     Public Property p32ExternalPID As String
     Private Property _p34Name As String

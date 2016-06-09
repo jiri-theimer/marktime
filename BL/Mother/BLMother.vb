@@ -72,12 +72,12 @@
         End If
         Return True
     End Function
-    Public Function RaiseAppEvent_TailoringAfterSave(intRecordPID As Integer, strRecPrefix As String) As Boolean
+    Public Function RaiseAppEvent_TailoringAfterSave(intRecordPID As Integer, strRecPrefix As String, Optional strSuffix As String = "_aftersave") As Boolean
         'validační pravidla na míru pro zákazníky
         'musí existovat ve web.config (appSettings) klíč události ve tvau prefix+'_aftersave' + SQL procedura, která provádí test
-        If BO.ASS.GetConfigVal(strRecPrefix + "_aftersave") > "" Then
-            Dim strSqlProc As String = BO.ASS.GetConfigVal(strRecPrefix + "_aftersave")
-            Return Factory.p85TempBoxBL.RunTailoredProcedure(intRecordPID, BO.ASS.GetConfigVal(strRecPrefix + "_aftersave"))
+        If BO.ASS.GetConfigVal(strRecPrefix + strSuffix) > "" Then
+            Dim strSqlProc As String = BO.ASS.GetConfigVal(strRecPrefix + strSuffix)
+            Return Factory.p85TempBoxBL.RunTailoredProcedure(intRecordPID, BO.ASS.GetConfigVal(strRecPrefix + strSuffix))
 
         End If
         Return True

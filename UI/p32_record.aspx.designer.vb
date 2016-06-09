@@ -320,6 +320,60 @@ Partial Public Class p32_record
     Protected WithEvents p32ExternalPID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblp32FreeText01 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp32FreeText01 As Global.UI.datalabel
+
+    '''<summary>
+    '''p32FreeText01 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32FreeText01 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblp32FreeText02 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp32FreeText02 As Global.UI.datalabel
+
+    '''<summary>
+    '''p32FreeText02 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32FreeText02 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblp32FreeText03 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp32FreeText03 As Global.UI.datalabel
+
+    '''<summary>
+    '''p32FreeText03 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p32FreeText03 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Page3 control.
     '''</summary>
     '''<remarks>

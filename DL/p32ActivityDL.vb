@@ -45,6 +45,10 @@
             pars.Add("p32Name_BillingLang3", .p32Name_BillingLang3, DbType.String)
             pars.Add("p32Name_BillingLang4", .p32Name_BillingLang4, DbType.String)
 
+            pars.Add("p32FreeText01", .p32FreeText01, DbType.String)
+            pars.Add("p32FreeText02", .p32FreeText02, DbType.String)
+            pars.Add("p32FreeText03", .p32FreeText03, DbType.String)
+
             pars.Add("p32DefaultWorksheetText_Lang1", .p32DefaultWorksheetText_Lang1, DbType.String, , , True, "Výchozí popis úkonu - fakturační jazyk 1")
             pars.Add("p32DefaultWorksheetText_Lang2", .p32DefaultWorksheetText_Lang2, DbType.String, , , True, "Výchozí popis úkonu - fakturační jazyk 2")
             pars.Add("p32DefaultWorksheetText_Lang3", .p32DefaultWorksheetText_Lang3, DbType.String, , , True, "Výchozí popis úkonu - fakturační jazyk 3")

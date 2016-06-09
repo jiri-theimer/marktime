@@ -114,7 +114,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <uc:datalabel ID="lblX15" runat="server" Text="Výchozí sazba DPH:" GLX="65"></uc:datalabel>
+                        <uc:datalabel ID="lblX15" runat="server" Text="Fakturační sazba DPH:"></uc:datalabel>
                     </td>
                     <td>
                         <uc:datacombo ID="x15id" Width="130px" runat="server" DataTextField="x15Name" DataValueField="pid"></uc:datacombo>
@@ -138,7 +138,30 @@
                         <asp:TextBox ID="p32ExternalPID" runat="server"></asp:TextBox>
                     </td>
                 </tr>
-
+                <tr>
+                    <td>
+                        <uc:datalabel runat="server" ID="lblp32FreeText01" Text="Volné pole 1:"></uc:datalabel>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p32FreeText01" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <uc:datalabel runat="server" ID="lblp32FreeText02" Text="Volné pole 2:"></uc:datalabel>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p32FreeText02" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <uc:datalabel runat="server" ID="lblp32FreeText03" Text="Volné pole 3:"></uc:datalabel>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p32FreeText03" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
 
             </table>
 
