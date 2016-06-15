@@ -470,8 +470,8 @@
             <asp:CheckBox ID="chkBindToP56" runat="server" Text="Projektový úkol" AutoPostBack="true" />
         </div>
         <div class="content">
-            <asp:DropDownList ID="p56ID" runat="server" DataTextField="NameWithTypeAndCode" DataValueField="pid" Visible="false" ></asp:DropDownList>
             
+            <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" Visible="false" AutoPostBack="false" Filter="Contains" />
         </div>
 
     </div>

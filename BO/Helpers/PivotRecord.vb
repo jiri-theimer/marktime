@@ -6,6 +6,7 @@
     p56Name = 5601
     p28Name = 2801
     j18Name = 1801
+    j18Name_j02 = 1802
     p32IsBillable = 9801
     p71Name = 7101
     p70Name = 7001
@@ -53,6 +54,10 @@ Public Class PivotRowColumnField
                 _SelectField = "min(j18.j18Name)"
                 _GroupByField = "p41.j18ID"
                 s = "Středisko projektu"
+            Case PivotRowColumnFieldType.j18Name_j02
+                _SelectField = "min(j18_j02.j18Name)"
+                _GroupByField = "j02.j18ID"
+                s = "Středisko osoby"
             Case PivotRowColumnFieldType.Month
                 _SelectField = "convert(varchar(7), a.p31Date, 126)"
                 _GroupByField = _SelectField

@@ -43,12 +43,14 @@
         Else
             gridP31.AllowApproving = BO.BAS.BG(Request.Item("IsApprovingPerson"))
         End If
-        
+
     End Sub
 
     Private Sub entity_framework_p31subform_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         
     End Sub
+
+
 
    
 End Class

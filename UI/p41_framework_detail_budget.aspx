@@ -76,7 +76,10 @@
      <div style="clear:both;"></div>
     <uc:datagrid ID="gridBudget" runat="server" OnRowSelected="RowSelected_budget" OnRowDblClick="RowDoubleClick_budget"></uc:datagrid>
 
-
+    <asp:Panel ID="panP49Setting" runat="server">
+        <asp:CheckBox ID="chkP49GroupByP34" runat="server" Text="Mezisoučty za sešity" AutoPostBack="true" Checked="true" />
+        <asp:CheckBox ID="chkP49GroupByP32" runat="server" Text="Mezisoučty za aktivity" AutoPostBack="true" />
+    </asp:Panel>
 
     <asp:HiddenField ID="hidBudgetPID" runat="server" />
 

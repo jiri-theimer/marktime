@@ -40,11 +40,11 @@ Class p86BankAccountBL
                 _Error = "IBAN kód [" & cRec.p86IBAN & "] je již nastaven v jiném bankovním účtu." : Return False
             End If
         End If
-        If cRec.p86SWIFT <> "" Then
-            If lis.Where(Function(p) LCase(Trim(p.p86SWIFT)) = LCase(Trim(cRec.p86SWIFT))).Count > 0 Then
-                _Error = "SWIFT kód [" & cRec.p86SWIFT & "] je již nastaven v jiném bankovním účtu." : Return False
-            End If
-        End If
+        ''If cRec.p86SWIFT <> "" Then
+        ''    If lis.Where(Function(p) LCase(Trim(p.p86SWIFT)) = LCase(Trim(cRec.p86SWIFT))).Count > 0 Then
+        ''        _Error = "SWIFT kód [" & cRec.p86SWIFT & "] je již nastaven v jiném bankovním účtu." : Return False
+        ''    End If
+        ''End If
         
 
         Return _cDL.Save(cRec)

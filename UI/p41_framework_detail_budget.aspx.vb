@@ -20,14 +20,21 @@ Public Class p41_framework_detail_budget
             Dim lisPars As New List(Of String)
             With lisPars
                 .Add("p41_framework_detail_budget-prefix")
+                .Add("p41_framework_detail_budget-chkP49GroupByP34")
+                .Add("p41_framework_detail_budget-chkP49GroupByP32")
             End With
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
 
                 If .GetUserParam("p41_framework_detail_budget-prefix", "p46") = "p46" Then
                     cmdBudgetP46.Checked = True : cmdBudgetP46.Font.Bold = True
+                    panP49Setting.Visible = False
                 Else
                     cmdBudgetP49.Checked = True : cmdBudgetP49.Font.Bold = True
+                    panP49Setting.Visible = True
+                    Me.chkP49GroupByP34.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkP49GroupByP34", "1"))
+                    Me.chkP49GroupByP32.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkP49GroupByP32"))
+
                 End If
             End With
             RefreshRecord()
@@ -105,19 +112,41 @@ Public Class p41_framework_detail_budget
                 .AddColumn("p32Name", "Aktivita", , , , , , , , "plan")
                 .AddColumn("SupplierName", "Dodavatel", , , , , , , , "plan")
                 .AddColumn("p49Text", "Text", , , , , , , , "plan")
-                .AddColumn("p49Amount", "Částka", BO.cfENUM.Numeric2, , , , , , , "plan")
+                .AddColumn("p49Amount", "Částka", BO.cfENUM.Numeric2, , , , , True, , "plan")
                 .AddColumn("j27Code", "Měna", , , , , , , , "plan")
 
                 .AddColumn("p31Date", "Datum", BO.cfENUM.DateOnly, , , , , , , "real")
-                .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , , , "real")
+                .AddColumn("p31Amount_WithoutVat_Orig", "Částka", BO.cfENUM.Numeric, , , , , True, , "real")
                 .AddColumn("p31Code", "Kód dokladu", , , , , , , , "real")
                 .AddColumn("p31Count", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
 
+                
             End If
 
 
         End With
 
+
+    End Sub
+
+    Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
+        gridBudget.radGridOrig.GroupingSettings.RetainGroupFootersVisibility = True
+        With gridBudget.radGridOrig.MasterTableView
+            ''.GroupByExpressions.Clear()
+            If strGroupField = "" Then Return
+            .ShowGroupFooter = True
+            .GroupsDefaultExpanded = True
+            Dim GGE As New GridGroupByExpression
+            Dim fld As New GridGroupByField
+            fld.FieldName = strGroupField
+            fld.HeaderText = strFieldHeader
+            GGE.SelectFields.Add(fld)
+            GGE.GroupByFields.Add(fld)
+
+            .GroupByExpressions.Add(GGE)
+
+            ''.ShowFooter = True
+        End With
 
     End Sub
 
@@ -150,23 +179,23 @@ Public Class p41_framework_detail_budget
             Dim lis As IEnumerable(Of BO.p49FinancialPlanExtended) = Master.Factory.p49FinancialPlanBL.GetList_Extended(mq, Master.DataPID)
             gridBudget.DataSource = lis
             If lis.Count > 0 Then
-                With gridBudget.radGridOrig.MasterTableView
-                    .GroupByExpressions.Clear()
-                    .ShowGroupFooter = False
-                    Dim GGE As New GridGroupByExpression
-                    Dim fld As New GridGroupByField
-                    fld.FieldName = "p34Name"
-                    fld.HeaderText = "Sešit"
-
-                    GGE.SelectFields.Add(fld)
-                    GGE.GroupByFields.Add(fld)
-
-                    .GroupByExpressions.Add(GGE)
-                End With
+                gridBudget.radGridOrig.MasterTableView.GroupByExpressions.Clear()
+                If Me.chkP49GroupByP34.Checked Then SetupGrouping("p34Name", "Sešit")
+                If Me.chkP49GroupByP32.Checked Then SetupGrouping("p32Name", "Aktivita")
+                gridBudget.radGridOrig.ShowFooter = False
             End If
         End If
 
     End Sub
 
    
+    Private Sub chkP49GroupByP34_CheckedChanged(sender As Object, e As EventArgs) Handles chkP49GroupByP34.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p41_framework_detail_budget-chkP49GroupByP34", BO.BAS.GB(Me.chkP49GroupByP34.Checked))
+        gridBudget.Rebind(False)
+    End Sub
+
+    Private Sub chkP49GroupByP32_CheckedChanged(sender As Object, e As EventArgs) Handles chkP49GroupByP32.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p41_framework_detail_budget-chkP49GroupByP32", BO.BAS.GB(Me.chkP49GroupByP32.Checked))
+        gridBudget.Rebind(False)
+    End Sub
 End Class

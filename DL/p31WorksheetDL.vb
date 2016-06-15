@@ -623,6 +623,7 @@
         s.Append(" LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID")
         s.Append(" LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID LEFT OUTER JOIN p71ApproveStatus p71 ON a.p71ID=p71.p71ID LEFT OUTER JOIN p72PreBillingStatus p72approve ON a.p72ID_AfterApprove=p72approve.p72ID")
         s.Append(" LEFT OUTER JOIN j18Region j18 ON p41.j18ID=j18.j18ID")
+        s.Append(" LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27orig ON a.j27ID_Billing_Orig=j27orig.j27ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27invoice ON a.j27ID_Billing_Invoiced=j27invoice.j27ID")
         Dim pars As New DL.DbParameters

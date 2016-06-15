@@ -1044,7 +1044,7 @@
     End Sub
 
     Private Sub p31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Me.p56ID.Items.Count <= 1 Or Me.chkBindToP56.Checked = False Then Me.p56ID.Visible = False Else Me.p56ID.Visible = True
+        If Me.p56ID.Rows <= 1 Or Me.chkBindToP56.Checked = False Then Me.p56ID.Visible = False Else Me.p56ID.Visible = True
         Me.panP49.Visible = panM.Visible
         Me.panTrimming.Visible = panT.Visible
         If Not _Sheet Is Nothing And panM.Visible Then
@@ -1082,18 +1082,20 @@
 
         Me.p56ID.DataSource = Master.Factory.p56TaskBL.GetList(mq)
         Me.p56ID.DataBind()
-        Me.p56ID.Items.Insert(0, "")
+        'Me.p56ID.Items.Insert(0, "")
 
-        If intDefP56ID > 0 Then basUI.SelectDropdownlistValue(Me.p56ID, intDefP56ID.ToString)
+        'If intDefP56ID > 0 Then basUI.SelectDropdownlistValue(Me.p56ID, intDefP56ID.ToString)
+        If intDefP56ID > 0 Then Me.p56ID.SelectedValue = intDefP56ID.ToString
 
         If intDefP56ID > 0 And Me.p56ID.SelectedValue <> intDefP56ID.ToString And bolSilent Then
             Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(intDefP56ID)
             If Not cRec Is Nothing Then
-                Me.p56ID.Items.Add(New ListItem(cRec.NameWithTypeAndCode, cRec.PID.ToString))
+                'Me.p56ID.Items.Add(New ListItem(cRec.NameWithTypeAndCode, cRec.PID.ToString))
+                Me.p56ID.AddOneComboItem(cRec.PID.ToString, cRec.NameWithTypeAndCode)
             End If
         End If
 
-        If Me.p56ID.Items.Count <= 1 And Not bolSilent Then
+        If Me.p56ID.Rows <= 1 And Not bolSilent Then
             Master.Notify("Pro vybranou osobu a projekt není dostupný ani jeden otevřený úkol k vykazování.")
         End If
 

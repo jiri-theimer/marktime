@@ -112,6 +112,7 @@ Public Class p31_subgrid
         If Me.MasterDataPID = 0 Then Return
 
         If Not Page.IsPostBack Then
+            ViewState("footersum") = ""
             With Factory.j03UserBL
                 Dim lisPars As New List(Of String), strKey As String = "p31_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.EntityX29ID)
                 If Me.hidJ74RecordState.Value <> "" Then strKey += "-" & Me.hidJ74RecordState.Value
@@ -330,7 +331,9 @@ Public Class p31_subgrid
 
     Private Sub grid2_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles grid2.NeedFooterSource
         footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
-
+        If ViewState("footersum") = "" And grid2.radGridOrig.PageCount > 1 Then
+            RecalcVirtualRowCount()
+        End If
 
         grid2.ParseFooterItemString(footerItem, ViewState("footersum"))
 
@@ -344,6 +347,7 @@ Public Class p31_subgrid
             Return
         End If
         grid2.Rebind(bolKeepSelectedItems, intExplicitSelectedPID)
+
     End Sub
 
     ''Public Sub SelectRecord(intSelPID As Integer)
@@ -379,7 +383,6 @@ Public Class p31_subgrid
         Dim cSum As BO.p31WorksheetSum = Me.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
         If Not cSum Is Nothing Then
             grid2.VirtualRowCount = cSum.RowsCount
-
             ViewState("footersum") = grid2.GenerateFooterItemString(cSum)
         Else
             ViewState("footersum") = ""

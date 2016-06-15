@@ -86,6 +86,33 @@ Partial Public Class p41_framework_detail_budget
     Protected WithEvents gridBudget As Global.UI.datagrid
 
     '''<summary>
+    '''panP49Setting control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panP49Setting As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chkP49GroupByP34 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP49GroupByP34 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkP49GroupByP32 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP49GroupByP32 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''hidBudgetPID control.
     '''</summary>
     '''<remarks>
