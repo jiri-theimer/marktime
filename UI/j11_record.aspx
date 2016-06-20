@@ -40,6 +40,12 @@
             <asp:Button ID="cmdRemoveSelected" runat="server" Text="Odebrat vybrané členy" CssClass="cmd" />
         </div>
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" AllowMultiSelect="true"></uc:datagrid>
+
+        <div class="div6">
+            <asp:Label ID="Label1" runat="server" Text="Vybrat pozici:" CssClass="lbl"></asp:Label>
+            <asp:DropDownList ID="j07ID" runat="server" DataTextField="j07Name" DataValueField="pid"></asp:DropDownList>
+            <asp:Button ID="cmdAddJ07" runat="server" Text="Přidat do týmu" CssClass="cmd" />
+        </div>
     </asp:Panel>
 
     <asp:CheckBox ID="j11IsAllPersons" runat="server" Visible="false" />

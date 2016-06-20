@@ -95,6 +95,33 @@ Partial Public Class j11_record
     Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j07ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j07ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdAddJ07 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddJ07 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''j11IsAllPersons control.
     '''</summary>
     '''<remarks>

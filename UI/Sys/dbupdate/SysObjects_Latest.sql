@@ -315,6 +315,64 @@ END
 
 GO
 
+----------FN---------------get_one_role_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('get_one_role_inline') and type = 'FN')
+ drop function get_one_role_inline
+GO
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[get_one_role_inline](@recordpid int,@x67id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené obsazení projektové role @x67id v projektu @p41id
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@recordpid AND x69.x67ID=@x67id
+  
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------get_today-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('get_today') and type = 'FN')
@@ -1244,6 +1302,79 @@ END
 
 GO
 
+----------FN---------------p41_get_p41code_client_plus_ordinary-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_p41code_client_plus_ordinary') and type = 'FN')
+ drop function p41_get_p41code_client_plus_ordinary
+GO
+
+
+
+
+CREATE    FUNCTION [dbo].[p41_get_p41code_client_plus_ordinary](@pid int)
+RETURNS varchar(50)
+AS
+BEGIN
+  ---vrací kód projektu podle logiky kód klienta + poøadové èíslo projektu v rámci klienta
+
+ DECLARE @ret varchar(50),@p28id int,@p28code varchar(50),@pocet int,@suffix varchar(10)
+
+ select @p28id=p28ID_Client,@p28code=b.p28Code From p41Project a INNER JOIN p28Contact b ON a.p28ID_Client=b.p28ID WHERE a.p41ID=@pid
+
+ if @p28id is null
+  set @p28code='????'+convert(varchar(10),@pid)
+
+ select @pocet=count(*) FROM p41Project WHERE p28ID_Client=@p28id
+
+ set @pocet=isnull(@pocet,0)+1
+ set @suffix=right('000'+convert(varchar(10),@pocet),3)
+ 
+ set @ret=@p28code+'-'+@suffix
+ 
+ 
+
+ WHILE (exists(select p41ID FROM p41Project WHERE p41Code like @ret))
+  BEGIN
+    set @pocet=@pocet+1
+	set @suffix=right('000'+convert(varchar(10),@pocet),3)
+	set @ret=@p28code+'-'+@suffix
+	if @pocet>=999
+	 BREAK
+  END
+
+
+
+RETURN(@ret)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------p41_getroles_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p41_getroles_inline') and type = 'FN')
@@ -1754,13 +1885,11 @@ if exists (select 1 from sysobjects where  id = object_id('x38_get_freecode') an
 GO
 
 
-
-
 CREATE FUNCTION [dbo].[x38_get_freecode](@x38id int,@x29id int,@datapid int,@isdraft bit,@attempt_number int)
 RETURNS varchar(50) AS  
 BEGIN 
 
-declare @mask varchar(200),@x38ExplicitIncrementStart int,@code_new varchar(50),@val int,@code_max_used varchar(50)
+declare @x38ExplicitIncrementStart int,@code_new varchar(50),@val int,@code_max_used varchar(50)
 declare @x38Scale int,@x38ConstantBeforeValue varchar(50),@pid_last int,@x38ConstantAfterValue varchar(40)
 
 set @val=0
@@ -1777,7 +1906,7 @@ if @x29id<>328
 
 if @x38id is not null
  begin
-	select @mask=x38MaskSyntax,@x38ExplicitIncrementStart=isnull(x38ExplicitIncrementStart,0)
+	select @x38ExplicitIncrementStart=isnull(x38ExplicitIncrementStart,0)
 	,@x38ConstantBeforeValue=isnull(x38ConstantBeforeValue,''),@x38Scale=x38Scale
 	,@x38ConstantAfterValue=isnull(x38ConstantAfterValue,'')
 	FROM x38CodeLogic
@@ -1799,8 +1928,8 @@ else
 	 end
  end
 
-if @mask is not null
- RETURN('')	---maska zatím nefunguje
+
+
 
 
 if isnull(@x38Scale,0)=0
@@ -4231,7 +4360,7 @@ if @isdraft=0
   return
  end
  
-set @code=dbo.x38_get_freecode(@x38id,223,@o23id,0,1)
+exec dbo.x38_get_freecode_proc @x38id,223,@o23id,0,1,@code OUTPUT
 
 if @code=''
  begin
@@ -4732,10 +4861,15 @@ update p28Contact set p28Name=@p28name where p28ID=@p28id
 
 if left(@p28code,4)='TEMP' OR @p28code is null
  begin
+  if @x38id is null
+   select @x38id=x38ID FROM x38CodeLogic WHERE x29ID=328 AND x38IsDraft=0
+
+
   if @isdraft=1
    set @x38id=@x38id_draft
 
-  set @p28code=dbo.x38_get_freecode(@x38id,328,@p28id,@isdraft,1)
+  exec dbo.x38_get_freecode_proc @x38id,328,@p28id,@isdraft,1,@p28code OUTPUT
+
   if @p28code<>''
    UPDATE p28Contact SET p28Code=@p28code WHERE p28ID=@p28id 
  end 
@@ -4788,7 +4922,7 @@ if @isdraft=0
   return
  end
  
-set @code=dbo.x38_get_freecode(@x38id,328,@p28id,0,1)
+exec dbo.x38_get_freecode_proc @x38id,328,@p28id,0,1,@code OUTPUT
 
 if @code=''
  begin
@@ -7795,7 +7929,9 @@ if left(@p41code,4)='TEMP' OR @p41code is null
   if @isdraft=1
    set @x38id=@x38id_draft
 
-  set @p41code=dbo.x38_get_freecode(@x38id,141,@p41id,@isdraft,1)
+  exec dbo.x38_get_freecode_proc @x38id,141,@p41id,@isdraft,1,@p41code OUTPUT
+
+  --set @p41code=dbo.x38_get_freecode(@x38id,141,@p41id,@isdraft,1)
   if @p41code<>''
    UPDATE p41Project SET p41Code=@p41code WHERE p41ID=@p41id 
  end 
@@ -7846,8 +7982,8 @@ if @isdraft=0
   set @err_ret='Záznam není v àežimu DRAFT.'
   return
  end
- 
-set @code=dbo.x38_get_freecode(@x38id,141,@p41id,0,1)
+
+exec dbo.x38_get_freecode_proc @x38id,141,@p41id,0,1,@code OUTPUT
 
 if @code=''
  begin
@@ -9268,7 +9404,7 @@ if @isdraft=0
   return	--faktura není v draftu
  end
  
-set @code=dbo.x38_get_freecode(@x38id,391,@p91id,0,1)
+exec dbo.x38_get_freecode_proc @x38id,391,@p91id,0,1,@code OUTPUT
 
 if @code=''
  begin
@@ -9343,7 +9479,7 @@ set @login=dbo.j03_getlogin(@j03id_sys)
 select @j02id_owner=j02ID FROM j03User WHERE j03ID=@j03id_sys
 
 
-declare @j27id int,@j19id int,@x15id int,@j17id int,@p98id int
+declare @j27id int,@j19id int,@x15id int,@j17id int,@p98id int,@p91vatrate_standard float,@p91vatrate_low float,@p91vatrate_special float
 
 
 select @j27id=j27id,@j19id=j19id,@x15id=x15id,@j17id=j17ID,@p98id=p98ID
@@ -9412,6 +9548,38 @@ update p31worksheet set p31Minutes_Invoiced=p31Minutes_Approved_Billing,p31Hours
 ,p31Rate_Billing_Invoiced=p31Rate_Billing_Approved
 where p91ID=@ret_p91id
 
+
+select @p91vatrate_standard=dbo.p91_get_vatrate(3,@j27id,@j17id,@p91datesupply)	---DPH sazba, která bude aplikovaná pro všechny èasové úkony
+select @p91vatrate_low=dbo.p91_get_vatrate(2,@j27id,@j17id,@p91datesupply)
+select @p91vatrate_special=dbo.p91_get_vatrate(4,@j27id,@j17id,@p91datesupply)
+
+if @p91vatrate_standard is not null and isnull(@x15id,0)=0
+ begin	---narovnat standardní fakturaèní sazbu DPH
+  UPDATE p31Worksheet SET p31VatRate_Invoiced=@p91vatrate_standard
+  ,p31Amount_Vat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_standard/100
+  ,p31Amount_WithVat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_standard/100+p31Amount_WithoutVat_Invoiced
+  WHERE p91ID=@ret_p91id AND p31VatRate_Invoiced<>@p91vatrate_standard
+  AND p32ID IN (SELECT a.p32ID FROM p32Activity a INNER JOIN p34ActivityGroup b ON a.p34ID=b.p34ID WHERE b.p33ID IN (1,2,3) AND ISNULL(a.x15ID,3)=3)
+
+ end
+
+if @p91vatrate_low is not null and isnull(@x15id,0)=0
+ begin	---narovnat sníženou fakturaèní sazbu DPH
+  UPDATE p31Worksheet SET p31VatRate_Invoiced=@p91vatrate_low
+  ,p31Amount_Vat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_low/100
+  ,p31Amount_WithVat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_low/100+p31Amount_WithoutVat_Invoiced
+  WHERE p91ID=@ret_p91id AND p31VatRate_Invoiced<>@p91vatrate_low
+  AND p32ID IN (SELECT a.p32ID FROM p32Activity a INNER JOIN p34ActivityGroup b ON a.p34ID=b.p34ID WHERE b.p33ID IN (2) AND a.x15ID=2)
+
+ end
+
+if isnull(@x15id,0)=0
+ begin
+  UPDATE p31Worksheet SET p31VatRate_Invoiced=@p91vatrate_standard
+  ,p31Amount_Vat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_standard/100
+  ,p31Amount_WithVat_Invoiced=p31Amount_WithoutVat_Invoiced*@p91vatrate_standard/100+p31Amount_WithoutVat_Invoiced
+  WHERE p91ID=@ret_p91id AND p31VatRate_Invoiced<>@p91vatrate_standard and p31VatRate_Invoiced<>@p91vatrate_low and p31VatRate_Invoiced<>@p91vatrate_special and p31VatRate_Invoiced>0
+ end
 
 
 exec p91_recalc_amount @ret_p91id
@@ -11426,6 +11594,51 @@ END CATCH
 
 
 
+
+
+GO
+
+----------P---------------x38_get_freecode_proc-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x38_get_freecode_proc') and type = 'P')
+ drop procedure x38_get_freecode_proc
+GO
+
+
+CREATE PROCEDURE [dbo].[x38_get_freecode_proc]
+@x38id int
+,@x29id int
+,@datapid int
+,@isdraft bit
+,@attempt_number int
+,@ret_code varchar(50) OUTPUT
+AS
+
+declare @mask varchar(200)
+
+if @x38id is not null and isnull(@isdraft,0)=0
+ begin
+  select @mask=x38MaskSyntax FROM x38CodeLogic WHERE x38id=@x38id
+  
+  if @mask is not null
+   begin
+	declare @s nvarchar(1000),@ret varchar(50),@pars nvarchar(1000)
+	set @mask=replace(@mask,'@pid',convert(varchar(50),@datapid))
+
+	set @s=N'select @ret='+@mask
+	set @pars=N'@ret varchar(50) output'
+
+	exec sp_executesql @s, @pars, @ret output;
+
+	if @ret is not null
+	 begin
+	 set @ret_code=@ret
+	 return
+	 end
+   end
+ end
+
+select @ret_code=dbo.x38_get_freecode(@x38id,@x29id,@datapid,@isdraft,@attempt_number)
 
 
 GO

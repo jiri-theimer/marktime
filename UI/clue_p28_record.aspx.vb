@@ -24,6 +24,7 @@
             Else
                 Me.ph1.Text = .p28Name
             End If
+            ph1.Text += " <span style='color:gray;padding-left:10px;'>" & .p28Code & "</span>"
             Me.Owner.Text = .Owner
             If .p29ID <> 0 Then
                 Me.p29Name.Text = .p29Name

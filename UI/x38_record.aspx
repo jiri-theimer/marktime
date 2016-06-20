@@ -62,7 +62,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblx38MaskSyntax" runat="server" CssClass="lbl" Text="Vlastní maska číselné řadky:"></asp:Label>
+                <asp:Label ID="lblx38MaskSyntax" runat="server" CssClass="lbl" Text="Vlastní funkce číselné řadky:"></asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="x38MaskSyntax" runat="server" Style="width: 400px;"></asp:TextBox>

@@ -17,7 +17,8 @@
                 .HeaderText = "Tým osob"
             End With
             SetupGrid()
-
+            Me.j07ID.DataSource = Master.Factory.j07PersonPositionBL.GetList()
+            Me.j07ID.DataBind()
             RefreshRecord()
 
 
@@ -121,6 +122,8 @@
             .radGridOrig.ShowFooter = False
             .AddCheckboxSelector()
             .AddColumn("FullNameDesc", "Osoba")
+            .AddColumn("j07Name", "Pozice")
+            .AddColumn("j18Name", "Středisko")
             .PageSize = 50
         End With
         
@@ -167,5 +170,28 @@
         Master.Factory.p85TempBoxBL.Save(cRec)
 
         grid1.Rebind(True, intDataPID)
+    End Sub
+
+    Private Sub cmdAddJ07_Click(sender As Object, e As EventArgs) Handles cmdAddJ07.Click
+        Dim lisTMP As List(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).ToList
+        
+        Dim intJ07ID As Integer = BO.BAS.IsNullInt(Me.j07ID.SelectedValue)
+        If intJ07ID = 0 Then
+            Master.Notify("Musíte vybrat osobu", 2)
+            Return
+        End If
+        Dim mq As New BO.myQueryJ02
+        mq.j07ID = intJ07ID
+        Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
+        For Each c In lisJ02
+            If lisTMP.Where(Function(p) p.p85OtherKey1 = c.PID).Count = 0 Then
+                Dim cRec As New BO.p85TempBox
+                cRec.p85GUID = ViewState("guid")
+                cRec.p85OtherKey1 = c.PID
+                Master.Factory.p85TempBoxBL.Save(cRec)
+            End If
+
+        Next
+        grid1.Rebind(False)
     End Sub
 End Class
