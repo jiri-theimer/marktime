@@ -145,6 +145,13 @@
                     strW += " AND a.p56DateInsert BETWEEN @d1 AND @d2"
                 End If
             End If
+            If Not .p31Date_D1 Is Nothing Then
+                If Year(.p31Date_D1) > 1900 Then
+                    pars.Add("dp31f1", .p31Date_D1)
+                    pars.Add("dp31f2", .p31Date_D2)
+                    strW += " AND a.p56ID IN (SELECT p56ID FROM p31Worksheet WHERE p56ID IS NOT NULL AND p31Date BETWEEN @dp31f1 AND @dp31f2)"
+                End If
+            End If
             If Not .p56PlanFrom_D1 Is Nothing Then
                 If Year(.p56PlanFrom_D1) > 1900 Then
                     pars.Add("dpf1", .p56PlanFrom_D1)

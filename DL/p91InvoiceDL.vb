@@ -251,6 +251,13 @@
                 pars.Add("di2", .DateInsertUntil)
                 strW += " AND a.p91DateInsert BETWEEN @di1 AND @di2"
             End If
+            If Not .p31Date_D1 Is Nothing Then
+                If Year(.p31Date_D1) > 1900 Then
+                    pars.Add("dp31f1", .p31Date_D1)
+                    pars.Add("dp31f2", .p31Date_D2)
+                    strW += " AND a.p91ID IN (SELECT p91ID FROM p31Worksheet WHERE p91ID IS NOT NULL AND p31Date BETWEEN @dp31f1 AND @dp31f2)"
+                End If
+            End If
             If .j70ID > 0 Then
                 Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID)
                 If strQueryW <> "" Then

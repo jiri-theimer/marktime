@@ -155,14 +155,18 @@
             var item = eventArgs.get_item();
             var p32id = item.get_value();
             var p41id_pid = "<%=p41id.value%>";
-
-            $.post("Handler/handler_activity.ashx", { pid: p32id, p41id: p41id_pid, oper: "profile" }, function (data) {
-
-                if (data == ' ') {
+            var j27id_pid = "";
+            <%If panM.Visible then%>
+            j27id_pid = "<%=j27ID_Orig.SelectedValue%>";
+            <%end If%>
+            
+            $.post("Handler/handler_activity.ashx", { pid: p32id, p41id: p41id_pid, j27id: j27id_pid, oper: "profile" }, function (data) {
+               
+                if (data == ' ') {                    
                     return;
-                }
-
+                }                
                 var s = data.split("|");
+                
 
                 <%If panT.Visible Then%>
                 if (s[0] != "" && self.document.getElementById("<%=p31Value_Orig.ClientID%>").value == "") {
@@ -191,9 +195,12 @@
                     document.getElementById("<%=Me.lblP31Text.ClientID%>").className = "lblReq";
                 else
                     document.getElementById("<%=Me.lblP31Text.ClientID%>").className = "lbl";
-
-
-
+                
+                if (s[3] != "") {
+                    var combo = $find("<%= p31VatRate_Orig.RadCombo.ClientID%>");                     
+                    combo.set_text(s[3]);
+                }
+                
 
 
 

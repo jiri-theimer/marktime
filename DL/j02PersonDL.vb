@@ -193,6 +193,13 @@
                     strW += " AND a.j02DateInsert BETWEEN @d1 AND @d2"
                 End If
             End If
+            If Not .p31Date_D1 Is Nothing Then
+                If Year(.p31Date_D1) > 1900 Then
+                    pars.Add("dp31f1", .p31Date_D1)
+                    pars.Add("dp31f2", .p31Date_D2)
+                    strW += " AND a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p31Date BETWEEN @dp31f1 AND @dp31f2)"
+                End If
+            End If
             If .ColumnFilteringExpression <> "" Then
                 strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
             End If

@@ -311,7 +311,11 @@ Public Class report_modal
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         Select Case strButtonValue
             Case "mail"
-                Server.Transfer("sendmail.aspx?x31id=" & Me.CurrentX31ID.ToString & "&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString)
+                Dim strURL As String = "sendmail.aspx?x31id=" & Me.CurrentX31ID.ToString & "&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString
+                If period1.SelectedValue <> "" Then
+                    strURL += "&datfrom=" & BO.BAS.FD(period1.DateFrom) & "&datuntil=" & BO.BAS.FD(period1.DateUntil)
+                End If
+                Server.Transfer(strURL)
             Case "pdf"
                 If Me.MultiPIDs <> "" Then
                     MultiPidsGeneratePDF()

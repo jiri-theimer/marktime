@@ -16,6 +16,9 @@ Public Class myQuery
 
     Public Property DateInsertFrom As Date?
     Public Property DateInsertUntil As Date?
+
+    Public Property p31Date_D1 As Date?
+    Public Property p31Date_D2 As Date?
     
     Public Property TopRecordsOnly As Integer
     Public Property SearchExpression As String

@@ -284,6 +284,13 @@
                     s.Append(" AND a.p41PlanUntil BETWEEN @dpu1 AND @dpu2")
                 End If
             End If
+            If Not .p31Date_D1 Is Nothing Then
+                If Year(.p31Date_D1) > 1900 Then
+                    pars.Add("dp31f1", .p31Date_D1)
+                    pars.Add("dp31f2", .p31Date_D2)
+                    s.Append(" AND a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p31Date BETWEEN @dp31f1 AND @dp31f2)")
+                End If
+            End If
             If .p41WorksheetOperFlag > BO.p41WorksheetOperFlagEnum._NotSpecified Then
                 pars.Add("p41WorksheetOperFlag", .p41WorksheetOperFlag, DbType.Int32)
                 s.Append(" AND a.p41WorksheetOperFlag=@p41WorksheetOperFlag")

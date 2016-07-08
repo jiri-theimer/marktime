@@ -167,26 +167,34 @@ Public Class entity_framework
         Me.cbxQueryFlag.Visible = False
         With Me.cbxPeriodType.Items
             If .Count > 0 Then .Clear()
-            .Add(New ListItem("Založení záznamu:", "DateInsert"))
+
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
+                    .Add(New ListItem("Založení projektu:", "DateInsert"))
                     .Add(New ListItem("Plánované zahájení:", "p41PlanFrom"))
                     .Add(New ListItem("Plánované dokončení:", "p41PlanUntil"))
+                Case BO.x29IdEnum.p28Contact
+                    .Add(New ListItem("Založení klienta:", "DateInsert"))
                 Case BO.x29IdEnum.p56Task
+                    .Add(New ListItem("Založení úkolu:", "DateInsert"))
                     .Add(New ListItem("Plánované zahájení:", "p56PlanFrom"))
                     .Add(New ListItem("Termín dokončení:", "p56PlanUntil"))
                 Case BO.x29IdEnum.o23Notepad
+                    .Add(New ListItem("Založení dokumentu:", "DateInsert"))
                     .Add(New ListItem("Datum dokumentu:", "o23Date"))
                 Case BO.x29IdEnum.p91Invoice
+                    .Add(New ListItem("Založení faktury:", "DateInsert"))
                     .Add(New ListItem("Datum plnění:", "p91DateSupply"))
                     .Add(New ListItem("Datum splatnosti:", "p91DateMaturity"))
                     .Add(New ListItem("Datum vystavení:", "p91Date"))
 
                 Case BO.x29IdEnum.j02Person
+                    .Add(New ListItem("Založení záznamu:", "DateInsert"))
                     cbxQueryFlag.Items.Add(New ListItem("Pouze interní osoby", "1"))
                     cbxQueryFlag.Items.Add(New ListItem("Pouze kontaktní osoby", "2"))
                     cbxQueryFlag.Items.Add(New ListItem("Všechny osobní profily", "3"))
             End Select
+            .Add(New ListItem("Datum worksheet úkonu:", "p31Date"))
         End With
         
         If Me.cbxQueryFlag.Items.Count > 1 Then cbxQueryFlag.Visible = True
@@ -430,6 +438,8 @@ Public Class entity_framework
                 Case "p91Date" : .PeriodType = BO.myQueryP91_PeriodType.p91Date
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
+                Case "p31Date"
+                    .p31Date_D1 = period1.DateFrom : .p31Date_D2 = period1.DateUntil
             End Select
             If Me.cbxPeriodType.SelectedValue <> "DateInsert" Then
                 .DateFrom = period1.DateFrom
@@ -526,6 +536,8 @@ Public Class entity_framework
                     .p56PlanFrom_D1 = period1.DateFrom : .p56PlanFrom_D2 = period1.DateUntil
                 Case "p56PlanUntil"
                     .p56PlanUntil_D1 = period1.DateFrom : .p56PlanUntil_D2 = period1.DateUntil
+                Case "p31Date"
+                    .p31Date_D1 = period1.DateFrom : .p31Date_D2 = period1.DateUntil
             End Select
 
             .Closed = BO.BooleanQueryMode.NoQuery
@@ -561,6 +573,8 @@ Public Class entity_framework
                     .p41PlanFrom_D1 = period1.DateFrom : .p41PlanFrom_D2 = period1.DateUntil
                 Case "p41PlanUntil"
                     .p41PlanUntil_D1 = period1.DateFrom : .p41PlanUntil_D2 = period1.DateUntil
+                Case "p31Date"
+                    .p31Date_D1 = period1.DateFrom : .p31Date_D2 = period1.DateUntil
             End Select
 
             .Closed = BO.BooleanQueryMode.NoQuery
@@ -589,6 +603,8 @@ Public Class entity_framework
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
+                Case "p31Date"
+                    .p31Date_D1 = period1.DateFrom : .p31Date_D2 = period1.DateUntil
             End Select
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
@@ -623,6 +639,8 @@ Public Class entity_framework
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
+                Case "p31Date"
+                    .p31Date_D1 = period1.DateFrom : .p31Date_D2 = period1.DateUntil
             End Select
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead

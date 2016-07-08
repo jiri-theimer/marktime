@@ -4,7 +4,7 @@ Public Class p32Activity
     Public Property p34ID As Integer
     Public Property p95ID As Integer
     Public Property p35ID As Integer
-    Public Property x15ID As x15IdEnum
+    Public Property x15ID As x15IdEnum = x15IdEnum.Nic
     Public Property p32Name As String
     Public Property p32Code As String
     Public Property p32IsBillable As Boolean

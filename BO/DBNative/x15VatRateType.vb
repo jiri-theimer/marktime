@@ -1,4 +1,5 @@
 ﻿Public Enum x15IdEnum
+    Nic = 0
     BezDPH = 1
     SnizenaSazba = 2
     ZakladniSazba = 3

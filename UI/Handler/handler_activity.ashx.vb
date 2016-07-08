@@ -11,7 +11,8 @@ Public Class handler_activity
         Dim strOperation As String = Trim(context.Request.Item("oper"))
         Dim intP32ID As Integer = BO.BAS.IsNullInt(context.Request.Item("pid"))
         Dim intP41ID As Integer = BO.BAS.IsNullInt(context.Request.Item("p41id"))
-
+        Dim intJ27ID As Integer = BO.BAS.IsNullInt(context.Request.Item("j27id"))
+        
         If strOperation = "" Or intP32ID = 0 Then
             context.Response.Write(" ")
             Return
@@ -31,6 +32,7 @@ Public Class handler_activity
             context.Response.Write(" ")
             Return
         End If
+        Dim cP34 As BO.p34ActivityGroup = factory.p34ActivityGroupBL.Load(cRec.p34ID)
 
         Select Case strOperation
             'Case "defaultvatrate"
@@ -67,26 +69,42 @@ Public Class handler_activity
                         Case 3 : strDefText = cRec.p32DefaultWorksheetText_Lang3
                         Case 4 : strDefText = cRec.p32DefaultWorksheetText_Lang4
                     End Select
-                    If strDefText.IndexOf("[%") >= 0 Then
-                        've výchozím popisu aktivity jsou slučovací pole z projektu
-                        Dim matches As MatchCollection = Regex.Matches(strDefText, "\[%.*?\%]")
-                        For Each m As Match In matches
-                            Dim strField As String = Replace(m.Value, "[%", "").Replace("%]", "")
-                            strDefText = Replace(strDefText, m.Value, BO.BAS.GetPropertyValue(cP41, strField))
-                        Next
+                    If strDefText <> "" Then
+                        If strDefText.IndexOf("[%") >= 0 Then
+                            've výchozím popisu aktivity jsou slučovací pole z projektu
+                            Dim matches As MatchCollection = Regex.Matches(strDefText, "\[%.*?\%]")
+                            For Each m As Match In matches
+                                Dim strField As String = Replace(m.Value, "[%", "").Replace("%]", "")
+                                strDefText = Replace(strDefText, m.Value, BO.BAS.GetPropertyValue(cP41, strField))
+                            Next
+                        End If
                     End If
                 End If
-                'Výchozí hodnota|Výchozí popis úkonu|Povinnost zadávat popis
-                context.Response.Write(cRec.p32Value_Default.ToString & "|" & strDefText & "|" & BO.BAS.GB(cRec.p32IsTextRequired))
+                
+                Dim strDefaultVatRate As String = ""
+                If cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
+                    If cRec.x15ID > BO.x15IdEnum.Nic Then
+                        If intJ27ID = 0 Then
+                            intJ27ID = BO.BAS.IsNullInt(factory.x35GlobalParam.GetValueString("j27ID_Domestic"))
+                        End If
+                        Dim lisP53 As IEnumerable(Of BO.p53VatRate) = factory.p53VatRateBL.GetList(New BO.myQuery).Where(Function(p) p.j27ID = intJ27ID And p.x15ID = cRec.x15ID)
+                        If lisP53.Count > 0 Then
+                            strDefaultVatRate = lisP53(0).p53Value.ToString
+                        End If
+                    End If
+                End If
+
+                'Výchozí hodnota|Výchozí popis úkonu|Povinnost zadávat popis|výchozí sazba DPH
+                context.Response.Write(cRec.p32Value_Default.ToString & "|" & strDefText & "|" & BO.BAS.GB(cRec.p32IsTextRequired) & "|" & strDefaultVatRate)
 
                 'If cRec.p32Value_Default = 0 And strDefText = "" Then
                 '    context.Response.Write(" ")
                 'Else
                 '    context.Response.Write(cRec.p32Value_Default.ToString & "|" & strDefText)
                 'End If
-                
+
             Case Else
-                context.Response.Write(" ")
+                    context.Response.Write(" ")
         End Select
 
     End Sub

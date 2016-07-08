@@ -29,7 +29,7 @@ Class m62ExchangeRateBL
             If .j27ID_Master = 0 Then _Error = "Chybí zdrojová měna." : Return False
             If .j27ID_Slave = 0 Then _Error = "Chybí cílová měna." : Return False
             If .m62Rate <= 0 Then _Error = "Hodnota kurzu musí být větší než nula." : Return False
-
+            If .m62Units <= 0 Then _Error = "Množství musí být větší než nula." : Return False
         End With
 
         Return _cDL.Save(cRec)

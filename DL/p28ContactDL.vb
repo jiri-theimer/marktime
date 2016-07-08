@@ -239,6 +239,13 @@
                 pars.Add("d2", .DateInsertUntil)
                 s.Append(" AND a.p28DateInsert BETWEEN @d1 AND @d2")
             End If
+            If Not .p31Date_D1 Is Nothing Then
+                If Year(.p31Date_D1) > 1900 Then
+                    pars.Add("dp31f1", .p31Date_D1)
+                    pars.Add("dp31f2", .p31Date_D2)
+                    s.Append(" AND a.p28ID IN (SELECT gb.p28ID_Client FROM p31Worksheet ga INNER JOIN p41Project gb ON ga.p41ID=gb.p41ID WHERE gb.p28ID_Client IS NOT NULL AND ga.p31Date BETWEEN @dp31f1 AND @dp31f2)")
+                End If
+            End If
             If .QuickQuery > BO.myQueryP28_QuickQuery._NotSpecified Then
                 s.Append(" AND " & bas.GetQuickQuerySQL_p28(.QuickQuery))
             End If

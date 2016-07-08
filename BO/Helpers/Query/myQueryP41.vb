@@ -39,6 +39,7 @@ Public Class myQueryP41
     Public Property p41PlanFrom_D2 As Date?
     Public Property p41PlanUntil_D1 As Date?
     Public Property p41PlanUntil_D2 As Date?
+    
 
     Public Property j70ID As Integer
     Public Property p41WorksheetOperFlag As BO.p41WorksheetOperFlagEnum = p41WorksheetOperFlagEnum._NotSpecified
