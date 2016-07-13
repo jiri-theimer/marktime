@@ -434,6 +434,8 @@ Public Class DbHandler
                         If bolRefreshLastSavedPIDInfo Then _LastSavedRecordPID = params.Get(Of Integer)("pid")
                     End If
                     If bolRefreshLastSavedPIDInfo Then RaiseEvent OnSaveRecord(_LastSavedRecordPID)
+
+                    
                 Else
                     Handle_OnError("Neznámá chyba k příkazu: " & s)
 

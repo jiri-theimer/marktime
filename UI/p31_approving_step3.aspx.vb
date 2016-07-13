@@ -553,17 +553,20 @@ Public Class p31_approving_step3
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "save" Then
-            SaveChanges()
+            If Not SaveChanges() Then Return
             Master.CloseAndRefreshParent("approving")
         End If
     End Sub
 
-    Private Sub SaveChanges()
+    Private Function SaveChanges() As Boolean
         Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
         Dim strErrs As String = ""
         For Each cTemp In lis
             Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadTempRecord(cTemp.p85DataPID, ViewState("guid"))
-
+            If cRec Is Nothing Then
+                Master.Notify(String.Format("Metoda [LoadTempRecord], chyba: cTemp.p85DataPID={0}, guid={1}", cTemp.p85DataPID, ViewState("guid")), NotifyLevel.ErrorMessage)
+                Return False
+            End If
             Dim cApprove As New BO.p31WorksheetApproveInput(cRec.PID, cRec.p33ID)
 
             With cApprove
@@ -592,8 +595,8 @@ Public Class p31_approving_step3
             End With
         Next
 
-
-    End Sub
+        Return True
+    End Function
 
     Private Sub p31_approving_step3_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Not Page.IsPostBack Then

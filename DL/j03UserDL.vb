@@ -129,6 +129,7 @@ Public Class j03UserDL
         End With
 
         If _cDB.SaveRecord("j03user", pars, False, "j03id=@pid", True, _curUser.j03Login) Then
+
             Return True
         Else
             Return False

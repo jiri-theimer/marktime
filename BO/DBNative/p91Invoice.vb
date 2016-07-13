@@ -93,6 +93,12 @@
             Return _p28Name
         End Get
     End Property
+    Private Property _p28CompanyName As String
+    Public ReadOnly Property p28CompanyName As String
+        Get
+            Return _p28CompanyName
+        End Get
+    End Property
     Public ReadOnly Property CodeAndAmount As String
         Get
             Return Me.p91Code & " [" & BO.BAS.FD(Me.p91DateSupply) & "] " & BO.BAS.FN(Me.p91Amount_WithoutVat) & " " & _j27Code

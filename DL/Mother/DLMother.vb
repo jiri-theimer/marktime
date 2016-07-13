@@ -34,4 +34,6 @@
     Private Sub _cDB_OnSaveRecord(intLastSavedPID As Integer) Handles _cDB.OnSaveRecord
         RaiseEvent OnSaveRecord(intLastSavedPID)
     End Sub
+
+    
 End Class

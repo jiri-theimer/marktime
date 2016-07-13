@@ -20,6 +20,11 @@
             window.parent.window.open("p91_framework.aspx?pid=" + document.getElementById("<%=hiddatapid_p91.ClientID%>").value, "_top")
             <%End If%>
         }
+
+        function p91_subgrid_setting(j74id,masterprefix) {
+            
+            window.parent.sw_local("grid_designer.aspx?prefix=p91&masterprefix="+masterprefix+"&pid=" + j74id, "Images/griddesigner.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

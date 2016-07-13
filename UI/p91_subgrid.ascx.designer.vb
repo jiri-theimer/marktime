@@ -41,6 +41,33 @@ Partial Public Class p91_subgrid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''cbxPaging control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''hidDefaultSorting control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''gridP91 control.
     '''</summary>
     '''<remarks>

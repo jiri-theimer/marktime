@@ -6,27 +6,37 @@ Public Class p91_subgrid
     Public Property x29ID As BO.x29IdEnum
 
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
-        If Not Page.IsPostBack Then
-            SetupGridP91()
-        End If
 
     End Sub
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            Dim lisPars As New List(Of String)
+            ViewState("j74id") = ""
+            Dim lisPars As New List(Of String), strKey As String = "p91_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.x29ID)
             With lisPars
                 .Add("p91_framework-periodtype")
                 .Add("p91_framework-period")
                 .Add("periodcombo-custom_query")
+                .Add("p91_subgrid-pagesize")
             End With
             With Factory.j03UserBL
                 .InhaleUserParams(lisPars)
+                ViewState("j74id") = .GetUserParam(strKey, "0")
+                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
+                    Me.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p91Invoice, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
+                    Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p91Invoice, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
+                    ViewState("j74id") = cJ74.PID
+                    .SetUserParam(strKey, ViewState("j74id"))
+                End If
+
+                basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p91_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("p91_framework-periodtype", "p91DateSupply"))
                 period1.SetupData(Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p91_framework-period")
             End With
+
+            SetupGridP91()
         End If
 
         With Me.period1
@@ -36,6 +46,8 @@ Public Class p91_subgrid
                 .BackColor = Nothing
             End If
         End With
+
+
     End Sub
 
 
@@ -44,29 +56,40 @@ Public Class p91_subgrid
     End Sub
 
     Private Sub SetupGridP91()
-        With gridP91
-            .ClearColumns()
-            .radGridOrig.ShowFooter = True
-            .AddSystemColumn(20)
+        ''With gridP91
+        ''    .ClearColumns()
+        ''    .radGridOrig.ShowFooter = True
+        ''    .AddSystemColumn(20)
 
-            .PageSize = 20
-            .AddColumn("p91Code", "Číslo", , True)
-            .AddColumn("p92Name", "Typ", , True)
-            If Me.x29ID = BO.x29IdEnum.j02Person Then
-                .AddColumn("p28Name", "Klient", , True)
-            End If
-            If Me.x29ID = BO.x29IdEnum.p28Contact Then
-                .AddColumn("p41Name", "Projekt", , True)
-            End If
-            .AddColumn("p91Date", "Datum", BO.cfENUM.DateOnly)
-            .AddColumn("p91DateSupply", "Plnění", BO.cfENUM.DateOnly)
-            .AddColumn("p91DateMaturity", "Splatnost", BO.cfENUM.DateOnly)
-            .AddColumn("p91Amount_WithoutVat", "Bez DPH", BO.cfENUM.Numeric, True, , , , True)
-            .AddColumn("p91Amount_Debt", "Dluh", BO.cfENUM.Numeric, True, , , , True)
-            .AddColumn("j27Code", "Měna")
+        ''    .PageSize = 20
+        ''    .AddColumn("p91Code", "Číslo", , True)
+        ''    .AddColumn("p92Name", "Typ", , True)
+        ''    If Me.x29ID = BO.x29IdEnum.j02Person Then
+        ''        .AddColumn("p28Name", "Klient", , True)
+        ''    End If
+        ''    If Me.x29ID = BO.x29IdEnum.p28Contact Then
+        ''        .AddColumn("p41Name", "Projekt", , True)
+        ''    End If
+        ''    .AddColumn("p91Date", "Datum", BO.cfENUM.DateOnly)
+        ''    .AddColumn("p91DateSupply", "Plnění", BO.cfENUM.DateOnly)
+        ''    .AddColumn("p91DateMaturity", "Splatnost", BO.cfENUM.DateOnly)
+        ''    .AddColumn("p91Amount_WithoutVat", "Bez DPH", BO.cfENUM.Numeric, True, , , , True)
+        ''    .AddColumn("p91Amount_Debt", "Dluh", BO.cfENUM.Numeric, True, , , , True)
+        ''    .AddColumn("j27Code", "Měna")
 
-        End With
-        
+        ''End With
+
+        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
+        If cJ74 Is Nothing Then
+            cJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p91Invoice, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
+        End If
+       
+        Me.hidDefaultSorting.Value = cJ74.j74OrderBy
+        basUIMT.SetupGrid(Me.Factory, Me.gridP91, cJ74, CInt(Me.cbxPaging.SelectedValue), False, False, False)
+
+        'With Me.cbxGroupBy.SelectedItem
+        '    SetupGrouping(.Value, .Text)
+        'End With
     End Sub
 
     Private Sub SetupGroupByCurrency()
@@ -152,5 +175,28 @@ Public Class p91_subgrid
     Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
         Factory.j03UserBL.SetUserParam("p91_framework-period", Me.period1.SelectedValue)
         gridP91.Rebind(False)
+    End Sub
+
+    Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
+        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
+        Dim cXLS As New clsExportToXls(Me.Factory)
+
+        Dim mq As New BO.myQueryP91
+        InhaleMyQueryP91(mq)
+
+        Dim lis As IEnumerable(Of BO.p91Invoice) = Me.Factory.p91InvoiceBL.GetList(mq)
+
+        Dim strFileName As String = cXLS.ExportGridData(lis, cJ74)
+        If strFileName = "" Then
+            Response.Write(cXLS.ErrorMessage)
+        Else
+            Response.Redirect("binaryfile.aspx?tempfile=" & strFileName)
+        End If
+    End Sub
+
+    Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
+        Me.Factory.j03UserBL.SetUserParam("p91_subgrid-pagesize", Me.cbxPaging.SelectedValue)
+        SetupGridP91()
+        gridP91.Rebind(True)
     End Sub
 End Class

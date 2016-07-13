@@ -133,7 +133,20 @@ Class j74SavedGridColTemplateBL
             Case BO.x29IdEnum.p28Contact
                 c.j74ColumnNames = "p28Name"
             Case BO.x29IdEnum.p91Invoice
-                c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat,p91Amount_Debt"
+
+                Select Case strMasterPrefix
+                    Case "p41"
+                        c.j74Name = "Výchozí přehled v detailu projektu"
+                        c.j74ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+                    Case "p28"
+                        c.j74Name = "Výchozí přehled v detailu klienta"
+                        c.j74ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+                    Case "j02"
+                        c.j74Name = "Výchozí přehled v detailu osoby"
+                        c.j74ColumnNames = "p91Code,p28Name,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+                    Case Else
+                        c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat,p91Amount_Debt"
+                End Select
             Case BO.x29IdEnum.j02Person
                 c.j74ColumnNames = "FullNameDesc"
             Case BO.x29IdEnum.p56Task
@@ -365,6 +378,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Číslo", "p91Code"))
 
             .Add(AGC("Klient", "p28Name"))
+            .Add(AGC("Společnost klienta", "p28CompanyName"))
             .Add(AGC("Měna", "j27Code"))
             .Add(AGC("Typ faktury", "p92Name"))
             .Add(AGC("Projekt", "p41Name"))
