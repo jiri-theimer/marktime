@@ -115,13 +115,13 @@
         <asp:Image ID="img1" runat="server" ImageUrl="Images/worksheet_32.png" />
     </div>
     <div style="float:left;padding-left:5px;">
-        <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Worksheet kalendář pro zapisování úkonů"></asp:Label>
+        <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Worksheet kalendář pro zapisování úkonů" meta:resourcekey="lblHeader"></asp:Label>
     </div>     
     <div style="float:left;padding-left:5px;padding-top:5px;">
         <asp:DropDownList ID="j02ID" runat="server" onChange="j02id_onchange()"></asp:DropDownList>
     </div>
     <div style="float:left;padding-left:5px;padding-top:5px;" id="timer_panel">
-        <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat ČASOVAČ" AutoPostBack="false" Checked="true" onClick="timer_change(this)" />
+        <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat ČASOVAČ" AutoPostBack="false" Checked="true" onClick="timer_change(this)" meta:resourcekey="chkTimer" />
     </div>
     <div style="clear:both;"></div>
 
@@ -135,32 +135,32 @@
                     <div class="title">
                         <asp:HyperLink ID="clue_timesheet" runat="server" CssClass="reczoom" Text="i" ToolTip="Statistika vykázaných hodin v měsíci"></asp:HyperLink>
                         <asp:Label ID="StatHeader" runat="server"></asp:Label>
-                        <asp:HyperLink ID="cmdReport" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()" style="float:right;"></asp:HyperLink>
+                        <asp:HyperLink ID="cmdReport" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()" style="float:right;" meta:resourcekey="cmdReport"></asp:HyperLink>
                     </div>
                     <div class="content">
                         <div class="div6">
-                            <span>Vykázané hodiny:</span>
+                            <asp:label ID="lblHours_All" runat="server" meta:resourcekey="lblHours_All" Text="Vykázané hodiny:"></asp:label>
                             <asp:Label ID="Hours_All" runat="server" CssClass="valboldblue"></asp:Label>
                             
-                            <asp:label ID="lblHours_Billable" runat="server" Text="z toho fakturovatelné:"></asp:label>
+                            <asp:label ID="lblHours_Billable" runat="server" Text="z toho fakturovatelné:" meta:resourcekey="lblHours_Billable"></asp:label>
                             <asp:Label ID="Hours_Billable" runat="server" CssClass="valboldblue" ForeColor="green"></asp:Label>
                             
                         </div>
                         <div class="div6">
-                            <span>Fond pracovní doby:</span>
+                            <asp:label ID="lblFond_Hours" runat="server" Text="Fond pracovní doby:" meta:resourcekey="lblFond_Hours"></asp:label>
                             <asp:Label ID="Fond_Hours" runat="server" CssClass="valboldred"></asp:Label>
 
                         </div>
                         <div class="div6">
-                            <span>Utilizace za všechny hodiny:</span>
+                            <asp:label ID="lblUtil_Total" Text="Utilizace za všechny hodiny:" runat="server" meta:resourcekey="lblUtil_Total"></asp:label>
                             <asp:Label ID="Util_Total" runat="server" CssClass="valboldred"></asp:Label>
-                            <asp:Label ID="lblUtil_Billable" runat="server" Text="Utilizace za fakturovatelné hodiny:"></asp:Label>                            
+                            <asp:Label ID="lblUtil_Billable" runat="server" Text="Utilizace za fakturovatelné hodiny:" meta:resourcekey="lblUtil_Billable"></asp:Label>                            
                             <asp:Label ID="Util_Billable" runat="server" CssClass="valbold" ForeColor="green"></asp:Label>
                         </div>
                     </div>
                 </div>
                 <div class="content-box2" style="margin-top:10px;">
-                    <div class="title">Vyhledat projekt pro nový úkon...</div>
+                    <div class="title"><asp:label id="lblSearchProject" runat="server" text="Vyhledat projekt pro nový úkon..." meta:resourcekey="lblSearchProject"></asp:label></div>
                     <div class="content">
                          <uc:project ID="p41ID" runat="server" Width="99%" AutoPostBack="false" Flag="p31_entry" OnClientSelectedIndexChanged="p41id_onchange" />
                     </div>

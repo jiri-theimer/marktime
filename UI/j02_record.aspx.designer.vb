@@ -257,13 +257,13 @@ Partial Public Class j02_record
     Protected WithEvents j02Mobile As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label3 control.
+    '''lblj02Phone control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblj02Phone As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''j02Phone control.
@@ -302,13 +302,13 @@ Partial Public Class j02_record
     Protected WithEvents j02JobTitle As Global.UI.datacombo
 
     '''<summary>
-    '''Label1 control.
+    '''lblj02Office control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblj02Office As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''j02Office control.
@@ -383,13 +383,13 @@ Partial Public Class j02_record
     Protected WithEvents j02RobotAddress As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label2 control.
+    '''lblj02ExternalPID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblj02ExternalPID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''j02ExternalPID control.

@@ -86,6 +86,15 @@ Partial Public Class p31_framework_detail
     Protected WithEvents cmdReport As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''lblHours_All control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblHours_All As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Hours_All control.
     '''</summary>
     '''<remarks>
@@ -113,6 +122,15 @@ Partial Public Class p31_framework_detail
     Protected WithEvents Hours_Billable As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblFond_Hours control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblFond_Hours As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Fond_Hours control.
     '''</summary>
     '''<remarks>
@@ -120,6 +138,15 @@ Partial Public Class p31_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Fond_Hours As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblUtil_Total control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblUtil_Total As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Util_Total control.
@@ -147,6 +174,15 @@ Partial Public Class p31_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Util_Billable As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblSearchProject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblSearchProject As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p41ID control.

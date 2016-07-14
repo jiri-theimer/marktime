@@ -5,12 +5,14 @@
     Private Sub j02_record_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
         Master.HelpTopicID = "j02_record"
+
+
     End Sub
-    'Protected Overrides Sub InitializeCulture()
-    '    System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
-    '    System.Threading.Thread.CurrentThread.CurrentUICulture = New System.Globalization.CultureInfo("en-US")
-    '    MyBase.InitializeCulture()
-    'End Sub
+    ''Protected Overrides Sub InitializeCulture()
+    ''    System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
+    ''    System.Threading.Thread.CurrentThread.CurrentUICulture = New System.Globalization.CultureInfo("en-US")
+    ''    MyBase.InitializeCulture()
+    ''End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory

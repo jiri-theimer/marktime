@@ -155,20 +155,20 @@
             <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" OnClientButtonClicked="clicked" RenderMode="Auto">
                 <Items>
 
-                    <telerik:RadToolBarButton Text="Uložit změny" Value="save" ImageUrl="Images/save.png"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, save-changes %>" Value="save" ImageUrl="Images/save.png"></telerik:RadToolBarButton>
 
-                    <telerik:RadToolBarButton Text="Odstranit" Value="delete" ImageUrl="Images/delete.png" PostBack="false"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, delete %>" Value="delete" ImageUrl="Images/delete.png" PostBack="false"></telerik:RadToolBarButton>
 
                     <telerik:RadToolBarButton Text="Přesunout do archivu" Value="bin" ImageUrl="Images/bin.png" PostBack="false" Visible="false" CommandName="bin"></telerik:RadToolBarButton>
 
 
-                    <telerik:RadToolBarButton Text="Obnovit" Value="refresh" ImageUrl="Images/refresh.png" CommandName="refresh"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, refresh %>" Value="refresh" ImageUrl="Images/refresh.png" CommandName="refresh"></telerik:RadToolBarButton>
 
-                    <telerik:RadToolBarButton Text="Zavřít" Value="close" ImageUrl="Images/close.png" PostBack="false" NavigateUrl="javascript:CloseOnly()"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, close %>" Value="close" ImageUrl="Images/close.png" PostBack="false" NavigateUrl="javascript:CloseOnly()"></telerik:RadToolBarButton>
 
                     <telerik:RadToolBarButton Text="Jít zpět" Value="goback" ImageUrl="Images/back.png"></telerik:RadToolBarButton>
 
-                    <telerik:RadToolBarButton Text="Nápověda" Value="help" ImageUrl="Images/help.png" PostBack="false" NavigateUrl="http://www.marktime.net/doc/html/index.html" Target="_blank"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, help %>" Value="help" ImageUrl="Images/help.png" PostBack="false" NavigateUrl="http://www.marktime.net/doc/html/index.html" Target="_blank"></telerik:RadToolBarButton>
                 </Items>
             </telerik:RadToolBar>
 

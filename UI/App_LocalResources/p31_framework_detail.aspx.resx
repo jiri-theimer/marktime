@@ -117,22 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblFirstName.Text" xml:space="preserve">
-    <value>Name</value>
+  <data name="chkTimer.Text" xml:space="preserve">
+    <value>Zobrazovat ČASOVAČ</value>
   </data>
-  <data name="lblFirstName.Tooltip" xml:space="preserve">
-    <value>Person first name</value>
+  <data name="cmdReport.Text" xml:space="preserve">
+    <value>Tisková sestava</value>
   </data>
-  <data name="lblLastName.Text" xml:space="preserve">
-    <value>Last name</value>
+  <data name="lblFond_Hours.Text" xml:space="preserve">
+    <value>Fond pracovní doby:</value>
   </data>
-  <data name="lblLastName.Tooltip" xml:space="preserve">
-    <value>Person last name</value>
+  <data name="lblHeader.Text" xml:space="preserve">
+    <value>Worksheet kalendář pro zapisování úkonů</value>
   </data>
-  <data name="lblTitle.Text" xml:space="preserve">
-    <value>Title</value>
+  <data name="lblHours_All.Text" xml:space="preserve">
+    <value>Vykázané hodiny:</value>
   </data>
-  <data name="lblTitle.Tooltip" xml:space="preserve">
-    <value>Personal title</value>
+  <data name="lblHours_Billable.Text" xml:space="preserve">
+    <value>z toho fakturovatelné xx</value>
+  </data>
+  <data name="lblSearchProject.Text" xml:space="preserve">
+    <value>Vyhledat projekt pro nový úkon...</value>
+  </data>
+  <data name="lblUtil_Billable.Text" xml:space="preserve">
+    <value>Utilizace (fakturovatelné hodiny):</value>
+  </data>
+  <data name="lblUtil_Total.Text" xml:space="preserve">
+    <value>Utilizace (všechny hodiny):</value>
   </data>
 </root>

@@ -22,12 +22,14 @@ Public Class Global_asax
     End Sub
 
     Sub Application_BeginRequest(ByVal sender As Object, ByVal e As EventArgs)
-        'Dim strWakeHost As String = BO.ASS.GetConfigVal("LocalAppUrl")  'přednost má URL definované ve web.config
-        'If strWakeHost = "" Then
-        '    'pokud ve web.config není definován klíč LocalAppUrl, potom se bere aktuální URL
-        '    strWakeHost = Context.Request.Url.GetLeftPart(UriPartial.Authority)
-        'End If
-        'Dim strWakeupURL As String = strWakeHost & "/Public/wakeup_engine.aspx"
+        Dim cook As HttpCookie = HttpContext.Current.Request.Cookies("MT50-CultureInfo")
+        If Not cook Is Nothing Then
+            If cook.Value.Length > 1 Then
+                System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(cook.Value)
+                System.Threading.Thread.CurrentThread.CurrentUICulture = New System.Globalization.CultureInfo(cook.Value)
+            End If
+        End If
+        
         
         If Context.Request.Url.PathAndQuery.IndexOf("robot.aspx") > 0 Then
             'je spuštěna robot stránka nebo ještě nebyla incializovaná cache

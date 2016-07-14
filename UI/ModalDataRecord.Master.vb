@@ -92,7 +92,7 @@
         If RecordValidityIsClosed Then
             panRecValidity.Style.Item("display") = "block"
             toolbar1.Skin = "BlackMetroTouch"
-            cmd.Text = "Obnovit z archivu"
+            cmd.Text = GetGlobalResourceObject("common", "move-from-archive").ToString
             cmd.ImageUrl = "Images/recycle.png"
 
             lblValidity.Text = "Záznam je v archivu (byl otevřený od " & s1 & " do " & s2 & ")"
@@ -100,7 +100,7 @@
         Else
             panRecValidity.Style.Item("display") = "none"
             toolbar1.Skin = "Bootstrap"
-            cmd.Text = "Přesunout do archivu"
+            cmd.Text = GetGlobalResourceObject("common", "move-to-archive").ToString
             cmd.ImageUrl = "Images/bin.png"
             If Year(d2) = 3000 Then
                 lblValidity.Text = "Záznam je otevřený od " & s1
@@ -183,17 +183,21 @@
             _Factory = New BL.Factory(, strLogin)
             If _Factory.SysUser Is Nothing Then DoLogOut()
 
+            
             'PersonalizeMenu()
         End If
         If Request.Item("clone") = "1" Then
             hidIsRecordClone.Value = "1"
         End If
     End Sub
+    
     Private Sub DoLogOut()
         Response.Redirect("~/Account/Login.aspx?autologout=1") 'automatické odhlášení
     End Sub
 
+   
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        
         If Me.neededPermission > 0 And Me.neededPermissionIfSecond > 0 Then
             TestNeededPermission(Me.neededPermission, Me.neededPermissionIfSecond)
         Else
@@ -201,7 +205,7 @@
                 TestNeededPermission(Me.neededPermission)
             End If
         End If
-        
+
         If Not Page.IsPostBack Then
             If Request.Item("ReturnUrl") <> "" Then
                 HideShowToolbarButton("goback", True)

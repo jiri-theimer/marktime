@@ -493,6 +493,36 @@
       <DependentUpon>approving_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="App_GlobalResources\common.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>common.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\common.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>common.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\j02_record.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>j02_record.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\j02_record.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>j02_record.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\p31_framework_detail.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_framework_detail.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\p31_framework_detail.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_framework_detail.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="b01_record.aspx.designer.vb">
       <DependentUpon>b01_record.aspx</DependentUpon>
     </Compile>
@@ -2518,7 +2548,33 @@
   <ItemGroup>
     <Content Include="App_LocalResources\j02_record.aspx.resx" />
     <Content Include="App_LocalResources\p32_record.aspx.resx" />
-    <Content Include="App_LocalResources\j02_record.en-US.resx" />
+    <Content Include="App_LocalResources\j02_record.aspx.en-us.resx" />
+    <Content Include="App_GlobalResources\j02_record.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>j02_record.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\j02_record.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>j02_record.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\common.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>common.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\common.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>common.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_LocalResources\p31_framework_detail.aspx.resx" />
+    <Content Include="App_LocalResources\p31_framework_detail.aspx.en-us.resx" />
+    <Content Include="App_GlobalResources\p31_framework_detail.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_framework_detail.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\p31_framework_detail.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_framework_detail.en-us.designer.vb</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -2561,7 +2617,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="App_GlobalResources\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>

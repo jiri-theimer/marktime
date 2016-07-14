@@ -124,7 +124,15 @@ Public Class Site
             End With
         End If
 
-
+        Dim cook As HttpCookie = Request.Cookies("MT50-CultureInfo")
+        If Not cook Is Nothing Then
+            Select Case cook.Value
+                Case "en-US"
+                    menu1.FindItemByValue("lang").ImageUrl = "Images/Flags/menu_uk.gif"
+                Case Else
+                    menu1.FindItemByValue("lang").ImageUrl = "Images/Flags/menu_czech.gif"
+            End Select
+        End If
     End Sub
 
     Private Sub RenderHomeMenu()

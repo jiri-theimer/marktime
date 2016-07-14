@@ -59,57 +59,7 @@
     </asp:ContentPlaceHolder>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-
-            var iframeWidth = '100%';
-            var iframeHeight = '270';
-
-
-            $("a.reczoom").each(function () {
-
-                // Extract your variables here:
-                var $this = $(this);
-                var myurl = $this.attr('rel');
-
-                var mytitle = $this.attr('title');
-                if (mytitle == null)
-                    mytitle = 'Detail';
-
-
-                $this.qtip({
-                    content: {
-                        text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
-                        title: {
-                            text: mytitle
-                        },
-
-                    },
-                    position: {
-                        my: 'top center',  // Position my top left...
-                        at: 'bottom center', // at the bottom right of...
-                        viewport: $(window)
-                    },
-
-                    hide: {
-
-                        fixed: true,
-                        delay: 100
-
-                    },
-                    style: {
-                        classes: 'qtip-tipped',
-                        width: 700,
-                        height: 300
-
-                    }
-                });
-            });
-
-
-
-
-
-        });
+        
 
         function help(page) {
             window.open("help.aspx?page=" + page, "_blank");
@@ -120,7 +70,32 @@
 
         }
 
+        function setlang(value){
+           
+            createCookie('MT50-CultureInfo', value, 30);
+            location.replace(window.location.href);
+        }
 
+        function createCookie(name, value, days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                var expires = "; expires=" + date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
     </script>
 
 </head>
@@ -205,6 +180,12 @@
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="8" ImageUrl="Images/messages.png" Value="messages" ForeColor="#ffffff" ToolTip="Upozornění ze systému" NavigateUrl="javascript:messages();">
                     </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Value="lang" ToolTip="Jazyk" ImageUrl="~/Images/menuarrow.png">
+                        <Items>
+                            <telerik:RadMenuItem Text="Česky" ImageUrl="Images/Flags/menu_czech.gif" NavigateUrl="javascript:setlang('-')"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="English" ImageUrl="Images/Flags/menu_uk.gif" NavigateUrl="javascript:setlang('en-US')"></telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem Value="help" Target="_blank" Text="?" ToolTip="Nápověda">
                     </telerik:RadMenuItem>
@@ -231,6 +212,57 @@
     </form>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+
+            var iframeWidth = '100%';
+            var iframeHeight = '270';
+
+
+            $("a.reczoom").each(function () {
+
+                // Extract your variables here:
+                var $this = $(this);
+                var myurl = $this.attr('rel');
+
+                var mytitle = $this.attr('title');
+                if (mytitle == null)
+                    mytitle = 'Detail';
+
+
+                $this.qtip({
+                    content: {
+                        text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                        title: {
+                            text: mytitle
+                        },
+
+                    },
+                    position: {
+                        my: 'top center',  // Position my top left...
+                        at: 'bottom center', // at the bottom right of...
+                        viewport: $(window)
+                    },
+
+                    hide: {
+
+                        fixed: true,
+                        delay: 100
+
+                    },
+                    style: {
+                        classes: 'qtip-tipped',
+                        width: 700,
+                        height: 300
+
+                    }
+                });
+            });
+
+
+
+
+        });
+
         function sw_master(url, iconUrl, is_maximize) {
             var wnd = $find("<%=okno1.clientid%>");
             wnd.setUrl(url);
@@ -317,6 +349,7 @@
 
         <%End If%>
 
+        
         
     </script>
 </body>
