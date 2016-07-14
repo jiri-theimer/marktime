@@ -76,9 +76,9 @@ Namespace Resources
         '''<summary>
         '''  Looks up a localized string similar to Statistika [{0}].
         '''</summary>
-        Friend Shared ReadOnly Property statistika() As String
+        Friend Shared ReadOnly Property StatHeader() As String
             Get
-                Return ResourceManager.GetString("statistika", resourceCulture)
+                Return ResourceManager.GetString("StatHeader", resourceCulture)
             End Get
         End Property
     End Class

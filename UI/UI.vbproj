@@ -2575,6 +2575,8 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>p31_framework_detail.en-us.designer.vb</LastGenOutput>
     </Content>
+    <Content Include="App_LocalResources\p31_subgrid.ascx.resx" />
+    <Content Include="App_LocalResources\p31_subgrid.ascx.en-us.resx" />
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

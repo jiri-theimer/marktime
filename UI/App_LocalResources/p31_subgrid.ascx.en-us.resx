@@ -117,10 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cmdNewP31" xml:space="preserve">
-    <value>Zapsat nový úkon do [{0}]</value>
-  </data>
-  <data name="StatHeader" xml:space="preserve">
-    <value>Statistika [{0}]</value>
+  <data name="cmdNew.Tooltip" xml:space="preserve">
+    <value>New worksheet</value>
   </data>
 </root>

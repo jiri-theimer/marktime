@@ -119,7 +119,7 @@
 
     Private Sub p31_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
 
-        Me.cmdNewP31.Text = String.Format(GetGlobalResourceObject("p31_framework_detail", "cmdNewP31"), BO.BAS.FD(cal1.SelectedDate))
+        Me.cmdNewP31.Text = String.Format(Resources.p31_framework_detail.cmdNewP31, BO.BAS.FD(cal1.SelectedDate))
         'If cal1.CalendarColumns > 1 And Month(cal1.SelectedDate) <> Month(cal1.VisibleStartDate) Then
         '    RefreshStatistic()
         'End If
@@ -149,7 +149,7 @@
 
 
 
-        StatHeader.Text = String.Format(GetGlobalResourceObject("p31_framework_detail", "StatHeader"), Format(mq.DateFrom, "MM-yyyy"))
+        StatHeader.Text = String.Format(Resources.p31_framework_detail.StatHeader, Format(mq.DateFrom, "MM-yyyy"))
 
         Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(Me.CurrentJ02ID)
         Dim cRec As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, False)
