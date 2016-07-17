@@ -117,4 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cmdP31_Timer" xml:space="preserve">
+    <value>Track by STOPWATCH</value>
+  </data>
+  <data name="Dokumenty" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="Grid" xml:space="preserve">
+    <value>Grid</value>
+  </data>
+  <data name="Menu_DALSI" xml:space="preserve">
+    <value>MORE</value>
+  </data>
+  <data name="Menu_FAKTURY" xml:space="preserve">
+    <value>INVOICES</value>
+  </data>
+  <data name="Menu_KLIENTI" xml:space="preserve">
+    <value>CLIENTS</value>
+  </data>
+  <data name="Menu_LIDE" xml:space="preserve">
+    <value>PERSONS</value>
+  </data>
+  <data name="Menu_PROJEKTY" xml:space="preserve">
+    <value>PROJECTS</value>
+  </data>
+  <data name="Menu_UVOD" xml:space="preserve">
+    <value>HOME</value>
+  </data>
+  <data name="MujProfil" xml:space="preserve">
+    <value>My profile</value>
+  </data>
+  <data name="NajitProjekt" xml:space="preserve">
+    <value>Find project...</value>
+  </data>
+  <data name="OdhlasitSe" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Zapisovat" xml:space="preserve">
+    <value>Track hours &amp; expenses</value>
+  </data>
+  <data name="ZmenitHeslo" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="AdministraceSystemu" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="Ceniky" xml:space="preserve">
+    <value>Rate pricelists</value>
+  </data>
+  <data name="cmdReports" xml:space="preserve">
+    <value>Reports | Plugins</value>
+  </data>
+  <data name="DispecinkUkolu" xml:space="preserve">
+    <value>Project tasks</value>
+  </data>
+  <data name="Kalendar" xml:space="preserve">
+    <value>Scheduler</value>
+  </data>
+  <data name="Napoveda" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="NavrharWorkflow" xml:space="preserve">
+    <value>Workflow designer</value>
+  </data>
+  <data name="OdeslanaPosta" xml:space="preserve">
+    <value>Mail outbox</value>
+  </data>
+  <data name="OperativniPlanovani" xml:space="preserve">
+    <value>Operative planning</value>
+  </data>
+  <data name="Rozpocty" xml:space="preserve">
+    <value>Budgeting (expenses and fees)</value>
+  </data>
+  <data name="Schvalovat_Pripravit_Fakturaci" xml:space="preserve">
+    <value>Approving| Prepare billing proposals</value>
+  </data>
+  <data name="Stitky" xml:space="preserve">
+    <value>Labels</value>
+  </data>
+  <data name="ZalohoveFaktury" xml:space="preserve">
+    <value>Proforma invoices</value>
+  </data>
 </root>

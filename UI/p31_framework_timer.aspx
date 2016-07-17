@@ -30,9 +30,9 @@
 
     <div class="content-box2">
         <div class="title">
-            <img src="Images/stopwatch.png" alt="Časovač" />
+            <img src="Images/stopwatch.png" alt="STOPKY" />
             
-            <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat ČASOVAČ" AutoPostBack="false" Checked="true" onClick="timer_change(this)" />
+            <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat STOPKY" AutoPostBack="false" Checked="true" onClick="timer_change(this)" meta:resourcekey="chkTimer" />
         </div>
         <div class="content">
             <uc:timer ID="timer1" runat="server" IsPanelView="true" IsIFrame="true"></uc:timer>

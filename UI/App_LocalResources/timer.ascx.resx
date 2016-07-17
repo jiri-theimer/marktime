@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cmdAddRow.Text" xml:space="preserve">
+    <value>Přidat</value>
+  </data>
+  <data name="cmdClear.Text" xml:space="preserve">
+    <value>Vyčistit</value>
+  </data>
+  <data name="cmdFinalSave.Tooltip" xml:space="preserve">
+    <value>Uložit úkon a vyjmout ho ze stopek</value>
+  </data>
+  <data name="cmdPause.Tooltip" xml:space="preserve">
+    <value>Pozastavit</value>
+  </data>
+  <data name="cmdReset.Tooltip" xml:space="preserve">
+    <value>Zastavit a vynulovat</value>
+  </data>
+  <data name="del.Tooltip" xml:space="preserve">
+    <value>Odstranit řádek</value>
+  </data>
+  <data name="p31Text.Tooltip" xml:space="preserve">
+    <value>Podrobný popis úkonu</value>
+  </data>
 </root>

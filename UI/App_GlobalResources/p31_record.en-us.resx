@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Hodiny" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Hodiny_Tooltip" xml:space="preserve">
+    <value>Hours can be decadic number (example: 0,25 or 1,5) or format HH:mm (example: 00:15 or 01:30).</value>
+  </data>
+  <data name="Minuty" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Minuty_Tooltip" xml:space="preserve">
+    <value>Write as number.</value>
+  </data>
+  <data name="Nadpis" xml:space="preserve">
+    <value>Entry worksheet record</value>
+  </data>
+  <data name="Nastaveni" xml:space="preserve">
+    <value>Setting</value>
+  </data>
 </root>

@@ -155,7 +155,7 @@
             <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" OnClientButtonClicked="clicked" RenderMode="Auto">
                 <Items>
 
-                    <telerik:RadToolBarButton Text="<%$ Resources:common, save-changes %>" Value="save" ImageUrl="Images/save.png"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, save_changes %>" Value="save" ImageUrl="Images/save.png"></telerik:RadToolBarButton>
 
                     <telerik:RadToolBarButton Text="<%$ Resources:common, delete %>" Value="delete" ImageUrl="Images/delete.png" PostBack="false"></telerik:RadToolBarButton>
 

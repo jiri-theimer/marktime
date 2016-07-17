@@ -142,10 +142,10 @@
 
 <div>
     <div style="float: left; width: 100px;">
-        <asp:Button ID="cmdAddRow" runat="server" CssClass="cmd" Text="Přidat" />
+        <asp:Button ID="cmdAddRow" runat="server" CssClass="cmd" Text="Přidat" meta:resourcekey="cmdAddRow" />
     </div>
     <div style="float: left; width: 100px;">
-        <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit" />
+        <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit" meta:resourcekey="cmdClear" />
     </div>
     <div style="float: right;" id="setting">
         <asp:DropDownList ID="cbxTimerMode" runat="server" onchange="ChangeTimerMode()">
@@ -162,7 +162,7 @@
         <ItemTemplate>
             <asp:panel ID="panSave" runat="server" style="float:left;width:45px;">
                 <asp:Label ID="RowIndex" runat="server" style="padding-right:2px;"></asp:Label>
-                <asp:ImageButton ID="cmdFinalSave" runat="server" ImageUrl="Images/save.png" CssClass="button-link" ToolTip="Uložit úkon a vyjmout ho z časovače" />
+                <asp:ImageButton ID="cmdFinalSave" runat="server" ImageUrl="Images/save.png" CssClass="button-link" ToolTip="Uložit úkon a vyjmout ho ze stopek" meta:resourcekey="cmdFinalSave" />
                
                 
             </asp:panel>
@@ -176,11 +176,11 @@
                     <asp:Label ID="timer" runat="server" Style="font-weight: bold;" Text="00:00:00" Width="70px"></asp:Label>
 
                     <asp:ImageButton ID="cmdStart" runat="server" ImageUrl="Images/timer_start_24.png" ToolTip="Start" CommandName="start" />
-                    <asp:ImageButton ID="cmdPause" runat="server" ImageUrl="Images/timer_pause_24.png" ToolTip="Pozastavit" CommandName="pause" />
+                    <asp:ImageButton ID="cmdPause" runat="server" ImageUrl="Images/timer_pause_24.png" ToolTip="Pozastavit" CommandName="pause" meta:resourcekey="cmdPause" />
                     <span style="margin-left: 20px;"></span>
-                    <asp:ImageButton ID="cmdReset" runat="server" ImageUrl="Images/timer_reset_24.png" ToolTip="Zastavit a vynulovat" CommandName="reset" />
+                    <asp:ImageButton ID="cmdReset" runat="server" ImageUrl="Images/timer_reset_24.png" ToolTip="Zastavit a vynulovat" CommandName="reset" meta:resourcekey="cmdReset" />
 
-                    <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit řádek" CssClass="button-link" CommandName="delete" style="float:right;" />
+                    <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit řádek" CssClass="button-link" CommandName="delete" style="float:right;" meta:resourcekey="del" />
                 </div>
             </div>
 

@@ -128,9 +128,9 @@
             <telerik:RadToolBar ID="toolbar1" runat="server" Width="100%" Skin="Bootstrap" AutoPostBack="true" RenderMode="Auto">
                 <Items>
 
-                    <telerik:RadToolBarButton Text="Zavřít" Value="close" ImageUrl="Images/close.png" PostBack="false" NavigateUrl="javascript:CloseOnly()"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, close %>" Value="close" ImageUrl="Images/close.png" PostBack="false" NavigateUrl="javascript:CloseOnly()"></telerik:RadToolBarButton>
 
-                    <telerik:RadToolBarButton Text="Nápověda" Value="help" ImageUrl="Images/help.png" PostBack="false" Target="_blank"></telerik:RadToolBarButton>
+                    <telerik:RadToolBarButton Text="<%$ Resources:common, help %>" Value="help" ImageUrl="Images/help.png" PostBack="false" Target="_blank"></telerik:RadToolBarButton>
                     
                     
                 </Items>

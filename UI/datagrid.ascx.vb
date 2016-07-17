@@ -241,18 +241,24 @@ Public Class datagrid
     End Sub
 
     Private Sub SetupGrid()
+
         With grid1.PagerStyle
             .PageSizeLabelText = ""
-            .LastPageToolTip = "Poslední strana"
-            .FirstPageToolTip = "První strana"
-            .PrevPageToolTip = "Předchozí strana"
-            .NextPageToolTip = "Další strana"
-            .PagerTextFormat = "{4} Strana {0} z {1}, záznam {2} až {3} z {5}"
+            If Page.Culture.IndexOf("Czech") >= 0 Then
+                .LastPageToolTip = "Poslední strana"
+                .FirstPageToolTip = "První strana"
+                .PrevPageToolTip = "Předchozí strana"
+                .NextPageToolTip = "Další strana"
+                .PagerTextFormat = "{4} Strana {0} z {1}, záznam {2} až {3} z {5}"
+            End If
+            
         End With
+
+
 
         With grid1.MasterTableView
 
-            .NoMasterRecordsText = "Žádné záznamy"
+            .NoMasterRecordsText = Resources.common.Grid_ZadneZaznamy
         End With
     End Sub
     Public Sub AddCheckboxSelector()
@@ -437,21 +443,32 @@ Public Class datagrid
         Dim i As Integer = 0
         With menu.Items
             While i < .Count
-                With .Item(i)
-                    Select Case .Text
-                        Case "NoFilter" : .Text = "Nefiltrovat" : i += 1
-                        Case "Contains" : .Text = "Obsahuje" : i += 1
-                        Case "EqualTo" : .Text = "Je rovno" : i += 1
-                        Case "GreaterThan" : .Text = "Je větší než" : i += 1
-                        Case "LessThan" : .Text = "Je menší než" : i += 1
-                        Case "IsNull" : .Text = "Je prázdné" : i += 1
-                        Case "NotIsNull" : .Text = "Není prázdné" : i += 1
-                        Case "StartsWith" : .Text = "Začíná na" : i += 1
-                        Case Else
-                            Dim ss As String = .Text
-                            menu.Items.RemoveAt(i)
-                    End Select
-                End With
+                If Page.Culture.IndexOf("Czech") >= 0 Then
+                    With .Item(i)
+                        Select Case .Text
+                            Case "NoFilter" : .Text = "Nefiltrovat" : i += 1
+                            Case "Contains" : .Text = "Obsahuje" : i += 1
+                            Case "EqualTo" : .Text = "Je rovno" : i += 1
+                            Case "GreaterThan" : .Text = "Je větší než" : i += 1
+                            Case "LessThan" : .Text = "Je menší než" : i += 1
+                            Case "IsNull" : .Text = "Je prázdné" : i += 1
+                            Case "NotIsNull" : .Text = "Není prázdné" : i += 1
+                            Case "StartsWith" : .Text = "Začíná na" : i += 1
+                            Case Else
+                                menu.Items.RemoveAt(i)
+                        End Select
+                    End With
+                Else
+                    With .Item(i)
+                        Select Case .Text
+                            Case "NoFilter", "Contains", "EqualTo", "GreaterThan", "LessThan", "IsNull", "NotIsNull", "StartsWith"
+                                i += 1
+                            Case Else
+                                menu.Items.RemoveAt(i)
+                        End Select
+                    End With
+                End If
+                
             End While
         End With
 

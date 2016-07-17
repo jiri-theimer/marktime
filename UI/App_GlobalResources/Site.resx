@@ -117,4 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cmdP31_Timer" xml:space="preserve">
+    <value>Zapisovat přes STOPKY</value>
+  </data>
+  <data name="Dokumenty" xml:space="preserve">
+    <value>Dokumenty</value>
+  </data>
+  <data name="Grid" xml:space="preserve">
+    <value>Datový přehled</value>
+  </data>
+  <data name="Menu_DALSI" xml:space="preserve">
+    <value>DALŠÍ</value>
+  </data>
+  <data name="Menu_FAKTURY" xml:space="preserve">
+    <value>FAKTURY</value>
+  </data>
+  <data name="Menu_KLIENTI" xml:space="preserve">
+    <value>KLIENTI</value>
+  </data>
+  <data name="Menu_LIDE" xml:space="preserve">
+    <value>LIDÉ</value>
+  </data>
+  <data name="Menu_PROJEKTY" xml:space="preserve">
+    <value>PROJEKTY</value>
+  </data>
+  <data name="Menu_UVOD" xml:space="preserve">
+    <value>ÚVOD</value>
+  </data>
+  <data name="MujProfil" xml:space="preserve">
+    <value>Můj profil</value>
+  </data>
+  <data name="NajitProjekt" xml:space="preserve">
+    <value>Najít projekt...</value>
+  </data>
+  <data name="OdhlasitSe" xml:space="preserve">
+    <value>Odhlásit se</value>
+  </data>
+  <data name="Zapisovat" xml:space="preserve">
+    <value>Zapisovat</value>
+  </data>
+  <data name="ZmenitHeslo" xml:space="preserve">
+    <value>Změnit heslo</value>
+  </data>
+  <data name="AdministraceSystemu" xml:space="preserve">
+    <value>Administrace systému</value>
+  </data>
+  <data name="Ceniky" xml:space="preserve">
+    <value>Ceníky sazeb</value>
+  </data>
+  <data name="cmdReports" xml:space="preserve">
+    <value>Tiskové sestavy | Pluginy</value>
+  </data>
+  <data name="DispecinkUkolu" xml:space="preserve">
+    <value>Dispečink úkolů</value>
+  </data>
+  <data name="Kalendar" xml:space="preserve">
+    <value>Kalendář</value>
+  </data>
+  <data name="Napoveda" xml:space="preserve">
+    <value>Nápověda</value>
+  </data>
+  <data name="NavrharWorkflow" xml:space="preserve">
+    <value>Návrhář workflow</value>
+  </data>
+  <data name="OdeslanaPosta" xml:space="preserve">
+    <value>Odeslaná pošta</value>
+  </data>
+  <data name="OperativniPlanovani" xml:space="preserve">
+    <value>Operativní plánování</value>
+  </data>
+  <data name="Rozpocty" xml:space="preserve">
+    <value>Rozpočty výdajů a fixních odměn</value>
+  </data>
+  <data name="Schvalovat_Pripravit_Fakturaci" xml:space="preserve">
+    <value>Schvalovat | Připravit podklady k fakturaci</value>
+  </data>
+  <data name="Stitky" xml:space="preserve">
+    <value>Štítky</value>
+  </data>
+  <data name="ZalohoveFaktury" xml:space="preserve">
+    <value>Zálohové faktury</value>
+  </data>
 </root>

@@ -343,7 +343,7 @@
         function search1Blur() {
 
             document.getElementById("<%=hidSearchBox1.Value%>").style.background = "";
-            document.getElementById("<%=hidSearchBox1.Value%>").value = "Najít projekt...";
+            document.getElementById("<%=hidSearchBox1.Value%>").value = "<%=Resources.Site.NajitProjekt%>";
         }
 
 

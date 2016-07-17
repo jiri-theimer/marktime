@@ -160,6 +160,11 @@
     <Compile Include="p59PriorityBL.vb" />
     <Compile Include="p61ActivityClusterBL.vb" />
     <Compile Include="p98Invoice_Round_Setting_TemplateBL.vb" />
+    <Compile Include="Resources\common.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>common.resx</DependentUpon>
+    </Compile>
     <Compile Include="x18EntityCategoryBL.vb" />
     <Compile Include="p47CapacityPlanBL.vb" />
     <Compile Include="p48OperativePlanBL.vb" />
@@ -196,10 +201,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\common.en-us.resx" />
+    <EmbeddedResource Include="Resources\common.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>common.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +238,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

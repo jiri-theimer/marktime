@@ -83,6 +83,24 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Fakturovat.
+        '''</summary>
+        Friend Shared ReadOnly Property Fakturovat() As String
+            Get
+                Return ResourceManager.GetString("Fakturovat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Žádné záznamy.
+        '''</summary>
+        Friend Shared ReadOnly Property Grid_ZadneZaznamy() As String
+            Get
+                Return ResourceManager.GetString("Grid_ZadneZaznamy", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Nápověda.
         '''</summary>
         Friend Shared ReadOnly Property help() As String
@@ -92,11 +110,20 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Klient projektu.
+        '''</summary>
+        Friend Shared ReadOnly Property klient_projektu() As String
+            Get
+                Return ResourceManager.GetString("klient_projektu", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Obnovit z archivu.
         '''</summary>
         Friend Shared ReadOnly Property move_from_archive() As String
             Get
-                Return ResourceManager.GetString("move-from-archive", resourceCulture)
+                Return ResourceManager.GetString("move_from_archive", resourceCulture)
             End Get
         End Property
         
@@ -105,7 +132,7 @@ Namespace Resources
         '''</summary>
         Friend Shared ReadOnly Property move_to_archive() As String
             Get
-                Return ResourceManager.GetString("move-to-archive", resourceCulture)
+                Return ResourceManager.GetString("move_to_archive", resourceCulture)
             End Get
         End Property
         
@@ -132,7 +159,16 @@ Namespace Resources
         '''</summary>
         Friend Shared ReadOnly Property save_changes() As String
             Get
-                Return ResourceManager.GetString("save-changes", resourceCulture)
+                Return ResourceManager.GetString("save_changes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Skrytý odpis.
+        '''</summary>
+        Friend Shared ReadOnly Property SkrytyOdpis() As String
+            Get
+                Return ResourceManager.GetString("SkrytyOdpis", resourceCulture)
             End Get
         End Property
         
@@ -141,7 +177,16 @@ Namespace Resources
         '''</summary>
         Friend Shared ReadOnly Property uzivatelska_pole() As String
             Get
-                Return ResourceManager.GetString("uzivatelska-pole", resourceCulture)
+                Return ResourceManager.GetString("uzivatelska_pole", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Viditelný odpis.
+        '''</summary>
+        Friend Shared ReadOnly Property ViditelnyOdpis() As String
+            Get
+                Return ResourceManager.GetString("ViditelnyOdpis", resourceCulture)
             End Get
         End Property
         
@@ -151,6 +196,15 @@ Namespace Resources
         Friend Shared ReadOnly Property vlastnosti() As String
             Get
                 Return ResourceManager.GetString("vlastnosti", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Zahrnout do paušálu.
+        '''</summary>
+        Friend Shared ReadOnly Property ZahrnoutDoPausalu() As String
+            Get
+                Return ResourceManager.GetString("ZahrnoutDoPausalu", resourceCulture)
             End Get
         End Property
     End Class

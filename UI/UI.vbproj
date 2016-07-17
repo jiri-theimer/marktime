@@ -523,6 +523,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>p31_framework_detail.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\p31_record.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_record.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\p31_record.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_record.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Site.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Site.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Site.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Site.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="b01_record.aspx.designer.vb">
       <DependentUpon>b01_record.aspx</DependentUpon>
     </Compile>
@@ -2577,6 +2597,28 @@
     </Content>
     <Content Include="App_LocalResources\p31_subgrid.ascx.resx" />
     <Content Include="App_LocalResources\p31_subgrid.ascx.en-us.resx" />
+    <Content Include="App_LocalResources\p31_record.aspx.resx" />
+    <Content Include="App_LocalResources\p31_record.aspx.en-us.resx" />
+    <Content Include="App_GlobalResources\p31_record.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_record.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\p31_record.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_record.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Site.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Site.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Site.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Site.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_LocalResources\p31_framework_timer.aspx.resx" />
+    <Content Include="App_LocalResources\p31_framework_timer.aspx.en-us.resx" />
+    <Content Include="App_LocalResources\timer.ascx.resx" />
+    <Content Include="App_LocalResources\timer.ascx.en-us.resx" />
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

@@ -117,4 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="chkBindToContactPerson.Text" xml:space="preserve">
+    <value>Kontaktní osoba</value>
+  </data>
+  <data name="chkBindToP56.Text" xml:space="preserve">
+    <value>Projektový úkol</value>
+  </data>
+  <data name="chkTrimming.Text" xml:space="preserve">
+    <value>Korekce</value>
+  </data>
+  <data name="cmdDoc.Text" xml:space="preserve">
+    <value>Nahrát/spárovat dokument</value>
+  </data>
+  <data name="lblDate.Text" xml:space="preserve">
+    <value>Datum:</value>
+  </data>
+  <data name="lblDokumenty.Text" xml:space="preserve">
+    <value>Dokumenty</value>
+  </data>
+  <data name="lblHours.Text" xml:space="preserve">
+    <value>Hodiny:</value>
+  </data>
+  <data name="lblJ02ID.Text" xml:space="preserve">
+    <value>Osoba:</value>
+  </data>
+  <data name="lblp31Amount_Vat_Orig.Text" xml:space="preserve">
+    <value>Částka DPH:</value>
+  </data>
+  <data name="lblp31Amount_WithoutVat_Orig.Text" xml:space="preserve">
+    <value>Částka bez DPH:</value>
+  </data>
+  <data name="lblp31Amount_WithVat_Orig.Text" xml:space="preserve">
+    <value>Částka vč.DPH:</value>
+  </data>
+  <data name="lblp31Calc_PieceAmount.Text" xml:space="preserve">
+    <value>Cena 1 ks:</value>
+  </data>
+  <data name="lblp31Calc_Pieces.Text" xml:space="preserve">
+    <value>Počet:</value>
+  </data>
+  <data name="lblP31Text.Text" xml:space="preserve">
+    <value>Podrobný popis úkonu:</value>
+  </data>
+  <data name="lblp31VatRate_Orig.Text" xml:space="preserve">
+    <value>Sazba DPH (%):</value>
+  </data>
+  <data name="lblP32ID.Text" xml:space="preserve">
+    <value>Aktivita:</value>
+  </data>
+  <data name="lblP34ID.Text" xml:space="preserve">
+    <value>Sešit:</value>
+  </data>
+  <data name="lblP41ID.Text" xml:space="preserve">
+    <value>Projekt:</value>
+  </data>
+  <data name="lblRozpocet.Text" xml:space="preserve">
+    <value>Rozpočet</value>
+  </data>
+  <data name="lblSupplier.Text" xml:space="preserve">
+    <value>Dodavatel:</value>
+  </data>
+  <data name="lblTimeFrom.Text" xml:space="preserve">
+    <value>Začátek:</value>
+  </data>
+  <data name="lblTimeUntil.Text" xml:space="preserve">
+    <value>Konec:</value>
+  </data>
+  <data name="lblValueTrimmed.Text" xml:space="preserve">
+    <value>Hodiny k fakturaci:</value>
+  </data>
 </root>

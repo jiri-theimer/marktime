@@ -117,31 +117,193 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkTimer.Text" xml:space="preserve">
-    <value>Zobrazovat STOPKY</value>
+  <data name="p32Name" xml:space="preserve">
+    <value>Aktivita</value>
   </data>
-  <data name="cmdReport.Text" xml:space="preserve">
-    <value>Tisková sestava</value>
+  <data name="TimeFrom" xml:space="preserve">
+    <value>Čas od</value>
   </data>
-  <data name="lblFond_Hours.Text" xml:space="preserve">
-    <value>Fond pracovní doby:</value>
+  <data name="TimeUntil" xml:space="preserve">
+    <value>Čas do</value>
   </data>
-  <data name="lblHeader.Text" xml:space="preserve">
-    <value>Worksheet kalendář pro zapisování úkonů</value>
+  <data name="Datum" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="lblHours_All.Text" xml:space="preserve">
-    <value>Vykázané hodiny:</value>
+  <data name="Aktualizace" xml:space="preserve">
+    <value>Aktualizace</value>
   </data>
-  <data name="lblHours_Billable.Text" xml:space="preserve">
-    <value>z toho fakturovatelné xx</value>
+  <data name="Aktualizoval" xml:space="preserve">
+    <value>Updated by</value>
   </data>
-  <data name="lblSearchProject.Text" xml:space="preserve">
-    <value>Vyhledat projekt pro nový úkon...</value>
+  <data name="BillingDavka" xml:space="preserve">
+    <value>Billing dávka</value>
   </data>
-  <data name="lblUtil_Billable.Text" xml:space="preserve">
-    <value>Utilizace (fakturovatelné hodiny):</value>
+  <data name="CastkaBezDPH" xml:space="preserve">
+    <value>Částka bez DPH</value>
   </data>
-  <data name="lblUtil_Total.Text" xml:space="preserve">
-    <value>Utilizace (všechny hodiny):</value>
+  <data name="Dodavatel" xml:space="preserve">
+    <value>Dodavatel</value>
+  </data>
+  <data name="FA" xml:space="preserve">
+    <value>FA</value>
+  </data>
+  <data name="Faktura" xml:space="preserve">
+    <value>Faktura</value>
+  </data>
+  <data name="FakturacniOddil" xml:space="preserve">
+    <value>Fakt.oddíl</value>
+  </data>
+  <data name="Fakturovat" xml:space="preserve">
+    <value>Fakturovat</value>
+  </data>
+  <data name="KlientProjektu" xml:space="preserve">
+    <value>Klient projektu</value>
+  </data>
+  <data name="KodDokladu" xml:space="preserve">
+    <value>Kód dokladu</value>
+  </data>
+  <data name="KodUkolu" xml:space="preserve">
+    <value>Kód úkolu</value>
+  </data>
+  <data name="KontaktniOsoba" xml:space="preserve">
+    <value>Kontaktní osoba</value>
+  </data>
+  <data name="Mena" xml:space="preserve">
+    <value>Měna</value>
+  </data>
+  <data name="NakladovaCastka" xml:space="preserve">
+    <value>Nákladová částka</value>
+  </data>
+  <data name="NakladovaSazba" xml:space="preserve">
+    <value>Nákladová sazba</value>
+  </data>
+  <data name="NavrhFakturacnihoStatusu" xml:space="preserve">
+    <value>Návrh fakt.statusu</value>
+  </data>
+  <data name="NazevUkolu" xml:space="preserve">
+    <value>Název úkolu</value>
+  </data>
+  <data name="Osoba" xml:space="preserve">
+    <value>Osoba</value>
+  </data>
+  <data name="Projekt" xml:space="preserve">
+    <value>Projekt</value>
+  </data>
+  <data name="SazbaDPH" xml:space="preserve">
+    <value>Sazba DPH</value>
+  </data>
+  <data name="SchvalenaHodnota" xml:space="preserve">
+    <value>Schválená hodnota</value>
+  </data>
+  <data name="SchvalenaSazba" xml:space="preserve">
+    <value>Schválená sazba</value>
+  </data>
+  <data name="SchvaleneHodiny" xml:space="preserve">
+    <value>Schválené hodiny</value>
+  </data>
+  <data name="Schvaleno" xml:space="preserve">
+    <value>Schváleno</value>
+  </data>
+  <data name="SchvalenoBezDPH" xml:space="preserve">
+    <value>Schváleno bez DPH</value>
+  </data>
+  <data name="SchvalenoHHMM" xml:space="preserve">
+    <value>Schváleno HH:mm</value>
+  </data>
+  <data name="SchvalenoKdy" xml:space="preserve">
+    <value>Kdy schváleno</value>
+  </data>
+  <data name="SchvalenoVcDPH" xml:space="preserve">
+    <value>Schváleno vč.DPH</value>
+  </data>
+  <data name="Sesit" xml:space="preserve">
+    <value>Sešit</value>
+  </data>
+  <data name="SkrytyOdpis" xml:space="preserve">
+    <value>Skrytý odpis</value>
+  </data>
+  <data name="ViditelnyOdpis" xml:space="preserve">
+    <value>Viditelný odpis</value>
+  </data>
+  <data name="VlastnikZaznamu" xml:space="preserve">
+    <value>Vlastník záznamu</value>
+  </data>
+  <data name="VychoziSazba" xml:space="preserve">
+    <value>Výchozí sazba</value>
+  </data>
+  <data name="VyfakturovanaHodnota" xml:space="preserve">
+    <value>Vyfakt.hodnota</value>
+  </data>
+  <data name="VyfakturovanaSazba" xml:space="preserve">
+    <value>Vyfakt.sazba</value>
+  </data>
+  <data name="VyfakturovaneHodiny" xml:space="preserve">
+    <value>Vyfakt.hodiny</value>
+  </data>
+  <data name="VyfakturovanoBezDPH" xml:space="preserve">
+    <value>Vyfakt.bez DPH</value>
+  </data>
+  <data name="VyfakturovanoVcDPH" xml:space="preserve">
+    <value>Vyfakt.vč.DPH</value>
+  </data>
+  <data name="VykazanaHodnota" xml:space="preserve">
+    <value>Vykázaná hodnota</value>
+  </data>
+  <data name="VykazaneHodiny" xml:space="preserve">
+    <value>Vykázané hodiny</value>
+  </data>
+  <data name="VykazaneHodinyHHMM" xml:space="preserve">
+    <value>Vykázáno HH:MM</value>
+  </data>
+  <data name="ZahrnoutDoPausalu" xml:space="preserve">
+    <value>Zahrnout do paušálu</value>
+  </data>
+  <data name="Zalozeno" xml:space="preserve">
+    <value>Založeno</value>
+  </data>
+  <data name="Zalozil" xml:space="preserve">
+    <value>Založil</value>
+  </data>
+  <data name="ExterniKod" xml:space="preserve">
+    <value>Externí kód</value>
+  </data>
+  <data name="FakturacniCenik" xml:space="preserve">
+    <value>Fakturační ceník</value>
+  </data>
+  <data name="KlientPlusProjekt" xml:space="preserve">
+    <value>Klient+projekt</value>
+  </data>
+  <data name="Kod" xml:space="preserve">
+    <value>Kód</value>
+  </data>
+  <data name="LimitHodin" xml:space="preserve">
+    <value>Limit hodin</value>
+  </data>
+  <data name="LimitniHonorar" xml:space="preserve">
+    <value>Limitní honorář</value>
+  </data>
+  <data name="NakladovyCenik" xml:space="preserve">
+    <value>Nákladový ceník</value>
+  </data>
+  <data name="NazevProjektu" xml:space="preserve">
+    <value>Název projektu</value>
+  </data>
+  <data name="PlanEnd" xml:space="preserve">
+    <value>Plánované dokončení</value>
+  </data>
+  <data name="PlanStart" xml:space="preserve">
+    <value>Plánované zahájení</value>
+  </data>
+  <data name="Stredisko" xml:space="preserve">
+    <value>Středisko</value>
+  </data>
+  <data name="TypFaktury" xml:space="preserve">
+    <value>Typ faktury</value>
+  </data>
+  <data name="TypProjektu" xml:space="preserve">
+    <value>Typ projektu</value>
+  </data>
+  <data name="Zkratka" xml:space="preserve">
+    <value>Zkratka</value>
   </data>
 </root>

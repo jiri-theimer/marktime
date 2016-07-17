@@ -98,11 +98,11 @@ Public Class Site
                 menu1.FindItemByValue("messages").Text = .MessagesCount.ToString
             End If
 
-            If .HomeMenu = "" Then
-                menu1.FindItemByValue("dashboard").Text = "ÚVOD"
-            Else
+            If .HomeMenu <> "" Then
                 menu1.FindItemByValue("dashboard").Text = .HomeMenu
                 RenderHomeMenu()
+            Else
+                menu1.FindItemByValue("dashboard").Text = Resources.Site.Menu_UVOD
             End If
         End With
 
@@ -129,9 +129,47 @@ Public Class Site
             Select Case cook.Value
                 Case "en-US"
                     menu1.FindItemByValue("lang").ImageUrl = "Images/Flags/menu_uk.gif"
+                    TranslateMenu()
                 Case Else
                     menu1.FindItemByValue("lang").ImageUrl = "Images/Flags/menu_czech.gif"
             End Select
+        End If
+    End Sub
+
+    Private Sub TranslateMenu()
+        If Page.Culture.IndexOf("Czech") < 0 Then
+            menu1.FindItemByValue("p41").Text = Resources.Site.Menu_PROJEKTY
+            menu1.FindItemByValue("p28").Text = Resources.Site.Menu_KLIENTI
+            menu1.FindItemByValue("j02").Text = Resources.Site.Menu_LIDE
+            menu1.FindItemByValue("p91").Text = Resources.Site.Menu_FAKTURY
+            menu1.FindItemByValue("more").Text = Resources.Site.Menu_DALSI
+
+            menu1.FindItemByValue("o23").Text = Resources.Site.Dokumenty
+            menu1.FindItemByValue("cmdMyProfile").Text = Resources.Site.MujProfil
+            menu1.FindItemByValue("cmdChangePassword").Text = Resources.Site.ZmenitHeslo
+            menu1.FindItemByValue("cmdLogout").Text = Resources.Site.OdhlasitSe
+
+            menu1.FindItemByValue("p31_framework").Text = Resources.Site.Zapisovat
+            menu1.FindItemByValue("cmdP31_Grid").Text = Resources.Site.Grid
+            menu1.FindItemByValue("cmdP31_Timer").Text = Resources.Site.cmdP31_Timer
+            menu1.FindItemByValue("cmdP31_Approving").Text = Resources.Site.Schvalovat_Pripravit_Fakturaci
+
+            menu1.FindItemByValue("cmdAdmin").Text = Resources.Site.AdministraceSystemu
+            menu1.FindItemByValue("cmdReports").Text = Resources.Site.cmdReports
+            menu1.FindItemByValue("p56").Text = Resources.Site.DispecinkUkolu
+            menu1.FindItemByValue("o23").Text = Resources.Site.Dokumenty
+            menu1.FindItemByValue("entity_scheduler").Text = Resources.Site.Kalendar
+            menu1.FindItemByValue("p48").Text = Resources.Site.OperativniPlanovani
+            menu1.FindItemByValue("p49").Text = Resources.Site.Rozpocty
+            menu1.FindItemByValue("p90_framework").Text = Resources.Site.ZalohoveFaktury
+            menu1.FindItemByValue("p51").Text = Resources.Site.Ceniky
+            menu1.FindItemByValue("x40").Text = Resources.Site.OdeslanaPosta
+
+            menu1.FindItemByValue("cmdWorkflow").Text = Resources.Site.NavrharWorkflow
+            menu1.FindItemByValue("x18").Text = Resources.Site.Stitky
+            menu1.FindItemByValue("cmdHelp").Text = Resources.Site.Napoveda
+            menu1.FindItemByValue("help").ToolTip = Resources.Site.Napoveda
+            
         End If
     End Sub
 
@@ -257,7 +295,7 @@ Public Class Site
         Public Sub InstantiateIn(ByVal container As Control)
             Dim txt1 As New TextBox()
             txt1.ID = "searchbox1"
-            txt1.Text = "Najít projekt..."
+            txt1.Text = Resources.Site.NajitProjekt
             txt1.Style.Item("width") = "110px"
             txt1.Attributes.Item("onfocus") = "search1Focus()"
             txt1.Attributes.Item("onblur") = "search1Blur()"

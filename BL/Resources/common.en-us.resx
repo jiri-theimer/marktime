@@ -117,31 +117,193 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkTimer.Text" xml:space="preserve">
-    <value>Zobrazovat STOPKY</value>
+  <data name="p32Name" xml:space="preserve">
+    <value>Activity</value>
   </data>
-  <data name="cmdReport.Text" xml:space="preserve">
-    <value>Tisková sestava</value>
+  <data name="TimeFrom" xml:space="preserve">
+    <value>Time from</value>
   </data>
-  <data name="lblFond_Hours.Text" xml:space="preserve">
-    <value>Fond pracovní doby:</value>
+  <data name="TimeUntil" xml:space="preserve">
+    <value>Time until</value>
   </data>
-  <data name="lblHeader.Text" xml:space="preserve">
-    <value>Worksheet kalendář pro zapisování úkonů</value>
+  <data name="Datum" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="lblHours_All.Text" xml:space="preserve">
-    <value>Vykázané hodiny:</value>
+  <data name="Aktualizace" xml:space="preserve">
+    <value>Updated when</value>
   </data>
-  <data name="lblHours_Billable.Text" xml:space="preserve">
-    <value>z toho fakturovatelné xx</value>
+  <data name="Aktualizoval" xml:space="preserve">
+    <value>Updated by</value>
   </data>
-  <data name="lblSearchProject.Text" xml:space="preserve">
-    <value>Vyhledat projekt pro nový úkon...</value>
+  <data name="BillingDavka" xml:space="preserve">
+    <value>Billing batch</value>
   </data>
-  <data name="lblUtil_Billable.Text" xml:space="preserve">
-    <value>Utilizace (fakturovatelné hodiny):</value>
+  <data name="CastkaBezDPH" xml:space="preserve">
+    <value>Amount VAT exclude</value>
   </data>
-  <data name="lblUtil_Total.Text" xml:space="preserve">
-    <value>Utilizace (všechny hodiny):</value>
+  <data name="Dodavatel" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="FA" xml:space="preserve">
+    <value>Billable</value>
+  </data>
+  <data name="Faktura" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="FakturacniOddil" xml:space="preserve">
+    <value>Invoice row</value>
+  </data>
+  <data name="Fakturovat" xml:space="preserve">
+    <value>Bill</value>
+  </data>
+  <data name="KlientProjektu" xml:space="preserve">
+    <value>Project client</value>
+  </data>
+  <data name="KodDokladu" xml:space="preserve">
+    <value>Record code</value>
+  </data>
+  <data name="KodUkolu" xml:space="preserve">
+    <value>Task code</value>
+  </data>
+  <data name="KontaktniOsoba" xml:space="preserve">
+    <value>Contact person</value>
+  </data>
+  <data name="Mena" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="NakladovaCastka" xml:space="preserve">
+    <value>Internal amount</value>
+  </data>
+  <data name="NakladovaSazba" xml:space="preserve">
+    <value>Internal rate</value>
+  </data>
+  <data name="NavrhFakturacnihoStatusu" xml:space="preserve">
+    <value>Proposed status</value>
+  </data>
+  <data name="NazevUkolu" xml:space="preserve">
+    <value>Task name</value>
+  </data>
+  <data name="Osoba" xml:space="preserve">
+    <value>Person</value>
+  </data>
+  <data name="Projekt" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="SazbaDPH" xml:space="preserve">
+    <value>VAT rate</value>
+  </data>
+  <data name="SchvalenaHodnota" xml:space="preserve">
+    <value>Approved value</value>
+  </data>
+  <data name="SchvalenaSazba" xml:space="preserve">
+    <value>Approved rate</value>
+  </data>
+  <data name="SchvaleneHodiny" xml:space="preserve">
+    <value>Approved hours</value>
+  </data>
+  <data name="Schvaleno" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="SchvalenoBezDPH" xml:space="preserve">
+    <value>Approved Amount</value>
+  </data>
+  <data name="SchvalenoHHMM" xml:space="preserve">
+    <value>Approved HH:MM</value>
+  </data>
+  <data name="SchvalenoKdy" xml:space="preserve">
+    <value>Approved When</value>
+  </data>
+  <data name="SchvalenoVcDPH" xml:space="preserve">
+    <value>Approved Amount VAT incl.</value>
+  </data>
+  <data name="Sesit" xml:space="preserve">
+    <value>Sheet</value>
+  </data>
+  <data name="SkrytyOdpis" xml:space="preserve">
+    <value>Hidden write off</value>
+  </data>
+  <data name="ViditelnyOdpis" xml:space="preserve">
+    <value>Visible write off</value>
+  </data>
+  <data name="VlastnikZaznamu" xml:space="preserve">
+    <value>Record owner</value>
+  </data>
+  <data name="VychoziSazba" xml:space="preserve">
+    <value>Default rate</value>
+  </data>
+  <data name="VyfakturovanaHodnota" xml:space="preserve">
+    <value>Invoiced value</value>
+  </data>
+  <data name="VyfakturovanaSazba" xml:space="preserve">
+    <value>Invoiced rate</value>
+  </data>
+  <data name="VyfakturovaneHodiny" xml:space="preserve">
+    <value>Invoiced hours</value>
+  </data>
+  <data name="VyfakturovanoBezDPH" xml:space="preserve">
+    <value>Invoiced Amount</value>
+  </data>
+  <data name="VyfakturovanoVcDPH" xml:space="preserve">
+    <value>Invoiced Amount VAT incl.</value>
+  </data>
+  <data name="VykazanaHodnota" xml:space="preserve">
+    <value>Tracked value</value>
+  </data>
+  <data name="VykazaneHodiny" xml:space="preserve">
+    <value>Tracked hours</value>
+  </data>
+  <data name="VykazaneHodinyHHMM" xml:space="preserve">
+    <value>Tracked HH:MM</value>
+  </data>
+  <data name="ZahrnoutDoPausalu" xml:space="preserve">
+    <value>Fixed price</value>
+  </data>
+  <data name="Zalozeno" xml:space="preserve">
+    <value>Created when</value>
+  </data>
+  <data name="Zalozil" xml:space="preserve">
+    <value>Created by</value>
+  </data>
+  <data name="ExterniKod" xml:space="preserve">
+    <value>External code</value>
+  </data>
+  <data name="FakturacniCenik" xml:space="preserve">
+    <value>Invoice rates</value>
+  </data>
+  <data name="KlientPlusProjekt" xml:space="preserve">
+    <value>Client+Project</value>
+  </data>
+  <data name="Kod" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="LimitHodin" xml:space="preserve">
+    <value>Hours limit</value>
+  </data>
+  <data name="LimitniHonorar" xml:space="preserve">
+    <value>Limit Fee</value>
+  </data>
+  <data name="NakladovyCenik" xml:space="preserve">
+    <value>Cost rates</value>
+  </data>
+  <data name="NazevProjektu" xml:space="preserve">
+    <value>Project name</value>
+  </data>
+  <data name="PlanEnd" xml:space="preserve">
+    <value>Plan end</value>
+  </data>
+  <data name="PlanStart" xml:space="preserve">
+    <value>Plan start</value>
+  </data>
+  <data name="Stredisko" xml:space="preserve">
+    <value>Cost centre</value>
+  </data>
+  <data name="TypFaktury" xml:space="preserve">
+    <value>Invoice type</value>
+  </data>
+  <data name="TypProjektu" xml:space="preserve">
+    <value>Project type</value>
+  </data>
+  <data name="Zkratka" xml:space="preserve">
+    <value>Shortcut</value>
   </data>
 </root>

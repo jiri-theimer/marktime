@@ -179,7 +179,7 @@
             End If
 
             If Master.DataPID = 0 Then
-                Master.HeaderText = "Zapsat worksheet úkon"
+                Master.HeaderText = Resources.p31_record.Nadpis
                 If Me.CurrentP91ID > 0 Then
                     Master.HeaderText = "Zapsat úkon do faktury | " & Master.Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, Me.CurrentP91ID)
                 End If
@@ -753,12 +753,12 @@
         Dim bolET As Boolean = False
         Select Case Me.CurrentHoursEntryFlag
             Case BO.p31HoursEntryFlagENUM.Hodiny, BO.p31HoursEntryFlagENUM.PresnyCasOdDo
-                lblHours.Text = "Hodiny:"
-                lblHours.ToolTip = "Hodiny zapisujte jako dekadické číslo (např. 0,25 nebo 1,5) nebo ve formátu HH:mm (např. 00:15 nebo 01:30)"
+                lblHours.Text = Resources.p31_record.Hodiny + ":"
+                lblHours.ToolTip = Resources.p31_record.Hodiny_Tooltip
                 Me.p31Value_Orig.Attributes.Item("onchange") = "handle_hours()"
             Case BO.p31HoursEntryFlagENUM.Minuty
-                lblHours.Text = "Minuty:"
-                lblHours.ToolTip = "Čas zapisujte jako celé číslo v minutách."
+                lblHours.Text = Resources.p31_record.Minuty + ":"
+                lblHours.ToolTip = Resources.p31_record.Minuty_Tooltip
                 Me.p31Value_Orig.Attributes.Item("onchange") = "handle_minutes()"
         End Select
         If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo Or Me.p31_default_HoursEntryFlag.Value = "3" Or Me.CurrentIsScheduler Then

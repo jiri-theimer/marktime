@@ -464,6 +464,15 @@ Partial Public Class p31_record
     Protected WithEvents j02ID_ContactPerson As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''lblDokumenty control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDokumenty As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cmdDoc control.
     '''</summary>
     '''<remarks>
@@ -489,6 +498,15 @@ Partial Public Class p31_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panP49 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''lblRozpocet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblRozpocet As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdP49 control.

@@ -92,7 +92,7 @@
         If RecordValidityIsClosed Then
             panRecValidity.Style.Item("display") = "block"
             toolbar1.Skin = "BlackMetroTouch"
-            cmd.Text = GetGlobalResourceObject("common", "move-from-archive").ToString
+            cmd.Text = Resources.common.move_from_archive
             cmd.ImageUrl = "Images/recycle.png"
 
             lblValidity.Text = "Záznam je v archivu (byl otevřený od " & s1 & " do " & s2 & ")"
@@ -100,7 +100,8 @@
         Else
             panRecValidity.Style.Item("display") = "none"
             toolbar1.Skin = "Bootstrap"
-            cmd.Text = GetGlobalResourceObject("common", "move-to-archive").ToString
+
+            cmd.Text = Resources.common.move_to_archive
             cmd.ImageUrl = "Images/bin.png"
             If Year(d2) = 3000 Then
                 lblValidity.Text = "Záznam je otevřený od " & s1
