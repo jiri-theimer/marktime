@@ -1179,7 +1179,7 @@
             If Not c Is Nothing Then lisJ02.Add(c)
         End If
         If lisJ02.Count = 0 Then
-            If Not bolSilent Then Master.Notify(String.Format("K projektu [{0}] nebo ke klientovi [{1}] nejsou zavedeny kontaktní osoby.", cRec.p41Name, cRec.Client))
+            If Not bolSilent Then Master.Notify(String.Format(Resources.p31_record.NejsouZavedenyKontaktniOsoby, cRec.p41Name, cRec.Client))
         Else
             Me.j02ID_ContactPerson.DataSource = lisJ02
             Me.j02ID_ContactPerson.DataBind()

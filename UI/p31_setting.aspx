@@ -13,14 +13,14 @@
     <p></p>
     <asp:Panel ID="panT" runat="server" CssClass="content-box2">
         <div class="title">
-            Nastavení zapisování hodin
+            <%=Resources.p31_setting.Header_T%>
         </div>
         <div class="content">
             
             <asp:RadioButtonList ID="opgHoursEntryFlag" runat="server" AutoPostBack="true">
-                <asp:ListItem Text="Hodiny vyplňovat dekadickým číslem (příklad: 1,5) nebo HH:mm formátem (příklad: 01:30)" Value="1" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="<%$Resources:p31_setting,opgHoursEntryFlag_1%>" Value="1" Selected="true"></asp:ListItem>
                                
-                <asp:ListItem Text="Čas zadávat v minutách (celé číslo)" Value="2"></asp:ListItem>
+                <asp:ListItem Text="<%$Resources:p31_setting,opgHoursEntryFlag_2%>" Value="2"></asp:ListItem>
             </asp:RadioButtonList>
 
             <div class="div6">
@@ -30,48 +30,48 @@
             <table cellpadding="6" id="responsive">
                 <tr>
                     <td colspan="2">
-                        <asp:CheckBox ID="chkShowTimeInterval" runat="server" Text="Kromě hodin nabízet možnost vyplnit přesný čas od - do" CssClass="chk" />
+                        <asp:CheckBox ID="chkShowTimeInterval" runat="server" Text="<%$Resources:p31_setting, chkShowTimeInterval %>" CssClass="chk" meta:resourcekey="chkShowTimeInterval" />
                     </td>
                 </tr>
                 <tr>                    
                     <td>
-                        Nabídka předvyplněných intervalů pro pole [Hodiny]:
+                        <%=Resources.p31_setting.NabidkaIntervalu%>
                     </td>
                     <td>
                         <asp:DropDownList ID="p31_HoursInputInterval" runat="server">
-                            <asp:ListItem Text="Po 5ti minutách" Value="5"></asp:ListItem>
-                            <asp:ListItem Text="Po 15ti minutách" Value="15"></asp:ListItem>
-                            <asp:ListItem Text="Po 30ti minutách" Value="30"></asp:ListItem>
-                            <asp:ListItem Text="Po 60ti minutách" Value="60"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputInterval_5 %>" Value="5"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputInterval_15 %>" Value="15"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputInterval_30 %>" Value="30"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputInterval_60 %>" Value="60"></asp:ListItem>
                         </asp:DropDownList>
                     </td>
                 </tr>
                 <tr>                    
                     <td>
-                        Formát předvyplněných intervalů pro pole [Hodiny]:
+                        <%=Resources.p31_setting.NabidkaFormat%>
                     </td>
                     <td>
                         <asp:DropDownList ID="p31_HoursInputFormat" runat="server">
-                            <asp:ListItem Text="Dekadické číslo (např. 1,5)" Value="dec" Selected="true"></asp:ListItem>
-                            <asp:ListItem Text="HH:mm (např. 01:30)" Value="hhmm"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputFormat_dec%>" Value="dec" Selected="true"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputFormat_hhmm%>" Value="hhmm"></asp:ListItem>
                             
                         </asp:DropDownList>
                     </td>
                 </tr>                       
                 <tr>                    
                     <td>
-                        Velikost intervalů pro předvyplněné čas v polích [Začátek]/[Konec]:
+                        <%=Resources.p31_setting.NabidkaIntervaluCas%>
                     </td>
                     <td>
                         <asp:DropDownList ID="p31_TimeInputInterval" runat="server">                            
-                            <asp:ListItem Text="Po 30ti minutách" Value="30"></asp:ListItem>
-                            <asp:ListItem Text="Po 60ti minutách" Value="60"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputInterval_30%>" Value="30"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputInterval_60%>" Value="60"></asp:ListItem>
                         </asp:DropDownList>
                     </td>
                 </tr>
                 <tr>                    
                     <td>
-                        Nabídka intervalů v poli [Začátek]/[Konec] začíná od:
+                        <%=Resources.p31_setting.NabidkaStartOd%>
                     </td>
                     <td>
                         <asp:DropDownList ID="p31_TimeInput_Start" runat="server">   
@@ -88,7 +88,7 @@
                 </tr>
                 <tr>                    
                     <td>
-                        Nabídka intervalů v poli [Začátek]/[Konec] končí v:
+                        <%=Resources.p31_setting.NabidkaEndOd%>
                     </td>
                     <td>
                         <asp:DropDownList ID="p31_TimeInput_End" runat="server">   

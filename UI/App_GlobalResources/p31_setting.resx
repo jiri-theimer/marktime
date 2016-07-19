@@ -117,25 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hodiny" xml:space="preserve">
-    <value>Hours</value>
+  <data name="chkShowTimeInterval" xml:space="preserve">
+    <value>Kromě hodin nabízet možnost vyplnit přesný čas od - do</value>
   </data>
-  <data name="Hodiny_Tooltip" xml:space="preserve">
-    <value>Hours can be decadic number (example: 0,25 or 1,5) or format HH:mm (example: 00:15 or 01:30).</value>
+  <data name="Header_T" xml:space="preserve">
+    <value>Nastavení zapisování hodin</value>
   </data>
-  <data name="Minuty" xml:space="preserve">
-    <value>Minutes</value>
+  <data name="NabidkaEndOd" xml:space="preserve">
+    <value>Nabídka intervalů v poli [Začátek]/[Konec] končí v:</value>
   </data>
-  <data name="Minuty_Tooltip" xml:space="preserve">
-    <value>Write as number.</value>
+  <data name="NabidkaFormat" xml:space="preserve">
+    <value>Formát předvyplněných intervalů pro pole [Hodiny]:</value>
   </data>
-  <data name="Nadpis" xml:space="preserve">
-    <value>Entry worksheet record</value>
+  <data name="NabidkaIntervalu" xml:space="preserve">
+    <value>Nabídka předvyplněných intervalů pro pole [Hodiny]:</value>
   </data>
-  <data name="Nastaveni" xml:space="preserve">
-    <value>Setting</value>
+  <data name="NabidkaIntervaluCas" xml:space="preserve">
+    <value>Velikost intervalů pro předvyplněné čas v polích [Začátek]/[Konec]:</value>
   </data>
-  <data name="NejsouZavedenyKontaktniOsoby" xml:space="preserve">
-    <value>Project [{0}] or Client [{1}] has no contact person.</value>
+  <data name="NabidkaStartOd" xml:space="preserve">
+    <value>Nabídka intervalů v poli [Začátek]/[Konec] začíná od:</value>
+  </data>
+  <data name="opgHoursEntryFlag_1" xml:space="preserve">
+    <value>Hodiny vyplňovat dekadickým číslem (příklad: 1,5) nebo HH:mm formátem (příklad: 01:30)</value>
+  </data>
+  <data name="opgHoursEntryFlag_2" xml:space="preserve">
+    <value>Čas zadávat v minutách (celé číslo)</value>
+  </data>
+  <data name="p31_HoursInputFormat_dec" xml:space="preserve">
+    <value>Dekadické číslo (např. 1,5)</value>
+  </data>
+  <data name="p31_HoursInputFormat_hhmm" xml:space="preserve">
+    <value>HH:mm (např. 01:30)</value>
+  </data>
+  <data name="p31_HoursInputInterval_15" xml:space="preserve">
+    <value>Po 15ti minutách</value>
+  </data>
+  <data name="p31_HoursInputInterval_30" xml:space="preserve">
+    <value>Po 30ti minutách</value>
+  </data>
+  <data name="p31_HoursInputInterval_5" xml:space="preserve">
+    <value>Po 5ti minutách</value>
+  </data>
+  <data name="p31_HoursInputInterval_60" xml:space="preserve">
+    <value>Po 60ti minutách</value>
   </data>
 </root>

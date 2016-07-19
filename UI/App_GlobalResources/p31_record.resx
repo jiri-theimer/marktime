@@ -135,4 +135,7 @@
   <data name="Nastaveni" xml:space="preserve">
     <value>Nastavení</value>
   </data>
+  <data name="NejsouZavedenyKontaktniOsoby" xml:space="preserve">
+    <value>K projektu [{0}] nebo ke klientovi [{1}] nejsou zavedeny kontaktní osoby.</value>
+  </data>
 </root>

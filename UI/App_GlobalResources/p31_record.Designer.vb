@@ -117,5 +117,14 @@ Namespace Resources
                 Return ResourceManager.GetString("Nastaveni", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to K projektu [{0}] nebo ke klientovi [{1}] nejsou zavedeny kontaktní osoby..
+        '''</summary>
+        Friend Shared ReadOnly Property NejsouZavedenyKontaktniOsoby() As String
+            Get
+                Return ResourceManager.GetString("NejsouZavedenyKontaktniOsoby", resourceCulture)
+            End Get
+        End Property
     End Class
 End Namespace

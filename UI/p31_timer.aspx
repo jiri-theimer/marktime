@@ -55,7 +55,7 @@
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/worksheet_32.png" />
                 </td>
                 <td>
-                    <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Worksheet Časovač"></asp:Label>
+                    <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Worksheet Stopky"></asp:Label>
                     
                 </td>
 
@@ -66,7 +66,7 @@
 
         <div class="content-box2">
             <div class="title">
-                <img src="Images/stopwatch.png" alt="Časovač" />
+                <img src="Images/stopwatch.png" alt="Stopky" />
                 <asp:Label ID="lblItemsHeader" runat="server" Text="Položky"></asp:Label>
             </div>
             <div class="content">
