@@ -5,6 +5,7 @@
 <asp:HiddenField ID="hidCustomQueries" runat="server" />
 <asp:HiddenField ID="hidExplicitValue" runat="server" />
 <asp:HiddenField ID="hidLogin" runat="server" />
+
 <asp:Button ID="cmdPeriodComboRefresh" runat="server" Style="display: none;" />
 <script type="text/javascript">
     function hardrefresh_periodcombo(explicitVal) {

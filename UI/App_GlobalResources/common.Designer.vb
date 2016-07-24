@@ -74,11 +74,29 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to DALŠÍ.
+        '''</summary>
+        Friend Shared ReadOnly Property Dalsi() As String
+            Get
+                Return ResourceManager.GetString("Dalsi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Odstranit.
         '''</summary>
         Friend Shared ReadOnly Property delete() As String
             Get
                 Return ResourceManager.GetString("delete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Export přehledu do MS EXCEL.
+        '''</summary>
+        Friend Shared ReadOnly Property ExportPrehledu() As String
+            Get
+                Return ResourceManager.GetString("ExportPrehledu", resourceCulture)
             End Get
         End Property
         
@@ -119,6 +137,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Kopírovat.
+        '''</summary>
+        Friend Shared ReadOnly Property Kopirovat() As String
+            Get
+                Return ResourceManager.GetString("Kopirovat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Obnovit z archivu.
         '''</summary>
         Friend Shared ReadOnly Property move_from_archive() As String
@@ -137,11 +164,29 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Nový.
+        '''</summary>
+        Friend Shared ReadOnly Property Novy() As String
+            Get
+                Return ResourceManager.GetString("Novy", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Ostatní.
         '''</summary>
         Friend Shared ReadOnly Property ostatni() As String
             Get
                 Return ResourceManager.GetString("ostatni", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Počet záznamů na stránku:.
+        '''</summary>
+        Friend Shared ReadOnly Property PocetZaznamuNaStranku() As String
+            Get
+                Return ResourceManager.GetString("PocetZaznamuNaStranku", resourceCulture)
             End Get
         End Property
         
@@ -169,6 +214,15 @@ Namespace Resources
         Friend Shared ReadOnly Property SkrytyOdpis() As String
             Get
                 Return ResourceManager.GetString("SkrytyOdpis", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Upravit.
+        '''</summary>
+        Friend Shared ReadOnly Property Upravit() As String
+            Get
+                Return ResourceManager.GetString("Upravit", resourceCulture)
             End Get
         End Property
         
@@ -205,6 +259,15 @@ Namespace Resources
         Friend Shared ReadOnly Property ZahrnoutDoPausalu() As String
             Get
                 Return ResourceManager.GetString("ZahrnoutDoPausalu", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ZÁZNAM.
+        '''</summary>
+        Friend Shared ReadOnly Property Zaznam() As String
+            Get
+                Return ResourceManager.GetString("Zaznam", resourceCulture)
             End Get
         End Property
     End Class

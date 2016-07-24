@@ -32,11 +32,12 @@ Public Class periodcombo_setting
         If s = "" Then
             Return
         End If
-        Dim a() As String = s.Split("|"), x As Integer = 0
+        Dim a() As String = s.Split("|"), x As Integer = 0, bolEnglish As Boolean = False
+        If Page.Culture.IndexOf("Czech") < 0 Then bolEnglish = True
         For Each strPair As String In a
             x += 1
             Dim b() As String = strPair.Split(";")
-            Dim c As New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(b(0)), BO.BAS.ConvertString2Date(b(1)), b(2))
+            Dim c As New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(b(0)), BO.BAS.ConvertString2Date(b(1)), b(2), bolEnglish)
             Dim cRec As New BO.p85TempBox
 
             cRec.p85GUID = ViewState("guid")

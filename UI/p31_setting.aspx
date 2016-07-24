@@ -52,8 +52,8 @@
                     </td>
                     <td>
                         <asp:DropDownList ID="p31_HoursInputFormat" runat="server">
-                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputFormat_dec%>" Value="dec" Selected="true"></asp:ListItem>
-                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputFormat_hhmm%>" Value="hhmm"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputFormat_dec%>" Value="dec" Selected="true"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputFormat_hhmm%>" Value="hhmm"></asp:ListItem>
                             
                         </asp:DropDownList>
                     </td>
@@ -64,8 +64,8 @@
                     </td>
                     <td>
                         <asp:DropDownList ID="p31_TimeInputInterval" runat="server">                            
-                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputInterval_30%>" Value="30"></asp:ListItem>
-                            <asp:ListItem Text="<%$Resources.p31_setting, p31_HoursInputInterval_60%>" Value="60"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputInterval_30%>" Value="30"></asp:ListItem>
+                            <asp:ListItem Text="<%$Resources:p31_setting, p31_HoursInputInterval_60%>" Value="60"></asp:ListItem>
                         </asp:DropDownList>
                     </td>
                 </tr>

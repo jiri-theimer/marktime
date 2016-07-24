@@ -83,7 +83,7 @@
 
     Private Sub Handle_ChangePeriod()
         If BO.BAS.IsNullInt(cbxX21ID.SelectedValue) > 0 Then
-            Dim cX21 As New BO.x21DatePeriod(CInt(cbxX21ID.SelectedValue))
+            Dim cX21 As New BO.x21DatePeriod(CInt(cbxX21ID.SelectedValue), False)
 
             datFrom.SelectedDate = IIf(Year(cX21.DateFrom) < 2000, DateSerial(2000, 1, 1), cX21.DateFrom)
             datUntil.SelectedDate = IIf(Year(cX21.DateUntil) > 2050, DateSerial(2050, 1, 1), cX21.DateUntil)

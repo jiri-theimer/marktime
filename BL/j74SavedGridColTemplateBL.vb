@@ -72,7 +72,7 @@ Class j74SavedGridColTemplateBL
         Dim c As New BO.j74SavedGridColTemplate
         c.x29ID = x29id
         c.j74IsSystem = True
-        c.j74Name = "Výchozí datový přehled"
+        c.j74Name = BL.My.Resources.common.VychoziDatovyPrehled
         c.j74MasterPrefix = strMasterPrefix
         c.j74RecordState = recState
         If c.j74MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j74MasterPrefix = "p31_grid") Or c.j74MasterPrefix = "p31_framework" Then
@@ -83,7 +83,7 @@ Class j74SavedGridColTemplateBL
             Case BO.x29IdEnum.p31Worksheet
                 Select Case strMasterPrefix
                     Case "j02"
-                        c.j74Name = "Výchozí přehled v detailu osoby"
+                        c.j74Name = String.Format(BL.My.Resources.common.VychoziPrehledOsoby, "osoby")
                         Select Case c.j74RecordState
                             Case BO.p31RecordState.Approved
                                 c.j74Name = "Přehled schválených úkonů v detailu osoby"
@@ -93,7 +93,7 @@ Class j74SavedGridColTemplateBL
                         End Select
 
                     Case "p28"
-                        c.j74Name = "Výchozí přehled v detailu klienta"
+                        c.j74Name = My.Resources.common.VychoziPrehledKlienta
                         Select Case c.j74RecordState
                             Case BO.p31RecordState.Approved
                                 c.j74Name = "Přehled schválených úkonů v detailu klienta"
@@ -103,7 +103,7 @@ Class j74SavedGridColTemplateBL
                         End Select
 
                     Case "p41"
-                        c.j74Name = "Výchozí přehled v detailu projektu"
+                        c.j74Name = My.Resources.common.VychoziPrehledProjektu
                         Select Case c.j74RecordState
                             Case BO.p31RecordState.Approved
                                 c.j74Name = "Přehled schválených úkonů v detailu projektu"
@@ -112,13 +112,13 @@ Class j74SavedGridColTemplateBL
                                 c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                         End Select
                     Case "p91"
-                        c.j74Name = "Výchozí přehled v detailu faktury"
+                        c.j74Name = My.Resources.common.VychoziPrehledFaktury
                         c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Invoiced,p31Rate_Billing_Invoiced,p31Amount_WithoutVat_Invoiced,p31VatRate_Invoiced,p31Amount_WithVat_Invoiced,p31Text"
                     Case "approving_step3"  'schvalovací rozhraní
                         c.j74Name = "Rozhraní pro schvalování úkonů | Příprava k fakturaci"
                         c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Orig,p31Amount_WithoutVat_Approved,p31Text,p31ApprovingSet"
                     Case "p31_grid"
-                        c.j74Name = "Výchozí přehled"
+                        c.j74Name = My.Resources.common.VychoziPrehled
                         c.j74ColumnNames = "p31Date,Person,p28Name,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                     Case Else
                         c.j74ColumnNames = "p31Date,Person,p28Name,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
@@ -127,7 +127,7 @@ Class j74SavedGridColTemplateBL
             Case BO.x29IdEnum.p41Project
                 Select Case strMasterPrefix
                     Case "p31_framework"
-                        c.j74Name = "Výchozí přehled v zapisování úkonů"
+                        c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
                 End Select
                 c.j74ColumnNames = "Client,p41Name"
             Case BO.x29IdEnum.p28Contact
@@ -152,13 +152,13 @@ Class j74SavedGridColTemplateBL
             Case BO.x29IdEnum.p56Task
                 Select Case strMasterPrefix
                     Case "j02"
-                        c.j74Name = "Výchozí přehled v detailu osoby"
+                        c.j74Name = My.Resources.common.VychoziPrehledOsoby
                         c.j74ColumnNames = "p57Name,Client,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
                     Case "p28"
-                        c.j74Name = "Výchozí přehled v detailu klienta"
+                        c.j74Name = My.Resources.common.VychoziPrehledKlienta
                         c.j74ColumnNames = "p57Name,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
                     Case "p31_framework"
-                        c.j74Name = "Výchozí přehled v zapisování úkonů"
+                        c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
                         c.j74ColumnNames = "p57Name,p56Name"
                     Case Else
                         c.j74ColumnNames = "p56Code,p56Name,b02Name"
@@ -251,24 +251,24 @@ Class j74SavedGridColTemplateBL
     End Sub
     Private Sub InhaleP28ColList(ByRef lis As List(Of BO.GridColumn))
         With lis
-            .Add(AGC("Název", "p28Name"))
-            .Add(AGC("Společnost", "p28CompanyName"))
-            .Add(AGC("Kód", "p28Code"))
-            .Add(AGC("Kód dodavatele", "p28SupplierID"))
-            .Add(AGC("IČ", "p28RegID"))
-            .Add(AGC("DIČ", "p28VatID"))
-            .Add(AGC("Typ", "p29Name"))
-            .Add(AGC("Zkratka", "p28CompanyShortName"))
-            .Add(AGC("Fakturační ceník", "p51Name_Billing"))
-            .Add(AGC("Ceník nákladových sazeb", "p51Name_Internal"))
-            .Add(AGC("Typ faktury", "p92Name"))
-            .Add(AGC("Fakt.jazyk", "p87Name"))
+            .Add(AGC(My.Resources.common.Nazev, "p28Name"))
+            .Add(AGC(My.Resources.common.Spolecnost, "p28CompanyName"))
+            .Add(AGC(My.Resources.common.Kod, "p28Code"))
+            .Add(AGC(My.Resources.common.Kod, "p28SupplierID"))
+            .Add(AGC(My.Resources.common.IC, "p28RegID"))
+            .Add(AGC(My.Resources.common.DIC, "p28VatID"))
+            .Add(AGC(My.Resources.common.Typ, "p29Name"))
+            .Add(AGC(My.Resources.common.Zkratka, "p28CompanyShortName"))
+            .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing"))
+            .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal"))
+            .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
+            .Add(AGC(My.Resources.common.FakturacniJazyk, "p87Name"))
 
-            .Add(AGC("Vlastník záznamu", "Owner"))
-            .Add(AGC("Založeno", "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC("Založil", "UserInsert"))
-            .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner"))
+            .Add(AGC(My.Resources.common.Zalozeno, "DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Zalozil, "UserInsert"))
+            .Add(AGC(My.Resources.common.Aktualizace, "DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Aktualizoval, "UserUpdate"))
             .Add(AGC("Externí kód", "p28ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p28Contact, lis)
@@ -486,7 +486,7 @@ Class j74SavedGridColTemplateBL
 
     Public Function GroupByPallet(x29id As BO.x29IdEnum) As List(Of BO.GridGroupByColumn) Implements Ij74SavedGridColTemplateBL.GroupByPallet
         Dim lis As New List(Of BO.GridGroupByColumn)
-        lis.Add(New BO.GridGroupByColumn("Bez souhrnů", "", "", ""))
+        lis.Add(New BO.GridGroupByColumn(My.Resources.common.BezSouhrnu, "", "", ""))
         Select Case x29id
             Case BO.x29IdEnum.p41Project
                 lis.Add(New BO.GridGroupByColumn("Klient", "Client", "a.p28ID_Client", "min(p28client.p28Name)"))
@@ -507,15 +507,15 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Vlastník dokumentu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "o23IsDraft", "a.o23IsDraft", "a.o23IsDraft"))
             Case BO.x29IdEnum.p31Worksheet
-                lis.Add(New BO.GridGroupByColumn("Sešit", "p34Name", "p32.p34ID", "min(p34.p34Name)"))
-                lis.Add(New BO.GridGroupByColumn("Aktivita", "p32Name", "a.p32ID", "min(p34.p34Name+' - '+p32.p32Name)"))
-                lis.Add(New BO.GridGroupByColumn("Osoba", "Person", "a.j02ID", "min(j02.j02LastName+' '+j02.j02Firstname)"))
-                lis.Add(New BO.GridGroupByColumn("Klient projektu", "p28Name", "p41.p28ID_Client", "min(p28Client.p28Name)"))
-                lis.Add(New BO.GridGroupByColumn("Projekt", "p41Name", "a.p41ID", "min(isnull(p28Client.p28Name+' - ','')+p41.p41Name)"))
-                lis.Add(New BO.GridGroupByColumn("Faktura", "p91Code", "a.p91ID", "min(p91.p91Code)"))
-                lis.Add(New BO.GridGroupByColumn("Schváleno", "p71Name", "a.p71ID", "min(p71.p71Name)"))
-                lis.Add(New BO.GridGroupByColumn("Fakturační status", "p70Name", "a.p70ID", "min(p70.p70Name)"))
-                lis.Add(New BO.GridGroupByColumn("Dodavatel", "SupplierName", "a.p28ID_Supplier", "min(supplier.p28Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Sesit, "p34Name", "p32.p34ID", "min(p34.p34Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.p32Name, "p32Name", "a.p32ID", "min(p34.p34Name+' - '+p32.p32Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Osoba, "Person", "a.j02ID", "min(j02.j02LastName+' '+j02.j02Firstname)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.KlientProjektu, "p28Name", "p41.p28ID_Client", "min(p28Client.p28Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Projekt, "p41Name", "a.p41ID", "min(isnull(p28Client.p28Name+' - ','')+p41.p41Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Faktura, "p91Code", "a.p91ID", "min(p91.p91Code)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Schvaleno, "p71Name", "a.p71ID", "min(p71.p71Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.FakturacniStatus, "p70Name", "a.p70ID", "min(p70.p70Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Dodavatel, "SupplierName", "a.p28ID_Supplier", "min(supplier.p28Name)"))
                 ''lis.Add(New BO.GridGroupByColumn("Billing dávka", "p31ApprovingSet", "a.p31ApprovingSet", "min(a.p31ApprovingSet)"))
             Case BO.x29IdEnum.p56Task
                 lis.Add(New BO.GridGroupByColumn("Typ úkolu", "p57Name", "a.p57ID", "min(p57.p57Name)"))

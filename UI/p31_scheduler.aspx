@@ -215,7 +215,7 @@
             <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true" Skin="Default">
                 <Tabs>
                     <telerik:RadTab Text="Kalendář" Selected="true" Value="core"></telerik:RadTab>
-                    <telerik:RadTab Text="Časovač" Value="timer"></telerik:RadTab>
+                    <telerik:RadTab Text="Stopky" Value="timer"></telerik:RadTab>
                     <telerik:RadTab Text="Nastavení" Value="setting"></telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>

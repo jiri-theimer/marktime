@@ -195,7 +195,10 @@
                     Select Case cField.x24ID
                         Case BO.x24IdENUM.tDate, BO.x24IdENUM.tDateTime, BO.x24IdENUM.tTime
                             panQueryPeriod.Visible = True
-                            period1.FillData(Master.Factory.ftBL.GetList_X21_NonDB(False), "", "--Vlastní období--")
+                            Dim bolEnglish As Boolean = False
+                            If Page.Culture.IndexOf("Czech") < 0 Then bolEnglish = True
+
+                            period1.FillData(Master.Factory.ftBL.GetList_X21_NonDB(False, bolEnglish), "", "--Vlastní období--")
                         Case BO.x24IdENUM.tString
                             panQueryString.Visible = True
                         Case Else

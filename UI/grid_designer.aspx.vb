@@ -47,7 +47,7 @@
             With Master
                 .HeaderIcon = "Images/griddesigner_32.png"
                 .HeaderText = "Šablony datového přehledu"
-                .AddToolbarButton("Vybrat", "ok", , "Images/ok.png")
+                .AddToolbarButton(Resources.grid_designer.Vybrat, "ok", , "Images/ok.png")
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
 
             End With
@@ -128,7 +128,7 @@
         Dim cRec As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
         With cRec
             j74Name.Text = .j74Name
-            Master.HeaderText = "Šablona datového přehledu" & " | " & .j74Name
+            Master.HeaderText = Resources.grid_designer.SablonaDatovehoPrehledu & " | " & .j74Name
             cmdDelete.Visible = True
             cmdNew.Visible = True
 
@@ -334,7 +334,7 @@
 
         Me.CurrentIsSystem = False
         If Me.j74ID.RadCombo.FindItemByValue("0") Is Nothing Then
-            Me.j74ID.RadCombo.Items.Insert(0, New Telerik.Web.UI.RadComboBoxItem("---Založit novou šablonu sloupců---", "0"))
+            Me.j74ID.RadCombo.Items.Insert(0, New Telerik.Web.UI.RadComboBoxItem("---" & Resources.grid_designer.ZalozitNovouSablonu & "---", "0"))
 
         End If
 

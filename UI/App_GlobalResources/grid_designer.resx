@@ -117,49 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkShowTimeInterval" xml:space="preserve">
-    <value>Hours entry includes input for time-start and time-end</value>
+  <data name="AutomatickyTriditPodle" xml:space="preserve">
+    <value>Automaticky třídit podle</value>
   </data>
-  <data name="Header_T" xml:space="preserve">
-    <value>Setting for hours tracking</value>
+  <data name="DostupneSloupce" xml:space="preserve">
+    <value>Dostupné sloupce</value>
   </data>
-  <data name="NabidkaEndOd" xml:space="preserve">
-    <value>[End] ends in interval:</value>
+  <data name="NabizetSloupcovyFiltr" xml:space="preserve">
+    <value>Nabízet sloupcový auto-filtr</value>
   </data>
-  <data name="NabidkaFormat" xml:space="preserve">
-    <value>Mask (format) of pre-filled intervals for field [Hours]</value>
+  <data name="NazevSablony" xml:space="preserve">
+    <value>Název šablony:</value>
   </data>
-  <data name="NabidkaIntervalu" xml:space="preserve">
-    <value>Pre-filled intervals for field [Hours]:</value>
+  <data name="SablonaDatovehoPrehledu" xml:space="preserve">
+    <value>Šablona datového přehledu</value>
   </data>
-  <data name="NabidkaIntervaluCas" xml:space="preserve">
-    <value>Time intervals for [Start]/[End]:</value>
+  <data name="SablonaSloupcu" xml:space="preserve">
+    <value>Šablona sloupců:</value>
   </data>
-  <data name="NabidkaStartOd" xml:space="preserve">
-    <value>[Start] begins in interval:</value>
+  <data name="Sestupne" xml:space="preserve">
+    <value>Sestupně</value>
   </data>
-  <data name="opgHoursEntryFlag_1" xml:space="preserve">
-    <value>Hours can be filled as decimal number (example: 1,5) or as HH:mm format (example: 01:30)</value>
+  <data name="VybraneSloupce" xml:space="preserve">
+    <value>Vybrané sloupce</value>
   </data>
-  <data name="opgHoursEntryFlag_2" xml:space="preserve">
-    <value>Hours to be filled as minutes (integer number)</value>
+  <data name="Vybrat" xml:space="preserve">
+    <value>Vybrat</value>
   </data>
-  <data name="p31_HoursInputFormat_dec" xml:space="preserve">
-    <value>Decimal number (example: 1,5)</value>
+  <data name="ZadneVybraneSloupce" xml:space="preserve">
+    <value>Zatím žádné vybrané sloupce</value>
   </data>
-  <data name="p31_HoursInputFormat_hhmm" xml:space="preserve">
-    <value>HH:mm (example: 01:30)</value>
-  </data>
-  <data name="p31_HoursInputInterval_15" xml:space="preserve">
-    <value>15 minutes intervals</value>
-  </data>
-  <data name="p31_HoursInputInterval_30" xml:space="preserve">
-    <value>30 minutes intervals</value>
-  </data>
-  <data name="p31_HoursInputInterval_5" xml:space="preserve">
-    <value>5 minutes intervals</value>
-  </data>
-  <data name="p31_HoursInputInterval_60" xml:space="preserve">
-    <value>60 minutes intervals</value>
+  <data name="ZalozitNovouSablonu" xml:space="preserve">
+    <value>Založit novou šablonu sloupců</value>
   </data>
 </root>

@@ -214,18 +214,18 @@
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
 
-                    <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
+                    <telerik:RadMenuItem Text="<%$Resources:common,Zaznam %>" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
                         <Items>
-                            <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdSplit" Text="Rozdělit na 2 kusy" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdNew" Text="<%$Resources:common,Novy %>" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdEdit" Text="<%$Resources:common,Upravit %>" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdClone" Text="<%$Resources:common,Kopirovat %>" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdSplit" Text="<%$Resources:p31_grid,Rozdelit %>" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
                         </Items>                       
                     </telerik:RadMenuItem>
 
 
 
-                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="columns" PostBack="false">
+                    <telerik:RadMenuItem Text="<%$Resources:common,Dalsi %>" ImageUrl="Images/more.png" Value="columns" PostBack="false">
                         <ContentTemplate>
                             <div style="padding: 20px;">
                                 <div class="div6">
@@ -235,24 +235,24 @@
 
                                 </div>
                                 <asp:Panel ID="panGroupBy" runat="server" CssClass="div6">
-                                    <span>Datové souhrny:</span>
+                                    <span><%=Resources.p31_grid.DatoveSouhrny%></span>
                                     <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                                     </asp:DropDownList>
                                     <div>
-                                        <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
+                                        <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="<%$Resources:p31_framework,AutoRozbaleneSouhrny %>" AutoPostBack="true" Checked="true" />
                                     </div>
                                 </asp:Panel>
 
                                 <div class="div6">
                                     <img src="Images/approve.png" />
-                                    <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();"></asp:HyperLink>
+                                    <asp:HyperLink ID="cmdApprove" runat="server" Text="<%$Resources:p31_grid,Schvalovat_Preschvalovat%>" NavigateUrl="javascript:approving();"></asp:HyperLink>
                                 </div>
                                 <div class="div6">
                                     <img src="Images/export.png" />
-                                    <asp:LinkButton ID="cmdExport" runat="server" Text="Export přehledu do MS EXCEL." />
+                                    <asp:LinkButton ID="cmdExport" runat="server" Text="<%$Resources:common,ExportPrehledu %>" />
                                 </div>
                                 <div class="div6">
-                                    <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Počet záznamů na stránku:"></asp:Label>
+                                    <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="<%$Resources:common,PocetZaznamuNaStranku %>"></asp:Label>
                                     <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
                                         <asp:ListItem Text="20"></asp:ListItem>
                                         <asp:ListItem Text="50" Selected="True"></asp:ListItem>

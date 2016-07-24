@@ -244,7 +244,7 @@ Public Class datagrid
 
         With grid1.PagerStyle
             .PageSizeLabelText = ""
-            If Page.Culture.IndexOf("Czech") >= 0 Then
+            If Page.Culture.IndexOf("Czech") >= 0 Or Page.Culture.IndexOf("Če") >= 0 Then
                 .LastPageToolTip = "Poslední strana"
                 .FirstPageToolTip = "První strana"
                 .PrevPageToolTip = "Předchozí strana"
@@ -443,7 +443,7 @@ Public Class datagrid
         Dim i As Integer = 0
         With menu.Items
             While i < .Count
-                If Page.Culture.IndexOf("Czech") >= 0 Then
+                If Page.Culture.IndexOf("Czech") >= 0 Or Page.Culture.IndexOf("Če") >= 0 Then
                     With .Item(i)
                         Select Case .Text
                             Case "NoFilter" : .Text = "Nefiltrovat" : i += 1

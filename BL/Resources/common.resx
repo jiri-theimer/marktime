@@ -306,4 +306,67 @@
   <data name="Zkratka" xml:space="preserve">
     <value>Zkratka</value>
   </data>
+  <data name="DIC" xml:space="preserve">
+    <value>DIČ</value>
+  </data>
+  <data name="FakturacniJazyk" xml:space="preserve">
+    <value>Fakt.jazyk</value>
+  </data>
+  <data name="IC" xml:space="preserve">
+    <value>IČ</value>
+  </data>
+  <data name="KodDodavatele" xml:space="preserve">
+    <value>Kód dodavatele</value>
+  </data>
+  <data name="Nazev" xml:space="preserve">
+    <value>Název</value>
+  </data>
+  <data name="Spolecnost" xml:space="preserve">
+    <value>Společnost</value>
+  </data>
+  <data name="Typ" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="AutoRozbaleneSouhrny" xml:space="preserve">
+    <value>Auto-rozbalené souhrny</value>
+  </data>
+  <data name="BezSouhrnu" xml:space="preserve">
+    <value>Bez souhrnů</value>
+  </data>
+  <data name="Klient" xml:space="preserve">
+    <value>Klient</value>
+  </data>
+  <data name="Milnik" xml:space="preserve">
+    <value>Milník</value>
+  </data>
+  <data name="Prijemce" xml:space="preserve">
+    <value>Příjemce</value>
+  </data>
+  <data name="TypUkolu" xml:space="preserve">
+    <value>Typ úkolu</value>
+  </data>
+  <data name="VychoziDatovyPrehled" xml:space="preserve">
+    <value>Výchozí datový přehled</value>
+  </data>
+  <data name="VychoziPrehled" xml:space="preserve">
+    <value>Výchozí přehled</value>
+  </data>
+  <data name="VychoziPrehledFaktury" xml:space="preserve">
+    <value>Výchozí přehled v detailu faktury</value>
+  </data>
+  <data name="VychoziPrehledKlienta" xml:space="preserve">
+    <value>Výchozí přehled v detailu klienta</value>
+  </data>
+  <data name="VychoziPrehledOsoby" xml:space="preserve">
+    <value>Výchozí přehled v detailu osoby</value>
+  </data>
+  <data name="VychoziPrehledProjektu" xml:space="preserve">
+    <value>Výchozí přehled v detailu projektu</value>
+  </data>
+  <data name="VychoziPrehledZapisovaniUkonu" xml:space="preserve">
+    <value>Výchozí přehled v zapisování úkonů</value>
+  </data>
+  <data name="FakturacniStatus" xml:space="preserve">
+    <value>Fakturační status</value>
+  </data>
 </root>

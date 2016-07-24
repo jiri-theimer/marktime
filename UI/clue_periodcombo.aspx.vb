@@ -8,7 +8,8 @@
             With Master.Factory.j03UserBL
                 .InhaleUserParams("periodcombo-custom_query")
 
-                Dim s As String = .GetUserParam("periodcombo-custom_query")
+                Dim s As String = .GetUserParam("periodcombo-custom_query"), bolEnglish As Boolean = False
+                If Page.Culture.IndexOf("Czech") < 0 Then bolEnglish = True
                 Me.hidCustomQueries.Value = s
                 If s <> "" Then
                     Dim lis As New List(Of BO.x21DatePeriod)
@@ -16,7 +17,7 @@
                     For Each strPair As String In a
                         x += 1
                         Dim b() As String = strPair.Split(";")
-                        Dim cX21 As New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(b(0)), BO.BAS.ConvertString2Date(b(1)), b(2))
+                        Dim cX21 As New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(b(0)), BO.BAS.ConvertString2Date(b(1)), b(2), bolEnglish)
                         lis.Add(cX21)
                     Next
                     Me.period1.DataSource = lis
@@ -109,7 +110,7 @@
                 Case BO.x21IdEnum._NoQuery
                     Return DateSerial(1900, 1, 1)
                 Case Else
-                    Dim c As New BO.x21DatePeriod(Me.x21ID)
+                    Dim c As New BO.x21DatePeriod(Me.x21ID, False)
                     Return c.DateFrom
             End Select
 
@@ -123,7 +124,7 @@
                 Case BO.x21IdEnum._NoQuery
                     Return DateSerial(3000, 1, 1)
                 Case Else
-                    Dim c As New BO.x21DatePeriod(Me.x21ID)
+                    Dim c As New BO.x21DatePeriod(Me.x21ID, False)
                     Return c.DateUntil
             End Select
         End Get
@@ -131,13 +132,14 @@
     Public ReadOnly Property CurrentX21 As BO.x21DatePeriod
         Get
             If Me.x21ID < BO.x21IdEnum._CutomQuery Then
-                Return New BO.x21DatePeriod(Me.x21ID)
+                Return New BO.x21DatePeriod(Me.x21ID, False)
             End If
 
-            Dim a() As String = Me.hidCustomQueries.Value.Split("|"), x As Integer = 0
+            Dim a() As String = Me.hidCustomQueries.Value.Split("|"), x As Integer = 0, bolEnglish As Boolean = False
+            If Page.Culture.IndexOf("Czech") < 0 Then bolEnglish = True
             Dim strPair As String = a(Me.CustomQueryIndex - 1)
             a = strPair.Split(";")
-            Return New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(a(0)), BO.BAS.ConvertString2Date(a(1)), a(2))
+            Return New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(a(0)), BO.BAS.ConvertString2Date(a(1)), a(2), bolEnglish)
 
         End Get
     End Property

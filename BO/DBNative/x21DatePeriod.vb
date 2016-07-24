@@ -39,18 +39,21 @@ Public Class x21DatePeriod
     Private _Today As Date = Today
 
     Public Property CustomQueryIndex As Integer = 0
+    Public Property EnglishVersion As Boolean = False
 
-    Public Sub New(setX21ID As x21IdEnum)
+    Public Sub New(setX21ID As x21IdEnum, bolEnglishVersion As Boolean)
         _x21ID = setX21ID
+        Me.EnglishVersion = bolEnglishVersion
         If _x21ID > x21IdEnum._NoQuery And _x21ID < x21IdEnum._CutomQuery Then Me.SetPeriod(Today)
     End Sub
-    Public Sub New(intCustomQueryIndex As Integer, datFrom As Date, datUntil As Date, strName As String)
+    Public Sub New(intCustomQueryIndex As Integer, datFrom As Date, datUntil As Date, strName As String, bolEnglishVersion As Boolean)
         _x21ID = x21IdEnum._CutomQuery
         Me.CustomQueryIndex = intCustomQueryIndex
         _DateFrom = datFrom
         _DateUntil = datUntil
         _x21NameDef = strName
         _x21Name = strName
+        Me.EnglishVersion = bolEnglishVersion
     End Sub
 
     Public ReadOnly Property x21Name As String
@@ -119,14 +122,17 @@ Public Class x21DatePeriod
                 _DateFrom = _Today
                 _DateUntil = _Today
                 _x21NameDef = "Dnes"
+                If Me.EnglishVersion Then _x21NameDef = "Today"
             Case x21IdEnum.Vcera
                 _DateFrom = _Today.AddDays(-1)
                 _DateUntil = _Today.AddDays(-1)
                 _x21NameDef = "Včera"
+                If Me.EnglishVersion Then _x21NameDef = "Yesterday"
             Case x21IdEnum.Zitra
                 _DateFrom = _Today.AddDays(1)
                 _DateUntil = _Today.AddDays(1)
                 _x21NameDef = "Zítra"
+                If Me.EnglishVersion Then _x21NameDef = "Tomorrow"
             Case x21IdEnum.TydenTento
                 _DateFrom = GetFirstMondayOfCurrentWeek()
                 _DateUntil = _DateFrom.AddDays(6)

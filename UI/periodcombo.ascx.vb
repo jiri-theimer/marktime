@@ -24,13 +24,14 @@
     Public ReadOnly Property CurrentX21 As BO.x21DatePeriod
         Get
             If Me.x21ID < BO.x21IdEnum._CutomQuery Then
-                Return New BO.x21DatePeriod(Me.x21ID)
+                Return New BO.x21DatePeriod(Me.x21ID, False)
             End If
 
             Dim a() As String = Me.hidCustomQueries.Value.Split("|"), x As Integer = 0
             Dim strPair As String = a(Me.CustomQueryIndex - 1)
             a = strPair.Split(";")
-            Return New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(a(0)), BO.BAS.ConvertString2Date(a(1)), a(2))
+            
+            Return New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(a(0)), BO.BAS.ConvertString2Date(a(1)), a(2), False)
 
         End Get
     End Property
@@ -58,7 +59,7 @@
                 Case BO.x21IdEnum._NoQuery
                     Return DateSerial(1900, 1, 1)
                 Case Else
-                    Dim c As New BO.x21DatePeriod(Me.x21ID)
+                    Dim c As New BO.x21DatePeriod(Me.x21ID, False)
                     Return c.DateFrom
             End Select
            
@@ -72,7 +73,7 @@
                 Case BO.x21IdEnum._NoQuery
                     Return DateSerial(3000, 1, 1)
                 Case Else
-                    Dim c As New BO.x21DatePeriod(Me.x21ID)
+                    Dim c As New BO.x21DatePeriod(Me.x21ID, False)
                     Return c.DateUntil
             End Select
         End Get
@@ -95,16 +96,19 @@
     End Property
     Public Sub SetupData(factory As BL.Factory, strCustomQueries As String, Optional bolIncludeFuture As Boolean = False)
         Me.hidLogin.Value = factory.SysUser.j03Login
+        Dim bolEnglish As Boolean = False
+        If Page.Culture.IndexOf("Czech") < 0 And Page.Culture.IndexOf("Če") < 0 Then bolEnglish = True
 
-        Dim lis As List(Of BO.x21DatePeriod) = factory.ftBL.GetList_X21_NonDB(bolIncludeFuture)
+        Dim lis As List(Of BO.x21DatePeriod) = factory.ftBL.GetList_X21_NonDB(bolIncludeFuture, bolEnglish)
         Me.hidCustomQueries.Value = strCustomQueries
 
         If strCustomQueries <> "" Then
+
             Dim a() As String = strCustomQueries.Split("|"), x As Integer = 0
             For Each strPair As String In a
                 x += 1
                 Dim b() As String = strPair.Split(";")
-                Dim cX21 As New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(b(0)), BO.BAS.ConvertString2Date(b(1)), b(2))
+                Dim cX21 As New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(b(0)), BO.BAS.ConvertString2Date(b(1)), b(2), bolEnglish)
 
                 lis.Add(cX21)
             Next

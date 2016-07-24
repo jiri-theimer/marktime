@@ -150,17 +150,18 @@ Public Class p31_framework
     Private Sub InitialGroupByCombo(intTabIndex As Integer)
         With Me.cbxGroupBy
             .Items.Clear()
-            .Items.Add(New ListItem("Bez souhrnů", ""))
-            .Items.Add(New ListItem("Klient", "Client"))
+            .Items.Add(New ListItem(BL.My.Resources.common.BezSouhrnu, ""))
+            .Items.Add(New ListItem(BL.My.Resources.common.Klient, "Client"))
             If intTabIndex < 2 Then
-                .Items.Add(New ListItem("Typ projektu", "p42Name"))
-                .Items.Add(New ListItem("Středisko", "j18Name"))
+                .Items.Add(New ListItem(BL.My.Resources.common.TypProjektu, "p42Name"))
+                .Items.Add(New ListItem(BL.My.Resources.common.Stredisko, "j18Name"))
+
             Else
-                .Items.Add(New ListItem("Typ úkolu", "p57Name"))
-                .Items.Add(New ListItem("Projekt", "ProjectCodeAndName"))
-                .Items.Add(New ListItem("Příjemce", "ReceiversInLine"))
-                .Items.Add(New ListItem("Milník", "o22Name"))
-                .Items.Add(New ListItem("Vlastník", "Owner"))
+                .Items.Add(New ListItem(BL.My.Resources.common.TypUkolu, "p57Name"))
+                .Items.Add(New ListItem(BL.My.Resources.common.Projekt, "ProjectCodeAndName"))
+                .Items.Add(New ListItem(BL.My.Resources.common.Prijemce, "ReceiversInLine"))
+                .Items.Add(New ListItem(BL.My.Resources.common.Milnik, "o22Name"))
+                .Items.Add(New ListItem(BL.My.Resources.common.VlastnikZaznamu, "Owner"))
             End If
         End With
     End Sub
@@ -402,10 +403,10 @@ Public Class p31_framework
         Select Case Me.tabs1.SelectedIndex
             Case 0, 1
                 img1.ImageUrl = "Images/project_32.png"
-                lblFormHeader.Text = "Projekty"
+                lblFormHeader.Text = Resources.p31_framework.tabs1_p41
             Case 2
                 img1.ImageUrl = "Images/task_32.png"
-                lblFormHeader.Text = "Úkoly"
+                lblFormHeader.Text = Resources.p31_framework.tabs1_todo
         End Select
 
         If grid1.GetFilterExpression <> "" Then

@@ -150,9 +150,9 @@
 
             <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Metro" AutoPostBack="true">
                 <Tabs>
-                    <telerik:RadTab Text="Projekty" Value="p41" Selected="true" ToolTip="Všechny otevřené projekty k vykazování"></telerik:RadTab>
+                    <telerik:RadTab Text="<%$ Resources:p31_framework, tabs1_p41 %>" Value="p41" Selected="true" ToolTip="<%$Resources:p31_framework, tabs1_p41_tooltip %>"></telerik:RadTab>
                     <telerik:RadTab Text="TOP 10" Value="top10" ToolTip="Maximálně 10 mnou naposledy vykazovaných projektů"></telerik:RadTab>
-                    <telerik:RadTab Text="Úkoly" Value="todo" ToolTip="Otevřené úkoly k řešení a vykazování"></telerik:RadTab>
+                    <telerik:RadTab Text="<%$ Resources:p31_framework, tabs1_todo %>" Value="todo" ToolTip="Otevřené úkoly k řešení a vykazování"></telerik:RadTab>
 
                 </Tabs>
             </telerik:RadTabStrip>
@@ -166,11 +166,11 @@
                 </div>
                 <div class="commandcell" style="padding-left: 20px;">
                     <asp:TextBox ID="txtSearch" runat="server" Style="width: 140px;" ToolTip="Filtrovat podle názvu/kódu projektu nebo klienta"></asp:TextBox>
-                    <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="margin-left: 10px; font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
+                    <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="<%$Resources:p31_framework, cmdCĺearFilter%>" Style="margin-left: 10px; font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
                 </div>
                 <div class="commandcell">
                     <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" ToolTip="Spustit filtr" CssClass="button-link" />
-                    <asp:HyperLink ID="cmdNewTask" runat="server" Text="Nový úkol" NavigateUrl="javascript:p56_create()"></asp:HyperLink>
+                    <asp:HyperLink ID="cmdNewTask" runat="server" Text="<%$Resources:p31_framework,cmdNewTask %>" NavigateUrl="javascript:p56_create()"></asp:HyperLink>
                 </div>
 
                 <div class="commandcell" style="float: right; margin-right: 10px;">
@@ -186,15 +186,15 @@
             <div class="slidingDiv1">
                 <div class="content-box2">
                     <div class="title">
-                        Nastavení nabídky projektů
+                        <%=Resources.p31_framework.NastaveniProjektu%>
                     </div>
                     <div class="content">
                         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
                         <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
-                        <button type="button" onclick="griddesigner()">Sloupce</button>
+                        <button type="button" onclick="griddesigner()"><%=Resources.p31_framework.Sloupce%></button>
 
                         <div class="div6">
-                            <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Záznamů na stránku:"></asp:Label>
+                            <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="<%$Resources:p31_framework,lblPaging%>"></asp:Label>
                             <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
                                 <asp:ListItem Text="20"></asp:ListItem>
                                 <asp:ListItem Text="50" Selected="True"></asp:ListItem>
@@ -202,12 +202,12 @@
                                 <asp:ListItem Text="200"></asp:ListItem>
                                 <asp:ListItem Text="500"></asp:ListItem>
                             </asp:DropDownList>
-                            <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" />
+                            <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="<%$Resources:p31_framework, AutoRozbaleneSouhrny%>" AutoPostBack="true" Checked="false" />
                         </div>
                     </div>
                 </div>
                 <div class="div6">
-                    <img src="Images/help.png" /><i>Zápis úkonu do projektu/úkolu provedete dvojklikem na vybraný záznam v přehledu.</i>
+                    <img src="Images/help.png" /><i><%=Resources.p31_framework.Napoveda %></i>
                 </div>
             </div>
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Default"></uc:datagrid>

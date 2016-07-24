@@ -17,7 +17,7 @@
     Function LoadJ27(intJ27ID As Integer) As BO.j27Currency
     Function GetList_J27(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.j27Currency)
     Function GetList_C11(datFrom As Date, datUntil As Date, levelFrom As BO.PeriodLevel, levelUntil As BO.PeriodLevel) As IEnumerable(Of BO.c11StatPeriod)
-    Function GetList_X21_NonDB(bolIncludeFuture As Boolean) As List(Of BO.x21DatePeriod)
+    Function GetList_X21_NonDB(bolIncludeFuture As Boolean, bolEnglish As Boolean) As List(Of BO.x21DatePeriod)
     Function LoadX90(intX90ID As Integer) As BO.x90EntityLog
     Function LoadX45(intX45ID As Integer) As BO.x45Event
     Function GetList_X45(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x45Event)
@@ -26,6 +26,7 @@ Class FtBL
     Inherits BLMother
     Implements IFtBL
     Private WithEvents _cDL As DL.FtDL
+    Private _English As Boolean = False
 
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
@@ -100,8 +101,10 @@ Class FtBL
     Public Function GetList_X21(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21
         Return _cDL.GetList_X21(mq)
     End Function
-    Public Function GetList_X21_NonDB(bolIncludeFuture As Boolean) As List(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21_NonDB
+    Public Function GetList_X21_NonDB(bolIncludeFuture As Boolean, bolEnglish As Boolean) As List(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21_NonDB
+        _English = bolEnglish
         Dim lis As New List(Of BO.x21DatePeriod)
+
         With lis
             .Add(AC(BO.x21IdEnum._NoQuery))
             .Add(AC(BO.x21IdEnum.Vcera))
@@ -138,7 +141,7 @@ Class FtBL
         Return lis
     End Function
     Private Function AC(x21id As BO.x21IdEnum) As BO.x21DatePeriod
-        Dim c As New BO.x21DatePeriod(x21id)
+        Dim c As New BO.x21DatePeriod(x21id, _English)
         c.SetPeriod(Today)
         Return c
     End Function

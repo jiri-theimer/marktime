@@ -503,6 +503,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>common.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\grid_designer.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>grid_designer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\grid_designer.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>grid_designer.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\j02_record.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -513,6 +523,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>j02_record.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\p31_framework.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_framework.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\p31_framework.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_framework.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\p31_framework_detail.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -522,6 +542,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>p31_framework_detail.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\p31_grid.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_grid.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\p31_grid.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p31_grid.en-us.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\p31_record.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -2636,6 +2666,30 @@
     <Content Include="App_GlobalResources\p31_setting.en-us.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>p31_setting.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\p31_framework.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_framework.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\p31_framework.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_framework.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\grid_designer.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>grid_designer.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\grid_designer.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>grid_designer.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\p31_grid.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_grid.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\p31_grid.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p31_grid.en-us.designer.vb</LastGenOutput>
     </Content>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
