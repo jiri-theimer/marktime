@@ -137,14 +137,17 @@ Public Class x21DatePeriod
                 _DateFrom = GetFirstMondayOfCurrentWeek()
                 _DateUntil = _DateFrom.AddDays(6)
                 _x21NameDef = "Tento týden"
+                If Me.EnglishVersion Then _x21NameDef = "Current week"
             Case x21IdEnum.TydenMinuly
                 _DateFrom = GetFirstMondayOfCurrentWeek().AddDays(-7)
                 _DateUntil = _DateFrom.AddDays(6)
                 _x21NameDef = "Minulý týden"
+                If Me.EnglishVersion Then _x21NameDef = "Last week"
             Case x21IdEnum.TydenPristi
                 _DateFrom = GetFirstMondayOfCurrentWeek().AddDays(7)
                 _DateUntil = _DateFrom.AddDays(6)
                 _x21NameDef = "Příští týden"
+                If Me.EnglishVersion Then _x21NameDef = "Next week"
             Case x21IdEnum.MesicTento
                 _DateFrom = DateSerial(_Today.Year, _Today.Month, 1)
                 _DateUntil = _DateFrom.AddMonths(1).AddDays(-1)
@@ -179,50 +182,65 @@ Public Class x21DatePeriod
                 _DateFrom = d1
                 _DateUntil = _DateFrom.AddMonths(3).AddDays(-1)
                 _x21NameDef = "Tento kvartál"
+                If Me.EnglishVersion Then _x21NameDef = "Current quarter"
             Case x21IdEnum.KvartalMinuly
                 Dim x As Integer = Math.Ceiling(_Today.Month / 3)
                 Dim d1 As New DateTime(_Today.Year, (3 * x) - 2, 1)
                 _DateFrom = d1.AddMonths(-3)
                 _DateUntil = _DateFrom.AddMonths(3).AddDays(-1)
                 _x21NameDef = "Minulý kvartál"
+                If Me.EnglishVersion Then _x21NameDef = "Last quarter"
             Case x21IdEnum.KvartalPristi
                 Dim x As Integer = Math.Ceiling(_Today.Month / 3)
                 Dim d1 As New DateTime(_Today.Year, (3 * x) - 2, 1)
                 _DateFrom = d1.AddMonths(3)
                 _DateUntil = _DateFrom.AddMonths(3).AddDays(-1)
                 _x21NameDef = "Příští kvartál"
+                If Me.EnglishVersion Then _x21NameDef = "Next quarter"
             Case x21IdEnum.RokTento
                 _DateFrom = DateSerial(Today.Year, 1, 1)
                 _DateUntil = DateSerial(Today.Year, 12, 31)
                 _x21NameDef = "Tento rok"
+                If Me.EnglishVersion Then _x21NameDef = "Current year"
             Case x21IdEnum.RokMinuly
                 _DateFrom = DateSerial(Today.Year - 1, 1, 1)
                 _DateUntil = DateSerial(Today.Year - 1, 12, 31)
                 _x21NameDef = "Minulý rok"
+                If Me.EnglishVersion Then _x21NameDef = "Last year"
             Case x21IdEnum.RokPristi
                 _DateFrom = DateSerial(Today.Year + 1, 1, 1)
                 _DateUntil = DateSerial(Today.Year + 1, 12, 31)
                 _x21NameDef = "Příští rok"
+                If Me.EnglishVersion Then _x21NameDef = "Next year"
             Case x21IdEnum.DoDnes
                 _DateFrom = DateSerial(2000, 1, 1)
                 _DateUntil = Today
                 _x21NameDef = "Do dnes vč."
+                If Me.EnglishVersion Then _x21NameDef = "Till today incl."
             Case x21IdEnum.DoMinulyMesic
                 _DateFrom = DateSerial(2000, 1, 1)
                 _DateUntil = DateSerial(Today.Year, Today.Month, 1).AddDays(-1)
-                _x21NameDef = "Do konce " & Format(_DateUntil, "MM") & "/" & Format(_DateUntil, "yyyy")
+                _x21NameDef = "Do konce "
+                If Me.EnglishVersion Then _x21NameDef = "Till "
+                _x21NameDef += Format(_DateUntil, "MM") & "/" & Format(_DateUntil, "yyyy")
             Case x21IdEnum.DoMinulyMesic2
                 _DateFrom = DateSerial(2000, 1, 1)
                 _DateUntil = DateSerial(Today.Year, Today.Month, 1).AddDays(-1).AddMonths(-1)
-                _x21NameDef = "Do konce " & Format(_DateUntil, "MM") & "/" & Format(_DateUntil, "yyyy")
+                _x21NameDef = "Do konce "
+                If Me.EnglishVersion Then _x21NameDef = "Till "
+                _x21NameDef += Format(_DateUntil, "MM") & "/" & Format(_DateUntil, "yyyy")
             Case x21IdEnum.DoMinulyMesic3
                 _DateFrom = DateSerial(2000, 1, 1)
                 _DateUntil = DateSerial(Today.Year, Today.Month, 1).AddDays(-1).AddMonths(-2)
-                _x21NameDef = "Do konce " & Format(_DateUntil, "MM") & "/" & Format(_DateUntil, "yyyy")
+                _x21NameDef = "Do konce "
+                If Me.EnglishVersion Then _x21NameDef = "Till "
+                _x21NameDef += Format(_DateUntil, "MM") & "/" & Format(_DateUntil, "yyyy")
             Case x21IdEnum.DoMinulyRok
                 _DateFrom = DateSerial(2000, 1, 1)
                 _DateUntil = DateSerial(Today.Year - 1, 12, 31)
-                _x21NameDef = "Do konce " & Format(_DateUntil, "yyyy")
+                _x21NameDef = "Do konce "
+                If Me.EnglishVersion Then _x21NameDef = "Till"
+                _x21NameDef += Format(_DateUntil, "yyyy")
         End Select
     End Sub
 
