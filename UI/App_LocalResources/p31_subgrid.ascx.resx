@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="cmdApprove.Text" xml:space="preserve">
+    <value>Schvalovat/Pře-schvalovat označené úkony</value>
+  </data>
+  <data name="cmdCopy.Tooltip" xml:space="preserve">
+    <value>Kopírovat do nového úkonu</value>
+  </data>
   <data name="cmdNew.Tooltip" xml:space="preserve">
     <value>Nový úkon</value>
+  </data>
+  <data name="cmdSearch.Tooltip" xml:space="preserve">
+    <value>Hledat</value>
+  </data>
+  <data name="cmdSplit.Tooltip" xml:space="preserve">
+    <value>Rozdělit časový úkon na 2 kusy</value>
+  </data>
+  <data name="txtSearch.Tooltip" xml:space="preserve">
+    <value>Hledat podle názvu klienta, projektu, kódu projektu, příjmení osoby, názvu aktivity nebo podrobného popisu úkonu</value>
   </data>
 </root>

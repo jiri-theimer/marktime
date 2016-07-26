@@ -506,7 +506,8 @@ Public Class p31_subgrid
         Else
             txtSearch.Style.Item("background-color") = "red"
         End If
-       
+        If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
+
     End Sub
     Private Sub cmdExplicitPeriod_Click(sender As Object, e As EventArgs) Handles cmdExplicitPeriod.Click
         Me.ExplicitDateFrom = DateSerial(1900, 1, 1)

@@ -573,6 +573,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>p31_setting.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\report_modal.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>report_modal.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\report_modal.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>report_modal.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Site.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2691,6 +2701,16 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>p31_grid.en-us.designer.vb</LastGenOutput>
     </Content>
+    <Content Include="App_GlobalResources\report_modal.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>report_modal.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\report_modal.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>report_modal.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_LocalResources\p41_framework_detail.aspx.resx" />
+    <Content Include="App_LocalResources\p41_framework_detail.aspx.en-us.resx" />
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

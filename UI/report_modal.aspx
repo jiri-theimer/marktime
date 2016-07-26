@@ -64,7 +64,7 @@
         <tr>
 
             <td>
-                <asp:Label ID="lblX31ID" runat="server" Text="Sestava:" CssClass="lbl"></asp:Label>
+                <asp:Label ID="lblX31ID" runat="server" Text="<%$Resources:report_modal,Sestava%>" CssClass="lbl"></asp:Label>
             </td>
             <td>
                 <asp:DropDownList ID="x31ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="NameWithFormat" Style="width: 350px;" BackColor="yellow"></asp:DropDownList>
@@ -74,7 +74,7 @@
             </td>
 
             <td>
-                <asp:Button ID="cmdRefresh" runat="server" Text="Obnovit" CssClass="cmd" />
+                <asp:Button ID="cmdRefresh" runat="server" Text="<%$Resources:common,refresh%>" CssClass="cmd" />
             </td>
           
 

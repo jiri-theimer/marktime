@@ -425,7 +425,7 @@ Public Class p31_grid
 
         basUIMT.RenderQueryCombo(Me.j70ID)
 
-
+        If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
     End Sub
 
 

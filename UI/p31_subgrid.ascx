@@ -15,8 +15,8 @@
 
     </div>
     <div class="commandcell">
-        <asp:TextBox ID="txtSearch" runat="server" Text="" Style="width: 80px;" ToolTip="Hledat podle názvu klienta, projektu, kódu projektu, příjmení osoby, názvu aktivity nebo podrobného popisu úkonu"></asp:TextBox>
-        <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" CssClass="button-link" ToolTip="Hledat" />
+        <asp:TextBox ID="txtSearch" runat="server" Text="" Style="width: 80px;" ToolTip="Hledat podle názvu klienta, projektu, kódu projektu, příjmení osoby, názvu aktivity nebo podrobného popisu úkonu" meta:resourcekey="txtSearch"></asp:TextBox>
+        <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" CssClass="button-link" ToolTip="Hledat" meta:resourcekey="cmdSearch" />
     </div>
     <div class="commandcell" style="padding-left: 10px;">
         <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
@@ -32,7 +32,7 @@
 
     <div class="commandcell" style="padding-left: 20px;">
         <asp:ImageButton ID="cmdNew" runat="server" ImageUrl="Images/new.png" ToolTip="Nový úkon" OnClientClick="return p31_entry()" CssClass="button-link" meta:resourcekey="cmdNew" />
-        <asp:ImageButton ID="cmdCopy" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat do nového úkonu" OnClientClick="return p31_clone()" CssClass="button-link" />
+        <asp:ImageButton ID="cmdCopy" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat do nového úkonu" OnClientClick="return p31_clone()" CssClass="button-link" meta:resourcekey="cmdCopy" />
         <asp:ImageButton ID="cmdSplit" runat="server" ImageUrl="Images/split.png" ToolTip="Rozdělit časový úkon na 2 kusy" OnClientClick="return p31_split()" CssClass="button-link" />
 
     </div>
@@ -53,7 +53,7 @@
 
 
 
-    <span style="padding-left: 40px;">Stránkování:</span>
+    <span style="padding-left: 40px;"><%=Resources.common.Strankovani%>:</span>
     <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
         <asp:ListItem Text="10"></asp:ListItem>
         <asp:ListItem Text="20"></asp:ListItem>
@@ -64,18 +64,18 @@
     </asp:DropDownList>
 
     <asp:Panel ID="panGroupBy" runat="server" Style="margin-top: 20px;">
-        <span>Datové souhrny:</span>
+        <span><%=Resources.common.DatoveSouhrny%>:</span>
         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true">
-            <asp:ListItem Text="Bez souhrnů" Value=""></asp:ListItem>
-            <asp:ListItem Text="Sešit" Value="p34Name"></asp:ListItem>
-            <asp:ListItem Text="Aktivita" Value="p32Name"></asp:ListItem>
-            <asp:ListItem Text="Osoba" Value="Person"></asp:ListItem>
-            <asp:ListItem Text="Klient" Value="p28Name"></asp:ListItem>
-            <asp:ListItem Text="Projekt" Value="p41Name"></asp:ListItem>
-            <asp:ListItem Text="Faktura" Value="p91Code"></asp:ListItem>
-            <asp:ListItem Text="Úkol" Value="p56Name"></asp:ListItem>
-            <asp:ListItem Text="Schvalování" Value="p71Name"></asp:ListItem>
-            <asp:ListItem Text="Fakt.status" Value="p70Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,BezSouhrnu%>" Value=""></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Sesit%>" Value="p34Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Aktivita%>" Value="p32Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Osoba%>" Value="Person"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Klient%>" Value="p28Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Projekt %>" Value="p41Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Faktura%>" Value="p91Code"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Ukol%>" Value="p56Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Schvalovani%>" Value="p71Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,FaktStatus%>" Value="p70Name"></asp:ListItem>
             <asp:ListItem Text="Billing dávka" Value="p31ApprovingSet"></asp:ListItem>
         </asp:DropDownList>
         <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
@@ -85,7 +85,7 @@
         <asp:LinkButton ID="cmdExport" runat="server" Text="MS Excel" />
 
         <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
-        <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();"></asp:HyperLink>
+        <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();" meta:resourcekey="cmdApprove"></asp:HyperLink>
 
     </div>
 </div>

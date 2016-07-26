@@ -369,4 +369,22 @@
   <data name="FakturacniStatus" xml:space="preserve">
     <value>Billing status</value>
   </data>
+  <data name="KodProjektu" xml:space="preserve">
+    <value>Project code</value>
+  </data>
+  <data name="PlanHodin" xml:space="preserve">
+    <value>Hours plan</value>
+  </data>
+  <data name="PlanVydaju" xml:space="preserve">
+    <value>Expense plan</value>
+  </data>
+  <data name="PrioritaZadavatele" xml:space="preserve">
+    <value>Issuer priority</value>
+  </data>
+  <data name="Termin" xml:space="preserve">
+    <value>Deadline</value>
+  </data>
+  <data name="VykazaneVydaje" xml:space="preserve">
+    <value>Tracked expenses</value>
+  </data>
 </root>

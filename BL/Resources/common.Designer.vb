@@ -281,6 +281,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Kód projektu.
+        '''</summary>
+        Public Shared ReadOnly Property KodProjektu() As String
+            Get
+                Return ResourceManager.GetString("KodProjektu", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Kód úkolu.
         '''</summary>
         Public Shared ReadOnly Property KodUkolu() As String
@@ -425,6 +434,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Plán hodin.
+        '''</summary>
+        Public Shared ReadOnly Property PlanHodin() As String
+            Get
+                Return ResourceManager.GetString("PlanHodin", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Plánované zahájení.
         '''</summary>
         Public Shared ReadOnly Property PlanStart() As String
@@ -434,11 +452,29 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Plán výdajů.
+        '''</summary>
+        Public Shared ReadOnly Property PlanVydaju() As String
+            Get
+                Return ResourceManager.GetString("PlanVydaju", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Příjemce.
         '''</summary>
         Public Shared ReadOnly Property Prijemce() As String
             Get
                 Return ResourceManager.GetString("Prijemce", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Priorita zadavatele.
+        '''</summary>
+        Public Shared ReadOnly Property PrioritaZadavatele() As String
+            Get
+                Return ResourceManager.GetString("PrioritaZadavatele", resourceCulture)
             End Get
         End Property
         
@@ -565,6 +601,15 @@ Namespace My.Resources
         Public Shared ReadOnly Property Stredisko() As String
             Get
                 Return ResourceManager.GetString("Stredisko", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Termín.
+        '''</summary>
+        Public Shared ReadOnly Property Termin() As String
+            Get
+                Return ResourceManager.GetString("Termin", resourceCulture)
             End Get
         End Property
         
@@ -781,6 +826,15 @@ Namespace My.Resources
         Public Shared ReadOnly Property VykazaneHodinyHHMM() As String
             Get
                 Return ResourceManager.GetString("VykazaneHodinyHHMM", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Vykázané výdaje.
+        '''</summary>
+        Public Shared ReadOnly Property VykazaneVydaje() As String
+            Get
+                Return ResourceManager.GetString("VykazaneVydaje", resourceCulture)
             End Get
         End Property
         

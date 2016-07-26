@@ -369,4 +369,22 @@
   <data name="FakturacniStatus" xml:space="preserve">
     <value>Fakturační status</value>
   </data>
+  <data name="KodProjektu" xml:space="preserve">
+    <value>Kód projektu</value>
+  </data>
+  <data name="PlanHodin" xml:space="preserve">
+    <value>Plán hodin</value>
+  </data>
+  <data name="PlanVydaju" xml:space="preserve">
+    <value>Plán výdajů</value>
+  </data>
+  <data name="PrioritaZadavatele" xml:space="preserve">
+    <value>Priorita zadavatele</value>
+  </data>
+  <data name="Termin" xml:space="preserve">
+    <value>Termín</value>
+  </data>
+  <data name="VykazaneVydaje" xml:space="preserve">
+    <value>Vykázané výdaje</value>
+  </data>
 </root>

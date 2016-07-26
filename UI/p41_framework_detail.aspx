@@ -257,21 +257,21 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" Text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu projektu (boxy)">
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" Style="margin-top: 6px;">
+                <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" Style="margin-top: 6px;" meta:resourcekey="menu_zaznam">
                     <Items>
-                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění." meta:resourcekey="menu_upravit"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit nový projekt" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png" ToolTip="Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury."></telerik:RadMenuItem>
 
-                        <telerik:RadMenuItem Value="cmdCopy" Text="Založit nový projekt kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdCopy" Text="Založit nový projekt kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu." meta:resourcekey="menu_kopirovat"></telerik:RadMenuItem>
 
                     </Items>
                 </telerik:RadMenuItem>
 
 
-                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31" meta:resourcekey="menu_zapsat_worksheet"></telerik:RadMenuItem>
 
-                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more" meta:resourcekey="menu_dalsi">
                     <Items>
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">                           
                         </telerik:RadMenuItem>
@@ -317,7 +317,7 @@
         <div class="content-box1">
             <div class="title">
                 <img src="Images/properties.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server"></asp:Label>
+                <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
                 <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
             </div>
             <div class="content">
@@ -325,7 +325,7 @@
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="baseline">
                         <td style="min-width: 120px;">
-                            <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl" meta:resourcekey="lblProject"></asp:Label>
                         </td>
                         <td>
 
@@ -343,7 +343,7 @@
                     <tr valign="baseline">
                         <td>
 
-                            <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl" meta:resourcekey="lblClient"></asp:Label>
 
                         </td>
                         <td>
@@ -380,7 +380,7 @@
                     </tr>
                     <tr>
                         <td style="vertical-align: top;">
-                            <asp:Label ID="lblX51" runat="server" Text="Fakturační ceník:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblX51" runat="server" Text="Fakturační ceník:" CssClass="lbl" meta:resourcekey="lblX51"></asp:Label>
                         </td>
                         <td>
 
@@ -394,13 +394,13 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="lblP42Name" runat="server" Text="Typ projektu:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblP42Name" runat="server" Text="Typ projektu:" CssClass="lbl" meta:resourcekey="lblP42Name"></asp:Label>
                         </td>
                         <td>
                             <asp:Label ID="p42Name" runat="server" CssClass="valbold"></asp:Label>
                             <asp:HyperLink ID="clue_p42name" runat="server" CssClass="reczoom" Text="i" title="Detail typu projektu"></asp:HyperLink>
 
-                            <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl" meta:resourcekey="lblJ18Name"></asp:Label>
                             <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
                             <asp:HyperLink ID="clue_j18name" runat="server" CssClass="reczoom" Text="i" title="Detail střediska"></asp:HyperLink>
                         </td>

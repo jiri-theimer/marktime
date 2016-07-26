@@ -117,22 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cmdApprove.Text" xml:space="preserve">
-    <value>Approve/Re-approve selected records</value>
+  <data name="NastaveniSablony" xml:space="preserve">
+    <value>Template setting</value>
   </data>
-  <data name="cmdCopy.Tooltip" xml:space="preserve">
-    <value>Copy into a new record</value>
+  <data name="OdeslatPostou" xml:space="preserve">
+    <value>Send by mail as PDF</value>
   </data>
-  <data name="cmdNew.Tooltip" xml:space="preserve">
-    <value>New worksheet</value>
-  </data>
-  <data name="cmdSearch.Tooltip" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="cmdSplit.Tooltip" xml:space="preserve">
-    <value>Split time record into 2 pieces</value>
-  </data>
-  <data name="txtSearch.Tooltip" xml:space="preserve">
-    <value>Search by client/project/person last name/activity/record text</value>
+  <data name="Sestava" xml:space="preserve">
+    <value>Report:</value>
   </data>
 </root>

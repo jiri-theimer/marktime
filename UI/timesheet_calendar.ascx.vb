@@ -71,7 +71,12 @@ Public Class timesheet_calendar
         End With
 
         If Not Page.IsPostBack Then
-           
+            If Page.Culture.IndexOf("Czech") >= 0 Or Page.Culture.IndexOf("Če") >= 0 Then
+                cmdToday.Text = "Dnes"
+            Else
+                cmdToday.Text = "Today"
+            End If
+
             If BO.BAS.IsNullDBDate(cal1.SelectedDate) Is Nothing Then
                 Me.SelectedDate = Today
             End If

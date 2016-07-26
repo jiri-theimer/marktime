@@ -57,11 +57,11 @@ Public Class report_modal
                 ''If .DataPID = 0 And Request.Item("guid") = "" Then .StopPage("pid missing")
                 If .DataPID = 0 And Me.MultiPIDs = "" And Request.Item("guid") = "" Then .StopPage("pid missing")
                 If .Factory.SysUser.IsAdmin Then
-                    .AddToolbarButton("Nastavení šablony", "setting", "0", "Images/setting.png", False, "javascript:x31_record()")
+                    .AddToolbarButton(Resources.report_modal.NastaveniSablony, "setting", "0", "Images/setting.png", False, "javascript:x31_record()")
                 End If
                 .AddToolbarButton("PDF merge", "merge", "0", "Images/merge.png", False)
                 .AddToolbarButton("PDF export", "pdf", "0", "Images/pdf.png")
-                .AddToolbarButton("Odeslat poštou jako PDF", "mail", "0", "Images/email.png")
+                .AddToolbarButton(Resources.report_modal.OdeslatPostou, "mail", "0", "Images/email.png")
                 .RadToolbar.FindItemByValue("merge").CssClass = "show_hide1"
 
             End With
@@ -237,7 +237,7 @@ Public Class report_modal
         Master.HideShowToolbarButton("pdf", True)
         Master.HideShowToolbarButton("merge", True)
         rv1.Visible = True
-
+        
 
         Dim strXmlContent As String = cF.GetFileContents(strRepFullPath, , False), bolPeriod As Boolean = False
 
@@ -474,6 +474,20 @@ Public Class report_modal
             period1.BackColor = System.Drawing.Color.Red
         Else
             period1.BackColor = Nothing
+        End If
+        If rv1.Visible Then
+            If Page.Culture.IndexOf("Czech") < 0 And Page.Culture.IndexOf("Če") < 0 Then
+                With rv1.Resources
+                    .ExportSelectFormatText = ""
+                    .TogglePageLayoutToolTip = ""
+                    .NextPageToolTip = ""
+                    .PrintToolTip = ""
+                    .PreviousPageToolTip = ""
+                    .RefreshToolTip = ""
+                    .LastPageToolTip = ""
+                    .FirstPageToolTip = ""
+                End With
+            End If
         End If
     End Sub
 

@@ -60,8 +60,14 @@
         With cbxX21ID
             .DataSource = lisX21
             .DataBind()
-            If strNoFilterCaption <> "" Then .Items.Insert(0, New ListItem("--Nefiltrovat období--", "0"))
-            If strCustomPeriodCaption <> "" Then .Items.Insert(1, New ListItem("--Vlastní období--", "-1"))
+            If Page.Culture.IndexOf("Czech") < 0 And Page.Culture.IndexOf("Če") < 0 Then
+                If strNoFilterCaption <> "" Then .Items.Insert(0, New ListItem("--No period filter--", "0"))
+                If strCustomPeriodCaption <> "" Then .Items.Insert(1, New ListItem("--Custom period--", "-1"))
+            Else
+                If strNoFilterCaption <> "" Then .Items.Insert(0, New ListItem("--Nefiltrovat období--", "0"))
+                If strCustomPeriodCaption <> "" Then .Items.Insert(1, New ListItem("--Vlastní období--", "-1"))
+            End If
+            
         End With
     End Sub
 

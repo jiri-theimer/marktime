@@ -117,22 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cmdApprove.Text" xml:space="preserve">
-    <value>Approve/Re-approve selected records</value>
+  <data name="boxCoreTitle.Text" xml:space="preserve">
+    <value>Záznam projektu</value>
   </data>
-  <data name="cmdCopy.Tooltip" xml:space="preserve">
-    <value>Copy into a new record</value>
+  <data name="lblClient.Text" xml:space="preserve">
+    <value>Klient:</value>
   </data>
-  <data name="cmdNew.Tooltip" xml:space="preserve">
-    <value>New worksheet</value>
+  <data name="lblJ18Name.Text" xml:space="preserve">
+    <value>Středisko:</value>
   </data>
-  <data name="cmdSearch.Tooltip" xml:space="preserve">
-    <value>Search</value>
+  <data name="lblP42Name.Text" xml:space="preserve">
+    <value>Typ projektu:</value>
   </data>
-  <data name="cmdSplit.Tooltip" xml:space="preserve">
-    <value>Split time record into 2 pieces</value>
+  <data name="lblProject.Text" xml:space="preserve">
+    <value>Projekt:</value>
   </data>
-  <data name="txtSearch.Tooltip" xml:space="preserve">
-    <value>Search by client/project/person last name/activity/record text</value>
+  <data name="lblX51.Text" xml:space="preserve">
+    <value>Fakturační ceník:</value>
+  </data>
+  <data name="menu_dalsi.Text" xml:space="preserve">
+    <value>DALŠÍ</value>
+  </data>
+  <data name="menu_kopirovat.Text" xml:space="preserve">
+    <value>Založit nový projekt kopírováním</value>
+  </data>
+  <data name="menu_upravit.Text" xml:space="preserve">
+    <value>Upravit nastavení projektu</value>
+  </data>
+  <data name="menu_zapsat_worksheet.Text" xml:space="preserve">
+    <value>ZAPSAT WORKSHEET</value>
+  </data>
+  <data name="menu_zaznam.Text" xml:space="preserve">
+    <value>ZÁZNAM PROJEKTU</value>
   </data>
 </root>
