@@ -261,7 +261,7 @@
                     <Items>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění." meta:resourcekey="menu_upravit"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdNew" Text="Založit nový projekt" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png" ToolTip="Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdNew" Text="Založit nový projekt" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png" ToolTip="Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury." meta:resourcekey="menu_novy"></telerik:RadMenuItem>
 
                         <telerik:RadMenuItem Value="cmdCopy" Text="Založit nový projekt kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu." meta:resourcekey="menu_kopirovat"></telerik:RadMenuItem>
 
@@ -273,26 +273,26 @@
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more" meta:resourcekey="menu_dalsi">
                     <Items>
-                        <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">                           
+                        <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()" meta:resourcekey="switchHeight">                           
                         </telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za projekt" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za projekt" Target="_top" ImageUrl="Images/pivot.png" meta:resourcekey="cmdPivot"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP30" Text="Přiřadit k projektu kontaktní osobu" NavigateUrl="javascript:p30_record(0);" ImageUrl="Images/person.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP56" Text="Vytvořit úkol" NavigateUrl="javascript:p56_record(0);" ImageUrl="Images/task.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP30" Text="Přiřadit k projektu kontaktní osobu" NavigateUrl="javascript:p30_record(0);" ImageUrl="Images/person.png" meta:resourcekey="cmdP30"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP56" Text="Vytvořit úkol" NavigateUrl="javascript:p56_record(0);" ImageUrl="Images/task.png" meta:resourcekey="cmdP56"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png" meta:resourcekey="cmdO23"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png" meta:resourcekey="cmdO22"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png" meta:resourcekey="cmdB07"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP40Create" Text="Zapsat opakovanou odměnu/paušál/úkon" NavigateUrl="javascript:p40_record(0);" ImageUrl="Images/worksheet_recurrence.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP31Recalc" Text="Přepočítat sazby rozpracovaných úkonů" NavigateUrl="javascript:p31_recalc();" ImageUrl="Images/recalc.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP31Move2Bin" Text="Přesunout rozpracovanost do/z archivu" NavigateUrl="javascript:p31_move2bin();" ImageUrl="Images/bin.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP31MoveToOtherProject" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project();" ImageUrl="Images/cut.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP40Create" Text="Zapsat opakovanou odměnu/paušál/úkon" NavigateUrl="javascript:p40_record(0);" ImageUrl="Images/worksheet_recurrence.png" meta:resourcekey="cmdP40Create"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP31Recalc" Text="Přepočítat sazby rozpracovaných úkonů" NavigateUrl="javascript:p31_recalc();" ImageUrl="Images/recalc.png" meta:resourcekey="cmdP31Recalc"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP31Move2Bin" Text="Přesunout rozpracovanost do/z archivu" NavigateUrl="javascript:p31_move2bin();" ImageUrl="Images/bin.png" meta:resourcekey="cmdP31Move2Bin"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP31MoveToOtherProject" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project();" ImageUrl="Images/cut.png" meta:resourcekey="cmdP31MoveToOtherProject"></telerik:RadMenuItem>
 
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdLog" Text="Historie záznamu" NavigateUrl="javascript: timeline()" ImageUrl="Images/event.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png" meta:resourcekey="cmdX40"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png" meta:resourcekey="cmdP48"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdLog" Text="Historie záznamu" NavigateUrl="javascript: timeline()" ImageUrl="Images/event.png" meta:resourcekey="cmdLog"></telerik:RadMenuItem>
                     </Items>
 
                 </telerik:RadMenuItem>
@@ -304,12 +304,12 @@
 
     <div style="height: 3px; page-break-after: always"></div>
     <div class="div_radiolist_metro">
-        <asp:HyperLink ID="topLink0" runat="server" Text="Úkony" CssClass="toplink" NavigateUrl="javascript:p31_grid()" Style="margin-left: 6px;"></asp:HyperLink>
-        <asp:HyperLink ID="topLink1" runat="server" Text="Schvalování/fakturační podklady/fakturace" CssClass="toplink" NavigateUrl="javascript:approve()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink4" runat="server" Text="Sestava" CssClass="toplink" NavigateUrl="javascript:report()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář projektu" CssClass="toplink" NavigateUrl="javascript:scheduler()"></asp:HyperLink>
+        <asp:HyperLink ID="topLink0" runat="server" Text="Úkony" CssClass="toplink" NavigateUrl="javascript:p31_grid()" Style="margin-left: 6px;" meta:resourcekey="topLink0"></asp:HyperLink>
+        <asp:HyperLink ID="topLink1" runat="server" Text="Schvalování/fakturační podklady/fakturace" CssClass="toplink" NavigateUrl="javascript:approve()" meta:resourcekey="topLink1"></asp:HyperLink>
+        <asp:HyperLink ID="topLink4" runat="server" Text="Sestava" CssClass="toplink" NavigateUrl="javascript:report()" meta:resourcekey="topLink4"></asp:HyperLink>
+        <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()" meta:resourcekey="topLink2"></asp:HyperLink>
+        <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()" meta:resourcekey="topLink6"></asp:HyperLink>
+        <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář projektu" CssClass="toplink" NavigateUrl="javascript:scheduler()" meta:resourcekey="topLink3"></asp:HyperLink>
     </div>
 
 
@@ -367,7 +367,7 @@
                     </tr>
                     <tr id="trPlan" runat="server" style="vertical-align: top;">
                         <td>
-                            <asp:Label ID="lblPlan" runat="server" Text="Zahájení/dokončení:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblPlan" runat="server" Text="Zahájení/dokončení:" CssClass="lbl" meta:resourcekey="lblPlan"></asp:Label>
                         </td>
                         <td>
                             <asp:Label ID="PlanPeriod" runat="server" CssClass="val"></asp:Label>
@@ -416,8 +416,8 @@
         <asp:panel ID="boxX18" runat="server" CssClass="content-box1">
             <div class="title">
                 <img src="Images/label.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
-                <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
+                <asp:Label ID="boxX18Title" runat="server" Text="Štítky" meta:resourcekey="boxX18Title"></asp:Label>
+                <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit" meta:resourcekey="x18_binding"></asp:HyperLink>
             </div>
             <div class="content">
                 <uc:x18_readonly id="labels1" runat="server"></uc:x18_readonly>
@@ -453,8 +453,8 @@
         <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">
             <div class="title">
                 <img src="Images/person.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby projektu"></asp:Label>
-                <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" Style="margin-left: 20px;"></asp:HyperLink>
+                <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby projektu" meta:resourcekey="boxP30Title"></asp:Label>
+                <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" Style="margin-left: 20px;" meta:resourcekey="cmdEditP30"></asp:HyperLink>
             </div>
             <div class="content">
                 <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>
@@ -476,7 +476,7 @@
         <asp:Panel ID="boxRoles" runat="server" CssClass="content-box1">
             <div class="title">
                 <img src="Images/projectrole.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxRolesTitle" runat="server" Text="Projektové role"></asp:Label>
+                <asp:Label ID="boxRolesTitle" runat="server" Text="Projektové role" meta:resourcekey="boxRolesTitle"></asp:Label>
             </div>
             <div class="content">
                 <uc:entityrole_assign_inline ID="roles_project" runat="server" EntityX29ID="p41Project" NoDataText="V projektu nejsou přiřazeny projektové role."></uc:entityrole_assign_inline>
@@ -486,7 +486,7 @@
         <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
             <div class="title">
                 <img src="Images/notepad.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
+                <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
             </div>
             <div class="content" style="overflow: auto; max-height: 200px;">
 
@@ -501,12 +501,12 @@
     <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="false" OnClientTabSelected="OnClientTabSelected">
         <Tabs>
             <telerik:RadTab Text="Worksheet summary" Value="-1" Selected="true" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="Worksheet přehled" Value="1" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="Úkoly" Value="4" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="Rozpočet" Value="5" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="Vystavené faktury" Value="2" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="Komentáře a workflow" Value="3" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="x" Value="0" ToolTip="Nezobrazovat pod-přehled" Target="fraSubform"></telerik:RadTab>
+            <telerik:RadTab Text="Worksheet přehled" Value="1" Target="fraSubform" meta:resourcekey="tab_worksheetprehled"></telerik:RadTab>
+            <telerik:RadTab Text="Úkoly" Value="4" Target="fraSubform" meta:resourcekey="topLink2"></telerik:RadTab>
+            <telerik:RadTab Text="Rozpočet" Value="5" Target="fraSubform" meta:resourcekey="tab_rozpocet"></telerik:RadTab>
+            <telerik:RadTab Text="Vystavené faktury" Value="2" Target="fraSubform" meta:resourcekey="tab_faktury"></telerik:RadTab>
+            <telerik:RadTab Text="Komentáře a workflow" Value="3" Target="fraSubform" meta:resourcekey="tab_workflow"></telerik:RadTab>
+            <telerik:RadTab Text="x" Value="0" ToolTip="Nezobrazovat pod-přehled" Target="fraSubform" meta:resourcekey="tab_none"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
     <div id="offsetY"></div>
