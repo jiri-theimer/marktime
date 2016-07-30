@@ -819,6 +819,8 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        Dim bolEnglish As Boolean = False
+        If Page.Culture.IndexOf("Czech") < 0 And Page.Culture.IndexOf("Če") < 0 Then bolEnglish = True
         With Master.Factory.p31WorksheetBL
             Dim cRec As New BO.p31WorksheetEntryInput()
             With cRec
@@ -844,7 +846,7 @@
                 .p31Text = Me.p31Text.Text
                 .p31Code = Me.p31Code.Text
                 .p49ID = BO.BAS.IsNullInt(Me.p49ID.Value)
-              
+
                 Select Case Me.CurrentP33ID
                     Case BO.p33IdENUM.Cas
                         .p31HoursEntryflag = Me.CurrentHoursEntryFlag
@@ -864,7 +866,7 @@
                             .TimeUntil = Me.TimeUntil.Text
                             .p31HoursEntryflag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo
                         End If
-                        If Not .ValidateEntryTime(5) Then
+                        If Not .ValidateEntryTime(5, bolEnglish) Then
                             Master.Notify(.ErrorMessage, 2)
                             Return
                         End If
@@ -893,7 +895,7 @@
                         .p31Calc_Pieces = BO.BAS.IsNullNum(Me.p31Calc_Pieces.Value)
                         .p35ID = BO.BAS.IsNullInt(Me.p35ID.SelectedValue)
                 End Select
-               
+
             End With
 
             If Me.MultiDateInput.Visible And Me.MultiDateInput.Text <> "" Then

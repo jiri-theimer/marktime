@@ -168,4 +168,19 @@
   <data name="lblTitle.Tooltip" xml:space="preserve">
     <value>Titul před jménem</value>
   </data>
+  <data name="chkIsSmtp.Text" xml:space="preserve">
+    <value>Odeslaná pošta osoby odchází z vlastního SMTP účtu</value>
+  </data>
+  <data name="lblj02SmtpPassword.Text" xml:space="preserve">
+    <value>SMTP heslo:</value>
+  </data>
+  <data name="lblj02SmtpServer.Text" xml:space="preserve">
+    <value>Adresa SMTP serveru:</value>
+  </data>
+  <data name="RadTabStrip1_smpt.Text" xml:space="preserve">
+    <value>SMTP účet</value>
+  </data>
+  <data name="j02IsSmtpVerify.Text" xml:space="preserve">
+    <value>Účet vyžaduje ověření</value>
+  </data>
 </root>

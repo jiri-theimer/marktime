@@ -150,7 +150,7 @@ Public Class p31WorksheetEntryInput
                 Return True
         End Select
     End Function
-    Public Function ValidateEntryTime(intRound2Minutes As Integer) As Boolean
+    Public Function ValidateEntryTime(intRound2Minutes As Integer, Optional bolEnglish As Boolean = False) As Boolean
 
         'časový úkon
         Dim intSeconds_Orig As Integer = 0, cTime As New BO.clsTime()
@@ -170,12 +170,14 @@ Public Class p31WorksheetEntryInput
                     intSeconds_Orig = cTime.ConvertTimeToSeconds(Me.Value_Orig)
                     If intSeconds_Orig = 0 Then
                         _Error = "Chybí [Hodiny]."
+                        If bolEnglish Then _Error = "Field [Hours] is required."
                         Return False
                     End If
                     Me.TimeFrom = "" : Me.TimeUntil = ""
                 End If
                 If intSeconds_Orig < 0 Then
                     _Error = "[Čas do] je menší než [Čas od]."
+                    If bolEnglish Then _Error = "[Time START] is lower then [Time END]."
                     Return False
                 End If
                 If Me.TimeFrom <> "" And Me.TimeUntil <> "" Then
@@ -187,10 +189,12 @@ Public Class p31WorksheetEntryInput
         End Select
         If intSeconds_Orig = 0 And (Me.Value_Orig = "0" Or Me.Value_Orig = "" Or Me.Value_Orig = "00:00") Then
             _Error = "Čas úkonu nesmí být NULA."
+            If bolEnglish Then _Error = "Field [Hours] is nullable."
             Return False
         End If
         If intSeconds_Orig = 0 And Me.Value_Orig <> "" Then
             _Error = String.Format("Výraz [{0}] není podporovaný zápis času.", Me.Value_Orig)
+            If bolEnglish Then _Error = String.Format("The expression [{0}] is not supported time format.", Me.Value_Orig)
             Return False
         End If
 

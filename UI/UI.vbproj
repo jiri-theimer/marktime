@@ -573,6 +573,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>p31_setting.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\p41_framework_detail.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p41_framework_detail.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\p41_framework_detail.en-us.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>p41_framework_detail.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\report_modal.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2711,6 +2721,16 @@
     </Content>
     <Content Include="App_LocalResources\p41_framework_detail.aspx.resx" />
     <Content Include="App_LocalResources\p41_framework_detail.aspx.en-us.resx" />
+    <Content Include="App_GlobalResources\p41_framework_detail.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p41_framework_detail.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\p41_framework_detail.en-us.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>p41_framework_detail.en-us.designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="App_LocalResources\entity_worksheet_summary.ascx.resx" />
+    <Content Include="App_LocalResources\entity_worksheet_summary.ascx.en-us.resx" />
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

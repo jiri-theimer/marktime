@@ -21,6 +21,12 @@
     Public Property j02RobotAddress As String
     Public Property j02ExternalPID As String
 
+    Public Property j02SmtpServer As String
+    Public Property j02SmtpLogin As String
+    Public Property j02SmtpPassword As String
+    Public Property j02IsSmtpVerify As Boolean
+
+
     Public ReadOnly Property FullNameAsc As String
         Get
             Return Trim(j02TitleBeforeName & " " & j02FirstName & " " & j02LastName & " " & j02TitleAfterName)

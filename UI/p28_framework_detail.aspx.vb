@@ -271,7 +271,8 @@ Public Class p28_framework_detail
             If Not .SysUser.IsApprovingPerson Then
                 'schovat záložku pro schvalování
                 topLink1.Visible = False
-
+            Else
+                topLink1.Visible = .TestPermission(BO.x53PermValEnum.PR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
             End If
             If Not .SysUser.j04IsMenu_Project Then topLink5.Visible = False
             If Not .SysUser.j04IsMenu_Invoice Then

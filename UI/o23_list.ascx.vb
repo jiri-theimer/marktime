@@ -1,5 +1,6 @@
 ﻿Public Class o23_list
     Inherits System.Web.UI.UserControl
+    Private _rowsCount As Integer = 0
     Public Property EntityX29ID As BO.x29IdEnum
         Get
             If Me.hidX29ID.Value <> "" Then
@@ -22,6 +23,8 @@
     End Sub
 
     Public Sub RefreshData(lisO23 As IEnumerable(Of BO.o23Notepad), intDataRecordPID As Integer)
+        _rowsCount = lisO23.Count
+
         rpO23.DataSource = lisO23
         rpO23.DataBind()
         Me.hidInhaledDataPID.Value = intDataRecordPID.ToString
@@ -64,6 +67,12 @@
             .ToolTip = cRec.UserUpdate & "/" & BO.BAS.FD(cRec.DateUpdate, True)
         End With
         ''CType(e.Item.FindControl("TimeStamp"), Label).Text = cRec.UserUpdate & "/" & BO.BAS.FD(cRec.DateUpdate, True)
-       
+        If _rowsCount < 5 Then
+            If cRec.o23BodyPlainText.Length > 0 Then
+                With CType(e.Item.FindControl("place1"), PlaceHolder)
+                    .Controls.Add(New LiteralControl("<div><i>" & BO.BAS.CrLfText2Html(cRec.o23BodyPlainText) & "</i></div>"))
+                End With
+            End If
+        End If
     End Sub
 End Class

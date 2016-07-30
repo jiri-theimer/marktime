@@ -117,139 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="aP48.Text" xml:space="preserve">
-    <value>Operativní plán projektu</value>
+  <data name="CastkaNesmiNula" xml:space="preserve">
+    <value>Částka na vstupu nesmí být NULA.</value>
   </data>
-  <data name="boxCoreTitle.Text" xml:space="preserve">
-    <value>Záznam projektu</value>
+  <data name="ChybiMena" xml:space="preserve">
+    <value>U částky chybí měna.</value>
   </data>
-  <data name="boxO23Title.Text" xml:space="preserve">
-    <value>Dokumenty</value>
+  <data name="ChybiOsoba" xml:space="preserve">
+    <value>V záznamu chybí osoba.</value>
   </data>
-  <data name="boxP30Title.Text" xml:space="preserve">
-    <value>Kontaktní osoby projektu</value>
+  <data name="ChybiProjekt" xml:space="preserve">
+    <value>V záznamu chybí projekt.</value>
   </data>
-  <data name="boxRolesTitle.Text" xml:space="preserve">
-    <value>Projektové role</value>
+  <data name="ChybiSesit" xml:space="preserve">
+    <value>V záznamu chybí sešit.</value>
   </data>
-  <data name="boxX18Title.Text" xml:space="preserve">
-    <value>Štítky</value>
-  </data>
-  <data name="cmdB07.Text" xml:space="preserve">
-    <value>Zapsat komentář</value>
-  </data>
-  <data name="cmdEditP30.Text" xml:space="preserve">
-    <value>Upravit</value>
-  </data>
-  <data name="cmdLog.Text" xml:space="preserve">
-    <value>Historie záznamu</value>
-  </data>
-  <data name="cmdO22.Text" xml:space="preserve">
-    <value>Zapsat událost do kalendáře</value>
-  </data>
-  <data name="cmdO23.Text" xml:space="preserve">
-    <value>Vytvořit dokument</value>
-  </data>
-  <data name="cmdP30.Text" xml:space="preserve">
-    <value>Přiřadit k projektu kontaktní osobu</value>
-  </data>
-  <data name="cmdP31Move2Bin.Text" xml:space="preserve">
-    <value>Přesunout rozpracovanost do/z archivu</value>
-  </data>
-  <data name="cmdP31MoveToOtherProject.Text" xml:space="preserve">
-    <value>Přesunout rozpracovanost na jiný projekt</value>
-  </data>
-  <data name="cmdP31Recalc.Text" xml:space="preserve">
-    <value>Přepočítat sazby rozpracovaných úkonů</value>
-  </data>
-  <data name="cmdP40Create.Text" xml:space="preserve">
-    <value>Zapsat opakovanou odměnu/paušál/úkon</value>
-  </data>
-  <data name="cmdP48.Text" xml:space="preserve">
-    <value>Operativní plán</value>
-  </data>
-  <data name="cmdP56.Text" xml:space="preserve">
-    <value>Vytvořit úkol</value>
-  </data>
-  <data name="cmdPivot.Text" xml:space="preserve">
-    <value>Worksheet Pivot za projekt</value>
-  </data>
-  <data name="cmdX40.Text" xml:space="preserve">
-    <value>Historie odeslané pošty</value>
-  </data>
-  <data name="lblClient.Text" xml:space="preserve">
-    <value>Klient:</value>
-  </data>
-  <data name="lblJ18Name.Text" xml:space="preserve">
-    <value>Středisko:</value>
-  </data>
-  <data name="lblP42Name.Text" xml:space="preserve">
-    <value>Typ projektu:</value>
-  </data>
-  <data name="lblPlan.Text" xml:space="preserve">
-    <value>Zahájení/dokončení:</value>
-  </data>
-  <data name="lblProject.Text" xml:space="preserve">
-    <value>Projekt:</value>
-  </data>
-  <data name="lblX51.Text" xml:space="preserve">
-    <value>Fakturační ceník:</value>
-  </data>
-  <data name="menu_dalsi.Text" xml:space="preserve">
-    <value>DALŠÍ</value>
-  </data>
-  <data name="menu_kopirovat.Text" xml:space="preserve">
-    <value>Založit nový projekt kopírováním</value>
-  </data>
-  <data name="menu_novy.Text" xml:space="preserve">
-    <value>Založit nový projekt</value>
-  </data>
-  <data name="menu_upravit.Text" xml:space="preserve">
-    <value>Upravit nastavení projektu</value>
-  </data>
-  <data name="menu_zapsat_worksheet.Text" xml:space="preserve">
-    <value>ZAPSAT WORKSHEET</value>
-  </data>
-  <data name="menu_zaznam.Text" xml:space="preserve">
-    <value>ZÁZNAM PROJEKTU</value>
-  </data>
-  <data name="switchHeight.Text" xml:space="preserve">
-    <value>Nastavení vzhledu stránky</value>
-  </data>
-  <data name="tab_faktury.Text" xml:space="preserve">
-    <value>Vystavené faktury</value>
-  </data>
-  <data name="tab_none.Text" xml:space="preserve">
-    <value>Nezobrazovat pod-přehled</value>
-  </data>
-  <data name="tab_rozpocet.Text" xml:space="preserve">
-    <value>Rozpočet</value>
-  </data>
-  <data name="tab_workflow.Text" xml:space="preserve">
-    <value>Komentáře a workflow</value>
-  </data>
-  <data name="tab_worksheetprehled.Text" xml:space="preserve">
-    <value>Worksheet přehled</value>
-  </data>
-  <data name="topLink0.Text" xml:space="preserve">
-    <value>Úkony</value>
-  </data>
-  <data name="topLink1.Text" xml:space="preserve">
-    <value>Schvalování/fakturační podklady/fakturace</value>
-  </data>
-  <data name="topLink2.Text" xml:space="preserve">
-    <value>Úkoly</value>
-  </data>
-  <data name="topLink3.Text" xml:space="preserve">
-    <value>Kalendář projektu</value>
-  </data>
-  <data name="topLink4.Text" xml:space="preserve">
-    <value>Sestava</value>
-  </data>
-  <data name="topLink6.Text" xml:space="preserve">
-    <value>Faktury</value>
-  </data>
-  <data name="x18_binding.Text" xml:space="preserve">
-    <value>Přiřadit</value>
+  <data name="SesitVyzadujeAktivitu" xml:space="preserve">
+    <value>Sešit [{0}] vyžaduje na vstupu zadání aktivity.</value>
   </data>
 </root>

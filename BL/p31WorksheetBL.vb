@@ -140,13 +140,13 @@ Class p31WorksheetBL
                     .p41ID = cP56.p41ID
                 End If
             End If
-            If .p41ID = 0 Then _Error = "V záznamu chybí projekt." : Return False
-            If .j02ID = 0 Then _Error = "V záznamu chybí osoba." : Return False
-            If .p34ID = 0 Then _Error = "V záznamu chybí sešit." : Return False
+            If .p41ID = 0 Then _Error = My.Resources.p31.ChybiProjekt : Return False
+            If .j02ID = 0 Then _Error = My.Resources.p31.ChybiOsoba : Return False
+            If .p34ID = 0 Then _Error = My.Resources.p31.ChybiSesit : Return False
             If .p32ID = 0 Then
                 Dim cP34 As BO.p34ActivityGroup = Factory.p34ActivityGroupBL.Load(.p34ID)
                 If cP34.p34ActivityEntryFlag = BO.p34ActivityEntryFlagENUM.AktivitaJePovinna Then
-                    _Error = String.Format("Sešit [{0}] vyžaduje na vstupu zadání aktivity.", cP34.p34Name) : Return False
+                    _Error = String.Format(My.Resources.p31.SesitVyzadujeAktivitu, cP34.p34Name) : Return False
                 End If
                 Dim mq As New BO.myQueryP32 'zkusit najít výchozí systémovou aktivitu, pokud se aktivita nemá zadávat
                 mq.p34ID = .p34ID
@@ -193,17 +193,17 @@ Class p31WorksheetBL
                         _Error = "U částky chybí měna." : Return False
                     End If
                     If cRec.Amount_WithoutVat_Orig = 0 Then
-                        _Error = "Částka na vstupu nesmí být NULA."
+                        _Error = My.Resources.p31.CastkaNesmiNula
                         Return False
                     End If
                     cRec.RecalcEntryAmount(cRec.Amount_WithoutVat_Orig, .VatRate)  'dopočítat částku vč. DPH
                     cRec.VatRate_Orig = .VatRate
                 Case BO.p33IdENUM.PenizeVcDPHRozpisu
                     If cRec.j27ID_Billing_Orig = 0 Then
-                        _Error = "U částky chybí měna." : Return False
+                        _Error = My.Resources.p31.ChybiMena : Return False
                     End If
                     If cRec.Amount_WithoutVat_Orig = 0 And cRec.Amount_WithVat_Orig = 0 Then
-                        _Error = "Částka na vstupu nesmí být NULA."
+                        _Error = My.Resources.p31.CastkaNesmiNula
                         Return False
                     End If
                     cRec.SetAmounts()

@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class entity_worksheet_summary
 
     '''<summary>
+    '''lblHodiny control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblHodiny As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblOstatni control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblOstatni As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblCelkemVykazano control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCelkemVykazano As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''p31Hours_Orig control.
     '''</summary>
     '''<remarks>
@@ -66,6 +93,15 @@ Partial Public Class entity_worksheet_summary
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents trWait4Invoice As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''lblCekaNaFakturaci control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCekaNaFakturaci As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''WaitingOnInvoice_Hours_Sum control.

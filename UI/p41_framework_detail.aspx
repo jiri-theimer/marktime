@@ -373,7 +373,8 @@
                             <asp:Label ID="PlanPeriod" runat="server" CssClass="val"></asp:Label>
                             <div>
 
-                                <a href="javascript: p48_plan()">Operativní plán projektu</a>
+                                
+                                <asp:HyperLink ID="aP48" runat="server" NavigateUrl="javascript:p48_plan()" Text="Operativní plán projektu" meta:resourcekey="aP48"></asp:HyperLink>
                             </div>
 
                         </td>

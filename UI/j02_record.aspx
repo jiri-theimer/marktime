@@ -14,6 +14,7 @@
         <Tabs>
             <telerik:RadTab Text="<%$ Resources:common, vlastnosti %>" Selected="true" Value="core"></telerik:RadTab>
             <telerik:RadTab Text="<%$ Resources:common, uzivatelska_pole %>" Value="ff"></telerik:RadTab>
+            <telerik:RadTab Text="SMTP účet" Value="smtp" meta:resourcekey="RadTabStrip1_smpt"></telerik:RadTab>
             <telerik:RadTab Text="<%$ Resources:common, ostatni %>" Value="other"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -65,8 +66,8 @@
                         <div>
                             <asp:RegularExpressionValidator ID="emailValidator" runat="server" Display="Dynamic" ForeColor="Red" ErrorMessage="Zadejte validní e-mail adresu." ValidationExpression="^[\w\.\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]{1,})*(\.[a-zA-Z]{2,4}){1,2}$" ControlToValidate="j02Email"></asp:RegularExpressionValidator>
                         </div>
-                        
-                        
+
+
                     </td>
                 </tr>
                 <tr>
@@ -99,7 +100,7 @@
                         <uc:datacombo ID="j18ID" runat="server" DataTextField="j18Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
                     </td>
                 </tr>
-              
+
                 <tr valign="top" id="trJ17ID" runat="server">
                     <td>
                         <asp:Label ID="lblJ17ID" Text="Region:" runat="server" CssClass="lbl"></asp:Label></td>
@@ -118,7 +119,7 @@
                         <asp:TextBox ID="j02Phone" runat="server" Style="width: 200px;"></asp:TextBox>
                     </td>
                 </tr>
-                
+
                 <tr id="trJobTitle" runat="server">
                     <td>
                         <asp:Label ID="lblj02JobTitle" Text="Pozice:" runat="server" CssClass="lbl" AssociatedControlID="j02JobTitle" meta:resourcekey="lblj02JobTitle"></asp:Label>
@@ -151,6 +152,50 @@
 
             <uc:freefields ID="ff1" runat="server" />
 
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="smtp" runat="server">
+            <asp:CheckBox ID="chkIsSmtp" runat="server" Text="Odeslaná pošta osoby odchází z vlastního SMTP účtu" AutoPostBack="true" meta:resourcekey="chkIsSmtp" />
+            <asp:Panel ID="panSMTP" runat="server">
+                <table cellpadding="5" cellspacing="2">
+                    <tr>
+                        <td>
+                            <asp:Label ID="lblj02SmtpServer" runat="server" Text="Adresa SMTP serveru:" CssClass="lbl" meta:resourcekey="lblj02SmtpServer"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="j02SmtpServer" runat="server" Style="width: 300px;"></asp:TextBox>
+                            <asp:CheckBox ID="j02IsSmtpVerify" runat="server" AutoPostBack="true" Text="Účet vyžaduje ověření" Checked="true" meta:resourcekey="j02IsSmtpVerify" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="lblj02SmtpLogin" runat="server" Text="SMTP login:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="j02SmtpLogin" runat="server" Style="width: 300px;"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="lblj02SmtpPassword" runat="server" Text="SMTP heslo:" CssClass="lbl" meta:resourcekey="lblj02SmtpPassword"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="j02SmtpPassword" runat="server" Style="width: 200px;" TextMode="Password"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="lblVerifyPassword" runat="server" Text="Ověření hesla:" CssClass="lbl" meta:resourcekey="lblVerifyPassword"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtVerifyPassword" runat="server" Style="width: 200px;" TextMode="Password"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                </table>
+            </asp:Panel>
         </telerik:RadPageView>
         <telerik:RadPageView ID="other" runat="server">
             <table cellpadding="5" cellspacing="2">

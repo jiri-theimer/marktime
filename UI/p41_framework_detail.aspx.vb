@@ -189,12 +189,12 @@ Public Class p41_framework_detail
             Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, Master.Factory.SysUser.j02ID)
             With menu1.FindItemByValue("p31")
                 For Each c In lisP34
-                    Dim mi As New Telerik.Web.UI.RadMenuItem(String.Format("Zapsat úkon do [{0}]", c.p34Name), "javascript:p31_entry_menu(" & c.PID.ToString & ")")
+                    Dim mi As New Telerik.Web.UI.RadMenuItem(String.Format(Resources.p41_framework_detail.ZapsatUkonDo, c.p34Name), "javascript:p31_entry_menu(" & c.PID.ToString & ")")
                     mi.ImageUrl = "Images/worksheet.png"
                     .Items.Add(mi)
                 Next
                 If lisP34.Count = 0 Then
-                    Dim mi As New Telerik.Web.UI.RadMenuItem("V tomto projektu nedisponujete oprávněním k zapisování úkonů.")
+                    Dim mi As New Telerik.Web.UI.RadMenuItem(Resources.p41_framework_detail.NedisponujeteOpravnenimZapisovat)
                     mi.ForeColor = Drawing.Color.Red
                     menu1.FindItemByValue("p31").Items.Add(mi)
                 End If
@@ -203,9 +203,9 @@ Public Class p41_framework_detail
             Dim mi As New Telerik.Web.UI.RadMenuItem("V projektu nemůžete zapisovat worksheet úkony.")
             If cRec.IsClosed Then
                 hidIsBin.Value = "1"
-                mi.Text = "Do projektu v archivu nelze zapisovat nové úkony."
+                mi.Text = Resources.p41_framework_detail.VArchivuNelzeWorksheet
             End If
-            If cRec.p41IsDraft Then mi.Text = "Do projektu v režimu DRAFT nelze zapisovat úkony."
+            If cRec.p41IsDraft Then mi.Text = Resources.p41_framework_detail.VDraftNelzeWorksheet
             mi.ForeColor = Drawing.Color.Red
             menu1.FindItemByValue("p31").Items.Add(mi)
         End If
@@ -358,16 +358,17 @@ Public Class p41_framework_detail
             menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
             If cRec.b01ID <> 0 Then menu1.FindItemByValue("cmdB07").Visible = False
 
-            Dim bolCanApprove As Boolean = .TestPermission(BO.x53PermValEnum.GR_P31_Approver)
-            If bolCanApprove = False And cDisp.x67IDs.Count > 0 Then
+            Dim bolCanApproveOrInvoice As Boolean = .TestPermission(BO.x53PermValEnum.GR_P31_Approver, BO.x53PermValEnum.GR_P91_Creator)
+            If Not bolCanApproveOrInvoice Then bolCanApproveOrInvoice = .TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
+            If bolCanApproveOrInvoice = False And cDisp.x67IDs.Count > 0 Then
                 Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = Master.Factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
                 If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
-                    bolCanApprove = True
+                    bolCanApproveOrInvoice = True
                 End If
             End If
-            topLink1.Visible = bolCanApprove
-            If Not bolCanApprove Then Me.p31summary1.DisableApprovingButton()
-            Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApprove)
+            topLink1.Visible = bolCanApproveOrInvoice
+            If Not bolCanApproveOrInvoice Then Me.p31summary1.DisableApprovingButton()
+            Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
             ''Me.bigsummary1.IsApprovingPerson = bolCanApprove
             ''gridP31.AllowApproving = bolCanApprove
             ''gridP56.AllowApproving = bolCanApprove

@@ -3142,8 +3142,8 @@ FROM j03user a INNER JOIN j04UserRole b on a.j04ID=b.j04ID
 WHERE a.j03ID=@j03id
 
 
-if exists(SELECT x68ID FROM x68EntityRole_Permission WHERE x67ID=@x67id AND x53ID=58)
- set @is_approve=1	--mùže paušálnì schvalovat veškerý worksheet, oprávnìní x53ID=58: Oprávnìní schvalovat všechny worksheet úkony v databázi
+if exists(SELECT a.x68ID FROM x68EntityRole_Permission a INNER JOIN x53Permission b ON a.x53ID=b.x53ID WHERE a.x67ID=@x67id AND b.x53Value=23 AND b.x29ID=103)
+ set @is_approve=1	--mùže paušálnì schvalovat veškerý worksheet, oprávnìní x53Value=GR_P31_Approver (23): Oprávnìní schvalovat všechny worksheet úkony v databázi
 
 if @is_approve=0
 begin

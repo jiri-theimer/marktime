@@ -10,7 +10,7 @@
             <asp:Image ID="img1" runat="server" ImageUrl="Images/notepad.png" />
 
             <asp:HyperLink ID="o23Name" runat="server"></asp:HyperLink>
-
+            <asp:PlaceHolder ID="place1" runat="server"></asp:PlaceHolder>
             
         </div>
     </ItemTemplate>

@@ -79,6 +79,14 @@
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
 
+            If .j02SmtpServer <> "" Then
+                Me.chkIsSmtp.Checked = True
+                Me.j02SmtpServer.Text = .j02SmtpServer
+                Me.j02SmtpLogin.Text = .j02SmtpLogin
+                Me.j02IsSmtpVerify.Checked = .j02IsSmtpVerify
+            Else
+                Me.chkIsSmtp.Checked = False
+            End If
 
             'val1.InitVals(.ValidFrom, .ValidUntil, .DateInsert)
         End With
@@ -132,6 +140,19 @@
                 .j02ExternalPID = Me.j02ExternalPID.Text
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
+                If chkIsSmtp.Checked Then
+                    .j02IsSmtpVerify = Me.j02IsSmtpVerify.Checked
+                    .j02SmtpLogin = Me.j02SmtpLogin.Text
+                    .j02SmtpPassword = Me.j02SmtpPassword.Text
+                    .j02SmtpServer = Me.j02SmtpServer.Text
+
+                    If Me.j02IsSmtpVerify.Checked Then
+                        If (Me.j02SmtpPassword.Text <> "" Or Me.txtVerifyPassword.Text <> "") And (Me.j02SmtpPassword.Text <> Me.txtVerifyPassword.Text) Then
+                            Master.Notify("SMTP heslo nesouhlasí s ověřením.", NotifyLevel.WarningMessage)
+                            Return
+                        End If
+                    End If
+                End If
             End With
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
@@ -176,5 +197,18 @@
         lblj02EmailSignature.Visible = b : Me.j02EmailSignature.Visible = b
 
         trJobTitle.Visible = Not b
+
+        Me.chkIsSmtp.Enabled = b
+        If Not b Then
+            Me.chkIsSmtp.Checked = False
+        End If
+
+        Me.panSMTP.Visible = chkIsSmtp.Checked
+        If chkIsSmtp.Checked Then
+            b = j02IsSmtpVerify.Checked
+            lblj02SmtpLogin.Visible = b : j02SmtpLogin.Visible = b
+            lblj02SmtpPassword.Visible = b : j02SmtpPassword.Visible = b
+            Me.lblVerifyPassword.Visible = b : Me.txtVerifyPassword.Visible = b
+        End If
     End Sub
 End Class
