@@ -122,6 +122,11 @@ Class p28ContactBL
                 _Error = BL.BAS.ErrorMessage : Return False
             End If
         End If
+        If Not lisO32 Is Nothing Then
+            If lisO32.Where(Function(p) Trim(p.o32Value) = "" And Trim(p.o32Description) = "").Count > 0 Then
+                _Error = "Kontaktní média klienta obsahují položku s nevyplněnou adresou (číslem) i poznámkou!" : Return False
+            End If
+        End If
         Return True
     End Function
     Public Function Save(cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField), p58IDs As List(Of Integer)) As Boolean Implements Ip28ContactBL.Save

@@ -67,8 +67,8 @@
             .ToolTip = cRec.UserUpdate & "/" & BO.BAS.FD(cRec.DateUpdate, True)
         End With
         ''CType(e.Item.FindControl("TimeStamp"), Label).Text = cRec.UserUpdate & "/" & BO.BAS.FD(cRec.DateUpdate, True)
-        If _rowsCount < 5 Then
-            If cRec.o23BodyPlainText.Length > 0 Then
+        If _rowsCount < 5 And Not cRec.o23BodyPlainText Is Nothing Then
+            If cRec.o23BodyPlainText.Length > 0 And Not cRec.o23IsEncrypted Then
                 With CType(e.Item.FindControl("place1"), PlaceHolder)
                     .Controls.Add(New LiteralControl("<div><i>" & BO.BAS.CrLfText2Html(cRec.o23BodyPlainText) & "</i></div>"))
                 End With

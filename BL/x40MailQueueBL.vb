@@ -225,6 +225,20 @@ Class x40MailQueueBL
                 .Credentials = basicAuthenticationInfo
                 .Host = Me.Factory.x35GlobalParam.GetValueString("SMTP_Server")
             End If
+            If _cUser.j02ID <> 0 Then
+                Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
+                If cPerson.j02SmtpServer <> "" Then
+                    'osoba má vlastní SMTP účet
+                    Dim basicAuthenticationInfo As New System.Net.NetworkCredential()
+                    If cPerson.j02IsSmtpVerify Then
+                        basicAuthenticationInfo = New System.Net.NetworkCredential(cPerson.j02SmtpLogin, BO.Crypto.Decrypt(cPerson.j02SmtpPassword, "hoVaDo7Ivan1"), "")
+                    End If
+                    .UseDefaultCredentials = False
+                    .Credentials = basicAuthenticationInfo
+                    .Host = cPerson.j02SmtpServer
+                End If
+                log4net.LogManager.GetLogger("smtplog").Info("SMTP sender: " & .Host & vbCrLf & "Message subject: " & cPerson.j02SmtpLogin)
+            End If
             Try
                 .Send(mail)
                 log4net.LogManager.GetLogger("smtplog").Info("Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
