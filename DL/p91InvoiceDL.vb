@@ -10,13 +10,20 @@
 
         Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.p91id = intPID})
     End Function
+    Public Function LoadByCode(strCode As String) As BO.p91Invoice
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2()
+
+        s += " WHERE a.p91Code LIKE @code"
+       
+        Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.code = strCode})
+    End Function
     Public Function LoadMyLastCreated() As BO.p91Invoice
         Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
         s += " WHERE a.j02ID_Owner=@j02id_owner ORDER BY a.p91ID DESC"
 
         Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.j02id_owner = _curUser.j02ID})
     End Function
-
+    
 
     Public Function SaveP94(cRec As BO.p94Invoice_Payment) As Boolean
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
@@ -29,7 +36,7 @@
             pars.Add("p91ID", BO.BAS.IsNullDBKey(.p91ID), DbType.Int32)
             pars.Add("p94Date", .p94Date, DbType.DateTime)
             pars.Add("p94Amount", .p94Amount, DbType.Double)
-
+            pars.Add("p94Code", .p94Code, DbType.String)
         End With
 
         If _cDB.SaveRecord("p94Invoice_Payment", pars, bolINSERT, strW, True, _curUser.j03Login) Then
@@ -406,6 +413,13 @@
         s += " FROM p94Invoice_Payment WHERE p91ID=@pid ORDER BY p94Date DESC"
 
         Return _cDB.GetList(Of BO.p94Invoice_Payment)(s, New With {.pid = intPID})
+    End Function
+    Public Function LoadP94ByCode(strP94Code As String) As BO.p94Invoice_Payment
+        Dim s As String = "select *," & bas.RecTail("p94", "", False, False)
+        s += " FROM p94Invoice_Payment WHERE p94Code LIKE @code"
+
+        Return _cDB.GetRecord(Of BO.p94Invoice_Payment)(s, New With {.code = strP94Code})
+
     End Function
 
     Public Function ChangeCurrency(intP91ID As Integer, intJ27ID As Integer) As Boolean

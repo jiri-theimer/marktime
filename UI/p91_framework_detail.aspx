@@ -220,6 +220,9 @@
         function export_pohoda() {           
             sw_local("p91_export2pohoda.aspx?pid=<%=Master.DataPID%>","Images/export.png");
         }
+        function abo_import() {           
+            sw_local("p91_pay_aboimport.aspx","Images/payment.png");
+        }
         function workflow(){            
             sw_local("workflow_dialog.aspx?prefix=p91&pid=<%=master.datapid%>","Images/workflow.png",false);
         }
@@ -268,6 +271,7 @@
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdB07" Text="Zapsat k faktuře komentář" NavigateUrl="javascript:b07_comment();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdAboImport" Text="Import úhrad z ABO souboru" NavigateUrl="javascript:abo_import();" ImageUrl="Images/payment.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdPohoda" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" ImageUrl="Images/license.png"></telerik:RadMenuItem>
                     </Items>
 

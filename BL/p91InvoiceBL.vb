@@ -2,6 +2,7 @@
     Inherits IFMother
     Function Create(cCreate As BO.p91Create) As Integer
     Function Load(intPID As Integer) As BO.p91Invoice
+    Function LoadByCode(strCode As String) As BO.p91Invoice
     Function LoadMyLastCreated() As BO.p91Invoice
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice)
@@ -12,6 +13,7 @@
     Function SaveP94(cRec As BO.p94Invoice_Payment) As Boolean
     Function DeleteP94(intP94ID As Integer, intP91ID As Integer) As Boolean
     Function GetList_p94(intPID As Integer) As IEnumerable(Of BO.p94Invoice_Payment)
+    Function LoadP94ByCode(strP94Code As String) As BO.p94Invoice_Payment
     Function GetVirtualCount(myQuery As BO.myQueryP91) As Integer
     Function GetSumRow(myQuery As BO.myQueryP91) As BO.p91InvoiceSum
     Function SaveP99(intP91ID As Integer, intP90ID As Integer) As Boolean
@@ -87,9 +89,13 @@ Class p91InvoiceBL
     Public Function Load(intPID As Integer) As BO.p91Invoice Implements Ip91InvoiceBL.Load
         Return _cDL.Load(intPID)
     End Function
+    Public Function LoadByCode(strCode As String) As BO.p91Invoice Implements Ip91InvoiceBL.LoadByCode
+        Return _cDL.LoadByCode(strCode)
+    End Function
     Public Function LoadMyLastCreated() As BO.p91Invoice Implements Ip91InvoiceBL.LoadMyLastCreated
         Return _cDL.LoadMyLastCreated()
     End Function
+
     Public Function Delete(intPID As Integer) As Boolean Implements Ip91InvoiceBL.Delete
         Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, intPID) 'úschova kvůli logování historie
         If _cDL.Delete(intPID) Then
@@ -126,6 +132,9 @@ Class p91InvoiceBL
     End Function
     Public Function GetList_p94(intPID As Integer) As IEnumerable(Of BO.p94Invoice_Payment) Implements Ip91InvoiceBL.GetList_p94
         Return _cDL.GetList_p94(intPID)
+    End Function
+    Public Function LoadP94ByCode(strP94Code As String) As BO.p94Invoice_Payment Implements Ip91InvoiceBL.LoadP94ByCode
+        Return _cDL.LoadP94ByCode(strP94Code)
     End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryP91) As Integer Implements Ip91InvoiceBL.GetVirtualCount
         Return _cDL.GetVirtualCount(myQuery)

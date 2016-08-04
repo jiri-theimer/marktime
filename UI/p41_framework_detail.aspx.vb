@@ -14,6 +14,9 @@ Public Class p41_framework_detail
     End Enum
     Public Property CurrentSubgrid As SubgridType
         Get
+            If opgSubgrid.SelectedTab Is Nothing Then
+                Return SubgridType._NotSpecified
+            End If
             Return DirectCast(CInt(Me.opgSubgrid.SelectedTab.Value), SubgridType)
         End Get
         Set(value As SubgridType)

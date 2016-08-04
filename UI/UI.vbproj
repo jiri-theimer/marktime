@@ -316,6 +316,7 @@
     <Content Include="p91_creditnote.aspx" />
     <Content Include="p91_export2pohoda.aspx" />
     <Content Include="p91_framework.aspx" />
+    <Content Include="p91_pay_aboimport.aspx" />
     <Content Include="p91_proforma.aspx" />
     <Content Include="p98_record.aspx" />
     <Content Include="panelmenu.ascx" />
@@ -1649,6 +1650,13 @@
     </Compile>
     <Compile Include="p91_framework.aspx.vb">
       <DependentUpon>p91_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_pay_aboimport.aspx.designer.vb">
+      <DependentUpon>p91_pay_aboimport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_pay_aboimport.aspx.vb">
+      <DependentUpon>p91_pay_aboimport.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p91_proforma.aspx.designer.vb">
