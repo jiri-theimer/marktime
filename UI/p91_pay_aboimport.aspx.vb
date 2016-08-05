@@ -14,9 +14,13 @@
         Public Property SSymbol As String
         Public Property Valuta As String
         Public Property DoplnujiciUdaj As String
+        Public Property KodBanky As String
       
-
+        Public Property Vysledek As String
+        Public Property IsStrike As Boolean
     End Class
+
+
 
     Private Sub p91_pay_aboimport_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -56,13 +60,11 @@
 
                 Try
                     validFile.SaveAs(strTemp, True)
-                    Dim s As String = cF.GetFileContents(strTemp)
-                    Dim x As Integer = ParseFileContent(s)
-                    If x > 0 Then
-                        Master.Notify(String.Format("Počet nalezených úhrad po zpracování ABO souboru: {0}.", x), NotifyLevel.InfoMessage)
-                    Else
-                        Master.Notify("V ABO souboru nebyla nalezena ani jedna úhrada.", NotifyLevel.InfoMessage)
-                    End If
+                    Dim s As String = cF.GetFileContents(strTemp), intCountNotHandled As Integer = 0
+                    Dim lis As List(Of AboRecord) = ParseFileContent(s)
+                    Master.Notify("Zpracování ABO souboru dokončeno.", NotifyLevel.InfoMessage)
+                    rp1.DataSource = lis
+                    rp1.DataBind()
                 Catch ex As Exception
                     Master.Notify(ex.Message, NotifyLevel.ErrorMessage)
                     Return
@@ -71,8 +73,9 @@
         End If
     End Sub
 
-    Private Function ParseFileContent(s As String) As Integer
-        Dim a() As String = Split(s, vbCrLf), intHandled As Integer = 0
+    Private Function ParseFileContent(s As String) As List(Of AboRecord)
+        Dim a() As String = Split(s, vbCrLf), intHandled As Integer = 0, lisRP As New List(Of AboRecord)
+
         For i As Integer = 1 To UBound(a) - 1
             Dim c As New AboRecord, intStart As Integer = 3
             c.TypZaznamu = Left(a(i), 3)
@@ -89,6 +92,10 @@
             c.VSymbol = RemoveLeadingZeros(Mid(a(i), intStart + 1, 10))
             intStart += 10
             c.KSymbol = Mid(a(i), intStart + 1, 10)
+            If Len(c.KSymbol) > 8 Then
+                c.KodBanky = Left(Right(c.KSymbol, 8), 4)
+            End If
+
             intStart += 10
             c.SSymbol = Mid(a(i), intStart + 1, 10)
             intStart += 10
@@ -96,28 +103,42 @@
             intStart += 6
             c.DoplnujiciUdaj = Mid(a(i), intStart + 1, 20)
 
-
-            If c.VSymbol <> "" And c.Castka <> "" And c.CisloDokladu <> "" Then
-                If Master.Factory.p91InvoiceBL.LoadP94ByCode(c.CisloDokladu) Is Nothing Then
+            If c.VSymbol <> "" And c.Castka <> "" Then
+                If c.CisloProtiUctu <> "" Then
                     Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadByCode(c.VSymbol)
                     If Not cRec Is Nothing Then
                         If cRec.p91Amount_Debt > 1 Then
-                            Dim cP94 As New BO.p94Invoice_Payment
-                            With cP94
-                                .p94Code = c.CisloDokladu
-                                .p91ID = cRec.PID
-                                .p94Amount = CDbl(c.Castka) / 100
-                                .p94Date = Today
-                            End With
-                            If Master.Factory.p91InvoiceBL.SaveP94(cP94) Then
-                                intHandled += 1
+                            If Master.Factory.p91InvoiceBL.LoadP94ByCode(c.VSymbol & "-" & c.CisloDokladu) Is Nothing Then
+                                Dim cP94 As New BO.p94Invoice_Payment
+                                With cP94
+                                    .p94Code = c.VSymbol & "-" & c.CisloDokladu
+                                    .p91ID = cRec.PID
+                                    .p94Amount = CDbl(c.Castka) / 100
+                                    .p94Date = Today
+                                End With
+                                If Master.Factory.p91InvoiceBL.SaveP94(cP94) Then
+                                    intHandled += 1
+                                    c.Vysledek = String.Format("Nově spárovaná úhrada k faktuře {0}.", c.VSymbol)
+                                    c.IsStrike = True
+                                End If
+                            Else
+                                c.Vysledek = String.Format("Úhrada byla již dříve spárovaná.")
                             End If
+                        Else
+                            c.Vysledek = String.Format("Faktura s ID {0} byla již dříve uhrazena.", c.VSymbol)
                         End If
+                    Else
+                        c.Vysledek = String.Format("Pro variabilní symbol {0} nebyla nalezena vystavená faktura.", c.VSymbol)
                     End If
+                Else
+                    c.Vysledek = String.Format("Bez pokusu o spárování.")
                 End If
+                
+                lisRP.Add(c)
             End If
+
         Next
-        Return intHandled
+        Return lisRP
     End Function
 
     Private Function RemoveLeadingZeros(str As String) As String
@@ -133,4 +154,20 @@
         Next
         Return s
     End Function
+
+    Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
+        Dim c As AboRecord = CType(e.Item.DataItem, AboRecord)
+        CType(e.Item.FindControl("Castka"), Label).Text = BO.BAS.FN(CDbl(c.Castka) / 100)
+        If c.CisloProtiUctu <> "" Then
+            CType(e.Item.FindControl("CisloProtiUctu"), Label).Text = c.CisloProtiUctu & "/" & c.KodBanky
+        End If
+
+        CType(e.Item.FindControl("VSymbol"), Label).Text = c.VSymbol
+        CType(e.Item.FindControl("DoplnujiciUdaj"), Label).Text = c.DoplnujiciUdaj
+        CType(e.Item.FindControl("Vysledek"), Label).Text = c.Vysledek
+        If c.IsStrike Then
+            CType(e.Item.FindControl("img1"), Image).ImageUrl = "Images/ok.png"
+        End If
+
+    End Sub
 End Class

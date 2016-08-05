@@ -21,6 +21,32 @@
         </div>
     </div>
 
+    <table cellpadding="5" cellspacing="3">
+    <asp:Repeater ID="rp1" runat="server">
+        <ItemTemplate>
+            <tr class="trHover">
+                <td>
+                    <asp:Image ID="img1" runat="server" />
+                </td>
+                <td>
+                    <asp:Label ID="CisloProtiUctu" runat="server"></asp:Label>
+                </td>
+                <td align="right">
+                    <asp:Label ID="Castka" runat="server" CssClass="valboldred"></asp:Label>
+                </td>
+                <td>
+                    <asp:Label ID="VSymbol" runat="server" CssClass="valboldblue"></asp:Label>
+                </td>
+                <td>
+                    <asp:Label ID="DoplnujiciUdaj" runat="server" Font-Italic="true"></asp:Label>
+                </td>
+                <td>
+                    <asp:Label ID="Vysledek" runat="server" Font-Size="Smaller"></asp:Label>
+                </td>
+            </tr>
+        </ItemTemplate>
+    </asp:Repeater>
+    </table>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

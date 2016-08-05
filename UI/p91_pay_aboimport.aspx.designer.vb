@@ -23,6 +23,15 @@ Partial Public Class p91_pay_aboimport
     Protected WithEvents upload1 As Global.Telerik.Web.UI.RadUpload
 
     '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
