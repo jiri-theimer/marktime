@@ -582,7 +582,8 @@ Public Class datagrid
             If .FilterExpression = "" Then
                 Return ""
             Else
-                Return .FilterExpression.Replace("True", "1").Replace("False", "0")
+                If .FilterExpression.IndexOf(",") >= 0 Then .FilterExpression = .FilterExpression.Replace(",", ".")
+                Return .FilterExpression.Replace("True", "1")
             End If
         End With
     End Function

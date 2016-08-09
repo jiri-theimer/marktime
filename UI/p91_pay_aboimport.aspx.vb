@@ -103,39 +103,39 @@
             intStart += 6
             c.DoplnujiciUdaj = Mid(a(i), intStart + 1, 20)
 
-            If c.VSymbol <> "" And c.Castka <> "" Then
-                If c.CisloProtiUctu <> "" Then
-                    Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadByCode(c.VSymbol)
-                    If Not cRec Is Nothing Then
-                        If cRec.p91Amount_Debt > 1 Then
-                            If Master.Factory.p91InvoiceBL.LoadP94ByCode(c.VSymbol & "-" & c.CisloDokladu) Is Nothing Then
-                                Dim cP94 As New BO.p94Invoice_Payment
-                                With cP94
-                                    .p94Code = c.VSymbol & "-" & c.CisloDokladu
-                                    .p91ID = cRec.PID
-                                    .p94Amount = CDbl(c.Castka) / 100
-                                    .p94Date = Today
-                                End With
-                                If Master.Factory.p91InvoiceBL.SaveP94(cP94) Then
-                                    intHandled += 1
-                                    c.Vysledek = String.Format("Nově spárovaná úhrada k faktuře {0}.", c.VSymbol)
-                                    c.IsStrike = True
-                                End If
-                            Else
-                                c.Vysledek = String.Format("Úhrada byla již dříve spárovaná.")
+
+            If c.CisloProtiUctu <> "" And c.VSymbol <> "" Then
+                Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadByCode(c.VSymbol)
+                If Not cRec Is Nothing Then
+                    If cRec.p91Amount_Debt > 1 Then
+                        If Master.Factory.p91InvoiceBL.LoadP94ByCode(c.VSymbol & "-" & c.CisloDokladu) Is Nothing Then
+                            Dim cP94 As New BO.p94Invoice_Payment
+                            With cP94
+                                .p94Code = c.VSymbol & "-" & c.CisloDokladu
+                                .p91ID = cRec.PID
+                                .p94Amount = CDbl(c.Castka) / 100
+                                .p94Date = Today
+                            End With
+                            If Master.Factory.p91InvoiceBL.SaveP94(cP94) Then
+                                intHandled += 1
+                                c.Vysledek = String.Format("Nově spárovaná úhrada k faktuře {0}.", c.VSymbol)
+                                c.IsStrike = True
                             End If
                         Else
-                            c.Vysledek = String.Format("Faktura s ID {0} byla již dříve uhrazena.", c.VSymbol)
+                            c.Vysledek = String.Format("Úhrada byla již dříve spárovaná.")
                         End If
                     Else
-                        c.Vysledek = String.Format("Pro variabilní symbol {0} nebyla nalezena vystavená faktura.", c.VSymbol)
+                        c.Vysledek = String.Format("Faktura s ID {0} byla již dříve uhrazena.", c.VSymbol)
                     End If
                 Else
-                    c.Vysledek = String.Format("Bez pokusu o spárování.")
+                    c.Vysledek = String.Format("Pro variabilní symbol {0} nebyla nalezena vystavená faktura.", c.VSymbol)
                 End If
-                
-                lisRP.Add(c)
+            Else
+                c.Vysledek = String.Format("Bez pokusu o spárování.")
             End If
+
+            lisRP.Add(c)
+
 
         Next
         Return lisRP

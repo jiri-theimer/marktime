@@ -472,6 +472,7 @@
 
     Private Function ParseFilterExpression(strFilter As String) As String
         strFilter = strFilter.Replace("ContactPerson", "cp.j02LastName+cp.j02FirstName").Replace("Person", "j02.j02LastName+j02.j02FirstName")
+
         Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
     End Function
 

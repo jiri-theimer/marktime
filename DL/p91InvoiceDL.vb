@@ -353,6 +353,7 @@
         Return bas.NormalizeOrderByClause(strSort)
     End Function
     Private Function ParseFilterExpression(strFilter As String) As String
+        'If strFilter.IndexOf(",") >= 0 Then strFilter = strFilter.Replace(",", ".")
         Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
     End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryP91) As Integer
