@@ -61,6 +61,7 @@ Public Class DbParameters
         Next
         Return s
     End Function
+
     Public Function Convert2PluginDbParameters() As List(Of BO.PluginDbParameter)
         Dim prs As New List(Of BO.PluginDbParameter)
         For Each par As DbParameter In _lis

@@ -323,14 +323,32 @@
             End If
         End With
 
-        'With myQuery
-        '    If .MG_SortString = "" Then
-        '        s += " ORDER BY a.p91ID DESC"
-        '    Else
-        '        s += " ORDER BY " & .MG_SortString
-        '    End If
-        'End With
+     
         Return _cDB.GetList(Of BO.p91Invoice)(s, pars)
+    End Function
+    Public Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
+
+        Dim s As String = GetSQLPart1(0), pars As New DbParameters
+        s += " " & GetSQLPart2()
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            Dim strSort As String = .MG_SortString
+            If strSort = "" Then strSort = "a.p91ID DESC"
+
+            If .MG_PageSize > 0 Then
+                'použít stránkování do gridu
+                s = GetSQL_OFFSET(strW, ParseSortExpression(strSort), .MG_PageSize, .MG_CurrentPageIndex, pars)
+            Else
+                'normální select
+                If strW <> "" Then s += " WHERE " & strW
+                If strSort <> "" Then
+                    s += " ORDER BY " & ParseSortExpression(strSort)
+                End If
+            End If
+        End With
+
+
+        Return _cDB.GetDataReader(s, , pars.Convert2PluginDbParameters)
     End Function
 
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String

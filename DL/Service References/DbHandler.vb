@@ -209,7 +209,7 @@ Public Class DbHandler
             Return ds
         End Using
     End Function
-    Public Function GetDataReader(ByVal strSQL As String, Optional ByVal intExplicitTimeout As Integer = -1) As SqlDataReader
+    Public Function GetDataReader(ByVal strSQL As String, Optional ByVal intExplicitTimeout As Integer = -1, Optional pars As List(Of BO.PluginDbParameter) = Nothing) As SqlDataReader
         'fce vrací sqldatareader
         _Error = ""
         If strSQL = "" Then
@@ -221,6 +221,11 @@ Public Class DbHandler
         con.Open()
         Dim comm As New SqlCommand(strSQL, con)
         If intExplicitTimeout > -1 Then comm.CommandTimeout = intExplicitTimeout
+        If Not pars Is Nothing Then
+            For Each c In pars
+                comm.Parameters.AddWithValue(c.Name, c.Value)
+            Next
+        End If
 
         Try
             Return comm.ExecuteReader(Data.CommandBehavior.CloseConnection)

@@ -36,7 +36,7 @@ Public Class p47_project
         Public Property Col8P85ID As Integer?
         Public Property Col9Fa As Double?
         Public Property Col9NeFa As Double?
-        Public Property ColP9P85ID As Integer?
+        Public Property Col9P85ID As Integer?
         Public Property Col10Fa As Double?
         Public Property Col10NeFa As Double?
         Public Property Col10P85ID As Integer?
@@ -328,9 +328,16 @@ Public Class p47_project
             For x As Integer = Me.m1.SelectedIndex To Me.m2.SelectedIndex
                 Dim i As Integer = x - Me.m1.SelectedIndex
                 If c.p85FreeDate01.Month = dats(i).Month And c.p85FreeDate01.Year = dats(i).Year Then
-                    BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "Fa", c.p85FreeFloat01)
-                    BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "NeFa", c.p85FreeFloat02)
-                    BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "P85ID", c.PID)
+                    Try
+                        BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "Fa", c.p85FreeFloat01)
+                        BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "NeFa", c.p85FreeFloat02)
+                        BO.BAS.SetPropertyValue(row, "Col" & (i + 1).ToString & "P85ID", c.PID)
+
+                    Catch ex As Exception
+                        Master.Notify("i=" & i.ToString & "<hr>" & ex.Message)
+                        Exit For
+                    End Try
+                    
                 End If
             Next
             intLastP46ID = c.p85OtherKey1

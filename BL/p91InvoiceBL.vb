@@ -6,6 +6,7 @@
     Function LoadMyLastCreated() As BO.p91Invoice
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice)
+    Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
     Function Update(cRec As BO.p91Invoice, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
     Function ChangeVat(intP91ID As Integer, x15id As BO.x15IdEnum, dblNewVatRate As Double) As Boolean
     Function ChangeCurrency(intP91ID As Integer, intJ27ID As Integer) As Boolean
@@ -107,6 +108,9 @@ Class p91InvoiceBL
     End Function
     Public Function GetList(mq As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice) Implements Ip91InvoiceBL.GetList
         Return _cDL.GetList(mq)
+    End Function
+    Public Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader Implements Ip91InvoiceBL.GetListAsDR
+        Return _cDL.GetListAsDR(myQuery)
     End Function
     Public Function ChangeVat(intP91ID As Integer, x15id As BO.x15IdEnum, dblNewVatRate As Double) As Boolean Implements Ip91InvoiceBL.ChangeVat
         If intP91ID = 0 Then _Error = "Na vstupu chybí ID faktury." : Return False

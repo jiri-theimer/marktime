@@ -408,6 +408,15 @@ Public Class entity_framework
                 InhaleMyQuery_p91(mq)
 
                 Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq)
+
+                'Dim mq2 As New BO.myQueryP41
+                'Dim lis2 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq2)
+
+                'Dim qry = From p In lis Join q In lis2 On p.p41ID_First Equals q.PID Select p, q.p41Code
+
+
+
+
                 If Not lis Is Nothing Then
                     grid1.DataSource = lis
                 Else
