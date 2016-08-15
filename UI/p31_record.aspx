@@ -300,6 +300,8 @@
             var p34id = "<%=Me.p34ID.SelectedValue%>";
             dialog_master("p49_bind.aspx?p34id="+p34id+"&p41id="+p41id, true);
         }
+
+       
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -419,9 +421,12 @@
             <tr>
                 <td>
                     <asp:Label ID="lblp31Amount_WithVat_Orig" runat="server" Text="Částka vč. DPH:" CssClass="lbl" meta:resourcekey="lblp31Amount_WithVat_Orig"></asp:Label>
+                    
+                   
                 </td>
                 <td>
-                    <telerik:RadNumericTextBox ID="p31Amount_WithVat_Orig" runat="server" Width="100px" NumberFormat-ZeroPattern="n"></telerik:RadNumericTextBox>
+                    <telerik:RadNumericTextBox ID="p31Amount_WithVat_Orig" runat="server" Width="100px" NumberFormat-ZeroPattern="n" ></telerik:RadNumericTextBox>
+                    
                 </td>
                 <td>
                     <asp:Label ID="lblp31Amount_Vat_Orig" runat="server" Text="Částka DPH:" CssClass="lbl" meta:resourcekey="lblp31Amount_Vat_Orig"></asp:Label>
@@ -429,7 +434,9 @@
                 <td>
                     <telerik:RadNumericTextBox ID="p31Amount_Vat_Orig" runat="server" Width="100px" NumberFormat-ZeroPattern="n"></telerik:RadNumericTextBox>
                 </td>
-                <td></td>
+                <td>
+                    <asp:ImageButton ID="cmdRecalcVat1" runat="server" ImageUrl="Images/recalc.png" style="display:block;" ToolTip="Dopočítat z celkové částky částku bez DPH a částku DPH"/>
+                </td>
             </tr>
             <tr>
                 <td>

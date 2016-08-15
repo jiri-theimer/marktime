@@ -358,6 +358,7 @@ Class j74SavedGridColTemplateBL
 
             If Not bolHideRatesColumns Then .Add(AGC("Vyfakt.bez DPH x Kurz", "p31Amount_WithoutVat_Invoiced_Domestic", BO.cfENUM.Numeric2, , , True))
             .Add(AGC(My.Resources.common.Faktura, "p91Code"))
+            .Add(AGC("Vyfakt.status", "p70Name"))
             .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name"))
             .Add(AGC(My.Resources.common.BillingDavka, "p31ApprovingSet"))
 

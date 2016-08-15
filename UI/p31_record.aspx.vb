@@ -712,7 +712,7 @@
                 Me.p31Amount_WithVat_Orig.Visible = b : Me.lblp31Amount_WithVat_Orig.Visible = b
                 Me.p31Amount_Vat_Orig.Visible = b : Me.lblp31Amount_Vat_Orig.Visible = b
                 Me.p31VatRate_Orig.Visible = b : Me.lblp31VatRate_Orig.Visible = b
-
+                Me.cmdRecalcVat1.Visible = b
 
                 If Me.j27ID_Orig.Rows = 0 Then
                     Me.j27ID_Orig.DataSource = Master.Factory.ftBL.GetList_J27(New BO.myQuery)
@@ -1224,5 +1224,20 @@
 
     Private Sub p72ID_AfterTrimming_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p72ID_AfterTrimming.SelectedIndexChanged
         RefreshTrimming(Nothing)
+    End Sub
+
+    
+    Private Sub cmdRecalcVat1_Click(sender As Object, e As ImageClickEventArgs) Handles cmdRecalcVat1.Click
+        Dim n1 As Double = BO.BAS.IsNullNum(Me.p31Amount_WithVat_Orig.Value)
+        Dim n2 As Double = 1 + BO.BAS.IsNullNum(Me.p31VatRate_Orig.Text) / 100
+        If n2 <> 0 And BO.BAS.IsNullNum(Me.p31VatRate_Orig.Text) <> 0 Then
+            Dim n3 As Double = n1 / n2
+            Me.p31Amount_WithoutVat_Orig.Value = n3
+            Me.p31Amount_Vat_Orig.Value = n1 - n3
+        Else
+            Me.p31Amount_WithoutVat_Orig.Value = n1
+            Me.p31Amount_Vat_Orig.Value = 0
+        End If
+        'Master.Notify(Me.p31Amount_WithoutVat_Orig.Value)
     End Sub
 End Class

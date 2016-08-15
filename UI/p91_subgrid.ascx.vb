@@ -56,34 +56,13 @@ Public Class p91_subgrid
     End Sub
 
     Private Sub SetupGridP91()
-        ''With gridP91
-        ''    .ClearColumns()
-        ''    .radGridOrig.ShowFooter = True
-        ''    .AddSystemColumn(20)
-
-        ''    .PageSize = 20
-        ''    .AddColumn("p91Code", "Číslo", , True)
-        ''    .AddColumn("p92Name", "Typ", , True)
-        ''    If Me.x29ID = BO.x29IdEnum.j02Person Then
-        ''        .AddColumn("p28Name", "Klient", , True)
-        ''    End If
-        ''    If Me.x29ID = BO.x29IdEnum.p28Contact Then
-        ''        .AddColumn("p41Name", "Projekt", , True)
-        ''    End If
-        ''    .AddColumn("p91Date", "Datum", BO.cfENUM.DateOnly)
-        ''    .AddColumn("p91DateSupply", "Plnění", BO.cfENUM.DateOnly)
-        ''    .AddColumn("p91DateMaturity", "Splatnost", BO.cfENUM.DateOnly)
-        ''    .AddColumn("p91Amount_WithoutVat", "Bez DPH", BO.cfENUM.Numeric, True, , , , True)
-        ''    .AddColumn("p91Amount_Debt", "Dluh", BO.cfENUM.Numeric, True, , , , True)
-        ''    .AddColumn("j27Code", "Měna")
-
-        ''End With
+        
 
         Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
         If cJ74 Is Nothing Then
             cJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p91Invoice, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
         End If
-       
+
         Me.hidDefaultSorting.Value = cJ74.j74OrderBy
         basUIMT.SetupGrid(Me.Factory, Me.gridP91, cJ74, CInt(Me.cbxPaging.SelectedValue), False, False, False)
 
@@ -126,8 +105,21 @@ Public Class p91_subgrid
         
         gridP91.DataSource = lis
         If Not bolGroupByCurrency Then
-            gridP91.radGridOrig.ShowFooter = True
-            ViewState("p91_footersum") = "p91Amount_WithoutVat;" & BO.BAS.FN(lis.Sum(Function(p) p.p91Amount_WithoutVat)) & "|p91Amount_Debt;" & BO.BAS.FN(lis.Sum(Function(p) p.p91Amount_Debt))
+            gridP91.radGridOrig.ShowFooter = True : ViewState("p91_footersum") = ""
+            For Each col In gridP91.radGridOrig.MasterTableView.Columns
+                If TypeOf col Is GridBoundColumn Then
+                    If col.Aggregate = GridAggregateFunction.Sum Then
+                        ''ViewState("p91_footersum") += "|" & col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) p.p91Amount_TotalDue))
+                        If ViewState("p91_footersum") <> "" Then
+                            ViewState("p91_footersum") += "|" & col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) BO.BAS.GetPropertyValue(p, col.DataField)))
+                        Else
+                            ViewState("p91_footersum") = col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) BO.BAS.GetPropertyValue(p, col.DataField)))
+                        End If
+
+                    End If
+                   
+                End If
+            Next
         Else
             gridP91.radGridOrig.ShowFooter = False
         End If

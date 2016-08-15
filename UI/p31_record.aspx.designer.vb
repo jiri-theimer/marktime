@@ -311,6 +311,15 @@ Partial Public Class p31_record
     Protected WithEvents p31Amount_Vat_Orig As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''cmdRecalcVat1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRecalcVat1 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''lblp31Calc_Pieces control.
     '''</summary>
     '''<remarks>
