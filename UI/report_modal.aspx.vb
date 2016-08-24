@@ -254,6 +254,17 @@ Public Class report_modal
         If Master.DataPID <> 0 Then
             xmlRepSource.Parameters.Add(New Parameter("pid", Master.DataPID))
         End If
+        
+        If strXmlContent.IndexOf("@langindex") > 0 Then            
+            Select Case Me.CurrentX29ID
+                Case BO.x29IdEnum.p41Project
+                    Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+                    xmlRepSource.Parameters.Add(New Parameter("langindex", IIf(cP41.p87ID <> 0, cP41.p87ID, cP41.p87ID_Client)))
+                Case BO.x29IdEnum.p28Contact
+                    Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
+                    xmlRepSource.Parameters.Add(New Parameter("langindex", cP28.p87ID))
+            End Select
+        End If
 
 
         If Not ViewState("params") Is Nothing Then
