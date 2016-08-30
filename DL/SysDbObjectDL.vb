@@ -2,7 +2,7 @@
     Inherits DLMother
 
     Public Function GetList_SysObjects() As IEnumerable(Of BO.SysDbObject)
-        Dim s As String = "SELECT ID,name,xtype,schema_ver as version,convert(text,null) as content FROM sysobjects WHERE rtrim(xtype) IN ('V','FN','P','TR') AND name not like 'dt_%' and (name not like 'sys%' or name not like 'system_%' or name not like 'zzz%') order by xtype,name"
+        Dim s As String = "SELECT ID,name,xtype,schema_ver as version,convert(text,null) as content FROM sysobjects WHERE rtrim(xtype) IN ('V','FN','P','TR') AND name not like 'dt_%' and name not like 'zzz%' and (name not like 'sys%' or name not like 'system_%') order by xtype,name"
 
         Dim lis As IEnumerable(Of BO.SysDbObject) = _cDB.GetList(Of BO.SysDbObject)(s)
         For Each cRec As BO.SysDbObject In lis
