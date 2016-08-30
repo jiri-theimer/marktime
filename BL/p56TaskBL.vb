@@ -72,6 +72,9 @@ Class p56TaskBL
                     _Error = "Plánované zahájení úkolu nesmí být větší plánované dokončení!" : Return False
                 End If
             End If
+            If .p56IsPlan_Expenses_Ceiling And .p56Plan_Expenses = 0 Then _Error = "Chybí zadání plánu peněžních výdajů." : Return False
+            If .p56IsPlan_Hours_Ceiling And .p56Plan_Hours = 0 Then _Error = "Chybí zadání plánu hodin." : Return False
+
 
         End With
         Dim cP57 As BO.p57TaskType = Me.Factory.p57TaskTypeBL.Load(cRec.p57ID)

@@ -167,6 +167,15 @@ Partial Public Class p56_record
     Protected WithEvents p56Plan_Hours As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''p56IsPlan_Hours_Ceiling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56IsPlan_Hours_Ceiling As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>
@@ -219,6 +228,15 @@ Partial Public Class p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p56Plan_Expenses As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''p56IsPlan_Expenses_Ceiling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56IsPlan_Expenses_Ceiling As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''lblO22ID control.

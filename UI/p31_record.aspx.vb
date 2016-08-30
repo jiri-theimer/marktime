@@ -248,8 +248,13 @@
             Dim cRecLast As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadMyLastCreated(True, intDefP41ID)
             If Not cRecLast Is Nothing Then
                 With cRecLast
-                    Me.MyDefault_p34ID = .p34ID
-                    Me.MyDefault_p32ID = .p32ID
+                    If BO.ASS.GetConfigVal("Implementation") = "dhp" Then
+                        'DHP nechce paměť posledního sešitu + aktivity
+                    Else
+                        Me.MyDefault_p34ID = .p34ID
+                        Me.MyDefault_p32ID = .p32ID
+                    End If
+                    
                     If DateDiff(DateInterval.Hour, .DateInsert.Value, Now) < 1 Then
                         'do hodiny starý záznam bere jako výchozí datum posledního úkonu + uživatele posledního úkonu
                         Me.MyDefault_p31Date = .p31Date
@@ -881,6 +886,7 @@
                         .Amount_WithoutVat_Orig = BO.BAS.IsNullNum(Me.p31Amount_WithoutVat_Orig.Value)
                         .Value_Orig_Entried = .Amount_WithoutVat_Orig.ToString
                         .j27ID_Billing_Orig = BO.BAS.IsNullInt(Me.j27ID_Orig.SelectedValue)
+                        .SetAmounts()
                     Case BO.p33IdENUM.PenizeVcDPHRozpisu
                         .Amount_WithoutVat_Orig = BO.BAS.IsNullNum(Me.p31Amount_WithoutVat_Orig.Value)
                         .Value_Orig_Entried = .Amount_WithoutVat_Orig.ToString
@@ -888,6 +894,8 @@
                         .j27ID_Billing_Orig = BO.BAS.IsNullInt(Me.j27ID_Orig.SelectedValue)
                         .Amount_WithVat_Orig = BO.BAS.IsNullNum(Me.p31Amount_WithVat_Orig.Value)
                         .Amount_Vat_Orig = BO.BAS.IsNullNum(Me.p31Amount_Vat_Orig.Value)
+                        .SetAmounts()
+
                 End Select
                 Select Case Me.CurrentP33ID
                     Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu

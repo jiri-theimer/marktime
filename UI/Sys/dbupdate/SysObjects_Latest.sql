@@ -1102,6 +1102,35 @@ END
 
 GO
 
+----------FN---------------p28_getonerole_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_getonerole_inline') and type = 'FN')
+ drop function p28_getonerole_inline
+GO
+
+
+CREATE FUNCTION [dbo].[p28_getonerole_inline](@p28id int,@x67id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené obsazení jedné klientské role @x67id u klienta @p28id
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@p28id AND x67.x67ID=@x67id
+  
+
+
+RETURN(@s)
+   
+END
+
+GO
+
 ----------FN---------------p28_getroles_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p28_getroles_inline') and type = 'FN')
@@ -1302,6 +1331,63 @@ END
 
 GO
 
+----------FN---------------p41_get_one_role_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_one_role_inline') and type = 'FN')
+ drop function p41_get_one_role_inline
+GO
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[p41_get_one_role_inline](@p41id int,@x67id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené obsazení jedné projektové role @x67id v projektu @p41id
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@p41id AND x67.x67ID=@x67id
+  
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------p41_get_p41code_client_plus_ordinary-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p41_get_p41code_client_plus_ordinary') and type = 'FN')
@@ -1487,6 +1573,53 @@ END
 
 
 
+
+
+
+
+GO
+
+----------FN---------------p84_translate-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p84_translate') and type = 'FN')
+ drop function p84_translate
+GO
+
+
+
+CREATE FUNCTION [dbo].[p84_translate](@default nvarchar(255),@langindex int)
+RETURNS nvarchar(255) AS  
+BEGIN 
+
+
+if ISNULL(@default,'')=''
+ RETURN('?')
+
+if ISNULL(@langindex,0)=0
+ RETURN(@default)
+
+declare @ret nvarchar(255)
+
+if @langindex=1
+ select @ret=p84Lang1 from p84LanguageExpression where p84Default like @default
+
+if @langindex=2
+ select @ret=p84Lang2 from p84LanguageExpression where p84Default like @default
+
+if @langindex=3
+ select @ret=p84Lang3 from p84LanguageExpression where p84Default like @default
+
+if @langindex=4
+ select @ret=p84Lang4 from p84LanguageExpression where p84Default like @default
+
+
+if @ret is null
+ RETURN(@default)
+
+
+RETURN(@ret)
+
+END
 
 
 
@@ -5192,6 +5325,7 @@ declare @j27id_billing_orig int,@j27id_internal int,@p31rate_billing_orig float,
 declare @p31value_orig float,@p31amount_withoutvat_orig float,@p31vatrate_orig float,@p31amount_withvat_orig float
 declare @p31amount_internal float,@p31amount_vat_orig float,@p91id int
 
+
 select @c11id=a.c11ID,@p32id=a.p32ID,@p34id=p32.p34ID,@p71id=a.p71ID,@p70id=a.p70ID
 ,@p33id=p34.p33ID,@j02id_rec=a.j02ID,@p31date=a.p31date,@p41id=a.p41ID
 ,@p31value_orig=a.p31value_orig,@p91id=a.p91ID
@@ -5229,7 +5363,7 @@ if @c11id is null OR @c11id_find is null OR isnull(@c11id_find,0)<>isnull(@c11id
  END
 
 if @p33id=1 or @p33id=3	---1 - èas, 3 - kusovník
- BEGIN        
+ BEGIN
 	exec p31_getrate_tu @p31date,1, @p41id, @j02id_rec, @p32id, @j27id_billing_orig OUTPUT , @p31rate_billing_orig OUTPUT
 
 	exec p31_getrate_tu @p31date,2, @p41id, @j02id_rec, @p32id, @j27id_internal OUTPUT , @p31rate_internal_orig OUTPUT  
@@ -5239,7 +5373,7 @@ if @p33id=1 or @p33id=3	---1 - èas, 3 - kusovník
 	set @p31amount_withoutvat_orig=@p31value_orig*@p31rate_billing_orig
 	set @p31amount_vat_orig=@p31amount_withoutvat_orig*@p31vatrate_orig/100
 	set @p31amount_withvat_orig=@p31amount_withoutvat_orig+@p31amount_vat_orig
-	set @p31amount_internal=@p31value_orig*@p31rate_internal_orig
+	set @p31amount_internal=@p31value_orig*@p31rate_internal_orig	
 	
 	update p31WorkSheet set p31amount_withoutvat_orig=@p31amount_withoutvat_orig,p31amount_vat_orig=@p31amount_vat_orig
 	,p31amount_withvat_orig=@p31amount_withvat_orig,p31VatRate_Orig=@p31vatrate_orig
@@ -5304,6 +5438,22 @@ if @guid is not null
 
    if @o23id_first is not null
     update p31Worksheet SET o23ID_First=@o23id_first WHERE p31ID=@p31id
+ end
+
+if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'IsCalc_FixedExchangeRate' and x35Value='1')
+ begin
+  declare @p31exchangerate_fixed float,@j27id_domestic int
+
+  if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'j27ID_Domestic')
+	select @j27id_domestic=convert(int,x35Value) from x35GlobalParam WHERE x35Key like 'j27ID_Domestic'
+  else
+	set @j27id_domestic=2
+
+  
+  select @p31exchangerate_fixed=dbo.get_exchange_rate(2,@p31date,@j27id_billing_orig,@j27id_domestic)
+
+  update p31WorkSheet set p31ExchangeRate_Fixed=@p31exchangerate_fixed,p31Amount_WithoutVat_FixedCurrency=@p31exchangerate_fixed*p31Amount_WithoutVat_Orig
+  WHERE p31ID=@p31id
  end
 
 GO
@@ -7096,6 +7246,7 @@ GO
 
 
 
+
 CREATE procedure [dbo].[p31_test_beforesave]
 @p31id int
 ,@j03id_sys int
@@ -7158,12 +7309,12 @@ select @j27id_domestic=convert(int,x35Value)
 FROM x35GlobalParam WHERE x35Key LIKE 'j27ID_Domestic' AND ISNUMERIC(x35Value)=1
 
 
-declare @islocked bit,@p34id int,@isplan bit,@person nvarchar(300),@j07id_rec int,@p32IsTextRequired bit,@p32name nvarchar(200)
+declare @islocked bit,@p34id int,@isplan bit,@person nvarchar(300),@j07id_rec int,@p32IsTextRequired bit,@p32name nvarchar(200),@p34IncomeStatementFlag int
 declare @p32Value_Maximum float,@p32Value_Minimum float
 
 select @person=j02LastName+' '+isnull(j02FirstName,''),@j07id_rec=isnull(j07id,-1) from j02Person where j02ID=@j02id_rec
 
-select @p34id=a.p34id,@p33id=b.p33id,@isplan=b.p34iscapacityplan,@p32IsTextRequired=a.p32IsTextRequired,@p32name=a.p32Name
+select @p34id=a.p34id,@p33id=b.p33id,@isplan=b.p34iscapacityplan,@p32IsTextRequired=a.p32IsTextRequired,@p32name=a.p32Name,@p34IncomeStatementFlag=b.p34IncomeStatementFlag
 ,@p32Value_Maximum=isnull(a.p32Value_Maximum,0),@p32Value_Minimum=isnull(a.p32Value_Minimum,0)
 from p32Activity a inner join p34ActivityGroup b on a.p34ID=b.p34id
 where a.p32ID=@p32id
@@ -7313,6 +7464,32 @@ if @test_todo=1
 if @err<>''
  return 
 
+if @p56id is not null
+ begin	---test pøekroèení plánu úkolu
+  declare @p56IsPlan_Hours_Ceiling bit,@p56IsPlan_Expenses_Ceiling bit,@p56Plan_Hours float,@p56Plan_Expenses float,@real_hours float,@real_expenses float
+
+  select @p56IsPlan_Hours_Ceiling=p56IsPlan_Hours_Ceiling,@p56IsPlan_Expenses_Ceiling=p56IsPlan_Expenses_Ceiling,@p56Plan_Hours=p56Plan_Hours,@p56Plan_Expenses=p56Plan_Expenses
+  FROM p56Task WHERE p56ID=@p56id
+
+  if @p56IsPlan_Hours_Ceiling=1 and @p33id=1
+   begin
+     select @real_hours=sum(p31Hours_Orig) FROM p31Worksheet WHERE p56ID=@p56id and p31ID<>@p31id
+     
+	 if isnull(@real_hours,0)+@value_orig>@p56Plan_Hours
+	  set @err='Vykázané hodiny by pøekroèili plán hodin úkolu ['+convert(varchar(10),@p56Plan_Hours)+'h.].'
+   end
+   if @p56IsPlan_Expenses_Ceiling=1 and @p33id IN (2,5) and @p34IncomeStatementFlag=1
+   begin
+     select @real_expenses=sum(p31Amount_WithoutVat_Orig) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID WHERE a.p56ID=@p56id AND c.p34IncomeStatementFlag=1 AND c.p33ID IN (2,5) AND a.p31ID<>@p31id
+     
+	 if isnull(@real_expenses,0)+@value_orig>@p56Plan_Expenses
+	  set @err='Vykázaný výdaj by pøekroèil plán (limit) výdajù úkolu ['+convert(varchar(10),@p56Plan_Expenses)+',-].'
+   end
+   
+ end
+
+if @err<>''
+ return 
 
 if @p33id<>1
  return	---nejedná se o èasový úkon, není tøeba testovat limit rozpoètu projektu
@@ -9739,7 +9916,8 @@ BEGIN
   set @guid=convert(varchar(10),@ret_p91id)+'-'+convert(varchar(10),@p31id)+'-'+convert(varchar(50),getdate())
   insert into p85TempBox(p85GUID,p85DataPID,p85Prefix) values(@guid,@p31id,'p31')
 
-  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
+  ---exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
+  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
 
   print 'p31_save_approving, p31id: '+convert(varchar(10),@p31id)+', error: '+@err_ret
   

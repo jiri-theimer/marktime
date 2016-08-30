@@ -109,6 +109,8 @@
             Me.p56Plan_Expenses.Value = .p56Plan_Expenses
             Me.p56CompletePercent.Value = .p56CompletePercent
             Me.p56ExternalPID.Text = .p56ExternalPID
+            Me.p56IsPlan_Hours_Ceiling.Checked = .p56IsPlan_Hours_Ceiling
+            Me.p56IsPlan_Expenses_Ceiling.Checked = .p56IsPlan_Expenses_Ceiling
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
         End With
@@ -199,6 +201,8 @@
                 .p56Description = Me.p56Description.Text
                 .p56Ordinary = BO.BAS.IsNullInt(Me.p56Ordinary.Value)
                 .p56Plan_Hours = BO.BAS.IsNullNum(Me.p56Plan_Hours.Value)
+                .p56IsPlan_Hours_Ceiling = Me.p56IsPlan_Hours_Ceiling.Checked
+                .p56IsPlan_Expenses_Ceiling = Me.p56IsPlan_Expenses_Ceiling.Checked
                 .p56Plan_Expenses = BO.BAS.IsNullNum(Me.p56Plan_Expenses.Value)
                 .p56CompletePercent = BO.BAS.IsNullInt(Me.p56CompletePercent.Value)
                 .p56ExternalPID = Me.p56ExternalPID.Text

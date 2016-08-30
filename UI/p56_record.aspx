@@ -78,9 +78,15 @@
                         <asp:Label ID="lblp56Plan_Hours" runat="server" Text="Plán pracnosti v hodinách:"></asp:Label>
                         <telerik:RadNumericTextBox ID="p56Plan_Hours" runat="server" NumberFormat-DecimalDigits="2" Width="70px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
 
+                        <asp:CheckBox ID="p56IsPlan_Hours_Ceiling" runat="server" Text="Zákaz překročit plán" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="Label1" Text="Hotovo (%):" runat="server" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
                         <telerik:RadNumericTextBox ID="p56CompletePercent" runat="server" NumberFormat-DecimalDigits="0" MaxValue="100" MinValue="0" IncrementSettings-Step="10" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
-
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +102,7 @@
 
                         <asp:Label ID="lblp56Plan_Expenses" runat="server" Text="Plán (limit) peněžních výdajů:"></asp:Label>
                         <telerik:RadNumericTextBox ID="p56Plan_Expenses" runat="server" NumberFormat-DecimalDigits="2" Width="90px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
-
+                        <asp:CheckBox ID="p56IsPlan_Expenses_Ceiling" runat="server" Text="Zákaz překročit plán" />
                     </td>
                 </tr>
            
