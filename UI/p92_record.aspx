@@ -115,9 +115,20 @@
 
             </td>
         </tr>
+       
     </table>
-
-
+    <div>
+        <asp:Label ID="lblp92InvoiceDefaultText1" runat="server" Text="Výchozí text faktury:" CssClass="lbl"></asp:Label>
+    </div>
+    <div class="div6">
+        <asp:TextBox ID="p92InvoiceDefaultText1" runat="server" TextMode="MultiLine" Style="width: 650px; height: 50px;"></asp:TextBox>
+    </div>
+    <div>
+        <asp:Label ID="lblp92InvoiceDefaultText2" runat="server" Text="Výchozí technický text faktury:" CssClass="lbl"></asp:Label>
+    </div>
+    <div class="div6">
+        <asp:TextBox ID="p92InvoiceDefaultText2" runat="server" TextMode="MultiLine" Style="width: 650px; height: 30px;"></asp:TextBox>
+    </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

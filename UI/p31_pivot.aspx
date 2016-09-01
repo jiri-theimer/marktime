@@ -138,12 +138,14 @@
                             <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
                             <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
                             <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
-                            <asp:ListItem Text="Fakt.aktivita" Value="9801"></asp:ListItem>
+                            <asp:ListItem Text="Fakturovatelné" Value="9801"></asp:ListItem>
                             <asp:ListItem Text="Schváleno" Value="7101"></asp:ListItem>
                             <asp:ListItem Text="Fakt.status" Value="7201"></asp:ListItem>
                             <asp:ListItem Text="Status ve faktuře" Value="7001"></asp:ListItem>
+                            <asp:ListItem Text="ID faktury" Value="9101"></asp:ListItem>
                             <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
-                            <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>                            
+                            <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>      
+                                                  
                         </asp:DropDownList>
                         <span>-></span>
                         <asp:DropDownList ID="row2" runat="server" AutoPostBack="true">
@@ -157,12 +159,14 @@
                             <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
                             <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
                             <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
-                            <asp:ListItem Text="Fakt.aktivita" Value="9801"></asp:ListItem>
+                            <asp:ListItem Text="Fakturovatelné" Value="9801"></asp:ListItem>
                             <asp:ListItem Text="Schváleno" Value="7101"></asp:ListItem>
                             <asp:ListItem Text="Fakt.status" Value="7201"></asp:ListItem>
                             <asp:ListItem Text="Status ve faktuře" Value="7001"></asp:ListItem>
+                            <asp:ListItem Text="ID faktury" Value="9101"></asp:ListItem>
                             <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
-                            <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>                            
+                            <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>
+                                                        
                         </asp:DropDownList>
                         <span>-></span>
                         <asp:DropDownList ID="row3" runat="server" AutoPostBack="true">
@@ -176,12 +180,14 @@
                             <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
                             <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
                             <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
-                            <asp:ListItem Text="Fakt.aktivita" Value="9801"></asp:ListItem>
+                            <asp:ListItem Text="Fakturovatelné" Value="9801"></asp:ListItem>
                             <asp:ListItem Text="Schváleno" Value="7101"></asp:ListItem>
                             <asp:ListItem Text="Fakt.status" Value="7201"></asp:ListItem>
                             <asp:ListItem Text="Status ve faktuře" Value="7001"></asp:ListItem>
+                            <asp:ListItem Text="ID faktury" Value="9101"></asp:ListItem>
                             <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
-                            <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>                            
+                            <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem> 
+                                                       
                         </asp:DropDownList>
                     </fieldset>
                 </td>

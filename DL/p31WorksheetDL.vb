@@ -627,6 +627,7 @@
         s.Append(" LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27orig ON a.j27ID_Billing_Orig=j27orig.j27ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27invoice ON a.j27ID_Billing_Invoiced=j27invoice.j27ID")
+        s.Append(" LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID")
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(mq, pars)
         If strW <> "" Then

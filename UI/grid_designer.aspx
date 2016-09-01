@@ -78,7 +78,7 @@
                         </div>
                     </EmptyMessageTemplate>
                 </telerik:RadListBox>
-                <div style="margin-top:20px;">
+                <div style="margin-top:20px;display:none;">
                     <asp:label ID="lblDrillDown" runat="server" Text="Drill-down v přehledu:"></asp:label>
                     <asp:DropDownList ID="j74DrillDownField1" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnField"></asp:DropDownList>
                 </div>

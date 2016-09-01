@@ -248,6 +248,42 @@ Partial Public Class p92_record
     Protected WithEvents b01ID As Global.UI.datacombo
 
     '''<summary>
+    '''lblp92InvoiceDefaultText1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp92InvoiceDefaultText1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p92InvoiceDefaultText1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p92InvoiceDefaultText1 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblp92InvoiceDefaultText2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp92InvoiceDefaultText2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p92InvoiceDefaultText2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p92InvoiceDefaultText2 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

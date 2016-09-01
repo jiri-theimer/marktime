@@ -23,7 +23,7 @@
         function p31_entry() {
             var p41id = <%=me.p41ID.ClientID%>_get_value();
             var b = false;
-            if (screen.availWidth < 1300)
+            if (screen.availWidth < 1300 || screen.availHeight<800)
                 b = true;
 
             sw_local("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id="+p41id, "Images/worksheet.png",b);

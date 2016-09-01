@@ -19,6 +19,9 @@ Public Class p92InvoiceType
     Public Property x38ID As Integer
     Public Property x38ID_Draft As Integer
 
+    Public Property p92InvoiceDefaultText1 As String
+    Public Property p92InvoiceDefaultText2 As String
+
     Private Property _j27Code As String
     Public ReadOnly Property j27Code As String
         Get

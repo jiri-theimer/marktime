@@ -68954,45 +68954,45 @@
     <TableName>p92InvoiceType</TableName>
   </Table>
   <Table>
-    <name>p92DateInsert</name>
+    <name>p92InvoiceDefaultText1</name>
     <id>907150277</id>
-    <xtype>61</xtype>
-    <typestat>0</typestat>
-    <xusertype>61</xusertype>
-    <length>8</length>
-    <xprec>23</xprec>
-    <xscale>3</xscale>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>1000</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
     <colid>16</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
     <colstat>0</colstat>
-    <cdefault>939150391</cdefault>
+    <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
     <colorder>16</colorder>
     <offset>-15</offset>
-    <collationid>0</collationid>
+    <collationid>53252</collationid>
     <language>0</language>
-    <status>8</status>
-    <type>111</type>
-    <usertype>12</usertype>
-    <prec>23</prec>
-    <scale>3</scale>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>1000</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>datetime</type_name>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
     <TableName>p92InvoiceType</TableName>
   </Table>
   <Table>
-    <name>p92UserInsert</name>
+    <name>p92InvoiceDefaultText2</name>
     <id>907150277</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
     <xusertype>231</xusertype>
-    <length>50</length>
+    <length>1000</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>17</colid>
@@ -69010,7 +69010,7 @@
     <status>24</status>
     <type>39</type>
     <usertype>0</usertype>
-    <prec>50</prec>
+    <prec>1000</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
@@ -69020,7 +69020,7 @@
     <TableName>p92InvoiceType</TableName>
   </Table>
   <Table>
-    <name>p92DateUpdate</name>
+    <name>p92DateInsert</name>
     <id>907150277</id>
     <xtype>61</xtype>
     <typestat>0</typestat>
@@ -69033,7 +69033,7 @@
     <bitpos>0</bitpos>
     <reserved>0</reserved>
     <colstat>0</colstat>
-    <cdefault>0</cdefault>
+    <cdefault>939150391</cdefault>
     <domain>0</domain>
     <number>0</number>
     <colorder>18</colorder>
@@ -69053,7 +69053,7 @@
     <TableName>p92InvoiceType</TableName>
   </Table>
   <Table>
-    <name>p92UserUpdate</name>
+    <name>p92UserInsert</name>
     <id>907150277</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
@@ -69086,7 +69086,7 @@
     <TableName>p92InvoiceType</TableName>
   </Table>
   <Table>
-    <name>p92ValidFrom</name>
+    <name>p92DateUpdate</name>
     <id>907150277</id>
     <xtype>61</xtype>
     <typestat>0</typestat>
@@ -69099,11 +69099,77 @@
     <bitpos>0</bitpos>
     <reserved>0</reserved>
     <colstat>0</colstat>
-    <cdefault>955150448</cdefault>
+    <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
     <colorder>20</colorder>
     <offset>-19</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>111</type>
+    <usertype>12</usertype>
+    <prec>23</prec>
+    <scale>3</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>datetime</type_name>
+    <TableName>p92InvoiceType</TableName>
+  </Table>
+  <Table>
+    <name>p92UserUpdate</name>
+    <id>907150277</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>21</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>21</colorder>
+    <offset>-20</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>p92InvoiceType</TableName>
+  </Table>
+  <Table>
+    <name>p92ValidFrom</name>
+    <id>907150277</id>
+    <xtype>61</xtype>
+    <typestat>0</typestat>
+    <xusertype>61</xusertype>
+    <length>8</length>
+    <xprec>23</xprec>
+    <xscale>3</xscale>
+    <colid>22</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>955150448</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>22</colorder>
+    <offset>-21</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -69127,7 +69193,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>21</colid>
+    <colid>23</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -69135,8 +69201,8 @@
     <cdefault>971150505</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>21</colorder>
-    <offset>-20</offset>
+    <colorder>23</colorder>
+    <offset>-22</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>

@@ -9709,6 +9709,9 @@ select @p91text2=p41InvoiceDefaultText2 from p41Project WHERE p41ID=@p41id_first
 if @p91text2 is null
  select @p91text2=p28InvoiceDefaultText2 from p28Contact where p28ID=@p28id
 
+if @p91text2 is null
+ select @p91text2=p92InvoiceDefaultText2 from p92InvoiceType where p92ID=@p92id
+
 if @p91text2 is not null
  update p91Invoice set p91Text2=@p91text2 where p91ID=@ret_p91id
 

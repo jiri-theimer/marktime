@@ -34,6 +34,8 @@
                 pars.Add("p92InvoiceType", .p92InvoiceType, DbType.Int32)
                 pars.Add("p92Code", .p92Code, DbType.String)
                 pars.Add("p92Name", .p92Name, DbType.String, , , True, "Název typu")
+                pars.Add("p92InvoiceDefaultText1", .p92InvoiceDefaultText1, DbType.String, , , True, "Výchozí fakturační text")
+                pars.Add("p92InvoiceDefaultText2", .p92InvoiceDefaultText2, DbType.String, , , True, "Výchozí technický text faktury")
 
                 pars.Add("p92validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p92validuntil", .ValidUntil, DbType.DateTime)

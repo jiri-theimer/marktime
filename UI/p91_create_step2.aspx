@@ -289,6 +289,7 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
+    <asp:HiddenField ID="hidIsDefTextFixed" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">

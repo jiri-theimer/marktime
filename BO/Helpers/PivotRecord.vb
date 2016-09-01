@@ -16,6 +16,7 @@
     j27code_orig = 2701
     j27code_invoice = 2702
     p42Name = 4201
+    p91Code = 9101
 End Enum
 Public Enum PivotSumFieldType
     p31Hours_Orig = 1
@@ -118,6 +119,10 @@ Public Class PivotRowColumnField
                 _SelectField = "min(j27invoice.j27Code)"
                 _GroupByField = "a.j27ID_Billing_Invoiced"
                 s = "Měna faktury"
+            Case PivotRowColumnFieldType.p91Code
+                _SelectField = "min(p91Code)"
+                _GroupByField = "a.p91ID"
+                s = "ID faktury"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

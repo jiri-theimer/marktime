@@ -121,8 +121,16 @@ Public Class p91_create_step2
         If Not Me.p91Date.IsEmpty Then
             Me.p91DateMaturity.SelectedDate = Me.p91Date.SelectedDate.Value.AddDays(intMaturityDays)
         End If
+        If Me.p91text1.Text <> "" Then Me.hidIsDefTextFixed.Value = "1"
         If intP92ID > 0 Then
             basUI.SelectDropdownlistValue(Me.p92ID, intP92ID.ToString)
+        End If
+        If intP92ID = 0 Then intP92ID = BO.BAS.IsNullInt(Me.p92ID.SelectedValue)
+        If intP92ID > 0 Then
+            If Me.hidIsDefTextFixed.Value <> "1" Then
+                Dim cP92 As BO.p92InvoiceType = Master.Factory.p92InvoiceTypeBL.Load(intP92ID)
+                Me.p91text1.Text = cP92.p92InvoiceDefaultText1
+            End If
         End If
         If Me.chkRememberDates.Checked Then
             Dim cLastRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadMyLastCreated()
@@ -383,5 +391,13 @@ Public Class p91_create_step2
 
     Private Sub chkSearchByClientOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkSearchByClientOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p91_create-chkSearchByClientOnly", BO.BAS.GB(Me.chkSearchByClientOnly.Checked))
+    End Sub
+
+    Private Sub p92ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p92ID.SelectedIndexChanged
+        If Me.hidIsDefTextFixed.Value <> "1" Then
+            Dim cP92 As BO.p92InvoiceType = Master.Factory.p92InvoiceTypeBL.Load(BO.BAS.IsNullInt(Me.p92ID.SelectedValue))
+            Me.p91text1.Text = cP92.p92InvoiceDefaultText1
+        End If
+        
     End Sub
 End Class
