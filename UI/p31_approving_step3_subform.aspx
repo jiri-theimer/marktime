@@ -8,11 +8,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    
+
+    <uc:p31_approve_onerec ID="approve1" runat="server" IsVertical="true" CommandSaveText="Potvrdit" HeaderText="Vybraný úkon" showCancelCommand="false" />
     <div>
     <button type="button" ID="cmdSplitRecord" runat="server" onclick="javascript:split_record()">Rozdělit úkon na 2 kusy</button>    
     </div>
-
-    <uc:p31_approve_onerec ID="approve1" runat="server" IsVertical="true" CommandSaveText="Potvrdit" HeaderText="Vybraný úkon" showCancelCommand="false" />
     <table cellpadding="5" cellspacing="2">
         <tr>
             <td>

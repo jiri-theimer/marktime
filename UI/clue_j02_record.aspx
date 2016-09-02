@@ -66,7 +66,7 @@
         </asp:Panel>
         <asp:Panel ID="panContacts" runat="server" CssClass="content-box2">
             <div class="title">
-                Kontakty
+                Klienti
             </div>
             <div class="content">
                 <asp:Repeater ID="rpP30" runat="server">

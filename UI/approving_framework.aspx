@@ -29,8 +29,27 @@
             });
 
 
+            InhaleGridHeight();
 
         });
+
+        function InhaleGridHeight() {
+            var h1 = new Number;
+            var h2 = new Number;
+            var h3 = new Number;
+
+            h1 = $(window).height();
+
+            var ss = self.document.getElementById("offsetY");
+            var offset = $(ss).offset();
+
+            h2 = offset.top;
+
+            h3 = h1 - h2 - 150;
+            
+            
+
+        }
 
         function periodcombo_setting() {
 
@@ -54,7 +73,7 @@
                 return
             }
 
-            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pid=" + pid, "", true);
+            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pid=" + pid, "Images/approve_32.png", true);
 
         }
 
@@ -188,7 +207,7 @@
         </div>
 
 
-
+        <div id="offsetY"></div>
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowDblClick="RowDoubleClick" OnRowSelected="RowSelected" AllowFilteringByColumn="true"></uc:datagrid>
 
 

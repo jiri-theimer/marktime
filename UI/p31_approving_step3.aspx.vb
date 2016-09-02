@@ -282,9 +282,10 @@ Public Class p31_approving_step3
             End If
             With grid1.radGridOrig.ClientSettings.Scrolling
                 .AllowScroll = True
-                '.UseStaticHeaders = True
+
                 .ScrollHeight = Unit.Parse(strGridHeight)
             End With
+
             fraSubform.Attributes.Item("height") = strFraheight
         End If
 
@@ -387,6 +388,7 @@ Public Class p31_approving_step3
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
+
         If Me.hidHardRefreshFlag.Value = "" And Me.hidHardRefreshPID.Value = "" Then Return
 
         Select Case Me.hidHardRefreshFlag.Value
@@ -399,8 +401,9 @@ Public Class p31_approving_step3
 
                 grid1.Rebind(True, BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value))
             Case Else
-                grid1.Rebind(True, BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value))
                 RefreshSubform(Me.hidHardRefreshPID.Value)
+                grid1.Rebind(True, BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value))
+
         End Select
 
         RefreshRecord()

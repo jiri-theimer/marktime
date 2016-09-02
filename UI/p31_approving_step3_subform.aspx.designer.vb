@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class p31_approving_step3_subform
 
     '''<summary>
-    '''cmdSplitRecord control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSplitRecord As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
     '''approve1 control.
     '''</summary>
     '''<remarks>
@@ -30,6 +21,15 @@ Partial Public Class p31_approving_step3_subform
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents approve1 As Global.UI.p31_approve_onerec
+
+    '''<summary>
+    '''cmdSplitRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSplitRecord As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''lblPerson control.

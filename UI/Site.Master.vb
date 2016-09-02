@@ -138,38 +138,45 @@ Public Class Site
 
     Private Sub TranslateMenu()
         If Page.Culture.IndexOf("Czech") < 0 Then
-            menu1.FindItemByValue("p41").Text = Resources.Site.Menu_PROJEKTY
-            menu1.FindItemByValue("p28").Text = Resources.Site.Menu_KLIENTI
-            menu1.FindItemByValue("j02").Text = Resources.Site.Menu_LIDE
-            menu1.FindItemByValue("p91").Text = Resources.Site.Menu_FAKTURY
-            menu1.FindItemByValue("more").Text = Resources.Site.Menu_DALSI
+            With menu1
 
-            menu1.FindItemByValue("o23").Text = Resources.Site.Dokumenty
-            menu1.FindItemByValue("cmdMyProfile").Text = Resources.Site.MujProfil
-            menu1.FindItemByValue("cmdChangePassword").Text = Resources.Site.ZmenitHeslo
-            menu1.FindItemByValue("cmdLogout").Text = Resources.Site.OdhlasitSe
+                If Not .FindItemByValue("p41") Is Nothing Then .FindItemByValue("p41").Text = Resources.Site.Menu_PROJEKTY
+                If Not .FindItemByValue("p28") Is Nothing Then .FindItemByValue("p28").Text = Resources.Site.Menu_KLIENTI
+                If Not .FindItemByValue("j02") Is Nothing Then .FindItemByValue("j02").Text = Resources.Site.Menu_LIDE
+                If Not .FindItemByValue("p91") Is Nothing Then .FindItemByValue("p91").Text = Resources.Site.Menu_FAKTURY
+                If Not .FindItemByValue("more") Is Nothing Then .FindItemByValue("more").Text = Resources.Site.Menu_DALSI
 
-            menu1.FindItemByValue("p31_framework").Text = Resources.Site.Zapisovat
-            menu1.FindItemByValue("cmdP31_Grid").Text = Resources.Site.Grid
-            menu1.FindItemByValue("cmdP31_Timer").Text = Resources.Site.cmdP31_Timer
-            menu1.FindItemByValue("cmdP31_Approving").Text = Resources.Site.Schvalovat_Pripravit_Fakturaci
+                If Not .FindItemByValue("o23") Is Nothing Then .FindItemByValue("o23").Text = Resources.Site.Dokumenty
+                If Not .FindItemByValue("cmdMyProfile") Is Nothing Then .FindItemByValue("cmdMyProfile").Text = Resources.Site.MujProfil
+                .FindItemByValue("cmdChangePassword").Text = Resources.Site.ZmenitHeslo
+                .FindItemByValue("cmdLogout").Text = Resources.Site.OdhlasitSe
 
-            menu1.FindItemByValue("cmdAdmin").Text = Resources.Site.AdministraceSystemu
-            menu1.FindItemByValue("cmdReports").Text = Resources.Site.cmdReports
-            menu1.FindItemByValue("p56").Text = Resources.Site.DispecinkUkolu
-            menu1.FindItemByValue("o23").Text = Resources.Site.Dokumenty
-            menu1.FindItemByValue("entity_scheduler").Text = Resources.Site.Kalendar
-            menu1.FindItemByValue("p48").Text = Resources.Site.OperativniPlanovani
-            menu1.FindItemByValue("p49").Text = Resources.Site.Rozpocty
-            menu1.FindItemByValue("p90_framework").Text = Resources.Site.ZalohoveFaktury
-            menu1.FindItemByValue("p51").Text = Resources.Site.Ceniky
-            menu1.FindItemByValue("x40").Text = Resources.Site.OdeslanaPosta
+                If Not .FindItemByValue("p31_framework") Is Nothing Then
+                    .FindItemByValue("p31_framework").Text = Resources.Site.Zapisovat
+                    .FindItemByValue("cmdP31_Grid").Text = Resources.Site.Grid
+                    .FindItemByValue("cmdP31_Timer").Text = Resources.Site.cmdP31_Timer
+                End If
 
-            menu1.FindItemByValue("cmdWorkflow").Text = Resources.Site.NavrharWorkflow
-            menu1.FindItemByValue("x18").Text = Resources.Site.Stitky
-            menu1.FindItemByValue("cmdHelp").Text = Resources.Site.Napoveda
-            menu1.FindItemByValue("help").ToolTip = Resources.Site.Napoveda
+                If Not .FindItemByValue("cmdP31_Approving") Is Nothing Then .FindItemByValue("cmdP31_Approving").Text = Resources.Site.Schvalovat_Pripravit_Fakturaci
+
+                If Not .FindItemByValue("cmdAdmin") Is Nothing Then .FindItemByValue("cmdAdmin").Text = Resources.Site.AdministraceSystemu
+                If Not .FindItemByValue("cmdReports") Is Nothing Then .FindItemByValue("cmdReports").Text = Resources.Site.cmdReports
+                If Not .FindItemByValue("p56") Is Nothing Then .FindItemByValue("p56").Text = Resources.Site.DispecinkUkolu
+                If Not .FindItemByValue("o23") Is Nothing Then .FindItemByValue("o23").Text = Resources.Site.Dokumenty
+                If Not .FindItemByValue("entity_scheduler") Is Nothing Then .FindItemByValue("entity_scheduler").Text = Resources.Site.Kalendar
+                If Not .FindItemByValue("p48") Is Nothing Then .FindItemByValue("p48").Text = Resources.Site.OperativniPlanovani
+                If Not .FindItemByValue("p49") Is Nothing Then .FindItemByValue("p49").Text = Resources.Site.Rozpocty
+                If Not .FindItemByValue("p90_framework") Is Nothing Then .FindItemByValue("p90_framework").Text = Resources.Site.ZalohoveFaktury
+                If Not .FindItemByValue("p51") Is Nothing Then .FindItemByValue("p51").Text = Resources.Site.Ceniky
+                If Not .FindItemByValue("x40") Is Nothing Then .FindItemByValue("x40").Text = Resources.Site.OdeslanaPosta
+
+                If Not .FindItemByValue("cmdWorkflow") Is Nothing Then .FindItemByValue("cmdWorkflow").Text = Resources.Site.NavrharWorkflow
+                If Not .FindItemByValue("x18") Is Nothing Then .FindItemByValue("x18").Text = Resources.Site.Stitky
+                .FindItemByValue("cmdHelp").Text = Resources.Site.Napoveda
+                .FindItemByValue("help").ToolTip = Resources.Site.Napoveda
+            End With
             
+
         End If
     End Sub
 

@@ -134,6 +134,14 @@ Public Class approving_framework
             SetupGrouping(.Value, .Text)
         End With
 
+        With grid1.radGridOrig.ClientSettings.Scrolling
+            .AllowScroll = True
+            '.UseStaticHeaders = True
+            Dim intHeight As Integer = Request.Browser.ScreenPixelsHeight * 2 - 100
+            intHeight = intHeight - 110
+            .ScrollHeight = Unit.Parse(intHeight.ToString & "px")
+        End With
+
     End Sub
 
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
