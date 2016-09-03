@@ -21,14 +21,21 @@
     Public Function GetList(intP28ID As Integer, intP41ID As Integer, intJ02ID As Integer) As IEnumerable(Of BO.p30Contact_Person)
         Dim pars As New DbParameters
         Dim s As String = GetSQLPart1()
-        If intP28ID <> 0 Then
-            s += " WHERE (a.p28ID=@p28id OR a.p41ID IN (select p41ID FROM p41Project WHERE p28ID_Client=@p28id))"
+        If intP28ID <> 0 And intP41ID <> 0 Then
+            s += " WHERE (a.p28ID=@p28id OR a.p41ID=@p41id)"
             pars.Add("p28id", intP28ID, DbType.Int32)
-        End If
-        If intP41ID <> 0 Then
-            s += " WHERE a.p41ID=@p41id"
             pars.Add("p41id", intP41ID, DbType.Int32)
+        Else
+            If intP28ID <> 0 Then
+                s += " WHERE (a.p28ID=@p28id OR a.p41ID IN (select p41ID FROM p41Project WHERE p28ID_Client=@p28id))"
+                pars.Add("p28id", intP28ID, DbType.Int32)
+            End If
+            If intP41ID <> 0 Then
+                s += " WHERE a.p41ID=@p41id"
+                pars.Add("p41id", intP41ID, DbType.Int32)
+            End If
         End If
+        
         If intJ02ID <> 0 Then
             s += " WHERE a.j02ID=@j02id"
             pars.Add("j02id", intJ02ID, DbType.Int32)
