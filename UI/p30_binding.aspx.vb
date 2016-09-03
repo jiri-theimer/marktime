@@ -91,19 +91,28 @@
     End Sub
 
     Private Sub rpP30_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpP30.ItemCommand
-        If e.CommandName = "delete" Then
-            If Master.Factory.p30Contact_PersonBL.Delete(BO.BAS.IsNullInt(e.CommandArgument)) Then
-                Master.CloseAndRefreshParent("p30-delete")
-            End If
-        End If
-
+        Dim intP30ID As Integer = BO.BAS.IsNullInt(CType(e.Item.FindControl("p30id"), HiddenField).Value)
+        Select Case e.CommandName
+            Case "delete"
+                If Master.Factory.p30Contact_PersonBL.Delete(intP30ID) Then
+                    Master.CloseAndRefreshParent("p30-delete")
+                End If
+            Case "default_add", "default_delete"
+                Dim b As Boolean = True
+                If e.CommandName = "default_delete" Then b = False
+                Dim cRec As BO.p30Contact_Person = Master.Factory.p30Contact_PersonBL.Load(intP30ID)
+                If Master.Factory.p30Contact_PersonBL.SetAsDefaultPerson(cRec, b) Then
+                    RefreshList()
+                End If
+        End Select
     End Sub
 
     Private Sub rpP30_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP30.ItemDataBound
         Dim cRec As BO.p30Contact_Person = CType(e.Item.DataItem, BO.p30Contact_Person)
 
+        CType(e.Item.FindControl("p30id"), HiddenField).Value = cRec.PID.ToString
+
         With CType(e.Item.FindControl("cmdDelete"), LinkButton)
-            .CommandArgument = cRec.PID.ToString
             Select Case Me.CurrentPrefix
                 Case "p28"
                     .Text = "Odstranit vazbu osoby ke klientovi"
@@ -111,6 +120,11 @@
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
                         CType(e.Item.FindControl("Message"), Label).Text = String.Format("Osoba je přímo přiřazená k projektu: {0}", "<b>" & cRec.Project & "</b>")
+                    End If
+                    If cRec.p28ID = Master.DataPID Then
+                        e.Item.FindControl("cmdDefaultInWorksheet").Visible = Not cRec.p30IsDefaultInWorksheet
+                        If cRec.p30IsDefaultInWorksheet Then e.Item.FindControl("cmdDeleteDefault").Visible = True
+                        e.Item.FindControl("lblDefaultInWorksheet").Visible = cRec.p30IsDefaultInWorksheet
                     End If
                 Case "p41"
                     .Text = "Odstranit vazbu osoby k projektu"
@@ -124,6 +138,11 @@
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
                         CType(e.Item.FindControl("Message"), Label).Text = String.Format("Osoba je přímo přiřazená k projektu: {0}", "<b>" & cRec.Project & "</b>")
                     End If
+                    If cRec.p41ID = Master.DataPID Then
+                        e.Item.FindControl("cmdDefaultInWorksheet").Visible = Not cRec.p30IsDefaultInWorksheet
+                        If cRec.p30IsDefaultInWorksheet Then e.Item.FindControl("cmdDeleteDefault").Visible = True
+                        e.Item.FindControl("lblDefaultInWorksheet").Visible = cRec.p30IsDefaultInWorksheet
+                    End If
             End Select
         End With
         With CType(e.Item.FindControl("Person"), Label)
@@ -133,5 +152,7 @@
         CType(e.Item.FindControl("p27Name"), Label).Text = cRec.p27Name
         CType(e.Item.FindControl("cmdJ02"), HyperLink).NavigateUrl = "javascript:j02_edit(" & cRec.j02ID.ToString & ")"
         CType(e.Item.FindControl("clue_j02"), HyperLink).Attributes("rel") = "clue_j02_record.aspx?pid=" & cRec.j02ID.ToString
+
+
     End Sub
 End Class

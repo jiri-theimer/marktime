@@ -75,15 +75,20 @@
                                     <td>
                                         <img src="Images/edit.png" />
                                         <asp:HyperLink ID="cmdJ02" runat="server" Text="Upravit osobní profil"></asp:HyperLink>
+                                        <asp:HiddenField ID="p30id" runat="server" />
                                     </td>
                                     <td  >
                                         <asp:image ID="imgDel" runat="server" ImageUrl="Images/delete.png" style="margin-left:20px;" />
                                         <asp:LinkButton ID="cmdDelete" runat="server" Text="Odstranit vazbu" CommandName="delete"></asp:LinkButton>
                                     </td>
-                                    
+                                    <td>
+                                        <asp:LinkButton ID="cmdDefaultInWorksheet" runat="server" Text="Přednastavit v zapisování výkazů" CommandName="default_add" Visible="false"></asp:LinkButton>
+                                        <asp:Label ID="lblDefaultInWorksheet" runat="server" Text="Přednastaveno v zapisování výkazů" CssClass="valboldred" Visible="false"></asp:Label>
+                                        <asp:ImageButton ID="cmdDeleteDefault" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit přednastavení v zapisování výkazů" CommandName="default_delete" Visible="false" />
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" style="border-bottom:solid 1px silver;">
+                                    <td colspan="5" style="border-bottom:solid 1px silver;">
                                         <asp:Label ID="Message" runat="server" CssClass="infoNotification"></asp:Label>
                                     </td>
                                 </tr>

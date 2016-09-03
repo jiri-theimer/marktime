@@ -32,4 +32,7 @@
         End Get
     End Property
     Public Property IsSetAsDeleted As Boolean
+
+    Public Property p30IsDefaultInWorksheet As Boolean
+
 End Class

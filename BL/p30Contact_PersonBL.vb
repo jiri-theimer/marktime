@@ -1,6 +1,7 @@
 ﻿Public Interface Ip30Contact_PersonBL
     Inherits IFMother
     Function Save(cRec As BO.p30Contact_Person) As Boolean
+    Function SetAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean
     Function Load(intPID As Integer) As BO.p30Contact_Person
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP28ID As Integer, intP41ID As Integer, intJ02ID As Integer) As IEnumerable(Of BO.p30Contact_Person)
@@ -46,6 +47,9 @@ Class p30Contact_PersonBL
         Else
             Return False
         End If
+    End Function
+    Function SetAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean Implements Ip30Contact_PersonBL.SetAsDefaultPerson
+        Return _cDL.SaveAsDefaultPerson(cRec, bolp30IsDefaultInWorksheet)
     End Function
     Public Function Load(intPID As Integer) As BO.p30Contact_Person Implements Ip30Contact_PersonBL.Load
         Return _cDL.Load(intPID)
