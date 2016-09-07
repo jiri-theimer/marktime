@@ -283,6 +283,8 @@ Public Class approving_framework
         Select Case Me.hidHardRefreshFlag.Value
             Case "export"
                 grid1.radGridOrig.MasterTableView.ExportToExcel()
+            Case "j70-run"
+                ReloadPage()
             Case Else
                 grid1.Rebind(False)
         End Select
