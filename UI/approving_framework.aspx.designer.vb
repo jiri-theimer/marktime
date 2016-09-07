@@ -50,6 +50,33 @@ Partial Public Class approving_framework
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''j70ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''lblPaging control.
     '''</summary>
     '''<remarks>

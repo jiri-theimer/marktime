@@ -17,6 +17,14 @@ Public Class approving_framework
             Return BO.BAS.GetX29FromPrefix(Me.hidCurPrefix.Value)
         End Get
     End Property
+    Public Property CurrentJ70ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
+        End Get
+        Set(value As Integer)
+            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
+        End Set
+    End Property
     Private Sub approving_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
@@ -46,6 +54,9 @@ Public Class approving_framework
                     .Add("approving_framework-filter_sql-p28")
                     .Add("approving_framework-filter_setting-j02")
                     .Add("approving_framework-filter_sql-j02")
+                    .Add("approving_framework-j70id-p41")
+                    .Add("approving_framework-j70id-p28")
+                    .Add("approving_framework-j70id-j02")
                 End With
 
                 With .Factory.j03UserBL
@@ -57,6 +68,7 @@ Public Class approving_framework
                     Else
                         Me.CurrentPrefix = Request.Item("prefix")
                     End If
+                    SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("approving_framework-j70id-" & Me.CurrentPrefix)))
                     Me.tabs1.FindTabByValue(Me.CurrentPrefix).Selected = True
                     basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("approving_framework-pagesize", "50"))
                     basUI.SelectDropdownlistValue(Me.cbxScope, .GetUserParam("approving_framework-scope", "1"))
@@ -79,6 +91,21 @@ Public Class approving_framework
         End If
     End Sub
 
+    Private Sub SetupJ70Combo(intDef As Integer)
+        Dim mq As New BO.myQuery
+        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID)
+        j70ID.DataBind()
+        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
+        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+        With Me.j70ID
+            If .SelectedIndex > 0 Then
+                .ToolTip = .SelectedItem.Text
+                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+            Else
+                Me.clue_query.Visible = False
+            End If
+        End With
+    End Sub
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With grid1
             .ClearColumns()
@@ -213,12 +240,14 @@ Public Class approving_framework
         mq.DateUntil = period1.DateUntil
 
 
-        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq)
+
+        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, Me.CurrentJ70ID)
 
         grid1.DataSource = lis
     End Sub
 
     Private Sub approving_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        basUIMT.RenderQueryCombo(Me.j70ID)
         With Me.period1
             If .SelectedValue <> "" Then
                 .BackColor = Drawing.Color.Red
@@ -227,9 +256,9 @@ Public Class approving_framework
             End If
         End With
         If Me.cbxScope.SelectedValue = "1" Then
-            lblHeader.Text = "Schvalovat úkony"
+            lblHeader.Text = "Schvalovat"
         Else
-            lblHeader.Text = "Fakturovat úkony"
+            lblHeader.Text = "Fakturovat"
         End If
     End Sub
 
@@ -278,5 +307,10 @@ Public Class approving_framework
         Master.Factory.j03UserBL.SetUserParam("approving_framework-kusovnik", BO.BAS.GB(Me.chkKusovnik.Checked))
         ReloadPage()
 
+    End Sub
+
+    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("approving_framework-j70id-" & Me.CurrentPrefix, j70ID.SelectedValue)
+        ReloadPage()
     End Sub
 End Class

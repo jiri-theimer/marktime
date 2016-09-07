@@ -131,6 +131,12 @@
 
 
         }
+
+        function querybuilder() {
+            var j70id = "<%=Me.CurrentJ70ID%>";
+            sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query_32.png");
+            return (false);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -155,7 +161,12 @@
         </div>
 
         <div class="commandcell">
-            <uc:periodcombo ID="period1" runat="server" Width="220px"></uc:periodcombo>
+            <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
+        </div>
+        <div class="commandcell">
+            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+            <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+            <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
         </div>
         <div class="commandcell">
             <button type="button" onclick="approve_selected()" title="Schvalovat všechny označené řádky">
@@ -164,8 +175,7 @@
             </button>
 
             <button type="button" onclick="hardrefresh(0,'export')" title="Export přehledu do MS Excel">
-                <img src="Images/export.png" />
-                MS Excel
+                <img src="Images/export.png" />                
             </button>
         </div>
         <div class="show_hide1" style="float:left;margin-top:10px;">

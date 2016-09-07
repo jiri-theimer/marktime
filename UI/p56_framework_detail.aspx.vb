@@ -26,7 +26,7 @@
 
                 Dim lisPars As New List(Of String)
                 With lisPars
-
+                    .Add("p56_framework_detail-opgSubgrid")
                     .Add("p56_framework_detail-pid")
                     .Add("p56_framework_detail-chkFFShowFilledOnly")
                 End With
@@ -44,6 +44,9 @@
                         End If
                     End If
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
+                    If .GetUserParam("p56_framework_detail-opgSubgrid", "p31") = "b05" Then
+                        Me.opgSubgrid.SelectedIndex = 1
+                    End If
                 End With
 
             End With
@@ -237,6 +240,10 @@
         End If
 
         RefreshImapBox(cRec)
+
+        If opgSubgrid.SelectedIndex = 1 Then
+            history1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
+        End If
     End Sub
 
     Private Sub RefreshImapBox(cRec As BO.p56Task)
@@ -280,5 +287,23 @@
 
     Private Sub ReloadPage(strPID As String)
         Response.Redirect("p56_framework_detail.aspx?pid=" & strPID)
+    End Sub
+
+    Private Sub opgSubgrid_TabClick(sender As Object, e As Telerik.Web.UI.RadTabStripEventArgs) Handles opgSubgrid.TabClick
+        Master.Factory.j03UserBL.SetUserParam("p56_framework_detail-opgSubgrid", Me.opgSubgrid.SelectedTab.Value)
+        If Me.opgSubgrid.SelectedTab.Value = "b05" Then
+            history1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
+        End If
+
+    End Sub
+
+    Private Sub p56_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        gridP31.Visible = False : history1.Visible = False
+        Select Case Me.opgSubgrid.SelectedIndex
+            Case 0
+                gridP31.Visible = True
+            Case 1
+                history1.Visible = True
+        End Select
     End Sub
 End Class

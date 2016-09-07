@@ -1271,6 +1271,64 @@ END
 
 GO
 
+----------FN---------------p32_get_invoicetext-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p32_get_invoicetext') and type = 'FN')
+ drop function p32_get_invoicetext
+GO
+
+
+
+
+CREATE FUNCTION [dbo].[p32_get_invoicetext](@p91id int,@p32id int)
+RETURNS nvarchar(200) AS  
+BEGIN 
+---vrací název aktivity @p32id ve správném fakturaèním jazyku pro fakturu @p91id
+
+declare @p28id int,@p41id int,@p87id int,@ret nvarchar(200),@langindex int
+
+
+
+select @p28id=p28ID,@p41id=p41ID_First FROM p91Invoice WHERE p91ID=@p91id
+
+if @p41id is not null
+ select @p87id=p87ID FROM p41Project WHERE p41ID=@p41id
+
+if @p87id is null
+ select @p87id=p87ID FROM p28Contact WHERE p28ID=@p28id
+
+if @p87id is not null
+ select @langindex=p87LangIndex FROM p87BillingLanguage WHERE p87ID=@p87id
+
+if @langindex=1
+ select @ret=p32Name_BillingLang1 FROM p32Activity WHERE p32ID=@p32id
+
+if @langindex=2
+ select @ret=p32Name_BillingLang2 FROM p32Activity WHERE p32ID=@p32id
+
+if @langindex=3
+ select @ret=p32Name_BillingLang3 FROM p32Activity WHERE p32ID=@p32id
+
+if @langindex=4
+ select @ret=p32Name_BillingLang4 FROM p32Activity WHERE p32ID=@p32id
+
+if @ret is null
+ select @ret=p32Name FROM p32Activity WHERE p32ID=@p32id
+
+
+RETURN(@ret)
+
+END
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------p32_get_vatrate-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p32_get_vatrate') and type = 'FN')

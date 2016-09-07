@@ -188,6 +188,10 @@
         function p31_subgrid_approving(pids) {
             window.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
         }
+
+       
+
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -448,14 +452,17 @@
     </asp:Panel>
 
     <div style="clear: both; width: 100%;"></div>
-    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="false">
+    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="true">
         <Tabs>
 
-            <telerik:RadTab Text="Worksheet přehled" Value="1" Selected="true"></telerik:RadTab>
-
+            <telerik:RadTab Text="Worksheet přehled" Value="p31" Selected="true"></telerik:RadTab>
+            <telerik:RadTab Text="Historie" Value="b05"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
+
     <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p56Task" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowMultiSelect="true"></uc:p31_subgrid>
+    <uc:b07_list ID="history1" runat="server" ShowInsertButton="false" ShowHeader="False" JS_Reaction="b07_reaction" />
+    
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />

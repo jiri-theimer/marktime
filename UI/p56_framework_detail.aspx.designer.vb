@@ -527,6 +527,15 @@ Partial Public Class p56_framework_detail
     Protected WithEvents gridP31 As Global.UI.p31_subgrid
 
     '''<summary>
+    '''history1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents history1 As Global.UI.b07_list
+
+    '''<summary>
     '''hidHardRefreshFlag control.
     '''</summary>
     '''<remarks>

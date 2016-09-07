@@ -360,14 +360,14 @@
 
                     If Not BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Approver) Then
                         'pokud nemá právo paušálně schvalovat všechny záznamy v db
-                        Dim strJ11IDs As String = ""
-                        If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+                        ''Dim strJ11IDs As String = ""
+                        ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
-                        s.Append(" AND (")
+                        s.Append(" AND (zbytek.p31ID IS NOT NULL")
 
-                        s.Append(" a.p31ID IN (")
-                        s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
-                        s.Append(")")
+                        ''s.Append(" a.p31ID IN (")
+                        ''s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                        ''s.Append(")")
 
                         If _curUser.IsMasterPerson And _curUser.j02ID = .j02ID_ExplicitQueryFor Then
                             'oprávnění z titulu nadřazené osoby
@@ -382,13 +382,14 @@
                         'poku dnemá právo paušálně vidět nebo vlastnit veškerý worksheet
                         s.Append(" AND (")
 
-                        s.Append(" a.p31ID IN (")
+                        ''s.Append(" a.p31ID IN (")
+                        '' ''s.Append(" EXISTS (")
 
-                        Dim strJ11IDs As String = ""
-                        If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+                        ''Dim strJ11IDs As String = ""
+                        ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
-                        s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
-                        s.Append(") OR a.j02ID_Owner=@j02id_query OR a.j02ID=@j02id_query")
+                        ''s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                        s.Append("zbytek.p31ID IS NOT NULL OR a.j02ID_Owner=@j02id_query OR a.j02ID=@j02id_query")
 
                         If _curUser.IsMasterPerson And _curUser.j02ID = .j02ID_ExplicitQueryFor Then
                             'oprávnění z titulu nadřazené osoby
@@ -427,7 +428,7 @@
 
 
     Public Function GetList(myQuery As BO.myQueryP31, Optional strGUID_TempData As String = "") As IEnumerable(Of BO.p31Worksheet)
-        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & " " & GetSQLPart2(strGUID_TempData)
+        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & " " & GetSQLPart2(strGUID_TempData, myQuery)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars, strGUID_TempData)
         With myQuery
@@ -438,7 +439,7 @@
 
             If .MG_PageSize > 0 Then
                 'použít stránkování do gridu    
-                s = GetSQL_OFFSET(strW, ParseSortExpression(strSort), .MG_PageSize, .MG_CurrentPageIndex, pars)
+                s = GetSQL_OFFSET(strW, ParseSortExpression(strSort), .MG_PageSize, .MG_CurrentPageIndex, pars, myQuery)
             Else
                 'normální select
                 If strW <> "" Then s += " WHERE " & strW
@@ -451,10 +452,10 @@
     End Function
 
 
-    Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String
+    Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters, myQuery As BO.myQueryP31) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
 
-        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2()
+        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2(, myQuery)
 
         If strWHERE <> "" Then s += " WHERE " & strWHERE
         s += ") SELECT TOP " & intPageSize.ToString & " * FROM rst"
@@ -477,7 +478,7 @@
     End Function
 
     Public Function GetVirtualCount(myQuery As BO.myQueryP31, Optional strGUID_TempData As String = "") As Integer
-        Dim s As String = "SELECT count(a.p31ID) as Value " & GetSQLPart2(strGUID_TempData)
+        Dim s As String = "SELECT count(a.p31ID) as Value " & GetSQLPart2(strGUID_TempData, myQuery)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars, strGUID_TempData)
         If strW <> "" Then s += " WHERE " & strW
@@ -485,7 +486,7 @@
         Return _cDB.GetRecord(Of BO.GetInteger)(s, pars).Value
     End Function
     Public Function LoadSumRow(myQuery As BO.myQueryP31, bolIncludeWaiting4Approval As Boolean, bolIncludeWaiting4Invoice As Boolean, Optional strGUID_TempData As String = "") As BO.p31WorksheetSum
-        Dim s As String = "SELECT " & GetSF_SUM(bolIncludeWaiting4Approval, bolIncludeWaiting4Invoice) & " " & GetSQLPart2(strGUID_TempData)
+        Dim s As String = "SELECT " & GetSF_SUM(bolIncludeWaiting4Approval, bolIncludeWaiting4Invoice) & " " & GetSQLPart2(strGUID_TempData, myQuery)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars, strGUID_TempData)
         If strW <> "" Then s += " WHERE " & strW
@@ -504,7 +505,7 @@
             Next
         End If
 
-        s += " " & GetSQLPart2()
+        s += " " & GetSQLPart2(, myQuery)
 
         Dim pars As New DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
@@ -558,7 +559,7 @@
         End If
         Return s.ToString
     End Function
-    Private Function GetSQLPart2(Optional strGUID_TempData As String = "") As String
+    Private Function GetSQLPart2(Optional strGUID_TempData As String = "", Optional myQuery As BO.myQueryP31 = Nothing) As String
         Dim s As New System.Text.StringBuilder()
 
         If strGUID_TempData <> "" Then
@@ -575,6 +576,33 @@
         s.Append(" LEFT OUTER JOIN j27Currency j27billing_orig ON a.j27ID_Billing_Orig=j27billing_orig.j27ID")
         s.Append(" LEFT OUTER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID")
         s.Append(" LEFT OUTER JOIN p31WorkSheet_FreeField p31free ON a.p31ID=p31free.p31ID")
+        If Not myQuery Is Nothing Then
+            With myQuery
+                Select .SpecificQuery
+                    Case BO.myQueryP31_SpecificQuery.AllowedForDoApprove, BO.myQueryP31_SpecificQuery.AllowedForReApprove
+                        If Not BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Approver) Then
+                            'pokud nemá právo paušálně schvalovat všechny záznamy v db
+                            Dim strJ11IDs As String = ""
+                            If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+
+                            s.Append(" LEFT OUTER JOIN (")
+                            s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                            s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+
+
+                        End If
+                    Case BO.myQueryP31_SpecificQuery.AllowedForRead
+                        Dim strJ11IDs As String = ""
+                        If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+
+                        s.Append(" LEFT OUTER JOIN (")
+                        s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                        s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+                    Case Else
+                End Select
+            End With
+
+        End If
         Return s.ToString
     End Function
 
@@ -863,7 +891,7 @@
 
     End Function
 
-    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31) As IEnumerable(Of BO.ApprovingFramework)
+    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, Optional intJ70ID As Integer = 0) As IEnumerable(Of BO.ApprovingFramework)
         Dim pars As New DbParameters
         Dim s As String = ""
         Select Case x29id
@@ -900,6 +928,19 @@
 
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
+
+        If intJ70ID <> 0 Then
+            Dim strInW As String = bas.CompleteSqlJ70(_cDB, intJ70ID)
+            Select Case x29id
+                Case BO.x29IdEnum.p41Project And strInW <> ""
+                    s += " AND a.p41ID IN (SELECT a.p41ID FROM p41Project a LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID WHERE " & strInW & ")"
+                Case BO.x29IdEnum.p28Contact And strInW <> ""
+                    s += " AND p41.p28ID_Client IN (SELECT a.p28ID FROM p28Contact a LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID WHERE " & strInW & ")"
+                Case BO.x29IdEnum.j02Person And strInW <> ""
+                    s += " AND a.j02ID IN (SELECT a.j02ID FROM j02Person a LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID WHERE " & strInW & ")"
+                Case Else
+            End Select
+        End If
 
         Select Case x29id
             Case BO.x29IdEnum.p41Project
