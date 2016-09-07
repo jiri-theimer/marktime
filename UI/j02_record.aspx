@@ -201,6 +201,28 @@
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
+                        <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl" ></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="j02TimesheetEntryDaysBackLimit" runat="server">
+                            <asp:ListItem Value="" Text="Bez omezení"></asp:ListItem>
+                            <asp:ListItem Value="1" Text="1 den"></asp:ListItem>
+                            <asp:ListItem Value="2" Text="2 dny"></asp:ListItem>
+                            <asp:ListItem Value="3" Text="3 dny"></asp:ListItem>
+                            <asp:ListItem Value="4" Text="4 dny"></asp:ListItem>
+                            <asp:ListItem Value="5" Text="5 dní"></asp:ListItem>
+                            <asp:ListItem Value="6" Text="6 dní"></asp:ListItem>
+                            <asp:ListItem Value="7" Text="7 dní"></asp:ListItem>
+                            <asp:ListItem Value="8" Text="8 dní"></asp:ListItem>
+                            <asp:ListItem Value="9" Text="9 dní"></asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <td>
+                        <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="lblj02RobotAddress" runat="server" Text="Adresa pro IMAP robota:" CssClass="lbl" meta:resourcekey="lblj02RobotAddress"></asp:Label>
                     </td>
                     <td>

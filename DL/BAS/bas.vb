@@ -148,7 +148,7 @@
         Return strSQL
     End Function
 
-    Shared Function CompleteSqlJ70(cDB As DL.DbHandler, intJ70ID As Integer) As String
+    Shared Function CompleteSqlJ70(cDB As DL.DbHandler, intJ70ID As Integer, cUser As BO.j03UserSYS) As String
         Dim s As String = "select *," & bas.RecTail("j70") & " from j70QueryTemplate WHERE j70ID=@pid"
         Dim cRec As BO.j70QueryTemplate = cDB.GetRecord(Of BO.j70QueryTemplate)(s, New With {.pid = intJ70ID}), sql As New System.Text.StringBuilder
         Dim strFK As String = ""
@@ -210,7 +210,7 @@
                 Case "x67id"
                 Case "j11id"
                     sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j12Team_Person WHERE j11ID IN (" & strIN & "))")
-                    
+
                 Case "x25id"    'štítky
                     sql.Append(" AND " & strFK & " IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=" & CInt(cRec.x29ID).ToString & " AND x25ID IN (" & strIN & "))")
                 Case "p34id"
@@ -311,6 +311,9 @@
                     Case BO.x29IdEnum.o23Notepad
                         sql.Append("a.o23ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
                 End Select
+                If c.j71RecordPID_Extension = -1 Then
+                    c.j71RecordPID_Extension = cUser.j02ID    'aktuálně přihlášená osoba
+                End If
                 If c.j71RecordPID_Extension > 0 Then
                     sql.Append(" AND (j02ID=" & c.j71RecordPID_Extension.ToString & " OR j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=" & c.j71RecordPID_Extension.ToString & "))")
                 End If
@@ -344,7 +347,7 @@
         lis1 = lis.Where(Function(p) p.j71Field = "_other")
         If lis1.Count > 0 Then
             sql.Append(" AND (")
-            x = 0            
+            x = 0
             For Each c In lis1
                 If x > 0 Then sql.Append(" OR ")
                 Select Case cRec.x29ID

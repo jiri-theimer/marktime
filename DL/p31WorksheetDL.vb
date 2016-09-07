@@ -273,6 +273,9 @@
             If .p32ID <> 0 Then
                 pars.Add("p32id", .p32ID, DbType.Int32) : s.Append(" AND a.p32ID=@p32id")
             End If
+            If Not .p33IDs Is Nothing Then
+                s.Append(" AND p34.p33ID IN (" & String.Join(",", .p33IDs) & ")")
+            End If
             
             If Not .p56IDs Is Nothing Then
                 Select Case .p56IDs.Count
@@ -326,7 +329,7 @@
             ''End If
        
             If .j70ID > 0 Then
-                Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID)
+                Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID, _curUser)
                 If strQueryW <> "" Then
                     s.Append(" AND " & strQueryW)
                 End If
@@ -586,7 +589,7 @@
                             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
                             s.Append(" LEFT OUTER JOIN (")
-                            s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                            s.Append("SELECT DISTINCT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
                             s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
 
 
@@ -597,7 +600,7 @@
                             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
                             s.Append(" LEFT OUTER JOIN (")
-                            s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                            s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
                             s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
                         End If
                         
@@ -663,7 +666,7 @@
             Dim strJ11IDs As String = ""
             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
             s.Append(" LEFT OUTER JOIN (")
-            s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+            s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
             s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
         End If
         Dim pars As New DL.DbParameters
@@ -853,6 +856,13 @@
         s += ",SUM(case when a.p91ID IS NOT NULL THEN 1 END) as vyfakturovano_pocet"
         s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
         s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
+        If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
+            Dim strJ11IDs As String = ""
+            If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+            s += " LEFT OUTER JOIN ("
+            s += "SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID"
+            s += ") zbytek ON a.p31ID=zbytek.p31ID"
+        End If
         
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -940,7 +950,7 @@
             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
             s += " LEFT OUTER JOIN ("
-            s += "SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID"
+            s += "SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID"
             s += ") zbytek ON a.p31ID=zbytek.p31ID"
         End If
        
@@ -949,7 +959,7 @@
         If strW <> "" Then s += " WHERE " & strW
 
         If intJ70ID <> 0 Then
-            Dim strInW As String = bas.CompleteSqlJ70(_cDB, intJ70ID)
+            Dim strInW As String = bas.CompleteSqlJ70(_cDB, intJ70ID, _curUser)
             Select Case x29id
                 Case BO.x29IdEnum.p41Project And strInW <> ""
                     s += " AND a.p41ID IN (SELECT a.p41ID FROM p41Project a LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID WHERE " & strInW & ")"

@@ -7368,9 +7368,9 @@ FROM x35GlobalParam WHERE x35Key LIKE 'j27ID_Domestic' AND ISNUMERIC(x35Value)=1
 
 
 declare @islocked bit,@p34id int,@isplan bit,@person nvarchar(300),@j07id_rec int,@p32IsTextRequired bit,@p32name nvarchar(200),@p34IncomeStatementFlag int
-declare @p32Value_Maximum float,@p32Value_Minimum float
+declare @p32Value_Maximum float,@p32Value_Minimum float,@j02TimesheetEntryDaysBackLimit int
 
-select @person=j02LastName+' '+isnull(j02FirstName,''),@j07id_rec=isnull(j07id,-1) from j02Person where j02ID=@j02id_rec
+select @person=j02LastName+' '+isnull(j02FirstName,''),@j07id_rec=isnull(j07id,-1),@j02TimesheetEntryDaysBackLimit=j02TimesheetEntryDaysBackLimit from j02Person where j02ID=@j02id_rec
 
 select @p34id=a.p34id,@p33id=b.p33id,@isplan=b.p34iscapacityplan,@p32IsTextRequired=a.p32IsTextRequired,@p32name=a.p32Name,@p34IncomeStatementFlag=b.p34IncomeStatementFlag
 ,@p32Value_Maximum=isnull(a.p32Value_Maximum,0),@p32Value_Minimum=isnull(a.p32Value_Minimum,0)
@@ -7404,6 +7404,13 @@ if @p32Value_Maximum<>0 and @value_orig>=@p32Value_Maximum
 if @p48id is not null and @p33id<>1
  begin
   set @err='Operativní plán mùže být pøeklopen pouze do èasového úkonu.'
+  return
+ end
+
+if @p33id=1 and isnull(@j02TimesheetEntryDaysBackLimit,0)>0 and @p31date<dbo.get_today()
+ begin
+  if DATEDIFF(day,@p31date,dbo.get_today())>@j02TimesheetEntryDaysBackLimit
+   set @err='Máte povoleno zapisovat èasové úkony maximálnì ['+convert(varchar(10),@j02TimesheetEntryDaysBackLimit)+'] dní dozadu.'
   return
  end
 

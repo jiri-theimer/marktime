@@ -35,6 +35,7 @@
                 period1.SelectedValue = .Factory.j03UserBL.GetUserParam("p31_grid-period")
                 .AddToolbarButton("Uložit změny pro zaškrtlé úkony", "ok", , "Images/save.png")
             End With
+           
 
             SetupGrid()
             RecalcVirtualRowCount()
@@ -101,7 +102,10 @@
         Else
             mq.QuickQuery = BO.myQueryP31_QuickQuery.Editing
         End If
-
+        Dim p33ids As New List(Of Integer)
+        p33ids.Add(1)
+        p33ids.Add(3)
+        mq.p33IDs = p33ids
 
         mq.DateFrom = period1.DateFrom
         mq.DateUntil = period1.DateUntil

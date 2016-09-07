@@ -473,6 +473,24 @@ Partial Public Class j02_record
     Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''lblj02TimesheetEntryDaysBackLimit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblj02TimesheetEntryDaysBackLimit As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j02TimesheetEntryDaysBackLimit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02TimesheetEntryDaysBackLimit As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblj02RobotAddress control.
     '''</summary>
     '''<remarks>

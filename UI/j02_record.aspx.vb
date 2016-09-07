@@ -77,6 +77,7 @@
             Me.j02RobotAddress.Text = .j02RobotAddress
             Me.j02ExternalPID.Text = .j02ExternalPID
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
+            basUI.SelectDropdownlistValue(Me.j02TimesheetEntryDaysBackLimit, .j02TimesheetEntryDaysBackLimit.ToString)
             Master.Timestamp = .Timestamp
 
             If .j02SmtpServer <> "" Then
@@ -138,6 +139,7 @@
                 .j02JobTitle = Me.j02JobTitle.Text
                 .j02RobotAddress = Me.j02RobotAddress.Text
                 .j02ExternalPID = Me.j02ExternalPID.Text
+                .j02TimesheetEntryDaysBackLimit = BO.BAS.IsNullInt(Me.j02TimesheetEntryDaysBackLimit.SelectedValue)
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
                 If chkIsSmtp.Checked Then

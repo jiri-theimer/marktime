@@ -271,7 +271,7 @@
                     End If
             End Select
             If .j70ID > 0 Then
-                Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID)
+                Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID, _curUser)
                 If strQueryW <> "" Then
                     s.Append(" AND " & strQueryW)
                 End If

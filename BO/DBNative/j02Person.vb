@@ -25,6 +25,7 @@
     Public Property j02SmtpLogin As String
     Public Property j02SmtpPassword As String
     Public Property j02IsSmtpVerify As Boolean
+    Public Property j02TimesheetEntryDaysBackLimit As Integer
 
 
     Public ReadOnly Property FullNameAsc As String

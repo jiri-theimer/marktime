@@ -270,8 +270,14 @@ Public Class datacombo
         End Try
 
     End Sub
-    Public Overloads Sub AddOneComboItem(ByVal strValue As String, ByVal strText As String)
-        cbx1.Items.Add(New Telerik.Web.UI.RadComboBoxItem(strText, strValue))
+    Public Overloads Sub AddOneComboItem(ByVal strValue As String, ByVal strText As String, Optional intIndex As Integer = -1)
+        If intIndex < 0 Then
+            cbx1.Items.Add(New Telerik.Web.UI.RadComboBoxItem(strText, strValue))
+        Else
+            cbx1.Items.Insert(intIndex, New Telerik.Web.UI.RadComboBoxItem(strText, strValue))
+        End If
+
+
     End Sub
     Public Overloads Sub AddOneComboItem(ByVal strValue As String, ByVal strText As String, ByVal strAttributeKey As String, ByVal strAttributeValue As String)
         Dim item As New RadComboBoxItem(strText, strValue)

@@ -297,6 +297,7 @@
                     mqJ02.Closed = BO.BooleanQueryMode.NoQuery
                     Me.cbxItemsExtension.DataSource = Master.Factory.j02PersonBL.GetList(mqJ02)
                     Me.cbxItemsExtension.DataBind()
+                    Me.cbxItemsExtension.AddOneComboItem("-1", "Aktuálně přihlášený uživatel", 1)
                 End If
 
             Case BO.x29IdEnum.p28Contact
