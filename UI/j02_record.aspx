@@ -215,6 +215,10 @@
                             <asp:ListItem Value="7" Text="7 dní"></asp:ListItem>
                             <asp:ListItem Value="8" Text="8 dní"></asp:ListItem>
                             <asp:ListItem Value="9" Text="9 dní"></asp:ListItem>
+                            <asp:ListItem Value="10" Text="10 dní"></asp:ListItem>
+                            <asp:ListItem Value="14" Text="14 dní"></asp:ListItem>
+                            <asp:ListItem Value="20" Text="20 dní"></asp:ListItem>
+                            <asp:ListItem Value="30" Text="30 dní"></asp:ListItem>
                         </asp:DropDownList>
                     </td>
                     <td>
