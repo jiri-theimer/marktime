@@ -45,7 +45,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <a href="webform2.aspx?ano=ne">webform2 - vyvolat uměle chybu</a>
 
     <asp:Button ID="cmdPokus" runat="server" Text="test" />
 

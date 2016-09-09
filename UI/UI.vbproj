@@ -191,6 +191,7 @@
     <Content Include="entity_framework_p56subform.aspx" />
     <Content Include="entity_framework_p91subform.aspx" />
     <Content Include="entity_scheduler.aspx" />
+    <Content Include="ErrorPage.aspx" />
     <Content Include="fileupload_preview.aspx" />
     <Content Include="imap_record.ascx" />
     <Content Include="Integration\mtService.svc" />
@@ -710,6 +711,13 @@
     <Compile Include="entity_scheduler.aspx.vb">
       <DependentUpon>entity_scheduler.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage.aspx.designer.vb">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPage.aspx.vb">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="fileupload_preview.aspx.designer.vb">
       <DependentUpon>fileupload_preview.aspx</DependentUpon>
