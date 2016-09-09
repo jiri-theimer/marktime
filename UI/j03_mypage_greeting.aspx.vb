@@ -19,6 +19,8 @@
 
 
             With Master.Factory
+                cmdReadUpgradeInfo.Visible = .SysUser.j03IsShallReadUpgradeInfo
+
                 .j03UserBL.InhaleUserParams("j03_mypage_greeting-last_step")
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet

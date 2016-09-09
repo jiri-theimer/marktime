@@ -18,7 +18,7 @@ Public Class j03UserSYS
 
     Private Property _IsApprovingPerson As Boolean    'detekce, zda uživatel může potenciálně schvalovat nějaký worksheet
     Private Property _IsMasterPerson As Boolean       'detekce, zda osoba má pod sebou nějaké podřízené
-
+    
     Private Property _RoleValue As String
     Private Property _PersonalPage As String
     Public Property OneProjectPage As String
@@ -29,6 +29,7 @@ Public Class j03UserSYS
     Private Property _MessagesCount As Integer  'počet zpráv, na které systém upozorňuje uživatele
     Private Property _j11IDs As String          'seznam týmů osoby
 
+   
     Public ReadOnly Property IsApprovingPerson As Boolean
         Get
             Return _IsApprovingPerson

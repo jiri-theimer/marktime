@@ -89,7 +89,13 @@ Public Class p31_framework
                     hidCurrentJ02ID.Value = .GetUserParam("p31_framework_detail-j02id", Master.Factory.SysUser.j02ID.ToString)
                     Me.txtSearch.Text = .GetUserParam("p31_framework-search")
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_framework-pagesize-" & Me.GridPrefix, "20"))
-                    Me.navigationPane.Width = Unit.Parse(.GetUserParam("p31_framework-navigationPane_width", "350") & "px")
+                    Dim strW As String = .GetUserParam("p31_framework-navigationPane_width", "350")
+                    If strW = "-1" Then
+                        Me.navigationPane.Collapsed = True
+                    Else
+                        Me.navigationPane.Width = Unit.Parse(.GetUserParam("p31_framework-navigationPane_width", "350") & "px")
+                    End If
+
                     
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_framework-groupby-" & Me.GridPrefix, IIf(Me.GridPrefix = "p56", "Client", "")))
                     If tabs1.SelectedIndex = 0 Then

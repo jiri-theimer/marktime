@@ -112,7 +112,12 @@ Public Class entity_framework
                         Case "o23", "p56", "p91" : strDefWidth = "500"
                         Case Else
                     End Select
-                    Me.navigationPane.Width = Unit.Parse(.GetUserParam(Me.CurrentPrefix + "_framework-navigationPane_width", strDefWidth) & "px")
+                    Dim strW As String = .GetUserParam(Me.CurrentPrefix + "_framework-navigationPane_width", strDefWidth)
+                    If strW = "-1" Then
+                        Me.navigationPane.Collapsed = True
+                    Else
+                        Me.navigationPane.Width = Unit.Parse(strW & "px")
+                    End If
 
                     If Request.Item("blankwindow") = "1" Then Me.navigationPane.Collapsed = True
 
@@ -275,6 +280,9 @@ Public Class entity_framework
                 End If
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy
+            If cJ74.x29ID = BO.x29IdEnum.p56Task Then
+                If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
+            End If
             basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
         End With
         With grid1
@@ -365,7 +373,12 @@ Public Class entity_framework
                 InhaleMyQuery_p56(mq)
 
                 Dim bolInhaleReceiversInLine As Boolean = True
-                Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq, bolInhaleReceiversInLine)
+                Dim lis As IEnumerable(Of BO.p56Task) = Nothing
+                If Me.hidTasksWorksheetColumns.Value = "1" Then
+                    lis = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq, bolInhaleReceiversInLine)
+                Else
+                    lis = Master.Factory.p56TaskBL.GetList(mq, bolInhaleReceiversInLine)
+                End If
                 If lis Is Nothing Then
                     Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else

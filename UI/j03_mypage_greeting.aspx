@@ -278,7 +278,11 @@
             <div style="margin-top: 20px;">
                 <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
 
-
+                <span style="padding-left:30px;">&nbsp</span>
+                <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
+                
+                <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
+                
             </div>
         </div>
 </asp:Content>

@@ -221,6 +221,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents lblBuild As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cmdReadUpgradeInfo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdReadUpgradeInfo As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

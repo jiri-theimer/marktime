@@ -259,6 +259,7 @@ Public Class Site
             ''ScriptManager.RegisterStartupScript(Me.myHead, Me.GetType(), "LiveChat", s.ToString, False)
             myHead.Controls.Add(New LiteralControl(s.ToString))
         End If
+        imgVisitUpgradeInfo.Visible = _Factory.SysUser.j03IsShallReadUpgradeInfo
 
         'menu1.FindItemByValue("more").Items.FindItemByValue("cmdHelp").NavigateUrl = "javascript:help('" & Request.FilePath & "')"
         If Me.HelpTopicID = "" Then

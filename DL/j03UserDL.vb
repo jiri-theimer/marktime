@@ -202,6 +202,13 @@ Public Class j03UserDL
         End If
     End Function
 
+    Public Sub SetAsVisitedUpgradeInfo(intPID As Integer)
+        _cDB.RunSQL("UPDATE j03User set j03IsShallReadUpgradeInfo=0 WHERE j03ID=" & intPID.ToString)
+    End Sub
+    Public Sub SetAsWaitingOnVisitUpgradeInfo()
+        _cDB.RunSQL("UPDATE j03User set j03IsShallReadUpgradeInfo=1")
+    End Sub
+
     Public Function Delete(intPID As Integer) As Boolean
         Dim pars As New DbParameters()
         With pars

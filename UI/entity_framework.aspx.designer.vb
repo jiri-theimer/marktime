@@ -293,6 +293,15 @@ Partial Public Class entity_framework
     Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidTasksWorksheetColumns control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidTasksWorksheetColumns As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''RadSplitbar1 control.
     '''</summary>
     '''<remarks>

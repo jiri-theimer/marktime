@@ -17,6 +17,8 @@
     Function SetUserParam(strKey As String, strValue As String) As Boolean
 
     Function DeleteAllUserParams(intJ03ID As Integer) As Boolean
+    Sub SetAsVisitedUpgradeInfo(intPID As Integer)
+    Sub SetAsWaitingOnVisitUpgradeInfo()
 
     'Function LoadDockState(strPage As String) As String
     'Function SaveDockState(strPage As String, strDockState As String)
@@ -142,6 +144,13 @@ Class j03UserBL
     Public Function IsExistUserByLogin(strLogin As String, intJ03ID_Exclude As Integer) As Boolean Implements Ij03UserBL.IsExistUserByLogin
         Return _cDL.IsExistUserByLogin(strLogin, intJ03ID_Exclude)
     End Function
+
+    Public Sub SetAsVisitedUpgradeInfo(intPID As Integer) Implements Ij03UserBL.SetAsVisitedUpgradeInfo
+        _cDL.SetAsVisitedUpgradeInfo(intPID)
+    End Sub
+    Public Sub SetAsWaitingOnVisitUpgradeInfo() Implements Ij03UserBL.SetAsWaitingOnVisitUpgradeInfo
+        _cDL.SetAsWaitingOnVisitUpgradeInfo()
+    End Sub
 
     ''Public Function LoadDockState(strPage As String) As String Implements Ij03UserBL.LoadDockState
     ''    Return _cDL.SYS_LoadDockState(strPage)

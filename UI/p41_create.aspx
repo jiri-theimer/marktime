@@ -232,7 +232,7 @@
                             <asp:Label ID="lblMaturity" runat="server" Text="Výchozí počet dní splatnosti faktury:" CssClass="lbl"></asp:Label>
 
 
-                            <telerik:RadNumericTextBox ID="p41InvoiceMaturityDays" runat="server" MinValue="0" MaxValue="200" NumberFormat-DecimalDigits="0" Value="10" Width="50px" ShowSpinButtons="true">
+                            <telerik:RadNumericTextBox ID="p41InvoiceMaturityDays" runat="server" MinValue="0" MaxValue="200" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true">
                             </telerik:RadNumericTextBox>
                             <span class="infoInForm">Výchozí splatnost definujte v případě, že se liší od nastavení klienta.</span>
                         </td>

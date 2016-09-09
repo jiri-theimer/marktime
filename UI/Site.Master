@@ -103,7 +103,8 @@
     <form runat="server" style="height: 100%; margin: 0px;">
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
-
+        
+        <asp:HyperLink ID="imgVisitUpgradeInfo" runat="server" ImageUrl="Images/upgraded_32.png" NavigateUrl="log_app_update.aspx" style="position:absolute;left:140px;z-index:9000;" ToolTip="Nedávno proběhla aktualizace. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
         <div style="background-color: #25a0da;height:32px;">
 
             <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Auto" Skin="Windows7" ClickToOpen="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2900;background-color:blue !important;">

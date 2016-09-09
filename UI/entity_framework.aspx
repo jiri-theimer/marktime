@@ -86,14 +86,7 @@
             return (pids);
         }
 
-        function AfterPaneResized(sender, args) {
-            if (_initResizing == "1") {
-                _initResizing = "0";
-                return;
-            }
-
-            var w = sender.get_width();
-
+        function SavePaneWidth(w) {
             $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: "<%=Me.CurrentPrefix%>_framework-navigationPane_width", oper: "set" }, function (data) {
                 if (data == ' ') {
                     return;
@@ -101,8 +94,26 @@
 
 
             });
+        }
 
+        function AfterPaneResized(sender, args) {
+            if (_initResizing == "1") {
+                _initResizing = "0";
+                return;
+            }
 
+            var w = sender.get_width();
+            SavePaneWidth(w);
+           
+        }
+
+        function AfterPaneCollapsed(pane) {
+            var w = "-1";
+            SavePaneWidth(w);
+        }
+        function AfterPaneExpanded(pane) {
+            var w = pane.get_width();
+            SavePaneWidth(w);
         }
 
         function hardrefresh(pid, flag) {
@@ -172,7 +183,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="offsetY"></div>
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
-        <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" MaxWidth="1500" MinWidth="50" BackColor="white">
+        <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" MaxWidth="1500" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;">
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
@@ -264,6 +275,7 @@
             <asp:HiddenField ID="hidMasterPrefix" runat="server" />
             <asp:HiddenField ID="hidMasterPID" runat="server" />
             
+            <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

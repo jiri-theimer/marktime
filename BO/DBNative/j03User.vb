@@ -12,6 +12,8 @@
     Public Property j03IsSiteMenuOnClick As Boolean
     Public Property j03SiteMenuSkin As String
 
+    Public Property j03IsShallReadUpgradeInfo As Boolean
+
     Protected Property _j04Name As String
     Protected Property _j02LastName As String
     Protected Property _j02FirstName As String

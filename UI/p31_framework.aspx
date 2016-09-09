@@ -96,6 +96,15 @@
             sw_master(url,img,is_maximize);
         }
 
+        function SavePaneWidth(w) {
+            $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: "p31_framework-navigationPane_width", oper: "set" }, function (data) {
+                if (data == ' ') {
+                    return;
+                }
+
+            });
+        }
+
         function AfterPaneResized(sender, args) {
             if (_initResizing == "1") {
                 _initResizing = "0";
@@ -104,15 +113,18 @@
 
             var w = sender.get_width();
 
-            $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: "p31_framework-navigationPane_width", oper: "set" }, function (data) {
-                if (data == ' ') {
-                    return;
-                }
+            SavePaneWidth(w);
 
+        }
 
-            });
-
-
+        function AfterPaneCollapsed(pane)
+        {
+            var w = "-1";
+            SavePaneWidth(w);
+        }
+        function AfterPaneExpanded(pane) {
+            var w = pane.get_width();
+            SavePaneWidth(w);            
         }
 
         function hardrefresh(pid, flag) {
@@ -145,8 +157,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <div id="offsetY"></div>
-    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro">
-        <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" MaxWidth="1000" MinWidth="50" BackColor="white">
+    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
+        <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" MaxWidth="1000" BackColor="white">
 
             <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Metro" AutoPostBack="true">
                 <Tabs>

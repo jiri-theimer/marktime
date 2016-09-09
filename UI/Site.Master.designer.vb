@@ -59,6 +59,15 @@ Partial Public Class Site
     Protected WithEvents notify1 As Global.Telerik.Web.UI.RadNotification
 
     '''<summary>
+    '''imgVisitUpgradeInfo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgVisitUpgradeInfo As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>

@@ -49,6 +49,7 @@
     Private Sub cmdRunResult_Click(sender As Object, e As EventArgs) Handles cmdRunResult.Click
         Dim s As String = Trim(txtScript.Text)
         If s = "" Then
+            SetUpgradeInfoLog()
             Master.Notify("Není co spouštět!", NotifyLevel.WarningMessage)
             Return
         End If
@@ -59,8 +60,26 @@
             txtScript.Text = ""
             cmdRunResult.Visible = False
 
+
+            SetUpgradeInfoLog()
+
+
             Master.Notify("Operace dokončena.", NotifyLevel.InfoMessage)
 
+        End If
+    End Sub
+
+    Private Sub SetUpgradeInfoLog()
+        Dim cF As New BO.clsFile
+        Dim strLogFile As String = BO.ASS.GetApplicationRootFolder & "\sys\dbupdate\log_app_update.txt"
+        If cF.FileExist(strLogFile) Then
+            Dim s As String = cF.GetFileContents(strLogFile, , False, True)
+            Dim c As BO.x35GlobalParam = Master.Factory.x35GlobalParam.Load("log_app_update", True)
+            If c.x35Value <> s Then
+                Master.Factory.j03UserBL.SetAsWaitingOnVisitUpgradeInfo()
+            End If
+            c.x35Value = s
+            Master.Factory.x35GlobalParam.Save(c)
         End If
     End Sub
 End Class

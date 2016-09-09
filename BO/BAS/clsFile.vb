@@ -7,7 +7,7 @@ Public Class clsFile
             Return _Error
         End Get
     End Property
-    Public Function GetFileContents(ByVal FullPath As String, Optional ByRef ErrInfo As String = "", Optional ByVal bolWin1250 As Boolean = True) As String
+    Public Function GetFileContents(ByVal FullPath As String, Optional ByRef ErrInfo As String = "", Optional ByVal bolWin1250 As Boolean = True, Optional bolReadFirstLineOnly As Boolean = False) As String
 
         Dim strContents As String
         Dim objReader As StreamReader
@@ -18,8 +18,12 @@ Public Class clsFile
             Else
                 objReader = New StreamReader(FullPath, System.Text.Encoding.UTF8)
             End If
+            If bolReadFirstLineOnly Then
+                strContents = objReader.ReadLine()
+            Else
+                strContents = objReader.ReadToEnd()
+            End If
 
-            strContents = objReader.ReadToEnd()
             objReader.Close()
             Return strContents
 

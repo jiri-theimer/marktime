@@ -279,9 +279,13 @@
                 <div class="content">
 
                     <asp:Label ID="version" runat="server" CssClass="valbold"></asp:Label>
-
+                    
                     <span class="lbl">Počet otevřených uživatelů</span>
                     <asp:Label ID="lblRealUsersCount" runat="server" CssClass="badge1"></asp:Label>
+
+                    <div>
+                        <a href="log_app_update.aspx">Histoire změn a novinek v systému</a>
+                    </div>
                 </div>
             </div>
 
