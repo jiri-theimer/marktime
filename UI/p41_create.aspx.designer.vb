@@ -527,6 +527,24 @@ Partial Public Class p41_create
     Protected WithEvents p41NameShort As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p41WorksheetOperFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41WorksheetOperFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblp41RobotAddress control.
     '''</summary>
     '''<remarks>

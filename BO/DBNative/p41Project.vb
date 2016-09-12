@@ -2,8 +2,10 @@
     _NotSpecified = 0                   '0 - do projektu je povoleno zapisovat i fakturovat worksheet
     NoEntryData = 1                     '1 - V projektu není povoleno zapisování úkonů
     OnlyEntryData = 2                   '2 - V projektu je povoleno pouze zapisování úkonů
+    WithTaskOnly = 3                      '3 - V projektu je povoleno zapisovat úkony pouze přes úkol
     NoLimit = 9
 End Enum
+
 Public Class p41Project
     Inherits BOMother
     Public Property p42ID As Integer

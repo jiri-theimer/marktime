@@ -380,14 +380,36 @@ if exists (select 1 from sysobjects where  id = object_id('get_today') and type 
 GO
 
 
-create FUNCTION [dbo].[get_today](
+
+CREATE FUNCTION [dbo].[get_today](
   
 	)
 RETURNS datetime
 AS
 BEGIN
-    RETURN cast(convert(varchar(10), getdate(), 110) as datetime)
+	declare @d int,@m int,@s varchar(10)
+	set @d=day(getdate())
+	set @m=MONTH(getdate())
+	
+	if @d<10
+	 set @s='0'+CONVERT(varchar(1),@d)
+	else
+	 set @s=CONVERT(varchar(2),@d)
+	 
+	if @m<10
+	 set @s=@s+'.0'+CONVERT(varchar(1),@m)
+	else
+	 set @s=@s+'.'+CONVERT(varchar(2),@m)
+	
+	set @s=@s+'.'+CONVERT(varchar(4),year(getdate()))
+	
+	RETURN convert(datetime,@s,104)
+
+    ---RETURN cast(convert(varchar(10), getdate(), 110) as datetime)
+    
+    
 END
+
 
 GO
 
@@ -7345,7 +7367,10 @@ if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41IsDraft=1)
  set @err='Projekt je v režimu DRAFT, nelze do nìj vykazovat úkony.'
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41WorksheetOperFlag=1)
- set @err='Projekt je uzavøený pro zapisování worksheet úkonù.'
+ set @err='V projektu platí zákaz zapisovat úkony.'
+
+if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND p41WorksheetOperFlag=3) AND isnull(@p56id,0)=0
+ set @err='V projektu lze vykazovat úkony pouze pøes úkol.'
 
 if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ValidFrom>getdate() OR p41ValidUntil<getdate()))
  set @err='Projekt byl pøesunut do koše, nelze do nìj zapisovat worksheet úkony.'

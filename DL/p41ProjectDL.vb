@@ -307,7 +307,7 @@
 
             Select Case .SpecificQuery
                 Case BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
-                    s.Append(" AND a.p41IsDraft=0 AND a.p41WorksheetOperFlag IN (2,9) AND a.p41IsDraft=0 AND getdate() BETWEEN a.p41ValidFrom AND a.p41ValidUntil")
+                    s.Append(" AND a.p41IsDraft=0 AND a.p41WorksheetOperFlag>1 AND a.p41IsDraft=0 AND getdate() BETWEEN a.p41ValidFrom AND a.p41ValidUntil")
                     s.Append(" AND (a.p41ID IN (")
 
                     s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")

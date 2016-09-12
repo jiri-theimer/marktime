@@ -121,6 +121,7 @@
             If .p41LimitHours_Notification > 0 Or .p41LimitFee_Notification > 0 Then Me.chkDefineLimits.Checked = True Else Me.chkDefineLimits.Checked = False
             Me.p41RobotAddress.Text = .p41RobotAddress
             Me.p41ExternalPID.Text = .p41ExternalPID
+            basUI.SelectDropdownlistValue(Me.p41WorksheetOperFlag, CInt(.p41WorksheetOperFlag).ToString)
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -276,6 +277,7 @@
             End If
             .p41RobotAddress = Me.p41RobotAddress.Text
             .p41ExternalPID = Me.p41ExternalPID.Text
+            .p41WorksheetOperFlag = CType(p41WorksheetOperFlag.SelectedValue, BO.p41WorksheetOperFlagEnum)
 
             .ValidFrom = Master.RecordValidFrom
             .ValidUntil = Master.RecordValidUntil

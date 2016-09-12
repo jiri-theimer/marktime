@@ -66,7 +66,7 @@
                         <asp:Label ID="Label4" Text="Již uhrazeno:" runat="server" CssClass="lbl"></asp:Label>
                         <telerik:RadNumericTextBox ID="p90Amount_Billed" runat="server" Width="100px"></telerik:RadNumericTextBox>
                         <asp:Label ID="Label5" Text="Datum úhrady:" runat="server" CssClass="lbl"></asp:Label>
-                        <telerik:RadDatePicker ID="p90DateBilled" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p90DateBilled" runat="server"  Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
                     </td>
@@ -96,7 +96,7 @@
 
                     </td>
                     <td>
-                        <telerik:RadDatePicker ID="p90Date" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p90Date" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
 
@@ -108,7 +108,7 @@
 
                     </td>
                     <td>
-                        <telerik:RadDatePicker ID="p90DateMaturity" runat="server" RenderMode="Lightweight" Width="120px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDatePicker ID="p90DateMaturity" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput3" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
 

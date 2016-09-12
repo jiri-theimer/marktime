@@ -4,6 +4,8 @@ Public Class admin_framework
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
     Private Property _bolNeedExportList As Boolean = False
+    Private Property _needFilterIsChanged As Boolean = False
+
 
     Private Sub admin_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         Master.HelpTopicID = "admin_framework"
@@ -25,6 +27,8 @@ Public Class admin_framework
                     .Add(ViewState("prefix") & "-query-validity")
                     .Add("admin_framework-chkShowCustomTailor")
                     .Add(ViewState("prefix") & "-admin_framework-search")
+                    .Add("admin_framework-filter_setting-" & ViewState("prefix"))
+                    .Add("admin_framework-filter_sql-" & ViewState("prefix"))
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 
@@ -42,7 +46,9 @@ Public Class admin_framework
                 RefreshRecord()
                 panelmenu1.SelectedValue = "dashboard"
             Else
-                SetupGrid()
+                With Master.Factory.j03UserBL
+                    SetupGrid(.GetUserParam("admin_framework-filter_setting-" & ViewState("prefix")), .GetUserParam("admin_framework-filter_sql-" & ViewState("prefix")))
+                End With
                 panelmenu1.SelectedValue = ViewState("prefix")
             End If
             Select Case ViewState("prefix")
@@ -287,7 +293,7 @@ Public Class admin_framework
 
 
 
-    Private Sub SetupGrid()
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
 
         Dim bolSearch As Boolean = False
         grid1.ClearColumns()
@@ -295,7 +301,7 @@ Public Class admin_framework
         With grid1
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
             .radGridOrig.ShowFooter = False
-            
+
             Select Case ViewState("prefix")
                 Case "j02"
                     bolSearch = True
@@ -464,7 +470,7 @@ Public Class admin_framework
                 Case "x25"
                     .AddColumn("x23Name", "Combo seznam")
                     .AddColumn("x25Name", "Název položky")
-                    .AddColumn("x25Ordinary", "#", BO.cfENUM.Numeric0)            
+                    .AddColumn("x25Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "x23"
                     .AddColumn("x23Name", "Název")
                     .AddColumn("x23Ordinary", "#", BO.cfENUM.Numeric0)
@@ -505,7 +511,7 @@ Public Class admin_framework
                     ''    .AddColumn("x40Subject", "Předmět zprávy")
                     ''    .AddColumn("x40WhenProceeded", "Zpracováno", BO.cfENUM.DateTime)
                     ''    .AddColumn("x40ErrorMessage", "Chyba")
-                
+
                 Case "p53"
                     .AddColumn("x15Name", "Hladina")
                     .AddColumn("p53Value", "Hodnota sazby", BO.cfENUM.Numeric)
@@ -524,7 +530,7 @@ Public Class admin_framework
                     .AddColumn("UserUpdate", "Aktualizoval")
             End Select
 
-            
+            .SetFilterSetting(strFilterSetting, strFilterExpression)
         End With
 
         cmdSearch.Visible = bolSearch
@@ -535,6 +541,10 @@ Public Class admin_framework
     Private Function NU(ByVal strValue As String) As String
         Return "javascript:lp('" & strValue & "')"
     End Function
+
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needFilterIsChanged = True
+    End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         If Not TypeOf e.Item Is GridDataItem Then Return
@@ -606,6 +616,12 @@ Public Class admin_framework
         End Select
     End Function
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("admin_framework-filter_setting-" & ViewState("prefix"), grid1.GetFilterSetting())
+                .SetUserParam("admin_framework-filter_sql-" & ViewState("prefix"), grid1.GetFilterExpression())
+            End With
+        End If
         grid1.DataKeyNames = "IsClosed"
         Dim mqDef As New BO.myQuery
         mqDef.Closed = VQ()
@@ -695,11 +711,11 @@ Public Class admin_framework
                     Dim lis As IEnumerable(Of BO.o21MilestoneType) = .o21MilestoneTypeBL.GetList(mqDef).Where(Function(p) p.x29ID = x29id)
                     grid1.DataSource = lis
 
-                
+
                 Case "p41_x67", "p56_x67", "x31_x67", "p28_x67", "p91_x67", "p90_x67", "o23_x67"
                     Dim lis As IEnumerable(Of BO.x67EntityRole) = .x67EntityRoleBL.GetList(mqDef).Where(Function(p) p.x29ID = BO.BAS.GetX29FromPrefix(Left(ViewState("prefix"), 3)))
                     grid1.DataSource = lis
-                
+
                 Case "p95"
                     Dim lis As IEnumerable(Of BO.p95InvoiceRow) = .p95InvoiceRowBL.GetList(mqDef)
                     grid1.DataSource = lis

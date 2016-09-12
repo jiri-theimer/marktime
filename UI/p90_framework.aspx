@@ -13,12 +13,12 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p90_record.aspx?pid=" + pid, "Images/proforma_32.png");
+            sw_master("p90_record.aspx?pid=" + pid, "Images/proforma_32.png",true);
 
         }
 
         function record_new() {
-            sw_master("p90_record.aspx?pid=0", "Images/proforma_32.png");
+            sw_master("p90_record.aspx?pid=0", "Images/proforma_32.png",true);
 
 
         }
@@ -55,7 +55,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p90_record.aspx?clone=1&pid=" + pid, "Images/billing_32.png");
+            sw_master("p90_record.aspx?clone=1&pid=" + pid, "Images/billing_32.png",true);
 
         }
 

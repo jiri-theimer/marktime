@@ -322,6 +322,7 @@
     <Content Include="p91_proforma.aspx" />
     <Content Include="p98_record.aspx" />
     <Content Include="panelmenu.ascx" />
+    <Content Include="Public\log_app_update_public.aspx" />
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
@@ -1695,6 +1696,13 @@
     <Compile Include="panelmenu.ascx.vb">
       <DependentUpon>panelmenu.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\log_app_update_public.aspx.designer.vb">
+      <DependentUpon>log_app_update_public.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\log_app_update_public.aspx.vb">
+      <DependentUpon>log_app_update_public.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="query_builder.aspx.designer.vb">
       <DependentUpon>query_builder.aspx</DependentUpon>

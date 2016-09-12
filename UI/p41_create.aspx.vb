@@ -312,6 +312,7 @@
                 End If
                 .p41RobotAddress = Me.p41RobotAddress.Text
                 .p41ExternalPID = Me.p41ExternalPID.Text
+                .p41WorksheetOperFlag = CType(p41WorksheetOperFlag.SelectedValue, BO.p41WorksheetOperFlagEnum)
             End With
 
             Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()

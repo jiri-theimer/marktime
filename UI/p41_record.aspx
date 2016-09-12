@@ -291,6 +291,18 @@
                         <asp:TextBox ID="p41NameShort" runat="server" Style="width: 100px;"></asp:TextBox>
                     </td>
                 </tr>
+                 <tr>
+                    <td>
+                        <asp:Label ID="Label3" runat="server" Text="Omezení úkonů v projektu:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="p41WorksheetOperFlag" runat="server">
+                            <asp:ListItem Text="" Value="9"></asp:ListItem>
+                            <asp:ListItem Text="V projektu platí zákaz vykazovat úkony" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="V projektu lze vykazovat úkony pouze přes úkol" Value="3"></asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Label ID="lblp41RobotAddress" runat="server" Text="Adresa pro IMAP robota:" CssClass="lbl"></asp:Label>
@@ -299,6 +311,7 @@
                         <asp:TextBox ID="p41RobotAddress" runat="server" Style="width: 200px;"></asp:TextBox>
                     </td>
                 </tr>
+               
                 <tr>
                     <td colspan="2">
                         <span class="infoInForm">Adresa v kopii (CC/BCC) , podle které robot pozná, že načtená poštovní zpráva má vazbu k tomuto projektu.</span>
