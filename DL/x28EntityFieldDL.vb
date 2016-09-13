@@ -82,9 +82,9 @@
 
     End Function
 
-    Public Overloads Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer) As IEnumerable(Of BO.x28EntityField)
+    Public Overloads Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer, bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
         Dim pars As New DbParameters
-        Dim s As String = InhaleGetListSQL(x29id, pars, intEntityType)
+        Dim s As String = InhaleGetListSQL(x29id, pars, intEntityType, bolTestUserAccess)
 
         Return _cDB.GetList(Of BO.x28EntityField)(s, pars)
     End Function
@@ -94,7 +94,7 @@
         pars.Add("x23id", intX23ID, DbType.Int32)
         Return _cDB.GetList(Of BO.x28EntityField)(s, pars)
     End Function
-    Public Overloads Function GetList(x28FieldNames As List(Of String)) As IEnumerable(Of BO.x28EntityField)
+    Public Overloads Function GetList(x28FieldNames As List(Of String), bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
         Dim s As String = GetSQLPart1(), pars As New DbParameters
         If x28FieldNames.Count > 0 Then
             s += " WHERE a.x28Field IN ("
@@ -107,7 +107,7 @@
             Next
             s += ")"
         End If
-        
+
         Return _cDB.GetList(Of BO.x28EntityField)(s, pars)
     End Function
     
@@ -119,7 +119,7 @@
         Return s
     End Function
 
-    Private Function InhaleGetListSQL(x29id As BO.x29IdEnum, ByRef pars As DbParameters, intEntityType As Integer) As String
+    Private Function InhaleGetListSQL(x29id As BO.x29IdEnum, ByRef pars As DbParameters, intEntityType As Integer, bolTestUserAccess As Boolean) As String
         Dim s As String = GetSQLPart1()
         If x29id > BO.x29IdEnum._NotSpecified Then
             s += " WHERE a.x29ID=@x29id"
@@ -131,14 +131,17 @@
             Else
                 s += " AND (a.x28IsAllEntityTypes=1 OR a.x28ID IN (select x28ID FROM x26EntityField_Binding WHERE x26EntityTypePID=" & intEntityType.ToString
                 s += " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29id).ToString & "))"
-                
+
             End If
         End If
-        s += " AND (a.x28IsPublic=1 OR ','+a.x28NotPublic_j04IDs+',' LIKE '%," & _curUser.j04ID.ToString & ",%'"
-        If _curUser.j07ID <> 0 Then
-            s += " OR ','+a.x28NotPublic_j07IDs+',' LIKE '%," & _curUser.j07ID.ToString & ",%'"
+        If bolTestUserAccess Then
+            s += " AND (a.x28IsPublic=1 OR ','+a.x28NotPublic_j04IDs+',' LIKE '%," & _curUser.j04ID.ToString & ",%'"
+            If _curUser.j07ID <> 0 Then
+                s += " OR ','+a.x28NotPublic_j07IDs+',' LIKE '%," & _curUser.j07ID.ToString & ",%'"
+            End If
+            s += ")"
         End If
-        s += ")"
+        
 
         s += " ORDER BY a.x29ID,x27.x27Ordinary,a.x27ID,a.x28Ordinary,a.x28name"
         Return s
@@ -164,7 +167,7 @@
     Public Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer) As List(Of BO.FreeField)
         Dim pars As New DbParameters
 
-        Dim s As String = InhaleGetListSQL(x29id, pars, intEntityType)
+        Dim s As String = InhaleGetListSQL(x29id, pars, intEntityType, True)
         Dim lis As List(Of BO.FreeField) = _cDB.GetList(Of BO.FreeField)(s, pars).ToList
 
         If lis.Count = 0 Then Return lis

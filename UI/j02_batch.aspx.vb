@@ -32,7 +32,7 @@
         End If
     End Sub
     Private Sub SetupFF()
-        Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(BO.x29IdEnum.j02Person, -1)
+        Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(BO.x29IdEnum.j02Person, -1, True)
         For Each c In lisX28
             opgTarget.Items.Add(New ListItem("Uživatelské pole [" & c.x28Name & "]", "ff-" & c.PID.ToString))
         Next

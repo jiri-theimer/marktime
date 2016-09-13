@@ -197,7 +197,7 @@ Class j74SavedGridColTemplateBL
     End Function
 
     Private Sub AppendFreeFields(x29id As BO.x29IdEnum, ByRef lis As List(Of BO.GridColumn))
-        Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(x29id, -1)
+        Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(x29id, -1, True)
         For Each c In lisX28
             If c.x23ID = 0 Then
                 Select Case c.x24ID
@@ -208,7 +208,7 @@ Class j74SavedGridColTemplateBL
                     Case BO.x24IdENUM.tDateTime
                         lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateTime))
                     Case BO.x24IdENUM.tDecimal
-                       lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric))
+                        lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric))
                     Case BO.x24IdENUM.tInteger
                         lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric0))
                     Case BO.x24IdENUM.tBoolean

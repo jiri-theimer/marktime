@@ -152,7 +152,7 @@
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
 
-        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1)
+        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True)
         For Each cField In lisFF
             lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Field, cField.x28Name))
         Next

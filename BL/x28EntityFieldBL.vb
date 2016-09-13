@@ -4,8 +4,8 @@
     Function Load(intPID As Integer) As BO.x28EntityField
     Function LoadByField(strField As String) As BO.x28EntityField
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer) As IEnumerable(Of BO.x28EntityField)
-    Function GetList(x28FieldNames As List(Of String)) As IEnumerable(Of BO.x28EntityField)
+    Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer, bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
+    Function GetList(x28FieldNames As List(Of String), bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
     Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x28EntityField)
     Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer) As List(Of BO.FreeField)
     Function GetList_x26(intX28ID As Integer) As IEnumerable(Of BO.x26EntityField_Binding)
@@ -66,11 +66,11 @@ Class x28EntityFieldBL
     Public Function Delete(intPID As Integer) As Boolean Implements Ix28EntityFieldBL.Delete
         Return _cDL.Delete(intPID)
     End Function
-    Public Overloads Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer) As IEnumerable(Of BO.x28EntityField) Implements Ix28EntityFieldBL.GetList
-        Return _cDL.GetList(x29id, intEntityType)
+    Public Overloads Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer, bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField) Implements Ix28EntityFieldBL.GetList
+        Return _cDL.GetList(x29id, intEntityType, bolTestUserAccess)
     End Function
-    Public Overloads Function GetList(x28FieldNames As List(Of String)) As IEnumerable(Of BO.x28EntityField) Implements Ix28EntityFieldBL.GetList
-        Return _cDL.GetList(x28FieldNames)
+    Public Overloads Function GetList(x28FieldNames As List(Of String), bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField) Implements Ix28EntityFieldBL.GetList
+        Return _cDL.GetList(x28FieldNames, bolTestUserAccess)
     End Function
     Public Overloads Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x28EntityField) Implements Ix28EntityFieldBL.GetList
         Return _cDL.GetList(intX23ID)
