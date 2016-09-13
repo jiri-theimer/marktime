@@ -95,6 +95,7 @@
         Return _cDB.GetList(Of BO.x28EntityField)(s, pars)
     End Function
     Public Overloads Function GetList(x28FieldNames As List(Of String), bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
+        'zde zatím bez využití bolTestUserAccess
         Dim s As String = GetSQLPart1(), pars As New DbParameters
         If x28FieldNames.Count > 0 Then
             s += " WHERE a.x28Field IN ("
