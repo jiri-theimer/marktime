@@ -352,6 +352,14 @@
                         s.Append(" WHERE x67.x29ID=118 AND x68.x53ID=21 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
                         s.Append("))")
                     End If
+                Case BO.myQueryP41_SpecificQuery.AllowedForApproving
+                    s.Append(" AND (a.p41ID IN (")
+                    s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
+                    s.Append(" WHERE x67.x29ID=141 AND o28.o28PermFlag IN (3,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
+                    s.Append(") OR a.j18ID IN (")
+                    s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
+                    s.Append(" WHERE x67.x29ID=118 AND o28.o28PermFlag IN (3,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
+                    s.Append("))")
             End Select
             If .QuickQuery > BO.myQueryP41_QuickQuery._NotSpecified Then
                 s.Append(" AND " & bas.GetQuickQuerySQL_p41(.QuickQuery))

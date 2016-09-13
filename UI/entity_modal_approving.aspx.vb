@@ -157,6 +157,7 @@
             Return
         End If
         Dim bolCanApprove As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
+
         Dim intFirstPID As Integer = Master.DataPID
         If Me.CurrentInputPIDs <> "" Then
             intFirstPID = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)(0)
@@ -186,6 +187,15 @@
                 If cRec Is Nothing Then NoRec()
                 Master.HeaderText = cRec.p28Name
                 Master.HeaderIcon = "Images/contact_32.png"
+                If Not bolCanApprove Then
+                    Dim mq As New BO.myQueryP41
+                    mq.p28ID = cRec.PID
+                    mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForApproving
+                    Dim lisP41 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
+                    If lisP41.Count > 0 Then
+                        bolCanApprove = True
+                    End If
+                End If
             Case BO.x29IdEnum.p56Task
                 Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(intFirstPID)
                 If cRec Is Nothing Then NoRec()
