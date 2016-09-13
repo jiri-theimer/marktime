@@ -41,6 +41,10 @@
             pars.Add("x28IsRequired", .x28IsRequired, DbType.Boolean)
             pars.Add("x28IsAllEntityTypes", .x28IsAllEntityTypes, DbType.Boolean)
 
+            pars.Add("x28IsPublic", .x28IsPublic, DbType.Boolean)
+            pars.Add("x28NotPublic_j04IDs", .x28NotPublic_j04IDs, DbType.String)
+            pars.Add("x28NotPublic_j07IDs", .x28NotPublic_j07IDs, DbType.String)
+
 
             pars.Add("x28textboxheight", cRec.x28TextboxHeight, DbType.Int32)
             pars.Add("x28textboxwidth", cRec.x28TextboxWidth, DbType.Int32)
@@ -130,7 +134,11 @@
                 
             End If
         End If
-        
+        s += " AND (a.x28IsPublic=1 OR ','+a.x28NotPublic_j04IDs+',' LIKE '%," & _curUser.j04ID.ToString & ",%'"
+        If _curUser.j07ID <> 0 Then
+            s += " OR ','+a.x28NotPublic_j07IDs+',' LIKE '%," & _curUser.j07ID.ToString & ",%'"
+        End If
+        s += ")"
 
         s += " ORDER BY a.x29ID,x27.x27Ordinary,a.x27ID,a.x28Ordinary,a.x28name"
         Return s

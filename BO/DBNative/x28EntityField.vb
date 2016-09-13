@@ -25,6 +25,10 @@ Public Class x28EntityField
 
     Public Property x28Field As String
 
+    Public Property x28IsPublic As Boolean = True
+    Public Property x28NotPublic_j04IDs As String
+    Public Property x28NotPublic_j07IDs As String
+
     Protected Property _x29Name As String
     Public ReadOnly Property x29Name As String
         Get

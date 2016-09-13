@@ -3,6 +3,7 @@
     Public Property j03Login As String
     Public Property j04ID As Integer
     Public Property j02ID As Integer
+    Public Property j07ID As Integer
     Public Property j03IsDomainAccount As Boolean
     Public Property j03MembershipUserId As String
     Public Property j03IsSystemAccount As Boolean

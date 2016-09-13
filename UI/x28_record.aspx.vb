@@ -34,6 +34,11 @@
     End Sub
 
     Private Sub RefreshRecord()
+        Me.x28NotPublic_j04IDs.DataSource = Master.Factory.j04UserRoleBL.GetList()
+        Me.x28NotPublic_j04IDs.DataBind()
+        Me.x28NotPublic_j07IDs.DataSource = Master.Factory.j07PersonPositionBL.GetList()
+        Me.x28NotPublic_j07IDs.DataBind()
+
         x27ID.DataSource = Master.Factory.x27EntityFieldGroupBL.GetList(New BO.myQuery)
         x27ID.DataBind()
         x24id.DataSource = Master.Factory.ftBL.GetList_X24(New BO.myQuery)
@@ -62,6 +67,11 @@
             x28Ordinary.Value = .x28Ordinary
             x28field.Text = .x28Field
             x28IsRequired.Checked = .x28IsRequired
+            x28IsPublic.Checked = .x28IsPublic
+            If Not .x28IsPublic Then
+                basUI.CheckItems(Me.x28NotPublic_j04IDs, BO.BAS.ConvertPIDs2List(.x28NotPublic_j04IDs, ","))
+                basUI.CheckItems(Me.x28NotPublic_j07IDs, BO.BAS.ConvertPIDs2List(.x28NotPublic_j07IDs, ","))
+            End If
             Master.Timestamp = .Timestamp
 
         End With
@@ -104,6 +114,7 @@
             Case BO.x29IdEnum.p31Worksheet : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny worksheet sešity"
             Case BO.x29IdEnum.p56Task : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy úkolů"
         End Select
+        panPublic.Visible = Not Me.x28IsPublic.Checked
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x28EntityFieldBL
@@ -138,6 +149,13 @@
                 .x29ID = BO.BAS.IsNullInt(x29ID.SelectedValue)
                 .x27ID = BO.BAS.IsNullInt(x27ID.SelectedValue)
 
+                .x28IsPublic = Me.x28IsPublic.Checked
+                If Me.x28IsPublic.Checked Then
+                    .x28NotPublic_j04IDs = "" : .x28NotPublic_j07IDs = ""
+                Else
+                    .x28NotPublic_j04IDs = String.Join(",", basUI.GetCheckedItems(Me.x28NotPublic_j04IDs))
+                    .x28NotPublic_j07IDs = String.Join(",", basUI.GetCheckedItems(Me.x28NotPublic_j07IDs))
+                End If
             End With
 
             Dim lisX26 As New List(Of BO.x26EntityField_Binding)

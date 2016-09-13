@@ -221,6 +221,42 @@ Partial Public Class x28_record
     Protected WithEvents x28field As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''x28IsPublic control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28IsPublic As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panPublic control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPublic As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x28NotPublic_j04IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28NotPublic_j04IDs As Global.System.Web.UI.WebControls.CheckBoxList
+
+    '''<summary>
+    '''x28NotPublic_j07IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28NotPublic_j07IDs As Global.System.Web.UI.WebControls.CheckBoxList
+
+    '''<summary>
     '''x28IsAllEntityTypes control.
     '''</summary>
     '''<remarks>

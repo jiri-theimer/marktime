@@ -111,6 +111,19 @@
 
     </table>
     <div class="div6">
+        <asp:CheckBox ID="x28IsPublic" runat="server" AutoPostBack="true" Text="Obsah pole je dostupný všem uživatelům s přístupem k záznamu" Checked="true" />
+    </div>
+    <asp:panel ID="panPublic" runat="server" cssclass="content-box2">
+        <div class="title">
+            Obsah pole bude přístupný pouze uživatelům s níže vybranou aplikační rolí nebo pozicí osoby
+        </div>
+        <div class="content">
+            <asp:CheckBoxList ID="x28NotPublic_j04IDs" runat="server" DataTextField="j04Name" DataValueField="pid" RepeatColumns="5"></asp:CheckBoxList>
+            <hr />
+            <asp:CheckBoxList ID="x28NotPublic_j07IDs" runat="server" DataTextField="j07Name" DataValueField="pid" RepeatColumns="5"></asp:CheckBoxList>
+        </div>
+    </asp:panel>
+    <div class="div6">
         <asp:CheckBox ID="x28IsAllEntityTypes" runat="server" AutoPostBack="true" Text="Pole je aplikovatelné pro všechny entitní typy" Checked="true" />
     </div>
     <asp:panel ID="panEntityTypes" runat="server" cssclass="content-box2">
@@ -138,8 +151,7 @@
         </div>
     </asp:panel>
 
-
-
+     
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>
