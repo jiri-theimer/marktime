@@ -52,6 +52,14 @@ Public Class datagrid
             grid1.AllowCustomPaging = value
         End Set
     End Property
+    Public Property AllowCustomSorting As Boolean
+        Get
+            Return grid1.MasterTableView.AllowCustomSorting
+        End Get
+        Set(value As Boolean)
+            grid1.MasterTableView.AllowCustomSorting = value
+        End Set
+    End Property
     Public Property VirtualRowCount As Integer
         Get
             Return grid1.MasterTableView.VirtualItemCount
@@ -275,7 +283,6 @@ Public Class datagrid
             .Text = strText
             .HeaderText = strHeaderText
         End With
-
 
 
     End Sub

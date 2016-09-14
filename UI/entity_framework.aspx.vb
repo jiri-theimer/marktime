@@ -283,7 +283,7 @@ Public Class entity_framework
             If cJ74.x29ID = BO.x29IdEnum.p56Task Then
                 If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
             End If
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -310,7 +310,7 @@ Public Class entity_framework
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
-                basUIMT.p41_grid_Handle_ItemDataBound(sender, e)
+                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
             Case BO.x29IdEnum.p28Contact
                 basUIMT.p28_grid_Handle_ItemDataBound(sender, e)
             Case BO.x29IdEnum.o23Notepad
@@ -342,11 +342,17 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p41(mq)
 
-                Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
-                If lis Is Nothing Then
+                ''Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
+                ''If lis Is Nothing Then
+                ''    Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                ''Else
+                ''    grid1.DataSource = lis
+                ''End If
+                Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(hidCols.Value, mq)
+                If dt Is Nothing Then
                     Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
-                    grid1.DataSource = lis
+                    grid1.DataSourceDataTable = dt
                 End If
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28

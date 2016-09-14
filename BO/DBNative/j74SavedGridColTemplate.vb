@@ -12,4 +12,6 @@
     Public Property j74IsFilteringByColumn As Boolean
     Public Property j74IsVirtualScrolling As Boolean
     Public Property j74DrillDownField1 As String
+
+    
 End Class

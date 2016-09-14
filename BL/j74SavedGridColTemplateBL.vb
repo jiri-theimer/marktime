@@ -129,6 +129,7 @@ Class j74SavedGridColTemplateBL
                     Case "p31_framework"
                         c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
                 End Select
+                ''c.j74ColumnNames = "Client,p41Name"
                 c.j74ColumnNames = "Client,p41Name"
             Case BO.x29IdEnum.p28Contact
                 c.j74ColumnNames = "p28Name"
@@ -226,24 +227,24 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.NazevProjektu, "p41Name"))
             .Add(AGC(My.Resources.common.Kod, "p41Code"))
             .Add(AGC("DRAFT", "p41IsDraft", BO.cfENUM.Checkbox))
-            .Add(AGC(My.Resources.common.KlientProjektu, "Client"))
-            .Add(AGC(My.Resources.common.KlientPlusProjekt, "FullName", , False))
+            .Add(AGC(My.Resources.common.KlientProjektu, "Client", , , "p28client.p28Name"))
+            .Add(AGC(My.Resources.common.KlientPlusProjekt, "FullName", , True, "isnull(p28client.p28Name+char(32),'')+p41Name"))
             .Add(AGC(My.Resources.common.Zkratka, "p41NameShort"))
             .Add(AGC(My.Resources.common.TypProjektu, "p42Name"))
             .Add(AGC(My.Resources.common.Stredisko, "j18Name"))
-            .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing"))
-            .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal"))
+            .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
+            .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
             .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly))
             .Add(AGC(My.Resources.common.PlanEnd, "p41PlanUntil", BO.cfENUM.DateOnly))
             .Add(AGC(My.Resources.common.LimitHodin, "p41LimitHours_Notification", BO.cfENUM.Numeric))
             .Add(AGC(My.Resources.common.LimitniHonorar, "p41LimitFee_Notification", BO.cfENUM.Numeric))
 
-            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner"))
-            .Add(AGC(My.Resources.common.Zalozeno, "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Zalozil, "UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Aktualizoval, "UserUpdate"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p41DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Zalozil, "p41UserInsert"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p41DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p41UserUpdate"))
             .Add(AGC(My.Resources.common.ExterniKod, "p41ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p41Project, lis)

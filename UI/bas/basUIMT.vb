@@ -1,10 +1,12 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
-    Public Shared Sub SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "")
+    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "") As String
+        Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         With grid
             .ClearColumns()
             .AllowMultiSelect = bolAllowMultiSelect
             .DataKeyNames = "pid"
+            .AllowCustomSorting = True
 
             If cJ74.j74DrillDownField1 = "" Then
                 'bez drill-down
@@ -46,6 +48,11 @@ Public Class basUIMT
 
                     If Not c Is Nothing Then
                         .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
+                        If c.ColumnDBName = "" Then
+                            lisSqlSEL.Add(c.ColumnName)
+                        Else
+                            lisSqlSEL.Add(c.ColumnDBName & " AS " & c.ColumnName)
+                        End If
                     End If
                 Next
                 grid.SetFilterSetting(strFilterSetting, strFilterExpression)
@@ -93,8 +100,8 @@ Public Class basUIMT
 
         End With
 
-
-    End Sub
+        Return String.Join(",", lisSqlSEL)
+    End Function
 
     Public Shared Sub MakeDockZonesUserFriendly(rdl As RadDockLayout, bolLockedInteractivity As Boolean)
 
@@ -224,13 +231,19 @@ Public Class basUIMT
         End With
 
     End Sub
-    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
+    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, Optional bolDT As Boolean = False)
         If Not TypeOf e.Item Is GridDataItem Then Return
-
-        Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
-        If cRec.IsClosed Then dataItem.Font.Strikeout = True
-        If cRec.p41IsDraft Then dataItem("systemcolumn").CssClass = "draft"
+        If bolDT Then
+            Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
+            If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+        Else
+            Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
+            If cRec.IsClosed Then dataItem.Font.Strikeout = True
+            If cRec.p41IsDraft Then dataItem("systemcolumn").CssClass = "draft"
+        End If
+
 
     End Sub
     

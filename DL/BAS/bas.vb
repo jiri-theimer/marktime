@@ -35,6 +35,23 @@
             Return ""
         End If
     End Function
+    ''Shared Function ParseGridSqlOrderBy(strOrderBy As String) As String
+    ''    If strOrderBy = "" Then Return ""
+    ''    Dim a() As String = Split(strOrderBy, ","), lis As New List(Of String)
+    ''    For i As Integer = 0 To UBound(a)
+    ''        If a(i).ToLower.IndexOf(" as ") > 0 Then
+    ''            Dim b() As String = Split(a(i).ToLower, " as ")
+    ''            If Right(a(i).ToLower, 4) = "desc" Then
+    ''                lis.Add(b(0) & " DESC")
+    ''            Else
+    ''                lis.Add(b(0))
+    ''            End If
+    ''        Else
+    ''            lis.Add(a(i))
+    ''        End If
+    ''    Next
+    ''    Return String.Join(",", lis)
+    ''End Function
 
     Shared Function ParseWhereMultiPIDs(strPKField As String, myQuery As BO.myQuery) As String
         If myQuery Is Nothing Then Return ""

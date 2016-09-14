@@ -194,6 +194,36 @@
         Return _cDB.GetList(Of BO.p41Project)(s, pars)
     End Function
 
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP41) As DataTable
+        Dim s As String = ""
+        strCols += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft"
+        
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            Dim strORDERBY As String = .MG_SortString
+            If strORDERBY = "" Then strORDERBY = "p28client.p28Name,p41Name"
+            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2()
+
+            If strW <> "" Then s += " WHERE " & strW
+            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+            pars.Add("start", intStart, DbType.Int32)
+            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+            s += " WHERE RowIndex BETWEEN @start AND @end"
+        End With
+
+
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+
+
+    End Function
+
+
+
     Private Function ParseSortExpression(strSort As String) As String
         strSort = strSort.Replace("UserInsert", "p41UserInsert").Replace("UserUpdate", "p41UserUpdate").Replace("DateInsert", "p41DateInsert").Replace("DateUpdate", "p41DateUpdate")
         strSort = strSort.Replace("Client", "p28client.p28Name").Replace("Owner", "j02owner.j02LastName").Replace("p51Name_Billing", "p51billing.p51Name").Replace("FullName", "p28client.p28Name,p41Name").Replace("p51Name_Internal", "p51internal.p51Name")
@@ -204,8 +234,6 @@
     End Function
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
-        'strORDERBY = strORDERBY.Replace("UserInsert", "p41UserInsert").Replace("UserUpdate", "p41UserUpdate").Replace("DateInsert", "p41DateInsert").Replace("DateUpdate", "p41DateUpdate")
-        'Dim strORDERBY_Primary As String = strORDERBY.Replace("Client", "p28client.p28Name").Replace("Owner", "j02owner.j02LastName").Replace("p51Name_Billing", "p51billing.p51Name").Replace("FullName", "p28client.p28Name,p41Name")
 
         Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2()
 
@@ -214,8 +242,7 @@
         pars.Add("start", intStart, DbType.Int32)
         pars.Add("end", (intStart + intPageSize - 1), DbType.Int32)
         s += " WHERE RowIndex BETWEEN @start AND @end"
-        'strORDERBY = strORDERBY.Replace("Client", "_Client").Replace("p28client.p28Name", "_Client").Replace("j18Name", "_j18Name").Replace("p92Name", "_p92Name").Replace("Owner", "_Owner").Replace("p51Name_Billing", "_p51Name_Billing").Replace("p42Name", "_p42Name")
-        's += " ORDER BY " & strORDERBY
+
         Return s
     End Function
 
@@ -227,7 +254,7 @@
         Return _cDB.GetList(Of BO.o39Project_Address)(s, New With {.pid = intPID})
     End Function
 
-   
+
     Public Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
         Return bas.GetList_x90(_cDB, BO.x29IdEnum.p41Project, intPID, datFrom, datUntil)
     End Function
