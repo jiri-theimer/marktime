@@ -248,12 +248,8 @@
             Dim cRecLast As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadMyLastCreated(True, intDefP41ID)
             If Not cRecLast Is Nothing Then
                 With cRecLast
-                    If BO.ASS.GetConfigVal("Implementation") = "dhp" Then
-                        'DHP nechce paměť posledního sešitu + aktivity
-                    Else
-                        Me.MyDefault_p34ID = .p34ID
-                        Me.MyDefault_p32ID = .p32ID
-                    End If
+                    Me.MyDefault_p34ID = .p34ID
+                    Me.MyDefault_p32ID = .p32ID
                     
                     If DateDiff(DateInterval.Hour, .DateInsert.Value, Now) < 1 Then
                         'do hodiny starý záznam bere jako výchozí datum posledního úkonu + uživatele posledního úkonu
