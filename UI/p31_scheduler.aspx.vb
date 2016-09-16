@@ -220,7 +220,7 @@ Public Class p31_scheduler
                 End If
                 
                 Dim s As String = .p28CompanyShortName
-                If s = "" Then s = .p28Name
+                If s = "" Then s = .ClientName
                 If s > "" Then
                     If Len(s) > 20 Then c.Subject += Left(s, 20) & "..." Else c.Subject += s
                 End If

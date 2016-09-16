@@ -675,7 +675,7 @@
                 .Text = cRec.p41Name
             End If
             If cRec.p28ID_Client <> 0 Then
-                .Text = BO.BAS.OM3(cRec.p28Name, 15) & " - " & .Text
+                .Text = BO.BAS.OM3(cRec.ClientName, 15) & " - " & .Text
             End If
         End With
         With CType(e.Item.FindControl("Task"), Label)

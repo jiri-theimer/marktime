@@ -31,7 +31,7 @@
         If cRec Is Nothing Then Master.StopPage("record not found")
         With cRec
             Me.Project.Text = .p41Name
-            Me.Client.Text = .p28Name
+            Me.Client.Text = .ClientName
             Me.p32Name.Text = .p32Name
             Me.p34name.Text = .p34Name
             Me.Person.Text = .Person

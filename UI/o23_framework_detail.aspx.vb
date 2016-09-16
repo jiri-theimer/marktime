@@ -220,7 +220,7 @@
             End If
             If .p31ID <> 0 Then
                 Dim cP31 As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(.p31ID)
-                Me.BindEntity.Text = cP31.p28Name & " - " & cP31.p41Name
+                Me.BindEntity.Text = cP31.ClientName & " - " & cP31.p41Name
                 If cP31.p33ID = BO.p33IdENUM.PenizeBezDPH Or cP31.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
                     Me.BindEntity.Text += " <span class='badge1'>" & BO.BAS.FN(cP31.p31Amount_WithoutVat_Orig) & " " & cP31.j27Code_Billing_Orig & "</span>"
                 End If

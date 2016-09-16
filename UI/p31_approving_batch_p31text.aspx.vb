@@ -115,7 +115,7 @@
             End With
 
             CType(e.Item.FindControl("Currency"), Label).Text = cRec.j27Code_Billing_Orig
-            CType(e.Item.FindControl("Client"), Label).Text = .p28Name
+            CType(e.Item.FindControl("Client"), Label).Text = .ClientName
             CType(e.Item.FindControl("p41Name"), Label).Text = .p41Name
         End With
 

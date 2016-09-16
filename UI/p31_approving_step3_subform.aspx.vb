@@ -46,7 +46,7 @@
             Me.billable.Text = IIf(.p32IsBillable, "[fakturovatelné]", "[ne-fakturovatelné]")
             Me.p31date.Text = BO.BAS.FD(.p31Date)
 
-            Me.Client.Text = .p28Name
+            Me.Client.Text = .ClientName
             Me.p41Name.Text = .p41Name
 
             Me.p31value_orig.Text = BO.BAS.FN(.p31Value_Orig)

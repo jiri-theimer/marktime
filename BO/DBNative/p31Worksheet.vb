@@ -12,7 +12,7 @@ Public Class p31Worksheet
     Public Property p41Name As String
     Public Property p41NameShort As String
     Public Property p28ID_Client As Integer
-    Public Property p28Name As String
+    Public Property ClientName As String
     Public Property p28CompanyShortName As String
 
     Public Property j02ID As Integer

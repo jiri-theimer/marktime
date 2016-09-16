@@ -36,7 +36,7 @@
                     If lis(0).p28ID_Client = 0 Then
                         Me.p41id.Text = lis(0).p41Name
                     Else
-                        Me.p41id.Text = lis(0).p28Name & " - " & lis(0).p41Name
+                        Me.p41id.Text = lis(0).ClientName & " - " & lis(0).p41Name
                     End If
 
                 End If
