@@ -70,7 +70,7 @@
             <asp:ListItem Text="<%$Resources:common,Sesit%>" Value="p34Name"></asp:ListItem>
             <asp:ListItem Text="<%$Resources:common,Aktivita%>" Value="p32Name"></asp:ListItem>
             <asp:ListItem Text="<%$Resources:common,Osoba%>" Value="Person"></asp:ListItem>
-            <asp:ListItem Text="<%$Resources:common,Klient%>" Value="p28Name"></asp:ListItem>
+            <asp:ListItem Text="<%$Resources:common,Klient%>" Value="ClientName"></asp:ListItem>
             <asp:ListItem Text="<%$Resources:common,Projekt %>" Value="p41Name"></asp:ListItem>
             <asp:ListItem Text="<%$Resources:common,Faktura%>" Value="p91Code"></asp:ListItem>
             <asp:ListItem Text="<%$Resources:common,Ukol%>" Value="p56Name"></asp:ListItem>

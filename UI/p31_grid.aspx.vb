@@ -208,7 +208,7 @@ Public Class p31_grid
                     If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
                     If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
                     If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
-                    If .SelectedValue = "p28Name" Then Me.hidCols.Value += ",p28client.p28Name" : b = True
+                    If .SelectedValue = "ClientName" Then Me.hidCols.Value += ",p28client.p28Name as ClientName" : b = True
                     If Not b Then
                         Me.hidCols.Value += "," & .SelectedValue
                     End If
@@ -244,6 +244,10 @@ Public Class p31_grid
 
     End Sub
 
+    Private Sub grid1_DataBinding(sender As Object, e As EventArgs) Handles grid1.DataBinding
+
+    End Sub
+
     Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
         Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
         Dim mq As New BO.myQueryP31
@@ -272,7 +276,7 @@ Public Class p31_grid
             If Me.cbxGroupBy.SelectedValue <> "" Then
                 Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
                 If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
-                If strPrimarySortField = "p28Name" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
 
                 If .MG_SortString = "" Then
@@ -321,7 +325,7 @@ Public Class p31_grid
             If Me.cbxGroupBy.SelectedValue <> "" Then
                 Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
                 If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
-                If strPrimarySortField = "p28Name" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
 
                 If .MG_SortString = "" Then

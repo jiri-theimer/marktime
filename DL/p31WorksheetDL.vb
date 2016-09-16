@@ -498,7 +498,7 @@
     End Function
     Private Function ParseSortExpression(strSort As String) As String
         strSort = strSort.Replace("UserInsert", "p31UserInsert").Replace("UserUpdate", "p31UserUpdate").Replace("DateInsert", "p31DateInsert").Replace("DateUpdate", "p31DateUpdate").Replace("ContactPerson", "cp.j02LastName")
-        strSort = strSort.Replace("j27Code_Billing_Orig", "j27billing_orig.j27Code").Replace("Owner", "j02owner.j02LastName").Replace("Person", "j02.j02LastName").Replace("p28Name", "p28Client.p28Name").Replace("SupplierName", "supplier.p28Name")
+        strSort = strSort.Replace("j27Code_Billing_Orig", "j27billing_orig.j27Code").Replace("Owner", "j02owner.j02LastName").Replace("Person", "j02.j02LastName").Replace("ClientName", "p28Client.p28Name").Replace("SupplierName", "supplier.p28Name")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
 

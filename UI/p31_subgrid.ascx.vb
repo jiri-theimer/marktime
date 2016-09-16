@@ -193,7 +193,7 @@ Public Class p31_subgrid
                 If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
                 If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
                 If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
-                If .SelectedValue = "p28Name" Then Me.hidCols.Value += ",p28client.p28Name" : b = True
+                If .SelectedValue = "ClientName" Then Me.hidCols.Value += ",p28client.p28Name as ClientName" : b = True
                 If Not b Then
                     Me.hidCols.Value += "," & .SelectedValue
                 End If
@@ -481,7 +481,7 @@ Public Class p31_subgrid
             If Me.cbxGroupBy.SelectedValue <> "" Then
                 Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
                 If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
-                If strPrimarySortField = "p28Name" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
 
                 If .MG_SortString = "" Then
@@ -567,10 +567,11 @@ Public Class p31_subgrid
 
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.cbxGroupBy.SelectedValue)
-        With Me.cbxGroupBy.SelectedItem
-            SetupGrouping(.Value, .Text)
-        End With
-        grid2.Rebind(True)
+        ReloadPage()
+        'With Me.cbxGroupBy.SelectedItem
+        '    SetupGrouping(.Value, .Text)
+        'End With
+        'grid2.Rebind(True)
     End Sub
     
 
@@ -618,7 +619,8 @@ Public Class p31_subgrid
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-j70id", Me.CurrentJ70ID.ToString)
         If Me.hidDrillDownField.Value = "" Then
-            grid2.Rebind(True)
+            RecalcVirtualRowCount()
+            grid2.Rebind(False)
         Else
             ReloadPage()
         End If

@@ -87,9 +87,9 @@ Class j74SavedGridColTemplateBL
                         Select Case c.j74RecordState
                             Case BO.p31RecordState.Approved
                                 c.j74Name = "Přehled schválených úkonů v detailu osoby"
-                                c.j74ColumnNames = "p31Date,p28Name,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,p31Text"
+                                c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,p31Text"
                             Case Else
-                                c.j74ColumnNames = "p31Date,p28Name,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                                c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                         End Select
 
                     Case "p28"
@@ -119,9 +119,9 @@ Class j74SavedGridColTemplateBL
                         c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Orig,p31Amount_WithoutVat_Approved,p31Text,p31ApprovingSet"
                     Case "p31_grid"
                         c.j74Name = My.Resources.common.VychoziPrehled
-                        c.j74ColumnNames = "p31Date,Person,p28Name,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                        c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                     Case Else
-                        c.j74ColumnNames = "p31Date,Person,p28Name,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                        c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                 End Select
 
             Case BO.x29IdEnum.p41Project
@@ -310,7 +310,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Sesit, "p34Name"))
 
             .Add(AGC(My.Resources.common.Projekt, "p41Name"))
-            .Add(AGC(My.Resources.common.KlientProjektu, "p28Name", , , "p28Client.p28Name"))
+            .Add(AGC(My.Resources.common.KlientProjektu, "ClientName", , , "p28Client.p28Name"))
             .Add(AGC(My.Resources.common.NazevUkolu, "p56Name"))
             .Add(AGC(My.Resources.common.KodUkolu, "p56Code"))
 
@@ -512,7 +512,7 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Sesit, "p34Name", "p32.p34ID", "min(p34.p34Name)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.p32Name, "p32Name", "a.p32ID", "min(p34.p34Name+' - '+p32.p32Name)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Osoba, "Person", "a.j02ID", "min(j02.j02LastName+' '+j02.j02Firstname)"))
-                lis.Add(New BO.GridGroupByColumn(My.Resources.common.KlientProjektu, "p28Name", "p41.p28ID_Client", "min(p28Client.p28Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.KlientProjektu, "ClientName", "p41.p28ID_Client", "min(p28Client.p28Name)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Projekt, "p41Name", "a.p41ID", "min(isnull(p28Client.p28Name+' - ','')+p41.p41Name)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Faktura, "p91Code", "a.p91ID", "min(p91.p91Code)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Schvaleno, "p71Name", "a.p71ID", "min(p71.p71Name)"))
