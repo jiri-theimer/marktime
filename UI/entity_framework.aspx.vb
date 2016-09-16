@@ -291,6 +291,8 @@ Public Class entity_framework
                     If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
                     If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "ProjectCodeAndName" Then Me.hidCols.Value += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName" : b = True
                     If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "Client" Then Me.hidCols.Value += ",p28client.p28Name as Client" : b = True
+                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "p59NameSubmitter" Then Me.hidCols.Value += ",p59submitter.p59Name as p59NameSubmitter" : b = True
+                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "ReceiversInLine" Then Me.hidCols.Value += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine" : b = True
                     If Not b Then
                         Me.hidCols.Value += "," & .SelectedValue
                     End If
@@ -329,7 +331,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.o23Notepad
                 basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, False)
             Case BO.x29IdEnum.p56Task
-                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False)
+                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True)
             Case BO.x29IdEnum.j02Person
                 basUIMT.j02_grid_Handle_ItemDataBound(sender, e)
             Case BO.x29IdEnum.p91Invoice
@@ -398,17 +400,23 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p56(mq)
 
-                Dim bolInhaleReceiversInLine As Boolean = True
-                Dim lis As IEnumerable(Of BO.p56Task) = Nothing
-                If Me.hidTasksWorksheetColumns.Value = "1" Then
-                    lis = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq, bolInhaleReceiversInLine)
-                Else
-                    lis = Master.Factory.p56TaskBL.GetList(mq, bolInhaleReceiversInLine)
-                End If
-                If lis Is Nothing Then
+                'Dim bolInhaleReceiversInLine As Boolean = True
+                'Dim lis As IEnumerable(Of BO.p56Task) = Nothing
+                'If Me.hidTasksWorksheetColumns.Value = "1" Then
+                '    lis = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq, bolInhaleReceiversInLine)
+                'Else
+                '    lis = Master.Factory.p56TaskBL.GetList(mq, bolInhaleReceiversInLine)
+                'End If
+                'If lis Is Nothing Then
+                '    Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                'Else
+                '    grid1.DataSource = lis
+                'End If
+                Dim dt As DataTable = Master.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq)
+                If dt Is Nothing Then
                     Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
-                    grid1.DataSource = lis
+                    grid1.DataSourceDataTable = dt
                 End If
             Case BO.x29IdEnum.o23Notepad
                 Dim mq As New BO.myQueryO23
@@ -577,10 +585,17 @@ Public Class entity_framework
                 End If
             End If
             If Me.cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+                If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "ReceiversInLine" Then strPrimarySortField = "dbo.p56_getroles_inline(a.p56ID)"
+                If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
+                If strPrimarySortField = "p59NameSubmitter" Then strPrimarySortField = "p59submitter.p59Name"
+                If strPrimarySortField = "ProjectCodeAndName" Then strPrimarySortField = "isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name"
+
                 If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                    .MG_SortString = strPrimarySortField
                 Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
             Select Case Me.cbxPeriodType.SelectedValue
@@ -769,11 +784,12 @@ Public Class entity_framework
                         InhaleMyQuery_p56(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq)
+                        Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq, False, hidCols.Value)
+
                         If lis Is Nothing Then
                             Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
-                        Else                            
+                        Else
                             pids = lis.Select(Function(p) p.PID)
                         End If
                     Case BO.x29IdEnum.o23Notepad
@@ -925,7 +941,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
-                grid1.VirtualRowCount = Master.Factory.p56TaskBL.GetVirtualCount(mq)
+                grid1.VirtualRowCount = Master.Factory.p56TaskBL.GetVirtualCount(mq, Me.hidCols.Value)
             Case BO.x29IdEnum.o23Notepad
                 Dim mq As New BO.myQueryO23
                 InhaleMyQuery_o23(mq)

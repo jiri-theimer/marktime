@@ -203,28 +203,51 @@ Public Class basUIMT
         End Select
     End Sub
 
-    Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean)
+    Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolDT As Boolean = False)
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
-        Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
-        If bolShowClueTip Then
-            With dataItem("systemcolumn")
-                .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?pid=" & cRec.PID.ToString & "'>i</a>"
+
+        If bolDT Then
+            Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            If bolShowClueTip Then
+                With dataItem("systemcolumn")
+                    .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?pid=" & cRec.Item("pid").ToString & "'>i</a>"
+                End With
+            End If
+            With cRec
+                If .Item("IsClosed") Then
+                    dataItem.Font.Strikeout = True
+                Else
+                    If Not .Item("p56PlanUntil_Grid") Is System.DBNull.Value Then
+                        If Now > .Item("p56PlanUntil_Grid") Then dataItem("systemcolumn").CssClass = "overtime"
+                    End If
+                End If
+                If BO.BAS.IsNullInt(.Item("b02ID_Grid")) > 0 Then
+                    If .Item("b02Color_Grid") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color_Grid")
+                End If
+            End With
+        Else
+            Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
+            If bolShowClueTip Then
+                With dataItem("systemcolumn")
+                    .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?pid=" & cRec.PID.ToString & "'>i</a>"
+                End With
+            End If
+            With cRec
+                If .IsClosed Then
+                    dataItem.Font.Strikeout = True
+                Else
+                    If Not .p56PlanUntil Is Nothing Then
+                        If Now > .p56PlanUntil Then dataItem("systemcolumn").CssClass = "overtime"
+                    End If
+                End If
+                If .b02ID > 0 Then
+                    If .b02Color <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .b02Color
+                End If
             End With
         End If
-        With cRec
-            If .IsClosed Then
-                dataItem.Font.Strikeout = True
-            Else
-                If Not .p56PlanUntil Is Nothing Then
-                    If Now > .p56PlanUntil Then dataItem("systemcolumn").CssClass = "overtime"
-                End If
-            End If
-            If .b02ID > 0 Then
-                If .b02Color <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .b02Color
-            End If
-        End With
+        
 
     End Sub
     Public Shared Sub o23_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, bolShowFilePreview As Boolean)

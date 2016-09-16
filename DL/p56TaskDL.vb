@@ -215,7 +215,7 @@
         Return bas.TrimWHERE(strW)
     End Function
 
-    Public Function GetList(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean) As IEnumerable(Of BO.p56Task)
+    Public Function GetList(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean, strCols As String) As IEnumerable(Of BO.p56Task)
         Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly), pars As New DbParameters
         If myQuery.MG_SelectPidFieldOnly Then
             'SQL SELECT klauzule bude plnit pouze hodnotu primárního klíče
@@ -224,7 +224,7 @@
         If bolInhaleReceiversInLine Then
             s += ",dbo.p56_getroles_inline(a.p56ID) as _ReceiversInLine"
         End If
-        s += " " & GetSQLPart2()
+        s += " " & GetSQLPart2(strCols)
         Dim strW As String = GetSQLWHERE(myQuery, pars)
 
 
@@ -248,6 +248,33 @@
 
         End With
         Return _cDB.GetList(Of BO.p56Task)(s, pars)
+    End Function
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP56) As DataTable
+        Dim s As String = ""
+        strCols += ",a.p56ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END) as IsClosed"
+        strCols += ",a.p56PlanUntil as p56PlanUntil_Grid,a.b02ID as b02ID_Grid,b02Color as b02Color_Grid"
+        
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            Dim strORDERBY As String = .MG_SortString
+            If .p41ID <> 0 And strORDERBY = "" Then
+                strORDERBY = "a.p56Ordinary,a.p56ID DESC"
+            End If
+            If strORDERBY = "" Then strORDERBY = "a.p56ID DESC"
+            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strCols)
+
+            If strW <> "" Then s += " WHERE " & strW
+            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+            pars.Add("start", intStart, DbType.Int32)
+            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+            s += " WHERE RowIndex BETWEEN @start AND @end"
+        End With
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters, bolInhaleReceiversInLine As Boolean) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
@@ -323,8 +350,8 @@
 
 
     End Function
-    Public Function GetVirtualCount(myQuery As BO.myQueryP56) As Integer
-        Dim s As String = "SELECT count(a.p56ID) as Value " & GetSQLPart2()
+    Public Function GetVirtualCount(myQuery As BO.myQueryP56, Optional strCols As String = "") As Integer
+        Dim s As String = "SELECT count(a.p56ID) as Value " & GetSQLPart2(strCols)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -342,7 +369,7 @@
         s += " " & GetSF()
         Return s
     End Function
-    Private Function GetSQLPart2() As String
+    Private Function GetSQLPart2(Optional strCols As String = "") As String
         Dim s As String = "FROM p56Task a INNER JOIN p57TaskType p57 ON a.p57ID=p57.p57ID"
         s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
         s += " LEFT OUTER JOIN o22Milestone o22 ON a.o22ID=o22.o22ID"
@@ -351,6 +378,10 @@
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID"
+        If strCols <> "" And strCols.IndexOf("p31.") > 0 Then
+            s += " LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig"
+            s += " FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID"
+        End If
         Return s
     End Function
 
