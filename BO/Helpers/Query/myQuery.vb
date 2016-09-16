@@ -32,6 +32,8 @@ Public Class myQuery
     Public Property MG_SortString As String
     Public Property MG_PageMovePrevOnly As Boolean          'zda vyrobit rychlý SQL pro grid, kde lze pohybovat pouze dopředu a dozadu o po stránce
 
+    Public Property MG_SelectPidFieldOnly As Boolean
+
     Public Sub AddItemToPIDs(intPID As Integer)
         If Me.PIDs Is Nothing Then Me.PIDs = New List(Of Integer)
         Me.PIDs.Add(intPID)

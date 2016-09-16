@@ -431,7 +431,12 @@
 
 
     Public Function GetList(myQuery As BO.myQueryP31, Optional strGUID_TempData As String = "") As IEnumerable(Of BO.p31Worksheet)
-        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & " " & GetSQLPart2(strGUID_TempData, myQuery)
+        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly)
+        If myQuery.MG_SelectPidFieldOnly Then
+            'SQL SELECT klauzule bude plnit pouze hodnotu primárního klíče
+            s = "SELECT a.p31ID as _pid"
+        End If
+        s += " " & GetSQLPart2(strGUID_TempData, myQuery)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars, strGUID_TempData)
         With myQuery

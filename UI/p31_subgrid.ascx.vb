@@ -187,6 +187,18 @@ Public Class p31_subgrid
 
         Me.hidDefaultSorting.Value = _curJ74.j74OrderBy
         Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
+        With Me.cbxGroupBy
+            If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
+                Dim b As Boolean = False
+                If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
+                If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
+                If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
+                If .SelectedValue = "p28Name" Then Me.hidCols.Value += ",p28client.p28Name" : b = True
+                If Not b Then
+                    Me.hidCols.Value += "," & .SelectedValue
+                End If
+            End If
+        End With
 
         If _curJ74.j74IsFilteringByColumn Then
             Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
@@ -265,8 +277,8 @@ Public Class p31_subgrid
     End Function
 
     Private Sub grid2_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid2.ItemDataBound
-        If TypeOf e.Item.DataItem Is DataRowView Then Return
-        basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
+        'If TypeOf e.Item.DataItem Is DataRowView Then Return
+        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
     End Sub
 
     Private Sub grid2_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid2.NeedDataSource
@@ -284,18 +296,23 @@ Public Class p31_subgrid
             'drill down úroveň
             Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
 
-            Dim dt As DataTable = Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid2.radGridOrig.MasterTableView.Attributes("sumfields"))
-            grid2.VirtualRowCount = dt.Rows.Count
-            grid2.DataSourceDataTable = dt
+            Dim dtDD As DataTable = Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid2.radGridOrig.MasterTableView.Attributes("sumfields"))
+            grid2.VirtualRowCount = dtDD.Rows.Count
+            grid2.DataSourceDataTable = dtDD
             Return
         End If
-        Dim lis As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mq)
+        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq)
+        If dt Is Nothing Then
+            Return
+        End If
+
         If Me.DefaultSelectedPID <> 0 Then
-            If lis.Where(Function(p) p.PID = Me.DefaultSelectedPID).Count > 0 Then
+            If dt.AsEnumerable.Where(Function(p) p.Item("pid") = Me.DefaultSelectedPID).Count > 0 Then
                 'záznam je na první stránce
             Else
                 Dim mqAll As New BO.myQueryP31
                 mqAll.TopRecordsOnly = 0
+                mqAll.MG_SelectPidFieldOnly = True
                 p31_InhaleMyQuery(mqAll)
                 Dim lisAll As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mqAll)
                 Dim pids As IEnumerable(Of Integer) = lisAll.Select(Function(p) p.PID)
@@ -308,14 +325,41 @@ Public Class p31_subgrid
                     If intPID = Me.DefaultSelectedPID Then
                         grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
                         mq.MG_CurrentPageIndex = intNewPageIndex
-                        lis = Me.Factory.p31WorksheetBL.GetList(mq) 'nový zdroj pro grid
+                        dt = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq) 'nový zdroj pro grid
+                        ''lis = Me.Factory.p31WorksheetBL.GetList(mq) 'nový zdroj pro grid
                         Exit For
                     End If
                 Next
             End If
         End If
-        grid2.DataSource = lis
+        ''Dim lis As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mq)
+        ''If Me.DefaultSelectedPID <> 0 Then
+        ''    If lis.Where(Function(p) p.PID = Me.DefaultSelectedPID).Count > 0 Then
+        ''        'záznam je na první stránce
+        ''    Else
+        ''        Dim mqAll As New BO.myQueryP31
+        ''        mqAll.TopRecordsOnly = 0
+        ''        p31_InhaleMyQuery(mqAll)
+        ''        Dim lisAll As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mqAll)
+        ''        Dim pids As IEnumerable(Of Integer) = lisAll.Select(Function(p) p.PID)
+        ''        Dim x As Integer, intNewPageIndex As Integer = 0
+        ''        For Each intPID As Integer In pids
+        ''            x += 1
+        ''            If x > grid2.PageSize Then
+        ''                intNewPageIndex += 1 : x = 1
+        ''            End If
+        ''            If intPID = Me.DefaultSelectedPID Then
+        ''                grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
+        ''                mq.MG_CurrentPageIndex = intNewPageIndex
+        ''                lis = Me.Factory.p31WorksheetBL.GetList(mq) 'nový zdroj pro grid
+        ''                Exit For
+        ''            End If
+        ''        Next
+        ''    End If
+        ''End If
+        ''grid2.DataSource = lis
 
+        grid2.DataSourceDataTable = dt
     End Sub
 
     Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
@@ -435,10 +479,15 @@ Public Class p31_subgrid
                 End If
             End If
             If Me.cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+                If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
+                If strPrimarySortField = "p28Name" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
+
                 If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                    .MG_SortString = strPrimarySortField
                 Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
         End With
