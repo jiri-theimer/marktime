@@ -454,6 +454,29 @@
         Return _cDB.GetList(Of BO.p31Worksheet)(s, pars)
     End Function
 
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31) As DataTable
+        Dim s As String = ""
+        strCols += ",a.p31ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN 0 else 1 END) as IsClosed,a.p72ID_AfterTrimming,a.p72ID_AfterApprove,a.p70ID,a.o23ID_First,a.p49ID,a.p71ID,p34.p33ID"
+        strCols += ",a.p31Date as p31Date_Grid,a.p31Hours_Trimmed as p31Hours_Trimmed_Grid,a.p31Hours_Orig as p31Hours_Orig_Grid,p34.p34IncomeStatementFlag"
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            Dim strORDERBY As String = .MG_SortString
+            If strORDERBY = "" Then strORDERBY = "a.p31ID DESC"
+            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(, myQuery)
+
+            If strW <> "" Then s += " WHERE " & strW
+            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+            pars.Add("start", intStart, DbType.Int32)
+            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+            s += " WHERE RowIndex BETWEEN @start AND @end"
+        End With
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
 
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters, myQuery As BO.myQueryP31) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize

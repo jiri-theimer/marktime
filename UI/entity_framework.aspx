@@ -275,6 +275,7 @@
             <asp:HiddenField ID="hidMasterPrefix" runat="server" />
             <asp:HiddenField ID="hidMasterPID" runat="server" />
             <asp:HiddenField ID="hidCols" runat="server" />
+            <asp:HiddenField ID="hidGroupByFieldSQL" runat="server" />
             
             <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
         </telerik:RadPane>

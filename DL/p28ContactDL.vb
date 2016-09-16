@@ -333,7 +333,30 @@
         End With
         Return _cDB.GetList(Of BO.p28Contact)(s, pars)
     End Function
-   
+
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP28) As DataTable
+        Dim s As String = ""
+        strCols += ",a.p28ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p28ValidFrom AND a.p28ValidUntil THEN 0 else 1 END) as IsClosed,a.p28IsDraft as IsDraft"
+
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            Dim strORDERBY As String = .MG_SortString
+            If strORDERBY = "" Then strORDERBY = "p28Name"
+            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2()
+
+            If strW <> "" Then s += " WHERE " & strW
+            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+            pars.Add("start", intStart, DbType.Int32)
+            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+            s += " WHERE RowIndex BETWEEN @start AND @end"
+        End With
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
 
     Private Function ParseSortExpression(strSort As String) As String
         strSort = strSort.Replace("UserInsert", "p28UserInsert").Replace("UserUpdate", "p28UserUpdate").Replace("DateInsert", "p28DateInsert").Replace("DateUpdate", "p28DateUpdate")

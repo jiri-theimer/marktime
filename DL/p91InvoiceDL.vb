@@ -326,6 +326,29 @@
      
         Return _cDB.GetList(Of BO.p91Invoice)(s, pars)
     End Function
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP91) As DataTable
+        Dim s As String = ""
+        strCols += ",a.p91ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p91ValidFrom AND a.p91ValidUntil THEN 0 else 1 END) as IsClosed,a.p91IsDraft as IsDraft"
+        strCols += ",a.p91Amount_TotalDue as TotalDue,a.p91Amount_Debt as Debt,a.p91DateMaturity as Maturity,p92.p92InvoiceType as InvoiceType"
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            Dim strORDERBY As String = .MG_SortString
+            If strORDERBY = "" Then strORDERBY = "a.p91ID DESC"
+            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2()
+
+            If strW <> "" Then s += " WHERE " & strW
+            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+            pars.Add("start", intStart, DbType.Int32)
+            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+            s += " WHERE RowIndex BETWEEN @start AND @end"
+        End With
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
     Public Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
 
         Dim s As String = GetSQLPart1(0), pars As New DbParameters

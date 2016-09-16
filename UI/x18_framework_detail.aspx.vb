@@ -133,9 +133,9 @@ Public Class x18_framework_detail
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
-                basUIMT.p41_grid_Handle_ItemDataBound(sender, e)
+                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, False)
             Case BO.x29IdEnum.p28Contact
-                basUIMT.p28_grid_Handle_ItemDataBound(sender, e)
+                basUIMT.p28_grid_Handle_ItemDataBound(sender, e, False)
             Case BO.x29IdEnum.o23Notepad
                 basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, False)
             Case BO.x29IdEnum.p56Task
@@ -143,7 +143,7 @@ Public Class x18_framework_detail
             Case BO.x29IdEnum.j02Person
                 basUIMT.j02_grid_Handle_ItemDataBound(sender, e)
             Case BO.x29IdEnum.p91Invoice
-                basUIMT.p91_grid_Handle_ItemDataBound(sender, e)
+                basUIMT.p91_grid_Handle_ItemDataBound(sender, e, False)
         End Select
 
     End Sub

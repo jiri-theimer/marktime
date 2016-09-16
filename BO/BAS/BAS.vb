@@ -281,6 +281,13 @@
         End With
 
     End Function
+    Public Shared Function OM4(ByVal strExpression As String, ByVal strAppendExpression As String, Optional strDelimiter As String = ",") As String
+        If strExpression = "" Then
+            Return strAppendExpression
+        Else
+            Return strExpression & strDelimiter & strAppendExpression
+        End If
+    End Function
 
     Public Shared Function ConvertString2Date(ByVal strDat As String, Optional strFormat As String = "dd.MM.yyyy") As Date
         Try

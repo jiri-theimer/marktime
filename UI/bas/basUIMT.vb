@@ -122,34 +122,60 @@ Public Class basUIMT
         Next
     End Sub
 
-    Public Shared Sub p91_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
+    Public Shared Sub p91_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean)
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
-        Dim cRec As BO.p91Invoice = CType(e.Item.DataItem, BO.p91Invoice)
-        With cRec
-            If .p91IsDraft Then
-                dataItem("systemcolumn").CssClass = "draft"
-            Else
-                If .p91Amount_Debt > 10 Then
-                    If .p91DateMaturity >= Today Then
-                        dataItem("systemcolumn").CssClass = "p91_yellow"
-                    Else
-                        If Math.Abs(.p91Amount_TotalDue - .p91Amount_Debt) < 50 Then
-                            dataItem("systemcolumn").CssClass = "p91_red"
+        If bolDT Then
+            Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            With cRec
+                If .Item("IsDraft") Then
+                    dataItem("systemcolumn").CssClass = "draft"
+                Else
+                    If .Item("Debt") > 10 Then
+                        If .Item("Maturity") >= Today Then
+                            dataItem("systemcolumn").CssClass = "p91_yellow"
                         Else
-                            dataItem("systemcolumn").CssClass = "p91_pink"
+                            If Math.Abs(.Item("TotalDue") - .Item("Debt")) < 50 Then
+                                dataItem("systemcolumn").CssClass = "p91_red"
+                            Else
+                                dataItem("systemcolumn").CssClass = "p91_pink"
+                            End If
                         End If
                     End If
                 End If
-            End If
-            
-            If cRec.IsClosed Then dataItem.Font.Strikeout = True
-            If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.CreditNote Then
-                'dobropis - opravný doklad
-                dataItem("systemcolumn").CssClass = "p91_creditnote"
-            End If
-        End With
+                If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+                If cRec.Item("InvoiceType") = BO.p92InvoiceTypeENUM.CreditNote Then
+                    'dobropis - opravný doklad
+                    dataItem("systemcolumn").CssClass = "p91_creditnote"
+                End If
+            End With
+        Else
+            Dim cRec As BO.p91Invoice = CType(e.Item.DataItem, BO.p91Invoice)
+            With cRec
+                If .p91IsDraft Then
+                    dataItem("systemcolumn").CssClass = "draft"
+                Else
+                    If .p91Amount_Debt > 10 Then
+                        If .p91DateMaturity >= Today Then
+                            dataItem("systemcolumn").CssClass = "p91_yellow"
+                        Else
+                            If Math.Abs(.p91Amount_TotalDue - .p91Amount_Debt) < 50 Then
+                                dataItem("systemcolumn").CssClass = "p91_red"
+                            Else
+                                dataItem("systemcolumn").CssClass = "p91_pink"
+                            End If
+                        End If
+                    End If
+                End If
+                If cRec.IsClosed Then dataItem.Font.Strikeout = True
+                If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.CreditNote Then
+                    'dobropis - opravný doklad
+                    dataItem("systemcolumn").CssClass = "p91_creditnote"
+                End If
+            End With
+        End If
+        
     End Sub
     Public Shared Sub x40_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
         If Not TypeOf e.Item Is GridDataItem Then Return
@@ -231,7 +257,7 @@ Public Class basUIMT
         End With
 
     End Sub
-    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, Optional bolDT As Boolean = False)
+    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean)
         If Not TypeOf e.Item Is GridDataItem Then Return
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
@@ -258,84 +284,167 @@ Public Class basUIMT
             dataItem.Font.Italic = True
         End If
     End Sub
-    Public Shared Sub p28_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
+    Public Shared Sub p28_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean)
         If Not TypeOf e.Item Is GridDataItem Then Return
-
-        Dim cRec As BO.p28Contact = CType(e.Item.DataItem, BO.p28Contact)
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        If bolDT Then
+            Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
 
-        If cRec.IsClosed Then dataItem.Font.Strikeout = True
-        If cRec.p28IsDraft Then dataItem("systemcolumn").CssClass = "draft"
+            If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+            If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
 
-        If cRec.p28CompanyShortName > "" Then dataItem.ToolTip = cRec.p28CompanyName
+            ''If cRec.p28CompanyShortName > "" Then dataItem.ToolTip = cRec.p28CompanyName
+        Else
+            Dim cRec As BO.p28Contact = CType(e.Item.DataItem, BO.p28Contact)
+
+            If cRec.IsClosed Then dataItem.Font.Strikeout = True
+            If cRec.p28IsDraft Then dataItem("systemcolumn").CssClass = "draft"
+
+            If cRec.p28CompanyShortName > "" Then dataItem.ToolTip = cRec.p28CompanyName
+        End If
+        
     End Sub
-    Public Shared Sub p31_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
-        If Not TypeOf e.Item Is GridDataItem Then Return
 
-        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
-        Dim cRec As BO.p31Worksheet = CType(e.Item.DataItem, BO.p31Worksheet)
+    Private Shared Sub p31_grid_Handle_ItemDataBound_Engine(dataItem As GridDataItem, p31Date As Date, p72ID_AfterTrimming As BO.p72IdENUM, P72ID_AfterApprove As BO.p72IdENUM, p70ID As BO.p70IdENUM, p71ID As BO.p71IdENUM, bolIsClosed As Boolean, intO23ID_First As Integer, intP49ID As Integer, p33ID As BO.p33IdENUM, p31Hours_Trimmed As Double, p31Hours_Orig As Double, p34IncomeStatementFlag As BO.p34IncomeStatementFlagENUM)
+        If p31Date > Now Then dataItem("systemcolumn").CssClass = "future" 'záznam do budoucna vizuálně zvýrazňovat jako plán
 
-        With cRec
-            If .p31Date > Now Then dataItem("systemcolumn").CssClass = "future" 'záznam do budoucna vizuálně zvýrazňovat jako plán
+        Select Case p72ID_AfterTrimming
+            Case BO.p72IdENUM.SkrytyOdpis, BO.p72IdENUM.ViditelnyOdpis, BO.p72IdENUM.ZahrnoutDoPausalu
+                dataItem("systemcolumn").CssClass = "corr_236"
+            Case BO.p72IdENUM.Fakturovat
+                If p31Hours_Trimmed < p31Hours_Orig Then
+                    dataItem("systemcolumn").CssClass = "corr_4_down"
+                End If
+                If p31Hours_Trimmed > p31Hours_Orig Then
+                    dataItem("systemcolumn").CssClass = "corr_4_up"
+                End If
+        End Select
+        Select Case P72ID_AfterApprove
+            Case BO.p72IdENUM.Fakturovat : dataItem("systemcolumn").CssClass = "a14"
+            Case BO.p72IdENUM.FakturovatPozdeji : dataItem("systemcolumn").CssClass = "a17"
+            Case BO.p72IdENUM.ZahrnoutDoPausalu : dataItem("systemcolumn").CssClass = "a16"
+            Case BO.p72IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a12"
+            Case BO.p72IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a13"
+            Case Else
+                If p71ID = BO.p71IdENUM.Neschvaleno Then dataItem("systemcolumn").CssClass = "a20"
 
-            Select Case .p72ID_AfterTrimming
-                Case BO.p72IdENUM.SkrytyOdpis, BO.p72IdENUM.ViditelnyOdpis, BO.p72IdENUM.ZahrnoutDoPausalu
-                    dataItem("systemcolumn").CssClass = "corr_236"
-                Case BO.p72IdENUM.Fakturovat
-                    If .p31Hours_Trimmed < .p31Hours_Orig Then
-                        dataItem("systemcolumn").CssClass = "corr_4_down"
-                    End If
-                    If .p31Hours_Trimmed > .p31Hours_Orig Then
-                        dataItem("systemcolumn").CssClass = "corr_4_up"
-                    End If
-            End Select
-            Select Case .p72ID_AfterApprove
-                Case BO.p72IdENUM.Fakturovat : dataItem("systemcolumn").CssClass = "a14"
-                Case BO.p72IdENUM.FakturovatPozdeji : dataItem("systemcolumn").CssClass = "a17"
-                Case BO.p72IdENUM.ZahrnoutDoPausalu : dataItem("systemcolumn").CssClass = "a16"
-                Case BO.p72IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a12"
-                Case BO.p72IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a13"
-                Case Else
-                    If .p71ID = BO.p71IdENUM.Neschvaleno Then dataItem("systemcolumn").CssClass = "a20"
+        End Select
+        Select Case p70ID
+            Case BO.p70IdENUM.Vyfakturovano : dataItem("systemcolumn").CssClass = "a4"
+            Case BO.p70IdENUM.ZahrnutoDoPausalu : dataItem("systemcolumn").CssClass = "a6"
+            Case BO.p70IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a2"
+            Case BO.p70IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a3"
+        End Select
+        If intO23ID_First > 0 And intP49ID = 0 Then dataItem("systemcolumn").Text += "<img src='Images/attachment.png' width='12px' height='12px'/>"
+        If bolIsClosed Then dataItem.Font.Strikeout = True
 
-            End Select
-            Select Case .p70ID
-                Case BO.p70IdENUM.Vyfakturovano : dataItem("systemcolumn").CssClass = "a4"
-                Case BO.p70IdENUM.ZahrnutoDoPausalu : dataItem("systemcolumn").CssClass = "a6"
-                Case BO.p70IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a2"
-                Case BO.p70IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a3"
-            End Select
-            If .o23ID_First > 0 And .p49ID = 0 Then dataItem("systemcolumn").Text += "<img src='Images/attachment.png' width='12px' height='12px'/>"
-            If .IsClosed Then dataItem.Font.Strikeout = True
-
-            Select Case .p33ID
-                Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
-                    If .p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem Then
-                        dataItem.ForeColor = Drawing.Color.Blue  'příjmy
-                    Else
-                        dataItem.ForeColor = Drawing.Color.Brown    'výdaje
-                    End If
-                    If .p49ID > 0 Then
-                        If .p71ID > BO.p71IdENUM.Nic Then
-                            If .o23ID_First = 0 Then
-                                dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px;padding-left:7px;'/>"
-                            Else
-                                dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px;padding-left:7px;'/>"
-                            End If
+        Select Case p33ID
+            Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
+                If p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem Then
+                    dataItem.ForeColor = Drawing.Color.Blue  'příjmy
+                Else
+                    dataItem.ForeColor = Drawing.Color.Brown    'výdaje
+                End If
+                If intP49ID > 0 Then
+                    If p71ID > BO.p71IdENUM.Nic Then
+                        If intO23ID_First = 0 Then
+                            dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px;padding-left:7px;'/>"
                         Else
-                            If .o23ID_First = 0 Then
-                                dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px'/>"
-                            Else
-                                dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px'/>"
-                            End If
+                            dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px;padding-left:7px;'/>"
+                        End If
+                    Else
+                        If intO23ID_First = 0 Then
+                            dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px'/>"
+                        Else
+                            dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px'/>"
                         End If
                     End If
-                Case BO.p33IdENUM.Kusovnik
-                    dataItem.ForeColor = Drawing.Color.Green  'kusovník
-                Case Else
-            End Select
+                End If
+            Case BO.p33IdENUM.Kusovnik
+                dataItem.ForeColor = Drawing.Color.Green  'kusovník
+            Case Else
+        End Select
+    End Sub
+    Public Shared Sub p31_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, Optional bolDT As Boolean = False)
+        If Not TypeOf e.Item Is GridDataItem Then Return
 
-        End With
+        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        If bolDT Then
+            Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            With cRec
+                p31_grid_Handle_ItemDataBound_Engine(dataItem, .Item("p31Date_Grid"), BO.BAS.IsNullInt(.Item("p72ID_AfterTrimming")), BO.BAS.IsNullInt(.Item("p72ID_AfterApprove")), BO.BAS.IsNullInt(.Item("p70ID")), BO.BAS.IsNullInt(.Item("p71ID")), .Item("IsClosed"), BO.BAS.IsNullInt(.Item("o23ID_First")), BO.BAS.IsNullInt(.Item("p49ID")), .Item("p33ID"), BO.BAS.IsNullNum(.Item("p31Hours_Trimmed_Grid")), BO.BAS.IsNullNum(.Item("p31Hours_Orig_Grid")), .Item("p34IncomeStatementFlag"))
+            End With
+        Else
+
+            Dim cRec As BO.p31Worksheet = CType(e.Item.DataItem, BO.p31Worksheet)
+            With cRec
+                p31_grid_Handle_ItemDataBound_Engine(dataItem, .p31Date, .p72ID_AfterTrimming, .p72ID_AfterApprove, .p70ID, .p71ID, .IsClosed, .o23ID_First, .p49ID, .p33ID, .p31Hours_Trimmed, .p31Hours_Orig, .p34IncomeStatementFlag)
+            End With
+
+
+            ''With cRec
+            ''    If .p31Date > Now Then dataItem("systemcolumn").CssClass = "future" 'záznam do budoucna vizuálně zvýrazňovat jako plán
+
+            ''    Select Case .p72ID_AfterTrimming
+            ''        Case BO.p72IdENUM.SkrytyOdpis, BO.p72IdENUM.ViditelnyOdpis, BO.p72IdENUM.ZahrnoutDoPausalu
+            ''            dataItem("systemcolumn").CssClass = "corr_236"
+            ''        Case BO.p72IdENUM.Fakturovat
+            ''            If .p31Hours_Trimmed < .p31Hours_Orig Then
+            ''                dataItem("systemcolumn").CssClass = "corr_4_down"
+            ''            End If
+            ''            If .p31Hours_Trimmed > .p31Hours_Orig Then
+            ''                dataItem("systemcolumn").CssClass = "corr_4_up"
+            ''            End If
+            ''    End Select
+            ''    Select Case .p72ID_AfterApprove
+            ''        Case BO.p72IdENUM.Fakturovat : dataItem("systemcolumn").CssClass = "a14"
+            ''        Case BO.p72IdENUM.FakturovatPozdeji : dataItem("systemcolumn").CssClass = "a17"
+            ''        Case BO.p72IdENUM.ZahrnoutDoPausalu : dataItem("systemcolumn").CssClass = "a16"
+            ''        Case BO.p72IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a12"
+            ''        Case BO.p72IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a13"
+            ''        Case Else
+            ''            If .p71ID = BO.p71IdENUM.Neschvaleno Then dataItem("systemcolumn").CssClass = "a20"
+
+            ''    End Select
+            ''    Select Case .p70ID
+            ''        Case BO.p70IdENUM.Vyfakturovano : dataItem("systemcolumn").CssClass = "a4"
+            ''        Case BO.p70IdENUM.ZahrnutoDoPausalu : dataItem("systemcolumn").CssClass = "a6"
+            ''        Case BO.p70IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a2"
+            ''        Case BO.p70IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a3"
+            ''    End Select
+            ''    If .o23ID_First > 0 And .p49ID = 0 Then dataItem("systemcolumn").Text += "<img src='Images/attachment.png' width='12px' height='12px'/>"
+            ''    If .IsClosed Then dataItem.Font.Strikeout = True
+
+            ''    Select Case .p33ID
+            ''        Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
+            ''            If .p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem Then
+            ''                dataItem.ForeColor = Drawing.Color.Blue  'příjmy
+            ''            Else
+            ''                dataItem.ForeColor = Drawing.Color.Brown    'výdaje
+            ''            End If
+            ''            If .p49ID > 0 Then
+            ''                If .p71ID > BO.p71IdENUM.Nic Then
+            ''                    If .o23ID_First = 0 Then
+            ''                        dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px;padding-left:7px;'/>"
+            ''                    Else
+            ''                        dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px;padding-left:7px;'/>"
+            ''                    End If
+            ''                Else
+            ''                    If .o23ID_First = 0 Then
+            ''                        dataItem("systemcolumn").Text += "<img src='Images/finplan.png' style='width:12px;height:12px'/>"
+            ''                    Else
+            ''                        dataItem("systemcolumn").Text += "<img src='Images/finplan_attachment.png' style='width:12px;height:12px'/>"
+            ''                    End If
+            ''                End If
+            ''            End If
+            ''        Case BO.p33IdENUM.Kusovnik
+            ''            dataItem.ForeColor = Drawing.Color.Green  'kusovník
+            ''        Case Else
+            ''    End Select
+
+            ''End With
+        End If
+
     End Sub
     Public Shared Sub RenderHeaderMenu(bolRecordIsClosed As Boolean, panMenuContainer As Panel, menu As Telerik.Web.UI.RadMenu)
         If bolRecordIsClosed Then

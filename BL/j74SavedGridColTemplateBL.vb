@@ -260,24 +260,24 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.DIC, "p28VatID"))
             .Add(AGC(My.Resources.common.Typ, "p29Name"))
             .Add(AGC(My.Resources.common.Zkratka, "p28CompanyShortName"))
-            .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing"))
-            .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal"))
+            .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
+            .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
             .Add(AGC(My.Resources.common.FakturacniJazyk, "p87Name"))
 
-            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner"))
-            .Add(AGC(My.Resources.common.Zalozeno, "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Zalozil, "UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Aktualizoval, "UserUpdate"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p28DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Zalozil, "p28UserInsert"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p28DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p28UserUpdate"))
             .Add(AGC("Externí kód", "p28ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p28Contact, lis)
     End Sub
     Private Sub InhaleJ02ColList(ByRef lis As List(Of BO.GridColumn))
         With lis
-            .Add(AGC("Příjmení+jméno", "FullNameDesc"))
-            .Add(AGC("Jméno+příjmení", "FullNameAsc"))
+            .Add(AGC("Příjmení+jméno", "FullNameDesc", , , "a.j02LastName+char(32)+a.j02FirstName"))
+            .Add(AGC("Jméno+příjmení", "FullNameAsc", , , "a.j02FirstName+char(32)+a.j02LastName"))
             .Add(AGC("Jméno", "j02FirstName"))
             .Add(AGC("Příjmení", "j02LastName"))
             .Add(AGC("Titul", "j02TitleBeforeName"))
@@ -287,10 +287,10 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Středisko", "j18Name"))
 
             .Add(AGC("Interní osoba", "j02IsIntraPerson", BO.cfENUM.Checkbox))
-            .Add(AGC("Založeno", "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC("Založil", "UserInsert"))
-            .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC("Založeno", "j02DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC("Založil", "j02UserInsert"))
+            .Add(AGC("Aktualizace", "j02DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC("Aktualizoval", "j02UserUpdate"))
             .Add(AGC("Externí kód", "j02ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.j02Person, lis)
@@ -301,23 +301,23 @@ Class j74SavedGridColTemplateBL
 
         With lis
             .Add(AGC(My.Resources.common.Datum, "p31Date", BO.cfENUM.DateOnly))
-            .Add(AGC(My.Resources.common.TimeFrom, "TimeFrom", , False))
-            .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False))
+            .Add(AGC(My.Resources.common.TimeFrom, "TimeFrom", , False, "p31DateTimeFrom_Orig"))
+            .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False, "p31DateTimeUntil_Orig"))
 
-            .Add(AGC(My.Resources.common.Osoba, "Person"))
+            .Add(AGC(My.Resources.common.Osoba, "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName"))
             .Add(AGC(My.Resources.common.p32Name, "p32Name"))
             .Add(AGC(My.Resources.common.FA, "p32IsBillable", BO.cfENUM.Checkbox))
             .Add(AGC(My.Resources.common.Sesit, "p34Name"))
 
             .Add(AGC(My.Resources.common.Projekt, "p41Name"))
-            .Add(AGC(My.Resources.common.KlientProjektu, "p28Name"))
+            .Add(AGC(My.Resources.common.KlientProjektu, "p28Name", , , "p28Client.p28Name"))
             .Add(AGC(My.Resources.common.NazevUkolu, "p56Name"))
             .Add(AGC(My.Resources.common.KodUkolu, "p56Code"))
 
             .Add(AGC("Text", "p31Text"))
-            .Add(AGC(My.Resources.common.Dodavatel, "SupplierName"))
+            .Add(AGC(My.Resources.common.Dodavatel, "SupplierName", , , "supplier.p28Name"))
             .Add(AGC(My.Resources.common.KodDokladu, "p31Code"))
-            .Add(AGC(My.Resources.common.KontaktniOsoba, "ContactPerson"))
+            .Add(AGC(My.Resources.common.KontaktniOsoba, "ContactPerson", , , "cp.j02LastName+char(32)+cp.j02FirstName"))
 
             .Add(AGC(My.Resources.common.Schvaleno, "p71Name"))
 
@@ -368,11 +368,11 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Kalk/počet", "p31Calc_Pieces", BO.cfENUM.Numeric2))
             .Add(AGC("Kalk/cena 1 ks", "p31Calc_PieceAmount", BO.cfENUM.Numeric2))
 
-            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , False))
-            .Add(AGC(My.Resources.common.Zalozeno, "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Zalozil, "UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Aktualizoval, "UserUpdate"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , False, "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p31DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Zalozil, "p31UserInsert"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p31DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p31UserUpdate"))
         End With
         AppendFreeFields(BO.x29IdEnum.p31Worksheet, lis)
     End Sub
@@ -408,11 +408,11 @@ Class j74SavedGridColTemplateBL
 
             .Add(AGC("Text", "p91Text1"))
 
-            .Add(AGC("Vlastník záznamu", "Owner"))
-            .Add(AGC("Založeno", "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC("Založil", "UserInsert"))
-            .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC("Vlastník záznamu", "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
+            .Add(AGC("Založeno", "p91DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC("Založil", "p91UserInsert"))
+            .Add(AGC("Aktualizace", "p91DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC("Aktualizoval", "p91UserUpdate"))
         End With
         AppendFreeFields(BO.x29IdEnum.p91Invoice, lis)
     End Sub
@@ -426,7 +426,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Klient, "Client"))
             .Add(AGC(My.Resources.common.Projekt, "p41Name"))
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code"))
-            .Add(AGC(My.Resources.common.Prijemce, "ReceiversInLine"))
+            .Add(AGC(My.Resources.common.Prijemce, "ReceiversInLine", , , "dbo.p56_getroles_inline(a.p56ID)"))
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner"))
             .Add(AGC(My.Resources.common.Termin, "p56PlanUntil", BO.cfENUM.DateTime))
             .Add(AGC(My.Resources.common.PlanStart, "p56PlanFrom", BO.cfENUM.DateTime))
@@ -443,10 +443,10 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.VykazaneVydaje, "Expenses_Orig", BO.cfENUM.Numeric2, , , True))
 
             
-            .Add(AGC(My.Resources.common.Zalozeno, "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Zalozil, "UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Aktualizoval, "UserUpdate"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p56DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Zalozil, "p56UserInsert"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p56DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p56UserUpdate"))
             .Add(AGC(My.Resources.common.ExterniKod, "p56ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p56Task, lis)
@@ -457,8 +457,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Název", "o23Name"))
             .Add(AGC("Kód dokumentu", "o23Code"))
             .Add(AGC("Aktuální stav", "b02Name"))
-            .Add(AGC("Projekt", "Project"))
-            .Add(AGC("Klient projektu", "ProjectClient"))
+            .Add(AGC("Projekt", "Project", , , "p41.p41Name"))
+            .Add(AGC("Klient projektu", "ProjectClient", , , "p28_client.p28Name"))
             .Add(AGC("Firma", "p28Name"))
             .Add(AGC("Faktura", "p91Code"))
             .Add(AGC("Úkol", "p56Code"))
@@ -467,10 +467,10 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Datum", "o23Date", BO.cfENUM.DateTime))
             .Add(AGC("Připomenutí", "o23ReminderDate", BO.cfENUM.DateTime))
 
-            .Add(AGC("Založeno", "DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC("Založil", "UserInsert"))
-            .Add(AGC("Aktualizace", "DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC("Aktualizoval", "UserUpdate"))
+            .Add(AGC("Založeno", "o23DateInsert", BO.cfENUM.DateTime))
+            .Add(AGC("Založil", "o23UserInsert"))
+            .Add(AGC("Aktualizace", "o23DateUpdate", BO.cfENUM.DateTime))
+            .Add(AGC("Aktualizoval", "o23UserUpdate"))
         End With
         AppendFreeFields(BO.x29IdEnum.o23Notepad, lis)
     End Sub

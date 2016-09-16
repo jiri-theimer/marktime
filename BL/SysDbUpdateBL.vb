@@ -221,9 +221,20 @@
         Else
             If Not cF.IsComputed Then
                 Dim bolGoON As Boolean = False
-                If cF.Type <> dbRow.Item("type_name") Or (cF.Length <> dbRow.Item("length") & "") Or cF.Prec <> dbRow.Item("xprec") & "" Or cF.Scale <> dbRow.Item("xscale") & "" Or (cF.cDefault = "0" And dbRow.Item("cdefault").ToString <> "0") Or (cF.cDefault <> "0" And dbRow.Item("cdefault") = "0") Then
+                If cF.Type <> dbRow.Item("type_name") Or cF.Prec <> dbRow.Item("xprec") & "" Or cF.Scale <> dbRow.Item("xscale") & "" Or (cF.cDefault = "0" And dbRow.Item("cdefault").ToString <> "0") Or (cF.cDefault <> "0" And dbRow.Item("cdefault") = "0") Then
                     bolGoON = True
 
+                End If
+                If Not bolGoON Then
+                    If IsNumeric(cF.Length) And IsNumeric(dbRow.Item("length") & "") Then
+                        If BO.BAS.IsNullInt(cF.Length) > BO.BAS.IsNullInt(dbRow.Item("length")) Then
+                            bolGoON = True
+                        End If
+                    Else
+                        If cF.Length <> dbRow.Item("length") & "" Then
+                            bolGoON = True
+                        End If
+                    End If
                 End If
 
                 If bolGoON Then

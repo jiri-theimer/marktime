@@ -201,7 +201,20 @@ Public Class p31_grid
                 If Not cJ74 Is Nothing Then SetupJ74Combo(cJ74.PID)
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression, strSortExpression)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression, strSortExpression)
+            With Me.cbxGroupBy
+                If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
+                    Dim b As Boolean = False
+                    If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
+                    If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
+                    If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
+                    If .SelectedValue = "p28Name" Then Me.hidCols.Value += ",p28client.p28Name" : b = True
+                    If Not b Then
+                        Me.hidCols.Value += "," & .SelectedValue
+                    End If
+                End If
+            End With
+
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
             If Not Me.txtSearch.Visible Then Me.txtSearch.Text = ""
@@ -257,10 +270,15 @@ Public Class p31_grid
                 End If
             End If
             If Me.cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+                If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
+                If strPrimarySortField = "p28Name" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
+
                 If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                    .MG_SortString = strPrimarySortField
                 Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
         End With
@@ -301,10 +319,15 @@ Public Class p31_grid
                 End If
             End If
             If Me.cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+                If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
+                If strPrimarySortField = "p28Name" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
+
                 If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                    .MG_SortString = strPrimarySortField
                 Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
         End With
@@ -314,9 +337,9 @@ Public Class p31_grid
             'drill down úroveň
             Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
 
-            Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid1.radGridOrig.MasterTableView.Attributes("sumfields"))
-            grid1.VirtualRowCount = dt.Rows.Count
-            grid1.DataSourceDataTable = dt
+            Dim dtDD As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid1.radGridOrig.MasterTableView.Attributes("sumfields"))
+            grid1.VirtualRowCount = dtDD.Rows.Count
+            grid1.DataSourceDataTable = dtDD
             Return
         End If
 
@@ -328,11 +351,16 @@ Public Class p31_grid
             RecalcVirtualRowCount()
         End If
 
-
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq)
+        If dt Is Nothing Then
+            Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
+        Else
+            grid1.DataSourceDataTable = dt
+        End If
 
         
 
-        grid1.DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
+        ''grid1.DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
 
     End Sub
 
@@ -470,10 +498,12 @@ Public Class p31_grid
 
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-groupby", Me.cbxGroupBy.SelectedValue)
-        With Me.cbxGroupBy.SelectedItem
-            SetupGrouping(.Value, .Text)
-        End With
-        grid1.Rebind(True)
+        ReloadPage()
+
+        ''With Me.cbxGroupBy.SelectedItem
+        ''    SetupGrouping(.Value, .Text)
+        ''End With
+        ''grid1.Rebind(True)
     End Sub
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31-j70id", Me.CurrentJ70ID.ToString)

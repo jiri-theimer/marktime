@@ -284,6 +284,19 @@ Public Class entity_framework
                 If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
             End If
             Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
+            With Me.cbxGroupBy
+                If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
+                    Dim b As Boolean = False
+                    If Me.CurrentX29ID = BO.x29IdEnum.p41Project And .SelectedValue = "Client" Then Me.hidCols.Value += ",p28client.p28Name as Client" : b = True
+                    If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
+                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "ProjectCodeAndName" Then Me.hidCols.Value += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName" : b = True
+                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "Client" Then Me.hidCols.Value += ",p28client.p28Name as Client" : b = True
+                    If Not b Then
+                        Me.hidCols.Value += "," & .SelectedValue
+                    End If
+                End If
+            End With
+            
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -312,7 +325,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.p41Project
                 basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
             Case BO.x29IdEnum.p28Contact
-                basUIMT.p28_grid_Handle_ItemDataBound(sender, e)
+                basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True)
             Case BO.x29IdEnum.o23Notepad
                 basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, False)
             Case BO.x29IdEnum.p56Task
@@ -320,7 +333,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.j02Person
                 basUIMT.j02_grid_Handle_ItemDataBound(sender, e)
             Case BO.x29IdEnum.p91Invoice
-                basUIMT.p91_grid_Handle_ItemDataBound(sender, e)
+                basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True)
         End Select
 
     End Sub
@@ -363,12 +376,19 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p28(mq)
 
-                Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq)
-                If lis Is Nothing Then
-                    Master.Notify(Master.Factory.p28ContactBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                Dim dt As DataTable = Master.Factory.p28ContactBL.GetGridDataSource(hidCols.Value, mq)
+                If dt Is Nothing Then
+                    Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
-                    grid1.DataSource = lis
+                    grid1.DataSourceDataTable = dt
                 End If
+
+                ''Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq)
+                ''If lis Is Nothing Then
+                ''    Master.Notify(Master.Factory.p28ContactBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                ''Else
+                ''    grid1.DataSource = lis
+                ''End If
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 With mq
@@ -426,21 +446,26 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p91(mq)
 
-                Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq)
+                ''Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq)
 
                 'Dim mq2 As New BO.myQueryP41
                 'Dim lis2 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq2)
 
                 'Dim qry = From p In lis Join q In lis2 On p.p41ID_First Equals q.PID Select p, q.p41Code
 
-
-
-
-                If Not lis Is Nothing Then
-                    grid1.DataSource = lis
-                Else
+                Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(hidCols.Value, mq)
+                If dt Is Nothing Then
                     Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                Else
+                    grid1.DataSourceDataTable = dt
                 End If
+
+
+                ''If Not lis Is Nothing Then
+                ''    grid1.DataSource = lis
+                ''Else
+                ''    Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                ''End If
             Case Else
 
         End Select
@@ -485,10 +510,11 @@ Public Class entity_framework
                 End If
             End If
             If Me.cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
                 If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                    .MG_SortString = strPrimarySortField
                 Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
         End With
@@ -588,10 +614,12 @@ Public Class entity_framework
                 End If
             End If
             If Me.cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+                If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
                 If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                    .MG_SortString = strPrimarySortField
                 Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
             Select Case Me.cbxPeriodType.SelectedValue
@@ -622,10 +650,12 @@ Public Class entity_framework
                 End If
             End If
             If Me.cbxGroupBy.SelectedValue <> "" Then
+                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+                If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
                 If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
+                    .MG_SortString = strPrimarySortField
                 Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
             Select Case Me.cbxPeriodType.SelectedValue
@@ -855,6 +885,7 @@ Public Class entity_framework
     End Sub
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-groupby", Me.cbxGroupBy.SelectedValue)
+        ReloadPage()
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With

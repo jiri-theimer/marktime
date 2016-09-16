@@ -214,12 +214,8 @@
             s += " WHERE RowIndex BETWEEN @start AND @end"
         End With
 
-
-
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
         If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
-
-
     End Function
 
 

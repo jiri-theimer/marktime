@@ -99,6 +99,7 @@
 <asp:HiddenField ID="hidDefaultSorting" runat="server" />
 <asp:HiddenField ID="hidJ74ID" runat="server" />
 <asp:HiddenField ID="hidDrillDownField" runat="server" />
+<asp:HiddenField ID="hidCols" runat="server" />
 
 <script type="text/javascript">
     $(document).ready(function () {

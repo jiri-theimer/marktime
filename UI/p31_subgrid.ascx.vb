@@ -186,7 +186,7 @@ Public Class p31_subgrid
         grid2.ClearColumns()
 
         Me.hidDefaultSorting.Value = _curJ74.j74OrderBy
-        basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
 
         If _curJ74.j74IsFilteringByColumn Then
             Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
