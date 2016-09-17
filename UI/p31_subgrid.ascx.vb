@@ -187,18 +187,18 @@ Public Class p31_subgrid
 
         Me.hidDefaultSorting.Value = _curJ74.j74OrderBy
         Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
-        With Me.cbxGroupBy
-            If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
-                Dim b As Boolean = False
-                If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
-                If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
-                If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
-                If .SelectedValue = "ClientName" Then Me.hidCols.Value += ",p28client.p28Name as ClientName" : b = True
-                If Not b Then
-                    Me.hidCols.Value += "," & .SelectedValue
-                End If
-            End If
-        End With
+        ''With Me.cbxGroupBy
+        ''    If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
+        ''        Dim b As Boolean = False
+        ''        If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
+        ''        If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
+        ''        If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
+        ''        If .SelectedValue = "ClientName" Then Me.hidCols.Value += ",p28client.p28Name as ClientName" : b = True
+        ''        If Not b Then
+        ''            Me.hidCols.Value += "," & .SelectedValue
+        ''        End If
+        ''    End If
+        ''End With
 
         If _curJ74.j74IsFilteringByColumn Then
             Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
@@ -301,7 +301,7 @@ Public Class p31_subgrid
             grid2.DataSourceDataTable = dtDD
             Return
         End If
-        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq)
+        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
         If dt Is Nothing Then
             Return
         End If
@@ -325,7 +325,7 @@ Public Class p31_subgrid
                     If intPID = Me.DefaultSelectedPID Then
                         grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
                         mq.MG_CurrentPageIndex = intNewPageIndex
-                        dt = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq) 'nový zdroj pro grid
+                        dt = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue) 'nový zdroj pro grid
                         ''lis = Me.Factory.p31WorksheetBL.GetList(mq) 'nový zdroj pro grid
                         Exit For
                     End If
@@ -478,18 +478,18 @@ Public Class p31_subgrid
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
-                If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
-                If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
-                If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
+            ''If Me.cbxGroupBy.SelectedValue <> "" Then
+            ''    Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+            ''    If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
+            ''    If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
+            ''    If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
 
-                If .MG_SortString = "" Then
-                    .MG_SortString = strPrimarySortField
-                Else
-                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
-                End If
-            End If
+            ''    If .MG_SortString = "" Then
+            ''        .MG_SortString = strPrimarySortField
+            ''    Else
+            ''        .MG_SortString = strPrimarySortField & "," & .MG_SortString
+            ''    End If
+            ''End If
         End With
     End Sub
 

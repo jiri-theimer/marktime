@@ -268,7 +268,7 @@ Public Class p31_approving_step3
                     Me.CurrentJ74ID = cJ74.PID
                 End If
             End If
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, True)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, True)
         End With
 
         If Not Page.IsPostBack Then
@@ -322,7 +322,7 @@ Public Class p31_approving_step3
   
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
-        basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
+        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
@@ -334,10 +334,19 @@ Public Class p31_approving_step3
         End With
         InhaleMyQuery(mq)
 
+        ''Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq, ViewState("guid"))
+
+        ''grid1.DataSource = lis
+
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(Me.hidCols.Value, mq, opgGroupBy.SelectedValue, ViewState("guid"))
+        If dt Is Nothing Then
+            Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
+            Return
+        Else
+            grid1.DataSourceDataTable = dt
+        End If
+
         Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq, ViewState("guid"))
-
-        grid1.DataSource = lis
-
         RecalcVirtualRowCount(lis)
 
         Dim sets As List(Of String) = Master.Factory.p31WorksheetBL.GetList_ApprovingSet(ViewState("guid"), Nothing, Nothing)

@@ -459,24 +459,58 @@
         Return _cDB.GetList(Of BO.p31Worksheet)(s, pars)
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31) As DataTable
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31, strGroupField As String, Optional strTempGUID As String = "") As DataTable
         Dim s As String = ""
+        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
+            Dim b As Boolean = False
+            If strGroupField = "SupplierName" Then strCols += ",supplier.p28Name as SupplierName" : b = True
+            If strGroupField = "Owner" Then strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
+            If strGroupField = "Person" Then strCols += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
+            If strGroupField = "ClientName" Then strCols += ",p28client.p28Name as ClientName" : b = True
+            If strGroupField = "j27Code_Billing_Orig" Then strCols = ",j27billing_orig.j27Code as j27Code_Billing_Orig"
+            If strGroupField = "approve_p72Name" Then strCols = +",p72approve.p72Name as approve_p72Name"
+            If Not b Then
+                strCols += "," & strGroupField
+            End If
+        End If
         strCols += ",a.p31ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN 0 else 1 END) as IsClosed,a.p72ID_AfterTrimming,a.p72ID_AfterApprove,a.p70ID,a.o23ID_First,a.p49ID,a.p71ID,p34.p33ID"
         strCols += ",a.p31Date as p31Date_Grid,a.p31Hours_Trimmed as p31Hours_Trimmed_Grid,a.p31Hours_Orig as p31Hours_Orig_Grid,p34.p34IncomeStatementFlag"
+
         Dim pars As New DL.DbParameters
-        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        Dim strW As String = GetSQLWHERE(myQuery, pars, strTempGUID)
         With myQuery
             Dim strORDERBY As String = .MG_SortString
+            If strGroupField <> "" Then
+                Dim strPrimarySortField As String = strGroupField
+                If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
+                If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
+                If strPrimarySortField = "approve_p72Name" Then strPrimarySortField = "p72approve.p72Name"
+                If strORDERBY = "" Then
+                    strORDERBY = strPrimarySortField
+                Else
+                    strORDERBY = strPrimarySortField & "," & .MG_SortString
+                End If
+            End If
             If strORDERBY = "" Then strORDERBY = "a.p31ID DESC"
-            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(, myQuery)
+            If .MG_PageSize > 0 Then
+                Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-            If strW <> "" Then s += " WHERE " & strW
-            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
-            pars.Add("start", intStart, DbType.Int32)
-            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
-            s += " WHERE RowIndex BETWEEN @start AND @end"
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strTempGUID, myQuery)
+
+                If strW <> "" Then s += " WHERE " & strW
+                s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+                pars.Add("start", intStart, DbType.Int32)
+                pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+                s += " WHERE RowIndex BETWEEN @start AND @end"
+            Else
+                'bez stránkování
+                s = "SELECT " & strCols & " " & GetSQLPart2(strTempGUID, myQuery)
+                If strW <> "" Then s += " WHERE " & strW
+                s += " ORDER BY " & strORDERBY
+            End If
+
         End With
 
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())

@@ -356,6 +356,15 @@ Partial Public Class p31_approving_step3
     Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidCols control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''okno1 control.
     '''</summary>
     '''<remarks>

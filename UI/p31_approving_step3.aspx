@@ -193,7 +193,7 @@
                         <asp:ListItem Text="Aktivita" Value="p32Name"></asp:ListItem>
                         <asp:ListItem Text="Osoba" Value="Person"></asp:ListItem>
                         <asp:ListItem Text="Projekt" Value="p41Name"></asp:ListItem>
-                        <asp:ListItem Text="Klient" Value="p28Name"></asp:ListItem>
+                        <asp:ListItem Text="Klient" Value="ClientName"></asp:ListItem>
                         <asp:ListItem Text="Úkol" Value="p56Name"></asp:ListItem>
                     </asp:RadioButtonList>
                 </div>
@@ -308,6 +308,7 @@
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
+    <asp:HiddenField ID="hidCols" runat="server" />
 
 
     <telerik:RadWindow ID="okno1" runat="server" Modal="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png">

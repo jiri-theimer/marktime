@@ -281,7 +281,7 @@ Public Class p91_framework_detail
                     Me.CurrentJ74ID = cJ74.PID
                 End If
             End If
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), True, True)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), True, True)
         End With
 
 
@@ -306,6 +306,7 @@ Public Class p91_framework_detail
             Case Else
                 Return
         End Select
+
         With grid1.radGridOrig.MasterTableView
             .ShowGroupFooter = True
             Dim GGE As New Telerik.Web.UI.GridGroupByExpression
@@ -330,7 +331,8 @@ Public Class p91_framework_detail
         If Not cSum Is Nothing Then
             grid1.VirtualRowCount = cSum.RowsCount
             With tabs1.FindTabByValue("p31")
-                .Text = .Text & " (" & cSum.RowsCount.ToString & ")"
+                .Text = BO.BAS.OM2(.Text, cSum.RowsCount.ToString)
+                ''.Text = .Text & " (" & cSum.RowsCount.ToString & ")"
             End With
             ViewState("footersum") = grid1.GenerateFooterItemString(cSum)
         Else
@@ -350,43 +352,60 @@ Public Class p91_framework_detail
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
-        basUIMT.p31_grid_Handle_ItemDataBound(sender, e)
+        basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        Dim strSort As String = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
+        Dim strGroupField As String = ""
         Select Case Me.opgGroupBy.SelectedValue
             Case "p41"
-                strSort = "p41name"
+                strGroupField = "p41name"
             Case "p34"
-                strSort = "p34Name"
+                strGroupField = "p34Name"
             Case "p95"
-                strSort = "p95Name"
+                strGroupField = "p95Name"
             Case "p32"
-                strSort = "p34name,p32Name"
+                strGroupField = "p32Name"
             Case "j02"
-                strSort = "Person"
+                strGroupField = "Person"
             Case "j27"
-                strSort = "j27Code_Billing_Orig"
+                strGroupField = "j27Code_Billing_Orig"
             Case "p56"
-                strSort = "p56Code"
+                strGroupField = "p56Code"
             Case "p70"
-                strSort = "p70Name"
+                strGroupField = "p70Name"
+            Case "p31ApprovingSet"
+                strGroupField = "p31ApprovingSet"
             Case Else
         End Select
+        ''If Me.opgGroupBy.SelectedValue <> "" Then
+        ''    Me.hidCols.Value += "," & strSort
+        ''End If
+
+
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
         With mq
             .MG_PageSize = CInt(Me.cbxPaging.SelectedValue)
             .MG_CurrentPageIndex = grid1.radGridOrig.MasterTableView.CurrentPageIndex
-            .MG_SortString = strSort
+            .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
 
         End With
 
-        Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
-        grid1.DataSource = lis
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value & ",a.p41ID as p41IDX,p41.p41Name as p41NameX", mq, strGroupField)
+        If dt Is Nothing Then
+            Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
+            Return
+        Else
+            grid1.DataSourceDataTable = dt
+        End If
 
-        Dim p41ids As List(Of String) = lis.Select(Function(p) p.p41ID.ToString & "|" & p.p41Name).Distinct.ToList
+        ''Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+        ''grid1.DataSource = lis
+        Dim p41ids = dt.AsEnumerable.Select(Function(p) p.Item("p41IDX").ToString & "|" & p.Item("p41NameX")).Distinct
+
+        'Dim p41ids As List(Of Object) = dt.AsEnumerable.Select(Function(p) p.Item("p41ID").ToString & "|" & p.Item("p41Name")).Distinct
+
         rpProject.DataSource = p41ids
         rpProject.DataBind()
         If rpProject.Items.Count > 1 Then
@@ -395,7 +414,7 @@ Public Class p91_framework_detail
             End With
             If rpProject.Items.Count >= 3 Then panProjects.Style.Item("height") = "60px" : panProjects.Style.Item("overflow") = "auto"
         End If
-        
+
     End Sub
     Private Sub grid1_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles grid1.NeedFooterSource
         footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
@@ -404,6 +423,7 @@ Public Class p91_framework_detail
 
     Private Sub opgGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgGroupBy.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p91_framework_detail-group", Me.opgGroupBy.SelectedValue)
+
         SetupGrid()
         RecalcVirtualRowCount()
         grid1.Rebind(False)
