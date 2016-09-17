@@ -72,6 +72,7 @@
     <asp:HiddenField ID="hidReceiversInLine" runat="server" />
     <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
     <asp:HiddenField ID="hidDefaultSorting" runat="server" />
+    <asp:HiddenField ID="hidCols" runat="server" />
 </div>
 
 

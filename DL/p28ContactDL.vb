@@ -334,14 +334,30 @@
         Return _cDB.GetList(Of BO.p28Contact)(s, pars)
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP28) As DataTable
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP28, strGroupField As String) As DataTable
         Dim s As String = ""
+        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
+            Select Case strGroupField
+                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                Case Else
+                    strCols += "," & strGroupField
+            End Select
+        End If
         strCols += ",a.p28ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p28ValidFrom AND a.p28ValidUntil THEN 0 else 1 END) as IsClosed,a.p28IsDraft as IsDraft"
 
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
             Dim strORDERBY As String = .MG_SortString
+            If strGroupField <> "" Then
+                Dim strPrimarySortField As String = strGroupField
+                If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
+                If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
+                    strORDERBY = strPrimarySortField
+                Else
+                    strORDERBY = strPrimarySortField & "," & .MG_SortString
+                End If
+            End If
             If strORDERBY = "" Then strORDERBY = "p28Name"
             Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 

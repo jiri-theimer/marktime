@@ -7,7 +7,7 @@
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice)
     Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
-    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP91) As DataTable
+    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP91, strGroupField As String) As DataTable
     Function Update(cRec As BO.p91Invoice, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
     Function ChangeVat(intP91ID As Integer, x15id As BO.x15IdEnum, dblNewVatRate As Double) As Boolean
     Function ChangeCurrency(intP91ID As Integer, intJ27ID As Integer) As Boolean
@@ -199,7 +199,7 @@ Class p91InvoiceBL
 
         Return c
     End Function
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP91) As DataTable Implements Ip91InvoiceBL.GetGridDataSource
-        Return _cDL.GetGridDataSource(strCols, myQuery)
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP91, strGroupField As String) As DataTable Implements Ip91InvoiceBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField)
     End Function
 End Class

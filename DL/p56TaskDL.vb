@@ -258,6 +258,7 @@
                 Case "p59NameSubmitter" : strCols += ",p59submitter.p59Name as p59NameSubmitter"
                 Case "ReceiversInLine" : strCols += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine"
                 Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                Case "IsClosed" 'je automaticky ve sloupcích, viz níže
                 Case Else
                     strCols += "," & strGroupField
             End Select
@@ -273,8 +274,10 @@
                 Dim strPrimarySortField As String = strGroupField
                 If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
-                If strPrimarySortField = "ProjectCodeAndName" Then strPrimarySortField = "isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
+                If strPrimarySortField = "p59NameSubmitter" Then strPrimarySortField = "p59submitter.p59Name"
+                If strPrimarySortField = "ProjectCodeAndName" Then strPrimarySortField = "isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name"
                 If strPrimarySortField = "ReceiversInLine" Then strPrimarySortField = "dbo.p56_getroles_inline(a.p56ID)"
+                If strPrimarySortField = "IsClosed" Then strPrimarySortField = "CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END"
                 If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
                     strORDERBY = strPrimarySortField
                 Else
@@ -285,15 +288,24 @@
                 strORDERBY = "a.p56Ordinary,a.p56ID DESC"
             End If
             If strORDERBY = "" Then strORDERBY = "a.p56ID DESC"
-            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strCols)
+            If .MG_PageSize > 0 Then
+                Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-            If strW <> "" Then s += " WHERE " & strW
-            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
-            pars.Add("start", intStart, DbType.Int32)
-            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
-            s += " WHERE RowIndex BETWEEN @start AND @end"
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strCols)
+
+                If strW <> "" Then s += " WHERE " & strW
+                s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+                pars.Add("start", intStart, DbType.Int32)
+                pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+                s += " WHERE RowIndex BETWEEN @start AND @end"
+            Else
+                'bez stránkování
+                s = "SELECT " & strCols & " " & GetSQLPart2(strCols)
+                If strW <> "" Then s += " WHERE " & strW
+                s += " ORDER BY " & strORDERBY
+            End If
+           
         End With
 
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())

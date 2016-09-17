@@ -364,7 +364,7 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p28(mq)
 
-                Dim dt As DataTable = Master.Factory.p28ContactBL.GetGridDataSource(hidCols.Value, mq)
+                Dim dt As DataTable = Master.Factory.p28ContactBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -447,7 +447,7 @@ Public Class entity_framework
 
                 'Dim qry = From p In lis Join q In lis2 On p.p41ID_First Equals q.PID Select p, q.p41Code
 
-                Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(hidCols.Value, mq)
+                Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -629,15 +629,7 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
-                If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
-                If .MG_SortString = "" Then
-                    .MG_SortString = strPrimarySortField
-                Else
-                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
-                End If
-            End If
+            
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil

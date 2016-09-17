@@ -65,7 +65,7 @@ Public Class p56_subgrid
         If cJ74.j74ColumnNames.IndexOf("ReceiversInLine") > 0 Then Me.hidReceiversInLine.Value = "1" Else Me.hidReceiversInLine.Value = ""
         If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
         Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-        basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), False, True, True)
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), False, True, True)
 
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -77,7 +77,7 @@ Public Class p56_subgrid
 
 
     Private Sub gridP56_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridP56.ItemDataBound
-        basUIMT.p56_grid_Handle_ItemDataBound(sender, e, True)
+        basUIMT.p56_grid_Handle_ItemDataBound(sender, e, True, True)
         
     End Sub
     Private Sub InhaleTasksQuery(ByRef mq As BO.myQueryP56)
@@ -109,13 +109,7 @@ Public Class p56_subgrid
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
-                Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
-                End If
-            End If
+            
         End With
     End Sub
     Private Sub gridP56_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridP56.NeedDataSource
@@ -124,30 +118,36 @@ Public Class p56_subgrid
         Dim mq As New BO.myQueryP56, intClosed As Integer, intOpened As Integer, bolReceiversInLine As Boolean = False
         InhaleTasksQuery(mq)
 
-        If Me.hidReceiversInLine.Value = "1" Then bolReceiversInLine = True
+        ''If Me.hidReceiversInLine.Value = "1" Then bolReceiversInLine = True
 
-        If Me.hidTasksWorksheetColumns.Value = "1" Then
-            Dim lis As IEnumerable(Of BO.p56TaskWithWorksheetSum) = Factory.p56TaskBL.GetList_WithWorksheetSum(mq, bolReceiversInLine)
-            intClosed = lis.Where(Function(p) p.IsClosed = True).Count
-            intOpened = lis.Where(Function(p) p.IsClosed = False).Count
-            Select Case Me.cbxP56Validity.SelectedValue
-                Case "1"
-                Case "2" : lis = lis.Where(Function(p) p.IsClosed = False)
-                Case "3" : lis = lis.Where(Function(p) p.IsClosed = True)
-            End Select
-            gridP56.DataSource = lis
+        ''If Me.hidTasksWorksheetColumns.Value = "1" Then
+        ''    Dim lis As IEnumerable(Of BO.p56TaskWithWorksheetSum) = Factory.p56TaskBL.GetList_WithWorksheetSum(mq, bolReceiversInLine)
+        ''    intClosed = lis.Where(Function(p) p.IsClosed = True).Count
+        ''    intOpened = lis.Where(Function(p) p.IsClosed = False).Count
+        ''    Select Case Me.cbxP56Validity.SelectedValue
+        ''        Case "1"
+        ''        Case "2" : lis = lis.Where(Function(p) p.IsClosed = False)
+        ''        Case "3" : lis = lis.Where(Function(p) p.IsClosed = True)
+        ''    End Select
+        ''    gridP56.DataSource = lis
+        ''Else
+        ''    Dim lis As IEnumerable(Of BO.p56Task) = Factory.p56TaskBL.GetList(mq, bolReceiversInLine)
+        ''    intClosed = lis.Where(Function(p) p.IsClosed = True).Count
+        ''    intOpened = lis.Where(Function(p) p.IsClosed = False).Count
+        ''    Select Case Me.cbxP56Validity.SelectedValue
+        ''        Case "1"
+        ''        Case "2" : lis = lis.Where(Function(p) p.IsClosed = False)
+        ''        Case "3" : lis = lis.Where(Function(p) p.IsClosed = True)
+        ''    End Select
+        ''    gridP56.DataSource = lis
+        ''End If
+        Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+
+        If dt Is Nothing Then
+            Return
         Else
-            Dim lis As IEnumerable(Of BO.p56Task) = Factory.p56TaskBL.GetList(mq, bolReceiversInLine)
-            intClosed = lis.Where(Function(p) p.IsClosed = True).Count
-            intOpened = lis.Where(Function(p) p.IsClosed = False).Count
-            Select Case Me.cbxP56Validity.SelectedValue
-                Case "1"
-                Case "2" : lis = lis.Where(Function(p) p.IsClosed = False)
-                Case "3" : lis = lis.Where(Function(p) p.IsClosed = True)
-            End Select
-            gridP56.DataSource = lis
+            gridP56.DataSourceDataTable = dt
         End If
-        
 
         Dim strCount As String = intOpened.ToString & "+" & intClosed.ToString
         If intClosed = 0 And intOpened = 0 Then strCount = "0"
