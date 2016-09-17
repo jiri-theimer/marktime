@@ -462,16 +462,16 @@
     Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31, strGroupField As String, Optional strTempGUID As String = "") As DataTable
         Dim s As String = ""
         If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Dim b As Boolean = False
-            If strGroupField = "SupplierName" Then strCols += ",supplier.p28Name as SupplierName" : b = True
-            If strGroupField = "Owner" Then strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
-            If strGroupField = "Person" Then strCols += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
-            If strGroupField = "ClientName" Then strCols += ",p28client.p28Name as ClientName" : b = True
-            If strGroupField = "j27Code_Billing_Orig" Then strCols = ",j27billing_orig.j27Code as j27Code_Billing_Orig"
-            If strGroupField = "approve_p72Name" Then strCols = +",p72approve.p72Name as approve_p72Name"
-            If Not b Then
-                strCols += "," & strGroupField
-            End If
+            Select Case strGroupField
+                Case "SupplierName" : strCols += ",supplier.p28Name as SupplierName"
+                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                Case "Person" : strCols += ",j02.j02LastName+char(32)+j02.j02Firstname as Person"
+                Case "ClientName" : strCols += ",p28client.p28Name as ClientName"
+                Case "j27Code_Billing_Orig" : strCols += ",j27billing_orig.j27Code as j27Code_Billing_Orig"
+                Case "approve_p72Name" : strCols += ",p72approve.p72Name as approve_p72Name"
+                Case Else
+                    strCols += "," & strGroupField
+            End Select
         End If
         strCols += ",a.p31ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN 0 else 1 END) as IsClosed,a.p72ID_AfterTrimming,a.p72ID_AfterApprove,a.p70ID,a.o23ID_First,a.p49ID,a.p71ID,p34.p33ID"
         strCols += ",a.p31Date as p31Date_Grid,a.p31Hours_Trimmed as p31Hours_Trimmed_Grid,a.p31Hours_Orig as p31Hours_Orig_Grid,p34.p34IncomeStatementFlag"
@@ -486,7 +486,7 @@
                 If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
                 If strPrimarySortField = "approve_p72Name" Then strPrimarySortField = "p72approve.p72Name"
-                If strORDERBY = "" Then
+                If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
                     strORDERBY = strPrimarySortField
                 Else
                     strORDERBY = strPrimarySortField & "," & .MG_SortString
