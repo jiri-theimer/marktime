@@ -207,9 +207,9 @@ Public Class p56_subgrid
         Dim mq As New BO.myQueryP56
         InhaleTasksQuery(mq)
 
-        Dim lis As IEnumerable(Of BO.p56TaskWithWorksheetSum) = Me.Factory.p56TaskBL.GetList_WithWorksheetSum(mq)
+        Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, "")
 
-        Dim strFileName As String = cXLS.ExportGridData(lis, cJ74)
+        Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
         If strFileName = "" Then
             Response.Write(cXLS.ErrorMessage)
         Else

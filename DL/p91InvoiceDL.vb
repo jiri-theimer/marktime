@@ -351,15 +351,23 @@
                 End If
             End If
             If strORDERBY = "" Then strORDERBY = "a.p91ID DESC"
-            Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+            If .MG_PageSize > 0 Then
+                Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-            s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2()
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2()
 
-            If strW <> "" Then s += " WHERE " & strW
-            s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
-            pars.Add("start", intStart, DbType.Int32)
-            pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
-            s += " WHERE RowIndex BETWEEN @start AND @end"
+                If strW <> "" Then s += " WHERE " & strW
+                s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+                pars.Add("start", intStart, DbType.Int32)
+                pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+                s += " WHERE RowIndex BETWEEN @start AND @end"
+            Else
+                'bez stránkování
+                s = "SELECT " & strCols & " " & GetSQLPart2()
+                If strW <> "" Then s += " WHERE " & strW
+                s += " ORDER BY " & strORDERBY
+            End If
+           
         End With
 
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())

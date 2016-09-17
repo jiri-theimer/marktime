@@ -938,37 +938,43 @@ Public Class entity_framework
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
         Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
         Dim cXLS As New clsExportToXls(Master.Factory)
-        Dim lis As IEnumerable(Of Object) = Nothing
+        ''Dim lis As IEnumerable(Of Object) = Nothing
+        Dim dt As DataTable = Nothing
 
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
                 Dim mq As New BO.myQueryP41
                 InhaleMyQuery_p41(mq)
-                lis = Master.Factory.p41ProjectBL.GetList(mq)
+                ''lis = Master.Factory.p41ProjectBL.GetList(mq)
+                dt = Master.Factory.p41ProjectBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28
                 InhaleMyQuery_p28(mq)
-                lis = Master.Factory.p28ContactBL.GetList(mq)
+                ''lis = Master.Factory.p28ContactBL.GetList(mq)
+                dt = Master.Factory.p28ContactBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
-                lis = Master.Factory.p56TaskBL.GetList(mq)
+                ''lis = Master.Factory.p56TaskBL.GetList(mq)
+                dt = Master.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.o23Notepad
                 Dim mq As New BO.myQueryO23
                 InhaleMyQuery_o23(mq)
-                lis = Master.Factory.o23NotepadBL.GetList4Grid(mq)
+                ''lis = Master.Factory.o23NotepadBL.GetList4Grid(mq)
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 InhaleMyQuery_j02(mq)
-                lis = Master.Factory.j02PersonBL.GetList(mq)
+                ''lis = Master.Factory.j02PersonBL.GetList(mq)
+                ''dt = Master.Factory.j02PersonBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
-                lis = Master.Factory.p91InvoiceBL.GetList(mq)
+                ''lis = Master.Factory.p91InvoiceBL.GetList(mq)
+                dt = Master.Factory.p91InvoiceBL.GetGridDataSource(Me.hidCols.Value, mq, "")
 
         End Select
 
-        Dim strFileName As String = cXLS.ExportGridData(lis, cJ74)
+        Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
         If strFileName = "" Then
             Master.Notify(cXLS.ErrorMessage, NotifyLevel.ErrorMessage)
         Else

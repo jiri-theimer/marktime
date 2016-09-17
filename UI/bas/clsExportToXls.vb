@@ -67,7 +67,17 @@ Public Class clsExportToXls
     Private Sub RenderDataRow(obj As Object, strProperties As String, sheet As ExcelWorksheet, intRow As Integer, Optional intStartColumn As Integer = 1)
         Dim x As Integer = intStartColumn
         For Each s In Split(strProperties, "|")
-            Dim o As Object = BO.BAS.GetPropertyValue(obj, s)
+            Dim o As Object = Nothing
+            If TypeOf obj Is DataRow Then
+                Try
+                    o = CType(obj, DataRow).Item(s)
+                Catch ex As Exception
+                End Try
+
+            Else
+                o = BO.BAS.GetPropertyValue(obj, s)
+            End If
+
             If Not o Is Nothing Then
 
                 Select Case o.GetType.ToString
@@ -104,7 +114,7 @@ Public Class clsExportToXls
         Next
         Return Nothing
     End Function
-    
+
     Public Function ExportGridData(lis As IEnumerable(Of Object), cJ74 As BO.j74SavedGridColTemplate) As String
         Dim sheet As ExcelWorksheet = CreateSheet(), strFields As String = "", strHeaders As String = ""
 
@@ -116,7 +126,7 @@ Public Class clsExportToXls
             If Not c Is Nothing Then
                 strFields += "|" & c.ColumnName
                 strHeaders += "|" & c.ColumnHeader
-                
+
             End If
 
         Next

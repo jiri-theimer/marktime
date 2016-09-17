@@ -477,9 +477,10 @@ Public Class p31_grid
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
-        Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+        ''Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(Me.hidCols.Value, mq, "")
 
-        Dim strFileName As String = cXLS.ExportGridData(lis, cJ74)
+        Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
         If strFileName = "" Then
             Master.Notify(cXLS.ErrorMessage, NotifyLevel.ErrorMessage)
         Else
