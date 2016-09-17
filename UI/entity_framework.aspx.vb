@@ -284,21 +284,7 @@ Public Class entity_framework
                 If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
             End If
             Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
-            With Me.cbxGroupBy
-                If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
-                    Dim b As Boolean = False
-                    If Me.CurrentX29ID = BO.x29IdEnum.p41Project And .SelectedValue = "Client" Then Me.hidCols.Value += ",p28client.p28Name as Client" : b = True
-                    If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
-                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "ProjectCodeAndName" Then Me.hidCols.Value += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName" : b = True
-                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "Client" Then Me.hidCols.Value += ",p28client.p28Name as Client" : b = True
-                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "p59NameSubmitter" Then Me.hidCols.Value += ",p59submitter.p59Name as p59NameSubmitter" : b = True
-                    If Me.CurrentX29ID = BO.x29IdEnum.p56Task And .SelectedValue = "ReceiversInLine" Then Me.hidCols.Value += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine" : b = True
-                    If Not b Then
-                        Me.hidCols.Value += "," & .SelectedValue
-                    End If
-                End If
-            End With
-            
+           
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -363,7 +349,7 @@ Public Class entity_framework
                 ''Else
                 ''    grid1.DataSource = lis
                 ''End If
-                Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(hidCols.Value, mq)
+                Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -412,7 +398,7 @@ Public Class entity_framework
                 'Else
                 '    grid1.DataSource = lis
                 'End If
-                Dim dt As DataTable = Master.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq)
+                Dim dt As DataTable = Master.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -584,20 +570,7 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
-                If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
-                If strPrimarySortField = "ReceiversInLine" Then strPrimarySortField = "dbo.p56_getroles_inline(a.p56ID)"
-                If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
-                If strPrimarySortField = "p59NameSubmitter" Then strPrimarySortField = "p59submitter.p59Name"
-                If strPrimarySortField = "ProjectCodeAndName" Then strPrimarySortField = "isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name"
-
-                If .MG_SortString = "" Then
-                    .MG_SortString = strPrimarySortField
-                Else
-                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
-                End If
-            End If
+            
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
@@ -628,15 +601,7 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
-                If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
-                If .MG_SortString = "" Then
-                    .MG_SortString = strPrimarySortField
-                Else
-                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
-                End If
-            End If
+            
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil

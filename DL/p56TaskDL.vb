@@ -249,15 +249,38 @@
         End With
         Return _cDB.GetList(Of BO.p56Task)(s, pars)
     End Function
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP56) As DataTable
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP56, strGroupField As String) As DataTable
         Dim s As String = ""
+        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
+            Select Case strGroupField
+                Case "ProjectCodeAndName" : strCols += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
+                Case "Client" : strCols += ",p28client.p28Name as Client"
+                Case "p59NameSubmitter" : strCols += ",p59submitter.p59Name as p59NameSubmitter"
+                Case "ReceiversInLine" : strCols += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine"
+                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                Case Else
+                    strCols += "," & strGroupField
+            End Select
+        End If
         strCols += ",a.p56ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END) as IsClosed"
         strCols += ",a.p56PlanUntil as p56PlanUntil_Grid,a.b02ID as b02ID_Grid,b02Color as b02Color_Grid"
-        
+
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
             Dim strORDERBY As String = .MG_SortString
+            If strGroupField <> "" Then
+                Dim strPrimarySortField As String = strGroupField
+                If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
+                If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
+                If strPrimarySortField = "ProjectCodeAndName" Then strPrimarySortField = "isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
+                If strPrimarySortField = "ReceiversInLine" Then strPrimarySortField = "dbo.p56_getroles_inline(a.p56ID)"
+                If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
+                    strORDERBY = strPrimarySortField
+                Else
+                    strORDERBY = strPrimarySortField & "," & .MG_SortString
+                End If
+            End If
             If .p41ID <> 0 And strORDERBY = "" Then
                 strORDERBY = "a.p56Ordinary,a.p56ID DESC"
             End If
