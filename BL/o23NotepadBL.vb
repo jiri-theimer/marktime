@@ -10,6 +10,7 @@ Public Interface Io23NotepadBL
     Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23NotepadGrid)
     Function GetVirtualCount(myQuery As BO.myQueryO23) As Integer
     Function GetList4Grid(myQuery As BO.myQueryO23) As IEnumerable(Of BO.o23NotepadGrid)
+    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryO23, strGroupField As String) As DataTable
     Sub Handle_Reminder()
     Function InhaleRecordDisposition(cRec As BO.o23Notepad) As BO.o23RecordDisposition
     Sub UpdateSelectedNotepadRole(intX67ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), intO23ID As Integer)
@@ -250,5 +251,8 @@ Class o23NotepadBL
     End Function
     Public Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean Implements Io23NotepadBL.UpdateImapSource
         Return _cDL.UpdateImapSource(intPID, intO43ID)
+    End Function
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryO23, strGroupField As String) As DataTable Implements Io23NotepadBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField)
     End Function
 End Class

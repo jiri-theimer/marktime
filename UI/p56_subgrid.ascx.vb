@@ -2,6 +2,7 @@
 Public Class p56_subgrid
     Inherits System.Web.UI.UserControl
     Public Property MasterDataPID As Integer
+    Public Property DefaultSelectedPID As Integer = 0
     Public Property Factory As BL.Factory
     Public Property x29ID As BO.x29IdEnum
 
@@ -152,6 +153,31 @@ Public Class p56_subgrid
         Dim strCount As String = intOpened.ToString & "+" & intClosed.ToString
         If intClosed = 0 And intOpened = 0 Then strCount = "0"
         lblHeaderP56.Text = BO.BAS.OM2(lblHeaderP56.Text, strCount)
+
+        If Me.DefaultSelectedPID <> 0 Then
+            If dt.AsEnumerable.Where(Function(p) p.Item("pid") = Me.DefaultSelectedPID).Count > 0 Then
+                'záznam je na první stránce
+            Else
+                Dim mqAll As New BO.myQueryP56
+                mqAll.TopRecordsOnly = 0
+                mqAll.MG_SelectPidFieldOnly = True
+                InhaleTasksQuery(mqAll)
+                Dim dtAll As DataTable = Me.Factory.p56TaskBL.GetGridDataSource("", mqAll, Me.cbxGroupBy.SelectedValue)
+                Dim x As Integer, intNewPageIndex As Integer = 0
+                For Each dbRow As DataRow In dtAll.Rows
+                    x += 1
+                    If x > gridP56.PageSize Then
+                        intNewPageIndex += 1 : x = 1
+                    End If
+                    If dbRow.Item("pid") = Me.DefaultSelectedPID Then
+                        gridP56.radGridOrig.CurrentPageIndex = intNewPageIndex
+                        mq.MG_CurrentPageIndex = intNewPageIndex
+                        dt = Me.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue) 'nový zdroj pro grid
+                        Exit For
+                    End If
+                Next
+            End If
+        End If
     End Sub
 
     Private Sub cbxP56Validity_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxP56Validity.SelectedIndexChanged
@@ -214,6 +240,12 @@ Public Class p56_subgrid
             Response.Write(cXLS.ErrorMessage)
         Else
             Response.Redirect("binaryfile.aspx?tempfile=" & strFileName)
+        End If
+    End Sub
+
+    Private Sub gridP56_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles gridP56.NeedFooterSource
+        If Me.DefaultSelectedPID <> 0 Then
+            gridP56.SelectRecords(Me.DefaultSelectedPID)
         End If
     End Sub
 End Class

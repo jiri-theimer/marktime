@@ -52,7 +52,7 @@ Public Class p91_subgrid
 
 
     Private Sub gridP91_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridP91.ItemDataBound
-        basUIMT.p91_grid_Handle_ItemDataBound(sender, e, False)
+        basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True)
     End Sub
 
     Private Sub SetupGridP91()
@@ -64,7 +64,7 @@ Public Class p91_subgrid
         End If
 
         Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-        basUIMT.SetupGrid(Me.Factory, Me.gridP91, cJ74, CInt(Me.cbxPaging.SelectedValue), False, False, False)
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP91, cJ74, CInt(Me.cbxPaging.SelectedValue), False, False, False)
 
         'With Me.cbxGroupBy.SelectedItem
         '    SetupGrouping(.Value, .Text)
@@ -76,7 +76,7 @@ Public Class p91_subgrid
             .ShowGroupFooter = True
             Dim GGE As New Telerik.Web.UI.GridGroupByExpression
             Dim fld As New GridGroupByField
-            fld.FieldName = "j27Code"
+            fld.FieldName = "j27Code_Grid"
             fld.HeaderText = "Měna"
 
 
@@ -94,35 +94,38 @@ Public Class p91_subgrid
         Dim mq As New BO.myQueryP91
         InhaleMyQueryP91(mq)
 
-        Dim lis As IEnumerable(Of BO.p91Invoice) = Factory.p91InvoiceBL.GetList(mq)
-        Dim bolGroupByCurrency As Boolean = False
-        If gridP91.radGridOrig.MasterTableView.GroupByExpressions.Count = 0 And lis.Count > 0 Then
-            If lis.Select(Function(p) p.j27ID).Distinct.Count > 1 Then
-                SetupGroupByCurrency()
-                bolGroupByCurrency = True
-            End If
-        End If
-        
-        gridP91.DataSource = lis
-        If Not bolGroupByCurrency Then
-            gridP91.radGridOrig.ShowFooter = True : ViewState("p91_footersum") = ""
-            For Each col In gridP91.radGridOrig.MasterTableView.Columns
-                If TypeOf col Is GridBoundColumn Then
-                    If col.Aggregate = GridAggregateFunction.Sum Then
-                        ''ViewState("p91_footersum") += "|" & col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) p.p91Amount_TotalDue))
-                        If ViewState("p91_footersum") <> "" Then
-                            ViewState("p91_footersum") += "|" & col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) BO.BAS.GetPropertyValue(p, col.DataField)))
-                        Else
-                            ViewState("p91_footersum") = col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) BO.BAS.GetPropertyValue(p, col.DataField)))
-                        End If
+        Dim dt As DataTable = Factory.p91InvoiceBL.GetGridDataSource(Me.hidCols.Value, mq, "")
 
-                    End If
-                   
-                End If
-            Next
-        Else
-            gridP91.radGridOrig.ShowFooter = False
-        End If
+        ''Dim bolGroupByCurrency As Boolean = False
+        ''If gridP91.radGridOrig.MasterTableView.GroupByExpressions.Count = 0 And dt.Rows.Count > 0 Then
+        ''    If lis.Select(Function(p) p.j27ID).Distinct.Count > 1 Then
+        ''        SetupGroupByCurrency()
+        ''        bolGroupByCurrency = True
+        ''    End If
+        ''End If
+        SetupGroupByCurrency()
+
+        gridP91.DataSourceDataTable = dt
+
+        ''If Not bolGroupByCurrency Then
+        ''    gridP91.radGridOrig.ShowFooter = True : ViewState("p91_footersum") = ""
+        ''    For Each col In gridP91.radGridOrig.MasterTableView.Columns
+        ''        If TypeOf col Is GridBoundColumn Then
+        ''            If col.Aggregate = GridAggregateFunction.Sum Then
+        ''                ''ViewState("p91_footersum") += "|" & col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) p.p91Amount_TotalDue))
+        ''                If ViewState("p91_footersum") <> "" Then
+        ''                    ViewState("p91_footersum") += "|" & col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) BO.BAS.GetPropertyValue(p, col.DataField)))
+        ''                Else
+        ''                    ViewState("p91_footersum") = col.DataField & ";" & BO.BAS.FN(lis.Sum(Function(p) BO.BAS.GetPropertyValue(p, col.DataField)))
+        ''                End If
+
+        ''            End If
+
+        ''        End If
+        ''    Next
+        ''Else
+        ''    gridP91.radGridOrig.ShowFooter = False
+        ''End If
 
     End Sub
 

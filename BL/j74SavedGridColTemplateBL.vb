@@ -459,11 +459,11 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Aktuální stav", "b02Name"))
             .Add(AGC("Projekt", "Project", , , "p41.p41Name"))
             .Add(AGC("Klient projektu", "ProjectClient", , , "p28_client.p28Name"))
-            .Add(AGC("Firma", "p28Name"))
+            .Add(AGC("Firma", "DocCompany", , , "p28.p28Name"))
             .Add(AGC("Faktura", "p91Code"))
             .Add(AGC("Úkol", "p56Code"))
-            .Add(AGC("Příjemci", "ReceiversInLine"))
-            .Add(AGC("Vlastník", "Owner"))
+            .Add(AGC("Příjemci", "ReceiversInLine", , , "dbo.o23_getroles_inline(a.o23ID)"))
+            .Add(AGC("Vlastník", "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
             .Add(AGC("Datum", "o23Date", BO.cfENUM.DateTime))
             .Add(AGC("Připomenutí", "o23ReminderDate", BO.cfENUM.DateTime))
 
@@ -503,7 +503,7 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "p28IsDraft", "a.p28IsDraft", "a.p28IsDraft"))
             Case BO.x29IdEnum.o23Notepad
                 lis.Add(New BO.GridGroupByColumn("Typ dokumentu", "o24Name", "a.o24ID", "min(o24Name)"))
-                lis.Add(New BO.GridGroupByColumn("Klient", "p28Name", "a.p28ID", "min(p28Name)"))
+                lis.Add(New BO.GridGroupByColumn("Klient", "ProjectClient", "a.p28ID", "min(p28Name)"))
                 lis.Add(New BO.GridGroupByColumn("Projekt", "Project", "a.p41ID", "min(p41Name)"))
                 lis.Add(New BO.GridGroupByColumn("Aktuální stav", "b02Name", "a.b02ID", "min(b02.b02Name)"))
                 lis.Add(New BO.GridGroupByColumn("Vlastník dokumentu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))

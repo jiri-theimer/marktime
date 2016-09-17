@@ -336,10 +336,11 @@
             End Select
         End If
         strCols += ",a.p91ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p91ValidFrom AND a.p91ValidUntil THEN 0 else 1 END) as IsClosed,a.p91IsDraft as IsDraft"
-        strCols += ",a.p91Amount_TotalDue as TotalDue,a.p91Amount_Debt as Debt,a.p91DateMaturity as Maturity,p92.p92InvoiceType as InvoiceType"
+        strCols += ",a.p91Amount_TotalDue as TotalDue,a.p91Amount_Debt as Debt,a.p91DateMaturity as Maturity,p92.p92InvoiceType as InvoiceType,j27.j27Code as j27Code_Grid"
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
+            If .MG_SelectPidFieldOnly Then strCols = "a.p91ID as pid"
             Dim strORDERBY As String = .MG_SortString
             If strGroupField <> "" Then
                 Dim strPrimarySortField As String = strGroupField
@@ -367,7 +368,7 @@
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
-           
+
         End With
 
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())

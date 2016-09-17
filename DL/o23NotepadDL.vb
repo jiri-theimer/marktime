@@ -240,6 +240,60 @@
 
     End Function
 
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryO23, strGroupField As String) As DataTable
+        Dim s As String = ""
+        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
+            Select Case strGroupField
+                Case "ProjectClient" : strCols += ",p28_client.p28Name as ProjectClient"
+                Case "Project" : strCols += ",p41.p41Name as Project"
+                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                Case Else
+                    strCols += "," & strGroupField
+            End Select
+        End If
+        strCols += ",a.o23ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.o23ValidFrom AND a.o23ValidUntil THEN 0 else 1 END) as IsClosed,a.o23IsDraft as IsDraft"
+        strCols += ",a.o23IsEncrypted as o23IsEncrypted_Grid,a.o23LockedFlag as o23LockedFlag_Grid,a.b02ID,b02.b02Color"
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            If .MG_SelectPidFieldOnly Then strCols = "a.o23ID as pid"
+            Dim strORDERBY As String = .MG_SortString
+            If strGroupField <> "" Then
+                Dim strPrimarySortField As String = strGroupField
+                If strPrimarySortField = "ProjectClient" Then strPrimarySortField = "p28_client.p28Name"
+                If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
+                If strPrimarySortField = "Project" Then strPrimarySortField = "p41.p41Name"
+                If strPrimarySortField = "DocCompany" Then strPrimarySortField = "p28.p28Name"
+                If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
+                    strORDERBY = strPrimarySortField
+                Else
+                    strORDERBY = strPrimarySortField & "," & .MG_SortString
+                End If
+            End If
+            If strORDERBY = "" Then strORDERBY = "a.o23ID DESC"
+            If .MG_PageSize > 0 Then
+                Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2_Grid()
+
+                If strW <> "" Then s += " WHERE " & strW
+                s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+                pars.Add("start", intStart, DbType.Int32)
+                pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+                s += " WHERE RowIndex BETWEEN @start AND @end"
+            Else
+                'bez stránkování
+                s = "SELECT " & strCols & " " & GetSQLPart2_Grid()
+                If strW <> "" Then s += " WHERE " & strW
+                s += " ORDER BY " & strORDERBY
+            End If
+
+        End With
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
+
     Public Function GetList4Grid(myQuery As BO.myQueryO23) As IEnumerable(Of BO.o23NotepadGrid)
         Dim s As String = GetSQLPart1_Grid(myQuery.TopRecordsOnly), pars As New DbParameters
         If myQuery.MG_SelectPidFieldOnly Then
@@ -274,7 +328,7 @@
 
     Private Function ParseSortExpression(strSort As String) As String
         strSort = strSort.Replace("UserInsert", "o23UserInsert").Replace("UserUpdate", "o23UserUpdate").Replace("DateInsert", "o23DateInsert").Replace("DateUpdate", "o23DateUpdate").Replace("p28Name", "p28.p28Name").Replace("p28CompanyName", "p28.p28CompanyName")
-        strSort = strSort.Replace("Owner", "j02owner.j02LastName").Replace("Project", "p41.p41Name").Replace("ProjectClient", "p28_client.p28Name").Replace("ReceiversInLine", "dbo.o23_getroles_inline(a.o23ID)")
+        strSort = strSort.Replace("Owner", "j02owner.j02LastName").Replace("ProjectClient", "p28_client.p28Name").Replace("ReceiversInLine", "dbo.o23_getroles_inline(a.o23ID)").Replace("Project", "p41.p41Name")
         Return bas.NormalizeOrderByClause(strSort)
     End Function
     Private Function ParseFilterExpression(strFilter As String) As String
@@ -315,6 +369,7 @@
         Dim s As String = "FROM o23Notepad a INNER JOIN o24NotepadType o24 ON a.o24ID=o24.o24ID LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID LEFT OUTER JOIN p28Contact p28_client ON p41.p28ID_Client=p28_client.p28ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID LEFT OUTER JOIN p28Contact p28 ON a.p28ID=p28.p28ID LEFT OUTER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
+        s += " LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID"
         s += " LEFT OUTER JOIN o23Notepad_FreeField o23free ON a.o23ID=o23free.o23ID"
         Return s
     End Function

@@ -269,6 +269,7 @@
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
+            If .MG_SelectPidFieldOnly Then strCols = "a.p56ID as pid"
             Dim strORDERBY As String = .MG_SortString
             If strGroupField <> "" Then
                 Dim strPrimarySortField As String = strGroupField
@@ -305,7 +306,7 @@
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
-           
+
         End With
 
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())

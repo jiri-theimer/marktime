@@ -109,7 +109,7 @@ Public Class x18_framework_detail
                 End If
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 20, True, True, False, strFilterSetting, strFilterExpression)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 20, True, True, False, strFilterSetting, strFilterExpression)
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -133,17 +133,17 @@ Public Class x18_framework_detail
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
-                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, False)
+                basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
             Case BO.x29IdEnum.p28Contact
-                basUIMT.p28_grid_Handle_ItemDataBound(sender, e, False)
+                basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True)
             Case BO.x29IdEnum.o23Notepad
                 basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, False)
             Case BO.x29IdEnum.p56Task
-                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False)
+                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True)
             Case BO.x29IdEnum.j02Person
                 basUIMT.j02_grid_Handle_ItemDataBound(sender, e)
             Case BO.x29IdEnum.p91Invoice
-                basUIMT.p91_grid_Handle_ItemDataBound(sender, e, False)
+                basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True)
         End Select
 
     End Sub
@@ -165,7 +165,7 @@ Public Class x18_framework_detail
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
-                grid1.DataSource = Master.Factory.p41ProjectBL.GetList(mq)
+                grid1.DataSourceDataTable = Master.Factory.p41ProjectBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28
                 With mq
@@ -174,7 +174,7 @@ Public Class x18_framework_detail
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
-                grid1.DataSource = Master.Factory.p28ContactBL.GetList(mq)
+                grid1.DataSourceDataTable = Master.Factory.p28ContactBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 With mq
@@ -183,7 +183,7 @@ Public Class x18_framework_detail
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
-                grid1.DataSource = Master.Factory.p56TaskBL.GetList(mq, True)
+                grid1.DataSourceDataTable = Master.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, "")
 
             Case BO.x29IdEnum.o23Notepad
                 Dim mq As New BO.myQueryO23
@@ -193,7 +193,7 @@ Public Class x18_framework_detail
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
-                grid1.DataSource = Master.Factory.o23NotepadBL.GetList4Grid(mq)
+                grid1.DataSourceDataTable = Master.Factory.o23NotepadBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 With mq
@@ -202,7 +202,7 @@ Public Class x18_framework_detail
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
-                grid1.DataSource = Master.Factory.j02PersonBL.GetList(mq)
+                grid1.DataSourceDataTable = Master.Factory.j02PersonBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 With mq
@@ -211,7 +211,7 @@ Public Class x18_framework_detail
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
-                grid1.DataSource = Master.Factory.p91InvoiceBL.GetList(mq)
+                grid1.DataSourceDataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case Else
 
         End Select

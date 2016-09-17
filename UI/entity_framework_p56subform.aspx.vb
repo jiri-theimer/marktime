@@ -28,7 +28,10 @@
             Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
             Me.CurrentMasterPrefix = Request.Item("masterprefix")
             If Me.CurrentMasterPID = 0 Or Me.CurrentMasterPrefix = "" Then Master.StopPage("masterpid or masterprefix missing.")
-
+            
+        End If
+        If Request.Item("pid") <> "" Then
+            gridP56.DefaultSelectedPID = BO.BAS.IsNullInt(Request.Item("pid"))
         End If
         If Request.Item("IsApprovingPerson") = "" Then
             gridP56.AllowApproving = Master.Factory.SysUser.IsApprovingPerson

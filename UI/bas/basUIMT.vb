@@ -254,28 +254,29 @@ Public Class basUIMT
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
-        Dim cRec As BO.o23Notepad = CType(e.Item.DataItem, BO.o23Notepad)
+
+        Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
         If bolShowClueTip Then
             With dataItem("systemcolumn")
-                .Text = "<a class='reczoom' title='Detail dokumentu' rel='clue_o23_record.aspx?pid=" & cRec.PID.ToString & "'>i</a>"
+                .Text = "<a class='reczoom' title='Detail dokumentu' rel='clue_o23_record.aspx?pid=" & cRec.Item("pid").ToString & "'>i</a>"
             End With
         End If
         If bolShowFilePreview Then
             With dataItem("systemcolumn")
-                .Text += "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.PID.ToString & "' target='_blank'>Náhled</a>"
+                .Text += "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank'>Náhled</a>"
             End With
         End If
         With cRec
-            If .o23IsDraft Then dataItem("systemcolumn").CssClass = "draft"
-            If .o23IsEncrypted Then dataItem("systemcolumn").CssClass = "spy"
-            If .o23LockedFlag > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"
+            If .Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
+            If .Item("o23IsEncrypted_Grid") Then dataItem("systemcolumn").CssClass = "spy"
+            If CType(BO.BAS.IsNullInt(.Item("o23LockedFlag_Grid")), BO.o23LockedTypeENUM) > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"
 
-            If .IsClosed Then
+            If .Item("IsClosed") Then
                 dataItem.Font.Strikeout = True
 
             End If
-            If .b02ID > 0 Then
-                If .b02Color <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .b02Color
+            If BO.BAS.IsNullInt(.Item("b02ID")) > 0 Then
+                If .Item("b02Color") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color")
             End If
         End With
 
@@ -298,12 +299,12 @@ Public Class basUIMT
     
     Public Shared Sub j02_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
         If Not TypeOf e.Item Is GridDataItem Then Return
-
-        Dim cRec As BO.j02Person = CType(e.Item.DataItem, BO.j02Person)
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
 
-        If cRec.IsClosed Then dataItem.Font.Strikeout = True
-        If Not cRec.j02IsIntraPerson Then
+        Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+
+        If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+        If Not cRec.Item("IsIntraPerson") Then
             dataItem.Font.Italic = True
         End If
     End Sub

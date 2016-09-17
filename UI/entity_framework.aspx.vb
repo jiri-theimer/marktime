@@ -412,11 +412,17 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_o23(mq)
 
-                Dim lis As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList4Grid(mq)
-                If lis Is Nothing Then
+                ''Dim lis As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList4Grid(mq)
+                ''If lis Is Nothing Then
+                ''    Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                ''Else
+                ''    grid1.DataSource = lis
+                ''End If
+                Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                If dt Is Nothing Then
                     Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
-                    grid1.DataSource = lis
+                    grid1.DataSourceDataTable = dt
                 End If
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
@@ -426,11 +432,11 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_j02(mq)
 
-                Dim lis As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
-                If Not lis Is Nothing Then
-                    grid1.DataSource = lis
-                Else
+                Dim dt As DataTable = Master.Factory.j02PersonBL.GetGridDataSource(Me.hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                If dt Is Nothing Then
                     Master.Notify(Master.Factory.j02PersonBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                Else
+                    grid1.DataSourceDataTable = dt
                 End If
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
@@ -709,91 +715,80 @@ Public Class entity_framework
             'označit výchozí záznam
             grid1.SelectRecords(intSelPID)
             If grid1.GetSelectedPIDs.Count = 0 Then
-                'hledaný projekt nebyl nalezen na první stránce
-                Dim pids As IEnumerable(Of Integer) = Nothing
+                Dim dt As DataTable = Nothing
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p41Project
                         Dim mq As New BO.myQueryP41
                         InhaleMyQuery_p41(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
-                        If lis Is Nothing Then
+                        dt = Master.Factory.p41ProjectBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        If dt Is Nothing Then
                             Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
-                        Else
-                            pids = lis.Select(Function(p) p.PID)
                         End If
                     Case BO.x29IdEnum.p28Contact
                         Dim mq As New BO.myQueryP28
                         InhaleMyQuery_p28(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq)
-                        If lis Is Nothing Then
+                        dt = Master.Factory.p28ContactBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        If dt Is Nothing Then
                             Master.Notify(Master.Factory.p28ContactBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
-                        Else
-                            pids = lis.Select(Function(p) p.PID)
                         End If
                     Case BO.x29IdEnum.p56Task
                         Dim mq As New BO.myQueryP56
                         InhaleMyQuery_p56(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq, False, hidCols.Value)
+                        dt = Master.Factory.p56TaskBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
 
-                        If lis Is Nothing Then
+                        If dt Is Nothing Then
                             Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
-                        Else
-                            pids = lis.Select(Function(p) p.PID)
                         End If
                     Case BO.x29IdEnum.o23Notepad
                         Dim mq As New BO.myQueryO23
                         InhaleMyQuery_o23(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        Dim lis As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList4Grid(mq)
-                        If lis Is Nothing Then
+
+                        dt = Master.Factory.o23NotepadBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        If dt Is Nothing Then
                             Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
-                        Else
-                            pids = lis.Select(Function(p) p.PID)
                         End If
                     Case BO.x29IdEnum.j02Person
                         Dim mq As New BO.myQueryJ02
                         InhaleMyQuery_j02(mq)
-
+                        mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        Dim lis As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
-                        If lis Is Nothing Then
+                        dt = Master.Factory.j02PersonBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        If dt Is Nothing Then
                             Master.Notify(Master.Factory.j02PersonBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
-                        Else
-                            pids = lis.Select(Function(p) p.PID)
                         End If
                     Case BO.x29IdEnum.p91Invoice
                         Dim mq As New BO.myQueryP91
                         InhaleMyQuery_p91(mq)
                         ''mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq)
-                        If lis Is Nothing Then
+                        mq.MG_SelectPidFieldOnly = True
+                        dt = Master.Factory.p91InvoiceBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        If dt Is Nothing Then
                             Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
-                        Else
-                            pids = lis.Select(Function(p) p.PID)
                         End If
                 End Select
 
                 Dim x As Integer, intNewPageIndex As Integer = 0
-                For Each intPID As Integer In pids
+                For Each dbRow As DataRow In dt.Rows
                     x += 1
                     If x > grid1.PageSize Then
                         intNewPageIndex += 1 : x = 1
                     End If
-                    If intPID = intSelPID Then
+                    If dbRow.Item("pid") = intSelPID Then
                         grid1.radGridOrig.CurrentPageIndex = intNewPageIndex
                         grid1.Rebind(False)
                         grid1.SelectRecords(intSelPID)
@@ -961,6 +956,7 @@ Public Class entity_framework
                 Dim mq As New BO.myQueryO23
                 InhaleMyQuery_o23(mq)
                 ''lis = Master.Factory.o23NotepadBL.GetList4Grid(mq)
+                dt = Master.Factory.o23NotepadBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 InhaleMyQuery_j02(mq)

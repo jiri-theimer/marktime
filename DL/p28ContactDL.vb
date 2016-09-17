@@ -348,6 +348,7 @@
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
+            If .MG_SelectPidFieldOnly Then strCols = "a.p28ID as pid"
             Dim strORDERBY As String = .MG_SortString
             If strGroupField <> "" Then
                 Dim strPrimarySortField As String = strGroupField
@@ -359,7 +360,7 @@
                 End If
             End If
             If strORDERBY = "" Then strORDERBY = "p28Name"
-           
+
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
@@ -376,7 +377,7 @@
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
-            
+
         End With
 
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())

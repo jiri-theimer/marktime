@@ -8,6 +8,7 @@
     Function LoadByExternalPID(strExternalPID As String) As BO.j02Person
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryJ02) As IEnumerable(Of BO.j02Person)
+    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryJ02, strGroupField As String) As DataTable
     Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
     Function GetList_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As IEnumerable(Of BO.j02Person)
     Function GetList_j11(intJ02ID As Integer) As IEnumerable(Of BO.j11Team)
@@ -110,5 +111,8 @@ Class j02PersonBL
     End Function
     Public Function GetList_j11(intJ02ID As Integer) As IEnumerable(Of BO.j11Team) Implements Ij02PersonBL.GetList_j11
         Return _cDL.GetList_j11(intJ02ID)
+    End Function
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryJ02, strGroupField As String) As DataTable Implements Ij02PersonBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField)
     End Function
 End Class

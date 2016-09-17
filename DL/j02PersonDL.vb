@@ -264,6 +264,57 @@
         Return _cDB.GetValueFromSQL("SELECT dbo.j02_teams_inline(" & intJ02ID.ToString & ")")
     End Function
 
+    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryJ02, strGroupField As String) As DataTable
+        Dim s As String = ""
+        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
+            Select Case strGroupField
+                Case Else
+                    strCols += "," & strGroupField
+            End Select
+        End If
+        strCols += ",a.j02ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.j02ValidFrom AND a.j02ValidUntil THEN 0 else 1 END) as IsClosed,a.j02IsIntraPerson as IsIntraPerson"
+
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        With myQuery
+            If .MG_SelectPidFieldOnly Then strCols = "a.j02ID as pid"
+            Dim strORDERBY As String = .MG_SortString
+            If strGroupField <> "" Then
+                Dim strPrimarySortField As String = strGroupField
+                If strPrimarySortField = "FullNameDesc" Then strPrimarySortField = "a.j02LastName+char(32)+a.j02FirstName"
+                If strPrimarySortField = "FullNameAsc" Then strPrimarySortField = "a.j02FirstName+char(32)+a.j02LastName"
+                If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
+                    strORDERBY = strPrimarySortField
+                Else
+                    strORDERBY = strPrimarySortField & "," & .MG_SortString
+                End If
+            End If
+            If strORDERBY = "" Then strORDERBY = "j02lastname,j02firstname"
+
+            Dim strFROM As String = "FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID"
+            If .MG_PageSize > 0 Then
+                Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & strFROM
+                If strW <> "" Then s += " WHERE " & strW
+
+                s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+                pars.Add("start", intStart, DbType.Int32)
+                pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+                s += " WHERE RowIndex BETWEEN @start AND @end"
+            Else
+                'bez stránkování
+                s = "SELECT " & strCols & " " & strFROM
+                If strW <> "" Then s += " WHERE " & strW
+                s += " ORDER BY " & strORDERBY
+            End If
+
+        End With
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
+
     Public Overloads Function GetList(myQuery As BO.myQueryJ02) As IEnumerable(Of BO.j02Person)
         Return GetListProc(myQuery)
     End Function

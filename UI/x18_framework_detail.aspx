@@ -91,4 +91,5 @@
 
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidDefaultSorting" runat="server" />
+    <asp:HiddenField ID="hidCols" runat="server" />
 </asp:Content>

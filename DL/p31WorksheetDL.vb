@@ -479,6 +479,7 @@
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars, strTempGUID)
         With myQuery
+            If .MG_SelectPidFieldOnly Then strCols = "a.p31ID as pid"
             Dim strORDERBY As String = .MG_SortString
             If strGroupField <> "" Then
                 Dim strPrimarySortField As String = strGroupField

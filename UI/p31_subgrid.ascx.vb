@@ -314,19 +314,17 @@ Public Class p31_subgrid
                 mqAll.TopRecordsOnly = 0
                 mqAll.MG_SelectPidFieldOnly = True
                 p31_InhaleMyQuery(mqAll)
-                Dim lisAll As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mqAll)
-                Dim pids As IEnumerable(Of Integer) = lisAll.Select(Function(p) p.PID)
+                Dim dtAll As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource("", mqAll, Me.cbxGroupBy.SelectedValue)
                 Dim x As Integer, intNewPageIndex As Integer = 0
-                For Each intPID As Integer In pids
+                For Each dbRow As DataRow In dtAll.Rows
                     x += 1
                     If x > grid2.PageSize Then
                         intNewPageIndex += 1 : x = 1
                     End If
-                    If intPID = Me.DefaultSelectedPID Then
+                    If dbRow.Item("pid") = Me.DefaultSelectedPID Then
                         grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
                         mq.MG_CurrentPageIndex = intNewPageIndex
                         dt = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue) 'nový zdroj pro grid
-                        ''lis = Me.Factory.p31WorksheetBL.GetList(mq) 'nový zdroj pro grid
                         Exit For
                     End If
                 Next
