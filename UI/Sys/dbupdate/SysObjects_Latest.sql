@@ -1050,6 +1050,66 @@ END
 
 GO
 
+----------FN---------------o23_getroles_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('o23_getroles_inline') and type = 'FN')
+ drop function o23_getroles_inline
+GO
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[o23_getroles_inline](@o23id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené obsazení  rolí v dokumentu @o23id
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))+' ('+x67Name+')'
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@o23id AND x67.x29ID=223
+  ORDER BY x67Ordinary
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------o28_get_permflag-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('o28_get_permflag') and type = 'FN')
@@ -3482,6 +3542,7 @@ select a.*,a.j03id as _pid
 ,case when a.j03Aspx_PersonalPage IS NULL THEN @personal_page ELSE a.j03Aspx_PersonalPage END as _PersonalPage
 ,j04.j04IsMenu_Worksheet,j04.j04IsMenu_Report,j04.j04IsMenu_Project,j04.j04IsMenu_People,j04.j04IsMenu_Contact,j04.j04IsMenu_Invoice,j04.j04IsMenu_Proforma,j04.j04IsMenu_MyProfile,j04.j04IsMenu_More
 ,j04.j04Aspx_OneProjectPage as OneProjectPage,j04.j04Aspx_OneContactPage as OneContactPage,j04.j04Aspx_OneInvoicePage as OneInvoicePage,j04.j04Aspx_OnePersonPage as OnePersonPage
+,j02.j07ID
 FROM j03user a INNER JOIN j04userrole j04 on a.j04id=j04.j04id LEFT OUTER JOIN j02Person j02 ON a.j02id=j02.j02id
 INNER JOIN x67EntityRole x67 ON j04.x67ID=x67.x67ID
 WHERE a.j03ID=@j03id

@@ -584,13 +584,90 @@ Public Class datagrid
 
     End Sub
 
+    Public Function GetFilterExpressionCompleteSql() As String
+        With grid1.MasterTableView
+            If .FilterExpression = "" Then
+                Return ""
+            Else
+                Dim s As New List(Of String)
+                For Each col As GridColumn In .Columns
+                    If Not String.IsNullOrEmpty(col.CurrentFilterValue) Or col.CurrentFilterFunction = GridKnownFunction.IsNull Or col.CurrentFilterFunction = GridKnownFunction.NotIsNull Then
+                        Dim strVal As String = col.CurrentFilterValue, strOPER As String = ""
+                        Dim strColType As String = col.DataTypeName
+                        If TypeOf col Is GridBoundColumn Then
+                            If CType(col, GridBoundColumn).DataFormatString.IndexOf("dd.") > 0 Then strColType = "System.DateTime"
+                        End If
+                        Select Case strColType
+                            Case "System.Double", "System.Int"
+                                If Not IsNumeric(strVal) Then strVal = "0"
+                                strVal = Replace(strVal, ",", ".")
+                            Case "System.DateTime"
+                                If strVal.IndexOf(".") > 0 Then
+                                    Dim d As Date? = BO.BAS.ConvertString2Date(strVal)
+                                    If Not d Is Nothing Then
+                                        strVal = "'" & Month(d).ToString & "/" & Day(d).ToString & "/" & Year(d).ToString & "'"
+                                    End If
+                                Else
+                                    Dim a() As String = Split(strVal & "///", "/")
+                                    If Not IsNumeric(a(0)) Then a(0) = "12"
+                                    If Not IsNumeric(a(1)) Then a(1) = "31"
+                                    If Not IsNumeric(a(2)) Then a(2) = "1900"
+                                    strVal = "'" & a(0) & "/" & a(1) & "/" & a(2) & "'"
+                                End If
+
+                            Case "System.String"
+                                Select Case col.CurrentFilterFunction
+                                    Case GridKnownFunction.Contains
+                                        strVal = "'%" & strVal & "%'"
+                                    Case GridKnownFunction.StartsWith
+                                        strVal = "'" & strVal & "%'"
+                                    Case Else
+                                        strVal = BO.BAS.GS(strVal)
+                                End Select
+                            Case "System.Boolean"
+                                strVal = Replace(strVal, "True", "1")
+                                strVal = Replace(strVal, "False", "0")
+                        End Select
+                        Select Case col.CurrentFilterFunction
+                            Case GridKnownFunction.Contains, GridKnownFunction.StartsWith, GridKnownFunction.EndsWith : strOPER = "LIKE"
+                            Case GridKnownFunction.EqualTo : strOPER = "="
+                            Case GridKnownFunction.GreaterThan : strOPER = ">"
+                            Case GridKnownFunction.GreaterThanOrEqualTo : strOPER = ">="
+                            Case GridKnownFunction.LessThan : strOPER = "<"
+                            Case GridKnownFunction.LessThanOrEqualTo : strOPER = "<="
+                            Case GridKnownFunction.IsNull
+                                strOPER = "IS NULL" : strVal = ""
+                            Case GridKnownFunction.NotIsNull
+                                strOPER = "IS NOT NULL" : strVal = ""
+                        End Select
+                        s.Add(col.UniqueName & " " & strOPER & " " & strVal)
+
+                    End If
+
+                Next
+                Return System.String.Join(" AND ", s)
+            End If
+        End With
+    End Function
+
     Public Function GetFilterExpression() As String
         With grid1.MasterTableView
             If .FilterExpression = "" Then
                 Return ""
             Else
                 If .FilterExpression.IndexOf(",") >= 0 Then .FilterExpression = .FilterExpression.Replace(",", ".")
-                Return .FilterExpression.Replace("True", "1")
+                .FilterExpression = .FilterExpression.Replace("True", "1")
+                ''If strReplaceDbField <> "" Then
+                ''    Dim matches As MatchCollection = Regex.Matches(.FilterExpression, "\[.*?\]")
+                ''    For Each m As Match In matches
+                ''        'Dim strField As String = Replace(m.Value, "[", "").Replace("]", "")
+                ''        .FilterExpression = Replace(.FilterExpression, m.Value, strReplaceDbField)
+                ''    Next
+                ''End If
+                
+
+                Return .FilterExpression
+
             End If
         End With
     End Function
@@ -602,7 +679,6 @@ Public Class datagrid
         grid1.MasterTableView.FilterExpression = ""
     End Sub
     Public Function GetFilterSetting() As String
-
         Dim s As New List(Of String)
         For Each col As GridColumn In grid1.MasterTableView.Columns
             If Not String.IsNullOrEmpty(col.CurrentFilterValue) Or col.CurrentFilterFunction = GridKnownFunction.IsNull Or col.CurrentFilterFunction = GridKnownFunction.NotIsNull Then

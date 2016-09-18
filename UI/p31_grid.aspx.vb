@@ -387,7 +387,7 @@ Public Class p31_grid
             End Select
             .j70ID = Me.CurrentJ70ID
             .SearchExpression = Trim(Me.txtSearch.Text)
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
             If period1.SelectedValue <> "" Then
                 .DateFrom = period1.DateFrom

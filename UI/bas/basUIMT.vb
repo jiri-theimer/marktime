@@ -2,6 +2,7 @@
 Public Class basUIMT
     Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "") As String
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
+        Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
         With grid
             .ClearColumns()
             .AllowMultiSelect = bolAllowMultiSelect
@@ -53,6 +54,7 @@ Public Class basUIMT
                         Else
                             lisSqlSEL.Add(c.ColumnDBName & " AS " & c.ColumnName)
                         End If
+                        If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
                     End If
                 Next
                 grid.SetFilterSetting(strFilterSetting, strFilterExpression)
@@ -100,7 +102,9 @@ Public Class basUIMT
 
         End With
 
-        Return String.Join(",", lisSqlSEL)
+        Dim strRet As String = String.Join(",", lisSqlSEL)
+        If lisSqlFROM.Count > 0 Then strRet += "||" & String.Join(" ", lisSqlFROM)
+        Return strRet
     End Function
 
     Public Shared Sub MakeDockZonesUserFriendly(rdl As RadDockLayout, bolLockedInteractivity As Boolean)

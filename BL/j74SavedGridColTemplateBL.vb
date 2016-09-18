@@ -200,24 +200,39 @@ Class j74SavedGridColTemplateBL
     Private Sub AppendFreeFields(x29id As BO.x29IdEnum, ByRef lis As List(Of BO.GridColumn))
         Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(x29id, -1, True)
         For Each c In lisX28
-            If c.x23ID = 0 Then
+            If c.x28Flag = BO.x28FlagENUM.UserField Then
+                If c.x23ID = 0 Then
+                    Select Case c.x24ID
+                        Case BO.x24IdENUM.tString
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.AnyString))
+                        Case BO.x24IdENUM.tDate
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateOnly))
+                        Case BO.x24IdENUM.tDateTime
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateTime))
+                        Case BO.x24IdENUM.tDecimal
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric))
+                        Case BO.x24IdENUM.tInteger
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric0))
+                        Case BO.x24IdENUM.tBoolean
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Checkbox))
+                    End Select
+                Else
+                    'text combo položky
+                    lis.Add(AGC(c.x28Name, c.x28Field & "Text", BO.cfENUM.AnyString))
+                End If
+            End If
+            If c.x28Flag = BO.x28FlagENUM.GridField Then
+                Dim col As New BO.GridColumn(c.x29ID, c.x28Name, c.x28Grid_Field)
+                col.ColumnDBName = c.x28Grid_SqlSyntax
+                col.SqlSyntax_FROM = c.x28Grid_SqlFrom
                 Select Case c.x24ID
-                    Case BO.x24IdENUM.tString
-                        lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.AnyString))
-                    Case BO.x24IdENUM.tDate
-                        lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateOnly))
-                    Case BO.x24IdENUM.tDateTime
-                        lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateTime))
-                    Case BO.x24IdENUM.tDecimal
-                        lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric))
-                    Case BO.x24IdENUM.tInteger
-                        lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric0))
-                    Case BO.x24IdENUM.tBoolean
-                        lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Checkbox))
+                    Case BO.x24IdENUM.tDate : col.ColumnType = BO.cfENUM.DateOnly
+                    Case BO.x24IdENUM.tDateTime : col.ColumnType = BO.cfENUM.DateTime
+                    Case BO.x24IdENUM.tDecimal : col.ColumnType = BO.cfENUM.Numeric
+                    Case BO.x24IdENUM.tInteger : col.ColumnType = BO.cfENUM.Numeric0
+                    Case BO.x24IdENUM.tBoolean : col.ColumnType = BO.cfENUM.Checkbox
                 End Select
-            Else
-                'text combo položky
-                lis.Add(AGC(c.x28Name, c.x28Field & "Text", BO.cfENUM.AnyString))
+                lis.Add(col)
             End If
         Next
     End Sub

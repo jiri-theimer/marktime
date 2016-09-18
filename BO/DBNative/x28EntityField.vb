@@ -5,9 +5,13 @@
 '    Public x28DataType As String
 '    Public DbValue As Object
 'End Class
-
+Public Enum x28FlagENUM
+    UserField = 1
+    GridField = 2
+End Enum
 Public Class x28EntityField
     Inherits BOMother
+    Public Property x28Flag As x28FlagENUM = x28FlagENUM.UserField
     Public Property x29ID As x29IdEnum
     Public Property x24ID As x24IdENUM
     Public Property x27ID As Integer
@@ -28,6 +32,10 @@ Public Class x28EntityField
     Public Property x28IsPublic As Boolean = True
     Public Property x28NotPublic_j04IDs As String
     Public Property x28NotPublic_j07IDs As String
+
+    Public Property x28Grid_Field As String
+    Public Property x28Grid_SqlSyntax As String
+    Public Property x28Grid_SqlFrom As String
 
     Protected Property _x29Name As String
     Public ReadOnly Property x29Name As String

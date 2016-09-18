@@ -29,19 +29,29 @@ Class x28EntityFieldBL
     End Sub
     Public Function Save(cRec As BO.x28EntityField, lisX26 As List(Of BO.x26EntityField_Binding)) As Boolean Implements Ix28EntityFieldBL.Save
         With cRec
-            If Trim(.x28Name) = "" Then _Error = "Chybí název pole." : Return False
+            If Trim(.x28Name) = "" Then _Error = "Chybí název/popisek pole." : Return False
             If .x24ID = BO.x24IdENUM.tNone Then _Error = "Chybí typ pole." : Return False
-            If .x23ID <> 0 And .x24ID <> BO.x24IdENUM.tInteger Then
-                _Error = "Pole s vazbou na combo seznam musí být formátu INTEGER." : Return False
-            End If
+            Select Case .x28Flag
+                Case BO.x28FlagENUM.UserField
+                    If .x23ID <> 0 And .x24ID <> BO.x24IdENUM.tInteger Then
+                        _Error = "Pole s vazbou na combo seznam musí být formátu INTEGER." : Return False
+                    End If
 
-            If .x28Field = "" Then
-                Dim cX24 As BO.x24DataType = Factory.ftBL.GetList_X24().Where(Function(p) p.x24ID = .x24ID)(0)
-                .x28Field = _cDL.FindFirstUsableField(BO.BAS.GetDataPrefix(cRec.x29ID), cX24, .x23ID)
-                If .x28Field = "" Then
-                    _Error = "Systém nedokázal najít volné fyzické pole pro toto uživatelské pole." : Return False
-                End If
-            End If
+                    If .x28Field = "" Then
+                        Dim cX24 As BO.x24DataType = Factory.ftBL.GetList_X24().Where(Function(p) p.x24ID = .x24ID)(0)
+                        .x28Field = _cDL.FindFirstUsableField(BO.BAS.GetDataPrefix(cRec.x29ID), cX24, .x23ID)
+                        If .x28Field = "" Then
+                            _Error = "Systém nedokázal najít volné fyzické pole pro toto uživatelské pole." : Return False
+                        End If
+                    End If
+                Case BO.x28FlagENUM.GridField
+                    If Trim(.x28Grid_Field) = "" Then _Error = "Chybá specifikace pole." : Return False
+                    If .x28Grid_Field.IndexOf(".") > 0 Or .x28Grid_Field.IndexOf("[") > 0 Or .x28Grid_Field.IndexOf("[") > 0 Then
+                        _Error = "Pole obsahuje zakázané znaky." : Return False
+                    End If
+            End Select
+            
+            
             If .x28IsAllEntityTypes Then
                 lisX26 = New List(Of BO.x26EntityField_Binding)
             Else

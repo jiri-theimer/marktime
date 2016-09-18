@@ -219,7 +219,7 @@
                 End If
             End If
             If .ColumnFilteringExpression <> "" Then
-                strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
+                strW += " AND " & .ColumnFilteringExpression
             End If
             If .SearchExpression <> "" Then
                 strW += " AND (a.j02firstname like @expr+'%' OR a.j02LastName LIKE '%'+@expr+'%' OR a.j02Email LIKE '%'+@expr+'%')"
@@ -265,7 +265,12 @@
     End Function
 
     Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryJ02, strGroupField As String) As DataTable
-        Dim s As String = ""
+        Dim s As String = "", strAdditionalFROM As String = ""
+        If strCols.IndexOf("||") > 0 Then
+            's výčtem sloupců se předává i klauzule FROM
+            strAdditionalFROM = " " & Split(strCols, "||")(1)
+            strCols = Split(strCols, "||")(0)
+        End If
         If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
             Select Case strGroupField
                 Case Else
@@ -291,7 +296,7 @@
             End If
             If strORDERBY = "" Then strORDERBY = "j02lastname,j02firstname"
 
-            Dim strFROM As String = "FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID"
+            Dim strFROM As String = "FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID" & strAdditionalFROM
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 

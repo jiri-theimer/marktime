@@ -101,6 +101,8 @@
                 Case BO.cfENUM.Checkbox
                     it.ImageUrl = "Images/type_checkbox.png"
             End Select
+            If c.ColumnName.IndexOf("Free") > 0 Then it.ForeColor = Drawing.Color.Green
+
             colsSource.Items.Add(it)
         Next
 

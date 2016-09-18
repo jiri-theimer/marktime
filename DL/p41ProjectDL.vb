@@ -195,7 +195,13 @@
     End Function
 
     Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP41, strGroupField As String) As DataTable
-        Dim s As String = ""
+        Dim s As String = "", strAdditionalFROM As String = ""
+        If strCols.IndexOf("||") > 0 Then
+            's výčtem sloupců se předává i klauzule FROM
+            strAdditionalFROM = " " & Split(strCols, "||")(1)
+            strCols = Split(strCols, "||")(0)
+        End If
+
         If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
             Select Case strGroupField
                 Case "Client" : strCols += ",p28client.p28Name as Client"
@@ -225,7 +231,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2()
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2() & strAdditionalFROM
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -234,7 +240,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2()
+                s = "SELECT " & strCols & " " & GetSQLPart2() & strAdditionalFROM
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -424,7 +430,8 @@
             If .x25ID > 0 Then s.Append(" AND a.p41ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=141 AND x25ID=" & .x25ID.ToString & ")")
 
             If .ColumnFilteringExpression <> "" Then
-                s.Append(" AND " & ParseFilterExpression(.ColumnFilteringExpression))
+                's.Append(" AND " & ParseFilterExpression(.ColumnFilteringExpression))
+                s.Append(" AND " & .ColumnFilteringExpression)
             End If
             If .SearchExpression <> "" Then
                 s.Append(" AND (")

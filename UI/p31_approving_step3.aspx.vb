@@ -360,7 +360,7 @@ Public Class p31_approving_step3
 
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
         With mq
-
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql
 
         End With
     End Sub

@@ -53,6 +53,7 @@
 
         Dim cRec As BO.x28EntityField = Master.Factory.x28EntityFieldBL.Load(Master.DataPID)
         With cRec
+            basUI.SelectDropdownlistValue(Me.x28Flag, CInt(.x28Flag).ToString)
             Me.x28IsAllEntityTypes.Checked = .x28IsAllEntityTypes
             x29ID.SelectedValue = BO.BAS.IsNullInt(.x29ID).ToString
             Handle_ChangeX29ID()
@@ -73,7 +74,9 @@
                 basUI.CheckItems(Me.x28NotPublic_j07IDs, BO.BAS.ConvertPIDs2List(.x28NotPublic_j07IDs, ","))
             End If
             Master.Timestamp = .Timestamp
-
+            Me.x28Grid_Field.Text = .x28Grid_Field
+            Me.x28Grid_SqlFrom.Text = .x28Grid_SqlFrom
+            Me.x28Grid_SqlSyntax.Text = .x28Grid_SqlSyntax
         End With
 
 
@@ -115,6 +118,17 @@
             Case BO.x29IdEnum.p56Task : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy úkolů"
         End Select
         panPublic.Visible = Not Me.x28IsPublic.Checked
+
+        If Me.x28Flag.SelectedValue = "1" Then
+            tabFlag1.Visible = True
+        Else
+            tabFlag1.Visible = False
+        End If
+        tabFlag2.Visible = Not tabFlag1.Visible
+        If Master.DataPID <> 0 Then
+            Me.x28Flag.Enabled = False
+
+        End If
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x28EntityFieldBL
@@ -135,6 +149,7 @@
         With Master.Factory.x28EntityFieldBL
             Dim cRec As BO.x28EntityField = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.x28EntityField)
             With cRec
+                .x28Flag = CInt(Me.x28Flag.SelectedValue)
                 .x28Name = x28Name.Text
                 .x24ID = BO.BAS.IsNullInt(x24id.SelectedValue)
                 .x23ID = BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
@@ -156,6 +171,10 @@
                     .x28NotPublic_j04IDs = String.Join(",", basUI.GetCheckedItems(Me.x28NotPublic_j04IDs))
                     .x28NotPublic_j07IDs = String.Join(",", basUI.GetCheckedItems(Me.x28NotPublic_j07IDs))
                 End If
+
+                .x28Grid_Field = Me.x28Grid_Field.Text
+                .x28Grid_SqlFrom = Me.x28Grid_SqlFrom.Text
+                .x28Grid_SqlSyntax = Me.x28Grid_SqlSyntax.Text
             End With
 
             Dim lisX26 As New List(Of BO.x26EntityField_Binding)

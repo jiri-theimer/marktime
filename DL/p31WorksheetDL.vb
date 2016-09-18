@@ -407,7 +407,7 @@
                     
             End Select
             If .ColumnFilteringExpression <> "" Then
-                s.Append(" AND " & ParseFilterExpression(.ColumnFilteringExpression))
+                s.Append(" AND " & .ColumnFilteringExpression)
             End If
             If .SearchExpression <> "" Then
                 s.Append(" AND (p28Client.p28Name LIKE '%'+@expr+'%' OR p41.p41Code LIKE @expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR a.p31Text LIKE '%'+@expr+'%' OR p32.p32Name like '%'+@expr+'%' OR p28Client.p28CompanyName LIKE '%'+@expr+'%'")
@@ -460,7 +460,12 @@
     End Function
 
     Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31, strGroupField As String, Optional strTempGUID As String = "") As DataTable
-        Dim s As String = ""
+        Dim s As String = "", strAdditionalFROM As String = ""
+        If strCols.IndexOf("||") > 0 Then
+            's výčtem sloupců se předává i klauzule FROM
+            strAdditionalFROM = " " & Split(strCols, "||")(1)
+            strCols = Split(strCols, "||")(0)
+        End If
         If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
             Select Case strGroupField
                 Case "SupplierName" : strCols += ",supplier.p28Name as SupplierName"
@@ -498,7 +503,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strTempGUID, myQuery)
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strTempGUID, myQuery) & strAdditionalFROM
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -507,7 +512,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2(strTempGUID, myQuery)
+                s = "SELECT " & strCols & " " & GetSQLPart2(strTempGUID, myQuery) & strAdditionalFROM
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If

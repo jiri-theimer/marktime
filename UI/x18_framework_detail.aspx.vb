@@ -164,6 +164,7 @@ Public Class x18_framework_detail
                     .x25ID = Master.DataPID
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                    .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
                 End With
                 grid1.DataSourceDataTable = Master.Factory.p41ProjectBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p28Contact
@@ -173,6 +174,7 @@ Public Class x18_framework_detail
                     .x25ID = Master.DataPID
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                    .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
                 End With
                 grid1.DataSourceDataTable = Master.Factory.p28ContactBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p56Task
@@ -182,6 +184,7 @@ Public Class x18_framework_detail
                     .x25ID = Master.DataPID
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                    .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
                 End With
                 grid1.DataSourceDataTable = Master.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, "")
 
@@ -192,6 +195,7 @@ Public Class x18_framework_detail
                     .x25ID = Master.DataPID
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                    .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
                 End With
                 grid1.DataSourceDataTable = Master.Factory.o23NotepadBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.j02Person
@@ -201,6 +205,7 @@ Public Class x18_framework_detail
                     .x25ID = Master.DataPID
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                    .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
                 End With
                 grid1.DataSourceDataTable = Master.Factory.j02PersonBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p91Invoice
@@ -210,6 +215,7 @@ Public Class x18_framework_detail
                     .x25ID = Master.DataPID
                     .MG_PageSize = 20
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                    .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
                 End With
                 grid1.DataSourceDataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case Else

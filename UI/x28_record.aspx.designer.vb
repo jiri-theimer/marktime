@@ -32,6 +32,15 @@ Partial Public Class x28_record
     Protected WithEvents x29ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''x28Flag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Flag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblName control.
     '''</summary>
     '''<remarks>
@@ -48,6 +57,33 @@ Partial Public Class x28_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x28Name As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x24id control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x24id As Global.UI.datacombo
+
+    '''<summary>
+    '''tabFlag1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabFlag1 As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
     '''Label3 control.
@@ -84,24 +120,6 @@ Partial Public Class x28_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x27ID As Global.UI.datacombo
-
-    '''<summary>
-    '''Label1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x24id control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x24id As Global.UI.datacombo
 
     '''<summary>
     '''x28IsRequired control.
@@ -203,13 +221,13 @@ Partial Public Class x28_record
     Protected WithEvents x28Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
-    '''Label5 control.
+    '''lblx28field control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblx28field As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''x28field control.
@@ -219,6 +237,69 @@ Partial Public Class x28_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x28field As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''tabFlag2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabFlag2 As Global.System.Web.UI.HtmlControls.HtmlTable
+
+    '''<summary>
+    '''Label5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x28Grid_Field control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Grid_Field As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x28Grid_SqlSyntax control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Grid_SqlSyntax As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x28Grid_SqlFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Grid_SqlFrom As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''x28IsPublic control.

@@ -25,6 +25,7 @@
         End If
 
         With cRec
+            pars.Add("x28Flag", .x28Flag, DbType.Int32)
             pars.Add("x28Name", .x28Name, DbType.String, , , True, "Název")
             pars.Add("x28Field", .x28Field, DbType.String)
             pars.Add("x28Ordinary", .x28Ordinary, DbType.Int32)
@@ -44,6 +45,9 @@
             pars.Add("x28IsPublic", .x28IsPublic, DbType.Boolean)
             pars.Add("x28NotPublic_j04IDs", .x28NotPublic_j04IDs, DbType.String)
             pars.Add("x28NotPublic_j07IDs", .x28NotPublic_j07IDs, DbType.String)
+            pars.Add("x28Grid_Field", .x28Grid_Field, DbType.String)
+            pars.Add("x28Grid_SqlSyntax", .x28Grid_SqlSyntax, DbType.String)
+            pars.Add("x28Grid_SqlFrom", .x28Grid_SqlFrom, DbType.String)
 
 
             pars.Add("x28textboxheight", cRec.x28TextboxHeight, DbType.Int32)
@@ -169,7 +173,7 @@
         Dim pars As New DbParameters
 
         Dim s As String = InhaleGetListSQL(x29id, pars, intEntityType, True)
-        Dim lis As List(Of BO.FreeField) = _cDB.GetList(Of BO.FreeField)(s, pars).ToList
+        Dim lis As List(Of BO.FreeField) = _cDB.GetList(Of BO.FreeField)(s, pars).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField).ToList
 
         If lis.Count = 0 Then Return lis
 

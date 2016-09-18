@@ -10,7 +10,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <table cellpadding="3" cellspacing="2">
         <tr>
-            <td>
+            <td style="width:140px;">
                 <asp:Label ID="lblX29ID" Text="Entita:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
@@ -24,12 +24,16 @@
                     <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
                     <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
                 </asp:DropDownList>
-
+                <span>Druh pole:</span>
+                <asp:DropDownList ID="x28Flag" runat="server" AutoPostBack="true">
+                    <asp:ListItem Value="1" Text="Formulářové pole" Selected="true"></asp:ListItem>
+                    <asp:ListItem Value="2" Text="Pouze přehledové/Grid pole"></asp:ListItem>
+                </asp:DropDownList>
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblName" Text="Název pole:" runat="server" AssociatedControlID="x28Name" CssClass="lblReq"></asp:Label>
+                <asp:Label ID="lblName" Text="Název/popisek pole:" runat="server" AssociatedControlID="x28Name" CssClass="lblReq"></asp:Label>
             </td>
             <td>
                 <asp:TextBox ID="x28Name" runat="server" Style="width: 400px;"></asp:TextBox>
@@ -38,6 +42,15 @@
         </tr>
         <tr>
             <td>
+                <asp:Label ID="Label1" Text="Datový formát:" runat="server" CssClass="lblReq"></asp:Label></td>
+            <td>
+                <uc:datacombo ID="x24id" runat="server" DataTextField="x24name" DataValueField="pid" IsFirstEmptyRow="true" Width="100px" AutoPostBack="true"></uc:datacombo>
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="3" cellspacing="2" id="tabFlag1" runat="server">
+        <tr>
+            <td style="width:140px;">
                 <asp:Label ID="Label3" Text="Combo seznam:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px" AutoPostBack="true"></uc:datacombo>
@@ -50,13 +63,7 @@
                 <uc:datacombo ID="x27ID" runat="server" DataTextField="x27name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
             </td>
         </tr>
-        <tr>
-            <td>
-                <asp:Label ID="Label1" Text="Datový formát:" runat="server" CssClass="lblReq"></asp:Label></td>
-            <td>
-                <uc:datacombo ID="x24id" runat="server" DataTextField="x24name" DataValueField="pid" IsFirstEmptyRow="true" Width="100px" AutoPostBack="true"></uc:datacombo>
-            </td>
-        </tr>
+        
         <tr>
             <td colspan="2">
                 <asp:CheckBox ID="x28IsRequired" runat="server" Text="Povinné k vyplnění" />
@@ -102,13 +109,36 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="Label5" Text="Fyzický název pole:" runat="server" CssClass="lbl"></asp:Label>
+                <asp:Label ID="lblx28field" Text="Fyzický název pole:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
                 <asp:Label ID="x28field" Text="?" runat="server"></asp:Label>
             </td>
         </tr>
 
+    </table>
+    <table cellpadding="3" cellspacing="2" id="tabFlag2" runat="server">
+        <tr>
+            <td style="width:140px;">
+                <asp:Label ID="Label5" Text="Pole (sloupec):" runat="server" CssClass="lblReq"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x28Grid_Field" runat="server" style="width:200px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label6" Text="SQL syntaxe pole:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x28Grid_SqlSyntax" runat="server" style="width:600px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label7" Text="SQL FROM klauzule:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x28Grid_SqlFrom" runat="server" style="width:600px;height:80px;" TextMode="MultiLine"></asp:TextBox>
+            </td>
+        </tr>
     </table>
     <div class="div6">
         <asp:CheckBox ID="x28IsPublic" runat="server" AutoPostBack="true" Text="Obsah pole je dostupný všem uživatelům s přístupem k záznamu" Checked="true" />

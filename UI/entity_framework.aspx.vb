@@ -6,6 +6,7 @@ Public Class entity_framework
     Private Property _curJ62 As BO.j62MenuHome
     Private Property _x29id As BO.x29IdEnum
     Private Property _needFilterIsChanged As Boolean = False
+    Private Property _CurFilterDbField As String = ""
 
     Public Property CurrentX29ID As BO.x29IdEnum
         Get
@@ -284,7 +285,7 @@ Public Class entity_framework
                 If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
             End If
             Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
-           
+
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -303,7 +304,7 @@ Public Class entity_framework
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
         _needFilterIsChanged = True
-
+        _CurFilterDbField = strFilterColumn
     End Sub
 
 
@@ -484,7 +485,7 @@ Public Class entity_framework
                 Case "j02" : .j02ID = Me.CurrentMasterPID
                 Case "p28" : .p28ID = Me.CurrentMasterPID
             End Select
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "p91DateSupply" : .PeriodType = BO.myQueryP91_PeriodType.p91DateSupply
                 Case "p91DateMaturity" : .PeriodType = BO.myQueryP91_PeriodType.p91DateMaturity
@@ -523,7 +524,7 @@ Public Class entity_framework
 
     Private Sub InhaleMyQuery_o23(ByRef mq As BO.myQueryO23)
         With mq
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
                 Case "j02" : .j02ID = Me.CurrentMasterPID
@@ -562,7 +563,7 @@ Public Class entity_framework
 
     Private Sub InhaleMyQuery_p56(ByRef mq As BO.myQueryP56)
         With mq
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
                 Case "j02" : .j02ID = Me.CurrentMasterPID
@@ -595,7 +596,7 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_p41(ByRef mq As BO.myQueryP41)
         With mq
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p28" : .p28ID = Me.CurrentMasterPID
             End Select
@@ -626,7 +627,7 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_p28(ByRef mq As BO.myQueryP28)
         With mq
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -652,7 +653,7 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_j02(ByRef mq As BO.myQueryJ02)
         With mq
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
                 Case "p28" : .p28ID = Me.CurrentMasterPID

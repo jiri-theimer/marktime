@@ -285,7 +285,7 @@
                 End If
             End If
             If .ColumnFilteringExpression <> "" Then
-                s.Append(" AND " & ParseFilterExpression(.ColumnFilteringExpression))
+                s.Append(" AND " & .ColumnFilteringExpression)
             End If
             If .SearchExpression <> "" Then
                 s.Append(" AND (")
@@ -335,7 +335,12 @@
     End Function
 
     Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP28, strGroupField As String) As DataTable
-        Dim s As String = ""
+        Dim s As String = "", strAdditionalFROM As String = ""
+        If strCols.IndexOf("||") > 0 Then
+            's výčtem sloupců se předává i klauzule FROM
+            strAdditionalFROM = " " & Split(strCols, "||")(1)
+            strCols = Split(strCols, "||")(0)
+        End If
         If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
             Select Case strGroupField
                 Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
@@ -364,7 +369,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2()
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2() & strAdditionalFROM
                 If strW <> "" Then s += " WHERE " & strW
 
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -373,7 +378,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2()
+                s = "SELECT " & strCols & " " & GetSQLPart2() & strAdditionalFROM
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
