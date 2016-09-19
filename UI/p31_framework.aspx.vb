@@ -182,9 +182,9 @@ Public Class p31_framework
                 End If
             End If
             If tabs1.SelectedIndex = 0 Then
-                basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression)
             Else
-                basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression)
             End If
             If tabs1.SelectedIndex = 1 Then grid1.AllowFilteringByColumn = False 'v top10 se nefiltruje
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
@@ -208,17 +208,17 @@ Public Class p31_framework
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+
         If Me.GridPrefix = "p41" Then
-            Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
-            If cRec.IsClosed Then dataItem.Font.Strikeout = True
-            dataItem("systemcolumn").Text = "<a title='Zapsat úkon' href='javascript:nw(" & cRec.PID.ToString & ")'><img src='Images/new.png' border=0/></a>"
+            If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+            dataItem("systemcolumn").Text = "<a title='Zapsat úkon' href='javascript:nw(" & cRec.Item("pid").ToString & ")'><img src='Images/new.png' border=0/></a>"
         Else
-            Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
             With dataItem("systemcolumn")
-                .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?&pid=" & cRec.PID.ToString & "'>i</a>"
+                .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?&pid=" & cRec.Item("pid").ToString & "'>i</a>"
             End With
-            If Not cRec.p56PlanUntil Is Nothing Then
-                If Now > cRec.p56PlanUntil Then dataItem.ForeColor = Drawing.Color.DarkRed
+            If Not cRec.Item("p56PlanUntil_Grid") Is System.DBNull.Value Then
+                If Now > cRec.Item("p56PlanUntil_Grid") Then dataItem.ForeColor = Drawing.Color.DarkRed
             End If
         End If
 
@@ -254,23 +254,22 @@ Public Class p31_framework
 
             InhaleMyQuery(mq)
 
-            Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
-            If lis Is Nothing Then
+            Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(Me.hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+            If dt Is Nothing Then
                 Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
             Else
                 If tabs1.SelectedIndex = 1 Then
-                    lis = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID, lis)
+                    dt = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID, Me.hidCols.Value, Me.cbxGroupBy.SelectedValue)
+                    'lis = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID)    'omezit na TOP 10
                 End If
-                grid1.DataSource = lis
+                grid1.DataSourceDataTable = dt
             End If
 
         End If
         If Me.GridPrefix = "p56" Then
-            If Me.IsUseTasksWorksheetColumns Then
-                grid1.DataSource = GetTasksListWithWorksheetSum()
-            Else
-                grid1.DataSource = GetTasksList()
-            End If
+            Dim mq As New BO.myQueryP56
+            InhaleMyTaskQuery(mq)
+            grid1.DataSourceDataTable = Master.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
 
         End If
 
@@ -321,7 +320,7 @@ Public Class p31_framework
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
             If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then .j02ID_ExplicitQueryFor = Me.CurrentJ02ID
 
@@ -333,8 +332,7 @@ Public Class p31_framework
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_framework-pagesize-" & Me.GridPrefix, Me.cbxPaging.SelectedValue)
 
-        RecalcVirtualRowCount()
-        grid1.Rebind(True)
+        ReloadPage()
     End Sub
 
     Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
@@ -561,7 +559,7 @@ Public Class p31_framework
             .j02ID = Me.CurrentJ02ID
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
             .Closed = BO.BooleanQueryMode.FalseQuery
-            .ColumnFilteringExpression = grid1.GetFilterExpression()
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
         End With
         

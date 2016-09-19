@@ -126,7 +126,7 @@ Public Class p31_scheduler
 
         Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
         If lis.Count > 10 Then
-            lis = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID, lis)
+            lis = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID)
         End If
 
 

@@ -58,7 +58,7 @@
                 .Rebind(False)
             End With
 
-            cmdReport.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)
+            ''cmdReport.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)    'toto omezení již neplatí
 
             If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then
                 Me.p41ID.J02ID_Explicit = Me.CurrentJ02ID

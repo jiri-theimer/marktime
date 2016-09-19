@@ -232,6 +232,7 @@
             <asp:HiddenField ID="hidCurrentJ02ID" runat="server" />
             <asp:HiddenField ID="hidReceiversInLine" runat="server" />
             <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
+            <asp:HiddenField ID="hidCols" runat="server" />
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

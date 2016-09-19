@@ -577,7 +577,7 @@ Public Class basUIMT
         masterPage.Session.Item("DropBoxLogin") = login
     End Sub
 
-    Public Shared Function QueryProjectListByTop10(factory As BL.Factory, intJ02ID As Integer, lisBasis As IEnumerable(Of BO.p41Project)) As IEnumerable(Of BO.p41Project)
+    Public Overloads Shared Function QueryProjectListByTop10(factory As BL.Factory, intJ02ID As Integer) As IEnumerable(Of BO.p41Project)
         'vybere z projektů TOP 10 podle naposledy zapisovaných úkonů
         Dim mqP31 As New BO.myQueryP31
         mqP31.j02ID = intJ02ID
@@ -603,5 +603,32 @@ Public Class basUIMT
         mqP41.PIDs = p41ids
         mqP41.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
         Return factory.p41ProjectBL.GetList(mqP41)
+    End Function
+    Public Overloads Shared Function QueryProjectListByTop10(factory As BL.Factory, intJ02ID As Integer, strCols As String, strGroupField As String) As DataTable
+        'vybere z projektů TOP 10 podle naposledy zapisovaných úkonů
+        Dim mqP31 As New BO.myQueryP31
+        mqP31.j02ID = intJ02ID
+        mqP31.TopRecordsOnly = 100
+        mqP31.MG_SortString = "p31dateinsert desc"
+        Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = factory.p31WorksheetBL.GetList(mqP31)
+        Dim p41ids As New List(Of Integer)
+        If lisP31.Count > 0 Then
+            If lisP31.Select(Function(p) p.p41ID).Distinct.Count > 10 Then
+                For Each c In lisP31
+                    If p41ids.Where(Function(p) p = c.p41ID).Count = 0 Then
+                        p41ids.Add(c.p41ID)
+                    End If
+                    If p41ids.Count >= 10 Then Exit For
+                Next
+            Else
+                p41ids = lisP31.Select(Function(p) p.p41ID).Distinct.ToList
+            End If
+        Else
+            p41ids.Add(-1)
+        End If
+        Dim mqP41 As New BO.myQueryP41
+        mqP41.PIDs = p41ids
+        mqP41.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
+        Return factory.p41ProjectBL.GetGridDataSource(strCols, mqP41, strGroupField)
     End Function
 End Class
