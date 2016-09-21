@@ -181,11 +181,14 @@ Public Class p31_framework
                     SetupJ74Combo(cJ74.PID)
                 End If
             End If
+            Dim strAddSqlFrom As String = ""
             If tabs1.SelectedIndex = 0 Then
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
             Else
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
             End If
+            hidFrom.Value = strAddSqlFrom
+
             If tabs1.SelectedIndex = 1 Then grid1.AllowFilteringByColumn = False 'v top10 se nefiltruje
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
@@ -319,6 +322,7 @@ Public Class p31_framework
             End If
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_AdditionalSqlFROM = Me.hidFrom.Value
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
@@ -562,6 +566,7 @@ Public Class p31_framework
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_AdditionalSqlFROM = Me.hidFrom.Value
             .Closed = BO.BooleanQueryMode.FalseQuery
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)

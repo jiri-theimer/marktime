@@ -36,7 +36,7 @@
                                 <%# Eval("Person")%>   
                             </td>
                             <td>
-                                <%# Eval("p28Name")%>   
+                                <%# Eval("ClientName")%>   
                                 <div><%# Eval("p41Name")%> </div>
                             </td>
                         
