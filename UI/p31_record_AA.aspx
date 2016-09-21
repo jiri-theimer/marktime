@@ -153,7 +153,7 @@
                             <td>
                                 <asp:Label ID="value_approved_billing" runat="server" CssClass="valbold"></asp:Label>
 
-                                <asp:Label ID="lblKorekceCaption" runat="server" Text="Korekce úkonu:" Visible="false" GLX="1160"></asp:Label>
+                                <asp:Label ID="lblKorekceCaption" runat="server" Text="Korekce:" Visible="false" GLX="1160"></asp:Label>
                                 <asp:Image ID="imgKorekce" runat="server" ImageUrl="./images/correction.png" Visible="false" />
                                 <asp:Label ID="value_korekce" runat="server" CssClass="valbold"></asp:Label>
 

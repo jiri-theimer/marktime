@@ -284,8 +284,9 @@ Public Class entity_framework
             If cJ74.x29ID = BO.x29IdEnum.p56Task Then
                 If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
             End If
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression)
-
+            Dim strAddtionalSqlFrom As String = ""
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom)
+            Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -350,7 +351,7 @@ Public Class entity_framework
                 ''Else
                 ''    grid1.DataSource = lis
                 ''End If
-                Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -365,7 +366,7 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p28(mq)
 
-                Dim dt As DataTable = Master.Factory.p28ContactBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                Dim dt As DataTable = Master.Factory.p28ContactBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -399,7 +400,7 @@ Public Class entity_framework
                 'Else
                 '    grid1.DataSource = lis
                 'End If
-                Dim dt As DataTable = Master.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                Dim dt As DataTable = Master.Factory.p56TaskBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -419,7 +420,7 @@ Public Class entity_framework
                 ''Else
                 ''    grid1.DataSource = lis
                 ''End If
-                Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -433,7 +434,7 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_j02(mq)
 
-                Dim dt As DataTable = Master.Factory.j02PersonBL.GetGridDataSource(Me.hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                Dim dt As DataTable = Master.Factory.j02PersonBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.j02PersonBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -454,7 +455,7 @@ Public Class entity_framework
 
                 'Dim qry = From p In lis Join q In lis2 On p.p41ID_First Equals q.PID Select p, q.p41Code
 
-                Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+                Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Else
@@ -479,6 +480,9 @@ Public Class entity_framework
 
     Private Sub InhaleMyQuery_p91(ByRef mq As BO.myQueryP91)
         With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .Closed = BO.BooleanQueryMode.NoQuery
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
@@ -524,6 +528,9 @@ Public Class entity_framework
 
     Private Sub InhaleMyQuery_o23(ByRef mq As BO.myQueryO23)
         With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
@@ -563,6 +570,9 @@ Public Class entity_framework
 
     Private Sub InhaleMyQuery_p56(ByRef mq As BO.myQueryP56)
         With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
@@ -577,7 +587,7 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            
+
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
@@ -596,6 +606,9 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_p41(ByRef mq As BO.myQueryP41)
         With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p28" : .p28ID = Me.CurrentMasterPID
@@ -608,7 +621,7 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            
+
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
@@ -627,6 +640,9 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_p28(ByRef mq As BO.myQueryP28)
         With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
@@ -636,7 +652,7 @@ Public Class entity_framework
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            
+
             Select Case Me.cbxPeriodType.SelectedValue
                 Case "DateInsert"
                     .DateInsertFrom = period1.DateFrom : .DateInsertUntil = period1.DateUntil
@@ -653,6 +669,9 @@ Public Class entity_framework
     End Sub
     Private Sub InhaleMyQuery_j02(ByRef mq As BO.myQueryJ02)
         With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID
@@ -723,7 +742,7 @@ Public Class entity_framework
                         InhaleMyQuery_p41(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        dt = Master.Factory.p41ProjectBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        dt = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
                         If dt Is Nothing Then
                             Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
@@ -733,7 +752,7 @@ Public Class entity_framework
                         InhaleMyQuery_p28(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        dt = Master.Factory.p28ContactBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        dt = Master.Factory.p28ContactBL.GetGridDataSource(mq)
                         If dt Is Nothing Then
                             Master.Notify(Master.Factory.p28ContactBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
@@ -743,7 +762,7 @@ Public Class entity_framework
                         InhaleMyQuery_p56(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        dt = Master.Factory.p56TaskBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        dt = Master.Factory.p56TaskBL.GetGridDataSource(mq)
 
                         If dt Is Nothing Then
                             Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -755,7 +774,7 @@ Public Class entity_framework
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
 
-                        dt = Master.Factory.o23NotepadBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        dt = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
                         If dt Is Nothing Then
                             Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
@@ -765,7 +784,7 @@ Public Class entity_framework
                         InhaleMyQuery_j02(mq)
                         mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
-                        dt = Master.Factory.j02PersonBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        dt = Master.Factory.j02PersonBL.GetGridDataSource(mq)
                         If dt Is Nothing Then
                             Master.Notify(Master.Factory.j02PersonBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
@@ -776,7 +795,7 @@ Public Class entity_framework
                         ''mq.MG_SelectPidFieldOnly = True
                         mq.TopRecordsOnly = 0
                         mq.MG_SelectPidFieldOnly = True
-                        dt = Master.Factory.p91InvoiceBL.GetGridDataSource("", mq, Me.cbxGroupBy.SelectedValue)
+                        dt = Master.Factory.p91InvoiceBL.GetGridDataSource(mq)
                         If dt Is Nothing Then
                             Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
                             Return
@@ -894,7 +913,7 @@ Public Class entity_framework
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
-                grid1.VirtualRowCount = Master.Factory.p56TaskBL.GetVirtualCount(mq, Me.hidCols.Value)
+                grid1.VirtualRowCount = Master.Factory.p56TaskBL.GetVirtualCount(mq)
             Case BO.x29IdEnum.o23Notepad
                 Dim mq As New BO.myQueryO23
                 InhaleMyQuery_o23(mq)
@@ -941,33 +960,39 @@ Public Class entity_framework
             Case BO.x29IdEnum.p41Project
                 Dim mq As New BO.myQueryP41
                 InhaleMyQuery_p41(mq)
+                mq.MG_GridGroupByField = ""
                 ''lis = Master.Factory.p41ProjectBL.GetList(mq)
-                dt = Master.Factory.p41ProjectBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+                dt = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28
                 InhaleMyQuery_p28(mq)
+                mq.MG_GridGroupByField = ""
                 ''lis = Master.Factory.p28ContactBL.GetList(mq)
-                dt = Master.Factory.p28ContactBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+                dt = Master.Factory.p28ContactBL.GetGridDataSource(mq)
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
+                mq.MG_GridGroupByField = ""
                 ''lis = Master.Factory.p56TaskBL.GetList(mq)
-                dt = Master.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+                dt = Master.Factory.p56TaskBL.GetGridDataSource(mq)
             Case BO.x29IdEnum.o23Notepad
                 Dim mq As New BO.myQueryO23
                 InhaleMyQuery_o23(mq)
+                mq.MG_GridGroupByField = ""
                 ''lis = Master.Factory.o23NotepadBL.GetList4Grid(mq)
-                dt = Master.Factory.o23NotepadBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+                dt = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 InhaleMyQuery_j02(mq)
+                mq.MG_GridGroupByField = ""
                 ''lis = Master.Factory.j02PersonBL.GetList(mq)
                 ''dt = Master.Factory.j02PersonBL.GetGridDataSource(Me.hidCols.Value, mq, "")
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
+                mq.MG_GridGroupByField = ""
                 ''lis = Master.Factory.p91InvoiceBL.GetList(mq)
-                dt = Master.Factory.p91InvoiceBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+                dt = Master.Factory.p91InvoiceBL.GetGridDataSource(mq)
 
         End Select
 

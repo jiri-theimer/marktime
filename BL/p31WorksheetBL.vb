@@ -12,7 +12,7 @@
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQuery, Optional strGUID_TempData As String = "") As IEnumerable(Of BO.p31Worksheet)
     Function GetVirtualCount(myQuery As BO.myQuery, Optional strGUID_TempData As String = "") As Integer
-    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31, strGroupField As String, Optional strTempGUID As String = "") As DataTable
+    Function GetGridDataSource(myQuery As BO.myQueryP31, Optional strTempGUID As String = "") As DataTable
     Function InhaleRecordDisposition(intPID As Integer) As BO.p31WorksheetDisposition
 
     Function Save_Approving(cApproveInput As BO.p31WorksheetApproveInput, bolTempData As Boolean) As Boolean
@@ -406,7 +406,7 @@ Class p31WorksheetBL
     Public Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean Implements Ip31WorksheetBL.UpdateTempField
         Return _cDL.UpdateTempField(strField, dbValue, strGUID, intP31ID)
     End Function
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31, strGroupField As String, Optional strTempGUID As String = "") As DataTable Implements Ip31WorksheetBL.GetGridDataSource
-        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField, strTempGUID)
+    Public Function GetGridDataSource(myQuery As BO.myQueryP31, Optional strTempGUID As String = "") As DataTable Implements Ip31WorksheetBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(myQuery, strTempGUID)
     End Function
 End Class

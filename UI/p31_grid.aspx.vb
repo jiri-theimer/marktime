@@ -201,7 +201,9 @@ Public Class p31_grid
                 If Not cJ74 Is Nothing Then SetupJ74Combo(cJ74.PID)
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression, strSortExpression)
+            Dim strAddSqlFrom As String = ""
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom)
+            Me.hidFrom.Value = strAddSqlFrom
             ''With Me.cbxGroupBy
             ''    If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
             ''        Dim b As Boolean = False
@@ -355,7 +357,7 @@ Public Class p31_grid
             RecalcVirtualRowCount()
         End If
 
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(mq)
         If dt Is Nothing Then
             Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
         Else
@@ -388,6 +390,9 @@ Public Class p31_grid
             .j70ID = Me.CurrentJ70ID
             .SearchExpression = Trim(Me.txtSearch.Text)
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
+            .MG_AdditionalSqlFROM = Me.hidFrom.Value
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
             If period1.SelectedValue <> "" Then
                 .DateFrom = period1.DateFrom
@@ -476,9 +481,9 @@ Public Class p31_grid
 
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
-
+        mq.MG_GridGroupByField = ""
         ''Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(mq)
 
         Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
         If strFileName = "" Then

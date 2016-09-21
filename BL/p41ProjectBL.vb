@@ -7,7 +7,7 @@
     Function LoadByExternalPID(strExternalPID As String) As BO.p41Project
     Function LoadSumRow(intPID As Integer) As BO.p41ProjectSum
     Function Delete(intPID As Integer) As Boolean
-    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP41, strGroupField As String) As DataTable
+    Function GetGridDataSource(myQuery As BO.myQueryP41) As DataTable
     Function GetList(mq As BO.myQueryP41) As IEnumerable(Of BO.p41Project)
     Function GetList_o39(intPID As Integer) As IEnumerable(Of BO.o39Project_Address)
     Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
@@ -175,8 +175,8 @@ Class p41ProjectBL
         End If
     End Function
 
-    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP41, strGroupField As String) As DataTable Implements Ip41ProjectBL.GetGridDataSource
-        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField)
+    Function GetGridDataSource(myQuery As BO.myQueryP41) As DataTable Implements Ip41ProjectBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(myQuery)
     End Function
     Public Function GetList(mq As BO.myQueryP41) As IEnumerable(Of BO.p41Project) Implements Ip41ProjectBL.GetList
         Return _cDL.GetList(mq)

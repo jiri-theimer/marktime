@@ -5,10 +5,10 @@
     Function LoadMyLastCreated() As BO.p56Task
     Function LoadByExternalPID(strExternalPID As String) As BO.p56Task
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(mq As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False, Optional strCols As String = "") As IEnumerable(Of BO.p56Task)
+    Function GetList(mq As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56Task)
     Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56TaskWithWorksheetSum)
-    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP56, strGroupField As String) As DataTable
-    Function GetVirtualCount(myQuery As BO.myQueryP56, Optional strCols As String = "") As Integer
+    Function GetGridDataSource(myQuery As BO.myQueryP56) As DataTable
+    Function GetVirtualCount(myQuery As BO.myQueryP56) As Integer
     Function GetRolesInline(intPID As Integer) As String
     Function GetList_WaitingOnReminder(datReminderFrom As Date, datReminderUntil As Date) As IEnumerable(Of BO.p56Task)
     Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.p56Task)
@@ -126,8 +126,8 @@ Class p56TaskBL
             Return False
         End If
     End Function
-    Public Function GetList(mq As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False, Optional strCols As String = "") As IEnumerable(Of BO.p56Task) Implements Ip56TaskBL.GetList
-        Return _cDL.GetList(mq, bolInhaleReceiversInLine, strCols)
+    Public Function GetList(mq As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56Task) Implements Ip56TaskBL.GetList
+        Return _cDL.GetList(mq, bolInhaleReceiversInLine)
     End Function
     Public Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56TaskWithWorksheetSum) Implements Ip56TaskBL.GetList_WithWorksheetSum
         Return _cDL.GetList_WithWorksheetSum(myQuery, bolInhaleReceiversInLine)
@@ -135,11 +135,11 @@ Class p56TaskBL
     Public Function GetList_WaitingOnReminder(datReminderFrom As Date, datReminderUntil As Date) As IEnumerable(Of BO.p56Task) Implements Ip56TaskBL.GetList_WaitingOnReminder
         Return _cDL.GetList_WaitingOnReminder(datReminderFrom, datReminderUntil)
     End Function
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP56, strGroupField As String) As DataTable Implements Ip56TaskBL.GetGridDataSource
-        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField)
+    Public Function GetGridDataSource(myQuery As BO.myQueryP56) As DataTable Implements Ip56TaskBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(myQuery)
     End Function
-    Public Function GetVirtualCount(myQuery As BO.myQueryP56, Optional strCols As String = "") As Integer Implements Ip56TaskBL.GetVirtualCount
-        Return _cDL.GetVirtualCount(myQuery, strCols)
+    Public Function GetVirtualCount(myQuery As BO.myQueryP56) As Integer Implements Ip56TaskBL.GetVirtualCount
+        Return _cDL.GetVirtualCount(myQuery)
     End Function
     Public Function GetRolesInline(intPID As Integer) As String Implements Ip56TaskBL.GetRolesInline
         Return _cDL.GetRolesInline(intPID)

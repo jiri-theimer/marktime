@@ -47,7 +47,7 @@ Partial Public Class p31_record_AI
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Edit_p31Value_Invoiced As Global.Telerik.Web.UI.RadNumericTextBox
+    Protected WithEvents Edit_p31Value_Invoiced As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''value_j27code control.

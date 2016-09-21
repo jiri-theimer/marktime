@@ -11,7 +11,7 @@
         Return _cDB.GetRecord(Of BO.o23Notepad)(s, New With {.o23id = intPID})
     End Function
     Public Function Load4Grid(intPID As Integer) As BO.o23NotepadGrid
-        Dim s As String = GetSQLPart1_Grid(0) & " " & GetSQLPart2_Grid()
+        Dim s As String = GetSQLPart1_Grid(0) & " " & GetSQLPart2_Grid(Nothing)
         s += " WHERE a.o23ID=@o23id"
 
         Return _cDB.GetRecord(Of BO.o23NotepadGrid)(s, New With {.o23id = intPID})
@@ -110,7 +110,7 @@
     End Function
     Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23NotepadGrid)
 
-        Dim s As String = GetSQLPart1_Grid(0) & " " & GetSQLPart2_Grid(), pars As New DbParameters
+        Dim s As String = GetSQLPart1_Grid(0) & " " & GetSQLPart2_Grid(Nothing), pars As New DbParameters
         s += " WHERE a.o23ReminderDate BETWEEN @d1 AND @d2"
         s += " AND (a.j02ID_Owner=@j02id OR a.j02ID=@j02id OR a.o23ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=223 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))))"
 
@@ -220,7 +220,7 @@
         Return bas.TrimWHERE(strW)
     End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryO23) As Integer
-        Dim s As String = "SELECT COUNT(a.o23ID) as Value " & GetSQLPart2_Grid()
+        Dim s As String = "SELECT COUNT(a.o23ID) as Value " & GetSQLPart2_Grid(Nothing)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -240,31 +240,30 @@
 
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryO23, strGroupField As String) As DataTable
-        Dim s As String = "", strAdditionalFROM As String = ""
-        If strCols.IndexOf("||") > 0 Then
-            's výčtem sloupců se předává i klauzule FROM
-            strAdditionalFROM = " " & Split(strCols, "||")(1)
-            strCols = Split(strCols, "||")(0)
-        End If
-        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Select Case strGroupField
-                Case "ProjectClient" : strCols += ",p28_client.p28Name as ProjectClient"
-                Case "Project" : strCols += ",p41.p41Name as Project"
-                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                Case Else
-                    strCols += "," & strGroupField
-            End Select
-        End If
-        strCols += ",a.o23ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.o23ValidFrom AND a.o23ValidUntil THEN 0 else 1 END) as IsClosed,a.o23IsDraft as IsDraft"
-        strCols += ",a.o23IsEncrypted as o23IsEncrypted_Grid,a.o23LockedFlag as o23LockedFlag_Grid,a.b02ID,b02.b02Color"
+    Public Function GetGridDataSource(myQuery As BO.myQueryO23) As DataTable
+        Dim s As String = ""
+        With myQuery
+            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                Select Case .MG_GridGroupByField
+                    Case "ProjectClient" : .MG_GridSqlColumns += ",p28_client.p28Name as ProjectClient"
+                    Case "Project" : .MG_GridSqlColumns += ",p41.p41Name as Project"
+                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                    Case Else
+                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                End Select
+            End If
+            .MG_GridSqlColumns += ",a.o23ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.o23ValidFrom AND a.o23ValidUntil THEN 0 else 1 END) as IsClosed,a.o23IsDraft as IsDraft"
+            .MG_GridSqlColumns += ",a.o23IsEncrypted as o23IsEncrypted_Grid,a.o23LockedFlag as o23LockedFlag_Grid,a.b02ID,b02.b02Color"
+        End With
+
+        
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
-            If .MG_SelectPidFieldOnly Then strCols = "a.o23ID as pid"
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.o23ID as pid"
             Dim strORDERBY As String = .MG_SortString
-            If strGroupField <> "" Then
-                Dim strPrimarySortField As String = strGroupField
+            If .MG_GridGroupByField <> "" Then
+                Dim strPrimarySortField As String = .MG_GridGroupByField
                 If strPrimarySortField = "ProjectClient" Then strPrimarySortField = "p28_client.p28Name"
                 If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
                 If strPrimarySortField = "Project" Then strPrimarySortField = "p41.p41Name"
@@ -279,7 +278,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2_Grid() & strAdditionalFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2_Grid(myQuery)
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -288,7 +287,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2_Grid() & strAdditionalFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2_Grid(myQuery)
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -316,7 +315,7 @@
                 s = GetSQL_OFFSET(strW, ParseSortExpression(strSort), .MG_PageSize, .MG_CurrentPageIndex, pars, bolInhaleReceiversInLine)
             Else
                 'normální select - navazuje se na úvodní skladbu
-                s += " " & GetSQLPart2_Grid()
+                s += " " & GetSQLPart2_Grid(myQuery)
                 If strW <> "" Then s += " WHERE " & strW
                 If strSort <> "" Then
                     s += " ORDER BY " & ParseSortExpression(strSort)
@@ -346,7 +345,7 @@
         If bolInhaleReceiversInLine Then
             s += ",dbo.o23_getroles_inline(a.o23ID) as _ReceiversInLine"
         End If
-        s += " " & GetSQLPart2_Grid()
+        s += " " & GetSQLPart2_Grid(Nothing)
 
         If strWHERE <> "" Then s += " WHERE " & strWHERE
         s += ") SELECT TOP " & intPageSize.ToString & " * FROM rst"
@@ -370,12 +369,15 @@
         Return s
     End Function
 
-    Private Function GetSQLPart2_Grid() As String
+    Private Function GetSQLPart2_Grid(mq As BO.myQueryO23) As String
         Dim s As String = "FROM o23Notepad a INNER JOIN o24NotepadType o24 ON a.o24ID=o24.o24ID LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID LEFT OUTER JOIN p28Contact p28_client ON p41.p28ID_Client=p28_client.p28ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID LEFT OUTER JOIN p28Contact p28 ON a.p28ID=p28.p28ID LEFT OUTER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID"
         s += " LEFT OUTER JOIN o23Notepad_FreeField o23free ON a.o23ID=o23free.o23ID"
+        If Not mq Is Nothing Then
+            If mq.MG_AdditionalSqlFROM <> "" Then s += " " & mq.MG_AdditionalSqlFROM
+        End If
         Return s
     End Function
 

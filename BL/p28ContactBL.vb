@@ -10,7 +10,7 @@
     Function LoadByImapRobotAddress(strRobotAddress) As BO.p28Contact
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP28) As IEnumerable(Of BO.p28Contact)
-    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP28, strGroupField As String) As DataTable
+    Function GetGridDataSource(myQuery As BO.myQueryP28) As DataTable
     Function GetVirtualCount(myQuery As BO.myQueryP28) As Integer
     Function GetList_o37(intPID As Integer) As IEnumerable(Of BO.o37Contact_Address)
     Function GetList_o32(intPID As Integer) As IEnumerable(Of BO.o32Contact_Medium)
@@ -240,7 +240,7 @@ Class p28ContactBL
         Return _cDL.ConvertFromDraft(intPID)
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP28, strGroupField As String) As DataTable Implements Ip28ContactBL.GetGridDataSource
-        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField)
+    Public Function GetGridDataSource(myQuery As BO.myQueryP28) As DataTable Implements Ip28ContactBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(myQuery)
     End Function
 End Class

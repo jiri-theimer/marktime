@@ -37,5 +37,5 @@ Public Class myQueryO23
     Public QuickQuery As myQueryO23_QuickQuery = myQueryO23_QuickQuery._NotSpecified
 
     Public Property o23GUID As String
-    Public Property MG_SelectPidFieldOnly As Boolean
+
 End Class

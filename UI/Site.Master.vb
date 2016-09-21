@@ -159,20 +159,25 @@ Public Class Site
 
                 If Not .FindItemByValue("cmdP31_Approving") Is Nothing Then .FindItemByValue("cmdP31_Approving").Text = Resources.Site.Schvalovat_Pripravit_Fakturaci
 
-                If Not .FindItemByValue("cmdAdmin") Is Nothing Then .FindItemByValue("cmdAdmin").Text = Resources.Site.AdministraceSystemu
-                If Not .FindItemByValue("cmdReports") Is Nothing Then .FindItemByValue("cmdReports").Text = Resources.Site.cmdReports
-                If Not .FindItemByValue("p56") Is Nothing Then .FindItemByValue("p56").Text = Resources.Site.DispecinkUkolu
-                If Not .FindItemByValue("o23") Is Nothing Then .FindItemByValue("o23").Text = Resources.Site.Dokumenty
-                If Not .FindItemByValue("entity_scheduler") Is Nothing Then .FindItemByValue("entity_scheduler").Text = Resources.Site.Kalendar
-                If Not .FindItemByValue("p48") Is Nothing Then .FindItemByValue("p48").Text = Resources.Site.OperativniPlanovani
-                If Not .FindItemByValue("p49") Is Nothing Then .FindItemByValue("p49").Text = Resources.Site.Rozpocty
-                If Not .FindItemByValue("p90_framework") Is Nothing Then .FindItemByValue("p90_framework").Text = Resources.Site.ZalohoveFaktury
-                If Not .FindItemByValue("p51") Is Nothing Then .FindItemByValue("p51").Text = Resources.Site.Ceniky
-                If Not .FindItemByValue("x40") Is Nothing Then .FindItemByValue("x40").Text = Resources.Site.OdeslanaPosta
 
-                If Not .FindItemByValue("cmdWorkflow") Is Nothing Then .FindItemByValue("cmdWorkflow").Text = Resources.Site.NavrharWorkflow
-                If Not .FindItemByValue("x18") Is Nothing Then .FindItemByValue("x18").Text = Resources.Site.Stitky
-                .FindItemByValue("cmdHelp").Text = Resources.Site.Napoveda
+                If Not .FindItemByValue("more") Is Nothing Then
+                    If Not .FindItemByValue("cmdAdmin") Is Nothing Then .FindItemByValue("cmdAdmin").Text = Resources.Site.AdministraceSystemu
+                    If Not .FindItemByValue("cmdReports") Is Nothing Then .FindItemByValue("cmdReports").Text = Resources.Site.cmdReports
+                    If Not .FindItemByValue("p56") Is Nothing Then .FindItemByValue("p56").Text = Resources.Site.DispecinkUkolu
+                    If Not .FindItemByValue("o23") Is Nothing Then .FindItemByValue("o23").Text = Resources.Site.Dokumenty
+                    If Not .FindItemByValue("entity_scheduler") Is Nothing Then .FindItemByValue("entity_scheduler").Text = Resources.Site.Kalendar
+                    If Not .FindItemByValue("p48") Is Nothing Then .FindItemByValue("p48").Text = Resources.Site.OperativniPlanovani
+                    If Not .FindItemByValue("p49") Is Nothing Then .FindItemByValue("p49").Text = Resources.Site.Rozpocty
+                    If Not .FindItemByValue("p90_framework") Is Nothing Then .FindItemByValue("p90_framework").Text = Resources.Site.ZalohoveFaktury
+                    If Not .FindItemByValue("p51") Is Nothing Then .FindItemByValue("p51").Text = Resources.Site.Ceniky
+                    If Not .FindItemByValue("x40") Is Nothing Then .FindItemByValue("x40").Text = Resources.Site.OdeslanaPosta
+
+                    If Not .FindItemByValue("cmdWorkflow") Is Nothing Then .FindItemByValue("cmdWorkflow").Text = Resources.Site.NavrharWorkflow
+                    If Not .FindItemByValue("x18") Is Nothing Then .FindItemByValue("x18").Text = Resources.Site.Stitky
+
+                    .FindItemByValue("cmdHelp").Text = Resources.Site.Napoveda
+                End If
+
                 .FindItemByValue("help").ToolTip = Resources.Site.Napoveda
             End With
             

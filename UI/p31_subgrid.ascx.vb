@@ -186,7 +186,10 @@ Public Class p31_subgrid
         grid2.ClearColumns()
 
         Me.hidDefaultSorting.Value = _curJ74.j74OrderBy
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect)
+        Dim strAddSqlFrom As String = ""
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect, , , , strAddSqlFrom)
+        Me.hidFrom.Value = strAddSqlFrom
+
         ''With Me.cbxGroupBy
         ''    If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
         ''        Dim b As Boolean = False
@@ -301,7 +304,7 @@ Public Class p31_subgrid
             grid2.DataSourceDataTable = dtDD
             Return
         End If
-        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(mq)
         If dt Is Nothing Then
             Return
         End If
@@ -313,8 +316,10 @@ Public Class p31_subgrid
                 Dim mqAll As New BO.myQueryP31
                 mqAll.TopRecordsOnly = 0
                 mqAll.MG_SelectPidFieldOnly = True
+                mqAll.MG_AdditionalSqlFROM = Me.hidFrom.Value
+                mqAll.MG_GridSqlColumns = Me.hidCols.Value
                 p31_InhaleMyQuery(mqAll)
-                Dim dtAll As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource("", mqAll, Me.cbxGroupBy.SelectedValue)
+                Dim dtAll As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(mqAll)
                 Dim x As Integer, intNewPageIndex As Integer = 0
                 For Each dbRow As DataRow In dtAll.Rows
                     x += 1
@@ -324,7 +329,7 @@ Public Class p31_subgrid
                     If dbRow.Item("pid") = Me.DefaultSelectedPID Then
                         grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
                         mq.MG_CurrentPageIndex = intNewPageIndex
-                        dt = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue) 'nový zdroj pro grid
+                        dt = Me.Factory.p31WorksheetBL.GetGridDataSource(mq) 'nový zdroj pro grid
                         Exit For
                     End If
                 Next
@@ -468,6 +473,9 @@ Public Class p31_subgrid
             .SearchExpression = Trim(Me.txtSearch.Text)
 
             .MG_SortString = grid2.radGridOrig.MasterTableView.SortExpressions.GetSortString()
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_AdditionalSqlFROM = Me.hidFrom.Value
+            .MG_GridSqlColumns = Me.hidCols.Value
 
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -579,8 +587,9 @@ Public Class p31_subgrid
 
         Dim mq As New BO.myQueryP31
         p31_InhaleMyQuery(mq)
+        mq.MG_GridGroupByField = ""
 
-        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value, mq, "")
+        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(mq)
 
         Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
         If strFileName = "" Then

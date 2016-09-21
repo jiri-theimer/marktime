@@ -254,7 +254,7 @@ Public Class p31_framework
 
             InhaleMyQuery(mq)
 
-            Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(Me.hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+            Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
             If dt Is Nothing Then
                 Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
             Else
@@ -269,7 +269,7 @@ Public Class p31_framework
         If Me.GridPrefix = "p56" Then
             Dim mq As New BO.myQueryP56
             InhaleMyTaskQuery(mq)
-            grid1.DataSourceDataTable = Master.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+            grid1.DataSourceDataTable = Master.Factory.p56TaskBL.GetGridDataSource(mq)
 
         End If
 
@@ -317,6 +317,8 @@ Public Class p31_framework
                     .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
                 End If
             End If
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_GridSqlColumns = Me.hidCols.Value
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
@@ -558,6 +560,8 @@ Public Class p31_framework
         With mq
             .j02ID = Me.CurrentJ02ID
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_GridSqlColumns = Me.hidCols.Value
             .Closed = BO.BooleanQueryMode.FalseQuery
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)

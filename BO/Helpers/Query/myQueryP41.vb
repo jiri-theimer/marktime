@@ -29,7 +29,6 @@ End Enum
 Public Class myQueryP41
     Inherits myQuery
 
-    Public Property MG_SelectPidFieldOnly As Boolean = False  'true - bude vrace pouze sloupec s primárním klíčem
     Public Property p28ID As Integer
     Public Property p42ID As Integer
 

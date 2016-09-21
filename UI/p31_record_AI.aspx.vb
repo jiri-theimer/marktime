@@ -47,7 +47,12 @@
             Me.Client.Text = .ClientName
             p41Name.Text = .p41Name
 
-            p31value_orig.Text = BO.BAS.FN(.p31Value_Orig)
+            If .p33ID = BO.p33IdENUM.Cas Then
+                p31value_orig.Text = BO.BAS.FN(.p31Value_Orig) & " (" & .p31HHMM_Orig & ")"
+            Else
+                p31value_orig.Text = BO.BAS.FN(.p31Value_Orig)
+            End If
+
 
             If .p56ID <> 0 Then
                 Me.Task.Text = .p56Name
@@ -78,10 +83,17 @@
                 If .p72ID_AfterApprove = BO.p72IdENUM._NotSpecified Then Me.p72img.Visible = False
 
                 Me.value_approved_billing.Text = BO.BAS.FN(.p31Value_Approved_Billing)
+                If .p33ID = BO.p33IdENUM.Cas Then
+                    Me.value_approved_billing.Text += " (" & .p31HHMM_Approved_Billing & ")"
+                End If
                 If .p31Value_Approved_Billing <> .p31Value_Orig Then
                     lblKorekceCaption.Visible = True
                     imgKorekce.Visible = True
                     value_korekce.Text = BO.BAS.FN(.p31Value_Approved_Billing - .p31Value_Orig)
+                    If .p33ID = BO.p33IdENUM.Cas Then
+                        Dim cT As New BO.clsTime
+                        value_korekce.Text += " (" & cT.ShowAsHHMM(CDbl(.p31Value_Approved_Billing - .p31Value_Orig).ToString) & ")"
+                    End If
                     If cRec.p31Value_Orig > .p31Value_Approved_Billing Then
                         imgKorekce.ImageUrl = "Images/correction_down.gif"
                     Else
@@ -157,6 +169,7 @@
     Private Sub RefreshRecord_4Edit(cRec As BO.p31Worksheet)
         Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(cRec.p91ID)
         basUI.SelectRadiolistValue(Me.Edit_p70ID, CInt(cRec.p70ID).ToString)
+        
 
         Select Case cRec.p33ID
             Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
@@ -184,8 +197,13 @@
         ''Else
         ''    Me.Edit_p31VatRate_Invoiced.Value = cRec.p31VatRate_Invoiced
         ''End If
+
         Me.Edit_p31VatRate_Invoiced.Value = cRec.p31VatRate_Invoiced
-        Edit_p31Value_Invoiced.Value = cRec.p31Value_Invoiced
+        Edit_p31Value_Invoiced.Text = cRec.p31Value_Invoiced.ToString
+        If cRec.p33ID = BO.p33IdENUM.Cas And cRec.IsRecommendedHHMM_Invoiced() Then
+            Dim cT As New BO.clsTime
+            Me.Edit_p31Value_Invoiced.Text = cT.ShowAsHHMM(cRec.p31Value_Invoiced.ToString)
+        End If
         Me.Edit_p31Text.Text = cRec.p31Text
 
 
@@ -233,7 +251,14 @@
 
                 End Select
                 .InvoiceVatRate = BO.BAS.IsNullNum(Me.Edit_p31VatRate_Invoiced.Value)
-                .InvoiceValue = BO.BAS.IsNullNum(Me.Edit_p31Value_Invoiced.Value)
+                If cRec.p33ID = BO.p33IdENUM.Cas Then
+                    Dim cT As New BO.clsTime
+                    .InvoiceValue = cT.ShowAsDec(Me.Edit_p31Value_Invoiced.Text)
+
+                Else
+                    .InvoiceValue = BO.BAS.IsNullNum(Me.Edit_p31Value_Invoiced.Text)
+                End If
+
 
             End With
             Dim lis As New List(Of BO.p31WorksheetInvoiceChange)

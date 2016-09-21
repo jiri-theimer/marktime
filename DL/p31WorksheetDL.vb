@@ -425,7 +425,7 @@
         pars.Add("d2", d2, DbType.DateTime)
         pars.Add("j02id", intJ02ID, DbType.Int32)
 
-        Dim s As String = "SELECT a.p31Date,sum(a.p31Hours_Orig) as Hours FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID WHERE p34.p33ID=1 AND a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date"
+        Dim s As String = "SELECT a.p31Date,sum(a.p31Hours_Orig) as Hours,count(case when p34.p33id in (2,5) then 1 end) as Moneys,count(case when p34.p33id=3 then 1 end) as Pieces FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID WHERE a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date"
         Return _cDB.GetList(Of BO.p31WorksheetCalendarHours)(s, pars)
     End Function
 
@@ -459,35 +459,33 @@
         Return _cDB.GetList(Of BO.p31Worksheet)(s, pars)
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP31, strGroupField As String, Optional strTempGUID As String = "") As DataTable
-        Dim s As String = "", strAdditionalFROM As String = ""
-        If strCols.IndexOf("||") > 0 Then
-            's výčtem sloupců se předává i klauzule FROM
-            strAdditionalFROM = " " & Split(strCols, "||")(1)
-            strCols = Split(strCols, "||")(0)
-        End If
-        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Select Case strGroupField
-                Case "SupplierName" : strCols += ",supplier.p28Name as SupplierName"
-                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                Case "Person" : strCols += ",j02.j02LastName+char(32)+j02.j02Firstname as Person"
-                Case "ClientName" : strCols += ",p28client.p28Name as ClientName"
-                Case "j27Code_Billing_Orig" : strCols += ",j27billing_orig.j27Code as j27Code_Billing_Orig"
-                Case "approve_p72Name" : strCols += ",p72approve.p72Name as approve_p72Name"
-                Case Else
-                    strCols += "," & strGroupField
-            End Select
-        End If
-        strCols += ",a.p31ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN 0 else 1 END) as IsClosed,a.p72ID_AfterTrimming,a.p72ID_AfterApprove,a.p70ID,a.o23ID_First,a.p49ID,a.p71ID,p34.p33ID"
-        strCols += ",a.p31Date as p31Date_Grid,a.p31Hours_Trimmed as p31Hours_Trimmed_Grid,a.p31Hours_Orig as p31Hours_Orig_Grid,p34.p34IncomeStatementFlag"
+    Public Function GetGridDataSource(myQuery As BO.myQueryP31, Optional strTempGUID As String = "") As DataTable
+        Dim s As String = ""
+        With myQuery
+            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                Select Case .MG_GridGroupByField
+                    Case "SupplierName" : .MG_GridSqlColumns += ",supplier.p28Name as SupplierName"
+                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                    Case "Person" : .MG_GridSqlColumns += ",j02.j02LastName+char(32)+j02.j02Firstname as Person"
+                    Case "ClientName" : .MG_GridSqlColumns += ",p28client.p28Name as ClientName"
+                    Case "j27Code_Billing_Orig" : .MG_GridSqlColumns += ",j27billing_orig.j27Code as j27Code_Billing_Orig"
+                    Case "approve_p72Name" : .MG_GridSqlColumns += ",p72approve.p72Name as approve_p72Name"
+                    Case Else
+                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                End Select
+            End If
+            .MG_GridSqlColumns += ",a.p31ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN 0 else 1 END) as IsClosed,a.p72ID_AfterTrimming,a.p72ID_AfterApprove,a.p70ID,a.o23ID_First,a.p49ID,a.p71ID,p34.p33ID"
+            .MG_GridSqlColumns += ",a.p31Date as p31Date_Grid,a.p31Hours_Trimmed as p31Hours_Trimmed_Grid,a.p31Hours_Orig as p31Hours_Orig_Grid,p34.p34IncomeStatementFlag"
 
+        End With
+        
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars, strTempGUID)
         With myQuery
-            If .MG_SelectPidFieldOnly Then strCols = "a.p31ID as pid"
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.p31ID as pid"
             Dim strORDERBY As String = .MG_SortString
-            If strGroupField <> "" Then
-                Dim strPrimarySortField As String = strGroupField
+            If .MG_GridGroupByField <> "" Then
+                Dim strPrimarySortField As String = .MG_GridGroupByField
                 If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
                 If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
@@ -503,7 +501,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strTempGUID, myQuery) & strAdditionalFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2(strTempGUID, myQuery)
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -512,7 +510,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2(strTempGUID, myQuery) & strAdditionalFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2(strTempGUID, myQuery)
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -649,7 +647,8 @@
         s.Append(" LEFT OUTER JOIN p31WorkSheet_FreeField p31free ON a.p31ID=p31free.p31ID")
         If Not myQuery Is Nothing Then
             With myQuery
-                Select .SpecificQuery
+                If .MG_AdditionalSqlFROM <> "" Then s.Append(" " & .MG_AdditionalSqlFROM)
+                Select Case .SpecificQuery
                     Case BO.myQueryP31_SpecificQuery.AllowedForDoApprove, BO.myQueryP31_SpecificQuery.AllowedForReApprove
                         If Not BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Approver) Then
                             'pokud nemá právo paušálně schvalovat všechny záznamy v db
@@ -671,7 +670,7 @@
                             s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
                             s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
                         End If
-                        
+
                     Case Else
                 End Select
             End With

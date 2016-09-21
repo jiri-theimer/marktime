@@ -33,6 +33,8 @@
                 Me.j17ID.DataBind()
                 Me.j18ID.DataSource = Master.Factory.j18RegionBL.GetList(New BO.myQuery)
                 Me.j18ID.DataBind()
+                Me.j02TimesheetEntryDaysBackLimit_p34IDs.DataSource = Master.Factory.p34ActivityGroupBL.GetList(New BO.myQuery).Where(Function(p) p.p33ID = BO.p33IdENUM.Cas Or p.p33ID = BO.p33IdENUM.Kusovnik)
+                Me.j02TimesheetEntryDaysBackLimit_p34IDs.DataBind()
             End With
 
 
@@ -78,6 +80,12 @@
             Me.j02ExternalPID.Text = .j02ExternalPID
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             basUI.SelectDropdownlistValue(Me.j02TimesheetEntryDaysBackLimit, .j02TimesheetEntryDaysBackLimit.ToString)
+            If .j02TimesheetEntryDaysBackLimit_p34IDs <> "" Then
+                Dim lis As List(Of String) = BO.BAS.ConvertPIDs2List(.j02TimesheetEntryDaysBackLimit_p34IDs).Select(Function(p) p.ToString).ToList
+                Me.j02TimesheetEntryDaysBackLimit_p34IDs.SelectCheckboxItems(lis)
+
+            End If
+
             Master.Timestamp = .Timestamp
 
             If .j02SmtpServer <> "" Then
@@ -140,6 +148,7 @@
                 .j02RobotAddress = Me.j02RobotAddress.Text
                 .j02ExternalPID = Me.j02ExternalPID.Text
                 .j02TimesheetEntryDaysBackLimit = BO.BAS.IsNullInt(Me.j02TimesheetEntryDaysBackLimit.SelectedValue)
+                .j02TimesheetEntryDaysBackLimit_p34IDs = String.Join(",", Me.j02TimesheetEntryDaysBackLimit_p34IDs.GetAllCheckedValues)
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
                 If chkIsSmtp.Checked Then

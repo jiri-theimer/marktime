@@ -78,6 +78,7 @@
             pars.Add("j02ExternalPID", .j02ExternalPID, DbType.String)
             pars.Add("j02Description", .j02Description, DbType.String, , , True, "Poznámka")
             pars.Add("j02TimesheetEntryDaysBackLimit", .j02TimesheetEntryDaysBackLimit, DbType.Int32)
+            pars.Add("j02TimesheetEntryDaysBackLimit_p34IDs", .j02TimesheetEntryDaysBackLimit_p34IDs, DbType.String)
             pars.Add("j02validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("j02validuntil", .ValidUntil, DbType.DateTime)
 
@@ -264,28 +265,25 @@
         Return _cDB.GetValueFromSQL("SELECT dbo.j02_teams_inline(" & intJ02ID.ToString & ")")
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryJ02, strGroupField As String) As DataTable
-        Dim s As String = "", strAdditionalFROM As String = ""
-        If strCols.IndexOf("||") > 0 Then
-            's výčtem sloupců se předává i klauzule FROM
-            strAdditionalFROM = " " & Split(strCols, "||")(1)
-            strCols = Split(strCols, "||")(0)
-        End If
-        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Select Case strGroupField
-                Case Else
-                    strCols += "," & strGroupField
-            End Select
-        End If
-        strCols += ",a.j02ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.j02ValidFrom AND a.j02ValidUntil THEN 0 else 1 END) as IsClosed,a.j02IsIntraPerson as IsIntraPerson"
-
+    Public Function GetGridDataSource(myQuery As BO.myQueryJ02) As DataTable
+        Dim s As String = ""
+        With myQuery
+            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                Select Case .MG_GridGroupByField
+                    Case Else
+                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                End Select
+            End If
+            .MG_GridSqlColumns += ",a.j02ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.j02ValidFrom AND a.j02ValidUntil THEN 0 else 1 END) as IsClosed,a.j02IsIntraPerson as IsIntraPerson"
+        End With
+        
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
-            If .MG_SelectPidFieldOnly Then strCols = "a.j02ID as pid"
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.j02ID as pid"
             Dim strORDERBY As String = .MG_SortString
-            If strGroupField <> "" Then
-                Dim strPrimarySortField As String = strGroupField
+            If .MG_GridGroupByField <> "" Then
+                Dim strPrimarySortField As String = .MG_GridGroupByField
                 If strPrimarySortField = "FullNameDesc" Then strPrimarySortField = "a.j02LastName+char(32)+a.j02FirstName"
                 If strPrimarySortField = "FullNameAsc" Then strPrimarySortField = "a.j02FirstName+char(32)+a.j02LastName"
                 If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
@@ -296,11 +294,14 @@
             End If
             If strORDERBY = "" Then strORDERBY = "j02lastname,j02firstname"
 
-            Dim strFROM As String = "FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID" & strAdditionalFROM
+            Dim strFROM As String = "FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID"
+            If .MG_AdditionalSqlFROM <> "" Then
+                strFROM += " " & .MG_AdditionalSqlFROM
+            End If
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & strFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & strFROM
                 If strW <> "" Then s += " WHERE " & strW
 
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -309,7 +310,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & strFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & strFROM
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -366,7 +367,7 @@
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
         s += " a.j07ID,a.j17ID,a.j18ID,a.c21ID,a.j02IsIntraPerson,a.j02FirstName,a.j02LastName,a.j02TitleBeforeName,a.j02TitleAfterName,a.j02Code,a.j02JobTitle,a.j02Email,a.j02Mobile,a.j02Phone,a.j02Office,a.j02EmailSignature,a.j02Description,a.j02AvatarImage,a.j02SmtpServer,a.j02SmtpLogin,a.j02IsSmtpVerify"
-        s += ",j02free.*,j07.j07Name as _j07Name,c21.c21Name as _c21Name,j18.j18Name as _j18Name,a.j02RobotAddress,a.j02ExternalPID,a.j02TimesheetEntryDaysBackLimit," & bas.RecTail("j02", "a")
+        s += ",j02free.*,j07.j07Name as _j07Name,c21.c21Name as _c21Name,j18.j18Name as _j18Name,a.j02RobotAddress,a.j02ExternalPID,a.j02TimesheetEntryDaysBackLimit,a.j02TimesheetEntryDaysBackLimit_p34IDs," & bas.RecTail("j02", "a")
         s += " FROM j02Person a LEFT OUTER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID LEFT OUTER JOIN c21FondCalendar c21 ON a.c21ID=c21.c21ID LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID"
 
         Return s

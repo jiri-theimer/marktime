@@ -5,19 +5,19 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.p56Task
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p56ID=@p56id"
 
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.p56id = intPID})
     End Function
     Public Function LoadMyLastCreated() As BO.p56Task
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.j02ID_Owner=@j02id_owner ORDER BY a.p56ID DESC"
 
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.j02id_owner = _curUser.j02ID})
     End Function
     Public Function LoadByExternalPID(strExternalPID As String) As BO.p56Task
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p56ExternalPID LIKE @externalpid"
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.externalpid = strExternalPID})
     End Function
@@ -215,7 +215,7 @@
         Return bas.TrimWHERE(strW)
     End Function
 
-    Public Function GetList(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean, strCols As String) As IEnumerable(Of BO.p56Task)
+    Public Function GetList(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean) As IEnumerable(Of BO.p56Task)
         Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly), pars As New DbParameters
         If myQuery.MG_SelectPidFieldOnly Then
             'SQL SELECT klauzule bude plnit pouze hodnotu primárního klíče
@@ -224,7 +224,7 @@
         If bolInhaleReceiversInLine Then
             s += ",dbo.p56_getroles_inline(a.p56ID) as _ReceiversInLine"
         End If
-        s += " " & GetSQLPart2(strCols)
+        s += " " & GetSQLPart2(myQuery)
         Dim strW As String = GetSQLWHERE(myQuery, pars)
 
 
@@ -249,35 +249,33 @@
         End With
         Return _cDB.GetList(Of BO.p56Task)(s, pars)
     End Function
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP56, strGroupField As String) As DataTable
-        Dim s As String = "", strAdditionalFROM As String = ""
-        If strCols.IndexOf("||") > 0 Then
-            's výčtem sloupců se předává i klauzule FROM
-            strAdditionalFROM = " " & Split(strCols, "||")(1)
-            strCols = Split(strCols, "||")(0)
-        End If
-        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Select Case strGroupField
-                Case "ProjectCodeAndName" : strCols += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
-                Case "Client" : strCols += ",p28client.p28Name as Client"
-                Case "p59NameSubmitter" : strCols += ",p59submitter.p59Name as p59NameSubmitter"
-                Case "ReceiversInLine" : strCols += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine"
-                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                Case "IsClosed" 'je automaticky ve sloupcích, viz níže
-                Case Else
-                    strCols += "," & strGroupField
-            End Select
-        End If
-        strCols += ",a.p56ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END) as IsClosed"
-        strCols += ",a.p56PlanUntil as p56PlanUntil_Grid,a.b02ID as b02ID_Grid,b02Color as b02Color_Grid"
+    Public Function GetGridDataSource(myQuery As BO.myQueryP56) As DataTable
+        Dim s As String = ""
+        With myQuery
+            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                Select Case .MG_GridGroupByField
+                    Case "ProjectCodeAndName" : .MG_GridSqlColumns += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
+                    Case "Client" : .MG_GridSqlColumns += ",p28client.p28Name as Client"
+                    Case "p59NameSubmitter" : .MG_GridSqlColumns += ",p59submitter.p59Name as p59NameSubmitter"
+                    Case "ReceiversInLine" : .MG_GridSqlColumns += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine"
+                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                    Case "IsClosed" 'je automaticky ve sloupcích, viz níže
+                    Case Else
+                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                End Select
+            End If
+            .MG_GridSqlColumns += ",a.p56ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END) as IsClosed"
+            .MG_GridSqlColumns += ",a.p56PlanUntil as p56PlanUntil_Grid,a.b02ID as b02ID_Grid,b02Color as b02Color_Grid"
+        End With
+        
 
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
-            If .MG_SelectPidFieldOnly Then strCols = "a.p56ID as pid"
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.p56ID as pid"
             Dim strORDERBY As String = .MG_SortString
-            If strGroupField <> "" Then
-                Dim strPrimarySortField As String = strGroupField
+            If .MG_GridGroupByField <> "" Then
+                Dim strPrimarySortField As String = .MG_GridGroupByField
                 If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
                 If strPrimarySortField = "p59NameSubmitter" Then strPrimarySortField = "p59submitter.p59Name"
@@ -298,7 +296,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2(strCols) & strAdditionalFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -307,7 +305,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2(strCols) & strAdditionalFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -324,7 +322,7 @@
         If bolInhaleReceiversInLine Then
             s += ",dbo.p56_getroles_inline(a.p56ID) as _ReceiversInLine"
         End If
-        s += " " & GetSQLPart2()
+        s += " " & GetSQLPart2(Nothing)
 
         If strWHERE <> "" Then s += " WHERE " & strWHERE
         s += ") SELECT TOP " & intPageSize.ToString & " * FROM rst"
@@ -345,7 +343,7 @@
         Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
     End Function
     Public Function GetList_WaitingOnReminder(datReminderFrom As Date, datReminderUntil As Date) As IEnumerable(Of BO.p56Task)
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("datereminderfrom", datReminderFrom)
         pars.Add("datereminderuntil", datReminderUntil)
         s += " WHERE p56ReminderDate BETWEEN @datereminderfrom AND @datereminderuntil"
@@ -354,7 +352,7 @@
         Return _cDB.GetList(Of BO.p56Task)(s, pars)
     End Function
     Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.p56Task)
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         s += " WHERE ((p56PlanUntil BETWEEN @d1 AND @d2 and getdate() between p56ValidFrom and p56ValidUntil) OR p56ReminderDate between @d1 AND @d2)"
         s += "AND (a.j02ID_Owner=@j02id OR a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@j02id OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))))"
 
@@ -370,7 +368,7 @@
         If bolInhaleReceiversInLine Then
             s += ",dbo.p56_getroles_inline(a.p56ID) as _ReceiversInLine"
         End If
-        s += " " & GetSQLPart2()
+        s += " " & GetSQLPart2(myQuery)
         s += " LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig"
         s += " FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID"
         Dim strW As String = GetSQLWHERE(myQuery, pars)
@@ -391,8 +389,8 @@
 
 
     End Function
-    Public Function GetVirtualCount(myQuery As BO.myQueryP56, Optional strCols As String = "") As Integer
-        Dim s As String = "SELECT count(a.p56ID) as Value " & GetSQLPart2(strCols)
+    Public Function GetVirtualCount(myQuery As BO.myQueryP56) As Integer
+        Dim s As String = "SELECT count(a.p56ID) as Value " & GetSQLPart2(myQuery)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -410,7 +408,7 @@
         s += " " & GetSF()
         Return s
     End Function
-    Private Function GetSQLPart2(Optional strCols As String = "") As String
+    Private Function GetSQLPart2(mq As BO.myQueryP56) As String
         Dim s As String = "FROM p56Task a INNER JOIN p57TaskType p57 ON a.p57ID=p57.p57ID"
         s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
         s += " LEFT OUTER JOIN o22Milestone o22 ON a.o22ID=o22.o22ID"
@@ -419,10 +417,21 @@
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID"
-        If strCols <> "" And strCols.IndexOf("p31.") > 0 Then
-            s += " LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig"
-            s += " FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID"
+        If Not mq Is Nothing Then
+            With mq
+                If Not String.IsNullOrEmpty(.MG_GridSqlColumns) Then
+                    If .MG_GridSqlColumns.IndexOf("p31.") > 0 Then
+                        s += " LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig"
+                        s += " FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID"
+                    End If
+                End If
+                
+                If .MG_AdditionalSqlFROM <> "" Then
+                    s += " " & .MG_AdditionalSqlFROM
+                End If
+            End With
         End If
+        
         Return s
     End Function
 

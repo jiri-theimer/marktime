@@ -64,8 +64,9 @@ Public Class p91_subgrid
         End If
 
         Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP91, cJ74, CInt(Me.cbxPaging.SelectedValue), False, False, False)
-
+        Dim strAddSqlFrom As String = ""
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP91, cJ74, CInt(Me.cbxPaging.SelectedValue), False, False, False, , , , strAddSqlFrom)
+        Me.hidFrom.Value = strAddSqlFrom
         'With Me.cbxGroupBy.SelectedItem
         '    SetupGrouping(.Value, .Text)
         'End With
@@ -94,7 +95,7 @@ Public Class p91_subgrid
         Dim mq As New BO.myQueryP91
         InhaleMyQueryP91(mq)
 
-        Dim dt As DataTable = Factory.p91InvoiceBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+        Dim dt As DataTable = Factory.p91InvoiceBL.GetGridDataSource(mq)
 
         ''Dim bolGroupByCurrency As Boolean = False
         ''If gridP91.radGridOrig.MasterTableView.GroupByExpressions.Count = 0 And dt.Rows.Count > 0 Then
@@ -150,6 +151,8 @@ Public Class p91_subgrid
             End Select
             .DateFrom = period1.DateFrom
             .DateUntil = period1.DateUntil
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_AdditionalSqlFROM = Me.hidFrom.Value
             '.QuickQuery = Me.CurrentQuickQuery
 
 

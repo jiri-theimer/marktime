@@ -491,6 +491,15 @@ Partial Public Class j02_record
     Protected WithEvents j02TimesheetEntryDaysBackLimit As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''j02TimesheetEntryDaysBackLimit_p34IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02TimesheetEntryDaysBackLimit_p34IDs As Global.UI.datacombo
+
+    '''<summary>
     '''lblj02RobotAddress control.
     '''</summary>
     '''<remarks>

@@ -5,19 +5,19 @@
         _curUser = ServiceUser
     End Sub
     Public Overloads Function Load(intPID As Integer) As BO.p28Contact
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p28ID=@p28id"
 
         Return _cDB.GetRecord(Of BO.p28Contact)(s, New With {.p28id = intPID})
     End Function
     Public Function LoadMyLastCreated() As BO.p28Contact
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p28UserInsert=@mylogin ORDER BY a.p28ID DESC"
 
         Return _cDB.GetRecord(Of BO.p28Contact)(s, New With {.mylogin = _curUser.j03Login})
     End Function
     Public Function LoadByRegID(strRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("regid", strRegID, DbType.String)
         s += " WHERE a.p28RegID LIKE @regid"
         If intP28ID_Exclude <> 0 Then
@@ -28,7 +28,7 @@
         Return _cDB.GetRecord(Of BO.p28Contact)(s, pars)
     End Function
     Public Function LoadByVatID(strVatID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("vatid", strVatID, DbType.String)
         s += " WHERE a.p28VatID LIKE @vatid"
         If intP28ID_Exclude <> 0 Then
@@ -38,7 +38,7 @@
         Return _cDB.GetRecord(Of BO.p28Contact)(s, pars)
     End Function
     Public Function LoadBySupplierID(strRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("supplierid", strRegID, DbType.String)
         s += " WHERE a.p28SupplierID LIKE @supplierid"
         If intP28ID_Exclude <> 0 Then
@@ -48,13 +48,13 @@
         Return _cDB.GetRecord(Of BO.p28Contact)(s, pars)
     End Function
     Public Function LoadByExternalPID(strExternalPID As String) As BO.p28Contact
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("externalpid", strExternalPID, DbType.String)
         s += " WHERE a.p28ExternalPID LIKE @externalpid"
         Return _cDB.GetRecord(Of BO.p28Contact)(s, pars)
     End Function
     Public Function LoadByPersonBirthRegID(strBirthRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("p28Person_BirthRegID", strBirthRegID, DbType.String)
         s += " WHERE a.p28Person_BirthRegID LIKE @p28Person_BirthRegID"
         If intP28ID_Exclude <> 0 Then
@@ -64,7 +64,7 @@
         Return _cDB.GetRecord(Of BO.p28Contact)(s, pars)
     End Function
     Public Function LoadByImapRobotAddress(strRobotAddress As String) As BO.p28Contact
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p28RobotAddress LIKE @robotkey"
 
         Return _cDB.GetRecord(Of BO.p28Contact)(s, New With {.robotkey = strRobotAddress})
@@ -309,10 +309,10 @@
     End Function
 
     Public Function GetList(myQuery As BO.myQueryP28) As IEnumerable(Of BO.p28Contact)
-        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & " " & GetSQLPart2(myQuery)
         If myQuery.MG_SelectPidFieldOnly Then
             'SQL SELECT klauzule bude plnit pouze hodnotu primárního klíče
-            s = "SELECT a.p28ID as _pid " & GetSQLPart2()
+            s = "SELECT a.p28ID as _pid " & GetSQLPart2(myQuery)
         End If
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
@@ -334,29 +334,26 @@
         Return _cDB.GetList(Of BO.p28Contact)(s, pars)
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP28, strGroupField As String) As DataTable
-        Dim s As String = "", strAdditionalFROM As String = ""
-        If strCols.IndexOf("||") > 0 Then
-            's výčtem sloupců se předává i klauzule FROM
-            strAdditionalFROM = " " & Split(strCols, "||")(1)
-            strCols = Split(strCols, "||")(0)
-        End If
-        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Select Case strGroupField
-                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                Case Else
-                    strCols += "," & strGroupField
-            End Select
-        End If
-        strCols += ",a.p28ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p28ValidFrom AND a.p28ValidUntil THEN 0 else 1 END) as IsClosed,a.p28IsDraft as IsDraft"
-
+    Public Function GetGridDataSource(myQuery As BO.myQueryP28) As DataTable
+        Dim s As String = ""
+        With myQuery
+            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                Select Case .MG_GridGroupByField
+                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                    Case Else
+                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                End Select
+            End If
+            .MG_GridSqlColumns += ",a.p28ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p28ValidFrom AND a.p28ValidUntil THEN 0 else 1 END) as IsClosed,a.p28IsDraft as IsDraft"
+        End With
+       
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
-            If .MG_SelectPidFieldOnly Then strCols = "a.p28ID as pid"
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.p28ID as pid"
             Dim strORDERBY As String = .MG_SortString
-            If strGroupField <> "" Then
-                Dim strPrimarySortField As String = strGroupField
+            If .MG_GridGroupByField <> "" Then
+                Dim strPrimarySortField As String = .MG_GridGroupByField
                 If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
                 If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
                     strORDERBY = strPrimarySortField
@@ -369,7 +366,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2() & strAdditionalFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
                 If strW <> "" Then s += " WHERE " & strW
 
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -378,7 +375,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2() & strAdditionalFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -400,7 +397,7 @@
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
         
-        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2()
+        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2(Nothing)
 
         If strWHERE <> "" Then s += " WHERE " & strWHERE
         s += ") SELECT TOP " & intPageSize.ToString & " * FROM rst"
@@ -412,7 +409,7 @@
     End Function
 
     Public Function GetVirtualCount(myQuery As BO.myQueryP28) As Integer
-        Dim s As String = "SELECT count(a.p28ID) as Value " & GetSQLPart2()
+        Dim s As String = "SELECT count(a.p28ID) as Value " & GetSQLPart2(myQuery)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -432,7 +429,7 @@
         s += ",p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner," & bas.RecTail("p28", "a") & ",p28free.*"
         Return s
     End Function
-    Private Function GetSQLPart2() As String
+    Private Function GetSQLPart2(mq As BO.myQueryP28) As String
         Dim s As String = "FROM p28Contact a LEFT OUTER JOIN p29ContactType p29 ON a.p29ID=p29.p29ID"
         s += " LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID"
         s += " LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID"
@@ -441,6 +438,9 @@
         s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID"
+        If Not mq Is Nothing Then
+            If mq.MG_AdditionalSqlFROM <> "" Then s += " " & mq.MG_AdditionalSqlFROM
+        End If
         Return s
     End Function
 

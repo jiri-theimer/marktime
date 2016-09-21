@@ -100,6 +100,7 @@
 <asp:HiddenField ID="hidJ74ID" runat="server" />
 <asp:HiddenField ID="hidDrillDownField" runat="server" />
 <asp:HiddenField ID="hidCols" runat="server" />
+<asp:HiddenField ID="hidFrom" runat="server" />
 
 <script type="text/javascript">
     $(document).ready(function () {

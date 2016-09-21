@@ -228,4 +228,11 @@ Public Class p31Worksheet
 
         Return False
     End Function
+    Public Function IsRecommendedHHMM_Invoiced() As Boolean
+        If Me.p33ID = p33IdENUM.Cas Then
+            If Len(Me.p31Hours_Invoiced.ToString) > 5 Then Return True 'desetinné číslo s velkým počtem desetinných míst
+        End If
+
+        Return False
+    End Function
 End Class

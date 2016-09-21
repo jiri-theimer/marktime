@@ -5,20 +5,20 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer, Optional bolLoadRelation2AllProjects As Boolean = False) As BO.p91Invoice
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p91ID=@p91id"
 
         Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.p91id = intPID})
     End Function
     Public Function LoadByCode(strCode As String) As BO.p91Invoice
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)
 
         s += " WHERE a.p91Code LIKE @code"
        
         Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.code = strCode})
     End Function
     Public Function LoadMyLastCreated() As BO.p91Invoice
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.j02ID_Owner=@j02id_owner ORDER BY a.p91ID DESC"
 
         Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.j02id_owner = _curUser.j02ID})
@@ -305,7 +305,7 @@
 
     Public Function GetList(myQuery As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice)
         Dim s As String = GetSQLPart1(0), pars As New DbParameters
-        s += " " & GetSQLPart2()
+        s += " " & GetSQLPart2(myQuery)
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
             Dim strSort As String = .MG_SortString
@@ -326,29 +326,30 @@
      
         Return _cDB.GetList(Of BO.p91Invoice)(s, pars)
     End Function
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP91, strGroupField As String) As DataTable
-        Dim s As String = "", strAdditionalFROM As String = ""
-        If strCols.IndexOf("||") > 0 Then
-            's výčtem sloupců se předává i klauzule FROM
-            strAdditionalFROM = " " & Split(strCols, "||")(1)
-            strCols = Split(strCols, "||")(0)
-        End If
-        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Select Case strGroupField
-                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                Case Else
-                    strCols += "," & strGroupField
-            End Select
-        End If
-        strCols += ",a.p91ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p91ValidFrom AND a.p91ValidUntil THEN 0 else 1 END) as IsClosed,a.p91IsDraft as IsDraft"
-        strCols += ",a.p91Amount_TotalDue as TotalDue,a.p91Amount_Debt as Debt,a.p91DateMaturity as Maturity,p92.p92InvoiceType as InvoiceType,j27.j27Code as j27Code_Grid"
+    Public Function GetGridDataSource(myQuery As BO.myQueryP91) As DataTable
+        Dim s As String = ""
+        With myQuery
+            If Not (String.IsNullOrEmpty(.MG_GridSqlColumns) Or String.IsNullOrEmpty(.MG_GridGroupByField)) Then
+                If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                    Select Case .MG_GridGroupByField
+                        Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                        Case Else
+                            .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                    End Select
+                End If
+            End If
+            .MG_GridSqlColumns += ",a.p91ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p91ValidFrom AND a.p91ValidUntil THEN 0 else 1 END) as IsClosed,a.p91IsDraft as IsDraft"
+            .MG_GridSqlColumns += ",a.p91Amount_TotalDue as TotalDue,a.p91Amount_Debt as Debt,a.p91DateMaturity as Maturity,p92.p92InvoiceType as InvoiceType,j27.j27Code as j27Code_Grid"
+
+        End With
+        
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
-            If .MG_SelectPidFieldOnly Then strCols = "a.p91ID as pid"
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.p91ID as pid"
             Dim strORDERBY As String = .MG_SortString
-            If strGroupField <> "" Then
-                Dim strPrimarySortField As String = strGroupField
+            If .MG_GridGroupByField <> "" Then
+                Dim strPrimarySortField As String = .MG_GridGroupByField
                 If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
                 If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
                     strORDERBY = strPrimarySortField
@@ -360,7 +361,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2() & strAdditionalFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -369,7 +370,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2() & strAdditionalFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -382,7 +383,7 @@
     Public Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
 
         Dim s As String = GetSQLPart1(0), pars As New DbParameters
-        s += " " & GetSQLPart2()
+        s += " " & GetSQLPart2(myQuery)
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
             Dim strSort As String = .MG_SortString
@@ -407,7 +408,7 @@
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
 
-        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2()
+        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2(Nothing)
 
         If strWHERE <> "" Then s += " WHERE " & strWHERE
         s += ") SELECT TOP " & intPageSize.ToString & " * FROM rst"
@@ -428,7 +429,9 @@
         Return ParseSortExpression(strFilter).Replace("[", "").Replace("]", "")
     End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryP91) As Integer
-        Dim s As String = "SELECT count(a.p91ID) as Value " & GetSQLPart2()
+
+        Dim s As String = "SELECT count(a.p91ID) as Value " & GetSQLPart2(myQuery)
+
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -442,7 +445,8 @@
         ''s += ",sum(case when a.j27ID=2 THEN p91Amount_WithoutVat end) as WithoutVat_CZK,sum(case when a.j27ID=3 THEN p91Amount_WithoutVat end) as WithoutVat_EUR"
         ''s += ",sum(case when a.j27ID=2 THEN p91Amount_Debt end) as Debt_CZK,sum(case when a.j27ID=3 THEN p91Amount_Debt end) as Debt_EUR"
 
-        s += " " & GetSQLPart2()
+        s += " " & GetSQLPart2(myQuery)
+        
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -466,7 +470,7 @@
         s += " " & GetSF()
         Return s
     End Function
-    Private Function GetSQLPart2() As String
+    Private Function GetSQLPart2(mq As BO.myQueryP91) As String
         Dim s As New System.Text.StringBuilder
         s.Append("FROM p91Invoice a INNER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID")
         s.Append(" INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID")
@@ -476,6 +480,10 @@
         s.Append(" LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID")
         s.Append(" LEFT OUTER JOIN j17Country j17 ON a.j17ID=j17.j17ID")
         s.Append(" LEFT OUTER JOIN p91Invoice_FreeField p91free ON a.p91ID=p91free.p91ID")
+        If Not mq Is Nothing Then
+            If mq.MG_AdditionalSqlFROM <> "" Then s.Append(" " & mq.MG_AdditionalSqlFROM)
+        End If
+
         Return s.ToString
     End Function
 

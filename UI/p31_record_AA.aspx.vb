@@ -71,6 +71,9 @@
             p41Name.Text = .p41Name
             p31text.Text = Replace(.p31Text, vbCrLf, "<br>")
             p31value_orig.Text = BO.BAS.FN(.p31Value_Orig)
+            If .p33ID = BO.p33IdENUM.Cas Then
+                p31value_orig.Text += " (" & .p31HHMM_Orig & ")"
+            End If
 
             If .p56ID <> 0 Then
                 Me.Task.Text = .p56Name
@@ -110,10 +113,17 @@
                 If .p72ID_AfterApprove = BO.p72IdENUM._NotSpecified Then Me.p72img.Visible = False
 
                 Me.value_approved_billing.Text = BO.BAS.FN(.p31Value_Approved_Billing)
+                If .p33ID = BO.p33IdENUM.Cas Then
+                    Me.value_approved_billing.Text += " (" & .p31HHMM_Approved_Billing & ")"
+                End If
                 If .p31Value_Approved_Billing <> .p31Value_Orig Then
                     lblKorekceCaption.Visible = True
                     imgKorekce.Visible = True
                     value_korekce.Text = BO.BAS.FN(.p31Value_Approved_Billing - .p31Value_Orig)
+                    If .p33ID = BO.p33IdENUM.Cas Then
+                        Dim cT As New BO.clsTime
+                        value_korekce.Text += " (" & cT.ShowAsHHMM(CDbl(.p31Value_Approved_Billing - .p31Value_Orig).ToString) & ")"
+                    End If
                     If cRec.p31Value_Orig > .p31Value_Approved_Billing Then
                         imgKorekce.ImageUrl = "Images/correction_down.gif"
                     Else

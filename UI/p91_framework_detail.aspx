@@ -638,6 +638,7 @@
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
     <asp:HiddenField ID="hidIsBin" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />
+    <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 

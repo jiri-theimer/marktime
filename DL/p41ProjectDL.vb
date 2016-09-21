@@ -5,25 +5,25 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.p41Project
-        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p41ID=@p41id"
 
         Return _cDB.GetRecord(Of BO.p41Project)(s, New With {.p41id = intPID})
     End Function
     Public Function LoadMyLastCreated() As BO.p41Project
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p41UserInsert=@mylogin ORDER BY a.p41ID DESC"
 
         Return _cDB.GetRecord(Of BO.p41Project)(s, New With {.mylogin = _curUser.j03Login})
     End Function
     Public Function LoadByImapRobotAddress(strRobotAddress As String) As BO.p41Project
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p41RobotAddress LIKE @robotkey"
 
         Return _cDB.GetRecord(Of BO.p41Project)(s, New With {.robotkey = strRobotAddress})
     End Function
     Public Function LoadByExternalPID(strExternalPID As String) As BO.p41Project
-        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p41ExternalPID LIKE @externalpid"
         Return _cDB.GetRecord(Of BO.p41Project)(s, New With {.externalpid = strExternalPID})
     End Function
@@ -168,10 +168,10 @@
     End Function
 
     Public Function GetList(myQuery As BO.myQueryP41) As IEnumerable(Of BO.p41Project)
-        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & " " & GetSQLPart2()
+        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & " " & GetSQLPart2(myQuery)
         If myQuery.MG_SelectPidFieldOnly Then
             'SQL SELECT klauzule bude plnit pouze hodnotu primárního klíče
-            s = "SELECT a.p41ID as _pid " & GetSQLPart2()
+            s = "SELECT a.p41ID as _pid " & GetSQLPart2(myQuery)
         End If
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
@@ -194,31 +194,27 @@
         Return _cDB.GetList(Of BO.p41Project)(s, pars)
     End Function
 
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryP41, strGroupField As String) As DataTable
-        Dim s As String = "", strAdditionalFROM As String = ""
-        If strCols.IndexOf("||") > 0 Then
-            's výčtem sloupců se předává i klauzule FROM
-            strAdditionalFROM = " " & Split(strCols, "||")(1)
-            strCols = Split(strCols, "||")(0)
-        End If
-
-        If strCols.ToLower.IndexOf(strGroupField.ToLower) < 0 And strGroupField <> "" Then
-            Select Case strGroupField
-                Case "Client" : strCols += ",p28client.p28Name as Client"
-                Case "Owner" : strCols += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                Case Else
-                    strCols += "," & strGroupField
-            End Select
-        End If
-        strCols += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft"
+    Public Function GetGridDataSource(myQuery As BO.myQueryP41) As DataTable
+        Dim s As String = ""
+        With myQuery
+            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                Select Case .MG_GridGroupByField
+                    Case "Client" : .MG_GridSqlColumns += ",p28client.p28Name as Client"
+                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                    Case Else
+                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                End Select
+            End If
+            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft"
+        End With
 
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
-            If .MG_SelectPidFieldOnly Then strCols = "a.p41ID as pid"
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.p41ID as pid"
             Dim strORDERBY As String = .MG_SortString
-            If strGroupField <> "" Then
-                Dim strPrimarySortField As String = strGroupField
+            If .MG_GridGroupByField <> "" Then
+                Dim strPrimarySortField As String = .MG_GridGroupByField
                 If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
                 If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
@@ -231,7 +227,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & strCols & " " & GetSQLPart2() & strAdditionalFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
@@ -240,7 +236,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & strCols & " " & GetSQLPart2() & strAdditionalFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2(myQuery)
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
@@ -264,7 +260,7 @@
     Private Function GetSQL_OFFSET(strWHERE As String, strORDERBY As String, intPageSize As Integer, intCurrentPageIndex As Integer, ByRef pars As DL.DbParameters) As String
         Dim intStart As Integer = (intCurrentPageIndex) * intPageSize
 
-        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2()
+        Dim s As String = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & GetSF() & " " & GetSQLPart2(Nothing)
 
         If strWHERE <> "" Then s += " WHERE " & strWHERE
         s += ") SELECT TOP " & intPageSize.ToString & " * FROM rst"
@@ -450,7 +446,7 @@
     End Function
 
     Public Function GetVirtualCount(myQuery As BO.myQueryP41) As Integer
-        Dim s As String = "SELECT count(a.p41ID) as Value " & GetSQLPart2()
+        Dim s As String = "SELECT count(a.p41ID) as Value " & GetSQLPart2(myQuery)
         Dim pars As New DL.DbParameters
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
@@ -472,7 +468,7 @@
         Return s
 
     End Function
-    Private Function GetSQLPart2() As String
+    Private Function GetSQLPart2(mq As BO.myQueryP41) As String
         Dim s As String = "FROM p41Project a INNER JOIN p42ProjectType p42 ON a.p42ID=p42.p42ID"
         s += " LEFT OUTER JOIN p28Contact p28client ON a.p28ID_Client=p28client.p28ID"
         s += " LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"
@@ -484,6 +480,9 @@
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN j18Region j18 ON a.j18ID=j18.j18ID"
         s += " LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID"
+        If Not mq Is Nothing Then
+            If mq.MG_AdditionalSqlFROM <> "" Then s += " " & mq.MG_AdditionalSqlFROM
+        End If
         Return s
 
     End Function

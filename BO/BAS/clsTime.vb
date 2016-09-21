@@ -26,13 +26,11 @@
     Public Function ShowAsDec(ByVal strTime As String, Optional ByVal dblRetWithPrec As Double = 0, Optional ByVal lngMinTimeUnit As Integer = 0) As Double
         'strTime je ve formátu hh:mm
         'fce vrací čas z výrazu hh:mm na decadické číslo
-        Dim lngSec As Integer, strDec As String = ""
-        lngSec = ConvertTimeToSeconds(strTime)
+        Dim lngSec As Integer = ConvertTimeToSeconds(strTime)
         If lngMinTimeUnit > 0 Then
             lngSec = RoundSeconds(lngSec, lngMinTimeUnit)
         End If
-        strDec = GetDecTimeFromSeconds(lngSec, dblRetWithPrec)
-        ShowAsDec = strDec
+        Return CDbl(lngSec) / 60 / 60
     End Function
 
     Public Function RoundSeconds(ByVal lngSeconds As Integer, ByVal lngMinTimeSecUnit As Integer) As Integer
@@ -63,7 +61,7 @@
         If lngMinTimeUnit > 0 Then
             lngSec = RoundSeconds(lngSec, lngMinTimeUnit)
         End If
-        strHHMM = GetTimeFromSeconds(lngSec)
+        strHHMM = GetTimeFromSeconds(CDbl(lngSec))
         Return strHHMM
         'ShowAsHHMM = Left(strHHMM, 5)
     End Function

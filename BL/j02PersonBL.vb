@@ -8,7 +8,7 @@
     Function LoadByExternalPID(strExternalPID As String) As BO.j02Person
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryJ02) As IEnumerable(Of BO.j02Person)
-    Function GetGridDataSource(strCols As String, myQuery As BO.myQueryJ02, strGroupField As String) As DataTable
+    Function GetGridDataSource(myQuery As BO.myQueryJ02) As DataTable
     Function GetList_x90(intPID As Integer, datFrom As Date, datUntil As Date) As IEnumerable(Of BO.x90EntityLog)
     Function GetList_j02_join_j11(j02ids As List(Of Integer), j11ids As List(Of Integer)) As IEnumerable(Of BO.j02Person)
     Function GetList_j11(intJ02ID As Integer) As IEnumerable(Of BO.j11Team)
@@ -51,7 +51,9 @@ Class j02PersonBL
                     _Error = "Jiná osoba (" & c.FullNameAsc & ") již má zavedenu tuto e-mail adresu." : Return False
                 End If
             End If
-           
+            If .j02TimesheetEntryDaysBackLimit = 0 And .j02TimesheetEntryDaysBackLimit_p34IDs <> "" Then
+                _Error = "Omezení zpětného zapisování hodin není zadáno správně." : Return False
+            End If
         End With
 
         Return True
@@ -112,7 +114,7 @@ Class j02PersonBL
     Public Function GetList_j11(intJ02ID As Integer) As IEnumerable(Of BO.j11Team) Implements Ij02PersonBL.GetList_j11
         Return _cDL.GetList_j11(intJ02ID)
     End Function
-    Public Function GetGridDataSource(strCols As String, myQuery As BO.myQueryJ02, strGroupField As String) As DataTable Implements Ij02PersonBL.GetGridDataSource
-        Return _cDL.GetGridDataSource(strCols, myQuery, strGroupField)
+    Public Function GetGridDataSource(myQuery As BO.myQueryJ02) As DataTable Implements Ij02PersonBL.GetGridDataSource
+        Return _cDL.GetGridDataSource(myQuery)
     End Function
 End Class

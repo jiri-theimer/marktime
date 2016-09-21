@@ -66,8 +66,9 @@ Public Class p56_subgrid
         If cJ74.j74ColumnNames.IndexOf("ReceiversInLine") > 0 Then Me.hidReceiversInLine.Value = "1" Else Me.hidReceiversInLine.Value = ""
         If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
         Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), False, True, True)
-
+        Dim strAddSqlFrom As String = ""
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), False, True, True, , , , strAddSqlFrom)
+        Me.hidFrom.Value = strAddSqlFrom
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
@@ -102,6 +103,9 @@ Public Class p56_subgrid
                 mq.Closed = BO.BooleanQueryMode.TrueQuery
         End Select
         With mq
+            .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_AdditionalSqlFROM = Me.hidFrom.Value
             .MG_SortString = gridP56.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -110,7 +114,7 @@ Public Class p56_subgrid
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            
+
         End With
     End Sub
     Private Sub gridP56_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridP56.NeedDataSource
@@ -142,7 +146,7 @@ Public Class p56_subgrid
         ''    End Select
         ''    gridP56.DataSource = lis
         ''End If
-        Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue)
+        Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(mq)
 
         If dt Is Nothing Then
             Return
@@ -162,7 +166,7 @@ Public Class p56_subgrid
                 mqAll.TopRecordsOnly = 0
                 mqAll.MG_SelectPidFieldOnly = True
                 InhaleTasksQuery(mqAll)
-                Dim dtAll As DataTable = Me.Factory.p56TaskBL.GetGridDataSource("", mqAll, Me.cbxGroupBy.SelectedValue)
+                Dim dtAll As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(mqAll)
                 Dim x As Integer, intNewPageIndex As Integer = 0
                 For Each dbRow As DataRow In dtAll.Rows
                     x += 1
@@ -172,7 +176,9 @@ Public Class p56_subgrid
                     If dbRow.Item("pid") = Me.DefaultSelectedPID Then
                         gridP56.radGridOrig.CurrentPageIndex = intNewPageIndex
                         mq.MG_CurrentPageIndex = intNewPageIndex
-                        dt = Me.Factory.p56TaskBL.GetGridDataSource(hidCols.Value, mq, Me.cbxGroupBy.SelectedValue) 'nový zdroj pro grid
+                        mq.MG_GridSqlColumns = Me.hidCols.Value
+                        mq.MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
+                        dt = Me.Factory.p56TaskBL.GetGridDataSource(mq) 'nový zdroj pro grid
                         Exit For
                     End If
                 Next
@@ -232,8 +238,9 @@ Public Class p56_subgrid
 
         Dim mq As New BO.myQueryP56
         InhaleTasksQuery(mq)
+        mq.MG_GridGroupByField = ""
 
-        Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(Me.hidCols.Value, mq, "")
+        Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(mq)
 
         Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
         If strFileName = "" Then

@@ -281,7 +281,9 @@ Public Class p91_framework_detail
                     Me.CurrentJ74ID = cJ74.PID
                 End If
             End If
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), True, True)
+            Dim strF As String = ""
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), True, True, , , , , strF)
+            Me.hidFrom.Value = strF
         End With
 
 
@@ -389,10 +391,12 @@ Public Class p91_framework_detail
             .MG_PageSize = CInt(Me.cbxPaging.SelectedValue)
             .MG_CurrentPageIndex = grid1.radGridOrig.MasterTableView.CurrentPageIndex
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
-
+            .MG_GridGroupByField = strGroupField
+            .MG_GridSqlColumns = hidCols.Value & ",a.p41ID as p41IDX,p41.p41Name as p41NameX"
+            .MG_AdditionalSqlFROM = hidFrom.Value
         End With
 
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(hidCols.Value & ",a.p41ID as p41IDX,p41.p41Name as p41NameX", mq, strGroupField)
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(mq)
         If dt Is Nothing Then
             Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
             Return

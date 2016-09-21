@@ -1,6 +1,6 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
-    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "") As String
+    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "") As String
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
         With grid
@@ -102,9 +102,12 @@ Public Class basUIMT
 
         End With
 
-        Dim strRet As String = String.Join(",", lisSqlSEL)
-        If lisSqlFROM.Count > 0 Then strRet += "||" & String.Join(" ", lisSqlFROM)
-        Return strRet
+        If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM)
+        Return String.Join(",", lisSqlSEL)
+
+        'Dim strRet As String = String.Join(",", lisSqlSEL)
+        'If lisSqlFROM.Count > 0 Then strRet += "||" & String.Join(" ", lisSqlFROM)
+        'Return strRet
     End Function
 
     Public Shared Sub MakeDockZonesUserFriendly(rdl As RadDockLayout, bolLockedInteractivity As Boolean)
@@ -629,6 +632,8 @@ Public Class basUIMT
         Dim mqP41 As New BO.myQueryP41
         mqP41.PIDs = p41ids
         mqP41.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
-        Return factory.p41ProjectBL.GetGridDataSource(strCols, mqP41, strGroupField)
+        mqP41.MG_GridSqlColumns = strCols
+        mqP41.MG_GridGroupByField = strGroupField
+        Return factory.p41ProjectBL.GetGridDataSource(mqP41)
     End Function
 End Class

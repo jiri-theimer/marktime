@@ -1550,7 +1550,7 @@ BEGIN
  if @p28id is null
   set @p28code='????'+convert(varchar(10),@pid)
 
- select @pocet=count(*) FROM p41Project WHERE p28ID_Client=@p28id
+ select @pocet=count(*) FROM p41Project WHERE p28ID_Client=@p28id and p41ID<>@pid
 
  set @pocet=isnull(@pocet,0)+1
  set @suffix=right('000'+convert(varchar(10),@pocet),3)
@@ -7454,9 +7454,10 @@ FROM x35GlobalParam WHERE x35Key LIKE 'j27ID_Domestic' AND ISNUMERIC(x35Value)=1
 
 
 declare @islocked bit,@p34id int,@isplan bit,@person nvarchar(300),@j07id_rec int,@p32IsTextRequired bit,@p32name nvarchar(200),@p34IncomeStatementFlag int
-declare @p32Value_Maximum float,@p32Value_Minimum float,@j02TimesheetEntryDaysBackLimit int
+declare @p32Value_Maximum float,@p32Value_Minimum float
 
-select @person=j02LastName+' '+isnull(j02FirstName,''),@j07id_rec=isnull(j07id,-1),@j02TimesheetEntryDaysBackLimit=j02TimesheetEntryDaysBackLimit from j02Person where j02ID=@j02id_rec
+select @person=j02LastName+' '+isnull(j02FirstName,''),@j07id_rec=isnull(j07id,-1) from j02Person where j02ID=@j02id_rec
+
 
 select @p34id=a.p34id,@p33id=b.p33id,@isplan=b.p34iscapacityplan,@p32IsTextRequired=a.p32IsTextRequired,@p32name=a.p32Name,@p34IncomeStatementFlag=b.p34IncomeStatementFlag
 ,@p32Value_Maximum=isnull(a.p32Value_Maximum,0),@p32Value_Minimum=isnull(a.p32Value_Minimum,0)
@@ -7493,12 +7494,40 @@ if @p48id is not null and @p33id<>1
   return
  end
 
+
+declare @j02TimesheetEntryDaysBackLimit int,@j02TimesheetEntryDaysBackLimit_p34IDs varchar(100)
+select @j02TimesheetEntryDaysBackLimit=j02TimesheetEntryDaysBackLimit,@j02TimesheetEntryDaysBackLimit_p34IDs=j02TimesheetEntryDaysBackLimit_p34IDs FROM j02Person WHERE j02ID IN (SELECT j02ID FROM j03User WHERE j03ID=@j03id_sys)
+
+
+if @p33id=1 AND @j02TimesheetEntryDaysBackLimit=999 and @p31date<dbo.get_today()	---mùže zapisovat zpìtnì pouze v aktuální týden
+ begin
+  SET DATEFIRST 1
+  declare @datPondeli datetime,@datNedele datetime
+  set @datNedele= DATEADD(DAY , 7-DATEPART(WEEKDAY,GETDATE()),GETDATE())
+  set @datPondeli=CAST(DATEADD(DAY,-6,@datNedele) as date)
+  set @datNedele=CAST(@datNedele as date)
+  set @datNedele=DATEADD(MINUTE,59,DATEADD(HOUR,23,@datNedele))  
+  
+
+  if @p31date NOT BETWEEN @datPondeli AND @datNedele
+   begin
+    set @err='Zpìtný zápis hodin máte povolený pouze pro aktuální týden.'
+	return
+   end
+ end
+
 if @p33id=1 and isnull(@j02TimesheetEntryDaysBackLimit,0)>0 and @p31date<dbo.get_today()
  begin
   if DATEDIFF(day,@p31date,dbo.get_today())>@j02TimesheetEntryDaysBackLimit
-   set @err='Máte povoleno zapisovat èasové úkony maximálnì ['+convert(varchar(10),@j02TimesheetEntryDaysBackLimit)+'] dní dozadu.'
-  return
+   begin
+    if @j02TimesheetEntryDaysBackLimit_p34IDs is null OR exists(select * FROM dbo.SplitString(@j02TimesheetEntryDaysBackLimit_p34IDs,',') WHERE s=convert(varchar(10),@p34id))
+	 begin
+      set @err='Máte povoleno zapisovat èasové úkony maximálnì ['+convert(varchar(10),@j02TimesheetEntryDaysBackLimit)+'] dní dozadu.'
+      return
+	 end
+   end	 
  end
+ 
 
 ---test sazby DPH------------
 if @p33id=5 ----testuje se pouze money sešit s plným rozpisem DPH
@@ -10159,6 +10188,9 @@ where p91ID=@pid
 if exists(select p94ID FROM p94Invoice_Payment where p91ID=@pid)
   delete from p94Invoice_Payment where p91id=@pid
 
+if exists(select p81ID FROM p81InvoiceAmount WHERE p91ID=@pid)
+ delete from p81InvoiceAmount WHERE p91ID=@pid
+
 if exists(select p96ID FROM p96Invoice_ExchangeRate where p91ID=@pid)
   delete from p96Invoice_ExchangeRate where p91id=@pid
 
@@ -10741,6 +10773,14 @@ select @p91vatrate_low=dbo.p91_get_vatrate(2,@j27id_dest,@j17id,@datSupply)
 select @p91vatrate_standard=dbo.p91_get_vatrate(3,@j27id_dest,@j17id,@datSupply)
 select @p91vatrate_special=dbo.p91_get_vatrate(4,@j27id_dest,@j17id,@datSupply)
 
+if exists(select p81ID FROM p81InvoiceAmount WHERE p91ID=@p91id)
+ DELETE FROM p81InvoiceAmount WHERE p91ID=@p91id
+
+INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat) SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2) FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID WHERE a.p91ID=@p91id GROUP BY p32.p95ID,a.p31VatRate_Invoiced
+
+update p81InvoiceAmount set p81Amount_Vat=round(p81Amount_WithoutVat*p81VatRate/100,2) WHERE p91ID=@p91id
+
+update p81InvoiceAmount set p81Amount_WithVat=p81Amount_WithoutVat+p81Amount_Vat WHERE p91ID=@p91id
 
 if @p92invoicetype=2	--dobropis
  begin  ---u dobropisu brát sazby DPH z pùvodní faktury   
@@ -10749,26 +10789,26 @@ if @p92invoicetype=2	--dobropis
    p91Invoice WHERE p91ID in (select p91ID_CreditNoteBind FROM p91invoice where p91id=@p91id)
  end
 
-select @p91amount_withoutvat_none=sum(p31Amount_WithoutVat_Invoiced)
-FROM p31worksheet where p91id=@p91id and p31VatRate_Invoiced=0
+select @p91amount_withoutvat_none=sum(p81Amount_WithoutVat)
+FROM p81InvoiceAmount where p91id=@p91id and p81VatRate=0
 
 if @p91vatrate_low>0
  begin
-  select @p91amount_withoutVat_low=sum(p31Amount_WithoutVat_Invoiced),@p91amount_withVat_low=sum(p31Amount_WithVat_Invoiced),@p91amount_Vat_low=sum(p31Amount_Vat_Invoiced)
-  FROM p31worksheet where p91id=@p91id and p31VatRate_Invoiced=@p91vatrate_low
+  select @p91amount_withoutVat_low=sum(p81Amount_WithoutVat),@p91amount_withVat_low=sum(p81Amount_WithVat),@p91amount_Vat_low=sum(p81Amount_Vat)
+  FROM p81InvoiceAmount where p91id=@p91id and p81VatRate=@p91vatrate_low
  end
 
 if @p91vatrate_standard>0
  begin
-  select @p91amount_withoutVat_standard=sum(p31Amount_WithoutVat_Invoiced),@p91amount_withVat_standard=sum(p31Amount_WithVat_Invoiced),@p91amount_Vat_standard=sum(p31Amount_Vat_Invoiced)
-  FROM p31worksheet where p91id=@p91id and p31VatRate_Invoiced=@p91vatrate_standard
+  select @p91amount_withoutVat_standard=sum(p81Amount_WithoutVat),@p91amount_withVat_standard=sum(p81Amount_WithVat),@p91amount_Vat_standard=sum(p81Amount_Vat)
+  FROM p81InvoiceAmount where p91id=@p91id and p81VatRate=@p91vatrate_standard
  end
 
 
 if @p91vatrate_special>0
  begin
-  select @p91amount_withoutVat_special=sum(p31Amount_WithoutVat_Invoiced),@p91amount_withVat_special=sum(p31Amount_WithVat_Invoiced),@p91amount_Vat_special=sum(p31Amount_Vat_Invoiced)
-  FROM p31worksheet where p91id=@p91id and p31VatRate_Invoiced=@p91vatrate_special
+  select @p91amount_withoutVat_special=sum(p81Amount_WithoutVat),@p91amount_withVat_special=sum(p81Amount_WithVat),@p91amount_Vat_special=sum(p81Amount_Vat)
+  FROM p81InvoiceAmount where p91id=@p91id and p81VatRate=@p91vatrate_special
  end
 
 set @p91amount_withoutvat_none=ROUND(@p91amount_withoutvat_none,2)

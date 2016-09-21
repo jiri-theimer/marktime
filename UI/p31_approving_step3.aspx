@@ -309,6 +309,7 @@
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />
+    <asp:HiddenField ID="hidFrom" runat="server" />
 
 
     <telerik:RadWindow ID="okno1" runat="server" Modal="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png">

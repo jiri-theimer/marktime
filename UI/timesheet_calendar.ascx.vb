@@ -124,10 +124,16 @@ Public Class timesheet_calendar
                 e.Cell.Text += "<div class='calcell' title='" & strHoliday & "'><img src='Images/holiday.png' border=0></div>"
             End If
         Else
+            Dim s As String = ""
+            If lis(0).Hours <> 0 Then
+                s = BO.BAS.FN(lis(0).Hours)
+            End If
+            If lis(0).Moneys > 0 Then s += "<b style='color:blue;'>x</b>" '<span style='color:green;font-weight:bold;'>x</span>
+            If lis(0).Pieces > 0 Then s += "<b style='color:green;'>x</b>" '<span style='color:green;font-weight:bold;'>x</span>
             If strHoliday = "" Then
-                e.Cell.Text += "<div class='calcell'>" & BO.BAS.FN(lis(0).Hours) & "</div>"
+                e.Cell.Text += "<div class='calcell'>" & s & "</div>"
             Else
-                e.Cell.Text += "<div class='calcell' style='white-space:nowrap;' title='" & strHoliday & "'>" & BO.BAS.FN(lis(0).Hours) & "<img src='Images/holiday.png' border=0></div>"
+                e.Cell.Text += "<div class='calcell' style='white-space:nowrap;' title='" & strHoliday & "'>" & s & "<img src='Images/holiday.png' border=0></div>"
             End If
 
         End If

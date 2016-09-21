@@ -198,33 +198,36 @@
             </asp:Panel>
         </telerik:RadPageView>
         <telerik:RadPageView ID="other" runat="server">
-            <table cellpadding="5" cellspacing="2">
-                <tr>
-                    <td>
-                        <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl" ></asp:Label>
-                    </td>
-                    <td>
-                        <asp:DropDownList ID="j02TimesheetEntryDaysBackLimit" runat="server">
+            <fieldset>
+                <legend>Omezení zpětně zapisovat hodiny</legend>
+
+                <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl" ></asp:Label>
+                <asp:DropDownList ID="j02TimesheetEntryDaysBackLimit" runat="server">
                             <asp:ListItem Value="" Text="Bez omezení"></asp:ListItem>
-                            <asp:ListItem Value="1" Text="1 den"></asp:ListItem>
-                            <asp:ListItem Value="2" Text="2 dny"></asp:ListItem>
-                            <asp:ListItem Value="3" Text="3 dny"></asp:ListItem>
-                            <asp:ListItem Value="4" Text="4 dny"></asp:ListItem>
-                            <asp:ListItem Value="5" Text="5 dní"></asp:ListItem>
-                            <asp:ListItem Value="6" Text="6 dní"></asp:ListItem>
-                            <asp:ListItem Value="7" Text="7 dní"></asp:ListItem>
-                            <asp:ListItem Value="8" Text="8 dní"></asp:ListItem>
-                            <asp:ListItem Value="9" Text="9 dní"></asp:ListItem>
-                            <asp:ListItem Value="10" Text="10 dní"></asp:ListItem>
-                            <asp:ListItem Value="14" Text="14 dní"></asp:ListItem>
-                            <asp:ListItem Value="20" Text="20 dní"></asp:ListItem>
-                            <asp:ListItem Value="30" Text="30 dní"></asp:ListItem>
+                            <asp:ListItem Value="999" Text="Povolen pouze aktuální týden"></asp:ListItem>
+                            <asp:ListItem Value="1" Text="-1 den"></asp:ListItem>
+                            <asp:ListItem Value="2" Text="-2 dny"></asp:ListItem>
+                            <asp:ListItem Value="3" Text="-3 dny"></asp:ListItem>
+                            <asp:ListItem Value="4" Text="-4 dny"></asp:ListItem>
+                            <asp:ListItem Value="5" Text="-5 dní"></asp:ListItem>
+                            <asp:ListItem Value="6" Text="-6 dní"></asp:ListItem>
+                            <asp:ListItem Value="7" Text="-7 dní"></asp:ListItem>
+                            <asp:ListItem Value="8" Text="-8 dní"></asp:ListItem>
+                            <asp:ListItem Value="9" Text="-9 dní"></asp:ListItem>
+                            <asp:ListItem Value="10" Text="-10 dní"></asp:ListItem>
+                            <asp:ListItem Value="14" Text="-14 dní"></asp:ListItem>
+                            <asp:ListItem Value="20" Text="-20 dní"></asp:ListItem>
+                            <asp:ListItem Value="30" Text="-30 dní"></asp:ListItem>
                         </asp:DropDownList>
-                    </td>
-                    <td>
-                        <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony</span>
-                    </td>
-                </tr>
+                <div style="margin-top:10px;">
+                    <label class="lbl">Výběr časových sešitů</label>
+                    <uc:datacombo ID="j02TimesheetEntryDaysBackLimit_p34IDs" DataValueField="pid" DataTextField="p34Name" runat="server" AllowCheckboxes="true" Width="200px" />
+                </div>
+                <br />
+                <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony. Omezení se vztahuje na osobu zapisovače úkonu, nikoliv na osobu záznamu úkonu.</span>
+            </fieldset>
+            <table cellpadding="5" cellspacing="2">
+                
                 <tr>
                     <td>
                         <asp:Label ID="lblj02RobotAddress" runat="server" Text="Adresa pro IMAP robota:" CssClass="lbl" meta:resourcekey="lblj02RobotAddress"></asp:Label>

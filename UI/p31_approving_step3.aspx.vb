@@ -268,7 +268,9 @@ Public Class p31_approving_step3
                     Me.CurrentJ74ID = cJ74.PID
                 End If
             End If
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, True)
+            Dim strF As String = ""
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, True, , , , , strF)
+            Me.hidFrom.Value = strF
         End With
 
         If Not Page.IsPostBack Then
@@ -338,7 +340,7 @@ Public Class p31_approving_step3
 
         ''grid1.DataSource = lis
 
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(Me.hidCols.Value, mq, opgGroupBy.SelectedValue, ViewState("guid"))
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(mq, ViewState("guid"))
         If dt Is Nothing Then
             Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
             Return
@@ -361,7 +363,9 @@ Public Class p31_approving_step3
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
         With mq
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql
-
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_AdditionalSqlFROM = Me.hidFrom.Value
+            .MG_GridGroupByField = opgGroupBy.SelectedValue
         End With
     End Sub
 

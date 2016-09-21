@@ -300,4 +300,13 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
 End Class
