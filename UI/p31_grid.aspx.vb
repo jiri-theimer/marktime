@@ -203,20 +203,9 @@ Public Class p31_grid
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
             Dim strAddSqlFrom As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, , strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, , strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom)
             Me.hidFrom.Value = strAddSqlFrom
-            ''With Me.cbxGroupBy
-            ''    If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
-            ''        Dim b As Boolean = False
-            ''        If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
-            ''        If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
-            ''        If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
-            ''        If .SelectedValue = "ClientName" Then Me.hidCols.Value += ",p28client.p28Name as ClientName" : b = True
-            ''        If Not b Then
-            ''            Me.hidCols.Value += "," & .SelectedValue
-            ''        End If
-            ''    End If
-            ''End With
+            
 
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
@@ -552,7 +541,6 @@ Public Class p31_grid
 
     Private Sub GridExport(strFormat As String)
         _curIsExport = True
-
         With grid1
             .Page.Response.ClearHeaders()
             .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])

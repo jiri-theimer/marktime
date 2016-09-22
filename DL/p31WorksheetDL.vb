@@ -822,6 +822,18 @@
         End If
 
     End Function
+    
+    Public Function RemoveFromApproving(pids As List(Of Integer)) As Boolean
+        Dim strGUID As String = BO.BAS.GetGUID
+        _cDB.RunSQL("INSERT INTO p85TempBox(p85GUID,p85Prefix,p85DataPID) SELECT '" & strGUID & "','p31',p31ID FROM p31Worksheet WHERE p31ID IN (" & String.Join(",", pids) & ")")
+        Dim pars As New DbParameters
+        With pars
+            .Add("guid", strGUID, DbType.String)
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
+        End With
+        Return _cDB.RunSP("p31_remove_approve", pars)
+    End Function
     Public Function AppendToInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean
         Dim strGUID As String = BO.BAS.GetGUID
         _cDB.RunSQL("INSERT INTO p85TempBox(p85GUID,p85Prefix,p85DataPID) SELECT '" & strGUID & "','p31',p31ID FROM p31Worksheet WHERE p31ID IN (" & String.Join(",", pids) & ")")

@@ -16,8 +16,10 @@ Public Class p91_remove_worksheet
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .DataPID = 0 Then .StopPage("pid missing")
                 .HeaderIcon = "Images/cut_32.png"
+                .AddToolbarButton("Přesunout do archivu", "remove2bin", , "Images/bin.png")
+                .AddToolbarButton("Přesunout do rozpracovanosti", "remove2wip", , "Images/worksheet.png")
+                .AddToolbarButton("Přesunout do schválených", "remove2approve", , "Images/approve.png")
 
-                .AddToolbarButton("Potvrdit", "ok", , "Images/save.png")
 
                 .HeaderText = "Vyjmout z faktury vybrané úkony | " & .Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, .DataPID)
 
@@ -62,19 +64,42 @@ Public Class p91_remove_worksheet
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        If strButtonValue = "ok" Then
-            Dim pids As New List(Of Integer)
-            Dim a() As String = Split(ViewState("p31ids"), ",")
-            For i As Integer = 0 To UBound(a)
-                pids.Add(CInt(a(i)))
-            Next
-            With Master.Factory.p31WorksheetBL
-                If .RemoveFromInvoice(Master.DataPID, pids) Then
-                    Master.CloseAndRefreshParent("p31-remove")
-                Else
-                    Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
-                End If
-            End With
-        End If
+        Select Case strButtonValue
+            Case "remove2approve", "remove2wip", "remove2bin"
+                Dim pids As New List(Of Integer)
+                Dim a() As String = Split(ViewState("p31ids"), ",")
+                For i As Integer = 0 To UBound(a)
+                    pids.Add(CInt(a(i)))
+                Next
+                With Master.Factory.p31WorksheetBL
+                    
+                    If strButtonValue = "remove2approve" Then
+                        If .RemoveFromInvoice(Master.DataPID, pids) Then
+                            Master.CloseAndRefreshParent("p31-remove")
+                        Else
+                            Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                        End If
+                    End If
+                    If strButtonValue = "remove2wip" Then
+                        If .RemoveFromInvoice(Master.DataPID, pids) Then
+                            If .RemoveFromApproving(pids) Then
+                                Master.CloseAndRefreshParent("p31-remove")
+                            End If
+                        Else
+                            Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                        End If
+                    End If
+                    If strButtonValue = "remove2bin" Then
+                        If .RemoveFromInvoice(Master.DataPID, pids) Then
+                            If .RemoveFromApproving(pids) Then
+                                If .MoveToBin(pids) Then
+                                    Master.CloseAndRefreshParent("p31-remove")
+                                End If
+                            End If
+                        End If
+                    End If
+                End With
+        End Select
+        
     End Sub
 End Class

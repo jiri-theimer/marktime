@@ -24,6 +24,7 @@
     Function MoveFromBin(pids As List(Of Integer)) As Boolean
     Function Move2Project(intDestP41ID As Integer, pids As List(Of Integer)) As Boolean
     Function RecalcRates(pids As List(Of Integer)) As Boolean
+    Function RemoveFromApproving(pids As List(Of Integer)) As Boolean
     Function AppendToInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean
     Function RemoveFromInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean
     Function UpdateInvoice(intP91ID As Integer, lis As List(Of BO.p31WorksheetInvoiceChange)) As Boolean
@@ -333,6 +334,13 @@ Class p31WorksheetBL
             _Error = "Na vstupu není žádný úkon." : Return False
         End If
         Return _cDL.RecalcRates(pids)
+    End Function
+    Public Function RemoveFromApproving(pids As List(Of Integer)) As Boolean Implements Ip31WorksheetBL.RemoveFromApproving
+        If pids.Count = 0 Then
+            _Error = "Na vstupu není žádný úkon." : Return False
+        End If
+
+        Return _cDL.RemoveFromApproving(pids)
     End Function
     Public Function AppendToInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean Implements Ip31WorksheetBL.AppendToInvoice
         If pids.Count = 0 Then
