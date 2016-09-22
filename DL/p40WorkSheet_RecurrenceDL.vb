@@ -120,7 +120,7 @@
         pars.Add("j02id", intJ02ID, DbType.Int32)
         pars.Add("login", _curUser.j03Login, DbType.String)
         pars.Add("d1", DateAdd(DateInterval.Day, -1, Now), DbType.DateTime)
-        pars.Add("d2", DateAdd(DateInterval.Day, 1, Now), DbType.DateTime)
+        pars.Add("d2", DateAdd(DateInterval.Day, 2, Now), DbType.DateTime)
 
         Return _cDB.GetList(Of BO.p39WorkSheet_Recurrence_Plan)(s, pars)
     End Function
