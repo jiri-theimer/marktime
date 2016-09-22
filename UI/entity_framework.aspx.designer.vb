@@ -176,15 +176,6 @@ Partial Public Class entity_framework
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''chkGroupsAutoExpanded control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''cmdExport control.
     '''</summary>
     '''<remarks>
@@ -192,6 +183,42 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdXLS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdPDF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdDOC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''chkGroupsAutoExpanded control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''chkCheckboxSelector control.

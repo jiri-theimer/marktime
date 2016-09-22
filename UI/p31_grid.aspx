@@ -248,8 +248,18 @@
                                     <asp:HyperLink ID="cmdApprove" runat="server" Text="<%$Resources:p31_grid,Schvalovat_Preschvalovat%>" NavigateUrl="javascript:approving();"></asp:HyperLink>
                                 </div>
                                 <div class="div6">
-                                    <img src="Images/export.png" />
-                                    <asp:LinkButton ID="cmdExport" runat="server" Text="<%$Resources:common,ExportPrehledu %>" />
+                                    <img src="Images/export.png" alt="export" />
+                                    <asp:LinkButton ID="cmdExport" runat="server" Text="Export" />
+
+                                    <img src="Images/xls.png" alt="xls" />
+                                    <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+                                    <img src="Images/pdf.png" alt="pdf" />
+                                    <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+                                    <img src="Images/doc.png" alt="doc" />
+                                    <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                                    
                                 </div>
                                 <div class="div6">
                                     <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="<%$Resources:common,PocetZaznamuNaStranku %>"></asp:Label>

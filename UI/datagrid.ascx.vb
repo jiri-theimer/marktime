@@ -444,6 +444,10 @@ Public Class datagrid
         RaiseEvent DetailTableDataBind(sender, e)
     End Sub
 
+    
+
+    
+
     Private Sub grid1_Init(sender As Object, e As EventArgs) Handles grid1.Init
         If grid1.AllowFilteringByColumn Then Return
         Dim menu As GridFilterMenu = grid1.FilterMenu
@@ -520,6 +524,11 @@ Public Class datagrid
                 Next
             End If
         End If
+        If grid1.IsExporting Then
+            If TypeOf e.Item Is GridDataItem OrElse TypeOf e.Item Is GridHeaderItem Then
+                e.Item.Cells(0).Visible = False
+            End If
+        End If
     End Sub
 
 
@@ -571,6 +580,14 @@ Public Class datagrid
         Next
 
     End Sub
+
+    Private Sub grid1_PageIndexChanged(sender As Object, e As GridPageChangedEventArgs) Handles grid1.PageIndexChanged
+
+    End Sub
+
+    
+
+    
 
     Private Sub grid1_SortCommand(sender As Object, e As GridSortCommandEventArgs) Handles grid1.SortCommand
         Select Case e.NewSortOrder
@@ -714,4 +731,6 @@ Public Class datagrid
 
         grid1.MasterTableView.FilterExpression = strFilterExpression
     End Sub
+
+   
 End Class

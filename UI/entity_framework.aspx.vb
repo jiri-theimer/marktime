@@ -7,6 +7,7 @@ Public Class entity_framework
     Private Property _x29id As BO.x29IdEnum
     Private Property _needFilterIsChanged As Boolean = False
     Private Property _CurFilterDbField As String = ""
+    Private Property _curIsExport As Boolean
 
     Public Property CurrentX29ID As BO.x29IdEnum
         Get
@@ -325,7 +326,17 @@ Public Class entity_framework
             Case BO.x29IdEnum.p91Invoice
                 basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True)
         End Select
-
+        If _curIsExport Then
+            If TypeOf e.Item Is GridHeaderItem Then
+                e.Item.BackColor = Drawing.Color.Silver
+            End If
+            If TypeOf e.Item Is GridGroupHeaderItem Then
+                e.Item.BackColor = Drawing.Color.WhiteSmoke
+            End If
+            'If TypeOf e.Item Is GridDataItem Or TypeOf e.Item Is GridHeaderItem Then
+            '    e.Item.Cells(0).Visible = False
+            'End If
+        End If
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
@@ -345,12 +356,7 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p41(mq)
 
-                ''Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
-                ''If lis Is Nothing Then
-                ''    Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
-                ''Else
-                ''    grid1.DataSource = lis
-                ''End If
+                If _curIsExport Then mq.MG_PageSize = 2000
                 Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -365,6 +371,7 @@ Public Class entity_framework
 
                 End With
                 InhaleMyQuery_p28(mq)
+                If _curIsExport Then mq.MG_PageSize = 2000
 
                 Dim dt As DataTable = Master.Factory.p28ContactBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
@@ -373,12 +380,6 @@ Public Class entity_framework
                     grid1.DataSourceDataTable = dt
                 End If
 
-                ''Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq)
-                ''If lis Is Nothing Then
-                ''    Master.Notify(Master.Factory.p28ContactBL.ErrorMessage, NotifyLevel.ErrorMessage)
-                ''Else
-                ''    grid1.DataSource = lis
-                ''End If
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 With mq
@@ -388,18 +389,8 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p56(mq)
 
-                'Dim bolInhaleReceiversInLine As Boolean = True
-                'Dim lis As IEnumerable(Of BO.p56Task) = Nothing
-                'If Me.hidTasksWorksheetColumns.Value = "1" Then
-                '    lis = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq, bolInhaleReceiversInLine)
-                'Else
-                '    lis = Master.Factory.p56TaskBL.GetList(mq, bolInhaleReceiversInLine)
-                'End If
-                'If lis Is Nothing Then
-                '    Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
-                'Else
-                '    grid1.DataSource = lis
-                'End If
+                If _curIsExport Then mq.MG_PageSize = 2000
+
                 Dim dt As DataTable = Master.Factory.p56TaskBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.p56TaskBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -414,12 +405,8 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_o23(mq)
 
-                ''Dim lis As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList4Grid(mq)
-                ''If lis Is Nothing Then
-                ''    Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
-                ''Else
-                ''    grid1.DataSource = lis
-                ''End If
+                If _curIsExport Then mq.MG_PageSize = 2000
+
                 Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
                     Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -433,6 +420,8 @@ Public Class entity_framework
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
                 End With
                 InhaleMyQuery_j02(mq)
+
+                If _curIsExport Then mq.MG_PageSize = 2000
 
                 Dim dt As DataTable = Master.Factory.j02PersonBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
@@ -448,12 +437,7 @@ Public Class entity_framework
                 End With
                 InhaleMyQuery_p91(mq)
 
-                ''Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq)
-
-                'Dim mq2 As New BO.myQueryP41
-                'Dim lis2 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq2)
-
-                'Dim qry = From p In lis Join q In lis2 On p.p41ID_First Equals q.PID Select p, q.p41Code
+                If _curIsExport Then mq.MG_PageSize = 2000
 
                 Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(mq)
                 If dt Is Nothing Then
@@ -462,12 +446,6 @@ Public Class entity_framework
                     grid1.DataSourceDataTable = dt
                 End If
 
-
-                ''If Not lis Is Nothing Then
-                ''    grid1.DataSource = lis
-                ''Else
-                ''    Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
-                ''End If
             Case Else
 
         End Select
@@ -1080,4 +1058,52 @@ Public Class entity_framework
     Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-sort", SortExpression)
     End Sub
+
+   
+    
+
+    Private Sub GridExport(strFormat As String)
+        _curIsExport = True
+        With grid1
+            .Page.Response.ClearHeaders()
+            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
+            .PageSize = 2000
+            .Rebind(False)
+            Select Case strFormat
+                Case "xls"
+                    .radGridOrig.ExportToExcel()
+                Case "pdf"
+
+                    With .radGridOrig.ExportSettings.Pdf
+                        If grid1.radGridOrig.Columns.Count > 4 Then
+                            .PageWidth = Unit.Parse("297mm")
+                            .PageHeight = Unit.Parse("210mm")
+                        Else
+                            .PageHeight = Unit.Parse("297mm")
+                            .PageWidth = Unit.Parse("210mm")
+                        End If
+                    End With
+                    .radGridOrig.ExportToPdf()
+                Case "doc"
+                    .radGridOrig.ExportToWord()
+            End Select
+
+        End With
+    End Sub
+
+    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
+        GridExport("doc")
+    End Sub
+
+    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
+        GridExport("pdf")
+    End Sub
+
+    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
+        GridExport("xls")
+    End Sub
+
+   
+    
+   
 End Class

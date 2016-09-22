@@ -151,6 +151,9 @@
                             <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>   
                             <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>   
                             <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>                            
+                            <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>      
+                            <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
                         </asp:DropDownList>
                         <span>-></span>
                         <asp:DropDownList ID="row2" runat="server" AutoPostBack="true">
@@ -177,6 +180,9 @@
                             <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>            
                             <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>   
                             <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>
+                            <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>      
+                            <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
                         </asp:DropDownList>
                         <span>-></span>
                         <asp:DropDownList ID="row3" runat="server" AutoPostBack="true">
@@ -203,6 +209,9 @@
                             <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>                    
                             <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>   
                             <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>
+                            <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>      
+                            <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
                         </asp:DropDownList>
                     </fieldset>
                 </td>
@@ -227,7 +236,10 @@
                             <asp:ListItem Text="Rok fakturace" Value="9903"></asp:ListItem>
                             <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>               
                             <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>   
-                            <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>                  
+                            <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>
+                            <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>      
+                            <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>           
                         </asp:DropDownList>
                     </fieldset>
                 </td>
@@ -238,8 +250,10 @@
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                             <asp:ListItem Text="Vykázané hodiny" Value="1" Selected="true"></asp:ListItem>
                             <asp:ListItem Text="Částka bez DPH" Value="21"></asp:ListItem>
+                            <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                            <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Fakturovat]" Value="2"></asp:ListItem>
-                            <asp:ListItem Text="Schválené hodiny [Fakturovat]" Value="12"></asp:ListItem>
+                            <asp:ListItem Text="Schválená hodnota [Fakturovat]" Value="12"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Paušál]" Value="126"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Odpis]" Value="123"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Fakt.později]" Value="127"></asp:ListItem>
@@ -250,8 +264,7 @@
                             <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                                                       
-                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                            
+                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>                                                                 
                         </asp:DropDownList>
                         
@@ -259,6 +272,8 @@
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                             <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
                             <asp:ListItem Text="Částka bez DPH" Value="21"></asp:ListItem>
+                            <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                            <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Fakturovat]" Value="2"></asp:ListItem>
                             <asp:ListItem Text="Schválená hodiny [Paušál]" Value="126"></asp:ListItem>
                             <asp:ListItem Text="Schválená hodiny [Odpis]" Value="123"></asp:ListItem>
@@ -271,9 +286,7 @@
                             <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                            
                             <asp:ListItem Text="Schválená hodnota [Fakturovat]" Value="12"></asp:ListItem>                            
-                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                            
-                            
+                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>           
                         </asp:DropDownList>
                         
@@ -281,6 +294,8 @@
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                             <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
                             <asp:ListItem Text="Částka bez DPH" Value="21"></asp:ListItem>
+                            <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                            <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Fakturovat]" Value="2"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Paušál]" Value="126"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Odpis]" Value="123"></asp:ListItem>
@@ -293,15 +308,15 @@
                             <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                            
                             <asp:ListItem Text="Schválená hodnota [Fakturovat]" Value="12"></asp:ListItem>                            
-                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                            
-                            
+                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>           
                         </asp:DropDownList>
                         <asp:DropDownList ID="sum4" runat="server" AutoPostBack="true">
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                             <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
                             <asp:ListItem Text="Částka bez DPH" Value="21"></asp:ListItem>
+                            <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                            <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Fakturovat]" Value="2"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Paušál]" Value="126"></asp:ListItem>
                             <asp:ListItem Text="Schválené hodiny [Odpis]" Value="123"></asp:ListItem>
@@ -314,9 +329,7 @@
                             <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
                             <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>                            
                             <asp:ListItem Text="Schválená hodnota [Fakturovat]" Value="12"></asp:ListItem>                            
-                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                            
-                            
+                            <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>                            
                             <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>           
                         </asp:DropDownList>
                             

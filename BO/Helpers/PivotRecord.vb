@@ -21,9 +21,14 @@
     p42Name = 4201
     p91Code = 9101
     InvoiceClient = 9102
+    p31Rate_Billing_Orig = 3101
+    p31Rate_Billing_Approved = 3102
+    p31Rate_Billing_Invoiced = 3103
 End Enum
 Public Enum PivotSumFieldType
     p31Hours_Orig = 1
+    p31Hours_WIP = 4
+    p31Hours_BIN = 5
     p31Hours_Approved_Billing = 2
     p31Hours_Invoiced = 3
     p31Value_Orig = 11
@@ -143,6 +148,18 @@ Public Class PivotRowColumnField
                 _SelectField = "min(p91Client.p28Name)"
                 _GroupByField = "p91.p28ID"
                 s = "Klient faktury"
+            Case PivotRowColumnFieldType.p31Rate_Billing_Orig
+                _SelectField = "p31Rate_Billing_Orig"
+                _GroupByField = "p31Rate_Billing_Orig"
+                s = "Výchozí sazba"
+            Case PivotRowColumnFieldType.p31Rate_Billing_Approved
+                _SelectField = "p31Rate_Billing_Approved"
+                _GroupByField = "p31Rate_Billing_Approved"
+                s = "Schválená sazba"
+            Case PivotRowColumnFieldType.p31Rate_Billing_Invoiced
+                _SelectField = "p31Rate_Billing_Invoiced"
+                _GroupByField = "p31Rate_Billing_Invoiced"
+                s = "Vyfakturovaná sazba"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub
@@ -175,6 +192,12 @@ Public Class PivotSumField
             Case PivotSumFieldType.p31Hours_Orig
                 _SelectField = "sum(p31Hours_Orig)"
                 s = "Vykázané hodiny"
+            Case PivotSumFieldType.p31Hours_WIP
+                _SelectField = "sum(case when a.p71ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig end)"
+                s = "Rozpracované hodiny"
+            Case PivotSumFieldType.p31Hours_BIN
+                _SelectField = "sum(case when a.p71ID IS NULL AND getdate() NOT BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig end)"
+                s = "Hodiny v archivu"
             Case PivotSumFieldType.p31Hours_Invoiced
                 _SelectField = "sum(p31Hours_Invoiced)"
                 s = "Vyfakt.hodiny"

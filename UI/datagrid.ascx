@@ -3,8 +3,9 @@
 <div id="gogo1"></div>
 <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" runat="server" ShowFooter="true" EnableViewState="true" AllowPaging="true" AllowSorting="true" Skin="Default" EnableLinqExpressions="false">
   
-    <ExportSettings ExportOnlyData="true" OpenInNewWindow="true" FileName="marktime_export" UseItemStyles="false">
+    <ExportSettings ExportOnlyData="true" OpenInNewWindow="true" FileName="marktime_export" UseItemStyles="true">
         <Excel Format="Biff" />
+        <Pdf BorderStyle="Thin" BorderType="AllBorders" DefaultFontFamily="Arial Unicode MS" PageBottomMargin="20" PageTopMargin="20" PageLeftMargin="30" PageRightMargin="20"></Pdf>
     </ExportSettings>
     <GroupingSettings CaseSensitive="false" ExpandTooltip="Rozbalit řádky" CollapseTooltip="Sbalit řádky" />
 

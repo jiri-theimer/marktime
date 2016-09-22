@@ -185,6 +185,33 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''cmdXLS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdPDF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdDOC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''imgApprove control.
     '''</summary>
     '''<remarks>

@@ -66,8 +66,17 @@
     <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat úkony za vybrané úkoly" NavigateUrl="javascript:approving();"></asp:HyperLink>
 
     <span style="padding-left: 20px;"></span>
-    <img src="Images/export.png" />
-    <asp:LinkButton ID="cmdExport" runat="server" Text="Export do MS Excel" />
+    <img src="Images/export.png" alt="export" />
+        <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
+
+        <img src="Images/xls.png" alt="xls" />
+        <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+        <img src="Images/pdf.png" alt="pdf" />
+        <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+        <img src="Images/doc.png" alt="doc" />
+        <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
     <asp:HiddenField ID="hidReceiversInLine" runat="server" />
     <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />

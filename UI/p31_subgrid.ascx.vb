@@ -6,6 +6,7 @@ Public Class p31_subgrid
     Public Property DefaultSelectedPID As Integer = 0
     Public Property ExplicitMyQuery As BO.myQueryP31    'proměnná nedrží stav!
     Private Property _curJ74 As BO.j74SavedGridColTemplate
+    Private Property _curIsExport As Boolean
 
     Public Property MasterDataPID As Integer
         Get
@@ -282,6 +283,17 @@ Public Class p31_subgrid
     Private Sub grid2_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid2.ItemDataBound
         'If TypeOf e.Item.DataItem Is DataRowView Then Return
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
+        If _curIsExport Then
+            If TypeOf e.Item Is GridHeaderItem Then
+                e.Item.BackColor = Drawing.Color.Silver
+            End If
+            If TypeOf e.Item Is GridGroupHeaderItem Then
+                e.Item.BackColor = Drawing.Color.WhiteSmoke
+            End If
+            If TypeOf e.Item Is GridDataItem Or TypeOf e.Item Is GridHeaderItem Then
+                e.Item.Cells(0).Visible = False
+            End If
+        End If
     End Sub
 
     Private Sub grid2_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid2.NeedDataSource
@@ -304,12 +316,13 @@ Public Class p31_subgrid
             grid2.DataSourceDataTable = dtDD
             Return
         End If
+        If _curIsExport Then mq.MG_PageSize = 2000
         Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(mq)
         If dt Is Nothing Then
             Return
         End If
 
-        If Me.DefaultSelectedPID <> 0 Then
+        If Me.DefaultSelectedPID <> 0 And Not _curIsExport Then
             If dt.AsEnumerable.Where(Function(p) p.Item("pid") = Me.DefaultSelectedPID).Count > 0 Then
                 'záznam je na první stránce
             Else
@@ -646,5 +659,47 @@ Public Class p31_subgrid
 
     Private Sub grid2_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid2.SortCommand
         Factory.j03UserBL.SetUserParam("p31_subgrid-sort", SortExpression)
+    End Sub
+
+    Private Sub GridExport(strFormat As String)
+        _curIsExport = True
+        Me.AllowMultiSelect = False
+        SetupP31Grid()
+        With grid2
+            .Page.Response.ClearHeaders()
+            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
+            .PageSize = 2000
+            .Rebind(False)
+            Select Case strFormat
+                Case "xls"
+                    .radGridOrig.ExportToExcel()
+                Case "pdf"
+                    With .radGridOrig.ExportSettings.Pdf
+                        If grid2.radGridOrig.Columns.Count > 4 Then
+                            .PageWidth = Unit.Parse("297mm")
+                            .PageHeight = Unit.Parse("210mm")
+                        Else
+                            .PageHeight = Unit.Parse("297mm")
+                            .PageWidth = Unit.Parse("210mm")
+                        End If
+                    End With
+                    .radGridOrig.ExportToPdf()
+                Case "doc"
+                    .radGridOrig.ExportToWord()
+            End Select
+
+        End With
+    End Sub
+
+    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
+        GridExport("pdf")
+    End Sub
+
+    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
+        GridExport("xls")
+    End Sub
+
+    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
+        GridExport("doc")
     End Sub
 End Class

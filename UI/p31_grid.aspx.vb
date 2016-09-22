@@ -5,6 +5,7 @@ Public Class p31_grid
     Protected WithEvents _MasterPage As Site
     Private Property _curJ74 As BO.j74SavedGridColTemplate
     Private Property _needFilterIsChanged As Boolean = False
+    Private Property _curIsExport As Boolean
 
     Private Sub p31_grid_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -303,9 +304,18 @@ Public Class p31_grid
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
-        'If TypeOf e.Item.DataItem Is DataRowView Then Return
-
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
+        If _curIsExport Then
+            If TypeOf e.Item Is GridHeaderItem Then
+                e.Item.BackColor = Drawing.Color.Silver
+            End If
+            If TypeOf e.Item Is GridGroupHeaderItem Then
+                e.Item.BackColor = Drawing.Color.WhiteSmoke
+            End If
+            If TypeOf e.Item Is GridDataItem Or TypeOf e.Item Is GridHeaderItem Then
+                e.Item.Cells(0).Visible = False
+            End If
+        End If
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
@@ -324,18 +334,6 @@ Public Class p31_grid
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
-            ''If Me.cbxGroupBy.SelectedValue <> "" Then
-            ''    Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
-            ''    If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
-            ''    If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
-            ''    If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
-
-            ''    If .MG_SortString = "" Then
-            ''        .MG_SortString = strPrimarySortField
-            ''    Else
-            ''        .MG_SortString = strPrimarySortField & "," & .MG_SortString
-            ''    End If
-            ''End If
         End With
         InhaleMyQuery(mq)
 
@@ -356,7 +354,7 @@ Public Class p31_grid
             End With
             RecalcVirtualRowCount()
         End If
-
+        If _curIsExport Then mq.MG_PageSize = 2000
         Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(mq)
         If dt Is Nothing Then
             Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -550,5 +548,46 @@ Public Class p31_grid
     Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
         If strOwnerTableName = "drilldown" Then Return 'neukládat třídění z drill-down
         Master.Factory.j03UserBL.SetUserParam("p31_grid-sort", SortExpression)
+    End Sub
+
+    Private Sub GridExport(strFormat As String)
+        _curIsExport = True
+
+        With grid1
+            .Page.Response.ClearHeaders()
+            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
+            .PageSize = 2000
+            .Rebind(False)
+            Select Case strFormat
+                Case "xls"
+                    .radGridOrig.ExportToExcel()
+                Case "pdf"
+                    With .radGridOrig.ExportSettings.Pdf
+                        If grid1.radGridOrig.Columns.Count > 4 Then
+                            .PageWidth = Unit.Parse("297mm")
+                            .PageHeight = Unit.Parse("210mm")
+                        Else
+                            .PageHeight = Unit.Parse("297mm")
+                            .PageWidth = Unit.Parse("210mm")
+                        End If
+                    End With
+                    .radGridOrig.ExportToPdf()
+                Case "doc"
+                    .radGridOrig.ExportToWord()
+            End Select
+
+        End With
+    End Sub
+
+    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
+        GridExport("pdf")
+    End Sub
+
+    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
+        GridExport("xls")
+    End Sub
+
+    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
+        GridExport("doc")
     End Sub
 End Class

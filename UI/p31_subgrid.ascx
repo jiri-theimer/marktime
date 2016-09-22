@@ -80,9 +80,18 @@
         </asp:DropDownList>
         <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
     </asp:Panel>
-    <div style="margin-top:20px;">
-        <img src="Images/export.png" />
-        <asp:LinkButton ID="cmdExport" runat="server" Text="MS Excel" />
+    <div style="margin-top: 20px;">
+        <img src="Images/export.png" alt="export" />
+        <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
+
+        <img src="Images/xls.png" alt="xls" />
+        <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+        <img src="Images/pdf.png" alt="pdf" />
+        <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+        <img src="Images/doc.png" alt="doc" />
+        <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
         <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
         <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();" meta:resourcekey="cmdApprove"></asp:HyperLink>
@@ -144,7 +153,7 @@
 
     function periodcombo_setting() {
         p31_subgrid_periodcombo();
-        
+
     }
 
     function querybuilder() {
@@ -161,7 +170,7 @@
 
         }
         p31_subgrid_approving(pids);
-        
+
 
     }
 
@@ -186,7 +195,7 @@
         return (false);
     }
 
-    function p31_RowDoubleClick_first(sender, args) {        
+    function p31_RowDoubleClick_first(sender, args) {
         if (args.get_tableView().get_name() == "grid") {
             p31_RowDoubleClick();
         }

@@ -5,6 +5,7 @@ Public Class p56_subgrid
     Public Property DefaultSelectedPID As Integer = 0
     Public Property Factory As BL.Factory
     Public Property x29ID As BO.x29IdEnum
+    Private Property _curIsExport As Boolean
 
     Public Property AllowApproving As Boolean
         Get
@@ -67,7 +68,7 @@ Public Class p56_subgrid
         If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
         Me.hidDefaultSorting.Value = cJ74.j74OrderBy
         Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), False, True, True, , , , strAddSqlFrom)
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
         Me.hidFrom.Value = strAddSqlFrom
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -80,7 +81,17 @@ Public Class p56_subgrid
 
     Private Sub gridP56_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridP56.ItemDataBound
         basUIMT.p56_grid_Handle_ItemDataBound(sender, e, True, True)
-        
+        If _curIsExport Then
+            If TypeOf e.Item Is GridHeaderItem Then
+                e.Item.BackColor = Drawing.Color.Silver
+            End If
+            If TypeOf e.Item Is GridGroupHeaderItem Then
+                e.Item.BackColor = Drawing.Color.WhiteSmoke
+            End If
+            If TypeOf e.Item Is GridDataItem Or TypeOf e.Item Is GridHeaderItem Then
+                e.Item.Cells(0).Visible = False
+            End If
+        End If
     End Sub
     Private Sub InhaleTasksQuery(ByRef mq As BO.myQueryP56)
         Select Case Me.x29ID
@@ -254,5 +265,48 @@ Public Class p56_subgrid
         If Me.DefaultSelectedPID <> 0 Then
             gridP56.SelectRecords(Me.DefaultSelectedPID)
         End If
+    End Sub
+
+
+    Private Sub GridExport(strFormat As String)
+        _curIsExport = True
+
+        SetupGridP56()
+        With gridP56
+            .Page.Response.ClearHeaders()
+            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
+            .PageSize = 2000
+            .Rebind(False)
+            Select Case strFormat
+                Case "xls"
+                    .radGridOrig.ExportToExcel()
+                Case "pdf"
+                    With .radGridOrig.ExportSettings.Pdf
+                        If gridP56.radGridOrig.Columns.Count > 4 Then
+                            .PageWidth = Unit.Parse("297mm")
+                            .PageHeight = Unit.Parse("210mm")
+                        Else
+                            .PageHeight = Unit.Parse("297mm")
+                            .PageWidth = Unit.Parse("210mm")
+                        End If
+                    End With
+                    .radGridOrig.ExportToPdf()
+                Case "doc"
+                    .radGridOrig.ExportToWord()
+            End Select
+
+        End With
+    End Sub
+
+    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
+        GridExport("pdf")
+    End Sub
+
+    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
+        GridExport("xls")
+    End Sub
+
+    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
+        GridExport("doc")
     End Sub
 End Class
