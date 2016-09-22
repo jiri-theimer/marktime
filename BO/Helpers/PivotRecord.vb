@@ -3,6 +3,7 @@
     p41Name = 4101
     p34Name = 3401
     p32Name = 3201
+    p95Name = 9501
     p56Name = 5601
     p28Name = 2801
     j18Name = 1801
@@ -13,10 +14,13 @@
     p72Name = 7201
     Year = 9901
     Month = 9902
+    YearInvoice = 9903
+    MonthInvoice = 9904
     j27code_orig = 2701
     j27code_invoice = 2702
     p42Name = 4201
     p91Code = 9101
+    InvoiceClient = 9102
 End Enum
 Public Enum PivotSumFieldType
     p31Hours_Orig = 1
@@ -67,8 +71,16 @@ Public Class PivotRowColumnField
                 _SelectField = "Year(a.p31date)"
                 _GroupByField = _SelectField
                 s = "Rok"
+            Case PivotRowColumnFieldType.YearInvoice
+                _SelectField = "Year(p91.p91DateSupply)"
+                _GroupByField = _SelectField
+                s = "Rok fakturace"
+            Case PivotRowColumnFieldType.MonthInvoice
+                _SelectField = "convert(varchar(7), p91.p91DateSupply, 126)"
+                _GroupByField = _SelectField
+                s = "Měsíc fakturace"
             Case PivotRowColumnFieldType.p28Name
-                _SelectField = "min(p28Name)"
+                _SelectField = "min(p28Client.p28Name)"
                 _GroupByField = "p41.p28ID_Client"
                 s = "Klient"
             Case PivotRowColumnFieldType.p34Name
@@ -79,6 +91,10 @@ Public Class PivotRowColumnField
                 _SelectField = "min(p32.p32Name)"
                 _GroupByField = "a.p32ID"
                 s = "Aktivita"
+            Case PivotRowColumnFieldType.p95Name
+                _SelectField = "min(p95.p95Name)"
+                _GroupByField = "p32.p95ID"
+                s = "Fakturační oddíl"
             Case PivotRowColumnFieldType.p32IsBillable
                 _SelectField = "min(convert(int,p32.p32IsBillable))"
                 _GroupByField = "p32.p32IsBillable"
@@ -110,7 +126,7 @@ Public Class PivotRowColumnField
             Case PivotRowColumnFieldType.p72Name
                 _SelectField = "min(p72Name)"
                 _GroupByField = "a.p72ID_AfterApprove"
-                s = "Fakt.status"
+                s = "Schvalovací status"
             Case PivotRowColumnFieldType.j27code_orig
                 _SelectField = "min(j27orig.j27Code)"
                 _GroupByField = "a.j27ID_Billing_Orig"
@@ -123,6 +139,10 @@ Public Class PivotRowColumnField
                 _SelectField = "min(p91Code)"
                 _GroupByField = "a.p91ID"
                 s = "ID faktury"
+            Case PivotRowColumnFieldType.InvoiceClient
+                _SelectField = "min(p91Client.p28Name)"
+                _GroupByField = "p91.p28ID"
+                s = "Klient faktury"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

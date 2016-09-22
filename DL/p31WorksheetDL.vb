@@ -728,7 +728,9 @@
         s.Append(" LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27orig ON a.j27ID_Billing_Orig=j27orig.j27ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27invoice ON a.j27ID_Billing_Invoiced=j27invoice.j27ID")
+        s.Append(" LEFT OUTER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID")
         s.Append(" LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID")
+        s.Append(" LEFT OUTER JOIN p28Contact p91Client ON p91.p28ID=p91Client.p28ID")
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
             Dim strJ11IDs As String = ""
             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
