@@ -190,8 +190,10 @@
         }
 
        
-
-
+
+
+
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -446,7 +448,7 @@
 
     <asp:Panel ID="panDescription" runat="server" CssClass="content-box1" Style="width: 99%; max-width: none;">
         <div class="title">Podrobný popis</div>
-        <div class="content" style="background-color: #ffffcc;">
+        <div class="content" style="background-color: #ffffcc;max-height:120px;overflow:auto;">
             <asp:Label ID="p56Description" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
         </div>
     </asp:Panel>

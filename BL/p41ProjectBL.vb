@@ -91,7 +91,7 @@ Class p41ProjectBL
                     _Error = "Doba časového plánu projektu musí být menší než 100 měsíců." : Return False
                 End If
             End If
-            If .ValidUntil < Now Then
+            If .ValidUntil <= Now Then
                 'pokud o přesun projektu do archivu
                 Dim cP42 As BO.p42ProjectType = Factory.p42ProjectTypeBL.Load(.p42ID)
                 Select Case cP42.p42ArchiveFlag
@@ -104,7 +104,7 @@ Class p41ProjectBL
                             _Error = "Projekt nelze přesunout do achivu, dokud v něm existují rozpracované worksheet úkony. Rozpracované úkony lze přesunout do archivu nebo tuto ochranu může změnit administrátor v nastavení typu projektu." : Return False
                         End If
                 End Select
-                
+
             End If
         End With
         If Not lisFF Is Nothing Then

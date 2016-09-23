@@ -159,6 +159,8 @@ Public Class j03UserDL
                 .Add("j03validuntil", cRec.ValidUntil, DbType.DateTime)
                 .Add("j03Aspx_PersonalPage", cRec.j03Aspx_PersonalPage, DbType.String)
                 .Add("j03Aspx_PersonalPage_Mobile", cRec.j03Aspx_PersonalPage_Mobile, DbType.String)
+                .Add("j03IsMustChangePassword", cRec.j03IsMustChangePassword, DbType.Boolean)
+                .Add("j03PasswordExpiration", BO.BAS.IsNullDBDate(cRec.j03PasswordExpiration), DbType.DateTime)
             End With
 
             If _cDB.SaveRecord("j03User", pars, bolINSERT, strW, True, _curUser.j03Login) Then

@@ -22,6 +22,7 @@
             j07ID.DataBind()
             c21ID.DataSource = Master.Factory.c21FondCalendarBL.GetList(New BO.myQuery)
             c21ID.DataBind()
+            Me.j03PasswordExpiration.SelectedDate = DateAdd(DateInterval.Month, 6, Today)
 
             If Request.Item("clone") = "1" And Request.Item("pid") <> "" Then
                 Dim cRec As BO.j03User = Master.Factory.j03UserBL.Load(BO.BAS.IsNullInt(Request.Item("pid")))
@@ -92,6 +93,10 @@
                 .j03Login = Me.j03login.Text
                 .j03IsLiveChatSupport = Me.j03IsLiveChatSupport.Checked
                 .j03IsSiteMenuOnClick = False
+                .j03IsMustChangePassword = Me.j03IsMustChangePassword.Checked
+                If Not Me.j03PasswordExpiration.IsEmpty Then
+                    .j03PasswordExpiration = Me.j03PasswordExpiration.SelectedDate
+                End If
             End With
 
             Dim cJ02 As New BO.j02Person

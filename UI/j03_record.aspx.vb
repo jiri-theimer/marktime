@@ -39,6 +39,11 @@
             Me.j04id.SelectedValue = .j04ID.ToString
             Me.j02ID.Value = .j02ID.ToString
             Me.j02ID.Text = .PersonDesc
+            Me.j03IsMustChangePassword.Checked = .j03IsMustChangePassword
+            If Not .j03PasswordExpiration Is Nothing Then
+                Me.j03PasswordExpiration.SelectedDate = .j03PasswordExpiration
+            End If
+
             Master.Timestamp = .Timestamp
 
 
@@ -85,6 +90,13 @@
                 .j03IsLiveChatSupport = Me.j03IsLiveChatSupport.Checked
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
+                .j03IsMustChangePassword = Me.j03IsMustChangePassword.Checked
+                If Me.j03PasswordExpiration.IsEmpty Then
+                    .j03PasswordExpiration = Nothing
+                Else
+                    .j03PasswordExpiration = Me.j03PasswordExpiration.SelectedDate
+                End If
+
             End With
 
             If .Save(cRec) Then

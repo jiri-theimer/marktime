@@ -83,7 +83,8 @@
                         </td>
                         <td>
                             <asp:Label ID="j03login" runat="server" CssClass="valbold"></asp:Label>
-
+                            <asp:Label ID="Label3" runat="server" CssClass="lbl" Text="Expirace přihlašovacího hesla:" style="padding-left:20px;"></asp:Label>
+                            <asp:Label ID="j03PasswordExpiration" runat="server" CssClass="valboldred"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -95,6 +96,7 @@
 
                         </td>
                     </tr>
+                  
                     <tr>
                         <td>
                             <asp:Label ID="lblPerson" runat="server" CssClass="lbl" Text="Osobní profil:"></asp:Label>

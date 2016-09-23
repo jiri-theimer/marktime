@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Change Password" Language="vb" MasterPageFile="~/Site.Master" AutoEventWireup="false"
-    CodeBehind="ChangePasswordSuccess.aspx.vb" Inherits="UI.ChangePasswordSuccess" %>
+﻿<%@ Page Title="Change Password" Language="vb" MasterPageFile="~/Site.Master" AutoEventWireup="false" CodeBehind="ChangePasswordSuccess.aspx.vb" Inherits="UI.ChangePasswordSuccess" %>
+<%@ MasterType VirtualPath="~/Site.Master" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>

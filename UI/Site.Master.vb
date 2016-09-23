@@ -49,6 +49,17 @@ Public Class Site
             _Factory = New BL.Factory(, strLogin)
             If _Factory.SysUser Is Nothing Then DoLogOut()
 
+            If _Factory.SysUser.j03IsMustChangePassword Then
+                If Request.Url.ToString.ToLower.IndexOf("changepassword") < 0 Then
+                    Response.Redirect("ChangePassword.aspx")
+                End If
+            Else
+                If Not _Factory.SysUser.j03PasswordExpiration Is Nothing Then
+                    If _Factory.SysUser.j03PasswordExpiration < Now Then
+                        If Request.Url.ToString.ToLower.IndexOf("changepassword") < 0 Then Response.Redirect("ChangePassword.aspx")
+                    End If
+                End If
+            End If
             PersonalizeMenu()
         End If
     End Sub

@@ -22,8 +22,10 @@
     Public Property p56Ordinary As Integer
     Public Property p56Plan_Hours As Double
     Public Property p56Plan_Expenses As Double
-    Public Property p56IsPlan_Hours_Ceiling As Boolean
-    Public Property p56IsPlan_Expenses_Ceiling As Boolean
+    Public Property p56IsPlan_Hours_Ceiling As Boolean  'zastropovat plán hodin (nelze překročit)
+    Public Property p56IsPlan_Expenses_Ceiling As Boolean   'zastropovat plán výdajů (nelze překročit)
+
+    Public Property p56IsHtml As Boolean    'zadání/popis úkolu je v HTML
 
     Public Property p56CompletePercent As Integer
     Public Property p56RatingValue As Integer?

@@ -43,6 +43,12 @@
             Me.FullName.Text = .Person
             Me.j03IsLiveChatSupport.Checked = .j03IsLiveChatSupport
             Me.j03IsSiteMenuOnClick.Checked = .j03IsSiteMenuOnClick
+            If .j03PasswordExpiration Is Nothing Then
+                Me.j03PasswordExpiration.Text = "Heslo bez časové expirace"
+            Else
+                Me.j03PasswordExpiration.Text = BO.BAS.FD(.j03PasswordExpiration, , True)
+            End If
+
             basUI.SelectDropdownlistValue(Me.j03SiteMenuSkin, .j03SiteMenuSkin)
         End With
         If cRec.j02ID <> 0 Then

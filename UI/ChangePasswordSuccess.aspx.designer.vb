@@ -21,4 +21,16 @@ Partial Public Class ChangePasswordSuccess
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Master property.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated property.
+    '''</remarks>
+    Public Shadows ReadOnly Property Master() As UI.Site
+        Get
+            Return CType(MyBase.Master, UI.Site)
+        End Get
+    End Property
 End Class

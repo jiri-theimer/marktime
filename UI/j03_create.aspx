@@ -53,6 +53,17 @@
         </tr>
 
     </table>
+    <div class="div6">
+        <asp:CheckBox ID="j03IsMustChangePassword" runat="server" Text="Uživatel si musí okamžitě změnit přihlašovací heslo" />
+    </div>
+    <div class="div6">
+        <asp:Label ID="Label2" runat="server" Text="Heslo expiruje dne:" CssClass="lbl"></asp:Label>
+        <telerik:RadDatePicker ID="j03PasswordExpiration" runat="server" Width="120px">
+                    <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
+                </telerik:RadDatePicker>
+        <span class="infoInForm">Pokud datum expirace hesla není vyplněno, heslo platí na dobu neurčitou.</span>
+    </div>
+
 
     <div class="content-box2">
         <div class="title">

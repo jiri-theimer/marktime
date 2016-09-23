@@ -104,6 +104,33 @@ Partial Public Class j03_create
     Protected WithEvents txtVerify As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''j03IsMustChangePassword control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j03IsMustChangePassword As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j03PasswordExpiration control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j03PasswordExpiration As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
     '''ph1 control.
     '''</summary>
     '''<remarks>

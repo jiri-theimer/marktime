@@ -14,7 +14,8 @@
     Public Property j03SiteMenuSkin As String
 
     Public Property j03IsShallReadUpgradeInfo As Boolean
-
+    Public Property j03IsMustChangePassword As Boolean
+    Public Property j03PasswordExpiration As Date?
     Protected Property _j04Name As String
     Protected Property _j02LastName As String
     Protected Property _j02FirstName As String
