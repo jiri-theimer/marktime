@@ -209,7 +209,7 @@
                     </div>
                 </asp:Panel>
                 <div class="div6">
-                    <asp:Button ID="cmdDeleteUserParams" runat="server" text="Vyčistit nastavení systému v mém uživatelském profilu" CssClass="cmd" />
+                    <asp:Button ID="cmdDeleteUserParams" runat="server" text="Vyčistit paměť (cache) v mém uživatelském profilu" CssClass="cmd" />
                 </div>
             </telerik:RadPageView>
             <telerik:RadPageView ID="page2" runat="server">

@@ -76,6 +76,7 @@
         <div class="content">
             <asp:Button ID="cmdRecoveryPassword" runat="server" Text="Vygenerovat nové přístupové heslo" CssClass="cmd" OnClientClick="return passwordrecovery()" />
             <asp:Button ID="cmdChangeLogin" runat="server" Text="Změnit přihlašovací jméno" CssClass="cmd" OnClientClick="return changelogin()" />
+            <asp:Button ID="cmdDeleteUserParams" runat="server" text="Vyčistit paměť (cache) v uživatelském profilu" CssClass="cmd" />
             <asp:Button ID="cmdRecoveryMembership" runat="server" Text="Opravit membership účet" CssClass="cmd" />
 
 

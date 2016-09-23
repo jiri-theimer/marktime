@@ -162,4 +162,10 @@
             End With
         End If
     End Sub
+
+    Private Sub cmdDeleteUserParams_Click(sender As Object, e As EventArgs) Handles cmdDeleteUserParams.Click
+        If Master.Factory.j03UserBL.DeleteAllUserParams(Master.DataPID) Then
+            Master.Notify("Paměť uživatelského profilu byla vyčištěna.")
+        End If
+    End Sub
 End Class

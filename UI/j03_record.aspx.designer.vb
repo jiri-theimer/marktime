@@ -122,6 +122,15 @@ Partial Public Class j03_record
     Protected WithEvents cmdChangeLogin As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdDeleteUserParams control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDeleteUserParams As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''cmdRecoveryMembership control.
     '''</summary>
     '''<remarks>
