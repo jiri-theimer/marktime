@@ -6,6 +6,14 @@ Public Enum myQueryP31_QuickQuery
     Invoiced = 3    'prošlo fakturací
     MovedToBin = 4  'přesunuto do koše
     EditingOrMovedToBin = 5   'rozpracované nebo v koši
+    Is_ContactPerson = 6  's vazbou na kontaktní osobu
+    Is_Document = 7           's vazbou na dokument
+    Is_Corrention = 8     'vyplněná výchozí korekce úkonu
+    Is_Task = 9           's vazbou na úkol
+    Is_Supplier = 10      's vazbou na dodavatele
+    Is_Budget = 11
+    Is_p31Code = 12
+    Is_GeneratedByRobot = 13  'vygenerováno robotem
 End Enum
 Public Enum myQueryP31_SpecificQuery
     _NotSpecified = 0

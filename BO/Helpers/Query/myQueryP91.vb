@@ -16,6 +16,13 @@ Public Enum myQueryP91_QuickQuery
     DebtAfterMaturity = 4
     IsDraft = 5
     IsOficialCode = 6
+    BoundWithProforma = 7
+    BoundWithCreditNote = 8
+    Is_p91RoundFitAmount = 9
+    Is_p91Amount_WithoutVat_Standard = 10
+    Is_p91Amount_WithoutVat_Low = 11
+    Is_p91Amount_WithoutVat_None = 12
+    Is_ExchangeRate = 13
 End Enum
 Public Class myQueryP91
     Inherits myQuery

@@ -557,6 +557,20 @@
                 Return "a.p91IsDraft=1"
             Case BO.myQueryP91_QuickQuery.IsOficialCode
                 Return "a.p91IsDraft=0"
+            Case BO.myQueryP91_QuickQuery.BoundWithProforma
+                Return "a.p91ID IN (SELECT p91ID FROM p99Invoice_Proforma)"
+            Case BO.myQueryP91_QuickQuery.BoundWithCreditNote
+                Return "a.p91ID_CreditNoteBind IS NOT NULL"
+            Case BO.myQueryP91_QuickQuery.Is_p91RoundFitAmount
+                Return "a.p91RoundFitAmount<>0"
+            Case BO.myQueryP91_QuickQuery.Is_p91Amount_WithoutVat_Standard
+                Return "a.p91Amount_WithoutVat_Standard<>0"
+            Case BO.myQueryP91_QuickQuery.Is_p91Amount_WithoutVat_Low
+                Return "a.p91Amount_WithoutVat_Low<>0"
+            Case BO.myQueryP91_QuickQuery.Is_p91Amount_WithoutVat_None
+                Return "a.p91Amount_WithoutVat_None<>0"
+            Case BO.myQueryP91_QuickQuery.Is_ExchangeRate
+                Return "isnull(a.p91ExchangeRate,1)<>1"
             Case Else
                 Return ""
         End Select
@@ -573,7 +587,22 @@
                 Return "a.p91ID IS NOT NULL"
             Case BO.myQueryP31_QuickQuery.MovedToBin
                 Return "getdate() NOT BETWEEN a.p31ValidFrom AND a.p31ValidUntil"
-           
+            Case BO.myQueryP31_QuickQuery.Is_ContactPerson
+                Return "a.j02ID_ContactPerson IS NOT NULL"
+            Case BO.myQueryP31_QuickQuery.Is_Corrention
+                Return "a.p72ID_AfterTrimming IS NOT NULL"
+            Case BO.myQueryP31_QuickQuery.Is_Document
+                Return "a.p31ID IN (SELECT p31ID FROM o23Notepad WHERE p31ID IS NOT NULL)"
+            Case BO.myQueryP31_QuickQuery.Is_Task
+                Return "a.p56ID IS NOT NULL"
+            Case BO.myQueryP31_QuickQuery.Is_Supplier
+                Return "a.p28ID_Supplier IS NOT NULL"
+            Case BO.myQueryP31_QuickQuery.Is_Budget
+                Return "a.p49ID IS NOT NULL"
+            Case BO.myQueryP31_QuickQuery.Is_p31Code
+                Return "a.p31Code IS NOT NULL"
+            Case BO.myQueryP31_QuickQuery.Is_GeneratedByRobot
+                Return "a.p31ID IN (SELECT p31ID_NewInstance FROM p39WorkSheet_Recurrence_Plan WHERE p31ID_NewInstance IS NOT NULL)"
             Case Else
                 Return ""
         End Select
