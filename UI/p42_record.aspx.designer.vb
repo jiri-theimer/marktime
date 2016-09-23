@@ -149,6 +149,24 @@ Partial Public Class p42_record
     Protected WithEvents p34ids As Global.System.Web.UI.WebControls.CheckBoxList
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p42ArchiveFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p42ArchiveFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

@@ -41,6 +41,7 @@
         Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project)
         Me.b01ID.DataBind()
 
+
         If Master.DataPID = 0 Then
             Return
         End If
@@ -56,6 +57,8 @@
             Me.p42IsDefault.Checked = .p42IsDefault
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
+
+            basUI.SelectDropdownlistValue(Me.p42ArchiveFlag, CInt(.p42ArchiveFlag).ToString)
 
             Dim lis As IEnumerable(Of BO.p43ProjectType_Workload) = Master.Factory.p42ProjectTypeBL.GetList_p43(Master.DataPID)
             basUI.CheckItems(Me.p34ids, lis.Select(Function(p) p.p34ID).ToList)
@@ -90,6 +93,7 @@
             cRec.p42IsDefault = Me.p42IsDefault.Checked
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
+            cRec.p42ArchiveFlag = CInt(Me.p42ArchiveFlag.SelectedValue)
 
             Dim mq As New BO.myQuery
             mq.AddItemToPIDs(-1)

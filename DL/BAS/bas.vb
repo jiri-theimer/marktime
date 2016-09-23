@@ -475,6 +475,12 @@
                 Return "a.p28ID NOT IN (SELECT p28ID_Client FROM p41Project WHERE p28ID_Client IS NOT NULL)"
             Case BO.myQueryP28_QuickQuery.SupplierSide
                 Return "a.p28SupplierFlag IN (2,3)"
+            Case BO.myQueryP28_QuickQuery.DuplicityInCompanyName
+                Return "lower(left(a.p28CompanyName,25)) IN (select lower(left(p28CompanyName,25)) FROM p28Contact where p28CompanyName is not null and p28ID<>a.p28ID)"
+            Case BO.myQueryP28_QuickQuery.DuplicityRegID
+                Return "lower(a.p28RegID) IN (select lower(p28RegID) FROM p28Contact where p28RegID is not null and p28ID<>a.p28ID)"
+            Case BO.myQueryP28_QuickQuery.DuplicityVatID
+                Return "lower(a.p28VatID) IN (select lower(p28VatID) FROM p28Contact where p28VatID is not null and p28ID<>a.p28ID)"
             Case Else
                 Return ""
         End Select

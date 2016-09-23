@@ -27,6 +27,7 @@
                 pars.Add("p42Code", .p42Code, DbType.String, , , True, "Kód")
                 pars.Add("p42Ordinary", .p42Ordinary, DbType.Int32)
                 pars.Add("p42IsDefault", .p42IsDefault, DbType.Boolean)
+                pars.Add("p42ArchiveFlag", CInt(.p42ArchiveFlag), DbType.Int32)
 
                 pars.Add("p42validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p42validuntil", .ValidUntil, DbType.DateTime)

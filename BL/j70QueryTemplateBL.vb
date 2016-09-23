@@ -93,6 +93,9 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(17, "Bez přiřazení kontaktních osob"))
                 lis.Add(New BO.OtherQueryItem(20, "Obsahují minimálně jeden notepad dokument"))
                 lis.Add(New BO.OtherQueryItem(21, "Vystupuje jako dodavatel"))
+                lis.Add(New BO.OtherQueryItem(22, "Duplicitní klienti podle prvních 25 písmen v názvu"))
+                lis.Add(New BO.OtherQueryItem(23, "Duplicitní klienti podle IČ"))
+                lis.Add(New BO.OtherQueryItem(24, "Duplicitní klienti podle DIČ"))
             Case BO.x29IdEnum.j02Person
                 lis.Add(New BO.OtherQueryItem(3, "Existují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Existují schválené úkony, které čekají na fakturaci"))

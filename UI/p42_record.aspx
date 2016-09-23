@@ -22,7 +22,7 @@
             </td>
             <td>
                 <uc:datacombo ID="x38ID" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
-                 <asp:Label ID="Label1" Text="Číselná řada DRAFT projektů:" runat="server" CssClass="lbl"></asp:Label>
+                <asp:Label ID="Label1" Text="Číselná řada DRAFT projektů:" runat="server" CssClass="lbl"></asp:Label>
                 <uc:datacombo ID="x38ID_Draft" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="200px"></uc:datacombo>
             </td>
         </tr>
@@ -61,14 +61,29 @@
 
     <div class="content-box2">
         <div class="title">
-            <asp:label ID="ph1" runat="server" Text="Povolené sešity pro vykazování" />
+            <asp:Label ID="ph1" runat="server" Text="Povolené sešity pro vykazování" />
         </div>
         <div class="content">
             <asp:CheckBoxList ID="p34ids" runat="server" AutoPostBack="false" DataValueField="pid" DataTextField="p34Name" RepeatColumns="3" CellPadding="8" CellSpacing="2"></asp:CheckBoxList>
         </div>
     </div>
-    
-    
+
+    <table cellpadding="3" cellspacing="2">
+        <tr>
+            <td>
+                <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Ochrana proti archivování projektu:"></asp:Label></td>
+            <td>
+                <asp:DropDownList ID="p42ArchiveFlag" runat="server">
+                    <asp:ListItem Text="Bez omezení" Value="0"></asp:ListItem>
+                    <asp:ListItem Text="Projekty nelze přesunout do archivu, pokud v něm existují nevyfakturované worksheet úkony" Value="1" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Projekty nelze přesunout do archivu, pokud v něm existují rozpracované worksheet úkony" Value="2"></asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
+    </table>
+
+
+
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

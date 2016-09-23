@@ -497,4 +497,19 @@
         Return _cDB.RunSP("p41_convertdraft", pars)
 
     End Function
+
+    Public Function ExistWaitingWorksheetForInvoicing(intPID As Integer) As Boolean
+        If _cDB.GetValueFromSQL("select top 1 p31ID FROM p31worksheet WHERE p41ID=" & intPID.ToString & " AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil") <> "" Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+    Public Function ExistWaitingWorksheetForApproving(intPID As Integer) As Boolean
+        If _cDB.GetValueFromSQL("select top 1 p31ID FROM p31worksheet WHERE p41ID=" & intPID.ToString & " AND p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil") <> "" Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 End Class

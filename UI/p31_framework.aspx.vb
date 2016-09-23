@@ -313,13 +313,7 @@ Public Class p31_framework
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP41)
         With mq
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
-                Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
-                End If
-            End If
+            
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .MG_GridSqlColumns = Me.hidCols.Value
             .MG_AdditionalSqlFROM = Me.hidFrom.Value

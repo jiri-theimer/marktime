@@ -20,6 +20,9 @@ Public Enum myQueryP28_QuickQuery
     WithoutProjects = 19
     WIthNotepad = 20
     SupplierSide = 21
+    DuplicityInCompanyName = 22
+    DuplicityRegID = 23
+    DuplicityVatID = 24
 End Enum
 Public Class myQueryP28
     Inherits myQuery
