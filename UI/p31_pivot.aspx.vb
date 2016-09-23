@@ -336,16 +336,32 @@ Public Class p31_pivot
 
     
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
-        With pivot1.ExportSettings
-            .FileName = "MARKTIME_PIVOT"
-            .IgnorePaging = True
+        GridExport("xls")
+       
 
-        End With
-        pivot1.ExportToExcel()
     End Sub
 
    
     Private Sub cmdRebind_Click(sender As Object, e As EventArgs) Handles cmdRebind.Click
         pivot1.Rebind()
+    End Sub
+
+    Private Sub GridExport(strFormat As String)
+        With pivot1.ExportSettings
+            .FileName = "MARKTIME_PIVOT"
+            .IgnorePaging = True
+            .OpenInNewWindow = True
+        End With
+        Select Case strFormat
+            Case "xls"
+                pivot1.ExportToExcel()
+            Case "doc"
+                pivot1.ExportToWord()
+        End Select
+       
+    End Sub
+
+    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
+        GridExport("doc")
     End Sub
 End Class

@@ -190,7 +190,10 @@ Public Class j02_framework_detail
             Else
                 lblJ18Name.Visible = True : Me.j18Name.Text = .j18Name
             End If
+            Me.TeamsInLine.Text = Master.Factory.j02PersonBL.GetTeamsInLine(.PID)
+            If Me.TeamsInLine.Text = "" Then lblTeams.Visible = False
         End With
+
 
         Dim mqO23 As New BO.myQueryO23
         mqO23.j02ID = Master.DataPID

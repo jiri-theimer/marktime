@@ -190,11 +190,14 @@ Public Class Site
         For Each c In lisJ62
             Dim n As New RadMenuItem(c.j62Name)
             n.NavigateUrl = c.j62Url
-            If n.NavigateUrl.IndexOf("?") > 0 Then
-                n.NavigateUrl += "&j62id=" & c.PID.ToString
-            Else
-                n.NavigateUrl += "?j62id=" & c.PID.ToString
+            If n.NavigateUrl.IndexOf("javascript") < 0 Then
+                If n.NavigateUrl.IndexOf("?") > 0 Then
+                    n.NavigateUrl += "&j62id=" & c.PID.ToString
+                Else
+                    n.NavigateUrl += "?j62id=" & c.PID.ToString
+                End If
             End If
+            
             n.ImageUrl = c.j62ImageUrl
             n.Target = c.j62Target
             n.Value = "hm" + c.PID.ToString

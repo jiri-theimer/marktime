@@ -335,7 +335,16 @@
 
                         </td>
                     </tr>
+                    <tr valign="top">
+                        <td>
+                            <asp:Label ID="lblTeams" runat="server" Text="Člen týmů:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td colspan="3">
+                            <asp:Label ID="TeamsInLine" runat="server" CssClass="valbold"></asp:Label>
 
+                        </td>
+                        
+                    </tr>
 
                 </table>
 

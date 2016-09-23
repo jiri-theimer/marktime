@@ -88,7 +88,7 @@
                 
                 <div style="margin-top:10px;">
                     <span><%=Resources.grid_designer.AutomatickyTriditPodle %> 1):</span>
-                    <asp:DropDownList ID="cbxOrderBy1" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnName"></asp:DropDownList>
+                    <asp:DropDownList ID="cbxOrderBy1" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnSqlSyntax_OrderBy"></asp:DropDownList>
                     <asp:DropDownList ID="cbxOrderBy1Dir" runat="server">
                         <asp:ListItem text="" Value=""></asp:ListItem>
                         <asp:ListItem text="<%$Resources:grid_designer,Sestupne %>" Value="DESC"></asp:ListItem>
@@ -96,7 +96,7 @@
                 </div>
                 <div>
                     <span><%=Resources.grid_designer.AutomatickyTriditPodle %> 2):</span>
-                    <asp:DropDownList ID="cbxOrderBy2" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnName"></asp:DropDownList>
+                    <asp:DropDownList ID="cbxOrderBy2" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnSqlSyntax_OrderBy"></asp:DropDownList>
                     <asp:DropDownList ID="cbxOrderBy2Dir" runat="server">
                         <asp:ListItem text="" Value=""></asp:ListItem>
                         <asp:ListItem text="<%$Resources:grid_designer,Sestupne %>" Value="DESC"></asp:ListItem>

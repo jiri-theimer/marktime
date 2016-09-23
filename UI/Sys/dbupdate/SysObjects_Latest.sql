@@ -6369,6 +6369,83 @@ if @is_access_edit=1 and @is_access_approve=1
 
 GO
 
+----------P---------------p31_remove_approve-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_remove_approve') and type = 'P')
+ drop procedure p31_remove_approve
+GO
+
+
+
+
+CREATE procedure [dbo].[p31_remove_approve]
+@guid varchar(50)
+,@j03id_sys int
+,@err_ret varchar(1000) OUTPUT
+AS
+
+---vyèištìní worksheet záznamù ze schvalování
+---vstupní úkony musí být uloženy v TEMPu - p85TempBox
+---p85Prefix='p31'
+---p31id - p85DataPID
+
+set @err_ret=''
+set @j03id_sys=isnull(@j03id_sys,0)
+set @guid=isnull(@guid,'')
+
+
+
+if @j03id_sys=0 or @guid=''
+ begin
+  set @err_ret='@guid or @j03id_sys missing!'
+  return
+ end
+
+if @err_ret<>''
+ return
+
+
+update p31WorkSheet set p71ID=null,p72ID_AfterApprove=null,p31Approved_When=null,p31Value_Approved_Billing=null,p31Value_Approved_Internal=null
+,p31Minutes_Approved_Billing=null,p31Hours_Approved_Billing=null,p31Hours_Approved_Internal=null,p31HHMM_Approved_Billing=null,p31HHMM_Approved_Internal=null
+,p31Rate_Billing_Approved=null,p31Rate_Internal_Approved=null
+,p31Amount_WithoutVat_Approved=null,p31Amount_WithVat_Approved=null,p31Amount_Vat_Approved=null,p31VatRate_Approved=null,p31Amount_Internal_Approved=null
+,j02ID_ApprovedBy=null
+where p31ID IN (select p85DataPID FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='p31') AND p91ID IS NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p31_remove_invoice-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_remove_invoice') and type = 'P')
@@ -7656,7 +7733,7 @@ if @p56id is not null
      select @real_hours=sum(p31Hours_Orig) FROM p31Worksheet WHERE p56ID=@p56id and p31ID<>@p31id
      
 	 if isnull(@real_hours,0)+@value_orig>@p56Plan_Hours
-	  set @err='Vykázané hodiny by pøekroèili plán hodin úkolu ['+convert(varchar(10),@p56Plan_Hours)+'h.].'
+	  set @err='Vykázané hodiny by pøekroèily plán hodin úkolu ['+convert(varchar(10),@p56Plan_Hours)+'h.].'
    end
    if @p56IsPlan_Expenses_Ceiling=1 and @p33id IN (2,5) and @p34IncomeStatementFlag=1
    begin
@@ -7698,7 +7775,7 @@ set @real_total=isnull(@real_total,0)
 
 if @p46ExceedFlag=2 AND @real_total+@value_orig>@p46HoursTotal
  begin
-  set @err='Vykázané hodiny by pøekroèili plán hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursTotal)+'h.).'
+  set @err='Vykázané hodiny by pøekroèily plán hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursTotal)+'h.).'
   return
  end
 
@@ -7707,13 +7784,13 @@ select @p32IsBillable=p32IsBillable FROM p32Activity WHERE p32ID=@p32id
 
 if @p46ExceedFlag IN (1,3) AND @p32IsBillable=1 AND @real_billable+@value_orig>@p46HoursBillable
  begin
-  set @err='Vykázané fakturovatelné hodiny by pøekroèili plán fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursBillable)+'h.).'
+  set @err='Vykázané fakturovatelné hodiny by pøekroèily plán fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursBillable)+'h.).'
   return
  end
 
 if @p46ExceedFlag IN (1,4) AND @p32IsBillable=0 AND @real_nonbillable+@value_orig>@p46HoursNonBillable
  begin
-  set @err='Vykázané ne-fakturovatelné hodiny by pøekroèili plán ne-fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursNonBillable)+'h.).'
+  set @err='Vykázané ne-fakturovatelné hodiny by pøekroèily plán ne-fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursNonBillable)+'h.).'
   return
  end
 

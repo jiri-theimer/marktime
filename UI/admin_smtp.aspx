@@ -10,14 +10,19 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <asp:Label ID="Label2" runat="server" Text="E-mail adresa odesílatele:"></asp:Label>
+        <asp:Label ID="Label2" runat="server" Text="Globální e-mail adresa odesílatele:"></asp:Label>
         <asp:TextBox ID="SMTP_SenderAddress" runat="server" Style="width: 150px;"></asp:TextBox>
+
+    </div>
+    <div class="div6">
+        <asp:CheckBox ID="SMTP_SenderIsUser" runat="server" Text="Adresa odesílatele bude e-mail přihlášeného uživatele" />
     </div>
     <div class="div6">
         <asp:Label ID="Label1" runat="server" Text="Aplikační adresa (Host URL):"></asp:Label>
         <asp:TextBox ID="AppHost" runat="server" Style="width: 300px;"></asp:TextBox>
         <span class="infoInForm">Tato URL adresa se bude zobrazovat v notifikačních zprávách</span>
     </div>
+    <fieldset>        
     <div class="div6">
         <asp:CheckBox ID="chkIsSMTP_UseWebConfigSetting" runat="server" Text="Používat výchozí SMTP server z globálního nastavení (web.config)" AutoPostBack="true"></asp:CheckBox>
 
@@ -26,14 +31,23 @@
         <table cellpadding="3" cellspacing="2">
             <tr>
                 <td>
-                    <asp:Label ID="Datalabel1" runat="server" Text="Výchozí SMTP server:"></asp:Label>
+                    <asp:Label ID="Datalabel1" runat="server" Text="SMTP server:"></asp:Label>
                 </td>
                 <td>
                     <asp:Label ID="default_server" runat="server" CssClass="valbold"></asp:Label>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <asp:Label ID="Label3" runat="server" Text="Adresa odesílatele:"></asp:Label>
+                </td>
+                <td>
+                    <asp:Label ID="default_sender" runat="server" CssClass="valbold"></asp:Label>
+                </td>
+            </tr>
         </table>
     </asp:Panel>
+    </fieldset>
 
 
     <asp:Panel ID="panRec" runat="server">

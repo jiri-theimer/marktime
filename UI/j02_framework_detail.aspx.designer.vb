@@ -221,6 +221,24 @@ Partial Public Class j02_framework_detail
     Protected WithEvents c21Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblTeams control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblTeams As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''TeamsInLine control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TeamsInLine As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Mediums control.
     '''</summary>
     '''<remarks>

@@ -59,13 +59,13 @@ Partial Public Class p31_pivot
     Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''menu1 control.
+    '''cbxPaging control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cmdRebind control.
@@ -86,22 +86,13 @@ Partial Public Class p31_pivot
     Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''lblPaging control.
+    '''cmdDOC control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblPaging As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cbxPaging control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''panQueryByEntity control.

@@ -49,11 +49,12 @@ Public Class basUIMT
 
                     If Not c Is Nothing Then
                         .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
-                        If c.ColumnDBName = "" Then
-                            lisSqlSEL.Add(c.ColumnName)
-                        Else
-                            lisSqlSEL.Add(c.ColumnDBName & " AS " & c.ColumnName)
-                        End If
+                        lisSqlSEL.Add(c.ColumnSqlSyntax_Select)
+                        ''If c.ColumnDBName = "" Then
+                        ''    lisSqlSEL.Add(c.ColumnName)
+                        ''Else
+                        ''    lisSqlSEL.Add(c.ColumnDBName & " AS " & c.ColumnName)
+                        ''End If
                         If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
                     End If
                 Next

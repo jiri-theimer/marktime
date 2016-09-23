@@ -28,7 +28,18 @@
                 menu1.FindItemByValue("p91_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
                 menu1.FindItemByValue("p28_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator)
                 menu1.FindItemByValue("o23_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)
-                menu1.FindItemByValue("p56_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P56_Creator)
+
+                menu1.FindItemByValue("p56_create").Visible = False
+                If .TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
+                    menu1.FindItemByValue("p56_create").Visible = True
+                Else
+                    Dim lis As IEnumerable(Of BO.x67EntityRole) = .j02PersonBL.GetList_AllAssignedEntityRoles(.SysUser.j02ID, BO.x29IdEnum.p41Project)
+                    For Each c In lis
+                        If .x67EntityRoleBL.GetList_BoundX53(c.PID).Where(Function(p) p.x53Value = BO.x53PermValEnum.PR_P56_Creator).Count > 0 Then
+                            menu1.FindItemByValue("p56_create").Visible = True : Exit For
+                        End If
+                    Next
+                End If
                 menu1.FindItemByValue("admin").Visible = .SysUser.IsAdmin
                 menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
                 menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
@@ -257,7 +268,7 @@
         Dim s As String = "select round(sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end),2) as HodinyFa,round(sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end),2) as HodinyNeFa,convert(varchar(10),p31Date,104) as Datum FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID WHERE a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date ORDER BY a.p31Date"
 
         Dim pars As New List(Of BO.PluginDbParameter)
-        pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-5)))
+        pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-10)))
         pars.Add(New BO.PluginDbParameter("d2", Today.AddDays(1)))
         pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)

@@ -32,6 +32,15 @@ Partial Public Class admin_smtp
     Protected WithEvents SMTP_SenderAddress As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''SMTP_SenderIsUser control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SMTP_SenderIsUser As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>
@@ -84,6 +93,24 @@ Partial Public Class admin_smtp
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents default_server As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''default_sender control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents default_sender As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''panRec control.

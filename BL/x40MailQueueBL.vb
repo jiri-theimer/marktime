@@ -174,10 +174,17 @@ Class x40MailQueueBL
     Public Overloads Function SendMessageFromQueque(cRec As BO.x40MailQueue) As Boolean Implements Ix40MailQueueBL.SendMessageFromQueque
         _Error = ""
         Dim recipients As IEnumerable(Of BO.x43MailQueue_Recipient) = _cDL.GetList_Recipients(cRec.PID)
+        Dim strGlobalSenderAddress As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
+        Dim strSenderIsUser As String = Me.Factory.x35GlobalParam.GetValueString("SMTP_SenderIsUser")
 
         Dim mail As MailMessage = New MailMessage()
         With mail
-            .From = New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName)
+            If strSenderIsUser = "1" Then
+                .From = New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName)
+            Else
+                .From = New MailAddress(strGlobalSenderAddress, cRec.x40SenderName)
+                .ReplyToList.Add(New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName))
+            End If
             .Body = cRec.x40Body
             .IsBodyHtml = cRec.x40IsHtmlBody
             .Subject = cRec.x40Subject
@@ -229,6 +236,7 @@ Class x40MailQueueBL
                 Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
                 If cPerson.j02SmtpServer <> "" Then
                     'osoba má vlastní SMTP účet
+                    mail.From = New MailAddress(_cUser.PersonEmail, _cUser.Person)
                     Dim basicAuthenticationInfo As New System.Net.NetworkCredential()
                     If cPerson.j02IsSmtpVerify Then
                         basicAuthenticationInfo = New System.Net.NetworkCredential(cPerson.j02SmtpLogin, BO.Crypto.Decrypt(cPerson.j02SmtpPassword, "hoVaDo7Ivan1"), "")

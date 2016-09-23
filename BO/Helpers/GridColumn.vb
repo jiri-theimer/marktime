@@ -31,6 +31,25 @@ Public Class GridColumn
         Me.IsSortable = bolSortable
     End Sub
 
+
+    Public ReadOnly Property ColumnSqlSyntax_OrderBy As String
+        Get
+            If Me.ColumnDBName <> "" Then
+                Return Me.ColumnDBName
+            Else
+                Return Me.ColumnName
+            End If
+        End Get
+    End Property
+    Public ReadOnly Property ColumnSqlSyntax_Select As String
+        Get
+            If Me.ColumnDBName = "" Then
+                Return Me.ColumnName
+            Else
+                Return Me.ColumnDBName & " AS " & Me.ColumnName
+            End If
+        End Get
+    End Property
     
 End Class
 
@@ -58,4 +77,6 @@ Public Class GridGroupByColumn
 
         End Get
     End Property
+
+    
 End Class

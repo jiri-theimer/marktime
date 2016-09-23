@@ -30,8 +30,11 @@ Public Class admin_smtp
             With settings.Smtp.Network
                 default_server.Text = .Host
             End With
-
+            With settings.Smtp
+                default_sender.Text = .From
+            End With
         End If
+
 
         With Master.Factory.x35GlobalParam
             Me.AppHost.Text = .GetValueString("AppHost")
@@ -45,7 +48,7 @@ Public Class admin_smtp
             Me.SMTP_Login.Text = .GetValueString("SMTP_Login")
             Me.SMTP_IsVerify.Checked = BO.BAS.BG(.GetValueString("SMTP_IsVerify", "0"))
             Me.SMTP_Password.Text = .GetValueString("SMTP_Password")
-
+            Me.SMTP_SenderIsUser.Checked = BO.BAS.BG(.GetValueString("SMTP_SenderIsUser", "0"))
         End With
 
     End Sub
@@ -100,6 +103,11 @@ Public Class admin_smtp
                 cRec = .Load("AppHost")
                 cRec.x35Value = Me.AppHost.Text
                 .Save(cRec)
+
+                cRec = .Load("SMTP_SenderIsUser", True)
+                cRec.x35Value = BO.BAS.GB(Me.SMTP_SenderIsUser.Checked)
+                .Save(cRec)
+
 
             End With
             Master.CloseAndRefreshParent("smtp")

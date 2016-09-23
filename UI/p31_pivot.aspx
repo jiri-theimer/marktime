@@ -69,41 +69,26 @@
                     <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
 
                 </td>
-
-                <td style="padding-left: 40px;">
-                    <telerik:RadMenu ID="menu1" RenderMode="Lightweight" Skin="Silk" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
-                        <Items>
-                            
-                            <telerik:RadMenuItem Text="Další" ImageUrl="Images/more.png" PostBack="false">
-                                <ContentTemplate>
-                                    <div style="padding: 20px;">
-                                        <div class="div6">
-                                            <img src="Images/refresh.png" />
-                                            <asp:LinkButton ID="cmdRebind" runat="server" Text="Obnovit výstup sestavy." />
-                                        </div>
-                                        <div class="div6">
-                                            <img src="Images/export.png" />
-                                            <asp:LinkButton ID="cmdExport" runat="server" Text="Export do MS EXCEL." />
-                                        </div>
-                                        <div class="div6">
-                                            <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
+                <td style="text-align: left;padding-left:20px;">
+                    
                                             <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování PIVOT výstupu">
                                                 <asp:ListItem Text="5"></asp:ListItem>
                                                 <asp:ListItem Text="10"></asp:ListItem>
                                                 <asp:ListItem Text="20" Selected="true"></asp:ListItem>
                                                 <asp:ListItem Text="50"></asp:ListItem>
-
                                             </asp:DropDownList>
-                                        </div>
-                                        <p></p>
+                </td>
+                <td style="text-align:left;">
+                    <img src="Images/refresh.png" />
+                                            <asp:LinkButton ID="cmdRebind" runat="server" Text="Obnovit." />
+                </td>
+                <td style="padding-left: 20px;">
+                    <img src="Images/export.png" />
+                    <asp:LinkButton ID="cmdExport" runat="server" Text="MS EXCEL." />
+                    <img src="Images/doc.png" alt="doc" />
+                    <asp:LinkButton ID="cmdDOC" runat="server" Text="MS WORD" />
 
-                                    </div>
-                                </ContentTemplate>
-
-                            </telerik:RadMenuItem>
-
-                        </Items>
-                    </telerik:RadMenu>
+                    
                 </td>
             </tr>
         </table>
@@ -342,7 +327,7 @@
 
 
     
-    <telerik:RadPivotGrid runat="server" ID="pivot1" AllowPaging="true" ShowColumnHeaderZone="false" AllowSorting="false" AllowFiltering="false" ShowFilterHeaderZone="false" AllowNaturalSort="false" Skin="Silk">
+    <telerik:RadPivotGrid runat="server" ID="pivot1" AllowPaging="true" ShowColumnHeaderZone="false" AllowSorting="false" AllowFiltering="false" ShowFilterHeaderZone="false" AllowNaturalSort="false" Skin="Metro">
         <DataCellStyle BackColor="white" />
         <PagerStyle Mode="NextPrevAndNumeric" AlwaysVisible="false"></PagerStyle>
         <Fields>
