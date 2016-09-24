@@ -2816,6 +2816,10 @@
       <Project>{2081B1EA-B426-4107-898F-E953AECD89AA}</Project>
       <Name>BO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TelerikReportingBAS\TelerikReportingBAS.vbproj">
+      <Project>{bd292f09-a7a7-4050-98ec-28ce7f01d9c5}</Project>
+      <Name>TelerikReportingBAS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
