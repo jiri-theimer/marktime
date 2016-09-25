@@ -56,23 +56,37 @@
 
         function report() {
             
-            sw_local("report_modal.aspx?prefix=p41&pid=<%=Master.DataPID%>","Images/reporting.png",true);
+            sw_decide("report_modal.aspx?prefix=p41&pid=<%=Master.DataPID%>","Images/reporting.png",true);
 
         }
 
+        function sw_decide(url, iconUrl, is_maximize) {
+            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+            var h = screen.availHeight;
+
+            if ((w < 901 || h < 800) && w>0) {
+                window.parent.sw_master(url, iconUrl);
+                return;
+            }                
+
+            if (w < 910)
+                is_maximize = true;
+            
+            sw_local(url, iconUrl, is_maximize);
+        }
         
         
         
         function p31_entry_menu(p34id) {
             ///z menu1           
-            sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
+            sw_decide("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
             
 
         }
 
         function record_new() {
             
-            sw_local("p41_create.aspx?client_family=1&pid=<%=Master.DataPID%>","Images/project.png",true);
+            sw_decide("p41_create.aspx?client_family=1&pid=<%=Master.DataPID%>","Images/project.png",true);
 
         }
 
@@ -82,7 +96,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p41_record.aspx?pid=" + pid,"Images/project.png",true);
+            sw_decide("p41_record.aspx?pid=" + pid,"Images/project.png",true);
 
         }
         
@@ -93,7 +107,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p41_create.aspx?clone=1&pid=" + pid,"Images/project.png",true);
+            sw_decide("p41_create.aspx?clone=1&pid=" + pid,"Images/project.png",true);
 
         }
 
@@ -118,32 +132,32 @@
 
         function o23_record(pid) {
             
-            sw_local("o23_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad.png",true);
+            sw_decide("o23_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad.png",true);
 
         }
         function o22_record(pid) {
             
-            sw_local("o22_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar.png",true);
+            sw_decide("o22_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar.png",true);
 
         }
         function p56_record(pid,bolReturnFalse) {
-            sw_local("p56_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/task.png",true);
+            sw_decide("p56_record.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/task.png",true);
             if (bolReturnFalse==true)
                 return(false)
         }
         
         
         function p31_move2bin(){            
-            sw_local("p31_move2bin.aspx?prefix=p41&pid=<%=master.datapid%>","Images/bin.png",true);
+            sw_decide("p31_move2bin.aspx?prefix=p41&pid=<%=master.datapid%>","Images/bin.png",true);
         }
         function p31_move2project(){            
-            sw_local("p31_move2project.aspx?prefix=p41&pid=<%=master.datapid%>","Images/cut.png",true);
+            sw_decide("p31_move2project.aspx?prefix=p41&pid=<%=master.datapid%>","Images/cut.png",true);
         }
         function p31_recalc(){            
-            sw_local("p31_recalc.aspx?prefix=p41&pid=<%=master.datapid%>","Images/recalc.png",true);
+            sw_decide("p31_recalc.aspx?prefix=p41&pid=<%=master.datapid%>","Images/recalc.png",true);
         }
         function timeline(){            
-            sw_local("entity_timeline.aspx?prefix=p41&pid=<%=master.datapid%>","Images/timeline.png",true);
+            sw_decide("entity_timeline.aspx?prefix=p41&pid=<%=master.datapid%>","Images/timeline.png",true);
         }
         function approve(){            
             window.parent.sw_master("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
@@ -164,7 +178,7 @@
             window.open("entity_scheduler.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
         }
         function p40_record(p40id){            
-            sw_local("p40_record.aspx?p41id=<%=master.datapid%>&pid="+p40id,"Images/worksheet_recurrence.png",true);
+            sw_decide("p40_record.aspx?p41id=<%=master.datapid%>&pid="+p40id,"Images/worksheet_recurrence.png",true);
         }
         
         function p48_plan(){            
@@ -172,20 +186,20 @@
         }
 
         function workflow(){            
-            sw_local("workflow_dialog.aspx?prefix=p41&pid=<%=master.datapid%>","Images/workflow.png",false);
+            sw_decide("workflow_dialog.aspx?prefix=p41&pid=<%=master.datapid%>","Images/workflow.png",false);
         }
 
         
         
         function p31_recurrence_record(pid) {            
-            sw_local("p31_record.aspx?pid="+pid,"Images/worksheet.png");
+            sw_decide("p31_record.aspx?pid="+pid,"Images/worksheet.png");
 
         }
         function p30_binding() {            
-            sw_local("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>","Images/person.png",false);
+            sw_decide("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>","Images/person.png",false);
         }
         function p30_record(pid) {            
-            sw_local("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/person.png",true);
+            sw_decide("p30_binding.aspx?masterprefix=p41&masterpid=<%=master.datapid%>&pid="+pid,"Images/person.png",true);
         }
         
         function draft2normal() {
@@ -215,7 +229,7 @@
         }
         function b07_record() {
 
-            sw_local("b07_create.aspx?masterprefix=p41&masterpid=<%=master.datapid%>", "Images/comment.png", true);
+            sw_decide("b07_create.aspx?masterprefix=p41&masterpid=<%=master.datapid%>", "Images/comment.png", true);
 
         }
         function OnClientTabSelected(sender, eventArgs)
@@ -236,7 +250,7 @@
                 
         }
         function page_setting(){
-            sw_local("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting.png",false);
+            sw_decide("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting.png",false);
         }
         function stoploading(){            
             document.getElementById("<%=me.imgLoading.clientid%>").style.display="none";
@@ -519,6 +533,7 @@
 
     <asp:HiddenField ID="hidIsBin" runat="server" />
     <asp:HiddenField ID="hidIsCanApprove" runat="server" />
+    <asp:HiddenField ID="hidParentWidth" runat="server" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

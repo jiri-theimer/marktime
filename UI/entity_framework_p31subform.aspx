@@ -20,7 +20,7 @@
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
             
-            window.parent.sw_local("p31_record.aspx?pid=" + pid, "Images/worksheet.png",false);
+            window.parent.sw_decide("p31_record.aspx?pid=" + pid, "Images/worksheet.png",false);
 
         }
         function p31_clone() {
@@ -41,7 +41,7 @@
                 alert("Musíte vybrat záznam")
                 return (false);
             }
-            window.parent.sw_local("p31_record_split.aspx?pid=" + pid, "Images/split.png", false);
+            window.parent.sw_decide("p31_record_split.aspx?pid=" + pid, "Images/split.png", false);
             return (false);
         }
         function p31_entry() {
@@ -50,23 +50,23 @@
             <%if Me.CurrentMasterPrefix="p41" then%>
             p41id = "<%=me.CurrentMasterPID%>";
             <%End If%>
-            window.parent.sw_local("p31_record.aspx?pid=0&p41id="+p41id, "Images/worksheet.png", false);
+            window.parent.sw_decide("p31_record.aspx?pid=0&p41id="+p41id, "Images/worksheet.png", false);
             return (false);
         }
         function p31_subgrid_setting(j74id) {
             ///volá se z p31_subgrid
-            window.parent.sw_local("grid_designer.aspx?prefix=p31&masterprefix=p41&pid=" + j74id, "Images/griddesigner_32.png", true);
+            window.parent.sw_decide("grid_designer.aspx?prefix=p31&masterprefix=p41&pid=" + j74id, "Images/griddesigner_32.png", true);
 
         }
         function p31_subgrid_approving(pids) {
             window.parent.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
         }
         function p31_subgrid_querybuilder(j70id) {           
-            window.parent.sw_local("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query_32.png", true);
+            window.parent.sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query_32.png", true);
            
         }
         function p31_subgrid_periodcombo() {
-            window.parent.sw_local("periodcombo_setting.aspx", "Images/settings_32.png");
+            window.parent.sw_decide("periodcombo_setting.aspx", "Images/settings_32.png");
         }
     </script>
 </asp:Content>

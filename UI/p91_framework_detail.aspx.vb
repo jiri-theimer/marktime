@@ -11,6 +11,7 @@ Public Class p91_framework_detail
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
         If Not Page.IsPostBack Then
+            Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneInvoicePage <> "" Then
@@ -42,7 +43,7 @@ Public Class p91_framework_detail
                     End If
                 End If
 
-                
+
             End With
 
             RefreshRecord()

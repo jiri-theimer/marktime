@@ -163,7 +163,7 @@ Public Class entity_framework
             If Me.CurrentMasterPID = 0 Then
                 Handle_DefaultSelectedRecord()
             Else
-                Me.contentPane.ContentUrl = "entity_framework_detail_missing.aspx?prefix=" & Me.CurrentPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString & "&masterprefix=" & Me.CurrentMasterPrefix
+                Me.hidContentPaneDefUrl.Value = "entity_framework_detail_missing.aspx?prefix=" & Me.CurrentPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString & "&masterprefix=" & Me.CurrentMasterPrefix
             End If
 
 
@@ -698,7 +698,7 @@ Public Class entity_framework
     
 
     Private Sub Handle_DefaultSelectedRecord()
-        Me.contentPane.ContentUrl = Me.CurrentPrefix + "_framework_detail.aspx"
+        Me.hidContentPaneDefUrl.Value = Me.CurrentPrefix + "_framework_detail.aspx?nic=1"
 
         Dim intSelPID As Integer = 0
         If Not Page.IsPostBack Then
@@ -795,10 +795,10 @@ Public Class entity_framework
                 Next
             End If
             
-            Me.contentPane.ContentUrl = Me.CurrentPrefix + "_framework_detail.aspx?pid=" & intSelPID.ToString   'v detailu ho vybereme nezávisle na tom, zda byl nalezen v gridu
+            Me.hidContentPaneDefUrl.Value = Me.CurrentPrefix + "_framework_detail.aspx?pid=" & intSelPID.ToString   'v detailu ho vybereme nezávisle na tom, zda byl nalezen v gridu
         End If
         If Request.Item("force") <> "" Then
-            Me.contentPane.ContentUrl += "&force=" & Request.Item("force")
+            Me.hidContentPaneDefUrl.Value += "&force=" & Request.Item("force")
         End If
     End Sub
 

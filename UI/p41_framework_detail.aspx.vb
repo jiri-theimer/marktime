@@ -41,6 +41,7 @@ Public Class p41_framework_detail
         End With
         If Not Page.IsPostBack Then
             ViewState("p28id_client") = ""
+            Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
                 If Request.Item("tab") <> "" Then
                     .Factory.j03UserBL.SetUserParam("p41_framework_detail-subgrid", Request.Item("tab"))
@@ -311,7 +312,7 @@ Public Class p41_framework_detail
         End If
 
         If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=p41&pid={0}','Images/label_32.png',false);", cRec.PID)
+            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p41&pid={0}','Images/label_32.png',false);", cRec.PID)
             labels1.RefreshData(BO.x29IdEnum.p41Project, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p41Project, cRec.PID))
         Else
             boxX18.Visible = False

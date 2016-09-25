@@ -59,18 +59,32 @@
 
         });
 
+        function sw_decide(url, iconUrl, is_maximize) {
+            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+            var h = screen.availHeight;
+
+            if ((w < 901 || h < 800) && w>0) {
+                window.parent.sw_master(url, iconUrl);
+                return;
+            }                
+
+            if (w < 910)
+                is_maximize = true;
+            
+            sw_local(url, iconUrl, is_maximize);
+        }
       
 
         function record_new() {
             
-            sw_local("p56_record.aspx?pid=0&p41id=<%=Me.CurrentP41ID%>","Images/task_32.png",true);
+            sw_decide("p56_record.aspx?pid=0&p41id=<%=Me.CurrentP41ID%>","Images/task_32.png",true);
 
         }
 
       
         function report() {
             
-            sw_local("report_modal.aspx?prefix=p56&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
+            sw_decide("report_modal.aspx?prefix=p56&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
 
         }
 
@@ -80,7 +94,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p56_record.aspx?pid=" + pid,"Images/task_32.png",true);
+            sw_decide("p56_record.aspx?pid=" + pid,"Images/task_32.png",true);
 
         }
         
@@ -91,7 +105,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p56_record.aspx?clone=1&pid=" + pid,"Images/task_32.png",true);
+            sw_decide("p56_record.aspx?clone=1&pid=" + pid,"Images/task_32.png",true);
 
         }
 
@@ -114,7 +128,7 @@
 
         function p31_entry() {
             ///volá se z p31_subgrid
-            sw_local("p31_record.aspx?pid=0&p56id=<%=master.DataPID%>","Images/worksheet_32.png",true);
+            sw_decide("p31_record.aspx?pid=0&p56id=<%=master.DataPID%>","Images/worksheet_32.png",true);
             return(false);
 
         }
@@ -122,12 +136,12 @@
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?clone=1&pid="+pid,"Images/worksheet_32.png",true);
+            sw_decide("p31_record.aspx?clone=1&pid="+pid,"Images/worksheet_32.png",true);
             return(false);
         }
         function p31_entry_menu(p34id) {
             ///z menu1
-            sw_local("p31_record.aspx?pid=0&p56id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet_32.png",true);
+            sw_decide("p31_record.aspx?pid=0&p56id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet_32.png",true);
             
 
         }
@@ -144,33 +158,33 @@
 
         function record_p31_edit() {
             var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?pid="+pid,"Images/worksheet_32.png");
+            sw_decide("p31_record.aspx?pid="+pid,"Images/worksheet_32.png");
 
         }
 
         function p31_subgrid_setting(j74id) {
           
-            sw_local("grid_designer.aspx?prefix=p31&masterprefix=p56&pid="+j74id, "Images/griddesigner_32.png",true);
+            sw_decide("grid_designer.aspx?prefix=p31&masterprefix=p56&pid="+j74id, "Images/griddesigner_32.png",true);
         }
         function p56_subgrid_setting(j74id) {
             ///volá se z p56_subgrid
-            sw_local("grid_designer.aspx?prefix=p56&masterprefix=p56&pid="+j74id, "Images/griddesigner_32.png",true);
+            sw_decide("grid_designer.aspx?prefix=p56&masterprefix=p56&pid="+j74id, "Images/griddesigner_32.png",true);
         }
         
 
         function o23_record(pid) {
             
-            sw_local("o23_record.aspx?masterprefix=p56&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
+            sw_decide("o23_record.aspx?masterprefix=p56&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
 
         }
         
         function b07_record() {
             
-            sw_local("b07_create.aspx?masterprefix=p56&masterpid=<%=master.datapid%>","Images/comment_32.png",true);
+            sw_decide("b07_create.aspx?masterprefix=p56&masterpid=<%=master.datapid%>","Images/comment_32.png",true);
 
         }
         function b07_reaction(b07id) {
-            sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=p56&masterpid=<%=master.datapid%>","Images/comment_32.png", true)
+            sw_decide("b07_create.aspx?parentpid="+b07id+"&masterprefix=p56&masterpid=<%=master.datapid%>","Images/comment_32.png", true)
            
         }
 
@@ -180,7 +194,7 @@
         }
 
         function workflow(){            
-            sw_local("workflow_dialog.aspx?prefix=p56&pid=<%=master.datapid%>","Images/workflow_32.png",false);
+            sw_decide("workflow_dialog.aspx?prefix=p56&pid=<%=master.datapid%>","Images/workflow_32.png",false);
         }
         function p31_grid(){            
             window.open("p31_grid.aspx?masterprefix=p56&masterpid=<%=Master.DataPID%>","_top")
@@ -471,6 +485,7 @@
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
     <asp:HiddenField ID="hidCurP41ID" runat="server" />
     <asp:HiddenField ID="hidIsBin" runat="server" />
+    <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 

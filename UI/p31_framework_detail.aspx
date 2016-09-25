@@ -13,26 +13,34 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-           
-
-
 
         });
 
+        function sw_decide(url, iconUrl, is_maximize) {
+            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+            var h = screen.availHeight;
+
+            if ((w < 901 || h < 800) && w>0) {
+                window.parent.sw_master(url, iconUrl);
+                return;
+            }                
+
+            if (w < 910)
+                is_maximize = true;
+            
+            sw_local(url, iconUrl, is_maximize);
+        }
         
         function p31_entry() {
             var p41id = <%=me.p41ID.ClientID%>_get_value();
-            var b = false;
-            if (screen.availWidth < 1300 || screen.availHeight<800)
-                b = true;
-
-            sw_local("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id="+p41id, "Images/worksheet.png",b);
+            
+            sw_decide("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id=" + p41id, "Images/worksheet.png");
             return (false);
         }
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png", true);
+            sw_decide("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png");
             return (false);
         }
 
@@ -67,12 +75,12 @@
 
         function record_p31_edit() {
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_local("p31_record.aspx?pid=" + pid, "Images/worksheet.png");
+            sw_decide("p31_record.aspx?pid=" + pid, "Images/worksheet.png");
 
         }
 
         function p31_subgrid_setting(j74id) {
-            sw_local("grid_designer.aspx?prefix=p31&masterprefix=j02&pid=" + j74id, "Images/griddesigner.png", true);
+            sw_decide("grid_designer.aspx?prefix=p31&masterprefix=j02&pid=" + j74id, "Images/griddesigner.png",true);
 
         }
 
@@ -96,7 +104,7 @@
 
         function report() {
             
-            sw_local("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting.png", true);
+            sw_decide("report_modal.aspx?prefix=j02&pid=<%=me.j02id.selectedvalue%>", "Images/reporting.png", true);
 
         }
 
@@ -182,5 +190,6 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
+    <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

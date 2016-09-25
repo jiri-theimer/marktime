@@ -50,6 +50,10 @@
 
             sender.set_height(h3);
 
+            var pane = sender.getPaneById("<%=contentPane.ClientID%>");
+            document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();            
+            pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value+"&parentWidth=" + pane.get_width());
+
         }
 
 
@@ -61,7 +65,7 @@
             var splitter = $find("<%= RadSplitter1.ClientID %>");
             var pane = splitter.getPaneById("<%=contentPane.ClientID%>");            
 
-            pane.set_contentUrl("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
+            pane.set_contentUrl("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&parentWidth=" + pane.get_width());
             
 
         }
@@ -289,6 +293,8 @@
             <asp:HiddenField ID="hidMasterPID" runat="server" />
             <asp:HiddenField ID="hidCols" runat="server" />
             <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
+            <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
+            <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
                         
             <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
         </telerik:RadPane>

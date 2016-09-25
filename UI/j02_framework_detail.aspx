@@ -76,16 +76,31 @@
             document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
         }
 
+        function sw_decide(url, iconUrl, is_maximize) {
+            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+            var h = screen.availHeight;
+
+            if ((w < 901 || h < 800) && w>0) {
+                window.parent.sw_master(url, iconUrl);
+                return;
+            }                
+
+            if (w < 910)
+                is_maximize = true;
+            
+            sw_local(url, iconUrl, is_maximize);
+        }
+
         function report() {
             
-            sw_local("report_modal.aspx?prefix=j02&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
+            sw_decide("report_modal.aspx?prefix=j02&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
 
         }
       
 
         function record_new() {
             
-            sw_local("j02_record.aspx?pid=0","Images/person_32.png",true);
+            sw_decide("j02_record.aspx?pid=0","Images/person_32.png",true);
 
         }
 
@@ -95,7 +110,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("j02_record.aspx?pid=" + pid,"Images/person_32.png",true);
+            sw_decide("j02_record.aspx?pid=" + pid,"Images/person_32.png",true);
 
         }
         
@@ -106,7 +121,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("j02_record.aspx?clone=1&pid=" + pid,"Images/person_32.png",true);
+            sw_decide("j02_record.aspx?clone=1&pid=" + pid,"Images/person_32.png",true);
 
         }
 
@@ -130,33 +145,33 @@
 
         function o23_record(pid) {
             
-            sw_local("o23_record.aspx?masterprefix=j02&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
+            sw_decide("o23_record.aspx?masterprefix=j02&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
 
         }
 
         function j03_create() {            
-            sw_local("j03_create.aspx?j02id=<%=master.datapid%>","Images/user_32.png",true);
+            sw_decide("j03_create.aspx?j02id=<%=master.datapid%>","Images/user_32.png",true);
         }
 
         function j03_edit() {            
-            sw_local("j03_record.aspx?pid=<%=Me.CurrentJ03ID%>","Images/user_32.png",true);
+            sw_decide("j03_record.aspx?pid=<%=Me.CurrentJ03ID%>","Images/user_32.png",true);
         }
 
         function j05_record(j05id) {
             
-            sw_local("j05_record.aspx?pid="+j05id,"Images/masterslave_32.png",false);
+            sw_decide("j05_record.aspx?pid="+j05id,"Images/masterslave_32.png",false);
 
         }
 
         function o22_record(pid) {
             
-            sw_local("o22_record.aspx?masterprefix=j02&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar_32.png",true);
+            sw_decide("o22_record.aspx?masterprefix=j02&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar_32.png",true);
 
         }
 
       
         function timeline(){            
-            sw_local("entity_timeline.aspx?prefix=j02&pid=<%=master.datapid%>","Images/timeline_32.png",true);
+            sw_decide("entity_timeline.aspx?prefix=j02&pid=<%=master.datapid%>","Images/timeline_32.png",true);
         }
        
         
@@ -212,7 +227,7 @@
                 
         }
         function page_setting(){
-            sw_local("entity_framework_detail_setting.aspx?prefix=j02", "Images/setting_32.png",false);
+            sw_decide("entity_framework_detail_setting.aspx?prefix=j02", "Images/setting_32.png",false);
         }
         function stoploading(){            
             document.getElementById("<%=me.imgLoading.clientid%>").style.display="none";
@@ -491,6 +506,7 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidIsBin" runat="server" />
+    <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 

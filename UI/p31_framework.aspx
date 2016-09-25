@@ -24,6 +24,8 @@
                 $(".slidingDiv1").slideToggle();
             });
 
+            
+
         });
 
         function loadSplitter(sender) {
@@ -41,7 +43,11 @@
             h3 = h1 - h2;
 
             sender.set_height(h3);
-
+            
+            
+            var pane = sender.getPaneById("<%=contentPane.ClientID%>");            
+            pane.set_contentUrl("p31_framework_detail.aspx?parentWidth=" + pane.get_width());
+            
         }
 
 
@@ -233,15 +239,15 @@
             <asp:HiddenField ID="hidReceiversInLine" runat="server" />
             <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
             <asp:HiddenField ID="hidCols" runat="server" />
-            <asp:HiddenField ID="hidFrom" runat="server" />
+            <asp:HiddenField ID="hidFrom" runat="server" />            
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>
-        <telerik:RadPane ID="contentPane" runat="server" ContentUrl="p31_framework_detail.aspx">
+        <telerik:RadPane ID="contentPane" runat="server">
             Detail projektu
         </telerik:RadPane>
         <telerik:RadPane ID="rightPane" runat="server" Width="350px" ContentUrl="blank.aspx">
-            Časovač
+            Stopky
         </telerik:RadPane>
     </telerik:RadSplitter>
 

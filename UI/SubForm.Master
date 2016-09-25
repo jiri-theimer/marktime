@@ -117,7 +117,7 @@
 
     <script type="text/javascript">
         
-        function sw_local(url, iconUrl, is_maximize) {
+        function sw_local(url, iconUrl, is_maximize) {           
             var wnd = $find("<%=okno1.clientid%>");
             wnd.setUrl(url);
             if (iconUrl != null)

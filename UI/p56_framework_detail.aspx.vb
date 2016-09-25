@@ -18,6 +18,7 @@
         End With
 
         If Not Page.IsPostBack Then
+            Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneContactPage <> "" Then
@@ -226,7 +227,7 @@
         basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & Master.DataPID.ToString, cRec.IsClosed)
 
         If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p56Task).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=p56&pid={0}','Images/label_32.png',false);", cRec.PID)
+            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p56&pid={0}','Images/label_32.png',false);", cRec.PID)
             labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID))
         Else
             boxX18.Visible = False

@@ -418,6 +418,7 @@ Public Class p31_framework
         Else
             cmdCĺearFilter.Visible = False
         End If
+
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click

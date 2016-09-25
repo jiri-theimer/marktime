@@ -63,21 +63,36 @@
 
         });
 
+        function sw_decide(url, iconUrl, is_maximize) {
+            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+            var h = screen.availHeight;
+
+            if ((w < 901 || h < 800) && w>0) {
+                window.parent.sw_master(url, iconUrl);
+                return;
+            }                
+
+            if (w < 910)
+                is_maximize = true;
+            
+            sw_local(url, iconUrl, is_maximize);
+        }
+
         function report(x31id) {
             
-            sw_local("report_modal.aspx?prefix=p91&pid=<%=Master.DataPID%>&x31id="+x31id,"Images/reporting.png",true);
+            sw_decide("report_modal.aspx?prefix=p91&pid=<%=Master.DataPID%>&x31id="+x31id,"Images/reporting.png",true);
 
         }
 
         function p31_entry(p34id) {
             
-            sw_local("p31_record.aspx?pid=0&p91id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
+            sw_decide("p31_record.aspx?pid=0&p91id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
 
         }
 
         function record_new() {
             
-            sw_local("p91_create.aspx","Images/invoice.png",true);
+            sw_decide("p91_create.aspx","Images/invoice.png",true);
 
         }
 
@@ -87,35 +102,35 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p91_record.aspx?pid=" + pid,"Images/invoice.png",true);
+            sw_decide("p91_record.aspx?pid=" + pid,"Images/invoice.png",true);
 
         }
 
         function record_new() {
             var pid = <%=master.DataPID%>;            
            
-            sw_local("p91_create_step1.aspx?prefix=p28","Images/invoice.png",true);
+            sw_decide("p91_create_step1.aspx?prefix=p28","Images/invoice.png",true);
         }
 
         function changevat() {
          
-            sw_local("p91_change_vat.aspx?pid=<%=Master.DataPID%>","Images/recalc.png");
+            sw_decide("p91_change_vat.aspx?pid=<%=Master.DataPID%>","Images/recalc.png");
 
         }
         function changecurrency() {
          
-            sw_local("p91_change_currency.aspx?pid=<%=Master.DataPID%>","Images/recalc.png");
+            sw_decide("p91_change_currency.aspx?pid=<%=Master.DataPID%>","Images/recalc.png");
 
         }
 
         function pay() {
            
-            sw_local("p91_pay.aspx?pid=<%=Master.DataPID%>","Images/payment.png");
+            sw_decide("p91_pay.aspx?pid=<%=Master.DataPID%>","Images/payment.png");
 
         }
         
         function p31_add() {           
-            sw_local("p91_add_worksheet_gateway.aspx?pid=<%=Master.DataPID%>","Images/worksheet.png");
+            sw_decide("p91_add_worksheet_gateway.aspx?pid=<%=Master.DataPID%>","Images/worksheet.png");
         }
         function p31_remove(){       
             var p31ids=GetAllSelectedPIDs();
@@ -123,7 +138,7 @@
                 alert("Musíte vybrat minimálně jeden záznam.");
                 return;
             }
-            sw_local("p91_remove_worksheet.aspx?pid=<%=Master.DataPID%>&p31ids="+p31ids,"Images/cut.png");
+            sw_decide("p91_remove_worksheet.aspx?pid=<%=Master.DataPID%>&p31ids="+p31ids,"Images/cut.png");
         }
 
         function hardrefresh(pid, flag) {           
@@ -179,19 +194,19 @@
                 alert("Musíte vybrat položku z tabulky.");
                 return;
             }
-            sw_local("p31_record_AI.aspx?pid="+pid,"Images/worksheet.png");
+            sw_decide("p31_record_AI.aspx?pid="+pid,"Images/worksheet.png");
 
         }
 
      
         function o23_record(pid) {
             
-            sw_local("o23_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad.png",true);
+            sw_decide("o23_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad.png",true);
 
         }
         function o22_record(pid) {
             
-            sw_local("o22_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar.png",true);
+            sw_decide("o22_record.aspx?masterprefix=p91&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar.png",true);
 
         }
        
@@ -199,32 +214,32 @@
 
         function b07_comment() {
             
-            sw_local("b07_create.aspx?masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment.png",true)
+            sw_decide("b07_create.aspx?masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment.png",true)
             
         }
         function b07_reaction(b07id) {
-            sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment.png", true)
+            sw_decide("b07_create.aspx?parentpid="+b07id+"&masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment.png", true)
            
         }
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_local("grid_designer.aspx?nodrilldown=1&x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner.png");
+            sw_decide("grid_designer.aspx?nodrilldown=1&x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner.png");
         }
        
         function proforma() {           
-            sw_local("p91_proforma.aspx?pid=<%=Master.DataPID%>","Images/proforma.png");
+            sw_decide("p91_proforma.aspx?pid=<%=Master.DataPID%>","Images/proforma.png");
         }
         function creditnote() {           
-            sw_local("p91_creditnote.aspx?pid=<%=Master.DataPID%>","Images/correction_down.gif");
+            sw_decide("p91_creditnote.aspx?pid=<%=Master.DataPID%>","Images/correction_down.gif");
         }
         function export_pohoda() {           
-            sw_local("p91_export2pohoda.aspx?pid=<%=Master.DataPID%>","Images/export.png");
+            sw_decide("p91_export2pohoda.aspx?pid=<%=Master.DataPID%>","Images/export.png");
         }
         function abo_import() {           
-            sw_local("p91_pay_aboimport.aspx","Images/payment.png");
+            sw_decide("p91_pay_aboimport.aspx","Images/payment.png");
         }
         function workflow(){            
-            sw_local("workflow_dialog.aspx?prefix=p91&pid=<%=master.datapid%>","Images/workflow.png",false);
+            sw_decide("workflow_dialog.aspx?prefix=p91&pid=<%=master.datapid%>","Images/workflow.png",false);
         }
     </script>
 
@@ -639,6 +654,7 @@
     <asp:HiddenField ID="hidIsBin" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
+    <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 

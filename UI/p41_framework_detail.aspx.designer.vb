@@ -644,6 +644,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents hidIsCanApprove As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidParentWidth control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidParentWidth As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdRefresh control.
     '''</summary>
     '''<remarks>

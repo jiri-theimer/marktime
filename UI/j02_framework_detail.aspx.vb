@@ -34,6 +34,7 @@ Public Class j02_framework_detail
         End With
 
         If Not Page.IsPostBack Then
+            Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             ViewState("j03id") = 0
             With Master
                 If Request.Item("tab") <> "" Then
@@ -75,7 +76,7 @@ Public Class j02_framework_detail
                     Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("j02_framework_detail-subgrid", "1")), SubgridType)
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
-                
+
             End With
 
 
@@ -235,7 +236,7 @@ Public Class j02_framework_detail
         End If
 
         If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=j02&pid={0}','Images/label_32.png',false);", cRec.PID)
+            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=j02&pid={0}','Images/label_32.png',false);", cRec.PID)
             labels1.RefreshData(BO.x29IdEnum.j02Person, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.j02Person, cRec.PID))
         Else
             boxX18.Visible = False

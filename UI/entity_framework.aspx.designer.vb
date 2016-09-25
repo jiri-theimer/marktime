@@ -338,6 +338,24 @@ Partial Public Class entity_framework
     Protected WithEvents hidAdditionalFrom As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidContentPaneWidth control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidContentPaneWidth As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidContentPaneDefUrl control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidContentPaneDefUrl As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidTasksWorksheetColumns control.
     '''</summary>
     '''<remarks>

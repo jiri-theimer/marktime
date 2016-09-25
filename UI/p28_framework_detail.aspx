@@ -80,20 +80,35 @@
             document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
         }
 
+        function sw_decide(url, iconUrl, is_maximize) {
+            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+            var h = screen.availHeight;
+
+            if ((w < 901 || h < 800) && w>0) {
+                window.parent.sw_master(url, iconUrl);
+                return;
+            }                
+
+            if (w < 910)
+                is_maximize = true;
+            
+            sw_local(url, iconUrl, is_maximize);
+        }
+
         function record_new() {
             
-            sw_local("p28_record.aspx?pid=0","Images/contact_32.png",true);
+            sw_decide("p28_record.aspx?pid=0","Images/contact_32.png",true);
 
         }
 
         function p41_new() {
             
-            sw_local("p41_create.aspx?p28id=<%=Master.DataPID%>","Images/project_32.png",true);
+            sw_decide("p41_create.aspx?p28id=<%=Master.DataPID%>","Images/project_32.png",true);
 
         }
         function report() {
             
-            sw_local("report_modal.aspx?prefix=p28&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
+            sw_decide("report_modal.aspx?prefix=p28&pid=<%=Master.DataPID%>","Images/reporting_32.png",true);
 
         }
 
@@ -103,7 +118,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p28_record.aspx?pid=" + pid,"Images/contact_32.png",true);
+            sw_decide("p28_record.aspx?pid=" + pid,"Images/contact_32.png",true);
 
         }
         
@@ -114,7 +129,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_local("p28_record.aspx?clone=1&pid=" + pid,"Images/contact_32.png",true);
+            sw_decide("p28_record.aspx?clone=1&pid=" + pid,"Images/contact_32.png",true);
 
         }
 
@@ -139,35 +154,35 @@
        
 
         function p30_record(pid) {            
-            sw_local("p30_binding.aspx?masterprefix=p28&masterpid=<%=master.datapid%>&pid="+pid,"Images/person_32.png",true);
+            sw_decide("p30_binding.aspx?masterprefix=p28&masterpid=<%=master.datapid%>&pid="+pid,"Images/person_32.png",true);
         }
 
         function o23_record(pid) {
             
-            sw_local("o23_record.aspx?masterprefix=p28&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
+            sw_decide("o23_record.aspx?masterprefix=p28&masterpid=<%=master.datapid%>&pid="+pid,"Images/notepad_32.png",true);
 
         }
         function o22_record(pid) {
             
-            sw_local("o22_record.aspx?masterprefix=p28&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar_32.png",true);
+            sw_decide("o22_record.aspx?masterprefix=p28&masterpid=<%=master.datapid%>&pid="+pid,"Images/calendar_32.png",true);
 
         }
         function b07_record() {
             
-            sw_local("b07_create.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","Images/comment_32.png",true);
+            sw_decide("b07_create.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","Images/comment_32.png",true);
 
         }
         
         
         function timeline(){            
-            sw_local("entity_timeline.aspx?prefix=p28&pid=<%=master.datapid%>","Images/timeline_32.png",true);
+            sw_decide("entity_timeline.aspx?prefix=p28&pid=<%=master.datapid%>","Images/timeline_32.png",true);
         }
         
         
        
         function p30_binding() {
             
-            sw_local("p30_binding.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","Images/person_32.png",false);
+            sw_decide("p30_binding.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","Images/person_32.png",false);
 
         }
         function approve(){            
@@ -207,7 +222,7 @@
             window.open("p48_framework.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","_top");
         }
         function workflow(){            
-            sw_local("workflow_dialog.aspx?prefix=p28&pid=<%=master.datapid%>","Images/workflow_32.png",false);
+            sw_decide("workflow_dialog.aspx?prefix=p28&pid=<%=master.datapid%>","Images/workflow_32.png",false);
         }
         function OnSwitch()
         {       
@@ -244,7 +259,7 @@
                 
         }
         function page_setting(){
-            sw_local("entity_framework_detail_setting.aspx?prefix=p28", "Images/setting_32.png",false);
+            sw_decide("entity_framework_detail_setting.aspx?prefix=p28", "Images/setting_32.png",false);
         }
         
     </script>
@@ -535,6 +550,7 @@
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidDetailMode" runat="server" Value="detail" />
     <asp:HiddenField ID="hidIsBin" runat="server" />
+    <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 

@@ -675,7 +675,7 @@
             Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(_Project.p28ID_Client, _Project.PID, 0).Where(Function(p) p.p30IsDefaultInWorksheet = True)
             If lisP30.Count > 0 Then
                 Me.chkBindToContactPerson.Checked = True : Me.j02ID_ContactPerson.Visible = True
-                RefreshContactPersonCombo(True, lisP30.First.j02ID, _Project)
+                RefreshContactPersonCombo(True, lisP30.First.j02ID)
             End If
 
 
@@ -1173,7 +1173,7 @@
 
     End Sub
     
-    Private Sub RefreshContactPersonCombo(bolSilent As Boolean, intDefJ02ID As Integer, Optional cRec As BO.p41Project = Nothing)
+    Private Sub RefreshContactPersonCombo(bolSilent As Boolean, intDefJ02ID As Integer)
         Me.j02ID_ContactPerson.Visible = False
         If Not Me.chkBindToContactPerson.Checked Then
             Me.j02ID_ContactPerson.DataSource = Nothing
@@ -1184,18 +1184,23 @@
             If Not bolSilent Then Master.Notify("Chybí projekt.")
             Return
         End If
-        If cRec Is Nothing Then cRec = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
+        If _Project Is Nothing Then _Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
+
         Dim mq As New BO.myQueryJ02
         mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
-        If cRec.p28ID_Client > 0 Then mq.p28ID = cRec.p28ID_Client Else mq.p41ID = cRec.PID
+        mq.p41ID = _Project.PID
+        ''If _Project.p28ID_Client > 0 Then mq.p28ID = _Project.p28ID_Client Else mq.p41ID = _Project.PID
 
         Dim lisJ02 As List(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq).ToList
+        If lisJ02.Count = 0 And _Project.p28ID_Client <> 0 Then
+            mq.p41ID = 0 : mq.p28ID = _Project.p28ID_Client
+        End If
         If intDefJ02ID > 0 And lisJ02.Where(Function(p) p.PID = intDefJ02ID).Count = 0 Then
             Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(intDefJ02ID)
             If Not c Is Nothing Then lisJ02.Add(c)
         End If
         If lisJ02.Count = 0 Then
-            If Not bolSilent Then Master.Notify(String.Format(Resources.p31_record.NejsouZavedenyKontaktniOsoby, cRec.p41Name, cRec.Client))
+            If Not bolSilent Then Master.Notify(String.Format(Resources.p31_record.NejsouZavedenyKontaktniOsoby, _Project.p41Name, _Project.Client))
         Else
             Me.j02ID_ContactPerson.DataSource = lisJ02
             Me.j02ID_ContactPerson.DataBind()

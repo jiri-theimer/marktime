@@ -9,7 +9,7 @@
         });
         function periodcombo_setting() {
 
-            window.parent.sw_local("periodcombo_setting.aspx", "Images/settings_32.png");
+            window.parent.sw_decide("periodcombo_setting.aspx", "Images/settings_32.png");
         }
         function RowSelected_p91(sender, args) {
             document.getElementById("<%=hiddatapid_p91.ClientID%>").value = args.getDataKeyValue("pid");
@@ -23,7 +23,7 @@
 
         function p91_subgrid_setting(j74id,masterprefix) {
             
-            window.parent.sw_local("grid_designer.aspx?prefix=p91&masterprefix="+masterprefix+"&pid=" + j74id, "Images/griddesigner.png", true);
+            window.parent.sw_decide("grid_designer.aspx?prefix=p91&masterprefix="+masterprefix+"&pid=" + j74id, "Images/griddesigner.png", true);
         }
     </script>
 </asp:Content>

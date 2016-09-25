@@ -195,7 +195,7 @@
             End If
             If .p41ID <> 0 Then
                 pars.Add("p41id", .p41ID, DbType.Int32)
-                strW += " AND a.j02ID IN (select j02ID FROM p30Contact_Person WHERE p41ID=@p41id)"
+                strW += " AND a.j02ID IN (select j02ID FROM p30Contact_Person WHERE p41ID=@p41id OR p28ID IN (SELECT p28ID_Client FROM p41Project WHERE p41ID=@p41id AND p28ID_Client IS NOT NULL))"
             End If
             If .p28ID <> 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)

@@ -15,8 +15,8 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gridP31.Factory = Master.Factory
 
-
         If Not Page.IsPostBack Then
+            Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             Dim lisPars As New List(Of String)
             With lisPars
                 .Add("p31_framework_detail-calendarcolumns")
@@ -30,7 +30,7 @@
                 Me.chkTimer.Checked = BO.BAS.BG(.GetUserParam("p31_framework-timer", "1"))
             End With
 
-            
+
 
             Dim intPID As Integer = BO.BAS.IsNullInt(Request.Item("pid"))
             If intPID > 0 Then
@@ -45,7 +45,7 @@
                     End If
 
                 End With
-                
+
             Else
                 cal1.SelectedDate = Today
             End If
