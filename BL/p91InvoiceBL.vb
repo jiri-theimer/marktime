@@ -3,12 +3,13 @@
     Function Create(cCreate As BO.p91Create) As Integer
     Function Load(intPID As Integer) As BO.p91Invoice
     Function LoadByCode(strCode As String) As BO.p91Invoice
+    Function LoadCreditNote(intPID As Integer) As BO.p91Invoice
     Function LoadMyLastCreated() As BO.p91Invoice
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice)
     Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
-    Function GetGridDataSource(myQuery As BO.myQueryP91) As DataTable
     Function Update(cRec As BO.p91Invoice, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
+    Function GetGridDataSource(myQuery As BO.myQueryP91) As DataTable
     Function ChangeVat(intP91ID As Integer, x15id As BO.x15IdEnum, dblNewVatRate As Double) As Boolean
     Function ChangeCurrency(intP91ID As Integer, intJ27ID As Integer) As Boolean
     Function ConvertFromDraft(intP91ID As Integer) As Boolean
@@ -96,6 +97,9 @@ Class p91InvoiceBL
     End Function
     Public Function LoadMyLastCreated() As BO.p91Invoice Implements Ip91InvoiceBL.LoadMyLastCreated
         Return _cDL.LoadMyLastCreated()
+    End Function
+    Public Function LoadCreditNote(intPID As Integer) As BO.p91Invoice Implements Ip91InvoiceBL.LoadCreditNote
+        Return _cDL.LoadCreditNote(intPID)
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean Implements Ip91InvoiceBL.Delete

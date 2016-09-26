@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="x-ua-compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="~/Scripts/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Scripts/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Styles/bootstrap_custom.css" />
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
     <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
@@ -68,7 +68,7 @@
     </style>
 
     <script src="Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
-    <script src="Scripts/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="Scripts/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
     
@@ -237,16 +237,16 @@
                     <li  <%=IIf(Me.MenuPrefix = "p31", "class='active'", "")%>><a href="p31_framework_mobile.aspx">Worksheet</a></li>
                     <%If _Factory.SysUser.j04IsMenu_Project Then%>
                     <%If Me.MenuPrefix = "p41" Then%>
-                    <li class="active"><a href="p41_framework_mobile.aspx">Projekty</a></li>
+                    <li class="active"><a href="p41_framework_mobile.aspx">PROJEKTY</a></li>
                     <%Else%>
-                    <li><a href="p41_framework_mobile.aspx">Projekty</a></li>
+                    <li><a href="p41_framework_mobile.aspx">PROJEKTY</a></li>
                     <%End If%>
                      <%End If%>
                     <li><a href="pokus_mobile.aspx">Pokus Splitter</a></li>
                     
-                    <li  <%=IIf(Me.MenuPrefix = "p28", "class='active'", "")%>><a href="p41_framework_mobile.aspx">Klienti</a></li>
-                    <li  <%=IIf(Me.MenuPrefix = "p91", "class='active'", "")%>><a href="p41_framework_mobile.aspx">Faktury</a></li>
-                    <li  <%=IIf(Me.MenuPrefix = "j02", "class='active'", "")%>><a href="p41_framework_mobile.aspx">Lidé</a></li>
+                    <li  <%=IIf(Me.MenuPrefix = "p28", "class='active'", "")%>><a href="p41_framework_mobile.aspx">KLIENTI</a></li>
+                    <li  <%=IIf(Me.MenuPrefix = "p91", "class='active'", "")%>><a href="p41_framework_mobile.aspx">FAKTURY</a></li>
+                    <li  <%=IIf(Me.MenuPrefix = "j02", "class='active'", "")%>><a href="p41_framework_mobile.aspx">LIDÉ</a></li>
                     <li class="dropdown">
                         <asp:HyperLink ID="miUser" runat="server"  data-toggle="dropdown" NavigateUrl="#"></asp:HyperLink>
                         <ul class="dropdown-menu">

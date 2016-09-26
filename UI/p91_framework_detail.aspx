@@ -321,7 +321,7 @@
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="baseline">
                         <td style="min-width: 120px;" id="rlbl">
-                            <asp:Label ID="lblCode" runat="server" Text="Číslo faktury:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblCode" runat="server" Text="Číslo dokladu:" CssClass="lbl"></asp:Label>                            
                         </td>
                         <td style="min-width: 200px; max-width: 350px;">
                             <asp:Image ID="imgRecord" runat="server" Visible="false" />
@@ -349,7 +349,7 @@
                     <tr>
 
                         <td>
-                            <asp:HyperLink ID="cmdReportInvoice" runat="server" Text="Sestava faktury"></asp:HyperLink>
+                            <asp:HyperLink ID="cmdReportInvoice" runat="server" Text="Sestava dokladu"></asp:HyperLink>
 
                         </td>
                         <td>
@@ -369,6 +369,16 @@
                         </td>
 
 
+                    </tr>
+                    <tr id="trSourceCode" runat="server" visible="false">
+                        <td>
+                            <asp:Label ID="lblSourceCode" runat="server" Text="Opravovaný doklad:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:HyperLink ID="SourceLink" runat="server" Target="_top"></asp:HyperLink>
+                        </td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td id="rlbl">Typ faktury:
@@ -472,6 +482,7 @@
                         </td>
                         <td>
                             <asp:Label ID="p91DateMaturity" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:HyperLink ID="SourceCode" runat="server" Visible="false"></asp:HyperLink>
                         </td>
                     </tr>
                     <tr>

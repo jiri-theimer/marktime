@@ -166,6 +166,19 @@ Public Class p91_framework_detail
                 lblExchangeRate.Visible = True
                 Me.p91ExchangeRate.Text = .p91ExchangeRate.ToString & " (" & BO.BAS.FD(.p91DateExchange) & ")"
             End If
+            Dim cRecSource As BO.p91Invoice = Nothing
+            If .p91ID_CreditNoteBind <> 0 Then
+                'jedná se o dobropis
+                cRecSource = Master.Factory.p91InvoiceBL.Load(.p91ID_CreditNoteBind)
+            Else
+                cRecSource = Master.Factory.p91InvoiceBL.LoadCreditNote(.PID)
+                lblSourceCode.Text = "<img src='Images/correction_down.gif'></img>" & "Opravný doklad:"
+            End If
+            If Not cRecSource Is Nothing Then
+                Me.trSourceCode.Visible = True
+                Me.SourceLink.Text = cRecSource.p91Code
+                Me.SourceLink.NavigateUrl = "p91_framework.aspx?pid=" & cRecSource.PID.ToString
+            End If
         End With
 
 
@@ -186,7 +199,7 @@ Public Class p91_framework_detail
             End If
         End If
         If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p91Invoice).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_local('x18_binding.aspx?prefix=p91&pid={0}','Images/label_32.png',false);", cRec.PID)
+            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p91&pid={0}','Images/label_32.png',false);", cRec.PID)
             labels1.RefreshData(BO.x29IdEnum.p91Invoice, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p91Invoice, cRec.PID))
         Else
             boxX18.Visible = False
@@ -261,8 +274,9 @@ Public Class p91_framework_detail
             menu1.FindItemByValue("cmdPay").Visible = False
             menu1.FindItemByValue("cmdProforma").Visible = False
             menu1.FindItemByValue("cmdCreditNote").Visible = False
+            menu1.FindItemByValue("record").Text = "ZÁZNAM DOKLADU"
             lblp91DateBilled.Visible = False
-            p91DateMaturity.Visible = False : lblp91DateMaturity.Visible = False
+            p91DateMaturity.Visible = False
             imgRecord.Visible = True : imgRecord.ImageUrl = "Images\correction_down.gif"
             lblExchangeRate.Visible = False : p91ExchangeRate.Visible = False
         End If

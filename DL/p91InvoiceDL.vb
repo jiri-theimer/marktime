@@ -10,6 +10,12 @@
 
         Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.p91id = intPID})
     End Function
+    Public Function LoadCreditNote(intPID As Integer) As BO.p91Invoice
+        Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing) & " INNER JOIN p91Invoice sourcedoc ON a.p91ID_CreditNoteBind=sourcedoc.p91ID"
+        s += " WHERE sourcedoc.p91ID=@p91id"
+
+        Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.p91id = intPID})
+    End Function
     Public Function LoadByCode(strCode As String) As BO.p91Invoice
         Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing)
 

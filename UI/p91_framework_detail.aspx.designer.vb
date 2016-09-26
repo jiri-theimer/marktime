@@ -185,6 +185,33 @@ Partial Public Class p91_framework_detail
     Protected WithEvents clue_client As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''trSourceCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trSourceCode As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''lblSourceCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblSourceCode As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''SourceLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SourceLink As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''p92Name control.
     '''</summary>
     '''<remarks>
@@ -489,6 +516,15 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p91DateMaturity As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''SourceCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SourceCode As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''lblProforma control.
