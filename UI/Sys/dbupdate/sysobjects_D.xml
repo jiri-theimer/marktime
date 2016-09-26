@@ -877,6 +877,10 @@
     <name>DF__j02Person__j02Fr__2EA5EC27</name>
   </Table>
   <Table>
+    <id>784721848</id>
+    <name>DEF_p56Task_p56IsHtml</name>
+  </Table>
+  <Table>
     <id>788197858</id>
     <name>DF__p91Invoic__p91Fr__2EFAF1E2</name>
   </Table>
@@ -909,10 +913,6 @@
     <name>DF__j02Person__j02Fr__308E3499</name>
   </Table>
   <Table>
-    <id>816721962</id>
-    <name>DEF_o22Milestone_o22IsAllDay</name>
-  </Table>
-  <Table>
     <id>818101955</id>
     <name>DEF_x40MailQueue_x40IsHtmlBody</name>
   </Table>
@@ -930,7 +930,7 @@
   </Table>
   <Table>
     <id>832722019</id>
-    <name>DEF_o22Milestone_o22DateInsert</name>
+    <name>DEF_o22Milestone_o22IsAllDay</name>
   </Table>
   <Table>
     <id>834102012</id>
@@ -946,7 +946,7 @@
   </Table>
   <Table>
     <id>848722076</id>
-    <name>DF__o22Milest__o22Da__3296789C</name>
+    <name>DEF_o22Milestone_o22DateInsert</name>
   </Table>
   <Table>
     <id>850102069</id>
@@ -970,7 +970,7 @@
   </Table>
   <Table>
     <id>864722133</id>
-    <name>DEF_o22Milestone_o22ValidFrom</name>
+    <name>DF__o22Milest__o22Da__338A9CD5</name>
   </Table>
   <Table>
     <id>868198143</id>
@@ -994,7 +994,7 @@
   </Table>
   <Table>
     <id>880722190</id>
-    <name>DEF_o22Milestone_o22ValidUntil</name>
+    <name>DEF_o22Milestone_o22ValidFrom</name>
   </Table>
   <Table>
     <id>884198200</id>
@@ -1011,6 +1011,10 @@
   <Table>
     <id>891150220</id>
     <name>DEF_p29ContactType_p29DateInsert</name>
+  </Table>
+  <Table>
+    <id>896722247</id>
+    <name>DEF_o22Milestone_o22ValidUntil</name>
   </Table>
   <Table>
     <id>900198257</id>
@@ -1041,10 +1045,6 @@
     <name>DF__p90Profor__p90Fr__373B3228</name>
   </Table>
   <Table>
-    <id>928722361</id>
-    <name>DEF_o23Notepad_o23IsDraft</name>
-  </Table>
-  <Table>
     <id>930102354</id>
     <name>DF__b09Workfl__b09Co__37703C52</name>
   </Table>
@@ -1062,7 +1062,7 @@
   </Table>
   <Table>
     <id>944722418</id>
-    <name>DEF_o23Notepad_o23IsEncrypted</name>
+    <name>DEF_o23Notepad_o23IsDraft</name>
   </Table>
   <Table>
     <id>946102411</id>
@@ -1082,7 +1082,7 @@
   </Table>
   <Table>
     <id>960722475</id>
-    <name>DEF_o23Notepad_o23SizeHtml</name>
+    <name>DEF_o23Notepad_o23IsEncrypted</name>
   </Table>
   <Table>
     <id>962102468</id>
@@ -1110,7 +1110,7 @@
   </Table>
   <Table>
     <id>976722532</id>
-    <name>DEF_o23Notepad_o23SizePlainText</name>
+    <name>DEF_o23Notepad_o23SizeHtml</name>
   </Table>
   <Table>
     <id>978102525</id>
@@ -1138,7 +1138,7 @@
   </Table>
   <Table>
     <id>992722589</id>
-    <name>DEF_o23Notepad_o23LockedFlag</name>
+    <name>DEF_o23Notepad_o23SizePlainText</name>
   </Table>
   <Table>
     <id>996198599</id>
@@ -1158,7 +1158,7 @@
   </Table>
   <Table>
     <id>1008722646</id>
-    <name>DEF_o23Notepad_o23DateInsert</name>
+    <name>DEF_o23Notepad_o23LockedFlag</name>
   </Table>
   <Table>
     <id>1015674666</id>
@@ -1170,7 +1170,7 @@
   </Table>
   <Table>
     <id>1024722703</id>
-    <name>DEF_o23Notepad_o23ValidFrom</name>
+    <name>DEF_o23Notepad_o23DateInsert</name>
   </Table>
   <Table>
     <id>1029578706</id>
@@ -1182,7 +1182,7 @@
   </Table>
   <Table>
     <id>1040722760</id>
-    <name>DEF_o23Notepad_o23ValidUntil</name>
+    <name>DEF_o23Notepad_o23ValidFrom</name>
   </Table>
   <Table>
     <id>1044198770</id>
@@ -1199,6 +1199,10 @@
   <Table>
     <id>1054626800</id>
     <name>DF__p90Profor__p90Fr__3EDC53F0</name>
+  </Table>
+  <Table>
+    <id>1056722817</id>
+    <name>DEF_o23Notepad_o23ValidUntil</name>
   </Table>
   <Table>
     <id>1058102810</id>
@@ -1223,10 +1227,6 @@
   <Table>
     <id>1083150904</id>
     <name>DEF_p51PriceList_p51IsInternalPriceList</name>
-  </Table>
-  <Table>
-    <id>1088722931</id>
-    <name>DF__p31WorkSh__p31Fr__40E497F3</name>
   </Table>
   <Table>
     <id>1090102924</id>
@@ -1437,6 +1437,10 @@
     <name>DEF_p27ContactPersonRole_p27ValidUntil</name>
   </Table>
   <Table>
+    <id>1248723501</id>
+    <name>DF__p31WorkSh__p31Fr__4A6E022D</name>
+  </Table>
+  <Table>
     <id>1250103494</id>
     <name>DEF_x38CodeLogic_x38DateInsert</name>
   </Table>
@@ -1463,10 +1467,6 @@
   <Table>
     <id>1275151588</id>
     <name>DEF_p42ProjectType_p42DateInsert</name>
-  </Table>
-  <Table>
-    <id>1280723615</id>
-    <name>DF__p56Task_F__p56Fr__4C564A9F</name>
   </Table>
   <Table>
     <id>1282103608</id>
@@ -1677,6 +1677,10 @@
     <name>DF__o23Notepa__o23Fr__55BFB948</name>
   </Table>
   <Table>
+    <id>1440724185</id>
+    <name>DF__p56Task_F__p56Fr__55DFB4D9</name>
+  </Table>
+  <Table>
     <id>1442104178</id>
     <name>DEF_p85TempBox_p85IsDeleted</name>
   </Table>
@@ -1765,10 +1769,6 @@
     <name>DEF_o24NotepadType_o24IsAllowDropbox</name>
   </Table>
   <Table>
-    <id>1536724527</id>
-    <name>DEF_p48OperativePlan_p48DateInsert</name>
-  </Table>
-  <Table>
     <id>1538104520</id>
     <name>DEF_j07PersonPosition_j07ValidUntil</name>
   </Table>
@@ -1786,7 +1786,7 @@
   </Table>
   <Table>
     <id>1552724584</id>
-    <name>DF__p48Operat__p48Da__5C8CB268</name>
+    <name>DEF_p48OperativePlan_p48DateInsert</name>
   </Table>
   <Table>
     <id>1556200594</id>
@@ -1806,7 +1806,7 @@
   </Table>
   <Table>
     <id>1568724641</id>
-    <name>DEF_p48OperativePlan_p48ValidFrom</name>
+    <name>DF__p48Operat__p48Da__5D80D6A1</name>
   </Table>
   <Table>
     <id>1572200651</id>
@@ -1826,7 +1826,7 @@
   </Table>
   <Table>
     <id>1584724698</id>
-    <name>DEF_p48OperativePlan_p48ValidUntil</name>
+    <name>DEF_p48OperativePlan_p48ValidFrom</name>
   </Table>
   <Table>
     <id>1586104691</id>
@@ -1843,6 +1843,10 @@
   <Table>
     <id>1595152728</id>
     <name>DEF_p32Activity_p32IsSystemDefault</name>
+  </Table>
+  <Table>
+    <id>1600724755</id>
+    <name>DEF_p48OperativePlan_p48ValidUntil</name>
   </Table>
   <Table>
     <id>1602104748</id>

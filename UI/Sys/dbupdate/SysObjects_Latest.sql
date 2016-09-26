@@ -1,3 +1,42 @@
+----------FN---------------CleanHTMLTags-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('CleanHTMLTags') and type = 'FN')
+ drop function CleanHTMLTags
+GO
+
+
+CREATE FUNCTION [dbo].[CleanHTMLTags] (@HTMLText VARCHAR(MAX),@ReplaceChar char(1))
+RETURNS VARCHAR(MAX)
+AS
+BEGIN
+DECLARE @Start INT
+DECLARE @End INT
+DECLARE @Length INT
+
+set @HTMLText=replace(@HTMLText,'&nbsp;',' ')
+set @HTMLText=replace(@HTMLText,'<br />',char(13)+char(10))
+set @HTMLText=replace(@HTMLText,'</p>',char(13)+char(10))
+
+SET @Start = CHARINDEX('<',@HTMLText)
+SET @End = CHARINDEX('>',@HTMLText,CHARINDEX('<',@HTMLText))
+SET @Length = (@End - @Start) + 1 
+WHILE @Start > 0 AND @End > 0 AND @Length > 0
+ BEGIN
+  IF (UPPER(SUBSTRING(@HTMLText, @Start, 4)) <> '') AND (UPPER(SUBSTRING(@HTMLText, @Start, 5)) <>'')
+   begin
+    SET @HTMLText = RTRIM(LTRIM(STUFF(@HTMLText,@Start,@Length,@ReplaceChar)));
+   end
+  ELSE
+   SET @Length = 0;
+   SET @Start = CHARINDEX('<',@HTMLText, @End-@Length) 
+   SET @End = CHARINDEX('>',@HTMLText,CHARINDEX('<',@HTMLText, @Start))
+   SET @Length = (@End - @Start) + 1
+  END
+  RETURN isnull(RTRIM(LTRIM(@HTMLText)), '')
+END
+
+GO
+
 ----------FN---------------convert_to_dateserial-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('convert_to_dateserial') and type = 'FN')
@@ -801,6 +840,53 @@ END
 
 GO
 
+----------FN---------------j02_get_pid_from_login-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j02_get_pid_from_login') and type = 'FN')
+ drop function j02_get_pid_from_login
+GO
+
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[j02_get_pid_from_login](@login varchar(50))
+RETURNS INT
+AS
+BEGIN
+  ---vrací j02ID osoby
+
+ 
+
+  RETURN(select a.J02ID FROM j02Person a INNER JOIN j03user b ON a.j02ID=b.j02ID where b.j03Login LIKE @login)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------j02_teams_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('j02_teams_inline') and type = 'FN')
@@ -825,6 +911,53 @@ select @s=COALESCE(@s + ', ', '')+b.j11Name
 RETURN(@s)
    
 END
+
+
+GO
+
+----------FN---------------j03_get_pid_from_login-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j03_get_pid_from_login') and type = 'FN')
+ drop function j03_get_pid_from_login
+GO
+
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[j03_get_pid_from_login](@login varchar(50))
+RETURNS INT
+AS
+BEGIN
+  ---vrací j03ID uživatele
+
+ 
+
+  RETURN(select j03ID FROM j03user where j03Login LIKE @login)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 GO
@@ -3522,6 +3655,8 @@ if datediff(minute,@j03Cache_TimeStamp,getdate())>5
 
 	select @j03Cache_MessagesCount=j03Cache_MessagesCount,@j03Cache_IsApprovingPerson=j03Cache_IsApprovingPerson,@j03Cache_j11IDs=j03Cache_j11IDs,@j03Cache_HomeMenu=j03Cache_HomeMenu
 	FROM j03User WHERE j03ID=@j03id
+
+	insert into j90LoginAccessLog(j03ID,j90Date) values(@j03id,getdate())
  end
 
 
