@@ -51,6 +51,8 @@
             pars.Add("x31RunInTime", .x31RunInTime, DbType.String)
             pars.Add("x31DocSqlSource", .x31DocSqlSource, DbType.String)
             pars.Add("x31DocSqlSourceTabs", .x31DocSqlSourceTabs, DbType.String)
+            pars.Add("x31ExportFileNameMask", .x31ExportFileNameMask, DbType.String)
+            pars.Add("x31QueryFlag", .x31QueryFlag, DbType.Int32)
 
             pars.Add("x31validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("x31validuntil", .ValidUntil, DbType.DateTime)

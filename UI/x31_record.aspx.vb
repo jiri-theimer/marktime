@@ -78,6 +78,8 @@
             Me.x31IsUsableAsPersonalPage.Checked = .x31IsUsableAsPersonalPage
             Me.x31DocSqlSource.Text = .x31DocSqlSource
             Me.x31DocSqlSourceTabs.Text = .x31DocSqlSourceTabs
+            Me.x31ExportFileNameMask.Text = .x31ExportFileNameMask
+            Me.hidx31QueryFlag.Value = CInt(.x31QueryFlag).ToString
 
             Master.Factory.o27AttachmentBL.CopyRecordsToTemp(upload1.GUID, Master.DataPID, BO.x29IdEnum.x31Report)
             uploadlist1.RefreshData_TEMP()
@@ -118,6 +120,8 @@
                 .x31IsUsableAsPersonalPage = Me.x31IsUsableAsPersonalPage.Checked
                 .x31DocSqlSource = Me.x31DocSqlSource.Text
                 .x31DocSqlSourceTabs = Me.x31DocSqlSourceTabs.Text
+                .x31ExportFileNameMask = Me.x31ExportFileNameMask.Text
+                .x31QueryFlag = BO.BAS.IsNullInt(Me.hidx31QueryFlag.Value)
             End With
             If Me.uploadlist1.ItemsCount = 0 Then
                 Master.Notify("Chybí soubor šablony sestavy", NotifyLevel.WarningMessage)
@@ -149,9 +153,16 @@
         ViewState("upload_changed") = "1"
         Me.uploadlist1.RefreshData_TEMP()
 
+        Dim cF As New BO.clsFile
         Select Case Right(LCase(strFulllPath), 4)
             Case "trdx"
                 Me.CurrentFormat = BO.x31FormatFlagENUM.Telerik
+                Dim s As String = cF.GetFileContents(strFulllPath, , False)
+                If s.IndexOf("331=331") > 0 Then Me.hidx31QueryFlag.Value = "331"
+                If s.IndexOf("141=141") > 0 Then Me.hidx31QueryFlag.Value = "141"
+                If s.IndexOf("328=328") > 0 Then Me.hidx31QueryFlag.Value = "328"
+                If s.IndexOf("391=391") > 0 Then Me.hidx31QueryFlag.Value = "391"
+                If s.IndexOf("356=356") > 0 Then Me.hidx31QueryFlag.Value = "356"
             Case ".docx"
                 Me.CurrentFormat = BO.x31FormatFlagENUM.DOCX
             Case "aspx"
@@ -159,7 +170,7 @@
             Case "xlsx"
                 Me.CurrentFormat = BO.x31FormatFlagENUM.XLSX
         End Select
-        Dim cF As New BO.clsFile
+
         Me.x31Code.Text = cF.GetNameFromFullpath(strFulllPath).Replace(cF.GetFileExtension(strFulllPath), "")
         If Me.x31Name.Text = "" Then
             Me.x31Name.Text = Me.x31Code.Text

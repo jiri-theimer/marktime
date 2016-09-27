@@ -77238,6 +77238,72 @@
     <TableName>x31Report</TableName>
   </Table>
   <Table>
+    <name>x31ExportFileNameMask</name>
+    <id>1963154039</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>32</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>32</colorder>
+    <offset>-19</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>x31Report</TableName>
+  </Table>
+  <Table>
+    <name>x31QueryFlag</name>
+    <id>1963154039</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>33</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>33</colorder>
+    <offset>-20</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>x31Report</TableName>
+  </Table>
+  <Table>
     <name>x35ID</name>
     <id>341576255</id>
     <xtype>56</xtype>

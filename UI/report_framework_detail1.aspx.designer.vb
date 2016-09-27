@@ -41,6 +41,33 @@ Partial Public Class report_framework_detail1
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''j70ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''cmdSetting control.
     '''</summary>
     '''<remarks>
@@ -93,6 +120,15 @@ Partial Public Class report_framework_detail1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidQueryPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidQueryPrefix As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

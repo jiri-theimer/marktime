@@ -125,4 +125,8 @@
 
         Return _cDB.GetList(Of BO.j71QueryTemplate_Item)(s, New With {.pid = intPID})
     End Function
+
+    Public Function GetSqlWhere(intJ70ID As Integer) As String
+        Return bas.CompleteSqlJ70(_cDB, intJ70ID, _curUser)
+    End Function
 End Class

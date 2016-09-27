@@ -12,6 +12,11 @@
         function hardrefresh(pid, flag) {
             location.replace("report_framework_detail4.aspx?x31id=<%=me.CurrentX31ID%>");
         }
+        function querybuilder() {
+            var j70id = "<%=Me.CurrentJ70ID%>";
+            sw_local("query_builder.aspx?prefix=<%=me.hidQueryPrefix.value%>&pid=" + j70id, "Images/query_32.png");
+            return (false);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -26,6 +31,9 @@
           
             <td>
                 <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span"></asp:Label>
+                <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+                <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
             </td>
             <td>
                 <asp:HyperLink ID="cmdSetting" runat="server" Text="Nastavení šablony" NavigateUrl="javascript:x31_record()"></asp:HyperLink>
@@ -36,4 +44,5 @@
         <asp:Button ID="cmdGenerate" runat="server" Text="Vygenerovat sestavu" CssClass="cmd" Font-Bold="true" />
     </div>
     <asp:HiddenField ID="hidCurX31ID" runat="server" />
+    <asp:HiddenField ID="hidQueryPrefix" runat="server" />
 </asp:Content>

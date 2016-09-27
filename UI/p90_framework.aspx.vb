@@ -21,10 +21,13 @@ Public Class p90_framework
                     .Add("p90_framework-query-closed")
                     .Add("p90_framework-filter_setting")
                     .Add("p90_framework-filter_sql")
+                    .Add("p90_framework-period")
+                    .Add("periodcombo-custom_query")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
 
-
+                period1.SetupData(Master.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
+                period1.SelectedValue = .Factory.j03UserBL.GetUserParam("p90_framework-period")
 
             End With
             With Master.Factory.j03UserBL
@@ -91,7 +94,10 @@ Public Class p90_framework
                 mq.Closed = BO.BooleanQueryMode.TrueQuery
         End Select
         mq.ColumnFilteringExpression = grid1.GetFilterExpression
-
+        If period1.SelectedValue <> "" Then
+            mq.DateFrom = period1.DateFrom
+            mq.DateUntil = period1.DateUntil
+        End If
         Dim lis As IEnumerable(Of BO.p90Proforma) = Master.Factory.p90ProformaBL.GetList(mq)
 
         grid1.DataSource = lis
@@ -114,6 +120,18 @@ Public Class p90_framework
     End Sub
 
    
-
+    Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
+        Master.Factory.j03UserBL.SetUserParam("p90_framework-period", Me.period1.SelectedValue)
+        ReloadPage()
+    End Sub
     
+    Private Sub p90_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        With Me.period1
+            If .SelectedValue <> "" Then
+                .BackColor = Drawing.Color.Red
+            Else
+                .BackColor = Nothing
+            End If
+        End With
+    End Sub
 End Class

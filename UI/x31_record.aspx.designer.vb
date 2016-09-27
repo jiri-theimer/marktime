@@ -149,6 +149,24 @@ Partial Public Class x31_record
     Protected WithEvents x31IsUsableAsPersonalPage As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''lblx31ExportFileNameMask control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx31ExportFileNameMask As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x31ExportFileNameMask control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31ExportFileNameMask As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''ph1 control.
     '''</summary>
     '''<remarks>
@@ -201,6 +219,15 @@ Partial Public Class x31_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x31DocSqlSourceTabs As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''hidx31QueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx31QueryFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

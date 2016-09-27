@@ -36,6 +36,7 @@ Public Class p91_create_step2
                     .Add(strGridKey)
                     .Add("p91_create-pagesize")
                     .Add("p91_create-rememberdates")
+                    .Add("p91_create-rememberdates-values")
                     .Add("p91_create-chkSearchByClientOnly")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
@@ -57,6 +58,17 @@ Public Class p91_create_step2
             End With
 
             InhaleDefaults()
+
+            If Master.Factory.j03UserBL.GetUserParam("p91_create-rememberdates", "0") = "1" Then
+                Dim a() As String = Split(Master.Factory.j03UserBL.GetUserParam("p91_create-rememberdates-values"), "|")
+                If UBound(a) > 1 Then
+                    If a(0) <> "" Then Me.p91DateSupply.SelectedDate = BO.BAS.ConvertString2Date(a(0))
+                    If a(1) <> "" Then Me.p91Date.SelectedDate = BO.BAS.ConvertString2Date(a(1))
+                    If a(2) <> "" Then Me.p91DateMaturity.SelectedDate = BO.BAS.ConvertString2Date(a(2))
+                    If a(3) <> "" Then Me.p91Datep31_From.SelectedDate = BO.BAS.ConvertString2Date(a(3))
+                    If a(4) <> "" Then Me.p91Datep31_Until.SelectedDate = BO.BAS.ConvertString2Date(a(4))
+                End If
+            End If
             
 
             SetupGrid()
@@ -93,8 +105,9 @@ Public Class p91_create_step2
                     Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(intDataPID)
                     cP28 = Master.Factory.p28ContactBL.Load(cP41.p28ID_Client)
                     If Not cP28 Is Nothing Then
-                        intMaturityDays = cP28.p28InvoiceMaturityDays
+                        If cP28.p28InvoiceMaturityDays > 0 Then intMaturityDays = cP28.p28InvoiceMaturityDays
                     End If
+                    If cP41.p41InvoiceMaturityDays > 0 Then intMaturityDays = cP41.p41InvoiceMaturityDays
                     If cP41.p41InvoiceDefaultText1 <> "" Then
                         Me.p91text1.Text = cP41.p41InvoiceDefaultText1
                     Else
@@ -379,6 +392,9 @@ Public Class p91_create_step2
 
             If intP91ID <> 0 Then                
                 Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates", BO.BAS.GB(Me.chkRememberDates.Checked))
+                If Me.chkRememberDates.Checked Then
+                    Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates-values", MFD(Me.p91DateSupply.SelectedDate) & "|" & MFD(Me.p91Date.SelectedDate) & "|" & MFD(Me.p91DateMaturity.SelectedDate) & "|" & MFD(Me.p91Datep31_From.SelectedDate) & "|" & MFD(Me.p91Datep31_Until.SelectedDate))
+                End If
                 Master.DataPID = intP91ID
                 Master.CloseAndRefreshParent("p91-create")
             Else
@@ -388,6 +404,10 @@ Public Class p91_create_step2
 
         End If
     End Sub
+    Private Function MFD(d As Date?)
+        If d Is Nothing Then Return ""
+        Return Format(d, "dd.MM.yyyy")
+    End Function
 
     Private Sub chkSearchByClientOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkSearchByClientOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p91_create-chkSearchByClientOnly", BO.BAS.GB(Me.chkSearchByClientOnly.Checked))

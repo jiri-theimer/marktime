@@ -4,6 +4,14 @@
     ASPX = 3
     XLSX = 4
 End Enum
+Public Enum x31QueryFlagENUM
+    _None = 0
+    p31 = 331
+    p41 = 141
+    p28 = 328
+    p91 = 391
+    p56 = 356
+End Enum
 Public Class x31Report
     Inherits BOMother
     Public Property x29ID As BO.x29IdEnum
@@ -30,6 +38,8 @@ Public Class x31Report
     Public Property x31RunInTime As String
     Public Property x31DocSqlSource As String
     Public Property x31DocSqlSourceTabs As String
+    Public Property x31ExportFileNameMask As String
+    Public Property x31QueryFlag As x31QueryFlagENUM = x31QueryFlagENUM._None
 
     Private Property _x29Name As String
     Private Property _j25Name As String
@@ -110,4 +120,23 @@ Public Class x31Report
         _ReportFileName = strURL
         _j25Ordinary = intExplicitJ25Ordinary
     End Sub
+
+    Public ReadOnly Property QueryX29ID As BO.x29IdEnum
+        Get
+            Select Case Me.x31QueryFlag
+                Case x31QueryFlagENUM.p28
+                    Return x29IdEnum.p28Contact
+                Case x31QueryFlagENUM.p41
+                    Return x29IdEnum.p41Project
+                Case x31QueryFlagENUM.p31
+                    Return x29IdEnum.p31Worksheet
+                Case x31QueryFlagENUM.p56
+                    Return x29IdEnum.p56Task
+                Case x31QueryFlagENUM.p91
+                    Return x29IdEnum.p91Invoice
+                Case Else
+                    Return x29IdEnum._NotSpecified
+            End Select
+        End Get
+    End Property
 End Class

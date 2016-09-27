@@ -15,8 +15,6 @@
                 .HeaderText = "Vytvořit opravný doklad"
                 .AddToolbarButton("Vygenerovat opravný doklad", "save", , "Images/save.png")
 
-                Dim cRec As BO.p91Invoice = .Factory.p91InvoiceBL.Load(.DataPID)
-                Me.Amount.Value = cRec.p91Amount_WithoutVat
             End With
             Me.p92ID.DataSource = Master.Factory.p92InvoiceTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.CreditNote)
             Me.p92ID.DataBind()

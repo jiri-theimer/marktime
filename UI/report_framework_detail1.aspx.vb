@@ -11,6 +11,14 @@ Public Class report_framework_detail1
             hidCurX31ID.Value = value.ToString
         End Set
     End Property
+    Public Property CurrentJ70ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
+        End Get
+        Set(value As Integer)
+            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
+        End Set
+    End Property
     Private Sub report_framework_detail1_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
@@ -26,7 +34,7 @@ Public Class report_framework_detail1
                 With lisPars
                     .Add("periodcombo-custom_query")
                     .Add("report_framework_detail1-period")
-
+                    .Add("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString)
                 End With
 
                 With .Factory.j03UserBL
@@ -40,7 +48,16 @@ Public Class report_framework_detail1
                 cmdSetting.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
             End With
 
-            RenderReport()
+            Dim cRec As BO.x31Report = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
+            If cRec.QueryX29ID > BO.x29IdEnum._NotSpecified Then
+                Me.hidQueryPrefix.Value = Left(cRec.QueryX29ID.ToString, 3)
+                SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString)), cRec.QueryX29ID)
+            Else
+                Me.j70ID.Visible = False : Me.cmdQuery.Visible = False : Me.clue_query.Visible = False
+            End If
+
+
+            RenderReport(cRec)
         End If
     End Sub
 
@@ -50,8 +67,8 @@ Public Class report_framework_detail1
         RenderReport()
     End Sub
 
-    Private Sub RenderReport()
-        Dim cRec As BO.x31Report = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
+    Private Sub RenderReport(Optional cRec As BO.x31Report = Nothing)
+        If cRec Is Nothing Then cRec = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
         If cRec Is Nothing Then
             Master.StopPage("Nelze načíst sestavu.<hr>" & Master.Factory.x31ReportBL.ErrorMessage)
             Return
@@ -74,7 +91,6 @@ Public Class report_framework_detail1
 
         Dim strXmlContent As String = cF.GetFileContents(strRepFullPath, , False), bolPeriod As Boolean = False
 
-        Dim intJ70ID As Integer = 0, bolQueryJ70 As Boolean = False
         If strXmlContent.IndexOf("1=1") > 0 Then
             'sestava má vztah k návrháři filtrů
             ''intJ70ID = BO.BAS.IsNullInt(query_j70id.SelectedValue)
@@ -90,6 +106,23 @@ Public Class report_framework_detail1
         ''End If
         Dim xmlRepSource As New Telerik.Reporting.XmlReportSource()
         xmlRepSource.Xml = strXmlContent
+
+        If Me.CurrentJ70ID > 0 Then
+            Dim strW As String = Master.Factory.j70QueryTemplateBL.GetSqlWhere(Me.CurrentJ70ID)
+            Select Case cRec.QueryX29ID
+                Case BO.x29IdEnum.p41Project
+                    xmlRepSource.Xml = Replace(xmlRepSource.Xml, "141=141", strW)
+                Case BO.x29IdEnum.p28Contact
+                    xmlRepSource.Xml = Replace(xmlRepSource.Xml, "328=328", strW)
+                Case BO.x29IdEnum.p91Invoice
+                    xmlRepSource.Xml = Replace(xmlRepSource.Xml, "391=391", strW)
+                Case BO.x29IdEnum.p31Worksheet
+                    xmlRepSource.Xml = Replace(xmlRepSource.Xml, "331=331", strW)
+                Case BO.x29IdEnum.p56Task
+                    xmlRepSource.Xml = Replace(xmlRepSource.Xml, "356=356", strW)
+            End Select
+            
+        End If
 
         If strXmlContent.IndexOf("@datfrom") > 0 Or strXmlContent.IndexOf("@datuntil") > 0 Or cRec.x31IsPeriodRequired Then
             period1.Visible = True
@@ -124,7 +157,7 @@ Public Class report_framework_detail1
         ''lblQuery.Visible = bolQueryJ70
         ''query_j70id.Visible = bolQueryJ70
 
-     
+
 
         rv1.ReportSource = xmlRepSource
 
@@ -138,11 +171,36 @@ Public Class report_framework_detail1
                 .BackColor = Nothing
             End If
         End With
+        lblHeader.Visible = Not Me.j70ID.Visible
+        If Me.j70ID.Visible Then
+            basUIMT.RenderQueryCombo(Me.j70ID)
+            With Me.j70ID
+                If .SelectedIndex > 0 Then
+                    .ToolTip = .SelectedItem.Text
+                    Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+                Else
+                    Me.clue_query.Visible = False
+                End If
+            End With
+        End If
+
+        
     End Sub
 
     
 
     
-
+    Private Sub SetupJ70Combo(intDef As Integer, x29id As BO.x29IdEnum)
+        Dim mq As New BO.myQuery
+        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, x29id)
+        j70ID.DataBind()
+        j70ID.Items.Insert(0, "--Bez filtrování--")
+        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+        
+    End Sub
  
+    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString, Me.CurrentJ70ID.ToString)
+        RenderReport()
+    End Sub
 End Class

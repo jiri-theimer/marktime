@@ -126,6 +126,11 @@
                 pars.Add("j27id", .j27ID, DbType.Int32)
                 strW += " AND a.j27ID=@j27id"
             End If
+            If Year(.DateFrom) > 2000 Or Year(.DateUntil) < 2100 Then
+                pars.Add("d1", .DateFrom, DbType.DateTime)
+                pars.Add("d2", .DateUntil, DbType.DateTime)
+                strW += " AND a.p90Date BETWEEN @d1 AND @d2"
+            End If
         End With
         strW += bas.ParseWhereValidity("p90", "a", myQuery)
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)

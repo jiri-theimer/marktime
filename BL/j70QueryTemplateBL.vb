@@ -6,6 +6,8 @@
     Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum) As IEnumerable(Of BO.j70QueryTemplate)
     Function GetList_j71(intPID As Integer) As IEnumerable(Of BO.j71QueryTemplate_Item)
     Function GetList_OtherQueryItem(x29id As BO.x29IdEnum) As List(Of BO.OtherQueryItem)
+
+    Function GetSqlWhere(intJ70ID As Integer) As String
     
     Sub Setupj71TempList(intPID As Integer, strGUID As String)
 End Interface
@@ -140,5 +142,9 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(12, "Dokument čeká na vazbu s osobou"))
         End Select
         Return lis
+    End Function
+
+    Public Function GetSqlWhere(intJ70ID As Integer) As String Implements Ij70QueryTemplateBL.GetSqlWhere
+        Return _cDL.GetSqlWhere(intJ70ID)
     End Function
 End Class

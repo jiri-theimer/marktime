@@ -6200,10 +6200,10 @@ declare @login nvarchar(50),@j02id_sys int
 select @j02id_sys=j02ID,@login=j03Login FROM j03User WHERE j03ID=@j03id_sys
 
 
-declare @j27id int,@x15id int,@p91fixedvatrate float
+declare @j27id int,@x15id int,@p91fixedvatrate float,@is_creditnote bit
 
 
-select @j27id=j27ID,@x15id=x15ID,@p91fixedvatrate=p91FixedVatRate
+select @j27id=j27ID,@x15id=x15ID,@p91fixedvatrate=p91FixedVatRate,@is_creditnote=convert(bit,case when p91ID_CreditNoteBind IS NOT NULL THEN 1 else 0 end)
 from p91Invoice
 where p91ID=@p91id  
 
@@ -6281,6 +6281,26 @@ END
 CLOSE curP31
 DEALLOCATE curP31
 
+
+if @is_creditnote=1
+ begin
+	declare @p32id_creditnote int
+
+	if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'p32ID_CreditNote' AND ISNUMERIC(x35Value)=1)
+	 select @p32id_creditnote=convert(int,x35Value) FROM x35GlobalParam WHERE x35Key like 'p32ID_CreditNote'
+
+
+	if @p32id_creditnote is not null
+	 begin
+	   UPDATE p31Worksheet set p31Amount_WithoutVat_Approved=p31Amount_WithoutVat_Invoiced,p31Amount_WithVat_Approved= p31Amount_WithVat_Invoiced,p31Amount_Vat_Approved=p31Amount_Vat_Invoiced,p31VatRate_Approved=p31VatRate_Invoiced
+	   ,p31Amount_WithoutVat_Orig=p31Amount_WithoutVat_Invoiced,p31Amount_WithVat_Orig= p31Amount_WithVat_Invoiced,p31Amount_Vat_Orig=p31Amount_Vat_Invoiced,p31VatRate_Orig=p31VatRate_Invoiced
+	   ,j27ID_Billing_Orig=j27ID_Billing_Invoiced
+	   ,p31Value_Approved_Billing=p31Value_Invoiced,p31Value_Orig=p31Value_Invoiced
+	   ,p31Value_Approved_Internal=p31Value_Invoiced
+       WHERE p91ID=@p91id AND p32ID=@p32id_creditnote
+     end
+
+ end
 
 
 

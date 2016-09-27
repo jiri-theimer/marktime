@@ -12,6 +12,14 @@ Public Class report_framework_detail4
             hidCurX31ID.Value = value.ToString
         End Set
     End Property
+    Public Property CurrentJ70ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
+        End Get
+        Set(value As Integer)
+            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
+        End Set
+    End Property
 
     Private Sub report_framework_detail4_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -27,7 +35,7 @@ Public Class report_framework_detail4
                 With lisPars
                     .Add("periodcombo-custom_query")
                     .Add("report_framework_detail4-period")
-
+                    .Add("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString)
                 End With
 
                 With .Factory.j03UserBL
@@ -40,6 +48,13 @@ Public Class report_framework_detail4
 
                 cmdSetting.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
             End With
+            Dim cRec As BO.x31Report = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
+            If cRec.QueryX29ID > BO.x29IdEnum._NotSpecified Then
+                Me.hidQueryPrefix.Value = Left(cRec.QueryX29ID.ToString, 3)
+                SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString)), cRec.QueryX29ID)
+            Else
+                Me.j70ID.Visible = False : Me.cmdQuery.Visible = False : Me.clue_query.Visible = False
+            End If
 
             If InhaleReport() = "" Then
                 cmdGenerate.Visible = False
@@ -78,19 +93,6 @@ Public Class report_framework_detail4
 
 
 
-        ''Dim intJ70ID As Integer = 0, bolQueryJ70 As Boolean = False
-
-        ''If strXmlContent.IndexOf("@datfrom") > 0 Or strXmlContent.IndexOf("@datuntil") > 0 Or cRec.x31IsPeriodRequired Then
-        ''    period1.Visible = True
-
-        ''    xmlRepSource.Parameters.Add(New Parameter("datfrom", period1.DateFrom))
-        ''    xmlRepSource.Parameters.Add(New Parameter("datuntil", period1.DateUntil))
-
-        ''Else
-        ''    period1.Visible = False
-        ''End If
-
-
 
     End Function
 
@@ -118,6 +120,22 @@ Public Class report_framework_detail4
                 Case "x31name", "x31code"
                 Case Else
                     Dim strSQL As String = sheetDef.Item(i, 2).Value
+                    If Me.CurrentJ70ID > 0 Then
+                        Dim strW As String = Master.Factory.j70QueryTemplateBL.GetSqlWhere(Me.CurrentJ70ID)
+                        Select Case Me.hidQueryPrefix.Value
+                            Case "p41"
+                                strSQL = Replace(strSQL, "141=141", strW)
+                            Case "p28"
+                                strSQL = Replace(strSQL, "328=328", strW)
+                            Case "p91"
+                                strSQL = Replace(strSQL, "391=391", strW)
+                            Case "p31"
+                                strSQL = Replace(strSQL, "331=331", strW)
+                            Case "p56"
+                                strSQL = Replace(strSQL, "356=356", strW)
+                        End Select
+                    End If
+
                     Dim strRange As String = sheetDef.Item(i, 1).Text
                     If strSQL <> "" And strRange <> "" Then
                         Dim pars As New List(Of BO.PluginDbParameter)
@@ -145,6 +163,17 @@ Public Class report_framework_detail4
                 .BackColor = Nothing
             End If
         End With
+        If Me.j70ID.Visible Then
+            basUIMT.RenderQueryCombo(Me.j70ID)
+            With Me.j70ID
+                If .SelectedIndex > 0 Then
+                    .ToolTip = .SelectedItem.Text
+                    Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+                Else
+                    Me.clue_query.Visible = False
+                End If
+            End With
+        End If
     End Sub
 
     Private Sub cmdGenerate_Click(sender As Object, e As EventArgs) Handles cmdGenerate.Click
@@ -152,5 +181,18 @@ Public Class report_framework_detail4
         If strTempFile <> "" Then
             Response.Redirect("binaryfile.aspx?tempfile=" & strTempFile)
         End If
+    End Sub
+
+    Private Sub SetupJ70Combo(intDef As Integer, x29id As BO.x29IdEnum)
+        Dim mq As New BO.myQuery
+        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, x29id)
+        j70ID.DataBind()
+        j70ID.Items.Insert(0, "--Bez filtrování--")
+        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+
+    End Sub
+
+    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString, Me.CurrentJ70ID.ToString)
     End Sub
 End Class

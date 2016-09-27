@@ -84,6 +84,14 @@
                 <asp:CheckBox ID="x31IsUsableAsPersonalPage" runat="server" Text="Šablona je použitelná jako osobní (výchozí) stránka uživatele" />
             </td>
         </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblx31ExportFileNameMask" Text="Maska export souboru:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="x31ExportFileNameMask" runat="server" style="width:300px;"></asp:TextBox>
+            </td>
+        </tr>
     </table>
 
     <div class="content-box2">
@@ -109,7 +117,7 @@
             <asp:TextBox ID="x31DocSqlSourceTabs" runat="server" style="width:99%;height:100px;" TextMode="MultiLine"></asp:TextBox>
         </div>
     </asp:Panel>
-
+    <asp:HiddenField ID="hidx31QueryFlag" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>
