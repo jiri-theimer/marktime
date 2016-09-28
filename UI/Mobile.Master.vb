@@ -78,6 +78,6 @@
 
 
     Public Sub StopPage(ByVal strMessage As String, Optional ByVal bolErrorInfo As Boolean = True)
-        Server.Transfer("~/stoppage_site.aspx?&err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage), False)
+        Server.Transfer("~/mobile_stoppage.aspx?&err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage), False)
     End Sub
 End Class

@@ -13,6 +13,14 @@
             Me.hidX29ID.Value = CInt(value).ToString
         End Set
     End Property
+    Public Property IsShowClueTip As Boolean
+        Get
+            Return BO.BAS.BG(Me.hidIsShowClueTip.Value)
+        End Get
+        Set(value As Boolean)
+            Me.hidIsShowClueTip.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Public ReadOnly Property RowsCount As Integer
         Get
             Return rpO23.Items.Count
@@ -39,7 +47,12 @@
 
     Private Sub rpO23_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO23.ItemDataBound
         Dim cRec As BO.o23Notepad = CType(e.Item.DataItem, BO.o23Notepad)
-        CType(e.Item.FindControl("clue_o23"), HyperLink).Attributes.Item("rel") = "clue_o23_record.aspx?pid=" & cRec.PID.ToString
+        If Me.hidIsShowClueTip.Value = "1" Then
+            CType(e.Item.FindControl("clue_o23"), HyperLink).Attributes.Item("rel") = "clue_o23_record.aspx?pid=" & cRec.PID.ToString
+        Else
+            e.Item.FindControl("clue_o23").Visible = False
+        End If
+
         With CType(e.Item.FindControl("img1"), Image)
             If cRec.o24IsBillingMemo Then
                 .ImageUrl = "Images/billing.png" : .Visible = True

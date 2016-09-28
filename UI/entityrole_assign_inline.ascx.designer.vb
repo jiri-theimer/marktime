@@ -57,4 +57,13 @@ Partial Public Class entityrole_assign_inline
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidIsShowClueTip As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsRenderAsTable control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsRenderAsTable As Global.System.Web.UI.WebControls.HiddenField
 End Class

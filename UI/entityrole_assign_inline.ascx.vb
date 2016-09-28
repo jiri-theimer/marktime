@@ -23,6 +23,14 @@
             Me.hidIsShowClueTip.Value = BO.BAS.GB(value)
         End Set
     End Property
+    Public Property IsRenderAsTable As Boolean
+        Get
+            Return BO.BAS.BG(Me.hidIsRenderAsTable.Value)
+        End Get
+        Set(value As Boolean)
+            Me.hidIsRenderAsTable.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Public ReadOnly Property RowsCount As Integer
         Get
             Return rpX69.Items.Count
@@ -49,6 +57,7 @@
         Else
             noData.Visible = False
             CType(rpX69.Items(rpX69.Items.Count - 1).FindControl("_subject"), Label).Text += ")"
+            If Me.hidIsRenderAsTable.Value = "1" Then rpX69.Controls.Add(New LiteralControl("</td></tr>"))
         End If
     End Sub
 
@@ -59,8 +68,15 @@
             With CType(e.Item.FindControl("_x67name"), Label)
                 If _cRecLast.x69ID > 0 Then
                     '.Text += ")<span style='padding-right:10px;'></span>"
-                    .Text += ")<br>"
+                    If Me.hidIsRenderAsTable.Value = "1" Then
+                        CType(e.Item.FindControl("place1"), PlaceHolder).Controls.Add(New LiteralControl("<span>)</span></td></tr><tr><td>"))
+                    Else
+                        CType(e.Item.FindControl("place1"), PlaceHolder).Controls.Add(New LiteralControl("<span>)</span></br>"))
+                    End If
+                Else
+                    If Me.hidIsRenderAsTable.Value = "1" Then CType(e.Item.FindControl("place1"), PlaceHolder).Controls.Add(New LiteralControl("<tr><td>"))
                 End If
+
                 .Text += cRec.x67Name
             End With
             If Me.IsShowClueTip Then
@@ -69,7 +85,7 @@
                 e.Item.FindControl("role_clue").Visible = False
             End If
 
-          
+
         Else
             e.Item.FindControl("_x67name").Visible = False
             e.Item.FindControl("role_clue").Visible = False

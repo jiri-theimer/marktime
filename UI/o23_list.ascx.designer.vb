@@ -39,4 +39,13 @@ Partial Public Class o23_list
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidInhaledDataPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsShowClueTip control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsShowClueTip As Global.System.Web.UI.WebControls.HiddenField
 End Class

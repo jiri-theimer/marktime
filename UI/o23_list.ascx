@@ -18,3 +18,4 @@
 
 <asp:HiddenField ID="hidX29ID" runat="server" />
 <asp:HiddenField ID="hidInhaledDataPID" runat="server" />
+<asp:HiddenField ID="hidIsShowClueTip" runat="server" Value="1" />
