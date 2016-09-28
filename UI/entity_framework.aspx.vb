@@ -131,6 +131,7 @@ Public Class entity_framework
                     End If
                     basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam(Me.CurrentPrefix + "_framework-periodtype", ""))
                     If Me.cbxQueryFlag.Visible Then basUI.SelectDropdownlistValue(Me.cbxQueryFlag, .GetUserParam(Me.CurrentPrefix + "_framework-queryflag"))
+                    If Me.CurrentPrefix = "j02" And Me.CurrentMasterPrefix <> "" And Me.CurrentMasterPID > 0 Then Me.cbxQueryFlag.SelectedIndex = 0 'seznam kontaktních osob k projektu/klientu
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
                 End With

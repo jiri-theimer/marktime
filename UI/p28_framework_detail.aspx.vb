@@ -4,6 +4,7 @@ Imports System.Web.Script.Serialization
 Public Class p28_framework_detail
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As SubForm
+    Private Property _curProjectIndex As Integer
     Public Enum SubgridType
         summary = -1
         p31 = 1
@@ -309,7 +310,6 @@ Public Class p28_framework_detail
     End Sub
 
     Private Sub RefreshProjectList(cRec As BO.p28Contact)
-
         Dim mq As New BO.myQueryP41
         mq.p28ID = cRec.PID
         mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
@@ -330,13 +330,14 @@ Public Class p28_framework_detail
                 Else
                     .Text = .Text & " (" & intOpened.ToString & ")"
                     topLink5.Text += "<span class='badge1'>" & intOpened.ToString & "</span>"
-                End If                
+                End If
 
                 .Text = "<a href='javascript:projects()'>" & .Text & "</a>"
             End With
 
         End If
-
+        If lis.Count > 100 Then lis = lis.Take(101) 'omezit na maximálně 100+1
+        _curProjectIndex = 98
         rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
         rpP41.DataBind()
 
@@ -425,6 +426,7 @@ Public Class p28_framework_detail
     End Sub
 
     Private Sub rpP41_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP41.ItemDataBound
+        _curProjectIndex += 1
         Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
         With CType(e.Item.FindControl("aProject"), HyperLink)
             If cRec.p41NameShort > "" Then
@@ -436,10 +438,19 @@ Public Class p28_framework_detail
             If Master.Factory.SysUser.j04IsMenu_Project Then
                 .NavigateUrl = "p41_framework.aspx?pid=" & cRec.PID.ToString
             End If
-
             If cRec.IsClosed Then .Font.Strikeout = True : .ForeColor = Drawing.Color.Gray
+            If _curProjectIndex > 100 Then
+                'poslední nad 100
+                .Text = "Další projekty klienta..."
+                .NavigateUrl = "javascript:projects()"
+                .ForeColor = Drawing.Color.Green
+                .Font.Bold = True
+                e.Item.FindControl("clue_project").Visible = False
+            End If
         End With
         CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
+
+
     End Sub
 
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged

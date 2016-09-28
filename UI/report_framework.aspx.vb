@@ -106,6 +106,7 @@ Public Class report_framework
                     Case BO.x31FormatFlagENUM.XLSX
                         strIMG = "Images/xls.png"
                 End Select
+                If c.x31QueryFlag > BO.x31QueryFlagENUM._None Then strIMG = "Images/query.png"
                 .AddItem(c.x31Name, c.PID.ToString, strURL, "j25-" & c.j25ID.ToString, strIMG, , strTarget)
             Next
 
