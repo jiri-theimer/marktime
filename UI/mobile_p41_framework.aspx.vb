@@ -106,13 +106,36 @@
             Me.boxP30.Visible = True
             Me.persons1.FillData(lisP30)
             Me.CountP30.Text = lisP30.Count.ToString
-            Me.titleP30.NavigateUrl = "#"
             
         Else
             Me.boxP30.Visible = False
         End If
 
         RefreshBillingLanguage(cRec, cClient)
+
+        Dim cProjectSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
+        With cProjectSum
+            If .p91_Count > 0 Then
+                lisP91.Visible = True
+                CountP91.Text = .p91_Count.ToString
+            End If
+            If .p56_Actual_Count > 0 Then
+                liP56_Actual.Visible = True
+                CountP56_Actual.Text = .p56_Actual_Count.ToString
+            End If
+            If .p56_Closed_Count > 0 Then
+                liP56_Closed.Visible = True
+                CountP56_Closed.Text = .p56_Closed_Count.ToString
+            End If
+        End With
+
+        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p41Project, cRec.PID)
+        If lisX19.Count > 0 Then
+            labels1.RefreshData(BO.x29IdEnum.p41Project, cRec.PID, lisX19)
+        Else
+            boxX18.Visible = False
+        End If
+        RefreshP31Summary()
     End Sub
 
     Private Sub RefreshBillingLanguage(cRec As BO.p41Project, cClient As BO.p28Contact)
@@ -136,5 +159,28 @@
                 End If
             End If
         End With
+    End Sub
+
+    Private Sub RefreshP31Summary()
+        Dim mq As New BO.myQueryP31
+        mq.p41ID = Master.DataPID
+        'mq.DateFrom = period1.DateFrom
+        'mq.DateUntil = period1.DateUntil
+        mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
+
+        Dim lis As IEnumerable(Of BO.p31WorksheetBigSummary) = Master.Factory.p31WorksheetBL.GetList_BigSummary(mq)
+        
+        If lis.Count = 0 Then
+            boxP31.Visible = False
+        Else
+            boxP31.Visible = True
+            worksheet1.RefreshData(lis, Me.opgWorksheetState.SelectedIndex + 1)
+
+        End If
+
+    End Sub
+
+    Private Sub opgWorksheetState_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgWorksheetState.SelectedIndexChanged
+        RefreshP31Summary()
     End Sub
 End Class

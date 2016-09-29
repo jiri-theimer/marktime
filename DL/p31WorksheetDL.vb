@@ -916,42 +916,58 @@
     End Function
 
     Public Function GetList_BigSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.p31WorksheetBigSummary)
-        Dim pars As New DbParameters
-
-        Dim s As String = "select min(j27.j27Code) as j27Code,SUM(case when a.p71ID IS NULL THEN a.p31hours_orig END) as rozpracovano_hodiny"
-        s += ",MIN(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_prvni"
-        s += ",MAX(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_posledni"
-        s += ",SUM(case when a.p71ID IS NULL AND p34.p34IncomeStatementFlag=1 THEN p31Amount_WithoutVat_Orig END) as rozpracovano_vydaje"
-        s += ",SUM(case when a.p71ID IS NULL AND p34.p34IncomeStatementFlag=2 THEN p31Amount_WithoutVat_Orig END) as rozpracovano_odmeny"
-        s += ",SUM(case when a.p71ID IS NULL THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_celkem"
-        s += ",SUM(case when a.p71ID IS NULL THEN 1 END) as rozpracovano_pocet"
-        s += ",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny"
-        s += ",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=1 THEN p31Amount_WithoutVat_Approved END) as schvaleno_vydaje"
-        s += ",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=2 THEN p31Amount_WithoutVat_Approved END) as schvaleno_odmeny"
-        s += ",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_celkem"
-        s += ",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN 1 END) as schvaleno_pocet"
-        s += ",MIN(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_prvni"
-        s += ",MAX(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_posledni"
-        s += ",SUM(case when a.p91ID IS NOT NULL THEN a.p31Hours_Invoiced END) as vyfakturovano_hodiny"
-        s += ",SUM(case when a.p91ID IS NOT NULL THEN a.p31Amount_WithVat_Invoiced END) as vyfakturovano_castka"
-        s += ",SUM(case when a.p91ID IS NOT NULL THEN 1 END) as vyfakturovano_pocet"
-        s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
-        s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
+        Dim pars As New DbParameters, s As New System.Text.StringBuilder
+        s.Append("select min(j27.j27Code) as j27Code")
+        s.Append(",SUM(case when a.p71ID IS NULL THEN a.p31hours_orig END) as rozpracovano_hodiny")
+        s.Append(",MIN(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_prvni")
+        s.Append(",MAX(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_posledni")
+        s.Append(",SUM(case when a.p71ID IS NULL AND p34.p33ID=1 THEN p31Amount_WithoutVat_Orig END) as rozpracovano_honorar")
+        s.Append(",SUM(case when a.p71ID IS NULL AND p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as rozpracovano_vydaje")
+        s.Append(",SUM(case when a.p71ID IS NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as rozpracovano_odmeny")
+        s.Append(",SUM(case when a.p71ID IS NULL THEN a.p31Amount_WithoutVat_Orig END) as rozpracovano_celkem")
+        s.Append(",SUM(case when a.p71ID IS NULL THEN 1 END) as rozpracovano_pocet")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove=4 THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_honorar")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove=6 THEN a.p31hours_orig END) as schvaleno_hodiny_pausal")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove IN (2,3) THEN a.p31hours_orig END) as schvaleno_hodiny_odpis")
+        s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=1 and a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Approved END) as schvaleno_vydaje")
+        s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=1 and a.p72ID_AfterApprove=6 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as schvaleno_vydaje_pausal")
+        s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=1 and a.p72ID_AfterApprove IN (2,3) AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as schvaleno_vydaje_odpis")
+        s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=2 AND a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Approved END) as schvaleno_odmeny")
+        s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=2 AND a.p72ID_AfterApprove=6 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as schvaleno_odmeny_pausal")
+        s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=2 AND a.p72ID_AfterApprove IN (2,3) AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as schvaleno_odmeny_odpis")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_celkem")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN 1 END) as schvaleno_pocet")
+        s.Append(",MIN(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_prvni")
+        s.Append(",MAX(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_posledni")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL THEN a.p31Hours_Invoiced END) as vyfakturovano_hodiny")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND a.p70ID=6 THEN a.p31hours_orig END) as vyfakturovano_hodiny_pausal")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND a.p70ID IN (2,3) THEN a.p31hours_orig END) as vyfakturovano_hodiny_odpis")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL THEN a.p31Amount_WithoutVat_Invoiced/p31ExchangeRate_Invoice END) as vyfakturovano_castka")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Invoiced/p31ExchangeRate_Invoice END) as vyfakturovano_honorar")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=1 and a.p70ID=4 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Invoiced/p31ExchangeRate_Invoice END) as vyfakturovano_vydaje")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=2 AND a.p70ID=4 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Invoiced/p31ExchangeRate_Invoice END) as vyfakturovano_odmeny")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=2 AND a.p70ID=6 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as vyfakturovano_odmeny_pausal")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=2 AND a.p70ID IN (2,3) AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as vyfakturovano_odmeny_odpis")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=1 and a.p70ID IN (2,3) AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as vyfakturovano_vydaje_pausal")
+        s.Append(",SUM(case when a.p91ID IS NOT NULL THEN 1 END) as vyfakturovano_pocet")
+        s.Append(" from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID")
+        s.Append(" LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID")
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
             Dim strJ11IDs As String = ""
             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
-            s += " LEFT OUTER JOIN ("
-            s += "SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID"
-            s += ") zbytek ON a.p31ID=zbytek.p31ID"
+            s.Append(" LEFT OUTER JOIN (")
+            s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+            s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
         End If
         
         Dim strW As String = GetSQLWHERE(myQuery, pars)
-        If strW <> "" Then s += " WHERE " & strW
+        If strW <> "" Then s.Append(" WHERE " & strW)
 
 
-        s += " GROUP BY a.j27ID_Billing_Orig"
+        s.Append(" GROUP BY a.j27ID_Billing_Orig,case when a.j27ID_Billing_Invoiced is null then a.j27ID_Billing_Orig else a.j27ID_Billing_Invoiced end")
 
-        Return _cDB.GetList(Of BO.p31WorksheetBigSummary)(s, pars)
+        Return _cDB.GetList(Of BO.p31WorksheetBigSummary)(s.ToString, pars)
     End Function
 
     Public Sub UpdateDeleteApprovingSet(strApprovingSet As String, p31ids As List(Of Integer), bolClear As Boolean, strTempGUID As String)

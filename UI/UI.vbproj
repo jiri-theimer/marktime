@@ -210,6 +210,7 @@
     <Content Include="o41_record.aspx" />
     <Content Include="o42_record.aspx" />
     <Content Include="p28_framework.aspx" />
+    <Content Include="p31summary.ascx" />
     <Content Include="p31_framework_timer.aspx" />
     <Content Include="p31_record_split.aspx" />
     <Content Include="p31_scheduler.aspx" />
@@ -856,6 +857,13 @@
     <Compile Include="p28_framework.aspx.vb">
       <DependentUpon>p28_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31summary.ascx.designer.vb">
+      <DependentUpon>p31summary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p31summary.ascx.vb">
+      <DependentUpon>p31summary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p31_framework_timer.aspx.designer.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>

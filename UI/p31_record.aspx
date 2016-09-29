@@ -408,7 +408,7 @@
                     </telerik:RadNumericTextBox>
                 </td>
                 <td>
-                    <uc:datacombo ID="j27ID_Orig" Width="60px" runat="server" DataTextField="j27Code" DataValueField="pid" AutoPostBack="true"></uc:datacombo>
+                    <uc:datacombo ID="j27ID_Orig" Width="70px" runat="server" DataTextField="j27Code" DataValueField="pid" AutoPostBack="true"></uc:datacombo>
                 </td>
                 <td>
                     <asp:Label ID="lblp31VatRate_Orig" runat="server" Text="Sazba DPH (%):" CssClass="lbl" meta:resourcekey="lblp31VatRate_Orig"></asp:Label>

@@ -103,6 +103,11 @@
             font-weight: bold;
             color: red;
         }
+
+        a {
+            text-decoration: underline;
+        }
+       
     </style>
 
 
@@ -183,7 +188,7 @@
                 minLength: 1,
                 select: function (event, ui) {
                     if (ui.item) {
-                        location.replace("p41_framework_mobile.aspx?pid=" + ui.item.PID);
+                        location.replace("mobile_p41_framework.aspx?pid=" + ui.item.PID);
                         return false;
                     }
                 },
