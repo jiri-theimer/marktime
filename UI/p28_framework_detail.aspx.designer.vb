@@ -176,6 +176,33 @@ Partial Public Class p28_framework_detail
     Protected WithEvents panDraftCommands As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''trParent control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trParent As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ParentContact control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ParentContact As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''trWorkflow control.
     '''</summary>
     '''<remarks>

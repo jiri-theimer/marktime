@@ -23,6 +23,8 @@ Public Enum myQueryP28_QuickQuery
     DuplicityInCompanyName = 22
     DuplicityRegID = 23
     DuplicityVatID = 24
+    WithParentContact = 25
+    WithChildContact = 26
 End Enum
 Public Class myQueryP28
     Inherits myQuery
@@ -31,6 +33,7 @@ Public Class myQueryP28
     Public Property j02ID As Integer
     Public Property b02ID As Integer
     Public Property j70ID As Integer
+    Public Property p28ParentID As Integer
     Public Property CanBeSupplier As BooleanQueryMode = BooleanQueryMode.NoQuery
     Public Property CanBeClient As BooleanQueryMode = BooleanQueryMode.NoQuery
     Public QuickQuery As myQueryP28_QuickQuery = myQueryP28_QuickQuery._NotSpecified

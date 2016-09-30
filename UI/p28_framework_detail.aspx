@@ -366,6 +366,17 @@
 
 
                     </tr>
+                    <tr id="trParent" runat="server" visible="false">
+                        <td>
+                            <asp:Label ID="Label3" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
+
+                        </td>
+                        <td>                            
+                            <asp:HyperLink ID="ParentContact" runat="server" Target="_top"></asp:HyperLink>
+
+                        </td>
+
+                    </tr>
                     <tr id="trWorkflow" runat="server" visible="false">
                         <td>
                             <asp:Label ID="lblB02ID" runat="server" Text="Workflow stav:" CssClass="lbl"></asp:Label>

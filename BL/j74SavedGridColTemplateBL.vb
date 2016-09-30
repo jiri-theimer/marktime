@@ -274,6 +274,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.IC, "p28RegID"))
             .Add(AGC(My.Resources.common.DIC, "p28VatID"))
             .Add(AGC(My.Resources.common.Typ, "p29Name"))
+            .Add(AGC("Nadřízený klient", "ParentName", , , "p28parent.ParentName"))
             .Add(AGC(My.Resources.common.Zkratka, "p28CompanyShortName"))
             .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))

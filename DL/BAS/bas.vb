@@ -481,6 +481,10 @@
                 Return "lower(a.p28RegID) IN (select lower(p28RegID) FROM p28Contact where p28RegID is not null and p28ID<>a.p28ID)"
             Case BO.myQueryP28_QuickQuery.DuplicityVatID
                 Return "lower(a.p28VatID) IN (select lower(p28VatID) FROM p28Contact where p28VatID is not null and p28ID<>a.p28ID)"
+            Case BO.myQueryP28_QuickQuery.WithParentContact
+                Return "a.p28ParentID IS NOT NULL"
+            Case BO.myQueryP28_QuickQuery.WithChildContact
+                Return "a.p28ID IN (SELECT p28ParentID FROM p28Contact WHERE p28ParentID IS NOT NULL)"
             Case Else
                 Return ""
         End Select

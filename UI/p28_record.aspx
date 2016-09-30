@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign" Src="~/entityrole_assign.ascx" %>
+<%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -260,6 +261,14 @@
                     </table>
                 </asp:Panel>
             </div>
+            <div style="margin-top:10px;">
+                <asp:Label ID="lblParentID" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
+                <uc:contact ID="p28ParentID" runat="server" Width="400px" Flag="client" />
+                        <a href="javascript:p28_client_add()">Založit nového klienta</a>
+            </div>
+                        
+
+                
         </telerik:RadPageView>
         <telerik:RadPageView ID="billing" runat="server">
             <fieldset>

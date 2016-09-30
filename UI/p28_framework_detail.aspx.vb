@@ -134,7 +134,11 @@ Public Class p28_framework_detail
                 Me.p29Name.Text = "[" & .p29Name & "]"
             End If
             imgDraft.Visible = .p28IsDraft
-
+            If .p28ParentID <> 0 Then
+                Me.trParent.Visible = True
+                Me.ParentContact.NavigateUrl = "p28_framework.aspx?pid=" & .p28ParentID.ToString
+                Me.ParentContact.Text = .ParentName
+            End If
         End With
 
 
@@ -337,7 +341,6 @@ Public Class p28_framework_detail
 
         End If
         If lis.Count > 100 Then lis = lis.Take(101) 'omezit na maximálně 100+1
-        _curProjectIndex = 98
         rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
         rpP41.DataBind()
 

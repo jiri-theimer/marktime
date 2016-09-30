@@ -130,6 +130,10 @@
             Me.p28ExternalPID.Text = .p28ExternalPID
             Master.Timestamp = .Timestamp
 
+            If .p28ParentID <> 0 Then
+                Me.p28ParentID.Value = .p28ParentID
+                Me.p28ParentID.Text = .ParentName
+            End If
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
@@ -334,6 +338,7 @@
                 .p28IsCompany = BO.BAS.BG(Me.p28IsCompany.SelectedValue)
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .p29ID = BO.BAS.IsNullInt(Me.p29ID.SelectedValue)
+                .p28ParentID = BO.BAS.IsNullInt(Me.p28ParentID.Value)
                 If .p28IsCompany Then
                     .p28CompanyName = Me.p28CompanyName.Text
                     .p28CompanyShortName = Me.p28CompanyShortName.Text

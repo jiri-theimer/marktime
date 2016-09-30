@@ -383,6 +383,24 @@ Partial Public Class p28_record
     Protected WithEvents rpO32 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''lblParentID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblParentID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p28ParentID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28ParentID As Global.UI.contact
+
+    '''<summary>
     '''billing control.
     '''</summary>
     '''<remarks>
