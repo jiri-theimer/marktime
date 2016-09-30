@@ -466,4 +466,14 @@
         Return _cDB.RunSP("p28_convertdraft", pars)
 
     End Function
+
+    Public Function HasChildRecords(intPID As Integer) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("pid", intPID, DbType.Int32)
+        If _cDB.GetIntegerValueFROMSQL("if exists(select p28ID FROM p28Contact WHERE p28ParentID=@pid) select 1 as Value else select 0 as Value", pars) = 1 Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 End Class

@@ -200,6 +200,10 @@
             window.open("p91_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
             
         }
+        function childs(){            
+            window.open("p28_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            
+        }
         function notepads(){            
             window.open("o23_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
         }
@@ -334,6 +338,7 @@
         <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()"></asp:HyperLink>
         <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()"></asp:HyperLink>
         <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář klienta" CssClass="toplink" NavigateUrl="javascript:scheduler()"></asp:HyperLink>
+        <asp:HyperLink ID="topLink7" runat="server" Text="Podřízení klienti" CssClass="toplink" NavigateUrl="javascript:childs()" Visible="false"></asp:HyperLink>
 
     </div>
 

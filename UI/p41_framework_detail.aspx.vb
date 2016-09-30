@@ -291,8 +291,6 @@ Public Class p41_framework_detail
 
         End If
 
-
-
         basUIMT.RenderHeaderMenu(cRec.IsClosed, Me.panMenuContainer, menu1)
         Dim strLevel1 As String = cRec.FullName
         If Len(cRec.Client) > 30 Then
@@ -321,7 +319,13 @@ Public Class p41_framework_detail
         Else
             boxX18.Visible = False
         End If
-
+        If Master.Factory.p41ProjectBL.HasChildRecords(cRec.PID) Then
+            topLink7.Visible = True
+            Dim mq2 As New BO.myQueryP41
+            mq2.MG_SelectPidFieldOnly = True
+            mq2.p41ParentID = cRec.PID
+            topLink7.Text += "<span class='badge1'>" & Master.Factory.p41ProjectBL.GetList(mq2).Count.ToString & "</span>"
+        End If
 
 
         RefreshP40(cRec)

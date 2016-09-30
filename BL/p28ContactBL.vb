@@ -22,6 +22,7 @@
     Sub ClearSelectedRole(intX67ID As Integer, intP28ID As Integer)
     Function ConvertFromDraft(intPID As Integer) As Boolean
     Function LoadMyLastCreated() As BO.p28Contact
+    Function HasChildRecords(intPID As Integer) As Boolean
 End Interface
 Class p28ContactBL
     Inherits BLMother
@@ -245,5 +246,8 @@ Class p28ContactBL
 
     Public Function GetGridDataSource(myQuery As BO.myQueryP28) As DataTable Implements Ip28ContactBL.GetGridDataSource
         Return _cDL.GetGridDataSource(myQuery)
+    End Function
+    Public Function HasChildRecords(intPID As Integer) As Boolean Implements Ip28ContactBL.HasChildRecords
+        Return _cDL.HasChildRecords(intPID)
     End Function
 End Class

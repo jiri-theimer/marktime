@@ -83,6 +83,11 @@
                 trPlanPeriod.Visible = False
             End If
             Me.imgDraft.Visible = .p41IsDraft
+            If .p41ParentID <> 0 Then
+                Me.trParent.Visible = True
+                Me.ParentProject.NavigateUrl = "mobile_p41_framework.aspx?pid=" & .p41ParentID.ToString
+                Me.ParentProject.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ParentID)
+            End If
         End With
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, cRec.PID)

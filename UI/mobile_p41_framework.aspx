@@ -83,6 +83,16 @@
                                 <asp:Image ID="imgFlag_Client" runat="server" />
                             </td>
                         </tr>
+                        <tr id="trParent" runat="server" visible="false">
+                        <td>
+                            Nadřízený projekt:
+
+                        </td>
+                        <td>                            
+                            <asp:HyperLink ID="ParentProject" runat="server" Target="_top"></asp:HyperLink>
+                        </td>
+
+                        </tr>
                         <tr id="trB02" runat="server">
                             <td>Workflow stav:
                             </td>

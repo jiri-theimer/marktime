@@ -16,6 +16,7 @@
     Sub UpdateSelectedProjectRole(intX67ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), intP41ID As Integer)
     Sub ClearSelectedProjectRole(intX67ID As Integer, intP41ID As Integer)
     Function ConvertFromDraft(intPID As Integer) As Boolean
+    Function HasChildRecords(intPID As Integer) As Boolean
 End Interface
 Class p41ProjectBL
     Inherits BLMother
@@ -275,5 +276,8 @@ Class p41ProjectBL
 
     Public Function ConvertFromDraft(intPID As Integer) As Boolean Implements Ip41ProjectBL.ConvertFromDraft
         Return _cDL.ConvertFromDraft(intPID)
+    End Function
+    Public Function HasChildRecords(intPID As Integer) As Boolean Implements Ip41ProjectBL.HasChildRecords
+        Return _cDL.HasChildRecords(intPID)
     End Function
 End Class

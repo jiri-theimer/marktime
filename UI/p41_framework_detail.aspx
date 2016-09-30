@@ -165,6 +165,10 @@
         function tasks(){            
             window.open("p56_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
         }
+        function childs(){            
+            window.open("p41_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
+            
+        }
         function notepads(){            
             window.open("o23_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
         }
@@ -324,6 +328,7 @@
         <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()" meta:resourcekey="topLink2"></asp:HyperLink>
         <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()" meta:resourcekey="topLink6"></asp:HyperLink>
         <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář projektu" CssClass="toplink" NavigateUrl="javascript:scheduler()" meta:resourcekey="topLink3"></asp:HyperLink>
+        <asp:HyperLink ID="topLink7" runat="server" Text="Podřízené projekty" CssClass="toplink" NavigateUrl="javascript:childs()" Visible="false"></asp:HyperLink>
     </div>
 
 

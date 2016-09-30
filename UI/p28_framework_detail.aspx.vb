@@ -242,7 +242,13 @@ Public Class p28_framework_detail
         Else
             boxFF.Visible = False
         End If
-
+        If Master.Factory.p28ContactBL.HasChildRecords(cRec.PID) Then
+            topLink7.Visible = True
+            Dim mq2 As New BO.myQueryP28
+            mq2.MG_SelectPidFieldOnly = True
+            mq2.p28ParentID = cRec.PID
+            topLink7.Text += "<span class='badge1'>" & Master.Factory.p28ContactBL.GetList(mq2).Count.ToString & "</span>"
+        End If
     End Sub
 
     Private Sub RefreshComments()

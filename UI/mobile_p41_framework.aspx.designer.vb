@@ -113,6 +113,24 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents imgFlag_Client As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
+    '''trParent control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trParent As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''ParentProject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ParentProject As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''trB02 control.
     '''</summary>
     '''<remarks>

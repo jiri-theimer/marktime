@@ -591,6 +591,8 @@ Public Class entity_framework
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p28" : .p28ID = Me.CurrentMasterPID
+                Case "p41"
+                    .p41ParentID = Me.CurrentMasterPID    'podřízené projekty
             End Select
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
@@ -630,6 +632,10 @@ Public Class entity_framework
                 Else
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
+            End If
+            If Me.CurrentMasterPrefix = "p28" Then
+                'podřízení klienti
+                .p28ParentID = Me.CurrentMasterPID
             End If
 
             Select Case Me.cbxPeriodType.SelectedValue
