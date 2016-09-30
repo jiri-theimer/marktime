@@ -239,54 +239,56 @@ Class j74SavedGridColTemplateBL
 
     Private Sub InhaleP41ColList(ByRef lis As List(Of BO.GridColumn))
         With lis
-            .Add(AGC(My.Resources.common.NazevProjektu, "p41Name"))
-            .Add(AGC(My.Resources.common.Kod, "p41Code"))
-            .Add(AGC("DRAFT", "p41IsDraft", BO.cfENUM.Checkbox))
+            .Add(AGC(My.Resources.common.NazevProjektu, "p41Name", , , "a.p41Name"))
+            .Add(AGC(My.Resources.common.Kod, "p41Code", , , "a.p41Code"))
+            .Add(AGC("DRAFT", "p41IsDraft", BO.cfENUM.Checkbox, , "a.p41IsDraft"))
             .Add(AGC(My.Resources.common.KlientProjektu, "Client", , , "p28client.p28Name"))
-            .Add(AGC(My.Resources.common.KlientPlusProjekt, "FullName", , True, "isnull(p28client.p28Name+char(32),'')+p41Name"))
-            .Add(AGC(My.Resources.common.Zkratka, "p41NameShort"))
+            .Add(AGC(My.Resources.common.KlientPlusProjekt, "FullName", , True, "isnull(p28client.p28Name+char(32),'')+a.p41Name"))
+            .Add(AGC(My.Resources.common.Zkratka, "p41NameShort", , , "a.p41NameShort"))
             .Add(AGC(My.Resources.common.TypProjektu, "p42Name"))
             .Add(AGC(My.Resources.common.Stredisko, "j18Name"))
             .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
-            .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly))
-            .Add(AGC(My.Resources.common.PlanEnd, "p41PlanUntil", BO.cfENUM.DateOnly))
-            .Add(AGC(My.Resources.common.LimitHodin, "p41LimitHours_Notification", BO.cfENUM.Numeric))
-            .Add(AGC(My.Resources.common.LimitniHonorar, "p41LimitFee_Notification", BO.cfENUM.Numeric))
+            .Add(AGC("Nadřízený projekt", "ParentProject", , , "p41parent.p41Name", , "LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"))
+            .Add(AGC("Kód nadř.projektu", "ParentCode", , , "p41parent.p41Code", , "LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"))
+            .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly, , "a.p41PlanFrom"))
+            .Add(AGC(My.Resources.common.PlanEnd, "p41PlanUntil", BO.cfENUM.DateOnly, , "a.p41PlanUntil"))
+            .Add(AGC(My.Resources.common.LimitHodin, "p41LimitHours_Notification", BO.cfENUM.Numeric, , "a.p41LimitHours_Notification"))
+            .Add(AGC(My.Resources.common.LimitniHonorar, "p41LimitFee_Notification", BO.cfENUM.Numeric, , "a.p41LimitFee_Notification"))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
-            .Add(AGC(My.Resources.common.Zalozeno, "p41DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Zalozil, "p41UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "p41DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Aktualizoval, "p41UserUpdate"))
-            .Add(AGC(My.Resources.common.ExterniKod, "p41ExternalPID"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p41DateInsert", BO.cfENUM.DateTime, , "a.p41DateInsert"))
+            .Add(AGC(My.Resources.common.Zalozil, "p41UserInsert", , , "a.p41UserInsert"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p41DateUpdate", BO.cfENUM.DateTime, , "a.p41DateUpdate"))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p41UserUpdate", , , "a.p41UserUpdate"))
+            .Add(AGC(My.Resources.common.ExterniKod, "p41ExternalPID", , , "a.p41ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p41Project, lis)
 
     End Sub
     Private Sub InhaleP28ColList(ByRef lis As List(Of BO.GridColumn))
         With lis
-            .Add(AGC(My.Resources.common.Nazev, "p28Name"))
-            .Add(AGC(My.Resources.common.Spolecnost, "p28CompanyName"))
-            .Add(AGC(My.Resources.common.Kod, "p28Code"))
-            .Add(AGC(My.Resources.common.Kod, "p28SupplierID"))
-            .Add(AGC(My.Resources.common.IC, "p28RegID"))
-            .Add(AGC(My.Resources.common.DIC, "p28VatID"))
-            .Add(AGC(My.Resources.common.Typ, "p29Name"))
-            .Add(AGC("Nadřízený klient", "ParentName", , , "p28parent.ParentName"))
-            .Add(AGC(My.Resources.common.Zkratka, "p28CompanyShortName"))
+            .Add(AGC(My.Resources.common.Nazev, "p28Name", , , "a.p28Name"))
+            .Add(AGC(My.Resources.common.Spolecnost, "p28CompanyName", , , "a.p28CompanyName"))
+            .Add(AGC(My.Resources.common.Kod, "p28Code", , , "a.p28Code"))
+            .Add(AGC(My.Resources.common.KodDodavatele, "p28SupplierID", , , "a.p28SupplierID"))
+            .Add(AGC(My.Resources.common.IC, "p28RegID", , , "a.p28RegID"))
+            .Add(AGC(My.Resources.common.DIC, "p28VatID", , , "a.p28VatID"))
+            .Add(AGC(My.Resources.common.Typ, "p29Name"))            
+            .Add(AGC("Nadřízený klient", "ParentContact", , , "p28parent.p28Name", , "LEFT OUTER JOIN p28Contact p28parent ON a.p28ParentID=p28parent.p28ID"))
+            .Add(AGC(My.Resources.common.Zkratka, "p28CompanyShortName", , , "a.p28CompanyShortName"))
             .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
             .Add(AGC(My.Resources.common.FakturacniJazyk, "p87Name"))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
-            .Add(AGC(My.Resources.common.Zalozeno, "p28DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Zalozil, "p28UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "p28DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Aktualizoval, "p28UserUpdate"))
-            .Add(AGC("Externí kód", "p28ExternalPID"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p28DateInsert", BO.cfENUM.DateTime, , "a.p28DateInsert"))
+            .Add(AGC(My.Resources.common.Zalozil, "p28UserInsert", , , "a.p28UserInsert"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p28DateUpdate", BO.cfENUM.DateTime, , "a.p28DateUpdate"))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p28UserUpdate", , , "a.p28UserUpdate"))
+            .Add(AGC("Externí kód", "p28ExternalPID", , , "a.p28ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p28Contact, lis)
     End Sub
@@ -493,12 +495,13 @@ Class j74SavedGridColTemplateBL
 
 
 
-    Private Function AGC(strHeader As String, strName As String, Optional colType As BO.cfENUM = BO.cfENUM.AnyString, Optional bolSortable As Boolean = True, Optional strDBName As String = "", Optional bolShowTotals As Boolean = False)
+    Private Function AGC(strHeader As String, strName As String, Optional colType As BO.cfENUM = BO.cfENUM.AnyString, Optional bolSortable As Boolean = True, Optional strDBName As String = "", Optional bolShowTotals As Boolean = False, Optional strSqlSyntax_FROM As String = "")
         Dim col As BO.GridColumn
         col = New BO.GridColumn(_x29id, strHeader, strName, colType)
         col.IsSortable = bolSortable
         col.ColumnDBName = strDBName
         col.IsShowTotals = bolShowTotals
+        col.SqlSyntax_FROM = strSqlSyntax_FROM
         Return col
     End Function
 

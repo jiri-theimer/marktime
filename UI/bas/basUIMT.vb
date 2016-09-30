@@ -103,7 +103,7 @@ Public Class basUIMT
 
         End With
 
-        If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM)
+        If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
         Return String.Join(",", lisSqlSEL)
 
         'Dim strRet As String = String.Join(",", lisSqlSEL)

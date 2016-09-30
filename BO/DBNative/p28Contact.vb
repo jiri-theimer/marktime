@@ -27,7 +27,6 @@ Public Class p28Contact
     Public Property p28CompanyName As String
     Public Property p28CompanyShortName As String
     Public Property p28ParentID As Integer
-    Public Property ParentName As String
     Public Property p28InvoiceDefaultText1 As String
     Public Property p28InvoiceDefaultText2 As String
     Public Property p28InvoiceMaturityDays As Integer

@@ -2354,15 +2354,16 @@ if @x29id=328
 	declare @p29id int
 	select @p29id=p29ID FROM p28Contact WHERE p28ID=@datapid	---u klienta nemusí být povinnì vyplnìný TYP klienta, který s sebou nese èíselnou øadu
 
+
 	if @p29id is not null and @isdraft=0
-	  select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=0 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p29ID IN (SELECT p29ID FROM p29ContactType WHERE x38ID=@x38id OR x38ID IS NULL)
+	  select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=0 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND (p29ID IS NULL OR p29ID IN (SELECT p29ID FROM p29ContactType WHERE x38ID=@x38id))
 
 	if @p29id is null and @isdraft=0	---zde chybí zcela vazba na èíselnou øadu, protože typ klienta není povinné pole
 	 select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=0 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue
 
 	
 	if @p29id is not null and @isdraft=1
-	  select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=1 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p29ID IN (SELECT p29ID FROM p29ContactType WHERE x38ID_Draft=@x38id OR x38ID_Draft IS NULL)
+	  select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=1 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND (p29ID IS NULL OR p29ID IN (SELECT p29ID FROM p29ContactType WHERE x38ID_Draft=@x38id OR x38ID_Draft IS NULL))
 
 	if @p29id is null and @isdraft=1
 	  select @pid_last=max(p28ID),@code_max_used=max(dbo.remove_alphacharacters(p28code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p28Contact where p28IsDraft=1 AND p28Code NOT LIKE 'TEMP%' and p28Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue
@@ -8719,11 +8720,13 @@ CREATE procedure [dbo].[p41_inhale_sumrow]
 @j03id_sys int
 ,@pid int						---p41id
 ,@p56_actual_count int OUTPUT	--_poèet otevøených úkolù v projektu
+,@p56_closed_count int OUTPUT	--_poèet uzavøených úkolù v projektu
 ,@o22_actual_count int OUTPUT	--poèet otevøených termínù v projektu
 ,@p91_count int OUTPUT			--poèet vystavených faktur
 AS
 
 set @p56_actual_count=0
+set @p56_closed_count=0
 set @o22_actual_count=0
 set @p91_count=0
 
@@ -8731,6 +8734,10 @@ set @p91_count=0
 SELECT @p56_actual_count=COUNT(*)
 FROM p56Task
 WHERE p41ID=@pid AND getdate() BETWEEN p56ValidFrom AND p56ValidUntil
+
+SELECT @p56_closed_count=COUNT(*)
+FROM p56Task
+WHERE p41ID=@pid AND getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil
 
 SELECT @o22_actual_count=COUNT(*)
 FROM o22Milestone

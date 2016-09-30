@@ -283,7 +283,8 @@
                 .p42ID = BO.BAS.IsNullInt(Me.p42ID.SelectedValue)
                 .j18ID = BO.BAS.IsNullInt(Me.j18ID.SelectedValue)
                 .p28ID_Client = BO.BAS.IsNullInt(Me.p28ID_Client.Value)
-                .p61ID = BO.BAS.IsNullInt(Me.p61id.selectedvalue)
+                .p61ID = BO.BAS.IsNullInt(Me.p61ID.SelectedValue)
+                .p41ParentID = BO.BAS.IsNullInt(Me.p41ParentID.Value)
                 Select Case Me.opgPriceList.SelectedValue
                     Case "1"
                         'projekt bez ceníku

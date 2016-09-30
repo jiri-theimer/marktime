@@ -77,6 +77,15 @@ Partial Public Class clue_p41_record
     Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''ParentProject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ParentProject As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''trDates control.
     '''</summary>
     '''<remarks>

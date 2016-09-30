@@ -91,6 +91,9 @@ Class p41ProjectBL
                     _Error = "Doba časového plánu projektu musí být menší než 100 měsíců." : Return False
                 End If
             End If
+            If .p41ParentID <> 0 Then
+                If .p41ParentID = .PID Then _Error = "Nadřízený záznam se musí lišit od podřízeného." : Return False
+            End If
             If .ValidUntil <= Now Then
                 'pokud o přesun projektu do archivu
                 Dim cP42 As BO.p42ProjectType = Factory.p42ProjectTypeBL.Load(.p42ID)

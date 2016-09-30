@@ -284,6 +284,24 @@ Partial Public Class p41_record
     Protected WithEvents roles_region As Global.UI.entityrole_assign_preview
 
     '''<summary>
+    '''lblParent control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblParent As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p41ParentID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41ParentID As Global.UI.project
+
+    '''<summary>
     '''billing control.
     '''</summary>
     '''<remarks>

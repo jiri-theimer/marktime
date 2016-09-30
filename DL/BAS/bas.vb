@@ -532,6 +532,10 @@
                 Return "a.p41ID IN (SELECT p41ID FROM p30Contact_Person WHERE p41ID IS NOT NULL)"
             Case BO.myQueryP41_QuickQuery.WithoutContactPersons
                 Return "a.p41ID NOT IN (SELECT p41ID FROM p30Contact_Person WHERE p41ID IS NOT NULL)"
+            Case BO.myQueryP41_QuickQuery.WithParentProject
+                Return "a.p41ParentID IS NOT NULL"
+            Case BO.myQueryP41_QuickQuery.WithChildProject
+                Return "a.p41ID IN (SELECT p41ParentID FROM p41Project WHERE p41ParentID IS NOT NULL)"
             Case Else
                 Return ""
         End Select

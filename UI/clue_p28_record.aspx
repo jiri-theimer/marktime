@@ -27,6 +27,7 @@
                         <td>Vlastník:</td>
                         <td>
                             <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>IČ:</td>
@@ -35,6 +36,9 @@
                         <td>DIČ:</td>
                         <td>
                             <asp:Label ID="p28VATID" runat="server" CssClass="valbold"></asp:Label></td>
+                        <td>Nadřízený:
+                            <asp:HyperLink ID="ParentContact" runat="server" Target="_top"></asp:HyperLink>
+                        </td>
                     </tr>
                 </table>
 

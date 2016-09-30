@@ -180,7 +180,11 @@ Public Class p41_framework_detail
             End If
 
             Me.imgDraft.Visible = .p41IsDraft
-
+            If .p41ParentID <> 0 Then
+                Me.trParent.Visible = True
+                Me.ParentProject.NavigateUrl = "p41_framework.aspx?pid=" & .p41ParentID.ToString
+                Me.ParentProject.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ParentID)
+            End If
         End With
 
         RefreshBillingLanguage(cRec, cClient)

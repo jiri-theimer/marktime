@@ -109,6 +109,11 @@
                 Me.opgPriceList.SelectedValue = "1"
             End If
             Me.p51ID_Internal.SelectedValue = .p51ID_Internal.ToString
+            If .p41ParentID <> 0 Then
+                Me.p41ParentID.Value = .p41ParentID.ToString
+                Dim cParent As BO.p41Project = Master.Factory.p41ProjectBL.Load(.p41ParentID)
+                Me.p41ParentID.Text = cParent.FullName
+            End If
 
             Me.p87ID.SelectedValue = .p87ID.ToString
             Me.p92id.SelectedValue = .p92ID.ToString
@@ -281,6 +286,8 @@
 
             .ValidFrom = Master.RecordValidFrom
             .ValidUntil = Master.RecordValidUntil
+
+            .p41ParentID = BO.BAS.IsNullInt(Me.p41ParentID.Value)
         End With
 
         Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()

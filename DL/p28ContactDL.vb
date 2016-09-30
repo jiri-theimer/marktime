@@ -323,7 +323,7 @@
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
             Dim strSort As String = .MG_SortString
-            If strSort = "" Then strSort = "p28Name"
+            If strSort = "" Then strSort = "a.p28Name"
 
             If .MG_PageSize > 0 Then
                 'použít stránkování do gridu
@@ -366,7 +366,7 @@
                     strORDERBY = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
-            If strORDERBY = "" Then strORDERBY = "p28Name"
+            If strORDERBY = "" Then strORDERBY = "a.p28Name"
 
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
@@ -431,7 +431,7 @@
     Private Function GetSF() As String
         Dim s As String = "a.p29ID,a.p92ID,a.j02ID_Owner,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.b02ID,a.p28IsCompany,a.p28IsDraft,a.p28Code,a.p28FirstName,a.p28LastName,a.p28TitleBeforeName,a.p28TitleAfterName,a.p28RegID,a.p28VatID,a.p28Person_BirthRegID,a.p28CompanyName,a.p28CompanyShortName,a.p28InvoiceDefaultText1,a.p28InvoiceDefaultText2,a.p28InvoiceMaturityDays,a.p28LimitHours_Notification,a.p28LimitFee_Notification,a.p28AvatarImage"
         s += ",a.p28Name as _p28name,p29.p29Name as _p29Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,p87.p87Name as _p87Name,a.p28RobotAddress,a.p28SupplierID,a.p28SupplierFlag,a.p28ExternalPID"
-        s += ",p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,a.p28ParentID,p28parent.ParentName," & bas.RecTail("p28", "a") & ",p28free.*"
+        s += ",p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,a.p28ParentID," & bas.RecTail("p28", "a") & ",p28free.*"
         Return s
     End Function
     Private Function GetSQLPart2(mq As BO.myQueryP28) As String
@@ -443,7 +443,7 @@
         s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID"
-        s += " LEFT OUTER JOIN (SELECT p28ID as ParentID,p28Name as ParentName FROM p28Contact) p28parent ON a.p28ParentID=p28parent.ParentID"
+        ''s += " LEFT OUTER JOIN (SELECT p28ID as ParentID,p28Name as ParentContact FROM p28Contact) p28parent ON a.p28ParentID=p28parent.ParentID"
         If Not mq Is Nothing Then
             If mq.MG_AdditionalSqlFROM <> "" Then s += " " & mq.MG_AdditionalSqlFROM
         End If

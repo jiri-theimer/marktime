@@ -137,7 +137,7 @@ Public Class p28_framework_detail
             If .p28ParentID <> 0 Then
                 Me.trParent.Visible = True
                 Me.ParentContact.NavigateUrl = "p28_framework.aspx?pid=" & .p28ParentID.ToString
-                Me.ParentContact.Text = .ParentName
+                Me.ParentContact.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .p28ParentID)
             End If
         End With
 

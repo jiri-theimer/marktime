@@ -132,7 +132,7 @@
 
             If .p28ParentID <> 0 Then
                 Me.p28ParentID.Value = .p28ParentID
-                Me.p28ParentID.Text = .ParentName
+                Me.p28ParentID.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .p28ParentID, True)
             End If
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)

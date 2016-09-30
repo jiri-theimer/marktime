@@ -43,6 +43,13 @@
             If .p51ID_Billing = 0 And .p87ID = 0 And .p92ID = 0 Then
                 panBilling.Visible = False
             End If
+            If .p28ParentID > 0 Then
+                ParentContact.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .p28ParentID)
+                ParentContact.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .p28ParentID)
+                ParentContact.NavigateUrl = "p28_framework.aspx?pid=" & .p28ParentID.ToString
+            Else
+                ParentContact.Visible = False
+            End If
         End With
         address1.FillData(Master.Factory.p28ContactBL.GetList_o37(intPID))
 

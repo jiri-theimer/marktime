@@ -85,6 +85,8 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(14, "Je přiřazen ceník k projektu nebo ke klientovi projektu"))
                 lis.Add(New BO.OtherQueryItem(16, "Přiřazena minimálně jedna kontaktní osoba"))
                 lis.Add(New BO.OtherQueryItem(17, "Bez přiřazení kontaktních osob"))
+                lis.Add(New BO.OtherQueryItem(18, "Má nadřízený projekt"))
+                lis.Add(New BO.OtherQueryItem(19, "Má pod sebou podřízené projekty"))
             Case BO.x29IdEnum.p28Contact
                 lis.Add(New BO.OtherQueryItem(3, "Projekty klienta obsahují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Projektovy klienta obsahují schválené úkony, které čekají na fakturaci"))
@@ -98,8 +100,8 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(22, "Duplicitní klienti podle prvních 25 písmen v názvu"))
                 lis.Add(New BO.OtherQueryItem(23, "Duplicitní klienti podle IČ"))
                 lis.Add(New BO.OtherQueryItem(24, "Duplicitní klienti podle DIČ"))
-                lis.Add(New BO.OtherQueryItem(25, "Přiřazen nadřízený klient"))
-                lis.Add(New BO.OtherQueryItem(26, "Minimálně jeden podřízený klient"))
+                lis.Add(New BO.OtherQueryItem(25, "Má nadřízeného klienta"))
+                lis.Add(New BO.OtherQueryItem(26, "Má pod sebou podřízené klienty"))
             Case BO.x29IdEnum.j02Person
                 lis.Add(New BO.OtherQueryItem(3, "Existují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Existují schválené úkony, které čekají na fakturaci"))

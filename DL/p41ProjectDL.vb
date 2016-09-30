@@ -65,6 +65,7 @@
                 pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
                 pars.Add("p28ID_Client", BO.BAS.IsNullDBKey(.p28ID_Client), DbType.Int32)
                 pars.Add("p28ID_Billing", BO.BAS.IsNullDBKey(.p28ID_Billing), DbType.Int32)
+                pars.Add("p41ParentID", BO.BAS.IsNullDBKey(.p41ParentID), DbType.Int32)
 
                 pars.Add("p42ID", BO.BAS.IsNullDBKey(.p42ID), DbType.Int32)
                 pars.Add("p92ID", BO.BAS.IsNullDBKey(.p92ID), DbType.Int32)
@@ -225,7 +226,7 @@
                     strORDERBY = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
-            If strORDERBY = "" Then strORDERBY = "p28client.p28Name,p41Name"
+            If strORDERBY = "" Then strORDERBY = "p28client.p28Name,a.p41Name"
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
@@ -459,7 +460,7 @@
     Private Function GetSF() As String
         Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"
         s += ",p28client.p28Name as _Client,p28billing.p28Name as _ClientBilling,p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal"
-        s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID," & bas.RecTail("p41", "a")
+        s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID," & bas.RecTail("p41", "a")
         s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41RobotAddress,p41free.*"
         Return s
     End Function

@@ -26,6 +26,7 @@ Public Class p41Project
     Public Property p41NameShort As String
     Public Property p41RobotAddress As String
     Public Property p41ExternalPID As String
+    Public Property p41ParentID As Integer
     Protected Property _p41Code As String
     Public Property p41Code As String
         Get

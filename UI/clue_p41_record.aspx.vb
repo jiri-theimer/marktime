@@ -35,6 +35,12 @@
             Else
                 trDates.Visible = False
             End If
+            If .p41ParentID > 0 Then
+                ParentProject.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ParentID)
+                ParentProject.NavigateUrl = "p41_framework.aspx?pid=" & .p41ParentID.ToString
+            Else
+                ParentProject.Visible = False
+            End If
         End With
 
         Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(0, Master.DataPID, 0)

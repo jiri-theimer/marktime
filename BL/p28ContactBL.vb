@@ -104,6 +104,9 @@ Class p28ContactBL
                     Return False
                 End If
             End If
+            If .p28ParentID <> 0 Then
+                If .p28ParentID = .PID Then _Error = "Nadřízený záznam se musí lišit od podřízeného." : Return False
+            End If
             'If Trim(.p28VatID) <> "" Then
             '    .p28VatID = Trim(.p28VatID)
             '    If Not LoadByVatID(.p28VatID, .PID) Is Nothing Then

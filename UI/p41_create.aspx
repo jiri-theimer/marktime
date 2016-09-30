@@ -9,6 +9,7 @@
 <%@ Register TagPrefix="uc" TagName="entityrole_assign" Src="~/entityrole_assign.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_preview" Src="~/entityrole_assign_preview.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
+<%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -153,6 +154,10 @@
                     </div>
                     <uc:entityrole_assign_preview ID="roles_region" runat="server" EntityX29ID="j18Region" NoDataText="V přiřazeném středisku nejsou nastaveny projektové role."></uc:entityrole_assign_preview>
                 </div>
+            </div>
+            <div class="div6">
+                <asp:Label ID="lblParent" runat="server" CssClass="lbl" Text="Nadřízený projekt:"></asp:Label>
+                 <uc:project ID="p41ParentID" runat="server" Width="400px" />
             </div>
         </telerik:RadPageView>
 

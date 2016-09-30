@@ -30,6 +30,7 @@
                             <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
 
                         </td>
+                        
                     </tr>
                     <tr>
                         <td>Klient:</td>
@@ -46,7 +47,8 @@
                         <td>Vlastník:</td>
                         <td>
                             <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
-
+                            <span style="padding-left:20px;">Nadřízený projekt:</span>
+                            <asp:HyperLink ID="ParentProject" runat="server" Target="_top"></asp:HyperLink>
                         </td>
                     </tr>
                     <tr id="trDates" runat="server">

@@ -68,6 +68,15 @@ Partial Public Class clue_p28_record
     Protected WithEvents p28VATID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''ParentContact control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ParentContact As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''panP30 control.
     '''</summary>
     '''<remarks>

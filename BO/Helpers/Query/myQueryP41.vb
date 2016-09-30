@@ -25,6 +25,8 @@ Public Enum myQueryP41_QuickQuery
     Invoiced = 15
     WithContactPersons = 16
     WithoutContactPersons = 17
+    WithParentProject = 18
+    WithChildProject = 19
 End Enum
 Public Class myQueryP41
     Inherits myQuery
