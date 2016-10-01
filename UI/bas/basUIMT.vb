@@ -40,7 +40,9 @@ Public Class basUIMT
             End If
 
             Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID)
-
+            If cJ74.j74MasterPrefix = "mobile_grid" Then
+                .AddSystemColumn(5, "mob")
+            End If
             If cJ74.j74DrillDownField1 = "" Then
                 For Each s In Split(cJ74.j74ColumnNames, ",")
                     Dim strField As String = Trim(s)
@@ -50,11 +52,6 @@ Public Class basUIMT
                     If Not c Is Nothing Then
                         .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
                         lisSqlSEL.Add(c.ColumnSqlSyntax_Select)
-                        ''If c.ColumnDBName = "" Then
-                        ''    lisSqlSEL.Add(c.ColumnName)
-                        ''Else
-                        ''    lisSqlSEL.Add(c.ColumnDBName & " AS " & c.ColumnName)
-                        ''End If
                         If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
                     End If
                 Next
@@ -289,13 +286,16 @@ Public Class basUIMT
         End With
 
     End Sub
-    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean)
+    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional bolMobile As Boolean = False)
         If Not TypeOf e.Item Is GridDataItem Then Return
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+            If bolMobile Then
+                dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+            End If
         Else
             Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
             If cRec.IsClosed Then dataItem.Font.Strikeout = True

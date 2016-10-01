@@ -6,25 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="datepicker" Src="~/datepicker.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-        .thumbnail {
-            box-shadow: 0;
-            border-radius: 4px;
-            padding: 0px;
-        }
-
-            .thumbnail .caption {
-                background-color: whitesmoke;
-            }
-
-            
-            .nav-pills > li > a {
   
-        padding-top:4px;
-        padding-bottom:4px;
-            }
-                
-    </style>
     <script type="text/javascript">
         $(document).ready(function () {
 

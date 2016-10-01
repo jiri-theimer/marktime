@@ -462,17 +462,19 @@
     Public Function GetGridDataSource(myQuery As BO.myQueryP31, Optional strTempGUID As String = "") As DataTable
         Dim s As String = ""
         With myQuery
-            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
-                Select Case .MG_GridGroupByField
-                    Case "SupplierName" : .MG_GridSqlColumns += ",supplier.p28Name as SupplierName"
-                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                    Case "Person" : .MG_GridSqlColumns += ",j02.j02LastName+char(32)+j02.j02Firstname as Person"
-                    Case "ClientName" : .MG_GridSqlColumns += ",p28client.p28Name as ClientName"
-                    Case "j27Code_Billing_Orig" : .MG_GridSqlColumns += ",j27billing_orig.j27Code as j27Code_Billing_Orig"
-                    Case "approve_p72Name" : .MG_GridSqlColumns += ",p72approve.p72Name as approve_p72Name"
-                    Case Else
-                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
-                End Select
+            If Not System.String.IsNullOrEmpty(.MG_GridGroupByField) Then
+                If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 Then
+                    Select Case .MG_GridGroupByField
+                        Case "SupplierName" : .MG_GridSqlColumns += ",supplier.p28Name as SupplierName"
+                        Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                        Case "Person" : .MG_GridSqlColumns += ",j02.j02LastName+char(32)+j02.j02Firstname as Person"
+                        Case "ClientName" : .MG_GridSqlColumns += ",p28client.p28Name as ClientName"
+                        Case "j27Code_Billing_Orig" : .MG_GridSqlColumns += ",j27billing_orig.j27Code as j27Code_Billing_Orig"
+                        Case "approve_p72Name" : .MG_GridSqlColumns += ",p72approve.p72Name as approve_p72Name"
+                        Case Else
+                            .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                    End Select
+                End If
             End If
             .MG_GridSqlColumns += ",a.p31ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN 0 else 1 END) as IsClosed,a.p72ID_AfterTrimming,a.p72ID_AfterApprove,a.p70ID,a.o23ID_First,a.p49ID,a.p71ID,p34.p33ID"
             .MG_GridSqlColumns += ",a.p31Date as p31Date_Grid,a.p31Hours_Trimmed as p31Hours_Trimmed_Grid,a.p31Hours_Orig as p31Hours_Orig_Grid,p34.p34IncomeStatementFlag"

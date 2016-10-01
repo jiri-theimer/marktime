@@ -279,31 +279,31 @@
                 
                 
                                        
-                    <li  <%=IIf(Me.MenuPrefix = "p31", "class='active'", "")%>><a href="p31_framework_mobile.aspx">Worksheet</a></li>
+                    <li  <%=IIf(Me.MenuPrefix = "p31", "class='active'", "")%>><a href="p31_framework_mobile.aspx">WORKSHEET</a></li>
                     <%If _Factory.SysUser.j04IsMenu_Project Then%>
-                    <%If Me.MenuPrefix = "p41" Then%>
-                    <li class="active"><a href="p41_framework_mobile.aspx">PROJEKTY</a></li>
-                    <%Else%>
-                    <li><a href="p41_framework_mobile.aspx">PROJEKTY</a></li>
+                    <li><a href="mobile_grid.aspx?prefix=p41">PROJEKTY</a></li>
                     <%End If%>
-                     <%End If%>
-                    <li><a href="pokus_mobile.aspx">Pokus Splitter</a></li>
-                    
-                    <li  <%=IIf(Me.MenuPrefix = "p28", "class='active'", "")%>><a href="p41_framework_mobile.aspx">KLIENTI</a></li>
-                    <li  <%=IIf(Me.MenuPrefix = "p91", "class='active'", "")%>><a href="p41_framework_mobile.aspx">FAKTURY</a></li>
-                    <li  <%=IIf(Me.MenuPrefix = "j02", "class='active'", "")%>><a href="p41_framework_mobile.aspx">LIDÉ</a></li>
-                    <li class="dropdown">
-                        <asp:HyperLink ID="miUser" runat="server"  data-toggle="dropdown" NavigateUrl="#"></asp:HyperLink>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Můj profil</a></li>
-                            <li><a href="#">Změnit heslo</a></li>
-                            <li class="divider" role="separator"></li>
-                            <li><a href="Account/Login.aspx?logout=1&mobile=1"><span class="glyphicon glyphicon-log-out"></span>Odhlásit se</a></li>
-                        </ul>
+                    <%If _Factory.SysUser.j04IsMenu_Contact Then%>
+                    <li><a href="mobile_grid.aspx?prefix=p28">KLIENTI</a></li>
+                    <%End If%>
+                    <%If _Factory.SysUser.j04IsMenu_Invoice Then%>
+                    <li><a href="mobile_grid.aspx?prefix=p91">FAKTURY</a></li>
+                    <%End If%>
+                    <%If _Factory.SysUser.j04IsMenu_More Then%>
+                    <li><a href="mobile_grid.aspx?prefix=p56">ÚKOLY</a></li>
+                    <%End If%>
+                    <li>
+                        <asp:Label ID="miUser" runat="server"></asp:Label>
                     </li>
-
                     
-                    <li><a href="default.aspx"><span class="glyphicon glyphicon-hdd"></span>Přepnout na klasické rozhraní</a></li>
+                    <li><a href="#">Můj profil</a></li>
+                    <li><a href="#">Změnit heslo</a></li>
+                    <li class="divider" role="separator"></li>
+                    <li><a href="Account/Login.aspx?logout=1&mobile=1">Odhlásit se</a></li>
+                    <li class="divider" role="separator"></li>
+                    
+                    
+                    <li><a href="default.aspx">Přepnout na klasické rozhraní</a></li>
 
                     
                 </ul>

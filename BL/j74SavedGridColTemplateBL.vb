@@ -120,6 +120,8 @@ Class j74SavedGridColTemplateBL
                     Case "p31_grid"
                         c.j74Name = My.Resources.common.VychoziPrehled
                         c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "mobile_grid"
+                        c.j74ColumnNames = "p31Date,Person,p41Name,p31Value_Orig,p31Text"
                     Case Else
                         c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                 End Select
@@ -128,6 +130,8 @@ Class j74SavedGridColTemplateBL
                 Select Case strMasterPrefix
                     Case "p31_framework"
                         c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
+                    Case "mobile_grid"
+                        c.j74ColumnNames = "FullName"
                 End Select
                 ''c.j74ColumnNames = "Client,p41Name"
                 c.j74ColumnNames = "Client,p41Name"
@@ -145,6 +149,8 @@ Class j74SavedGridColTemplateBL
                     Case "j02"
                         c.j74Name = "Výchozí přehled v detailu osoby"
                         c.j74ColumnNames = "p91Code,p28Name,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+                    Case "mobile_grid"
+                        c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat"
                     Case Else
                         c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat,p91Amount_Debt"
                 End Select

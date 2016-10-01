@@ -274,7 +274,7 @@ Public Class datagrid
         col.ItemStyle.Width = Unit.Parse("20px")
         grid1.MasterTableView.Columns.Add(col)
     End Sub
-    Public Sub AddButton(strText As String, strCommandName As String, strHeaderText As String)
+    Public Sub AddButton(strText As String, strCommandName As String, strHeaderText As String, Optional strImageUrl As String = "")
         Dim cmd As New GridButtonColumn
         grid1.MasterTableView.Columns.Add(cmd)
         With cmd
@@ -282,9 +282,22 @@ Public Class datagrid
             .UniqueName = strCommandName
             .Text = strText
             .HeaderText = strHeaderText
+            .ImageUrl = strImageUrl
+            .ItemStyle.Width = Unit.Parse("16px")
+            .HeaderStyle.Width = Unit.Parse("16px")
         End With
-
-
+    End Sub
+    Public Sub AddLink(strText As String, strCommandName As String, strHeaderText As String, Optional strImageUrl As String = "")
+        Dim cmd As New GridHyperLinkColumn
+        grid1.MasterTableView.Columns.Add(cmd)
+        With cmd
+            .UniqueName = strCommandName
+            .Text = strText
+            .HeaderText = strHeaderText
+            .ImageUrl = strImageUrl
+            .ItemStyle.Width = Unit.Parse("16px")
+            .HeaderStyle.Width = Unit.Parse("16px")
+        End With
     End Sub
 
     Public Sub AddTextboxColumn(strField As String, strHeader As String, strColumnEditorID As String, bolAllowSorting As Boolean, Optional ByVal strUniqueName As String = "")

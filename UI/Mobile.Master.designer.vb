@@ -56,7 +56,7 @@ Partial Public Class Mobile
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents miUser As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents miUser As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''MainContent control.

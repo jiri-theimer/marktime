@@ -37,6 +37,7 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbarOnSite">
                 <ul class="nav navbar-nav">
+                    <li><a href="mobile_grid.aspx?prefix=p41">Přehled projektů</a></li>
                     <li><a href="p31_framework_mobile.aspx?p41id=<%=Master.DataPID%>">Zapsat úkon</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="p41_framework_mobile.aspx">Sestava</a></li>

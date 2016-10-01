@@ -342,12 +342,14 @@
     Public Function GetGridDataSource(myQuery As BO.myQueryP28) As DataTable
         Dim s As String = ""
         With myQuery
-            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
-                Select Case .MG_GridGroupByField
-                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                    Case Else
-                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
-                End Select
+            If Not System.String.IsNullOrEmpty(.MG_GridGroupByField) Then
+                If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 Then
+                    Select Case .MG_GridGroupByField
+                        Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                        Case Else
+                            .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                    End Select
+                End If
             End If
             .MG_GridSqlColumns += ",a.p28ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p28ValidFrom AND a.p28ValidUntil THEN 0 else 1 END) as IsClosed,a.p28IsDraft as IsDraft"
         End With

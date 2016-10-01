@@ -94,7 +94,7 @@
             Return Me.per1.Items.Count
         End Get
     End Property
-    Public Sub SetupData(factory As BL.Factory, strCustomQueries As String, Optional bolIncludeFuture As Boolean = False)
+    Public Sub SetupData(factory As BL.Factory, strCustomQueries As String, Optional bolIncludeFuture As Boolean = False, Optional bolMobile As Boolean = False)
         Me.hidLogin.Value = factory.SysUser.j03Login
         Dim bolEnglish As Boolean = False
         If Page.Culture.IndexOf("Czech") < 0 And Page.Culture.IndexOf("Če") < 0 Then bolEnglish = True
@@ -117,6 +117,9 @@
         Me.per1.DataSource = lis
         Me.per1.DataBind()
 
+        If bolMobile Then
+            Me.clue_period.Visible = False
+        End If
     End Sub
 
     Public Property BackColor As System.Drawing.Color
