@@ -37,7 +37,7 @@
             Me.p95Code.Text = .p95Code
            
             Master.Timestamp = .Timestamp
-            
+            Me.p95Ordinary.Value = .p95Ordinary
             Me.p95Name_BillingLang1.Text = .p95Name_BillingLang1
             Me.p95Name_BillingLang2.Text = .p95Name_BillingLang2
             Me.p95Name_BillingLang3.Text = .p95Name_BillingLang3
@@ -71,6 +71,7 @@
             cRec.p95Name_BillingLang2 = Me.p95Name_BillingLang2.Text
             cRec.p95Name_BillingLang3 = Me.p95Name_BillingLang3.Text
             cRec.p95Name_BillingLang4 = Me.p95Name_BillingLang4.Text
+            cRec.p95Ordinary = BO.BAS.IsNullInt(Me.p95Ordinary.Value)
 
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID

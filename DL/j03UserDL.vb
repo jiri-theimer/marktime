@@ -249,9 +249,12 @@ Public Class j03UserDL
             .Add("j90UserHostName", cLog.j90UserHostName, DbType.String)
             .Add("j90IsDomainTrusted", cLog.j90IsDomainTrusted, DbType.Boolean)
             .Add("j90DomainUserName", cLog.j90DomainUserName, DbType.String)
+            .Add("j90RequestURL", cLog.j90RequestURL, DbType.String)
         End With
         If _cDB.SaveRecord("j90LoginAccessLog", pars, True) Then
-
+            pars = New DbParameters
+            pars.Add("pid", intJ03ID, DbType.Int32)
+            _cDB.RunSQL("UPDATE j03User SET j03Ping_TimeStamp=GETDATE() WHERE j03ID=@pid", pars)
         End If
     End Sub
 
@@ -310,5 +313,14 @@ Public Class j03UserDL
             Return False
         End If
 
+    End Function
+
+    Public Function GetList_j90(intJ03ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.j90LoginAccessLog)
+        Dim pars As New DL.DbParameters
+        pars.Add("j03id", intJ03ID, DbType.Int32)
+        pars.Add("d1", d1, DbType.DateTime)
+        pars.Add("d2", d2, DbType.DateTime)
+
+        Return _cDB.GetList(Of BO.j90LoginAccessLog)("SELECT TOP 1000 j90ID as pid,* FROM j90LoginAccessLog WHERE j03ID=@j03id AND j90Date >= @d1 AND j90Date < DATEADD(DAY,1,@d2) ORDER BY j90ID DESC", pars)
     End Function
 End Class

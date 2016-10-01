@@ -48,6 +48,7 @@ Public Class Site
             Dim strLogin As String = HttpContext.Current.User.Identity.Name
             _Factory = New BL.Factory(, strLogin)
             If _Factory.SysUser Is Nothing Then DoLogOut()
+            basUI.PingAccessLog(_Factory, Request)
 
             If _Factory.SysUser.j03IsMustChangePassword Then
                 If Request.Url.ToString.ToLower.IndexOf("changepassword") < 0 Then

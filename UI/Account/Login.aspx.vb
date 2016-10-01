@@ -56,7 +56,7 @@
                 If factory.SysUser.IsClosed Then
                     bolStop = True
                     LoginUser.FailureText = "Uzavřený účet pro přihlašování.<br>Your user account is closed."
-                    Write2AccessLog(factory, False)
+                    basUI.Write2AccessLog(factory, False, Request, screenwidth.Value, screenheight.Value)
                 End If
             End If
         Else
@@ -70,29 +70,14 @@
     Private Sub LoginUser_LoggedIn(ByVal sender As Object, ByVal e As System.EventArgs) Handles LoginUser.LoggedIn
         Dim factory As New BL.Factory(, LoginUser.UserName)
         If Not factory.SysUser Is Nothing Then
-            Write2AccessLog(factory, True)
-           
+
+            basUI.Write2AccessLog(factory, True, Request, screenwidth.Value, screenheight.Value)
+
         End If
 
     End Sub
 
-    Private Sub Write2AccessLog(factory As BL.Factory, bolAllowLogIn As Boolean)
-        If _IsSilent Then Return
-        Dim cLog As New BO.j90LoginAccessLog
-        With cLog
-            .j90ClientBrowser = Request.Browser.Type & " - " & Request.UserAgent
-            .j90Platform = Request.Browser.Platform
-            .j90IsMobileDevice = Request.Browser.IsMobileDevice
-            .j90ScreenPixelsHeight = BO.BAS.IsNullInt(screenheight.Value)
-            .j90ScreenPixelsWidth = BO.BAS.IsNullInt(screenwidth.Value)
-            .j90MobileDevice = Request.Browser.MobileDeviceManufacturer & "/" & Request.Browser.MobileDeviceModel
-            .j90UserHostAddress = Request.UserHostAddress
-            .j90UserHostName = Request.UserHostName
-
-
-        End With
-        factory.j03UserBL.AppendAccessLog(factory.SysUser.PID, cLog)
-    End Sub
+    
 
     Private Sub TestUserAuthenticationMode()        
         Dim factory As New BL.Factory(), bolWinDomain As Boolean = False

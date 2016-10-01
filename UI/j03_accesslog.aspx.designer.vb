@@ -11,25 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class entity_timeline
+Partial Public Class j03_accesslog
 
     '''<summary>
-    '''imgEntity control.
+    '''lblUser control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''lblEntityHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblEntityHeader As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblUser As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''lblPeriodCaption control.
@@ -59,15 +50,6 @@ Partial Public Class entity_timeline
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cmdAccessLog control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAccessLog As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''grid1 control.
     '''</summary>
     '''<remarks>
@@ -75,15 +57,6 @@ Partial Public Class entity_timeline
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents grid1 As Global.UI.datagrid
-
-    '''<summary>
-    '''hidPrefix control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidPrefix As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

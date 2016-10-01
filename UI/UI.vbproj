@@ -196,6 +196,7 @@
     <Content Include="imap_record.ascx" />
     <Content Include="Integration\mtService.svc" />
     <Content Include="j02_framework.aspx" />
+    <Content Include="j03_accesslog.aspx" />
     <Content Include="j61_record.aspx" />
     <Content Include="j62_record.aspx" />
     <Content Include="log_app_update.aspx" />
@@ -758,6 +759,13 @@
     </Compile>
     <Compile Include="j02_framework.aspx.vb">
       <DependentUpon>j02_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j03_accesslog.aspx.designer.vb">
+      <DependentUpon>j03_accesslog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j03_accesslog.aspx.vb">
+      <DependentUpon>j03_accesslog.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j61_record.aspx.designer.vb">

@@ -16,6 +16,7 @@
     Public Property j03IsShallReadUpgradeInfo As Boolean
     Public Property j03IsMustChangePassword As Boolean
     Public Property j03PasswordExpiration As Date?
+    Public Property j03Ping_TimeStamp As Date?
     Protected Property _j04Name As String
     Protected Property _j02LastName As String
     Protected Property _j02FirstName As String

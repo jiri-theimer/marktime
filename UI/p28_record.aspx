@@ -264,7 +264,7 @@
             <div style="margin-top:10px;">
                 <asp:Label ID="lblParentID" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
                 <uc:contact ID="p28ParentID" runat="server" Width="400px" Flag="client" />
-                        <a href="javascript:p28_client_add()">Založit nového klienta</a>
+                        
             </div>
                         
 

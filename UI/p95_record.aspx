@@ -27,6 +27,15 @@
                 <asp:TextBox ID="p95Code" runat="server" Style="width: 100px;"></asp:TextBox>
             </td>
         </tr>
+        <tr>
+            <td>
+                <uc:datalabel runat="server" ID="Label2" Text="Index pořadí:" GLX="87"></uc:datalabel>
+            </td>
+            <td>
+
+                <telerik:RadNumericTextBox ID="p95Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+            </td>
+        </tr>
     </table>
 
     <div class="content-box2">

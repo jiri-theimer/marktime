@@ -33,7 +33,7 @@
             Dim strLogin As String = HttpContext.Current.User.Identity.Name
             _Factory = New BL.Factory(, strLogin)
             If _Factory.SysUser Is Nothing Then DoLogOut()
-
+            basUI.PingAccessLog(_Factory, Request)
         End If
     End Sub
     Private Sub DoLogOut()

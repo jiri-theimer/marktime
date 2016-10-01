@@ -3657,7 +3657,7 @@ if datediff(minute,@j03Cache_TimeStamp,getdate())>5
 	select @j03Cache_MessagesCount=j03Cache_MessagesCount,@j03Cache_IsApprovingPerson=j03Cache_IsApprovingPerson,@j03Cache_j11IDs=j03Cache_j11IDs,@j03Cache_HomeMenu=j03Cache_HomeMenu
 	FROM j03User WHERE j03ID=@j03id
 
-	insert into j90LoginAccessLog(j03ID,j90Date) values(@j03id,getdate())
+	---insert into j90LoginAccessLog(j03ID,j90Date) values(@j03id,getdate())
  end
 
 

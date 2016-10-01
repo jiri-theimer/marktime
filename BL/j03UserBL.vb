@@ -27,6 +27,7 @@
     Sub SetMyTag(strTagValue As String)
     Sub SetMyDropboxAccessToken(strToken As String, strSecret As String)
     Function GetMyDropboxAccessToken() As BO.DropboxUserToken
+    Function GetList_j90(intJ03ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.j90LoginAccessLog)
 End Interface
 Class j03UserBL
     Inherits BLMother
@@ -151,7 +152,9 @@ Class j03UserBL
     Public Sub SetAsWaitingOnVisitUpgradeInfo() Implements Ij03UserBL.SetAsWaitingOnVisitUpgradeInfo
         _cDL.SetAsWaitingOnVisitUpgradeInfo()
     End Sub
-
+    Public Function GetList_j90(intJ03ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.j90LoginAccessLog) Implements Ij03UserBL.GetList_j90
+        Return _cDL.GetList_j90(intJ03ID, d1, d2)
+    End Function
     ''Public Function LoadDockState(strPage As String) As String Implements Ij03UserBL.LoadDockState
     ''    Return _cDL.SYS_LoadDockState(strPage)
     ''End Function

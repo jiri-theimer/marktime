@@ -31,6 +31,8 @@
                         .DataPID = lisJ03(0).PID
                         Me.CurrentPrefix = "j03"
                     End If
+                    cmdAccessLog.Visible = True
+                    cmdAccessLog.NavigateUrl = "j03_accesslog.aspx?pid=" & .DataPID.ToString
                 End If
                 Dim lisPars As New List(Of String)
                 With lisPars

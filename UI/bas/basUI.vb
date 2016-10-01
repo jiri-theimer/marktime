@@ -184,5 +184,61 @@ Public Class basUI
         End If
     End Function
 
-    
+
+    Public Shared Sub Write2AccessLog(factory As BL.Factory, bolAllowLogIn As Boolean, r As System.Web.HttpRequest, Optional screenWidth As String = "", Optional screenHeight As String = "", Optional strAppClient As String = "")
+        Dim cLog As New BO.j90LoginAccessLog
+        With cLog
+            .j90ClientBrowser = DetectBrowser(r)
+            .j90Platform = r.Browser.Platform
+            .j90IsMobileDevice = DetectIfMobileDefice(r)
+            If .j90IsMobileDevice Then
+                .j90MobileDevice = r.Browser.MobileDeviceManufacturer & "/" & r.Browser.MobileDeviceModel
+            End If
+            If screenWidth <> "" Then
+                .j90ScreenPixelsHeight = BO.BAS.IsNullInt(screenHeight)
+                .j90ScreenPixelsWidth = BO.BAS.IsNullInt(screenWidth)
+            End If
+            .j90UserHostAddress = r.UserHostAddress
+            .j90UserHostName = r.UserHostName
+            .j90RequestURL = r.Url.ToString
+            .j90AppClient = strAppClient
+
+        End With
+        factory.j03UserBL.AppendAccessLog(factory.SysUser.PID, cLog)
+    End Sub
+    Public Shared Sub PingAccessLog(factory As BL.Factory, r As System.Web.HttpRequest)
+        With factory.SysUser
+            If .j03Ping_TimeStamp Is Nothing Then .j03Ping_TimeStamp = Today
+            If DateDiff(DateInterval.Second, CDate(.j03Ping_TimeStamp), Now) > 100 Then Write2AccessLog(factory, True, r)
+        End With
+    End Sub
+
+    Private Shared Function DetectBrowser(r As HttpRequest) As String
+        If r.UserAgent.IndexOf("Edge/") > 0 Then
+            Return "Edge"
+        End If
+        With r.Browser
+            Return .Browser & " | " & .Type & ", version " & .Version & ", platform " & .Platform & ", Supports Frames = " & .Frames & ", Supports Cookies = " & .Cookies
+        End With
+        ''Dim s As String = ""
+        ''With r.Browser
+        ''    's &= "Browser Capabilities" & vbCrLf
+        ''    s &= .Type & vbCrLf
+        ''    s &= "Name = " & .Browser & vbCrLf
+        ''    s &= "Version = " & .Version & vbCrLf
+        ''    s &= "Major Version = " & .MajorVersion & vbCrLf
+        ''    s &= "Minor Version = " & .MinorVersion & vbCrLf
+        ''    s &= "Platform = " & .Platform & vbCrLf
+        ''    s &= "Is Beta = " & .Beta & vbCrLf
+        ''    's &= "Is Crawler = " & .Crawler & vbCrLf
+        ''    's &= "Is AOL = " & .AOL & vbCrLf
+        ''    's &= "Is Win16 = " & .Win16 & vbCrLf
+        ''    's &= "Is Win32 = " & .Win32 & vbCrLf
+        ''    s &= "Supports Frames = " & .Frames & vbCrLf
+        ''    's &= "Supports Tables = " & .Tables & vbCrLf
+        ''    s &= "Supports Cookies = " & .Cookies & vbCrLf
+        ''End With
+        ''Return s
+
+    End Function
 End Class

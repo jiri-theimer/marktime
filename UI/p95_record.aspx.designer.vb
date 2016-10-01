@@ -50,6 +50,24 @@ Partial Public Class p95_record
     Protected WithEvents p95Code As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.UI.datalabel
+
+    '''<summary>
+    '''p95Ordinary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p95Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
     '''ph1 control.
     '''</summary>
     '''<remarks>
