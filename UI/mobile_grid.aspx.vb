@@ -316,6 +316,7 @@
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             Select Case Me.CurrentMasterPrefix
                 Case "p28" : .p28ID = Me.CurrentMasterPID
+                Case "p91" : .p91ID = Me.CurrentMasterPID
                 Case "p41"
                     .p41ParentID = Me.CurrentMasterPID    'podřízené projekty
             End Select

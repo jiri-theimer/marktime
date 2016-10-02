@@ -62,7 +62,11 @@ Public Class mobile_report
                     If strDefX31ID = "" Then strDefX31ID = .GetUserParam("mobile_report-x31id-" & Me.CurrentPrefix)
                     SetupX31Combo(strDefX31ID)
                     If Me.CurrentX31ID <> 0 Then
-                        cmdRunDefaultReport.Visible = True
+                        If Request.Item("x31id") = "" Then
+                            cmdRunDefaultReport.Visible = True
+                        Else
+                            RenderReport()
+                        End If
                     End If
                 End With
             End With

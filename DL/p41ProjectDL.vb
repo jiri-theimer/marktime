@@ -326,6 +326,10 @@
                 pars.Add("p61id", .b02ID, DbType.Int32)
                 s.Append(" AND a.p61ID=@p61id")
             End If
+            If .p91ID > 0 Then
+                pars.Add("p91id", .p91ID, DbType.Int32)
+                s.Append(" AND a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p91ID=@p91id)")
+            End If
             If Not .DateInsertFrom Is Nothing Then
                 pars.Add("d1", .DateInsertFrom)
                 pars.Add("d2", .DateInsertUntil)

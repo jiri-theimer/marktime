@@ -15,10 +15,7 @@
             alert("nic");
 
         }
-        function report() {
-            alert("nic");
-
-        }
+      
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

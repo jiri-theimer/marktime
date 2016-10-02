@@ -205,6 +205,7 @@
     <Content Include="mobile_myprofile.aspx" />
     <Content Include="mobile_p28_framework.aspx" />
     <Content Include="mobile_p41_framework.aspx" />
+    <Content Include="mobile_p91_framework.aspx" />
     <Content Include="mobile_report.aspx" />
     <Content Include="mobile_start.aspx" />
     <Content Include="mobile_stoppage.aspx" />
@@ -827,6 +828,13 @@
     </Compile>
     <Compile Include="mobile_p41_framework.aspx.vb">
       <DependentUpon>mobile_p41_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_p91_framework.aspx.designer.vb">
+      <DependentUpon>mobile_p91_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_p91_framework.aspx.vb">
+      <DependentUpon>mobile_p91_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="mobile_report.aspx.designer.vb">
