@@ -1,4 +1,8 @@
-﻿Public Class j03User
+﻿Public Enum j03MobileForwardFlagENUM
+    Auto = 0
+    Manual = 1
+End Enum
+Public Class j03User
     Inherits BOMother
     Public Property j03Login As String
     Public Property j04ID As Integer
@@ -17,6 +21,7 @@
     Public Property j03IsMustChangePassword As Boolean
     Public Property j03PasswordExpiration As Date?
     Public Property j03Ping_TimeStamp As Date?
+    Public Property j03MobileForwardFlag As j03MobileForwardFlagENUM = j03MobileForwardFlagENUM.Auto
     Protected Property _j04Name As String
     Protected Property _j02LastName As String
     Protected Property _j02FirstName As String

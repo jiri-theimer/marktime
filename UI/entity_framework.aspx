@@ -51,7 +51,7 @@
             sender.set_height(h3);
 
             var pane = sender.getPaneById("<%=contentPane.ClientID%>");
-            document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();            
+            document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();              
             pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value+"&parentWidth=" + pane.get_width());
 
         }

@@ -10,9 +10,17 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master.Factory.SysUser
-                If .j03IsSystemAccount Then
-                    Response.Redirect("~/sys/membership_framework.aspx")
+                ''If .j03IsSystemAccount Then
+                ''    Response.Redirect("~/sys/membership_framework.aspx")
+                ''End If
+                If Request.Item("quitmobile") = "" Then
+                    If .j03MobileForwardFlag = BO.j03MobileForwardFlagENUM.Auto Then
+                        If basUI.DetectIfMobileDefice(Request) Then
+                            Response.Redirect("mobile_start.aspx")
+                        End If
+                    End If
                 End If
+                
                 If .PersonalPage <> "" Then
                     If .PersonalPage.IndexOf(".aspx") > 0 Then
                         If LCase(.PersonalPage) = "default.aspx" Then Response.Redirect("j03_mypage_greeting.aspx")

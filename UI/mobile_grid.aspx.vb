@@ -66,7 +66,9 @@
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
             End If
+            Me.hidClosedQueryValue.Value = Request.Item("closed")
             With Master
+                .MenuPrefix = Me.CurrentPrefix
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add(Me.CurrentPrefix + "_mobile_grid-pagesize")
@@ -82,24 +84,22 @@
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
 
+                    SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "_mobile_grid-j70id")))
                     If Me.CurrentMasterPID <> 0 Then
                         With Me.MasterRecord
                             .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
                             .NavigateUrl = "mobile_" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString
+                            .Visible = True
                         End With
-                        Me.j70ID.Visible = False
-                    Else
-                        SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "_mobile_grid-j70id")))
                     End If
 
-                    basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_mobile_grid-pagesize", "20"))
+                    basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_mobile_grid-pagesize", "10"))
 
 
                     If .GetUserParam(Me.CurrentPrefix + "_mobile-grid-sort") <> "" Then
                         grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam(Me.CurrentPrefix + "_mobile_grid-sort"))
                     End If
                     SetupGrid(.GetUserParam(Me.CurrentPrefix + "_mobile_grid-filter_setting"), .GetUserParam(Me.CurrentPrefix + "_mobile_grid-filter_sql"))
-                    RecalcVirtualRowCount()
                     Select Case Me.CurrentX29ID
                         Case BO.x29IdEnum.p31Worksheet, BO.x29IdEnum.p91Invoice
                             period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"), , True)
@@ -111,7 +111,7 @@
                 End With
 
             End With
-            
+            RecalcVirtualRowCount()
         End If
     End Sub
 
@@ -129,10 +129,7 @@
             Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
         End With
         With grid1
-            ''Dim cmd As New Telerik.Web.UI.GridHyperLinkColumn()
-            ''cmd.ImageUrl = "Images/detail.png"
-            ''.radGridOrig.Columns.AddAt(0, cmd)
-
+          
             .AllowFilteringByColumn = True
             .radGridOrig.RenderMode = Telerik.Web.UI.RenderMode.Auto
             Select Case Me.CurrentX29ID
@@ -141,7 +138,6 @@
                 Case Else
                     .radGridOrig.ShowFooter = False
             End Select
-            '.radGridOrig.SelectedItemStyle.BackColor = Drawing.Color.Red
 
         End With
        
@@ -156,18 +152,18 @@
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         Select Case Me.CurrentX29ID
+            Case BO.x29IdEnum.p31Worksheet
+                basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True, True)
             Case BO.x29IdEnum.p41Project
                 basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, True)
             Case BO.x29IdEnum.p28Contact
-                basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True)
+                basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True, True)
             Case BO.x29IdEnum.o23Notepad
-                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, False)
+                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, False, True)
             Case BO.x29IdEnum.p56Task
-                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True)
-            Case BO.x29IdEnum.j02Person
-                basUIMT.j02_grid_Handle_ItemDataBound(sender, e)
+                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, True)
             Case BO.x29IdEnum.p91Invoice
-                basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True)
+                basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True, True)
         End Select
     End Sub
 
@@ -181,6 +177,19 @@
             RecalcVirtualRowCount()
         End If
         Select Case Me.CurrentX29ID
+            Case BO.x29IdEnum.p31Worksheet
+                Dim mq As New BO.myQueryP31
+                With mq
+                    .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+                    .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                End With
+                InhaleMyQuery_p31(mq)
+                Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(mq)
+                If dt Is Nothing Then
+                    Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                Else
+                    grid1.DataSourceDataTable = dt
+                End If
             Case BO.x29IdEnum.p41Project
                 Dim mq As New BO.myQueryP41
                 With mq
@@ -216,7 +225,6 @@
                 With mq
                     .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
                     .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
-
                 End With
                 InhaleMyQuery_p56(mq)
 
@@ -240,7 +248,20 @@
                 Else
                     grid1.DataSourceDataTable = dt
                 End If
+            Case BO.x29IdEnum.o23Notepad
+                Dim mq As New BO.myQueryO23
+                With mq
+                    .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+                    .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+                End With
+                InhaleMyQuery_o23(mq)
 
+                Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
+                If dt Is Nothing Then
+                    Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                Else
+                    grid1.DataSourceDataTable = dt
+                End If
             Case Else
 
         End Select
@@ -248,6 +269,10 @@
 
     Private Sub RecalcVirtualRowCount()
         Select Case Me.CurrentX29ID
+            Case BO.x29IdEnum.p31Worksheet
+                Dim mq As New BO.myQueryP31
+                InhaleMyQuery_p31(mq)
+                grid1.VirtualRowCount = Master.Factory.p31WorksheetBL.GetVirtualCount(mq)
             Case BO.x29IdEnum.p41Project
                 Dim mq As New BO.myQueryP41
                 InhaleMyQuery_p41(mq)
@@ -260,23 +285,19 @@
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
                 grid1.VirtualRowCount = Master.Factory.p56TaskBL.GetVirtualCount(mq)
-                ''Case BO.x29IdEnum.o23Notepad
-                ''    Dim mq As New BO.myQueryO23
-                ''    InhaleMyQuery_o23(mq)
-                ''    grid1.VirtualRowCount = Master.Factory.o23NotepadBL.GetVirtualCount(mq)
+            Case BO.x29IdEnum.o23Notepad
+                Dim mq As New BO.myQueryO23
+                InhaleMyQuery_o23(mq)
+                grid1.VirtualRowCount = Master.Factory.o23NotepadBL.GetVirtualCount(mq)
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
                 Dim cSum As BO.p91InvoiceSum = Master.Factory.p91InvoiceBL.GetSumRow(mq)
                 grid1.VirtualRowCount = cSum.Count
                 Me.hidFooterSum.Value = grid1.GenerateFooterItemString(cSum)
-                ''Case BO.x29IdEnum.j02Person
-                ''    Dim mq As New BO.myQueryJ02
-                ''    InhaleMyQuery_j02(mq)
-                ''    grid1.VirtualRowCount = Master.Factory.j02PersonBL.GetList(mq).Count
         End Select
         grid1.radGridOrig.CurrentPageIndex = 0
-        lblRowsCount.Text = grid1.VirtualRowCount.ToString & " záznamů"
+        lblRowsCount.Text = grid1.VirtualRowCount.ToString
     End Sub
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_mobile_grid-pagesize", Me.cbxPaging.SelectedValue)
@@ -354,9 +375,46 @@
                 End If
             End If
             .p56PlanUntil_D1 = period1.DateFrom : .p56PlanUntil_D2 = period1.DateUntil
-            .Closed = BO.BooleanQueryMode.NoQuery
+            Select Case Me.hidClosedQueryValue.Value
+                Case "1" : .Closed = BO.BooleanQueryMode.TrueQuery
+                Case "0" : .Closed = BO.BooleanQueryMode.FalseQuery
+                Case Else : .Closed = BO.BooleanQueryMode.NoQuery
+            End Select
+
             .j70ID = Me.CurrentJ70ID
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
+        End With
+    End Sub
+    Private Sub InhaleMyQuery_p31(ByRef mq As BO.myQueryP31)
+        With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
+            Select Case Me.CurrentMasterPrefix
+                Case "p41" : .p41ID = Me.CurrentMasterPID
+                Case "p28" : .p28ID_Client = Me.CurrentMasterPID
+                Case "j02" : .j02ID = Me.CurrentMasterPID
+                Case "p56"
+                    .p56IDs = New List(Of Integer)
+                    .p56IDs.Add(Me.CurrentMasterPID)
+                Case "p91" : .p91ID = Me.CurrentMasterPID
+                Case Else
+            End Select
+            .j70ID = Me.CurrentJ70ID
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
+
+            .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
+            If period1.SelectedValue <> "" Then
+                .DateFrom = period1.DateFrom
+                .DateUntil = period1.DateUntil
+            End If
+            .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
+            If Me.hidDefaultSorting.Value <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.hidDefaultSorting.Value
+                Else
+                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+                End If
+            End If
         End With
     End Sub
     Private Sub InhaleMyQuery_p91(ByRef mq As BO.myQueryP91)
@@ -384,6 +442,30 @@
                     .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
                 End If
             End If
+        End With
+    End Sub
+    Private Sub InhaleMyQuery_o23(ByRef mq As BO.myQueryO23)
+        With mq
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
+            Select Case Me.CurrentMasterPrefix
+                Case "p41" : .p41ID = Me.CurrentMasterPID
+                Case "j02" : .j02ID = Me.CurrentMasterPID
+                Case "p28" : .p28ID = Me.CurrentMasterPID
+                Case "p56" : .p56ID = Me.CurrentMasterPID
+            End Select
+            .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
+            If Me.hidDefaultSorting.Value <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.hidDefaultSorting.Value
+                Else
+                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+                End If
+            End If
+            .Closed = BO.BooleanQueryMode.NoQuery
+            .j70ID = Me.CurrentJ70ID
+            .SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
         End With
 
     End Sub
@@ -413,6 +495,11 @@
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_mobile_grid-j70id", Me.CurrentJ70ID.ToString)
+        ReloadPage()
+    End Sub
+
+    Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
+        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_mobile_grid-period", period1.SelectedValue)
         ReloadPage()
     End Sub
 End Class

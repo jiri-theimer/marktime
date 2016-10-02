@@ -6,6 +6,7 @@ Public Enum myQueryP31_QuickQuery
     Invoiced = 3    'prošlo fakturací
     MovedToBin = 4  'přesunuto do koše
     EditingOrMovedToBin = 5   'rozpracované nebo v koši
+    EditingOrApproved = 14        'rozpracované nebo schválené a čekající na fakturaci
     Is_ContactPerson = 6  's vazbou na kontaktní osobu
     Is_Document = 7           's vazbou na dokument
     Is_Corrention = 8     'vyplněná výchozí korekce úkonu

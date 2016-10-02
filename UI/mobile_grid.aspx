@@ -25,14 +25,18 @@
 
     <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 100%;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
     <uc:periodcombo ID="period1" runat="server" Width="100%"></uc:periodcombo>
-    <asp:HyperLink ID="MasterRecord" runat="server" Visible="false"></asp:HyperLink>
-    <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
-        <asp:ListItem Text="10"></asp:ListItem>
-        <asp:ListItem Text="20" Selected="true"></asp:ListItem>
-        <asp:ListItem Text="50"></asp:ListItem>
-        <asp:ListItem Text="100"></asp:ListItem>
-    </asp:DropDownList>
-    <asp:Label ID="lblRowsCount" runat="server"></asp:Label>
+    <div>
+        <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
+            <asp:ListItem Text="10" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="20"></asp:ListItem>
+            <asp:ListItem Text="50"></asp:ListItem>
+            <asp:ListItem Text="100"></asp:ListItem>
+        </asp:DropDownList>
+        <img src="Images/sum.png" />
+        <asp:Label ID="lblRowsCount" runat="server"></asp:Label>
+        <asp:HyperLink ID="MasterRecord" runat="server" Visible="false" CssClass="alinked"></asp:HyperLink>
+
+    </div>
 
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
 
@@ -48,5 +52,5 @@
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
     <asp:HiddenField ID="hidJ74ID" runat="server" />
-
+    <asp:HiddenField ID="hidClosedQueryValue" runat="server" />
 </asp:Content>

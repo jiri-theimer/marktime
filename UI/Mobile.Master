@@ -104,9 +104,10 @@
             color: red;
         }
 
-        a {
+        a.alinked {
             text-decoration: underline;
         }
+       
        
     </style>
 
@@ -175,53 +176,13 @@
 
 
 
-
+            
 
 
 
         });
 
-        $(function () {
-
-            $("#search1").autocomplete({
-                source: "Handler/handler_search_project.ashx",
-                minLength: 1,
-                select: function (event, ui) {
-                    if (ui.item) {
-                        location.replace("mobile_p41_framework.aspx?pid=" + ui.item.PID);
-                        return false;
-                    }
-                },
-                open: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                       .removeAttr('style').hide()
-                       .appendTo('#search_result').show();
-                }
-
-
-
-            }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                var s = "<div>";
-                if (item.Closed == "1")
-                    s = s + "<a style='text-decoration:line-through;'>";
-                else
-                    s = s + "<a>";
-
-                s = s + __highlight(item.Project, item.FilterString);
-
-
-                s = s + "</a>";
-
-
-
-                s = s + "</div>";
-
-
-                return $(s).appendTo(ul);
-
-
-            };
-        });
+        
 
 
         function __highlight(s, t) {
@@ -238,8 +199,7 @@
 
             document.getElementById("search1").style.background = "transparent";
             document.getElementById("search1").style.color = "";
-
-            //document.getElementById("search1").value = "Najít projekt...";
+            
         }
 
         function help(page) {
@@ -266,8 +226,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="p41_framework_mobile.aspx" class="navbar-brand"><img src="Images/logo_metro.png" border="0"  /></a>
-                <input id="search1"  class="navbar-brand" placeholder="Najít projekt..." style="border:none;background-color:transparent;font-size:100%;" title="Vyhledání projektu podle částečné shody v názvu/kódu projektu nebo v názvu/kódu klienta projektu" />
+                <a href="Mobile/default.aspx" class="navbar-brand"><img src="Images/logo_metro.png" border="0"  /></a>
+                <input id="search1"  class="navbar-brand" placeholder="Najít projekt..." style="border:none;background-color:transparent;font-size:100%;" />
                
                 
             </div>
@@ -289,21 +249,23 @@
                     <%If _Factory.SysUser.j04IsMenu_Invoice Then%>
                     <li><a href="mobile_grid.aspx?prefix=p91">FAKTURY</a></li>
                     <%End If%>
-                    <%If _Factory.SysUser.j04IsMenu_More Then%>
+                    
                     <li><a href="mobile_grid.aspx?prefix=p56">ÚKOLY</a></li>
+                    <%If _Factory.SysUser.j04IsMenu_Report Then%>
+                    <li><a href="mobile_report.aspx">SESTAVY</a></li>
                     <%End If%>
                     <li>
                         <asp:Label ID="miUser" runat="server"></asp:Label>
                     </li>
                     
-                    <li><a href="#">Můj profil</a></li>
-                    <li><a href="#">Změnit heslo</a></li>
+                    <li><a href="mobile_myprofile.aspx">MůJ PROFIL</a></li>
+                    <li><a href="mobile_changepassword.aspx">ZMĚNIT HESLO</a></li>
                     <li class="divider" role="separator"></li>
-                    <li><a href="Account/Login.aspx?logout=1&mobile=1">Odhlásit se</a></li>
+                    <li><a href="Account/Login.aspx?logout=1&mobile=1">ODHLÁSIT SE</a></li>
                     <li class="divider" role="separator"></li>
                     
                     
-                    <li><a href="default.aspx">Přepnout na klasické rozhraní</a></li>
+                    <li><a href="default.aspx?quitmobile=1">PŘEPNOUT</a></li>
 
                     
                 </ul>
@@ -326,4 +288,89 @@
         <asp:HiddenField ID="hidMenuPrefix" runat="server" />
     </form>
 </body>
+
+    <script type="text/javascript">
+        $(function () {
+
+        <%If Not (Me.MenuPrefix = "p28" Or Me.MenuPrefix = "p91") Then%>
+            $("#search1").autocomplete({
+                source: "Handler/handler_search_project.ashx",
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {
+                        location.replace("mobile_p41_framework.aspx?pid=" + ui.item.PID);
+                        return false;
+                    }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search_result').show();
+                }
+
+                <%end if%>
+
+        <%If Me.MenuPrefix = "p28" Then%>
+            document.getElementById("search1").placeholder="Najít klienta...";
+
+            $("#search1").autocomplete({
+                source: "Handler/handler_search_contact.ashx",
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {
+                        location.replace("mobile_p28_framework.aspx?pid=" + ui.item.PID);
+                        return false;
+                    }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search_result').show();
+                }
+
+                <%end if%>
+        <%If Me.MenuPrefix = "p91" Then%>
+        document.getElementById("search1").placeholder="Najít fakturu...";
+
+            $("#search1").autocomplete({
+                source: "Handler/handler_search_invoice.ashx",
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {
+                        location.replace("mobile_p91_framework.aspx?pid=" + ui.item.PID);
+                        return false;
+                    }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search_result').show();
+                }
+
+        <%end if%>
+
+
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var s = "<div>";
+                if (item.Closed == "1")
+                    s = s + "<a style='text-decoration:line-through;'>";
+                else
+                    s = s + "<a>";
+
+                s = s + __highlight(item.Project, item.FilterString);
+
+
+                s = s + "</a>";
+
+
+
+                s = s + "</div>";
+
+
+                return $(s).appendTo(ul);
+
+
+            };
+        });
+    </script>
 </html>

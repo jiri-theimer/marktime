@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class mobile_p41_framework
+Partial Public Class mobile_p28_framework
 
     '''<summary>
     '''RecordHeader control.
@@ -21,6 +21,24 @@ Partial Public Class mobile_p41_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents RecordHeader As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''liP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents liP41 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''CountP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CountP41 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''liP56_Actual control.
@@ -95,24 +113,6 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents imgFlag_Project As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''Client control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Client As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''imgFlag_Client control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgFlag_Client As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
     '''trParent control.
     '''</summary>
     '''<remarks>
@@ -122,13 +122,13 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents trParent As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''ParentProject control.
+    '''ParentClient control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ParentProject As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents ParentClient As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''trB02 control.
@@ -149,40 +149,22 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''trPlanPeriod control.
+    '''trType control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents trPlanPeriod As Global.System.Web.UI.HtmlControls.HtmlTableRow
+    Protected WithEvents trType As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''p41PlanFrom control.
+    '''p29Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p41PlanFrom As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p41PlanUntil control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p41PlanUntil As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p42Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p42Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents p29Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''imgDraft control.
@@ -201,6 +183,24 @@ Partial Public Class mobile_p41_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents PriceList_Billing As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''address1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents address1 As Global.UI.p28_address
+
+    '''<summary>
+    '''medium1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents medium1 As Global.UI.p28_medium
 
     '''<summary>
     '''roles_project control.

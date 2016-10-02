@@ -161,6 +161,7 @@ Public Class j03UserDL
                 .Add("j03Aspx_PersonalPage_Mobile", cRec.j03Aspx_PersonalPage_Mobile, DbType.String)
                 .Add("j03IsMustChangePassword", cRec.j03IsMustChangePassword, DbType.Boolean)
                 .Add("j03PasswordExpiration", BO.BAS.IsNullDBDate(cRec.j03PasswordExpiration), DbType.DateTime)
+                pars.Add("j03MobileForwardFlag", CInt(cRec.j03MobileForwardFlag), DbType.Int32)
             End With
 
             If _cDB.SaveRecord("j03User", pars, bolINSERT, strW, True, _curUser.j03Login) Then

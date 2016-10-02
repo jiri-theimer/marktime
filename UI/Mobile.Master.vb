@@ -45,16 +45,23 @@
     End Sub
 
     Private Sub PersonalizeMenu()
+        ''miUser.Text = "<span class='glyphicon glyphicon-user'></span>"
+        ''With _Factory.SysUser
+        ''    If .Person = "" Then
+        ''        miUser.Text += .j03Login
+        ''    Else
+        ''        miUser.Text += .Person
+        ''    End If
+        ''    miUser.Text += "<span class='caret'></span>"
+        ''End With
         miUser.Text = "<span class='glyphicon glyphicon-user'></span>"
         With _Factory.SysUser
             If .Person = "" Then
-                miUser.Text += .j03Login
+                miUser.Text = .j03Login
             Else
-                miUser.Text += .Person
+                miUser.Text = .Person
             End If
-            miUser.Text += "<span class='caret'></span>"
         End With
-       
     End Sub
 
     Public Property PageTitle() As String

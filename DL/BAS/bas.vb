@@ -595,6 +595,8 @@
                 Return "a.p71ID=1 AND a.p91ID IS NULL"
             Case BO.myQueryP31_QuickQuery.Editing
                 Return "a.p71ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"
+            Case BO.myQueryP31_QuickQuery.EditingOrApproved
+                Return "a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"
             Case BO.myQueryP31_QuickQuery.EditingOrMovedToBin
                 Return "a.p71ID IS NULL"
             Case BO.myQueryP31_QuickQuery.Invoiced

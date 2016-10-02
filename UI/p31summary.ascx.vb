@@ -21,12 +21,15 @@
         rp1.DataSource = lis
         rp1.DataBind()
 
+
     End Sub
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As BO.p31WorksheetBigSummary = CType(e.Item.DataItem, BO.p31WorksheetBigSummary)
+
         With cRec
             If Me.hidState.Value = "1" Then
+                e.Item.FindControl("hodiny_count")
                 SV("hodiny_rozpracovano", .rozpracovano_hodiny, e, )
                 SV("honorar_rozpracovano", .rozpracovano_honorar, e, .j27Code)
                 SV("hodiny_fakturovat", .schvaleno_hodiny, e)

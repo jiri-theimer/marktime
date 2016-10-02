@@ -47,6 +47,7 @@
             Me.RecordHeader.Text = BO.BAS.OM3(.p41Name, 30)
             Me.RecordHeader.NavigateUrl = "mobile_p41_framework.aspx?pid=" & .PID.ToString
             Me.RecordName.Text = "[" & .p41Code & "] " & .p41Name
+            Me.cmdP31Grid.NavigateUrl = "mobile_grid.aspx?prefix=p31&masterprefix=p41&masterpid=" & .PID.ToString
 
             If .p28ID_Client <> 0 Then
                 cClient = Master.Factory.p28ContactBL.Load(.p28ID_Client)
@@ -172,13 +173,18 @@
         'mq.DateFrom = period1.DateFrom
         'mq.DateUntil = period1.DateUntil
         mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
+        If opgWorksheetState.SelectedValue = "2" Then
+            mq.QuickQuery = BO.myQueryP31_QuickQuery.Invoiced
+        Else
+            mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
+        End If
 
         Dim lis As IEnumerable(Of BO.p31WorksheetBigSummary) = Master.Factory.p31WorksheetBL.GetList_BigSummary(mq)
         
         If lis.Count = 0 Then
-            boxP31.Visible = False
+            worksheet1.Visible = False
         Else
-            boxP31.Visible = True
+            worksheet1.Visible = True
             worksheet1.RefreshData(lis, Me.opgWorksheetState.SelectedIndex + 1)
 
         End If

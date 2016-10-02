@@ -2,7 +2,8 @@
 <table class="table table-hover">
   
     <tr style="background-color:whitesmoke;">
-        <td></td>
+        <td>            
+        </td>
         <td title="Rozpracovanost" style="text-align:right;"><asp:Label ID="lblRozpracovano" runat="server" Text="ROZPR"></asp:Label></td>
         <td title="Fakturovat" style="text-align:right;"><asp:Label ID="lblFakturovat" runat="server" Text="FAK"></asp:Label></td>
         <td title="Paušál" style="text-align:right;">PAU</td>
@@ -12,7 +13,7 @@
 <ItemTemplate>    
     <tr>
         <td>
-            Hodiny:
+            Hodiny:           
         </td>
         <td style="text-align:right;">
             <asp:Label ID="hodiny_rozpracovano" runat="server"></asp:Label>
@@ -48,7 +49,7 @@
     </tr>
     <tr>
         <td>
-            Výdaje:
+            Výdaje:            
         </td>
         <td style="text-align:right;">
             <asp:Label ID="vydaje_rozpracovano" runat="server"></asp:Label>
@@ -66,7 +67,7 @@
     </tr>
     <tr>
         <td>
-            Ostatní odměny:
+            Ostatní odměny:            
         </td>
         <td style="text-align:right;">
             <asp:Label ID="odmeny_rozpracovano" runat="server"></asp:Label>

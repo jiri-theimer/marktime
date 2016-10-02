@@ -202,7 +202,11 @@
     <Content Include="log_app_update.aspx" />
     <Content Include="m62_import_setting.aspx" />
     <Content Include="mobile_grid.aspx" />
+    <Content Include="mobile_myprofile.aspx" />
+    <Content Include="mobile_p28_framework.aspx" />
     <Content Include="mobile_p41_framework.aspx" />
+    <Content Include="mobile_report.aspx" />
+    <Content Include="mobile_start.aspx" />
     <Content Include="mobile_stoppage.aspx" />
     <Content Include="o23_batch.aspx" />
     <Content Include="o23_framework.aspx" />
@@ -804,11 +808,39 @@
       <DependentUpon>mobile_grid.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="mobile_myprofile.aspx.designer.vb">
+      <DependentUpon>mobile_myprofile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_myprofile.aspx.vb">
+      <DependentUpon>mobile_myprofile.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_p28_framework.aspx.designer.vb">
+      <DependentUpon>mobile_p28_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_p28_framework.aspx.vb">
+      <DependentUpon>mobile_p28_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="mobile_p41_framework.aspx.designer.vb">
       <DependentUpon>mobile_p41_framework.aspx</DependentUpon>
     </Compile>
     <Compile Include="mobile_p41_framework.aspx.vb">
       <DependentUpon>mobile_p41_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_report.aspx.designer.vb">
+      <DependentUpon>mobile_report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_report.aspx.vb">
+      <DependentUpon>mobile_report.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_start.aspx.designer.vb">
+      <DependentUpon>mobile_start.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_start.aspx.vb">
+      <DependentUpon>mobile_start.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="mobile_stoppage.aspx.designer.vb">

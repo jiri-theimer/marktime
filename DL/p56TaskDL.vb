@@ -252,18 +252,21 @@
     Public Function GetGridDataSource(myQuery As BO.myQueryP56) As DataTable
         Dim s As String = ""
         With myQuery
-            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
-                Select Case .MG_GridGroupByField
-                    Case "ProjectCodeAndName" : .MG_GridSqlColumns += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
-                    Case "Client" : .MG_GridSqlColumns += ",p28client.p28Name as Client"
-                    Case "p59NameSubmitter" : .MG_GridSqlColumns += ",p59submitter.p59Name as p59NameSubmitter"
-                    Case "ReceiversInLine" : .MG_GridSqlColumns += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine"
-                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                    Case "IsClosed" 'je automaticky ve sloupcích, viz níže
-                    Case Else
-                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
-                End Select
+            If Not String.IsNullOrEmpty(.MG_GridGroupByField) Then
+                If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 Then
+                    Select Case .MG_GridGroupByField
+                        Case "ProjectCodeAndName" : .MG_GridSqlColumns += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
+                        Case "Client" : .MG_GridSqlColumns += ",p28client.p28Name as Client"
+                        Case "p59NameSubmitter" : .MG_GridSqlColumns += ",p59submitter.p59Name as p59NameSubmitter"
+                        Case "ReceiversInLine" : .MG_GridSqlColumns += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine"
+                        Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                        Case "IsClosed" 'je automaticky ve sloupcích, viz níže
+                        Case Else
+                            .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                    End Select
+                End If
             End If
+
             .MG_GridSqlColumns += ",a.p56ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END) as IsClosed"
             .MG_GridSqlColumns += ",a.p56PlanUntil as p56PlanUntil_Grid,a.b02ID as b02ID_Grid,b02Color as b02Color_Grid"
         End With

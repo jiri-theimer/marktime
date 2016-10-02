@@ -32,15 +32,6 @@ Partial Public Class mobile_grid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''MasterRecord control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''cbxPaging control.
     '''</summary>
     '''<remarks>
@@ -57,6 +48,15 @@ Partial Public Class mobile_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblRowsCount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''MasterRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''grid1 control.
@@ -156,6 +156,15 @@ Partial Public Class mobile_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidJ74ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidClosedQueryValue control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidClosedQueryValue As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

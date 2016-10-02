@@ -112,6 +112,8 @@
 
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
+
+                                <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
                             </Items>
                         </telerik:RadPanelItem>
                         <telerik:RadPanelItem Text="Osobní nastavení">
