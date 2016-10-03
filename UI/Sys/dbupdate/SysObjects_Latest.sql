@@ -10096,20 +10096,6 @@ insert into p91invoice(p91code,p91dateinsert,p91userinsert,p91Date,p91DateSupply
 
 SELECT @ret_p91id=@@IDENTITY
 
-	
-update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id
-,p91userupdate=@login,p91dateupdate=getdate()
-,p91Text1=@p91text1
-,p91Datep31_From=@p91datep31_from,p91Datep31_Until=@p91datep31_until,j19id=@j19id
-,p91Client=b.p28Name,p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
-,p91ClientAddress1_City=o38prim.o38City,p91ClientAddress1_Street=o38prim.o38Street,p91ClientAddress1_ZIP=o38prim.o38ZIP,p91ClientAddress1_Country=o38prim.o38Country
-,p91ClientAddress2=isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,'')
-FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID
-LEFT OUTER JOIN o38Address o38prim ON a.o38ID_Primary=o38prim.o38ID
-LEFT OUTER JOIN o38Address o38del ON a.o38ID_Delivery=o38del.o38ID
-where a.p91id=@ret_p91id
-
-
 declare @o38id_primary int,@o38id_delivery int,@p41id_first int
 
 select top 1 @p41id_first=p41ID FROM p31Worksheet WHERE p31id in (select p85datapid from p85TempBox where p85guid=@guid and p85Prefix='p31' and p85IsDeleted=0)
@@ -10124,6 +10110,17 @@ if @o38id_delivery is null
 update p91Invoice set o38ID_Primary=@o38id_primary,@o38id_delivery=o38id_delivery,p41ID_First=@p41id_first
 where p91ID=@ret_p91id
 
+update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id
+,p91userupdate=@login,p91dateupdate=getdate()
+,p91Text1=@p91text1
+,p91Datep31_From=@p91datep31_from,p91Datep31_Until=@p91datep31_until,j19id=@j19id
+,p91Client=b.p28CompanyName,p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
+,p91ClientAddress1_City=o38prim.o38City,p91ClientAddress1_Street=o38prim.o38Street,p91ClientAddress1_ZIP=o38prim.o38ZIP,p91ClientAddress1_Country=o38prim.o38Country
+,p91ClientAddress2=isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,'')
+FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID
+LEFT OUTER JOIN o38Address o38prim ON a.o38ID_Primary=o38prim.o38ID
+LEFT OUTER JOIN o38Address o38del ON a.o38ID_Delivery=o38del.o38ID
+where a.p91id=@ret_p91id
  
 
 declare @p91text2 nvarchar(1000)
@@ -10314,6 +10311,14 @@ FROM p91invoice
 where p91id=@p91id_bind
 
 SELECT @ret_p91id=@@IDENTITY
+
+update a set p91Client=b.p28CompanyName,p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
+,p91ClientAddress1_City=o38prim.o38City,p91ClientAddress1_Street=o38prim.o38Street,p91ClientAddress1_ZIP=o38prim.o38ZIP,p91ClientAddress1_Country=o38prim.o38Country
+,p91ClientAddress2=isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,'')
+FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID
+LEFT OUTER JOIN o38Address o38prim ON a.o38ID_Primary=o38prim.o38ID
+LEFT OUTER JOIN o38Address o38del ON a.o38ID_Delivery=o38del.o38ID
+where a.p91id=@ret_p91id
 
 
 
