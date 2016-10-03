@@ -11,6 +11,7 @@
             With Master
                 .MenuPrefix = "p28"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                Me.worksheet1.AllowShowRates = .Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)
 
                 Dim lisPars As New List(Of String)
                 With lisPars
@@ -41,6 +42,7 @@
         If Master.DataPID = 0 Then Return
 
         Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
+        Handle_Permissions(cRec)
         With cRec
             Me.RecordHeader.Text = BO.BAS.OM3(.p28Name, 30)
             Me.RecordHeader.NavigateUrl = "mobile_p28_framework.aspx?pid=" & .PID.ToString
@@ -108,13 +110,16 @@
         Else
             Me.boxP30.Visible = False
         End If
-        Dim mqP91 As New BO.myQueryP91
-        mqP91.p28ID = cRec.PID
-        mqP91.MG_SelectPidFieldOnly = True
-        Dim intCount As Integer = Master.Factory.p91InvoiceBL.GetVirtualCount(mqP91)
-        If intCount > 0 Then
-            Me.lisP91.Visible = True : Me.CountP91.Text = intCount.ToString
+        If Master.Factory.SysUser.j04IsMenu_Invoice Then
+            Dim mqP91 As New BO.myQueryP91
+            mqP91.p28ID = cRec.PID
+            mqP91.MG_SelectPidFieldOnly = True
+            Dim intCount As Integer = Master.Factory.p91InvoiceBL.GetVirtualCount(mqP91)
+            If intCount > 0 Then
+                Me.lisP91.Visible = True : Me.CountP91.Text = intCount.ToString
+            End If
         End If
+        
 
         
 
@@ -179,5 +184,17 @@
 
     Private Sub opgWorksheetState_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgWorksheetState.SelectedIndexChanged
         RefreshP31Summary()
+    End Sub
+
+    Private Sub Handle_Permissions(cRec As BO.p28Contact)
+        Dim cDisp As BO.p28RecordDisposition = Master.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then
+            Master.StopPage("Nedisponujete přístupovým oprávněním ke klientovi.")
+        End If
+        With Master.Factory.SysUser
+            If Not .j04IsMenu_Invoice Then lisP91.Visible = False
+
+        End With
+
     End Sub
 End Class

@@ -1,7 +1,14 @@
 ﻿Public Class p31summary
     Inherits System.Web.UI.UserControl
 
-
+    Public Property AllowShowRates As Boolean
+        Get
+            Return BO.BAS.BG(Me.hidAllowShowRates.Value)
+        End Get
+        Set(value As Boolean)
+            Me.hidAllowShowRates.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
@@ -37,15 +44,19 @@
                 SV("vydaje_rozpracovano", .rozpracovano_vydaje, e, .j27Code)
 
                 SV("hodiny_fakturovat", .schvaleno_hodiny, e)
-                SV("honorar_fakturovat", .schvaleno_honorar, e, .j27Code)
+                If Me.hidAllowShowRates.Value = "1" Then
+                    SV("honorar_fakturovat", .schvaleno_honorar, e, .j27Code)
+                    SV("odmeny_fakturovat", .schvaleno_odmeny, e, .j27Code)
+                    SV("odmeny_odpis", .schvaleno_odmeny_odpis, e, .j27Code)
+                    SV("odmeny_pausal", .schvaleno_odmeny_pausal, e, .j27Code)
+                    SV("vydaje_fakturovat", .schvaleno_vydaje, e, .j27Code)
+                    SV("vydaje_odpis", .schvaleno_vydaje_odpis, e, .j27Code)
+                    SV("vydaje_pausal", .schvaleno_vydaje_pausal, e, .j27Code)
+                End If
+
                 SV("hodiny_odpis", .schvaleno_hodiny_odpis, e)
                 SV("hodiny_pausal", .schvaleno_hodiny_pausal, e)
-                SV("odmeny_fakturovat", .schvaleno_odmeny, e, .j27Code)
-                SV("odmeny_odpis", .schvaleno_odmeny_odpis, e, .j27Code)
-                SV("odmeny_pausal", .schvaleno_odmeny_pausal, e, .j27Code)
-                SV("vydaje_fakturovat", .schvaleno_vydaje, e, .j27Code)
-                SV("vydaje_odpis", .schvaleno_vydaje_odpis, e, .j27Code)
-                SV("vydaje_pausal", .schvaleno_vydaje_pausal, e, .j27Code)
+               
             Else
                 SV("hodiny_rozpracovano", 0, e)
                 SV("honorar_rozpracovano", 0, e)
@@ -53,15 +64,19 @@
                 SV("vydaje_rozpracovano", 0, e)
 
                 SV("hodiny_fakturovat", .vyfakturovano_hodiny, e)
-                SV("honorar_fakturovat", .vyfakturovano_honorar, e, .j27Code)
+                If Me.hidAllowShowRates.Value = "1" Then
+                    SV("honorar_fakturovat", .vyfakturovano_honorar, e, .j27Code)
+                    SV("odmeny_fakturovat", .vyfakturovano_odmeny, e, .j27Code)
+                    SV("odmeny_odpis", .vyfakturovano_odmeny_odpis, e, .j27Code)
+                    SV("odmeny_pausal", .vyfakturovano_odmeny_pausal, e, .j27Code)
+                    SV("vydaje_fakturovat", .vyfakturovano_vydaje, e, .j27Code)
+                    SV("vydaje_odpis", .vyfakturovano_vydaje_odpis, e, .j27Code)
+                    SV("vydaje_pausal", .vyfakturovano_vydaje_pausal, e, .j27Code)
+                End If
+
                 SV("hodiny_odpis", .vyfakturovano_hodiny_odpis, e)
                 SV("hodiny_pausal", .vyfakturovano_hodiny_pausal, e)
-                SV("odmeny_fakturovat", .vyfakturovano_odmeny, e, .j27Code)
-                SV("odmeny_odpis", .vyfakturovano_odmeny_odpis, e, .j27Code)
-                SV("odmeny_pausal", .vyfakturovano_odmeny_pausal, e, .j27Code)
-                SV("vydaje_fakturovat", .vyfakturovano_vydaje, e, .j27Code)
-                SV("vydaje_odpis", .vyfakturovano_vydaje_odpis, e, .j27Code)
-                SV("vydaje_pausal", .vyfakturovano_vydaje_pausal, e, .j27Code)
+               
             End If
         End With
 

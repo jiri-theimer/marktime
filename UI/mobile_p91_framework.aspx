@@ -3,6 +3,12 @@
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        function o23_record(o23id) {
+            location.replace("mobile_o23_framework.aspx?pid=" + o23id);
+
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <nav class="navbar navbar-default" style="margin-bottom: 0px !important;">

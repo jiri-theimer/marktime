@@ -133,6 +133,13 @@ Class j70QueryTemplateBL
             Case BO.x29IdEnum.p56Task
                 lis.Add(New BO.OtherQueryItem(3, "Obsahují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Obsahují schválené úkony, které čekají na fakturaci"))
+                lis.Add(New BO.OtherQueryItem(6, "Vyplněn termín dokončení úkolu"))
+                lis.Add(New BO.OtherQueryItem(7, "Je po termínu dokončení úkolu"))
+                lis.Add(New BO.OtherQueryItem(8, "Vyplněno plánované zahájení úkolu"))
+                lis.Add(New BO.OtherQueryItem(9, "Vyplněn plán/limit hodin"))
+                lis.Add(New BO.OtherQueryItem(10, "Vyplněn plán/limit výdajů"))
+                lis.Add(New BO.OtherQueryItem(11, "Došlo k překročení plánu/limitu hodin"))
+                lis.Add(New BO.OtherQueryItem(12, "Došlo k překročení plánu/limitu výdajů"))
             Case BO.x29IdEnum.o23Notepad
                 lis.Add(New BO.OtherQueryItem(3, "Dokument byl svázán s projektem"))
                 lis.Add(New BO.OtherQueryItem(4, "Dokument čeká na vazbu s projektem"))

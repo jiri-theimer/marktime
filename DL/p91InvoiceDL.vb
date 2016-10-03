@@ -92,6 +92,15 @@
                 pars.Add("p91validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p91validuntil", .ValidUntil, DbType.DateTime)
 
+                pars.Add("p91Client", .p91Client, DbType.String, , , True, "Název klienta")
+                pars.Add("p91Client_RegID", .p91Client_RegID, DbType.String)
+                pars.Add("p91Client_VatID", .p91Client_VatID, DbType.String)
+                pars.Add("p91ClientAddress1_Street", .p91ClientAddress1_Street, DbType.String)
+                pars.Add("p91ClientAddress1_City", .p91ClientAddress1_City, DbType.String)
+                pars.Add("p91ClientAddress1_ZIP", .p91ClientAddress1_ZIP, DbType.String, , , True, "PSČ")
+                pars.Add("p91ClientAddress1_Country", .p91ClientAddress1_Country, DbType.String)
+
+                pars.Add("p91ClientAddress2", .p91ClientAddress2, DbType.String, , , True, "Poštovní adresa")
             End With
 
             If _cDB.SaveRecord("p91Invoice", pars, False, "p91ID=@pid", True, _curUser.j03Login) Then
@@ -466,6 +475,7 @@
         s.Append(",a.p91Datep31_From,a.p91Datep31_Until,a.p91Amount_WithoutVat,a.p91Amount_Vat,a.p91Amount_Billed,a.p91Amount_WithVat,a.p91Amount_Debt,a.p91RoundFitAmount,a.p91Text1,a.p91Text2,a.p91ProformaAmount,a.p91ProformaBilledAmount,a.p91Amount_WithoutVat_None,a.p91VatRate_Low,a.p91Amount_WithVat_Low,a.p91Amount_WithoutVat_Low,a.p91Amount_Vat_Low")
         s.Append(",a.p91VatRate_Standard,a.p91Amount_WithVat_Standard,a.p91Amount_WithoutVat_Standard,a.p91Amount_Vat_Standard,a.p91VatRate_Special,a.p91Amount_WithVat_Special,a.p91Amount_WithoutVat_Special,a.p91Amount_Vat_Special,a.p91Amount_TotalDue")
         s.Append("," & bas.RecTail("p91", "a") & ",p91free.*,p28client.p28Name as _p28Name,p92.p92Name as _p92Name,p92.p93ID as _p93ID,p41.p41Name as _p41Name,b02.b02Name as _b02Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,j17.j17Name as _j17Name,j27.j27Code as _j27Code,p92.p92InvoiceType as _p92InvoiceType,p92.b01ID as _b01ID,p28client.p28CompanyName as _p28CompanyName")
+        s.Append(",a.p91Client,a.p91Client_RegID,a.p91Client_VatID,a.p91ClientAddress1_Street,a.p91ClientAddress1_City,a.p91ClientAddress1_ZIP,a.p91ClientAddress1_Country,a.p91ClientAddress2")
         ''s.Append(",case when a.j27ID=2 THEN p91Amount_WithoutVat END as WithoutVat_CZK,case when a.j27ID=3 THEN p91Amount_WithoutVat END as WithoutVat_EUR")
         Return s.ToString
 

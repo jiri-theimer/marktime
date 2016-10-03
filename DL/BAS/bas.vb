@@ -402,6 +402,20 @@
                 Return "a.p56ID IN (SELECT p56ID FROM p31Worksheet WHERE p56ID IS NOT NULL AND p71ID IS NULL AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryP56_QuickQuery.WaitingOnInvoice
                 Return "a.p56ID IN (SELECT p56ID FROM p31Worksheet WHERE p56ID IS NOT NULL AND p71ID=1 AND p91ID IS NULL)"
+            Case BO.myQueryP56_QuickQuery.Is_PlanUntil
+                Return "a.p56PlanUntil IS NOT NULL"
+            Case BO.myQueryP56_QuickQuery.Is_OverPlanUtil
+                Return "a.p56PlanUntil IS NOT NULL AND a.p56PlanUntil<GETDATE()"
+            Case BO.myQueryP56_QuickQuery.Is_PlanFrom
+                Return "a.p56PlanFrom IS NOT NULL"
+            Case BO.myQueryP56_QuickQuery.Is_PlanHours
+                Return "ISNULL(a.p56Plan_Hours,0)>0"
+            Case BO.myQueryP56_QuickQuery.Is_PlanExpenses
+                Return "ISNULL(a.p56Plan_Expenses,0)>0"
+            Case BO.myQueryP56_QuickQuery.Is_OverPlanHours
+                Return "ISNULL(a.p56Plan_Hours,0)>0 AND a.P56ID IN (SELECT p56ID FROM p31Worksheet WHERE p56ID=a.p56ID GROUP BY p56ID HAVING sum(p31Hours_Orig)>a.p56Plan_Hours)"
+            Case BO.myQueryP56_QuickQuery.Is_OverPlanEpenses
+                Return "ISNULL(a.p56Plan_Expenses,0)>0 AND a.P56ID IN (SELECT p56ID FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID=a.p56ID AND xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 GROUP BY xa.p56ID HAVING sum(xa.p31Amount_WithoutVat_Orig)>a.p56Plan_Expenses)"
             Case Else
                 Return ""
         End Select

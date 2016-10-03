@@ -56,6 +56,15 @@
             Me.p91Datep31_From.selecteddate = .p91Datep31_From
             Me.p91Datep31_Until.SelectedDate = .p91Datep31_Until
 
+            Me.p91Client.Text = .p91Client
+            Me.p91Client_RegID.Text = .p91Client_RegID
+            Me.p91Client_VatID.Text = .p91Client_VatID
+            Me.p91ClientAddress1_City.Text = .p91ClientAddress1_City
+            Me.p91ClientAddress1_Street.Text = .p91ClientAddress1_Street
+            Me.p91ClientAddress1_ZIP.Text = .p91ClientAddress1_ZIP
+            Me.p91ClientAddress1_Country.Text = .p91ClientAddress1_Country
+            Me.p91ClientAddress2.Text = .p91ClientAddress2
+
             InhaleAddresses()
             If .p28ID <> 0 Then
                 Me.o38ID_Primary.SelectedValue = .o38ID_Primary.ToString
@@ -123,6 +132,16 @@
                 .p91Datep31_From = BO.BAS.IsNullDBDate(Me.p91Datep31_From.SelectedDate)
                 .p91Datep31_Until = BO.BAS.IsNullDBDate(Me.p91Datep31_Until.SelectedDate)
 
+
+                .p91Client = Me.p91Client.Text
+                .p91Client_RegID = Me.p91Client_RegID.Text
+                .p91Client_VatID = Me.p91Client_VatID.Text
+                .p91ClientAddress1_City = Me.p91ClientAddress1_City.Text
+                .p91ClientAddress1_Street = Me.p91ClientAddress1_Street.Text
+                .p91ClientAddress1_ZIP = Me.p91ClientAddress1_ZIP.Text
+                .p91ClientAddress1_Country = Me.p91ClientAddress1_Country.Text
+                .p91ClientAddress2 = Me.p91ClientAddress2.Text
+
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
             End With
@@ -144,5 +163,31 @@
 
     Private Sub p92ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles p92ID.SelectedIndexChanged
         Handle_FF()
+    End Sub
+
+    Private Sub cmdLoadClient_Click(sender As Object, e As EventArgs) Handles cmdLoadClient.Click
+        Dim intP28ID As Integer = BO.BAS.IsNullInt(Me.p28ID.Value), intO38ID As Integer = BO.BAS.IsNullInt(Me.o38ID_Primary.SelectedValue)
+        If intP28ID = 0 Or intO38ID = 0 Then
+            Master.Notify("Musíte vybrat klienta a jeho primární adresu.", NotifyLevel.WarningMessage)
+            Return
+        End If
+        Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(intP28ID), cA As BO.o38Address = Master.Factory.o38AddressBL.Load(intO38ID)
+        With cRec
+            Me.p91Client.Text = .p28Name
+            Me.p91Client_VatID.Text = .p28VatID
+            Me.p91Client_RegID.Text = .p28RegID
+        End With
+        With cA
+            Me.p91ClientAddress1_Street.Text = .o38Street
+            Me.p91ClientAddress1_City.Text = .o38City
+            Me.p91ClientAddress1_ZIP.Text = .o38ZIP
+            Me.p91ClientAddress1_Country.Text = .o38Country
+        End With
+        If Me.o38ID_Delivery.SelectedValue <> "" Then
+            cA = Master.Factory.o38AddressBL.Load(BO.BAS.IsNullInt(Me.o38ID_Delivery.SelectedValue))
+            Me.p91ClientAddress2.Text = cA.FullAddressWithBreaks
+        Else
+            Me.p91ClientAddress2.Text = ""
+        End If
     End Sub
 End Class

@@ -17,6 +17,7 @@
     <link href="Scripts/datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
 
     <link href="Scripts/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <style type="text/css">
         .badge1 {
@@ -235,7 +236,7 @@
                 
                 <ul class="nav navbar-nav"> 
                     
-                       
+                    <li><a href="mobile_start.aspx">ÚVOD</a></li>
                 
                 
                                        
@@ -328,9 +329,10 @@
                        .appendTo('#search_result').show();
                 }
 
+               
                 <%end if%>
         <%If Me.MenuPrefix = "p91" Then%>
-        document.getElementById("search1").placeholder="Najít fakturu...";
+            document.getElementById("search1").placeholder="Najít fakturu...";
 
             $("#search1").autocomplete({
                 source: "Handler/handler_search_invoice.ashx",
@@ -347,6 +349,7 @@
                        .appendTo('#search_result').show();
                 }
 
+                
         <%end if%>
 
 
@@ -356,9 +359,11 @@
                     s = s + "<a style='text-decoration:line-through;'>";
                 else
                     s = s + "<a>";
-
+                 <%If Me.MenuPrefix = "p91" Then%>
+                s = s + __highlight(item.Invoice, item.FilterString);
+                <%else%>
                 s = s + __highlight(item.Project, item.FilterString);
-
+                <%end if%>
 
                 s = s + "</a>";
 

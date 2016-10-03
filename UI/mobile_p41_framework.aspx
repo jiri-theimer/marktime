@@ -10,7 +10,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         function o23_record(o23id) {
-            alert("nic");
+            location.replace("mobile_o23_framework.aspx?pid=" + o23id);
 
         }
         
@@ -32,7 +32,7 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbarOnSite">
                 <ul class="nav navbar-nav">                   
-                    <li><a href="p31_framework_mobile.aspx?p41id=<%=Master.DataPID%>">Zapsat úkon</a></li>
+                    <li><a href="mobile_p31_framework.aspx?p41id=<%=Master.DataPID%>">Zapsat worksheet</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="mobile_report.aspx?prefix=p41&pid=<%=Master.DataPID%>">Sestava</a></li>
                     <li role="separator" class="divider"></li>
@@ -130,19 +130,6 @@
             </div>
 
 
-
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <img src="Images/projectrole.png" />
-                        Projektové role
-                    </div>
-                    <table class="table table-hover">
-                        <uc:entityrole_assign_inline ID="roles_project" runat="server" IsShowClueTip="false" IsRenderAsTable="true" EntityX29ID="p41Project" NoDataText="V projektu nejsou přiřazeny projektové role!"></uc:entityrole_assign_inline>
-                    </table>
-                </div>
-            </div>
-
             <asp:Panel ID="boxP31" runat="server" CssClass="col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <div class="caption">
@@ -158,6 +145,18 @@
                     
                 </div>
             </asp:Panel>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <img src="Images/projectrole.png" />
+                        Projektové role
+                    </div>
+                    <table class="table table-hover">
+                        <uc:entityrole_assign_inline ID="roles_project" runat="server" IsShowClueTip="false" IsRenderAsTable="true" EntityX29ID="p41Project" NoDataText="V projektu nejsou přiřazeny projektové role!"></uc:entityrole_assign_inline>
+                    </table>
+                </div>
+            </div>
 
             <asp:Panel ID="boxP30" runat="server" CssClass="col-sm-6 col-md-4">
                 <div class="thumbnail">

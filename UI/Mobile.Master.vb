@@ -34,6 +34,18 @@
             If _Factory.SysUser Is Nothing Then DoLogOut()
             basUI.PingAccessLog(_Factory, Request)
 
+            If _Factory.SysUser.j03IsMustChangePassword Then
+                If Request.Url.ToString.ToLower.IndexOf("changepassword") < 0 Then
+                    Response.Redirect("mobile_changepassword.aspx")
+                End If
+            Else
+                If Not _Factory.SysUser.j03PasswordExpiration Is Nothing Then
+                    If _Factory.SysUser.j03PasswordExpiration < Now Then
+                        If Request.Url.ToString.ToLower.IndexOf("changepassword") < 0 Then Response.Redirect("mobile_changepassword.aspx")
+                    End If
+                End If
+            End If
+
             PersonalizeMenu()
 
 

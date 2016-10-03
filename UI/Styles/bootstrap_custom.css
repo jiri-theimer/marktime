@@ -95,3 +95,147 @@
    label {
     font-weight: normal !important;
 }			
+
+
+
+/* Stavy worksheet úkonů
+----------------------------------------------------------*/
+.a12 {
+    background-image: url('../Images/a12.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.a13 {
+    background-image: url('../Images/a13.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.a14 {
+    background-image: url('../Images/a14.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.a16 {
+    background-image: url('../Images/a16.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.a17 {
+    background-image: url('../Images/a17.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.a20 {
+    background-image: url('../Images/a20.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.a30 {
+    background-image: url('../Images/a30.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.corr_236 {
+    background-image: url('../Images/correction_down.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.corr_4_down {
+    background-image: url('../Images/correction_down.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.corr_4_up {
+    background-image: url('../Images/correction_up.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.future {
+    background-image: url('../Images/future.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.draft {
+    background-image: url('../Images/draft.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.overtime {
+    background-image: url('../Images/overtime.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.locked {
+    background-image: url('../Images/lock.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.spy {
+    background-image: url('../Images/spy.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.a2 {
+    background-color: red;
+}
+
+.a3 {
+    background-color: brown;
+}
+
+.a4 {
+    background-color: green;
+}
+
+.a6 {
+    background-color: pink;
+}
+
+.box_comment {
+    padding-bottom: 6px;
+}
+
+    .box_comment:hover {
+        background-color: whitesmoke;
+    }
+
+tr.trHover:hover {
+    background-color: whitesmoke;
+}
+
+.calcell {
+    color: red;
+    width: 30px;
+    height: 15px;
+    font-size: 90%;
+}
+
+.p91_red {
+    background-color: red;
+}
+
+.p91_pink {
+    background-color: pink;
+}
+
+.p91_creditnote {
+    background-image: url('../Images/correction_down.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.p91_yellow {
+    background-color: yellow;
+}

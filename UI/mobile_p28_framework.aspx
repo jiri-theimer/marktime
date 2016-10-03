@@ -12,7 +12,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         function o23_record(o23id) {
-            alert("nic");
+            location.replace("mobile_o23_framework.aspx?pid=" + o23id);
 
         }
       
@@ -124,7 +124,7 @@
                         Klientské role
                     </div>
                     <table class="table table-hover">
-                        <uc:entityrole_assign_inline ID="roles_project" runat="server" IsShowClueTip="false" IsRenderAsTable="true" EntityX29ID="p41Project" NoDataText="V projektu nejsou přiřazeny projektové role!"></uc:entityrole_assign_inline>
+                        <uc:entityrole_assign_inline ID="roles_project" runat="server" IsShowClueTip="false" IsRenderAsTable="true" EntityX29ID="p28Contact" NoDataText="V projektu nejsou přiřazeny projektové role!"></uc:entityrole_assign_inline>
                     </table>
                 </div>
             </div>
@@ -164,11 +164,11 @@
                     <div class="caption">
                         <img src="Images/notepad.png" />
 
-                        <a href="mobile_grid.aspx?prefix=o23&masterprefix=p41&masterpid=<%=Master.DataPID%>" class="alinked">Dokumenty <asp:Label runat="server" ID="CountO23" CssClass="badge"></asp:Label></a>
+                        <a href="mobile_grid.aspx?prefix=o23&masterprefix=p28&masterpid=<%=Master.DataPID%>" class="alinked">Dokumenty <asp:Label runat="server" ID="CountO23" CssClass="badge"></asp:Label></a>
                         
                     </div>
                     <table class="table table-hover">
-                        <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project" IsShowClueTip="false"></uc:o23_list>
+                        <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p28Contact" IsShowClueTip="false"></uc:o23_list>
                     </table>
                 </div>
             </asp:Panel>

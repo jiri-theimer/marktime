@@ -68,6 +68,15 @@
             End If
             Me.hidClosedQueryValue.Value = Request.Item("closed")
             With Master
+                If Me.CurrentX29ID = BO.x29IdEnum.p91Invoice And Not .Factory.SysUser.j04IsMenu_Invoice Then
+                    .StopPage("Nemáte oprávnění k přehledu faktur.")
+                End If
+                If Me.CurrentX29ID = BO.x29IdEnum.p28Contact And Not .Factory.SysUser.j04IsMenu_Contact And Me.CurrentMasterPrefix = "" Then
+                    .StopPage("Nemáte oprávnění k přehledu klientů.")
+                End If
+                If Me.CurrentX29ID = BO.x29IdEnum.p41Project And Not .Factory.SysUser.j04IsMenu_Project And Me.CurrentMasterPrefix = "" Then
+                    .StopPage("Nemáte oprávnění k přehledu projektů.")
+                End If
                 .MenuPrefix = Me.CurrentPrefix
                 Dim lisPars As New List(Of String)
                 With lisPars

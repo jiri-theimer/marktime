@@ -409,7 +409,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Měna", "j27Code"))
             .Add(AGC("Typ faktury", "p92Name"))
             .Add(AGC("Projekt", "p41Name"))
-            .Add(AGC("Stát", "j17Name"))
+            .Add(AGC("DPH region", "j17Name"))
 
             .Add(AGC("Bez dph", "p91Amount_WithoutVat", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Bez dph x Kurz", "WithoutVat_Krat_Kurz", BO.cfENUM.Numeric, , , True))

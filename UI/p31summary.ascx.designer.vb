@@ -48,4 +48,13 @@ Partial Public Class p31summary
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidState As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidAllowShowRates control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidAllowShowRates As Global.System.Web.UI.WebControls.HiddenField
 End Class

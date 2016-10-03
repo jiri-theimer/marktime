@@ -61,6 +61,15 @@
     Public Property p91Text1 As String
     Public Property p91Text2 As String
 
+    Public Property p91Client As String
+    Public Property p91Client_RegID As String
+    Public Property p91Client_VatID As String
+    Public Property p91ClientAddress1_Street As String
+    Public Property p91ClientAddress1_City As String
+    Public Property p91ClientAddress1_ZIP As String
+    Public Property p91ClientAddress1_Country As String
+    Public Property p91ClientAddress2 As String
+
     Private Property _b01ID As Integer
     Public ReadOnly Property b01ID As Integer
         Get
@@ -165,6 +174,20 @@
     Public ReadOnly Property p91Amount_TotalDue_Krat_Kurz As Double
         Get
             Return Me.p91Amount_TotalDue * Me.p91ExchangeRate
+        End Get
+    End Property
+
+    Public ReadOnly Property PrimaryAddress As String
+        Get
+            Dim s As String = Me.p91ClientAddress1_Street
+            If s = "" Then
+                s = Me.p91ClientAddress1_City
+            Else
+                s += ", " & Me.p91ClientAddress1_City
+            End If
+            If Me.p91ClientAddress1_ZIP <> "" Then s += ", " & Me.p91ClientAddress1_ZIP
+            If Me.p91ClientAddress1_Country <> "" Then s += ", " & Me.p91ClientAddress1_Country
+            Return s
         End Get
     End Property
 

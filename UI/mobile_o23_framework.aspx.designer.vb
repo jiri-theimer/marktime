@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class mobile_p41_framework
+Partial Public Class mobile_o23_framework
 
     '''<summary>
     '''RecordHeader control.
@@ -23,58 +23,49 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents RecordHeader As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''liP56_Actual control.
+    '''panEntryPassword control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents liP56_Actual As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    Protected WithEvents panEntryPassword As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''CountP56_Actual control.
+    '''txtEntryPassword control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents CountP56_Actual As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtEntryPassword As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''liP56_Closed control.
+    '''cmdDecrypt control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents liP56_Closed As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    Protected WithEvents cmdDecrypt As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''CountP56_Closed control.
+    '''panRecord control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents CountP56_Closed As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panRecord As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''lisP91 control.
+    '''imgRecord control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lisP91 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''CountP91 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CountP91 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents imgRecord As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
     '''RecordName control.
@@ -86,49 +77,67 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents RecordName As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''imgFlag_Project control.
+    '''o24Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgFlag_Project As Global.System.Web.UI.WebControls.Image
+    Protected WithEvents o24Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Client control.
+    '''imgDraft control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Client As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents imgDraft As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''imgFlag_Client control.
+    '''lblBind control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgFlag_Client As Global.System.Web.UI.WebControls.Image
+    Protected WithEvents lblBind As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''trParent control.
+    '''BindEntity control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents trParent As Global.System.Web.UI.HtmlControls.HtmlTableRow
+    Protected WithEvents BindEntity As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''ParentProject control.
+    '''trBindTemp control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ParentProject As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents trBindTemp As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''lblBindTemp control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblBindTemp As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''BindTempEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents BindTempEntity As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''trB02 control.
@@ -149,94 +158,49 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''trPlanPeriod control.
+    '''o23Date control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents trPlanPeriod As Global.System.Web.UI.HtmlControls.HtmlTableRow
+    Protected WithEvents o23Date As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''p41PlanFrom control.
+    '''panFiles control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p41PlanFrom As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panFiles As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''p41PlanUntil control.
+    '''Fileupload_list__readonly control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p41PlanUntil As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Fileupload_list__readonly As Global.UI.fileupload_list
 
     '''<summary>
-    '''p42Name control.
+    '''panBody control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p42Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panBody As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''imgDraft control.
+    '''o23BodyPlainText control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgDraft As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''PriceList_Billing control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents PriceList_Billing As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''boxP31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxP31 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cmdP31Grid control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdP31Grid As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''opgWorksheetState control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents opgWorksheetState As Global.System.Web.UI.WebControls.RadioButtonList
-
-    '''<summary>
-    '''worksheet1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents worksheet1 As Global.UI.p31summary
+    Protected WithEvents o23BodyPlainText As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''roles_project control.
@@ -248,58 +212,22 @@ Partial Public Class mobile_p41_framework
     Protected WithEvents roles_project As Global.UI.entityrole_assign_inline
 
     '''<summary>
-    '''boxP30 control.
+    '''Owner control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents boxP30 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''CountP30 control.
+    '''Timestamp control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents CountP30 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''persons1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents persons1 As Global.UI.contactpersons
-
-    '''<summary>
-    '''boxO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxO23 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''CountO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CountO23 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''notepad1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
+    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''boxX18 control.

@@ -11,6 +11,7 @@
             With Master
                 .MenuPrefix = "p41"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                Me.worksheet1.AllowShowRates = .Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)
 
                 Dim lisPars As New List(Of String)
                 With lisPars
@@ -42,6 +43,7 @@
         If Master.DataPID = 0 Then Return
 
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+        Handle_Permissions(cRec)
         Dim cClient As BO.p28Contact = Nothing
         With cRec
             Me.RecordHeader.Text = BO.BAS.OM3(.p41Name, 30)
@@ -194,4 +196,17 @@
     Private Sub opgWorksheetState_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgWorksheetState.SelectedIndexChanged
         RefreshP31Summary()
     End Sub
+
+    Private Sub Handle_Permissions(cRec As BO.p41Project)
+        Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then
+            Master.StopPage("Nedisponujete přístupovým oprávněním k projektu.")
+        End If
+        With Master.Factory.SysUser
+            If Not .j04IsMenu_Invoice Then lisP91.Visible = False
+
+        End With
+
+    End Sub
+
 End Class

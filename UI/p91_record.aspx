@@ -31,6 +31,7 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
             <telerik:RadTab Text="Vlastnosti" Selected="true" Value="core"></telerik:RadTab>
+            <telerik:RadTab Text="Klient faktury" Value="client"></telerik:RadTab>
             <telerik:RadTab Text="Uživatelská pole" Value="ff"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -76,43 +77,11 @@
                     </td>
                     <td>
                         <telerik:RadDatePicker ID="p91DateMaturity" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
-                            <DateInput ID="DateInput3" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>                            
+                            <DateInput ID="DateInput3" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                         </telerik:RadDatePicker>
 
                     </td>
                 </tr>
-                <tr valign="top">
-                    <td>
-                        <asp:Label ID="lblP28ID" runat="server" Text="Klient (odběratel):" CssClass="lbl"></asp:Label>
-
-                    </td>
-                    <td>
-                        <uc:contact ID="p28ID" runat="server" Width="400px" AutoPostBack="true" />
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="Label1" runat="server" Text="Fakturační adresa klienta:" CssClass="lbl"></asp:Label>
-
-                    </td>
-                    <td>
-                        <uc:datacombo ID="o38ID_Primary" runat="server" AutoPostBack="false" DataTextField="FullAddress" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="Label2" runat="server" Text="Poštovní adresa klienta:" CssClass="lbl"></asp:Label>
-
-                    </td>
-                    <td>
-                        <uc:datacombo ID="o38ID_Delivery" runat="server" AutoPostBack="false" DataTextField="FullAddress" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-
-                    </td>
-                </tr>
-
-
                 <tr valign="top">
                     <td>
                         <asp:Label ID="lblJ17ID" Text="DPH region:" runat="server" CssClass="lbl"></asp:Label>
@@ -174,15 +143,116 @@
                 </tr>
             </table>
         </telerik:RadPageView>
-        <telerik:RadPageView ID="ff" runat="server">            
+        <telerik:RadPageView ID="tab2" runat="server">
+            <table cellpadding="6" cellspacing="2">
+                <tr valign="top">
+                    <td>
+                        <asp:Label ID="lblP28ID" runat="server" Text="Klient (odběratel):" CssClass="lbl"></asp:Label>
+
+                    </td>
+                    <td>
+                        <uc:contact ID="p28ID" runat="server" Width="400px" AutoPostBack="true" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label1" runat="server" Text="Fakturační adresa klienta:" CssClass="lbl"></asp:Label>
+
+                    </td>
+                    <td>
+                        <uc:datacombo ID="o38ID_Primary" runat="server" AutoPostBack="false" DataTextField="FullAddress" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="Poštovní adresa klienta:" CssClass="lbl"></asp:Label>
+
+                    </td>
+                    <td>
+                        <uc:datacombo ID="o38ID_Delivery" runat="server" AutoPostBack="false" DataTextField="FullAddress" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+
+                    </td>
+                </tr>
+            </table>
+
+            <div class="content-box2">
+                <div class="title">
+                    <span>Údaje o klientovi, které historicky zůstávají ve faktuře (bez ohledu na aktualizaci klienta)</span>
+                </div>
+                <div class="content">
+                    <table cellpadding="6" cellspacing="2">
+                        <tr>
+                            <td colspan="2">
+                                <asp:Button ID="cmdLoadClient" runat="server" Text="Načíst klienta do faktury" CssClass="cmd" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label6" runat="server" Text="Název klienta:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="p91Client" runat="server" Style="width: 400px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label7" runat="server" Text="IČ:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="p91Client_RegID" runat="server" Style="width: 150px;"></asp:TextBox>
+                                <asp:Label ID="Label8" runat="server" Text="DIČ:" CssClass="lbl"></asp:Label>
+                                <asp:TextBox ID="p91Client_VatID" runat="server" Style="width: 150px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label9" runat="server" Text="Ulice:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="p91ClientAddress1_Street" runat="server" Style="width: 400px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label10" runat="server" Text="Město:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="p91ClientAddress1_City" runat="server" Style="width: 400px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label11" runat="server" Text="PSČ:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="p91ClientAddress1_ZIP" runat="server" Style="width: 100px;"></asp:TextBox>
+                                <asp:Label ID="Label12" runat="server" Text="Stát:" CssClass="lbl"></asp:Label>
+                                <asp:TextBox ID="p91ClientAddress1_Country" runat="server" Style="width: 250px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                <asp:Label ID="Label13" runat="server" Text="Poštovní adresa:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="p91ClientAddress2" runat="server" TextMode="MultiLine" Style="width: 400px; height: 80px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="ff" runat="server">
             <uc:freefields ID="ff1" runat="server" />
         </telerik:RadPageView>
     </telerik:RadMultiPage>
 
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
         <SpecialDays>
-                    <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
-                </SpecialDays>
+            <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
+        </SpecialDays>
     </telerik:RadCalendar>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

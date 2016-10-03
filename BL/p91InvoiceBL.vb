@@ -73,11 +73,13 @@ Class p91InvoiceBL
     Public Function Update(cRec As BO.p91Invoice, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean Implements Ip91InvoiceBL.Update
         With cRec
             If .p92ID = 0 Then _Error = "Chybí typ faktury." : Return False
-            If .p28ID = 0 Then _Error = "Chybí příjemce (odběratel) faktury." : Return False
-            If .o38ID_Primary = 0 Then
-                If Factory.p28ContactBL.GetList_o37(.p28ID).Where(Function(p) p.o36ID = BO.o36IdEnum.InvoiceAddress).Count > 0 Then
-                    'klient má v profilu uvedenou fakturační adresu, tak jí budeme vyžadovat
-                    _Error = "Chybí fakturační adresa klienta."
+            If Trim(.p91Client) = "" Then
+                If .p28ID = 0 Then _Error = "Chybí příjemce (odběratel) faktury." : Return False
+                If .o38ID_Primary = 0 Then
+                    If Factory.p28ContactBL.GetList_o37(.p28ID).Where(Function(p) p.o36ID = BO.o36IdEnum.InvoiceAddress).Count > 0 Then
+                        'klient má v profilu uvedenou fakturační adresu, tak jí budeme vyžadovat
+                        _Error = "Chybí fakturační adresa klienta."
+                    End If
                 End If
             End If
             If _Error <> "" Then Return False

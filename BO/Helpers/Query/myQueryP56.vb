@@ -11,6 +11,13 @@ Public Enum myQueryP56_QuickQuery
     Removed2Bin = 2
     WaitingOnApproval = 3
     WaitingOnInvoice = 5
+    Is_PlanUntil = 6
+    Is_OverPlanUtil = 7
+    Is_PlanFrom = 8
+    Is_PlanHours = 9
+    Is_PlanExpenses = 10
+    Is_OverPlanHours = 11
+    Is_OverPlanEpenses = 12
 End Enum
 Public Class myQueryP56
     Inherits myQuery

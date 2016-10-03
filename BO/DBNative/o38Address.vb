@@ -22,4 +22,21 @@
             Return s
         End Get
     End Property
+    Public ReadOnly Property FullAddressWithBreaks As String
+        Get
+            Dim s As String = ""
+            If Me.o38Street <> "" Then
+                s = Me.o38Street & vbCrLf & Me.o38City
+            Else
+                s = Me.o38City
+            End If
+            If Me.o38ZIP <> "" Then
+                s += vbCrLf & Me.o38ZIP
+            End If
+            If Me.o38Country <> "" Then
+                s += vbCrLf & Me.o38Country
+            End If
+            Return s
+        End Get
+    End Property
 End Class

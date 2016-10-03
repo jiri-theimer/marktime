@@ -91,15 +91,23 @@ Public Class p91_framework_detail
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString, .IsClosed)
             If .IsClosed Then Me.hidIsBin.Value = "1"
 
-
-
             Me.p92Name.Text = .p92Name
             Me.clue_p92name.Attributes("rel") = "clue_p92_record.aspx?pid=" & cRec.p92ID.ToString
             With Me.Client
                 .Text = cRec.p28Name
+                If cRec.p28Name <> cRec.p91Client Then
+                    .Text += " | " & cRec.p91Client
+                End If
                 .NavigateUrl = "p28_framework.aspx?pid=" & cRec.p28ID.ToString
             End With
-            Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
+            If .p28ID = 0 Then
+                Me.clue_client.Visible = False
+                Me.Client.NavigateUrl = ""
+                Me.Client.Text = .p91Client
+            Else
+                Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
+            End If
+
 
             If .b01ID <> 0 Then
                 Me.trWorkflow.Visible = True
@@ -145,8 +153,10 @@ Public Class p91_framework_detail
             Me.p91Text2.Text = BO.BAS.CrLfText2Html(.p91Text2)
             Me.Owner.Text = .Owner
             Me.WorksheetRange.Text = BO.BAS.FD(.p91Datep31_From) & " - " & BO.BAS.FD(.p91Datep31_Until)
-            Me.BillingAddress.Text = ParseAddress(.o38ID_Primary)
-            Me.PostAddress.Text = ParseAddress(.o38ID_Delivery)
+            ''Me.BillingAddress.Text = ParseAddress(.o38ID_Primary)
+            ''Me.PostAddress.Text = ParseAddress(.o38ID_Delivery)
+            Me.BillingAddress.Text = .PrimaryAddress
+            Me.PostAddress.Text = Replace(.p91ClientAddress2, vbCrLf, ",")
             HandleBankAccount(.p93ID, .j27ID)
 
             Me.p91RoundFitAmount.Text = BO.BAS.FN(.p91RoundFitAmount)
@@ -229,11 +239,11 @@ Public Class p91_framework_detail
             End If
         End With
     End Sub
-    Private Function ParseAddress(intO38ID As Integer) As String
-        If intO38ID = 0 Then Return ""
-        Dim cRec As BO.o38Address = Master.Factory.o38AddressBL.Load(intO38ID)
-        Return cRec.FullAddress
-    End Function
+    ''Private Function ParseAddress(intO38ID As Integer) As String
+    ''    If intO38ID = 0 Then Return ""
+    ''    Dim cRec As BO.o38Address = Master.Factory.o38AddressBL.Load(intO38ID)
+    ''    Return cRec.FullAddress
+    ''End Function
     Private Sub HandleBankAccount(intP93ID As Integer, intJ27ID As Integer)
         Dim lis As IEnumerable(Of BO.p88InvoiceHeader_BankAccount) = Master.Factory.p93InvoiceHeaderBL.GetList_p88(intP93ID)
         If lis.Where(Function(p) p.j27ID = intJ27ID).Count > 0 Then

@@ -243,14 +243,16 @@
     Public Function GetGridDataSource(myQuery As BO.myQueryO23) As DataTable
         Dim s As String = ""
         With myQuery
-            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
-                Select Case .MG_GridGroupByField
-                    Case "ProjectClient" : .MG_GridSqlColumns += ",p28_client.p28Name as ProjectClient"
-                    Case "Project" : .MG_GridSqlColumns += ",p41.p41Name as Project"
-                    Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
-                    Case Else
-                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
-                End Select
+            If Not String.IsNullOrEmpty(.MG_GridGroupByField) Then
+                If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 Then
+                    Select Case .MG_GridGroupByField
+                        Case "ProjectClient" : .MG_GridSqlColumns += ",p28_client.p28Name as ProjectClient"
+                        Case "Project" : .MG_GridSqlColumns += ",p41.p41Name as Project"
+                        Case "Owner" : .MG_GridSqlColumns += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner"
+                        Case Else
+                            .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                    End Select
+                End If
             End If
             .MG_GridSqlColumns += ",a.o23ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.o23ValidFrom AND a.o23ValidUntil THEN 0 else 1 END) as IsClosed,a.o23IsDraft as IsDraft"
             .MG_GridSqlColumns += ",a.o23IsEncrypted as o23IsEncrypted_Grid,a.o23LockedFlag as o23LockedFlag_Grid,a.b02ID,b02.b02Color"

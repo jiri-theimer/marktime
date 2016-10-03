@@ -88,3 +88,4 @@
 </table>
 
 <asp:HiddenField ID="hidState" runat="server" Value="1" />
+<asp:HiddenField ID="hidAllowShowRates" runat="server" Value="1" />
