@@ -302,7 +302,7 @@
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png" meta:resourcekey="cmdO22"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png" meta:resourcekey="cmdB07"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP40Create" Text="Zapsat opakovanou odměnu/paušál/úkon" NavigateUrl="javascript:p40_record(0);" ImageUrl="Images/worksheet_recurrence.png" meta:resourcekey="cmdP40Create"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP40Create" Text="Definovat opakovanou odměnu/paušál/úkon" NavigateUrl="javascript:p40_record(0);" ImageUrl="Images/worksheet_recurrence.png" meta:resourcekey="cmdP40Create"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP31Recalc" Text="Přepočítat sazby rozpracovaných čas.úkonů" NavigateUrl="javascript:p31_recalc();" ImageUrl="Images/recalc.png" meta:resourcekey="cmdP31Recalc"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP31Move2Bin" Text="Přesunout rozpracovanost do/z archivu" NavigateUrl="javascript:p31_move2bin();" ImageUrl="Images/bin.png" meta:resourcekey="cmdP31Move2Bin"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP31MoveToOtherProject" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project();" ImageUrl="Images/cut.png" meta:resourcekey="cmdP31MoveToOtherProject"></telerik:RadMenuItem>
