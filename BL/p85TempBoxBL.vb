@@ -24,7 +24,7 @@
     Function SaveObjectReflection2Temp(strGUID As String, cRec As Object, strRecPrefix As String) As Boolean
     Function RunTailoredProcedure(strGUID As String, strProcName As String) As String
     Function RunTailoredProcedure(intRecordPID As Integer, strProcName As String) As Boolean
-    
+    Sub Recovery_ClearCompleteTemp()
 End Interface
 Class p85TempBoxBL
     Inherits BLMother
@@ -100,4 +100,8 @@ Class p85TempBoxBL
     Public Overloads Function RunTailoredProcedure(intRecordPID As Integer, strProcName As String) As Boolean Implements Ip85TempBoxBL.RunTailoredProcedure
         Return _cDL.RunTailoredProcedure(intRecordPID, strProcName)
     End Function
+
+    Public Sub Recovery_ClearCompleteTemp() Implements Ip85TempBoxBL.Recovery_ClearCompleteTemp
+        _cDL.Recovery_ClearCompleteTemp()
+    End Sub
 End Class

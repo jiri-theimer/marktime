@@ -25,6 +25,10 @@
                 Handle_CnbKurzy()
             End If
 
+            If Now > Today.AddHours(3) And Now < Today.AddHours(4) Then
+                'mezi třetí a čtvrtou hodinou ráno vyčistit temp tabulky
+                _Factory.p85TempBoxBL.Recovery_ClearCompleteTemp()
+            End If
 
             log4net.LogManager.GetLogger("robotlog").Info("End")
 

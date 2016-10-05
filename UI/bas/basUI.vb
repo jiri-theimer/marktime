@@ -219,10 +219,11 @@ Public Class basUI
 
     Private Shared Function DetectBrowser(r As HttpRequest) As String
         If r.UserAgent.IndexOf("Edge/") > 0 Then
-            Return "Edge"
+            Return "Edge | " & r.UserAgent
         End If
         With r.Browser
-            Return .Browser & " | " & .Type & ", version " & .Version & ", platform " & .Platform & ", Supports Frames = " & .Frames & ", Supports Cookies = " & .Cookies
+            'Return .Browser & " | " & .Type & ", version " & .Version & " | " & r.Browser.Browser
+            Return .Browser & "/" & .Type & " | " & r.UserAgent
         End With
         ''Dim s As String = ""
         ''With r.Browser

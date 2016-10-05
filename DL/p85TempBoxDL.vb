@@ -191,4 +191,8 @@ Public Class p85TempBoxDL
             Return False
         End If
     End Function
+
+    Public Sub Recovery_ClearCompleteTemp()
+        _cDB.RunSQL("exec dbo.recovery_clear_temp")
+    End Sub
 End Class
