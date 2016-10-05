@@ -358,7 +358,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.SazbaDPH, "p31VatRate_Orig", BO.cfENUM.Numeric0))
             .Add(AGC(My.Resources.common.Mena, "j27Code_Billing_Orig", , , "j27billing_orig.j27Code"))
 
-            .Add(AGC(My.Resources.common.NavrhFakturacnihoStatusu, "approve_p72Name", , , "p72approve.j72Name"))
+            .Add(AGC(My.Resources.common.NavrhFakturacnihoStatusu, "approve_p72Name", , , "p72approve.p72Name"))
             .Add(AGC(My.Resources.common.SchvalenaHodnota, "p31Value_Approved_Billing", BO.cfENUM.Numeric2, , , True))
             .Add(AGC(My.Resources.common.SchvaleneHodiny, "p31Hours_Approved_Billing", BO.cfENUM.Numeric2, , , True))
             .Add(AGC(My.Resources.common.SchvalenoHHMM, "p31HHMM_Approved_Billing"))

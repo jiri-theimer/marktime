@@ -176,6 +176,15 @@ Partial Public Class mobile_p28_framework
     Protected WithEvents imgDraft As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
+    '''trP51 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trP51 As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
     '''PriceList_Billing control.
     '''</summary>
     '''<remarks>

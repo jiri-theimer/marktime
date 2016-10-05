@@ -17,6 +17,7 @@
     Sub ClearSelectedProjectRole(intX67ID As Integer, intP41ID As Integer)
     Function ConvertFromDraft(intPID As Integer) As Boolean
     Function HasChildRecords(intPID As Integer) As Boolean
+    Function GetTopProjectsByWorksheetEntry(intJ02ID As Integer, intGetTopRecs As Integer) As List(Of Integer)
 End Interface
 Class p41ProjectBL
     Inherits BLMother
@@ -279,5 +280,9 @@ Class p41ProjectBL
     End Function
     Public Function HasChildRecords(intPID As Integer) As Boolean Implements Ip41ProjectBL.HasChildRecords
         Return _cDL.HasChildRecords(intPID)
+    End Function
+
+    Public Function GetTopProjectsByWorksheetEntry(intJ02ID As Integer, intGetTopRecs As Integer) As List(Of Integer) Implements Ip41ProjectBL.GetTopProjectsByWorksheetEntry
+        Return _cDL.GetTopProjectsByWorksheetEntry(intJ02ID, intGetTopRecs)
     End Function
 End Class

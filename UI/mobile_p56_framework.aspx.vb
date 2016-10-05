@@ -48,13 +48,14 @@
 
         Dim cClient As BO.p28Contact = Nothing
         With cRec
+            Me.p56Code.Text = .p56Code
             Me.RecordHeader.Text = BO.BAS.OM3(.p57Name & ": " & .p56Code, 30)
             Me.RecordHeader.NavigateUrl = "mobile_p56_framework.aspx?pid=" & .PID.ToString
             Me.RecordName.Text = .p56Name
-            Me.cmdP31Grid.NavigateUrl = "mobile_grid.aspx?prefix=p31&masterprefix=p56&masterpid=" & .PID.ToString
+            Me.cmdP31Grid.NavigateUrl = "mobile_grid.aspx?source=task&prefix=p31&masterprefix=p56&masterpid=" & .PID.ToString
             Me.Project.NavigateUrl = "mobile_p41_framework.aspx?pid=" & .p41ID.ToString
             Me.Project.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ID)
-            
+
             Me.p57Name.Text = .p57Name
 
             If .b02ID > 0 Then
@@ -67,7 +68,7 @@
             Me.Owner.Text = .Owner
             Me.Timestamp.Text = .Timestamp
             Me.p56Description.Text = BO.BAS.CrLfText2Html(.p56Description)
-            
+
         End With
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, cRec.PID)

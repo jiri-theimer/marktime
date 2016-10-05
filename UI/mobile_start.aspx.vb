@@ -15,7 +15,7 @@
                 .Add("p28_framework_detail-pid")
                 .Add("p91_framework_detail-pid")
             End With
-
+            Master.MenuPrefix = "home"
             With Master.Factory
                 .j03UserBL.InhaleUserParams(lisPars)
 
@@ -36,9 +36,11 @@
                         linkLastInvoice.Text = "<img src='Images/invoice.png' /> " & .GetRecordCaption(BO.x29IdEnum.p91Invoice, intPID)
                     End If
                 End If
-                
-            End With
 
+            End With
+            If Request.Item("w") <> "" And Request.Item("h") <> "" Then
+                basUI.Write2AccessLog(Master.Factory, True, Request, Request.Item("w"), Request.Item("h"))
+            End If
         End If
     End Sub
 

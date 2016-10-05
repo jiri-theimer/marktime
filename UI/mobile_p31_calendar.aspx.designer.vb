@@ -11,77 +11,71 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Mobile
+Partial Public Class mobile_p31_calendar
 
     '''<summary>
-    '''title1 control.
+    '''cal1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents title1 As Global.System.Web.UI.HtmlControls.HtmlTitle
+    Protected WithEvents cal1 As Global.UI.timesheet_calendar
 
     '''<summary>
-    '''head control.
+    '''lblCurDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents head As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents lblCurDate As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''RadScriptManager1 control.
+    '''rp1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents RadScriptManager1 As Global.Telerik.Web.UI.RadScriptManager
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''notify1 control.
+    '''Hours_All control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents notify1 As Global.Telerik.Web.UI.RadNotification
+    Protected WithEvents Hours_All As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''linkMyProfile control.
+    '''list1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents linkMyProfile As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents list1 As Global.UI.mobile_p31_list
 
     '''<summary>
-    '''MainContent control.
+    '''hidCurDate control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents MainContent As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents hidCurDate As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidDataPID control.
+    '''Master property.
     '''</summary>
     '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
+    '''Auto-generated property.
     '''</remarks>
-    Protected WithEvents hidDataPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidMenuPrefix control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidMenuPrefix As Global.System.Web.UI.WebControls.HiddenField
+    Public Shadows ReadOnly Property Master() As UI.Mobile
+        Get
+            Return CType(MyBase.Master, UI.Mobile)
+        End Get
+    End Property
 End Class

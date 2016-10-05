@@ -43,7 +43,7 @@
         If Master.DataPID = 0 Then Return
 
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
-        Handle_Permissions(cRec)
+
         Dim cClient As BO.p28Contact = Nothing
         With cRec
             Me.RecordHeader.Text = BO.BAS.OM3(.p41Name, 30)
@@ -60,20 +60,25 @@
             End If
             Me.p42Name.Text = .p42Name
 
-            If .p51ID_Billing > 0 Then
-                If .p51Name_Billing.IndexOf(cRec.p41Name) >= 0 Then
-                    'sazby na míru
-                    Me.PriceList_Billing.Text = "Tento projekt má sazby na míru"
+            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                If .p51ID_Billing > 0 Then
+                    If .p51Name_Billing.IndexOf(cRec.p41Name) >= 0 Then
+                        'sazby na míru
+                        Me.PriceList_Billing.Text = "Tento projekt má sazby na míru"
+                    End If
+                Else
+                    If Not cClient Is Nothing Then
+                        With cClient
+                            If .p51ID_Billing > 0 Then
+                                Me.PriceList_Billing.Text = .p51Name_Billing & " (dědí se z klienta)"
+                            End If
+                        End With
+                    End If
                 End If
             Else
-                If Not cClient Is Nothing Then
-                    With cClient
-                        If .p51ID_Billing > 0 Then
-                            Me.PriceList_Billing.Text = .p51Name_Billing & " (dědí se z klienta)"
-                        End If
-                    End With
-                End If
+                trP51.Visible = False
             End If
+            
             If .b02ID > 0 Then
                 Me.b02Name.Text = .b02Name
             Else
@@ -144,6 +149,9 @@
             boxX18.Visible = False
         End If
         RefreshP31Summary()
+
+
+        Handle_Permissions(cRec)
     End Sub
 
     Private Sub RefreshBillingLanguage(cRec As BO.p41Project, cClient As BO.p28Contact)
@@ -204,7 +212,6 @@
         End If
         With Master.Factory.SysUser
             If Not .j04IsMenu_Invoice Then lisP91.Visible = False
-
         End With
 
     End Sub

@@ -87,7 +87,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="b01WorkflowTemplateBL.vb" />
+    <Compile Include="Mother\b01WorkflowTemplateBL.vb" />
     <Compile Include="b02WorkflowStatusBL.vb" />
     <Compile Include="b05Workflow_HistoryBL.vb" />
     <Compile Include="b06WorkflowStepBL.vb" />

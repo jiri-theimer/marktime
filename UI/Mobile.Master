@@ -207,7 +207,7 @@
             window.open("help.aspx?page=" + page, "_blank");
         }
 
-
+        
 
     </script>
 
@@ -227,7 +227,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="Mobile/default.aspx" class="navbar-brand"><img src="Images/logo_metro.png" border="0"  /></a>
+                <a href="mobile_start.aspx" class="navbar-brand"><img src="Images/logo_metro.png" border="0"  /></a>
                 <input id="search1"  class="navbar-brand" placeholder="Najít projekt..." style="border:none;background-color:transparent;font-size:100%;" />
                
                 
@@ -236,30 +236,29 @@
                 
                 <ul class="nav navbar-nav"> 
                     
-                    <li><a href="mobile_start.aspx">ÚVOD</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "home", "class='active'", "")%>><a href="mobile_start.aspx">ÚVOD</a></li>
                 
                 
                                        
-                    <li  <%=IIf(Me.MenuPrefix = "p31", "class='active'", "")%>><a href="p31_framework_mobile.aspx">WORKSHEET</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "p31", "class='active'", "")%>><a href="mobile_p31_calendar.aspx">WORKSHEET</a></li>
                     <%If _Factory.SysUser.j04IsMenu_Project Then%>
-                    <li><a href="mobile_grid.aspx?prefix=p41">PROJEKTY</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "p41", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p41">PROJEKTY</a></li>
                     <%End If%>
                     <%If _Factory.SysUser.j04IsMenu_Contact Then%>
-                    <li><a href="mobile_grid.aspx?prefix=p28">KLIENTI</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "p28", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p28">KLIENTI</a></li>
                     <%End If%>
                     <%If _Factory.SysUser.j04IsMenu_Invoice Then%>
-                    <li><a href="mobile_grid.aspx?prefix=p91">FAKTURY</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "p91", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p91">FAKTURY</a></li>
                     <%End If%>
                     
-                    <li><a href="mobile_grid.aspx?prefix=p56">ÚKOLY</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "p56", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p56">ÚKOLY</a></li>
                     <%If _Factory.SysUser.j04IsMenu_Report Then%>
-                    <li><a href="mobile_report.aspx">SESTAVY</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "report", "class='active'", "")%>><a href="mobile_report.aspx">SESTAVY</a></li>
                     <%End If%>
-                    <li>
-                        <asp:Label ID="miUser" runat="server"></asp:Label>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "myprofile", "class='active'", "")%>>
+                        <asp:HyperLink ID="linkMyProfile" runat="server" NavigateUrl="mobile_myprofile.aspx"></asp:HyperLink>
                     </li>
                     
-                    <li><a href="mobile_myprofile.aspx">MůJ PROFIL</a></li>
                     <li><a href="mobile_changepassword.aspx">ZMĚNIT HESLO</a></li>
                     <li class="divider" role="separator"></li>
                     <li><a href="Account/Login.aspx?logout=1&mobile=1">ODHLÁSIT SE</a></li>

@@ -98,7 +98,7 @@
                                 <asp:Image ID="imgDraft" runat="server" ImageUrl="Images/draft_icon.gif" Visible="false" AlternateText="DRAFT záznam" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="trP51" runat="server">
                             <td>
                                 <span>Fakturační ceník:</span>
                             </td>

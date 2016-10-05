@@ -9,6 +9,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
+                .MenuPrefix = "myprofile"
                 With .Factory.SysUser
                     lblUser.Text = .Person
                     Me.j03Login.Text = .j03Login
@@ -23,7 +24,7 @@
                     Me.j02Email.Text = cJ02.j02Email
                     Me.Teams.Text = .Factory.j02PersonBL.GetTeamsInLine(cJ02.PID)
                 End If
-
+                
 
             End With
         End If

@@ -15,7 +15,7 @@
     </div>
 
     <telerik:RadCalendar ID="cal1" ShowRowHeaders="false" ShowColumnHeaders="true" ShowDayCellToolTips="false" runat="server" AutoPostBack="true"
-        RenderMode="Lightweight" Skin="Metro" EnableMultiSelect="false"
+        RenderMode="Auto" Skin="Metro" EnableMultiSelect="false"
         EnableNavigationAnimation="false" EnableRepeatableDaysOnClient="false"
         EnableMonthYearFastNavigation="false" EnableNavigation="true" Width="300px">
 

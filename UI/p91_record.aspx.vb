@@ -173,7 +173,7 @@
         End If
         Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(intP28ID), cA As BO.o38Address = Master.Factory.o38AddressBL.Load(intO38ID)
         With cRec
-            Me.p91Client.Text = .p28CompanyName
+            Me.p91Client.Text = IIf(.p28CompanyName = "", .p28Name, .p28CompanyName)
             Me.p91Client_VatID.Text = .p28VatID
             Me.p91Client_RegID.Text = .p28RegID
         End With

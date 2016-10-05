@@ -534,4 +534,9 @@
             Return False
         End If
     End Function
+
+    Public Function GetTopProjectsByWorksheetEntry(intJ02ID As Integer, intGetTopRecs As Integer) As List(Of Integer)
+        Dim s As String = "SELECT TOP " & intGetTopRecs.ToString & " p41ID as Value FROM view_LastWorksheetDateOfPerson WHERE j02ID=@j02id ORDER BY LastDate DESC"
+        Return _cDB.GetList(Of BO.GetInteger)(s, New With {.j02id = intJ02ID}).Select(Function(p) p.Value).ToList
+    End Function
 End Class

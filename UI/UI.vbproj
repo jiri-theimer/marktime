@@ -203,9 +203,13 @@
     <Content Include="m62_import_setting.aspx" />
     <Content Include="mobile_changepassword.aspx" />
     <Content Include="mobile_grid.aspx" />
+    <Content Include="mobile_j02_framework.aspx" />
     <Content Include="mobile_myprofile.aspx" />
     <Content Include="mobile_o23_framework.aspx" />
     <Content Include="mobile_p28_framework.aspx" />
+    <Content Include="mobile_p31_calendar.aspx" />
+    <Content Include="mobile_p31_framework.aspx" />
+    <Content Include="mobile_p31_list.ascx" />
     <Content Include="mobile_p41_framework.aspx" />
     <Content Include="mobile_p56_framework.aspx" />
     <Content Include="mobile_p91_framework.aspx" />
@@ -306,7 +310,6 @@
     <Content Include="kurzy_cnb.aspx" />
     <Content Include="m62_record.aspx" />
     <Content Include="Mobile\default.aspx" />
-    <Content Include="p31_framework_mobile.aspx" />
     <Content Include="p28_batch.aspx" />
     <Content Include="p28_import_xls.aspx" />
     <Content Include="p30_binding.aspx" />
@@ -819,6 +822,13 @@
       <DependentUpon>mobile_grid.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="mobile_j02_framework.aspx.designer.vb">
+      <DependentUpon>mobile_j02_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_j02_framework.aspx.vb">
+      <DependentUpon>mobile_j02_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="mobile_myprofile.aspx.designer.vb">
       <DependentUpon>mobile_myprofile.aspx</DependentUpon>
     </Compile>
@@ -839,6 +849,27 @@
     <Compile Include="mobile_p28_framework.aspx.vb">
       <DependentUpon>mobile_p28_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_p31_calendar.aspx.designer.vb">
+      <DependentUpon>mobile_p31_calendar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_p31_calendar.aspx.vb">
+      <DependentUpon>mobile_p31_calendar.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_p31_framework.aspx.designer.vb">
+      <DependentUpon>mobile_p31_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_p31_framework.aspx.vb">
+      <DependentUpon>mobile_p31_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_p31_list.ascx.designer.vb">
+      <DependentUpon>mobile_p31_list.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_p31_list.ascx.vb">
+      <DependentUpon>mobile_p31_list.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="mobile_p41_framework.aspx.designer.vb">
       <DependentUpon>mobile_p41_framework.aspx</DependentUpon>
@@ -1596,13 +1627,6 @@
     </Compile>
     <Compile Include="Mobile.Master.vb">
       <DependentUpon>Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="p31_framework_mobile.aspx.designer.vb">
-      <DependentUpon>p31_framework_mobile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p31_framework_mobile.aspx.vb">
-      <DependentUpon>p31_framework_mobile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p28_batch.aspx.designer.vb">

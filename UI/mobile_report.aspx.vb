@@ -37,6 +37,7 @@ Public Class mobile_report
             End If
 
             With Master
+                .MenuPrefix = "report"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .DataPID <> 0 Then
                     With Me.MasterRecord
@@ -45,7 +46,6 @@ Public Class mobile_report
                         .Visible = True
                     End With
                 End If
-                .MenuPrefix = Me.CurrentPrefix
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("periodcombo-custom_query")

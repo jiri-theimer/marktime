@@ -139,22 +139,22 @@
                 ph1.Text = "Návrhář filtrů nad worksheet přehledem"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
-                lis.Add(New myItem(BO.x29IdEnum.p34ActivityGroup, "p34id", "Sešit"))
+                lis.Add(New myItem(BO.x29IdEnum.p34ActivityGroup, "p32.p34id", "Sešit"))
                 lis.Add(New myItem(BO.x29IdEnum.p32Activity, "p32id", "Aktivita"))
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id", "Osoba"))
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "a.j02ID_ContactPerson", "Kontaktní osoba"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID_Supplier", "Dodavatel"))
                 lis.Add(New myItem(BO.x29IdEnum.p71ApproveStatus, "p71id", "Schvalování"))
-                lis.Add(New myItem(BO.x29IdEnum.p72PreBillingStatus, "p72id", "Návrh fakturace po schvalování"))
+                lis.Add(New myItem(BO.x29IdEnum.p72PreBillingStatus, "p72ID_AfterApprove", "Návrh fakturace po schvalování"))
                 lis.Add(New myItem(BO.x29IdEnum.p70BillingStatus, "p70id", "Fakturace"))
                 lis.Add(New myItem(BO.x29IdEnum.j27Currency, "j27ID_Billing_Orig", "Měna úkonu"))
-                lis.Add(New myItem(BO.x29IdEnum.p95InvoiceRow, "p95id", "Fakturační oddíl"))
+                lis.Add(New myItem(BO.x29IdEnum.p95InvoiceRow, "p32.p95id", "Fakturační oddíl"))
         End Select
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
 
-        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True)
+        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField)
         For Each cField In lisFF
             lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Field, cField.x28Name))
         Next

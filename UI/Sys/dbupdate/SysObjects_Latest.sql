@@ -10114,7 +10114,7 @@ update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id
 ,p91userupdate=@login,p91dateupdate=getdate()
 ,p91Text1=@p91text1
 ,p91Datep31_From=@p91datep31_from,p91Datep31_Until=@p91datep31_until,j19id=@j19id
-,p91Client=b.p28CompanyName,p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
+,p91Client=isnull(b.p28CompanyName,b.p28Name),p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
 ,p91ClientAddress1_City=o38prim.o38City,p91ClientAddress1_Street=o38prim.o38Street,p91ClientAddress1_ZIP=o38prim.o38ZIP,p91ClientAddress1_Country=o38prim.o38Country
 ,p91ClientAddress2=isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,'')
 FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID
@@ -10312,7 +10312,7 @@ where p91id=@p91id_bind
 
 SELECT @ret_p91id=@@IDENTITY
 
-update a set p91Client=b.p28CompanyName,p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
+update a set p91Client=isnull(b.p28CompanyName,b.p28Name),p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
 ,p91ClientAddress1_City=o38prim.o38City,p91ClientAddress1_Street=o38prim.o38Street,p91ClientAddress1_ZIP=o38prim.o38ZIP,p91ClientAddress1_Country=o38prim.o38Country
 ,p91ClientAddress2=isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,'')
 FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID
@@ -12584,6 +12584,25 @@ VALUES(@x29id,@pid,@j03id_sys,getdate(),@flag,@j02id_sys,@validfrom,@validuntil)
 
 
 
+
+
+GO
+
+----------V---------------view_LastWorksheetDateOfPerson-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_LastWorksheetDateOfPerson') and type = 'V')
+ drop view view_LastWorksheetDateOfPerson
+GO
+
+
+
+
+CREATE VIEW [dbo].[view_LastWorksheetDateOfPerson]
+as
+select a.p41ID,a.j02ID,MAX(a.p31Date) as LastDate
+from
+p31WorkSheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID
+GROUP BY a.p41ID,a.j02ID
 
 
 GO

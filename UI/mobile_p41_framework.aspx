@@ -32,12 +32,12 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbarOnSite">
                 <ul class="nav navbar-nav">                   
-                    <li><a href="mobile_p31_framework.aspx?p41id=<%=Master.DataPID%>">Zapsat worksheet</a></li>
+                    <li><a href="mobile_p31_framework.aspx?source=project&p41id=<%=Master.DataPID%>">Zapsat worksheet</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="mobile_report.aspx?prefix=p41&pid=<%=Master.DataPID%>">Sestava</a></li>
                     <li role="separator" class="divider"></li>
                     
-                    <li><a href="default.aspx">Vytvořit úkol</a></li>
+                    
 
                    
                     
@@ -113,7 +113,7 @@
                                 <asp:Image ID="imgDraft" runat="server" ImageUrl="Images/draft_icon.gif" Visible="false" AlternateText="DRAFT záznam" />
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="trP51" runat="server">
                             <td>
                                 <span>Fakturační ceník:</span>
                             </td>
@@ -134,7 +134,8 @@
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/worksheet.png" />
-                        <asp:HyperLink ID="cmdP31Grid" runat="server" Text="Worksheet přehled" CssClass="alinked"></asp:HyperLink>                        
+                        <asp:HyperLink ID="cmdP31Grid" runat="server" Text="Worksheet přehled" CssClass="alinked"></asp:HyperLink>      
+                        <a href="mobile_p31_framework.aspx?source=project&p41id=<%=Master.DataPID%>" class="alinked" style="float:right;">Nový</a>                  
                         <asp:RadioButtonList id="opgWorksheetState" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
                             <asp:ListItem Text="Čeká na fakturaci" Value="1" Selected="true" class="radio-inline"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturováno" Value="2" class="radio-inline"></asp:ListItem>

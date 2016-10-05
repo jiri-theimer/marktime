@@ -57,21 +57,12 @@
     End Sub
 
     Private Sub PersonalizeMenu()
-        ''miUser.Text = "<span class='glyphicon glyphicon-user'></span>"
-        ''With _Factory.SysUser
-        ''    If .Person = "" Then
-        ''        miUser.Text += .j03Login
-        ''    Else
-        ''        miUser.Text += .Person
-        ''    End If
-        ''    miUser.Text += "<span class='caret'></span>"
-        ''End With
-        miUser.Text = "<span class='glyphicon glyphicon-user'></span>"
+       
         With _Factory.SysUser
             If .Person = "" Then
-                miUser.Text = .j03Login
+                linkMyProfile.Text = .j03Login
             Else
-                miUser.Text = .Person
+                linkMyProfile.Text = .Person
             End If
         End With
     End Sub

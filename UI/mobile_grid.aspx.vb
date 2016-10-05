@@ -62,6 +62,7 @@
         If Not Page.IsPostBack Then
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
+                
             End If
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")

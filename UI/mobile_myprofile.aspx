@@ -2,13 +2,25 @@
 <%@ MasterType VirtualPath="~/Mobile.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            document.getElementById("resolution").innerText = screen.width + "x" + screen.height;
+
+        });
+       
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="page-header">
         <h3>
             <asp:Label ID="lblUser" runat="server"></asp:Label><small>, MARKTIME profil</small>
         </h3>
-
+        <div>
+            <span>Displej:</span>
+            <span id="resolution"></span>
+        </div>
     </div>
      <div class="container-fluid">
         <div id="row1" class="row">
@@ -82,5 +94,5 @@
 
         </div>
     </div>
-
+    
 </asp:Content>

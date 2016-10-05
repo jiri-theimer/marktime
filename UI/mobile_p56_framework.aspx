@@ -148,7 +148,7 @@
                     <div class="caption">
                         <img src="Images/worksheet.png" />
                         <asp:HyperLink ID="cmdP31Grid" runat="server" Text="Worksheet přehled" CssClass="alinked"></asp:HyperLink>
-
+                        <a href="mobile_p31_framework.aspx?source=task&p56id=<%=Master.DataPID%>" class="alinked" style="float:right;">Nový</a>                  
                     </div>
 
                     <table cellpadding="6" class="table table-hover">

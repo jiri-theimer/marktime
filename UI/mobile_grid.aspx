@@ -17,7 +17,7 @@
             //nic
         }
         function re(pid) {
-            location.replace("mobile_<%=me.currentprefix%>_framework.aspx?pid=" + pid);
+            location.replace("mobile_<%=me.currentprefix%>_framework.aspx?source=mobile_grid&pid=" + pid);
         }
     </script>
 </asp:Content>

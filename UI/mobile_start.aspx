@@ -3,6 +3,9 @@
 <%@ MasterType VirtualPath="~/Mobile.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+       
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -15,7 +18,7 @@
                 <asp:Label ID="lblWelcome" runat="server"></asp:Label><small>,vítejte v MARKTIME!</small>
             </h3>
             <li>
-                <a href="mobile_grid.aspx?prefix=p31">
+                <a href="mobile_p31_calendar.aspx">
                     <img src="Images/worksheet.png" />
                     Worksheet</a>
             </li>

@@ -42,7 +42,6 @@
         If Master.DataPID = 0 Then Return
 
         Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
-        Handle_Permissions(cRec)
         With cRec
             Me.RecordHeader.Text = BO.BAS.OM3(.p28Name, 30)
             Me.RecordHeader.NavigateUrl = "mobile_p28_framework.aspx?pid=" & .PID.ToString
@@ -54,15 +53,19 @@
                 Me.p29Name.Text = .p29Name
             End If
             Me.imgDraft.Visible = .p28IsDraft
-
-            If .p51ID_Billing > 0 Then
-                If .p51Name_Billing.IndexOf(cRec.p28Name) >= 0 Then
-                    'sazby na míru
-                    Me.PriceList_Billing.Text = "Sazby na míru"
-                Else
-                    Me.PriceList_Billing.Text = .p51Name_Billing
+            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                If .p51ID_Billing > 0 Then
+                    If .p51Name_Billing.IndexOf(cRec.p28Name) >= 0 Then
+                        'sazby na míru
+                        Me.PriceList_Billing.Text = "Sazby na míru"
+                    Else
+                        Me.PriceList_Billing.Text = .p51Name_Billing
+                    End If
                 End If
+            Else
+                trP51.Visible = False
             End If
+
             If .b02ID > 0 Then
                 Me.b02Name.Text = .b02Name
                 trB02.Visible = True
@@ -156,6 +159,8 @@
             Me.CountP56_Actual.Text = lisP56.Where(Function(p) p.IsClosed = False).Count.ToString
             Me.CountP56_Closed.Text = lisP56.Where(Function(p) p.IsClosed = True).Count.ToString
         End If
+
+        Handle_Permissions(cRec)
     End Sub
 
     Private Sub RefreshP31Summary()
@@ -193,7 +198,6 @@
         End If
         With Master.Factory.SysUser
             If Not .j04IsMenu_Invoice Then lisP91.Visible = False
-
         End With
 
     End Sub
