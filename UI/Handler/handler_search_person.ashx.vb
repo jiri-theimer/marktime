@@ -21,7 +21,8 @@ Public Class handler_search_person
         Dim strFilterString As String = context.Request.Item("term")
 
         Dim mq As New BO.myQueryJ02
-        mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
+        ''mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
+        mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
         mq.SearchExpression = strFilterString
         mq.Closed = BO.BooleanQueryMode.NoQuery
 
@@ -32,7 +33,13 @@ Public Class handler_search_person
         For Each cJ02 In lisJ02
             Dim c As New NameValue
             With cJ02
-                c.Project = .FullNameDesc & " [" & .j07Name & "]"
+                c.Project = .FullNameDesc
+                If cJ02.j02IsIntraPerson Then
+                    If .j07ID <> 0 Then c.Project += " [" & .j07Name & "]"
+                Else
+                    If .j02Email <> "" Then c.Project += " [" & cJ02.j02Email & "]"
+                    c.Project = "<i>" & c.Project & "</i>"
+                End If
 
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"

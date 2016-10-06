@@ -462,6 +462,7 @@ Public Class entity_framework
             .MG_GridSqlColumns = Me.hidCols.Value
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidAdditionalFrom.Value
+            .SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
             .Closed = BO.BooleanQueryMode.NoQuery
             Select Case Me.CurrentMasterPrefix
                 Case "p41" : .p41ID = Me.CurrentMasterPID

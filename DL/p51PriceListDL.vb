@@ -89,14 +89,15 @@
         Dim strW As String = bas.ParseWhereMultiPIDs("a.p51ID", myQuery), pars As New DbParameters
         strW += bas.ParseWhereValidity("p51", "a", myQuery)
         If Not myQuery Is Nothing Then
-            If myQuery.SearchExpression <> "" Then
+            If Not String.IsNullOrEmpty(myQuery.SearchExpression) Then
                 strW += " AND (a.p51Name like '%'+@expr+'%' OR a.p51Code LIKE '%'+@expr+'%')"
                 pars.Add("expr", myQuery.SearchExpression, DbType.String)
             End If
+            If Not String.IsNullOrEmpty(myQuery.ColumnFilteringExpression) Then
+                strW += " AND " & myQuery.ColumnFilteringExpression.Replace("p51", "[a.p51").Replace("[", "").Replace("]", "")
+            End If
         End If
-        If myQuery.ColumnFilteringExpression <> "" Then
-            strW += " AND " & myQuery.ColumnFilteringExpression.Replace("p51", "[a.p51").Replace("[", "").Replace("]", "")
-        End If
+        
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
         s += " ORDER BY a.p51IsMasterPriceList,a.p51Ordinary,a.p51Name"

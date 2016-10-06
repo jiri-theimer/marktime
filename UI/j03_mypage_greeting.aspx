@@ -123,14 +123,38 @@
                                 <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
                             </Items>
                         </telerik:RadPanelItem>
+                        
                     </Items>
 
                 </telerik:RadPanelBar>
             </div>
+            <asp:panel ID="panSearch" runat="server" CssClass="content-box1">
+                <div class="title">
+                    <img src="Images/search.png" />
+                </div>
+                <div class="content">
+                    <asp:panel ID="panSearch_p28" runat="server" Visible="false">
+                    <img src="Images/contact.png" />
+                    <input id="search_p28" style="width: 200px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít klienta...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_p91" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/invoice.png"" />
+                    <input id="search_p91" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít fakturu...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_p56" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/task.png" />
+                    <input id="search_p56" style="width: 200px; margin-top: 7px;" value="Najít úkol..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít úkol...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_j02" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/person.png" />
+                    <input id="search_j02" style="width: 200px; margin-top: 7px;" value="Najít osobu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít osobu...')" />
+                    </asp:panel>
+                </div>
+            </asp:panel>
             <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/task.png" alt="Úkol" />
-                    Blízké úkoly (otevřené) s termínem (+-1 den)
+                    Blízké úkoly (otevřené) s termínem
                     <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
                 </div>
                 <div class="content">
@@ -287,5 +311,179 @@
                 
             </div>
         </div>
+
+
+
+        <script type="text/javascript">
+            <%if panSearch_p28.Visible then%>
+            $(function () {
+
+                $("#search_p28").autocomplete({
+                    source: "Handler/handler_search_contact.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("p28_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Project, item.FilterString);
+
+
+                    s = s + "</a>";
+
+                    if (item.Draft == "1")
+                        s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%end if%>
+            <%if panSearch_p91.Visible then%>
+            $(function () {
+
+                $("#search_p91").autocomplete({
+                    source: "Handler/handler_search_invoice.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("p91_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Invoice, item.FilterString);
+
+
+                    s = s + "</a>";
+
+                    if (item.Draft == "1")
+                        s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%End If%>
+            <%if panSearch_p56.Visible then%>
+            $(function () {
+
+                $("#search_p56").autocomplete({
+                    source: "Handler/handler_search_task.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("p56_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Name + " | " + item.Project, item.FilterString);
+
+
+                    s = s + "</a>";
+
+
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%End if%>
+            <%if panSearch_j02.Visible then%>
+            $(function () {
+
+                $("#search_j02").autocomplete({
+                    source: "Handler/handler_search_person.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("j02_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Project, item.FilterString);
+
+
+                    s = s + "</a>";
+
+
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%end if%>
+           
+
+            function __highlight(s, t) {
+                var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+                return s.replace(matcher, "<strong>$1</strong>");
+            }
+
+            function search2Focus(ctl) {
+               ctl.value = "";
+                ctl.style.background = "yellow";
+            }
+            function search2Blur(ctl,defaultMessage) {
+
+                ctl.style.background = "";
+                ctl.value = defaultMessage;
+            }
+           
+    </script>
 </asp:Content>
 

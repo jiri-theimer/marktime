@@ -295,13 +295,18 @@
                 Case BO.myQueryp91_SpecificQuery.AllowedForRead
                     ''strW += " AND (a.j02ID_Owner=@j02id_query"
 
-                    If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.PR_P91_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P91_Owner) Then
+                    If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P91_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P91_Owner) Then
                         'právo paušálně číst všechny faktury - není třeba skládat podmínku
                     Else
+                        Dim strJ11IDs As String = ""
+                        If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+                        Dim intIndex As Integer = BO.x53PermValEnum.PR_P91_Reader
                         strW += " AND (a.j02ID_Owner=@j02id_query OR a.p91ID IN ("
                         strW += "SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID"
-                        strW += " WHERE x67.x29ID=391 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query))"
-                        strW += "))"
+                        strW += " WHERE x67.x29ID=391 AND (x69.j02ID=@j02id_query " & strJ11IDs & "))"
+                        strW += " OR a.p41ID_First IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID INNER JOIN x68EntityRole_Permission x68 ON x67.x67ID=x68.x67ID WHERE x67.x29ID=141 AND x68.x53ID=22 AND (x69.j02ID=@j02id_query " & strJ11IDs & "))"
+                        strW += ")"
+
                     End If
             End Select
             If .ColumnFilteringExpression <> "" Then

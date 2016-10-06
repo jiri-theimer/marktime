@@ -6,6 +6,36 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        tr.trTextRow {
+            border-bottom: solid 2px gray;
+        }
+
+        .task_in_table {
+            background-color: #5bc0de;
+            color: white;
+            text-align: center;
+            white-space: pre-wrap;
+            padding: 4px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 90%;
+        }
+
+        .person_in_table {
+            background-color: green;
+            color: white;
+            text-align: center;
+            white-space: pre-wrap;
+            padding: 4px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 90%;
+        }
+    </style>
+
     <script type="text/javascript">
         function hardrefresh(flag, value) {
             if (flag == "edit") {

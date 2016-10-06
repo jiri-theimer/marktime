@@ -17,6 +17,7 @@
     Sub ClearSelectedTaskRole(intX67ID As Integer, intP56ID As Integer)
     Function InhaleRecordDisposition(cRec As BO.p56Task) As BO.p56RecordDisposition
     Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
+    Function GetTotalTasksCount() As Integer
 End Interface
 Class p56TaskBL
     Inherits BLMother
@@ -222,5 +223,8 @@ Class p56TaskBL
 
     Public Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean Implements Ip56TaskBL.UpdateImapSource
         Return _cDL.UpdateImapSource(intPID, intO43ID)
+    End Function
+    Public Function GetTotalTasksCount() As Integer Implements Ip56TaskBL.GetTotalTasksCount
+        Return _cDL.GetTotalTasksCount()
     End Function
 End Class

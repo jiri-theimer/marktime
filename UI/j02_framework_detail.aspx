@@ -62,7 +62,6 @@
             var hh = new Number;
 
             h1 = $(window).height();
-
             ss = self.document.getElementById("offsetY");
             var offset = $(ss).offset();
 
@@ -72,8 +71,9 @@
             if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
                 hh=hh-10;
             }
-            
+            <%if Me.fraSubform.Visible then%>
             document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
+            <%end If%>
         }
 
         function sw_decide(url, iconUrl, is_maximize) {

@@ -112,7 +112,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(8, "Svázané s opravným dokladem"))
                 lis.Add(New BO.OtherQueryItem(5, "Pouze DRAFT faktury"))
                 lis.Add(New BO.OtherQueryItem(6, "Pouze faktury s oficiálním číslem"))
-                lis.Add(New BO.OtherQueryItem(9, "Obsahuje částku zaokrouhlení"))
+                lis.Add(New BO.OtherQueryItem(9, "Obsahuje haléřové zaokrouhlení"))
                 lis.Add(New BO.OtherQueryItem(10, "Obsahuje základ se základní sazbou DPH"))
                 lis.Add(New BO.OtherQueryItem(11, "Obsahuje základ se sníženou sazbou DPH"))
                 lis.Add(New BO.OtherQueryItem(12, "Obsahuje základ s nulovou sazbou DPH"))

@@ -2404,7 +2404,7 @@ end
 
 set @val=@val+1		---nový kód bude o jednièku vìtší
   
-if @val<@x38ExplicitIncrementStart
+if @val<=@x38ExplicitIncrementStart
  set @val=@x38ExplicitIncrementStart
 
 
@@ -11559,16 +11559,21 @@ GO
 
 
 
-
-
-
-
 CREATE PROCEDURE [dbo].[recovery_clear_temp]
 AS
 
 
+if exists(select p85ID FROM p85TempBox)
+ begin
+  if exists(select p85ID FROM p85TempBox WHERE p85GUID LIKE 'timer%' AND  DATEDIFF(DAY,p85DateInsert,getdate())<2)
+   DELETE FROM  p85TempBox WHERE p85GUID NOT LIKE 'timer%'   
+  else
+   truncate table p85TempBox
+ end
 
-truncate table p85TempBox
+
+if exists(select p31ID FROM p31Worksheet_Temp)
+ truncate table p31Worksheet_Temp
 
 
 	
@@ -12603,6 +12608,27 @@ select a.p41ID,a.j02ID,MAX(a.p31Date) as LastDate
 from
 p31WorkSheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID
 GROUP BY a.p41ID,a.j02ID
+
+
+GO
+
+----------V---------------view_PrimaryAddress-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_PrimaryAddress') and type = 'V')
+ drop view view_PrimaryAddress
+GO
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_PrimaryAddress]
+as
+SELECT o37.p28ID,o38prim.*
+FROM o38Address o38prim INNER JOIN o37Contact_Address o37 ON o38prim.o38ID=o37.o38ID
+WHERE o37.o36ID=1
+
 
 
 GO

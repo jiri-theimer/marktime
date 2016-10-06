@@ -283,6 +283,10 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.DIC, "p28VatID", , , "a.p28VatID"))
             .Add(AGC(My.Resources.common.Typ, "p29Name"))            
             .Add(AGC("Nadřízený klient", "ParentContact", , , "p28parent.p28Name", , "LEFT OUTER JOIN p28Contact p28parent ON a.p28ParentID=p28parent.p28ID"))
+            .Add(AGC("Město", "Adress1_City", , , "pa.o38City", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
+            .Add(AGC("Ulice", "Adress1_Street", , , "pa.o38Street", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
+            .Add(AGC("PSČ", "Adress1_ZIP", , , "pa.o38ZIP", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
+            .Add(AGC("Stát", "Adress1_Country", , , "pa.o38Country", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
             .Add(AGC(My.Resources.common.Zkratka, "p28CompanyShortName", , , "a.p28CompanyShortName"))
             .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))
@@ -404,8 +408,10 @@ Class j74SavedGridColTemplateBL
         With lis
             .Add(AGC("Číslo", "p91Code"))
 
-            .Add(AGC("Klient", "p28Name"))
-            .Add(AGC("Společnost klienta", "p28CompanyName"))
+            .Add(AGC("Název klienta (vazba)", "p28Name"))
+            .Add(AGC("Firma klienta (vazba)", "p28CompanyName"))
+            .Add(AGC("Klient ve faktuře", "p91Client"))
+
             .Add(AGC("Měna", "j27Code"))
             .Add(AGC("Typ faktury", "p92Name"))
             .Add(AGC("Projekt", "p41Name"))
@@ -419,6 +425,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Celkem x Kurz", "p91Amount_TotalDue_Krat_Kurz", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Celk.dph", "p91Amount_Vat", BO.cfENUM.Numeric, , , True))
             .Add(AGC("Vč.dph", "p91Amount_WithVat", BO.cfENUM.Numeric, , , True))
+            .Add(AGC("Haléřové zaokrouhlení", "p91RoundFitAmount", BO.cfENUM.Numeric))
+            .Add(AGC("Uhrazené zálohy", "p91ProformaBilledAmount", BO.cfENUM.Numeric))
             ''.Add(AGC("Bez dph CZK", "WithoutVat_CZK", BO.cfENUM.Numeric, , , True))
             ''.Add(AGC("Bez dph EUR", "WithoutVat_EUR", BO.cfENUM.Numeric, , , True))
             ''.Add(AGC("Dluh CZK", "Debt_CZK", BO.cfENUM.Numeric, , , True))
@@ -430,7 +438,15 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Splatnost", "p91DateMaturity", BO.cfENUM.DateOnly))
             .Add(AGC("Aktuální stav", "b02Name"))
 
+
+
             .Add(AGC("Text", "p91Text1"))
+
+            .Add(AGC("Ulice klienta", "p91ClientAddress1_Street"))
+            .Add(AGC("Město klienta", "p91ClientAddress1_City"))
+            .Add(AGC("PSČ klienta", "p91ClientAddress1_ZIP"))
+            .Add(AGC("Stát klienta", "p91ClientAddress1_Country"))
+            .Add(AGC("IČ klienta", "p91Client_RegID"))
 
             .Add(AGC("Vlastník záznamu", "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
             .Add(AGC("Založeno", "p91DateInsert", BO.cfENUM.DateTime))

@@ -158,7 +158,7 @@
 
                             <telerik:RadMenuItem Value="cmdReports" Text="Tiskové sestavy | Pluginy" NavigateUrl="report_framework.aspx" ImageUrl="Images/reporting.png"></telerik:RadMenuItem>
 
-                            <telerik:RadMenuItem Value="p56" Text="Dispečink úkolů" NavigateUrl="p56_framework.aspx" ImageUrl="Images/task.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="p56" Text="Úkoly" NavigateUrl="p56_framework.aspx" ImageUrl="Images/task.png"></telerik:RadMenuItem>
 
                             
                             <telerik:RadMenuItem Value="o23" Text="Dokumenty" NavigateUrl="o23_framework.aspx" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
