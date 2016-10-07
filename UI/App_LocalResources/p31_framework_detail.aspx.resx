@@ -127,13 +127,13 @@
     <value>Fond pracovní doby:</value>
   </data>
   <data name="lblHeader.Text" xml:space="preserve">
-    <value>Worksheet kalendář pro zapisování úkonů</value>
+    <value>Zapisovat úkony</value>
   </data>
   <data name="lblHours_All.Text" xml:space="preserve">
     <value>Vykázané hodiny:</value>
   </data>
   <data name="lblHours_Billable.Text" xml:space="preserve">
-    <value>z toho fakturovatelné xx</value>
+    <value>z toho fakturovatelné:</value>
   </data>
   <data name="lblSearchProject.Text" xml:space="preserve">
     <value>Vyhledat projekt pro nový úkon...</value>

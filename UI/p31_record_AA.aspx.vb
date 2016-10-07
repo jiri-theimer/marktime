@@ -54,6 +54,11 @@
                 End If
                 approve1.HeaderText = cmdApprove.Text
             End If
+            If .IsClosed Then
+                lblLockedReasonMessage.Text = "Schválený záznam byl přesunutý do archivu."
+                cmdApprove.Visible = False
+                Master.RadToolbar.Skin = "BlackMetroTouch"
+            End If
 
             ''lblReadonlyReason.Text = .ReadOnlyMessage
 

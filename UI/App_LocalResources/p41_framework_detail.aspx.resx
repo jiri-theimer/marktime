@@ -154,7 +154,7 @@
     <value>Přiřadit k projektu kontaktní osobu</value>
   </data>
   <data name="cmdP31Move2Bin.Text" xml:space="preserve">
-    <value>Přesunout rozpracovanost do/z archivu</value>
+    <value>Přesunout nevyfakturované do/z archivu</value>
   </data>
   <data name="cmdP31MoveToOtherProject.Text" xml:space="preserve">
     <value>Přesunout rozpracovanost na jiný projekt</value>
@@ -163,7 +163,7 @@
     <value>Přepočítat sazby rozpracovaných úkonů</value>
   </data>
   <data name="cmdP40Create.Text" xml:space="preserve">
-    <value>Zapsat opakovanou odměnu/paušál/úkon</value>
+    <value>Definovat opakovanou odměnu/paušál/úkon</value>
   </data>
   <data name="cmdP48.Text" xml:space="preserve">
     <value>Operativní plán</value>

@@ -352,10 +352,10 @@
                     ''s.Append(" AND getdate() BETWEEN p41.p41ValidFrom AND p41.p41ValidUntil")   'vyloučit projekty z archivu
                     If .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForDoApprove Then
                         If .QuickQuery <> BO.myQueryP31_QuickQuery.Editing Then
-                            s.Append(" AND a.p71ID IS NULL AND a.p91ID IS NULL")
+                            s.Append(" AND a.p71ID IS NULL AND a.p91ID IS NULL AND GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil")
                         End If
                     Else
-                        s.Append(" AND a.p71ID=1 AND a.p91ID IS NULL")    'přeschválit již dříve schválený worksheet
+                        s.Append(" AND a.p71ID=1 AND a.p91ID IS NULL AND GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil")    'přeschválit již dříve schválený worksheet
                     End If
                     If .QuickQuery = BO.myQueryP31_QuickQuery._NotSpecified Then
                         s.Append(" AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil")   'nabízet pouze platné záznamy, které nejsou v archivu
@@ -403,7 +403,7 @@
                         s.Append(")")
                     End If
                 Case BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
-                    s.Append(" AND a.p71ID=1 AND a.p72ID_AfterApprove NOT IN (7) AND a.p91ID IS NULL")    'zahrnout do faktury schvalené, ale dosud nefakturované úkony
+                    s.Append(" AND a.p71ID=1 AND a.p72ID_AfterApprove NOT IN (7) AND a.p91ID IS NULL AND GETDATE() BETWEEN a.p31ValidFrom AND a.p31ValidUntil")    'zahrnout do faktury schvalené, ale dosud nefakturované úkony
                     
             End Select
             If .ColumnFilteringExpression <> "" Then

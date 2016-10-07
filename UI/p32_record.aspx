@@ -12,7 +12,8 @@
     <table cellpadding="5" cellspacing="2">
         <tr>
             <td>
-                <uc:datalabel ID="lblP34ID" runat="server" Text="Sešit:" GLX="222" IsRequired="true" meta:resourcekey="lblP34ID"></uc:datalabel>
+                
+                <asp:Label runat="server" ID="Label5" Text="Sešit:" CssClass="lblReq" meta:resourcekey="lblP34ID"></asp:Label>
             </td>
             <td>
                 <uc:datacombo ID="p34ID" runat="server" AutoPostBack="true" DataTextField="p34Name"></uc:datacombo>
@@ -24,21 +25,16 @@
 
         <tr>
             <td>
-                <uc:datalabel runat="server" ID="lblP32Name" Text="Název aktivity:" GLX="83" IsRequired="true"></uc:datalabel>
+                <asp:Label runat="server" ID="Label4" Text="Název aktivity:" CssClass="lblReq"></asp:Label>
+                
             </td>
             <td>
                 <asp:TextBox ID="p32name" runat="server" Style="width: 400px;"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <uc:datalabel runat="server" ID="Label2" Text="Index pořadí:" GLX="87"></uc:datalabel>
-            </td>
-            <td>
-
+                <asp:Label runat="server" ID="Label2" Text="Index pořadí:"></asp:Label>
                 <telerik:RadNumericTextBox ID="p32Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
+       
         <tr valign="top">
             <td>
                 <asp:Label runat="server" ID="Label3" Text="Barva:"></asp:Label>

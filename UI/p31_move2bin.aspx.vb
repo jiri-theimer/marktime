@@ -77,12 +77,14 @@
             Case "j02"
                 mq.j02ID = Master.DataPID
         End Select
-        If Me.opgDirection.SelectedValue = "1" Then
-
-            mq.QuickQuery = BO.myQueryP31_QuickQuery.Editing
-        Else
-            mq.QuickQuery = BO.myQueryP31_QuickQuery.MovedToBin
-        End If
+        Select Case Me.opgDirection.SelectedValue
+            Case "1"
+                mq.QuickQuery = BO.myQueryP31_QuickQuery.Editing
+            Case "2"
+                mq.QuickQuery = BO.myQueryP31_QuickQuery.MovedToBin
+            Case "3"
+                mq.QuickQuery = BO.myQueryP31_QuickQuery.Approved
+        End Select
 
 
         mq.DateFrom = period1.DateFrom
@@ -163,19 +165,20 @@
                 Return
             End If
             With Master.Factory.p31WorksheetBL
-                If Me.opgDirection.SelectedValue = "1" Then
-                    If .MoveToBin(pids) Then
-                        Master.CloseAndRefreshParent("p31-bin")
-                    Else
-                        Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
-                    End If
-                Else
-                    If .MoveFromBin(pids) Then
-                        Master.CloseAndRefreshParent("p31-bin")
-                    Else
-                        Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
-                    End If
-                End If
+                Select Case Me.opgDirection.SelectedValue
+                    Case "1", "3"
+                        If .MoveToBin(pids) Then
+                            Master.CloseAndRefreshParent("p31-bin")
+                        Else
+                            Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                        End If
+                    Case "2"
+                        If .MoveFromBin(pids) Then
+                            Master.CloseAndRefreshParent("p31-bin")
+                        Else
+                            Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                        End If
+                End Select               
             End With
             
         End If

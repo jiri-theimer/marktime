@@ -36,7 +36,7 @@
                 pars.Add("p92Name", .p92Name, DbType.String, , , True, "Název typu")
                 pars.Add("p92InvoiceDefaultText1", .p92InvoiceDefaultText1, DbType.String, , , True, "Výchozí fakturační text")
                 pars.Add("p92InvoiceDefaultText2", .p92InvoiceDefaultText2, DbType.String, , , True, "Výchozí technický text faktury")
-
+                pars.Add("p92Ordinary", .p92Ordinary, DbType.Int32)
                 pars.Add("p92validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p92validuntil", .ValidUntil, DbType.DateTime)
 
@@ -69,7 +69,7 @@
         strW += bas.ParseWhereValidity("p92", "a", myQuery)
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
-        s += " ORDER BY x15Ordinary"
+        s += " ORDER BY p92Ordinary,x15Ordinary"
 
         Return _cDB.GetList(Of BO.p92InvoiceType)(s)
 

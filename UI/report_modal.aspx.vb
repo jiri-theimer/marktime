@@ -120,6 +120,7 @@ Public Class report_modal
                         mq.PIDs = pids
                         Me.multiple_records.Text = String.Join("<hr>", Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.FullNameDesc))
                 End Select
+                Me.multiple_records.Text = "<b style='color:blue'>Pro tisk hromadné sestavy je k dispozici pouze PDF výstup. Klasický náhled k tisku není možný.</b><hr>" & Me.multiple_records.Text
             Else
                 RenderReport()
                 multiple_records.Visible = False

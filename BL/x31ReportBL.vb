@@ -140,7 +140,7 @@ Class x31ReportBL
             lisX31.Add(GPPS(-3, "[Worksheet -> Zapisovat přes KALENDÁŘ]", "p31_scheduler.aspx", -11))
             lisX31.Add(GPPS(-3, "[Worksheet -> Zapisovat přes DAYLINE]", "p31_timeline.aspx", -11))
 
-            lisX31.Add(GPPS(-3, "[Worksheet -> Zapisovat přes ČASOVAČ]", "p31_timer.aspx", -11))
+            lisX31.Add(GPPS(-3, "[Worksheet -> Zapisovat přes STOPKY]", "p31_timer.aspx", -11))
             lisX31.Add(GPPS(-3, "[Worksheet -> Datový přehled]", "p31_grid.aspx", -11))
             If Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
                 lisX31.Add(GPPS(-3, "[Worksheet -> PIVOT]", "p31_pivot.aspx", -11))

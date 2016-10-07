@@ -14,6 +14,8 @@
                 <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název typu faktury:"></asp:Label></td>
             <td>
                 <asp:TextBox ID="p92Name" runat="server" Style="width: 400px;"></asp:TextBox>
+                <span>Index pořadí:</span>
+                <telerik:RadNumericTextBox ID="p92Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
         <tr>

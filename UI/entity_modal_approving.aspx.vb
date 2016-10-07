@@ -468,7 +468,7 @@
         If Not bolApprovedQuery Then
             s = "a.p71ID IS NULL AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"   'rozpracovanost
         Else
-            s = "a.p71ID=1 AND a.p91ID IS NULL"         'už schválené
+            s = "a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"         'už schválené
         End If
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project

@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class p32_record
 
     '''<summary>
-    '''lblP34ID control.
+    '''Label5 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblP34ID As Global.UI.datalabel
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p34ID control.
@@ -50,13 +50,13 @@ Partial Public Class p32_record
     Protected WithEvents p32Code As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lblP32Name control.
+    '''Label4 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblP32Name As Global.UI.datalabel
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p32name control.
@@ -74,7 +74,7 @@ Partial Public Class p32_record
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.UI.datalabel
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p32Ordinary control.

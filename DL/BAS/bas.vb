@@ -606,7 +606,7 @@
     Shared Function GetQuickQuerySQL_p31(quickQueryFlag As BO.myQueryP31_QuickQuery) As String
         Select Case quickQueryFlag
             Case BO.myQueryP31_QuickQuery.Approved
-                Return "a.p71ID=1 AND a.p91ID IS NULL"
+                Return "a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"
             Case BO.myQueryP31_QuickQuery.Editing
                 Return "a.p71ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"
             Case BO.myQueryP31_QuickQuery.EditingOrApproved

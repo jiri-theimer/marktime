@@ -27,20 +27,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <table cellpadding="10">
-        <tr>
-            <td>
-                <asp:RadioButtonList ID="opgDirection" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" Font-Bold="true" CellPadding="10">
+    <div class="commandcell" >
+        <asp:RadioButtonList ID="opgDirection" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" Font-Bold="true" CellPadding="10">
                     <asp:ListItem Text="Přesunout rozpracovanost do archivu" Value="1" Selected="true"></asp:ListItem>
-                    <asp:ListItem Text="Obnovit úkony z archivu do rozpracovanosti" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Přesunout schválené do archivu" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Obnovit úkony z archivu" Value="2"></asp:ListItem>
                     
                 </asp:RadioButtonList>
-            </td>
-            <td>
-                <uc:periodcombo ID="period1" runat="server" Width="300px"></uc:periodcombo>
-            </td>
-        </tr>
-    </table>
+    </div>
+    <div class="commandcell" style="padding-top:10px;">
+        <uc:periodcombo ID="period1" runat="server" Width="300px"></uc:periodcombo>
+    </div>
+    <div style="clear:both;"></div>
 
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
 
