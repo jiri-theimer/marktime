@@ -11,43 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p42_record
-
-    '''<summary>
-    '''lblName control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblName As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p42Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p42Name As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lblX38ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblX38ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x38ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x38ID As Global.UI.datacombo
+Partial Public Class p31_drilldown
 
     '''<summary>
     '''Label1 control.
@@ -59,130 +23,166 @@ Partial Public Class p42_record
     Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x38ID_Draft control.
+    '''period1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x38ID_Draft As Global.UI.datacombo
+    Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''lblB01ID control.
+    '''clue_query control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblB01ID As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''b01ID control.
+    '''j70ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents b01ID As Global.UI.datacombo
+    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lblCode control.
+    '''cmdQuery control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblCode As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''p42Code control.
+    '''cbxPaging control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p42Code As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''p42IsDefault control.
+    '''cmdRebind control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p42IsDefault As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents cmdRebind As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''lblOrdinary control.
+    '''panelmenu control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblOrdinary As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panelmenu As Global.UI.panelmenu
 
     '''<summary>
-    '''p42Ordinary control.
+    '''panQueryByEntity control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p42Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
+    Protected WithEvents panQueryByEntity As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''ph1 control.
+    '''imgEntity control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''p34ids control.
+    '''MasterEntity control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p34ids As Global.System.Web.UI.WebControls.CheckBoxList
+    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''Label2 control.
+    '''lblJ75ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblJ75ID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''p42ArchiveFlag control.
+    '''j75ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p42ArchiveFlag As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents j75ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Label3 control.
+    '''cmdJ75 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdJ75 As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''p42ArchiveFlagP31 control.
+    '''hidHardRefreshFlag control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p42ArchiveFlagP31 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidHardRefreshPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMasterPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMasterPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''cmdRefresh control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.
@@ -190,9 +190,9 @@ Partial Public Class p42_record
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.ModalDataRecord
+    Public Shadows ReadOnly Property Master() As UI.Site
         Get
-            Return CType(MyBase.Master, UI.ModalDataRecord)
+            Return CType(MyBase.Master, UI.Site)
         End Get
     End Property
 End Class

@@ -59,6 +59,7 @@
             Master.Timestamp = .Timestamp
 
             basUI.SelectDropdownlistValue(Me.p42ArchiveFlag, CInt(.p42ArchiveFlag).ToString)
+            basUI.SelectDropdownlistValue(Me.p42ArchiveFlagP31, CInt(.p42ArchiveFlagP31).ToString)
 
             Dim lis As IEnumerable(Of BO.p43ProjectType_Workload) = Master.Factory.p42ProjectTypeBL.GetList_p43(Master.DataPID)
             basUI.CheckItems(Me.p34ids, lis.Select(Function(p) p.p34ID).ToList)
@@ -94,6 +95,7 @@
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.p42ArchiveFlag = CInt(Me.p42ArchiveFlag.SelectedValue)
+            cRec.p42ArchiveFlagP31 = CInt(Me.p42ArchiveFlagP31.SelectedValue)
 
             Dim mq As New BO.myQuery
             mq.AddItemToPIDs(-1)

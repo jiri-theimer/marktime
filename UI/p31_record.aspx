@@ -180,6 +180,13 @@
                 }
 
                 <%End If%>
+                <%If panM.Visible Then%>
+                if (Number(s[0]) != 0) {
+                    $find("<%= p31Calc_PieceAmount.ClientID%>").set_value(s[0]);
+                    $find("<%= p31Calc_Pieces.ClientID%>").set_value(1);                   
+                    RecalcAmount_ByPieces();
+                }
+                <%End If%>
                 if (s[1] != "") {
                     if (self.document.getElementById("<%=p31text.ClientID%>").value == "")
                         self.document.getElementById("<%=p31text.ClientID%>").value = s[1];

@@ -625,6 +625,7 @@
         End If
         j70ID.SelectedIndex = 0
         j70Name.Text = "" : j70Name.Focus()
+        Me.opgBin.SelectedValue = "0"
 
         RefreshRecord()
     End Sub

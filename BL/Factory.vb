@@ -49,6 +49,7 @@
     Private Property _p95 As Ip95InvoiceRowBL
     Private Property _p85 As Ip85TempBoxBL
     Private Property _j74 As Ij74SavedGridColTemplateBL
+    Private Property _j75 As Ij75DrillDownTemplateBL
     Private Property _j70 As Ij70QueryTemplateBL
     Private Property _j25 As Ij25ReportCategoryBL
     Private Property _j17 As Ij17CountryBL
@@ -576,6 +577,12 @@
         Get
             If _j74 Is Nothing Then _j74 = New j74SavedGridColTemplateBL(_cUser)
             Return _j74
+        End Get
+    End Property
+    Public ReadOnly Property j75DrillDownTemplateBL As Ij75DrillDownTemplateBL
+        Get
+            If _j75 Is Nothing Then _j75 = New j75DrillDownTemplateBL(_cUser)
+            Return _j75
         End Get
     End Property
     Public ReadOnly Property j70QueryTemplateBL As Ij70QueryTemplateBL

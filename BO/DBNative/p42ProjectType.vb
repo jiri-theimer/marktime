@@ -3,6 +3,11 @@
     NoArchive_Waiting_Invoice = 1
     NoArchive_Waiting_Approve = 2
 End Enum
+Public Enum p42ArchiveFlagP31ENUM
+    EditingOnly = 1   'pouze rozpracované úkony
+    EditingOrApproved = 2 'rozpracované nebo schválené
+    NoRecords = 3           'žádné
+End Enum
 Public Class p42ProjectType
     Inherits BOMother
     Public Property b01ID As Integer
@@ -14,6 +19,7 @@ Public Class p42ProjectType
     Public Property p42Ordinary As Integer
 
     Public Property p42ArchiveFlag As p42ArchiveFlagENUM = p42ArchiveFlagENUM.NoLimit
+    Public Property p42ArchiveFlagP31 As p42ArchiveFlagP31ENUM = p42ArchiveFlagP31ENUM.EditingOrApproved
 
     Private Property _b01Name As String
     Public ReadOnly Property b01Name As String

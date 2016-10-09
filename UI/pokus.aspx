@@ -9,6 +9,12 @@
 
 
     <script type="text/javascript">
+        function dd_designer() {
+            var j75id = "";
+            
+            sw_master("drilldown_designer.aspx?x29id=102&masterprefix=j02_framework_detail&pid=" + j75id, "Images/drilldown_32.png",true);
+      
+
         function RowSelected(sender, args) {
 
             document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");
@@ -45,6 +51,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <button type="button" onclick="dd_designer()">DRILL-DOWN designer</button>
     <a href="webform2.aspx?ano=ne">webform2 - vyvolat uměle chybu</a>
 
     <asp:Button ID="cmdPokus" runat="server" Text="test" />

@@ -123,7 +123,8 @@
                             <telerik:RadMenuItem Value="cmdP31_Timer" Text="Zapisovat přes STOPKY" NavigateUrl="p31_timer.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdP31_Grid" Text="Datový přehled" NavigateUrl="p31_grid.aspx" ImageUrl="Images/grid.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdP31_Approving" Text="Schvalovat | Připravit podklady k fakturaci" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdP31_Pivot" Text="Worksheet Pivot" NavigateUrl="p31_pivot.aspx" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdP31_Pivot" Text="Worksheet PIVOT" NavigateUrl="p31_pivot.aspx" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdP31_DrillDown" Text="Worksheet DRILL-DOWN" NavigateUrl="p31_drilldown.aspx" ImageUrl="Images/drilldown.png"></telerik:RadMenuItem>
                         </Items>
 
 

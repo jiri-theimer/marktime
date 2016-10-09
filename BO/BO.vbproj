@@ -88,6 +88,8 @@
     <Compile Include="DBNative\j70QueryTemplate.vb" />
     <Compile Include="DBNative\j71QueryTemplate_Item.vb" />
     <Compile Include="DBNative\j74SavedGridColTemplate.vb" />
+    <Compile Include="DBNative\j75DrillDownTemplate.vb" />
+    <Compile Include="DBNative\j76DrillDownTemplate_Item.vb" />
     <Compile Include="DBNative\m62ExchangeRate.vb" />
     <Compile Include="DBNative\o19Milestone_NonPerson.vb" />
     <Compile Include="DBNative\o20Milestone_Receiver.vb" />

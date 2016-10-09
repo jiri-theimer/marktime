@@ -183,6 +183,7 @@
     <Content Include="blank.aspx" />
     <Content Include="clue_o24_record.aspx" />
     <Content Include="clue_p48_record.aspx" />
+    <Content Include="drilldown_designer.aspx" />
     <Content Include="entity_framework.aspx" />
     <Content Include="entity_framework_b07subform.aspx" />
     <Content Include="entity_framework_detail_setting.aspx" />
@@ -225,6 +226,7 @@
     <Content Include="o42_record.aspx" />
     <Content Include="p28_framework.aspx" />
     <Content Include="p31summary.ascx" />
+    <Content Include="p31_drilldown.aspx" />
     <Content Include="p31_framework_timer.aspx" />
     <Content Include="p31_record_split.aspx" />
     <Content Include="p31_scheduler.aspx" />
@@ -673,6 +675,13 @@
       <DependentUpon>clue_p48_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="drilldown_designer.aspx.designer.vb">
+      <DependentUpon>drilldown_designer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="drilldown_designer.aspx.vb">
+      <DependentUpon>drilldown_designer.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="entity_framework.aspx.designer.vb">
       <DependentUpon>entity_framework.aspx</DependentUpon>
     </Compile>
@@ -975,6 +984,13 @@
     <Compile Include="p31summary.ascx.vb">
       <DependentUpon>p31summary.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p31_drilldown.aspx.designer.vb">
+      <DependentUpon>p31_drilldown.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_drilldown.aspx.vb">
+      <DependentUpon>p31_drilldown.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31_framework_timer.aspx.designer.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>

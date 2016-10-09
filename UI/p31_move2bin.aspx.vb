@@ -33,6 +33,20 @@
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .Factory.j03UserBL.GetUserParam("p31_grid-period")
                 .AddToolbarButton("Uložit změny pro zaškrtlé úkony", "ok", , "Images/save.png")
+
+
+                Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+                Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
+                Select Case cP42.p42ArchiveFlagP31
+                    Case BO.p42ArchiveFlagP31ENUM.EditingOnly
+                        Me.opgDirection.Items.FindByValue("3").Enabled = False
+                    Case BO.p42ArchiveFlagP31ENUM.NoRecords
+                        Me.opgDirection.Items.FindByValue("3").Enabled = False
+                        Me.opgDirection.Items.FindByValue("1").Enabled = False
+                        Me.opgDirection.SelectedValue = "2"
+                        Master.Notify(String.Format("Typ projektu [{0}] má nastavený zákaz přesouvat úkony do archivu.", cP42.p42Name))
+                End Select
+                
             End With
 
             SetupGrid()
@@ -178,7 +192,7 @@
                         Else
                             Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
                         End If
-                End Select               
+                End Select
             End With
             
         End If

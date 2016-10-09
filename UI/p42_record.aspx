@@ -80,6 +80,17 @@
                 </asp:DropDownList>
             </td>
         </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label3" runat="server" CssClass="lbl" Text="Ochrana proti archivování úkonů v projektu:"></asp:Label></td>
+            <td>
+                <asp:DropDownList ID="p42ArchiveFlagP31" runat="server">
+                    <asp:ListItem Text="Do archivu povoleno přesouvat rozpracované úkony" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Do archivu povoleno přesouvat rozpracované nebo schválené úkony" Value="2" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Zákaz archivovat jakékoliv úkony" Value="3"></asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
     </table>
 
 
