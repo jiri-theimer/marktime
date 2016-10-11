@@ -56,6 +56,8 @@
                 pars = New DbParameters
                 pars.Add("j75ID", intJ75ID, DbType.Int32)
                 pars.Add("j76PivotSumFieldType", BO.BAS.IsNullDBKey(c.j76PivotSumFieldType), DbType.Int32)
+                pars.Add("j76Level", c.j76Level, DbType.Int32)
+                pars.Add("j76GridColumnName", c.j76GridColumnName, DbType.String)
                 pars.Add("x28ID", BO.BAS.IsNullDBKey(c.x28ID), DbType.Int32)
                 pars.Add("j76ExplicitHeader", c.j76ExplicitHeader, DbType.String)
                 pars.Add("j76Ordinary", c.j76Ordinary, DbType.Int32)

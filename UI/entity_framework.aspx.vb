@@ -712,7 +712,26 @@ Public Class entity_framework
         If Not Page.IsPostBack Then
             Dim strDefPID As String = Request.Item("pid")
             If strDefPID = "" Then
-                strDefPID = Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "_framework_detail-pid")
+                If Request.Item("eid") <> "" Then
+                    Select Case Me.CurrentPrefix
+                        Case "p56"
+                            Dim c As BO.p56Task = Master.Factory.p56TaskBL.LoadByExternalPID(Request.Item("eid"))
+                            If c Is Nothing Then
+                                Master.StopPage("External ID not found.")
+                            Else
+                                strDefPID = c.PID.ToString
+                            End If
+                        Case "p41"
+                            Dim c As BO.p41Project = Master.Factory.p41ProjectBL.LoadByExternalPID(Request.Item("eid"))
+                            If c Is Nothing Then
+                                Master.StopPage("External ID not found.")
+                            Else
+                                strDefPID = c.PID.ToString
+                            End If
+                    End Select
+                Else
+                    strDefPID = Master.Factory.j03UserBL.GetUserParam(Me.CurrentPrefix + "_framework_detail-pid")
+                End If
             End If
             If strDefPID > "" Then intSelPID = BO.BAS.IsNullInt(strDefPID)
         End If

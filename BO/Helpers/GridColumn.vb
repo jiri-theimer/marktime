@@ -20,7 +20,7 @@ Public Class GridColumn
     Public Property ColumnDBName As String
     Public Property IsShowTotals As Boolean = False
     Public Property IsAllowFiltering As Boolean = True
-
+    Public Property DrillDownDBName As String
     Public Property SqlSyntax_FROM As String
 
     Public Sub New(colX29ID As BO.x29IdEnum, strHeader As String, strName As String, Optional colType As cfENUM = cfENUM.AnyString, Optional bolSortable As Boolean = True)
@@ -48,6 +48,11 @@ Public Class GridColumn
             Else
                 Return Me.ColumnDBName & " AS " & Me.ColumnName
             End If
+        End Get
+    End Property
+    Public ReadOnly Property DrillDownSqlSyntax_Select As String
+        Get
+            Return Me.DrillDownDBName & " AS " & Me.ColumnName
         End Get
     End Property
     

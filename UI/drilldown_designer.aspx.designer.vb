@@ -77,40 +77,40 @@ Partial Public Class drilldown_designer
     Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''j75Level1 control.
+    '''tabs1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j75Level1 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
 
     '''<summary>
-    '''j75Level2 control.
+    '''j75Level control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j75Level2 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents j75Level As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''j75Level3 control.
+    '''colsSource control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j75Level3 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents colsSource As Global.Telerik.Web.UI.RadListBox
 
     '''<summary>
-    '''j75Level4 control.
+    '''colsDest control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j75Level4 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
 
     '''<summary>
     '''j75IsSystem control.
@@ -131,22 +131,76 @@ Partial Public Class drilldown_designer
     Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''colsSource control.
+    '''hidLevel1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents colsSource As Global.Telerik.Web.UI.RadListBox
+    Protected WithEvents hidLevel1 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''colsDest control.
+    '''hidLevel2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
+    Protected WithEvents hidLevel2 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidLevel3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidLevel3 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidLevel4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidLevel4 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCols1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCols1 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCols2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCols2 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCols3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCols3 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCols4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCols4 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''panRoles control.

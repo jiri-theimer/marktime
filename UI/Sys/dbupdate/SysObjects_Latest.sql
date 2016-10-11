@@ -4494,6 +4494,57 @@ delete from j74SavedGridColTemplate where j74ID=@pid
 
 GO
 
+----------P---------------j75_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j75_delete') and type = 'P')
+ drop procedure j75_delete
+GO
+
+
+
+
+
+
+
+
+
+CREATE   procedure [dbo].[j75_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--j75id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu  z tabulky j74SavedGridColTemplate
+
+
+if exists(select j75ID FROM j75DrillDownTemplate WHERE j75ID=@pid AND j75IsSystem=1)
+ set @err_ret='Výchozí drill-down šablonu nelze odstranit.'
+
+
+if isnull(@err_ret,'')<>''
+ return 
+
+DELETE FROM j76DrillDownTemplate_Item WHERE j75ID=@pid
+
+delete from j75DrillDownTemplate where j75ID=@pid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------m62_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('m62_delete') and type = 'P')

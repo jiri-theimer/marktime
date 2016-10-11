@@ -113,43 +113,75 @@
             cmdNew.Visible = True
 
             Me.CurrentIsSystem = .j75IsSystem
-            SetupCols()
-            Master.DataPID = .PID
 
-            If Not .j75Level1 Is Nothing Then
-                basUI.SelectDropdownlistValue(Me.j75Level1, CInt(.j75Level1).ToString)
-            End If
-            If Not .j75Level2 Is Nothing Then
-                basUI.SelectDropdownlistValue(Me.j75Level2, CInt(.j75Level2).ToString)
-            End If
-            If Not .j75Level3 Is Nothing Then
-                basUI.SelectDropdownlistValue(Me.j75Level3, CInt(.j75Level3).ToString)
-            End If
-            If Not .j75Level4 Is Nothing Then
-                basUI.SelectDropdownlistValue(Me.j75Level4, CInt(.j75Level4).ToString)
-            End If
-           
+            Master.DataPID = .PID
+            Me.hidLevel1.Value = BO.BAS.IsNullInt(.j75Level1)
+            Me.hidLevel2.Value = BO.BAS.IsNullInt(.j75Level2)
+            Me.hidLevel3.Value = BO.BAS.IsNullInt(.j75Level3)
+            Me.hidLevel4.Value = BO.BAS.IsNullInt(.j75Level4)
+
+
             panRoles.Visible = Not .j75IsSystem
         End With
 
-        Dim lisAllCols As List(Of BO.PivotSumField) = Master.Factory.j75DrillDownTemplateBL.ColumnsPallete()
         Dim lisJ76 As IEnumerable(Of BO.j76DrillDownTemplate_Item) = Master.Factory.j75DrillDownTemplateBL.GetList_j76(Me.CurrentJ75ID)
-        For Each c In lisJ76.Where(Function(p) p.j76PivotSumFieldType > 0)
-            Dim col As BO.PivotSumField = lisAllCols.Where(Function(p) CInt(p.FieldType) = c.j76PivotSumFieldType).First
-            If Not col Is Nothing Then
-                Dim it As Telerik.Web.UI.RadListBoxItem = colsSource.FindItem(Function(p) p.Value = col.FieldTypeID.ToString)
-                If Not it Is Nothing Then
-                    colsSource.Transfer(it, colsSource, colsDest)
-                    colsSource.ClearSelection()
-                    colsDest.ClearSelection()
-                End If
-            End If
+        Me.hidCols1.Value = String.Join(",", lisJ76.Where(Function(p) p.j76Level = 1).Select(Function(p) p.j76PivotSumFieldType))
+        Me.hidCols2.Value = String.Join(",", lisJ76.Where(Function(p) p.j76Level = 2).Select(Function(p) p.j76PivotSumFieldType))
+        Me.hidCols3.Value = String.Join(",", lisJ76.Where(Function(p) p.j76Level = 3).Select(Function(p) p.j76PivotSumFieldType))
+        Me.hidCols4.Value = String.Join(",", lisJ76.Where(Function(p) p.j76Level = 4).Select(Function(p) p.j76PivotSumFieldType))
 
-        Next
-        
-        colsSource.ClearSelection()
+        Me.tabs1.SelectedIndex = 0
+        InhaleCurrentState(1)
+
 
         roles1.InhaleInitialData(cRec.PID)
+    End Sub
+
+    Private Sub InhaleCurrentState(intLevel As Integer)
+        TabText(1)
+        TabText(2)
+        TabText(3)
+        TabText(4)
+        Me.j75Level.SelectedIndex = 0
+
+        SetupCols()
+        Dim s As String = Me.hidCols1.Value
+        If intLevel = 1 Then basUI.SelectDropdownlistValue(Me.j75Level, Me.hidLevel1.Value)
+        If intLevel = 2 Then s = Me.hidCols2.Value : basUI.SelectDropdownlistValue(Me.j75Level, Me.hidLevel2.Value)
+        If intLevel = 3 Then s = Me.hidCols3.Value : basUI.SelectDropdownlistValue(Me.j75Level, Me.hidLevel3.Value)
+        If intLevel = 4 Then s = Me.hidCols4.Value : basUI.SelectDropdownlistValue(Me.j75Level, Me.hidLevel4.Value)
+
+        If s = "" Then Return
+
+        Dim a() As String = Split(s, ",")
+        For Each s In a
+            Dim it As Telerik.Web.UI.RadListBoxItem = colsSource.FindItem(Function(p) p.Value = s)
+            If Not it Is Nothing Then
+                colsSource.Transfer(it, colsSource, colsDest)
+                colsSource.ClearSelection()
+                colsDest.ClearSelection()
+            End If
+        Next
+
+        colsSource.ClearSelection()
+
+
+    End Sub
+    Private Sub TabText(intLevel As Integer)
+        Dim s As String = "Úroveň #" & intLevel.ToString
+        If intLevel = 1 And Not Me.j75Level.Items.FindByValue(Me.hidLevel1.Value) Is Nothing Then
+            s += ": " & Me.j75Level.Items.FindByValue(Me.hidLevel1.Value).Text
+        End If
+        If intLevel = 2 And Not Me.j75Level.Items.FindByValue(Me.hidLevel2.Value) Is Nothing Then
+            s += ": " & Me.j75Level.Items.FindByValue(Me.hidLevel2.Value).Text
+        End If
+        If intLevel = 3 And Not Me.j75Level.Items.FindByValue(Me.hidLevel3.Value) Is Nothing Then
+            s += ": " & Me.j75Level.Items.FindByValue(Me.hidLevel3.Value).Text
+        End If
+        If intLevel = 4 And Not Me.j75Level.Items.FindByValue(Me.hidLevel4.Value) Is Nothing Then
+            s += ": " & Me.j75Level.Items.FindByValue(Me.hidLevel4.Value).Text
+        End If
+        Me.tabs1.FindTabByValue(intLevel.ToString).Text = s
     End Sub
 
     Private Sub cmdNew_Click(sender As Object, e As EventArgs) Handles cmdNew.Click
@@ -248,48 +280,49 @@
     End Function
 
     Private Function SaveRecord(cRec As BO.j75DrillDownTemplate) As Integer
+        Dim lisJ76 As New List(Of BO.j76DrillDownTemplate_Item), x As Integer = 0
         With cRec
             .x29ID = Me.CurrentX29ID
             .j75Name = j75Name.Text
-            If Me.j75Level1.SelectedValue = "" Then
+            If BO.BAS.IsNullInt(Me.hidLevel1.Value) = 0 Then
                 .j75Level1 = Nothing
             Else
-                .j75Level1 = CType(Me.j75Level1.SelectedValue, BO.PivotRowColumnFieldType)
+                .j75Level1 = CType(Me.hidLevel1.Value, BO.PivotRowColumnFieldType)
+                AppendList(1, Me.hidCols1.Value, lisJ76)
             End If
-            If Me.j75Level2.SelectedValue = "" Then
+            If BO.BAS.IsNullInt(Me.hidLevel2.Value) = 0 Then
                 .j75Level2 = Nothing
             Else
-                .j75Level2 = CType(Me.j75Level2.SelectedValue, BO.PivotRowColumnFieldType)
+                .j75Level2 = CType(Me.hidLevel2.Value, BO.PivotRowColumnFieldType)
+                AppendList(2, Me.hidCols2.Value, lisJ76)
             End If
-            If Me.j75Level3.SelectedValue = "" Then
-                .j75Level2 = Nothing
+            If BO.BAS.IsNullInt(Me.hidLevel3.Value) = 0 Then
+                .j75Level3 = Nothing
             Else
-                .j75Level3 = CType(Me.j75Level3.SelectedValue, BO.PivotRowColumnFieldType)
+                .j75Level3 = CType(Me.hidLevel3.Value, BO.PivotRowColumnFieldType)
+                AppendList(3, Me.hidCols3.Value, lisJ76)
             End If
-            If Me.j75Level4.SelectedValue = "" Then
+            If BO.BAS.IsNullInt(Me.hidLevel4.Value) = 0 Then
                 .j75Level4 = Nothing
             Else
-                .j75Level4 = CType(Me.j75Level4.SelectedValue, BO.PivotRowColumnFieldType)
+                .j75Level4 = CType(Me.hidLevel4.Value, BO.PivotRowColumnFieldType)
+                AppendList(4, Me.hidCols4.Value, lisJ76)
             End If
-            Dim s As String = ""
-            For Each it As Telerik.Web.UI.RadListBoxItem In colsDest.Items
-                s += "," & it.Value
-            Next
-            
+
         End With
         Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
         If roles1.ErrorMessage <> "" Then
             Master.Notify(roles1.ErrorMessage, 2)
             Return False
         End If
-        Dim lisJ76 As New List(Of BO.j76DrillDownTemplate_Item), x As Integer = 0
-        For Each it As Telerik.Web.UI.RadListBoxItem In colsDest.Items
-            Dim c As New BO.j76DrillDownTemplate_Item
-            c.j76PivotSumFieldType = CInt(it.Value)
-            x += 1
-            c.j76Ordinary = x
-            lisJ76.Add(c)
-        Next
+
+        ''For Each it As Telerik.Web.UI.RadListBoxItem In colsDest.Items
+        ''    Dim c As New BO.j76DrillDownTemplate_Item
+        ''    c.j76PivotSumFieldType = CInt(it.Value)
+        ''    x += 1
+        ''    c.j76Ordinary = x
+        ''    lisJ76.Add(c)
+        ''Next
 
         If Master.Factory.j75DrillDownTemplateBL.Save(cRec, lisJ76, lisX69) Then
             Return Master.Factory.j75DrillDownTemplateBL.LastSavedPID
@@ -298,8 +331,55 @@
             Return 0
         End If
     End Function
+    Private Sub AppendList(intLevel As Integer, strCols As String, ByRef lisJ76 As List(Of BO.j76DrillDownTemplate_Item))
+        If strCols = "" Then Return
+        Dim a() As String = Split(strCols, ",")
+        For i As Integer = 0 To UBound(a)
+            Dim c As New BO.j76DrillDownTemplate_Item
+            c.j76Level = intLevel
+            c.j76PivotSumFieldType = CInt(a(i))
+            c.j76Ordinary = i + 1
+            lisJ76.Add(c)
+        Next
+    End Sub
+
+
 
     Private Sub j75ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles j75ID.SelectedIndexChanged
         Handle_ChangeJ75()
+    End Sub
+
+    Private Sub tabs1_TabClick(sender As Object, e As Telerik.Web.UI.RadTabStripEventArgs) Handles tabs1.TabClick
+
+        InhaleCurrentState(Me.tabs1.SelectedIndex + 1)
+    End Sub
+
+    Private Sub colsSource_Transferred(sender As Object, e As Telerik.Web.UI.RadListBoxTransferredEventArgs) Handles colsSource.Transferred
+        SaveCurrentState()
+    End Sub
+
+    Private Sub SaveCurrentState()
+        Dim s As String = ""
+        For Each it As Telerik.Web.UI.RadListBoxItem In colsDest.Items
+            If s = "" Then
+                s = it.Value
+            Else
+                s += "," & it.Value
+            End If
+        Next
+        If tabs1.SelectedIndex = 0 Then Me.hidCols1.Value = s : Me.hidLevel1.Value = Me.j75Level.SelectedValue
+        If tabs1.SelectedIndex = 1 Then Me.hidCols2.Value = s : Me.hidLevel2.Value = Me.j75Level.SelectedValue
+        If tabs1.SelectedIndex = 2 Then Me.hidCols3.Value = s : Me.hidLevel3.Value = Me.j75Level.SelectedValue
+        If tabs1.SelectedIndex = 3 Then Me.hidCols4.Value = s : Me.hidLevel4.Value = Me.j75Level.SelectedValue
+    End Sub
+
+
+    Private Sub colsDest_Transferred(sender As Object, e As Telerik.Web.UI.RadListBoxTransferredEventArgs) Handles colsDest.Transferred
+        SaveCurrentState()
+    End Sub
+
+    Private Sub j75Level_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j75Level.SelectedIndexChanged
+        SaveCurrentState()
+        InhaleCurrentState(tabs1.SelectedIndex + 1)
     End Sub
 End Class

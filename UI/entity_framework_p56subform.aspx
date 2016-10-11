@@ -10,7 +10,7 @@
         });
         function p56_subgrid_setting(j74id) {
             ///volá se z p56_subgrid
-            window.parent.sw_decide("grid_designer.aspx?prefix=p56&masterprefix=p41&pid=" + j74id, "Images/griddesigner.png", true);
+            window.parent.sw_decide("grid_designer.aspx?prefix=p56&masterprefix=<%=Me.CurrentMasterPrefix%>&pid=" + j74id, "Images/griddesigner.png", true);
         }
         function RowSelected_p56(sender, args) {
             document.getElementById("<%=hiddatapid_p56.ClientID%>").value = args.getDataKeyValue("pid");
