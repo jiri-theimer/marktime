@@ -12,6 +12,7 @@
             End If
             LoginUser.RememberMeSet = True
             If Request.Item("deflogin") <> "" Then
+                ''TestUserAutoLoginPerDB(Request.Item("deflogin"))
                 LoginUser.UserName = Request.Item("deflogin")
             End If
             If Request.Item("autologout") = "1" Then
@@ -48,17 +49,18 @@
         End With
         If Not b Then b = Membership.ValidateUser(LoginUser.UserName, LoginUser.Password)
         If b Then
-            Dim factory As New BL.Factory(, LoginUser.UserName)
-            If factory.SysUser Is Nothing Then
-                bolStop = True
-                LoginUser.FailureText = "Účet uživatele nebyl nalezen v MARKTIME databázi.<br>User account wasn't found in MARKTIME database."
-            Else
-                If factory.SysUser.IsClosed Then
-                    bolStop = True
-                    LoginUser.FailureText = "Uzavřený účet pro přihlašování.<br>Your user account is closed."
-                    basUI.Write2AccessLog(factory, False, Request, screenwidth.Value, screenheight.Value)
-                End If
-            End If
+            bolStop = IsValidateUserByLogin(LoginUser.UserName)
+            ''Dim factory As New BL.Factory(, LoginUser.UserName)
+            ''If factory.SysUser Is Nothing Then
+            ''    bolStop = True
+            ''    LoginUser.FailureText = "Účet uživatele nebyl nalezen v MARKTIME databázi.<br>User account wasn't found in MARKTIME database."
+            ''Else
+            ''    If factory.SysUser.IsClosed Then
+            ''        bolStop = True
+            ''        LoginUser.FailureText = "Uzavřený účet pro přihlašování.<br>Your user account is closed."
+            ''        basUI.Write2AccessLog(factory, False, Request, screenwidth.Value, screenheight.Value)
+            ''    End If
+            ''End If
         Else
             bolStop = True 'toto je nutné odremovat!!
 
@@ -77,7 +79,34 @@
 
     End Sub
 
-    
+    Private Function IsValidateUserByLogin(strLogin As String) As Boolean
+        Dim factory As New BL.Factory(, LoginUser.UserName), bolStop As Boolean = False
+        If factory.SysUser Is Nothing Then
+            bolStop = True
+            LoginUser.FailureText = "Účet uživatele nebyl nalezen v MARKTIME databázi.<br>User account wasn't found in MARKTIME database."
+        Else
+            If factory.SysUser.IsClosed Then
+                bolStop = True
+                LoginUser.FailureText = "Uzavřený účet pro přihlašování.<br>Your user account is closed."
+                basUI.Write2AccessLog(factory, False, Request, screenwidth.Value, screenheight.Value)
+            End If
+        End If
+        Return bolStop
+    End Function
+
+    ''Private Sub TestUserAutoLoginPerDB(strAutoLogin As String)
+    ''    Dim factory As New BL.Factory()
+    ''    Dim c As BO.p85TempBox = factory.p85TempBoxBL.LoadByGUID("trusted-" + strAutoLogin)
+    ''    If c Is Nothing Then Return
+
+    ''    If DateAdd(DateInterval.Minute, 30, c.p85FreeDate01) < Now Then
+    ''        LoginUser.FailureText = "Platnost důvěry MARKTIME vůči externímu systému již vypršela. Musíte znovu požádat o důvěru nebo se standardně přihlásit přes login+heslo. "
+    ''        Return
+    ''    End If
+    ''    If Not IsValidateUserByLogin(strAutoLogin) Then Return
+
+    ''    FormsAuthentication.RedirectFromLoginPage(strAutoLogin, True)  'úspěšné ověření - přesměrovat na default.aspx
+    ''End Sub
 
     Private Sub TestUserAuthenticationMode()        
         Dim factory As New BL.Factory(), bolWinDomain As Boolean = False

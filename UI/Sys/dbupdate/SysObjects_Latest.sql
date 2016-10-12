@@ -5784,6 +5784,16 @@ if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'IsCalc_FixedExchan
   WHERE p31ID=@p31id
  end
 
+
+ if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'p31_aftersave_tailoring' and x35Value is not null)
+ begin
+  declare @sql varchar(1000)
+  select @sql=x35Value FROM x35GlobalParam WHERE x35Key like 'p31_aftersave_tailoring'
+  set @sql=replace(@sql,'@p31id',convert(varchar(10),@p31id))
+  set @sql=replace(@sql,'@j03id_sys',convert(varchar(10),@j03id_sys))
+  exec(@sql)
+ end
+
 GO
 
 ----------P---------------p31_append_invoice-------------------------
@@ -10125,6 +10135,13 @@ declare @login nvarchar(50),@j02id_owner int
 set @login=dbo.j03_getlogin(@j03id_sys)
 select @j02id_owner=j02ID FROM j03User WHERE j03ID=@j03id_sys
 
+if not exists(select a.p85ID from p85TempBox a INNER JOIN p31Worksheet b ON a.p85DataPID=b.p31ID where b.p91ID IS NULL AND a.p85guid=@guid and a.p85Prefix='p31' and a.p85IsDeleted=0)
+ begin
+  set @err_ret='Na vstupu chybí fronta worksheet položek faktury!'
+  return
+
+ end
+
 
 declare @j27id int,@j19id int,@x15id int,@j17id int,@p98id int,@p91vatrate_standard float,@p91vatrate_low float,@p91vatrate_special float
 
@@ -10166,8 +10183,8 @@ update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id
 ,p91Text1=@p91text1
 ,p91Datep31_From=@p91datep31_from,p91Datep31_Until=@p91datep31_until,j19id=@j19id
 ,p91Client=isnull(b.p28CompanyName,b.p28Name),p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
-,p91ClientAddress1_City=o38prim.o38City,p91ClientAddress1_Street=o38prim.o38Street,p91ClientAddress1_ZIP=o38prim.o38ZIP,p91ClientAddress1_Country=o38prim.o38Country
-,p91ClientAddress2=isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,'')
+,p91ClientAddress1_City=left(o38prim.o38City,100),p91ClientAddress1_Street=left(o38prim.o38Street,150),p91ClientAddress1_ZIP=left(o38prim.o38ZIP,20),p91ClientAddress1_Country=o38prim.o38Country
+,p91ClientAddress2=left(isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,''),255)
 FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID
 LEFT OUTER JOIN o38Address o38prim ON a.o38ID_Primary=o38prim.o38ID
 LEFT OUTER JOIN o38Address o38del ON a.o38ID_Delivery=o38del.o38ID

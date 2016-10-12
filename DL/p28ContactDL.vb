@@ -90,6 +90,7 @@
                 pars.Add("p87ID", BO.BAS.IsNullDBKey(.p87ID), DbType.Int32)
                 pars.Add("p51ID_Billing", BO.BAS.IsNullDBKey(.p51ID_Billing), DbType.Int32)
                 pars.Add("p51ID_Internal", BO.BAS.IsNullDBKey(.p51ID_Internal), DbType.Int32)
+                pars.Add("p63ID", BO.BAS.IsNullDBKey(.p63ID), DbType.Int32)
                 pars.Add("p28ParentID", BO.BAS.IsNullDBKey(.p28ParentID), DbType.Int32)
 
                 pars.Add("p28Code", .p28Code, DbType.String)

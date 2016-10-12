@@ -102,6 +102,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(24, "Duplicitní klienti podle DIČ"))
                 lis.Add(New BO.OtherQueryItem(25, "Má nadřízeného klienta"))
                 lis.Add(New BO.OtherQueryItem(26, "Má pod sebou podřízené klienty"))
+                lis.Add(New BO.OtherQueryItem(27, "Je nastavená režijní fakturační přirážka"))
             Case BO.x29IdEnum.j02Person
                 lis.Add(New BO.OtherQueryItem(3, "Existují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Existují schválené úkony, které čekají na fakturaci"))

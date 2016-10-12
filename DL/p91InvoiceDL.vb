@@ -155,28 +155,32 @@
         End If
     End Sub
     Public Function Create(cP91Create As BO.p91Create) As Integer
-        Dim pars As New DbParameters
-        With cP91Create
-            pars.Add("guid", .TempGUID, DbType.String)
-            pars.Add("j03id_sys", _curUser.PID, DbType.Int32)
-            pars.Add("p28id", BO.BAS.IsNullDBKey(.p28ID), DbType.Int32)
-            pars.Add("p92id", BO.BAS.IsNullDBKey(.p92ID), DbType.Int32)
-            pars.Add("p91isdraft", .IsDraft, DbType.Boolean)
-            pars.Add("p91date", .DateIssue, DbType.DateTime)
-            pars.Add("p91datematurity", .DateMaturity, DbType.DateTime)
-            pars.Add("p91datesupply", .DateSupply, DbType.DateTime)
-            pars.Add("p91datep31_from", .DateP31_From, DbType.DateTime)
-            pars.Add("p91datep31_until", .DateP31_Until, DbType.DateTime)
-            pars.Add("p91text1", .InvoiceText1, DbType.String)
-            pars.Add("ret_p91id", , DbType.Int32, ParameterDirection.Output)
-            pars.Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
-        End With
-        If _cDB.RunSP("p91_create", pars) Then
-            Dim intP91ID As Integer = pars.Get(Of Int32)("ret_p91id")
-            Return intP91ID
-        Else
-            Return 0
-        End If
+        Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
+            Dim pars As New DbParameters
+            With cP91Create
+                pars.Add("guid", .TempGUID, DbType.String)
+                pars.Add("j03id_sys", _curUser.PID, DbType.Int32)
+                pars.Add("p28id", BO.BAS.IsNullDBKey(.p28ID), DbType.Int32)
+                pars.Add("p92id", BO.BAS.IsNullDBKey(.p92ID), DbType.Int32)
+                pars.Add("p91isdraft", .IsDraft, DbType.Boolean)
+                pars.Add("p91date", .DateIssue, DbType.DateTime)
+                pars.Add("p91datematurity", .DateMaturity, DbType.DateTime)
+                pars.Add("p91datesupply", .DateSupply, DbType.DateTime)
+                pars.Add("p91datep31_from", .DateP31_From, DbType.DateTime)
+                pars.Add("p91datep31_until", .DateP31_Until, DbType.DateTime)
+                pars.Add("p91text1", .InvoiceText1, DbType.String)
+                pars.Add("ret_p91id", , DbType.Int32, ParameterDirection.Output)
+                pars.Add("err_ret", , DbType.String, ParameterDirection.Output, 1000)
+            End With
+            If _cDB.RunSP("p91_create", pars) Then
+                Dim intP91ID As Integer = pars.Get(Of Int32)("ret_p91id")
+                sc.Complete()
+                Return intP91ID
+            Else
+                Return 0
+            End If
+        End Using
+
     End Function
     Public Function CreateCreditNote(intP91ID As Integer, intP92ID_CreditNote As Integer) As Integer
         Dim pars As New DbParameters

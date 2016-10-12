@@ -499,6 +499,8 @@
                 Return "a.p28ParentID IS NOT NULL"
             Case BO.myQueryP28_QuickQuery.WithChildContact
                 Return "a.p28ID IN (SELECT p28ParentID FROM p28Contact WHERE p28ParentID IS NOT NULL)"
+            Case BO.myQueryP28_QuickQuery.WithOverHead
+                Return "a.p63ID IS NOT NULL"
             Case Else
                 Return ""
         End Select

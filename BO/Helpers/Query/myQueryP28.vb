@@ -25,6 +25,7 @@ Public Enum myQueryP28_QuickQuery
     DuplicityVatID = 24
     WithParentContact = 25
     WithChildContact = 26
+    WithOverHead = 27
 End Enum
 Public Class myQueryP28
     Inherits myQuery
