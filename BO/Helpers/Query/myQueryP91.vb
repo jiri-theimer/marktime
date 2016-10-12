@@ -23,6 +23,7 @@ Public Enum myQueryP91_QuickQuery
     Is_p91Amount_WithoutVat_Low = 11
     Is_p91Amount_WithoutVat_None = 12
     Is_ExchangeRate = 13
+    WithOverhead = 14
 End Enum
 Public Class myQueryP91
     Inherits myQuery

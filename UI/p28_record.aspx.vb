@@ -31,6 +31,8 @@
             SetupPriceList()
             Me.p58IDs.DataSource = Master.Factory.p58ProductBL.GetList(New BO.myQuery)
             Me.p58IDs.DataBind()
+            Me.p63ID.DataSource = Master.Factory.p63OverheadBL.GetList(New BO.myQuery)
+            Me.p63ID.DataBind()
             
             If Me.p92id.Visible Then
                 Me.p92id.DataSource = Master.Factory.p92InvoiceTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice)
@@ -111,6 +113,7 @@
                 Me.opgPriceList.SelectedValue = "1"
             End If
             Me.p51ID_Internal.SelectedValue = .p51ID_Internal.ToString
+            Me.p63ID.SelectedValue = .p63ID.ToString
 
             Me.p87ID.SelectedValue = .p87ID.ToString
             Me.p92id.SelectedValue = .p92ID.ToString
@@ -338,6 +341,7 @@
                 .p28IsCompany = BO.BAS.BG(Me.p28IsCompany.SelectedValue)
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .p29ID = BO.BAS.IsNullInt(Me.p29ID.SelectedValue)
+                .p63ID = BO.BAS.IsNullInt(Me.p63ID.SelectedValue)
                 .p28ParentID = BO.BAS.IsNullInt(Me.p28ParentID.Value)
                 If .p28IsCompany Then
                     .p28CompanyName = Me.p28CompanyName.Text
@@ -610,5 +614,10 @@
             roles1.InhaleInitialData(.PID)
         End With
 
+    End Sub
+
+    Private Sub p63ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p63ID.NeedMissingItem
+        Dim cRec As BO.p63Overhead = Master.Factory.p63OverheadBL.Load(CInt(strFoundedMissingItemValue))
+        If Not cRec Is Nothing Then strAddMissingItemText = cRec.NameWithRate
     End Sub
 End Class

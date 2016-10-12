@@ -393,8 +393,8 @@ Public Class admin_framework
                     .AddColumn("p98Name", "Název pravidla")
                     .AddColumn("p98IsDefault", "Výchozí pravidlo", BO.cfENUM.Checkbox)
                 Case "p63"
-                    .AddColumn("p63Name", "Název pravidla")
-                    .AddColumn("p63PercentRate", "Procento", BO.cfENUM.Numeric)
+                    .AddColumn("NameWithRate", "Název pravidla")
+                    .AddColumn("p32Name", "Aktivita")
                 Case "p92"
                     .AddColumn("p92Name", "Název")
                     .AddColumn("j27Code", "Cílová měna")

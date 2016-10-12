@@ -339,6 +339,14 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label ID="lblP63ID" runat="server" Text="Režijní přirážka k faktuře:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <uc:datacombo ID="p63ID" runat="server" DataTextField="NameWithRate" DataValueField="pid" IsFirstEmptyRow="true" Width="300px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="lblp51ID_Internal" runat="server" Text="Nákladový ceník projektů klienta:" CssClass="lbl"></asp:Label>
 
                     </td>

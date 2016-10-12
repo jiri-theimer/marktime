@@ -601,6 +601,8 @@
                 Return "a.p91Amount_WithoutVat_None<>0"
             Case BO.myQueryP91_QuickQuery.Is_ExchangeRate
                 Return "isnull(a.p91ExchangeRate,1)<>1"
+            Case BO.myQueryP91_QuickQuery.WithOverhead
+                Return "a.p63ID IS NOT NULL"
             Case Else
                 Return ""
         End Select

@@ -33,7 +33,8 @@
             </td>
             <td>
 
-                <telerik:RadNumericTextBox ID="p63PercentRate" runat="server" NumberFormat-DecimalDigits="1" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                <telerik:RadNumericTextBox ID="p63PercentRate" runat="server" NumberFormat-DecimalDigits="1" Width="70px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                %
             </td>
         </tr>
         <tr>

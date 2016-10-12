@@ -13,4 +13,10 @@
             Return _p32Name
         End Get
     End Property
+
+    Public ReadOnly Property NameWithRate As String
+        Get
+            Return Me.p63Name & " [" & Me.p63PercentRate.ToString & "%]"
+        End Get
+    End Property
 End Class

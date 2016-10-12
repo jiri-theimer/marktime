@@ -25,8 +25,11 @@
                 Me.p92ID.DataBind()
                 Me.p98ID.DataSource = .Factory.p98Invoice_Round_Setting_TemplateBL.GetList()
                 Me.p98ID.DataBind()
+                Me.p63ID.DataSource = .Factory.p63OverheadBL.GetList(New BO.myQuery)
+                Me.p63ID.DataBind()
+
             End With
-           
+
 
             RefreshRecord()
 
@@ -43,6 +46,7 @@
             Me.p91Code.NavigateUrl = "javascript:recordcode()"
             Me.j17ID.SelectedValue = .j17ID.ToString
             Me.p98ID.SelectedValue = .p98ID.ToString
+            Me.p63ID.SelectedValue = .p63ID.ToString
             Me.p92ID.SelectedValue = .p92ID.ToString
             Me.p28ID.Value = .p28ID.ToString
             Me.p28ID.Text = .p28Name
@@ -120,6 +124,7 @@
                 .p92ID = BO.BAS.IsNullInt(Me.p92ID.SelectedValue)
                 .j17ID = BO.BAS.IsNullInt(Me.j17ID.SelectedValue)
                 .p98ID = BO.BAS.IsNullInt(Me.p98ID.SelectedValue)
+                .p63ID = BO.BAS.IsNullInt(Me.p63ID.SelectedValue)
                 .p28ID = BO.BAS.IsNullInt(Me.p28ID.Value)
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .o38ID_Primary = BO.BAS.IsNullInt(Me.o38ID_Primary.SelectedValue)
@@ -161,6 +166,11 @@
         InhaleAddresses()
     End Sub
 
+    Private Sub p92ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p92ID.NeedMissingItem
+        Dim cRec As BO.p92InvoiceType = Master.Factory.p92InvoiceTypeBL.Load(CInt(strFoundedMissingItemValue))
+        If Not cRec Is Nothing Then strAddMissingItemText = cRec.p92Name
+    End Sub
+
     Private Sub p92ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles p92ID.SelectedIndexChanged
         Handle_FF()
     End Sub
@@ -189,5 +199,15 @@
         Else
             Me.p91ClientAddress2.Text = ""
         End If
+    End Sub
+
+    Private Sub j17ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles j17ID.NeedMissingItem
+        Dim cRec As BO.j17Country = Master.Factory.j17CountryBL.Load(CInt(strFoundedMissingItemValue))
+        If Not cRec Is Nothing Then strAddMissingItemText = cRec.j17Name
+    End Sub
+
+    Private Sub p63ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p63ID.NeedMissingItem
+        Dim cRec As BO.p63Overhead = Master.Factory.p63OverheadBL.Load(CInt(strFoundedMissingItemValue))
+        If Not cRec Is Nothing Then strAddMissingItemText = cRec.NameWithRate
     End Sub
 End Class
