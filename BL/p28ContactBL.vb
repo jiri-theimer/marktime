@@ -145,10 +145,10 @@ Class p28ContactBL
         If Not ValidateBeforeSave(cRec, lisO37, lisO32, lisP30, lisX69, lisFF) Then
             Return False
         End If
-        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p28") Then Return False
+        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p28_beforesave") Then Return False
 
         If _cDL.Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, p58IDs, _LastSavedPID) Then
-            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p28")
+            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p28_aftersave")
             Dim cP29 As BO.p29ContactType = Me.Factory.p29ContactTypeBL.Load(cRec.p29ID)
             Dim intB01ID As Integer = 0
             If Not cP29 Is Nothing Then intB01ID = cP29.b01ID

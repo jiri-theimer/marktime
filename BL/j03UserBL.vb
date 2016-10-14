@@ -28,6 +28,8 @@
     Sub SetMyDropboxAccessToken(strToken As String, strSecret As String)
     Function GetMyDropboxAccessToken() As BO.DropboxUserToken
     Function GetList_j90(intJ03ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.j90LoginAccessLog)
+    Function SaveAllFavouriteProjects(intJ03ID As Integer, p41ids As List(Of Integer)) As Boolean
+    Function AppendOrRemoveFavouriteProject(intJ03ID As Integer, p41ids As List(Of Integer), bolRemove As Boolean) As Boolean
 End Interface
 Class j03UserBL
     Inherits BLMother
@@ -154,6 +156,12 @@ Class j03UserBL
     End Sub
     Public Function GetList_j90(intJ03ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.j90LoginAccessLog) Implements Ij03UserBL.GetList_j90
         Return _cDL.GetList_j90(intJ03ID, d1, d2)
+    End Function
+    Public Function SaveAllFavouriteProjects(intJ03ID As Integer, p41ids As List(Of Integer)) As Boolean Implements Ij03UserBL.SaveAllFavouriteProjects
+        Return _cDL.SaveAllFavouriteProjects(intJ03ID, p41ids)
+    End Function
+    Public Function AppendOrRemoveFavouriteProject(intJ03ID As Integer, p41ids As List(Of Integer), bolRemove As Boolean) As Boolean Implements Ij03UserBL.AppendOrRemoveFavouriteProject
+        Return _cDL.AppendOrRemoveFavouriteProject(intJ03ID, p41ids, bolRemove)
     End Function
     ''Public Function LoadDockState(strPage As String) As String Implements Ij03UserBL.LoadDockState
     ''    Return _cDL.SYS_LoadDockState(strPage)

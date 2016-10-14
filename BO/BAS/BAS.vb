@@ -443,7 +443,7 @@
         ''End Try
         Dim isValid As Boolean = True, strEmailOrig As String = strEmail
 
-        Dim emailExpression As New System.Text.RegularExpressions.Regex("^((\s*[a-zA-Z0-9\._%-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4}\s*[,;:]){1,100}?)?(\s*[a-zA-Z0-9\._%-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4})*$")
+        Dim emailExpression As New System.Text.RegularExpressions.Regex("^((\s*[a-zA-Z0-9\._%-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,4}\s*[,;:]){1,100}?)?(\s*[a-zA-Z0-9\._%-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,6})*$")
         Try
             strEmail = strEmail.Trim.Replace(",", ";")
             strEmail = strEmail.Trim.Replace(" ", "")

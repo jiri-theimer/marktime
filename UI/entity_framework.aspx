@@ -228,8 +228,9 @@
                 <div class="content-box2">
                     <div class="title">
                         Datový přehled
-                        
+                        <%If Me.CurrentPrefix <> "p91" Then%>
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
+                        <%end if %>
                         <button type="button" onclick="report()" title="Tisková sestava">Sestava (hromadně)</button>
                         
                     </div>

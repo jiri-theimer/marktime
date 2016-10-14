@@ -21,7 +21,7 @@
     ''' <returns>Vrací p85guid z temp tabulky p85tempbox</returns>
     ''' <remarks></remarks>
     Function SetToDeposit(intDataPID) As String
-    Function SaveObjectReflection2Temp(strGUID As String, cRec As Object, strRecPrefix As String) As Boolean
+    Function SaveObjectReflection2Temp(strGUID As String, cRec As Object) As Boolean
     Function RunTailoredProcedure(strGUID As String, strProcName As String) As String
     Function RunTailoredProcedure(intRecordPID As Integer, strProcName As String) As Boolean
     Sub Recovery_ClearCompleteTemp()
@@ -91,8 +91,8 @@ Class p85TempBoxBL
         Return _cDL.LoadFromDeposit(strGUID)
     End Function
 
-    Function SaveObjectReflection2Temp(strGUID As String, cRec As Object, strRecPrefix As String) As Boolean Implements Ip85TempBoxBL.SaveObjectReflection2Temp
-        Return _cDL.SaveObjectReflection2Temp(strGUID, cRec, strRecPrefix)
+    Function SaveObjectReflection2Temp(strGUID As String, cRec As Object) As Boolean Implements Ip85TempBoxBL.SaveObjectReflection2Temp
+        Return _cDL.SaveObjectReflection2Temp(strGUID, cRec)
     End Function
     Public Overloads Function RunTailoredProcedure(strGUID As String, strProcName As String) As String Implements Ip85TempBoxBL.RunTailoredProcedure
         Return _cDL.RunTailoredProcedure(strGUID, strProcName)

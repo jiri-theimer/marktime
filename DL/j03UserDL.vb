@@ -324,4 +324,24 @@ Public Class j03UserDL
 
         Return _cDB.GetList(Of BO.j90LoginAccessLog)("SELECT TOP 1000 j90ID as pid,* FROM j90LoginAccessLog WHERE j03ID=@j03id AND j90Date >= @d1 AND j90Date < DATEADD(DAY,1,@d2) ORDER BY j90ID DESC", pars)
     End Function
+
+    Public Function SaveAllFavouriteProjects(intJ03ID As Integer, p41ids As List(Of Integer)) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("j03id", intJ03ID, DbType.Int32)
+        _cDB.RunSQL("DELETE FROM j13FavourteProject WHERE j03ID=@j03id", pars)
+        If p41ids.Count > 0 Then
+            Return _cDB.RunSQL("INSERT INTO j13FavourteProject(j03ID,p41ID) SELECT @j03id,p41ID FROM p41Project WHERE p41ID IN (" & String.Join(",", p41ids) & ")", pars)
+        Else
+            Return True
+        End If
+    End Function
+    Public Function AppendOrRemoveFavouriteProject(intJ03ID As Integer, p41ids As List(Of Integer), bolRemove As Boolean) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("j03id", intJ03ID, DbType.Int32)
+        If bolRemove Then
+            Return _cDB.RunSQL("DELETE FROM j13FavourteProject WHERE j03ID=@j03id AND p41ID IN (" & String.Join(",", p41ids) & ")", pars)
+        Else
+            Return _cDB.RunSQL("INSERT INTO j13FavourteProject(j03ID,p41ID) SELECT @j03id,p41ID FROM p41Project WHERE p41ID IN (" & String.Join(",", p41ids) & ") AND p41ID NOT IN (SELECT p41ID FROM j13FavourteProject WHERE j03ID=@j03id)", pars)
+        End If
+    End Function
 End Class

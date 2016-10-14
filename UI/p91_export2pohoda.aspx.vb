@@ -150,22 +150,22 @@ Public Class p91_export2pohoda
         Next
         dt.Clear()
 
-        'strSQL = "select isnull(p98Amount_WithoutVat,0) as p98Amount_WithoutVat,isnull(p98VatRate,0) as p98VatRate,isnull(p98Amount_WithVat,0) as p98Amount_WithVat,p98Name_Level1,p98Name_Level2,isnull(p98Amount_Vat,0) as p98Amount_Vat FROM p98InvoiceStatement"
-        'strSQL += " where p91id = " & strP91ID
-        'strSQL = "select sum(                 "
-        'strSQL += " FROM p38ActivityInvoiceRow()"
-        strSQL = "select left(min(p95name),90) as polozka"
-        strSQL += ",sum(p31Amount_WithoutVat_Invoiced) as bezdph"
-        strSQL += ",min(p31VatRate_Invoiced) as dph_sazba"
-        strSQL += ",sum(p31Amount_Vat_Invoiced) as dph_castka"
-        strSQL += ",sum(p31Amount_WithVat_Invoiced) as vcdph"
-        strSQL += " FROM p31worksheet a INNER JOIN p32activity p32 ON a.p32ID=p32.p32ID"
-        strSQL += " INNER JOIN p34activitygroup p34 on p32.p34id=p34.p34id"
-        strSQL += " LEFT OUTER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID"
-        strSQL += " WHERE a.p91id=" & strP91ID & " and a.p31Amount_WithoutVat_Invoiced<>0"
-        strSQL += " GROUP BY p32.p95ID"
-        strSQL += " ORDER BY min(p95Ordinary),min(p31VatRate_Invoiced) DESC"
-
+     
+        strSQL = "select left(p95name,90) as polozka"
+        strSQL += ",p81Amount_WithoutVat as bezdph"
+        strSQL += ",p81VatRate as dph_sazba"
+        strSQL += ",p81Amount_Vat as dph_castka"
+        strSQL += ",p81Amount_WithVat as vcdph,1 as Poradi"
+        strSQL += " FROM p81InvoiceAmount a LEFT OUTER JOIN p95InvoiceRow p95 ON a.p95ID=p95.p95ID"
+        strSQL += " WHERE a.p91id=" & strP91ID & " and a.p81Amount_WithoutVat<>0"
+        strSQL += " UNION"
+        strSQL += " SELECT 'Uhrazená záloha' as polozka,-1*(p91ProformaAmount_WithoutVat_None+p91ProformaAmount_WithoutVat_Low+p91ProformaAmount_WithoutVat_Standard) as bezdph"
+        strSQL += ",p91ProformaAmount_VatRate as dph_sazba"
+        strSQL += ",-1*(p91ProformaAmount_Vat_Low+p91ProformaAmount_Vat_Standard) as dph_castka"
+        strSQL += ",-1*p91ProformaAmount as vcdph,1000 as Poradi"
+        strSQL += " FROM p91Invoice WHERE p91ID=" & strP91ID & " AND isnull(p91ProformaAmount,0)<>0"
+        strSQL += " UNION SELECT 'Zaokrouhlení' as Polozka,p91RoundFitAmount as bezdph,0 as dph_sazba,0 as dph_castka,p91RoundFitAmount as vcdph,2000 as Poradi FROM p91Invoice WHERE p91ID=9 AND isnull(p91RoundFitAmount,0)<>0"
+        strSQL += " ORDER BY Poradi,dph_sazba"
         Dim x As Integer
         Dim ndDetail As XmlNode = ndHeader.NextSibling
 

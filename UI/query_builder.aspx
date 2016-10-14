@@ -90,7 +90,10 @@
         </div>
     </asp:panel>
     <asp:Panel ID="panJ71" runat="server" CssClass="content-box2">
-        <div class="title">Podmínka filtru</div>
+        <div class="title">
+            Podmínka filtru
+            <asp:CheckBox ID="j70IsNegation" runat="server" Text="Negovat podmínku" ToolTip="Pokud zaškrtnuto, filtr vrací záznamy nevyhovující filtrovací podmínce." style="float:right;" />
+        </div>
         <div class="content">
             <table cellpadding="3" cellspacing="2">
                 <asp:Repeater ID="rpJ71" runat="server">

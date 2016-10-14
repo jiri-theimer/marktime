@@ -122,13 +122,13 @@ Class o23NotepadBL
                 _Error = BL.BAS.ErrorMessage : Return False
             End If
         End If
-        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "o23") Then Return False
+        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "o23_beforesave") Then Return False
 
         If _cDL.Save(cRec, lisX69, lisFF) Then
             If strUploadGUID <> "" Then
                 Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.o23Notepad, Me.LastSavedPID)
             End If
-            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "o23")
+            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "o23_aftersave")
             Dim cO24 As BO.o24NotepadType = Me.Factory.o24NotepadTypeBL.Load(cRec.o24ID)
             If cRec.PID = 0 Then
                 If cO24.b01ID > 0 Then

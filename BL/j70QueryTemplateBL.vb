@@ -87,6 +87,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(17, "Bez přiřazení kontaktních osob"))
                 lis.Add(New BO.OtherQueryItem(18, "Má nadřízený projekt"))
                 lis.Add(New BO.OtherQueryItem(19, "Má pod sebou podřízené projekty"))
+                lis.Add(New BO.OtherQueryItem(20, "Moje oblíbené projekty"))
             Case BO.x29IdEnum.p28Contact
                 lis.Add(New BO.OtherQueryItem(3, "Projekty klienta obsahují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Projektovy klienta obsahují schválené úkony, které čekají na fakturaci"))

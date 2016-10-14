@@ -18,6 +18,7 @@
 
     Private Sub RefreshRecord()
         Dim cRec As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(Master.DataPID)
+        If cRec.j70IsNegation Then lblHeader.Text = "Negace podmínky filtru" : lblHeader.ForeColor = Drawing.Color.Red
         Select Case cRec.j70BinFlag
             Case 0
                 lblBinFlag.Text = "Otevřené i uzavřené záznamy"

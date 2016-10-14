@@ -325,6 +325,7 @@
                         <div>DRAG & DROP nabídka v levém panelu:</div>
                         <asp:DropDownList ID="p31_scheduler_tasks" runat="server" AutoPostBack="true">
                             <asp:ListItem Text="TOP 10 mých projektů" Value="p41"></asp:ListItem>
+                            <asp:ListItem Text="Seznam mých oblíbených projektů" Value="favourites"></asp:ListItem>
                             <asp:ListItem Text="Otevřené úkoly" Value="p56"></asp:ListItem>
                             <asp:ListItem Text="Nic nenabízet" Value="none"></asp:ListItem>
                         </asp:DropDownList>

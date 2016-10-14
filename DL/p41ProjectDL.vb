@@ -210,7 +210,8 @@
                     End Select
                 End If
             End If
-            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft"
+            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft,j13.j13ID"
+            .MG_AdditionalSqlFROM += " LEFT OUTER JOIN (SELECT j13ID,p41ID FROM j13FavourteProject WHERE j03ID=" & _curUser.PID.ToString & ") j13 ON a.p41ID=j13.p41ID"
         End With
 
         Dim pars As New DL.DbParameters
@@ -310,6 +311,10 @@
                 pars.Add("@j02id_contactperson", .j02ID_ContactPerson, DbType.Int32)
                 s.Append(" AND (a.p41ID IN (SELECT p41ID FROM p30Contact_Person WHERE J02ID=@j02id_contactperson AND p41ID IS NOT NULL) OR a.p28ID_Client IN (SELECT p28ID FROM p30Contact_Person WHERE J02ID=@j02id_contactperson AND p28ID IS NOT NULL))")
             End If
+            If .IsFavourite > BO.BooleanQueryMode.NoQuery Then
+                pars.Add("j03id_sys", _curUser.PID, DbType.Int32)
+                s.Append(" AND a.p41ID IN (SELECT p41ID FROM j13FavourteProject WHERE j03ID=@j03id_sys)")
+            End If
             If .p41ParentID <> 0 Then
                 pars.Add("parentpid", .p41ParentID, DbType.Int32)
                 s.Append(" AND a.p41ParentID=@parentpid")
@@ -367,6 +372,7 @@
                     pars.Add("j02id_query", _curUser.j02ID, DbType.Int32)
                 End If
             End If
+
             Dim strJ11IDs As String = ""
             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
@@ -427,7 +433,7 @@
                     s.Append("))")
             End Select
             If .QuickQuery > BO.myQueryP41_QuickQuery._NotSpecified Then
-                s.Append(" AND " & bas.GetQuickQuerySQL_p41(.QuickQuery))
+                s.Append(" AND " & bas.GetQuickQuerySQL_p41(.QuickQuery, _curUser))
             End If
 
             If .j70ID > 0 Then
@@ -538,5 +544,15 @@
     Public Function GetTopProjectsByWorksheetEntry(intJ02ID As Integer, intGetTopRecs As Integer) As List(Of Integer)
         Dim s As String = "SELECT TOP " & intGetTopRecs.ToString & " p41ID as Value FROM view_LastWorksheetDateOfPerson WHERE j02ID=@j02id ORDER BY LastDate DESC"
         Return _cDB.GetList(Of BO.GetInteger)(s, New With {.j02id = intJ02ID}).Select(Function(p) p.Value).ToList
+    End Function
+    Public Function IsMyFavouriteProject(intPID As Integer) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("pid", intPID, DbType.Int32)
+        pars.Add("j03id", _curUser.PID, DbType.Int32)
+        If _cDB.GetIntegerValueFROMSQL("if exists(select j13ID FROM j13FavourteProject WHERE p41ID=@pid AND j03ID=@j03id) select 1 as Value else select 0 as Value", pars) = 1 Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
 End Class

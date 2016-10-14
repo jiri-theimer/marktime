@@ -50,11 +50,12 @@
             
         }
 
+       
 
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
             document.getElementById("<%=hiddatapid.clientid%>").value = pid;
-
+           
         }
 
         function RowDoubleClick(sender, args) {
@@ -161,7 +162,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    
     <div id="offsetY"></div>
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" MaxWidth="1000" BackColor="white">
@@ -171,7 +172,7 @@
                     <telerik:RadTab Text="<%$ Resources:p31_framework, tabs1_p41 %>" Value="p41" Selected="true" ToolTip="<%$Resources:p31_framework, tabs1_p41_tooltip %>"></telerik:RadTab>
                     <telerik:RadTab Text="TOP 10" Value="top10" ToolTip="Maximálně 10 mnou naposledy vykazovaných projektů"></telerik:RadTab>
                     <telerik:RadTab Text="<%$ Resources:p31_framework, tabs1_todo %>" Value="todo" ToolTip="Otevřené úkoly k řešení a vykazování"></telerik:RadTab>
-
+                    <telerik:RadTab ImageUrl="Images/favourite.png" Value="favourites" ToolTip="Seznam mých oblíbených projektů"></telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
 
@@ -192,10 +193,13 @@
                 </div>
 
                 <div class="commandcell" style="float: right; margin-right: 10px;">
+                    
                     <button type="button" id="cmdSetting" class="show_hide1" style="float: right; padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Další nastavení přehledu">
 
                         <img src="Images/arrow_down.gif" alt="Nastavení" />
                     </button>
+                  
+                    <asp:HyperLink ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" NavigateUrl="javascript:favourite()" CssClass="button-link" Style="float:right;padding:0px; margin-right: 20px;width:20px;"></asp:HyperLink>
                 </div>
 
 

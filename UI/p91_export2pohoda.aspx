@@ -13,7 +13,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <asp:Label ID="lblIC" runat="server" CssClass="lbl" Text="IČ organizace:"></asp:Label>
+        <asp:Label ID="lblIC" runat="server" CssClass="lbl" Text="IČ účetní jednotky:"></asp:Label>
         <asp:textbox ID="txtIC" runat="server"></asp:textbox>
     </div>
     <fieldset>

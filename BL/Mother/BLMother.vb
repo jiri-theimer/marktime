@@ -44,14 +44,14 @@
 
     End Sub
 
-    Public Function RaiseAppEvent_TailoringTestBeforeSave(cRec As Object, lisFF As List(Of BO.FreeField), strRecPrefix As String) As Boolean
+    Public Function RaiseAppEvent_TailoringTestBeforeSave(cRec As Object, lisFF As List(Of BO.FreeField), strEvent As String) As Boolean
         'validační pravidla na míru pro zákazníky
         'musí existovat ve web.config (appSettings) klíč události ve tvau prefix+'_beforesave' + SQL procedura, která provádí test
         'pokud SQL procedura vrátí přes @err_ret hlášku, považuje se to za stopku k uložení záznamu
-        If BO.ASS.GetConfigVal(strRecPrefix + "_beforesave") > "" Then
-            Dim strSqlProc As String = BO.ASS.GetConfigVal(strRecPrefix + "_beforesave")
+        If BO.ASS.GetConfigVal(strEvent) > "" Then
+            Dim strSqlProc As String = BO.ASS.GetConfigVal(strEvent)
             Dim strGUID As String = BO.BAS.GetGUID
-            If Factory.p85TempBoxBL.SaveObjectReflection2Temp(strGUID, cRec, strRecPrefix) Then
+            If Factory.p85TempBoxBL.SaveObjectReflection2Temp(strGUID, cRec) Then
                 If Not lisFF Is Nothing Then
                     For Each c In lisFF
                         Dim cTemp As New BO.p85TempBox
@@ -72,13 +72,11 @@
         End If
         Return True
     End Function
-    Public Function RaiseAppEvent_TailoringAfterSave(intRecordPID As Integer, strRecPrefix As String, Optional strSuffix As String = "_aftersave") As Boolean
+    Public Function RaiseAppEvent_TailoringAfterSave(intRecordPID As Integer, strEvent As String) As Boolean
         'validační pravidla na míru pro zákazníky
         'musí existovat ve web.config (appSettings) klíč události ve tvau prefix+'_aftersave' + SQL procedura, která provádí test
-        If BO.ASS.GetConfigVal(strRecPrefix + strSuffix) > "" Then
-            Dim strSqlProc As String = BO.ASS.GetConfigVal(strRecPrefix + strSuffix)
-            Return Factory.p85TempBoxBL.RunTailoredProcedure(intRecordPID, BO.ASS.GetConfigVal(strRecPrefix + strSuffix))
-
+        If BO.ASS.GetConfigVal(strEvent) > "" Then
+            Return Factory.p85TempBoxBL.RunTailoredProcedure(intRecordPID, BO.ASS.GetConfigVal(strEvent))
         End If
         Return True
     End Function

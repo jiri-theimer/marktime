@@ -302,6 +302,15 @@ Partial Public Class query_builder
     Protected WithEvents panJ71 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''j70IsNegation control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70IsNegation As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''rpJ71 control.
     '''</summary>
     '''<remarks>

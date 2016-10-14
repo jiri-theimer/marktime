@@ -222,9 +222,12 @@ Class p31WorksheetBL
             End If
         End If
         If _IsBatchValidationOnly Then Return True 'v režimu hromadné kontroly vstupních úkonů - zatím se neukládá
-        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p31") Then Return False
+        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p31_beforesave") Then Return False
 
-        Return _cDL.SaveOrigRecord(cRec, cValidate.p33ID, lisFF)
+        If _cDL.SaveOrigRecord(cRec, cValidate.p33ID, lisFF) Then
+            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p31_aftersave")
+            Return True
+        End If
     End Function
     
    

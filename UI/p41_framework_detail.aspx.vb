@@ -326,7 +326,13 @@ Public Class p41_framework_detail
             mq2.p41ParentID = cRec.PID
             topLink7.Text += "<span class='badge1'>" & Master.Factory.p41ProjectBL.GetList(mq2).Count.ToString & "</span>"
         End If
-
+        If Master.Factory.p41ProjectBL.IsMyFavouriteProject(cRec.PID) Then
+            cmdFavourite.ImageUrl = "Images/favourite.png"
+            cmdFavourite.ToolTip = "Vyřadit z mých oblíbených projektů"
+        Else
+            cmdFavourite.ImageUrl = "Images/not_favourite.png"
+            cmdFavourite.ToolTip = "Zařadit do mých oblíbených projektů"
+        End If
 
         RefreshP40(cRec)
     End Sub
@@ -516,7 +522,10 @@ Public Class p41_framework_detail
             Case "p51-save"
                 Master.Notify("Pokud jste změnili sazby v ceníku a potřebujete přepočítat sazby u již uložené rozpracovanosti, použijte k tomu nástroj [Přepočítat sazby rozpracovaných úkonů].", NotifyLevel.InfoMessage)
 
-
+            Case "favourite"
+                Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
+                ReloadPage(Master.DataPID.ToString)
+               
             Case Else
                 ReloadPage(Master.DataPID.ToString)
         End Select

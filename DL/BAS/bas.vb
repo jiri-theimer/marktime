@@ -183,7 +183,7 @@
                     Case BO.x29IdEnum.p28Contact
                         sql.Append(" AND " & GetQuickQuerySQL_p28(BO.myQueryP28_QuickQuery.OpenClients))
                     Case BO.x29IdEnum.p41Project
-                        sql.Append(" AND " & GetQuickQuerySQL_p41(BO.myQueryP41_QuickQuery.OpenProjects))
+                        sql.Append(" AND " & GetQuickQuerySQL_p41(BO.myQueryP41_QuickQuery.OpenProjects, cUser))
                     Case BO.x29IdEnum.p91Invoice
                         sql.Append(" AND " & GetQuickQuerySQL_p91(BO.myQueryP91_QuickQuery.OpenInvoices))
                     Case BO.x29IdEnum.j02Person
@@ -200,7 +200,7 @@
                     Case BO.x29IdEnum.p28Contact
                         sql.Append("AND " & GetQuickQuerySQL_p28(BO.myQueryP28_QuickQuery.Removed2Bin))
                     Case BO.x29IdEnum.p41Project
-                        sql.Append(" AND " & GetQuickQuerySQL_p41(BO.myQueryP41_QuickQuery.Removed2Bin))
+                        sql.Append(" AND " & GetQuickQuerySQL_p41(BO.myQueryP41_QuickQuery.Removed2Bin, cUser))
                     Case BO.x29IdEnum.p91Invoice
                         sql.Append(" AND " & GetQuickQuerySQL_p91(BO.myQueryP91_QuickQuery.Removed2Bin))
                     Case BO.x29IdEnum.j02Person
@@ -369,7 +369,7 @@
                 If x > 0 Then sql.Append(" OR ")
                 Select Case cRec.x29ID
                     Case BO.x29IdEnum.p41Project
-                        sql.Append(GetQuickQuerySQL_p41(CType(c.j71RecordPID, BO.myQueryP41_QuickQuery)))
+                        sql.Append(GetQuickQuerySQL_p41(CType(c.j71RecordPID, BO.myQueryP41_QuickQuery), cUser))
                     Case BO.x29IdEnum.p28Contact
                         sql.Append(GetQuickQuerySQL_p28(CType(c.j71RecordPID, BO.myQueryP28_QuickQuery)))
                     Case BO.x29IdEnum.p91Invoice
@@ -389,8 +389,12 @@
             sql.Append(")")
         End If
 
+        If cRec.j70IsNegation Then
+            Return "NOT (" & TrimWHERE(sql.ToString) & ")"
+        Else
+            Return TrimWHERE(sql.ToString)
+        End If
 
-        Return TrimWHERE(sql.ToString)
     End Function
     Shared Function GetQuickQuerySQL_p56(quickQueryFlag As BO.myQueryP56_QuickQuery) As String
         Select Case quickQueryFlag
@@ -505,7 +509,7 @@
                 Return ""
         End Select
     End Function
-    Shared Function GetQuickQuerySQL_p41(quickQueryFlag As BO.myQueryP41_QuickQuery) As String
+    Shared Function GetQuickQuerySQL_p41(quickQueryFlag As BO.myQueryP41_QuickQuery, cUser As BO.j03UserSYS) As String
         Select Case quickQueryFlag
             Case BO.myQueryP41_QuickQuery.OpenProjects
                 Return "getdate() BETWEEN a.p41ValidFrom AND a.p41ValidUntil"
@@ -552,6 +556,8 @@
                 Return "a.p41ParentID IS NOT NULL"
             Case BO.myQueryP41_QuickQuery.WithChildProject
                 Return "a.p41ID IN (SELECT p41ParentID FROM p41Project WHERE p41ParentID IS NOT NULL)"
+            Case BO.myQueryP41_QuickQuery.Favourites
+                Return "a.p41ID IN (SELECT p41ID FROM j13FavourteProject WHERE j03ID=" & cUser.PID.ToString & ")"
             Case Else
                 Return ""
         End Select

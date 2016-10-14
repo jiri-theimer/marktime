@@ -64,7 +64,7 @@
                     <td>
                         <asp:TextBox ID="j02Email" runat="server" Style="width: 300px;"></asp:TextBox>
                         <div>
-                            <asp:RegularExpressionValidator ID="emailValidator" runat="server" Display="Dynamic" ForeColor="Red" ErrorMessage="Zadejte validní e-mail adresu." ValidationExpression="^[\w\.\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]{1,})*(\.[a-zA-Z]{2,4}){1,2}$" ControlToValidate="j02Email"></asp:RegularExpressionValidator>
+                            <asp:RegularExpressionValidator ID="emailValidator" runat="server" Display="Dynamic" ForeColor="Red" ErrorMessage="Zadejte validní e-mail adresu." ValidationExpression="^[\w\.\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]{1,})*(\.[a-zA-Z]{2,6}){1,2}$" ControlToValidate="j02Email"></asp:RegularExpressionValidator>
                         </div>
 
 

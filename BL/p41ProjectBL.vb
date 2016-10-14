@@ -18,6 +18,7 @@
     Function ConvertFromDraft(intPID As Integer) As Boolean
     Function HasChildRecords(intPID As Integer) As Boolean
     Function GetTopProjectsByWorksheetEntry(intJ02ID As Integer, intGetTopRecs As Integer) As List(Of Integer)
+    Function IsMyFavouriteProject(intPID As Integer) As Boolean
 End Interface
 Class p41ProjectBL
     Inherits BLMother
@@ -137,11 +138,11 @@ Class p41ProjectBL
         If Not ValidateBeforeSave(cRec, lisO39, lisP30, lisX69, lisFF) Then
             Return False
         End If
-        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p41") Then Return False
+        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p41_beforesave") Then Return False
 
 
         If _cDL.Save(cRec, lisO39, lisP30, lisX69, lisFF, _LastSavedPID) Then
-            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p41")
+            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p41_aftersave")
             If cRec.PID = 0 Then
                 Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
                 If cP42.b01ID > 0 Then
@@ -284,5 +285,8 @@ Class p41ProjectBL
 
     Public Function GetTopProjectsByWorksheetEntry(intJ02ID As Integer, intGetTopRecs As Integer) As List(Of Integer) Implements Ip41ProjectBL.GetTopProjectsByWorksheetEntry
         Return _cDL.GetTopProjectsByWorksheetEntry(intJ02ID, intGetTopRecs)
+    End Function
+    Public Function IsMyFavouriteProject(intPID As Integer) As Boolean Implements Ip41ProjectBL.IsMyFavouriteProject
+        Return _cDL.IsMyFavouriteProject(intPID)
     End Function
 End Class

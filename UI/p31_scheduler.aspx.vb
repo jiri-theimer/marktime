@@ -61,7 +61,7 @@ Public Class p31_scheduler
             Select Case Me.CurrentTasksPrefix
                 Case "p56"
                     SetupTasks()
-                Case "p41"
+                Case "p41", "favourites"
                     SetupProjects()
                 Case Else
                     tasks.Visible = False
@@ -123,19 +123,24 @@ Public Class p31_scheduler
         mq.Closed = BO.BooleanQueryMode.NoQuery
         mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
         mq.Closed = BO.BooleanQueryMode.NoQuery
+        If Me.CurrentTasksPrefix = "favourites" Then mq.IsFavourite = BO.BooleanQueryMode.TrueQuery
 
         Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
-        If lis.Count > 10 Then
+        If lis.Count > 10 And Me.CurrentTasksPrefix = "p41" Then
             lis = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID)
         End If
 
 
+        
         If lis.Count = 0 Then
             Me.lblTasksHeader.Text = "V systému nemáte otevřený projekt."
+            If Me.CurrentTasksPrefix = "favourites" Then Me.lblTasksHeader.Text += "<img src='Images/favourite.png'/>"
             tasks.Visible = False
             Return
         Else
-            Me.lblTasksHeader.Text = String.Format("Přetáhni projekt do kalendáře ({0}):", lis.Count.ToString)
+            Dim s As String = lis.Count.ToString
+            If Me.CurrentTasksPrefix = "favourites" Then s += "<img src='/Images/favourite.png'/>"
+            Me.lblTasksHeader.Text = String.Format("Přetáhni projekt do kalendáře ({0}):", s)
             tasks.Visible = True
         End If
 

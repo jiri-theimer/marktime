@@ -81,9 +81,9 @@ Public Class p85TempBoxDL
             Save(cRec)
         Next
     End Sub
-    Public Function SaveObjectReflection2Temp(strGUID As String, cRec As Object, strRecordPrefix As String) As Boolean
+    Public Function SaveObjectReflection2Temp(strGUID As String, cRec As Object) As Boolean
         Dim lisNames As List(Of String) = BO.BAS.GetPropertiesNames(cRec), s As New System.Text.StringBuilder
-        For Each strName As String In lisNames.Where(Function(p) p.IndexOf(strRecordPrefix & "Free") < 0)
+        For Each strName As String In lisNames.Where(Function(p) p.IndexOf("Free") < 0)
 
             Dim val As Object = BO.BAS.GetPropertyValue(cRec, strName)
             Dim strVal As String = "NULL"

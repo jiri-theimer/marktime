@@ -104,6 +104,15 @@ Partial Public Class p31_framework
     Protected WithEvents cmdNewTask As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''cmdFavourite control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFavourite As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''cbxGroupBy control.
     '''</summary>
     '''<remarks>

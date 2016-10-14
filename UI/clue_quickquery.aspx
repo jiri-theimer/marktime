@@ -19,7 +19,7 @@
 
 
         <asp:Panel ID="panJ71" runat="server" CssClass="content-box2">
-            <div class="title">Podmínka filtru</div>
+            <div class="title"><asp:label id="lblHeader" runat="server" Text="Podmínka filtru"></asp:label></div>
             <div class="content">
                 <div class="div6">
                     <asp:Label ID="lblBinFlag" runat="server" CssClass="valboldblue"></asp:Label>

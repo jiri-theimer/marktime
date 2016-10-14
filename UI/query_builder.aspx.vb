@@ -597,6 +597,7 @@
         Dim cRec As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(Master.DataPID)
         With cRec
             j70Name.Text = .j70Name
+            Me.j70IsNegation.Checked = .j70IsNegation
             cmdDelete.Visible = True
             cmdNew.Visible = True
             lblTimeStamp.Text = .Timestamp
@@ -626,7 +627,7 @@
         j70ID.SelectedIndex = 0
         j70Name.Text = "" : j70Name.Focus()
         Me.opgBin.SelectedValue = "0"
-
+        Me.j70IsNegation.Checked = False
         RefreshRecord()
     End Sub
 
@@ -652,6 +653,7 @@
             With cRec
                 .x29ID = Me.CurrentX29ID
                 .j70Name = j70Name.Text
+                .j70IsNegation = Me.j70IsNegation.Checked
                 .j70BinFlag = BO.BAS.IsNullInt(Me.opgBin.SelectedValue)
             End With
 

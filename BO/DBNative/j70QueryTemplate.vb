@@ -15,6 +15,7 @@ Public Class j70QueryTemplate
     Public Property j02ID_Owner As Integer
     Public Property j70IsSystem As Boolean
     Public Property j70BinFlag As Integer
+    Public Property j70IsNegation As Boolean
 
     Private Property _Mark As String
     Public ReadOnly Property NameWithMark As String

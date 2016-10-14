@@ -1,6 +1,6 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
-    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "") As String
+    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 10) As String
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
         With grid
@@ -16,7 +16,7 @@ Public Class basUIMT
                 '.AddSystemColumn(5)
 
                 .PageSize = intPageSize
-                .AddSystemColumn(5)
+                If intSysColumnWidth > 0 Then .AddSystemColumn(intSysColumnWidth)
                 .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
                 .AllowFilteringByColumn = cJ74.j74IsFilteringByColumn
                 If cJ74.j74IsVirtualScrolling Then
@@ -301,6 +301,7 @@ Public Class basUIMT
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
+            If Not cRec.Item("j13ID") Is System.DBNull.Value Then dataItem("systemcolumn").CssClass = "favourite"
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"

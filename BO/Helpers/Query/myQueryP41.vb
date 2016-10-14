@@ -27,6 +27,7 @@ Public Enum myQueryP41_QuickQuery
     WithoutContactPersons = 17
     WithParentProject = 18
     WithChildProject = 19
+    Favourites = 20
 End Enum
 Public Class myQueryP41
     Inherits myQuery
@@ -44,6 +45,7 @@ Public Class myQueryP41
     Public Property p41PlanUntil_D2 As Date?
 
     Public Property p41ParentID As Integer
+    Public Property IsFavourite As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
 
     Public Property j70ID As Integer
     Public Property p41WorksheetOperFlag As BO.p41WorksheetOperFlagEnum = p41WorksheetOperFlagEnum._NotSpecified

@@ -8112,6 +8112,9 @@ declare @ref_pid int
 if exists(select p31ID FROM p31Worksheet where p32ID=@pid)
  set @err_ret='Minimálnì jeden worksheet záznam má vazbu na tuto aktivitu.'
 
+if exists(select p63ID FROM p63Overhead where p32ID=@pid)
+ set @err_ret='Aktivita má vazbu na èíselník režijní fakturaèní pøirážky.'
+
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p51ID from p52PriceList_Item WHERE p32ID=@pid
 if @ref_pid is not null
@@ -9702,6 +9705,57 @@ END CATCH
 
 GO
 
+----------P---------------p63_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p63_delete') and type = 'P')
+ drop procedure p63_delete
+GO
+
+
+
+
+
+
+CREATE   procedure [dbo].[p63_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p63id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu  z tabulky p63Overhead
+
+
+if exists(select p28ID FROM p28Contact WHERE p63ID=@pid)
+ set @err_ret='Má vazbu na minimálnì jednoho klienta.'
+
+if exists(select p91ID FROM p91Invoice WHERE p63ID=@pid)
+ set @err_ret='Má vazbu na minimálnì jednu vystavenou fakturu.'
+
+if isnull(@err_ret,'')<>''
+ return 
+
+DELETE FROM p63Overhead WHERE p63ID=@pid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p86_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p86_delete') and type = 'P')
@@ -10178,7 +10232,7 @@ if @o38id_delivery is null
 update p91Invoice set o38ID_Primary=@o38id_primary,@o38id_delivery=o38id_delivery,p41ID_First=@p41id_first
 where p91ID=@ret_p91id
 
-update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id
+update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id,p63ID=b.p63ID
 ,p91userupdate=@login,p91dateupdate=getdate()
 ,p91Text1=@p91text1
 ,p91Datep31_From=@p91datep31_from,p91Datep31_Until=@p91datep31_until,j19id=@j19id

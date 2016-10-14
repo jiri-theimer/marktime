@@ -60,9 +60,11 @@ Class p91InvoiceBL
         If lis.Count = 0 Then
             _Error = "Na vstupu do faktury není ani jeden worksheet úkon." : Return 0
         End If
+        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cCreate, Nothing, "p91_beforecreate") Then Return 0
+
         Dim intP91ID As Integer = _cDL.Create(cCreate)
         If intP91ID <> 0 Then
-            Me.RaiseAppEvent_TailoringAfterSave(intP91ID, "p91", "_aftercreate")
+            Me.RaiseAppEvent_TailoringAfterSave(intP91ID, "p91_aftercreate")
 
             Me.RaiseAppEvent(BO.x45IDEnum.p91_new, intP91ID)
             Return intP91ID
@@ -85,6 +87,7 @@ Class p91InvoiceBL
             If _Error <> "" Then Return False
         End With
         If _cDL.Update(cRec, lisX69, lisFF) Then
+            Me.RaiseAppEvent_TailoringAfterSave(cRec.PID, "p91_afterupdate")
             Me.RaiseAppEvent(BO.x45IDEnum.p91_update, cRec.PID)
             Return True
         Else

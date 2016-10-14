@@ -169,6 +169,12 @@
     background-position: center;
 }
 
+.favourite {
+    background-image: url('../Images/favourite.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .overtime {
     background-image: url('../Images/overtime.png');
     background-repeat: no-repeat;

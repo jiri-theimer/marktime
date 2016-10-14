@@ -89,13 +89,13 @@ Class p56TaskBL
                 _Error = BL.BAS.ErrorMessage : Return False
             End If
         End If
-        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p56") Then Return False
+        If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p56_beforesave") Then Return False
 
         If _cDL.Save(cRec, lisX69, lisFF) Then
             If strUploadGUID <> "" Then
                 Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.p56Task, _LastSavedPID)
             End If
-            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p56")
+            Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p56_aftersave")
             If cRec.PID = 0 Then
                 If cP57.b01ID > 0 Then
                     InhaleDefaultWorkflowMove(_LastSavedPID, cP57.b01ID)    'je třeba nahodit výchozí workflow stav

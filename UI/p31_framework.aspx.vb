@@ -158,16 +158,17 @@ Public Class p31_framework
             .Items.Clear()
             .Items.Add(New ListItem(BL.My.Resources.common.BezSouhrnu, ""))
             .Items.Add(New ListItem(BL.My.Resources.common.Klient, "Client"))
-            If intTabIndex < 2 Then
-                .Items.Add(New ListItem(BL.My.Resources.common.TypProjektu, "p42Name"))
-                .Items.Add(New ListItem(BL.My.Resources.common.Stredisko, "j18Name"))
-
-            Else
+            If intTabIndex = 2 Then
                 .Items.Add(New ListItem(BL.My.Resources.common.TypUkolu, "p57Name"))
                 .Items.Add(New ListItem(BL.My.Resources.common.Projekt, "ProjectCodeAndName"))
                 .Items.Add(New ListItem(BL.My.Resources.common.Prijemce, "ReceiversInLine"))
                 .Items.Add(New ListItem(BL.My.Resources.common.Milnik, "o22Name"))
                 .Items.Add(New ListItem(BL.My.Resources.common.VlastnikZaznamu, "Owner"))
+
+            Else
+                .Items.Add(New ListItem(BL.My.Resources.common.TypProjektu, "p42Name"))
+                .Items.Add(New ListItem(BL.My.Resources.common.Stredisko, "j18Name"))
+                
             End If
         End With
     End Sub
@@ -183,13 +184,13 @@ Public Class p31_framework
             End If
             Dim strAddSqlFrom As String = ""
             If tabs1.SelectedIndex = 0 Then
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 16)
             Else
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 16)
             End If
             hidFrom.Value = strAddSqlFrom
 
-            If tabs1.SelectedIndex = 1 Then grid1.AllowFilteringByColumn = False 'v top10 se nefiltruje
+            If tabs1.SelectedIndex = 1 Or tabs1.SelectedIndex = 3 Then grid1.AllowFilteringByColumn = False 'v top10 a v oblíbených se nefiltruje
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
         End With
@@ -209,16 +210,20 @@ Public Class p31_framework
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
         If Not TypeOf e.Item Is GridDataItem Then Return
-
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+        
 
         If Me.GridPrefix = "p41" Then
-            If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
-            dataItem("systemcolumn").Text = "<a title='Zapsat úkon' href='javascript:nw(" & cRec.Item("pid").ToString & ")'><img src='Images/new.png' border=0/></a>"
+            'If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+            'dataItem("systemcolumn").Text = "<a title='Zapsat úkon' href='javascript:nw(" & cRec.Item("pid").ToString & ")'><img src='Images/new.png' border=0/></a>"
+            basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, False)
+            With dataItem("systemcolumn")
+                .Text = "<a class='reczoom' title='Detail projektu' rel='clue_p41_record.aspx?&pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>" & .Text
+            End With
         Else
             With dataItem("systemcolumn")
-                .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?&pid=" & cRec.Item("pid").ToString & "'>i</a>"
+                .Text = "<a class='reczoom' title='Detail úkolu' rel='clue_p56_record.aspx?&pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>"
             End With
             If Not cRec.Item("p56PlanUntil_Grid") Is System.DBNull.Value Then
                 If Now > cRec.Item("p56PlanUntil_Grid") Then dataItem.ForeColor = Drawing.Color.DarkRed
@@ -253,9 +258,11 @@ Public Class p31_framework
                     .MG_PageSize = 0
                     .MG_CurrentPageIndex = 0
                 End If
+
             End With
 
             InhaleMyQuery(mq)
+            If tabs1.SelectedIndex = 3 Then mq.IsFavourite = BO.BooleanQueryMode.TrueQuery
 
             Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
             If dt Is Nothing Then
@@ -320,7 +327,10 @@ Public Class p31_framework
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
-            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
+            If tabs1.SelectedIndex = 0 Then
+                .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
+            End If
+
             If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
             If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then .j02ID_ExplicitQueryFor = Me.CurrentJ02ID
 

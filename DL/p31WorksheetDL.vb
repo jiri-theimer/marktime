@@ -159,7 +159,11 @@
                 pars.Add("pid", cRec.PID)
             End If
             With cRec
-                pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(_curUser.j02ID), DbType.Int32)
+                If .PID = 0 Then
+                    pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(_curUser.j02ID), DbType.Int32)
+                Else
+                    pars.Add("j02ID_Owner", .j02ID, DbType.Int32)
+                End If
                 pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
                 pars.Add("j02ID", BO.BAS.IsNullDBKey(.j02ID), DbType.Int32)
                 pars.Add("p56ID", BO.BAS.IsNullDBKey(.p56ID), DbType.Int32)

@@ -111,6 +111,11 @@
 
         }
 
+        function favourite(){
+            hardrefresh(<%=Master.DataPID%>,'favourite');
+            parent.window.location.replace("p41_framework.aspx?pid=<%=Master.DataPID%>");
+        }
+
         function hardrefresh(pid, flag) {
             
             if (flag=="p41-create"){                
@@ -334,10 +339,14 @@
 
     <asp:Panel ID="panSwitch" runat="server" Style="height: 300px; overflow: auto;">
         <div class="content-box1">
-            <div class="title">
+            <div class="title">                
                 <img src="Images/properties.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
+                
+                <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>                
+
                 <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
+                <asp:HyperLink ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" NavigateUrl="javascript:favourite()" CssClass="button-link" Style="float:right;vertical-align: top;padding:0px; margin-right: 20px;"></asp:HyperLink>
+
             </div>
             <div class="content">
 

@@ -122,6 +122,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents cmdNewWindow As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''cmdFavourite control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFavourite As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''lblProject control.
     '''</summary>
     '''<remarks>
