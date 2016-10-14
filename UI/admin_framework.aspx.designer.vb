@@ -149,15 +149,6 @@ Partial Public Class admin_framework
     Protected WithEvents p32ID_CreditNote As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''p32ID_Overhead control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p32ID_Overhead As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''panP87 control.
     '''</summary>
     '''<remarks>

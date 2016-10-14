@@ -182,6 +182,7 @@
     <Content Include="b65_record.aspx" />
     <Content Include="blank.aspx" />
     <Content Include="clue_o24_record.aspx" />
+    <Content Include="clue_p41_myworksheet.aspx" />
     <Content Include="clue_p48_record.aspx" />
     <Content Include="drilldown_designer.aspx" />
     <Content Include="entity_framework.aspx" />
@@ -667,6 +668,13 @@
     </Compile>
     <Compile Include="clue_o24_record.aspx.vb">
       <DependentUpon>clue_o24_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_p41_myworksheet.aspx.designer.vb">
+      <DependentUpon>clue_p41_myworksheet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_p41_myworksheet.aspx.vb">
+      <DependentUpon>clue_p41_myworksheet.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="clue_p48_record.aspx.designer.vb">

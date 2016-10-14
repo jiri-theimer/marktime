@@ -246,11 +246,7 @@ Public Class admin_framework
                 Dim cP32 As BO.p32Activity = Master.Factory.p32ActivityBL.Load(.GetValueInteger("p32ID_CreditNote"))
                 If Not cP32 Is Nothing Then Me.p32ID_CreditNote.Text = cP32.NameWithSheet
             End If
-            If .GetValueInteger("p32ID_Overhead") <> 0 Then
-                Dim cP32 As BO.p32Activity = Master.Factory.p32ActivityBL.Load(.GetValueInteger("p32ID_Overhead"))
-                If Not cP32 Is Nothing Then Me.p32ID_Overhead.Text = cP32.NameWithSheet
-            End If
-           
+
             Me.Upload_Folder.Text = .GetValueString("Upload_Folder")
             If Me.Upload_Folder.Text <> "" Then Me.Upload_Folder.Text = "*******************" & Right(Me.Upload_Folder.Text, 5)
             Me.robot_host.Text = .GetValueString("robot_host")

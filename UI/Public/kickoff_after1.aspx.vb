@@ -563,14 +563,18 @@
         
         CreateQuery("Otevřené projekty", BO.x29IdEnum.p41Project, 1)
         CreateQuery("Projekty v archivu", BO.x29IdEnum.p41Project, 2)
-        CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p41Project, 0, "_other", 3)
-        CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p41Project, 0, "_other", 5)
-        CreateQuery("Projekty s fakturou", BO.x29IdEnum.p41Project, 0, "_other", 15)
+        CreateQuery("Můj seznam oblíbených", BO.x29IdEnum.p41Project, 0, "_other", 20)
+        CreateQuery("Obsahují rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p41Project, 0, "_other", 3)
+        CreateQuery("Obsahují schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p41Project, 0, "_other", 5)
+        CreateQuery("Projekty s vystavenou fakturou", BO.x29IdEnum.p41Project, 0, "_other", 15)
+        CreateQuery("Došlo k překročení limitu rozpracovanosti", BO.x29IdEnum.p41Project, 0, "_other", 4)
         CreateQuery("Projekty s otevřeným úkolem", BO.x29IdEnum.p41Project, 0, "_other", 6)
         CreateQuery("Projekty s opakovanou odměnou/paušálem", BO.x29IdEnum.p41Project, 0, "_other", 10)
         CreateQuery("Projekty v režimu DRAFT", BO.x29IdEnum.p41Project, 0, "_other", 11)
         CreateQuery("Není přiřazen ceník sazeb", BO.x29IdEnum.p41Project, 0, "_other", 13)
         CreateQuery("Projekty s kontaktní osobou", BO.x29IdEnum.p41Project, 0, "_other", 16)
+        CreateQuery("Má nad sebou nadřízený projekt", BO.x29IdEnum.p41Project, 0, "_other", 18)
+        CreateQuery("Má pod sebou podřízené projekty", BO.x29IdEnum.p41Project, 0, "_other", 19)
 
 
         CreateQuery("Otevření klienti", BO.x29IdEnum.p28Contact, 1)
@@ -578,14 +582,42 @@
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.p28Contact, 0, "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.p28Contact, 0, "_other", 5)
         CreateQuery("Klienti s kontaktní osobou", BO.x29IdEnum.p28Contact, 0, "_other", 16)
+        CreateQuery("Má nad sebou nadřízeného klienta", BO.x29IdEnum.p28Contact, 0, "_other", 25)
+        CreateQuery("Má pod sebou podřízené klienty", BO.x29IdEnum.p28Contact, 0, "_other", 26)
 
         CreateQuery("Otevřené osoby", BO.x29IdEnum.j02Person, 1)
         CreateQuery("Osoby v archivu", BO.x29IdEnum.j02Person, 2)
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.j02Person, 0, "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.j02Person, 0, "_other", 5)
 
+        CreateQuery("Neuhrazené po splatnosti", BO.x29IdEnum.p91Invoice, 0, "_other", 4)
+        CreateQuery("Ve splatnosti", BO.x29IdEnum.p91Invoice, 0, "_other", 3)
+        CreateQuery("DRAFT doklady", BO.x29IdEnum.p91Invoice, 0, "_other", 5)
+        CreateQuery("S oficiálním číslem", BO.x29IdEnum.p91Invoice, 0, "_other", 6)
+        CreateQuery("Svázané se zálohou", BO.x29IdEnum.p91Invoice, 0, "_other", 7)
+        CreateQuery("Svázané s opravným dokladem", BO.x29IdEnum.p91Invoice, 0, "_other", 8)
+        CreateQuery("S haléřovým zaokrouhlením", BO.x29IdEnum.p91Invoice, 0, "_other", 9)
+        CreateQuery("S přepotem  měnového kurzu", BO.x29IdEnum.p91Invoice, 0, "_other", 13)
+        CreateQuery("S nulovou sazbou DPH", BO.x29IdEnum.p91Invoice, 0, "_other", 12)
+
         CreateQuery("Výdaje", BO.x29IdEnum.p31Worksheet, 0, "p34id", 3, "Výdaje")
-        CreateQuery("Fixní odměny", BO.x29IdEnum.p31Worksheet, 0, "p34id", 4, "Odměny k fakturaci")
+        CreateQuery("Pevné (paušální) odměny", BO.x29IdEnum.p31Worksheet, 0, "p34id", 4, "Pevné (paušální) odměny")
+        CreateQuery("Rozpracovanost, čeká na schvalování", BO.x29IdEnum.p31Worksheet, 0, "_other", 1)
+        CreateQuery("Schváleno, čeká na fakturaci", BO.x29IdEnum.p31Worksheet, 0, "_other", 2)
+        CreateQuery("Vyfakturováno", BO.x29IdEnum.p31Worksheet, 0, "_other", 3)
+        CreateQuery("Přesunuto do archivu", BO.x29IdEnum.p31Worksheet, 0, "_other", 4)
+        CreateQuery("Přiřazena kontaktní osoba", BO.x29IdEnum.p31Worksheet, 0, "_other", 6)
+        CreateQuery("Přiřazen úkol", BO.x29IdEnum.p31Worksheet, 0, "_other", 9)
+        CreateQuery("Vygenerováno automaticky robotem", BO.x29IdEnum.p31Worksheet, 0, "_other", 13)
+
+
+        CreateQuery("Otevřené úkoly", BO.x29IdEnum.p56Task, 1)
+        CreateQuery("Uzavřené úkoly (v archivu)", BO.x29IdEnum.p56Task, 2)
+        CreateQuery("Rozpracované úkony, čeká na schvalování", BO.x29IdEnum.p31Worksheet, 0, "_other", 3)
+        CreateQuery("Schválené úkony, čeká na fakturaci", BO.x29IdEnum.p31Worksheet, 0, "_other", 5)
+        CreateQuery("Vyplněn plán/limit hodin", BO.x29IdEnum.p31Worksheet, 0, "_other", 9)
+        CreateQuery("Vyplněn termín dokončení", BO.x29IdEnum.p31Worksheet, 0, "_other", 6)
+        CreateQuery("Je po termínu dokončení", BO.x29IdEnum.p31Worksheet, 0, "_other", 7)
 
     End Sub
 

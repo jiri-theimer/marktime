@@ -55,7 +55,9 @@
                     End If
                 End If
                 panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible)
-
+                If .SysUser.j04IsMenu_Project Then
+                    RefreshFavourites()
+                End If
             End With
 
             With Master.Factory.j03UserBL
@@ -79,9 +81,10 @@
                         ShowChart2("5")
                         .SetUserParam("j03_mypage_greeting-last_step", "0")
                 End Select
-               
+
             End With
             RefreshBoxes()
+
 
         End If
     End Sub
@@ -117,6 +120,23 @@
             imgWelcome.ImageUrl = "Images/welcome/" & lisFiles(x)
         End If
 
+    End Sub
+
+    Private Sub RefreshFavourites()
+        Dim mq As New BO.myQueryP41
+        mq.IsFavourite = BO.BooleanQueryMode.TrueQuery
+        Dim lisP41 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
+        If lisP41.Count > 0 Then
+            menu1.FindItemByValue("favourites").Visible = True
+            With menu1.FindItemByValue("favourites").Items
+                For Each c In lisP41
+                    Dim link1 As New Telerik.Web.UI.RadPanelItem(c.FullName, "p41_framework.aspx?pid=" & c.PID.ToString)
+                    link1.ImageUrl = "Images/project.png"
+                    .Add(link1)
+                Next
+            End With
+            menu1.FindItemByValue("favourites").Text += " (" & lisP41.Count.ToString & ")"
+        End If
     End Sub
 
     Private Sub RefreshBoxes()

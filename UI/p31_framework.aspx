@@ -198,8 +198,7 @@
 
                         <img src="Images/arrow_down.gif" alt="Nastavení" />
                     </button>
-                  
-                    <asp:HyperLink ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" NavigateUrl="javascript:favourite()" CssClass="button-link" Style="float:right;padding:0px; margin-right: 20px;width:20px;"></asp:HyperLink>
+                                      
                 </div>
 
 

@@ -1,6 +1,7 @@
 ﻿table.PluginDataTable {
     border-collapse: collapse;
-	font-size:12px;
+	font-size:100%;
+width:100%;
 }
 
 table.PluginDataTable tr:hover {

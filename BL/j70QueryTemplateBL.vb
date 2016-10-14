@@ -124,7 +124,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(1, "Rozpracovanost, čeká na schvalování"))
                 lis.Add(New BO.OtherQueryItem(2, "Schváleno, čeká na fakturaci"))
                 lis.Add(New BO.OtherQueryItem(3, "Vyfakturováno"))
-                lis.Add(New BO.OtherQueryItem(4, "Rozpracovanost přesunutá do archivu"))
+                lis.Add(New BO.OtherQueryItem(4, "Přesunuto do archivu"))
                 lis.Add(New BO.OtherQueryItem(6, "Přiřazená kontaktní osoba"))
                 lis.Add(New BO.OtherQueryItem(7, "Přiřazen dokument"))
                 lis.Add(New BO.OtherQueryItem(8, "Vyplněná výchozí korekce úkonu"))

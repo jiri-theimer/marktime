@@ -39,7 +39,7 @@
                     .DataBind()
                     .SelectedValue = cRec.x35Value
                 End With
-            Case "p32ID_Overhead", "p32ID_CreditNote"
+            Case "p32ID_CreditNote"
                 With Me.x35Value_Combo
                     .Visible = True
                     .DataTextField = "p32Name"

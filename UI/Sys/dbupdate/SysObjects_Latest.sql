@@ -1486,6 +1486,66 @@ END
 
 GO
 
+----------FN---------------p32_get_invoice_worksheet_text-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p32_get_invoice_worksheet_text') and type = 'FN')
+ drop function p32_get_invoice_worksheet_text
+GO
+
+
+
+
+
+CREATE FUNCTION [dbo].[p32_get_invoice_worksheet_text](@p91id int,@p32id int)
+RETURNS nvarchar(200) AS  
+BEGIN 
+---vrací název aktivity @p32id ve správném fakturaèním jazyku pro fakturu @p91id
+
+declare @p28id int,@p41id int,@p87id int,@ret nvarchar(500),@langindex int
+
+
+
+select @p28id=p28ID,@p41id=p41ID_First FROM p91Invoice WHERE p91ID=@p91id
+
+if @p41id is not null
+ select @p87id=p87ID FROM p41Project WHERE p41ID=@p41id
+
+if @p87id is null
+ select @p87id=p87ID FROM p28Contact WHERE p28ID=@p28id
+
+if @p87id is not null
+ select @langindex=p87LangIndex FROM p87BillingLanguage WHERE p87ID=@p87id
+
+if @langindex=1
+ select @ret=isnull(p32DefaultWorksheetText_Lang1,p32Name_BillingLang1) FROM p32Activity WHERE p32ID=@p32id
+
+if @langindex=2
+ select @ret=isnull(p32DefaultWorksheetText_Lang2,p32Name_BillingLang2) FROM p32Activity WHERE p32ID=@p32id
+
+if @langindex=3
+ select @ret=isnull(p32DefaultWorksheetText_Lang3,p32Name_BillingLang3) FROM p32Activity WHERE p32ID=@p32id
+
+if @langindex=4
+ select @ret=isnull(p32DefaultWorksheetText_Lang4,p32Name_BillingLang4) FROM p32Activity WHERE p32ID=@p32id
+
+if @ret is null
+ select @ret=isnull(p32DefaultWorksheetText,p32Name) FROM p32Activity WHERE p32ID=@p32id
+
+
+RETURN(@ret)
+
+END
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------p32_get_invoicetext-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p32_get_invoicetext') and type = 'FN')
@@ -3494,7 +3554,9 @@ BEGIN TRY
 	if exists(select x47ID FROM x47EventLog where j03ID=@pid)
       DELETE FROM x47EventLog where j03ID=@pid 
 
-	
+	if exists(select j13ID FROM j13FavourteProject WHERE j03ID=@pid)
+	 DELETE FROM j13FavourteProject WHERE j03ID=@pid
+
 
 	delete from j03User where j03ID=@pid
 
@@ -5785,14 +5847,7 @@ if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'IsCalc_FixedExchan
  end
 
 
- if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'p31_aftersave_tailoring' and x35Value is not null)
- begin
-  declare @sql varchar(1000)
-  select @sql=x35Value FROM x35GlobalParam WHERE x35Key like 'p31_aftersave_tailoring'
-  set @sql=replace(@sql,'@p31id',convert(varchar(10),@p31id))
-  set @sql=replace(@sql,'@j03id_sys',convert(varchar(10),@j03id_sys))
-  exec(@sql)
- end
+
 
 GO
 
@@ -8735,6 +8790,9 @@ BEGIN TRY
 	if exists(select p48ID FROM p48OperativePlan WHERE p41ID=@pid)
 	 DELETE FROM p48OperativePlan WHERE p41ID=@pid
 
+	if exists(select j13ID FROM j13FavourteProject WHERE p41ID=@pid)
+	 DELETE FROM j13FavourteProject WHERE p41ID=@pid
+
 	if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141)
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141
 
@@ -10086,6 +10144,93 @@ if @recalc_amount=1
 
 GO
 
+----------P---------------p91_calc_overhead-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p91_calc_overhead') and type = 'P')
+ drop procedure p91_calc_overhead
+GO
+
+
+
+
+CREATE  PROCEDURE [dbo].[p91_calc_overhead]
+@p91id int
+,@p63id int
+AS
+
+  ---vypoèítá èástku režijní pøirážky k faktuøe a založí k tomu úkon
+  ---je vnoøené do procedury p91_recalc_amount ...nefunguje samostatnì
+
+declare @j27id int,@datSupply datetime,@p41id_first int,@j02id int,@j17id int,@x15id int,@vatrate float
+
+select @j27id=a.j27id,@datSupply=a.p91DateSupply,@p41id_first=a.p41ID_First,@j02id=a.j02ID_Owner,@x15id=a.x15ID,@j17id=a.j17ID
+from p91invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
+where a.p91id=@p91id
+
+declare @overhead float,@sum float,@p32id int,@p63IsIncludeTime bit,@p63IsIncludeExpense bit,@p63IsIncludeFees bit,@p63PercentRate float,@p31text nvarchar(1000)
+
+set @overhead=0
+
+select @p32id=a.p32ID,@p63IsIncludeTime=a.p63IsIncludeTime,@p63IsIncludeExpense=a.p63IsIncludeExpense,@p63IsIncludeFees=a.p63IsIncludeFees,@p63PercentRate=a.p63PercentRate
+FROM p63Overhead a INNER JOIN p32Activity b ON a.p32ID=b.p32ID WHERE a.p63ID=@p63id
+
+select @p31text=dbo.p32_get_invoice_worksheet_text(@p91id,@p32id)
+
+if @x15id is null
+ select @x15id=x15ID FROM p32Activity where p32ID=@p32id
+
+select @vatrate=dbo.p91_get_vatrate(@x15id,@j27id,@j17id,@datSupply)
+
+
+if @p63IsIncludeTime=1
+   select @sum=sum(p31Amount_WithoutVat_Invoiced) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID WHERE a.p91ID=@p91id AND c.p33ID IN (1,3)
+
+set @overhead=isnull(@sum,0)*@p63PercentRate/100
+set @sum=0
+
+if @p63IsIncludeExpense=1
+   select @sum=sum(p31Amount_WithoutVat_Invoiced) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID WHERE a.p91ID=@p91id AND c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 AND a.p32ID<>@p32id
+  
+set @overhead=@overhead+(isnull(@sum,0)*@p63PercentRate/100)
+  set @sum=0
+
+if @p63IsIncludeFees=1
+   select @sum=sum(p31Amount_WithoutVat_Invoiced) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID WHERE a.p91ID=@p91id AND c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 AND a.p32ID<>@p32id
+
+set @overhead=@overhead+(isnull(@sum,0)*@p63PercentRate/100)
+
+
+
+
+
+if not exists(select p31ID FROM p31Worksheet WHERE p91ID=@p91id AND p32ID=@p32id AND p31UserInsert='robot')
+   begin
+    declare @c11id int
+	select top 1 @c11id=c11id from c11statperiod where c11level=5 and c11datefrom=@datSupply  
+
+    insert into p31worksheet(p91ID,j02ID,p41ID,p32ID,j27ID_Billing_Orig,p31Date,j02ID_Owner,p31UserInsert,p31UserUpdate,p31DateInsert,p31DateUpdate,p31HoursEntryFlag,p71ID,p70ID,p72ID_AfterApprove,c11ID)
+    values(@p91id,@j02id,@p41id_first,@p32id,@j27id,@datSupply,@j02id,'robot','robot',getdate(),getdate(),0,1,4,4,@c11id)
+   end
+
+declare @amount_vat float,@amount_withvat float
+
+set @amount_vat=@overhead*@vatrate/100
+set @amount_withvat=@overhead+@amount_vat
+
+UPDATE p31Worksheet set p31VatRate_Orig=@vatrate,p31Amount_WithoutVat_Orig=@overhead,p31Amount_Vat_Orig=@amount_vat,p31Amount_WithVat_Orig=@amount_withvat,p31Value_Orig=@overhead
+,p32ID=@p32id,p41ID=@p41id_first,j27ID_Billing_Orig=@j27id,p31Date=@datSupply,p31DateUpdate=getdate(),j27ID_Billing_Invoiced=@j27id
+,p31Text=@p31text,j02ID_ApprovedBy=@j02id,p31Approved_When=getdate()
+,p31VatRate_Approved=@vatrate,p31Amount_WithoutVat_Approved=@overhead,p31Amount_Vat_Approved=@amount_vat,p31Amount_WithVat_Approved=@amount_withvat,p31Value_Approved_Billing=@overhead
+,p31VatRate_Invoiced=@vatrate,p31Amount_WithoutVat_Invoiced=@overhead,p31Amount_Vat_Invoiced=@amount_vat,p31Amount_WithVat_Invoiced=@amount_withvat,p31Value_Invoiced=@overhead
+WHERE p91ID=@p91id AND p32ID=@p32id AND p31UserInsert='robot'
+
+   
+
+
+
+
+GO
+
 ----------P---------------p91_convertdraft-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p91_convertdraft') and type = 'P')
@@ -11055,9 +11200,9 @@ CREATE procedure [dbo].[p91_recalc_amount]
 
 AS
 
-declare @j27id_dest int,@datSupply datetime,@j27id_domestic int,@p92invoicetype int,@p92id int,@p41id_first int,@j17id int,@p98id int
+declare @j27id_dest int,@datSupply datetime,@j27id_domestic int,@p92invoicetype int,@p92id int,@p41id_first int,@j17id int,@p98id int,@p63id int
 
-select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID,@p98id=a.p98ID
+select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID,@p98id=a.p98ID,@p63id=a.p63ID
 from p91invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
 where a.p91id=@p91id
 
@@ -11122,6 +11267,10 @@ where p91ID=@p91id and p32ID in (select p32ID from p32Activity a inner join p34A
 update p31worksheet set j27ID_Billing_Invoiced=@j27id_dest
 where p91id=@p91id and isnull(j27ID_Billing_Invoiced,0)<>@j27id_dest
 
+
+if @p63id is not null	---režijní pøirážka k faktuøe
+ exec dbo.p91_calc_overhead @p91id,@p63id
+
 ----mìnový kurz z fakturaèní mìny do domácí mìny----------
 update p31worksheet set j27ID_Billing_Invoiced_Domestic=@j27id_domestic, p31ExchangeRate_Domestic=dbo.get_exchange_rate(1,@datSupply,j27ID_Billing_Invoiced,@j27id_domestic)
 WHERE p91id=@p91id
@@ -11130,6 +11279,8 @@ update p31worksheet set p31Amount_WithoutVat_Invoiced_Domestic=p31Amount_Without
 ,p31Amount_WithVat_Invoiced_Domestic=p31Amount_WithVat_Invoiced*p31ExchangeRate_Domestic
 ,p31Amount_Vat_Invoiced_Domestic=p31Amount_Vat_Invoiced*p31ExchangeRate_Domestic
 where p91id=@p91id
+
+
 
 --***************èástky DPH***********************************--
 declare @p91amount_withoutvat_none float

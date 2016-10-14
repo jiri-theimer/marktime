@@ -227,6 +227,8 @@ Class p31WorksheetBL
         If _cDL.SaveOrigRecord(cRec, cValidate.p33ID, lisFF) Then
             Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p31_aftersave")
             Return True
+        Else
+            Return False
         End If
     End Function
     

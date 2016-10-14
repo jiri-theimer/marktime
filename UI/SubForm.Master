@@ -105,6 +105,7 @@
 
         <asp:HiddenField ID="hidDataPID" runat="server" />
         <asp:HiddenField ID="hidPageTitle" runat="server" />
+                
 
         <telerik:RadWindow ID="okno1" runat="server" RenderMode="Native" Width="900px" Height="700px" Modal="false" VisibleStatusbar="false" Skin="MetroTouch" ShowContentDuringLoad="false" InitialBehaviors="None" Behaviors="Close,Move,Resize,Maximize" Style="z-index: 9000;">
             <Shortcuts>

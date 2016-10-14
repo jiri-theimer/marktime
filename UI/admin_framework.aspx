@@ -176,16 +176,7 @@
                     <button type="button" onclick="sw_master('x35_record.aspx?key=p32ID_CreditNote','Images/setting_32.png')">Nastavit</button>
                 </div>
             </div>
-            <div class="content-box1">
-                <div class="title">
-                    Aktivita pro režijní přirážku faktury
-                </div>
-                <div class="content">
-                    <asp:Label ID="p32ID_Overhead" runat="server" CssClass="valbold"></asp:Label>
-                    <button type="button" onclick="sw_master('x35_record.aspx?key=p32ID_Overhead','Images/setting_32.png')">Nastavit</button>
-                </div>
-            </div>
-            
+         
 
             <div class="content-box1" style="width: 100%; max-width: none;">
                 <div class="title">

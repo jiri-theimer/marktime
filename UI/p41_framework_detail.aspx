@@ -113,7 +113,7 @@
 
         function favourite(){
             hardrefresh(<%=Master.DataPID%>,'favourite');
-            parent.window.location.replace("p41_framework.aspx?pid=<%=Master.DataPID%>");
+            parent.window.location.replace("p41_framework.aspx");
         }
 
         function hardrefresh(pid, flag) {

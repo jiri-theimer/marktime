@@ -618,7 +618,7 @@
         Else
             If _Project.p61ID > 0 Then Me.hidP61ID.Value = _Project.p61ID.ToString
             Me.clue_project.Visible = True
-            Me.clue_project.Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & _Project.PID.ToString
+            Me.clue_project.Attributes.Item("rel") = "clue_p41_myworksheet.aspx?pid=" & _Project.PID.ToString & "&j02id=" & Me.CurrentJ02ID.ToString
             Dim intLangIndex As Integer = 0
             If _Project.p87ID > 0 Or _Project.p87ID_Client > 0 Then
                 Dim cP87 As BO.p87BillingLanguage = Master.Factory.ftBL.LoadP87(IIf(_Project.p87ID > 0, _Project.p87ID, _Project.p87ID_Client))

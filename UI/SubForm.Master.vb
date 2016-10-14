@@ -42,9 +42,7 @@
     Public Sub Notify(ByVal strText As String, Optional ByVal msgLevel As NotifyLevel = NotifyLevel.InfoMessage, Optional ByVal strTitle As String = "")
         basUI.NotifyMessage(Me.notify1, strText, msgLevel)
     End Sub
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-    End Sub
+    
 
     
 End Class
