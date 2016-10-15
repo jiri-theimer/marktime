@@ -261,7 +261,8 @@ Public Class p41_framework_detail
             boxP31Summary.Visible = False
         Else
             Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
-            p31summary1.RefreshData(cWorksheetSum, "p41", Master.DataPID, cRec.p41LimitHours_Notification)
+            p31summary1.RefreshData(cWorksheetSum, "p41", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), cRec.p41LimitHours_Notification, cRec.p41LimitFee_Notification)
+
         End If
 
         With Me.opgSubgrid.Tabs

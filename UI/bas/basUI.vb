@@ -21,7 +21,7 @@ Public Class basUI
             Return strPage & "?" & strAddQuerystring
         End If
     End Function
-    Public Shared Function GetCompleteQuerystring(p As HttpRequest) As String
+    Public Shared Function GetCompleteQuerystring(p As HttpRequest, Optional bolOtaznikNapred As Boolean = False) As String
         Dim s As String = ""
         With p.QueryString
             For i As Integer = 0 To .Count - 1
@@ -32,7 +32,15 @@ Public Class basUI
                 End If
             Next
         End With
-        Return s
+        If s = "" Then
+            Return ""
+        Else
+            If bolOtaznikNapred Then
+                Return "?" & s
+            Else
+                Return s
+            End If
+        End If
     End Function
 
     Public Shared Function GetCheckedItems(chkl As CheckBoxList) As List(Of Integer)

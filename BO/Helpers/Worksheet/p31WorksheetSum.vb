@@ -10,6 +10,7 @@
     Public Property WaitingOnInvoice_Hours_Count As Integer
     Public Property WaitingOnInvoice_Other_Sum As Double
     Public Property WaitingOnInvoice_Other_Count As Integer
+    Public Property WaitingOnApproval_HoursFee As Double
 
     Public Property p31Hours_Approved_Billing As Double
     Public Property p31Hours_Approved_Internal As Double

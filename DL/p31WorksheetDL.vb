@@ -626,6 +626,7 @@
         If bolIncludeWaiting4Approval Then
             Dim strInW As String = "a.p71ID IS NULL AND a.P91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"
             s.Append(",SUM(case when " & strInW & " THEN a.p31Hours_Orig end) as WaitingOnApproval_Hours_Sum,SUM(case when p34.p33ID=1 AND " & strInW & " THEN 1 end) as WaitingOnApproval_Hours_Count")
+            s.Append(",SUM(case when p34.p33ID=1 AND " & strInW & " THEN a.p31Amount_WithoutVat_Orig end) as WaitingOnApproval_HoursFee")
             s.Append(",SUM(case when p34.p33ID>1 AND " & strInW & " THEN a.p31Value_Orig end) as WaitingOnApproval_Other_Sum,SUM(case when p34.p33ID>1 AND " & strInW & " THEN 1 end) as WaitingOnApproval_Other_Count")
         End If
         If bolIncludeWaiting4Invoice Then

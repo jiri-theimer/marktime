@@ -330,7 +330,7 @@ Public Class p31_pivot
         ReloadPage()
     End Sub
     Private Sub ReloadPage()
-        Response.Redirect("p31_pivot.aspx")
+        Response.Redirect("p31_pivot.aspx" & basUI.GetCompleteQuerystring(Request,true))
     End Sub
    
 

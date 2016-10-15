@@ -39,6 +39,8 @@ Public Enum PivotSumFieldType
     p31Amount_WithoutVat_Invoiced = 23
     p31Amount_WithoutVat_FixedCurrency = 24
     p31Amount_WithoutVat_Invoiced_Domestic = 25
+    p31Amount_HoursFee_WIP = 26
+    p31Amount_WithoutVat_WIP = 27
 
     p31Hours_Approved_Billing = 2
     p31Hours_Approved_FixedPrice = 126
@@ -245,7 +247,12 @@ Public Class PivotSumField
             Case PivotSumFieldType.p31Hours_Approved_InvoiceLater
                 _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove=7 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig end)"
                 s = "Čeká na fakturaci/Hodiny [Fakturovat později]"
-           
+            Case PivotSumFieldType.p31Amount_WithoutVat_WIP
+                _SelectField = "sum(case when a.p71ID IS NULL AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
+                s = "Rozpracovanost, částka bez DPH"
+            Case PivotSumFieldType.p31Amount_HoursFee_WIP
+                _SelectField = "sum(case when a.p71ID IS NULL AND a.p91ID IS NULL AND p34.p33ID=1 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
+                s = "Honorář z rozpracovaných hodin"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

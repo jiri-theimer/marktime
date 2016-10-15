@@ -13,7 +13,7 @@
             Master.SiteMenuValue = "dashboard"
             If Master.Factory.SysUser.j02ID > 0 Then
                 Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID)
-                lblHeader.Text = cRec.j02FirstName & ", vítejte v systému"
+                lblHeader.Text = cRec.j02FirstName & ", vítejte v"
             End If
 
 
@@ -300,7 +300,6 @@
     End Sub
 
     Private Sub ShowChart1(strFlag As String)
-        If strFlag = "3" Then panChart3.Visible = True Else panChart1.Visible = True
         Dim s As String = "select round(sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end),2) as HodinyFa,round(sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end),2) as HodinyNeFa,c11.c11DateFrom as Datum"
         s += " FROM (select c11DateFrom FROM c11StatPeriod WHERE c11Level=5 AND c11DateFrom between @d1 and @d2) c11 LEFT OUTER JOIN (select * from p31Worksheet where j02ID=@j02id and p31Date between @d1 and @d2) a ON c11.c11DateFrom=a.p31Date LEFT OUTER JOIN p32Activity b ON a.p32ID=b.p32ID"
         s += " WHERE c11.c11DateFrom BETWEEN @d1 AND @d2 GROUP BY c11.c11DateFrom ORDER BY c11.c11DateFrom"
@@ -314,15 +313,22 @@
         pars.Add(New BO.PluginDbParameter("d2", Today.AddDays(1)))
         pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
-        If dt.Rows.Count = 0 Then
-            panChart1.Visible = False : Return
+        Dim dbl As Double = 0
+        For Each row As DataRow In dt.Rows
+            dbl += BO.BAS.IsNullNum(row.Item("HodinyFa")) + BO.BAS.IsNullNum(row.Item("HodinyNeFa"))
+        Next
+        If dbl = 0 Then
+            ShowImage()
+            Return
         End If
         If strFlag = "3" Then
+            panChart3.Visible = True
             With chart3
                 .DataSource = dt
                 .DataBind()
             End With
         Else
+            panChart1.Visible = True
             With chart1
                 .DataSource = dt
                 .DataBind()
@@ -334,7 +340,6 @@
     End Sub
 
     Private Sub ShowChart2(strFlag As String)
-        panChart2.Visible = True
         Dim s As String = "select round(sum(p31Hours_Orig),2) as Hodiny,left(min(p28name),20) as Podle FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY p41.p28ID_Client ORDER BY min(p28Name)"
         Select Case strFlag
             Case "3"
@@ -359,8 +364,10 @@
         If strFlag = "4" And dt.Rows.Count <= 1 Then ShowChart2("3") 'pokud pracuje v jednom sešitě, pak graf nemá smysl
 
         If dt.Rows.Count = 0 Then
-            panChart2.Visible = False : Return
+            ShowImage()
+            Return
         End If
+        panChart2.Visible = True
         With chart2
             .ChartTitle.Text = "Měsíc " & Month(d0).ToString & "/" & Year(d0).ToString & ": " & BO.BAS.FN(dt.Compute("Sum(Hodiny)", "")) & "h."
             .DataSource = dt

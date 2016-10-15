@@ -14,6 +14,51 @@ Option Explicit On
 Partial Public Class entity_worksheet_summary
 
     '''<summary>
+    '''trRealFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trRealFee As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''WaitingOnApproval_HoursFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents WaitingOnApproval_HoursFee As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''trLimitFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trLimitFee As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''p41LimitFee_Notification control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41LimitFee_Notification As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Perc2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Perc2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''lblHodiny control.
     '''</summary>
     '''<remarks>
@@ -30,24 +75,6 @@ Partial Public Class entity_worksheet_summary
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblOstatni As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lblCelkemVykazano control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblCelkemVykazano As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p31Hours_Orig control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31Hours_Orig As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''trWait4Approval control.
@@ -86,6 +113,33 @@ Partial Public Class entity_worksheet_summary
     Protected WithEvents WaitingOnApproval_Other_Sum As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''trLimitHours control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trLimitHours As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''p41LimitHours_Notification control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41LimitHours_Notification As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Perc1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Perc1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''trWait4Invoice control.
     '''</summary>
     '''<remarks>
@@ -120,4 +174,22 @@ Partial Public Class entity_worksheet_summary
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents WaitingOnInvoice_Other_Sum As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblCelkemVykazano control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCelkemVykazano As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p31Hours_Orig control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31Hours_Orig As Global.System.Web.UI.WebControls.Label
 End Class

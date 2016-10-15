@@ -238,6 +238,8 @@
                     <asp:ListItem Text="Vykázané hodiny" Value="1" Selected="true"></asp:ListItem>
                     <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
                     <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
+                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
                     <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                     <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
                     <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat]" Value="2"></asp:ListItem>
@@ -260,6 +262,8 @@
                     <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
                     <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
                     <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
+                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
                     <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
                     <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                     <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
@@ -284,6 +288,8 @@
                     <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
                     <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
                     <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
+                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
                     <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
                     <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat]" Value="2"></asp:ListItem>
@@ -306,6 +312,8 @@
                     <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
                     <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
                     <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
+                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
                     <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
                     <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
                     <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat]" Value="2"></asp:ListItem>
