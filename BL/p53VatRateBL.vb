@@ -4,7 +4,7 @@
     Function Load(intPID As Integer) As BO.p53VatRate
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQuery) As IEnumerable(Of BO.p53VatRate)
-
+    Sub TestAndSetupVatExistence(x15id As BO.x15IdEnum?, intJ27ID As Integer)
 End Interface
 Class p53VatRateBL
     Inherits BLMother
@@ -34,6 +34,29 @@ Class p53VatRateBL
 
         Return _cDL.Save(cRec)
     End Function
+    Public Sub TestAndSetupVatExistence(x15id As BO.x15IdEnum?, intJ27ID As Integer) Implements Ip53VatRateBL.TestAndSetupVatExistence
+        Dim lis As IEnumerable(Of BO.p53VatRate) = GetList(New BO.myQuery).Where(Function(p) p.j27ID = intJ27ID)
+        If x15id Is Nothing Then x15id = BO.x15IdEnum.Nic
+        If lis.Count = 0 Then
+            Dim c As New BO.p53VatRate
+            c.p53Value = 0
+            c.x15ID = BO.x15IdEnum.BezDPH
+            c.ValidFrom = DateSerial(2000, 1, 1) : c.ValidUntil = DateSerial(3000, 1, 1)
+            c.j27ID = intJ27ID
+            Save(c)
+        End If
+        If x15id > BO.x15IdEnum.BezDPH And lis.Where(Function(p) p.x15ID = x15id).Count = 0 Then
+            If GetList(New BO.myQuery).Where(Function(p) p.x15ID = x15id And p.ValidUntil > Now).Count > 0 Then
+                Dim c As New BO.p53VatRate
+                c.x15ID = x15id
+                c.p53Value = GetList(New BO.myQuery).Where(Function(p) p.x15ID = x15id And p.ValidUntil > Now).First.p53Value
+                c.ValidFrom = DateSerial(2000, 1, 1) : c.ValidUntil = DateSerial(3000, 1, 1)
+                c.j27ID = intJ27ID
+                Save(c)
+            End If
+            
+        End If
+    End Sub
     Public Function Load(intPID As Integer) As BO.p53VatRate Implements Ip53VatRateBL.Load
         Return _cDL.Load(intPID)
     End Function

@@ -10,10 +10,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <table cellpadding="6" cellspacing="2">
         <tr>
-            <td style="width:180px;">
+            <td style="width: 180px;">
                 <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název typu faktury:"></asp:Label></td>
             <td>
-                <asp:TextBox ID="p92Name" runat="server" Style="width: 400px;"></asp:TextBox>
+                <asp:TextBox ID="p92Name" runat="server" Style="width: 350px;"></asp:TextBox>
                 <span>Index pořadí:</span>
                 <telerik:RadNumericTextBox ID="p92Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
@@ -24,7 +24,7 @@
             </td>
             <td>
                 <asp:RadioButtonList ID="p92InvoiceType" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
-                    <asp:ListItem Text="Klientská faktura" Value="1" Selected></asp:ListItem>
+                    <asp:ListItem Text="Klientská faktura" Value="1" Selected="true"></asp:ListItem>
                     <asp:ListItem Text="Opravný doklad (dobropis)" Value="2"></asp:ListItem>
                 </asp:RadioButtonList>
             </td>
@@ -35,11 +35,12 @@
             </td>
             <td>
                 <uc:datacombo ID="x38ID" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="260px"></uc:datacombo>
-                <asp:Label ID="Label2" Text="Číselná řada DRAFT faktury:" runat="server" CssClass="lbl"></asp:Label>
-                <uc:datacombo ID="x38ID_Draft" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="200px"></uc:datacombo>
+                <asp:Label ID="Label2" Text="Číslování DRAFT dokladu:" runat="server" CssClass="lbl"></asp:Label>
+                <uc:datacombo ID="x38ID_Draft" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="150px"></uc:datacombo>
             </td>
         </tr>
-        <tr valign="top" >
+       
+        <tr valign="top">
             <td>
                 <asp:Label ID="lblJ27ID" Text="Výchozí měna faktury:" runat="server" CssClass="lblReq"></asp:Label>
             </td>
@@ -59,15 +60,15 @@
 
             </td>
         </tr>
-        
-       
+
+
         <tr valign="top">
             <td>
                 <asp:Label ID="lblP93ID" Text="Hlavička vystavovatele faktury:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
                 <uc:datacombo ID="p93ID" runat="server" AutoPostBack="false" DataTextField="p93Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                
+
             </td>
         </tr>
         <tr valign="top">
@@ -89,7 +90,7 @@
                 <span class="infoInForm">Sestavu přílohy je možné pořizovat i přes ostatní šablony fakturačních sestav.</span>
             </td>
         </tr>
-         <tr valign="top" id="trJ17ID" runat="server">
+        <tr valign="top" id="trJ17ID" runat="server">
             <td>
                 <asp:Label ID="lblJ17ID" Text="Výchozí DPH region faktury:" runat="server" CssClass="lbl"></asp:Label>
             </td>
@@ -117,7 +118,7 @@
 
             </td>
         </tr>
-       
+
     </table>
     <div>
         <asp:Label ID="lblp92InvoiceDefaultText1" runat="server" Text="Výchozí text faktury:" CssClass="lbl"></asp:Label>

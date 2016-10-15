@@ -10356,6 +10356,17 @@ if isnull(@j27id,0)=0
    set @j27id=2
  end
 
+ if isnull(@x15id,0)<>0
+  begin	---úvodní otestování existence nastavených DPH sazeb
+   if not exists(select p53ID FROM p53VatRate WHERE x15ID=@x15id AND j27ID=@j27id AND isnull(j17ID,0)=isnull(@j17id,0) and GETDATE() between p53ValidFrom AND p53ValidUntil)
+    begin
+     select @err_ret='Pro fakturaèní mìnu ['+(select j27Code FROM j27Currency WHERE j27ID=@j27id)+'] je tøeba v systému nadefinovat DPH sazbu hladiny ['+ x15Name+'].' FROM x15VatRateType WHERE x15ID=@x15id
+	 return
+	end
+  end
+ 
+
+
 declare @code_temp varchar(50)
 set @code_temp='TEMP'+@guid  
 
@@ -10852,6 +10863,55 @@ WHERE p91ID=@p91id AND p70ID=6
 
 update p31Worksheet set p31AKDS_FPR_OBRAT_FixedCurrency=p31Amount_WithoutVat_Invoiced_Domestic,p31AKDS_FPR_OBRAT=p31Amount_WithVat_Invoiced
 WHERE p91ID=@p91id AND p70ID=4 AND p32ID IN (SELECT p32ID FROM p32Activity a INNER JOIN p34ActivityGroup b on a.p34ID=b.p34ID WHERE b.p33ID=1)
+
+GO
+
+----------P---------------p91_get_cenovy_rozpis-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p91_get_cenovy_rozpis') and type = 'P')
+ drop procedure p91_get_cenovy_rozpis
+GO
+
+
+
+CREATE   procedure [dbo].[p91_get_cenovy_rozpis]
+@pid int					--p91id
+
+AS
+
+select p95.p95Name as Oddil
+,a.p81Amount_WithoutVat as BezDPH
+,a.p81VatRate as DPHSazba
+,a.p81Amount_Vat as DPH
+,a.p81Amount_WithVat as VcDPH
+,j27.j27Code as j27Code
+,p95.p95Ordinary as Poradi
+from
+p81InvoiceAmount a
+INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
+LEFT OUTER JOIN p95InvoiceRow p95 ON a.p95ID=p95.p95ID
+LEFT OUTER JOIN j27Currency j27 ON p91.j27ID=j27.j27ID
+where a.p91ID=@pid and a.p81Amount_WithVat<>0
+UNION
+SELECT 'Zaokrouhlení' as Oddil
+,p91RoundFitAmount as BEZDPH
+,0 as DPHSazba
+,0 as DPH
+,p91RoundFitAmount as VcDPH
+,j27.j27Code,1000 as Poradi
+FROM p91Invoice a INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID WHERE a.p91ID=@pid AND isnull(p91RoundFitAmount,0)<>0
+UNION
+SELECT 'Uhrazené zálohy' as Oddil
+,-1*(p91ProformaAmount_WithoutVat_None+p91ProformaAmount_WithoutVat_Low+p91ProformaAmount_WithoutVat_Standard) as BEZDPH
+,p91ProformaAmount_VatRate as DPHSazba
+,-1*(p91ProformaAmount_Vat_Low+p91ProformaAmount_Vat_Standard) as DPH
+,-1*p91ProformaAmount as VcDPH
+,j27.j27Code,1000 as Poradi
+FROM p91Invoice a INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID
+WHERE a.p91ID=@pid AND isnull(p91ProformaAmount,0)<>0
+ORDER BY DPHSazba DESC,Poradi
+
+
 
 GO
 

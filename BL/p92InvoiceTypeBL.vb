@@ -28,10 +28,14 @@ Class p92InvoiceTypeBL
             If Trim(.p92Name) = "" Then _Error = "Chybí název typu." : Return False
             If .x38ID = 0 Then _Error = "Chybí specifikace číselné řady." : Return False
             If .j27ID = 0 Then _Error = "Chybí specifikace výchozí měny faktury." : Return False
-
         End With
 
-        Return _cDL.Save(cRec)
+        If _cDL.Save(cRec) Then
+            Factory.p53VatRateBL.TestAndSetupVatExistence(cRec.x15ID, cRec.j27ID)
+            Return True
+        Else
+            Return False
+        End If
     End Function
     Public Function Load(intPID As Integer) As BO.p92InvoiceType Implements Ip92InvoiceTypeBL.Load
         Return _cDL.Load(intPID)

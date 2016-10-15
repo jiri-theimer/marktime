@@ -590,6 +590,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents ff1 As Global.UI.freefields_readonly
 
     '''<summary>
+    '''plug1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents plug1 As Global.UI.plugin_datatable
+
+    '''<summary>
     '''panText1 control.
     '''</summary>
     '''<remarks>
@@ -716,6 +725,33 @@ Partial Public Class p91_framework_detail
     Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''p91Client control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p91Client As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ClientIDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ClientIDs As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ClientAddress control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ClientAddress As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Label5 control.
     '''</summary>
     '''<remarks>
@@ -752,15 +788,6 @@ Partial Public Class p91_framework_detail
     Protected WithEvents WorksheetRange As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblText2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblText2 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''p91Text2 control.
     '''</summary>
     '''<remarks>
@@ -768,87 +795,6 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p91Text2 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91Amount_WithoutVat_None control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91Amount_WithoutVat_None As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91VatRate_Low control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91VatRate_Low As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91Amount_WithoutVat_Low control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91Amount_WithoutVat_Low As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91Amount_Vat_Low control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91Amount_Vat_Low As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91Amount_WithVat_Low control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91Amount_WithVat_Low As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91VatRate_Standard control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91VatRate_Standard As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91Amount_WithoutVat_Standard control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91Amount_WithoutVat_Standard As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91Amount_Vat_Standard control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91Amount_Vat_Standard As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p91Amount_WithVat_Standard control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91Amount_WithVat_Standard As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''hidHardRefreshFlag control.

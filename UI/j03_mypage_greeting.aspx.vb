@@ -66,8 +66,8 @@
                         ShowImage()
                         .SetUserParam("j03_mypage_greeting-last_step", "1")
                     Case "1"
-                        ShowChart1()
-                        .SetUserParam("j03_mypage_greeting-last_step", "2")
+                        ShowChart1("1")
+                        .SetUserParam("j03_mypage_greeting-last_step", "2")                   
                     Case "2"
                         ShowChart2("2")
                         .SetUserParam("j03_mypage_greeting-last_step", "3")
@@ -78,6 +78,9 @@
                         ShowChart2("4")
                         .SetUserParam("j03_mypage_greeting-last_step", "5")
                     Case "5"
+                        ShowChart1("3")
+                        .SetUserParam("j03_mypage_greeting-last_step", "6")
+                    Case "6"
                         ShowChart2("5")
                         .SetUserParam("j03_mypage_greeting-last_step", "0")
                 End Select
@@ -296,22 +299,36 @@
         End With
     End Sub
 
-    Private Sub ShowChart1()
-        panChart1.Visible = True
-        Dim s As String = "select round(sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end),2) as HodinyFa,round(sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end),2) as HodinyNeFa,convert(varchar(10),p31Date,104) as Datum FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID WHERE a.j02ID=@j02id AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.p31Date ORDER BY a.p31Date"
-
+    Private Sub ShowChart1(strFlag As String)
+        If strFlag = "3" Then panChart3.Visible = True Else panChart1.Visible = True
+        Dim s As String = "select round(sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end),2) as HodinyFa,round(sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end),2) as HodinyNeFa,c11.c11DateFrom as Datum"
+        s += " FROM (select c11DateFrom FROM c11StatPeriod WHERE c11Level=5 AND c11DateFrom between @d1 and @d2) c11 LEFT OUTER JOIN (select * from p31Worksheet where j02ID=@j02id and p31Date between @d1 and @d2) a ON c11.c11DateFrom=a.p31Date LEFT OUTER JOIN p32Activity b ON a.p32ID=b.p32ID"
+        s += " WHERE c11.c11DateFrom BETWEEN @d1 AND @d2 GROUP BY c11.c11DateFrom ORDER BY c11.c11DateFrom"
         Dim pars As New List(Of BO.PluginDbParameter)
-        pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-10)))
+        If strFlag = "3" Then
+            pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-30)))
+        Else
+            pars.Add(New BO.PluginDbParameter("d1", Today.AddDays(-14)))
+        End If
+
         pars.Add(New BO.PluginDbParameter("d2", Today.AddDays(1)))
         pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
         If dt.Rows.Count = 0 Then
             panChart1.Visible = False : Return
         End If
-        With chart1
-            .DataSource = dt
-            .DataBind()
-        End With
+        If strFlag = "3" Then
+            With chart3
+                .DataSource = dt
+                .DataBind()
+            End With
+        Else
+            With chart1
+                .DataSource = dt
+                .DataBind()
+            End With
+        End If
+       
 
 
     End Sub

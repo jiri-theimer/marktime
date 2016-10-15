@@ -272,6 +272,9 @@ Public Class p31_framework
                     dt = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID, Me.hidCols.Value, Me.cbxGroupBy.SelectedValue)
                     'lis = basUIMT.QueryProjectListByTop10(Master.Factory, Me.CurrentJ02ID)    'omezit na TOP 10
                 End If
+                If tabs1.SelectedIndex = 3 And dt.Rows.Count = 0 Then
+                    Master.Notify("Váš seznam oblíbených projektů je prázdný.")
+                End If
                 grid1.DataSourceDataTable = dt
             End If
 

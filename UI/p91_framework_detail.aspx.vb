@@ -160,15 +160,7 @@ Public Class p91_framework_detail
             HandleBankAccount(.p93ID, .j27ID)
 
             Me.p91RoundFitAmount.Text = BO.BAS.FN(.p91RoundFitAmount)
-            Me.p91Amount_WithoutVat_None.Text = BO.BAS.FN(.p91Amount_WithoutVat_None)
-            Me.p91VatRate_Low.Text = .p91VatRate_Low.ToString & "%"
-            Me.p91Amount_Vat_Low.Text = BO.BAS.FN(.p91Amount_Vat_Low)
-            Me.p91Amount_WithVat_Low.Text = BO.BAS.FN(.p91Amount_WithVat_Low)
-            Me.p91VatRate_Standard.Text = .p91VatRate_Standard.ToString & "%"
-            Me.p91Amount_WithoutVat_Standard.Text = BO.BAS.FN(.p91Amount_WithoutVat_Standard)
-            Me.p91Amount_Vat_Standard.Text = BO.BAS.FN(.p91Amount_Vat_Standard)
-            If .p91Amount_WithVat_Standard <> 0 Then Me.p91Amount_WithVat_Standard.Text = BO.BAS.FN(.p91Amount_WithVat_Standard)
-
+           
             HandleDirectReports(.p92ID)
 
             Me.lblExchangeRate.Visible = False
@@ -189,6 +181,9 @@ Public Class p91_framework_detail
                 Me.SourceLink.Text = cRecSource.p91Code
                 Me.SourceLink.NavigateUrl = "p91_framework.aspx?pid=" & cRecSource.PID.ToString
             End If
+            Me.p91Client.Text = .p91Client
+            Me.ClientAddress.Text = .p91ClientAddress1_Street & ", " & .p91ClientAddress1_City & ", " & .p91ClientAddress1_ZIP & " " & .p91ClientAddress1_Country
+            Me.ClientIDs.Text = .p91Client_VatID & " | " & .p91Client_RegID
         End With
 
 
@@ -519,5 +514,13 @@ Public Class p91_framework_detail
             .NavigateUrl = "p41_framework.aspx?pid=" & a(0)
         End With
         
+    End Sub
+
+    Private Sub p91_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        Dim s As String = ""
+        With plug1
+            .AddDbParameter("pid", Master.DataPID)
+            .GenerateTable(Master.Factory, "exec dbo.p91_get_cenovy_rozpis @pid")
+        End With
     End Sub
 End Class

@@ -16,10 +16,10 @@
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
 
         If Me.IsMobileDevice Then
-            css1.Href = "~/Styles/SiteMobile_v2.css"
+            css1.Href = "~/Styles/SiteMobile_v3.css"
         Else
             
-            css1.Href = "~/Styles/Site_v2.css"
+            css1.Href = "~/Styles/Site_v3.css"
         End If
     End Sub
 

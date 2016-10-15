@@ -262,9 +262,11 @@
                 </div>
             </asp:Panel>
             <asp:Panel ID="panChart1" runat="server" Style="float: right;" Visible="false">
-                <telerik:RadHtmlChart runat="server" ID="chart1" width="400px">
+                <telerik:RadHtmlChart runat="server" ID="chart1" width="600px" Font-Size="Small">
+                    <ChartTitle Text="Vykázané hodiny po dnech (14 dní dozadu)">                        
+                    </ChartTitle>
                     <PlotArea>
-                        <Series>
+                        <Series>                          
                             <telerik:ColumnSeries Name="Hodiny Fa" DataFieldY="HodinyFa" Stacked="true">
                                 <Appearance FillStyle-BackgroundColor="LightGreen"></Appearance>
                             </telerik:ColumnSeries>
@@ -272,13 +274,45 @@
                                 <Appearance FillStyle-BackgroundColor="#ff9999"></Appearance>
                             </telerik:ColumnSeries>
                         </Series>
-                        <XAxis DataLabelsField="Datum"></XAxis>
-                        <YAxis></YAxis>
+                        <XAxis DataLabelsField="Datum">
+                            <LabelsAppearance RotationAngle="90" DataFormatString="dd.MM. ddd"></LabelsAppearance>
+                            <MinorGridLines Visible="false" />
+                            <MajorGridLines Visible="false" />
+                        </XAxis>
+                        <YAxis>
+                            <MinorGridLines Visible="false" />
+                            <MajorGridLines Visible="false" />
+                        </YAxis>
+                    </PlotArea>
+                </telerik:RadHtmlChart>
+            </asp:Panel>
+            <asp:Panel ID="panChart3" runat="server" Style="float: right;" Visible="false">
+                <telerik:RadHtmlChart runat="server" ID="chart3" width="400px" Height="700px" Font-Size="10px">
+                    <ChartTitle Text="Vykázané hodiny po dnech (30 dní dozadu)">                        
+                    </ChartTitle>
+                    <PlotArea>
+                        <Series>                             
+                            <telerik:BarSeries Name="Hodiny Fa" DataFieldY="HodinyFa" Stacked="true">
+                                <Appearance FillStyle-BackgroundColor="LightGreen"></Appearance>
+                            </telerik:BarSeries>
+                            <telerik:BarSeries Name="Hodiny NeFa" DataFieldY="HodinyNeFa">
+                                <Appearance FillStyle-BackgroundColor="#ff9999"></Appearance>
+                            </telerik:BarSeries>
+                        </Series>
+                        <XAxis DataLabelsField="Datum" Reversed="true">
+                            <LabelsAppearance DataFormatString="dd.MM. ddd"></LabelsAppearance>
+                            <MinorGridLines Visible="false" />
+                            <MajorGridLines Visible="true" />
+                        </XAxis>
+                        <YAxis>
+                            <MinorGridLines Visible="false" />
+                            <MajorGridLines Visible="false" />
+                        </YAxis>
                     </PlotArea>
                 </telerik:RadHtmlChart>
             </asp:Panel>
             <asp:Panel ID="panChart2" runat="server" Style="float: right;" Visible="false">
-                <telerik:RadHtmlChart runat="server" ID="chart2" Width="500px" >  
+                <telerik:RadHtmlChart runat="server" ID="chart2" Width="600px" >  
                     <Legend>
                         <Appearance Position="Right"></Appearance>
                     </Legend>                  

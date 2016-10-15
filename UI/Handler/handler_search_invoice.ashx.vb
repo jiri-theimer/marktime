@@ -47,7 +47,13 @@ Public Class handler_search_invoice
         For Each cP91 In lisP91
             Dim c As New SearchInvoice
             With cP91
-                c.Invoice = .p91Code & " - " & .p28Name & " (" & BO.BAS.FN(.p91Amount_TotalDue) & " " & .j27Code & ")"
+                c.Invoice = .p91Code & " - "
+                If .p91Client = "" Then
+                    c.Invoice += " " & .p28Name
+                Else
+                    c.Invoice += " " & .p91Client
+                End If
+                c.Invoice += " (" & BO.BAS.FN(.p91Amount_TotalDue) & " " & .j27Code & ")"
                 c.p91Text1 = .p91Text1
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"

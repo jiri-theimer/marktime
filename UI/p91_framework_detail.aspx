@@ -8,8 +8,10 @@
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <link rel="stylesheet" type="text/css" href="Plugins/Plugin.css" />
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
@@ -510,8 +512,15 @@
                         </td>
                     </tr>
                 </table>
+
                 <div class="div6">
-                    <a href="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Datový přehled vyfakturovaných úkonů</a>
+                <uc:plugin_datatable ID="plug1" TableID="tab1" runat="server"
+            ColHeaders="Fakturační oddíl|Částka bez DPH|DPH%|Částka DPH|Částka vč. DPH|" NoDataMessage="Žádná data."
+            ColHideRepeatedValues="0" ColTypes="S|N|N|N|N|S" ColFlexSubtotals="0|11|0|11|11|0"
+            TableCaption="" />
+                </div>
+                <div class="div6">
+                    <a href="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Datový přehled zdrojových úkonů faktury</a>
                 </div>
                 <asp:Panel ID="panText1" runat="server" CssClass="content-box1">
                     <div class="title">Text faktury</div>
@@ -573,6 +582,19 @@
 
             </telerik:RadPageView>
             <telerik:RadPageView ID="other" runat="server">
+                <div class="content-box2">
+                    <div class="title">Údaje klienta uložené ve faktuře</div>
+                    <div class="content">
+                        <asp:Label ID="p91Client" runat="server" CssClass="valbold"></asp:Label>
+                        <div>
+                            <asp:Label ID="ClientIDs" runat="server" CssClass="val"></asp:Label>
+                        </div>
+                        <div>
+                            <asp:Label ID="ClientAddress" runat="server" CssClass="val"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr>
                         <td style="min-width: 120px;">
@@ -583,6 +605,8 @@
                             <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
 
                         </td>
+                    </tr>
+                    <tr>
                         <td>
                             <asp:Label ID="lblp91Datep31_From" runat="server" Text="Worksheet časový rámec:" CssClass="lbl"></asp:Label>
                         </td>
@@ -591,62 +615,18 @@
                         </td>
 
                     </tr>
-                    <tr valign="top">
-                        <td>
-                            <asp:Label ID="lblText2" runat="server" CssClass="lbl" Text="Technický text faktury:"></asp:Label>
-                        </td>
-                        <td colspan="3">
-                            <asp:Label ID="p91Text2" runat="server" CssClass="val" Font-Italic="true"></asp:Label>
-                        </td>
-                    </tr>
+              
                 </table>
 
-                <div>
-                    <span class="framework_header_span">Rekapitulace DPH</span>
+                
+                
+                <div class="content-box2">
+                    <div class="title">Technický text faktury</div>
+                    <div class="content" style="background-color: #ffffcc;">
+                        <asp:Label ID="p91Text2" runat="server" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
+                    </div>
                 </div>
-
-
-                <table cellpadding="10" border="1" class="tabulka" id="responsive">
-                    <thead>
-                        <tr>
-                            <th>Druh sazby</th>
-                            <th>Výše sazby</th>
-                            <th>Částka bez DPH</th>
-                            <th>Částka DPH</th>
-                            <th>Částka vč. DPH</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td collbl="Druh sazby">Nulová</td>
-                        <td collbl="Výše sazby">0%</td>
-                        <td collbl="Částka bez DPH" align="right">
-                            <td collbl="Částka DPH">
-                                <asp:Label ID="p91Amount_WithoutVat_None" runat="server" CssClass="val"></asp:Label></td>
-                            <td collbl="Částka vč. DPH"></td>
-                    </tr>
-                    <tr>
-                        <td collbl="Druh sazby">Snížená</td>
-                        <td collbl="Výše sazby">
-                            <asp:Label ID="p91VatRate_Low" runat="server" CssClass="val"></asp:Label></td>
-                        <td collbl="Částka bez DPH" align="right">
-                            <asp:Label ID="p91Amount_WithoutVat_Low" runat="server" CssClass="val"></asp:Label></td>
-                        <td collbl="Částka DPH" align="right">
-                            <asp:Label ID="p91Amount_Vat_Low" runat="server" CssClass="val"></asp:Label></td>
-                        <td collbl="Částka vč. DPH" align="right">
-                            <asp:Label ID="p91Amount_WithVat_Low" runat="server" CssClass="val"></asp:Label></td>
-                    </tr>
-                    <tr>
-                        <td collbl="Druh sazby">Základní</td>
-                        <td collbl="Výše sazby">
-                            <asp:Label ID="p91VatRate_Standard" runat="server" CssClass="val"></asp:Label></td>
-                        <td collbl="Částka bez DPH" align="right">
-                            <asp:Label ID="p91Amount_WithoutVat_Standard" runat="server" CssClass="val"></asp:Label></td>
-                        <td collbl="Částka DPH" align="right">
-                            <asp:Label ID="p91Amount_Vat_Standard" runat="server" CssClass="val"></asp:Label></td>
-                        <td collbl="Částka vč. DPH" align="right">
-                            <asp:Label ID="p91Amount_WithVat_Standard" runat="server" CssClass="val"></asp:Label></td>
-                    </tr>
-                </table>
+                
 
 
 

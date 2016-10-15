@@ -320,7 +320,7 @@
             If .SearchExpression <> "" Then
                 strW += " AND ("
                 'něco jako fulltext
-                strW += "a.p91Code LIKE '%'+@expr+'%' OR a.p91Text1 LIKE '%'+@expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR p41.p41Code LIKE @expr+'%' OR p41.p41NameShort LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyShortName LIKE '%'+@expr+'%'"
+                strW += "a.p91Code LIKE '%'+@expr+'%' OR a.p91Text1 LIKE '%'+@expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR p41.p41Code LIKE @expr+'%' OR p41.p41NameShort LIKE '%'+@expr+'%' OR a.p91Client LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyShortName LIKE '%'+@expr+'%'"
                 strW += ")"
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If

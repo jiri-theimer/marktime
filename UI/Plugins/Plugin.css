@@ -12,9 +12,7 @@ table.PluginDataTable tr:hover {
         padding: 5px;
         border: 1px solid silver;
 		color: black;
-		font-family: Arial,Tahoma;
 		background-color: #F0F8FF;
-		font-size:110%;
     }
 
   table.PluginDataTable td {
@@ -23,7 +21,6 @@ table.PluginDataTable tr:hover {
     }
 
     table.PluginDataTable caption {
-        font-size: 130%;
         font-variant: small-caps;
         font-weight:bold;
         border-top: solid 1px silver;
@@ -53,7 +50,7 @@ td#CELL-TOTAL {
 
 
 tr#grandtotal {
-    background-color: silver;
+    background-color: #F1F1F1;
     font-weight: bold;
     text-align: right;
 }

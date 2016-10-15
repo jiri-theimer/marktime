@@ -30,7 +30,7 @@
 
             sw_local("periodcombo_setting.aspx", "Images/settings_32.png");
         }
-        
+
 
 
 
@@ -106,7 +106,7 @@
 
     <table cellpadding="10">
         <tr>
-           
+
 
             <td>
                 <span>Filtrovat období:</span>
@@ -114,19 +114,25 @@
             <td>
                 <uc:periodcombo ID="period1" runat="server" Width="220px"></uc:periodcombo>
             </td>
-           
+
         </tr>
     </table>
-    <div class="content-box2" style="padding-top: 10px;">
-        <div class="title">
-            <img src="Images/approve.png" />
-            Rozpracované úkony - čeká na schvalování
-        </div>
-        <div class="content">
-            <table>
+    <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
+        <Tabs>
+            <telerik:RadTab Text="Rozpracované úkony - čeká na schvalování" Selected="true" Value="1" ImageUrl="Images/approve.png"></telerik:RadTab>
+            <telerik:RadTab Text="Schválené úkony - čeká na fakturaci" Value="2" ImageUrl="Images/invoice.png"></telerik:RadTab>
+            <telerik:RadTab Text="Zrychlená fakturace jednou částkou" Value="3" ImageUrl="Images/invoice.png"></telerik:RadTab>
+        </Tabs>
+    </telerik:RadTabStrip>
+
+    <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
+        <telerik:RadPageView ID="jedna" runat="server" Selected="true">
+
+
+            <table cellpadding="6">
                 <tr valign="bottom">
                     <td>
-                        <span>Agregace dat:</span>
+                        <span>Zobrazovat sloupce:</span>
 
                         <asp:DropDownList ID="col1" runat="server" AutoPostBack="true">
                             <asp:ListItem Text="" Value=""></asp:ListItem>
@@ -168,37 +174,31 @@
 
                 </tr>
             </table>
-        </div>
-    </div>
 
-    <div style="clear:both;"></div>
-    <div style="float:left;">
-        <uc:plugin_datatable ID="plugin1" TableID="gridData" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Worksheet rozpracovanost" NoDataMessage="Ani jeden rozpracovaný úkon." />
-    </div>
-    <div style="float:left;">
-        <telerik:RadToolBar ID="tlb1" runat="server" Skin="Bootstrap" Orientation="Vertical">
+
+
+            <div style="float: left;">
+                <uc:plugin_datatable ID="plugin1" TableID="gridData" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Worksheet rozpracovanost" NoDataMessage="Ani jeden rozpracovaný úkon." />
+            </div>
+            <div style="float: left;">
+                <telerik:RadToolBar ID="tlb1" runat="server" Skin="Bootstrap" Orientation="Vertical">
                     <Items>
                         <telerik:RadToolBarButton Value="all" Text="Schvalovat [vše]" NavigateUrl="javascript:approve_all()" ImageUrl="Images/approve.png"></telerik:RadToolBarButton>
                     </Items>
                 </telerik:RadToolBar>
-    </div>
-    <div style="clear:both;"></div>
-    
+            </div>
+            <div style="clear: both;"></div>
+
+
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="dva" runat="server">
 
 
 
-    <div class="content-box2" style="padding-top: 10px;">
-        <div class="title" style="padding-bottom:10px;">
-            <img src="Images/invoice.png" />
-            Schválené úkony - čeká na fakturaci                      
-
-            <a href="#top" style="margin-left: 300px; padding: 5px;">Nahoru</a>
-        </div>
-        <div class="content">
-            <table>
+            <table cellpadding="6">
                 <tr valign="bottom">
                     <td>
-                        <span>Agregace dat:</span>
+                        <span>Zobrazovat sloupce:</span>
 
                         <asp:DropDownList ID="col1x" runat="server" AutoPostBack="true">
                             <asp:ListItem Text="" Value=""></asp:ListItem>
@@ -244,33 +244,28 @@
                 </tr>
             </table>
 
-            <div style="float:left;">
+            <div style="float: left;">
                 <uc:plugin_datatable ID="plugin2" TableID="gridApproved" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Prošlo schvalováním, čeká na fakturaci" NoDataMessage="Žádný schválený worksheet čekající na fakturaci." />
             </div>
-            <div style="float:left;">
+            <div style="float: left;">
                 <telerik:RadToolBar ID="tlb2" runat="server" Skin="Bootstrap" Orientation="Vertical">
-                <Items>
-                    <telerik:RadToolBarButton Value="cmdReApprove" Text="Pře-schválit již schválené" NavigateUrl="javascript:reapprove_all()" ImageUrl="Images/approve.png"></telerik:RadToolBarButton>
-                    <telerik:RadToolBarButton Value="cmdClearApprove" Text="Vyčistit schvalování" NavigateUrl="javascript:clearapprove_all()" ImageUrl="Images/break.png"></telerik:RadToolBarButton>
-                    <telerik:RadToolBarButton Value="cmdCreateP91" Text="Vystavit fakturu" NavigateUrl="javascript:invoice()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>
-                    <telerik:RadToolBarButton Value="cmdAppendP91" Text="Přidat do existující faktury" NavigateUrl="javascript:invoice_append()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>
-                    
-                </Items>
-            </telerik:RadToolBar>
+                    <Items>
+                        <telerik:RadToolBarButton Value="cmdCreateP91" Text="Vystavit fakturu" NavigateUrl="javascript:invoice()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>
+                        <telerik:RadToolBarButton Value="cmdAppendP91" Text="Přidat do existující faktury" NavigateUrl="javascript:invoice_append()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>
+                        <telerik:RadToolBarButton Value="cmdReApprove" Text="Pře-schválit již schválené" NavigateUrl="javascript:reapprove_all()" ImageUrl="Images/approve.png"></telerik:RadToolBarButton>
+                        <telerik:RadToolBarButton Value="cmdClearApprove" Text="Vyčistit schvalování" NavigateUrl="javascript:clearapprove_all()" ImageUrl="Images/break.png"></telerik:RadToolBarButton>
+                        
+                        
+
+                    </Items>
+                </telerik:RadToolBar>
             </div>
-            
-        </div>
-    </div>
 
-     <asp:panel ID="panQuickInvoice" runat="server" cssclass="content-box2" style="padding-top: 10px;">
-        <div class="title" style="padding-bottom:10px;">
-            <img src="Images/invoice.png" />
-            Zrychlená fakturace jednou částkou                    
 
-            <a href="#top" style="margin-left: 300px; padding: 5px;">Nahoru</a>
-        </div>
-        <div class="content">
-            
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="tri" runat="server">
+
+
             <asp:Button ID="cmdQuickInvoice" runat="server" Text="Vytvořit fakturu" CssClass="cmd" />
             <div>Jedno rozhraní pro následující proces:</div>
             <ul>
@@ -278,8 +273,9 @@
                 <li>2. Ihned úkon schválíte.</li>
                 <li>3. Vytvoříte fakturu.</li>
             </ul>
-        </div>
-    </asp:panel>
+
+        </telerik:RadPageView>
+    </telerik:RadMultiPage>
 
     <asp:HiddenField ID="hidX29ID" runat="server" Value="141" />
     <asp:HiddenField ID="hidPrefix" runat="server" Value="p41" />

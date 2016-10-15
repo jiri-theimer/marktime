@@ -69,8 +69,9 @@
                 Master.StopPage("prefix is missing")
             End If
             With Master                
-                .AddToolbarButton("Nastavení", "setting", 0, "Images/arrow_down_menu.png", False)
-                .AddToolbarButton("Schvalovat vše", "continue", , "Images/continue.png", False, "javascript:approve_all()")
+                .AddToolbarButton("Nastavení", "setting", 0, "Images/arrow_down_menu.png", False)                
+                .AddToolbarButton("Vystavit fakturu", "continue_invoice", , "Images/continue.png", False, "javascript:invoice()")
+                .AddToolbarButton("Schválit rozpracovanost", "continue", , "Images/continue.png", False, "javascript:approve_all()")
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide1"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If Request.Item("pids") <> "" Then
@@ -212,10 +213,11 @@
         End Select
 
         If ViewState("can_create_invoice") Then
-            panQuickInvoice.Visible = True
+            tabs1.FindTabByValue("3").Visible = True
         Else
-            panQuickInvoice.Visible = False
+            tabs1.FindTabByValue("3").Visible = False
         End If
+        RadMultiPage1.FindPageViewByID("tri").Visible = tabs1.FindTabByValue("3").Visible
 
         If Not bolCanApprove Then
             Handle_NoPermissions()
@@ -269,6 +271,15 @@
             End If
         End With
         RefreshResult()
+
+        If ViewState("can_create_invoice") Then
+            With tabs1.Tabs
+                If .Item(0).Text.IndexOf("(0)") > 0 And .Item(1).Text.IndexOf(">0") > 0 Then
+                    .Item(1).Selected = True
+                    RadMultiPage1.FindPageViewByID("dva").Selected = True
+                End If
+            End With
+        End If
     End Sub
 
 
@@ -350,56 +361,6 @@
 
 
     Private Sub RefreshResult()
-        ''Dim lis As List(Of StatColumn) = GetSelectedColumns(False)
-        ''If lis.Select(Function(p) p.Value).Count <> lis.Select(Function(p) p.Value).Distinct.Count Then
-        ''    Master.Notify("Agregační sloupec může být vybrán pouze jednou.", NotifyLevel.WarningMessage)
-        ''    Return
-        ''End If
-        ''If basUI.GetCheckedItems(j27ids).Count = 0 Then
-        ''    Master.Notify("Musíte zaškrtnout minimálně jednu měnu.", NotifyLevel.WarningMessage)
-        ''    Return
-        ''Else
-        ''    Master.Factory.j03UserBL.SetUserParam("entity_framework_detail_approving-j27ids", String.Join(",", basUI.GetCheckedItems(Me.j27ids)))
-        ''End If
-        ''If lis.Count = 0 Then
-        ''    Master.Notify("Musíte vybrat minimálně jeden agregační sloupec.", NotifyLevel.WarningMessage)
-        ''    Return
-        ''Else
-        ''    Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix & "-entity_framework_detail_approving-col1", col1.SelectedValue)
-        ''    Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix & "-entity_framework_detail_approving-col2", col2.SelectedValue)
-        ''    Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix & "-entity_framework_detail_approving-col3", col3.SelectedValue)
-        ''End If
-        ''Dim strT As String = lis(0).StatColType, strH As String = lis(0).HeaderText, strF As String = lis(0).SelectField
-        ''Dim strC As String = lis(0).StatColC, strG As String = lis(0).GroupField
-
-        ''For i As Integer = 1 To lis.Count - 1
-        ''    strT += "|" & lis(i).StatColType
-        ''    strH += "|" & lis(i).HeaderText
-        ''    strF += "," & lis(i).SelectField
-        ''    strC += "|" & lis(i).StatColC
-        ''    strG += "," & lis(i).GroupField
-        ''Next
-        ''Dim strOF As String = strF
-        ''Dim strTA As String = strT, strHA As String = strH, strCA As String = strC, strFA As String = strF
-        ''strT += "|N" : strTA += "|N"
-        ''strH += "|Hodiny" : strHA += "|Hodiny k fakturaci"
-        ''strC += "|11" : strCA += "|11"
-        ''strF += ",sum(p31Hours_Orig)" : strFA += ",sum(p31Hours_Approved_Billing)"
-
-        ''For Each intJ27ID As Integer In basUI.GetCheckedItems(Me.j27ids)
-        ''    strT += "|N" : strTA += "|N"
-        ''    strH += "|Částka bez DPH [" & Me.j27ids.Items.FindByValue(intJ27ID.ToString).Text & "]"
-        ''    strHA += "|Částka k fakturaci [" & Me.j27ids.Items.FindByValue(intJ27ID.ToString).Text & "]"
-        ''    strC += "|11" : strCA += "|11"
-        ''    strF += ",sum(case when a.j27ID_Billing_Orig=" & intJ27ID.ToString & " THEN p31Amount_WithoutVat_Orig END)"
-        ''    strFA += ",sum(case when a.p72ID_AfterApprove=4 AND a.j27ID_Billing_Orig=" & intJ27ID.ToString & " THEN p31Amount_WithoutVat_Approved END)"
-
-        ''Next
-        ''strT += "|I" : strTA += "|I"
-        ''strH += "|Počet úkonů" : strHA += "|Počet úkonů"
-        ''strC += "|11" : strCA += "|11"
-        ''strF += ",COUNT(p31ID)" : strFA += ",COUNT(p31ID)"
-
         Dim cS1 As StructureSQL = InhaleSqlStructure(False)
         Dim cS2 As StructureSQL = InhaleSqlStructure(True)
         If cS1 Is Nothing Or cS2 Is Nothing Then Return
@@ -450,15 +411,17 @@
             tlb2.FindItemByValue("cmdClearApprove").Visible = tlb2.FindItemByValue("cmdReApprove").Visible
             If .GeneratedRowsCount > 0 Then
                 tlb2.FindItemByValue("cmdCreateP91").Visible = ViewState("can_create_invoice")
-
+                tabs1.Tabs(1).Text = BO.BAS.OM2(tabs1.Tabs(1).Text, ">0")
             Else
                 tlb2.FindItemByValue("cmdCreateP91").Visible = False
+                tabs1.Tabs(1).Text = BO.BAS.OM2(tabs1.Tabs(1).Text, "0")
             End If
+            Master.HideShowToolbarButton("continue_invoice", tlb2.FindItemByValue("cmdCreateP91").Visible)
+            
         End With
         tlb2.FindItemByValue("cmdAppendP91").Visible = tlb2.FindItemByValue("cmdCreateP91").Visible
-
-
-
+        
+        
         Dim lis As List(Of StatColumn) = GetSelectedColumns(False)
         RenderDynamicCommands(lis)
 
@@ -674,12 +637,12 @@
         If lisP31.Count > 0 Then
             tlb1.Visible = True
             Master.HideShowToolbarButton("continue", True)
-            Master.RenameToolbarButton("continue", "Schvalovat [vše] " & lisP31.Count.ToString & "x")
+            Master.RenameToolbarButton("continue", String.Format("Schválit rozpracovanost {0}", lisP31.Count.ToString & "x"))
         Else
             tlb1.Visible = False
             Master.HideShowToolbarButton("continue", False)
         End If
-
+        tabs1.Tabs(0).Text = BO.BAS.OM2(tabs1.Tabs(0).Text, lisP31.Count.ToString)
 
 
     End Sub

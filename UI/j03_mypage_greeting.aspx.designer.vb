@@ -230,6 +230,24 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents chart1 As Global.Telerik.Web.UI.RadHtmlChart
 
     '''<summary>
+    '''panChart3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panChart3 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chart3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chart3 As Global.Telerik.Web.UI.RadHtmlChart
+
+    '''<summary>
     '''panChart2 control.
     '''</summary>
     '''<remarks>

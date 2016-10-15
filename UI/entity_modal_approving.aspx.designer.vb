@@ -59,6 +59,33 @@ Partial Public Class entity_modal_approving
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''tabs1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''jedna control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents jedna As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''col1 control.
     '''</summary>
     '''<remarks>
@@ -102,6 +129,15 @@ Partial Public Class entity_modal_approving
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents tlb1 As Global.Telerik.Web.UI.RadToolBar
+
+    '''<summary>
+    '''dva control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents dva As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''col1x control.
@@ -149,13 +185,13 @@ Partial Public Class entity_modal_approving
     Protected WithEvents tlb2 As Global.Telerik.Web.UI.RadToolBar
 
     '''<summary>
-    '''panQuickInvoice control.
+    '''tri control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panQuickInvoice As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents tri As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''cmdQuickInvoice control.

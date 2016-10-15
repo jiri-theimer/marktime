@@ -47,7 +47,7 @@ Public Class p91_create_step2
                     ViewState("j74id") = cJ74.PID
                     .Factory.j03UserBL.SetUserParam(strGridKey, ViewState("j74id"))
                 End If
-                .AddToolbarButton("Uložit fakturu", "save", , "Images/save.png")
+                .AddToolbarButton("Vygenerovat fakturu", "save", , "Images/save.png")
                 Me.chkSearchByClientOnly.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-chkSearchByClientOnly", "0"))
                 basUI.SelectRadiolistValue(Me.opgGroupBy, .Factory.j03UserBL.GetUserParam("p91_create-group"))
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .Factory.j03UserBL.GetUserParam("p91_create-pagesize", "20"))
