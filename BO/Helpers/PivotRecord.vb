@@ -57,6 +57,18 @@ Public Class PivotRowColumnField
     Public Property Caption As String
     Private Property _SelectField As String
     Private Property _GroupByField As String
+    Public ReadOnly Property SelectField As String
+        Get
+            Return _SelectField
+        End Get
+    End Property
+    Public ReadOnly Property GroupByField As String
+        Get
+            Return _GroupByField
+        End Get
+    End Property
+
+
     
     Public Sub New(ft As PivotRowColumnFieldType, Optional strCaption As String = "")
         Me.FieldType = ft
@@ -167,18 +179,11 @@ Public Class PivotRowColumnField
         If Me.Caption = "" Then Me.Caption = s
     End Sub
     
-    Public ReadOnly Property SelectField As String
+    Public ReadOnly Property FieldTypeID As Integer
         Get
-            Return _SelectField
+            Return CInt(Me.FieldType)
         End Get
     End Property
-    Public ReadOnly Property GroupByField As String
-        Get
-            Return _GroupByField
-        End Get
-    End Property
-    
-
     
 End Class
 

@@ -1117,21 +1117,59 @@
         End If
     End Function
 
-    ''Public Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
-    ''    Dim pars As New DbParameters
+    Public Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
+        Dim s As New System.Text.StringBuilder, x As Integer = 0
+        s.Append("SELECT " & groupCol.GroupByField & " AS pid")
+        s.Append("," & groupCol.SelectField & "as group" & groupCol.FieldTypeID.ToString)
 
-    ''    Dim s As String = "select a.p32ID,min(p32.p34ID) as p34ID, min(j27.j27Code) as j27Code,SUM(a.p31Amount_WithoutVat_Orig) as AmountWithoutVat,COUNT(a.p31ID) as Pocet"
-    ''    s += ",MIN(p34.p34Name) as p34Name,MIN(p32.p32Name) as p32Name"
-    ''    s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
-    ''    s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
+        For Each c In sumCols
+            s.Append("," & c.SelectField & " AS col" & c.FieldTypeID.ToString)
+        Next
+        s.Append(",COUNT(a.p31ID) as pocet,MIN(a.p31Date) as prvni,MAX(a.p31Date) as posledni")
+       
+        s.Append(" FROM p31Worksheet a")
+        s.Append(" INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID")
+        s.Append(" INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p42ProjectType p42 ON p41.p42ID=p42.p42ID")
+        s.Append(" LEFT OUTER JOIN p28Contact p28Client ON p41.p28ID_Client=p28Client.p28ID")
+        s.Append(" LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID")
+        s.Append(" LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID LEFT OUTER JOIN p71ApproveStatus p71 ON a.p71ID=p71.p71ID LEFT OUTER JOIN p72PreBillingStatus p72approve ON a.p72ID_AfterApprove=p72approve.p72ID")
+        s.Append(" LEFT OUTER JOIN j18Region j18 ON p41.j18ID=j18.j18ID")
+        s.Append(" LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID")
+        s.Append(" LEFT OUTER JOIN j27Currency j27orig ON a.j27ID_Billing_Orig=j27orig.j27ID")
+        s.Append(" LEFT OUTER JOIN j27Currency j27invoice ON a.j27ID_Billing_Invoiced=j27invoice.j27ID")
+        s.Append(" LEFT OUTER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID")
+        s.Append(" LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID")
+        s.Append(" LEFT OUTER JOIN p28Contact p91Client ON p91.p28ID=p91Client.p28ID")
+        If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
+            Dim strJ11IDs As String = ""
+            If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+            s.Append(" LEFT OUTER JOIN (")
+            s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+            s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+        End If
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(mq, pars)
+        If strParentSqlWhere <> "" Then
+            If strW = "" Then
+                strW = strParentSqlWhere
+            Else
+                strW = "(" & strW & ") AND " & strParentSqlWhere
+            End If
+        End If
+        If strW <> "" Then
+            s.Append(" WHERE " & strW)
+        End If
+        
 
-    ''    Dim strW As String = GetSQLWHERE(myQuery, pars)
-    ''    If strW <> "" Then s += " WHERE " & strW
+        s.Append(" GROUP BY " & groupCol.GroupByField)
 
+        If mq.MG_SortString = "" Then
+            s.Append(" ORDER BY " & groupCol.SelectField)
+        Else
+            s.Append(" ORDER BY " & mq.MG_SortString)
+        End If
 
-    ''    s += " GROUP BY a.j27ID_Billing_Orig,a.p32ID"
-
-    ''    Return _cDB.GetList(Of BO.WorksheetExpenseSummary)(s, pars)
-    ''End Function
-
+        Dim ds As DataSet = _cDB.GetDataSet(s.ToString, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
 End Class

@@ -66,33 +66,7 @@
         </Tabs>
     </telerik:RadTabStrip>
     <div class="div6">
-        <asp:DropDownList ID="j75Level" runat="server" AutoPostBack="true">
-            <asp:ListItem Text="" Value=""></asp:ListItem>
-            <asp:ListItem Text="Osoba" Value="201"></asp:ListItem>
-            <asp:ListItem Text="Klient projektu" Value="2801"></asp:ListItem>
-            <asp:ListItem Text="Projekt" Value="4101"></asp:ListItem>
-            <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
-            <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
-            <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
-            <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
-            <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
-            <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
-            <asp:ListItem Text="Fakturační oddíl" Value="9501"></asp:ListItem>
-            <asp:ListItem Text="Fakturovatelná aktivita" Value="9801"></asp:ListItem>
-            <asp:ListItem Text="Schváleno" Value="7101"></asp:ListItem>
-            <asp:ListItem Text="Návrh fakturačního statusu" Value="7201"></asp:ListItem>
-            <asp:ListItem Text="Fakturační status" Value="7001"></asp:ListItem>
-            <asp:ListItem Text="ID faktury" Value="9101"></asp:ListItem>
-            <asp:ListItem Text="Klient faktury" Value="9102"></asp:ListItem>
-            <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
-            <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>
-            <asp:ListItem Text="Rok fakturace" Value="9903"></asp:ListItem>
-            <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>
-            <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>
-            <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>
-            <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>
-            <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
-            <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
+        <asp:DropDownList ID="j75Level" runat="server" AutoPostBack="true" DataTextField="Caption" DataValueField="FieldTypeID">           
         </asp:DropDownList>
     </div>
     <table cellpadding="8">

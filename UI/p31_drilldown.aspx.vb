@@ -1,4 +1,5 @@
-﻿Public Class p31_drilldown
+﻿Imports Telerik.Web.UI
+Public Class p31_drilldown
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
     Public Property CurrentJ70ID As Integer
@@ -81,7 +82,7 @@
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_drilldown-pagesize", "20"))
-                    
+
 
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam("p31_grid-period")
@@ -93,8 +94,9 @@
             End With
 
             SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31-j70id")))
-            
-     
+
+
+            SetupGrid()
         End If
     End Sub
 
@@ -127,7 +129,7 @@
         Me.j75ID.DataBind()
         basUI.SelectDropdownlistValue(Me.j75ID, intDef.ToString)
 
-        
+
     End Sub
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
@@ -141,7 +143,7 @@
     End Sub
 
     Private Sub ReloadPage()
-        Response.Redirect("p31_drilldown.aspx?" & basUI.GetCompleteQuerystring(Request))
+        Response.Redirect("p31_drilldown.aspx" & basUI.GetCompleteQuerystring(Request, True))
     End Sub
 
     Private Sub p31_drilldown_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -163,5 +165,167 @@
     Private Sub j75ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j75ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentMasterPrefix & "-j75id", Me.j75ID.SelectedValue)
         ReloadPage()
+    End Sub
+
+    Private Sub SetupGrid()
+        Dim cRec As BO.j75DrillDownTemplate = Master.Factory.j75DrillDownTemplateBL.Load(Me.CurrentJ75ID)
+        Dim lisJ76 As IEnumerable(Of BO.j76DrillDownTemplate_Item) = Master.Factory.j75DrillDownTemplateBL.GetList_j76(cRec.PID)
+        Dim lisLevel As List(Of BO.PivotRowColumnField) = Master.Factory.j75DrillDownTemplateBL.LevelPallete()
+        Dim lisAllSumCols As List(Of BO.PivotSumField) = Master.Factory.j75DrillDownTemplateBL.ColumnsPallete()
+        Dim level1 As BO.PivotRowColumnField = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level1).First
+
+        With grid1
+            .ClearColumns()
+            .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
+            .radGridOrig.ShowFooter = True
+            .radGridOrig.MasterTableView.ExpandCollapseColumn.CollapseImageUrl = "Images/tree_collapse.png"
+            .radGridOrig.MasterTableView.ExpandCollapseColumn.ExpandImageUrl = "Images/tree_expand.png"
+            .AddColumn("group" & level1.FieldTypeID.ToString, level1.Caption)
+            Me.hidGroup1.Value = level1.FieldTypeID.ToString
+            For Each c In lisJ76.Where(Function(p) p.j76Level = 1)
+                Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
+                If Not col Is Nothing Then
+                    .AddColumn("col" & col.FieldTypeID.ToString, col.Caption, BO.cfENUM.Numeric2)
+                    Me.hidCols1.Value = BO.BAS.OM4(hidCols1.Value, col.FieldTypeID.ToString)
+                End If
+            Next
+
+            Dim gtv As New GridTableView(.radGridOrig)
+            If Not cRec.j75Level2 Is Nothing Then
+                Dim level2 As BO.PivotRowColumnField = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level2).First
+                With gtv
+                    .HierarchyLoadMode = GridChildLoadMode.ServerOnDemand
+                    .Name = "level2"
+                    '.AllowCustomPaging = True
+
+                    .AllowFilteringByColumn = False
+                    .AllowSorting = True
+                    .PageSize = 20
+                    .DataKeyNames = Split("pid", ",")
+                    .ClientDataKeyNames = Split("pid", ",")
+                    .ShowHeadersWhenNoRecords = False
+                    .ShowFooter = True
+
+                End With
+                .radGridOrig.MasterTableView.DetailTables.Add(gtv)
+                .AddColumn("group" & level2.FieldTypeID.ToString, level2.Caption, , , , , , , , , gtv)
+                Me.hidGroup2.Value = level2.FieldTypeID.ToString
+                For Each c In lisJ76.Where(Function(p) p.j76Level = 2)
+                    Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
+                    If Not col Is Nothing Then
+                        .AddColumn("col" & col.FieldTypeID.ToString, col.Caption, BO.cfENUM.Numeric2, , , , , , , , gtv)
+                        Me.hidCols2.Value = BO.BAS.OM4(hidCols2.Value, col.FieldTypeID.ToString)
+                    End If
+                Next
+            End If
+            If Not cRec.j75Level3 Is Nothing Then
+                Dim level3 As BO.PivotRowColumnField = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level3).First
+                Dim gtv3 As New GridTableView(.radGridOrig)
+                With gtv3
+                    .HierarchyLoadMode = GridChildLoadMode.ServerOnDemand
+                    .Name = "level3"
+                    '.AllowCustomPaging = True
+
+                    .AllowFilteringByColumn = False
+                    .AllowSorting = True
+                    .PageSize = 20
+                    .DataKeyNames = Split("pid", ",")
+                    .ClientDataKeyNames = Split("pid", ",")
+                    .ShowHeadersWhenNoRecords = False
+                    .ShowFooter = True
+
+                End With
+                gtv.DetailTables.Add(gtv3)
+
+                '.radGridOrig.MasterTableView.DetailTables.Add(gtv3)
+
+                .AddColumn("group" & level3.FieldTypeID.ToString, level3.Caption, , , , , , , , , gtv3)
+                Me.hidGroup3.Value = level3.FieldTypeID.ToString
+                For Each c In lisJ76.Where(Function(p) p.j76Level = 3)
+                    Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
+                    If Not col Is Nothing Then
+                        .AddColumn("col" & col.FieldTypeID.ToString, col.Caption, BO.cfENUM.Numeric2, , , , , , , , gtv)
+                        Me.hidCols3.Value = BO.BAS.OM4(hidCols3.Value, col.FieldTypeID.ToString)
+                    End If
+                Next
+            End If
+
+
+        End With
+
+    End Sub
+
+    Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
+        With mq
+            .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
+            .j70ID = Me.CurrentJ70ID
+            If period1.SelectedValue <> "" Then
+                .DateFrom = period1.DateFrom
+                .DateUntil = period1.DateUntil
+            End If
+            Select Case Me.CurrentMasterPrefix
+                Case "p41"
+                    .p41ID = Me.CurrentMasterPID
+                Case "j02"
+                    .j02ID = Me.CurrentMasterPID
+                Case "p28"
+                    .p28ID_Client = Me.CurrentMasterPID
+                Case "p91"
+                    .p91ID = Me.CurrentMasterPID
+            End Select
+        End With
+    End Sub
+
+    Private Sub grid1_ItemCommand(sender As Object, e As GridCommandEventArgs, strPID As String) Handles grid1.ItemCommand
+        If e.CommandName = RadGrid.ExpandCollapseCommandName Then
+            Dim item As GridItem
+            For Each item In e.Item.OwnerTableView.Items
+                If item.Expanded AndAlso Not item Is e.Item Then
+                    item.Expanded = False
+                End If
+            Next item
+        End If
+    End Sub
+
+    Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
+        Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
+        Dim intParentPID As Integer = BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid"))
+
+        Dim mq As New BO.myQueryP31
+        InhaleMyQuery(mq)
+
+        Dim groupCol As New BO.PivotRowColumnField(CType(Me.hidGroup2.Value, BO.PivotRowColumnFieldType))
+
+        Dim lastGroupCol As New BO.PivotRowColumnField(CType(Me.hidGroup1.Value, BO.PivotRowColumnFieldType))
+        Dim strParentSqlWhere As String = lastGroupCol.GroupByField & "=" & intParentPID.ToString
+
+        Dim lis As New List(Of BO.PivotSumField)
+        For Each s In Split(Me.hidCols2.Value, ",")
+            lis.Add(New BO.PivotSumField(CType(s, BO.PivotSumFieldType)))
+        Next
+        With e.DetailTableView
+            ''.AllowCustomPaging = True
+            .AllowSorting = True
+            ''If .VirtualItemCount = 0 Then .VirtualItemCount = GetVirtualCount(mq)
+            .DataSource = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(groupCol, lis, strParentSqlWhere, mq)
+
+
+        End With
+    End Sub
+
+    Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If e.IsFromDetailTable Then
+            Return
+        End If
+        Dim mq As New BO.myQueryP31
+        InhaleMyQuery(mq)
+
+        Dim groupCol As New BO.PivotRowColumnField(CType(Me.hidGroup1.Value, BO.PivotRowColumnFieldType))
+        Dim lis As New List(Of BO.PivotSumField)
+        For Each s In Split(Me.hidCols1.Value, ",")
+            lis.Add(New BO.PivotSumField(CType(s, BO.PivotSumFieldType)))
+        Next
+        grid1.DataSourceDataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(groupCol, lis, "", mq)
+
     End Sub
 End Class

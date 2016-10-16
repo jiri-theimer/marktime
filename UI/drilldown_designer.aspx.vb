@@ -50,6 +50,9 @@
                 .AddToolbarButton(Resources.grid_designer.Vybrat, "ok", , "Images/ok.png")
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
 
+                Me.j75Level.DataSource = .Factory.j75DrillDownTemplateBL.LevelPallete()
+                Me.j75Level.DataBind()
+                Me.j75Level.Items.Insert(0, "")
             End With
 
 

@@ -520,13 +520,19 @@
             Case BO.myQueryP41_QuickQuery.WaitingOnInvoice
                 Return "a.p41ID IN (SELECT p41ID FROM p31Worksheet WHERE p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryP41_QuickQuery.OverWorksheetLimit
-                Dim s As String = "a.p41ID IN ("
+                Dim s As String = "(a.p41ID IN ("
                 s += "SELECT xa.p41ID"
                 s += " FROM p31Worksheet xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID"
-                s += " WHERE (xb.p41LimitHours_Notification>0 OR xb.p41LimitFee_Notification>0) AND xa.p71ID IS NULL AND getdate() BETWEEN xa.p31ValidFrom AND xa.p31ValidUntil"
+                s += " WHERE xb.p41LimitHours_Notification>0 AND xa.p71ID IS NULL AND getdate() BETWEEN xa.p31ValidFrom AND xa.p31ValidUntil"
                 s += " GROUP BY xa.p41ID"
-                s += " HAVING sum(xa.p31Hours_Orig)>min(xb.p41LimitHours_Notification) OR sum(xa.p31Amount_WithoutVat_Orig)>min(xb.p41LimitFee_Notification)"
+                s += " HAVING sum(xa.p31Hours_Orig)>min(xb.p41LimitHours_Notification)"
                 s += ")"
+                s += " OR a.p41ID IN (SELECT xa.p41ID"
+                s += " FROM p31Worksheet xa INNER JOIN p41Project xb ON xa.p41ID=xb.p41ID"
+                s += " WHERE xb.p41LimitFee_Notification>0 AND xa.p71ID IS NULL AND getdate() BETWEEN xa.p31ValidFrom AND xa.p31ValidUntil"
+                s += " GROUP BY xa.p41ID"
+                s += " HAVING sum(xa.p31Amount_WithoutVat_Orig)>min(xb.p41LimitFee_Notification)"
+                s += "))"
                 Return s
             Case BO.myQueryP41_QuickQuery.WithOpenTasks
                 Return "a.p41ID IN (SELECT p41ID FROM p56Task WHERE getdate() BETWEEN p56ValidFrom AND p56ValidUntil)"

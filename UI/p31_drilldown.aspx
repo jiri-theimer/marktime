@@ -3,7 +3,7 @@
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
-<%@ Register Src="~/panelmenu.ascx" TagPrefix="uc" TagName="panelmenu" %>
+<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -36,11 +36,36 @@
             return (false);
         }
         function drilldownbuilder() {
-            var j75id = "<%=Me.CurrentJ75ID%>";
-            sw_master("drilldown_designer.aspx?masterprefix=<%=me.currentmasterprefix%>&pid=" + j75id, "Images/drilldown_32.png");
+            var j75id = "<%=Me.CurrentJ75ID%>";            
+            sw_master("drilldown_designer.aspx?masterprefix=<%=me.currentmasterprefix%>&pid=" + j75id, "Images/drilldown_32.png");           
             return (false);
         }
         
+        function RowSelected(sender, args) {
+            var pid = args.getDataKeyValue("pid");
+            document.getElementById("<%=hiddatapid.clientid%>").value = pid;
+
+        }
+
+        function RowDoubleClick(sender, args) {
+            //nic
+        }
+
+        function GetAllSelectedPIDs() {
+
+            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
+            var sel = masterTable.get_selectedItems();
+            var pids = "";
+
+            for (i = 0; i < sel.length; i++) {
+                if (pids == "")
+                    pids = sel[i].getDataKeyValue("pid");
+                else
+                    pids = pids + "," + sel[i].getDataKeyValue("pid");
+            }
+
+            return (pids);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -70,7 +95,7 @@
         <img src="Images/refresh.png" />
         <asp:LinkButton ID="cmdRebind" runat="server" Text="Obnovit." />
     </div>
-    <uc:panelmenu runat="server" ID="panelmenu" />
+    
 
     <div style="clear: both;"></div>
 </div>
@@ -86,12 +111,24 @@
         <asp:ImageButton ID="cmdJ75" runat="server" OnClientClick="return drilldownbuilder()" ImageUrl="Images/drilldown.png" ToolTip="Návrhář DRILL-DOWN šablon" CssClass="button-link" />
     </div>
             
+    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
     
+    <asp:HiddenField ID="hidCols1" runat="server" />
+    <asp:HiddenField ID="hidCols2" runat="server" />
+    <asp:HiddenField ID="hidCols3" runat="server" />
+    <asp:HiddenField ID="hidCols4" runat="server" />
+    <asp:HiddenField ID="hidGroup1" runat="server" />
+    <asp:HiddenField ID="hidGroup2" runat="server" />
+    <asp:HiddenField ID="hidGroup3" runat="server" />
+    <asp:HiddenField ID="hidGroup4" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" Value="p31_drilldown" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
+    <asp:HiddenField ID="hiddatapid" runat="server" />
+
+           
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

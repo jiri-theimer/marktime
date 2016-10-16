@@ -39,6 +39,7 @@
     Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31, strSumFieldsList As String) As DataTable
 
     Function SplitRecord(intP31ID As Integer, dblRec1Hours As Double, strRec1Text As String, dblRec2Hours As Double, strRec2Text As String) As Integer
+    Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
 
     Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean
     ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
@@ -421,5 +422,8 @@ Class p31WorksheetBL
     End Function
     Public Function GetGridDataSource(myQuery As BO.myQueryP31, Optional strTempGUID As String = "") As DataTable Implements Ip31WorksheetBL.GetGridDataSource
         Return _cDL.GetGridDataSource(myQuery, strTempGUID)
+    End Function
+    Public Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable Implements Ip31WorksheetBL.GetDrillDownDatasource
+        Return _cDL.GetDrillDownDatasource(groupCol, sumCols, strParentSqlWhere, mq)
     End Function
 End Class

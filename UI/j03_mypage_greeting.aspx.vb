@@ -103,13 +103,14 @@
         Dim intCount As Integer = lisFiles.Count - 1
 
         Randomize()
-        Dim x As Integer = CInt(Rnd() * 100), strPreffered As String = ""
-        'If x > intCount Then x = CInt(Rnd() * 100)
+        Dim x As Integer = CInt(Rnd() * 110), strPreffered As String = ""
+        If x > intCount Then x = intCount
 
-        If x > intCount And Now.Hour > 18 Then strPreffered = "19422837_s.jpg" 'rodina
-        If x > intCount And Now.Hour > 19 Then strPreffered = "10694994_s.jpg" 'pivo
+
+        'If x > intCount And Now.Hour > 18 Then strPreffered = "19422837_s.jpg" 'rodina
+        'If x > intCount And Now.Hour > 19 Then strPreffered = "10694994_s.jpg" 'pivo
         If x > intCount And (Now.Hour > 22 Or Now.Hour <= 6) Then strPreffered = "16805586_s.jpg" 'postel
-        If x > intCount And Now.Hour >= 12 And Now.Hour <= 13 Then strPreffered = "7001764_s.jpg" 'oběd
+        'If x > intCount And Now.Hour >= 12 And Now.Hour <= 13 Then strPreffered = "7001764_s.jpg" 'oběd
         If x > intCount And strPreffered = "" And (Weekday(Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday) = 3 Or Weekday(Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday) = 1) Then
             strPreffered = "work.jpng"
         End If
@@ -317,7 +318,7 @@
         For Each row As DataRow In dt.Rows
             dbl += BO.BAS.IsNullNum(row.Item("HodinyFa")) + BO.BAS.IsNullNum(row.Item("HodinyNeFa"))
         Next
-        If dbl = 0 Then
+        If dbl < 20 Then
             ShowImage()
             Return
         End If
@@ -360,10 +361,10 @@
         pars.Add(New BO.PluginDbParameter("d2", d2))
         pars.Add(New BO.PluginDbParameter("j02id", Master.Factory.SysUser.j02ID))
         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(s, pars)
-        If strFlag = "5" And dt.Rows.Count > 17 Then ShowChart2("") 'nad 17 projektů->graf podle klientů
-        If strFlag = "4" And dt.Rows.Count <= 1 Then ShowChart2("3") 'pokud pracuje v jednom sešitě, pak graf nemá smysl
+        If strFlag = "5" And dt.Rows.Count > 17 Then ShowChart2("") : Return 'nad 17 projektů->graf podle klientů
+        If strFlag = "4" And dt.Rows.Count <= 1 Then ShowChart2("3") : Return 'pokud pracuje v jednom sešitě, pak graf nemá smysl
 
-        If dt.Rows.Count = 0 Then
+        If dt.Rows.Count <= 1 Then
             ShowImage()
             Return
         End If

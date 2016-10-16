@@ -525,8 +525,9 @@ Public Class p41_framework_detail
 
             Case "favourite"
                 Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
-                ReloadPage(Master.DataPID.ToString)
-               
+                ''ReloadPage(Master.DataPID.ToString)
+                ClientScript.RegisterStartupScript(Me.GetType, "hash", "parent.window.location.replace('p41_framework.aspx');", True)
+
             Case Else
                 ReloadPage(Master.DataPID.ToString)
         End Select

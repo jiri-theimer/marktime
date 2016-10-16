@@ -7,6 +7,7 @@
     Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum) As IEnumerable(Of BO.j75DrillDownTemplate)
     Function CheckDefaultTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "") As Boolean
     Function ColumnsPallete() As List(Of BO.PivotSumField)
+    Function LevelPallete() As List(Of BO.PivotRowColumnField)
     Function GetList_j76(intPID As Integer) As IEnumerable(Of BO.j76DrillDownTemplate_Item)
    
 End Interface
@@ -116,6 +117,42 @@ Class j75DrillDownTemplateBL
         Return Save(c, lisCols, Nothing)
     End Function
 
+    Public Function LevelPallete() As List(Of BO.PivotRowColumnField) Implements Ij75DrillDownTemplateBL.LevelPallete
+        Dim bolHideRatesColumns As Boolean = Not Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)   'zda uživatel nemá právo vidět sazby a fakturační údaje
+
+        Dim lis As New List(Of BO.PivotRowColumnField)
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.Person))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p28Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p41Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p42Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.j18Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.j18Name_j02))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p56Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p34Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p32Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p95Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p32IsBillable))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p71Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p72Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p70Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p91Code))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.InvoiceClient))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.Year))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.Month))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.YearInvoice))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.MonthInvoice))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.j27code_orig))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.j27code_invoice))
+
+        If Not bolHideRatesColumns Then
+            lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p31Rate_Billing_Orig))
+            lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p31Rate_Billing_Approved))
+            lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p31Rate_Billing_Invoiced))
+        End If
+
+
+        Return lis
+    End Function
     Public Function ColumnsPallete() As List(Of BO.PivotSumField) Implements Ij75DrillDownTemplateBL.ColumnsPallete
         Dim bolHideRatesColumns As Boolean = Not Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)   'zda uživatel nemá právo vidět sazby a fakturační údaje
 
