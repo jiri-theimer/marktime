@@ -115,6 +115,22 @@
                 window.open("p31_framework.aspx?showtimer=0", "_top");
         }
 
+        function p31_subgrid_querybuilder(j70id) {
+           sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query_32.png", true);
+
+        }
+        function p31_split() {
+            ///volá se z p31_subgrid
+            var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
+            if (pid == "") {
+                alert("Musíte vybrat záznam")
+                return (false);
+            }            
+            sw_decide("p31_record_split.aspx?pid=" + pid, "Images/split.png", false);
+            return (false);
+            
+        }
+
     </script>
 
 </asp:Content>

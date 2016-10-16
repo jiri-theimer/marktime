@@ -117,18 +117,46 @@ Class j75DrillDownTemplateBL
     End Function
 
     Public Function ColumnsPallete() As List(Of BO.PivotSumField) Implements Ij75DrillDownTemplateBL.ColumnsPallete
+        Dim bolHideRatesColumns As Boolean = Not Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)   'zda uživatel nemá právo vidět sazby a fakturační údaje
+
         Dim lis As New List(Of BO.PivotSumField)
 
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Orig))
+        If Not bolHideRatesColumns Then
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_Orig))
+        End If
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_WIP))
+        If Not bolHideRatesColumns Then
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_WIP))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_WIP))
+
+
+        End If
+
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_Billing))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_FixedPrice))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_WriteOff))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_InvoiceLater))
+
+        If Not bolHideRatesColumns Then
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_Approved))
+        End If
+
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Invoiced))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Invoiced_FixedPrice))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Invoiced_WriteOff))
+
+        If Not bolHideRatesColumns Then
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_Invoiced))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_Invoiced_Domestic))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_FixedCurrency))
+        End If
+
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_BIN))
+
+        lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Value_Orig))
+        lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Value_Approved_Billing))
+        lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Value_Invoiced))
 
         Return lis
 

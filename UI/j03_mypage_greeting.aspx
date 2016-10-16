@@ -17,6 +17,15 @@
 
 
         }
+        function report() {
+            sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png",true);
+            
+        }
+        function sendmail() {
+            sw_master("sendmail.aspx", "Images/email_32.png")
+
+
+        }
         function p28_create() {
             sw_master("p28_record.aspx?pid=0", "Images/contact_32.png");
 
@@ -99,19 +108,23 @@
                     <Items>
                         <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
                             <Items>
-                                <telerik:RadPanelItem Text="Založit nového klienta" Value="p28_create" NavigateUrl="javascript:p28_create()" ImageUrl="Images/contact.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Založit nový projekt" Value="p41_create" NavigateUrl="javascript:p41_create()" ImageUrl="Images/project.png"></telerik:RadPanelItem>
+                                
                                 <telerik:RadPanelItem Text="Zapsat worksheet úkon" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
-
+                                
+                                <telerik:RadPanelItem Text="Založit nového klienta" Value="p28_create" NavigateUrl="javascript:p28_create()" ImageUrl="Images/contact.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Založit nový projekt" Value="p41_create" NavigateUrl="javascript:p41_create()" ImageUrl="Images/project.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Vytvořit nový úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Vytvořit nový dokument" Value="o23_create" NavigateUrl="javascript:o23_create()" ImageUrl="Images/notepad.png"></telerik:RadPanelItem>
 
                                 <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Vystavit fakturu" Value="p91_create" NavigateUrl="javascript:p91_create()" ImageUrl="Images/invoice.png"></telerik:RadPanelItem>
-
+                                <telerik:RadPanelItem IsSeparator="true" Text="<hr>"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Osobní tiskové sestavy" Value="myreport" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
+
+                                <telerik:RadPanelItem Text="Odeslat poštovní zprávu" Value="sendmail" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadPanelItem>
 
                                 <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
                             </Items>

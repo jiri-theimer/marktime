@@ -60,6 +60,13 @@ Public Class p31_pivot
                     .Add("p31_pivot-sum3")
                     .Add("p31_pivot-sum4")
                 End With
+                Dim lisSumFields As List(Of BO.PivotSumField) = .Factory.j75DrillDownTemplateBL.ColumnsPallete()
+                If Not .Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                    RemoveItems(Me.col1, "3101,3102,3103")
+                    RemoveItems(Me.row1, "3101,3102,3103")
+                    RemoveItems(Me.row2, "3101,3102,3103")
+                    RemoveItems(Me.row3, "3101,3102,3103")
+                End If
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_pivot-pagesize", "20"))
@@ -67,10 +74,11 @@ Public Class p31_pivot
                     basUI.SelectDropdownlistValue(Me.row2, .GetUserParam("p31_pivot-row2"))
                     basUI.SelectDropdownlistValue(Me.row3, .GetUserParam("p31_pivot-row3"))
                     basUI.SelectDropdownlistValue(Me.col1, .GetUserParam("p31_pivot-col1"))
-                    basUI.SelectDropdownlistValue(Me.sum1, .GetUserParam("p31_pivot-sum1", "1"))
-                    basUI.SelectDropdownlistValue(Me.sum2, .GetUserParam("p31_pivot-sum2"))
-                    basUI.SelectDropdownlistValue(Me.sum3, .GetUserParam("p31_pivot-sum3"))
-                    basUI.SelectDropdownlistValue(Me.sum4, .GetUserParam("p31_pivot-sum4"))
+
+                    SetupSumCombo(Me.sum1, lisSumFields, .GetUserParam("p31_pivot-sum1", "1"))
+                    SetupSumCombo(Me.sum2, lisSumFields, .GetUserParam("p31_pivot-sum2"))
+                    SetupSumCombo(Me.sum3, lisSumFields, .GetUserParam("p31_pivot-sum3"))
+                    SetupSumCombo(Me.sum4, lisSumFields, .GetUserParam("p31_pivot-sum4"))
 
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam("p31_grid-period")
@@ -86,6 +94,19 @@ Public Class p31_pivot
         Else
             SetupGridFields()
         End If
+    End Sub
+    Private Sub SetupSumCombo(cbx As DropDownList, lisSumFields As List(Of BO.PivotSumField), strDefVal As String)
+        cbx.DataSource = lisSumFields
+        cbx.DataBind()
+        cbx.Items.Insert(0, "")
+        basUI.SelectDropdownlistValue(cbx, strDefVal)
+    End Sub
+    Private Sub RemoveItems(cbx As DropDownList, strVals As String)
+        For Each s In Split(strVals, ",")
+            With cbx.Items
+                If Not .FindByValue(s) Is Nothing Then .Remove(.FindByValue(s))
+            End With
+        Next
     End Sub
     Private Sub SetupJ70Combo(intDef As Integer)
         Dim mq As New BO.myQuery

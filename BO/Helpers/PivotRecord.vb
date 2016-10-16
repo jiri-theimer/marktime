@@ -204,7 +204,7 @@ Public Class PivotSumField
                 s = "Hodiny v archivu"
             Case PivotSumFieldType.p31Hours_Invoiced
                 _SelectField = "sum(p31Hours_Invoiced)"
-                s = "Vyfakturovné hodiny"
+                s = "Vyfakturovné hodiny [Fakturovat]"
             Case PivotSumFieldType.p31Hours_Invoiced_FixedPrice
                 _SelectField = "sum(case when a.p70ID=6 THEN p31Hours_Orig end)"
                 s = "Vyfakturované hodiny [Paušál]"
@@ -213,13 +213,13 @@ Public Class PivotSumField
                 s = "Vyfakturované hodiny [Odpis]"
             Case PivotSumFieldType.p31Hours_Approved_Billing
                 _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Approved_Billing END)"
-                s = "Čeká na fakturaci/Hodiny [Fakturovat]"
+                s = "Čeká na fakturaci, hodiny [Fakturovat]"
             Case PivotSumFieldType.p31Amount_WithoutVat_Orig
                 _SelectField = "sum(p31Amount_WithoutVat_Orig)"
                 s = "Výchozí částka bez DPH"
             Case PivotSumFieldType.p31Amount_WithoutVat_Approved
                 _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil then p31Amount_WithoutVat_Approved end)"
-                s = "Čeká na fakturaci/Částka bez DPH"
+                s = "Čeká na fakturaci, Částka bez DPH"
             Case PivotSumFieldType.p31Amount_WithoutVat_Invoiced
                 _SelectField = "sum(p31Amount_WithoutVat_Invoiced)"
                 s = "Vyfakturováno bez DPH"
@@ -233,20 +233,20 @@ Public Class PivotSumField
                 _SelectField = "sum(p31Value_Orig)"
                 s = "Vykázaná hodnota"
             Case PivotSumFieldType.p31Value_Invoiced
-                _SelectField = "sum(p31Value_Invoiced)"
-                s = "Vyfakturovaná hodnota"
+                _SelectField = "sum(CASE when a.p70ID=4 THEN p31Value_Invoiced END)"
+                s = "Vyfakturovaná hodnota [Fakturovat]"
             Case PivotSumFieldType.p31Value_Approved_Billing
                 _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Value_Approved_Billing END)"
-                s = "Čeká na fakturaci/Hodnota [Fakturovat]"
+                s = "Čeká na fakturaci, hodnota [Fakturovat]"
             Case PivotSumFieldType.p31Hours_Approved_FixedPrice
                 _SelectField = "sum(CASE WHEN a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil AND a.p72ID_AfterApprove=6 THEN p31Hours_Orig end)"
-                s = "Čeká na fakturaci/Hodiny [Paušál]"
+                s = "Čeká na fakturaci, hodiny [Paušál]"
             Case PivotSumFieldType.p31Hours_Approved_WriteOff
                 _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove IN (2,3) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig end)"
-                s = "Čeká na fakturaci/Hodiny [Odpis]"
+                s = "Čeká na fakturaci, hodiny [Odpis]"
             Case PivotSumFieldType.p31Hours_Approved_InvoiceLater
                 _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove=7 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Hours_Orig end)"
-                s = "Čeká na fakturaci/Hodiny [Fakturovat později]"
+                s = "Čeká na fakturaci, hodiny [Fakturovat později]"
             Case PivotSumFieldType.p31Amount_WithoutVat_WIP
                 _SelectField = "sum(case when a.p71ID IS NULL AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
                 s = "Rozpracovanost, částka bez DPH"

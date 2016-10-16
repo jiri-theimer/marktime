@@ -14,6 +14,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gridP31.Factory = Master.Factory
+        gridP31.AllowApproving = False
 
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString

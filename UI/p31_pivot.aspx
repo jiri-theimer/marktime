@@ -233,103 +233,15 @@
                 <b>Veličiny</b>
             </div>
             <div class="content">
-                <asp:DropDownList ID="sum1" runat="server" AutoPostBack="true" Width="200px">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Vykázané hodiny" Value="1" Selected="true"></asp:ListItem>
-                    <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
-                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
-                    <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodnota [Fakturovat]" Value="12"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Paušál]" Value="126"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Odpis]" Value="123"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Částka bez DPH" Value="22"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Paušál]" Value="36"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Odpis]" Value="33"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
-                    <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                    <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>
+                <asp:DropDownList ID="sum1" runat="server" AutoPostBack="true" Width="200px" DataTextField="Caption" DataValueField="FieldTypeID">
                 </asp:DropDownList>
 
-                <asp:DropDownList ID="sum2" runat="server" AutoPostBack="true" Width="200px">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
-                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
-                    <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodnota [Fakturovat]" Value="12"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Paušál]" Value="126"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Odpis]" Value="123"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Částka bez DPH" Value="22"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Paušál]" Value="36"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Odpis]" Value="33"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
-                    <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodnota [Fakturovat]" Value="12"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                    <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>
+                <asp:DropDownList ID="sum2" runat="server" AutoPostBack="true" Width="200px"  DataTextField="Caption" DataValueField="FieldTypeID">                  
                 </asp:DropDownList>
 
-                <asp:DropDownList ID="sum3" runat="server" AutoPostBack="true" Width="200px">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
-                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
-                    <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
-                   <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodnota [Fakturovat]" Value="12"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Paušál]" Value="126"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Odpis]" Value="123"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Částka bez DPH" Value="22"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Paušál]" Value="36"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Odpis]" Value="33"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
-                    <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodnota [Fakturovat]" Value="12"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                    <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>
+                <asp:DropDownList ID="sum3" runat="server" AutoPostBack="true" Width="200px"  DataTextField="Caption" DataValueField="FieldTypeID">                   
                 </asp:DropDownList>
-                <asp:DropDownList ID="sum4" runat="server" AutoPostBack="true" Width="200px">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Vykázané hodiny" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Výchozí částka bez DPH" Value="21"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracované hodiny" Value="4"></asp:ListItem>
-                    <asp:ListItem Text="Honorář z rozpracovaných hodin" Value="26"></asp:ListItem>
-                    <asp:ListItem Text="Rozpracovanost, částka bez DPH" Value="27"></asp:ListItem>
-                    <asp:ListItem Text="Hodiny v archivu" Value="5"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat později]" Value="127"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Fakturovat]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodnota [Fakturovat]" Value="12"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Paušál]" Value="126"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodiny [Odpis]" Value="123"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Částka bez DPH" Value="22"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Paušál]" Value="36"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturované hodiny [Odpis]" Value="33"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH" Value="23"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturováno bez DPH x Kurz" Value="25"></asp:ListItem>
-                    <asp:ListItem Text="Vykázaná hodnota" Value="11"></asp:ListItem>
-                    <asp:ListItem Text="Čeká na fakturaci/Hodnota [Fakturovat]" Value="12"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturovaná hodnota" Value="13"></asp:ListItem>
-                    <asp:ListItem Text="Přepočteno fixním kurzem" Value="24"></asp:ListItem>
+                <asp:DropDownList ID="sum4" runat="server" AutoPostBack="true" Width="200px"  DataTextField="Caption" DataValueField="FieldTypeID">                   
                 </asp:DropDownList>
             </div>
         </div>
