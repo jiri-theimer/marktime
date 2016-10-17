@@ -9,5 +9,6 @@
     Public Property DateP31_From As Date
     Public Property DateP31_Until As Date
     Public Property InvoiceText1 As String
+    Public Property j02ID_ContactPerson As Integer
 
 End Class

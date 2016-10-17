@@ -63,6 +63,7 @@
     Public Property p91Text2 As String
 
     Public Property p91Client As String
+    Public Property p91ClientPerson As String
     Public Property p91Client_RegID As String
     Public Property p91Client_VatID As String
     Public Property p91ClientAddress1_Street As String

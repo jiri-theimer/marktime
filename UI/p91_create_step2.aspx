@@ -8,7 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
     <style type="text/css">
@@ -25,7 +25,6 @@
         * html .ui-autocomplete {
             height: 300px;
         }
-
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -63,16 +62,16 @@
         $(function () {
 
             $("#search2").autocomplete({
-                <%If chkSearchByClientOnly.Checked then%>
+                <%If chkSearchByClientOnly.Checked Then%>
                 source: "Handler/handler_search_invoice.ashx?p28id=<%=Me.p28id.Value%>",
-                <%else%>
+                <%Else%>
                 source: "Handler/handler_search_invoice.ashx",
                 <%End If%>
                 minLength: 1,
                 select: function (event, ui) {
                     if (ui.item) {
                         //alert(ui.item.PID);
-                        
+
                         document.getElementById("<%=p91text1.clientid%>").value = ui.item.p91Text1;
                         return false;
                     }
@@ -87,7 +86,7 @@
                 else
                     s = s + "<a>";
 
-                s = s + __highlight(item.Invoice+"<br>"+item.p91Text1, item.FilterString);
+                s = s + __highlight(item.Invoice + "<br>" + item.p91Text1, item.FilterString);
 
 
                 s = s + "</a>";
@@ -239,9 +238,14 @@
                 </tr>
             </table>
             <div>
-            <asp:CheckBox ID="chkRememberDates" runat="server" Text="V mé další faktuře nabízet ty samé datumy" CssClass="div6" /></div>
+                <asp:CheckBox ID="chkRememberDates" runat="server" Text="V mé další faktuře nabízet ty samé datumy" CssClass="div6" />
             </div>
-            <div class="div6">
+        </div>
+        <div class="div6">
+            <span>Kontaktní osoba klienta:</span>
+            <uc:datacombo ID="j02ID_ContactPerson" runat="server" DataValueField="pid" DataTextField="FullNameDescWithEmail" IsFirstEmptyRow="true" Width="400px" />
+        </div>
+        <div class="div6">
             Text faktury
             <input id="search2" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />
             <asp:CheckBox ID="chkSearchByClientOnly" runat="server" AutoPostBack="true" Text="Hledat pouze ve fakturách klienta" />

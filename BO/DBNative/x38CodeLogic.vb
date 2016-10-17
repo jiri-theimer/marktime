@@ -15,10 +15,14 @@ Public Class x38CodeLogic
     Public Property x38IsDraft As Boolean
     Public Property x38Description As String
     Public Property x38ExplicitIncrementStart As Integer
+    Public Property x38IsUseDbPID As Boolean
+
 
 
     Public ReadOnly Property CodeLogicInfo As String
         Get
+            If Me.x38IsUseDbPID Then Return ""
+
             If Me.x38MaskSyntax = "" Then
                 Return Me.x38ConstantBeforeValue & Right("000000001", Me.x38Scale) & " - " & Me.x38ConstantBeforeValue & Right("99999999999", Me.x38Scale)
             Else

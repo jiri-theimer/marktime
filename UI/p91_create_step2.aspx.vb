@@ -175,7 +175,14 @@ Public Class p91_create_step2
         notepad1.RefreshData(lisO23, mqO23.p28ID)
 
         Me.lblO23.Text = BO.BAS.OM2(Me.lblO23.Text, notepad1.RowsCount.ToString)
-
+        If Me.p28id.Value <> "" Then
+            Dim mqJ02 As New BO.myQueryJ02
+            mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+            mqJ02.p28ID = Me.p28id.Value
+            Me.j02ID_ContactPerson.DataSource = Master.Factory.j02PersonBL.GetList(mqJ02).ToList
+            Me.j02ID_ContactPerson.DataBind()
+        End If
+        
     End Sub
 
     Private Sub SetupGrid()
@@ -387,6 +394,7 @@ Public Class p91_create_step2
                 .DateSupply = Me.p91DateSupply.SelectedDate
                 .DateP31_From = Me.p91Datep31_From.SelectedDate
                 .DateP31_Until = Me.p91Datep31_Until.SelectedDate
+                .j02ID_ContactPerson = BO.BAS.IsNullInt(Me.j02ID_ContactPerson.SelectedValue)
             End With
             Dim intP91ID As Integer = Master.Factory.p91InvoiceBL.Create(cRec)
 

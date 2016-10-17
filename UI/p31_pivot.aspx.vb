@@ -401,6 +401,7 @@ Public Class p31_pivot
             Next
         Else
             If TypeOf e.PivotGridCell Is PivotGridRowHeaderCell Then
+                e.ExportedCell.Style.HorizontalAlign = HorizontalAlign.Justify
             Else
                 e.ExportedCell.Style.HorizontalAlign = HorizontalAlign.Right
             End If

@@ -96,9 +96,12 @@
             </div>
             <asp:Panel ID="panPasswordRecovery" runat="server" Style="background-color: orange;" Visible="false">
                 <div style="padding: 6px;">
-                    <asp:Label ID="lblNewPasswordLabel" runat="server" Text="Nové přístupové heslo:"></asp:Label>
-                    <asp:Label ID="lblNewPassword" runat="server" Style="margin-left: 20px; font-weight: bold; font-size: 20px;"></asp:Label>
-                    <asp:Button ID="cmdResetPasswordMessage" runat="server" Text="Odeslat zprávu o novém heslu" CssClass="cmd" />
+                    <asp:Label ID="lblNewPasswordLabel" runat="server" Text="Nové přístupové heslo:" ForeColor="black"></asp:Label>
+                    
+                    <asp:TextBox ID="txtNewPassword" runat="server" style="width:150px;"></asp:TextBox>
+                    <asp:Button ID="cmdGeneratePasswordAgain" runat="server" Text="Pře-generovat heslo" CssClass="cmd" />
+                    <span>Heslo můžete upravit (přepsat) a pře-generovat na tuto hodnotu.</span>
+                    <asp:Button ID="cmdResetPasswordMessage" runat="server" Text="Odeslat uživateli zprávu o novém heslu" CssClass="cmd" />
                 </div>
             </asp:Panel>
         </div>

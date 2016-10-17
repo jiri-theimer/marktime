@@ -165,6 +165,14 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label ID="lblPerson" runat="server" Text="Kontaktní osoba klienta:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <uc:datacombo ID="j02ID_ContactPerson" runat="server" DataValueField="pid" DataTextField="FullNameDescWithEmail" IsFirstEmptyRow="true" Width="400px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="Label1" runat="server" Text="Fakturační adresa klienta:" CssClass="lbl"></asp:Label>
 
                     </td>
@@ -202,6 +210,14 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="p91Client" runat="server" Style="width: 400px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label14" runat="server" Text="Kontaktní osoba klienta:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="p91ClientPerson" runat="server" Style="width: 400px;"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>

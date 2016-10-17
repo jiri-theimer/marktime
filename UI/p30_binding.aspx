@@ -74,7 +74,7 @@
                                     
                                     <td>
                                         <img src="Images/edit.png" />
-                                        <asp:HyperLink ID="cmdJ02" runat="server" Text="Upravit osobní profil"></asp:HyperLink>
+                                        <asp:HyperLink ID="cmdJ02" runat="server" Text="Upravit profil"></asp:HyperLink>
                                         <asp:HiddenField ID="p30id" runat="server" />
                                     </td>
                                     <td  >
@@ -86,9 +86,14 @@
                                         <asp:Label ID="lblDefaultInWorksheet" runat="server" Text="Přednastaveno v zapisování výkazů" CssClass="valboldred" Visible="false"></asp:Label>
                                         <asp:ImageButton ID="cmdDeleteDefault" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit přednastavení v zapisování výkazů" CommandName="default_delete" Visible="false" />
                                     </td>
+                                    <td>
+                                        <asp:LinkButton ID="cmdDefaultInInvoice" runat="server" Text="Přednastavit ve fakturaci" CommandName="default_invoice_add" Visible="false"></asp:LinkButton>
+                                        <asp:Label ID="Label1" runat="server" Text="Přednastaveno ve fakturaci" CssClass="valboldred" Visible="false"></asp:Label>
+                                        <asp:ImageButton ID="cmdDeleteDefaultInInvoice" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit přednastavení ve fakturaci" CommandName="default_invoice_delete" Visible="false" />
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" style="border-bottom:solid 1px silver;">
+                                    <td colspan="6" style="border-bottom:solid 1px silver;">
                                         <asp:Label ID="Message" runat="server" CssClass="infoNotification"></asp:Label>
                                     </td>
                                 </tr>

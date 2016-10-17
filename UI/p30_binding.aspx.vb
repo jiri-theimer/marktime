@@ -104,6 +104,13 @@
                 If Master.Factory.p30Contact_PersonBL.SetAsDefaultPerson(cRec, b) Then
                     RefreshList()
                 End If
+            Case "default_invoice_add", "default_invoice_delete"
+                Dim b As Boolean = True
+                If e.CommandName = "default_invoice_delete" Then b = False
+                Dim cRec As BO.p30Contact_Person = Master.Factory.p30Contact_PersonBL.Load(intP30ID)
+                If Master.Factory.p30Contact_PersonBL.SetAsDefaultInInvoice(cRec, b) Then
+                    RefreshList()
+                End If
         End Select
     End Sub
 
@@ -115,7 +122,7 @@
         With CType(e.Item.FindControl("cmdDelete"), LinkButton)
             Select Case Me.CurrentPrefix
                 Case "p28"
-                    .Text = "Odstranit vazbu osoby ke klientovi"
+                    .Text = "Odstranit vazbu ke klientovi"
                     If cRec.p41ID <> 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
@@ -127,7 +134,7 @@
                         e.Item.FindControl("lblDefaultInWorksheet").Visible = cRec.p30IsDefaultInWorksheet
                     End If
                 Case "p41"
-                    .Text = "Odstranit vazbu osoby k projektu"
+                    .Text = "Odstranit vazbu k projektu"
                     If cRec.p28ID <> 0 And cRec.p41ID = 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False

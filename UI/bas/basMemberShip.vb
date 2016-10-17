@@ -37,12 +37,14 @@
             Return 0
         End If
     End Function
-    Public Shared Function RecoveryPassword(strLogin As String) As String
+    Public Shared Function RecoveryPassword(strLogin As String, Optional strExplicitPassword As String = "") As String
         Dim user As MembershipUser = Membership.GetUser(strLogin)
         Try
-            'Return user.ResetPassword()
-            Randomize()
-            Dim strNewPWD As String = Left((Rnd() * 10000).ToString, 2) & Left(BO.BAS.GetGUID(), 6)
+            Dim strNewPWD As String = strExplicitPassword
+            If strNewPWD = "" Then
+                Randomize()
+                strNewPWD = Left((Rnd() * 10000).ToString, 2) & Left(BO.BAS.GetGUID(), 6)
+            End If
             If user.ChangePassword(user.ResetPassword(), strNewPWD) Then
                 Return strNewPWD
             End If

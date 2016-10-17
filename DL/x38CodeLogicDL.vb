@@ -36,6 +36,7 @@
             pars.Add("x38Description", .x38Description, DbType.String, , , True, "Poznámka")
             pars.Add("x38Scale", .x38Scale, DbType.Int32)
             pars.Add("x38ExplicitIncrementStart", .x38ExplicitIncrementStart, DbType.Int32)
+            pars.Add("x38IsUseDbPID", .x38IsUseDbPID, DbType.Boolean)
             pars.Add("x38ValidFrom", .ValidFrom, DbType.DateTime)
             pars.Add("x38ValidUntil", .ValidUntil, DbType.DateTime)
         End With

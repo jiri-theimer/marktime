@@ -28,6 +28,7 @@
                 Me.p63ID.DataSource = .Factory.p63OverheadBL.GetList(New BO.myQuery)
                 Me.p63ID.DataBind()
 
+               
             End With
 
 
@@ -73,6 +74,14 @@
             If .p28ID <> 0 Then
                 Me.o38ID_Primary.SelectedValue = .o38ID_Primary.ToString
                 Me.o38ID_Delivery.SelectedValue = .o38ID_Delivery.ToString
+
+                Dim mq As New BO.myQueryJ02
+                mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+                mq.p28ID = .p28ID
+                Me.j02ID_ContactPerson.DataSource = Master.Factory.j02PersonBL.GetList(mq).ToList
+                Me.j02ID_ContactPerson.DataBind()
+                Me.j02ID_ContactPerson.SelectedValue = .j02ID_ContactPerson.ToString
+
             End If
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -129,6 +138,7 @@
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .o38ID_Primary = BO.BAS.IsNullInt(Me.o38ID_Primary.SelectedValue)
                 .o38ID_Delivery = BO.BAS.IsNullInt(Me.o38ID_Delivery.SelectedValue)
+                .j02ID_ContactPerson = BO.BAS.IsNullInt(Me.j02ID_ContactPerson.SelectedValue)
                 .p91Text1 = Me.p91text1.Text
                 .p91Text2 = Me.p91text2.Text
                 .p91Date = Me.p91Date.SelectedDate
@@ -139,6 +149,7 @@
 
 
                 .p91Client = Me.p91Client.Text
+                .p91ClientPerson = Me.p91ClientPerson.Text
                 .p91Client_RegID = Me.p91Client_RegID.Text
                 .p91Client_VatID = Me.p91Client_VatID.Text
                 .p91ClientAddress1_City = Me.p91ClientAddress1_City.Text
@@ -198,6 +209,10 @@
             Me.p91ClientAddress2.Text = cA.FullAddressWithBreaks
         Else
             Me.p91ClientAddress2.Text = ""
+        End If
+        If Me.j02ID_ContactPerson.SelectedValue <> "" Then
+            Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(CInt(Me.j02ID_ContactPerson.SelectedValue))
+            Me.p91ClientPerson.Text = cJ02.FullNameAsc
         End If
     End Sub
 

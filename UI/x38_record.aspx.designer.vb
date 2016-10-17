@@ -59,6 +59,24 @@ Partial Public Class x38_record
     Protected WithEvents x38Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''x38IsUseDbPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x38IsUseDbPID As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''tabMore control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabMore As Global.System.Web.UI.HtmlControls.HtmlTable
+
+    '''<summary>
     '''lblOrdinary control.
     '''</summary>
     '''<remarks>

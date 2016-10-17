@@ -194,13 +194,22 @@ Partial Public Class j03_record
     Protected WithEvents lblNewPasswordLabel As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblNewPassword control.
+    '''txtNewPassword control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblNewPassword As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtNewPassword As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cmdGeneratePasswordAgain control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdGeneratePasswordAgain As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''cmdResetPasswordMessage control.

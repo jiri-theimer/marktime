@@ -275,6 +275,24 @@ Partial Public Class p91_record
     Protected WithEvents p28ID As Global.UI.contact
 
     '''<summary>
+    '''lblPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPerson As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j02ID_ContactPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02ID_ContactPerson As Global.UI.datacombo
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>
@@ -336,6 +354,24 @@ Partial Public Class p91_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p91Client As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label14 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label14 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p91ClientPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p91ClientPerson As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Label7 control.

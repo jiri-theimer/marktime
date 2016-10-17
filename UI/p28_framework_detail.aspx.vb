@@ -454,6 +454,7 @@ Public Class p28_framework_detail
                 .NavigateUrl = "javascript:projects()"
                 .ForeColor = Drawing.Color.Green
                 .Font.Bold = True
+                .Font.Strikeout = False
                 e.Item.FindControl("clue_project").Visible = False
             End If
         End With

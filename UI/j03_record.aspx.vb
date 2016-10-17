@@ -119,7 +119,7 @@
             Master.Notify(basMemberShip.ErrorMessage, 2)
         Else
             panPasswordRecovery.Visible = True
-            lblNewPassword.Text = strNewPWD
+            txtNewPassword.Text = strNewPWD
         End If
     End Sub
 
@@ -162,7 +162,7 @@
             Case 2
                 Master.Notify("Opravený účet musí mít nové přístupové heslo.", 0)
                 panPasswordRecovery.Visible = True
-                lblNewPassword.Text = strNewPWD
+                txtNewPassword.Text = strNewPWD
             Case 0
                 Master.Notify("Neznámá Membership chyba.", 2)
         End Select
@@ -178,6 +178,16 @@
     Private Sub cmdDeleteUserParams_Click(sender As Object, e As EventArgs) Handles cmdDeleteUserParams.Click
         If Master.Factory.j03UserBL.DeleteAllUserParams(Master.DataPID) Then
             Master.Notify("Paměť uživatelského profilu byla vyčištěna.")
+        End If
+    End Sub
+
+    Private Sub cmdGeneratePasswordAgain_Click(sender As Object, e As EventArgs) Handles cmdGeneratePasswordAgain.Click
+        Dim strNewPWD As String = basMemberShip.RecoveryPassword(j03login.Text, Trim(Me.txtNewPassword.Text))
+        If strNewPWD = "" Then
+            Master.Notify(basMemberShip.ErrorMessage, 2)
+        Else
+            txtNewPassword.Text = strNewPWD
+            Master.Notify("Nové heslo bylo pře-generováno.")
         End If
     End Sub
 End Class

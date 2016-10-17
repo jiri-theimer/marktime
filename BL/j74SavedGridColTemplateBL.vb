@@ -446,6 +446,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Město klienta", "p91ClientAddress1_City"))
             .Add(AGC("PSČ klienta", "p91ClientAddress1_ZIP"))
             .Add(AGC("Stát klienta", "p91ClientAddress1_Country"))
+            .Add(AGC("Kontaktní osoba", "p91ClientPerson"))
             .Add(AGC("IČ klienta", "p91Client_RegID"))
 
             .Add(AGC("Vlastník záznamu", "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))

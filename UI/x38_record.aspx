@@ -9,7 +9,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <table cellpadding="3" cellspacing="2">
         <tr>
-            <td>
+            <td style="width:180px;">
                 <asp:Label ID="lblX29ID" Text="Entita:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
@@ -33,9 +33,15 @@
                 <asp:TextBox ID="x38Name" runat="server" Style="width: 400px;"></asp:TextBox>
             </td>
         </tr>
-
         <tr>
-            <td>
+            <td colspan="2">
+                <asp:CheckBox ID="x38IsUseDbPID" runat="server" Text="Číslovat podle primárního klíče záznamu v databázi" AutoPostBack="true" />
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="3" cellspacing="2" id="tabMore" runat="server">
+        <tr>
+            <td style="width:180px;">
                 <asp:Label ID="lblOrdinary" Text="Rozsah nul pořadového čísla:" runat="server" CssClass="lbl"></asp:Label>
 
             </td>

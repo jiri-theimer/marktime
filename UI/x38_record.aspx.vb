@@ -42,6 +42,7 @@
             Else
                 Me.x38Scale.Value = .x38Scale
             End If
+            Me.x38IsUseDbPID.Checked = .x38IsUseDbPID
             Me.x38ConstantBeforeValue.Text = .x38ConstantBeforeValue
             Me.x38ConstantAfterValue.Text = .x38ConstantAfterValue
             basUI.SelectRadiolistValue(Me.x38EditModeFlag, CInt(.x38EditModeFlag).ToString)
@@ -83,6 +84,7 @@
                 .x38MaskSyntax = Me.x38MaskSyntax.Text
                 .x38IsDraft = Me.x38IsDraft.Checked
                 .x38ExplicitIncrementStart = BO.BAS.IsNullInt(x38ExplicitIncrementStart.Value)
+                .x38IsUseDbPID = Me.x38IsUseDbPID.Checked
             End With
             
 
@@ -104,5 +106,7 @@
             Case Else
                 Me.x38IsDraft.Visible = False
         End Select
+        Me.tabMore.Visible = Not Me.x38IsUseDbPID.Checked
+
     End Sub
 End Class
