@@ -263,7 +263,7 @@
             </telerik:PivotGridAggregateField>
 
         </Fields>
-
+      
         <ConfigurationPanelSettings EnableDragDrop="false" />
         <ClientSettings EnableFieldsDragDrop="false" ClientMessages-DragToReorder=""></ClientSettings>
     </telerik:RadPivotGrid>

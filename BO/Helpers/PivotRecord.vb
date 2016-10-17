@@ -40,6 +40,8 @@ Public Enum PivotSumFieldType
     p31Amount_WithoutVat_FixedCurrency = 24
     p31Amount_WithoutVat_Invoiced_Domestic = 25
     p31Amount_HoursFee_WIP = 26
+    p31Amount_HoursFee_Approved = 28
+    p31Amount_HoursFee_Invoiced = 29
     p31Amount_WithoutVat_WIP = 27
 
     p31Hours_Approved_Billing = 2
@@ -49,6 +51,17 @@ Public Enum PivotSumFieldType
 
     p31Hours_Invoiced_FixedPrice = 36
     p31Hours_Invoiced_WriteOff = 33
+
+    Expenses = 37
+    Expenses_WIP = 38
+    Expenses_Approved = 39
+    Expenses_Invoiced = 40
+    Fees = 41
+    Fees_WIP = 42
+    Fees_Approved = 43
+    Fees_Invoiced = 44
+
+
 
 
 End Enum
@@ -160,7 +173,7 @@ Public Class PivotRowColumnField
                 _GroupByField = "a.p91ID"
                 s = "ID faktury"
             Case PivotRowColumnFieldType.InvoiceClient
-                _SelectField = "min(p91Client.p28Name)"
+                _SelectField = "min(p91Receiver.p28Name)"
                 _GroupByField = "p91.p28ID"
                 s = "Klient faktury"
             Case PivotRowColumnFieldType.p31Rate_Billing_Orig
@@ -258,6 +271,36 @@ Public Class PivotSumField
             Case PivotSumFieldType.p31Amount_HoursFee_WIP
                 _SelectField = "sum(case when a.p71ID IS NULL AND a.p91ID IS NULL AND p34.p33ID=1 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
                 s = "Honorář z rozpracovaných hodin"
+            Case PivotSumFieldType.p31Amount_HoursFee_Approved
+                _SelectField = "sum(case when a.p71ID=1 AND a.p91ID IS NULL AND p34.p33ID=1 AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Approved END)"
+                s = "Čeká na fakturaci, časový honorář"
+            Case PivotSumFieldType.p31Amount_HoursFee_Invoiced
+                _SelectField = "sum(case when a.p91ID IS NOT NULL AND p34.p33ID=1 THEN p31Amount_WithoutVat_Invoiced END)"
+                s = "Vyfakturovaný časový honorář"
+            Case PivotSumFieldType.Expenses
+                _SelectField = "SUM(case when p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
+                s = "Vykázané výdaje"
+            Case PivotSumFieldType.Expenses_WIP
+                _SelectField = "SUM(case when a.p71ID IS NULL AND p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
+                s = "Rozpracované výdaje"
+            Case PivotSumFieldType.Expenses_Approved
+                _SelectField = "SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Approved END)"
+                s = "Čeká na fakturaci, výdaje"
+            Case PivotSumFieldType.Expenses_Invoiced
+                _SelectField = "SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=1 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Invoiced END)"
+                s = "Vyfakturované výdaje"
+            Case PivotSumFieldType.Fees
+                _SelectField = "SUM(case when p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
+                s = "Vykázané pevné odměny"
+            Case PivotSumFieldType.Fees_WIP
+                _SelectField = "SUM(case when a.p71ID IS NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Orig END)"
+                s = "Rozpracované pevné odměny"
+            Case PivotSumFieldType.Fees_Approved
+                _SelectField = "SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil THEN p31Amount_WithoutVat_Approved END)"
+                s = "Čeká na fakturaci, pevné odměny"
+            Case PivotSumFieldType.Fees_Invoiced
+                _SelectField = "SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Invoiced END)"
+                s = "Vyfakturované pevné odměny"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

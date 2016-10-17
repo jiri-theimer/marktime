@@ -385,4 +385,30 @@ Public Class p31_pivot
     Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
         GridExport("doc")
     End Sub
+
+    Private Sub pivot1_PivotGridCellExporting(sender As Object, e As PivotGridCellExportingArgs) Handles pivot1.PivotGridCellExporting
+     
+        If TypeOf e.PivotGridCell Is PivotGridColumnHeaderCell Then
+
+            e.ExportedCell.Style.Font.Bold = True
+
+            For i As Integer = 1 To pivot1.Fields.Count
+                If e.ExportedCell.ColIndex = i + 1 Then
+                    e.ExportedCell.Value = pivot1.Fields(i).Caption
+
+                End If
+
+            Next
+        Else
+            If TypeOf e.PivotGridCell Is PivotGridRowHeaderCell Then
+            Else
+                e.ExportedCell.Style.HorizontalAlign = HorizontalAlign.Right
+            End If
+
+
+        End If
+
+    End Sub
+
+   
 End Class

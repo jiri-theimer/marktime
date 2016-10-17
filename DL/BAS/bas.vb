@@ -284,6 +284,12 @@
                                         Else
                                             strW += " OR " & strField & ss
                                         End If
+                                    Case "boolean"
+                                        If strW = "" Then
+                                            strW = strField & "=" & c.j71RecordPID.ToString
+                                        Else
+                                            strW += " OR " & strField & "=" & c.j71RecordPID.ToString
+                                        End If
                                 End Select
                             Next
                         End If
