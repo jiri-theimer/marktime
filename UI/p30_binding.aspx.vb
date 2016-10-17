@@ -132,6 +132,10 @@
                         e.Item.FindControl("cmdDefaultInWorksheet").Visible = Not cRec.p30IsDefaultInWorksheet
                         If cRec.p30IsDefaultInWorksheet Then e.Item.FindControl("cmdDeleteDefault").Visible = True
                         e.Item.FindControl("lblDefaultInWorksheet").Visible = cRec.p30IsDefaultInWorksheet
+
+                        e.Item.FindControl("cmdDefaultInInvoice").Visible = Not cRec.p30IsDefaultInInvoice
+                        If cRec.p30IsDefaultInInvoice Then e.Item.FindControl("cmdDeleteDefaultInInvoice").Visible = True
+                        e.Item.FindControl("lblDefaultInInvoice").Visible = cRec.p30IsDefaultInInvoice
                     End If
                 Case "p41"
                     .Text = "Odstranit vazbu k projektu"

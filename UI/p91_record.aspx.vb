@@ -62,6 +62,7 @@
             Me.p91Datep31_Until.SelectedDate = .p91Datep31_Until
 
             Me.p91Client.Text = .p91Client
+            Me.p91ClientPerson.Text = .p91ClientPerson
             Me.p91Client_RegID.Text = .p91Client_RegID
             Me.p91Client_VatID.Text = .p91Client_VatID
             Me.p91ClientAddress1_City.Text = .p91ClientAddress1_City

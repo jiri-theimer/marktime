@@ -88,7 +88,7 @@
                                     </td>
                                     <td>
                                         <asp:LinkButton ID="cmdDefaultInInvoice" runat="server" Text="Přednastavit ve fakturaci" CommandName="default_invoice_add" Visible="false"></asp:LinkButton>
-                                        <asp:Label ID="Label1" runat="server" Text="Přednastaveno ve fakturaci" CssClass="valboldred" Visible="false"></asp:Label>
+                                        <asp:Label ID="lblDefaultInInvoice" runat="server" Text="Přednastaveno ve fakturaci" CssClass="valboldred" Visible="false"></asp:Label>
                                         <asp:ImageButton ID="cmdDeleteDefaultInInvoice" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit přednastavení ve fakturaci" CommandName="default_invoice_delete" Visible="false" />
                                     </td>
                                 </tr>

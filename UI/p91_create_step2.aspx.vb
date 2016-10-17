@@ -176,11 +176,13 @@ Public Class p91_create_step2
 
         Me.lblO23.Text = BO.BAS.OM2(Me.lblO23.Text, notepad1.RowsCount.ToString)
         If Me.p28id.Value <> "" Then
-            Dim mqJ02 As New BO.myQueryJ02
-            mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
-            mqJ02.p28ID = Me.p28id.Value
-            Me.j02ID_ContactPerson.DataSource = Master.Factory.j02PersonBL.GetList(mqJ02).ToList
+            Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(CInt(Me.p28id.Value), 0, True).Where(Function(p) p.IsClosed = False)
+            Me.j02ID_ContactPerson.DataSource = lisJ02
             Me.j02ID_ContactPerson.DataBind()
+            Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(CInt(Me.p28id.Value), 0, 0)
+            If lisP30.Where(Function(p) p.p30IsDefaultInInvoice = True).Count > 0 Then
+                Me.j02ID_ContactPerson.SelectedValue = lisP30.Where(Function(p) p.p30IsDefaultInInvoice = True)(0).j02ID.ToString
+            End If
         End If
         
     End Sub

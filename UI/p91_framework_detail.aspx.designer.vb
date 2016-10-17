@@ -185,6 +185,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents clue_client As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''p91ClientPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p91ClientPerson As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''trSourceCode control.
     '''</summary>
     '''<remarks>

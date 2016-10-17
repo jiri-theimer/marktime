@@ -107,6 +107,7 @@ Public Class p91_framework_detail
             Else
                 Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
             End If
+            Me.p91ClientPerson.Text = .p91ClientPerson
 
 
             If .b01ID <> 0 Then
