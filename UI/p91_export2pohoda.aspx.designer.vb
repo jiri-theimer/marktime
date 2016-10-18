@@ -41,6 +41,15 @@ Partial Public Class p91_export2pohoda
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''p93ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p93ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cmdGenerateBatch control.
     '''</summary>
     '''<remarks>

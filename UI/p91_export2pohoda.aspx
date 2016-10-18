@@ -22,9 +22,13 @@
         <div class="div6">
             <uc:periodcombo ID="period1" runat="server" Width="300px"></uc:periodcombo>
         </div>
+        <div class="div6">
+            <span>Vystavovatel faktury:</span>
+            <asp:DropDownList ID="p93ID" runat="server" DataValueField="pid" DataTextField="p93Name"></asp:DropDownList>
+        </div>
         <p>Z hromadného generování jsou automaticky vyloučeny DRAFT faktury.</p>
         <div class="div6">
-            <asp:Button ID="cmdGenerateBatch" runat="server" Text="Vygenerovat hromadně pro zvolené období" CssClass="cmd" />
+            <asp:Button ID="cmdGenerateBatch" runat="server" Text="Vygenerovat hromadně pro zvolené období a vystavovatele" CssClass="cmd" />
         </div>
     </fieldset>
     

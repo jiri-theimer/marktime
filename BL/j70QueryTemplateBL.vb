@@ -105,6 +105,8 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(26, "Má pod sebou podřízené klienty"))
                 lis.Add(New BO.OtherQueryItem(27, "Nastavena režijní fakturační přirážka"))
             Case BO.x29IdEnum.j02Person
+                lis.Add(New BO.OtherQueryItem(6, "Pouze interní osoby"))
+                lis.Add(New BO.OtherQueryItem(7, "Pouze kontaktní osoby"))
                 lis.Add(New BO.OtherQueryItem(3, "Existují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Existují schválené úkony, které čekají na fakturaci"))
             Case BO.x29IdEnum.p91Invoice

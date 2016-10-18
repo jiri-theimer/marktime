@@ -348,7 +348,7 @@
 
                         </td>
                     </tr>
-                    <tr>
+                    <tr valign="top">
 
                         <td>
                             <asp:HyperLink ID="cmdReportInvoice" runat="server" Text="Sestava dokladu"></asp:HyperLink>
@@ -356,7 +356,9 @@
                         </td>
                         <td>
                             <asp:HyperLink ID="cmdReportAttachment" runat="server" Text="Sestava přílohy"></asp:HyperLink>
-
+                            <div>
+                            <asp:HyperLink ID="cmdReportLetter" runat="server" Text="Průvodní dopis"></asp:HyperLink>
+                            </div>
                         </td>
                         <td id="rlbl">
 
@@ -385,7 +387,7 @@
                     <tr>
                         <td id="rlbl">Typ faktury:
                         </td>
-                        <td align="right">
+                        <td>
                             <asp:Label ID="p92Name" runat="server" CssClass="valbold"></asp:Label>
                             <asp:HyperLink ID="clue_p92name" runat="server" CssClass="reczoom" Text="i" title="Detail typu faktury" Style="margin-right: 80px;"></asp:HyperLink>
                         </td>

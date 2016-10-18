@@ -364,7 +364,9 @@
                 </table>
 
                 <asp:Label ID="Mediums" runat="server" CssClass="valbold"></asp:Label>
-
+                <div>
+                    <asp:Label ID="Correspondence" runat="server"></asp:Label>
+                </div>
             </div>
         </div>
         <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">

@@ -587,6 +587,10 @@
                 Return "a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p71ID IS NULL AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
             Case BO.myQueryP41_QuickQuery.WaitingOnInvoice
                 Return "a.j02ID IN (SELECT j02ID FROM p31Worksheet WHERE p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)"
+            Case BO.myQueryJ02_QuickQuery.NonIntraPersonsOnly
+                Return "a.j02IsIntraPerson=0"
+            Case BO.myQueryJ02_QuickQuery.IntraPersonsOnly
+                Return "a.j02IsIntraPerson=1"
             Case Else
                 Return ""
         End Select

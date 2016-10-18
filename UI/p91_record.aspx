@@ -169,6 +169,7 @@
                     </td>
                     <td>
                         <uc:datacombo ID="j02ID_ContactPerson" runat="server" DataValueField="pid" DataTextField="FullNameDescWithEmail" IsFirstEmptyRow="true" Width="400px" />
+
                     </td>
                 </tr>
                 <tr>
@@ -217,7 +218,9 @@
                                 <asp:Label ID="Label14" runat="server" Text="Kontaktní osoba klienta:" CssClass="lbl"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="p91ClientPerson" runat="server" Style="width: 400px;"></asp:TextBox>
+                                <asp:TextBox ID="p91ClientPerson" runat="server" Style="width: 200px;"></asp:TextBox>
+                                                        <span>Oslovení:</span>
+                                <asp:TextBox ID="p91ClientPerson_Salutation" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>

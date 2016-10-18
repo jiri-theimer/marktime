@@ -233,6 +233,11 @@ Public Class p91_framework_detail
             Else
                 Me.cmdReportAttachment.Visible = False
             End If
+            If .x31ID_Letter > 0 Then
+                Me.cmdReportLetter.NavigateUrl = "javascript: report(" & .x31ID_Letter.ToString & ")"
+            Else
+                Me.cmdReportLetter.Visible = False
+            End If
         End With
     End Sub
     ''Private Function ParseAddress(intO38ID As Integer) As String

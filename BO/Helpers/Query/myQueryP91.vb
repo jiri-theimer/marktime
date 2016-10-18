@@ -37,6 +37,7 @@ Public Class myQueryP91
     Public Property j27ID As Integer
     Public Property b02ID As Integer
     Public Property j70ID As Integer
+    Public Property p93ID As Integer
     Public Property x25ID As Integer    'štítek
     Public Property SpecificQuery As myQueryP91_SpecificQuery = myQueryP91_SpecificQuery._NotSpecified
     Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat faktury, pokud je 0, pak přihlášený uživatel

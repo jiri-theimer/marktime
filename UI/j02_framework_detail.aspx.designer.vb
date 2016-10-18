@@ -248,6 +248,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents Mediums As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''Correspondence control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Correspondence As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''panIntraPerson control.
     '''</summary>
     '''<remarks>

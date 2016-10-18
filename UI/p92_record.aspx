@@ -90,6 +90,15 @@
                 <span class="infoInForm">Sestavu přílohy je možné pořizovat i přes ostatní šablony fakturačních sestav.</span>
             </td>
         </tr>
+         <tr valign="top">
+            <td>
+                <asp:Label ID="Label4" Text="Výchozí průvodní dopis k faktuře:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="x31ID_Letter" runat="server" AutoPostBack="false" DataTextField="NameWithCode" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                
+            </td>
+        </tr>
         <tr valign="top" id="trJ17ID" runat="server">
             <td>
                 <asp:Label ID="lblJ17ID" Text="Výchozí DPH region faktury:" runat="server" CssClass="lbl"></asp:Label>

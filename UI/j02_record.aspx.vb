@@ -73,6 +73,7 @@
             Me.c21ID.SelectedValue = .c21ID.ToString
             Me.j18ID.SelectedValue = .j18ID.ToString
             Me.j02Office.Text = .j02Office
+            Me.j02Salutation.Text = .j02Salutation
             Me.j02EmailSignature.Text = .j02EmailSignature
             Me.j02IsIntraPerson.SelectedValue = BO.BAS.GB(.j02IsIntraPerson)
             Me.j02JobTitle.SetText(.j02JobTitle)
@@ -141,6 +142,7 @@
                 .j02Mobile = j02Mobile.Text
                 .j02Phone = j02Phone.Text
                 .j02Office = Me.j02Office.Text
+                .j02Salutation = Me.j02Salutation.Text
                 .j02Email = j02Email.Text
                 .j02EmailSignature = j02EmailSignature.Text
                 .j02IsIntraPerson = BO.BAS.BG(Me.j02IsIntraPerson.SelectedValue)

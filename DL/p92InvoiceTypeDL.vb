@@ -31,6 +31,7 @@
                 pars.Add("b01ID", BO.BAS.IsNullDBKey(.b01ID), DbType.Int32)
                 pars.Add("x31ID_Invoice", BO.BAS.IsNullDBKey(.x31ID_Invoice), DbType.Int32)
                 pars.Add("x31ID_Attachment", BO.BAS.IsNullDBKey(.x31ID_Attachment), DbType.Int32)
+                pars.Add("x31ID_Letter", BO.BAS.IsNullDBKey(.x31ID_Letter), DbType.Int32)
                 pars.Add("p92InvoiceType", .p92InvoiceType, DbType.Int32)
                 pars.Add("p92Code", .p92Code, DbType.String)
                 pars.Add("p92Name", .p92Name, DbType.String, , , True, "Název typu")

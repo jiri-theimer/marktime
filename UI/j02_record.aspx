@@ -137,6 +137,14 @@
                         <asp:TextBox ID="j02Office" runat="server" Style="width: 500px;"></asp:TextBox>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="lblj02Salutation" Text="Oslovení pro korespondenci:" runat="server" CssClass="lbl" AssociatedControlID="j02Salutation"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="j02Salutation" runat="server" Style="width: 500px;"></asp:TextBox>
+                    </td>
+                </tr>
                 <tr valign="top">
                     <td>
                         <asp:Label ID="lblj02EmailSignature" Text="Podpis pro e-mail:" runat="server" CssClass="lbl" AssociatedControlID="j02EmailSignature" meta:resourcekey="lblj02EmailSignature"></asp:Label>

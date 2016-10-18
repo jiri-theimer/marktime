@@ -26,7 +26,16 @@ Public Class p91_export2pohoda
                 Me.txtIC.Text = .Factory.j03UserBL.GetUserParam("p91_export2pohoda_ic")
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .Factory.j03UserBL.GetUserParam("p31_grid-period")
-                .AddToolbarButton("Vygenerovat XML soubor faktury", "ok", , "Images/ok.png")
+
+                If .DataPID <> 0 Then
+                    Dim cRec As BO.p91Invoice = .Factory.p91InvoiceBL.Load(.DataPID)
+                    .AddToolbarButton(String.Format("Vygenerovat XML soubor vybrané faktury [{0}]", cRec.p91Code), "ok", , "Images/ok.png")
+                End If
+
+
+                Me.p93ID.DataSource = .Factory.p93InvoiceHeaderBL.GetList(New BO.myQuery)
+                Me.p93ID.DataBind()
+                Me.p93ID.Items.Insert(0, "---Nefiltrovat---")
             End With
 
 
@@ -277,6 +286,7 @@ Public Class p91_export2pohoda
         mq.DateFrom = period1.DateFrom
         mq.DateUntil = period1.DateUntil
         mq.PeriodType = BO.myQueryP91_PeriodType.p91DateSupply
+        If Me.p93ID.SelectedValue <> "" Then mq.p93ID = BO.BAS.IsNullInt(Me.p93ID.SelectedValue)
 
         Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq).Where(Function(p) p.p91IsDraft = False)
         If lis.Count = 0 Then

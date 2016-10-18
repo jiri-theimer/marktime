@@ -2356,7 +2356,7 @@ RETURNS varchar(50) AS
 BEGIN 
 
 declare @x38ExplicitIncrementStart int,@code_new varchar(50),@val int,@code_max_used varchar(50)
-declare @x38Scale int,@x38ConstantBeforeValue varchar(50),@pid_last int,@x38ConstantAfterValue varchar(40)
+declare @x38Scale int,@x38ConstantBeforeValue varchar(50),@pid_last int,@x38ConstantAfterValue varchar(40),@x38IsUseDbPID bit
 
 set @val=0
 set @isdraft=isnull(@isdraft,0)
@@ -2374,9 +2374,12 @@ if @x38id is not null
  begin
 	select @x38ExplicitIncrementStart=isnull(x38ExplicitIncrementStart,0)
 	,@x38ConstantBeforeValue=isnull(x38ConstantBeforeValue,''),@x38Scale=x38Scale
-	,@x38ConstantAfterValue=isnull(x38ConstantAfterValue,'')
+	,@x38ConstantAfterValue=isnull(x38ConstantAfterValue,''),@x38IsUseDbPID=x38IsUseDbPID
 	FROM x38CodeLogic
 	WHERE x38ID=@x38id
+
+	if @x38IsUseDbPID=1
+	 RETURN(convert(varchar(10),@datapid))	---èíslování podle hodnoty primárního klíèe v databázi
  end
 else
  begin
@@ -5438,6 +5441,9 @@ select @x38id=p29.x38ID,@isdraft=a.p28IsDraft
 FROM
 p28Contact a LEFT OUTER JOIN p29ContactType p29 ON a.p29ID=p29.p29ID
 WHERE a.p28ID=@p28id
+
+if @x38id is null
+ select @x38id=x38id from x38CodeLogic WHERE x29ID=328 AND x38IsDraft=0 AND getdate() between x38ValidFrom and x38ValidUntil
 
 if @isdraft=0
  begin
@@ -10302,6 +10308,7 @@ CREATE procedure [dbo].[p91_create]
 ,@p91datep31_from datetime
 ,@p91datep31_until datetime
 ,@p91text1 nvarchar(2000)
+,@j02id_contactperson int
 ,@err_ret varchar(1000) OUTPUT
 ,@ret_p91id int OUTPUT
 
@@ -10370,11 +10377,14 @@ if isnull(@j27id,0)=0
 declare @code_temp varchar(50)
 set @code_temp='TEMP'+@guid  
 
-insert into p91invoice(p91code,p91dateinsert,p91userinsert,p91Date,p91DateSupply,p91DateMaturity,j02ID_Owner,p28ID,p92ID,j27ID) values(@code_temp,getdate(),@login,@p91date,@p91datesupply,@p91datematurity,@j02id_owner,@p28id,@p92id,@j27id)
+insert into p91invoice(p91code,p91dateinsert,p91userinsert,p91Date,p91DateSupply,p91DateMaturity,j02ID_Owner,p28ID,p92ID,j27ID,j02ID_ContactPerson) values(@code_temp,getdate(),@login,@p91date,@p91datesupply,@p91datematurity,@j02id_owner,@p28id,@p92id,@j27id,@j02id_contactperson)
 
 SELECT @ret_p91id=@@IDENTITY
 
-declare @o38id_primary int,@o38id_delivery int,@p41id_first int
+declare @o38id_primary int,@o38id_delivery int,@p41id_first int,@person nvarchar(100),@salutation nvarchar(150)
+
+if @j02id_contactperson is not null
+ select @person=isnull(j02TitleBeforeName+' ','')+j02FirstName+' '+j02LastName+isnull(' '+j02TitleAfterName,''),@salutation=j02Salutation FROM j02Person WHERE j02ID=@j02id_contactperson
 
 select top 1 @p41id_first=p41ID FROM p31Worksheet WHERE p31id in (select p85datapid from p85TempBox where p85guid=@guid and p85Prefix='p31' and p85IsDeleted=0)
 
@@ -10395,6 +10405,7 @@ update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id,p63ID=b.p63ID
 ,p91Client=isnull(b.p28CompanyName,b.p28Name),p91Client_RegID=b.p28RegID,p91Client_VatID=b.p28VatID
 ,p91ClientAddress1_City=left(o38prim.o38City,100),p91ClientAddress1_Street=left(o38prim.o38Street,150),p91ClientAddress1_ZIP=left(o38prim.o38ZIP,20),p91ClientAddress1_Country=o38prim.o38Country
 ,p91ClientAddress2=left(isnull(o38del.o38Street+char(13)+char(10),'')+isnull(o38del.o38City+char(13)+char(10),'')+isnull(o38del.o38ZIP+char(13)+char(10),'')+isnull(o38del.o38Country,''),255)
+,p91ClientPerson=left(@person,100),p91ClientPerson_Salutation=left(@salutation,150)
 FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID
 LEFT OUTER JOIN o38Address o38prim ON a.o38ID_Primary=o38prim.o38ID
 LEFT OUTER JOIN o38Address o38del ON a.o38ID_Delivery=o38del.o38ID
@@ -12573,13 +12584,13 @@ CREATE PROCEDURE [dbo].[x38_get_freecode_proc]
 ,@ret_code varchar(50) OUTPUT
 AS
 
-declare @mask varchar(200)
+declare @mask varchar(200),@x38IsUseDbPID bit
 
 if @x38id is not null and isnull(@isdraft,0)=0
  begin
-  select @mask=x38MaskSyntax FROM x38CodeLogic WHERE x38id=@x38id
+  select @mask=x38MaskSyntax,@x38IsUseDbPID=x38IsUseDbPID FROM x38CodeLogic WHERE x38id=@x38id
   
-  if @mask is not null
+  if @mask is not null and @x38IsUseDbPID=0
    begin
 	declare @s nvarchar(1000),@ret varchar(50),@pars nvarchar(1000)
 	set @mask=replace(@mask,'@pid',convert(varchar(50),@datapid))
@@ -12596,6 +12607,8 @@ if @x38id is not null and isnull(@isdraft,0)=0
 	 end
    end
  end
+
+
 
 select @ret_code=dbo.x38_get_freecode(@x38id,@x29id,@datapid,@isdraft,@attempt_number)
 

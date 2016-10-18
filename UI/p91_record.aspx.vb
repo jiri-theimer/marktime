@@ -63,6 +63,7 @@
 
             Me.p91Client.Text = .p91Client
             Me.p91ClientPerson.Text = .p91ClientPerson
+            Me.p91ClientPerson_Salutation.Text = .p91ClientPerson_Salutation
             Me.p91Client_RegID.Text = .p91Client_RegID
             Me.p91Client_VatID.Text = .p91Client_VatID
             Me.p91ClientAddress1_City.Text = .p91ClientAddress1_City
@@ -151,6 +152,7 @@
 
                 .p91Client = Me.p91Client.Text
                 .p91ClientPerson = Me.p91ClientPerson.Text
+                .p91ClientPerson_Salutation = Me.p91ClientPerson_Salutation.Text
                 .p91Client_RegID = Me.p91Client_RegID.Text
                 .p91Client_VatID = Me.p91Client_VatID.Text
                 .p91ClientAddress1_City = Me.p91ClientAddress1_City.Text
@@ -214,6 +216,7 @@
         If Me.j02ID_ContactPerson.SelectedValue <> "" Then
             Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(CInt(Me.j02ID_ContactPerson.SelectedValue))
             Me.p91ClientPerson.Text = cJ02.FullNameAsc
+            Me.p91ClientPerson_Salutation.Text = cJ02.j02Salutation
         End If
     End Sub
 

@@ -374,6 +374,15 @@ Partial Public Class p91_record
     Protected WithEvents p91ClientPerson As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''p91ClientPerson_Salutation control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p91ClientPerson_Salutation As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Label7 control.
     '''</summary>
     '''<remarks>

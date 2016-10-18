@@ -12,6 +12,8 @@ Public Enum myQueryJ02_QuickQuery
     Removed2Bin = 2
     WaitingOnApproval = 3
     WaitingOnInvoice = 5
+    IntraPersonsOnly = 6
+    NonIntraPersonsOnly = 7
 End Enum
 Public Enum myQueryJ02_IntraPersons
     _NotSpecified = 0

@@ -175,6 +175,10 @@ Public Class j02_framework_detail
             If Me.Mediums.Text <> "" Then
                 Me.Mediums.Text = BO.BAS.OM1(Trim(Me.Mediums.Text))
             End If
+            If .j02Salutation <> "" Then
+                Me.Correspondence.Text = String.Format("Oslovení pro korespondenci: {0}", "<b>" & .j02Salutation & "</b>")
+            End If
+
 
             Me.j07Name.Text = .j07Name
             If Not cRec.j02IsIntraPerson Then

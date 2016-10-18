@@ -10,6 +10,7 @@ Public Class p92InvoiceType
     Public Property p93ID As Integer
     Public Property x31ID_Invoice As Integer
     Public Property x31ID_Attachment As Integer
+    Public Property x31ID_Letter As Integer
     Public Property j27ID As Integer
     Public Property j17ID As Integer
     Public Property p98ID As Integer
