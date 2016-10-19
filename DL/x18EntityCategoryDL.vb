@@ -13,7 +13,7 @@
         Dim pars As New DbParameters
         pars.Add("x29id", CInt(x29id), DbType.Int32)
         pars.Add("recordpid", intRecordPID, DbType.Int32)
-        Return _cDB.GetList(Of BO.x19EntityCategory_Binding)("select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x18.x18Name as _x18Name from x19EntityCategory_Binding a INNER JOIN x18EntityCategory x18 ON a.x18ID=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID WHERE a.x29ID=@x29id AND a.x19RecordPID=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID", pars)
+        Return _cDB.GetList(Of BO.x19EntityCategory_Binding)("select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor from x19EntityCategory_Binding a INNER JOIN x18EntityCategory x18 ON a.x18ID=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID WHERE a.x29ID=@x29id AND a.x19RecordPID=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID", pars)
     End Function
 
     Public Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean

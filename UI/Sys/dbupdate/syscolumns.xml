@@ -76623,6 +76623,72 @@
     <TableName>x25EntityField_ComboValue</TableName>
   </Table>
   <Table>
+    <name>x25BackColor</name>
+    <id>439672614</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>12</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>12</colorder>
+    <offset>-11</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>x25EntityField_ComboValue</TableName>
+  </Table>
+  <Table>
+    <name>x25ForeColor</name>
+    <id>439672614</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>13</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>13</colorder>
+    <offset>-12</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>x25EntityField_ComboValue</TableName>
+  </Table>
+  <Table>
     <name>x26ID</name>
     <id>391672443</id>
     <xtype>56</xtype>

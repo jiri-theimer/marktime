@@ -96,6 +96,7 @@
     <Compile Include="j70QueryTemplateDL.vb" />
     <Compile Include="j75DrillDownTemplateDL.vb" />
     <Compile Include="m62ExchangeRateDL.vb" />
+    <Compile Include="o10NoticeBoardDL.vb" />
     <Compile Include="o21MilestoneTypeDL.vb" />
     <Compile Include="o23NotepadDL.vb" />
     <Compile Include="o24NotepadTypeDL.vb" />

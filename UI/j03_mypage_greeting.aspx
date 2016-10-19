@@ -118,7 +118,7 @@
                                 <telerik:RadPanelItem Text="Vytvořit nový dokument" Value="o23_create" NavigateUrl="javascript:o23_create()" ImageUrl="Images/notepad.png"></telerik:RadPanelItem>
 
                                 <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Vystavit fakturu" Value="p91_create" NavigateUrl="javascript:p91_create()" ImageUrl="Images/invoice.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Vystavit fakturu" Value="p91_create" NavigateUrl="javascript:p91_create()" ImageUrl="Images/invoice.png" Visible="false"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem IsSeparator="true" Text="<hr>"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Osobní tiskové sestavy" Value="myreport" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>

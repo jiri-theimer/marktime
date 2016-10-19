@@ -13,7 +13,7 @@
         If Not Page.IsPostBack Then
             ViewState("guid_o37") = BO.BAS.GetGUID()
             ViewState("guid_o32") = BO.BAS.GetGUID()
-
+            ViewState("guid_j02") = BO.BAS.GetGUID()
             With Master
                 .HeaderIcon = "Images/contact_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -47,7 +47,9 @@
 
             If Master.DataPID = 0 Then
                 Master.HeaderText = "Založit klienta"
+                panFirstP30.Visible = True
             End If
+
         End If
 
 
@@ -425,11 +427,21 @@
                 Master.Notify(roles1.ErrorMessage, 2)
                 Return
             End If
+            Dim lisP30 As List(Of BO.p30Contact_Person) = Nothing
+            If Master.DataPID = 0 Then
+                lisTEMP = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_j02"))
+                For Each cTMP In lisTEMP
+                    If lisP30 Is Nothing Then lisP30 = New List(Of BO.p30Contact_Person)
+                    Dim c As New BO.p30Contact_Person
+                    c.j02ID = cTMP.p85DataPID
+                    lisP30.Add(c)
+                Next
+            End If
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
             Dim p58vals As List(Of Integer) = Me.p58IDs.GetAllCheckedIntegerValues()
 
-            If .Save(cRec, lisO37, lisO32, Nothing, lisX69, lisFF, p58vals) Then
+            If .Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, p58vals) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
                 If bolNew Then
@@ -543,7 +555,13 @@
                 RefreshState_Pricelist()
             Case "p51-delete"
                 SetupPriceList()
-
+            Case "j02-save" 'nová kontaktní osoba
+                Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_j02"))
+                If lis.Count > 0 Then
+                    Me.RelevantPersons.Text = String.Join(", ", lis.Select(Function(p) p.p85FreeText01))
+                Else
+                    RelevantPersons.Text = ""
+                End If
         End Select
 
         Me.HardRefreshPID.Value = ""

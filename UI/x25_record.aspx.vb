@@ -40,7 +40,12 @@
             Me.x25Ordinary.Value = .x25Ordinary
             Me.x25UserKey.Text = .x25UserKey
             Master.Timestamp = .Timestamp
-
+            If .x25BackColor <> "" And Left(.x25BackColor, 2) <> "ff" Then
+                x25BackColor.SelectedColor = Drawing.Color.FromName(.x25BackColor)
+            End If
+            If .x25ForeColor <> "" And Left(.x25ForeColor, 2) <> "ff" Then
+                x25ForeColor.SelectedColor = Drawing.Color.FromName(.x25ForeColor)
+            End If
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
         Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
@@ -75,6 +80,24 @@
             cRec.x25UserKey = Me.x25UserKey.Text
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
+            If Not x25BackColor.SelectedColor.IsEmpty Then
+                If x25BackColor.SelectedColor.Name.IndexOf("#") = -1 Then
+                    cRec.x25BackColor = "#" & Right(x25BackColor.SelectedColor.Name, x25BackColor.SelectedColor.Name.Length - 2)
+                Else
+                    cRec.x25BackColor = x25BackColor.SelectedColor.Name
+                End If
+            Else
+                cRec.x25BackColor = ""
+            End If
+            If Not x25ForeColor.SelectedColor.IsEmpty Then
+                If x25ForeColor.SelectedColor.Name.IndexOf("#") = -1 Then
+                    cRec.x25ForeColor = "#" & Right(x25ForeColor.SelectedColor.Name, x25ForeColor.SelectedColor.Name.Length - 2)
+                Else
+                    cRec.x25ForeColor = x25ForeColor.SelectedColor.Name
+                End If
+            Else
+                cRec.x25ForeColor = ""
+            End If
 
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID

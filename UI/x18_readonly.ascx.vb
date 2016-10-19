@@ -20,7 +20,13 @@
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim intX18ID As Integer = CType(e.Item.DataItem, Integer)
-        CType(e.Item.FindControl("x18Name"), Label).Text = _lisX19.Where(Function(p) p.x18ID = intX18ID).First.x18Name & ":"
-        CType(e.Item.FindControl("items"), Label).Text = String.Join(", ", _lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25Name))
+        'CType(e.Item.FindControl("x18Name"), Label).Text = _lisX19.Where(Function(p) p.x18ID = intX18ID).First.x18Name & ":"
+        'For Each c In _lisX19.Where(Function(p) p.x18ID = intX18ID)
+
+        'Next
+        'CType(e.Item.FindControl("items"), Label).Text = String.Join(", ", _lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25Name))
+        CType(e.Item.FindControl("rpItems"), Repeater).DataSource = _lisX19.Where(Function(p) p.x18ID = intX18ID)
+        CType(e.Item.FindControl("rpItems"), Repeater).DataBind()
+
     End Sub
 End Class

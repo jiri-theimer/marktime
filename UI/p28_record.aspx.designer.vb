@@ -347,6 +347,51 @@ Partial Public Class p28_record
     Protected WithEvents rpO37 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''panFirstP30 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panFirstP30 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdAddP30 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddP30 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''j02ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02ID As Global.UI.person
+
+    '''<summary>
+    '''RelevantPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RelevantPersons As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''phO32 control.
     '''</summary>
     '''<remarks>

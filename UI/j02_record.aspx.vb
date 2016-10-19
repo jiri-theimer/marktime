@@ -17,6 +17,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
         If Not Page.IsPostBack Then
+            Me.hidGUID.Value = Request.Item("guid")
             If Request.Item("iscontact") = "1" Then
                 'režim zakládání kontaktní osoby
                 Me.j02IsIntraPerson.SelectedValue = "0"
@@ -172,6 +173,14 @@
 
             If .Save(cRec, lisFF) Then
                 Master.DataPID = .LastSavedPID
+                If Me.hidGUID.Value <> "" Then
+                    Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
+                    Dim cTemp As New BO.p85TempBox
+                    cTemp.p85GUID = Me.hidGUID.Value
+                    cTemp.p85DataPID = Master.DataPID
+                    cTemp.p85FreeText01 = c.FullNameAsc
+                    Master.Factory.p85TempBoxBL.Save(cTemp)
+                End If
                 Master.CloseAndRefreshParent("j02-save")
             Else
                 Master.Notify(.ErrorMessage, 2)

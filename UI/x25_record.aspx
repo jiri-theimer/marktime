@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/ModalDataRecord.Master" CodeBehind="x25_record.aspx.vb" Inherits="UI.x25_record" %>
+
 <%@ MasterType VirtualPath="~/ModalDataRecord.Master" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -35,6 +37,23 @@
                 <asp:Label ID="lblx25UserKey" runat="server" CssClass="lbl" Text="Klíč položky z externího datového zdroje:"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x25UserKey" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <asp:Label ID="Label2" Text="Barva pozadí:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <telerik:RadColorPicker ID="x25BackColor" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default">
+                </telerik:RadColorPicker>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label1" Text="Barva písma:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <telerik:RadColorPicker ID="x25ForeColor" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default">
+                </telerik:RadColorPicker>
             </td>
         </tr>
     </table>

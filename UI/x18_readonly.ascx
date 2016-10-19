@@ -1,9 +1,15 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="x18_readonly.ascx.vb" Inherits="UI.x18_readonly" %>
 <asp:Repeater ID="rp1" runat="server">
     <ItemTemplate>
-        <div class="div6">
-            <asp:Label ID="x18Name" runat="server"></asp:Label>
-            <asp:Label ID="items" runat="server" CssClass="valbold"></asp:Label>
+        <div class="div6" style="clear:both;">
+          
+            <asp:Repeater ID="rpItems" runat="server">
+                <ItemTemplate>
+                    <div class="badge_label" style="background-color:<%#Eval("BackColor")%>" title="<%#Eval("x18Name") %>">
+                    <span style="color:<%#Eval("ForeColor")%>"><%# Eval("x25Name") %></span>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
     </ItemTemplate>
 </asp:Repeater>

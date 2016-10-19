@@ -91,6 +91,7 @@
     <Compile Include="DBNative\j75DrillDownTemplate.vb" />
     <Compile Include="DBNative\j76DrillDownTemplate_Item.vb" />
     <Compile Include="DBNative\m62ExchangeRate.vb" />
+    <Compile Include="DBNative\o10NoticeBoard.vb" />
     <Compile Include="DBNative\o19Milestone_NonPerson.vb" />
     <Compile Include="DBNative\o20Milestone_Receiver.vb" />
     <Compile Include="DBNative\o21MilestoneType.vb" />

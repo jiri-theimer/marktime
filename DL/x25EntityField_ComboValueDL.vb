@@ -36,6 +36,8 @@
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
             pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
             pars.Add("x25UserKey", .x25UserKey, DbType.String)
+            pars.Add("x25ForeColor", .x25ForeColor, DbType.String)
+            pars.Add("x25BackColor", .x25BackColor, DbType.String)
             pars.Add("x25Ordinary", .x25Ordinary, DbType.Int32)
             pars.Add("x25ValidFrom", .ValidFrom, DbType.DateTime)
             pars.Add("x25ValidUntil", .ValidUntil, DbType.DateTime)

@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class j02_record
 
     '''<summary>
+    '''hidGUID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidGUID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''RadTabStrip1 control.
     '''</summary>
     '''<remarks>

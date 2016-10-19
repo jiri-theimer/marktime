@@ -17,6 +17,7 @@
     Private Property _o24 As Io24NotepadTypeBL
     Private Property _o22 As Io22MilestoneBL
     Private Property _o23 As Io23NotepadBL
+    Private Property _o10 As Io10NoticeBoardBL
     Private Property _p51 As Ip51PriceListBL
     Private Property _p50 As Ip50OfficePriceListBL
     Private Property _p56 As Ip56TaskBL
@@ -398,6 +399,12 @@
         Get
             If _o23 Is Nothing Then _o23 = New o23NotepadBL(_cUser)
             Return _o23
+        End Get
+    End Property
+    Public ReadOnly Property o10NoticeBoardBL As Io10NoticeBoardBL
+        Get
+            If _o10 Is Nothing Then _o10 = New o10NoticeBoardBL(_cUser)
+            Return _o10
         End Get
     End Property
     Public ReadOnly Property o24NotepadTypeBL As Io24NotepadTypeBL

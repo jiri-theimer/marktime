@@ -4,6 +4,9 @@
     Public Property x25Name As String
     Public Property x25Ordinary As Integer
     Public Property x25UserKey As String
+    Public Property x25BackColor As String
+    Public Property x25ForeColor As String
+
     Private Property _x23Name As String
     Public ReadOnly Property x23Name As String
         Get

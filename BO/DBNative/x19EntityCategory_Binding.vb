@@ -16,4 +16,16 @@
             Return _x25Name
         End Get
     End Property
+    Private Property _BackColor As String
+    Public ReadOnly Property BackColor As String
+        Get
+            Return _BackColor
+        End Get
+    End Property
+    Private Property _ForeColor As String
+    Public ReadOnly Property ForeColor As String
+        Get
+            Return _ForeColor
+        End Get
+    End Property
 End Class

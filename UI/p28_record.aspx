@@ -21,7 +21,7 @@
                 document.getElementById("<%=Me.p28Code.ClientID%>").innerText = codeValue;
                 alert("Změna kódu záznamu byla uložena.")
             }
-
+            
             document.getElementById("<%=HardRefreshPID.ClientID%>").value = pid;
             document.getElementById("<%=HardRefreshFlag.ClientID%>").value = flag;
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdHardRefresh, "", False)%>;
@@ -36,6 +36,11 @@
         function p51_edit(p51id) {
 
             dialog_master("p51_record.aspx?pid=" + p51id + "&prefix=p41", true)
+
+        }
+        function j02_create() {
+
+            dialog_master("j02_record.aspx?iscontact=1&pid=0&guid=<%=viewstate("guid_j02")%>", true)
 
         }
 
@@ -214,7 +219,21 @@
                 </asp:Panel>
             </div>
 
-
+            <asp:panel ID="panFirstP30" runat="server" CssClass="content-box2" style="padding-top: 10px;" Visible="false">
+                <div class="title">
+                    <img src="Images/contactperson.png" width="16px" height="16px" alt="E-mail" />
+                    <asp:Label ID="Label2" runat="server" CssClass="framework_header_span" Text="První kontaktní osoba klienta" Style="display: inline-block; min-width: 150px;"></asp:Label>
+                    <asp:Button ID="cmdAddP30" runat="server" CssClass="cmd" Text="Přidat" />
+                </div>
+                <div class="content">
+                    <button type="button" onclick="j02_create()">Založit novou osobu</button>
+                    <span>nebo vyhledat již založenou:</span>
+                    <uc:person ID="j02ID" runat="server" Flag="all2" Width="200px" />                    
+                    <div>
+                        <asp:Label ID="RelevantPersons" runat="server" CssClass="valboldblue"></asp:Label>
+                    </div>
+                </div>
+            </asp:panel>
 
             <div class="content-box2" style="padding-top: 10px;">
                 <div class="title">
@@ -261,6 +280,7 @@
                     </table>
                 </asp:Panel>
             </div>
+            
             <div style="margin-top:10px;">
                 <asp:Label ID="lblParentID" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
                 <uc:contact ID="p28ParentID" runat="server" Width="400px" Flag="client" />

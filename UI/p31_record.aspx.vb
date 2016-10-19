@@ -666,6 +666,17 @@
                             Me.p31Text.Text += vbCrLf & vbCrLf & strDefText
                         End If
                     End If
+                    Select Case Me.CurrentP33ID
+                        Case BO.p33IdENUM.Cas
+                            If cP32.p32Value_Default <> 0 And Me.p31Value_Orig.Text = "" Then
+                                Me.p31Value_Orig.Text = cP32.p32Value_Default.ToString
+                            End If
+                        Case BO.p33IdENUM.Kusovnik
+                            If cP32.p32Value_Default <> 0 And BO.BAS.IsNullNum(Me.Units_Orig.Value) = 0 Then
+                                Me.Units_Orig.Value = cP32.p32Value_Default
+                            End If
+                    End Select
+
                     If cP32.p32IsTextRequired Then Me.lblP31Text.CssClass = "lblReq" Else lblP31Text.CssClass = "lbl"
                 End If
             End If
