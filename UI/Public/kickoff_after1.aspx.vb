@@ -585,7 +585,8 @@
         CreateQuery("Má nad sebou nadřízeného klienta", BO.x29IdEnum.p28Contact, 0, "_other", 25)
         CreateQuery("Má pod sebou podřízené klienty", BO.x29IdEnum.p28Contact, 0, "_other", 26)
 
-        CreateQuery("Otevřené osoby", BO.x29IdEnum.j02Person, 1)
+        CreateQuery("Otevřené osoby (uživatelé)", BO.x29IdEnum.j02Person, 1, "_other", 6)
+        CreateQuery("Kontaktní osoby", BO.x29IdEnum.j02Person, 0, "_other", 7)
         CreateQuery("Osoby v archivu", BO.x29IdEnum.j02Person, 2)
         CreateQuery("Rozpracovanost (čeká na schvalování)", BO.x29IdEnum.j02Person, 0, "_other", 3)
         CreateQuery("Schválené úkony (čeká na fakturaci)", BO.x29IdEnum.j02Person, 0, "_other", 5)

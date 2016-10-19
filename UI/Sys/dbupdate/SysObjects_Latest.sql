@@ -11790,6 +11790,67 @@ END CATCH
 
 GO
 
+----------P---------------p95_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p95_delete') and type = 'P')
+ drop procedure p95_delete
+GO
+
+
+
+
+CREATE   procedure [dbo].[p95_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p95id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu  z tabulky p95InvoiceRow
+declare @ref_pid int
+
+SELECT TOP 1 @ref_pid=p32ID from p32Activity WHERE p95ID=@pid
+if @ref_pid is not null
+ set @err_ret='Minimálnì jedna aktivita má vazbu na tento oddíl ('+dbo.GetObjectAlias('p32',@ref_pid)+')'
+
+if exists(select p81ID FROM p81InvoiceAmount WHERE p95ID=@pid)
+ set @err_ret='Minimálnì u jedné faktury existuje cenový rozpis podle tohoto fakturaèního oddílu.'
+
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+	DELETE FROM p95InvoiceRow where p95ID=@pid
+
+	
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p97_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p97_delete') and type = 'P')

@@ -112,6 +112,7 @@ Class j70QueryTemplateBL
             Case BO.x29IdEnum.p91Invoice
                 lis.Add(New BO.OtherQueryItem(3, "Ve splatnosti"))
                 lis.Add(New BO.OtherQueryItem(4, "Neuhrazené po splatnosti"))
+                lis.Add(New BO.OtherQueryItem(15, "Neuhrazené"))
                 lis.Add(New BO.OtherQueryItem(7, "Svázané se zálohou"))
                 lis.Add(New BO.OtherQueryItem(8, "Svázané s opravným dokladem"))
                 lis.Add(New BO.OtherQueryItem(5, "Pouze DRAFT faktury"))

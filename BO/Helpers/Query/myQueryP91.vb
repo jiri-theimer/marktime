@@ -14,6 +14,7 @@ Public Enum myQueryP91_QuickQuery
     Removed2Bin = 2
     InMaturity = 3
     DebtAfterMaturity = 4
+    WithDebt = 15
     IsDraft = 5
     IsOficialCode = 6
     BoundWithProforma = 7

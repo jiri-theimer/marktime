@@ -602,9 +602,11 @@
             Case BO.myQueryP91_QuickQuery.Removed2Bin
                 Return "getdate() NOT BETWEEN a.p91ValidFrom AND a.p91ValidUntil"
             Case BO.myQueryP91_QuickQuery.DebtAfterMaturity
-                Return "a.p91Amount_Debt>10 AND a.p91DateMaturity<dbo.convert_to_dateserial(getdate())"
+                Return "a.p91Amount_Debt>10 AND a.p91DateMaturity<dbo.convert_to_dateserial(getdate()) and a.p91IsDraft=0"
+            Case BO.myQueryP91_QuickQuery.WithDebt
+                Return "a.p91Amount_Debt>10 and a.p91IsDraft=0"
             Case BO.myQueryP91_QuickQuery.InMaturity
-                Return "a.p91DateMaturity>=dbo.convert_to_dateserial(getdate())"
+                Return "a.p91DateMaturity>=dbo.convert_to_dateserial(getdate()) and a.p91IsDraft=0"
             Case BO.myQueryP91_QuickQuery.IsDraft
                 Return "a.p91IsDraft=1"
             Case BO.myQueryP91_QuickQuery.IsOficialCode

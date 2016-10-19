@@ -111,6 +111,7 @@ Public Class report_framework_detail4
                 Exit For
             End If
         Next
+
         If sheetData Is Nothing Then
             Master.Notify("XLS soubor neobsahuje volný datový sešit.", NotifyLevel.ErrorMessage)
             Return ""
@@ -119,6 +120,11 @@ Public Class report_framework_detail4
             Select Case LCase(sheetDef.Item(i, 1).Text)
                 Case "x31name", "x31code"
                 Case Else
+                    Dim sh As ExcelWorksheet = sheetData
+                    Dim strList As String = sheetDef.Item(i, 3).Value
+                    If strList <> "" Then
+                        sh = book.Worksheets.Item(strList)
+                    End If
                     Dim strSQL As String = sheetDef.Item(i, 2).Value
                     If Me.CurrentJ70ID > 0 Then
                         Dim strW As String = Master.Factory.j70QueryTemplateBL.GetSqlWhere(Me.CurrentJ70ID)
@@ -141,10 +147,10 @@ Public Class report_framework_detail4
                         Dim pars As New List(Of BO.PluginDbParameter)
                         pars.Add(New BO.PluginDbParameter("datfrom", period1.DateFrom))
                         pars.Add(New BO.PluginDbParameter("datuntil", period1.DateUntil))
-                        Dim intRow As Integer = sheetData.Item(strRange).TopRowIndex
-                        Dim intCol As Integer = sheetData.Item(strRange).LeftColumnIndex
+                        Dim intRow As Integer = sh.Item(strRange).TopRowIndex
+                        Dim intCol As Integer = sh.Item(strRange).LeftColumnIndex
                         Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(strSQL, pars)
-                        cXLS.MergeSheetWithDataTable(sheetData, dt, intRow, intCol)
+                        cXLS.MergeSheetWithDataTable(sh, dt, intRow, intCol)
                     End If
 
             End Select
