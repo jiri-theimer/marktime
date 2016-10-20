@@ -31,6 +31,7 @@
 
                 menu1.FindItemByValue("p28_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator)
                 menu1.FindItemByValue("o23_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)
+                menu1.FindItemByValue("o10_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O10_Creator)
 
                 menu1.FindItemByValue("p56_create").Visible = False
                 If .TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then

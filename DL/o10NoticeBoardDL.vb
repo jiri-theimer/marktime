@@ -5,11 +5,9 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.o10NoticeBoard
-        Dim s As String = "select *," & bas.RecTail("o10") & " FROM o10NoticeBoard WHERE o10ID=@pid"
-        s += " FROM o10NoticeBoard"
-        s += " WHERE o10ID=@o10id"
-
-        Return _cDB.GetRecord(Of BO.o10NoticeBoard)(s, New With {.o10id = intPID})
+        Dim s As String = "select a.*," & bas.RecTail("o10", "a") & " FROM o10NoticeBoard a WHERE a.o10ID=@pid"
+        
+        Return _cDB.GetRecord(Of BO.o10NoticeBoard)(s, New With {.pid = intPID})
     End Function
 
     Public Function Save(cRec As BO.o10NoticeBoard, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
@@ -28,7 +26,8 @@
             pars.Add("o10BodyHtml", .o10BodyHtml, DbType.String)
             pars.Add("o10BodyPlainText", .o10BodyPlainText, DbType.String)
             pars.Add("o10Ordinary", .o10Ordinary, DbType.Int32)
-
+            pars.Add("o10BackColor", .o10BackColor, DbType.String)
+            pars.Add("o10Locality", BO.BAS.IsNullDBKey(.o10Locality))
             pars.Add("o10validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("o10validuntil", .ValidUntil, DbType.DateTime)
 

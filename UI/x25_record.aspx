@@ -44,7 +44,26 @@
             <td>
                 <asp:Label ID="Label2" Text="Barva pozadí:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
-                <telerik:RadColorPicker ID="x25BackColor" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default">
+                <telerik:RadColorPicker ID="x25BackColor" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Standard">
+                     <telerik:ColorPickerItem Value="#F0F8FF"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FAEBD7"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#00FFFF"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#7FFFD4"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#F0FFFF"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#F5F5DC"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FFE4C4"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#00FFFF"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FFFAF0"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#F8F8FF"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FFD700"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#F0E68C"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#E6E6FA"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FFB6C1"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FFA500"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#AFEEEE"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FFDAB9"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#87CEEB"></telerik:ColorPickerItem>
+                            <telerik:ColorPickerItem Value="#FF6347"></telerik:ColorPickerItem>
                 </telerik:RadColorPicker>
             </td>
         </tr>
@@ -52,7 +71,7 @@
             <td>
                 <asp:Label ID="Label1" Text="Barva písma:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
-                <telerik:RadColorPicker ID="x25ForeColor" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Default">
+                <telerik:RadColorPicker ID="x25ForeColor" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Standard">                   
                 </telerik:RadColorPicker>
             </td>
         </tr>

@@ -45,9 +45,7 @@
             Me.b02Code.Text = .b02Code
             Me.b01ID.SelectedValue = .b01ID.ToString
             Me.b02Ordinary.Value = .b02Ordinary
-            If .b02Color <> "" And Left(.b02Color, 2) <> "ff" Then
-                b02Color.SelectedColor = Drawing.Color.FromName(.b02Color)
-            End If
+            basUI.SetColorToPicker(Me.b02Color, .b02Color)
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
@@ -79,16 +77,8 @@
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
                 .b02Code = Me.b02Code.Text
-
-                If Not b02Color.SelectedColor.IsEmpty Then
-                    If b02Color.SelectedColor.Name.IndexOf("#") = -1 Then
-                        .b02Color = "#" & Right(b02Color.SelectedColor.Name, b02Color.SelectedColor.Name.Length - 2)
-                    Else
-                        .b02Color = b02Color.SelectedColor.Name
-                    End If
-                Else
-                    .b02Color = ""
-                End If
+                .b02Color = basUI.GetColorFromPicker(Me.b02Color)
+               
             End With
 
 

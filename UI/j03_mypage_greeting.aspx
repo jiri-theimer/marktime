@@ -54,6 +54,11 @@
 
 
         }
+        function o10_create() {
+            sw_master("o10_record.aspx?pid=0", "Images/article_32.png",true)
+
+
+        }
         function hardrefresh(pid, flag) {
             if (flag == "p41-create" || flag == "p41-save") {
                 location.replace("p41_framework.aspx?pid=" + pid);
@@ -124,7 +129,8 @@
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
 
-                                <telerik:RadPanelItem Text="Odeslat poštovní zprávu" Value="sendmail" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Napsat na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
+                                
 
                                 <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
                             </Items>
@@ -136,6 +142,7 @@
                             <Items>
                                 <telerik:RadPanelItem Text="Zvolit si jinou startovací (výchozí) stránku" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Odeslat poštovní zprávu" Value="sendmail" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
                             </Items>
                         </telerik:RadPanelItem>
