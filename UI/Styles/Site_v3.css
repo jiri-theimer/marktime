@@ -989,3 +989,67 @@ div.commandcell {
         width: 100%;
     }
 }
+
+
+
+div.noticeboard-box {
+    float: left;
+    margin-top: 3px;
+    margin-left: 6px;
+    min-width: 300px;
+}
+
+    div.noticeboard-box .content {
+        overflow: hidden;
+        padding: 5px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border: 1px solid silver;
+    }
+
+    div.noticeboard-box .title {
+        cursor: default;
+        height: 16px;
+        line-height: 13px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        background: #e6f7ff;
+        font-family: Arial;
+        display: block;
+        color:#004d99;
+        padding: 10px;
+        border: 1px solid silver;
+        border-bottom: none;
+    }
+
+div.noticeboard-box-bin {
+    float: left;
+    margin-top: 3px;
+    margin-left: 6px;
+    min-width: 300px;
+}
+
+    div.noticeboard-box-bin .content {
+        overflow: hidden;
+        padding: 5px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border: 1px solid silver;
+        background-color:whitesmoke;
+    }
+
+    div.noticeboard-box-bin .title {
+        cursor: default;
+        height: 16px;
+        line-height: 13px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        background: black;
+        font-family: Arial;
+        display: block;
+        color: white;
+        text-decoration:line-through;
+        padding: 10px;
+        border: 1px solid silver;
+        border-bottom: none;
+    }

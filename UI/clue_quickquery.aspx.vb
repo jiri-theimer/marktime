@@ -1,12 +1,8 @@
 ﻿Public Class clue_quickquery
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As SubForm
     Private Property _lastField As String
     
-    Private Sub clue_quickquery_Init(sender As Object, e As EventArgs) Handles Me.Init
-        _MasterPage = Me.Master
-    End Sub
-
+   
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("prefix") = Request.Item("prefix")

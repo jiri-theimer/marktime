@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="clue_j02_month.aspx.vb" Inherits="UI.clue_j02_month" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="clue_j02_month.aspx.vb" Inherits="UI.clue_j02_month" %>
 
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodmonth" Src="~/periodmonth.ascx" %>
 

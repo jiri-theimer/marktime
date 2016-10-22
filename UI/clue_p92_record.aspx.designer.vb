@@ -127,9 +127,9 @@ Partial Public Class clue_p92_record
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.SubForm
+    Public Shadows ReadOnly Property Master() As UI.Clue
         Get
-            Return CType(MyBase.Master, UI.SubForm)
+            Return CType(MyBase.Master, UI.Clue)
         End Get
     End Property
 End Class

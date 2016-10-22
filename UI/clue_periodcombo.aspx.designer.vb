@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class clue_periodcombo
 
     '''<summary>
+    '''RadScriptManager1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadScriptManager1 As Global.Telerik.Web.UI.RadScriptManager
+
+    '''<summary>
     '''d1 control.
     '''</summary>
     '''<remarks>
@@ -82,9 +91,9 @@ Partial Public Class clue_periodcombo
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.SubForm
+    Public Shadows ReadOnly Property Master() As UI.Clue
         Get
-            Return CType(MyBase.Master, UI.SubForm)
+            Return CType(MyBase.Master, UI.Clue)
         End Get
     End Property
 End Class

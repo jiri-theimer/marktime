@@ -275,6 +275,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents imgWelcome As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
+    '''rpNoticeBoard control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpNoticeBoard As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''lblBuild control.
     '''</summary>
     '''<remarks>

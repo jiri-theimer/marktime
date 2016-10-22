@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="clue_p41_myworksheet.aspx.vb" Inherits="UI.clue_p41_myworksheet" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="clue_p41_myworksheet.aspx.vb" Inherits="UI.clue_p41_myworksheet" %>
 
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodmonth" Src="~/periodmonth.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contactpersons" Src="~/contactpersons.ascx" %>

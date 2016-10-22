@@ -14,6 +14,7 @@
         Set(ByVal value As String)
             hidPageTitle.Value = value
             pageTitle.Text = value
+
         End Set
     End Property
     Public Property DataPID() As Integer
@@ -26,6 +27,7 @@
     End Property
     Public Sub StopPage(ByVal strMessage As String, Optional ByVal bolErrorInfo As Boolean = True, Optional ByVal strNeededPerms As String = "", Optional bolModalPage As Boolean = False)
         Server.Transfer("~/stoppage.aspx?err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage) & "&neededperms=" & strNeededPerms & "&modal=" & BO.BAS.GB(bolModalPage), False)
+
     End Sub
 
     Private Sub Page_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init

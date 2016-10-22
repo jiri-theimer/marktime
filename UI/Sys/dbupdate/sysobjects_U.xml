@@ -25,7 +25,7 @@
     <name>b02WorkflowStatus</name>
   </Table>
   <Table>
-    <ID>496720822</ID>
+    <ID>576721107</ID>
     <name>b05Workflow_History</name>
   </Table>
   <Table>
@@ -173,15 +173,19 @@
     <name>m62ExchangeRate</name>
   </Table>
   <Table>
+    <ID>400720480</ID>
+    <name>o10NoticeBoard</name>
+  </Table>
+  <Table>
     <ID>789577851</ID>
     <name>o13AttachmentType</name>
   </Table>
   <Table>
-    <ID>1840725610</ID>
+    <ID>1920725895</ID>
     <name>o19Milestone_NonPerson</name>
   </Table>
   <Table>
-    <ID>1808725496</ID>
+    <ID>1888725781</ID>
     <name>o20Milestone_Receiver</name>
   </Table>
   <Table>
@@ -189,11 +193,11 @@
     <name>o21MilestoneType</name>
   </Table>
   <Table>
-    <ID>1152723159</ID>
+    <ID>1232723444</ID>
     <name>o22Milestone</name>
   </Table>
   <Table>
-    <ID>1264723558</ID>
+    <ID>1344723843</ID>
     <name>o23Notepad</name>
   </Table>
   <Table>
@@ -209,7 +213,7 @@
     <name>o25DmsBinding</name>
   </Table>
   <Table>
-    <ID>816721962</ID>
+    <ID>896722247</ID>
     <name>o27Attachment</name>
   </Table>
   <Table>
@@ -273,15 +277,15 @@
     <name>p29ContactType</name>
   </Table>
   <Table>
-    <ID>400720480</ID>
+    <ID>480720765</ID>
     <name>p30Contact_Person</name>
   </Table>
   <Table>
-    <ID>912722304</ID>
+    <ID>992722589</ID>
     <name>p31Worksheet</name>
   </Table>
   <Table>
-    <ID>1424724128</ID>
+    <ID>1504724413</ID>
     <name>p31WorkSheet_FreeField</name>
   </Table>
   <Table>
@@ -349,15 +353,15 @@
     <name>p46BudgetPerson</name>
   </Table>
   <Table>
-    <ID>576721107</ID>
+    <ID>656721392</ID>
     <name>p47CapacityPlan</name>
   </Table>
   <Table>
-    <ID>1872725724</ID>
+    <ID>1952726009</ID>
     <name>p48OperativePlan</name>
   </Table>
   <Table>
-    <ID>720721620</ID>
+    <ID>800721905</ID>
     <name>p49FinancialPlan</name>
   </Table>
   <Table>
@@ -377,11 +381,11 @@
     <name>p53VatRate</name>
   </Table>
   <Table>
-    <ID>1024722703</ID>
+    <ID>1104722988</ID>
     <name>p56Task</name>
   </Table>
   <Table>
-    <ID>1616724812</ID>
+    <ID>1696725097</ID>
     <name>p56Task_FreeField</name>
   </Table>
   <Table>
@@ -597,7 +601,7 @@
     <name>x56SnippetProperty</name>
   </Table>
   <Table>
-    <ID>688721506</ID>
+    <ID>768721791</ID>
     <name>x57UserPageBinding</name>
   </Table>
   <Table>

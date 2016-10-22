@@ -665,6 +665,13 @@
       <DependentUpon>blank.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Clue.Master.designer.vb">
+      <DependentUpon>Clue.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Clue.Master.vb">
+      <DependentUpon>Clue.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="clue_o24_record.aspx.designer.vb">
       <DependentUpon>clue_o24_record.aspx</DependentUpon>
     </Compile>
@@ -2965,6 +2972,7 @@
     <Content Include="Handler\handler_search_notepad.ashx" />
     <Content Include="Handler\handler_capacity_plan.ashx" />
     <Content Include="Handler\handler_p45_project.ashx" />
+    <Content Include="Clue.Master" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -2980,6 +2988,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\" />
   </ItemGroup>

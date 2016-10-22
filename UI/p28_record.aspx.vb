@@ -577,7 +577,7 @@
             Return
         End If
         Dim cAres As New clsAresImport()
-        Dim cRec As BO.AresRecord = cAres.LoadAresRecord(Trim(Me.p28RegID.Text))
+        Dim cRec As BO.AresRecord = cAres.LoadAresRecord(Trim(Replace(Me.p28RegID.Text, " ", "")))
         If cRec Is Nothing Then
             Master.Notify("ARES záznam nebylo možné načíst, chyba: " & cAres.ErrorMessage, NotifyLevel.ErrorMessage)
         Else

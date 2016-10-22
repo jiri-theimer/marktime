@@ -54,8 +54,12 @@
     End Function
 
     Public Function GetList(mq As BO.myQuery) As IEnumerable(Of BO.o10NoticeBoard)
-        Dim s As String = "select a.*," & bas.RecTail("o10", "a") & " FROM o10NoticeBoard a", pars As New DbParameters
+        Dim s As String = "select a.*,j02owner.j02FirstName+char(32)+j02owner.j02LastName as Owner," & bas.RecTail("o10", "a") & " FROM o10NoticeBoard a LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID", pars As New DbParameters
         Dim strW As String = "1=1"
+        If mq.j02ID_Owner <> 0 Then
+            strW += " AND a.j02ID_Owner=@j02id_owner"
+            pars.Add("j02id_owner", mq.j02ID_Owner, DbType.Int32)
+        End If
         If Not BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_Admin) Then
             strW = "(a.j02ID_Owner=@j02id_query OR a.o10ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=210 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query))))"
             pars.Add("j02id_query", _curUser.j02ID, DbType.Int32)
@@ -65,7 +69,7 @@
         strW += bas.ParseWhereValidity("o10", "a", mq)
       
         s += " WHERE " & bas.TrimWHERE(strW)
-        s += " ORDER BY a.o21Ordinary"
+        s += " ORDER BY a.o10Ordinary,a.o10ValidFrom DESC"
         Return _cDB.GetList(Of BO.o10NoticeBoard)(s, pars)
 
     End Function

@@ -7,6 +7,7 @@
             Return BO.BAS.IsNullInt(Me.j02ID.SelectedValue)
         End Get
     End Property
+    
     Private Sub p31_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
@@ -15,7 +16,6 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gridP31.Factory = Master.Factory
         gridP31.AllowApproving = False
-
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             Dim lisPars As New List(Of String)
@@ -191,4 +191,6 @@
     Private Sub cal1_ViewChanged() Handles cal1.ViewChanged
 
     End Sub
+
+    
 End Class

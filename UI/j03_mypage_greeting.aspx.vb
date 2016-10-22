@@ -64,32 +64,36 @@
                 End If
             End With
 
-            With Master.Factory.j03UserBL
-                Select Case .GetUserParam("j03_mypage_greeting-last_step", "0")
-                    Case "0"
-                        ShowImage()
-                        .SetUserParam("j03_mypage_greeting-last_step", "1")
-                    Case "1"
-                        ShowChart1("1")
-                        .SetUserParam("j03_mypage_greeting-last_step", "2")                   
-                    Case "2"
-                        ShowChart2("2")
-                        .SetUserParam("j03_mypage_greeting-last_step", "3")
-                    Case "3"
-                        ShowChart2("3")
-                        .SetUserParam("j03_mypage_greeting-last_step", "4")
-                    Case "4"
-                        ShowChart2("4")
-                        .SetUserParam("j03_mypage_greeting-last_step", "5")
-                    Case "5"
-                        ShowChart1("3")
-                        .SetUserParam("j03_mypage_greeting-last_step", "6")
-                    Case "6"
-                        ShowChart2("5")
-                        .SetUserParam("j03_mypage_greeting-last_step", "0")
-                End Select
+            RefreshNoticeBoard()
+            If rpNoticeBoard.Items.Count <= 1 Then  'pokud je na nástěnce 1 nebo žádný článek, pak zobrazovat grafy obrázky
+                With Master.Factory.j03UserBL
+                    Select Case .GetUserParam("j03_mypage_greeting-last_step", "0")
+                        Case "0"
+                            ShowImage()
+                            .SetUserParam("j03_mypage_greeting-last_step", "1")
+                        Case "1"
+                            ShowChart1("1")
+                            .SetUserParam("j03_mypage_greeting-last_step", "2")
+                        Case "2"
+                            ShowChart2("2")
+                            .SetUserParam("j03_mypage_greeting-last_step", "3")
+                        Case "3"
+                            ShowChart2("3")
+                            .SetUserParam("j03_mypage_greeting-last_step", "4")
+                        Case "4"
+                            ShowChart2("4")
+                            .SetUserParam("j03_mypage_greeting-last_step", "5")
+                        Case "5"
+                            ShowChart1("3")
+                            .SetUserParam("j03_mypage_greeting-last_step", "6")
+                        Case "6"
+                            ShowChart2("5")
+                            .SetUserParam("j03_mypage_greeting-last_step", "0")
+                    End Select
 
-            End With
+                End With
+            End If
+            
             RefreshBoxes()
 
 
@@ -380,5 +384,14 @@
         End With
 
 
+    End Sub
+
+    Private Sub RefreshNoticeBoard()
+        Dim mq As New BO.myQuery
+        mq.Closed = BO.BooleanQueryMode.FalseQuery
+        Dim lis As IEnumerable(Of BO.o10NoticeBoard) = Master.Factory.o10NoticeBoardBL.GetList(mq).Where(Function(p) p.o10Locality = BO.NoticeBoardLocality.WelcomePage)
+        
+        rpNoticeBoard.DataSource = lis
+        rpNoticeBoard.DataBind()
     End Sub
 End Class

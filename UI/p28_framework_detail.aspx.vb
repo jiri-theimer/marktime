@@ -217,7 +217,11 @@ Public Class p28_framework_detail
             boxP31Summary.Visible = False
         Else
             Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
-            p31summary1.RefreshData(cWorksheetSum, "p28", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), 0, 0)
+            If cWorksheetSum.RowsCount = 0 Then
+                boxP31Summary.Visible = False
+            Else
+                p31summary1.RefreshData(cWorksheetSum, "p28", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), 0, 0)
+            End If
         End If
 
         If cRec.b02ID > 0 Then

@@ -21,6 +21,11 @@
         s += " WHERE a.p56ExternalPID LIKE @externalpid"
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.externalpid = strExternalPID})
     End Function
+    Public Function LoadByCode(strCode As String) As BO.p56Task
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
+        s += " WHERE a.p56Code LIKE @code"
+        Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.code = strCode})
+    End Function
 
     Public Function Save(cRec As BO.p56Task, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
         Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci

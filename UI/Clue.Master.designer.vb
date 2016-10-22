@@ -11,89 +11,68 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class clue_quickquery
+Partial Public Class Clue
 
     '''<summary>
-    '''panContainer control.
+    '''pageTitle control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panContainer As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents pageTitle As Global.System.Web.UI.HtmlControls.HtmlTitle
 
     '''<summary>
-    '''imgEntity control.
+    '''HeadContent control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
+    Protected WithEvents HeadContent As Global.System.Web.UI.WebControls.ContentPlaceHolder
 
     '''<summary>
-    '''ph1 control.
+    '''form1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''panJ71 control.
+    '''lblNotifyMessage control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panJ71 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents lblNotifyMessage As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblHeader control.
+    '''MainContent control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents MainContent As Global.System.Web.UI.WebControls.ContentPlaceHolder
 
     '''<summary>
-    '''lblBinFlag control.
+    '''hidDataPID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblBinFlag As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents hidDataPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''rpJ71 control.
+    '''hidPageTitle control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpJ71 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''lblTimeStamp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblTimeStamp As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Master property.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated property.
-    '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
-        Get
-            Return CType(MyBase.Master, UI.Clue)
-        End Get
-    End Property
+    Protected WithEvents hidPageTitle As Global.System.Web.UI.WebControls.HiddenField
 End Class

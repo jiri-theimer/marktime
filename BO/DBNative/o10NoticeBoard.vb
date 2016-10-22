@@ -12,4 +12,15 @@ Public Class o10NoticeBoard
     Public Property o10BackColor As String
     Public Property o10Locality As NoticeBoardLocality?
 
+    Public Property Owner As String
+    Public ReadOnly Property CssClassBox As String
+        Get
+            If Me.IsClosed Then
+                Return "noticeboard-box-bin"
+            Else
+                Return "noticeboard-box"
+            End If
+        End Get
+    End Property
+    Public Property StyleDisplayEdit As String = "none"
 End Class

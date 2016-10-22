@@ -1,6 +1,6 @@
 ﻿Public Class clue_o23_record
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As SubForm
+    Protected WithEvents _MasterPage As Clue
 
     Private Sub clue_o23_record_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master

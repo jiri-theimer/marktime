@@ -129,7 +129,7 @@
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
 
-                                <telerik:RadPanelItem Text="Napsat na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Napsat článek na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
                                 
 
                                 <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
@@ -281,6 +281,7 @@
                     </asp:Repeater>
                 </div>
             </asp:Panel>
+            
             <asp:Panel ID="panChart1" runat="server" Style="float: right;" Visible="false">
                 <telerik:RadHtmlChart runat="server" ID="chart1" width="600px" Font-Size="Small">
                     <ChartTitle Text="Vykázané hodiny po dnech (14 dní dozadu)">                        
@@ -353,8 +354,22 @@
                 <asp:Image runat="server" ID="imgWelcome" ImageUrl="Images/welcome/start.jpg" Visible="false" />
             </div>
 
-
-
+           <asp:Repeater ID="rpNoticeBoard" runat="server">
+            <ItemTemplate>
+                <div class="noticeboard-box" style="margin-top:20px;">
+                    <div class="title">
+                        <img src="Images/article.png" />
+                        <span style="font-weight:bold;font-variant: small-caps;font-size:120%;"><%#Eval("o10Name")%></span>
+                        
+                                                
+                        <span style="font-style:italic;float:right;"> <%#Eval("ValidFrom")%> | <%#Eval("Owner") %></span>
+                    </div>
+                    <div class="content" style="color:black;background-color: <%#Eval("o10BackColor")%>;">
+                        <%#Eval("o10BodyHtml")%>
+                    </div>
+                </div>
+            </ItemTemplate>
+        </asp:Repeater>
 
             <div style="clear: both;"></div>
 

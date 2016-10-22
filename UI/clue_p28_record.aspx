@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="clue_p28_record.aspx.vb" Inherits="UI.clue_p28_record" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="clue_p28_record.aspx.vb" Inherits="UI.clue_p28_record" %>
 
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="p28_address" Src="~/p28_address.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p28_medium" Src="~/p28_medium.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contactpersons" Src="~/contactpersons.ascx" %>

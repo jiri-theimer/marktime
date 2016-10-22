@@ -23,6 +23,15 @@ Partial Public Class o10_framework
     Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''linkNew control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkNew As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''cbxValidity control.
     '''</summary>
     '''<remarks>
@@ -30,6 +39,24 @@ Partial Public Class o10_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxValidity As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxOwner As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''Master property.

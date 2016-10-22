@@ -37,7 +37,7 @@
                     <td>
                         
                         <asp:DropDownList ID="o10Locality" runat="server">
-                            <asp:ListItem Text="Úvodní stránka" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Úvodní stránka a nástěnka" Value="1"></asp:ListItem>
                             <asp:ListItem Text="Pouze nástěnka" Value="0"></asp:ListItem>
                         </asp:DropDownList>
                         

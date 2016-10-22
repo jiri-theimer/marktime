@@ -205,6 +205,10 @@
 
         Dim intDefP41ID As Integer = BO.BAS.IsNullInt(Request.Item("p41id"))
         Dim intDefP56ID As Integer = BO.BAS.IsNullInt(Request.Item("p56id"))
+        If intDefP56ID = 0 And Request.Item("p56code") > "" Then
+            Dim cTask As BO.p56Task = Master.Factory.p56TaskBL.LoadByCode(Request.Item("p56code"))
+            If Not cTask Is Nothing Then intDefP56ID = cTask.PID Else Master.Notify("Pro předávaný kód úkolu nebyl nalezen záznam.")
+        End If
         If Request.Item("p48id") <> "" Then Me.CurrentP48ID = BO.BAS.IsNullInt(Request.Item("p48id"))
 
         'dál se pokračuje pouze pro nové záznamy
