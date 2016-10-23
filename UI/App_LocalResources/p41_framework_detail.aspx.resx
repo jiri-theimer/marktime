@@ -232,10 +232,10 @@
     <value>Worksheet přehled</value>
   </data>
   <data name="topLink0.Text" xml:space="preserve">
-    <value>Úkony</value>
+    <value>Worksheet přehled</value>
   </data>
   <data name="topLink1.Text" xml:space="preserve">
-    <value>Schvalování/fakturační podklady/fakturace</value>
+    <value>Schvalovat/Vystavit fakturu</value>
   </data>
   <data name="topLink2.Text" xml:space="preserve">
     <value>Úkoly</value>

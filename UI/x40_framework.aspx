@@ -70,7 +70,7 @@
 
                     <telerik:RadMenuItem Text="OBNOVIT" Visible="false" ImageUrl="Images/refresh.png" Value="refresh" NavigateUrl="x40_framework.aspx"></telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="columns" PostBack="false">
+                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="columns" PostBack="false">
                         <ContentTemplate>
                             <div style="padding: 20px;">
 

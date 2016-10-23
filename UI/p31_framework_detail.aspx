@@ -208,7 +208,7 @@
     
 
     <div style="clear: both; width: 100%;"></div>
-    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="j02Person" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick"></uc:p31_subgrid>
+    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="j02Person" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowFullScreen="false"></uc:p31_subgrid>
 
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />

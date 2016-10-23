@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="entity_framework_p31subform.aspx.vb" Inherits="UI.entity_framework_p31subform" %>
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="entity_framework_p31subform.aspx.vb" Inherits="UI.entity_framework_p31subform" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 
 <%@ Register TagPrefix="uc" TagName="p31_subgrid" Src="~/p31_subgrid.ascx" %>
 

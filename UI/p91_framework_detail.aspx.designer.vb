@@ -104,15 +104,6 @@ Partial Public Class p91_framework_detail
     Protected WithEvents cmdConvertDraft As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''cmdNewWindow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewWindow As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''lblProject control.
     '''</summary>
     '''<remarks>
@@ -840,15 +831,6 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hiddatapid_p31 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidIsBin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidIsBin As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidCols control.

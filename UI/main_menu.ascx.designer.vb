@@ -11,44 +11,32 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class entity_framework_b07subform
+Partial Public Class main_menu
 
     '''<summary>
-    '''comments1 control.
+    '''panContainer control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents comments1 As Global.UI.b07_list
+    Protected WithEvents panContainer As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''hidMasterPrefix control.
+    '''menu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''hidMasterPID control.
+    '''hidSearchBox1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''Master property.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated property.
-    '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
-        Get
-            Return CType(MyBase.Master, UI.Clue)
-        End Get
-    End Property
+    Protected WithEvents hidSearchBox1 As Global.System.Web.UI.WebControls.HiddenField
 End Class

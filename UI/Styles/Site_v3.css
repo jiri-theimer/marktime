@@ -237,11 +237,25 @@ div.bigtext {
 }
 
 
-a.toplink {
-    color: white;
-    margin-left: 10px;
+A.toplink {
+    color: black;
+    display: inline-block;
+            font-weight: normal;
+            line-height: 2;
+            padding-left:10px;
+            padding-right:10px;
+            color:#000;
+            text-align: center;
+            white-space: pre-wrap;
+            vertical-align: middle;   
+            text-decoration:none;        
 }
-
+ A.toplink:hover {
+        background: #bdbdbd;
+        border-radius: 5px 5px 5px 5px;
+        
+        
+    }
 
 
 /* ClueTip - ZOOM vybraného záznamu  
@@ -734,6 +748,16 @@ div.div_radiolist_metro {
     text-transform: lowercase;
     font-family: Segoe UI;
 }
+div.div_radiolist_default {
+    width: 100%;   
+    text-transform: lowercase;
+    font-family: Segoe UI;
+    border-bottom:solid 1px gray;
+    border-top:solid 1px gray;
+    margin-bottom:10px;
+    background: url('rmVSprite.png') repeat;
+}
+
 
 div.content-box1 {
     float: left;

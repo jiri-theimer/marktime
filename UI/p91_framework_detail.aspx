@@ -16,15 +16,19 @@
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
     <style type="text/css">
-        html .RadMenu_Metro .rmRootGroup {
-            background-image: none;
-        }
+                html .RadMenu_Default .rmRootGroup {
+    border:0 !important;
+    border-style:none;
+    
+}
+ 
+html .RadMenu_Default .rmItem {
+    border-left:none !important;
+    border-right:none !important;
+    
+}
 
-        html .RadMenu_Metro ul.rmRootGroup {
-            <%if me.hidisbin.value="1" then%> background-color: black;
-            <%else%> background-color: white;
-            <%End If%>;
-        }
+       
 
         .rmLink {
             margin-top: 6px;
@@ -243,13 +247,16 @@
         function workflow(){            
             sw_decide("workflow_dialog.aspx?prefix=p91&pid=<%=master.datapid%>","Images/workflow.png",false);
         }
+        function p31_grid(){            
+            window.open("p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>","_top")
+        }
     </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 40px;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 44px;border-bottom:solid 1px gray;">
 
-        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
+        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
             <Items>
                 <telerik:RadMenuItem Value="begin">
                     <ItemTemplate>
@@ -258,6 +265,7 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
                 </telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p91_framework_detail.aspx?saw=1" ToolTip="Otevřít fakturu v nové záložce prohlížeče"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
@@ -277,10 +285,10 @@
 
 
 
-                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="more">
                     <Items>
                         <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report('');" ImageUrl="Images/report.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za fakturu" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet PIVOT za fakturu" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
@@ -306,7 +314,10 @@
 
     </asp:Panel>
 
-    <div style="height: 3px; page-break-after: always; clear: both;"></div>
+    <div style="clear:both;"></div>
+    
+    
+
 
     <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Metro" MultiPageID="RadMultiPage1">
         <Tabs>
@@ -329,7 +340,7 @@
                             <asp:Image ID="imgRecord" runat="server" Visible="false" />
                             <asp:Label ID="p91Code" runat="server" CssClass="valbold"></asp:Label>
                             <asp:Button ID="cmdConvertDraft" runat="server" CssClass="cmd" Text="Převést Draft na oficiální číslo" />
-                            <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
+                            
                         </td>
                         <td id="rlbl">
                             <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
@@ -521,9 +532,7 @@
             ColHideRepeatedValues="0" ColTypes="S|N|N|N|N|S" ColFlexSubtotals="0|11|0|11|11|0"
             TableCaption="" />
                 </div>
-                <div class="div6">
-                    <a href="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" target="_top">Datový přehled zdrojových úkonů faktury</a>
-                </div>
+          
                 <asp:Panel ID="panText1" runat="server" CssClass="content-box1">
                     <div class="title">Text faktury</div>
                     <div class="content" style="background-color: #ffffcc;">
@@ -577,7 +586,10 @@
                     <a href="javascript:p31_add()" title="Přidat do faktury další položky">
                         <img src="Images/new.png" border="0" class="button-link" /></a>
                     <a href="javascript:p31_remove()" title="Zaškrtlé vyjmout z faktury">
-                        <img src="Images/cut.png" border="0" class="button-link" /></a>
+                        <img src="Images/cut.png" border="0" class="button-link" /></a>                    
+                    <a href="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" title="Přehled worksheet úkonů na celou stránku" target="_top" style="margin-left: 30px;">
+                        <img src="Images/fullscreen.png" class="button-link" border="0" />
+                    </a>
 
                 </div>
                 <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick"></uc:datagrid>
@@ -644,7 +656,7 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
-    <asp:HiddenField ID="hidIsBin" runat="server" />
+    
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidParentWidth" runat="server" />

@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="p31_framework_timer.aspx.vb" Inherits="UI.p31_framework_timer" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="p31_framework_timer.aspx.vb" Inherits="UI.p31_framework_timer" %>
 
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="timer" Src="~/timer.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">

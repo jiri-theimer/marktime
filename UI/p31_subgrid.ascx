@@ -34,7 +34,7 @@
         <asp:ImageButton ID="cmdNew" runat="server" ImageUrl="Images/new.png" ToolTip="Nový úkon" OnClientClick="return p31_entry()" CssClass="button-link" meta:resourcekey="cmdNew" />
         <asp:ImageButton ID="cmdCopy" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat do nového úkonu" OnClientClick="return p31_clone()" CssClass="button-link" meta:resourcekey="cmdCopy" />
         <asp:ImageButton ID="cmdSplit" runat="server" ImageUrl="Images/split.png" ToolTip="Rozdělit časový úkon na 2 kusy" OnClientClick="return p31_split()" CssClass="button-link" />
-
+        <asp:ImageButton ID="cmdFullScreen" runat="server" ImageUrl="Images/fullscreen.png" ToolTip="Přehled na celou stránku" OnClientClick="return p31_fullscreen()" CssClass="button-link" />
     </div>
     <div class="commandcell" style="padding-left: 10px;">
         <button type="button" id="cmdSetting" class="show_hide1xx" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface; height: 23px;" title="Více nastavení k přehledu">
@@ -110,7 +110,7 @@
 <asp:HiddenField ID="hidDrillDownField" runat="server" />
 <asp:HiddenField ID="hidCols" runat="server" />
 <asp:HiddenField ID="hidFrom" runat="server" />
-
+<asp:HiddenField ID="hidAllowFullScreen" runat="server" Value="1" />
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -210,5 +210,10 @@
 
         }
 
+    }
+
+    function p31_fullscreen() {
+        window.open("p31_grid.aspx?masterpid="+document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value+"&masterprefix=<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>", "_top");
+        return (false);
     }
 </script>

@@ -113,7 +113,7 @@
 
                     <telerik:RadMenuItem Text="Obnovit" Visible="false" ImageUrl="Images/refresh.png" Value="refresh" NavigateUrl="p51_framework.aspx"></telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="columns" PostBack="false">
+                    <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="columns" PostBack="false">
                         <ContentTemplate>
                             <div style="padding: 20px;">
                                 <div class="div6">

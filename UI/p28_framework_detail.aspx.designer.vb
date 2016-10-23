@@ -32,78 +32,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''topLink0 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink0 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink5 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink5 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink1 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink4 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink4 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink2 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink6 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink6 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink3 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink7 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink7 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''panSwitch control.
     '''</summary>
     '''<remarks>
@@ -122,13 +50,13 @@ Partial Public Class p28_framework_detail
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdNewWindow control.
+    '''linkChilds control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNewWindow As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents linkChilds As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''lblContact control.
@@ -651,15 +579,6 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidDetailMode As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidIsBin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidIsBin As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidParentWidth control.

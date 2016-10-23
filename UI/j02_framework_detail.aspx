@@ -12,16 +12,17 @@
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
     <style type="text/css">
-        html .RadMenu_Metro .rmRootGroup {
-            background-image: none;
-        }
-
-        html .RadMenu_Metro ul.rmRootGroup {
-            <%if me.hidisbin.value="1" then%> background-color: black;
-            <%else%> background-color: white;
-            <%End If%>;
-        }
-
+         html .RadMenu_Default .rmRootGroup {
+    border:0 !important;
+    border-style:none;
+    
+}
+ 
+html .RadMenu_Default .rmItem {
+    border-left:none !important;
+    border-right:none !important;
+    
+}
         .rmLink {
             margin-top: 6px;
         }
@@ -236,9 +237,9 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 40px;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height:44px;border-bottom:solid 1px gray;">
 
-        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Width="100%" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
+        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" Width="100%" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>
                 <telerik:RadMenuItem Value="begin">
                     <ItemTemplate>
@@ -246,25 +247,34 @@
                     </ItemTemplate>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="j02_framework_detail.aspx?saw=1" ToolTip="Otevřít detail osoby v nové záložce prohlížeče"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" Text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu osoby (boxy)" />
                 <telerik:RadMenuItem Text="ZÁZNAM OSOBY" ImageUrl="Images/arrow_down_menu.png">
                     <Items>
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit novou osobu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit osobní profil" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdCopy" Text="Založit novou osobu kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nově zakládaná osoba se kompletně předvyplní nastavením z aktuálního profilu."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat nebo fakturovat práci osoby" NavigateUrl="javascript:approve()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                        
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                     </Items>
                 </telerik:RadMenuItem>
 
 
 
-                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="more">
                     <Items>
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                         </telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za osobu" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet PIVOT za osobu" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdCalendar" Text="Kalendář osoby" NavigateUrl="javascript:scheduler()" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
                     </Items>
@@ -282,23 +292,14 @@
     </asp:Panel>
 
 
-    <div style="height: 3px; page-break-after: always"></div>
-    <div class="div_radiolist_metro">
-        <asp:HyperLink ID="topLink0" runat="server" Text="Úkony" CssClass="toplink" NavigateUrl="javascript:p31_grid()" Style="margin-left: 6px;"></asp:HyperLink>
-        <asp:HyperLink ID="topLink1" runat="server" Text="Schvalování/fakturační podklady/fakturace" CssClass="toplink" NavigateUrl="javascript:approve()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink4" runat="server" Text="Sestava" CssClass="toplink" NavigateUrl="javascript:report()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()"></asp:HyperLink>
-        <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář osoby" CssClass="toplink" NavigateUrl="javascript:scheduler()"></asp:HyperLink>
-    </div>
-
-
+    <div style="clear:both;"></div>
+  <p></p>
 
     <asp:Panel ID="panSwitch" runat="server">
         <div class="content-box1">
             <div class="title">
                 <img src="Images/properties.png" style="margin-right: 10px;" />Záznam osobního profilu
-                        <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
+                        
             </div>
             <div class="content">
                 <table cellpadding="10" cellspacing="2" id="responsive">
@@ -495,7 +496,7 @@
             <telerik:RadTab Text="Worksheet summary" Value="-1" Target="fraSubform"></telerik:RadTab>
             <telerik:RadTab Text="Worksheet přehled" Value="1" Selected="true" Target="fraSubform"></telerik:RadTab>
             <telerik:RadTab Text="Úkoly" Value="4" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="Vystavené faktury s úkony osoby" Value="2" Target="fraSubform"></telerik:RadTab>
+            <telerik:RadTab Text="Vystavené faktury za práci osoby" Value="2" Target="fraSubform"></telerik:RadTab>
             <telerik:RadTab Text="Komentáře" Value="3" Target="fraSubform"></telerik:RadTab>
             <telerik:RadTab Text="Žádný pod-přehled" Value="0" Target="fraSubform"></telerik:RadTab>
         </Tabs>
@@ -507,7 +508,7 @@
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-    <asp:HiddenField ID="hidIsBin" runat="server" />
+    
     <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

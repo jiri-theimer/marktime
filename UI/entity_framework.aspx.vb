@@ -68,7 +68,7 @@ Public Class entity_framework
 
     Private Sub entity_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
-
+        
     End Sub
 
 

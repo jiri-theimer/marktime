@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="help.aspx.vb" Inherits="UI.help" %>
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="help.aspx.vb" Inherits="UI.help" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">

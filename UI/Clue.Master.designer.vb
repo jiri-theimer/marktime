@@ -41,6 +41,15 @@ Partial Public Class Clue
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
+    '''RadScriptManager1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadScriptManager1 As Global.Telerik.Web.UI.RadScriptManager
+
+    '''<summary>
     '''lblNotifyMessage control.
     '''</summary>
     '''<remarks>

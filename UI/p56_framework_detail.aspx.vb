@@ -94,7 +94,7 @@
                 Dim mi As New Telerik.Web.UI.RadMenuItem("Do uzavřeného úkolu nelze zapisovat nové úkony.")
                 mi.ForeColor = Drawing.Color.Red
                 menu1.FindItemByValue("p31").Items.Add(mi)
-                Me.hidIsBin.Value = "1"
+                menu1.Skin = "Black"
             End If
         Else
             Dim mi As New Telerik.Web.UI.RadMenuItem("V úkolu nedisponujete oprávněním k zapisování úkonů.")
@@ -110,7 +110,7 @@
                 bolCanApprove = True
             End If
         End If
-        topLink1.Visible = bolCanApprove
+        menu1.FindItemByValue("cmdApprove").Visible = bolCanApprove
         If cRec.b01ID <> 0 Then
             menu1.FindItemByValue("cmdB07").Visible = False
         End If
@@ -130,7 +130,6 @@
         Handle_Permissions(cRec, cP41)
 
         With cRec
-            cmdNewWindow.NavigateUrl = "p56_framework.aspx?blankwindow=1&pid=" & .PID.ToString & "&title=" & .FullName
             Me.Owner.Text = .Owner : Me.Timestamp.Text = .Timestamp
             Me.p56Code.Text = .p56Code
             Me.p56Name.Text = .p56Name

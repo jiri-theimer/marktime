@@ -195,6 +195,21 @@ Public Class basUI
             Return False
         End If
     End Function
+    Public Shared Function GetPageUrlPerSAW(r As HttpRequest, strDataPrefix As String) As String
+        If GetCookieValue(r, "MT50-SAW") = "1" Then
+            Return strDataPrefix & "_framework_detail.aspx" & GetCompleteQuerystring(r, True)
+        Else
+            Return "entity_framework.aspx?prefix=" & strDataPrefix & "&" & GetCompleteQuerystring(r)
+        End If
+    End Function
+    Public Shared Function GetCookieValue(r As HttpRequest, strCookie As String) As String
+        Dim cook As HttpCookie = r.Cookies(strCookie)
+        If Not cook Is Nothing Then
+            Return cook.Value
+        Else
+            Return ""
+        End If
+    End Function
 
 
     Public Shared Sub Write2AccessLog(factory As BL.Factory, bolAllowLogIn As Boolean, r As System.Web.HttpRequest, Optional screenWidth As String = "", Optional screenHeight As String = "", Optional strAppClient As String = "")

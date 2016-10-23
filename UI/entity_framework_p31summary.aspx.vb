@@ -1,6 +1,5 @@
 ﻿Public Class entity_framework_p31summary
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As SubForm
     Private _IsHiddenRates As Boolean = False
     Public Property CurrentMasterPrefix As String
         Get
@@ -35,9 +34,7 @@
         End Set
     End Property
 
-    Private Sub entity_framework_p31summary_Init(sender As Object, e As EventArgs) Handles Me.Init
-        _MasterPage = Me.Master
-    End Sub
+  
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid"))

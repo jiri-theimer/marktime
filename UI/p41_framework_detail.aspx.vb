@@ -134,7 +134,6 @@ Public Class p41_framework_detail
         Dim cClient As BO.p28Contact = Nothing
 
         With cRec
-            cmdNewWindow.NavigateUrl = "p41_framework.aspx?blankwindow=1&pid=" & .PID.ToString & "&title=" & .FullName
             ViewState("p28id_client") = .p28ID_Client.ToString
 
             Me.Project.Text = .p41Name & " <span style='color:gray;padding-left:10px;'>" & .p41Code & "</span>"
@@ -210,7 +209,7 @@ Public Class p41_framework_detail
         Else
             Dim mi As New Telerik.Web.UI.RadMenuItem("V projektu nemůžete zapisovat worksheet úkony.")
             If cRec.IsClosed Then
-                hidIsBin.Value = "1"
+                menu1.Skin = "Black"
                 mi.Text = Resources.p41_framework_detail.VArchivuNelzeWorksheet
             End If
             If cRec.p41IsDraft Then mi.Text = Resources.p41_framework_detail.VDraftNelzeWorksheet
@@ -272,7 +271,6 @@ Public Class p41_framework_detail
             If Not .FindTabByValue("2") Is Nothing Then
                 If cProjectSum.p91_Count > 0 Then
                     .FindTabByValue("2").Text += "<span class='badge1'>" & cProjectSum.p91_Count.ToString & "</span>"
-                    topLink6.Text += "<span class='badge1'>" & cProjectSum.p91_Count.ToString & "</span>"
                 End If
             End If
             With .FindTabByValue("4")
@@ -289,11 +287,12 @@ Public Class p41_framework_detail
         End If
         
 
-        If cProjectSum.p56_Actual_Count > 0 Or cProjectSum.o22_Actual_Count > 0 Then
-            If cProjectSum.p56_Actual_Count > 0 Then topLink2.Text = topLink2.Text & "<span title='Otevřené úkoly' class='badge1'>" & cProjectSum.p56_Actual_Count.ToString & "</span>"
-            If cProjectSum.o22_Actual_Count > 0 Then topLink3.Text = topLink3.Text & "<span title='Události v kalendáři' class='badge1'>" & cProjectSum.o22_Actual_Count.ToString & "</span>"
+        ''If cProjectSum.p56_Actual_Count > 0 Then
+        ''    If cProjectSum.p56_Actual_Count > 0 Then opgSubgrid.FindTabByValue("4").Text = opgSubgrid.FindTabByValue("4").Text & "<span title='Otevřené úkoly' class='badge1'>" & cProjectSum.p56_Actual_Count.ToString & "</span>"
+        ''    ''If cProjectSum.o22_Actual_Count > 0 Then topLink3.Text = topLink3.Text & "<span title='Události v kalendáři' class='badge1'>" & cProjectSum.o22_Actual_Count.ToString & "</span>"
 
-        End If
+        ''End If
+       
 
         basUIMT.RenderHeaderMenu(cRec.IsClosed, Me.panMenuContainer, menu1)
         Dim strLevel1 As String = cRec.FullName
@@ -324,11 +323,11 @@ Public Class p41_framework_detail
             boxX18.Visible = False
         End If
         If Master.Factory.p41ProjectBL.HasChildRecords(cRec.PID) Then
-            topLink7.Visible = True
+            cmdChilds.Visible = True
             Dim mq2 As New BO.myQueryP41
             mq2.MG_SelectPidFieldOnly = True
             mq2.p41ParentID = cRec.PID
-            topLink7.Text += "<span class='badge1'>" & Master.Factory.p41ProjectBL.GetList(mq2).Count.ToString & "</span>"
+            cmdChilds.Text += "<span class='badge1'>" & Master.Factory.p41ProjectBL.GetList(mq2).Count.ToString & "</span>"
         End If
         If Master.Factory.p41ProjectBL.IsMyFavouriteProject(cRec.PID) Then
             cmdFavourite.ImageUrl = "Images/favourite.png"
@@ -388,7 +387,7 @@ Public Class p41_framework_detail
                     bolCanApproveOrInvoice = True
                 End If
             End If
-            topLink1.Visible = bolCanApproveOrInvoice
+            menu1.FindItemByValue("cmdApprove").Visible = bolCanApproveOrInvoice
             If Not bolCanApproveOrInvoice Then Me.p31summary1.DisableApprovingButton()
             Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
             ''Me.bigsummary1.IsApprovingPerson = bolCanApprove
@@ -406,9 +405,8 @@ Public Class p41_framework_detail
             menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdP40Create").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdP30").Visible = .OwnerAccess
-            topLink6.Visible = Master.Factory.SysUser.j04IsMenu_Invoice
+
             If Not .p91_Read Then
-                topLink6.Visible = False
                 With Me.opgSubgrid.Tabs
                     If Not .FindTabByValue("2") Is Nothing Then .Remove(.FindTabByValue("2")) 'nemá právo vidět vystavené faktury v projektu
                 End With

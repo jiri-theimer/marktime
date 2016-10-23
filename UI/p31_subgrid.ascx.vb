@@ -69,6 +69,14 @@ Public Class p31_subgrid
 
         End Set
     End Property
+    Public Property AllowFullScreen As Boolean
+        Get
+            Return BO.BAS.BG(Me.hidAllowFullScreen.Value)
+        End Get
+        Set(value As Boolean)
+            Me.hidAllowFullScreen.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Public Property HeaderText As String
         Get
             Return Me.lblHeaderP31.Text
@@ -575,7 +583,7 @@ Public Class p31_subgrid
             txtSearch.Style.Item("background-color") = "red"
         End If
         If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
-
+        Me.cmdFullScreen.Visible = Me.AllowFullScreen
     End Sub
     Private Sub cmdExplicitPeriod_Click(sender As Object, e As EventArgs) Handles cmdExplicitPeriod.Click
         Me.ExplicitDateFrom = DateSerial(1900, 1, 1)

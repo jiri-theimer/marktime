@@ -13,15 +13,19 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style type="text/css">
-        html .RadMenu_Metro .rmRootGroup {
-            background-image: none;
-        }
+        html .RadMenu_Default .rmRootGroup {
+    border:0 !important;
+    border-style:none;
+    
+}
+ 
+html .RadMenu_Default .rmItem {
+    border-left:none !important;
+    border-right:none !important;
+    
+}
 
-        html .RadMenu_Metro ul.rmRootGroup {
-            <%if me.hidisbin.value="1" then%> background-color: black;
-            <%else%> background-color: white;
-            <%End If%>;
-        }
+      
 
         .rmLink {
             margin-top: 6px;
@@ -267,9 +271,9 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 40px;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height:44px;border-bottom:solid 1px gray;">
 
-        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
+        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
             <Items>
                 <telerik:RadMenuItem Value="begin">
                     <ItemTemplate>
@@ -278,8 +282,9 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
                 </telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p41_framework_detail.aspx?saw=1" ToolTip="Otevřít projekt v nové záložce prohlížeče"></telerik:RadMenuItem>          
                 <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" Text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu projektu (boxy)">
-                </telerik:RadMenuItem>
+                </telerik:RadMenuItem>                
                 <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" Style="margin-top: 6px;" meta:resourcekey="menu_zaznam">
                     <Items>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění." meta:resourcekey="menu_upravit"></telerik:RadMenuItem>
@@ -288,24 +293,33 @@
 
                         <telerik:RadMenuItem Value="cmdCopy" Text="Založit nový projekt kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu." meta:resourcekey="menu_kopirovat"></telerik:RadMenuItem>
 
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat nebo vystavit fakturu" NavigateUrl="javascript:approve()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+
                     </Items>
                 </telerik:RadMenuItem>
 
 
                 <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31" meta:resourcekey="menu_zapsat_worksheet"></telerik:RadMenuItem>
 
-                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/more.png" Value="more" meta:resourcekey="menu_dalsi">
+                <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="more" meta:resourcekey="menu_dalsi">
                     <Items>
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()" meta:resourcekey="switchHeight">                           
                         </telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet Pivot za projekt" Target="_top" ImageUrl="Images/pivot.png" meta:resourcekey="cmdPivot"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet PIVOT za projekt" Target="_top" ImageUrl="Images/pivot.png" meta:resourcekey="cmdPivot"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP30" Text="Přiřadit k projektu kontaktní osobu" NavigateUrl="javascript:p30_record(0);" ImageUrl="Images/person.png" meta:resourcekey="cmdP30"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP56" Text="Vytvořit úkol" NavigateUrl="javascript:p56_record(0);" ImageUrl="Images/task.png" meta:resourcekey="cmdP56"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP56" Text="Vytvořit úkol" NavigateUrl="javascript:p56_record(0);" ImageUrl="Images/task.png" meta:resourcekey="cmdP56"></telerik:RadMenuItem>                        
                         <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png" meta:resourcekey="cmdO23"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png" meta:resourcekey="cmdO22"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png" meta:resourcekey="cmdB07"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdO22" Text="Kalendář projektu" NavigateUrl="javascript:scheduler()" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        
+                        
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP40Create" Text="Definovat opakovanou odměnu/paušál/úkon" NavigateUrl="javascript:p40_record(0);" ImageUrl="Images/worksheet_recurrence.png" meta:resourcekey="cmdP40Create"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP31Recalc" Text="Přepočítat sazby rozpracovaných čas.úkonů" NavigateUrl="javascript:p31_recalc();" ImageUrl="Images/recalc.png" meta:resourcekey="cmdP31Recalc"></telerik:RadMenuItem>
@@ -313,6 +327,7 @@
                         <telerik:RadMenuItem Value="cmdP31MoveToOtherProject" Text="Přesunout rozpracovanost na jiný projekt" NavigateUrl="javascript:p31_move2project();" ImageUrl="Images/cut.png" meta:resourcekey="cmdP31MoveToOtherProject"></telerik:RadMenuItem>
 
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png" meta:resourcekey="cmdB07"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png" meta:resourcekey="cmdX40"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png" meta:resourcekey="cmdP48"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdLog" Text="Historie záznamu" NavigateUrl="javascript: timeline()" ImageUrl="Images/event.png" meta:resourcekey="cmdLog"></telerik:RadMenuItem>
@@ -325,16 +340,8 @@
 
     </asp:Panel>
 
-    <div style="height: 3px; page-break-after: always"></div>
-    <div class="div_radiolist_metro">
-        <asp:HyperLink ID="topLink0" runat="server" Text="Úkony" CssClass="toplink" NavigateUrl="javascript:p31_grid()" Style="margin-left: 6px;" meta:resourcekey="topLink0"></asp:HyperLink>
-        <asp:HyperLink ID="topLink1" runat="server" Text="Schvalování/fakturační podklady/fakturace" CssClass="toplink" NavigateUrl="javascript:approve()" meta:resourcekey="topLink1"></asp:HyperLink>
-        <asp:HyperLink ID="topLink4" runat="server" Text="Sestava" CssClass="toplink" NavigateUrl="javascript:report()" meta:resourcekey="topLink4"></asp:HyperLink>
-        <asp:HyperLink ID="topLink2" runat="server" Text="Úkoly" CssClass="toplink" NavigateUrl="javascript:tasks()" meta:resourcekey="topLink2"></asp:HyperLink>
-        <asp:HyperLink ID="topLink6" runat="server" Text="Faktury" CssClass="toplink" NavigateUrl="javascript:invoices()" meta:resourcekey="topLink6"></asp:HyperLink>
-        <asp:HyperLink ID="topLink3" runat="server" Text="Kalendář projektu" CssClass="toplink" NavigateUrl="javascript:scheduler()" meta:resourcekey="topLink3"></asp:HyperLink>
-        <asp:HyperLink ID="topLink7" runat="server" Text="Podřízené projekty" CssClass="toplink" NavigateUrl="javascript:childs()" Visible="false"></asp:HyperLink>
-    </div>
+    <div style="clear:both;"></div>
+  <p></p>
 
 
     <asp:Panel ID="panSwitch" runat="server" Style="height: 300px; overflow: auto;">
@@ -344,9 +351,10 @@
                 
                 <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>                
 
-                <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
-                <asp:HyperLink ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" NavigateUrl="javascript:favourite()" CssClass="button-link" Style="float:right;vertical-align: top;padding:0px; margin-right: 20px;"></asp:HyperLink>
-
+                <asp:HyperLink ID="cmdChilds" runat="server" Text="Podřízené projekty" NavigateUrl="javascript:childs()" Visible="false" style="float:right;"></asp:HyperLink>
+                <asp:HyperLink ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" NavigateUrl="javascript:favourite()" style="float:right;border-radius:5px;border:solid 1px gray;"></asp:HyperLink>
+                
+                
             </div>
             <div class="content">
 

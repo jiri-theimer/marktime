@@ -235,7 +235,7 @@
     <value>Worksheet</value>
   </data>
   <data name="topLink1.Text" xml:space="preserve">
-    <value>Approving/prepare invoice</value>
+    <value>Approve/Create invoice</value>
   </data>
   <data name="topLink2.Text" xml:space="preserve">
     <value>Tasks</value>

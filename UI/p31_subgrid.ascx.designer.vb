@@ -122,6 +122,15 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdSplit As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''j74id control.
     '''</summary>
     '''<remarks>
@@ -336,4 +345,13 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidAllowFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidAllowFullScreen As Global.System.Web.UI.WebControls.HiddenField
 End Class

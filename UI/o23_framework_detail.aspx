@@ -15,19 +15,17 @@
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
     <style type="text/css">
-        html .RadMenu_Metro .rmRootGroup {
-            background-image: none;
-            
-        }
+        html .RadMenu_Default .rmRootGroup {
+    border:0 !important;
+    border-style:none;
+    
+}
  
-        html .RadMenu_Metro ul.rmRootGroup {
-            <%if me.hidisbin.value="1" then%>
-            background-color: black;
-            <%else%>
-            background-color: white;
-            <%End If%>
-            
-        }
+html .RadMenu_Default .rmItem {
+    border-left:none !important;
+    border-right:none !important;
+    
+}
 
         .rmLink {
             margin-top:6px;
@@ -165,9 +163,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 40px;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 44px;border-bottom:solid 1px gray;">
 
-        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" width="100%" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
+        <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" width="100%" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>
                 <telerik:RadMenuItem Value="begin">
                     <ItemTemplate>
@@ -175,6 +173,7 @@
                     </ItemTemplate>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="o23_framework_detail.aspx?saw=1" ToolTip="Otevřít dokument v nové záložce prohlížeče"></telerik:RadMenuItem>          
                 <telerik:RadMenuItem Text="ZÁZNAM DOKUMENTU" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení dokumentu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
@@ -203,7 +202,8 @@
         </telerik:RadMenu>
 
     </asp:Panel>
-    <div style="height: 3px; page-break-after: always"></div>
+    <div style="clear:both;"></div>
+    <p></p>
     <asp:Panel ID="tableRecord" runat="server">
 
         <div class="content-box1">
@@ -395,7 +395,7 @@
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-    <asp:HiddenField ID="hidIsBin" runat="server" />
+    
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

@@ -121,7 +121,7 @@
                         <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="Uložit změny v osobním profilu" />
                     </div>
                     <div class="content">
-                        <div class="div6">
+                        <div class="div6" style="display:none;">
                             <asp:CheckBox ID="j03IsLiveChatSupport" runat="server" Text="Zapnutá Live chat MARKTIME podpora" CssClass="chk" />
 
                         </div>

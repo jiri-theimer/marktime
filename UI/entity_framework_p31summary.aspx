@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="entity_framework_p31summary.aspx.vb" Inherits="UI.entity_framework_p31summary" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="entity_framework_p31summary.aspx.vb" Inherits="UI.entity_framework_p31summary" %>
 
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">

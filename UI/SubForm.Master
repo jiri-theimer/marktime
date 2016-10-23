@@ -1,9 +1,8 @@
 ﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="SubForm.master.vb" Inherits="UI.SubForm" %>
-
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="uc" TagName="main_menu" Src="~/main_menu.ascx" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title runat="server" id="pageTitle" enableviewstate="true">MARKTIME 5.0</title>
@@ -19,7 +18,17 @@
 
 
     <style type="text/css">
-        a.toplink {
+        html .RadMenu_Windows7 .rmRootGroup {
+            background-image: none;
+            color:white;            
+        }
+ 
+        html .RadMenu_Windows7 ul.rmRootGroup {
+            background-color: #25a0da;
+            
+        }
+        
+        a.toplinkx {
             display: inline-block;
             font-weight: normal;
             line-height: 2;
@@ -28,6 +37,25 @@
             white-space: pre-wrap;
             vertical-align: middle;
             margin-left: 20px;
+        }
+        .ui-autocomplete {
+            width: 600px;
+            height: 300px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+            font-family: 'Microsoft Sans Serif';
+        }
+
+        * html .ui-autocomplete {
+            height: 300px;
+        }
+
+        .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+            background: #DCDCDC;
+            border: none;
+            border-radius: 0;
+            font-weight: normal;
         }
     </style>
     <script type="text/javascript">
@@ -81,11 +109,8 @@
 
                         
         });
-
-        function help(page) {
-            window.open("help.aspx?page=" + page, "_blank");
-        }
-
+       
+        
 
      
     </script>
@@ -95,9 +120,9 @@
 </head>
 <body style="background: white; margin: 0px; height: 100%;">
     <form id="form1" runat="server" style="height: 100%; margin: 0px;">
-        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />        
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
-        
+        <uc:main_menu id="mm1" runat="server"></uc:main_menu>
         <div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>

@@ -114,11 +114,11 @@ Public Class j02_framework_detail
         With cRec
             Me.panIntraPerson.Visible = .j02IsIntraPerson
             Me.boxJ05.Visible = .j02IsIntraPerson
-            Me.topLink1.Visible = .j02IsIntraPerson
-            Me.topLink2.Visible = .j02IsIntraPerson
-            Me.topLink3.Visible = .j02IsIntraPerson
-            Me.topLink0.Visible = .j02IsIntraPerson
-            Me.topLink6.Visible = .j02IsIntraPerson
+            menu1.FindItemByValue("cmdApprove").Visible = .j02IsIntraPerson
+
+            menu1.FindItemByValue("cmdCalendar").Visible = .j02IsIntraPerson
+            ''Me.topLink0.Visible = .j02IsIntraPerson
+            ''Me.topLink6.Visible = .j02IsIntraPerson
         End With
         
 
@@ -156,7 +156,6 @@ Public Class j02_framework_detail
 
         
         With cRec
-            cmdNewWindow.NavigateUrl = "j02_framework.aspx?blankwindow=1&title=" & .FullNameDesc & "&pid=" & .PID.ToString
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .FullNameAsc, "j02_framework_detail.aspx?pid=" & Master.DataPID.ToString, .IsClosed)
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Me.FullNameAsc.Text = .FullNameAsc
@@ -263,7 +262,7 @@ Public Class j02_framework_detail
             menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
             menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
             If Not .SysUser.j04IsMenu_Invoice Then
-                topLink6.Visible = False
+                ''topLink6.Visible = False
                 If Not Me.opgSubgrid.Tabs.FindTabByValue("2") Is Nothing Then
                     Me.opgSubgrid.Tabs.Remove(Me.opgSubgrid.Tabs.FindTabByValue("2"))
                     If Me.CurrentSubgrid = SubgridType.p91 Then Me.CurrentSubgrid = SubgridType.p31
@@ -296,7 +295,7 @@ Public Class j02_framework_detail
         End With
         If cRec.IsClosed Then
             menu1.FindItemByValue("cmdO22").Visible = False
-            Me.hidIsBin.Value = "1"
+            menu1.Skin = "Black"
         End If
     End Sub
 

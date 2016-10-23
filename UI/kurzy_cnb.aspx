@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="kurzy_cnb.aspx.vb" Inherits="UI.kurzy_cnb" %>
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="kurzy_cnb.aspx.vb" Inherits="UI.kurzy_cnb" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 

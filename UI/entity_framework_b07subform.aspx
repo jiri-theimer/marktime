@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="entity_framework_b07subform.aspx.vb" Inherits="UI.entity_framework_b07subform" %>
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="entity_framework_b07subform.aspx.vb" Inherits="UI.entity_framework_b07subform" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 
 

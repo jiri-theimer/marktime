@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="entity_framework_p56subform.aspx.vb" Inherits="UI.entity_framework_p56subform" %>
-<%@ MasterType VirtualPath="~/SubForm.Master" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="entity_framework_p56subform.aspx.vb" Inherits="UI.entity_framework_p56subform" %>
+<%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="p56_subgrid" Src="~/p56_subgrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">

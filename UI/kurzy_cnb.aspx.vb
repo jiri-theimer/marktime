@@ -1,7 +1,6 @@
 ﻿Public Class kurzy_cnb
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As SubForm
-
+   
     Public Class Listek
         Public Property Zeme As String
         Public Property Mena As String

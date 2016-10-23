@@ -294,7 +294,8 @@ Public Class Site
         End If
 
         SetupSearchbox()
-        
+
+
     End Sub
 
     Private Sub SetupSearchbox()

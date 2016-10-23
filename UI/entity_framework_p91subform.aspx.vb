@@ -1,6 +1,5 @@
 ﻿Public Class entity_framework_p91subform
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As SubForm
     Public Property CurrentMasterPrefix As String
         Get
             Return hidMasterPrefix.Value
@@ -17,9 +16,6 @@
             hidMasterPID.Value = value.ToString
         End Set
     End Property
-    Private Sub entity_framework_p91subform_Init(sender As Object, e As EventArgs) Handles Me.Init
-        _MasterPage = Me.Master
-    End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gridP91.Factory = Master.Factory

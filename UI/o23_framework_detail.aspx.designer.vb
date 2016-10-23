@@ -500,15 +500,6 @@ Partial Public Class o23_framework_detail
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidIsBin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidIsBin As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''cmdRefresh control.
     '''</summary>
     '''<remarks>

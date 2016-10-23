@@ -41,6 +41,15 @@ Partial Public Class p91_subgrid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''cbxPaging control.
     '''</summary>
     '''<remarks>

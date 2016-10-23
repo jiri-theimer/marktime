@@ -25,6 +25,16 @@
             hidDataPID.Value = value.ToString
         End Set
     End Property
+    Public Property HelpTopicID As String
+    Public Property SiteMenuValue() As String
+        Get
+            Return mm1.SelectedValue
+        End Get
+        Set(ByVal value As String)
+            mm1.SelectedValue = value
+        End Set
+    End Property
+
     Public Sub StopPage(ByVal strMessage As String, Optional ByVal bolErrorInfo As Boolean = True, Optional ByVal strNeededPerms As String = "", Optional bolModalPage As Boolean = False)
         Server.Transfer("~/stoppage.aspx?err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage) & "&neededperms=" & strNeededPerms & "&modal=" & BO.BAS.GB(bolModalPage), False)
 
@@ -37,6 +47,7 @@
             If _Factory.SysUser Is Nothing Then DoLogOut()
             basUI.PingAccessLog(_Factory, Request)
         End If
+        
     End Sub
     Private Sub DoLogOut()
         Response.Redirect("~/Account/Login.aspx?autologout=1") 'automatické odhlášení
@@ -47,4 +58,13 @@
     
 
     
+    Private Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Not Page.IsPostBack Then
+            If Request.Item("saw") = "1" Or basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                mm1.RefreshData(_Factory, Me.HelpTopicID)
+            Else
+                mm1.ClearAll()
+            End If
+        End If
+    End Sub
 End Class

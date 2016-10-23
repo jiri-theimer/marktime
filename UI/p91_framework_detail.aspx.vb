@@ -59,7 +59,6 @@ Public Class p91_framework_detail
             End With
         End If
 
-
     End Sub
 
     Public Property CurrentJ74ID As Integer
@@ -85,11 +84,10 @@ Public Class p91_framework_detail
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p91")
         Handle_Permissions(cRec)
         With cRec
-            cmdNewWindow.NavigateUrl = "p91_framework.aspx?blankwindow=1&pid=" & .PID.ToString & "&title=" & .p91Code
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Me.p91Code.Text = .p91Code
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString, .IsClosed)
-            If .IsClosed Then Me.hidIsBin.Value = "1"
+            If .IsClosed Then menu1.Skin = "Black"
 
             Me.p92Name.Text = .p92Name
             Me.clue_p92name.Attributes("rel") = "clue_p92_record.aspx?pid=" & cRec.p92ID.ToString

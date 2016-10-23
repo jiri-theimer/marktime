@@ -32,7 +32,7 @@
                 <asp:ImageButton ID="cmdP56_p31new" runat="server" ImageUrl="Images/worksheet.png" ToolTip="Zapsat úkon k úkolu" OnClientClick="return p31_entry_p56()" CssClass="button-link" />
                 <asp:ImageButton ID="cmdP56_new" runat="server" ImageUrl="Images/new.png" ToolTip="Nový úkol" OnClientClick="return p56_record(0,true)" CssClass="button-link" />
                 <asp:ImageButton ID="cmdP56_clone" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat úkol" OnClientClick="return p56_clone()" CssClass="button-link" />
-
+                <asp:ImageButton ID="cmdFullScreen" runat="server" ImageUrl="Images/fullscreen.png" ToolTip="Přehled úkolů na celou stránku" OnClientClick="return p56_fullscreen()" CssClass="button-link" />
             </td>
             <td style="padding-left:20px;">
                 <button type="button" id="cmdSetting" class="show_hide1xxp56" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;height:23px;">
@@ -128,6 +128,11 @@
         
 
 
+    }
+
+    function p56_fullscreen() {
+        window.open("p56_Framework.aspx?masterpid=<%=Me.MasterDataPID%>&masterprefix=<%=BO.BAS.GetDataPrefix(Me.x29ID)%>", "_top");
+        return (false);
     }
 </script>
 

@@ -40,7 +40,7 @@
                 <asp:Label ID="lblJ03Login" Text="Přihlašovací jméno (login):" runat="server" AssociatedControlID="j03login" CssClass="lblReq"></asp:Label></td>
             <td>
                 <asp:TextBox ID="j03login" runat="server" Style="width: 300px;" Enabled="false"></asp:TextBox>
-                <asp:CheckBox ID="j03IsLiveChatSupport" runat="server" Text="Zapnutá Live chat MARKTIME podpora" />
+                <asp:CheckBox ID="j03IsLiveChatSupport" runat="server" Text="Zapnutá Live chat MARKTIME podpora" Visible="false" />
             </td>
         </tr>
         <tr>

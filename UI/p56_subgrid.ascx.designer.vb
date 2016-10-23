@@ -68,6 +68,15 @@ Partial Public Class p56_subgrid
     Protected WithEvents cmdP56_clone As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''cbxPaging control.
     '''</summary>
     '''<remarks>

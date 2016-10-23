@@ -32,33 +32,6 @@ Partial Public Class p56_framework_detail
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''topLink0 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink0 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink1 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''topLink4 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents topLink4 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''boxCoreTitle control.
     '''</summary>
     '''<remarks>
@@ -66,15 +39,6 @@ Partial Public Class p56_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdNewWindow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewWindow As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''lblTask control.
@@ -570,15 +534,6 @@ Partial Public Class p56_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidCurP41ID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidIsBin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidIsBin As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidParentWidth control.

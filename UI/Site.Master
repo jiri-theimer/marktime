@@ -1,6 +1,6 @@
 ﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="Site.master.vb" Inherits="UI.Site" %>
-
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="uc" TagName="main_menu" Src="~/main_menu.ascx" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -46,7 +46,6 @@
             height: 300px;
         }
 
-
         .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
             background: #DCDCDC;
             border: none;
@@ -70,8 +69,14 @@
 
         }
 
-        function setlang(value){
+        function setsaw(value){
            
+            createCookie('MT50-SAW', value, 30);            
+            location.replace(window.location.href);
+        }
+
+        function setlang(value) {
+
             createCookie('MT50-CultureInfo', value, 30);
             location.replace(window.location.href);
         }
@@ -182,6 +187,7 @@
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="8" ImageUrl="Images/messages.png" Value="messages" ForeColor="#ffffff" ToolTip="Upozornění ze systému" NavigateUrl="javascript:messages();">
                     </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Value="saw" text="<img src='Images/window.png'/>" ToolTip="Skrýt levý panel" NavigateUrl="javascript:setsaw('1')"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Value="lang" ToolTip="Jazyk" ImageUrl="~/Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Text="Česky" ImageUrl="Images/Flags/menu_czech.gif" NavigateUrl="javascript:setlang('-')"></telerik:RadMenuItem>

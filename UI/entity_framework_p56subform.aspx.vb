@@ -1,7 +1,6 @@
 ﻿Public Class entity_framework_p56subform
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As SubForm
-
+    
     Public Property CurrentMasterPrefix As String
         Get
             Return hidMasterPrefix.Value
@@ -19,9 +18,7 @@
         End Set
     End Property
 
-    Private Sub entity_framework_p56subform_Init(sender As Object, e As EventArgs) Handles Me.Init
-        _MasterPage = Me.Master
-    End Sub
+   
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gridP56.Factory = Master.Factory
         If Not Page.IsPostBack Then

@@ -116,7 +116,6 @@ Public Class p28_framework_detail
 
         
         With cRec
-            cmdNewWindow.NavigateUrl = "p28_framework.aspx?blankwindow=1&pid=" & .PID.ToString & "&title=" & .p28Name
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p28Name, "p28_framework_detail.aspx?pid=" & Master.DataPID.ToString, .IsClosed)
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Me.Contact.Text = .p28Name
@@ -247,11 +246,12 @@ Public Class p28_framework_detail
             boxFF.Visible = False
         End If
         If Master.Factory.p28ContactBL.HasChildRecords(cRec.PID) Then
-            topLink7.Visible = True
+            linkChilds.Visible = True
             Dim mq2 As New BO.myQueryP28
             mq2.MG_SelectPidFieldOnly = True
             mq2.p28ParentID = cRec.PID
-            topLink7.Text += "<span class='badge1'>" & Master.Factory.p28ContactBL.GetList(mq2).Count.ToString & "</span>"
+            linkChilds.Text += "<span class='badge1'>" & Master.Factory.p28ContactBL.GetList(mq2).Count.ToString & "</span>"
+
         End If
     End Sub
 
@@ -286,13 +286,12 @@ Public Class p28_framework_detail
 
             If Not .SysUser.IsApprovingPerson Then
                 'schovat záložku pro schvalování
-                topLink1.Visible = False
+                menu1.FindItemByValue("cmdApprove").Visible = False
             Else
-                topLink1.Visible = .TestPermission(BO.x53PermValEnum.PR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
+                menu1.FindItemByValue("cmdApprove").Visible = .TestPermission(BO.x53PermValEnum.PR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
             End If
-            If Not .SysUser.j04IsMenu_Project Then topLink5.Visible = False
             If Not .SysUser.j04IsMenu_Invoice Then
-                topLink6.Visible = False
+                ''topLink6.Visible = False
                 With Me.opgSubgrid.Tabs
                     If Not .FindTabByValue("2") Is Nothing Then
                         .Remove(.FindTabByValue("2"))  'nemá právo vidět vystavené faktury
@@ -318,7 +317,7 @@ Public Class p28_framework_detail
 
         If cRec.IsClosed Then
             menu1.FindItemByValue("cmdO22").Visible = False : menu1.FindItemByValue("cmdNewP41").Visible = False : menu1.FindItemByValue("cmdP30").Visible = False 'klient je v archivu
-            Me.hidIsBin.Value = "1"
+            menu1.Skin = "Black"
         End If
 
     End Sub
@@ -337,16 +336,17 @@ Public Class p28_framework_detail
             boxP41.Visible = True
             Dim intClosed As Integer = lis.Where(Function(p) p.IsClosed = True).Count
             Dim intOpened As Integer = lis.Count - intClosed
+            Dim s As String = ""
             With boxP41Title
                 If intClosed > 0 Then
-                    .Text = .Text & " (" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & ")"
-                    topLink5.Text += "<span class='badge1'>" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & "</span>"
+                    ''.Text = .Text & " (" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & ")"
+                    s = "<span class='badge1'>" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & "</span>"
                 Else
-                    .Text = .Text & " (" & intOpened.ToString & ")"
-                    topLink5.Text += "<span class='badge1'>" & intOpened.ToString & "</span>"
+                    ''.Text = .Text & " (" & intOpened.ToString & ")"
+                    s = "<span class='badge1'>" & intOpened.ToString & "</span>"
                 End If
 
-                .Text = "<a href='javascript:projects()'>" & .Text & "</a>"
+                .Text = "<a href='javascript:projects()'>" & .Text & s & "</a>"
             End With
 
         End If

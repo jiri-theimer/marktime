@@ -140,7 +140,7 @@
                     Me.lblBind.Text = "Worksheet úkon:"
             End Select
             Me.clue_o24.Attributes("rel") = "clue_o24_record.aspx?pid=" & .o24ID.ToString
-            cmdNewWindow.NavigateUrl = "o23_framework.aspx?blankwindow=1&pid=" & .PID.ToString & "&title=" & .o23Name
+            cmdNewWindow.NavigateUrl = "o23_framework.aspx?saw=1"
             Me.Owner.Text = .Owner : Me.Timestamp.Text = .Timestamp
             Me.o24Name.Text = .o24Name
             Me.o23Name.Text = .o23Name
@@ -260,7 +260,7 @@
 
             End If
             
-            If .IsClosed Then Me.hidIsBin.Value = "1"
+            If .IsClosed Then menu1.Skin = "Black"
 
 
         End With

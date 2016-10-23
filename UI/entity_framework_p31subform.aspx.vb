@@ -1,6 +1,5 @@
 ﻿Public Class entity_framework_p31subform
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As SubForm
 
     Public Property CurrentMasterPrefix As String
         Get
@@ -19,13 +18,9 @@
         End Set
     End Property
 
-    Private Sub entity_framework_p31subform_Init(sender As Object, e As EventArgs) Handles Me.Init
-        _MasterPage = Me.Master
-    End Sub
-
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gridP31.Factory = Master.Factory
-        
+
         If Not Page.IsPostBack Then
             If Request.Item("pid") <> "" Then
                 gridP31.DefaultSelectedPID = BO.BAS.IsNullInt(Request.Item("pid"))
