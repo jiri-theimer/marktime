@@ -95,6 +95,24 @@ Partial Public Class SubForm
     Protected WithEvents hidPageTitle As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSiteMenuValue control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSiteMenuValue As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMenuNever control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMenuNever As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''okno1 control.
     '''</summary>
     '''<remarks>

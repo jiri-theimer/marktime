@@ -46,6 +46,9 @@ Public Class p31_framework
     
 
     Private Sub p31_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
+        If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+            Response.Redirect("p31_framework_detail.aspx", True)
+        End If
         _MasterPage = Me.Master
         Master.HelpTopicID = "p31_framework"
     End Sub

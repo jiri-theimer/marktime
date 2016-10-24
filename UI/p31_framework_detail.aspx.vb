@@ -17,6 +17,7 @@
         gridP31.Factory = Master.Factory
         gridP31.AllowApproving = False
         If Not Page.IsPostBack Then
+            Master.SiteMenuValue = "p31_framework"
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             Dim lisPars As New List(Of String)
             With lisPars
@@ -28,7 +29,12 @@
                 .InhaleUserParams(lisPars)
                 cal1.CalendarColumns = BO.BAS.IsNullInt(.GetUserParam("p31_framework_detail-calendarcolumns", "1"))
                 SetupComboPersons(.GetUserParam("p31_framework_detail-j02id"))
-                Me.chkTimer.Checked = BO.BAS.BG(.GetUserParam("p31_framework-timer", "1"))
+                If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                    chkTimer.Visible = False
+                Else
+                    Me.chkTimer.Checked = BO.BAS.BG(.GetUserParam("p31_framework-timer", "1"))
+                End If
+
             End With
 
 

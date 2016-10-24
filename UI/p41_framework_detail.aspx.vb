@@ -43,10 +43,11 @@ Public Class p41_framework_detail
             ViewState("p28id_client") = ""
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
+                .SiteMenuValue = "p41"
                 If Request.Item("tab") <> "" Then
                     .Factory.j03UserBL.SetUserParam("p41_framework_detail-subgrid", Request.Item("tab"))
                 End If
-                
+
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneProjectPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneProjectPage, "pid=" & .DataPID.ToString))

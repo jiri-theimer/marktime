@@ -146,7 +146,7 @@
         
     </div>
     <div class="commandcell" style="padding-left:5px;padding-top:5px;" id="timer_panel">
-        <asp:CheckBox ID="chkTimer" runat="server" Text="Zobrazovat ČASOVAČ" AutoPostBack="false" Checked="true" onClick="timer_change(this)" meta:resourcekey="chkTimer" />
+        <asp:CheckBox ID="chkTimer" runat="server" Text="Zapisovat přes STOPKY" AutoPostBack="false" Checked="true" onClick="timer_change(this)" meta:resourcekey="chkTimer" />
     </div>
 
     <div style="height:10px;clear:both;"></div>

@@ -5,7 +5,7 @@ Public Class main_menu
     Class TextBoxTemplate
         Public Sub InstantiateIn(ByVal container As Control)
             Dim txt1 As New TextBox()
-            txt1.ID = "searchbox1"
+            txt1.ID = "search1"
             txt1.Text = Resources.Site.NajitProjekt
             txt1.Style.Item("width") = "110px"
             txt1.Attributes.Item("onfocus") = "search1Focus()"
@@ -28,9 +28,18 @@ Public Class main_menu
             Return menu1.SelectedValue
         End Get
         Set(value As String)
+            If value = "" Then Return
             If Not menu1.FindItemByValue(value) Is Nothing Then
                 menu1.FindItemByValue(value).HighlightPath()
             End If
+        End Set
+    End Property
+    Public Property MasterPageName As String
+        Get
+            Return Me.hidMasterPageName.Value
+        End Get
+        Set(value As String)
+            hidMasterPageName.Value = value
         End Set
     End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -41,16 +50,17 @@ Public Class main_menu
         panContainer.Controls.Remove(menu1)
         panContainer.Visible = False
     End Sub
-    Public Sub RefreshData(factory As BL.Factory, strCurrentHelpID As String)
+    Public Sub RefreshData(factory As BL.Factory, strCurrentHelpID As String, strCurrentSiteMenuValue As String)
         Me.panContainer.Visible = True
         Dim bolAdmin As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_Admin), n As RadMenuItem
         With factory.SysUser
             menu1.ClickToOpen = .j03IsSiteMenuOnClick
             If .j03SiteMenuSkin > "" Then menu1.Skin = .j03SiteMenuSkin
+            If menu1.Items.Count > 0 Then menu1.Items.Clear()
 
             ai("", "begin", "", "")
             If .j04IsMenu_Project Then
-                ai("", "searchbox", "", "")
+                ai("", "searchbox1", "", "")
             End If
 
             If .HomeMenu = "" Then
@@ -111,9 +121,10 @@ Public Class main_menu
                 End If
 
                 ai(Resources.Site.Ceniky, "p51", "p51_framework.aspx", "Images/billing.png", n)
+                ai(Resources.Site.Stitky, "x18", "x18_framework.aspx", "Images/label.png", n)
                 ai(Resources.Site.OdeslanaPosta, "x40", "x40_framework.aspx", "Images/email.png", n)
                 If bolAdmin Then ai(Resources.Site.NavrharWorkflow, "cmdWorkflow", "admin_workflow.aspx", "Images/workflow.png", n)
-                ai(Resources.Site.Stitky, "x18", "x18_framework.aspx", "Images/label.png", n)
+
 
                 If n.Items.Count <= 8 Then n.GroupSettings.RepeatColumns = 1
             End If
@@ -122,14 +133,24 @@ Public Class main_menu
                 n = ai(.MessagesCount.ToString, "messages", "javascript:messages()", "Images/messages.png")
                 n.ToolTip = "Zprávy a upozornění ze systému"
             End If
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                n = ai("<img src='Images/saw_turn_off.png'/>", "saw", "javascript:setsaw('0')", "")
-                n.ToolTip = "Zobrazit levý panel"
-            Else
-                ai("<img src='Images/saw_turn_on.png'/>", "saw", "javascript:setsaw('1')", "")
-                n.ToolTip = "Skrýt levý panel"
+            If Is_SAW_Switcher() Then
+                If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                    n = ai("<img src='Images/saw_turn_off.png'/>", "saw", "javascript:setsaw('0')", "")
+                    n.ToolTip = "Zobrazit levý panel"
+                Else
+                    n = ai("<img src='Images/saw_turn_on.png'/>", "saw", "javascript:setsaw('1')", "")
+                    n.ToolTip = "Skrýt levý panel"
+                End If
             End If
-            n = ai("", "lang", "", "~/Images/menuarrow.png")
+
+            Select Case basUI.GetCookieValue(Request, "MT50-CultureInfo")
+                Case "en-US"
+                    n = ai("<img src='Images/Flags/menu_uk.gif'/>", "lang", "", "")
+                Case "-"
+                    n = ai("<img src='Images/Flags/menu_czech.gif'/>", "lang", "", "")
+                Case Else
+                    n = ai("", "lang", "", "~/Images/menuarrow.png")
+            End Select
             ai("Česky", "", "javascript:setlang('-')", "Images/Flags/menu_czech.gif", n)
             ai("English", "", "javascript:setlang('en-US')", "Images/Flags/menu_uk.gif", n)
 
@@ -140,9 +161,19 @@ Public Class main_menu
                 n.NavigateUrl = "http://www.marktime.net/doc/html/index.html?" & strCurrentHelpID & ".htm"
             End If
         End With
+        Me.SelectedValue = strCurrentSiteMenuValue
 
         SetupSearchbox()
     End Sub
+    Private Function Is_SAW_Switcher() As Boolean
+        If Request.Url.ToString.IndexOf("entity_framework") > 0 Or Request.Url.ToString.IndexOf("p31_framework") > 0 Then Return True
+        If Request.Url.ToString.IndexOf("p28_framework") > 0 Or Request.Url.ToString.IndexOf("p41_framework") > 0 Then Return True
+        If Request.Url.ToString.IndexOf("p91_framework") > 0 Or Request.Url.ToString.IndexOf("j02_framework") > 0 Then Return True
+        If Request.Url.ToString.IndexOf("o23_framework") > 0 Or Request.Url.ToString.IndexOf("p56_framework") > 0 Then Return True
+
+        Return False
+
+    End Function
 
     Private Function ai(strText As String, strValue As String, strURL As String, strImg As String, Optional nParent As RadMenuItem = Nothing) As RadMenuItem
 
@@ -167,11 +198,11 @@ Public Class main_menu
 
     Private Sub SetupSearchbox()
         Dim template As New TextBoxTemplate()
-        template.InstantiateIn(menu1.FindItemByValue("searchbox"))
+        template.InstantiateIn(menu1.FindItemByValue("searchbox1"))
         menu1.DataBind()
 
-        Dim mi As RadMenuItem = menu1.FindItemByValue("searchbox")
-        hidSearchBox1.Value = DirectCast(mi.FindControl("searchbox1"), TextBox).ClientID
+        Dim mi As RadMenuItem = menu1.FindItemByValue("searchbox1")
+        hidSearch1.Value = DirectCast(mi.FindControl("search1"), TextBox).ClientID
     End Sub
 
 

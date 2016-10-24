@@ -11,8 +11,10 @@
                 Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(ViewState("masterprefix")), BO.BAS.IsNullInt(ViewState("masterpid")))
                 Me.MasterRecord.NavigateUrl = ViewState("masterprefix") & "_framework.aspx?pid=" & ViewState("masterpid")
             End If
+            Master.SiteMenuValue = Request.Item("prefix")
             Select Case BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
                 Case BO.x29IdEnum.p28Contact
+                    panSearch_p28.Visible = True
                     img1.ImageUrl = "Images/contact_32.png"
                     Dim mq As New BO.myQueryP28
                     mq.SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
@@ -26,6 +28,7 @@
                     End If
 
                 Case BO.x29IdEnum.p41Project
+                    panSearch.Visible = False
                     img1.ImageUrl = "Images/project_32.png"
                     Dim mq As New BO.myQueryP41
                     mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
@@ -38,6 +41,7 @@
                         cmdNew.NavigateUrl = "javascript:p41_create()"
                     End If
                 Case BO.x29IdEnum.p56Task
+                    panSearch_p56.Visible = True
                     img1.ImageUrl = "Images/task_32.png"
                     Dim mq As New BO.myQueryP56
                     mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
@@ -49,6 +53,7 @@
                     cmdNew.NavigateUrl = "javascript:p56_create()"
                 Case BO.x29IdEnum.p91Invoice
                     img1.ImageUrl = "Images/invoice_32.png"
+                    panSearch_p91.Visible = True
                     Dim mq As New BO.myQueryP91
                     mq.SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
                     Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq)
@@ -60,6 +65,7 @@
                         cmdNew.NavigateUrl = "javascript:p91_create()"
                     End If
                 Case BO.x29IdEnum.j02Person
+                    panSearch_j02.Visible = True
                     img1.ImageUrl = "Images/person_32.png"
                     Dim mq As New BO.myQueryJ02
                     Dim lis As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
@@ -71,6 +77,8 @@
                         cmdNew.NavigateUrl = "javascript:j02_create()"
                     End If
                 Case BO.x29IdEnum.x31Report
+                    Master.IsMenuNever = True
+                    panSearch.Visible = False
                     img1.ImageUrl = "Images/reporting_32.png"
 
                     Dim lis As IEnumerable(Of BO.x31Report) = Master.Factory.x31ReportBL.GetList()
@@ -82,6 +90,7 @@
                         cmdNew.NavigateUrl = "javascript:x31_create()"
                     End If
                 Case BO.x29IdEnum.o23Notepad
+                    panSearch_o23.Visible = True
                     img1.ImageUrl = "Images/notepad_32.png"
                     Dim mq As New BO.myQueryO23
                     mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
@@ -98,7 +107,7 @@
 
                 Case Else
                     img1.Visible = False
-
+                    panSearch.Visible = False
             End Select
 
 

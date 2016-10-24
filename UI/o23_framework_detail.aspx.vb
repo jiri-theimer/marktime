@@ -22,6 +22,7 @@
             ViewState("verified") = ""
             upload1.GUID = BO.BAS.GetGUID
             With Master
+                .SiteMenuValue = "o23"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneContactPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneContactPage, "pid=" & .DataPID.ToString))
@@ -140,7 +141,7 @@
                     Me.lblBind.Text = "Worksheet úkon:"
             End Select
             Me.clue_o24.Attributes("rel") = "clue_o24_record.aspx?pid=" & .o24ID.ToString
-            cmdNewWindow.NavigateUrl = "o23_framework.aspx?saw=1"
+
             Me.Owner.Text = .Owner : Me.Timestamp.Text = .Timestamp
             Me.o24Name.Text = .o24Name
             Me.o23Name.Text = .o23Name

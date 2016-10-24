@@ -20,6 +20,7 @@
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
+                .SiteMenuValue = "p56"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneContactPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneContactPage, "pid=" & .DataPID.ToString))

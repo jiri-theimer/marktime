@@ -36,6 +36,7 @@ Public Class p28_framework_detail
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
+                .SiteMenuValue = "p28"
                 If Request.Item("tab") <> "" Then
                     .Factory.j03UserBL.SetUserParam("p28_framework_detail-subgrid", Request.Item("tab"))
                 End If

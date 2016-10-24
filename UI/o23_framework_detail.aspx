@@ -11,52 +11,7 @@
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
-    <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
-
-    <style type="text/css">
-        html .RadMenu_Default .rmRootGroup {
-    border:0 !important;
-    border-style:none;
-    
-}
- 
-html .RadMenu_Default .rmItem {
-    border-left:none !important;
-    border-right:none !important;
-    
-}
-
-        .rmLink {
-            margin-top:6px;
-           
-        }
-
-
-        .ui-autocomplete {
-            width: 400px;
-            height: 300px;
-            overflow-y: auto;
-            /* prevent horizontal scrollbar */
-            overflow-x: hidden;
-            font-family: 'Microsoft Sans Serif';
-            z-index: 9900;
-        }
-
-        * html .ui-autocomplete {
-            height: 300px;
-        }
-
-
-        .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-            background: #DCDCDC;
-            border: none;
-            border-radius: 0;
-            font-weight: normal;
-        }
-    </style>
-    
-
+   
     <script type="text/javascript">
         $(document).ready(function () {
            
@@ -194,7 +149,7 @@ html .RadMenu_Default .rmItem {
                     <ItemTemplate>
 
                         <input id="search2" style="width: 150px; margin-top: 7px;" value="Najít dokument..." onfocus="search2Focus()" onblur="search2Blur()" />
-
+                        <div id="search2_result" style="position: relative;left:-150px;"></div>
                     </ItemTemplate>
                 </telerik:RadMenuItem>
                 
@@ -210,7 +165,7 @@ html .RadMenu_Default .rmItem {
             <div class="title">
                 <asp:Image ID="imgRecord" runat="server" ImageUrl="Images/properties.png" Style="margin-right: 10px;" />
                 <asp:Label ID="boxCoreTitle" Text="Záznam dokumentu" runat="server"></asp:Label>
-                <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
+                
             </div>
             <div class="content">
                 <asp:Label ID="lblPermissionMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>
@@ -411,7 +366,16 @@ html .RadMenu_Default .rmItem {
                         window.open("o23_framework.aspx?pid=" + ui.item.PID,"_top");
                         return false;
                     }
-                }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search2_result').show();
+                },
+                close: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                    .hide();                   
+                }   
 
 
 

@@ -37,6 +37,7 @@ Public Class j02_framework_detail
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             ViewState("j03id") = 0
             With Master
+                .SiteMenuValue = "j02"
                 If Request.Item("tab") <> "" Then
                     .Factory.j03UserBL.SetUserParam("j02_framework_detail-subgrid", Request.Item("tab"))
                 End If

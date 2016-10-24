@@ -59,22 +59,13 @@ Partial Public Class Site
     Protected WithEvents notify1 As Global.Telerik.Web.UI.RadNotification
 
     '''<summary>
-    '''imgVisitUpgradeInfo control.
+    '''mm1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgVisitUpgradeInfo As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''menu1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents mm1 As Global.UI.main_menu
 
     '''<summary>
     '''MainContent control.
@@ -95,6 +86,15 @@ Partial Public Class Site
     Protected WithEvents okno1 As Global.Telerik.Web.UI.RadWindow
 
     '''<summary>
+    '''hidSiteMenuValue control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSiteMenuValue As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidPageTitle control.
     '''</summary>
     '''<remarks>
@@ -102,13 +102,4 @@ Partial Public Class Site
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidPageTitle As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidSearchBox1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidSearchBox1 As Global.System.Web.UI.WebControls.HiddenField
 End Class

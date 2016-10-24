@@ -13,6 +13,7 @@ Public Class p91_framework_detail
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
+                .SiteMenuValue = "p91"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneInvoicePage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneInvoicePage, "pid=" & .DataPID.ToString))

@@ -40,6 +40,7 @@
             /* prevent horizontal scrollbar */
             overflow-x: hidden;
             font-family: 'Microsoft Sans Serif';
+            
         }
 
         * html .ui-autocomplete {
@@ -109,99 +110,7 @@
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
         
-        <asp:HyperLink ID="imgVisitUpgradeInfo" runat="server" ImageUrl="Images/upgraded_32.png" NavigateUrl="log_app_update.aspx" style="position:absolute;left:140px;z-index:9000;" ToolTip="Nedávno proběhla aktualizace. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
-        <div style="background-color: #25a0da;height:32px;">
-
-            <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Auto" Skin="Windows7" ClickToOpen="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2900;background-color:blue !important;">
-                <Items>
-                    <telerik:RadMenuItem runat="server" Value="begin"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="ÚVOD" Value="dashboard" NavigateUrl="default.aspx"></telerik:RadMenuItem>
-
-                    <telerik:RadMenuItem Text="WORKSHEET" Value="p31" ImageUrl="~/Images/menuarrow.png">
-                        <Items>
-                            <telerik:RadMenuItem Value="p31_framework" Text="Zapisovat" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
-                            
-                            <telerik:RadMenuItem Value="p31_scheduler" Text="Zapisovat přes KALENDÁŘ" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="p31_timeline" Text="Zapisovat přes DAYLINE" NavigateUrl="p31_timeline.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
-                            
-                            <telerik:RadMenuItem Value="cmdP31_Timer" Text="Zapisovat přes STOPKY" NavigateUrl="p31_timer.aspx" ImageUrl="Images/worksheet.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdP31_Grid" Text="Datový přehled" NavigateUrl="p31_grid.aspx" ImageUrl="Images/grid.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdP31_Approving" Text="Schvalovat | Připravit podklady k fakturaci" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdP31_Pivot" Text="Worksheet PIVOT" NavigateUrl="p31_pivot.aspx" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdP31_DrillDown" Text="Worksheet DRILL-DOWN" NavigateUrl="p31_drilldown.aspx" ImageUrl="Images/drilldown.png" Visible="false"></telerik:RadMenuItem>
-                        </Items>
-
-
-                    </telerik:RadMenuItem>
-
-                    <telerik:RadMenuItem Text="PROJEKTY" Value="p41" NavigateUrl="p41_framework.aspx" >
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="KLIENTI" Value="p28" NavigateUrl="p28_framework.aspx" >
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="LIDÉ" Value="j02" NavigateUrl="j02_framework.aspx" >
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="FAKTURY" Value="p91" NavigateUrl="p91_framework.aspx" >
-                    </telerik:RadMenuItem>
-
-
-
-                    <telerik:RadMenuItem Text="Já" Value="me" ImageUrl="~/Images/menuarrow.png" >
-                        <Items>
-                            <telerik:RadMenuItem Value="cmdMyProfile" Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdChangePassword" Text="Změnit heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdLogout" Text="Odhlásit se" NavigateUrl="Account/Login.aspx?logout=1" ImageUrl="Images/logout.png"></telerik:RadMenuItem>
-                        </Items>
-
-
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="DALŠÍ" Value="more" ImageUrl="~/Images/menuarrow.png" >
-                        <GroupSettings RepeatColumns="2" RepeatDirection="Vertical" />
-                        <Items>
-                            <telerik:RadMenuItem Value="cmdAdmin" Text="Administrace systému" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadMenuItem>
-
-
-
-                            <telerik:RadMenuItem Value="cmdReports" Text="Tiskové sestavy | Pluginy" NavigateUrl="report_framework.aspx" ImageUrl="Images/reporting.png"></telerik:RadMenuItem>
-
-                            <telerik:RadMenuItem Value="p56" Text="Úkoly" NavigateUrl="p56_framework.aspx" ImageUrl="Images/task.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="o10" Text="Nástěnka" NavigateUrl="o10_framework.aspx" ImageUrl="Images/article.png"></telerik:RadMenuItem>
-                            
-                            <telerik:RadMenuItem Value="o23" Text="Dokumenty" NavigateUrl="o23_framework.aspx" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="entity_scheduler" Text="Kalendář" NavigateUrl="entity_scheduler.aspx" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="p48" Text="Operativní plánování" NavigateUrl="p48_framework.aspx" ImageUrl="Images/oplan.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="p49" Text="Rozpočty výdajů a fixních odměn" NavigateUrl="p49_framework.aspx" ImageUrl="Images/finplan.png" Visible="false"></telerik:RadMenuItem>
-                            
-                            
-
-                            <telerik:RadMenuItem Value="p90_framework" Text="Zálohové faktury" NavigateUrl="p90_framework.aspx" ImageUrl="Images/proforma.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="p51" Text="Ceníky sazeb" NavigateUrl="p51_framework.aspx" ImageUrl="Images/billing.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="x40" Text="Odeslaná pošta" NavigateUrl="x40_framework.aspx" ImageUrl="Images/email.png"></telerik:RadMenuItem>
-
-                            <telerik:RadMenuItem Value="cmdWorkflow" Text="Návrhář workflow" NavigateUrl="admin_workflow.aspx" ImageUrl="Images/workflow.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="x18" Text="Štítky" NavigateUrl="x18_framework.aspx" ImageUrl="Images/label.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdHelp" Text="Nápověda" NavigateUrl="http://www.marktime.net/doc/html" ImageUrl="Images/help.png" Target="_blank"></telerik:RadMenuItem>
-
-                        </Items>
-
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="8" ImageUrl="Images/messages.png" Value="messages" ForeColor="#ffffff" ToolTip="Upozornění ze systému" NavigateUrl="javascript:messages();">
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Value="saw" text="<img src='Images/window.png'/>" ToolTip="Skrýt levý panel" NavigateUrl="javascript:setsaw('1')"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Value="lang" ToolTip="Jazyk" ImageUrl="~/Images/menuarrow.png">
-                        <Items>
-                            <telerik:RadMenuItem Text="Česky" ImageUrl="Images/Flags/menu_czech.gif" NavigateUrl="javascript:setlang('-')"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="English" ImageUrl="Images/Flags/menu_uk.gif" NavigateUrl="javascript:setlang('en-US')"></telerik:RadMenuItem>
-                        </Items>
-                    </telerik:RadMenuItem>
-
-                    <telerik:RadMenuItem Value="help" Target="_blank" Text="?" ToolTip="Nápověda">
-                    </telerik:RadMenuItem>
-                </Items>
-            </telerik:RadMenu>
-
-        </div>
-        <div id="search_result" style="position: relative;z-index:9999;"></div>
+        <uc:main_menu id="mm1" runat="server" MasterPageName="Site"></uc:main_menu>
        
         <div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
@@ -214,9 +123,9 @@
             <Localization Close="Zavřít" Restore="Základní velikost" Maximize="Maximalizovat" />
         </telerik:RadWindow>
 
-
+        <asp:HiddenField ID="hidSiteMenuValue" runat="server" />
         <asp:HiddenField ID="hidPageTitle" runat="server" Value="MARKTIME 5.0" />
-        <asp:HiddenField ID="hidSearchBox1" runat="server" />
+        
     </form>
 
     <script type="text/javascript">
@@ -290,72 +199,7 @@
 
         }
 
-        <%If _Factory.SysUser.j04IsMenu_Project Then%>
-
-        $(function () {
-
-            $("#<%=hidSearchBox1.Value%>").autocomplete({
-                source: "Handler/handler_search_project.ashx",
-                minLength: 1,
-                select: function (event, ui) {
-                    if (ui.item) {
-                        location.replace("p41_framework.aspx?pid=" + ui.item.PID);
-                        return false;
-                    }
-                },
-                open: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                       .removeAttr('style').hide()
-                       .appendTo('#search_result').show();
-                }
-
-
-
-            }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                var s = "<div>";
-
-                if (item.Closed == "1")
-                    s = s + "<a style='text-decoration:line-through;'>";
-                else
-                    s = s + "<a>";
-
-
-                s = s + __highlight(item.Project, item.FilterString);
-
-
-                s = s + "</a>";
-
-                if (item.Draft == "1")
-                    s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
-
-
-                s = s + "</div>";
-
-
-                return $(s).appendTo(ul);
-
-
-            };
-        });
-
-
-        function __highlight(s, t) {
-            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
-            return s.replace(matcher, "<strong>$1</strong>");
-        }
-
-        function search1Focus() {
-            document.getElementById("<%=hidSearchBox1.Value%>").value = "";
-            document.getElementById("<%=hidSearchBox1.Value%>").style.background = "yellow";
-        }
-        function search1Blur() {
-
-            document.getElementById("<%=hidSearchBox1.Value%>").style.background = "";
-            document.getElementById("<%=hidSearchBox1.Value%>").value = "<%=Resources.Site.NajitProjekt%>";
-        }
-
-
-        <%End If%>
+        
 
         
         

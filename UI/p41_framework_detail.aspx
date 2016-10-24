@@ -12,26 +12,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    <style type="text/css">
-        html .RadMenu_Default .rmRootGroup {
-    border:0 !important;
-    border-style:none;
     
-}
- 
-html .RadMenu_Default .rmItem {
-    border-left:none !important;
-    border-right:none !important;
-    
-}
-
-      
-
-        .rmLink {
-            margin-top: 6px;
-        }
-    </style>
-
     <script type="text/javascript">
         $(document).ready(function () {           
 

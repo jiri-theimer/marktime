@@ -101,7 +101,7 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Dispečink úkolů.
+        '''  Looks up a localized string similar to Úkoly.
         '''</summary>
         Friend Shared ReadOnly Property DispecinkUkolu() As String
             Get

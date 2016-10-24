@@ -13,54 +13,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
-    <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
-    <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
-    <style type="text/css">  
-html .RadMenu_Default .rmRootGroup {
-    border:0 !important;
-    border-style:none;
+
     
-}
- 
-html .RadMenu_Default .rmItem {
-    border-left:none !important;
-    border-right:none !important;
-    
-}
-
-        
-
-        
-
-        .rmLink {
-            margin-top: 6px;
-        }
-
-
-
-        .ui-autocomplete {
-            width: 400px;
-            height: 300px;
-            overflow-y: auto;
-            /* prevent horizontal scrollbar */
-            overflow-x: hidden;
-            font-family: 'Microsoft Sans Serif';
-            z-index: 9900;
-        }
-
-        * html .ui-autocomplete {
-            height: 300px;
-        }
-
-
-        .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-            background: #DCDCDC;
-            border: none;
-            border-radius: 0;
-            font-weight: normal;
-        }
-    </style>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -335,7 +290,7 @@ html .RadMenu_Default .rmItem {
                     <ItemTemplate>
 
                         <input id="search2" style="width: 100px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus()" onblur="search2Blur()" />
-
+                        <div id="search2_result" style="position: relative;left:-150px;"></div>
                     </ItemTemplate>
                 </telerik:RadMenuItem>
             </Items>
@@ -589,7 +544,16 @@ html .RadMenu_Default .rmItem {
                         window.open("p28_framework.aspx?pid=" + ui.item.PID,"_top");
                         return false;
                     }
-                }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search2_result').show();
+                },
+                close: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                    .hide();                   
+                }   
 
 
 

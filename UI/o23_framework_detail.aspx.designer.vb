@@ -59,15 +59,6 @@ Partial Public Class o23_framework_detail
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdNewWindow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewWindow As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''lblPermissionMessage control.
     '''</summary>
     '''<remarks>

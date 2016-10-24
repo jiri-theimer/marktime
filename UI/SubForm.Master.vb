@@ -28,10 +28,18 @@
     Public Property HelpTopicID As String
     Public Property SiteMenuValue() As String
         Get
-            Return mm1.SelectedValue
+            Return Me.hidSiteMenuValue.Value
         End Get
         Set(ByVal value As String)
-            mm1.SelectedValue = value
+            Me.hidSiteMenuValue.Value = value
+        End Set
+    End Property
+    Public Property IsMenuNever As Boolean
+        Get
+            Return BO.BAS.BG(Me.hidMenuNever.Value)
+        End Get
+        Set(value As Boolean)
+            Me.hidMenuNever.Value = BO.BAS.GB(value)
         End Set
     End Property
 
@@ -60,8 +68,10 @@
     
     Private Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
+            If Me.IsMenuNever Then mm1.ClearAll() : Return
+
             If Request.Item("saw") = "1" Or basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                mm1.RefreshData(_Factory, Me.HelpTopicID)
+                mm1.RefreshData(_Factory, Me.HelpTopicID, Me.SiteMenuValue)
             Else
                 mm1.ClearAll()
             End If
