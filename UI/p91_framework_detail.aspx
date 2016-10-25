@@ -27,17 +27,20 @@
         });
 
         function sw_decide(url, iconUrl, is_maximize) {
-            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
-            var h = screen.availHeight;
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame==true){
 
-            if ((w < 901 || h < 800) && w>0) {
-                window.parent.sw_master(url, iconUrl);
-                return;
-            }                
+                var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+                var h = screen.availHeight;
 
-            if (w < 910)
-                is_maximize = true;
-            
+                if ((w < 901 || h < 800) && w>0) {
+                    window.parent.sw_master(url, iconUrl);
+                    return;
+                }                
+
+                if (w < 910)
+                    is_maximize = true;
+            }
             sw_local(url, iconUrl, is_maximize);
         }
 
@@ -225,7 +228,7 @@
                 <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p91_framework_detail.aspx?saw=1" ToolTip="Otevřít fakturu v nové záložce prohlížeče"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
-                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdCreateInvoice" Text="Vystavit novou fakturu" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdPay" Text="Zapsat úhradu faktury" NavigateUrl="javascript:pay();" ImageUrl="Images/payment.png" ToolTip="Je možné zapsat úplnou nebo částečnou úhradu faktury."></telerik:RadMenuItem>
@@ -262,7 +265,7 @@
                 <telerik:RadMenuItem Value="searchbox">
                     <ItemTemplate>
 
-                        <input id="search2" style="width: 100px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />
+                        <input id="search2" style="width: 100px; margin-top: 7px;height:19px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />                       
                         <div id="search2_result" style="position: relative;left:-150px;"></div>
                     </ItemTemplate>
                 </telerik:RadMenuItem>

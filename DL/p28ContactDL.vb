@@ -352,7 +352,7 @@
                     End Select
                 End If
             End If
-            .MG_GridSqlColumns += ",a.p28ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p28ValidFrom AND a.p28ValidUntil THEN 0 else 1 END) as IsClosed,a.p28IsDraft as IsDraft"
+            .MG_GridSqlColumns += ",a.p28ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p28ValidFrom AND a.p28ValidUntil THEN 0 else 1 END) as IsClosed,a.p28IsDraft as IsDraft,a.p28SupplierFlag as SupplierFlag"
         End With
        
         Dim pars As New DL.DbParameters

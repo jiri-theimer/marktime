@@ -3,6 +3,7 @@
     ClientOnly = 1
     SupplierOnly = 2
     ClientAndSupplier = 3
+    NotClientNotSupplier = 4
 End Enum
 
 Public Class p28Contact

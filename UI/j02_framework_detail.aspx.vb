@@ -83,6 +83,9 @@ Public Class j02_framework_detail
 
             RefreshRecord()
 
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "j02")
+            End If
         End If
 
         For Each t As RadTab In Me.opgSubgrid.Tabs

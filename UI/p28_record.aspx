@@ -146,6 +146,7 @@
                     <asp:ListItem Text="Pouze klient" Value="1" Selected="true"></asp:ListItem>
                     <asp:ListItem Text="Pouze dodavatel" Value="2"></asp:ListItem>
                     <asp:ListItem Text="Klient i dodavatel" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Ani klient ani dodavatel" Value="4"></asp:ListItem>
                 </asp:RadioButtonList>
                 <asp:Label ID="lblSupplierID" runat="server" Text="Kód dodavatele:"></asp:Label>
                 <asp:TextBox ID="p28SupplierID" runat="server"></asp:TextBox>

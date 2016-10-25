@@ -334,7 +334,7 @@ Public Class basUIMT
 
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
-
+            If cRec.Item("SupplierFlag") = 4 Then dataItem.Font.Italic = 4
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
             End If
@@ -592,4 +592,13 @@ Public Class basUIMT
         mqP41.MG_GridGroupByField = strGroupField
         Return factory.p41ProjectBL.GetGridDataSource(mqP41)
     End Function
+    Public Shared Sub RenderSawMenuItemAsGrid(MenuItem As Telerik.Web.UI.RadMenuItem, strPrefix As String)
+        With MenuItem
+            .ToolTip = "Datový přehled"
+            .Text = "<img src='/Images/grid.png'/>"
+            .NavigateUrl = "entity_framework.aspx?prefix=" & strPrefix
+            .Target = ""
+        End With
+    End Sub
+
 End Class

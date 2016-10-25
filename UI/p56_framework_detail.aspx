@@ -21,17 +21,20 @@
         });
 
         function sw_decide(url, iconUrl, is_maximize) {
-            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
-            var h = screen.availHeight;
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame==true){
 
-            if ((w < 901 || h < 800) && w>0) {
-                window.parent.sw_master(url, iconUrl);
-                return;
-            }                
+                var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+                var h = screen.availHeight;
 
-            if (w < 910)
-                is_maximize = true;
-            
+                if ((w < 901 || h < 800) && w>0) {
+                    window.parent.sw_master(url, iconUrl);
+                    return;
+                }                
+
+                if (w < 910)
+                    is_maximize = true;
+            }
             sw_local(url, iconUrl, is_maximize);
         }
       
@@ -72,7 +75,7 @@
 
         function hardrefresh(pid, flag) {
             if (flag=="p56-save" || flag=="workflow-dialog"){                
-                parent.window.location.replace("p56_framework.aspx?pid="+pid);
+                parent.window.location.replace("p56_framework.aspx?pid="+pid);               
                 return;
             }
             if (flag=="p56-delete"){
@@ -150,8 +153,14 @@
         }
 
         
-        function approve(){            
-            window.parent.sw_master("entity_modal_approving.aspx?prefix=p56&pid=<%=master.datapid%>","Images/approve_32.png",true);
+        function approve(){   
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame==true){
+                window.parent.sw_master("entity_modal_approving.aspx?prefix=p56&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
+            else{
+                sw_decide("entity_modal_approving.aspx?prefix=p56&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
         }
 
         function workflow(){            
@@ -186,7 +195,7 @@
                 <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p56_framework_detail.aspx?saw=1" ToolTip="Otevřít úkol v nové záložce prohlížeče"></telerik:RadMenuItem>          
                 <telerik:RadMenuItem Text="ZÁZNAM ÚKOLU" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
-                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení úkolu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu úkolu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit úkol" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
 

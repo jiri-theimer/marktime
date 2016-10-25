@@ -387,6 +387,23 @@
 
 
         <script type="text/javascript">
+            $(document).ready(function () {
+                //pokud je rozlišení displeje menší než 1280px, automaticky  nahodit režim SAW
+                if (screen.availWidth < 1280) {
+                    if (readCookie("MT50-SAW") == "1"){
+                        return;
+                    }                        
+                    else{
+                        createCookie('MT50-SAW', "1", 30);
+                    }
+                }
+                 
+
+                
+                
+            });
+
+
             <%if panSearch_p28.Visible then%>
             $(function () {
 

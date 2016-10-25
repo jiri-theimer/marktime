@@ -1,5 +1,6 @@
 ﻿Public Enum PivotRowColumnFieldType
     Person = 201
+    j07Name = 107
     p41Name = 4101
     p34Name = 3401
     p32Name = 3201
@@ -88,6 +89,10 @@ Public Class PivotRowColumnField
         Me.Caption = strCaption
         Dim s As String = ""
         Select Case ft
+            Case PivotRowColumnFieldType.j07Name
+                _SelectField = "min(j07.j07Name)"
+                _GroupByField = "j02.j07ID"
+                s = "Pozice osoby"
             Case PivotRowColumnFieldType.j18Name
                 _SelectField = "min(j18.j18Name)"
                 _GroupByField = "p41.j18ID"

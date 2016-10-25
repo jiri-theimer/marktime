@@ -23,6 +23,15 @@ Partial Public Class SubForm
     Protected WithEvents pageTitle As Global.System.Web.UI.HtmlControls.HtmlTitle
 
     '''<summary>
+    '''placeFavicon control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents placeFavicon As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
     '''HeadContent control.
     '''</summary>
     '''<remarks>

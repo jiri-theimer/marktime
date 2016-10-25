@@ -239,6 +239,15 @@ Partial Public Class entity_framework
     Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
+    '''hidSAW control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSAW As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hiddatapid control.
     '''</summary>
     '''<remarks>

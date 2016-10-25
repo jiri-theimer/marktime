@@ -135,7 +135,6 @@ Public Class entity_framework
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
                 End With
-
             End With
 
             Me.CurrentJ62ID = BO.BAS.IsNullInt(Request.Item("j62id"))
@@ -167,8 +166,26 @@ Public Class entity_framework
                 Me.hidContentPaneDefUrl.Value = "entity_framework_detail_missing.aspx?prefix=" & Me.CurrentPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString & "&masterprefix=" & Me.CurrentMasterPrefix
             End If
 
-
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                hidSAW.Value = "1"
+                AdaptSplitter4SAW()
+            End If
         End If
+    End Sub
+    Private Sub AdaptSplitter4SAW()
+        Me.contentPane.Visible = False
+        Me.RadSplitbar1.Visible = False
+
+        With navigationPane
+            .Collapsed = False
+            .MaxWidth = 0
+            .Width = Nothing
+            .OnClientResized = ""
+            .OnClientExpanded = ""
+        End With
+
+        Me.contentPane.Collapsed = True
+        grid1.OnRowDblClick = "RowDoubleClick"
     End Sub
 
     Private Sub SetupPeriodQuery()
@@ -1133,4 +1150,5 @@ Public Class entity_framework
    
     
    
+  
 End Class

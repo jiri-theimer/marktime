@@ -87,6 +87,13 @@ Class p28ContactBL
             Else
                 .p28SupplierID = ""
             End If
+            If .p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier And cRec.PID <> 0 Then
+                Dim mqP41 As New BO.myQueryP41
+                mqP41.p28ID = cRec.PID
+                If Factory.p41ProjectBL.GetVirtualCount(mqP41) > 0 Then
+                    _Error = "Klient má vazbu na minimálně jeden projekt." : Return False
+                End If
+            End If
             If .p28SupplierID <> "" Then
                 If Not LoadBySupplierID(.p28SupplierID, .PID) Is Nothing Then
                     _Error = String.Format("Kód dodavatele [{0}] je již vyplněn u jiného subjektu ({1})!", .p28SupplierID, LoadBySupplierID(.p28SupplierID, .PID).p28Name)

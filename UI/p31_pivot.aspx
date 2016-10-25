@@ -110,13 +110,13 @@
             </div>
             <div class="content">
                 <asp:DropDownList ID="row1" runat="server" AutoPostBack="true">
-
                     <asp:ListItem Text="Osoba" Value="201" Selected="true"></asp:ListItem>
                     <asp:ListItem Text="Klient projektu" Value="2801"></asp:ListItem>
                     <asp:ListItem Text="Projekt" Value="4101"></asp:ListItem>
                     <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
                     <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
                     <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
+                    <asp:ListItem Text="Pozice osoby" Value="107"></asp:ListItem>
                     <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
                     <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
                     <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
@@ -146,6 +146,7 @@
                     <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
                     <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
                     <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
+                    <asp:ListItem Text="Pozice osoby" Value="107"></asp:ListItem>
                     <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
                     <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
                     <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
@@ -175,6 +176,7 @@
                     <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
                     <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
                     <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
+                    <asp:ListItem Text="Pozice osoby" Value="107"></asp:ListItem>
                     <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
                     <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
                     <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
@@ -209,6 +211,7 @@
                     <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
                     <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
                     <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
+                    <asp:ListItem Text="Pozice osoby" Value="107"></asp:ListItem>
                     <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
                     <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
                     <asp:ListItem Text="Fakturovatelné" Value="9801"></asp:ListItem>

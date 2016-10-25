@@ -205,7 +205,7 @@
     <value>Create new project</value>
   </data>
   <data name="menu_upravit.Text" xml:space="preserve">
-    <value>Edit project setting</value>
+    <value>Edit project record</value>
   </data>
   <data name="menu_zapsat_worksheet.Text" xml:space="preserve">
     <value>TRACK WORKSHEET</value>

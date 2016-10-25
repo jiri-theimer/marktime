@@ -38,6 +38,7 @@
         }
 
         function sw_decide(url, iconUrl, is_maximize) {
+            <%If Master.MasterPageFile="Site" then%>
             var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
             var h = screen.availHeight;
 
@@ -48,7 +49,7 @@
 
             if (w < 910)
                 is_maximize = true;
-            
+            <%end If%>
             sw_local(url, iconUrl, is_maximize);
         }
 
@@ -136,8 +137,15 @@
         }
        
         
-        function approve(){            
-            window.parent.sw_master("entity_modal_approving.aspx?prefix=j02&pid=<%=master.datapid%>","Images/approve_32.png",true);
+        function approve(){  
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame == true) {
+                window.parent.sw_master("entity_modal_approving.aspx?prefix=j02&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
+            else
+            {
+                sw_decide("entity_modal_approving.aspx?prefix=j02&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
         }
         function tasks(){            
             window.open("p56_framework.aspx?masterprefix=j02&masterpid=<%=Master.DataPID%>","_top")

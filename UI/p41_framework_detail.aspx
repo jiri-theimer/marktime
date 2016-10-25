@@ -46,17 +46,20 @@
         }
 
         function sw_decide(url, iconUrl, is_maximize) {
-            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
-            var h = screen.availHeight;
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame==true){
 
-            if ((w < 901 || h < 800) && w>0) {
-                window.parent.sw_master(url, iconUrl);
-                return;
-            }                
+                var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+                var h = screen.availHeight;
 
-            if (w < 910)
-                is_maximize = true;
-            
+                if ((w < 901 || h < 800) && w>0) {
+                    window.parent.sw_master(url, iconUrl);
+                    return;
+                }                
+
+                if (w < 910)
+                    is_maximize = true;
+            }
             sw_local(url, iconUrl, is_maximize);
         }
         
@@ -149,8 +152,12 @@
         function timeline(){            
             sw_decide("entity_timeline.aspx?prefix=p41&pid=<%=master.datapid%>","Images/timeline.png",true);
         }
-        function approve(){            
+        function approve(){     
+            <%If Master.MasterPageFile="Site" then%>
             window.parent.sw_master("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            <%Else%>
+            sw_decide("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            <%end If%>
         }
         function tasks(){            
             window.open("p56_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")
@@ -268,7 +275,7 @@
                 </telerik:RadMenuItem>                
                 <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" Style="margin-top: 6px;" meta:resourcekey="menu_zaznam">
                     <Items>
-                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení projektu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění." meta:resourcekey="menu_upravit"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu projektu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění." meta:resourcekey="menu_upravit"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit nový projekt" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png" ToolTip="Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury." meta:resourcekey="menu_novy"></telerik:RadMenuItem>
 

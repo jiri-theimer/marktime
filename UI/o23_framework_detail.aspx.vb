@@ -55,6 +55,9 @@
 
             RefreshRecord()
 
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "o23")
+            End If
         End If
 
 

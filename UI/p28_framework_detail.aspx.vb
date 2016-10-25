@@ -78,7 +78,9 @@ Public Class p28_framework_detail
                 End With
 
             End With
-
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p28")
+            End If
 
             RefreshRecord()
 
@@ -94,7 +96,7 @@ Public Class p28_framework_detail
             End Select
         Next
         If Me.CurrentSubgrid = SubgridType._NotSpecified Then
-            fraSubform.Visible = False : imgLoading.Visible = False
+            fraSubform.Visible = False : imgLoading.Visible = False : fraSubform.Attributes.Item("src") = ""
             panSwitch.Style.Item("height") = ""
             For Each t As RadTab In Me.opgSubgrid.Tabs
                 t.NavigateUrl = ""
@@ -283,9 +285,14 @@ Public Class p28_framework_detail
             menu1.FindItemByValue("cmdCopy").Visible = menu1.FindItemByValue("cmdNew").Visible
             menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
             menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString
-            menu1.FindItemByValue("cmdNewP41").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
+            If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
+                menu1.FindItemByValue("cmdNewP41").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
+            Else
+                menu1.FindItemByValue("cmdNewP41").Visible = False
+            End If
 
-            If Not .SysUser.IsApprovingPerson Then
+
+            If .SysUser.IsApprovingPerson = False Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier Then
                 'schovat záložku pro schvalování
                 menu1.FindItemByValue("cmdApprove").Visible = False
             Else
@@ -320,6 +327,10 @@ Public Class p28_framework_detail
             menu1.FindItemByValue("cmdO22").Visible = False : menu1.FindItemByValue("cmdNewP41").Visible = False : menu1.FindItemByValue("cmdP30").Visible = False 'klient je v archivu
             menu1.Skin = "Black"
         End If
+        If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier Then
+            Me.CurrentSubgrid = SubgridType._NotSpecified   'NE-KLIENT nemá vůbec tabstrip
+            opgSubgrid.Visible = False
+        End If
 
     End Sub
 
@@ -330,7 +341,7 @@ Public Class p28_framework_detail
         mq.Closed = BO.BooleanQueryMode.NoQuery
 
 
-        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
+        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
         If lis.Count = 0 Then
             boxP41.Visible = False
         Else
@@ -351,7 +362,7 @@ Public Class p28_framework_detail
             End With
 
         End If
-        If lis.Count > 100 Then lis = lis.Take(101) 'omezit na maximálně 100+1
+        If lis.Count > 25 Then lis = lis.Take(26) 'omezit na maximálně 100+1
         rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
         rpP41.DataBind()
 
@@ -453,9 +464,9 @@ Public Class p28_framework_detail
                 .NavigateUrl = "p41_framework.aspx?pid=" & cRec.PID.ToString
             End If
             If cRec.IsClosed Then .Font.Strikeout = True : .ForeColor = Drawing.Color.Gray
-            If _curProjectIndex > 100 Then
-                'poslední nad 100
-                .Text = "Další projekty klienta..."
+            If _curProjectIndex > 25 Then
+                'poslední nad 25
+                .Text = "Všechny projekty klienta..."
                 .NavigateUrl = "javascript:projects()"
                 .ForeColor = Drawing.Color.Green
                 .Font.Bold = True

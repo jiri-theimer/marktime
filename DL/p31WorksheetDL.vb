@@ -1170,6 +1170,7 @@
         s.Append(" LEFT OUTER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID")
         s.Append(" LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID")
         s.Append(" LEFT OUTER JOIN p28Contact p91Receiver ON p91.p28ID=p91Receiver.p28ID")
+        s.Append(" LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID")
 
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
             Dim strJ11IDs As String = ""

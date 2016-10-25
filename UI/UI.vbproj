@@ -452,7 +452,7 @@
     <Content Include="Services\person_service.asmx" />
     <Content Include="stoppage.aspx" />
     <Content Include="stoppage_site.aspx" />
-    <Content Include="Styles\Site_v3.css" />
+    <Content Include="Styles\Site_v4.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Sys\sys_dbobjects.aspx" />
@@ -782,6 +782,9 @@
     </Compile>
     <Compile Include="Handler\handler_search_task.ashx.vb">
       <DependentUpon>handler_search_task.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\handler_search_worksheet.ashx.vb">
+      <DependentUpon>handler_search_worksheet.ashx</DependentUpon>
     </Compile>
     <Compile Include="imap_record.ascx.designer.vb">
       <DependentUpon>imap_record.ascx</DependentUpon>
@@ -2981,6 +2984,7 @@
     <Content Include="Handler\handler_capacity_plan.ashx" />
     <Content Include="Handler\handler_p45_project.ashx" />
     <Content Include="Clue.Master" />
+    <Content Include="Handler\handler_search_worksheet.ashx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

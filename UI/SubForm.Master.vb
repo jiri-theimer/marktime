@@ -42,6 +42,12 @@
             Me.hidMenuNever.Value = BO.BAS.GB(value)
         End Set
     End Property
+    Public ReadOnly Property IsTopWindow As Boolean
+        Get
+            If mm1.ItemsCount > 0 Then Return True Else Return False
+
+        End Get
+    End Property
 
     Public Sub StopPage(ByVal strMessage As String, Optional ByVal bolErrorInfo As Boolean = True, Optional ByVal strNeededPerms As String = "", Optional bolModalPage As Boolean = False)
         Server.Transfer("~/stoppage.aspx?err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage) & "&neededperms=" & strNeededPerms & "&modal=" & BO.BAS.GB(bolModalPage), False)
@@ -55,7 +61,6 @@
             If _Factory.SysUser Is Nothing Then DoLogOut()
             basUI.PingAccessLog(_Factory, Request)
         End If
-        
     End Sub
     Private Sub DoLogOut()
         Response.Redirect("~/Account/Login.aspx?autologout=1") 'automatické odhlášení
@@ -76,5 +81,6 @@
                 mm1.ClearAll()
             End If
         End If
+        If mm1.ItemsCount > 0 Then placeFavicon.Controls.Add(New LiteralControl("<link href='Images/favicon.ico' rel='shortcut icon' type='image/x-icon' />"))
     End Sub
 End Class

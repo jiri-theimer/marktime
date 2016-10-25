@@ -26,6 +26,7 @@ Public Enum myQueryP28_QuickQuery
     WithParentContact = 25
     WithChildContact = 26
     WithOverHead = 27
+    NotClientNotSupplier = 28
 End Enum
 Public Class myQueryP28
     Inherits myQuery

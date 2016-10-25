@@ -205,7 +205,7 @@
     <value>Založit nový projekt</value>
   </data>
   <data name="menu_upravit.Text" xml:space="preserve">
-    <value>Upravit nastavení projektu</value>
+    <value>Upravit kartu projektu</value>
   </data>
   <data name="menu_zapsat_worksheet.Text" xml:space="preserve">
     <value>ZAPSAT WORKSHEET</value>

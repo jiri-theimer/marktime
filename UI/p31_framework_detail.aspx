@@ -17,17 +17,20 @@
         });
 
         function sw_decide(url, iconUrl, is_maximize) {
-            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
-            var h = screen.availHeight;
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame == true) {
 
-            if ((w < 901 || h < 800) && w > 0) {
-                window.parent.sw_master(url, iconUrl);
-                return;
+                var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+                var h = screen.availHeight;
+
+                if ((w < 901 || h < 800) && w > 0) {
+                    window.parent.sw_master(url, iconUrl);
+                    return;
+                }
+
+                if (w < 910)
+                    is_maximize = true;
             }
-
-            if (w < 910)
-                is_maximize = true;
-
             sw_local(url, iconUrl, is_maximize);
         }
 

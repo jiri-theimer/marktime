@@ -20,6 +20,7 @@
                         End If
                     End If
                 End If
+
                 
                 If .PersonalPage <> "" Then
                     If .PersonalPage.IndexOf(".aspx") > 0 Then

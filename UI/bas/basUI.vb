@@ -197,7 +197,12 @@ Public Class basUI
     End Function
     Public Shared Function GetPageUrlPerSAW(r As HttpRequest, strDataPrefix As String) As String
         If GetCookieValue(r, "MT50-SAW") = "1" Then
-            Return strDataPrefix & "_framework_detail.aspx" & GetCompleteQuerystring(r, True)
+            Dim s As String = GetCompleteQuerystring(r, True)
+            If s.IndexOf("pid=") > 0 And s.IndexOf("masterprefix") = -1 Then
+                Return strDataPrefix & "_framework_detail.aspx" & s
+            Else
+                Return "entity_framework.aspx?prefix=" & strDataPrefix & "&" & GetCompleteQuerystring(r)
+            End If
         Else
             Return "entity_framework.aspx?prefix=" & strDataPrefix & "&" & GetCompleteQuerystring(r)
         End If

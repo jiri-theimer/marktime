@@ -131,7 +131,7 @@
                 <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="o23_framework_detail.aspx?saw=1" ToolTip="Otevřít dokument v nové záložce prohlížeče"></telerik:RadMenuItem>          
                 <telerik:RadMenuItem Text="ZÁZNAM DOKUMENTU" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
-                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení dokumentu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu dokumentu" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění."></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdNew" Text="Vytvořit nový dokument" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdCopy" Text="Vytvořit dokument kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový dokument se kompletně předvyplní podle vzoru tohoto záznamu."></telerik:RadMenuItem>

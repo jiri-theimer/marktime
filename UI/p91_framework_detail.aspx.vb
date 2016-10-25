@@ -58,6 +58,10 @@ Public Class p91_framework_detail
                         .Notify("Číslo faktury je nyní [" & Me.p91Code.Text & "].", NotifyLevel.InfoMessage)
                 End Select
             End With
+
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p91")
+            End If
         End If
 
     End Sub

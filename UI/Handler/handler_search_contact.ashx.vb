@@ -42,7 +42,7 @@ Public Class handler_search_contact
                 Else
                     c.Project = .p28CompanyShortName & " - " & .p28CompanyName & " [" & .p28Code & "]"
                 End If
-
+                If .p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier Then c.Project = "<i>" & c.Project & "</i>"
 
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"

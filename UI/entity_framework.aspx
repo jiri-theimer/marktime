@@ -30,6 +30,11 @@
 
 
             document.getElementById("<%=Me.hidUIFlag.ClientID%>").value = "";
+
+            <%If hidSAW.Value = "1" then%>
+            $("#divPeriodAndSettings").css("float", "left");
+            $("#divPeriodAndSettings").css("margin-left", "100px");
+            <%End If%>
         });
 
 
@@ -49,18 +54,24 @@
             h3 = h1 - h2;
 
             sender.set_height(h3);
-
+            <%If Me.hidSAW.Value <> "1" Then%>
             var pane = sender.getPaneById("<%=contentPane.ClientID%>");
             document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();              
-            pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value+"&parentWidth=" + pane.get_width());
-
+            pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value + "&parentWidth=" + pane.get_width());
+            <%Else%>
+            var pane = sender.getPaneById("<%=navigationPane.ClientID%>");
+            pane.set_width(screen.availWidth-5);
+            <%end If%>
+            
         }
 
 
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
             document.getElementById("<%=hiddatapid.clientid%>").value = pid;
-            
+            <%If Me.hidSAW.Value = "1" Then%>
+            return;
+            <%end If%>
 
             var splitter = $find("<%= RadSplitter1.ClientID %>");
             var pane = splitter.getPaneById("<%=contentPane.ClientID%>");            
@@ -71,7 +82,10 @@
         }
 
         function RowDoubleClick(sender, args) {
-            //nic
+            <%If Me.hidSAW.Value = "1" Then%>
+            var pid = args.getDataKeyValue("pid");
+            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
+            <%end If%>
         }
 
         function GetAllSelectedPIDs() {
@@ -186,8 +200,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="offsetY"></div>
-    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
-        <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" MaxWidth="1500" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
+    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
+        <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;">
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
@@ -201,7 +215,7 @@
                     <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
                     <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
                 </div>
-                <div style="float: right; margin-top: 10px;">
+                <div id="divPeriodAndSettings" style="float: right; margin-top: 10px;">
                     <button type="button" id="cmdPeriodQuery" class="show_hide2" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Filtr podle období">
                         <asp:Label ID="CurrentPeriodQuery" runat="server" Text="Filtr období"></asp:Label>
                         <img src="Images/arrow_down.gif" />
@@ -281,8 +295,7 @@
 
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
             
-            <span id="goto1"></span>
-            <input type="hidden" id="goto2" />
+           <asp:HiddenField ID="hidSAW" runat="server" />
             <asp:HiddenField ID="hiddatapid" runat="server" />
             <asp:HiddenField ID="hidDefaultSorting" runat="server" />
             <asp:HiddenField ID="hidJ62ID" runat="server" />

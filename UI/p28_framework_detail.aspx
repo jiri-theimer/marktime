@@ -24,6 +24,9 @@
         });
 
         function AdjustHeight(){
+            <%If Not fraSubform.Visible Then%>
+            return;
+            <%End If%>
             var h1 = new Number;
             var h2 = new Number;
             var hh = new Number;
@@ -44,17 +47,20 @@
         }
 
         function sw_decide(url, iconUrl, is_maximize) {
-            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
-            var h = screen.availHeight;
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame==true){
 
-            if ((w < 901 || h < 800) && w>0) {
-                window.parent.sw_master(url, iconUrl);
-                return;
-            }                
+                var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
+                var h = screen.availHeight;
 
-            if (w < 910)
-                is_maximize = true;
-            
+                if ((w < 901 || h < 800) && w>0) {
+                    window.parent.sw_master(url, iconUrl);
+                    return;
+                }                
+
+                if (w < 910)
+                    is_maximize = true;
+            }
             sw_local(url, iconUrl, is_maximize);
         }
 
@@ -148,8 +154,14 @@
             sw_decide("p30_binding.aspx?masterprefix=p28&masterpid=<%=master.datapid%>","Images/person_32.png",false);
 
         }
-        function approve(){            
-            window.parent.sw_master("entity_modal_approving.aspx?prefix=p28&pid=<%=master.datapid%>","Images/approve_32.png",true);
+        function approve(){    
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame==true){
+                window.parent.sw_master("entity_modal_approving.aspx?prefix=p28&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
+            else{
+            sw_decide("entity_modal_approving.aspx?prefix=p28&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
         }
         function tasks(){            
             window.open("p56_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
@@ -247,7 +259,7 @@
                 <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" Text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu klienta (boxy)" />                      
                 <telerik:RadMenuItem Text="ZÁZNAM KLIENTA" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
-                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit nastavení klienta" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu klienta" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit nového klienta" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
 
@@ -495,7 +507,7 @@
                         <div style="padding: 5px; float: left;">
                             <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
 
-                            <asp:HyperLink ID="aProject" runat="server" Target="_parent"></asp:HyperLink>
+                            <asp:HyperLink ID="aProject" runat="server" Target="_top"></asp:HyperLink>
 
                         </div>
                     </ItemTemplate>

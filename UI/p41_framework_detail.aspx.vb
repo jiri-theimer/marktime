@@ -96,6 +96,9 @@ Public Class p41_framework_detail
 
             RefreshRecord()
 
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p41")
+            End If
         End If
 
         For Each t As RadTab In Me.opgSubgrid.Tabs
@@ -527,8 +530,11 @@ Public Class p41_framework_detail
 
             Case "favourite"
                 Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
-                ''ReloadPage(Master.DataPID.ToString)
-                ClientScript.RegisterStartupScript(Me.GetType, "hash", "parent.window.location.replace('p41_framework.aspx');", True)
+                If Master.IsTopWindow Then
+                    ReloadPage(Master.DataPID.ToString)
+                Else
+                    ClientScript.RegisterStartupScript(Me.GetType, "hash", "parent.window.location.replace('p41_framework.aspx');", True)
+                End If
 
             Case Else
                 ReloadPage(Master.DataPID.ToString)

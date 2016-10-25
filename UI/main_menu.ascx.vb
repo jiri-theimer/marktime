@@ -42,6 +42,12 @@ Public Class main_menu
             hidMasterPageName.Value = value
         End Set
     End Property
+    Public ReadOnly Property ItemsCount As Integer
+        Get
+            If Not panContainer.Visible Then Return 0
+            Return menu1.Items.Count
+        End Get
+    End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
@@ -51,6 +57,9 @@ Public Class main_menu
         panContainer.Visible = False
     End Sub
     Public Sub RefreshData(factory As BL.Factory, strCurrentHelpID As String, strCurrentSiteMenuValue As String)
+        Dim bolCurSAW As Boolean = False
+        If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then bolCurSAW = True
+
         Me.panContainer.Visible = True
         Dim bolAdmin As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_Admin), n As RadMenuItem
         With factory.SysUser
@@ -68,7 +77,6 @@ Public Class main_menu
             Else
                 n = ai(.HomeMenu, "dashboard", "default.aspx", "")
                 RenderCustomHomeMenu(factory, n)
-
             End If
 
             If .j04IsMenu_Worksheet Then
@@ -86,10 +94,44 @@ Public Class main_menu
                 If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then ai("PIVOT", "cmdP31_Pivot", "p31_pivot.aspx", "Images/pivot.png", n)
             End If
 
-            If .j04IsMenu_Project Then ai(Resources.Site.Menu_PROJEKTY, "p41", "p41_framework.aspx", "")
-            If .j04IsMenu_Contact Then ai(Resources.Site.Menu_KLIENTI, "p28", "p28_framework.aspx", "")
-            If .j04IsMenu_People Then ai(Resources.Site.Menu_LIDE, "j02", "j02_framework.aspx", "")
-            If .j04IsMenu_Invoice Then ai(Resources.Site.Menu_FAKTURY, "p91", "p91_framework.aspx", "")
+            If .j04IsMenu_Project Then
+                If bolCurSAW Then
+                    n = ai(Resources.Site.Menu_PROJEKTY, "p41", "", "~/Images/menuarrow.png")
+                    ai("Detail", "p41_record", "p41_framework_detail.aspx", "", n)
+                    ai("Přehled", "p41_grid", "entity_framework.aspx?prefix=p41", "", n)
+                Else
+                    ai(Resources.Site.Menu_PROJEKTY, "p41", "p41_framework.aspx", "")
+                End If
+            End If
+
+
+            If .j04IsMenu_Contact Then
+                If bolCurSAW Then
+                    n = ai(Resources.Site.Menu_KLIENTI, "p28", "", "~/Images/menuarrow.png")
+                    ai("Detail", "p28_record", "p28_framework_detail.aspx", "", n)
+                    ai("Přehled", "p28_grid", "entity_framework.aspx?prefix=p28", "", n)
+                Else
+                    ai(Resources.Site.Menu_KLIENTI, "p28", "p28_framework.aspx", "")
+                End If
+            End If
+            If .j04IsMenu_People Then
+                If bolCurSAW Then
+                    n = ai(Resources.Site.Menu_LIDE, "j02", "", "~/Images/menuarrow.png")
+                    ai("Detail", "j02_record", "j02_framework_detail.aspx", "", n)
+                    ai("Přehled", "j02_grid", "entity_framework.aspx?prefix=j02", "", n)
+                Else
+                    ai(Resources.Site.Menu_LIDE, "j02", "j02_framework.aspx", "")
+                End If
+            End If
+            If .j04IsMenu_Invoice Then
+                If bolCurSAW Then
+                    n = ai(Resources.Site.Menu_FAKTURY, "p91", "", "~/Images/menuarrow.png")
+                    ai("Detail", "p91_record", "p91_framework_detail.aspx", "", n)
+                    ai("Přehled", "p91_grid", "entity_framework.aspx?prefix=p91", "", n)
+                Else
+                    ai(Resources.Site.Menu_FAKTURY, "p91", "p91_framework.aspx", "")
+                End If
+            End If
 
             n = ai(.Person, "me", "", "~/Images/menuarrow.png")
             If .Person = "" Then n.Text = .j03Login
@@ -133,15 +175,15 @@ Public Class main_menu
                 n = ai(.MessagesCount.ToString, "messages", "javascript:messages()", "Images/messages.png")
                 n.ToolTip = "Zprávy a upozornění ze systému"
             End If
-            If Is_SAW_Switcher() Then
-                If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                    n = ai("<img src='Images/saw_turn_off.png'/>", "saw", "javascript:setsaw('0')", "")
-                    n.ToolTip = "Zobrazit levý panel"
-                Else
-                    n = ai("<img src='Images/saw_turn_on.png'/>", "saw", "javascript:setsaw('1')", "")
-                    n.ToolTip = "Skrýt levý panel"
-                End If
+            ''If Is_SAW_Switcher() Then
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                n = ai("<img src='Images/saw_turn_off.png'/>", "saw", "javascript:setsaw('0')", "")
+                n.ToolTip = "Zobrazovat na stránkách levý navigační panel"
+            Else
+                n = ai("<img src='Images/saw_turn_on.png'/>", "saw", "javascript:setsaw('1')", "")
+                n.ToolTip = "Skrývat na stránkách levý navigační panel"
             End If
+            ''End If
 
             Select Case basUI.GetCookieValue(Request, "MT50-CultureInfo")
                 Case "en-US"

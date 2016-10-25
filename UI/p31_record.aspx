@@ -481,6 +481,8 @@
         <div>
             <asp:Label ID="lblP31Text" runat="server" Text="Podrobný popis úkonu:" CssClass="lbl" meta:resourcekey="lblP31Text"></asp:Label>
             <asp:Image ID="imgFlag" runat="server" />
+            <input id="search2" style="width: 400px;border:solid 1px white;color:#696969;font-family:'Segoe UI';margin-left:50px;" value="Našeptávač podobných textů..." onfocus="search2Focus()" onblur="search2Blur()" title="Hledání podle částečné shody textu úkonu, názvu klienta, názvu nebo kódu projektu a názvu aktivity" />
+            
         </div>
         <asp:TextBox ID="p31Text" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
         <uc:freefields ID="ff1" runat="server" />
@@ -581,6 +583,64 @@
     <asp:HiddenField ID="hidDefaultJ27ID" runat="server" />
     <asp:HiddenField ID="hidDefaultVatRate" runat="server" />
     <asp:HiddenField ID="hidGuidApprove" runat="server" />
+
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#search2").autocomplete({
+                source: "Handler/handler_search_worksheet.ashx?p41id=<%=Me.p41ID.Value%>&j02id=<%=Me.j02ID.Value%>",
+                minLength: 2,
+                select: function (event, ui) {
+                    if (ui.item) {
+                        
+                        document.getElementById("<%=p31Text.ClientID%>").value = ui.item.p31Text;
+                        return false;
+                    }
+                },               
+                close: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                    .hide();
+                }
+
+
+
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var s = "<div><a>";
+                
+                s = s + __highlight(item.p31Date+"<span style='color:silver;'>:"+item.Project + "</span><br><i>" + item.Text2Html+"</i>", item.FilterString);
+
+
+                s = s + "</a>";
+
+                
+
+                s = s + "</div>";
+
+
+                return $(s).appendTo(ul);
+
+
+            };
+        });
+
+        function __highlight(s, t) {
+            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+            return s.replace(matcher, "<strong>$1</strong>");
+        }
+
+        function search2Focus() {
+            document.getElementById("search2").value = "";
+            document.getElementById("search2").style.background = "whitesmoke";
+            document.getElementById("search2").style.border = "solid 1px silver";
+        }
+        function search2Blur() {
+
+            document.getElementById("search2").style.background = "";
+            document.getElementById("search2").style.border = "solid 1px white";
+            document.getElementById("search2").value = "Našeptávač podobných textů...";
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

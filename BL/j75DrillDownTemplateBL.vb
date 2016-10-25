@@ -126,6 +126,7 @@ Class j75DrillDownTemplateBL
         lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p41Name))
         lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p42Name))
         lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.j18Name))
+        lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.j07Name))
         lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.j18Name_j02))
         lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p56Name))
         lis.Add(New BO.PivotRowColumnField(BO.PivotRowColumnFieldType.p34Name))

@@ -167,6 +167,15 @@ Partial Public Class j03_myprofile
     Protected WithEvents cmdSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdDeleteUserParams control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDeleteUserParams As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''j03IsLiveChatSupport control.
     '''</summary>
     '''<remarks>
@@ -176,15 +185,6 @@ Partial Public Class j03_myprofile
     Protected WithEvents j03IsLiveChatSupport As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''j03SiteMenuSkin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j03SiteMenuSkin As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''j03IsSiteMenuOnClick control.
     '''</summary>
     '''<remarks>
@@ -192,6 +192,15 @@ Partial Public Class j03_myprofile
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j03IsSiteMenuOnClick As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''j03SiteMenuSkin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j03SiteMenuSkin As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''lblj02Email control.
@@ -291,15 +300,6 @@ Partial Public Class j03_myprofile
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02Office As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdDeleteUserParams control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdDeleteUserParams As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''page2 control.
