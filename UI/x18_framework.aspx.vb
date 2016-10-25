@@ -56,8 +56,27 @@
                 Me.hidX23ID.Value = cRec.x23ID.ToString
             End If
             SetupGrid()
-            If Request.Item("blankwindow") = "1" Then Me.navigationPane.Collapsed = True
+
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                hidSAW.Value = "1"
+                AdaptSplitter4SAW()
+            End If
         End If
+    End Sub
+    Private Sub AdaptSplitter4SAW()
+        Me.contentPane.Visible = False
+        Me.RadSplitbar1.Visible = False
+
+        With navigationPane
+            .Collapsed = False
+            .MaxWidth = 0
+            .Width = Nothing
+            .OnClientResized = ""
+            .OnClientExpanded = ""
+        End With
+
+        Me.contentPane.Collapsed = True
+        grid1.OnRowDblClick = "RowDoubleClick"
     End Sub
     Private Sub SetupGrid()
         With grid1

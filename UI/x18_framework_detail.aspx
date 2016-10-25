@@ -23,7 +23,7 @@
 
         function RowDoubleClick(sender, args) {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
+            window.open("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid,"_top");
         }
 
         function hardrefresh(pid, flag) {
@@ -39,7 +39,7 @@
         <div class="title">
             <asp:Image ID="imgRecord" runat="server" ImageUrl="Images/label.png" Style="margin-right: 10px;" />
             <asp:Label ID="boxCoreTitle" Text="Záznam štítku" runat="server"></asp:Label>
-            <asp:HyperLink ID="cmdNewWindow" runat="server" ImageUrl="Images/open_in_new_window.png" Target="_blank" ToolTip="Otevřít v nové záložce" CssClass="button-link" Style="float: right; vertical-align: top; padding: 0px;"></asp:HyperLink>
+            
         </div>
         <div class="content">
             <asp:Label ID="lblPermissionMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>

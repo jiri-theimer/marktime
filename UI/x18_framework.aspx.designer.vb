@@ -113,6 +113,15 @@ Partial Public Class x18_framework
     Protected WithEvents hidX23ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSAW control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSAW As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''RadSplitbar1 control.
     '''</summary>
     '''<remarks>

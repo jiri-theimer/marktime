@@ -78,7 +78,6 @@ Public Class x18_framework_detail
             Me.x25Name.Text = .x25Name
             Me.x23Name.Text = .x23Name
             Me.Timestamp.Text = .Timestamp
-            cmdNewWindow.NavigateUrl = "x18_framework.aspx?blankwindow=1&pid=" & .PID.ToString & "&title=" & .NameWithComboName
         End With
         Dim pars As New List(Of BO.PluginDbParameter)
         pars.Add(New BO.PluginDbParameter("x25id", Master.DataPID))

@@ -17,7 +17,10 @@
 
            
 
-
+            <%If hidSAW.Value = "1" then%>
+            $("#divPeriodAndSettings").css("float", "left");
+            $("#divPeriodAndSettings").css("margin-left", "100px");
+            <%End If%>
             
         });
 
@@ -43,6 +46,10 @@
             h3 = h1 - h2;
 
             sender.set_height(h3);
+            <%If hidSAW.value="1" then%>
+            var pane = sender.getPaneById("<%=navigationPane.ClientID%>");
+            pane.set_width(screen.availWidth-5);
+            <%End If%>
 
         }
 
@@ -50,7 +57,9 @@
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
             document.getElementById("<%=hiddatapid.clientid%>").value = pid;
-
+            <%If Me.hidSAW.Value = "1" Then%>
+            return;
+            <%end If%>
 
             var splitter = $find("<%= RadSplitter1.ClientID %>");
             var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
@@ -61,7 +70,10 @@
         }
 
         function RowDoubleClick(sender, args) {
-            //nic
+            <%If Me.hidSAW.Value = "1" Then%>
+            var pid = args.getDataKeyValue("pid");
+            location.replace("x18_framework_detail.aspx?pid=" + pid);
+            <%end If%>
         }
 
         function GetAllSelectedPIDs() {
@@ -112,7 +124,7 @@
                     <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="true" DataTextField="x18Name" DataValueField="pid" Style="width: 170px;"></asp:DropDownList>
                     
                 </div>
-               <div style="float: right; margin-top: 10px;">                    
+               <div id="divPeriodAndSettings" style="float: right; margin-top: 10px;">                    
                     <button type="button" id="cmdSetting" class="show_hide1" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Další nastavení přehledu">
 
                         <img src="Images/arrow_down.gif" />
@@ -157,6 +169,7 @@
             <input type="hidden" id="goto2" />
             <asp:HiddenField ID="hiddatapid" runat="server" />
            <asp:HiddenField ID="hidX23ID" runat="server" />
+            <asp:HiddenField ID="hidSAW" runat="server" />
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

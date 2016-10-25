@@ -269,12 +269,15 @@
     Public Function GetGridDataSource(myQuery As BO.myQueryJ02) As DataTable
         Dim s As String = ""
         With myQuery
-            If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
-                Select Case .MG_GridGroupByField
-                    Case Else
-                        .MG_GridSqlColumns += "," & .MG_GridGroupByField
-                End Select
+            If Not System.String.IsNullOrEmpty(.MG_GridGroupByField) Then
+                If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 And .MG_GridGroupByField <> "" Then
+                    Select Case .MG_GridGroupByField
+                        Case Else
+                            .MG_GridSqlColumns += "," & .MG_GridGroupByField
+                    End Select
+                End If
             End If
+            
             .MG_GridSqlColumns += ",a.j02ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.j02ValidFrom AND a.j02ValidUntil THEN 0 else 1 END) as IsClosed,a.j02IsIntraPerson as IsIntraPerson"
         End With
         

@@ -178,10 +178,10 @@ Public Class main_menu
             ''If Is_SAW_Switcher() Then
             If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
                 n = ai("<img src='Images/saw_turn_off.png'/>", "saw", "javascript:setsaw('0')", "")
-                n.ToolTip = "Zobrazovat na stránkách levý navigační panel"
+                n.ToolTip = "Přepnout do módu 1: zobrazovat levý navigační panel"
             Else
                 n = ai("<img src='Images/saw_turn_on.png'/>", "saw", "javascript:setsaw('1')", "")
-                n.ToolTip = "Skrývat na stránkách levý navigační panel"
+                n.ToolTip = "Přepnout do módu 2: skrývat levý navigační panel"
             End If
             ''End If
 
@@ -205,7 +205,7 @@ Public Class main_menu
         End With
         Me.SelectedValue = strCurrentSiteMenuValue
 
-        SetupSearchbox()
+        ''SetupSearchbox()
     End Sub
     Private Function Is_SAW_Switcher() As Boolean
         If Request.Url.ToString.IndexOf("entity_framework") > 0 Or Request.Url.ToString.IndexOf("p31_framework") > 0 Then Return True
@@ -277,5 +277,9 @@ Public Class main_menu
                 If menu1.ClickToOpen Then .NavigateUrl = ""
             End With
         End If
+    End Sub
+
+    Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        If panContainer.Visible Then SetupSearchbox()
     End Sub
 End Class

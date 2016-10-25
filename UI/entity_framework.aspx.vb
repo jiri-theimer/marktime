@@ -121,8 +121,6 @@ Public Class entity_framework
                         Me.navigationPane.Width = Unit.Parse(strW & "px")
                     End If
 
-                    If Request.Item("blankwindow") = "1" Then Me.navigationPane.Collapsed = True
-
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam(Me.CurrentPrefix + "_framework-groupby"))
                     Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-groups-autoexpanded", "1"))
                     Me.chkCheckboxSelector.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-checkbox_selector", "0"))

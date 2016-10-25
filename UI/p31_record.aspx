@@ -481,7 +481,7 @@
         <div>
             <asp:Label ID="lblP31Text" runat="server" Text="Podrobný popis úkonu:" CssClass="lbl" meta:resourcekey="lblP31Text"></asp:Label>
             <asp:Image ID="imgFlag" runat="server" />
-            <input id="search2" style="width: 400px;border:solid 1px white;color:#696969;font-family:'Segoe UI';margin-left:50px;" value="Našeptávač podobných textů..." onfocus="search2Focus()" onblur="search2Blur()" title="Hledání podle částečné shody textu úkonu, názvu klienta, názvu nebo kódu projektu a názvu aktivity" />
+            <input id="search2" style="width: 400px;border:solid 1px white;color:#696969;font-family:'Segoe UI';margin-left:50px;" value="Našeptávač    ...stačí napsat 2 písmena" onfocus="search2Focus()" onblur="search2Blur()" title="Hledání podle částečné shody textu úkonu, názvu klienta, názvu nebo kódu projektu a názvu aktivity" />
             
         </div>
         <asp:TextBox ID="p31Text" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
@@ -638,7 +638,7 @@
 
             document.getElementById("search2").style.background = "";
             document.getElementById("search2").style.border = "solid 1px white";
-            document.getElementById("search2").value = "Našeptávač podobných textů...";
+            document.getElementById("search2").value = "Našeptávač...";
         }
     </script>
 </asp:Content>
