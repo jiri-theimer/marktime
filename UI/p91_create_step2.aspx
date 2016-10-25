@@ -115,7 +115,7 @@
         function search2Blur() {
 
             document.getElementById("search2").style.background = "";
-            document.getElementById("search2").value = "Najít text faktury...";
+            document.getElementById("search2").value = "Našeptávač fakturačního textu...";
         }
     </script>
 </asp:Content>
@@ -247,7 +247,7 @@
         </div>
         <div class="div6">
             Text faktury
-            <input id="search2" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />
+            <input id="search2" style="width: 200px; margin-top: 7px;" value="Našeptávač fakturačního textu..." onfocus="search2Focus()" onblur="search2Blur()" />
             <asp:CheckBox ID="chkSearchByClientOnly" runat="server" AutoPostBack="true" Text="Hledat pouze ve fakturách klienta" />
             <br />
             <asp:TextBox ID="p91text1" runat="server" TextMode="MultiLine" Style="height: 50px; width: 90%;"></asp:TextBox>

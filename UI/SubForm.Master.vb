@@ -81,6 +81,7 @@
                 mm1.ClearAll()
             End If
         End If
+
         If mm1.ItemsCount > 0 Then placeFavicon.Controls.Add(New LiteralControl("<link href='Images/favicon.ico' rel='shortcut icon' type='image/x-icon' />"))
     End Sub
 End Class

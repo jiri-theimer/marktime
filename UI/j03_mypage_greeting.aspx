@@ -18,8 +18,8 @@
 
         }
         function report() {
-            sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png",true);
-            
+            sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png", true);
+
         }
         function sendmail() {
             sw_master("sendmail.aspx", "Images/email_32.png")
@@ -55,7 +55,7 @@
 
         }
         function o10_create() {
-            sw_master("o10_record.aspx?pid=0", "Images/article_32.png",true)
+            sw_master("o10_record.aspx?pid=0", "Images/article_32.png", true)
 
 
         }
@@ -79,6 +79,10 @@
             }
             if (flag == "o23-save" || flag == "o23-create") {
                 location.replace("o23_framework.aspx?pid=" + pid);
+                return;
+            }
+            if (flag == "j03_myprofile_defaultpage") {
+                location.replace("default.aspx");
                 return;
             }
 
@@ -114,13 +118,13 @@
                         <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
                             <Items>
                                 
-                                <telerik:RadPanelItem Text="Zapsat worksheet úkon" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Zapisovat úkony" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
                                 
-                                <telerik:RadPanelItem Text="Založit nového klienta" Value="p28_create" NavigateUrl="javascript:p28_create()" ImageUrl="Images/contact.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Založit nový projekt" Value="p41_create" NavigateUrl="javascript:p41_create()" ImageUrl="Images/project.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Vytvořit nový úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Vytvořit nový dokument" Value="o23_create" NavigateUrl="javascript:o23_create()" ImageUrl="Images/notepad.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Založit klienta" Value="p28_create" NavigateUrl="javascript:p28_create()" ImageUrl="Images/contact.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Založit projekt" Value="p41_create" NavigateUrl="javascript:p41_create()" ImageUrl="Images/project.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Vytvořit dokument" Value="o23_create" NavigateUrl="javascript:o23_create()" ImageUrl="Images/notepad.png"></telerik:RadPanelItem>
 
                                 <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Vystavit fakturu" Value="p91_create" NavigateUrl="javascript:p91_create()" ImageUrl="Images/invoice.png" Visible="false"></telerik:RadPanelItem>
@@ -129,14 +133,20 @@
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
 
-                                <telerik:RadPanelItem Text="Napsat článek na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
+                                
+                            </Items>
+                        </telerik:RadPanelItem>
+
+                        <telerik:RadPanelItem Text="Oblíbené projekty" Value="favourites" ImageUrl="Images/favourite.png" Visible="false">
+
+                        </telerik:RadPanelItem>
+                        <telerik:RadPanelItem Text="Další" Expanded="false">
+                            <Items>
+                            <telerik:RadPanelItem Text="Napsat článek na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
                                 
 
                                 <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
                             </Items>
-                        </telerik:RadPanelItem>
-                        <telerik:RadPanelItem Text="Oblíbené projekty" Value="favourites" ImageUrl="Images/favourite.png" Visible="false">
-
                         </telerik:RadPanelItem>
                         <telerik:RadPanelItem Text="Osobní nastavení">
                             <Items>
@@ -144,12 +154,14 @@
                                 <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Odeslat poštovní zprávu" Value="sendmail" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
+                                
                             </Items>
                         </telerik:RadPanelItem>
                         
                     </Items>
 
                 </telerik:RadPanelBar>
+                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat zde grafy z mých hodin" Checked="true" />
             </div>
             <asp:panel ID="panSearch" runat="server" CssClass="content-box1">
                 <div class="title">
@@ -259,6 +271,30 @@
 
                 </div>
             </asp:Panel>
+            <asp:Panel ID="panX47" runat="server" CssClass="content-box1">
+                <div class="title">
+                    <img src="Images/timeline.png" />
+                    Novinky v systému
+                   
+                    <asp:CheckBox ID="chkP41" runat="server" Text="Projekty" AutoPostBack="true" Checked="true" Visible="false" />
+                    <asp:CheckBox ID="chkP28" runat="server" Text="Klienti" AutoPostBack="true" Checked="true" Visible="false" />
+                    <asp:CheckBox ID="chkP91" runat="server" Text="Faktury" AutoPostBack="true" Checked="true" Visible="false" />
+                    <asp:CheckBox ID="chkO23" runat="server" Text="Dokumenty" AutoPostBack="true" Checked="true" Visible="false" />
+                </div>
+                <div class="content">
+                    <asp:Repeater ID="rpX47" runat="server">
+                        <ItemTemplate>
+                            <div class="div6">
+                                <asp:Image ID="img1" runat="server" />
+                                <asp:Label ID="lbl1" runat="server"></asp:Label>
+                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                                <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </asp:Panel>
+
             <asp:Panel ID="panP48" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/oplan.png" alt="Plán" />
@@ -390,21 +426,21 @@
             $(document).ready(function () {
                 //pokud je rozlišení displeje menší než 1280px, automaticky  nahodit režim SAW
                 if (screen.availWidth < 1280) {
-                    if (readCookie("MT50-SAW") == "1"){
+                    if (readCookie("MT50-SAW") == "1") {
                         return;
-                    }                        
-                    else{
+                    }
+                    else {
                         createCookie('MT50-SAW', "1", 30);
                     }
                 }
-                 
 
-                
-                
+
+
+
             });
 
 
-            <%if panSearch_p28.Visible then%>
+            <%If panSearch_p28.Visible Then%>
             $(function () {
 
                 $("#search_p28").autocomplete({
@@ -440,8 +476,8 @@
 
                 };
             });
-            <%end if%>
-            <%if panSearch_p91.Visible then%>
+            <%End If%>
+            <%If panSearch_p91.Visible Then%>
             $(function () {
 
                 $("#search_p91").autocomplete({
@@ -480,7 +516,7 @@
                 };
             });
             <%End If%>
-            <%if panSearch_p56.Visible then%>
+            <%If panSearch_p56.Visible Then%>
             $(function () {
 
                 $("#search_p56").autocomplete({
@@ -517,8 +553,8 @@
 
                 };
             });
-            <%End if%>
-            <%if panSearch_j02.Visible then%>
+            <%End If%>
+            <%If panSearch_j02.Visible Then%>
             $(function () {
 
                 $("#search_j02").autocomplete({
@@ -555,8 +591,8 @@
 
                 };
             });
-            <%end if%>
-           
+            <%End If%>
+
 
             function __highlight(s, t) {
                 var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
@@ -564,15 +600,15 @@
             }
 
             function search2Focus(ctl) {
-               ctl.value = "";
+                ctl.value = "";
                 ctl.style.background = "yellow";
             }
-            function search2Blur(ctl,defaultMessage) {
+            function search2Blur(ctl, defaultMessage) {
 
                 ctl.style.background = "";
                 ctl.value = defaultMessage;
             }
-           
+
     </script>
 </asp:Content>
 

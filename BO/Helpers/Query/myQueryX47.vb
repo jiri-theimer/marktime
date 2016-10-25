@@ -4,4 +4,6 @@
     Public Property x29ID As x29IdEnum?
     Public Property x45ID As x45IDEnum?
     Public Property j03ID As Integer
+    Public Property x45IDs As String
+
 End Class

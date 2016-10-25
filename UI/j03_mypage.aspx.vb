@@ -15,6 +15,7 @@ Public Class j03_mypage
             Master.SiteMenuValue = "dashboard"
             lblHeader.Text = BO.BAS.OM2(Me.lblHeader.Text, Master.Factory.SysUser.Person)
 
+            cmdReadUpgradeInfo.Visible = Master.Factory.SysUser.j03IsShallReadUpgradeInfo
         End If
 
         RefreshRecord()

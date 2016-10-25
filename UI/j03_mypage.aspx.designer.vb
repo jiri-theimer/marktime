@@ -257,6 +257,15 @@ Partial Public Class j03_mypage
     Protected WithEvents place_dock9 As Global.System.Web.UI.WebControls.PlaceHolder
 
     '''<summary>
+    '''cmdReadUpgradeInfo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdReadUpgradeInfo As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''place99 control.
     '''</summary>
     '''<remarks>

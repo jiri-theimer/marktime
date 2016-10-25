@@ -37,8 +37,8 @@
     
 
 
-    Public Function GetList(myQuery As BO.myQueryX47) As IEnumerable(Of BO.x47EventLog)
-        Dim s As String = GetSQLPart1(0), pars As New DbParameters
+    Public Function GetList(myQuery As BO.myQueryX47, Optional intTopRecs As Integer = 0) As IEnumerable(Of BO.x47EventLog)
+        Dim s As String = GetSQLPart1(intTopRecs), pars As New DbParameters
         Dim strW As String = bas.ParseWhereMultiPIDs("a.x47ID", myQuery)
         With myQuery
             If Year(.DateFrom) > 1900 Or Year(.DateUntil) < 3000 Then
@@ -51,12 +51,15 @@
                 pars.Add("x45id", .x45ID, DbType.Int32)
                 strW += " AND a.x45ID=@x45id"
             End If
+            If .x45IDs <> "" Then
+                strW += " AND a.x45ID IN (" & .x45IDs & ")"
+            End If
             If Not .x29ID Is Nothing Then
                 If .x29ID > BO.x29IdEnum._NotSpecified Then
                     pars.Add("x29id", .x29ID, DbType.Int32)
                     strW += " AND (a.x29ID=@x29id OR a.x29ID_Reference=@x29id)"
                 End If
-                
+
             End If
             If .RecordPID > 0 Then
                 pars.Add("recordpid", .RecordPID, DbType.Int32)

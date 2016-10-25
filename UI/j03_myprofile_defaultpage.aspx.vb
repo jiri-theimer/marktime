@@ -37,7 +37,7 @@
             Dim cRec As BO.j03User = Master.Factory.j03UserBL.Load(Master.Factory.SysUser.PID)
             cRec.j03Aspx_PersonalPage = Me.opgPersonalPage.SelectedValue
             If Master.Factory.j03UserBL.Save(cRec) Then
-                Master.CloseAndRefreshParent("j03_myprofile")
+                Master.CloseAndRefreshParent("j03_myprofile_defaultpage")
             Else
                 Master.Notify(Master.Factory.j03UserBL.ErrorMessage, NotifyLevel.ErrorMessage)
             End If

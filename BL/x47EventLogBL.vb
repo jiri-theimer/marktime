@@ -3,7 +3,7 @@ Public Interface Ix47EventLogBL
     Inherits IFMother
     Function AppendToLog(cRec As BO.x47EventLog) As Boolean
     Function Load(intPID As Integer) As BO.x47EventLog
-    Function GetList(mq As BO.myQueryX47) As IEnumerable(Of BO.x47EventLog)
+    Function GetList(mq As BO.myQueryX47, Optional intTopRecs As Integer = 0) As IEnumerable(Of BO.x47EventLog)
     Function GetObjectAlias(x29id As BO.x29IdEnum, intRecordPID As Integer) As String
 
 End Interface
@@ -94,8 +94,8 @@ Class x47EventLogBL
         Return _cDL.Load(intPID)
     End Function
   
-    Public Function GetList(mq As BO.myQueryX47) As IEnumerable(Of BO.x47EventLog) Implements Ix47EventLogBL.GetList
-        Return _cDL.GetList(mq)
+    Public Function GetList(mq As BO.myQueryX47, Optional intTopRecs As Integer = 0) As IEnumerable(Of BO.x47EventLog) Implements Ix47EventLogBL.GetList
+        Return _cDL.GetList(mq, intTopRecs)
     End Function
     Public Function GetObjectAlias(x29id As BO.x29IdEnum, intRecordPID As Integer) As String Implements Ix47EventLogBL.GetObjectAlias
         If x29id = BO.x29IdEnum._NotSpecified Or intRecordPID = 0 Then Return "????"

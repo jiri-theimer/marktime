@@ -32,6 +32,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadPanelBar
 
     '''<summary>
+    '''chkShowCharts control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkShowCharts As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''panSearch control.
     '''</summary>
     '''<remarks>
@@ -183,6 +192,60 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents rpP39 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''panX47 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panX47 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chkP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP41 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkP28 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP28 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkP91 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP91 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkO23 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkO23 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''rpX47 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX47 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''panP48 control.

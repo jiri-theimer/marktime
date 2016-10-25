@@ -153,11 +153,14 @@
             sw_decide("entity_timeline.aspx?prefix=p41&pid=<%=master.datapid%>","Images/timeline.png",true);
         }
         function approve(){     
-            <%If Master.MasterPageFile="Site" then%>
-            window.parent.sw_master("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
-            <%Else%>
-            sw_decide("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
-            <%end If%>
+            var isInIFrame = (window.location != window.parent.location);
+            if (isInIFrame==true){
+                window.parent.sw_master("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
+            else{
+                sw_decide("entity_modal_approving.aspx?prefix=p41&pid=<%=master.datapid%>","Images/approve_32.png",true);
+            }
+            
         }
         function tasks(){            
             window.open("p56_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>","_top")

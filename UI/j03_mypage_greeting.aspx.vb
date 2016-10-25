@@ -16,12 +16,26 @@
                 lblHeader.Text = cRec.j02FirstName & ", vítejte v"
             End If
 
-
+            Dim lisPars As New List(Of String)
+            With lisPars
+                .Add("j03_mypage_greeting-last_step")
+                .Add("j03_mypage_greeting-chkP41")
+                .Add("j03_mypage_greeting-chkP28")
+                .Add("j03_mypage_greeting-chkP91")
+                .Add("j03_mypage_greeting-chkO23")
+                .Add("j03_mypage_greeting-chkShowCharts")
+            End With
 
             With Master.Factory
                 cmdReadUpgradeInfo.Visible = .SysUser.j03IsShallReadUpgradeInfo
 
-                .j03UserBL.InhaleUserParams("j03_mypage_greeting-last_step")
+                .j03UserBL.InhaleUserParams(lisPars)
+                chkP41.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP41", "1"))
+                chkP28.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP28", "1"))
+                chkP91.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP91", "0"))
+                chkO23.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkO23", "1"))
+                chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
+
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p41_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
@@ -92,11 +106,13 @@
                     End Select
 
                 End With
+            Else
+                chkShowCharts.Visible = False
             End If
-            
+
             RefreshBoxes()
 
-
+            RefreshX47Log()
         End If
     End Sub
 
@@ -309,6 +325,7 @@
     End Sub
 
     Private Sub ShowChart1(strFlag As String)
+        If Not chkShowCharts.Checked Then ShowImage() : Return
         Dim s As String = "select round(sum(case when b.p32IsBillable=1 THEN p31Hours_Orig end),2) as HodinyFa,round(sum(case when b.p32IsBillable=0 THEN p31Hours_Orig end),2) as HodinyNeFa,c11.c11DateFrom as Datum"
         s += " FROM (select c11DateFrom FROM c11StatPeriod WHERE c11Level=5 AND c11DateFrom between @d1 and @d2) c11 LEFT OUTER JOIN (select * from p31Worksheet where j02ID=@j02id and p31Date between @d1 and @d2) a ON c11.c11DateFrom=a.p31Date LEFT OUTER JOIN p32Activity b ON a.p32ID=b.p32ID"
         s += " WHERE c11.c11DateFrom BETWEEN @d1 AND @d2 GROUP BY c11.c11DateFrom ORDER BY c11.c11DateFrom"
@@ -343,12 +360,14 @@
                 .DataBind()
             End With
         End If
-       
+
 
 
     End Sub
 
     Private Sub ShowChart2(strFlag As String)
+        If Not chkShowCharts.Checked Then ShowImage() : Return
+
         Dim s As String = "select round(sum(p31Hours_Orig),2) as Hodiny,left(min(p28name),20) as Podle FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID WHERE a.j02ID=@j02id AND p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY p41.p28ID_Client ORDER BY min(p28Name)"
         Select Case strFlag
             Case "3"
@@ -393,5 +412,98 @@
         
         rpNoticeBoard.DataSource = lis
         rpNoticeBoard.DataBind()
+    End Sub
+    Private Sub RefreshX47Log()
+        Dim mq As New BO.myQueryX47, x45ids As New List(Of String), b As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
+        If b Then x45ids.Add("10201")
+        With Master.Factory
+            If (b Or .TestPermission(BO.x53PermValEnum.GR_P41_Reader)) And .SysUser.j04IsMenu_Project Then
+                chkP41.Visible = True
+                If chkP41.Checked Then x45ids.Add("14101")
+            End If
+            If b Or .TestPermission(BO.x53PermValEnum.GR_P28_Reader) And .SysUser.j04IsMenu_Contact Then
+                chkP28.Visible = True
+                If chkP28.Checked Then x45ids.Add("32801")
+            End If
+            If b Or .TestPermission(BO.x53PermValEnum.GR_P91_Reader) And .SysUser.j04IsMenu_Invoice Then
+                chkP91.Visible = True
+                If chkP91.Checked Then
+                    x45ids.Add("39101")
+                    x45ids.Add("39001")
+                End If
+            End If
+            If b Then
+                chkO23.Visible = True
+                If chkO23.Checked Then x45ids.Add("22301")
+            End If
+        End With
+        If x45ids.Count > 0 Then
+            mq.x45IDs = String.Join(",", x45ids)
+            Dim lis As IEnumerable(Of BO.x47EventLog) = Master.Factory.x47EventLogBL.GetList(mq, 20)
+            rpX47.DataSource = lis
+            rpX47.DataBind()
+        Else
+            If chkP41.Visible Or chkP28.Visible Or chkP91.Visible Or chkO23.Visible Then
+                rpX47.Visible = False
+            Else
+                panX47.Visible = False
+            End If
+
+        End If
+
+
+
+
+    End Sub
+
+    Private Sub rpX47_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX47.ItemDataBound
+        Dim cRec As BO.x47EventLog = CType(e.Item.DataItem, BO.x47EventLog), s As String = ""
+
+        Select Case cRec.x45ID
+            Case BO.x45IDEnum.p41_new : s = "Images/project.png"
+            Case BO.x45IDEnum.p28_new : s = "Images/contact.png"
+            Case BO.x45IDEnum.p91_new : s = "Images/invoice.png"
+            Case BO.x45IDEnum.j02_new : s = "Images/user.png"
+            Case BO.x45IDEnum.o23_new : s = "Images/notepad.png"
+        End Select
+        If s = "" Then
+            e.Item.FindControl("img1").Visible = False
+        Else
+            CType(e.Item.FindControl("img1"), Image).ImageUrl = s
+            CType(e.Item.FindControl("link1"), HyperLink).NavigateUrl = BO.BAS.GetDataPrefix(cRec.x29ID) & "_framework.aspx?pid=" & cRec.x47RecordPID.ToString
+        End If
+        CType(e.Item.FindControl("lbl1"), Label).Text = cRec.x45Name & ": "
+        CType(e.Item.FindControl("timestamp"), Label).Text = cRec.Person & "/" & BO.BAS.FD(cRec.DateInsert, True, True)
+        CType(e.Item.FindControl("link1"), HyperLink).Text = cRec.x47Name
+
+    End Sub
+
+    Private Sub chkP41_CheckedChanged(sender As Object, e As EventArgs) Handles chkP41.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkP41", BO.BAS.GB(Me.chkP41.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub chkP91_CheckedChanged(sender As Object, e As EventArgs) Handles chkP91.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkP91", BO.BAS.GB(Me.chkP91.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub chkP28_CheckedChanged(sender As Object, e As EventArgs) Handles chkP28.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkP28", BO.BAS.GB(Me.chkP28.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub ReloadPage()
+        Response.Redirect("j03_mypage_greeting.aspx")
+    End Sub
+
+    Private Sub chkO23_CheckedChanged(sender As Object, e As EventArgs) Handles chkO23.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkO23", BO.BAS.GB(Me.chkO23.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub chkShowCharts_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowCharts.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkShowCharts", BO.BAS.GB(Me.chkShowCharts.Checked))
+        ReloadPage()
     End Sub
 End Class
