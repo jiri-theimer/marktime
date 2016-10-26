@@ -109,7 +109,7 @@
             <img src="Images/logo_transparent.png" />
         </div>
         <div style="clear: both;"></div>
-
+        
 
         <div style="min-height: 430px;">
             <div style="float: left;">
@@ -161,7 +161,7 @@
                     </Items>
 
                 </telerik:RadPanelBar>
-                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat zde grafy z mých hodin" Checked="true" />
+                
             </div>
             <asp:panel ID="panSearch" runat="server" CssClass="content-box1">
                 <div class="title">
@@ -274,24 +274,43 @@
             <asp:Panel ID="panX47" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/timeline.png" />
-                    Novinky v systému
+                    Poslední akce
                    
-                    <asp:CheckBox ID="chkP41" runat="server" Text="Projekty" AutoPostBack="true" Checked="true" Visible="false" />
-                    <asp:CheckBox ID="chkP28" runat="server" Text="Klienti" AutoPostBack="true" Checked="true" Visible="false" />
-                    <asp:CheckBox ID="chkP91" runat="server" Text="Faktury" AutoPostBack="true" Checked="true" Visible="false" />
-                    <asp:CheckBox ID="chkO23" runat="server" Text="Dokumenty" AutoPostBack="true" Checked="true" Visible="false" />
+                    
                 </div>
                 <div class="content">
+                    <table cellpadding="4" >
                     <asp:Repeater ID="rpX47" runat="server">
                         <ItemTemplate>
-                            <div class="div6">
+                            <tr class="trHover" valign="top">
+                                <td>
                                 <asp:Image ID="img1" runat="server" />
-                                <asp:Label ID="lbl1" runat="server"></asp:Label>
-                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>
-                            </div>
+                                    <asp:Label ID="lbl1" runat="server" CssClass="timestamp"></asp:Label>
+                                </td>
+                               
+                                <td>
+                                    <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                                    <asp:Label ID="lbl2" runat="server"></asp:Label>
+                                </td>
+                                
+                                
+                                
+                                    <td>
+                                    
+                                    <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>                                
+                                </td>
+                                
+                            </tr>
+                            
                         </ItemTemplate>
                     </asp:Repeater>
+                    </table>
+                    <hr />
+                    <asp:CheckBox ID="chkP41" runat="server" Text="Nové projekty" AutoPostBack="true" Checked="true" Visible="false" />
+                    <asp:CheckBox ID="chkP28" runat="server" Text="Noví klienti" AutoPostBack="true" Checked="true" Visible="false" />
+                    <asp:CheckBox ID="chkP91" runat="server" Text="Nové faktury" AutoPostBack="true" Checked="false" Visible="false" />
+                    <asp:CheckBox ID="chkP56" runat="server" Text="Nové úkoly" AutoPostBack="true" Checked="false" Visible="false" />
+                    <asp:CheckBox ID="chkO23" runat="server" Text="Nové dokumenty" AutoPostBack="true" Checked="false" Visible="false" />
                 </div>
             </asp:Panel>
 
@@ -417,10 +436,11 @@
                 
                 <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
                 
+                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce i grafy z mých hodin" Checked="true" style="float:right;" />
             </div>
         </div>
 
-
+        
 
         <script type="text/javascript">
             $(document).ready(function () {

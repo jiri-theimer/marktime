@@ -119,6 +119,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Dokument.
+        '''</summary>
+        Friend Shared ReadOnly Property Dokument() As String
+            Get
+                Return ResourceManager.GetString("Dokument", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Export přehledu do MS EXCEL.
         '''</summary>
         Friend Shared ReadOnly Property ExportPrehledu() As String

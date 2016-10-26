@@ -32,15 +32,6 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadPanelBar
 
     '''<summary>
-    '''chkShowCharts control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkShowCharts As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''panSearch control.
     '''</summary>
     '''<remarks>
@@ -203,6 +194,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents panX47 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''rpX47 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX47 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''chkP41 control.
     '''</summary>
     '''<remarks>
@@ -230,6 +230,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents chkP91 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkP56 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP56 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''chkO23 control.
     '''</summary>
     '''<remarks>
@@ -237,15 +246,6 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkO23 As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''rpX47 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpX47 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''panP48 control.
@@ -363,6 +363,15 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdReadUpgradeInfo As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''chkShowCharts control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkShowCharts As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''Master property.

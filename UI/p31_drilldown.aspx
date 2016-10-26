@@ -127,7 +127,9 @@
     <asp:HiddenField ID="hidMasterPrefix" runat="server" Value="p31_drilldown" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hiddatapid" runat="server" />
-
+    <asp:HiddenField ID="hidSelPID1" runat="server" />
+    <asp:HiddenField ID="hidSelPID2" runat="server" />
+    <asp:HiddenField ID="hidSelPID3" runat="server" />
            
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />

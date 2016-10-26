@@ -23,6 +23,7 @@
                 .Add("j03_mypage_greeting-chkP28")
                 .Add("j03_mypage_greeting-chkP91")
                 .Add("j03_mypage_greeting-chkO23")
+                .Add("j03_mypage_greeting-chkP56")
                 .Add("j03_mypage_greeting-chkShowCharts")
             End With
 
@@ -33,7 +34,8 @@
                 chkP41.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP41", "1"))
                 chkP28.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP28", "1"))
                 chkP91.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP91", "0"))
-                chkO23.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkO23", "1"))
+                chkO23.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkO23", "0"))
+                chkP56.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP56", "0"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
 
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
@@ -113,6 +115,9 @@
             RefreshBoxes()
 
             RefreshX47Log()
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                menu1.Visible = False
+            End If
         End If
     End Sub
 
@@ -435,11 +440,13 @@
             If b Then
                 chkO23.Visible = True
                 If chkO23.Checked Then x45ids.Add("22301")
+                chkP56.Visible = True
+                If chkP56.Checked Then x45ids.Add("35601")
             End If
         End With
         If x45ids.Count > 0 Then
             mq.x45IDs = String.Join(",", x45ids)
-            Dim lis As IEnumerable(Of BO.x47EventLog) = Master.Factory.x47EventLogBL.GetList(mq, 20)
+            Dim lis As IEnumerable(Of BO.x47EventLog) = Master.Factory.x47EventLogBL.GetList(mq, 20)    ''.Where(Function(p) p.x47Description = "")
             rpX47.DataSource = lis
             rpX47.DataBind()
         Else
@@ -459,22 +466,28 @@
     Private Sub rpX47_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX47.ItemDataBound
         Dim cRec As BO.x47EventLog = CType(e.Item.DataItem, BO.x47EventLog), s As String = ""
 
-        Select Case cRec.x45ID
-            Case BO.x45IDEnum.p41_new : s = "Images/project.png"
-            Case BO.x45IDEnum.p28_new : s = "Images/contact.png"
-            Case BO.x45IDEnum.p91_new : s = "Images/invoice.png"
-            Case BO.x45IDEnum.j02_new : s = "Images/user.png"
-            Case BO.x45IDEnum.o23_new : s = "Images/notepad.png"
-        End Select
+        With CType(e.Item.FindControl("lbl1"), Label)
+            Select Case cRec.x45ID
+                Case BO.x45IDEnum.p41_new : s = "Images/project.png" : .Text = Resources.common.Projekt
+                Case BO.x45IDEnum.p28_new : s = "Images/contact.png" : .Text = Resources.common.Klient
+                Case BO.x45IDEnum.p91_new : s = "Images/invoice.png" : .Text = Resources.common.Faktura
+                Case BO.x45IDEnum.j02_new : s = "Images/person.png" : .Text = Resources.common.Osoba
+                Case BO.x45IDEnum.o23_new : s = "Images/notepad.png" : .Text = Resources.common.Dokument
+                Case BO.x45IDEnum.p56_new : s = "Images/task.png" : .Text = Resources.common.Ukol
+                Case Else
+                    .Text = cRec.x45Name
+            End Select
+        End With
         If s = "" Then
             e.Item.FindControl("img1").Visible = False
         Else
             CType(e.Item.FindControl("img1"), Image).ImageUrl = s
             CType(e.Item.FindControl("link1"), HyperLink).NavigateUrl = BO.BAS.GetDataPrefix(cRec.x29ID) & "_framework.aspx?pid=" & cRec.x47RecordPID.ToString
+            CType(e.Item.FindControl("lbl2"), Label).Text = BO.BAS.OM3(cRec.x47NameReference, 25)
         End If
-        CType(e.Item.FindControl("lbl1"), Label).Text = cRec.x45Name & ": "
+
         CType(e.Item.FindControl("timestamp"), Label).Text = cRec.Person & "/" & BO.BAS.FD(cRec.DateInsert, True, True)
-        CType(e.Item.FindControl("link1"), HyperLink).Text = cRec.x47Name
+        CType(e.Item.FindControl("link1"), HyperLink).Text = BO.BAS.OM3(cRec.x47Name, 40)
 
     End Sub
 
@@ -504,6 +517,11 @@
 
     Private Sub chkShowCharts_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowCharts.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkShowCharts", BO.BAS.GB(Me.chkShowCharts.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub chkP56_CheckedChanged(sender As Object, e As EventArgs) Handles chkP56.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkP56", BO.BAS.GB(Me.chkP56.Checked))
         ReloadPage()
     End Sub
 End Class

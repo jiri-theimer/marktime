@@ -53,6 +53,7 @@
             End If
             If .x45IDs <> "" Then
                 strW += " AND a.x45ID IN (" & .x45IDs & ")"
+                strW += " AND a.x47RecordPID NOT IN (SELECT xa.x47RecordPID FROM x47EventLog xa WHERE xa.x47RecordPID=a.x47RecordPID AND xa.x29ID=a.x29ID AND xa.x45ID IN (14105,32805,35605,39105,10205,22305))"
             End If
             If Not .x29ID Is Nothing Then
                 If .x29ID > BO.x29IdEnum._NotSpecified Then
@@ -72,6 +73,7 @@
             End If
         End With
 
+    
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
         s += " ORDER BY a.x47ID DESC"

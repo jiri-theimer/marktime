@@ -272,6 +272,7 @@
         Return strExpression & " (" & strAppendExpression & ")"
     End Function
     Public Shared Function OM3(ByVal strExpression As String, intLimitLength As Integer) As String
+        If strExpression = "" Then Return ""
         With strExpression
             If .Length > intLimitLength - 2 Then
                 Return Left(strExpression, intLimitLength - 2) & "..."
