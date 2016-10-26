@@ -781,8 +781,7 @@ div.content-box1 {
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         background: #F1F1F1;
-        font-family: Arial;
-        text-transform: lowercase;
+        font-family: Arial;        
         display: block;
         color: black;
         padding: 6px;
@@ -810,7 +809,6 @@ div.content-box2 .title {
     background: #F1F1F1;
     font-family: Arial;
     font-weight: bold;
-    text-transform: lowercase;
     display: block;
     color: black;
     padding: 6px;

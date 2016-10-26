@@ -101,6 +101,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+    <a href="p31_drilldown.aspx">DRILL-DOWN</a>
     <div style="padding: 10px; background-color: white;">
         <div style="float: left;">
             <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
@@ -113,6 +114,30 @@
 
         <div style="min-height: 430px;">
             <div style="float: left;">
+                <asp:panel ID="panSearch" runat="server" CssClass="content-box2">
+                <div class="title">
+                    <img src="Images/search.png" />
+                </div>
+                <div class="content">
+                    <asp:panel ID="panSearch_p28" runat="server" Visible="false">
+                    <img src="Images/contact.png" />
+                    <input id="search_p28" style="width: 200px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít klienta...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_p91" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/invoice.png"" />
+                    <input id="search_p91" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít fakturu...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_p56" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/task.png" />
+                    <input id="search_p56" style="width: 200px; margin-top: 7px;" value="Najít úkol..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít úkol...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_j02" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/person.png" />
+                    <input id="search_j02" style="width: 200px; margin-top: 7px;" value="Najít osobu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít osobu...')" />
+                    </asp:panel>
+                </div>
+            </asp:panel>
+
                 <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px">
                     <Items>
                         <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
@@ -163,29 +188,7 @@
                 </telerik:RadPanelBar>
                 
             </div>
-            <asp:panel ID="panSearch" runat="server" CssClass="content-box1">
-                <div class="title">
-                    <img src="Images/search.png" />
-                </div>
-                <div class="content">
-                    <asp:panel ID="panSearch_p28" runat="server" Visible="false">
-                    <img src="Images/contact.png" />
-                    <input id="search_p28" style="width: 200px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít klienta...')" />
-                    </asp:panel>
-                    <asp:panel ID="panSearch_p91" runat="server" style="margin-top:6px;" Visible="false">
-                    <img src="Images/invoice.png"" />
-                    <input id="search_p91" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít fakturu...')" />
-                    </asp:panel>
-                    <asp:panel ID="panSearch_p56" runat="server" style="margin-top:6px;" Visible="false">
-                    <img src="Images/task.png" />
-                    <input id="search_p56" style="width: 200px; margin-top: 7px;" value="Najít úkol..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít úkol...')" />
-                    </asp:panel>
-                    <asp:panel ID="panSearch_j02" runat="server" style="margin-top:6px;" Visible="false">
-                    <img src="Images/person.png" />
-                    <input id="search_j02" style="width: 200px; margin-top: 7px;" value="Najít osobu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít osobu...')" />
-                    </asp:panel>
-                </div>
-            </asp:panel>
+            
             <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/task.png" alt="Úkol" />
@@ -271,10 +274,10 @@
 
                 </div>
             </asp:Panel>
-            <asp:Panel ID="panX47" runat="server" CssClass="content-box1">
+            <asp:Panel ID="panX47" runat="server" CssClass="content-box1" style="margin-left:30px;">
                 <div class="title">
                     <img src="Images/timeline.png" />
-                    Poslední akce
+                    Poslední významnější akce
                    
                     
                 </div>
@@ -436,7 +439,7 @@
                 
                 <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
                 
-                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce i grafy z mých hodin" Checked="true" style="float:right;" />
+                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin" Checked="true" style="float:right;" />
             </div>
         </div>
 

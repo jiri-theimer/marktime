@@ -74,10 +74,10 @@
 
     function messages() {        
         try {
-            sw_master("j03_messages.aspx", "Images/messages_32.png", false)
+            sw_master("j03_messages.aspx", "Images/globe_32.png", false)
         }
         catch (err) {
-            sw_local("j03_messages.aspx", "Images/messages_32.png", false)
+            sw_local("j03_messages.aspx", "Images/globe_32.png", false)
         }
     }
 

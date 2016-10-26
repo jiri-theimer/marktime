@@ -115,9 +115,9 @@
             RefreshBoxes()
 
             RefreshX47Log()
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                menu1.Visible = False
-            End If
+            'If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+            '    menu1.Visible = False
+            'End If
         End If
     End Sub
 

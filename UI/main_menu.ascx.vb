@@ -161,8 +161,10 @@ Public Class main_menu
                 If factory.TestPermission(BO.x53PermValEnum.GR_P90_Reader) Then
                     ai(Resources.Site.ZalohoveFaktury, "p90_framework", "p90_framework.aspx", "Images/proforma.png", n)
                 End If
+                If factory.TestPermission(BO.x53PermValEnum.GR_P51_Admin) Then
+                    ai(Resources.Site.Ceniky, "p51", "p51_framework.aspx", "Images/billing.png", n)
+                End If
 
-                ai(Resources.Site.Ceniky, "p51", "p51_framework.aspx", "Images/billing.png", n)
                 ai(Resources.Site.Stitky, "x18", "x18_framework.aspx", "Images/label.png", n)
                 ai(Resources.Site.OdeslanaPosta, "x40", "x40_framework.aspx", "Images/email.png", n)
                 If bolAdmin Then ai(Resources.Site.NavrharWorkflow, "cmdWorkflow", "admin_workflow.aspx", "Images/workflow.png", n)
@@ -172,7 +174,7 @@ Public Class main_menu
             End If
 
             If .MessagesCount > 0 Then
-                n = ai(.MessagesCount.ToString, "messages", "javascript:messages()", "Images/messages.png")
+                n = ai("<img src='Images/globe.png'/>" + .MessagesCount.ToString, "messages", "javascript:messages()", "")
                 n.ToolTip = "Zprávy a upozornění ze systému"
             End If
             ''If Is_SAW_Switcher() Then
@@ -239,11 +241,13 @@ Public Class main_menu
     End Sub
 
     Private Sub SetupSearchbox()
+        Dim c As Control = menu1.FindItemByValue("searchbox1")
+        If c Is Nothing Then Return
         Dim template As New TextBoxTemplate()
-        template.InstantiateIn(menu1.FindItemByValue("searchbox1"))
+        template.InstantiateIn(c)
         menu1.DataBind()
 
-        Dim mi As RadMenuItem = menu1.FindItemByValue("searchbox1")
+        Dim mi As RadMenuItem = CType(c, RadMenuItem)
         hidSearch1.Value = DirectCast(mi.FindControl("search1"), TextBox).ClientID
     End Sub
 
