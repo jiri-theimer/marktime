@@ -94,6 +94,7 @@
 
         </tr>
     </table>
+    <asp:Button ID="cmdUseColEveryWhere" runat="server" Text="Použít vybrané sloupce ve všech úrovních" CssClass="cmd" />
 
     <asp:HiddenField ID="j75IsSystem" runat="server" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />

@@ -362,6 +362,14 @@
     End Sub
 
     Private Sub SaveCurrentState()
+        Dim s As String = GetDestColsInline()
+        If tabs1.SelectedIndex = 0 Then Me.hidCols1.Value = s : Me.hidLevel1.Value = Me.j75Level.SelectedValue
+        If tabs1.SelectedIndex = 1 Then Me.hidCols2.Value = s : Me.hidLevel2.Value = Me.j75Level.SelectedValue
+        If tabs1.SelectedIndex = 2 Then Me.hidCols3.Value = s : Me.hidLevel3.Value = Me.j75Level.SelectedValue
+        If tabs1.SelectedIndex = 3 Then Me.hidCols4.Value = s : Me.hidLevel4.Value = Me.j75Level.SelectedValue
+    End Sub
+
+    Private Function GetDestColsInline() As String
         Dim s As String = ""
         For Each it As Telerik.Web.UI.RadListBoxItem In colsDest.Items
             If s = "" Then
@@ -370,12 +378,8 @@
                 s += "," & it.Value
             End If
         Next
-        If tabs1.SelectedIndex = 0 Then Me.hidCols1.Value = s : Me.hidLevel1.Value = Me.j75Level.SelectedValue
-        If tabs1.SelectedIndex = 1 Then Me.hidCols2.Value = s : Me.hidLevel2.Value = Me.j75Level.SelectedValue
-        If tabs1.SelectedIndex = 2 Then Me.hidCols3.Value = s : Me.hidLevel3.Value = Me.j75Level.SelectedValue
-        If tabs1.SelectedIndex = 3 Then Me.hidCols4.Value = s : Me.hidLevel4.Value = Me.j75Level.SelectedValue
-    End Sub
-
+        Return s
+    End Function
 
     Private Sub colsDest_Transferred(sender As Object, e As Telerik.Web.UI.RadListBoxTransferredEventArgs) Handles colsDest.Transferred
         SaveCurrentState()
@@ -384,5 +388,13 @@
     Private Sub j75Level_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j75Level.SelectedIndexChanged
         SaveCurrentState()
         InhaleCurrentState(tabs1.SelectedIndex + 1)
+    End Sub
+
+    Private Sub cmdUseColEveryWhere_Click(sender As Object, e As EventArgs) Handles cmdUseColEveryWhere.Click
+        Dim s As String = GetDestColsInline()
+        Me.hidCols1.Value = s
+        Me.hidCols2.Value = s
+        Me.hidCols3.Value = s
+        Me.hidCols4.Value = s
     End Sub
 End Class

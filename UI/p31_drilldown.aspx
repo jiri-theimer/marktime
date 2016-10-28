@@ -75,6 +75,7 @@
 
         function RowDoubleClick(sender, args) {
             drill();
+           
         }
 
         function GetAllSelectedPIDs() {
@@ -178,7 +179,8 @@
     <asp:HiddenField ID="hidMasterPrefix" runat="server" Value="p31_drilldown" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hiddatapid" runat="server" />
-    <asp:HiddenField ID="hidPath_Groups" runat="server" />
+    <asp:HiddenField ID="hidMaxLevel" runat="server" Value="1" />
+    <asp:HiddenField ID="hidCurLevelIndex" runat="server" />
     <asp:HiddenField ID="hidPath_Pids" runat="server" />
     <asp:HiddenField ID="hidPath_Names" runat="server" />
 

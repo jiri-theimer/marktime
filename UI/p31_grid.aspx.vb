@@ -106,7 +106,7 @@ Public Class p31_grid
         Dim mq As New BO.myQuery
         j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p31Worksheet)
         j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Bez filtrování--")
+        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
         With Me.j70ID
             If .SelectedIndex > 0 Then

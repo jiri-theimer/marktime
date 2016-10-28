@@ -75,10 +75,24 @@ Public Class p31_drilldown
     End Property
     Private ReadOnly Property CurrentLevelIndex As Integer
         Get
-            If Me.hidPath_Pids.Value = "" Then Return 1
+            If Me.hidCurLevelIndex.Value <> "" Then
+                Return CInt(hidCurLevelIndex.Value)
+            End If
+            Dim x As Integer = 0
+            If Me.hidPath_Pids.Value = "" Then x = 1
             Dim a() As String = Split(Me.hidPath_Pids.Value, "->")
-            Return UBound(a) + 2
+            x = UBound(a) + 2
+            Me.hidCurLevelIndex.Value = x.ToString
+            Return x
         End Get
+    End Property
+    Private Property MaxLevelIndex As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidMaxLevel.Value)
+        End Get
+        Set(value As Integer)
+            Me.hidMaxLevel.Value = value.ToString
+        End Set
     End Property
     Private ReadOnly Property CurrentSumFields As List(Of BO.PivotSumField)
         Get
@@ -253,57 +267,6 @@ Public Class p31_drilldown
         End With
     End Sub
 
-    ''Private Sub Handle_DrillDown(strPID As String, strLevel As String)
-
-    ''    Dim mq As New BO.myQueryP31
-    ''    InhaleMyQuery(mq)
-
-    ''    Dim groupCurCol As BO.PivotRowColumnField = Nothing
-    ''    Dim strCurCols As String = hidCols2.Value
-
-    ''    Dim groupCol1 As New BO.PivotRowColumnField(CType(Me.hidGroup1.Value, BO.PivotRowColumnFieldType))
-
-    ''    Dim groupCol2 As BO.PivotRowColumnField = Nothing
-    ''    If hidGroup2.Value <> "" Then groupCol2 = New BO.PivotRowColumnField(CType(Me.hidGroup2.Value, BO.PivotRowColumnFieldType))
-    ''    Dim groupCol3 As BO.PivotRowColumnField = Nothing
-    ''    If hidGroup3.Value <> "" Then groupCol3 = New BO.PivotRowColumnField(CType(Me.hidGroup3.Value, BO.PivotRowColumnFieldType))
-    ''    Dim groupCol4 As BO.PivotRowColumnField = Nothing
-    ''    If Me.hidGroup4.Value <> "" Then groupCol4 = New BO.PivotRowColumnField(CType(Me.hidGroup4.Value, BO.PivotRowColumnFieldType))
-
-    ''    Dim strParentSqlWhere As String = ""
-
-    ''    Select Case strLevel
-    ''        Case "level2"
-    ''            groupCurCol = groupCol2
-    ''            strCurCols = hidCols2.Value
-    ''            hidSelPID1.Value = strPID
-    ''            strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value
-    ''        Case "level3"
-    ''            groupCurCol = groupCol3
-    ''            strCurCols = hidCols3.Value
-    ''            hidSelPID2.Value = strPID
-    ''            strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value & " AND " & groupCol2.GroupByField & "=" & hidSelPID2.Value
-    ''        Case "level4"
-    ''            groupCurCol = groupCol4
-    ''            strCurCols = hidCols4.Value
-    ''            hidSelPID3.Value = strPID
-    ''            strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value & " AND " & groupCol2.GroupByField & "=" & hidSelPID2.Value & " AND " & groupCol3.GroupByField & "=" & hidSelPID3.Value
-    ''        Case Else
-    ''            Return
-    ''    End Select
-
-
-    ''    Dim lis As New List(Of BO.PivotSumField)
-    ''    For Each s In Split(strCurCols, ",")
-    ''        lis.Add(New BO.PivotSumField(CType(s, BO.PivotSumFieldType)))
-    ''    Next
-    ''    Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(groupCurCol, lis, strParentSqlWhere, mq)
-
-    ''End Sub
-
-    
-    
-    
     Private Sub cmdPokus_Click(sender As Object, e As EventArgs) Handles cmdPokus.Click
         SetupData(1)
         grid1.Rebind(False)
@@ -343,7 +306,6 @@ Public Class p31_drilldown
             Case 2
                 If cRec.j75Level2 Is Nothing Then Return
                 level = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level2).First
-
             Case 3
                 If cRec.j75Level3 Is Nothing Then Return
                 level = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level3).First
@@ -352,6 +314,9 @@ Public Class p31_drilldown
                 level = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level4).First
         End Select
         Me.hidGroup.Value = level.FieldTypeID.ToString
+        If cRec.j75Level2 Is Nothing Then Me.MaxLevelIndex = 1
+        If cRec.j75Level3 Is Nothing Then Me.MaxLevelIndex = 2
+        If cRec.j75Level4 Is Nothing Then Me.MaxLevelIndex = 3 Else Me.MaxLevelIndex = 4
 
         _lisCols = New List(Of ddColumn)
         Dim cc As New ddColumn(level.Caption, BO.cfENUM.AnyString, level.SelectField, level.GroupByField)
@@ -401,14 +366,17 @@ Public Class p31_drilldown
         If Not TypeOf e.Item Is GridDataItem Then Return
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         Dim cRec As DataRowView = CType(e.Item.DataItem, DataRowView)
-        With dataItem("systemcolumn")
-            .Text = "<a href='javascript:drill(" & cRec.Item("pid").ToString & ")'><img src='Images/arrow_right_dd.png'></a>"
-        End With
+        If Me.CurrentLevelIndex < Me.MaxLevelIndex Then
+            With dataItem("systemcolumn")
+                .Text = "<a href='javascript:drill(" & cRec.Item("pid").ToString & ")'><img src='Images/arrow_right_dd.png' title='Rozklad na nižší úroveň'></a>"
+            End With
+        End If
+        
         With dataItem("p31")
-            .Text = "<a href='javascript:p31(" & cRec.Item("pid").ToString & ")'><img src='Images/worksheet.png'></a>"
+            .Text = "<a href='javascript:p31(" & cRec.Item("pid").ToString & ")'><img src='Images/worksheet.png' title='Přehled zdrojových worksheet úkonů'></a>"
         End With
         With dataItem("approve")
-            .Text = "<a href='javascript:approve(" & cRec.Item("pid").ToString & ")'><img src='Images/approve.png'></a>"
+            .Text = "<a href='javascript:approve(" & cRec.Item("pid").ToString & ")' title='Schvalovat nebo fakturovat'><img src='Images/approve.png'></a>"
         End With
     End Sub
 
@@ -422,6 +390,7 @@ Public Class p31_drilldown
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
+        If Me.CurrentLevelIndex < Me.MaxLevelIndex Then grid1.OnRowDblClick = "RowDoubleClick" Else grid1.OnRowDblClick = ""
 
         Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(Me.CurrentLevel, Me.CurrentSumFields, GetParentSqlWhere(cRec), mq)
         grid1.DataSourceDataTable = dt
@@ -465,6 +434,7 @@ Public Class p31_drilldown
             Case "drill"
                 Dim strPID As String = Me.hidHardRefreshPID.Value
                 Me.hidPath_Pids.Value = BO.BAS.OM4(Me.hidPath_Pids.Value, strPID, "->")
+                Me.hidCurLevelIndex.Value = ""
                 Dim strName As String = ""
                 Dim dt As DataTable = grid1.radGridOrig.DataSource
                 For Each row As GridDataItem In grid1.radGridOrig.MasterTableView.Items
@@ -515,20 +485,21 @@ Public Class p31_drilldown
 
     Private Sub path1_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles path1.ItemCommand
         If e.CommandName = "drill" Then
-            Dim intLevel As Integer = CInt(CType(e.Item.FindControl("levelindex"), HiddenField).Value), intGridSelPID As Integer = BO.BAS.IsNullInt(CType(e.Item.FindControl("pid"), HiddenField).Value)
+            Dim intLevel As Integer = CInt(CType(e.Item.FindControl("levelindex"), HiddenField).Value)
+            Dim intGridSelPID As Integer = BO.BAS.IsNullInt(CType(e.Item.FindControl("pid"), HiddenField).Value)
             If intLevel > 1 Then
                 Dim strPID As String = CType(e.Item.FindControl("pid"), HiddenField).Value
                 Dim a() As String = Split(Me.hidPath_Pids.Value, "->")
                 Dim b() As String = Split(Me.hidPath_Names.Value, "->")
-                hidPath_Pids.Value = ""
+                hidPath_Pids.Value = "" : hidCurLevelIndex.Value = "" : hidCurLevelIndex.Value = ""
                 For i As Integer = 0 To intLevel - 2
                     Me.hidPath_Pids.Value = BO.BAS.OM4(Me.hidPath_Pids.Value, a(i), "->")
                     Me.hidPath_Names.Value = BO.BAS.OM4(Me.hidPath_Names.Value, b(i), "->")
                 Next
             Else
-                hidPath_Pids.Value = "" : hidPath_Names.Value = ""
+                hidPath_Pids.Value = "" : hidPath_Names.Value = "" : hidCurLevelIndex.Value = ""
             End If
-            
+
             SetupData(intLevel)
 
             grid1.Rebind(False)
@@ -536,6 +507,8 @@ Public Class p31_drilldown
             If intGridSelPID > 0 Then grid1.SelectRecords(intGridSelPID)
         End If
     End Sub
+
+    
 
     Private Sub path1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles path1.ItemDataBound
         Dim c As ddPath = CType(e.Item.DataItem, ddPath)

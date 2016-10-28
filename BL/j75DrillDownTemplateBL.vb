@@ -72,27 +72,26 @@ Class j75DrillDownTemplateBL
         c.j75Name = BL.My.Resources.common.VychoziDatovyPrehled
         c.j75MasterPrefix = strMasterPrefix
         c.j03ID = intJ03ID
-
+        Dim intLevels As Integer = 3
         Select Case strMasterPrefix
-            Case "j02_framework_detail"
-                c.j75Name = "Osoba->Klient->Projekt"
-                c.j75Level1 = BO.PivotRowColumnFieldType.Person
-                c.j75Level2 = BO.PivotRowColumnFieldType.p28Name
-                c.j75Level3 = BO.PivotRowColumnFieldType.p41Name
-
-            Case "p28_framework_detail"
-                c.j75Name = "Klient->Projekt->Osoba"
+            Case "j02"
+                c.j75Name = "Klient->Projekt->Aktivita"
                 c.j75Level1 = BO.PivotRowColumnFieldType.p28Name
                 c.j75Level2 = BO.PivotRowColumnFieldType.p41Name
-                c.j75Level3 = BO.PivotRowColumnFieldType.Person
-            Case "p41_framework_detail"
-                c.j75Name = "Projekt->Osoba->Měsíc"
+                c.j75Level3 = BO.PivotRowColumnFieldType.p32Name
+            Case "p28"
+                c.j75Name = "Projekt->Osoba->Sešit"
                 c.j75Level1 = BO.PivotRowColumnFieldType.p41Name
                 c.j75Level2 = BO.PivotRowColumnFieldType.Person
-                c.j75Level3 = BO.PivotRowColumnFieldType.Month
-            Case "p91_framework_detail"
-                c.j75Name = "Faktura->Sešit->Osoba"
-                c.j75Level1 = BO.PivotRowColumnFieldType.p91Code
+                c.j75Level3 = BO.PivotRowColumnFieldType.p34Name
+            Case "p41"
+                c.j75Name = "Osoba->Sešit->Aktivita"
+                c.j75Level1 = BO.PivotRowColumnFieldType.Person
+                c.j75Level2 = BO.PivotRowColumnFieldType.p34Name
+                c.j75Level3 = BO.PivotRowColumnFieldType.p32Name
+            Case "p91"
+                c.j75Name = "Projekt->Sešit->Osoba"
+                c.j75Level1 = BO.PivotRowColumnFieldType.p41Name
                 c.j75Level2 = BO.PivotRowColumnFieldType.p34Name
                 c.j75Level3 = BO.PivotRowColumnFieldType.Person
             Case Else
@@ -104,16 +103,35 @@ Class j75DrillDownTemplateBL
 
         Dim lisCols As New List(Of BO.j76DrillDownTemplate_Item)
 
-        Dim row As New BO.j76DrillDownTemplate_Item
-        row.j76PivotSumFieldType = BO.PivotSumFieldType.p31Hours_Orig
-        lisCols.Add(row)
-        row = New BO.j76DrillDownTemplate_Item
-        row.j76PivotSumFieldType = BO.PivotSumFieldType.p31Hours_WIP
-        lisCols.Add(row)
-        row = New BO.j76DrillDownTemplate_Item
-        row.j76PivotSumFieldType = BO.PivotSumFieldType.p31Hours_Approved_Billing
-        lisCols.Add(row)
-
+        For i As Integer = 1 To intLevels
+            Dim row As New BO.j76DrillDownTemplate_Item
+            row.j76PivotSumFieldType = BO.PivotSumFieldType.p31Hours_Orig
+            row.j76Level = i
+            lisCols.Add(row)
+            row = New BO.j76DrillDownTemplate_Item
+            row.j76PivotSumFieldType = BO.PivotSumFieldType.p31Hours_WIP
+            row.j76Level = i
+            lisCols.Add(row)
+            row = New BO.j76DrillDownTemplate_Item
+            row.j76PivotSumFieldType = BO.PivotSumFieldType.p31Hours_Approved_Billing
+            row.j76Level = i
+            lisCols.Add(row)
+            If Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                row = New BO.j76DrillDownTemplate_Item
+                row.j76PivotSumFieldType = BO.PivotSumFieldType.p31Amount_HoursFee_WIP
+                row.j76Level = i
+                lisCols.Add(row)
+                row = New BO.j76DrillDownTemplate_Item
+                row.j76PivotSumFieldType = BO.PivotSumFieldType.Expenses_WIP
+                row.j76Level = i
+                lisCols.Add(row)
+                row = New BO.j76DrillDownTemplate_Item
+                row.j76PivotSumFieldType = BO.PivotSumFieldType.Fees_WIP
+                row.j76Level = i
+                lisCols.Add(row)
+            End If
+        Next
+        
         Return Save(c, lisCols, Nothing)
     End Function
 

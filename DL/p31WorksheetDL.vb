@@ -1121,12 +1121,24 @@
 
     Public Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
         Dim s As New System.Text.StringBuilder, x As Integer = 0
-        s.Append("SELECT " & groupCol.GroupByField & " AS pid")
+        s.Append("SELECT isnull(" & groupCol.GroupByField & ",0) AS pid")
         s.Append("," & groupCol.SelectField & "as group" & groupCol.FieldTypeID.ToString)
 
         For Each c In sumCols
             s.Append("," & c.SelectField & " AS col" & c.FieldTypeID.ToString)
         Next
+        Select Case groupCol.FieldType
+            Case BO.PivotRowColumnFieldType.Person
+                s.Append(",'j02' as prefix")
+            Case BO.PivotRowColumnFieldType.p41Name
+                s.Append(",'p41' as prefix")
+            Case BO.PivotRowColumnFieldType.p28Name
+                s.Append(",'p28' as prefix")
+            Case BO.PivotRowColumnFieldType.p56Name
+                s.Append(",'p56' as prefix")
+            Case Else
+                s.Append(",null as prefix")
+        End Select
         AppendSqlFROM_Pivot_Or_Drilldown(s)
         
         

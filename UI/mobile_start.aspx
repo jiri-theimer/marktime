@@ -10,42 +10,40 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
 
-    <div class="container">
+    <div class="container" >
        
         
         <ul class="nav nav-pills nav-stacked">
             <h3>
-                <asp:Label ID="lblWelcome" runat="server"></asp:Label><small>,vítejte v MARKTIME!</small>
+                <asp:Label ID="lblWelcome" runat="server"></asp:Label>
             </h3>
-            <li>
-                <a href="mobile_p31_calendar.aspx">
+            <li style="background-color:#25a0da;">
+                <a href="mobile_p31_calendar.aspx" style="color:white;">
                     <img src="Images/worksheet.png" />
-                    Worksheet</a>
+                    WORKSHEET</a>
             </li>
-            <li>
-                <div style="width: 100%; border-top: 1px; border-color: whitesmoke; height: 1px; border-style: solid;"></div>
-            </li>
+         
 
             <%If Master.Factory.SysUser.j04IsMenu_Project Then%>
-            <li>
-                <a href="mobile_grid.aspx?prefix=p41">
+            <li style="background-color:#25a0da;">
+                <a href="mobile_grid.aspx?prefix=p41" style="color:white;">
                     <img src="Images/project.png" />
-                    Projekty </a>
+                    PROJEKTY </a>
             </li>
             <%End If%>
-            <li>
+            <li style="margin-left:10px;">
                 <asp:HyperLink ID="linkLastProject" runat="server" Style="display: none;" NavigateUrl="mobile_p41_framework.aspx"></asp:HyperLink>
             </li>
             <li>
                 <div style="width: 100%; border-top: 1px; border-color: whitesmoke; height: 1px; border-style: solid;"></div>
             </li>
             <%If Master.Factory.SysUser.j04IsMenu_Contact Then%>
-            <li>
-                <a href="mobile_grid.aspx?prefix=p28">
+            <li style="background-color:#72c0e5;">
+                <a href="mobile_grid.aspx?prefix=p28" style="color:white;">
                     <img src="Images/contact.png" />
-                    Klienti</a>
+                    KLIENTI</a>
             </li>
-            <li>
+            <li style="margin-left:10px;">
                 <asp:HyperLink ID="linkLastClient" runat="server" Style="display: none;" NavigateUrl="mobile_p28_framework.aspx"></asp:HyperLink>
             </li>
             <li>
@@ -55,12 +53,12 @@
             <%End If%>
 
             <%If Master.Factory.SysUser.j04IsMenu_Invoice Then%>
-            <li>
-                <a href="mobile_grid.aspx?prefix=p91">
+            <li style="background-color:#25a0da;">
+                <a href="mobile_grid.aspx?prefix=p91" style="color:white;">
                     <img src="Images/invoice.png" />
-                    Faktury</a>
+                    FAKTURY</a>
             </li>
-            <li>
+            <li style="margin-left:10px;">
                 <asp:HyperLink ID="linkLastInvoice" runat="server" Style="display: none;" NavigateUrl="mobile_p91_framework.aspx"></asp:HyperLink>
             </li>
             <li>
@@ -68,24 +66,24 @@
             </li>
             <%End If%>
 
-            <li>
-                <a href="mobile_grid.aspx?prefix=p56">
+            <li style="background-color:#25a0da;">
+                <a href="mobile_grid.aspx?prefix=p56" style="color:white;">
                     <img src="Images/task.png" />
-                    Úkoly</a>
+                    ÚKOLY</a>
             </li>
 
             <%If Master.Factory.SysUser.j04IsMenu_Report Then%>
-            <li>
-                <a href="mobile_report.aspx">
+            <li style="background-color:#25a0da;">
+                <a href="mobile_report.aspx" style="color:white;">
                     <img src="Images/report.png" />
-                    Sestavy</a>
+                    SESTAVY</a>
             </li>
             <%End If%>
 
-            <li>
-                <a href="mobile_myprofile.aspx">
+            <li style="background-color:#25a0da;">
+                <a href="mobile_myprofile.aspx" style="color:white;">
                     <img src="Images/user.png" />
-                    Můj profil</a>
+                    MůJ PROFIL</a>
             </li>
         </ul>
     </div>

@@ -84,7 +84,7 @@ Public Class p41_framework_detail
                     Else
                         panSwitch.Style.Item("height") = strHeight & "px"
                     End If
-                    Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p41_framework_detail-subgrid", "1")), SubgridType)
+                    Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p41_framework_detail-subgrid", "-1")), SubgridType)
                     If Request.Item("force") = "comment" Then
                         Me.CurrentSubgrid = SubgridType.b07
                     End If
@@ -231,13 +231,17 @@ Public Class p41_framework_detail
         Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
         If lisO23.Count > 0 Then
             Me.boxO23.Visible = True
-            notepad1.RefreshData(lisO23, Master.DataPID)
             With Me.boxO23Title
                 .Text = BO.BAS.OM2(.Text, lisO23.Count.ToString)
                 If menu1.FindItemByValue("cmdO23").Visible Then
                     .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
+                    If lisO23.Count > 10 Then
+                        .Text += ", 10 nejnovějších:"
+                        lisO23 = lisO23.Take(10)
+                    End If
                 End If
             End With
+            notepad1.RefreshData(lisO23, Master.DataPID)
         Else
             Me.boxO23.Visible = False
         End If

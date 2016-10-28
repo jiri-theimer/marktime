@@ -42,7 +42,7 @@
             if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
                 hh=hh-10;
             }
-            
+            hh=hh-3;
             document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
         }
 
@@ -164,23 +164,23 @@
             }
         }
         function tasks(){            
-            window.open("p56_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            window.open("p56_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top");
             
         }
         function projects(){            
-            window.open("p41_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            window.open("p41_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top");
             
         }
         function invoices(){            
-            window.open("p91_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            window.open("p91_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top");
             
         }
         function childs(){            
-            window.open("p28_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            window.open("p28_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top");
             
         }
         function notepads(){            
-            window.open("o23_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
+            window.open("o23_framework.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top");
         }
         function p31_grid(){            
             window.open("p31_grid.aspx?masterprefix=p28&masterpid=<%=Master.DataPID%>","_top")
@@ -499,6 +499,7 @@
             <div class="title">
                 <img src="Images/project.png" style="margin-right: 10px;" />
                 <asp:Label ID="boxP41Title" runat="server" Text="Projekty"></asp:Label>
+                <asp:CheckBox ID="chkShowBoxP41" runat="server" AutoPostBack="true" Text="Plnit box názvy projektů" Checked="true" />
             </div>
             <asp:Panel ID="panProjects" runat="server" CssClass="content" Style="overflow: auto; max-height: 200px;">
 

@@ -221,13 +221,22 @@ Partial Public Class p31_drilldown
     Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidPath_Groups control.
+    '''hidMaxLevel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidPath_Groups As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidMaxLevel As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCurLevelIndex control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCurLevelIndex As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidPath_Pids control.

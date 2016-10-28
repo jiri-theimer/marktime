@@ -509,6 +509,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents boxP41Title As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''chkShowBoxP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkShowBoxP41 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''panProjects control.
     '''</summary>
     '''<remarks>

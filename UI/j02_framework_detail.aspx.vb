@@ -74,7 +74,7 @@ Public Class j02_framework_detail
                     Else
                         panSwitch.Style.Item("height") = strHeight & "px"
                     End If
-                    Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("j02_framework_detail-subgrid", "1")), SubgridType)
+                    Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("j02_framework_detail-subgrid", "-1")), SubgridType)
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
 

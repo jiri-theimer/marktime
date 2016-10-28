@@ -5,6 +5,8 @@ Public Class p28_framework_detail
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As SubForm
     Private Property _curProjectIndex As Integer
+    Private Property _curDocIndex As Integer
+
     Public Enum SubgridType
         summary = -1
         p31 = 1
@@ -47,17 +49,18 @@ Public Class p28_framework_detail
 
                 Dim lisPars As New List(Of String)
                 With lisPars
-
                     .Add("p28_framework_detail-pid")
                     .Add("p28_framework_detail-subgrid")
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail-switch")
                     .Add("p28_framework_detail-switchHeight")
+                    .Add("p28_framework_detail-chkShowBoxP41")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                 End With
                 With .Factory.j03UserBL
+                    Me.chkShowBoxP41.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkShowBoxP41", "1"))
                     panSwitch.Style.Item("display") = .GetUserParam("p28_framework_detail-switch", "block")
                     Dim strHeight As String = .GetUserParam("p28_framework_detail-switchHeight", "auto")
                     If strHeight = "auto" Then
@@ -65,7 +68,7 @@ Public Class p28_framework_detail
                     Else
                         panSwitch.Style.Item("height") = strHeight & "px"
                     End If
-                    Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p28_framework_detail-subgrid", "1")), SubgridType)
+                    Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p28_framework_detail-subgrid", "-1")), SubgridType)
                     If Master.DataPID = 0 Then
                         Master.DataPID = BO.BAS.IsNullInt(.GetUserParam("p28_framework_detail-pid", "O"))
                         If Master.DataPID = 0 Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p28")
@@ -202,13 +205,17 @@ Public Class p28_framework_detail
 
         If lisO23.Count > 0 Then
             Me.boxO23.Visible = True
-            notepad1.RefreshData(lisO23, Master.DataPID)
             With Me.boxO23Title
                 .Text = .Text & " (" & lisO23.Count.ToString & ")"
                 If menu1.FindItemByValue("cmdO23").Visible Then
                     .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
+                    If lisO23.Count > 10 Then
+                        .Text += ", 10 nejnovějších:"
+                        lisO23 = lisO23.Take(10)
+                    End If
                 End If
             End With
+            notepad1.RefreshData(lisO23, Master.DataPID)
         Else
             Me.boxO23.Visible = False
         End If
@@ -335,15 +342,16 @@ Public Class p28_framework_detail
     End Sub
 
     Private Sub RefreshProjectList(cRec As BO.p28Contact)
+
         Dim mq As New BO.myQueryP41
         mq.p28ID = cRec.PID
         mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
         mq.Closed = BO.BooleanQueryMode.NoQuery
 
 
-        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
+        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).OrderBy(Function(p) p.IsClosed).ThenByDescending(Function(p) p.PID)
         If lis.Count = 0 Then
-            boxP41.Visible = False
+            boxP41.Visible = False : Return
         Else
             boxP41.Visible = True
             Dim intClosed As Integer = lis.Where(Function(p) p.IsClosed = True).Count
@@ -362,7 +370,9 @@ Public Class p28_framework_detail
             End With
 
         End If
-        If lis.Count > 25 Then lis = lis.Take(26) 'omezit na maximálně 100+1
+        If Not Me.chkShowBoxP41.Checked Then Return
+
+        If lis.Count > 10 Then lis = lis.Take(11) 'omezit na maximálně 10+1
         rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
         rpP41.DataBind()
 
@@ -460,21 +470,23 @@ Public Class p28_framework_detail
                 .Text = cRec.p41Name
             End If
             .Text += " (" & cRec.p41Code & ")"
+            If cRec.IsClosed Then .Font.Strikeout = True : .ForeColor = Drawing.Color.Gray
             If Master.Factory.SysUser.j04IsMenu_Project Then
                 .NavigateUrl = "p41_framework.aspx?pid=" & cRec.PID.ToString
-            End If
-            If cRec.IsClosed Then .Font.Strikeout = True : .ForeColor = Drawing.Color.Gray
-            If _curProjectIndex > 25 Then
-                'poslední nad 25
-                .Text = "Všechny projekty klienta..."
-                .NavigateUrl = "javascript:projects()"
-                .ForeColor = Drawing.Color.Green
-                .Font.Bold = True
-                .Font.Strikeout = False
-                e.Item.FindControl("clue_project").Visible = False
+
+
+                If _curProjectIndex > 10 Then
+                    'poslední nad 10
+                    .Text = "Všechny projekty klienta>>"
+                    .NavigateUrl = "javascript:projects()"
+                    .Target = ""
+                    .ForeColor = Drawing.Color.Green
+                    .Font.Bold = True
+                    e.Item.FindControl("clue_project").Visible = False
+                End If
             End If
         End With
-        CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
+        If e.Item.FindControl("clue_project").Visible Then CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
 
 
     End Sub
@@ -485,4 +497,8 @@ Public Class p28_framework_detail
     End Sub
 
    
+    Private Sub chkShowBoxP41_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowBoxP41.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p28_framework_detail-chkShowBoxP41", BO.BAS.GB(Me.chkShowBoxP41.Checked))
+        ReloadPage(Master.DataPID.ToString)
+    End Sub
 End Class

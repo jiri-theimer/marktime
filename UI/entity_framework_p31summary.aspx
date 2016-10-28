@@ -2,11 +2,67 @@
 
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             window.parent.stoploading();
+
+            $(".slidingDiv1xx").hide();
+            $(".show_hide1xx").show();
+
+            $('.show_hide1xx').click(function () {
+                $(".slidingDiv1xx").slideToggle();
+            });
+
+
+            var iframeWidth = '100%';
+            var iframeHeight = '270';
+
+
+            $("a.reczoom").each(function () {
+
+                // Extract your variables here:
+                var $this = $(this);
+                var myurl = $this.attr('rel');
+
+                var mytitle = $this.attr('title');
+                if (mytitle == null)
+                    mytitle = 'Detail';
+
+
+                $this.qtip({
+                    content: {
+                        text: '<iframe scrolling=no src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                        title: {
+                            text: mytitle
+                        },
+
+                    },
+                    position: {
+                        my: 'top center',  // Position my top left...
+                        at: 'bottom center', // at the bottom right of...
+                        viewport: $(window)
+                    },
+
+                    hide: {
+
+                        fixed: true,
+                        delay: 100
+
+                    },
+                    style: {
+                        classes: 'qtip-tipped',
+                        width: 700,
+                        height: 300
+
+                    }
+                });
+            });
 
         });
         function periodcombo_setting() {
@@ -30,129 +86,173 @@
 
             window.parent.parent.sw_master("p91_create_step1.aspx?nogateway=1&prefix=<%=Me.CurrentMasterPrefix%>&pid=<%=Me.CurrentMasterPID%>", "Images/invoice_32.png", true);
         }
+        function querybuilder() {
+            var j70id = "<%=Me.CurrentJ70ID%>";
+            window.parent.sw_decide("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query_32.png");
+            return (false);
+        }
+
+        function drilldownbuilder() {
+            var j75id = "<%=Me.CurrentJ75ID%>";
+            window.parent.sw_decide("drilldown_designer.aspx?masterprefix=<%=me.currentmasterprefix%>&pid=" + j75id, "Images/drilldown_32.png");
+            return (false);
+        }
+
+        function RowSelected(sender, args) {
+            var pid = args.getDataKeyValue("pid");
+            document.getElementById("<%=hiddatapid.clientid%>").value = pid;
+
+        }
+
+        function drill(pid) {
+            if (pid == null || pid == "")
+                var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+
+            if (pid == "") {
+                alert("Chybí ID záznamu");
+                return;
+            }
+
+            hardrefresh(pid, "drill");
+        }
+
+        function RowDoubleClick(sender, args) {
+            drill();
+
+        }
+
+        function GetAllSelectedPIDs() {
+
+            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
+            var sel = masterTable.get_selectedItems();
+            var pids = "";
+
+            for (i = 0; i < sel.length; i++) {
+                if (pids == "")
+                    pids = sel[i].getDataKeyValue("pid");
+                else
+                    pids = pids + "," + sel[i].getDataKeyValue("pid");
+            }
+
+            return (pids);
+        }
+
+
+        function hardrefresh(pid, flag) {
+
+
+            document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
+            document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
+
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
+
+        }
+
+        function fullscreen(pid, prefix) {
+            window.open(prefix + "_framework.aspx?pid=" + pid, "_top");
+        }
+        function p31(pid, prefix) {
+            window.open("p31_grid.aspx?masterprefix=" + prefix + "&masterpid=" + pid, "_top");
+        }
+        function approve(pid, prefix) {
+            try {
+                window.parent.parent.sw_master("entity_modal_approving.aspx?prefix=" + prefix + "&pid=" + pid, "Images/approve_32.png", true);
+            }
+            catch (err) {
+                window.parent.sw_decide("entity_modal_approving.aspx?prefix=" + prefix + "&pid=" + pid, "Images/approve_32.png", true);
+            }
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="div6">
-        <uc:periodcombo ID="period1" runat="server" Width="300px"></uc:periodcombo>
-        <p></p>
+    <div style="background-color: white;">
+        <div style="float: left; background-color: white;">
+            <img src="Images/drilldown_32.png" />
 
-        <table border="1" class="tabulka" cellpadding="4" cellspacing="2">
-            <tr>
-                <td colspan="7" style="text-align: center; background-color: ThreeDFace;">Rozpracováno (čeká na schvalování)</td>
-            </tr>
-            <tr style="font-weight: bold;">
-                <td></td>
-                <td style="text-align: right;">Hodiny</td>
-                <td style="text-align: right;">Výdaje</td>
-                <td style="text-align: right;">Odměny</td>
-                <td style="text-align: right;">Celkem</td>
-                <td style="text-align: center;">#</td>
-                <td></td>
+        </div>
+        <div class="commandcell" style="margin-left: 10px;">
 
-            </tr>
-            <asp:Repeater ID="rpWaiting" runat="server">
-                <ItemTemplate>
-                    <tr>
-                        <td>
-                            <asp:Label ID="rozpracovano_j27Code" runat="server" Font-Bold="true"></asp:Label>
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="rozpracovano_hodiny" runat="server"></asp:Label>
+            <asp:DropDownList ID="j75ID" runat="server" AutoPostBack="true" DataTextField="j75Name" DataValueField="pid" Style="width: 200px;" ToolTip="DRILL-DOWN šablona"></asp:DropDownList>
+            <asp:ImageButton ID="cmdJ75" runat="server" OnClientClick="return drilldownbuilder()" ImageUrl="Images/griddesigner.png" ToolTip="Návrhář DRILL-DOWN šablon" CssClass="button-link" />
+        </div>
+        <div class="commandcell" style="padding-left: 20px;">
+            <uc:periodcombo ID="period1" runat="server" Width="150px"></uc:periodcombo>
+        </div>
+        <div class="commandcell" style="padding-left: 20px;">
+            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+            <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 160px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+            <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
+        </div>
+        <div class="commandcell" style="padding-left: 10px;">
+            <button type="button" id="cmdSetting" class="show_hide1xx" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface; height: 23px;" title="Více nastavení">
 
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="rozpracovano_vydaje" runat="server"></asp:Label>
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="rozpracovano_odmeny" runat="server"></asp:Label>
-
-                        </td>
-                        <td style="text-align: right;">
-                            <asp:Label ID="rozpracovano_celkem" runat="server"></asp:Label>
-
-                        </td>
-
-                        <td>
-                            <asp:Label ID="rozpracovano_pocet" CssClass="badgebox1red" runat="server"></asp:Label>
-                            <asp:Label ID="rozpracovano_obdobi" runat="server"></asp:Label>
-
-                        </td>
-                        <td>
-                            <asp:HyperLink ID="cmdApprove" runat="server" Text="Schválit (připravit k fakturaci)" NavigateUrl="javascript:p31_bs_approve_all()"></asp:HyperLink>
-
-
-                        </td>
-                    </tr>
-
-                </ItemTemplate>
-            </asp:Repeater>
-        </table>
+                <img src="Images/arrow_down.gif" alt="Nastavení" />
+            </button>
+        </div>
 
 
 
-        <asp:Panel ID="panApproved" runat="server" style="padding-top:10px;">
-            <table border="1" class="tabulka" cellpadding="4" cellspacing="2">
-                <tr>
-                    <td colspan="7" style="text-align: center; background-color: ThreeDFace;">Schváleno | Čeká na fakturaci</td>
-                </tr>
-                <tr style="font-weight: bold;">
-                    <td></td>
-                    <td style="text-align: right;">Hodiny</td>
-                    <td style="text-align: right;">Výdaje</td>
-                    <td style="text-align: right;">Odměny</td>
-                    <td style="text-align: right;">Celkem</td>
-                    <td style="text-align: center;">#</td>
-                    <td></td>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slidingDiv1xx" style="padding: 20px;">
+        <div class="div6">
+            <img src="Images/xls.png" alt="xls" />
+            <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS" />
 
-                </tr>
-                <asp:Repeater ID="rpApproved" runat="server">
-                    <ItemTemplate>
+            <img src="Images/pdf.png" alt="pdf" />
+            <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF" />
 
+            <img src="Images/doc.png" alt="doc" />
+            <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC" />
 
-                        <tr>
-                            <td>
-                                <asp:Label ID="schvaleno_j27Code" runat="server" Font-Bold="true"></asp:Label>
-                            </td>
-                            <td style="text-align: right;">
-                                <asp:Label ID="schvaleno_hodiny" runat="server"></asp:Label>
+        
 
-                            </td>
-                            <td style="text-align: right;">
-                                <asp:Label ID="schvaleno_vydaje" runat="server"></asp:Label>
-                            </td>
-                            <td style="text-align: right;">
-                                <asp:Label ID="schvaleno_odmeny" runat="server"></asp:Label>
-
-                            </td>
-                            <td style="text-align: right;">
-                                <asp:Label ID="schvaleno_celkem" runat="server"></asp:Label>
-
-                            </td>
-                            <td style="text-align: right;">
-                                <asp:Label ID="schvaleno_pocet" ForeColor="red" runat="server"></asp:Label>
-                                <asp:Label ID="schvaleno_obdobi" runat="server"></asp:Label>
-
-                            </td>
-                            <td>
-                                <asp:HyperLink ID="cmdReApprove" runat="server" Text="Pře-schválit" NavigateUrl="javascript:p31_bs_reapprove_all()"></asp:HyperLink>
-                                <asp:HyperLink ID="cmdClearApprove" runat="server" Text="Vrátit do rozpracovanosti" NavigateUrl="javascript:p31_bs_clearapprove_all()" ForeColor="DarkOrange"></asp:HyperLink>
-                                <asp:HyperLink ID="cmdInvoice" runat="server" Text="Vyfakturovat" NavigateUrl="javascript:p31_bs_invoice()" ForeColor="green"></asp:HyperLink>
-
-
-                            </td>
-
-                        </tr>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </table>
-        </asp:Panel>
+        <span style="margin-left:100px;">Stránkování:</span>
+        <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
+            <asp:ListItem Text="5"></asp:ListItem>
+            <asp:ListItem Text="10"></asp:ListItem>
+            <asp:ListItem Text="20" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="50"></asp:ListItem>
+            <asp:ListItem Text="100"></asp:ListItem>
+        </asp:DropDownList>
+        </div>
     </div>
 
+    <asp:Repeater ID="path1" runat="server">
+        <ItemTemplate>
+            <div style="float: left; text-align: center; width: 30px;">
+                <asp:Image ID="sipka" runat="server" ImageUrl="Images/arrow_right_dd_24.png"></asp:Image>
+            </div>
+            <div style="float: left;">
 
-    <asp:HiddenField ID="hidIsApprovingPerson" runat="server" />
-    <asp:HiddenField ID="hidIsInvoicingPerson" runat="server" />
+                <asp:LinkButton ID="link1" runat="server" CommandName="drill" Font-Bold="true"></asp:LinkButton>
 
-    <asp:HiddenField ID="hidMasterPrefix" runat="server" />
+                <asp:HiddenField ID="pid" runat="server" />
+                <asp:HiddenField ID="levelindex" runat="server" />
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
+    <div style="clear: both;"></div>
+
+    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
+
+    <asp:HiddenField ID="hidCols" runat="server" />
+
+    <asp:HiddenField ID="hidGroup" runat="server" />
+
+    <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
+    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
+    <asp:HiddenField ID="hidMasterPrefix" runat="server" Value="p31_drilldown" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
+    <asp:HiddenField ID="hiddatapid" runat="server" />
+    <asp:HiddenField ID="hidMaxLevel" runat="server" Value="1" />
+    <asp:HiddenField ID="hidCurLevelIndex" runat="server" />
+    <asp:HiddenField ID="hidPath_Pids" runat="server" />
+    <asp:HiddenField ID="hidPath_Names" runat="server" />
+    <asp:HiddenField ID="hidIsApprovingPerson" runat="server" />
+
+
+    <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+
 </asp:Content>
