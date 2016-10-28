@@ -41,6 +41,9 @@ Public Class p31_grid
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
             End If
+            If Request.Item("aw") <> "" Then
+                Me.hidMasterAW.Value = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
+            End If
             With Master
                 .PageTitle = "Worksheet datový přehled"
                 .SiteMenuValue = "cmdP31_Grid"
@@ -385,6 +388,7 @@ Public Class p31_grid
                 .DateFrom = period1.DateFrom
                 .DateUntil = period1.DateUntil
             End If
+            .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
         End With
     End Sub
 

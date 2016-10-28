@@ -230,6 +230,15 @@ Partial Public Class entity_framework_p31summary
     Protected WithEvents hidIsApprovingPerson As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidAdditionalWhere control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidAdditionalWhere As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdRefresh control.
     '''</summary>
     '''<remarks>

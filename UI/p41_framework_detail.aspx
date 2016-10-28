@@ -35,7 +35,7 @@
             if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
                 hh=hh-10;
             }
-            hh=hh-3;
+            hh=hh-4;
             document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
         }
 

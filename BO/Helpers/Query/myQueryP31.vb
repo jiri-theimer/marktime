@@ -55,4 +55,6 @@ Public Class myQueryP31
     Public Property QuickQuery As myQueryP31_QuickQuery = myQueryP31_QuickQuery._NotSpecified
     Public Property SpecificQuery As myQueryP31_SpecificQuery = myQueryP31_SpecificQuery._NotSpecified
     Public Property j02ID_ExplicitQueryFor As Integer
+
+
 End Class

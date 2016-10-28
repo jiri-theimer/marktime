@@ -301,6 +301,7 @@
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
+    <asp:HiddenField ID="hidMasterAW" runat="server" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

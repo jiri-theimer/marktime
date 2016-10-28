@@ -151,15 +151,25 @@
         function fullscreen(pid, prefix) {
             window.open(prefix + "_framework.aspx?pid=" + pid, "_top");
         }
-        function p31(pid, prefix) {
-            window.open("p31_grid.aspx?masterprefix=" + prefix + "&masterpid=" + pid, "_top");
+        function p31(pid) {
+            var aw = document.getElementById("<%=Me.hidAdditionalWhere.ClientID%>").value;
+            if (aw == "")
+                aw="<%=Me.CurrentLevel.GroupByField%>=" + pid;
+            else
+                aw = aw + " AND <%=Me.CurrentLevel.GroupByField%>=" + pid;
+
+            var aw = encodeURI(aw);
+
+            window.open("p31_grid.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&aw="+aw, "_top");
         }
         function approve(pid, prefix) {
+            var aw = document.getElementById("<%=Me.hidAdditionalWhere.ClientID%>").value;
+
             try {
-                window.parent.parent.sw_master("entity_modal_approving.aspx?prefix=" + prefix + "&pid=" + pid, "Images/approve_32.png", true);
+                window.parent.parent.sw_master("entity_modal_approving.aspx?prefix=" + prefix+"&aw="+aw + "&pid=" + pid, "Images/approve_32.png", true);
             }
             catch (err) {
-                window.parent.sw_decide("entity_modal_approving.aspx?prefix=" + prefix + "&pid=" + pid, "Images/approve_32.png", true);
+                window.parent.sw_decide("entity_modal_approving.aspx?prefix=" + prefix + "&pid=" + pid+"&aw="+aw, "Images/approve_32.png", true);
             }
 
         }
@@ -251,7 +261,7 @@
     <asp:HiddenField ID="hidPath_Pids" runat="server" />
     <asp:HiddenField ID="hidPath_Names" runat="server" />
     <asp:HiddenField ID="hidIsApprovingPerson" runat="server" />
-
+    <asp:HiddenField ID="hidAdditionalWhere" runat="server" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

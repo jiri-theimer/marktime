@@ -418,6 +418,9 @@
                 s.Append(" OR j02.j02LastName LIKE '%'+@expr+'%')")
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
+            If Not String.IsNullOrEmpty(.MG_AdditionalSqlWHERE) Then
+                s.Append(" AND " & .MG_AdditionalSqlWHERE)
+            End If
         End With
 
         Return bas.TrimWHERE(s.ToString)

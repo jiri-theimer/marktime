@@ -66,7 +66,7 @@ Public Class entity_framework_p31summary
             basUI.SelectDropdownlistValue(Me.j75ID, value.ToString)
         End Set
     End Property
-    Private ReadOnly Property CurrentLevel As BO.PivotRowColumnField
+    Public ReadOnly Property CurrentLevel As BO.PivotRowColumnField
         Get
             If hidGroup.Value = "" Then Return Nothing
             Dim ft As BO.PivotRowColumnFieldType = CType(CInt(Me.hidGroup.Value), BO.PivotRowColumnFieldType)
@@ -372,16 +372,18 @@ Public Class entity_framework_p31summary
             End With
         End If
 
-        
-        If Not cRec.Item("prefix") Is System.DBNull.Value Then
-            With dataItem("p31")
-                .Text = "<a href=" & Chr(34) & "javascript:p31(" & cRec.Item("pid").ToString & ",'" & cRec.Item("prefix") & "')" & Chr(34) & "><img src='Images/worksheet.png' title='Přehled zdrojových worksheet úkonů'></a>"
+
+
+        ''If Not cRec.Item("prefix") Is System.DBNull.Value Then
+        With dataItem("p31")
+            .Text = "<a href=" & Chr(34) & "javascript:p31(" & cRec.Item("pid").ToString & ")" & Chr(34) & "><img src='Images/worksheet.png' title='Přehled zdrojových worksheet úkonů'></a>"
+        End With
+        If Me.IsApprovingPerson Then
+            With dataItem("approve")
+                .Text = "<a href=" & Chr(34) & "javascript:approve(" & Me.CurrentMasterPID.ToString & ",'" & Me.CurrentMasterPrefix & "')" & Chr(34) & " title='Schvalovat nebo fakturovat'><img src='Images/approve.png'></a>"
             End With
-            If Me.IsApprovingPerson Then
-                With dataItem("approve")
-                    .Text = "<a href=" & Chr(34) & "javascript:approve(" & cRec.Item("pid").ToString & ",'" & cRec.Item("prefix") & "')" & Chr(34) & " title='Schvalovat nebo fakturovat'><img src='Images/approve.png'></a>"
-                End With
-            End If
+        End If
+        If Not cRec.Item("prefix") Is System.DBNull.Value Then
             Dim b As Boolean = False
             Select Case cRec.Item("prefix")
                 Case "p41"
@@ -398,9 +400,11 @@ Public Class entity_framework_p31summary
                     .Text = "<a href=" & Chr(34) & "javascript:fullscreen(" & cRec.Item("pid").ToString & ",'" & cRec.Item("prefix") & "')" & Chr(34) & " title='Přejít na detail entity'><img src='Images/fullscreen.png'></a>"
                 End With
             End If
-           
         End If
         
+
+        ''End If
+
     End Sub
 
 
@@ -414,8 +418,9 @@ Public Class entity_framework_p31summary
         InhaleMyQuery(mq)
 
         If Me.CurrentLevelIndex < Me.MaxLevelIndex Then grid1.OnRowDblClick = "RowDoubleClick" Else grid1.OnRowDblClick = ""
+        Me.hidAdditionalWhere.Value = GetParentSqlWhere(cRec)
 
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(Me.CurrentLevel, Me.CurrentSumFields, GetParentSqlWhere(cRec), mq)
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(Me.CurrentLevel, Me.CurrentSumFields, Me.hidAdditionalWhere.Value, mq)
         grid1.DataSourceDataTable = dt
 
         If dt.Rows.Count > 1 Then
@@ -434,8 +439,8 @@ Public Class entity_framework_p31summary
         Else
             grid1.radGridOrig.ShowFooter = False
         End If
-
-
+       
+        '' Me.hidAdditionalWhere.Value = Server.UrlEncode(Replace(Me.hidAdditionalWhere.Value, "=", "xxx"))
     End Sub
 
     Private Sub grid1_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles grid1.NeedFooterSource

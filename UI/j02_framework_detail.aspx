@@ -32,7 +32,7 @@
             if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
                 hh=hh-10;
             }
-            hh=hh-3;
+            hh=hh-4;
             <%if Me.fraSubform.Visible then%>
             document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
             <%end If%>

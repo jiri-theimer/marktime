@@ -101,7 +101,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-    <a href="p31_drilldown.aspx">DRILL-DOWN</a>
+    
     <div style="padding: 10px; background-color: white;">
         <div style="float: left;">
             <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>

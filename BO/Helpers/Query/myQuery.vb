@@ -32,6 +32,7 @@ Public Class myQuery
     Public Property MG_SortString As String
     Public Property MG_PageMovePrevOnly As Boolean          'zda vyrobit rychlý SQL pro grid, kde lze pohybovat pouze dopředu a dozadu o po stránce
     Public Property MG_AdditionalSqlFROM As String          'rozšíření FROM SQL klauzule
+    Public Property MG_AdditionalSqlWHERE As String         'dodatečná WHERE klauzule
     Public Property MG_GridSqlColumns As String             'sloupce v gridu
     Public Property MG_GridGroupByField As String           'pole souhrnů v gridu
 
