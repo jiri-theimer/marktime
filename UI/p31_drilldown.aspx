@@ -3,17 +3,14 @@
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-        <link rel="stylesheet" type="text/css" href="Scripts/datatable/css/jquery.dataTables.min.css" />
-    <style type="text/css">
-        .numericCol{
-  float:right;
-}
-    </style>
-    <script type="text/javascript" src="Scripts/datatable/jquery.dataTables.min.js"></script>
+       
+
+        
 
     <script type="text/javascript">
         
@@ -21,23 +18,7 @@
         $(document).ready(function () {
 
             
-            oTable1 = $('#tabData').dataTable({
-                bPaginate: true,
-                bFilter: true,
-                pageLength: 50,
-                bStateSave: true,
-                bSort: true,
-              
-
-
-                oLanguage: {
-                    sUrl: 'Scripts/datatable/cs_CZ.txt'
-
-                }
-
-
-            });
-     
+           
 
             
             
@@ -74,9 +55,54 @@
             return (false);
         }
 
+        function RowSelected(sender, args) {
+            var pid = args.getDataKeyValue("pid");
+            document.getElementById("<%=hiddatapid.clientid%>").value = pid;
 
+        }
+
+        function drill(pid) {
+            if (pid==null || pid=="")
+                var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+
+            if (pid == "") {
+                alert("Chybí ID záznamu");
+                return;
+            }
+
+            hardrefresh(pid, "drill");
+        }
+
+        function RowDoubleClick(sender, args) {
+            drill();
+        }
+
+        function GetAllSelectedPIDs() {
+
+            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
+            var sel = masterTable.get_selectedItems();
+            var pids = "";
+
+            for (i = 0; i < sel.length; i++) {
+                if (pids == "")
+                    pids = sel[i].getDataKeyValue("pid");
+                else
+                    pids = pids + "," + sel[i].getDataKeyValue("pid");
+            }
+
+            return (pids);
+        }
         
 
+        function hardrefresh(pid, flag) {
+
+            
+            document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
+            document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
+
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -119,84 +145,48 @@
     <div class="div6">
         <asp:Label ID="lblJ75ID" runat="server" Text="DRILL-DOWN šablona:"></asp:Label>
         <asp:DropDownList ID="j75ID" runat="server" AutoPostBack="true" DataTextField="j75Name" DataValueField="pid" Style="width: 200px;" ToolTip="DRILL-DOWN šablona"></asp:DropDownList>
-        <asp:ImageButton ID="cmdJ75" runat="server" OnClientClick="return drilldownbuilder()" ImageUrl="Images/drilldown.png" ToolTip="Návrhář DRILL-DOWN šablon" CssClass="button-link" />
+        <asp:ImageButton ID="cmdJ75" runat="server" OnClientClick="return drilldownbuilder()" ImageUrl="Images/griddesigner.png" ToolTip="Návrhář DRILL-DOWN šablon" CssClass="button-link" />
     </div>
 
 
     <asp:Button ID="cmdPokus" runat="server" Text="Run" />
 
-    <table id="tabData" class="display" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>pid</th>
-                <asp:Repeater ID="rpH" runat="server">
-                    <ItemTemplate>
-                        <th>
-                            <asp:Label ID="lbl1" runat="server"></asp:Label>
-                        </th>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <td>pid</td>
-                <asp:Repeater ID="rpF" runat="server">
-                    <ItemTemplate>
-                        <td align="right">
-                            <asp:Label ID="lbl1" runat="server"></asp:Label>
-                        </td>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </tr>
+    <asp:Repeater ID="path1" runat="server">
+        <ItemTemplate>
+            <div style="float:left;text-align:center;width:30px;">
+                <asp:image ID="sipka" runat="server" ImageUrl="Images/arrow_right_dd_24.png"></asp:image>
+            </div>
+            <div style="float:left;">
+                
+                <asp:LinkButton ID="link1" runat="server" CommandName="drill" Font-Bold="true"></asp:LinkButton>
+                
+                <asp:HiddenField ID="pid" runat="server" />
+                <asp:HiddenField ID="levelindex" runat="server" />
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
+    <div style="clear:both;"></div>
 
-        </tfoot>
-        <tbody>
-            <asp:Repeater ID="rpData" runat="server">
-                <ItemTemplate>
-                    <tr>
-                        <td>
-                            <asp:HiddenField ID="pid" runat="server" />
-                        </td>
-                        <td>
-                            <asp:Label ID="lbl0" runat="server"></asp:Label>
-                        </td>
-                        <asp:Repeater ID="rp1" runat="server">
-                            <ItemTemplate>
-                                <td align="right">
-                                    <asp:Label ID="lbl1" runat="server"></asp:Label>
-                                </td>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </tr>
-                </ItemTemplate>
-            </asp:Repeater>
-        </tbody>
-    </table>
+       <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
-    <asp:Button ID="cmdPostback" runat="server" Text="Postback" />
-
-    <asp:HiddenField ID="hidCols1" runat="server" />
-    <asp:HiddenField ID="hidCols2" runat="server" />
-    <asp:HiddenField ID="hidCols3" runat="server" />
-    <asp:HiddenField ID="hidCols4" runat="server" />
-    <asp:HiddenField ID="hidGroup1" runat="server" />
-    <asp:HiddenField ID="hidGroup2" runat="server" />
-    <asp:HiddenField ID="hidGroup3" runat="server" />
-    <asp:HiddenField ID="hidGroup4" runat="server" />
+    <asp:HiddenField ID="hidCols" runat="server" />
+   
+    <asp:HiddenField ID="hidGroup" runat="server" />
+   
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" Value="p31_drilldown" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hiddatapid" runat="server" />
-    <asp:HiddenField ID="hidSelPID1" runat="server" />
-    <asp:HiddenField ID="hidSelPID2" runat="server" />
-    <asp:HiddenField ID="hidSelPID3" runat="server" />
+    <asp:HiddenField ID="hidPath_Groups" runat="server" />
+    <asp:HiddenField ID="hidPath_Pids" runat="server" />
+    <asp:HiddenField ID="hidPath_Names" runat="server" />
+
 
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
-
+    <asp:Button ID="cmdPostback" runat="server" Text="Postback" />
 
 
     

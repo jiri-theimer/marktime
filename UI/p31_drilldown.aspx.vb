@@ -2,8 +2,7 @@
 Public Class p31_drilldown
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
-    Private _lisCols As List(Of ddColumn)
-
+    Private Property _lisCols As List(Of ddColumn)
 
     Private Class ddColumn
         Public Property Header As String
@@ -11,6 +10,7 @@ Public Class p31_drilldown
         Public Property SqlSELECT As String
         Public Property SqlGROUPBY As String
         Public Property Total As Double = 0
+        Public Property FieldTypeID As Integer
 
         Public Sub New(strHeader As String, colFormat As BO.cfENUM, strSqlSelect As String, strSqlGroupBy As String)
             Me.Header = strHeader
@@ -18,6 +18,11 @@ Public Class p31_drilldown
             Me.SqlSELECT = strSqlSelect
             Me.SqlGROUPBY = strSqlGroupBy
         End Sub
+    End Class
+    Private Class ddPath
+        Public Property Name As String
+        Public Property PID As String
+        Public Property LevelIndex As Integer
     End Class
    
     Public Property CurrentJ70ID As Integer
@@ -61,7 +66,47 @@ Public Class p31_drilldown
             basUI.SelectDropdownlistValue(Me.j75ID, value.ToString)
         End Set
     End Property
-
+    Private ReadOnly Property CurrentLevel As BO.PivotRowColumnField
+        Get
+            If hidGroup.Value = "" Then Return Nothing
+            Dim ft As BO.PivotRowColumnFieldType = CType(CInt(Me.hidGroup.Value), BO.PivotRowColumnFieldType)
+            Return New BO.PivotRowColumnField(ft)
+        End Get
+    End Property
+    Private ReadOnly Property CurrentLevelIndex As Integer
+        Get
+            If Me.hidPath_Pids.Value = "" Then Return 1
+            Dim a() As String = Split(Me.hidPath_Pids.Value, "->")
+            Return UBound(a) + 2
+        End Get
+    End Property
+    Private ReadOnly Property CurrentSumFields As List(Of BO.PivotSumField)
+        Get
+            Dim lis As New List(Of BO.PivotSumField), a() As String = Split(Me.hidCols.Value, ",")
+            For i As Integer = 1 To UBound(a)
+                lis.Add(New BO.PivotSumField(CType(a(i), BO.PivotSumFieldType)))
+            Next
+            Return lis
+        End Get
+    End Property
+    Private ReadOnly Property CurrentDDFields As List(Of ddColumn)
+        Get
+            Dim lis As New List(Of ddColumn), a() As String = Split(Me.hidCols.Value, ",")
+            For i = 0 To 0
+                Dim c As New BO.PivotRowColumnField(CType(a(i), BO.PivotRowColumnFieldType))
+                Dim cc As New ddColumn(c.Caption, c.FieldType, c.SelectField, c.GroupByField)
+                cc.FieldTypeID = c.FieldTypeID
+                lis.Add(cc)
+            Next
+            For i As Integer = 1 To UBound(a)
+                Dim c As New BO.PivotSumField(CType(a(i), BO.PivotSumFieldType))
+                Dim cc As New ddColumn(c.Caption, c.ColumnType, c.SelectField, "")
+                cc.FieldTypeID = c.FieldTypeID
+                lis.Add(cc)
+            Next
+            Return lis
+        End Get
+    End Property
     Protected Overrides Sub OnInit(e As EventArgs)
         MyBase.OnInit(e)
 
@@ -186,60 +231,7 @@ Public Class p31_drilldown
     End Sub
 
     
-    Private Sub SetupGrid()
-        Dim cRec As BO.j75DrillDownTemplate = Master.Factory.j75DrillDownTemplateBL.Load(Me.CurrentJ75ID)
-        Dim lisJ76 As IEnumerable(Of BO.j76DrillDownTemplate_Item) = Master.Factory.j75DrillDownTemplateBL.GetList_j76(cRec.PID)
-        Dim lisLevel As List(Of BO.PivotRowColumnField) = Master.Factory.j75DrillDownTemplateBL.LevelPallete()
-        Dim lisAllSumCols As List(Of BO.PivotSumField) = Master.Factory.j75DrillDownTemplateBL.ColumnsPallete()
-        Dim level1 As BO.PivotRowColumnField = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level1).First
-
-
-
-        Me.hidGroup1.Value = level1.FieldTypeID.ToString
-        For Each c In lisJ76.Where(Function(p) p.j76Level = 1)
-            Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
-            If Not col Is Nothing Then
-                Me.hidCols1.Value = BO.BAS.OM4(hidCols1.Value, col.FieldTypeID.ToString)
-            End If
-        Next
-
-        If Not cRec.j75Level2 Is Nothing Then
-            Dim level2 As BO.PivotRowColumnField = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level2).First
-           
-            Me.hidGroup2.Value = level2.FieldTypeID.ToString
-            For Each c In lisJ76.Where(Function(p) p.j76Level = 2)
-                Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
-                If Not col Is Nothing Then
-                    Me.hidCols2.Value = BO.BAS.OM4(hidCols2.Value, col.FieldTypeID.ToString)
-                End If
-            Next
-        End If
-        If Not cRec.j75Level3 Is Nothing Then
-            Dim level3 As BO.PivotRowColumnField = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level3).First
-
-            Me.hidGroup3.Value = level3.FieldTypeID.ToString
-            For Each c In lisJ76.Where(Function(p) p.j76Level = 3)
-                Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
-                If Not col Is Nothing Then
-                    Me.hidCols3.Value = BO.BAS.OM4(hidCols3.Value, col.FieldTypeID.ToString)
-                End If
-            Next
-        End If
-        If Not cRec.j75Level4 Is Nothing Then
-            Dim level4 As BO.PivotRowColumnField = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level3).First
-
-            Me.hidGroup4.Value = level4.FieldTypeID.ToString
-            For Each c In lisJ76.Where(Function(p) p.j76Level = 3)
-                Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
-                If Not col Is Nothing Then
-                    Me.hidCols3.Value = BO.BAS.OM4(hidCols3.Value, col.FieldTypeID.ToString)
-                End If
-            Next
-        End If
-
-
-    End Sub
-
+    
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
         With mq
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
@@ -261,83 +253,84 @@ Public Class p31_drilldown
         End With
     End Sub
 
-    Private Sub Handle_DrillDown(strPID As String, strLevel As String)
+    ''Private Sub Handle_DrillDown(strPID As String, strLevel As String)
 
-        Dim mq As New BO.myQueryP31
-        InhaleMyQuery(mq)
+    ''    Dim mq As New BO.myQueryP31
+    ''    InhaleMyQuery(mq)
 
-        Dim groupCurCol As BO.PivotRowColumnField = Nothing
-        Dim strCurCols As String = hidCols2.Value
+    ''    Dim groupCurCol As BO.PivotRowColumnField = Nothing
+    ''    Dim strCurCols As String = hidCols2.Value
 
-        Dim groupCol1 As New BO.PivotRowColumnField(CType(Me.hidGroup1.Value, BO.PivotRowColumnFieldType))
+    ''    Dim groupCol1 As New BO.PivotRowColumnField(CType(Me.hidGroup1.Value, BO.PivotRowColumnFieldType))
 
-        Dim groupCol2 As BO.PivotRowColumnField = Nothing
-        If hidGroup2.Value <> "" Then groupCol2 = New BO.PivotRowColumnField(CType(Me.hidGroup2.Value, BO.PivotRowColumnFieldType))
-        Dim groupCol3 As BO.PivotRowColumnField = Nothing
-        If hidGroup3.Value <> "" Then groupCol3 = New BO.PivotRowColumnField(CType(Me.hidGroup3.Value, BO.PivotRowColumnFieldType))
-        Dim groupCol4 As BO.PivotRowColumnField = Nothing
-        If Me.hidGroup4.Value <> "" Then groupCol4 = New BO.PivotRowColumnField(CType(Me.hidGroup4.Value, BO.PivotRowColumnFieldType))
+    ''    Dim groupCol2 As BO.PivotRowColumnField = Nothing
+    ''    If hidGroup2.Value <> "" Then groupCol2 = New BO.PivotRowColumnField(CType(Me.hidGroup2.Value, BO.PivotRowColumnFieldType))
+    ''    Dim groupCol3 As BO.PivotRowColumnField = Nothing
+    ''    If hidGroup3.Value <> "" Then groupCol3 = New BO.PivotRowColumnField(CType(Me.hidGroup3.Value, BO.PivotRowColumnFieldType))
+    ''    Dim groupCol4 As BO.PivotRowColumnField = Nothing
+    ''    If Me.hidGroup4.Value <> "" Then groupCol4 = New BO.PivotRowColumnField(CType(Me.hidGroup4.Value, BO.PivotRowColumnFieldType))
 
-        Dim strParentSqlWhere As String = ""
+    ''    Dim strParentSqlWhere As String = ""
 
-        Select Case strLevel
-            Case "level2"
-                groupCurCol = groupCol2
-                strCurCols = hidCols2.Value
-                hidSelPID1.Value = strPID
-                strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value
-            Case "level3"
-                groupCurCol = groupCol3
-                strCurCols = hidCols3.Value
-                hidSelPID2.Value = strPID
-                strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value & " AND " & groupCol2.GroupByField & "=" & hidSelPID2.Value
-            Case "level4"
-                groupCurCol = groupCol4
-                strCurCols = hidCols4.Value
-                hidSelPID3.Value = strPID
-                strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value & " AND " & groupCol2.GroupByField & "=" & hidSelPID2.Value & " AND " & groupCol3.GroupByField & "=" & hidSelPID3.Value
-            Case Else
-                Return
-        End Select
+    ''    Select Case strLevel
+    ''        Case "level2"
+    ''            groupCurCol = groupCol2
+    ''            strCurCols = hidCols2.Value
+    ''            hidSelPID1.Value = strPID
+    ''            strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value
+    ''        Case "level3"
+    ''            groupCurCol = groupCol3
+    ''            strCurCols = hidCols3.Value
+    ''            hidSelPID2.Value = strPID
+    ''            strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value & " AND " & groupCol2.GroupByField & "=" & hidSelPID2.Value
+    ''        Case "level4"
+    ''            groupCurCol = groupCol4
+    ''            strCurCols = hidCols4.Value
+    ''            hidSelPID3.Value = strPID
+    ''            strParentSqlWhere = groupCol1.GroupByField & "=" & hidSelPID1.Value & " AND " & groupCol2.GroupByField & "=" & hidSelPID2.Value & " AND " & groupCol3.GroupByField & "=" & hidSelPID3.Value
+    ''        Case Else
+    ''            Return
+    ''    End Select
 
 
-        Dim lis As New List(Of BO.PivotSumField)
-        For Each s In Split(strCurCols, ",")
-            lis.Add(New BO.PivotSumField(CType(s, BO.PivotSumFieldType)))
-        Next
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(groupCurCol, lis, strParentSqlWhere, mq)
+    ''    Dim lis As New List(Of BO.PivotSumField)
+    ''    For Each s In Split(strCurCols, ",")
+    ''        lis.Add(New BO.PivotSumField(CType(s, BO.PivotSumFieldType)))
+    ''    Next
+    ''    Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(groupCurCol, lis, strParentSqlWhere, mq)
 
-    End Sub
+    ''End Sub
 
-    Private Sub Handle_MasterTable()
-        Dim mq As New BO.myQueryP31
-        InhaleMyQuery(mq)
-
-        Dim groupCol As New BO.PivotRowColumnField(CType(Me.hidGroup1.Value, BO.PivotRowColumnFieldType))
-        Dim lis As New List(Of BO.PivotSumField)
-        For Each s In Split(Me.hidCols1.Value, ",")
-            lis.Add(New BO.PivotSumField(CType(s, BO.PivotSumFieldType)))
-        Next
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(groupCol, lis, "", mq)
-        hidSelPID1.Value = "" : hidSelPID2.Value = "" : hidSelPID3.Value = ""
-
-        rpData.DataSource = dt
-        rpData.DataBind()
-
-    End Sub
-
+    
     
     
     Private Sub cmdPokus_Click(sender As Object, e As EventArgs) Handles cmdPokus.Click
-        FillData(1)
+        SetupData(1)
+        grid1.Rebind(False)
     End Sub
 
-    
+    Private Function GetParentSqlWhere(cRec As BO.j75DrillDownTemplate) As String
+        If hidPath_Pids.Value = "" Then Return ""
+        Dim parpids() As String = Split(hidPath_Pids.Value, "->"), lis As New List(Of String)
+        For i As Integer = 0 To UBound(parpids)
+            Dim strGF As String = ""
+            Select Case i
+                Case 0 : strGF = InhaleLevel(cRec.j75Level1).GroupByField
+                Case 1 : strGF = InhaleLevel(cRec.j75Level2).GroupByField
+                Case 2 : strGF = InhaleLevel(cRec.j75Level3).GroupByField
+            End Select
+            If parpids(i) = "0" Then
+                lis.Add(strGF & " IS NULL")
+            Else
+                lis.Add(strGF & " = " & parpids(i))
+            End If
 
-    Private Sub FillData(intLevel As Integer)
-        Dim mq As New BO.myQueryP31
-        InhaleMyQuery(mq)
+        Next
+        Return String.Join(" AND ", lis)
+    End Function
 
+    Private Sub SetupData(intLevel As Integer)
+        Me.hidCols.Value = "" : Me.hidGroup.Value = ""
         Dim cRec As BO.j75DrillDownTemplate = Master.Factory.j75DrillDownTemplateBL.Load(Me.CurrentJ75ID)
         Dim lisAllSumCols As List(Of BO.PivotSumField) = Master.Factory.j75DrillDownTemplateBL.ColumnsPallete()
         Dim lisLevel As List(Of BO.PivotRowColumnField) = Master.Factory.j75DrillDownTemplateBL.LevelPallete()
@@ -350,6 +343,7 @@ Public Class p31_drilldown
             Case 2
                 If cRec.j75Level2 Is Nothing Then Return
                 level = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level2).First
+
             Case 3
                 If cRec.j75Level3 Is Nothing Then Return
                 level = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level3).First
@@ -357,99 +351,202 @@ Public Class p31_drilldown
                 If cRec.j75Level4 Is Nothing Then Return
                 level = lisLevel.Where(Function(p) p.FieldType = cRec.j75Level4).First
         End Select
-
+        Me.hidGroup.Value = level.FieldTypeID.ToString
 
         _lisCols = New List(Of ddColumn)
-        Dim lisSums As New List(Of BO.PivotSumField)
-        _lisCols.Add(New ddColumn(level.Caption, BO.cfENUM.AnyString, level.SelectField, level.GroupByField))
+        Dim cc As New ddColumn(level.Caption, BO.cfENUM.AnyString, level.SelectField, level.GroupByField)
+        cc.FieldTypeID = level.FieldTypeID
+        _lisCols.Add(cc)
 
         Dim lisJ76 As IEnumerable(Of BO.j76DrillDownTemplate_Item) = Master.Factory.j75DrillDownTemplateBL.GetList_j76(Me.CurrentJ75ID)
         For Each c In lisJ76.Where(Function(p) p.j76Level = intLevel)
             Dim col As BO.PivotSumField = lisAllSumCols.First(Function(p) p.FieldTypeID = c.j76PivotSumFieldType)
             If Not col Is Nothing Then
-                _lisCols.Add(New ddColumn(col.Caption, col.ColumnType, col.SelectField, ""))
-                lisSums.Add(col)
+                cc = New ddColumn(col.Caption, col.ColumnType, col.SelectField, "")
+                cc.FieldTypeID = col.FieldTypeID
+                _lisCols.Add(cc)
             End If
         Next
 
-        rpH.DataSource = _lisCols
-        rpH.DataBind()
+        With grid1
+            .ClearColumns()
+            .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
+            .radGridOrig.ShowFooter = True
+            .DataKeyNames = "pid"
+            .AllowMultiSelect = True
+            .AddSystemColumn(16)
+            .AddSystemColumn(16, "p31")
+            .AddSystemColumn(16, "approve")
+
+
+            For Each c In _lisCols
+                Dim strDbField As String = "col" & c.FieldTypeID.ToString
+                If c.SqlGROUPBY <> "" Then strDbField = "group" & c.FieldTypeID.ToString
+
+                .AddColumn(strDbField, c.Header, c.ColumnFormat, , , , , IIf(c.ColumnFormat = BO.cfENUM.Numeric2, True, False), False)
+                If c.ColumnFormat = BO.cfENUM.Numeric2 Then
+                    .radGridOrig.MasterTableView.Columns.FindByDataField("col" & c.FieldTypeID.ToString).HeaderStyle.HorizontalAlign = HorizontalAlign.Right
+                End If
+
+                Me.hidCols.Value = BO.BAS.OM4(hidCols.Value, c.FieldTypeID.ToString)
+            Next
+
+        End With
+
+        RenderPath()
+
+    End Sub
+
+    Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
+        If Not TypeOf e.Item Is GridDataItem Then Return
+        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        Dim cRec As DataRowView = CType(e.Item.DataItem, DataRowView)
+        With dataItem("systemcolumn")
+            .Text = "<a href='javascript:drill(" & cRec.Item("pid").ToString & ")'><img src='Images/arrow_right_dd.png'></a>"
+        End With
+        With dataItem("p31")
+            .Text = "<a href='javascript:p31(" & cRec.Item("pid").ToString & ")'><img src='Images/worksheet.png'></a>"
+        End With
+        With dataItem("approve")
+            .Text = "<a href='javascript:approve(" & cRec.Item("pid").ToString & ")'><img src='Images/approve.png'></a>"
+        End With
+    End Sub
+
+    
+
+
+    Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If Me.CurrentLevel Is Nothing Then Return
+        Dim cRec As BO.j75DrillDownTemplate = Master.Factory.j75DrillDownTemplateBL.Load(Me.CurrentJ75ID)
+
+        Dim mq As New BO.myQueryP31
+        InhaleMyQuery(mq)
+
+
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(Me.CurrentLevel, Me.CurrentSumFields, GetParentSqlWhere(cRec), mq)
+        grid1.DataSourceDataTable = dt
+
+        If dt.Rows.Count > 1 Then
+            'zobrazovat footer
+            _lisCols = Me.CurrentDDFields()
+
+            For Each dbRow In dt.Rows
+                For i As Integer = 0 To _lisCols.Count - 1
+                    If dbRow(i + 1).GetType.ToString = "System.Double" Then
+                        If Not dbRow(i + 1) Is System.DBNull.Value Then
+                            _lisCols(i).Total += dbRow(i + 1)
+                        End If
+                    End If
+                Next
+            Next
+        Else
+            grid1.radGridOrig.ShowFooter = False
+        End If
         
 
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDatasource(level, lisSums, "", mq)
-
-        rpData.DataSource = dt
-        rpData.DataBind()
-
-        For Each dbRow In dt.Rows
-            For i As Integer = 1 To _lisCols.Count - 1
-                If dbRow(i + 1).GetType.ToString = "System.Double" Then
-                    If Not dbRow(i + 1) Is System.DBNull.Value Then
-                        _lisCols(i).Total += dbRow(i + 1)
-                    End If
-                End If
-            Next
-        Next
-
-        rpF.DataSource = _lisCols
-        rpF.DataBind()
     End Sub
 
-    Private Sub rpH_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpH.ItemDataBound
-        Dim c As ddColumn = CType(e.Item.DataItem, ddColumn)
-        CType(e.Item.FindControl("lbl1"), Label).Text = c.Header
+    Private Sub grid1_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles grid1.NeedFooterSource
+        footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+        If _lisCols Is Nothing Then Return
 
-    End Sub
-
-    Private Sub rpData_ItemCreated(sender As Object, e As RepeaterItemEventArgs) Handles rpData.ItemCreated
-        AddHandler CType(e.Item.FindControl("rp1"), Repeater).ItemDataBound, AddressOf Me.rp1_ItemDataBound
-    End Sub
-
-    Private Sub rpData_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpData.ItemDataBound
-        Dim dbRow As DataRowView = CType(e.Item.DataItem, DataRowView)
-        CType(e.Item.FindControl("pid"), HiddenField).Value = dbRow("pid").ToString
-
-        With CType(e.Item.FindControl("lbl0"), Label)
-            If Not dbRow(1) Is System.DBNull.Value Then .Text = dbRow(1)
-        End With
-        Dim lis As New List(Of Object)
-        For i As Integer = 1 To _lisCols.Count - 1
-            lis.Add(dbRow(i + 1))
-        Next
-
-        With CType(e.Item.FindControl("rp1"), Repeater)
-            .DataSource = lis
-            .DataBind()
-        End With
-    End Sub
-
-    Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs)
-        Dim val1 As Object = e.Item.DataItem
-        With CType(e.Item.FindControl("lbl1"), Label)
-            If val1 Is System.DBNull.Value Then
-            Else
-                Select Case val1.GetType.ToString
-                    Case "System.Double"
-                        .Text = BO.BAS.FN2(val1)
-                        '.Text = val1.ToString
-                    Case "System.DateTime"
-                        .Text = BO.BAS.FD(val1, True)
-                    Case Else
-                        .Text = val1.ToString
-                End Select
-
+        For Each c In _lisCols
+            If c.ColumnFormat = BO.cfENUM.Numeric2 Then
+                footerItem.Item("col" & c.FieldTypeID.ToString).Text = BO.BAS.FN(c.Total)
             End If
+        Next
 
-        End With
+        
+    End Sub
+
+    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
+
+        Select Case hidHardRefreshFlag.Value
+            Case "drill"
+                Dim strPID As String = Me.hidHardRefreshPID.Value
+                Me.hidPath_Pids.Value = BO.BAS.OM4(Me.hidPath_Pids.Value, strPID, "->")
+                Dim strName As String = ""
+                Dim dt As DataTable = grid1.radGridOrig.DataSource
+                For Each row As GridDataItem In grid1.radGridOrig.MasterTableView.Items
+
+                    If row.GetDataKeyValue("pid").ToString = strPID Then
+                        Me.hidPath_Names.Value = BO.BAS.OM4(Me.hidPath_Names.Value, row.Item(grid1.radGridOrig.MasterTableView.Columns(3).UniqueName).Text, "->")
+                    End If
+                Next
+
+                RenderPath()
+
+                SetupData(Me.CurrentLevelIndex)
+                grid1.Rebind(False)
+            Case ""
+                Return
+        End Select
+
+        hidHardRefreshFlag.Value = "" : hidHardRefreshPID.Value = ""
+    End Sub
+    Private Sub RenderPath()
+        Dim lis As New List(Of ddPath)
+        If Me.hidPath_Pids.Value <> "" Then
+            Dim a() As String = Split(Me.hidPath_Pids.Value, "->")
+            Dim b() As String = Split(Me.hidPath_Names.Value, "->")
+            For i As Integer = 0 To UBound(a)
+                Dim c As New ddPath
+                c.PID = a(i)
+                c.Name = b(i)
+                c.LevelIndex = i + 1
+                If c.LevelIndex = 1 Then c.Name = "[ROOT] " & c.Name
+                lis.Add(c)
+            Next
+        Else
+            Dim c As New ddPath
+            c.PID = -1
+            c.Name = "ROOT"
+            c.LevelIndex = 1
+            lis.Add(c)
+        End If
+        path1.DataSource = lis
+        path1.DataBind()
 
     End Sub
 
-    Private Sub rpF_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpF.ItemDataBound
-        Dim c As ddColumn = CType(e.Item.DataItem, ddColumn)
-        If c.ColumnFormat = BO.cfENUM.Numeric2 Then
-            CType(e.Item.FindControl("lbl1"), Label).Text = BO.BAS.FN(c.Total)
-        End If
+    Private Function InhaleLevel(fld As BO.PivotRowColumnFieldType) As BO.PivotRowColumnField
+        Return New BO.PivotRowColumnField(fld)
+    End Function
 
+    Private Sub path1_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles path1.ItemCommand
+        If e.CommandName = "drill" Then
+            Dim intLevel As Integer = CInt(CType(e.Item.FindControl("levelindex"), HiddenField).Value), intGridSelPID As Integer = BO.BAS.IsNullInt(CType(e.Item.FindControl("pid"), HiddenField).Value)
+            If intLevel > 1 Then
+                Dim strPID As String = CType(e.Item.FindControl("pid"), HiddenField).Value
+                Dim a() As String = Split(Me.hidPath_Pids.Value, "->")
+                Dim b() As String = Split(Me.hidPath_Names.Value, "->")
+                hidPath_Pids.Value = ""
+                For i As Integer = 0 To intLevel - 2
+                    Me.hidPath_Pids.Value = BO.BAS.OM4(Me.hidPath_Pids.Value, a(i), "->")
+                    Me.hidPath_Names.Value = BO.BAS.OM4(Me.hidPath_Names.Value, b(i), "->")
+                Next
+            Else
+                hidPath_Pids.Value = "" : hidPath_Names.Value = ""
+            End If
+            
+            SetupData(intLevel)
+
+            grid1.Rebind(False)
+            'Master.Notify(intGridSelPID)
+            If intGridSelPID > 0 Then grid1.SelectRecords(intGridSelPID)
+        End If
+    End Sub
+
+    Private Sub path1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles path1.ItemDataBound
+        Dim c As ddPath = CType(e.Item.DataItem, ddPath)
+        CType(e.Item.FindControl("link1"), LinkButton).Text = c.Name
+        CType(e.Item.FindControl("pid"), HiddenField).Value = c.PID
+        CType(e.Item.FindControl("levelindex"), HiddenField).Value = c.LevelIndex.ToString
+        If c.LevelIndex > 1 Then
+            e.Item.FindControl("sipka").Visible = True
+        Else
+            e.Item.FindControl("sipka").Visible = False
+        End If
 
     End Sub
 End Class

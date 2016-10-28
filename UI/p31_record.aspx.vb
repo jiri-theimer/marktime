@@ -339,7 +339,7 @@
             
         End If
         If intDefP56ID > 0 Then
-            Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(BO.BAS.IsNullInt(Request.Item("p56id")))
+            Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(intDefP56ID)
             If Not cP56 Is Nothing Then intDefP41ID = cP56.p41ID
         End If
         If intDefP41ID = 0 And Request.Item("p28id") <> "" Then

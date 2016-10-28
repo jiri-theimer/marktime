@@ -140,112 +140,40 @@ Partial Public Class p31_drilldown
     Protected WithEvents cmdPokus As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''rpH control.
+    '''path1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpH As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents path1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''rpF control.
+    '''grid1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpF As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
-    '''rpData control.
+    '''hidCols control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpData As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''cmdPostback control.
+    '''hidGroup control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdPostback As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''hidCols1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidCols1 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidCols2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidCols2 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidCols3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidCols3 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidCols4 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidCols4 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidGroup1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidGroup1 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidGroup2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidGroup2 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidGroup3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidGroup3 As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidGroup4 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidGroup4 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidGroup As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidHardRefreshFlag control.
@@ -293,31 +221,31 @@ Partial Public Class p31_drilldown
     Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidSelPID1 control.
+    '''hidPath_Groups control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidSelPID1 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidPath_Groups As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidSelPID2 control.
+    '''hidPath_Pids control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidSelPID2 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidPath_Pids As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidSelPID3 control.
+    '''hidPath_Names control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidSelPID3 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidPath_Names As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.
@@ -327,6 +255,15 @@ Partial Public Class p31_drilldown
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdPostback control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPostback As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.

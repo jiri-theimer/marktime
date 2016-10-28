@@ -61,6 +61,8 @@ Public Class Site
 
             ''PersonalizeMenu()
         End If
+        ''Response.Cache.SetCacheability(HttpCacheability.NoCache)
+        ''Response.Cache.SetNoStore()
     End Sub
 
     ''Private Sub PersonalizeMenu()
