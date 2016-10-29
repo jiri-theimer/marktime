@@ -17,6 +17,9 @@
             If Request.Item("reapprove") = "1" Or Request.Item("clearapprove") = "1" Then
                 mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForReApprove  'pře-schválit nebo vyčistit již schválený worksheet
             End If
+            If Request.Item("aw") <> "" Then
+                mq.MG_AdditionalSqlWHERE = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
+            End If
 
             Dim masterpids As New List(Of Integer)
             If Request.Item("masterpid") <> "" Then

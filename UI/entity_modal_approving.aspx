@@ -44,29 +44,37 @@
 
         }
 
-        function approve_all() {
+        function get_ocas() {
+            var s = "masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>";
+            var aw = document.getElementById("<%=Me.hidMasterAW.ClientID%>").value;
+            if (aw == "")
+                return (s);
 
-            location.replace("p31_approving_step1.aspx?masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>");
+            return(s+"&aw="+encodeURI(aw));
+        }
+
+        function approve_all() {            
+            location.replace("p31_approving_step1.aspx?"+get_ocas());
         }
         function approve_j02(j02id) {
 
-            location.replace("p31_approving_step1.aspx?masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>&prefix=j02&pid=" + j02id);
+            location.replace("p31_approving_step1.aspx?prefix=j02&pid=" + j02id+"&"+get_ocas());
         }
         function approve_p34(p34id) {
 
-            location.replace("p31_approving_step1.aspx?masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>&prefix=p34&pid=" + p34id);
+            location.replace("p31_approving_step1.aspx?prefix=p34&pid=" + p34id+"&"+get_ocas());
         }
         function approve_p41(p34id) {
 
-            location.replace("p31_approving_step1.aspx?masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>&prefix=p41&pid=" + p41id)
+            location.replace("p31_approving_step1.aspx?prefix=p41&pid=" + p41id+"&"+get_ocas())
         }
         function reapprove_all() {
 
-            location.replace("p31_approving_step1.aspx?reapprove=1&masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>");
+            location.replace("p31_approving_step1.aspx?reapprove=1&"+get_ocas());
         }
         function clearapprove_all() {
 
-            location.replace("p31_approving_step1.aspx?clearapprove=1&masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>");
+            location.replace("p31_approving_step1.aspx?clearapprove=1&"+get_ocas());
         }
 
 
@@ -282,6 +290,7 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidInputPIDS" runat="server" />
+    <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

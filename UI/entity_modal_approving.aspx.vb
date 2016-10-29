@@ -68,6 +68,9 @@
             If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified Then
                 Master.StopPage("prefix is missing")
             End If
+            If Request.Item("aw") <> "" Then
+                Me.hidMasterAW.Value = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
+            End If
             With Master                
                 .AddToolbarButton("Nastavení", "setting", 0, "Images/arrow_down_menu.png", False)                
                 .AddToolbarButton("Vystavit fakturu", "continue_invoice", , "Images/continue.png", False, "javascript:invoice()")
@@ -433,6 +436,7 @@
         Else
             s = "a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"         'už schválené
         End If
+        If Me.hidMasterAW.Value <> "" Then s += " AND " & Me.hidMasterAW.Value
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
                 If Me.CurrentInputPIDs <> "" Then
@@ -567,6 +571,8 @@
             mq.DateFrom = period1.DateFrom
             mq.DateUntil = period1.DateUntil
         End If
+        mq.MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
+
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
                 mq.p41ID = Master.DataPID

@@ -380,7 +380,7 @@ Public Class entity_framework_p31summary
         End With
         If Me.IsApprovingPerson Then
             With dataItem("approve")
-                .Text = "<a href=" & Chr(34) & "javascript:approve(" & Me.CurrentMasterPID.ToString & ",'" & Me.CurrentMasterPrefix & "')" & Chr(34) & " title='Schvalovat nebo fakturovat'><img src='Images/approve.png'></a>"
+                .Text = "<a href=" & Chr(34) & "javascript:approve(" & cRec.Item("pid").ToString & ")" & Chr(34) & " title='Schvalovat nebo fakturovat'><img src='Images/approve.png'></a>"
             End With
         End If
         If Not cRec.Item("prefix") Is System.DBNull.Value Then
@@ -540,7 +540,13 @@ Public Class entity_framework_p31summary
 
     Private Sub path1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles path1.ItemDataBound
         Dim c As ddPath = CType(e.Item.DataItem, ddPath)
-        CType(e.Item.FindControl("link1"), LinkButton).Text = c.Name
+        With CType(e.Item.FindControl("link1"), LinkButton)
+            .Text = c.Name
+            If c.Name = "ROOT" Then
+                .ToolTip = "Nejvyšší datová úroveň DRILL-DOWN šablony"
+            End If
+        End With
+
         CType(e.Item.FindControl("pid"), HiddenField).Value = c.PID
         CType(e.Item.FindControl("levelindex"), HiddenField).Value = c.LevelIndex.ToString
         If c.LevelIndex > 1 Then

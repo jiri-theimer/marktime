@@ -162,14 +162,20 @@
 
             window.open("p31_grid.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&aw="+aw, "_top");
         }
-        function approve(pid, prefix) {
+        function approve(pid) {
             var aw = document.getElementById("<%=Me.hidAdditionalWhere.ClientID%>").value;
+            if (aw == "")
+                aw = "<%=Me.CurrentLevel.GroupByField%>=" + pid;
+            else
+                aw = aw + " AND <%=Me.CurrentLevel.GroupByField%>=" + pid;
 
+            var aw = encodeURI(aw);
+            
             try {
-                window.parent.parent.sw_master("entity_modal_approving.aspx?prefix=" + prefix+"&aw="+aw + "&pid=" + pid, "Images/approve_32.png", true);
+                window.parent.parent.sw_master("entity_modal_approving.aspx?prefix=<%=me.CurrentMasterPrefix%>&pid=<%=me.CurrentMasterPID%>&aw="+aw, "Images/approve_32.png", true);
             }
             catch (err) {
-                window.parent.sw_decide("entity_modal_approving.aspx?prefix=" + prefix + "&pid=" + pid+"&aw="+aw, "Images/approve_32.png", true);
+                window.parent.sw_decide("entity_modal_approving.aspx?prefix=<%=me.CurrentMasterPrefix%>&pid=<%=me.CurrentMasterPID%>&aw=" + aw, "Images/approve_32.png", true);
             }
 
         }
