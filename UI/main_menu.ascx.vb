@@ -69,6 +69,7 @@ Public Class main_menu
 
             ai("", "begin", "", "")
             If .j04IsMenu_Project Then
+                Me.hidAllowSearch1.Value = "1"
                 ai("", "searchbox1", "", "")
             End If
 

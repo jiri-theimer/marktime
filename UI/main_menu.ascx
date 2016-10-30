@@ -10,13 +10,14 @@
         </asp:panel>
         <div id="search1_result" style="position: relative;z-index:9999;"></div>
        <asp:HiddenField ID="hidSearch1" runat="server" />
+        <asp:HiddenField ID="hidAllowSearch1" runat="server" Value="0" />
         <asp:HiddenField ID="hidMasterPageName" runat="server" Value="Site" />
 
 <script type="text/javascript">
     <%If panContainer.Visible Then%>
 
-    $(function () {
-
+    <%If Me.hidAllowSearch1.Value = "1" Then%>
+    $(function () {        
         $("#<%=hidSearch1.Value%>").autocomplete({
             source: "Handler/handler_search_project.ashx",
             minLength: 1,
@@ -66,7 +67,7 @@
 
         };
     });
-
+    <%End If%>
 
     function help(page) {
         window.open("help.aspx?page=" + page, "_blank");

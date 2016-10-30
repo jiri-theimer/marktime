@@ -308,7 +308,7 @@
                 s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & strFROM
                 If strW <> "" Then s += " WHERE " & strW
 
-                s += ") SELECT TOP " & .MG_PageSize.ToString & " * FROM rst"
+                s += ") SELECT * FROM rst"
                 pars.Add("start", intStart, DbType.Int32)
                 pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
                 s += " WHERE RowIndex BETWEEN @start AND @end"

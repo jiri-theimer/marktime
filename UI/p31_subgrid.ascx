@@ -113,7 +113,7 @@
 <asp:HiddenField ID="hidAllowFullScreen" runat="server" Value="1" />
 <script type="text/javascript">
     $(document).ready(function () {
-
+       
         $(".slidingDiv1xx").hide();
         $(".show_hide1xx").show();
 
@@ -213,7 +213,7 @@
     }
 
     function p31_fullscreen() {
-        window.open("p31_grid.aspx?masterpid="+document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value+"&masterprefix=<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>", "_top");
+        window.open("p31_grid.aspx?masterpid=" + document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value + "&masterprefix=<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>", "_top");
         return (false);
     }
 </script>

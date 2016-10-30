@@ -7,6 +7,7 @@ Imports log4net
 
 Public Class DbHandler
     Private Property _conString As String
+    Private Property _IsDebugSql As Boolean = False
     Private Property _Error As String
 
     <ThreadStatic()> Public Shared lastException As SqlException
@@ -54,6 +55,15 @@ Public Class DbHandler
         RaiseEvent OnDBError(ex.Message)
         LogManager.GetLogger("sqllog").Error(ex.Message)
     End Sub
+
+    Private Overloads Sub Handle_DebugSql(strSQL As String, params As Object)
+        If Not params Is Nothing Then
+            LogManager.GetLogger("debuglog").Info(APS(strSQL, params))
+        Else
+            LogManager.GetLogger("debuglog").Info(strSQL)
+        End If
+    End Sub
+
     Private Overloads Sub Handle_OnError(ex As System.Exception, strSQL As String, params As Object)
         If TypeOf ex Is System.Exception Or TypeOf ex Is SqlException Then
             Try
@@ -79,6 +89,7 @@ Public Class DbHandler
         If _conString = "" Then
             Handle_OnError("ApplicationPrimary connect string není definován ve web.config")
         End If
+        ''If System.Configuration.ConfigurationManager.AppSettings.Item("debugsql") = "1" Then _IsDebugSql = True
     End Sub
     Public Function GetConstring() As String
         Return _conString
@@ -99,6 +110,7 @@ Public Class DbHandler
 
         Using con As New SqlConnection(_conString)
             con.Open()
+            If _IsDebugSql Then Handle_DebugSql(strSQL, Nothing)
             Dim rec As T = con.Query(Of T)(strSQL).FirstOrDefault
             con.Close()
             Return rec
@@ -113,6 +125,7 @@ Public Class DbHandler
         Using con As New SqlConnection(_conString)
             con.Open()
             Try
+                If _IsDebugSql Then Handle_DebugSql(strSQL, params)
                 Dim rec As T = con.Query(Of T)(strSQL, params, , , , cmdType).FirstOrDefault
                 con.Close()
                 Return rec
@@ -132,6 +145,7 @@ Public Class DbHandler
         Using con As New SqlConnection(_conString)
             con.Open()
             Try
+                If _IsDebugSql Then Handle_DebugSql(strSQL, params)
                 Dim rec As T = con.Query(Of T)(strSQL, params, , , , cmdType).FirstOrDefault
                 con.Close()
                 Return rec
@@ -151,13 +165,17 @@ Public Class DbHandler
 
         Using con As New SqlConnection(_conString)
             con.Open()
+
             Dim cmd As New SqlCommand(strSQL, con)
             If Not pars Is Nothing Then
                 For Each c In pars
                     cmd.Parameters.AddWithValue(c.Name, c.Value)
                 Next
             End If
-
+            If _IsDebugSql Then
+                Dim p As New DbParameters
+                Handle_DebugSql(strSQL, pars)
+            End If
 
             adapter.SelectCommand = cmd
 
@@ -259,6 +277,7 @@ Public Class DbHandler
         Using con As New SqlConnection(_conString)
             con.Open()
             Try
+                If _IsDebugSql Then Handle_DebugSql(strSQL, params)
                 Dim lis As IEnumerable(Of T) = con.Query(Of T)(strSQL, params)
 
                 con.Close()
@@ -592,19 +611,47 @@ Public Class DbHandler
         Return sb.ToString
     End Function
 
-    Private Overloads Function APS(s As String, pars As DbParameters)
-        If Not pars Is Nothing Then
-            For Each strPar As String In pars.ParameterNames
-                s += vbCrLf & "Parameter " & strPar & ": " & pars.Get(Of Object)(strPar) & ""
-            Next
-        End If
-        Return s
-    End Function
+    ''Private Overloads Function APS(s As String, pars As DbParameters)
+    ''    If Not pars Is Nothing Then
+    ''        For Each strPar As String In pars.ParameterNames
+    ''            s += vbCrLf & "Parameter " & strPar & ": " & pars.Get(Of Object)(strPar) & ""
+    ''        Next
+    ''    End If
+    ''    Return s
+    ''End Function
+    ''Private Overloads Function APS(s As String, pars As List(Of BO.PluginDbParameter))
+    ''    If Not pars Is Nothing Then
+    ''        For Each c In pars
+    ''            s += vbCrLf & "Parameter " & c.Name & ": " & c.Value & ""
+    ''        Next
+    ''    End If
+    ''    Return s
+    ''End Function
+
+
     Private Overloads Function APS(s As String, pars As Object)
         If Not pars Is Nothing Then
-            s += vbCrLf & "Parameter: " & pars.ToString
+            If TypeOf pars Is DbParameters Then
+                Dim p As List(Of BO.PluginDbParameter) = CType(pars, DbParameters).Convert2PluginDbParameters()
+                For Each c In p
+                    s += vbCrLf & "@" & c.Name & " = " & c.Value & ""
+                Next
+                ''For Each strPar As String In pars.ParameterNames
+                ''    CType(pars, DbParameters).Convert2PluginDbParameters()
+                ''    's += vbCrLf & "Parameter " & strPar & ": " & pars.Get(Of Object)(strPar) & ""
+                ''Next
+                Return s
+            End If
+            If TypeOf pars Is List(Of BO.PluginDbParameter) Then
+                For Each c In pars
+                    s += vbCrLf & "@" & c.Name & " = " & c.Value & ""
+                Next
+                Return s
+            End If
+            Return vbCrLf & "Parameter: " & pars.ToString
+        Else
+            Return ""
         End If
-        Return s
     End Function
    
 

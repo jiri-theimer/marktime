@@ -41,6 +41,15 @@ Partial Public Class main_menu
     Protected WithEvents hidSearch1 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidAllowSearch1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidAllowSearch1 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidMasterPageName control.
     '''</summary>
     '''<remarks>
