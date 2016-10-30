@@ -36,8 +36,11 @@
                 Me.p93ID.DataBind()
                 Me.p98ID.DataSource = .Factory.p98Invoice_Round_Setting_TemplateBL.GetList(New BO.myQuery)
                 Me.p98ID.DataBind()
+                Me.p80ID.DataSource = .Factory.p80InvoiceAmountStructureBL.GetList(New BO.myQuery)
+                Me.p80ID.DataBind()
                 Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.p91Invoice)
                 Me.b01ID.DataBind()
+
             End With
 
             RefreshRecord()
@@ -76,6 +79,7 @@
             Me.x31ID_Letter.SelectedValue = .x31ID_Letter.ToString
             Me.p93ID.SelectedValue = .p93ID.ToString
             Me.p98ID.SelectedValue = .p98ID.ToString
+            Me.p80ID.SelectedValue = .p80ID.ToString
             Me.b01ID.SelectedValue = .b01ID.ToString
             Me.p92InvoiceDefaultText1.Text = .p92InvoiceDefaultText1
             Me.p92InvoiceDefaultText2.Text = .p92InvoiceDefaultText2
@@ -113,6 +117,7 @@
                 .j27ID = BO.BAS.IsNullInt(Me.j27ID.SelectedValue)
                 .j17ID = BO.BAS.IsNullInt(Me.j17ID.SelectedValue)
                 .p98ID = BO.BAS.IsNullInt(Me.p98ID.SelectedValue)
+                .p80ID = BO.BAS.IsNullInt(Me.p80ID.SelectedValue)
                 .x31ID_Invoice = BO.BAS.IsNullInt(Me.x31ID_Invoice.SelectedValue)
                 .x31ID_Attachment = BO.BAS.IsNullInt(Me.x31ID_Attachment.SelectedValue)
                 .x31ID_Letter = BO.BAS.IsNullInt(Me.x31ID_Letter.SelectedValue)

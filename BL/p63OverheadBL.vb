@@ -6,7 +6,7 @@
     Function GetList(mq As BO.myQuery) As IEnumerable(Of BO.p63Overhead)
 
 End Interface
-Public Class p63OverheadBL
+Class p63OverheadBL
     Inherits BLMother
     Implements Ip63OverheadBL
     Private WithEvents _cDL As DL.p63OverheadDL

@@ -117,6 +117,15 @@
                 <span class="infoInForm">Zaokrouhlovací pravidlo lze později změnit v samotné faktuře.</span>
             </td>
         </tr>
+        <tr valign="top">
+            <td>
+                <asp:Label ID="Label5" Text="Výchozí struktura cenového rozpisu:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="p80ID" runat="server" AutoPostBack="false" DataTextField="p80Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                
+            </td>
+        </tr>
         <tr>
             <td>
                 <asp:Label ID="lblB01ID" Text="Workflow šablona:" runat="server" CssClass="lbl"></asp:Label>

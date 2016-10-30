@@ -688,7 +688,7 @@ if @prefix='p51'
   select @ret=p51Name+' ('+j27Code+')' from p51PriceList a INNER JOIN j27Currency b ON a.j27ID=b.j27ID WHERE a.p51ID=@pid
 
 if @prefix='p49'
-  select @ret=right(convert(varchar(20),a.p49DateFrom,104),7)+'/'+ convert(varchar(10),a.p49Amount)+',-'+b.j27Code+isnull('/'+p49Text,'') from p49FinancialPlan a INNER JOIN j27Currency b ON a.j27ID=b.j27ID INNER JOIN p45Budget c ON a.p45ID=c.p45ID WHERE a.p49ID=@pid
+  select @ret=right(convert(varchar(20),a.p49DateFrom,104),7)+'/'+ convert(varchar(20),a.p49Amount)+',-'+b.j27Code+isnull('/'+p49Text,'') from p49FinancialPlan a INNER JOIN j27Currency b ON a.j27ID=b.j27ID INNER JOIN p45Budget c ON a.p45ID=c.p45ID WHERE a.p49ID=@pid
 
 if @prefix='p36'
  select @ret=convert(varchar(20),p36DateFrom,104)+' - '+convert(varchar(20),p36DateUntil,104) from p36LockPeriod WHERE p36ID=@pid
@@ -9877,6 +9877,59 @@ DELETE FROM p63Overhead WHERE p63ID=@pid
 
 GO
 
+----------P---------------p80_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p80_delete') and type = 'P')
+ drop procedure p80_delete
+GO
+
+
+
+
+
+
+
+CREATE   procedure [dbo].[p80_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p80id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu  z tabulky p80InvoiceAmountStructure
+
+
+if exists(select p92ID FROM p92InvoiceType WHERE p80ID=@pid)
+ set @err_ret='Má vazbu na minimálnì jeden typ faktury.'
+
+if exists(select p91ID FROM p91Invoice WHERE p80ID=@pid)
+ set @err_ret='Má vazbu na minimálnì jednu vystavenou fakturu.'
+
+if isnull(@err_ret,'')<>''
+ return 
+
+DELETE FROM p80InvoiceAmountStructure WHERE p80ID=@pid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p86_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p86_delete') and type = 'P')
@@ -10224,6 +10277,17 @@ AS
   ---vypoèítá èástku režijní pøirážky k faktuøe a založí k tomu úkon
   ---je vnoøené do procedury p91_recalc_amount ...nefunguje samostatnì
 
+if @p63id is null
+ begin	---kontrola, zda nevisí již vygenerovaná pøirážka ve faktuøe ->v tom pøípadì pøirážkový úkon smazat
+   if not exists(select p63ID FROM p63Overhead)
+	 RETURN
+
+    if exists(select p31ID FROM p31Worksheet WHERE p91ID=@p91id AND p31UserInsert='robot' AND p32ID IN (SELECT p32ID FROM p63Overhead))
+	 DELETE FROM p31Worksheet WHERE p91ID=@p91id AND p31UserInsert='robot' AND p32ID IN (SELECT p32ID FROM p63Overhead)
+
+	RETURN
+ end
+
 declare @j27id int,@datSupply datetime,@p41id_first int,@j02id int,@j17id int,@x15id int,@vatrate float
 
 select @j27id=a.j27id,@datSupply=a.p91DateSupply,@p41id_first=a.p41ID_First,@j02id=a.j02ID_Owner,@x15id=a.x15ID,@j17id=a.j17ID
@@ -10289,6 +10353,101 @@ WHERE p91ID=@p91id AND p32ID=@p32id AND p31UserInsert='robot'
 
    
 
+
+
+
+GO
+
+----------P---------------p91_calc_p81-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p91_calc_p81') and type = 'P')
+ drop procedure p91_calc_p81
+GO
+
+
+
+
+CREATE  PROCEDURE [dbo].[p91_calc_p81]
+@p91id int
+,@p80id int
+AS
+
+  ---Generuje souhrnný cenový rozpis faktury do tabulky p81InvoiceAmount
+  ---je vnoøené do procedury p91_recalc_amount ...nefunguje samostatnì
+
+
+if exists(select p81ID FROM p81InvoiceAmount WHERE p91ID=@p91id)
+ DELETE FROM p81InvoiceAmount WHERE p91ID=@p91id
+
+ ---explicitní rozpis podle p80InvoiceAmountStructure
+ declare @time bit,@fee bit,@expense bit
+
+ select @time=p80IsTimeSeparate,@expense=p80IsExpenseSeparate,@fee=p80IsFeeSeparate FROM p80InvoiceAmountStructure WHERE p80ID=@p80id
+
+if @p80id is null OR (@time=0 and @expense=0 and @fee=0)
+ begin	---bez explicitní struktury rozpisu ceny (podle fakturaèních oddílù)
+	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+	WHERE a.p91ID=@p91id
+	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
+ end
+
+if @p80id is not null AND @expense=0
+ begin
+	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1
+	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
+ end
+
+if @p80id is not null AND @expense=1
+ begin	---výdaje 1:1
+	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
+	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,round(a.p31Amount_WithoutVat_Invoiced,2)
+	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1	
+ end
+
+if @p80id is not null AND @fee=0
+ begin
+	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2
+	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
+ end
+
+if @p80id is not null AND @fee=1
+ begin	---pevné odmìny 1:1
+	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
+	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,round(a.p31Amount_WithoutVat_Invoiced,2)
+	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2	
+ end
+
+if @p80id is not null AND @time=0
+ begin
+	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+	WHERE a.p91ID=@p91id AND p34.p33ID IN (1,3)
+	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
+ end
+
+if @p80id is not null AND @time=1
+ begin	---èasové úkony 1:1
+	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
+	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,round(a.p31Amount_WithoutVat_Invoiced,2)
+	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+	WHERE a.p91ID=@p91id AND p34.p33ID IN (1,3)
+ end
+
+
+update p81InvoiceAmount set p81Amount_Vat=round(p81Amount_WithoutVat*p81VatRate/100,2) WHERE p91ID=@p91id
+
+update p81InvoiceAmount set p81Amount_WithVat=p81Amount_WithoutVat+p81Amount_Vat WHERE p91ID=@p91id
 
 
 
@@ -10406,10 +10565,10 @@ if not exists(select a.p85ID from p85TempBox a INNER JOIN p31Worksheet b ON a.p8
  end
 
 
-declare @j27id int,@j19id int,@x15id int,@j17id int,@p98id int,@p91vatrate_standard float,@p91vatrate_low float,@p91vatrate_special float
+declare @j27id int,@j19id int,@x15id int,@j17id int,@p98id int,@p91vatrate_standard float,@p91vatrate_low float,@p91vatrate_special float,@p80id int
 
 
-select @j27id=j27id,@j19id=j19id,@x15id=x15id,@j17id=j17ID,@p98id=p98ID
+select @j27id=j27id,@j19id=j19id,@x15id=x15id,@j17id=j17ID,@p98id=p98ID,@p80id=p80ID
 from p92InvoiceType where p92id=@p92id  
 
 if isnull(@j27id,0)=0
@@ -10452,10 +10611,10 @@ select top 1 @o38id_delivery=o38ID from o37Contact_Address WHERE o36ID=2 AND p28
 if @o38id_delivery is null
  set @o38id_delivery=@o38id_primary
 
-update p91Invoice set o38ID_Primary=@o38id_primary,@o38id_delivery=o38id_delivery,p41ID_First=@p41id_first
+update p91Invoice set o38ID_Primary=@o38id_primary,@o38id_delivery=o38id_delivery,p41ID_First=@p41id_first,p80ID=@p80id,p98ID=@p98id
 where p91ID=@ret_p91id
 
-update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p98ID=@p98id,p63ID=b.p63ID
+update a set p91IsDraft=@p91isdraft,j17ID=@j17id,p63ID=b.p63ID
 ,p91userupdate=@login,p91dateupdate=getdate()
 ,p91Text1=@p91text1
 ,p91Datep31_From=@p91datep31_from,p91Datep31_Until=@p91datep31_until,j19id=@j19id
@@ -10619,7 +10778,7 @@ if @p92id_creditnote=0
 if @err_ret<>''
   return
 
-declare @x38id int,@p28id int,@j27id int,@p32id_creditnote int
+declare @x38id int,@p28id int,@j27id int,@p32id_creditnote int,@p98id int,@p80id int
 
 if not exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'p32ID_CreditNote')
  begin
@@ -10632,7 +10791,7 @@ select @p32id_creditnote=convert(int,x35value) from x35GlobalParam WHERE x35Key 
 if not exists(select p32ID FROM p32Activity WHERE p32ID=@p32id_creditnote)
  set @err_ret='Pro parametr [p32ID_CreditNote] v systému neexistuje záznam aktivity!'
 
-select @x38id=x38id from p92InvoiceType where p92id=@p92id_creditnote
+select @x38id=x38id,@p98id=p98ID,@p80id=p80ID from p92InvoiceType where p92id=@p92id_creditnote
 
 select @p28id=p28id,@j27id=j27id from p91invoice where p91id=@p91id_bind
 
@@ -10647,12 +10806,12 @@ insert into p91invoice(
 p92id,p91dateinsert,p91userinsert,p91Date,p91DateSupply,p91DateMaturity,j02ID_Owner,p28id,j27id,p91dateupdate,p91userupdate
 ,o38ID_Primary,o38ID_Delivery,x15ID,p91fixedvatrate,j02ID_ContactPerson
 ,j19id,p41ID_First,j17ID
-,p91ID_CreditNoteBind,p91Datep31_From,p91Datep31_Until
+,p91ID_CreditNoteBind,p91Datep31_From,p91Datep31_Until,p98ID,p80ID
 )
 select @p92id_creditnote,getdate(),@login,getdate(),getdate(),getdate(),@j02id_sys,p28id,j27id,getdate(),@login
 ,o38ID_Primary,o38ID_Delivery,x15ID,p91fixedvatrate,j02ID_ContactPerson
 ,j19id,p41ID_First,j17ID
-,@p91id_bind,p91Datep31_From,p91Datep31_Until
+,@p91id_bind,p91Datep31_From,p91Datep31_Until,@p98id,@p80id
 FROM p91invoice
 where p91id=@p91id_bind
 
@@ -10943,11 +11102,32 @@ GO
 
 
 CREATE   procedure [dbo].[p91_get_cenovy_rozpis]
-@pid int					--p91id
+@pid int,@include_rounding bit,@include_proforma bit,@langindex int
+
+---@pid=p91ID
 
 AS
 
-select p95.p95Name as Oddil
+declare @zaokrouhleni varchar(100),@zalohy varchar(100)
+set @zaokrouhleni='Zaokrouhlení'
+set @zalohy='Uhrazené zálohy'
+
+set @langindex=isnull(@langindex,0)
+
+if @langindex=1
+ begin
+  set @zaokrouhleni='Rounded'
+  set @zalohy='Advance payment'
+ end
+
+if @langindex=2
+ begin
+  set @zaokrouhleni='Abrundung'
+  set @zalohy='Vorauszahlung'
+ end
+
+
+select case when a.p31ID IS NULL THEN case when @langindex=1 then isnull(p95.p95Name_BillingLang1,p95.p95Name) when @langindex=2 then isnull(p95.p95Name_BillingLang2,p95.p95Name) else p95.p95Name end else p31.p31Text END as Oddil
 ,a.p81Amount_WithoutVat as BezDPH
 ,a.p81VatRate as DPHSazba
 ,a.p81Amount_Vat as DPH
@@ -10959,24 +11139,25 @@ p81InvoiceAmount a
 INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
 LEFT OUTER JOIN p95InvoiceRow p95 ON a.p95ID=p95.p95ID
 LEFT OUTER JOIN j27Currency j27 ON p91.j27ID=j27.j27ID
+LEFT OUTER JOIN p31Worksheet p31 ON a.p31ID=p31.p31ID
 where a.p91ID=@pid and a.p81Amount_WithVat<>0
 UNION
-SELECT 'Zaokrouhlení' as Oddil
+SELECT @zaokrouhleni as Oddil
 ,p91RoundFitAmount as BEZDPH
 ,0 as DPHSazba
 ,0 as DPH
 ,p91RoundFitAmount as VcDPH
 ,j27.j27Code,1000 as Poradi
-FROM p91Invoice a INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID WHERE a.p91ID=@pid AND isnull(p91RoundFitAmount,0)<>0
+FROM p91Invoice a INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID WHERE a.p91ID=@pid AND isnull(p91RoundFitAmount,0)<>0 AND @include_rounding=1
 UNION
-SELECT 'Uhrazené zálohy' as Oddil
+SELECT @zalohy as Oddil
 ,-1*(p91ProformaAmount_WithoutVat_None+p91ProformaAmount_WithoutVat_Low+p91ProformaAmount_WithoutVat_Standard) as BEZDPH
 ,p91ProformaAmount_VatRate as DPHSazba
 ,-1*(p91ProformaAmount_Vat_Low+p91ProformaAmount_Vat_Standard) as DPH
 ,-1*p91ProformaAmount as VcDPH
 ,j27.j27Code,1000 as Poradi
 FROM p91Invoice a INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID
-WHERE a.p91ID=@pid AND isnull(p91ProformaAmount,0)<>0
+WHERE a.p91ID=@pid AND isnull(p91ProformaAmount,0)<>0 AND @include_proforma=1
 ORDER BY DPHSazba DESC,Poradi
 
 
@@ -11328,9 +11509,9 @@ CREATE procedure [dbo].[p91_recalc_amount]
 
 AS
 
-declare @j27id_dest int,@datSupply datetime,@j27id_domestic int,@p92invoicetype int,@p92id int,@p41id_first int,@j17id int,@p98id int,@p63id int
+declare @j27id_dest int,@datSupply datetime,@j27id_domestic int,@p92invoicetype int,@p92id int,@p41id_first int,@j17id int,@p98id int,@p63id int,@p80id int
 
-select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID,@p98id=a.p98ID,@p63id=a.p63ID
+select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID,@p98id=a.p98ID,@p63id=a.p63ID,@p80id=a.p80ID
 from p91invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
 where a.p91id=@p91id
 
@@ -11396,8 +11577,7 @@ update p31worksheet set j27ID_Billing_Invoiced=@j27id_dest
 where p91id=@p91id and isnull(j27ID_Billing_Invoiced,0)<>@j27id_dest
 
 
-if @p63id is not null	---režijní pøirážka k faktuøe
- exec dbo.p91_calc_overhead @p91id,@p63id
+exec dbo.p91_calc_overhead @p91id,@p63id	---pøípadná režijní pøirážka k faktuøe
 
 ----mìnový kurz z fakturaèní mìny do domácí mìny----------
 update p31worksheet set j27ID_Billing_Invoiced_Domestic=@j27id_domestic, p31ExchangeRate_Domestic=dbo.get_exchange_rate(1,@datSupply,j27ID_Billing_Invoiced,@j27id_domestic)
@@ -11423,14 +11603,7 @@ select @p91vatrate_low=dbo.p91_get_vatrate(2,@j27id_dest,@j17id,@datSupply)
 select @p91vatrate_standard=dbo.p91_get_vatrate(3,@j27id_dest,@j17id,@datSupply)
 select @p91vatrate_special=dbo.p91_get_vatrate(4,@j27id_dest,@j17id,@datSupply)
 
-if exists(select p81ID FROM p81InvoiceAmount WHERE p91ID=@p91id)
- DELETE FROM p81InvoiceAmount WHERE p91ID=@p91id
-
-INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat) SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2) FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID WHERE a.p91ID=@p91id GROUP BY p32.p95ID,a.p31VatRate_Invoiced
-
-update p81InvoiceAmount set p81Amount_Vat=round(p81Amount_WithoutVat*p81VatRate/100,2) WHERE p91ID=@p91id
-
-update p81InvoiceAmount set p81Amount_WithVat=p81Amount_WithoutVat+p81Amount_Vat WHERE p91ID=@p91id
+exec dbo.p91_calc_p81 @p91id,@p80id
 
 if @p92invoicetype=2	--dobropis
  begin  ---u dobropisu brát sazby DPH z pùvodní faktury   
@@ -12038,11 +12211,21 @@ if exists(select p31ID FROM p31Worksheet_Temp)
  truncate table p31Worksheet_Temp
 
 
+ if exists(select x47ID FROM x47EventLog where x29ID=141 and x45ID=14101 and x47Description is null and x47RecordPID NOT IN (SELECT p41ID FROM p41Project))
+   update x47EventLog set x47Description='deleted' where x29ID=141 and x45ID=14101 and x47RecordPID NOT IN (SELECT p41ID FROM p41Project)
 	
 	
+if exists(select x47ID FROM x47EventLog where x29ID=328 and x45ID=32801 and x47Description is null and x47RecordPID NOT IN (SELECT p28ID FROM p28Contact))
+   update x47EventLog set x47Description='deleted' where x29ID=328 and x45ID=32801 and x47RecordPID NOT IN (SELECT p28ID FROM p28Contact)
+	
+if exists(select x47ID FROM x47EventLog where x29ID=391 and x45ID=39101 and x47Description is null and x47RecordPID NOT IN (SELECT p91ID FROM p91Invoice))
+   update x47EventLog set x47Description='deleted' where x29ID=391 and x45ID=39101 and x47RecordPID NOT IN (SELECT p91ID FROM p91Invoice)
+	
+if exists(select x47ID FROM x47EventLog where x29ID=223 and x45ID=22301 and x47Description is null and x47RecordPID NOT IN (SELECT o23ID FROM o23Notepad))
+   update x47EventLog set x47Description='deleted' where x29ID=223 and x45ID=22301 and x47RecordPID NOT IN (SELECT o23ID FROM o23Notepad)
 
-
-
+if exists(select x47ID FROM x47EventLog where x29ID=356 and x45ID=35601 and x47Description is null and x47RecordPID NOT IN (SELECT p56ID FROM p56Task))
+   update x47EventLog set x47Description='deleted' where x29ID=356 and x45ID=35601 and x47RecordPID NOT IN (SELECT p56ID FROM p56Task)
 
 GO
 

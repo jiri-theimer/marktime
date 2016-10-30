@@ -529,7 +529,7 @@ Public Class p91_framework_detail
         Dim s As String = ""
         With plug1
             .AddDbParameter("pid", Master.DataPID)
-            .GenerateTable(Master.Factory, "exec dbo.p91_get_cenovy_rozpis @pid")
+            .GenerateTable(Master.Factory, "exec dbo.p91_get_cenovy_rozpis @pid,1,1,0")
         End With
     End Sub
 End Class

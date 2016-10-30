@@ -84,6 +84,7 @@
     Private Property _j61 As Ij61TextTemplateBL
     Private Property _j62 As Ij62MenuHomeBL
     Private Property _p63 As Ip63OverheadBL
+    Private Property _p80 As Ip80InvoiceAmountStructureBL
     Private Property _ft As IFtBL
     Private Property _plugin As IPluginSupportBL
     Private Property _copymanager As IDataCopyManagerBL
@@ -609,6 +610,12 @@
         Get
             If _p63 Is Nothing Then _p63 = New p63OverheadBL(_cUser)
             Return _p63
+        End Get
+    End Property
+    Public ReadOnly Property p80InvoiceAmountStructureBL As Ip80InvoiceAmountStructureBL
+        Get
+            If _p80 Is Nothing Then _p80 = New p80InvoiceAmountStructureBL(_cUser)
+            Return _p80
         End Get
     End Property
     Public ReadOnly Property j62MenuHomeBL As Ij62MenuHomeBL

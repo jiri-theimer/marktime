@@ -489,7 +489,7 @@
 
                 <div class="div6">
                 <uc:plugin_datatable ID="plug1" TableID="tab1" runat="server"
-            ColHeaders="Fakturační oddíl|Částka bez DPH|DPH%|Částka DPH|Částka vč. DPH|" NoDataMessage="Žádná data."
+            ColHeaders="Položka|Částka bez DPH|DPH%|Částka DPH|Částka vč. DPH|" NoDataMessage="Žádná data."
             ColHideRepeatedValues="0" ColTypes="S|N|N|N|N|S" ColFlexSubtotals="0|11|0|11|11|0"
             TableCaption="" />
                 </div>

@@ -27,7 +27,8 @@
                 Me.p98ID.DataBind()
                 Me.p63ID.DataSource = .Factory.p63OverheadBL.GetList(New BO.myQuery)
                 Me.p63ID.DataBind()
-
+                Me.p80ID.DataSource = .Factory.p80InvoiceAmountStructureBL.GetList(New BO.myQuery)
+                Me.p80ID.DataBind()
                
             End With
 
@@ -48,6 +49,7 @@
             Me.j17ID.SelectedValue = .j17ID.ToString
             Me.p98ID.SelectedValue = .p98ID.ToString
             Me.p63ID.SelectedValue = .p63ID.ToString
+            Me.p80ID.SelectedValue = .p80ID.ToString
             Me.p92ID.SelectedValue = .p92ID.ToString
             Me.p28ID.Value = .p28ID.ToString
             Me.p28ID.Text = .p28Name
@@ -136,6 +138,7 @@
                 .j17ID = BO.BAS.IsNullInt(Me.j17ID.SelectedValue)
                 .p98ID = BO.BAS.IsNullInt(Me.p98ID.SelectedValue)
                 .p63ID = BO.BAS.IsNullInt(Me.p63ID.SelectedValue)
+                .p80ID = BO.BAS.IsNullInt(Me.p80ID.SelectedValue)
                 .p28ID = BO.BAS.IsNullInt(Me.p28ID.Value)
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .o38ID_Primary = BO.BAS.IsNullInt(Me.o38ID_Primary.SelectedValue)
@@ -228,5 +231,10 @@
     Private Sub p63ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p63ID.NeedMissingItem
         Dim cRec As BO.p63Overhead = Master.Factory.p63OverheadBL.Load(CInt(strFoundedMissingItemValue))
         If Not cRec Is Nothing Then strAddMissingItemText = cRec.NameWithRate
+    End Sub
+
+    Private Sub p80ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p80ID.NeedMissingItem
+        Dim cRec As BO.p80InvoiceAmountStructure = Master.Factory.p80InvoiceAmountStructureBL.Load(CInt(strFoundedMissingItemValue))
+        If Not cRec Is Nothing Then strAddMissingItemText = cRec.p80Name
     End Sub
 End Class

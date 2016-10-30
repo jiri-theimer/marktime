@@ -14,6 +14,7 @@
     Public Property b02ID As Integer
     Public Property p98ID As Integer
     Public Property p63ID As Integer
+    Public Property p80ID As Integer
 
     Public Property p91Code As String
     Public Property p91IsDraft As Boolean

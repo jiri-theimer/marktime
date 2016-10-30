@@ -169,6 +169,7 @@ Public Class admin_framework
             .AddItem("Měnové kurzy", "m62", NU("m62"), "p91")
             .AddItem("Fakturační oddíly", "p95", NU("p95"), "p91")
             .AddItem("Zaokrouhlovací pravidla", "p98", NU("p98"), "p91")
+            .AddItem("Struktury rozpisu částky faktury", "p80", NU("p80"), "p91")
             .AddItem("Režijní přirážky k fakturaci", "p63", NU("p63"), "p91")
 
             .AddItem("Typy záloh", "p89", NU("p89"), "p91")
@@ -391,6 +392,11 @@ Public Class admin_framework
                 Case "p63"
                     .AddColumn("NameWithRate", "Název pravidla")
                     .AddColumn("p32Name", "Aktivita")
+                Case "p80"
+                    .AddColumn("p80Name", "Název pravidla")
+                    .AddColumn("p80IsFeeSeparate", "Pevné odměny 1:1", BO.cfENUM.Checkbox)
+                    .AddColumn("p80IsExpenseSeparate", "Výdaje 1:1", BO.cfENUM.Checkbox)
+                    .AddColumn("p80IsTimeSeparate", "Čas 1:1", BO.cfENUM.Checkbox)
                 Case "p92"
                     .AddColumn("p92Name", "Název")
                     .AddColumn("j27Code", "Cílová měna")
@@ -730,6 +736,9 @@ Public Class admin_framework
                     grid1.DataSource = lis
                 Case "p63"
                     Dim lis As IEnumerable(Of BO.p63Overhead) = .p63OverheadBL.GetList(mqDef)
+                    grid1.DataSource = lis
+                Case "p80"
+                    Dim lis As IEnumerable(Of BO.p80InvoiceAmountStructure) = .p80InvoiceAmountStructureBL.GetList(mqDef)
                     grid1.DataSource = lis
                 Case "p92"
                     Dim lis As IEnumerable(Of BO.p92InvoiceType) = .p92InvoiceTypeBL.GetList(mqDef)

@@ -102,6 +102,14 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label ID="Label15" runat="server" Text="Struktura cenového rozpisu:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <uc:datacombo ID="p80ID" runat="server" DataTextField="p80Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label ID="lblP63ID" runat="server" Text="Režijní přirážka k faktuře:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
