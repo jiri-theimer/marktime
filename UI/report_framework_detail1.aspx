@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="report_framework_detail1.aspx.vb" Inherits="UI.report_framework_detail1" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Subform.Master" CodeBehind="report_framework_detail1.aspx.vb" Inherits="UI.report_framework_detail1" %>
 
-<%@ MasterType VirtualPath="~/Clue.Master" %>
+<%@ MasterType VirtualPath="~/Subform.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 <%@ Register Assembly="Telerik.ReportViewer.WebForms, Version=10.0.16.204, Culture=neutral, PublicKeyToken=a9d7983dfcc261be" Namespace="Telerik.ReportViewer.WebForms" TagPrefix="telerik" %>
@@ -48,7 +48,8 @@
         }
 
         function x31_record() {
-            sw_local("x31_record.aspx?pid=<%=me.CurrentX31ID%>", "Images/settings_32.png")
+            sw_local("x31_record.aspx?pid=<%=me.CurrentX31ID%>", "Images/settings_32.png");
+            
         }
 
         function querybuilder() {

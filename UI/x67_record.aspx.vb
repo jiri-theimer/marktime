@@ -130,7 +130,7 @@
             If .Save(cRec, lisX53) Then
                 Master.DataPID = .LastSavedPID
 
-                If cRec.x29ID = BO.x29IdEnum.p41Project Then    'projektová role má ještě další nastavení
+                If Me.CurrentX29ID = BO.x29IdEnum.p41Project Then    'projektová role má ještě další nastavení
                     Dim lisO28 As New List(Of BO.o28ProjectRole_Workload)
                     For Each ri As RepeaterItem In rp1.Items
                         Dim c As New BO.o28ProjectRole_Workload
@@ -139,7 +139,12 @@
                         c.p34ID = CInt(CType(ri.FindControl("_p34id"), HiddenField).Value)
                         lisO28.Add(c)
                     Next
-                    Master.Factory.x67EntityRoleBL.SaveO28(Master.DataPID, lisO28)
+                    .SaveO28(Master.DataPID, lisO28)
+
+                    cRec = .LoadChild(Master.DataPID)
+                    If Not cRec Is Nothing Then
+                        .SaveO28(cRec.PID, lisO28)
+                    End If
                 End If
 
                 Master.CloseAndRefreshParent("x67-save")

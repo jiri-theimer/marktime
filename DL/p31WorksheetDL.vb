@@ -370,7 +370,7 @@
                         ''Dim strJ11IDs As String = ""
                         ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
-                        s.Append(" AND (zbytek.p31ID IS NOT NULL")
+                        s.Append(" AND (scope.p41ID IS NOT NULL")
 
                         ''s.Append(" a.p31ID IN (")
                         ''s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
@@ -396,7 +396,7 @@
                         ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
                         ''s.Append("SELECT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
-                        s.Append("zbytek.p31ID IS NOT NULL OR a.j02ID_Owner=@j02id_query OR a.j02ID=@j02id_query")
+                        s.Append("scope.p41ID IS NOT NULL OR a.j02ID_Owner=@j02id_query OR a.j02ID=@j02id_query")
 
                         If _curUser.IsMasterPerson And _curUser.j02ID = .j02ID_ExplicitQueryFor Then
                             'oprávnění z titulu nadřazené osoby
@@ -666,20 +666,20 @@
                             Dim strJ11IDs As String = ""
                             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
-                            s.Append(" LEFT OUTER JOIN (")
-                            s.Append("SELECT DISTINCT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
-                            s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
-
+                            ''s.Append(" LEFT OUTER JOIN (")
+                            ''s.Append("SELECT DISTINCT p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag IN (3,4) AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                            ''s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+                            AppendSqlFrom_Zbytek(s, "zo28.o28PermFlag IN (3,4)")
 
                         End If
                     Case BO.myQueryP31_SpecificQuery.AllowedForRead
                         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
-                            Dim strJ11IDs As String = ""
-                            If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
-
-                            s.Append(" LEFT OUTER JOIN (")
-                            s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
-                            s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+                            ''Dim strJ11IDs As String = ""
+                            ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+                            AppendSqlFrom_Zbytek(s, "zo28.o28PermFlag>0")
+                            ''s.Append(" LEFT OUTER JOIN (")
+                            ''s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+                            ''s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
                         End If
 
                     Case Else
@@ -689,6 +689,28 @@
         End If
         Return s.ToString
     End Function
+
+    Private Sub AppendSqlFrom_Zbytek(ByRef s As Text.StringBuilder, strPermFlagSqlWhere As String)
+        s.Append(" LEFT OUTER JOIN")
+        s.Append(" (")
+        s.Append(" select za.p41ID,zo28.p34ID")
+        s.Append(" from p41Project za INNER JOIN x69EntityRole_Assign zx69 ON za.p41ID=zx69.x69RecordPID")
+        s.Append(" INNER JOIN x67EntityRole zx67 ON zx69.x67ID=zx67.x67ID")
+        s.Append(" INNER JOIN o28ProjectRole_Workload zo28 ON zx67.x67ID=zo28.x67ID")
+        s.Append(" WHERE zx67.x29ID=141 AND " & strPermFlagSqlWhere & " AND (zx69.j02ID=@j02id_query")
+        If _curUser.j11IDs <> "" Then s.Append(" OR zx69.j11ID IN (" & _curUser.j11IDs & ")")
+        s.Append(")")
+        s.Append(" UNION select za.p41ID,zo28.p34ID")
+        s.Append(" FROM p41Project za INNER JOIN j18Region zj18 ON za.j18ID=zj18.j18ID")
+        s.Append(" INNER JOIN x69EntityRole_Assign zx69 ON zj18.j18ID=zx69.x69RecordPID")
+        s.Append(" INNER JOIN x67EntityRole zx67 ON zx69.x67ID=zx67.x67ID INNER JOIN o28ProjectRole_Workload zo28 ON zx67.x67ID=zo28.x67ID")
+        s.Append(" WHERE zx67.x29ID=118 AND " & strPermFlagSqlWhere & " AND (zx69.j02ID=@j02id_query")
+        If _curUser.j11IDs <> "" Then s.Append(" OR zx69.j11ID IN (" & _curUser.j11IDs & ")")
+        s.Append(")")
+        s.Append(") scope ON a.p41ID=scope.p41ID AND p32.p34ID=scope.p34ID")
+    End Sub
+
+
 
     Public Function InhaleRecordDisposition(intPID As Integer) As BO.p31WorksheetDisposition
         Dim pars As New DbParameters()
@@ -969,9 +991,10 @@
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
             Dim strJ11IDs As String = ""
             If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
-            s.Append(" LEFT OUTER JOIN (")
-            s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
-            s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+            ''s.Append(" LEFT OUTER JOIN (")
+            ''s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+            ''s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+            AppendSqlFrom_Zbytek(s, "zo28.o28PermFlag>0")
         End If
         
         Dim strW As String = GetSQLWHERE(myQuery, pars)
@@ -1056,12 +1079,15 @@
         s += " INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
         s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
-            Dim strJ11IDs As String = ""
-            If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+            ''Dim strJ11IDs As String = ""
+            ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
 
-            s += " LEFT OUTER JOIN ("
-            s += "SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID"
-            s += ") zbytek ON a.p31ID=zbytek.p31ID"
+            ''s += " LEFT OUTER JOIN ("
+            ''s += "SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID"
+            ''s += ") zbytek ON a.p31ID=zbytek.p31ID"
+            Dim ss As New Text.StringBuilder
+            AppendSqlFrom_Zbytek(ss, "zo28.o28PermFlag>0")
+            s += ss.ToString
         End If
        
 
@@ -1189,11 +1215,12 @@
         s.Append(" LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID")
 
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
-            Dim strJ11IDs As String = ""
-            If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
-            s.Append(" LEFT OUTER JOIN (")
-            s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
-            s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+            ''Dim strJ11IDs As String = ""
+            ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
+            ''s.Append(" LEFT OUTER JOIN (")
+            ''s.Append("SELECT distinct p31x.p31ID FROM p31Worksheet p31x INNER JOIN p32Activity p32x ON p31x.p32ID=p32x.p32ID INNER JOIN (SELECT x69.x69RecordPID,o28.p34ID FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID WHERE o28.o28PermFlag>0 AND x67.x29ID=141 AND (x69.j02ID=@j02id_query " & strJ11IDs & ")) scope ON p31x.p41ID=scope.x69RecordPID AND p32x.p34ID=scope.p34ID")
+            ''s.Append(") zbytek ON a.p31ID=zbytek.p31ID")
+            AppendSqlFrom_Zbytek(s, "zo28.o28PermFlag>0")
         End If
 
     End Sub

@@ -10310,7 +10310,7 @@ select @vatrate=dbo.p91_get_vatrate(@x15id,@j27id,@j17id,@datSupply)
 
 
 if @p63IsIncludeTime=1
-   select @sum=sum(p31Amount_WithoutVat_Invoiced) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID WHERE a.p91ID=@p91id AND c.p33ID IN (1,3)
+   select @sum=sum(p31Amount_WithoutVat_Invoiced) FROM p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID WHERE a.p91ID=@p91id AND c.p33ID=1
 
 set @overhead=isnull(@sum,0)*@p63PercentRate/100
 set @sum=0

@@ -20,7 +20,7 @@
     End Function
 
     Public Sub SaveO28(intX67ID As Integer, lisO28 As List(Of BO.o28ProjectRole_Workload))
-        'uložení vazby projektové role na worksheet
+
         _cDB.RunSQL("DELETE FROM o28ProjectRole_Workload WHERE x67ID=" & intX67ID.ToString)
         For Each c In lisO28
             _cDB.RunSQL("INSERT INTO o28ProjectRole_Workload(x67ID,p34ID,o28EntryFlag,o28PermFlag) VALUES(" & intX67ID.ToString & "," & c.p34ID.ToString & "," & CInt(c.o28EntryFlag).ToString & "," & CInt(c.o28PermFlag).ToString & ")")
@@ -59,7 +59,7 @@
                 If x53ids.Count > 0 Then
                     _cDB.RunSQL("INSERT INTO x68EntityRole_Permission(x67ID,x53ID) SELECT " & _cDB.LastSavedRecordPID.ToString & ",x53ID FROM x53Permission WHERE x53ID IN (" & String.Join(",", x53ids) & ")")
                 End If
-               
+
                 sc.Complete()
                 Return True
             Else
