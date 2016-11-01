@@ -61,7 +61,7 @@
             If _Factory.SysUser Is Nothing Then DoLogOut()
             basUI.PingAccessLog(_Factory, Request)
         End If
-        ''Response.Cache.SetCacheability(HttpCacheability.NoCache)
+
     End Sub
     Private Sub DoLogOut()
         Response.Redirect("~/Account/Login.aspx?autologout=1") 'automatické odhlášení

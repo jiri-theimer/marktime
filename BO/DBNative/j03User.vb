@@ -22,6 +22,7 @@ Public Class j03User
     Public Property j03PasswordExpiration As Date?
     Public Property j03Ping_TimeStamp As Date?
     Public Property j03MobileForwardFlag As j03MobileForwardFlagENUM = j03MobileForwardFlagENUM.Auto
+    Public Property j03ModalWindowsFlag As Integer
     Protected Property _j04Name As String
     Protected Property _j02LastName As String
     Protected Property _j02FirstName As String

@@ -50,6 +50,7 @@
             End If
 
             basUI.SelectDropdownlistValue(Me.j03SiteMenuSkin, .j03SiteMenuSkin)
+            basUI.SelectDropdownlistValue(Me.j03ModalWindowsFlag, .j03ModalWindowsFlag.ToString)
         End With
         If cRec.j02ID <> 0 Then
             Me.panJ02Update.Visible = True
@@ -87,6 +88,7 @@
                 .j03IsLiveChatSupport = Me.j03IsLiveChatSupport.Checked
                 .j03IsSiteMenuOnClick = Me.j03IsSiteMenuOnClick.Checked
                 .j03SiteMenuSkin = Me.j03SiteMenuSkin.SelectedValue
+                .j03ModalWindowsFlag = CInt(Me.j03ModalWindowsFlag.SelectedValue)
             End With
 
             If Not Master.Factory.j03UserBL.Save(cJ03) Then

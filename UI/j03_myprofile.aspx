@@ -129,6 +129,7 @@
                         <div class="div6">
                             <asp:CheckBox ID="j03IsSiteMenuOnClick" runat="server" Text="Hlavní aplikační menu se otevírá až na click myši" CssClass="chk" />
                         </div>
+                        
                         <div class="div6">
                             <span class="lbl">Vzhled hlavního aplikačního menu:</span>
                             <asp:DropDownList ID="j03SiteMenuSkin" runat="server">
@@ -148,6 +149,13 @@
 
                             </asp:DropDownList>
 
+                        </div>
+                        <div class="div6">
+                            <asp:DropDownList ID="j03ModalWindowsFlag" runat="server">
+                                <asp:ListItem Text="Velikost modálních dialogových oken 900 x 700" Value="0"></asp:ListItem>
+                                <asp:ListItem Text="Modální dialogová okna automaticky maximalizovat na plnou velikost" Value="1"></asp:ListItem>
+                            </asp:DropDownList>
+                            
                         </div>
 
                         <table cellpadding="10">

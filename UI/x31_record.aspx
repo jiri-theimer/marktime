@@ -77,10 +77,30 @@
             <td>
                 <uc:datacombo ID="j25ID" runat="server" DataTextField="j25Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
             </td>
-        </tr>
+        </tr>        
         <tr>
             <td colspan="2">
                 <asp:CheckBox ID="x31IsPeriodRequired" runat="server" Text="Sestava podporuje filtrování podle období" />
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label1" Text="Vztah sestavy k pojmenovaným filtrům:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <asp:DropDownList ID="x31QueryFlag" runat="server">
+                    <asp:ListItem Text=""></asp:ListItem>
+                    <asp:ListItem Text="Worksheet filtr" Value="331"></asp:ListItem>
+                    <asp:ListItem Text="Filtr nad projekty" Value="141"></asp:ListItem>
+                    <asp:ListItem Text="Filtr nad klienty" Value="328"></asp:ListItem>
+                    <asp:ListItem Text="Filtr nad fakturami" Value="391"></asp:ListItem>
+                    <asp:ListItem Text="Filtr nad úkoly" Value="356"></asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
                 <asp:CheckBox ID="x31IsUsableAsPersonalPage" runat="server" Text="Šablona je použitelná jako osobní (výchozí) stránka uživatele" />
             </td>
         </tr>
@@ -117,7 +137,7 @@
             <asp:TextBox ID="x31DocSqlSourceTabs" runat="server" style="width:99%;height:100px;" TextMode="MultiLine"></asp:TextBox>
         </div>
     </asp:Panel>
-    <asp:HiddenField ID="hidx31QueryFlag" runat="server" />
+    
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

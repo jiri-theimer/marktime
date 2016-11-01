@@ -54,12 +54,18 @@ Public Class report_framework_detail1
             If cRec.QueryX29ID > BO.x29IdEnum._NotSpecified Then
                 Me.hidQueryPrefix.Value = Left(cRec.QueryX29ID.ToString, 3)
                 SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString)), cRec.QueryX29ID)
-            Else
-                Me.j70ID.Visible = False : Me.cmdQuery.Visible = False : Me.clue_query.Visible = False
             End If
 
+            RenderReport(cRec, True)
 
-            RenderReport(cRec)
+        End If
+    End Sub
+
+    Private Sub Handle_FirstRun(bolPeriodQuery As Boolean)
+        divReportViewer.Visible = False
+        panFirstRun.Visible = True
+        If bolPeriodQuery Then
+            cmdRunReport.Text = "Vygenerovat náhled sestavy podle zvoleného filtru období"
         End If
     End Sub
 
@@ -69,15 +75,19 @@ Public Class report_framework_detail1
         RenderReport()
     End Sub
 
-    Private Sub RenderReport(Optional cRec As BO.x31Report = Nothing)
+    Private Sub RenderReport(Optional cRec As BO.x31Report = Nothing, Optional bolFirstRun As Boolean = False)
         If cRec Is Nothing Then cRec = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID)
         If cRec Is Nothing Then
             Master.StopPage("Nelze načíst sestavu.<hr>" & Master.Factory.x31ReportBL.ErrorMessage)
             Return
         End If
-        lblHeader.Text = cRec.x31Name
+        lblHeader.Text = BO.BAS.OM3(cRec.x31Name, 30)
         If cRec.x31FormatFlag <> BO.x31FormatFlagENUM.Telerik Then
             Master.StopPage("NOT TRDX format.")
+        End If
+        If cRec.QueryX29ID > BO.x29IdEnum._NotSpecified And bolFirstRun Then
+            Handle_FirstRun(False)
+            Return
         End If
         Dim strRepFullPath As String = Master.Factory.x35GlobalParam.UploadFolder
         If cRec.ReportFolder <> "" Then
@@ -93,21 +103,10 @@ Public Class report_framework_detail1
 
         Dim strXmlContent As String = cF.GetFileContents(strRepFullPath, , False), bolPeriod As Boolean = False
 
-        If strXmlContent.IndexOf("1=1") > 0 Then
-            'sestava má vztah k návrháři filtrů
-            ''intJ70ID = BO.BAS.IsNullInt(query_j70id.SelectedValue)
-            ''bolQueryJ70 = True
-        End If
-
-        ''If strXmlContent.IndexOf("#query_alias#") > 0 Then
-        ''    If intJ70ID <> 0 Then
-        ''        strXmlContent = Replace(strXmlContent, "#query_alias#", "Filtr: " & Master.Factory.j70SavedBasicQueryBL.GetAliasCondition(intJ70ID))
-        ''    Else
-        ''        strXmlContent = Replace(strXmlContent, "#query_alias#", "")
-        ''    End If
-        ''End If
+     
         Dim xmlRepSource As New Telerik.Reporting.XmlReportSource()
         xmlRepSource.Xml = strXmlContent
+
 
         If Me.CurrentJ70ID > 0 Then
             Dim strW As String = Master.Factory.j70QueryTemplateBL.GetSqlWhere(Me.CurrentJ70ID)
@@ -123,10 +122,15 @@ Public Class report_framework_detail1
                 Case BO.x29IdEnum.p56Task
                     xmlRepSource.Xml = Replace(xmlRepSource.Xml, "356=356", strW)
             End Select
-            
+
         End If
+      
 
         If strXmlContent.IndexOf("@datfrom") > 0 Or strXmlContent.IndexOf("@datuntil") > 0 Or cRec.x31IsPeriodRequired Then
+            If bolFirstRun Then
+                Handle_FirstRun(True)
+                Return
+            End If
             period1.Visible = True
             'uriReportSource.Parameters.Add(New Parameter("datFrom", period1.DateFrom))
             'uriReportSource.Parameters.Add(New Parameter("datUntil", period1.DateUntil))
@@ -137,7 +141,8 @@ Public Class report_framework_detail1
         Else
             period1.Visible = False
         End If
-
+        divReportViewer.Visible = True
+        panFirstRun.Visible = False
         ''If intJ70ID <> 0 And strXmlContent.IndexOf("1=1") > 0 Then
         ''    'externí filtr z návrháře
         ''    Dim strW As String = Master.Factory.j70SavedBasicQueryBL.CompleteReportSqlQuerySource(intJ70ID, "xa")
@@ -173,7 +178,7 @@ Public Class report_framework_detail1
                 .BackColor = Nothing
             End If
         End With
-        lblHeader.Visible = Not Me.j70ID.Visible
+        'lblHeader.Visible = Not Me.j70ID.Visible
         If Me.j70ID.Visible Then
             basUIMT.RenderQueryCombo(Me.j70ID)
             With Me.j70ID
@@ -196,13 +201,21 @@ Public Class report_framework_detail1
         Dim mq As New BO.myQuery
         j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, x29id)
         j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Bez filtrování--")
+        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        
+
+        Me.j70ID.Visible = True : Me.cmdQuery.Visible = True : Me.clue_query.Visible = True
     End Sub
  
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString, Me.CurrentJ70ID.ToString)
         RenderReport()
+    End Sub
+
+   
+    Private Sub cmdRunReport_Click(sender As Object, e As EventArgs) Handles cmdRunReport.Click
+        divReportViewer.Visible = True
+        panFirstRun.Visible = False
+        RenderReport(, False)
     End Sub
 End Class

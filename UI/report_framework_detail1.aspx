@@ -8,6 +8,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+            <%If Me.divReportViewer.Visible Then%>
             var h1 = new Number;
             var h2 = new Number;
             var hh = new Number;
@@ -25,7 +26,8 @@
             hh = h1 - h2 - 2;
             <%End If%>
 
-            self.document.getElementById("divReportViewer").style.height = hh + "px";
+            self.document.getElementById("<%=Me.divReportViewer.ClientID%>").style.height = hh + "px";
+            <%End If%>
         })
 
 
@@ -43,13 +45,13 @@
 
         }
 
-        function sendbymail(){
+        function sendbymail() {
             sw_local("sendmail.aspx?x31id=<%=me.CurrentX31ID%>&datfrom=<%=Format(period1.DateFrom,"dd.MM.yyyy")%>&datuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>", "Images/email_32.png")
         }
 
         function x31_record() {
             sw_local("x31_record.aspx?pid=<%=me.CurrentX31ID%>", "Images/settings_32.png");
-            
+
         }
 
         function querybuilder() {
@@ -61,37 +63,40 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <table cellpadding="10">
-        <tr>
-            <td>
-                <asp:Image ID="img1" runat="server" ImageUrl="Images/report.png" />
-            </td>
-            <td>
-                <uc:periodcombo ID="period1" runat="server" Width="250px"></uc:periodcombo>
-            </td>
-            <td>
-                <a href="javascript:sendbymail()">Odeslat sestavu poštou jako PDF</a>
-            </td>
-            <td>
-                <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span"></asp:Label>
-                <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
-                <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
-            </td>
-            
-            <td>
-                <asp:HyperLink ID="cmdSetting" runat="server" Text="Nastavení šablony" NavigateUrl="javascript:x31_record()"></asp:HyperLink>
-            </td>
-        </tr>
-    </table>
+    <div class="commandcell">
+        <asp:Image ID="img1" runat="server" ImageUrl="Images/report_32.png" />
+    </div>
+    
+    <div class="commandcell" style="padding-left:10px;">
+        <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span"></asp:Label>
+        <div>
+        <a href="javascript:sendbymail()">Odeslat sestavu poštou jako PDF</a>
+        </div>
+    </div>
+    <div class="commandcell" style="padding:10px;">
+
+        <uc:periodcombo ID="period1" runat="server" Width="250px"></uc:periodcombo>
+    </div>
+    <div class="commandcell" style="padding:10px;">
+        
+        <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i" visible="false"></asp:HyperLink>
+        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenovaný filtr" Visible="false"></asp:DropDownList>
+        <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" Visible="false" />
+
+        <asp:HyperLink ID="cmdSetting" runat="server" Text="Nastavení šablony" NavigateUrl="javascript:x31_record()"></asp:HyperLink>
+    </div>
+    <div style="clear: both;"></div>
     <div id="offsetY"></div>
 
-    <div id="divReportViewer">        
+    <asp:Panel ID="divReportViewer" runat="server">
         <telerik:ReportViewer ID="rv1" runat="server" Width="100%" Height="100%" ShowParametersButton="true" ShowHistoryButtons="false" ValidateRequestMode="Disabled">            
             <Resources PrintToolTip="Tisk" ExportSelectFormatText="Exportovat do zvoleného formátu" NextPageToolTip="Další strana" PreviousPageToolTip="Předchozí strana" RefreshToolTip="Obnovit" LastPageToolTip="Poslední strana" FirstPageToolTip="První strana" TogglePageLayoutToolTip="Přepnout na náhled k tisku"></Resources>
         </telerik:ReportViewer>
 
-    </div>
+    </asp:Panel>
+    <asp:Panel ID="panFirstRun" runat="server" Visible="false" Style="padding: 100px;">
+        <asp:Button ID="cmdRunReport" runat="server" CssClass="cmd" Text="Vygenerovat náhled sestavy podle filtru" Font-Size="Large" />
+    </asp:Panel>
     <asp:HiddenField ID="flag" runat="server" />
     <asp:HiddenField ID="hidCurX31ID" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />

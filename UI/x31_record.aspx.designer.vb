@@ -140,6 +140,24 @@ Partial Public Class x31_record
     Protected WithEvents x31IsPeriodRequired As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x31QueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31QueryFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''x31IsUsableAsPersonalPage control.
     '''</summary>
     '''<remarks>
@@ -219,15 +237,6 @@ Partial Public Class x31_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x31DocSqlSourceTabs As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''hidx31QueryFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidx31QueryFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

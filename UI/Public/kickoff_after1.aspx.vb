@@ -614,11 +614,11 @@
 
         CreateQuery("Otevřené úkoly", BO.x29IdEnum.p56Task, 1)
         CreateQuery("Uzavřené úkoly (v archivu)", BO.x29IdEnum.p56Task, 2)
-        CreateQuery("Rozpracované úkony, čeká na schvalování", BO.x29IdEnum.p31Worksheet, 0, "_other", 3)
-        CreateQuery("Schválené úkony, čeká na fakturaci", BO.x29IdEnum.p31Worksheet, 0, "_other", 5)
-        CreateQuery("Vyplněn plán/limit hodin", BO.x29IdEnum.p31Worksheet, 0, "_other", 9)
-        CreateQuery("Vyplněn termín dokončení", BO.x29IdEnum.p31Worksheet, 0, "_other", 6)
-        CreateQuery("Je po termínu dokončení", BO.x29IdEnum.p31Worksheet, 0, "_other", 7)
+        CreateQuery("Rozpracované úkony, čeká na schvalování", BO.x29IdEnum.p56Task, 0, "_other", 3)
+        CreateQuery("Schválené úkony, čeká na fakturaci", BO.x29IdEnum.p56Task, 0, "_other", 5)
+        CreateQuery("Vyplněn plán/limit hodin", BO.x29IdEnum.p56Task, 0, "_other", 9)
+        CreateQuery("Vyplněn termín dokončení", BO.x29IdEnum.p56Task, 0, "_other", 6)
+        CreateQuery("Je po termínu dokončení", BO.x29IdEnum.p56Task, 0, "_other", 7)
 
     End Sub
 

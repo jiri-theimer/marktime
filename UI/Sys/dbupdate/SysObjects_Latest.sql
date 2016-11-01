@@ -13280,3 +13280,54 @@ WHERE o37.o36ID=1
 
 GO
 
+----------V---------------view_ProjectRolesAllocation_Read-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_ProjectRolesAllocation_Read') and type = 'V')
+ drop view view_ProjectRolesAllocation_Read
+GO
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_ProjectRolesAllocation_Read]
+as
+select a.p41ID,o28.p34ID,x69.j02ID,x69.j11ID
+from
+p41Project a INNER JOIN x69EntityRole_Assign x69 ON a.p41ID=x69.x69RecordPID
+INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID
+INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID
+WHERE x67.x29ID=141 AND o28.o28EntryFlag>0
+ 
+
+
+
+GO
+
+----------V---------------view_RegionRolesAllocation_Read-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_RegionRolesAllocation_Read') and type = 'V')
+ drop view view_RegionRolesAllocation_Read
+GO
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_RegionRolesAllocation_Read]
+as
+select a.p41ID,o28.p34ID,x69.j02ID,x69.j11ID
+from
+p41Project a INNER JOIN j18Region j18 ON a.j18ID=j18.j18ID
+INNER JOIN x69EntityRole_Assign x69 ON j18.j18ID=x69.x69RecordPID
+INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID
+INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID
+WHERE x67.x29ID=118 AND o28.o28EntryFlag>0
+ 
+
+
+
+GO
+

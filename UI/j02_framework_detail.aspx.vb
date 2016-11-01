@@ -13,6 +13,7 @@ Public Class j02_framework_detail
     End Enum
     Public Property CurrentSubgrid As SubgridType
         Get
+            If Not opgSubgrid.Visible Then Return SubgridType._NotSpecified
             Return DirectCast(CInt(Me.opgSubgrid.SelectedTab.Value), SubgridType)
         End Get
         Set(value As SubgridType)
@@ -121,6 +122,8 @@ Public Class j02_framework_detail
             menu1.FindItemByValue("cmdApprove").Visible = .j02IsIntraPerson
 
             menu1.FindItemByValue("cmdCalendar").Visible = .j02IsIntraPerson
+            menu1.FindItemByValue("cmdP48").Visible = .j02IsIntraPerson
+            menu1.FindItemByValue("cmdPivot").Visible = .j02IsIntraPerson
             ''Me.topLink0.Visible = .j02IsIntraPerson
             ''Me.topLink6.Visible = .j02IsIntraPerson
         End With
@@ -293,10 +296,13 @@ Public Class j02_framework_detail
         End With
         
         menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString
-        With menu1.FindItemByValue("cmdPivot")
-            .Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
-            If .Visible Then .NavigateUrl = "p31_pivot.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString
-        End With
+        If cRec.j02IsIntraPerson Then
+            With menu1.FindItemByValue("cmdPivot")
+                .Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+                If .Visible Then .NavigateUrl = "p31_pivot.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString
+            End With
+        End If
+        
         If cRec.IsClosed Then
             menu1.FindItemByValue("cmdO22").Visible = False
             menu1.Skin = "Black"

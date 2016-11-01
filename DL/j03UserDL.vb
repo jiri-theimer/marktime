@@ -151,6 +151,7 @@ Public Class j03UserDL
                 .Add("j03login", cRec.j03Login, DbType.String, , , True, "Login")
                 .Add("j03IsLiveChatSupport", cRec.j03IsLiveChatSupport, DbType.Boolean)
                 .Add("j03SiteMenuSkin", cRec.j03SiteMenuSkin, DbType.String)
+                .Add("j03ModalWindowsFlag", cRec.j03ModalWindowsFlag, DbType.Int32)
                 .Add("j03IsSiteMenuOnClick", cRec.j03IsSiteMenuOnClick, DbType.Boolean)
                 .Add("j03IsDomainAccount", cRec.j03IsDomainAccount, DbType.Boolean)
                 .Add("j03IsSystemAccount", cRec.j03IsSystemAccount, DbType.Boolean)

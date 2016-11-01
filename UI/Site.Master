@@ -190,6 +190,10 @@
 
             wnd.show();
 
+            <%if Factory.SysUser.j03ModalWindowsFlag="1" then%>
+            is_maximize = true;
+            <%end if%>
+
             if (is_maximize == true) {
                 wnd.maximize();
             }

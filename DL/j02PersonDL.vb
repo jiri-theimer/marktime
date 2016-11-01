@@ -142,9 +142,9 @@
                         If _curUser.IsMasterPerson Then
                             strW += " AND (a.j02ID IN (SELECT j02ID_Slave FROM j05MasterSlave WHERE j02ID_Master=@j02id_me)"
                             strW += " OR a.j02ID IN (SELECT j12.j02ID FROM j12Team_Person j12 INNER JOIN j05MasterSlave xj05 ON j12.j11ID=xj05.j11ID_Slave WHERE xj05.j02ID_Master=@j02id_me)"
-                            strW += " OR a.j02ID=@j02id_me)"
+                            strW += " OR a.j02ID=@j02id_me OR a.j02IsIntraPerson=0)"
                         Else
-                            strW += " AND a.j02ID=@j02id_me"
+                            strW += " AND (a.j02ID=@j02id_me OR a.j02IsIntraPerson=0)"
                         End If
                     Case BO.myQueryJ02_SpecificQuery.AllowedForWorksheetEntry
                         If _curUser.IsMasterPerson Then

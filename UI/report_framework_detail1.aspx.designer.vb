@@ -23,15 +23,6 @@ Partial Public Class report_framework_detail1
     Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''period1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents period1 As Global.UI.periodcombo
-
-    '''<summary>
     '''lblHeader control.
     '''</summary>
     '''<remarks>
@@ -39,6 +30,15 @@ Partial Public Class report_framework_detail1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''period1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
     '''clue_query control.
@@ -77,6 +77,15 @@ Partial Public Class report_framework_detail1
     Protected WithEvents cmdSetting As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''divReportViewer control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents divReportViewer As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''rv1 control.
     '''</summary>
     '''<remarks>
@@ -84,6 +93,24 @@ Partial Public Class report_framework_detail1
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents rv1 As Global.Telerik.ReportViewer.WebForms.ReportViewer
+
+    '''<summary>
+    '''panFirstRun control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panFirstRun As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdRunReport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRunReport As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''flag control.
