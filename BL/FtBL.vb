@@ -21,6 +21,7 @@
     Function LoadX90(intX90ID As Integer) As BO.x90EntityLog
     Function LoadX45(intX45ID As Integer) As BO.x45Event
     Function GetList_X45(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x45Event)
+    Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
 End Interface
 Class FtBL
     Inherits BLMother
@@ -154,5 +155,8 @@ Class FtBL
     End Function
     Public Function LoadX45(intX45ID As Integer) As BO.x45Event Implements IFtBL.LoadX45
         Return _cDL.LoadX45(intX45ID)
+    End Function
+    Public Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab) Implements IFtBL.GetList_X61
+        Return _cDL.GetList_X61(x29id)
     End Function
 End Class

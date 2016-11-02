@@ -14,10 +14,7 @@
         <asp:LinkButton ID="cmdExplicitPeriod" ToolTip="Zrušit filtr podle kalendáře" runat="server" Style="font-size: 120%; font-weight: bold; color: red; padding-left: 10px; padding-right: 10px;"></asp:LinkButton>
 
     </div>
-    <div class="commandcell">
-        <asp:TextBox ID="txtSearch" runat="server" Text="" Style="width: 80px;" ToolTip="Hledat podle názvu klienta, projektu, kódu projektu, příjmení osoby, názvu aktivity nebo podrobného popisu úkonu" meta:resourcekey="txtSearch"></asp:TextBox>
-        <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" CssClass="button-link" ToolTip="Hledat" meta:resourcekey="cmdSearch" />
-    </div>
+   
     <div class="commandcell" style="padding-left: 10px;">
         <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
     </div>
@@ -111,6 +108,7 @@
 <asp:HiddenField ID="hidCols" runat="server" />
 <asp:HiddenField ID="hidFrom" runat="server" />
 <asp:HiddenField ID="hidAllowFullScreen" runat="server" Value="1" />
+<asp:HiddenField ID="hidMasterTabAutoQueryFlag" runat="server" />
 <script type="text/javascript">
     $(document).ready(function () {
        
@@ -121,35 +119,12 @@
             $(".slidingDiv1xx").slideToggle();
         });
 
-        $('#<%=Me.txtSearch.ClientID%>').keydown(function (event) {
-            var keypressed = event.keyCode || event.which;
-            if (keypressed == 13) {
-                search();
-            }
-        });
-
-        if ($("#<%=Me.txtSearch.ClientID%>").val() != '') {
-            $("#<%=Me.txtSearch.ClientID%>").focus();
-            $("#<%=Me.txtSearch.ClientID%>").select();
-        }
-
-        $("#<%=Me.txtSearch.ClientID%>").focus(function () { $(this).select(); });
+       
 
 
     });
 
-    function search() {
-        var s = document.getElementById("<%=Me.txtSearch.ClientID%>").value;
-
-        $.post("Handler/handler_userparam.ashx", { x36value: s, x36key: "p31_subgrid-search", oper: "set" }, function (data) {
-            if (data == ' ') {
-                return;
-            }
-
-            var clickButton = document.getElementById("<%=cmdSearch.ClientID %>");
-            clickButton.click();
-        });
-    }
+    
 
     function periodcombo_setting() {
         p31_subgrid_periodcombo();
@@ -213,7 +188,7 @@
     }
 
     function p31_fullscreen() {
-        window.open("p31_grid.aspx?masterpid=" + document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value + "&masterprefix=<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>", "_top");
+        window.open("p31_grid.aspx?masterpid=" + document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value + "&masterprefix=<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>&p31tabautoquery=<%=me.MasterTabAutoQueryFlag%>", "_top");
         return (false);
     }
 </script>

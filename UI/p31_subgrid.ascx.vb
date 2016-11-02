@@ -50,6 +50,14 @@ Public Class p31_subgrid
             Me.hidJ74RecordState.Value = CInt(value).ToString
         End Set
     End Property
+    Public Property MasterTabAutoQueryFlag As String
+        Get
+            Return hidMasterTabAutoQueryFlag.Value
+        End Get
+        Set(value As String)
+            hidMasterTabAutoQueryFlag.Value = value
+        End Set
+    End Property
 
     Public Property ExplicitDateFrom As Date
         Get
@@ -117,21 +125,31 @@ Public Class p31_subgrid
             Me.hidX29ID.Value = CInt(value).ToString
         End Set
     End Property
+    Public ReadOnly Property MasterPrefixWithQueryFlag As String
+        Get
+            If Me.MasterTabAutoQueryFlag = "" Then
+                Return BO.BAS.GetDataPrefix(Me.EntityX29ID)
+            Else
+                Return BO.BAS.GetDataPrefix(Me.EntityX29ID) & "-" & Me.MasterTabAutoQueryFlag
+            End If
+        End Get
+    End Property
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Me.MasterDataPID = 0 Then Return
 
         If Not Page.IsPostBack Then
             ViewState("footersum") = ""
             With Factory.j03UserBL
-                Dim lisPars As New List(Of String), strKey As String = "p31_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.EntityX29ID)
+                Dim lisPars As New List(Of String), strKey As String = "p31_subgrid-j74id_" & Me.MasterPrefixWithQueryFlag
                 If Me.hidJ74RecordState.Value <> "" Then strKey += "-" & Me.hidJ74RecordState.Value
                 With lisPars
                     .Add("periodcombo-custom_query")
                     .Add("p31_grid-period")
                     .Add("p31_subgrid-j70id")
                     .Add("p31_subgrid-pagesize")
-                    .Add("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID))
-                    .Add("p31_subgrid-search")
+                    .Add("p31_subgrid-groupby-" & Me.MasterPrefixWithQueryFlag)
+                    ''.Add("p31_subgrid-search")
                     .Add("p31_subgrid-groups-autoexpanded")
                     .Add("p31_subgrid-sort")
                     .Add(strKey)
@@ -140,8 +158,8 @@ Public Class p31_subgrid
                 Me.CurrentJ74ID = CInt(.GetUserParam(strKey, "0"))
 
                 If Me.CurrentJ74ID = 0 Then
-                    Me.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.j74RecordState)
-                    Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.j74RecordState)
+                    Me.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, Factory.SysUser.PID, Me.MasterPrefixWithQueryFlag, Me.j74RecordState)
+                    Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Factory.SysUser.PID, Me.MasterPrefixWithQueryFlag, Me.j74RecordState)
                     _curJ74 = cJ74
                     .SetUserParam(strKey, cJ74.PID.ToString)
                     Me.hidDrillDownField.Value = _curJ74.j74DrillDownField1
@@ -154,8 +172,8 @@ Public Class p31_subgrid
                     grid2.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam("p31_subgrid-sort"))
                 End If
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_subgrid-pagesize", "10"))
-                basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID)))
-                Me.txtSearch.Text = .GetUserParam("p31_subgrid-search")
+                basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_subgrid-groupby-" & Me.MasterPrefixWithQueryFlag))
+                ''Me.txtSearch.Text = .GetUserParam("p31_subgrid-search")
                 Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-groups-autoexpanded", "1"))
             End With
 
@@ -167,7 +185,7 @@ Public Class p31_subgrid
 
     End Sub
     Private Sub SetupJ74Combo()
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = BO.BAS.GetDataPrefix(Me.EntityX29ID) And p.j74RecordState = Me.j74RecordState)
+        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = Me.MasterPrefixWithQueryFlag And p.j74RecordState = Me.j74RecordState)
         j74id.DataSource = lisJ74
         j74id.DataBind()
 
@@ -180,7 +198,7 @@ Public Class p31_subgrid
         Dim mq As New BO.myQuery
         j70ID.DataSource = Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p31Worksheet)
         j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Bez filtrování--")
+        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
         
     End Sub
@@ -188,7 +206,7 @@ Public Class p31_subgrid
     Private Sub SetupP31Grid()
         If _curJ74 Is Nothing Then _curJ74 = Me.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
         If _curJ74 Is Nothing Then
-            _curJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.EntityX29ID))
+            _curJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Me.Factory.SysUser.PID, Me.MasterPrefixWithQueryFlag)
             Me.CurrentJ74ID = _curJ74.PID
         End If
         hidDrillDownField.Value = _curJ74.j74DrillDownField1
@@ -199,21 +217,10 @@ Public Class p31_subgrid
         Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect, , , , strAddSqlFrom)
         Me.hidFrom.Value = strAddSqlFrom
 
-        ''With Me.cbxGroupBy
-        ''    If hidCols.Value.IndexOf(.SelectedValue) < 0 And .SelectedValue <> "" Then
-        ''        Dim b As Boolean = False
-        ''        If .SelectedValue = "SupplierName" Then Me.hidCols.Value += ",supplier.p28Name as SupplierName" : b = True
-        ''        If .SelectedValue = "Owner" Then Me.hidCols.Value += ",j02owner.j02LastName+char(32)+j02owner.j02FirstName as Owner" : b = True
-        ''        If .SelectedValue = "Person" Then Me.hidCols.Value += ",j02.j02LastName+char(32)+j02.j02Firstname as Person" : b = True
-        ''        If .SelectedValue = "ClientName" Then Me.hidCols.Value += ",p28client.p28Name as ClientName" : b = True
-        ''        If Not b Then
-        ''            Me.hidCols.Value += "," & .SelectedValue
-        ''        End If
-        ''    End If
-        ''End With
+        
 
         If _curJ74.j74IsFilteringByColumn Then
-            Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
+            ''Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
         End If
         If _curJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
        
@@ -491,7 +498,8 @@ Public Class p31_subgrid
                 .DateFrom = Me.ExplicitDateFrom
                 .DateUntil = Me.ExplicitDateUntil
             End If
-            .SearchExpression = Trim(Me.txtSearch.Text)
+            ''.SearchExpression = Trim(Me.txtSearch.Text)
+            .TabAutoQuery = Me.MasterTabAutoQueryFlag
 
             .MG_SortString = grid2.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
@@ -577,11 +585,11 @@ Public Class p31_subgrid
             Me.clue_query.Visible = False
             Me.j70ID.BackColor = Nothing
         End If
-        If Trim(txtSearch.Text) = "" Then
-            txtSearch.Style.Item("background-color") = ""
-        Else
-            txtSearch.Style.Item("background-color") = "red"
-        End If
+        ''If Trim(txtSearch.Text) = "" Then
+        ''    txtSearch.Style.Item("background-color") = ""
+        ''Else
+        ''    txtSearch.Style.Item("background-color") = "red"
+        ''End If
         If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
         Me.cmdFullScreen.Visible = Me.AllowFullScreen
     End Sub
@@ -593,7 +601,7 @@ Public Class p31_subgrid
     End Sub
 
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
-        Factory.j03UserBL.SetUserParam("p31_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.cbxGroupBy.SelectedValue)
+        Factory.j03UserBL.SetUserParam("p31_subgrid-groupby-" & Me.MasterPrefixWithQueryFlag, Me.cbxGroupBy.SelectedValue)
         ReloadPage()
         'With Me.cbxGroupBy.SelectedItem
         '    SetupGrouping(.Value, .Text)
@@ -620,21 +628,21 @@ Public Class p31_subgrid
         End If
     End Sub
 
-    Private Sub Handle_RunSearch()
-        Factory.j03UserBL.SetUserParam("p31_subgrid-search", Trim(txtSearch.Text))
+    ''Private Sub Handle_RunSearch()
+    ''    Factory.j03UserBL.SetUserParam("p31_subgrid-search", Trim(txtSearch.Text))
 
-        If Me.hidDrillDownField.Value = "" Then
-            grid2.Rebind(False)
-        Else
-            ReloadPage()
-        End If
+    ''    If Me.hidDrillDownField.Value = "" Then
+    ''        grid2.Rebind(False)
+    ''    Else
+    ''        ReloadPage()
+    ''    End If
 
-        txtSearch.Focus()
-    End Sub
+    ''    txtSearch.Focus()
+    ''End Sub
 
-    Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
-        Handle_RunSearch()
-    End Sub
+    ''Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
+    ''    Handle_RunSearch()
+    ''End Sub
 
     Private Sub chkGroupsAutoExpanded_CheckedChanged(sender As Object, e As EventArgs) Handles chkGroupsAutoExpanded.CheckedChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-groups-autoexpanded", BO.BAS.GB(Me.chkGroupsAutoExpanded.Checked))
@@ -657,7 +665,7 @@ Public Class p31_subgrid
 
     Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-sort", "")
-        Factory.j03UserBL.SetUserParam("p31_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.EntityX29ID), Me.j74id.SelectedValue)
+        Factory.j03UserBL.SetUserParam("p31_subgrid-j74id_" & Me.MasterPrefixWithQueryFlag, Me.j74id.SelectedValue)
         ReloadPage()
     End Sub
 

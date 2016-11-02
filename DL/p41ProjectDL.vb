@@ -32,19 +32,8 @@
         With pars
             .Add("j03id_sys", _curUser.PID, DbType.Int32)
             .Add("pid", intPID, DbType.Int32)
-            .Add("p56_actual_count", , DbType.Int32, ParameterDirection.Output)
-            .Add("p56_closed_count", , DbType.Int32, ParameterDirection.Output)
-            .Add("o22_actual_count", , DbType.Int32, ParameterDirection.Output)
-            .Add("p91_count", , DbType.Int32, ParameterDirection.Output)
         End With
-        Dim c As New BO.p41ProjectSum
-        If _cDB.RunSP("p41_inhale_sumrow", pars) Then
-            c.p56_Actual_Count = pars.Get(Of Int32)("p56_actual_count")
-            c.p56_Closed_Count = pars.Get(Of Int32)("p56_closed_count")
-            c.o22_Actual_Count = pars.Get(Of Int32)("o22_actual_count")
-            c.p91_Count = pars.Get(Of Int32)("p91_count")
-        End If
-        Return c
+        Return _cDB.GetRecord(Of BO.p41ProjectSum)("p41_inhale_sumrow", pars, True)
     End Function
     
     Public Function Save(cRec As BO.p41Project, lisO39 As List(Of BO.o39Project_Address), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField), ByRef intLastSavedP41ID As Integer) As Boolean

@@ -333,6 +333,10 @@
                         sql.Append("a.p56ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
                     Case BO.x29IdEnum.o23Notepad
                         sql.Append("a.o23ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
+                    Case BO.x29IdEnum.p28Contact
+                        sql.Append("a.p28ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
+                    Case BO.x29IdEnum.p31Worksheet
+                        sql.Append("a.p41ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=" & c.j71RecordPID.ToString)
                 End Select
                 If c.j71RecordPID_Extension = -1 Then
                     c.j71RecordPID_Extension = cUser.j02ID    'aktuálně přihlášená osoba

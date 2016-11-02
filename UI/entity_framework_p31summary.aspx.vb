@@ -141,6 +141,9 @@ Public Class entity_framework_p31summary
                 Else
                     Me.IsApprovingPerson = BO.BAS.BG(Request.Item("IsApprovingPerson"))
                 End If
+                If Request.Item("lasttabkey") <> "" Then
+                    Master.Factory.j03UserBL.SetUserParam(Request.Item("lasttabkey"), Request.Item("lasttabval"))
+                End If
                 ''If Me.CurrentMasterPrefix <> "" And Me.CurrentMasterPID <> 0 Then
 
                 ''    Select Case Me.CurrentMasterPrefix

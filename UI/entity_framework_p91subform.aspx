@@ -7,8 +7,11 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function () {            
             window.parent.stoploading();
+
+            var iframeWidth = '100%';
+            var iframeHeight = '270';
 
             $("a.reczoom").each(function () {
 
@@ -49,6 +52,7 @@
                     }
                 });
             });
+            
         });
         function periodcombo_setting() {
 

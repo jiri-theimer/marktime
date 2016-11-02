@@ -50,24 +50,6 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdExplicitPeriod As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''txtSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSearch As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
     '''clue_query control.
     '''</summary>
     '''<remarks>
@@ -354,4 +336,13 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidAllowFullScreen As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMasterTabAutoQueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterTabAutoQueryFlag As Global.System.Web.UI.WebControls.HiddenField
 End Class

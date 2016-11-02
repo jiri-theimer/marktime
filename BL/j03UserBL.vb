@@ -30,6 +30,8 @@
     Function GetList_j90(intJ03ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.j90LoginAccessLog)
     Function SaveAllFavouriteProjects(intJ03ID As Integer, p41ids As List(Of Integer)) As Boolean
     Function AppendOrRemoveFavouriteProject(intJ03ID As Integer, p41ids As List(Of Integer), bolRemove As Boolean) As Boolean
+    Function GetList_PageTabs(intJ03ID As Integer, x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
+    Function SavePageTabs(intJ03ID As Integer, x29id As BO.x29IdEnum, x61ids As List(Of Integer)) As Boolean
 End Interface
 Class j03UserBL
     Inherits BLMother
@@ -169,4 +171,13 @@ Class j03UserBL
     ''Public Function SaveDockState(strPage As String, strDockState As String) Implements Ij03UserBL.SaveDockState
     ''    Return _cDL.SYS_SaveDockState(strPage, strDockState)
     ''End Function
+    Public Function GetList_PageTabs(intJ03ID As Integer, x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab) Implements Ij03UserBL.GetList_PageTabs
+        Return _cDL.GetList_PageTabs(intJ03ID, x29id)
+    End Function
+    Public Function SavePageTabs(intJ03ID As Integer, x29id As BO.x29IdEnum, x61ids As List(Of Integer)) As Boolean Implements Ij03UserBL.SavePageTabs
+        If x61ids.Count = 0 Then
+            _Error = "Musíte vybrat minimálně jednu záložku." : Return False
+        End If
+        Return _cDL.SavePageTabs(intJ03ID, x29id, x61ids)
+    End Function
 End Class

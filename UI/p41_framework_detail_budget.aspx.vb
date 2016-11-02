@@ -12,6 +12,9 @@ Public Class p41_framework_detail_budget
                 If Request.Item("budgetprefix") <> "" Then
                     .Factory.j03UserBL.SetUserParam("p41_framework_detail_budget-prefix", Request.Item("budgetprefix"))
                 End If
+                If Request.Item("lasttabkey") <> "" Then
+                    Master.Factory.j03UserBL.SetUserParam(Request.Item("lasttabkey"), Request.Item("lasttabval"))
+                End If
             End With
             Dim lisPars As New List(Of String)
             With lisPars

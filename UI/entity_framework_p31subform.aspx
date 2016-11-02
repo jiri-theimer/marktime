@@ -102,7 +102,7 @@
         }
         function p31_subgrid_setting(j74id) {
             ///volá se z p31_subgrid
-            window.parent.sw_decide("grid_designer.aspx?prefix=p31&masterprefix=<%=Me.CurrentMasterPrefix%>&pid=" + j74id, "Images/griddesigner_32.png", true);
+            window.parent.sw_decide("grid_designer.aspx?prefix=p31&masterprefix=<%=gridP31.MasterPrefixWithQueryFlag%>&pid=" + j74id, "Images/griddesigner_32.png", true);
 
         }
         function p31_subgrid_approving(pids) {

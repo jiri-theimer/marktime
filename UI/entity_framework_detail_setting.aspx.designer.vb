@@ -23,6 +23,33 @@ Partial Public Class entity_framework_detail_setting
     Protected WithEvents switchHeight As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
+    '''skin1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents skin1 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''colsSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents colsSource As Global.Telerik.Web.UI.RadListBox
+
+    '''<summary>
+    '''colsDest control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
+
+    '''<summary>
     '''hidPrefix control.
     '''</summary>
     '''<remarks>

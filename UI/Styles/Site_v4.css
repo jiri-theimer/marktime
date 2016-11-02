@@ -854,6 +854,39 @@ div.menu-group-item {
     margin-left: 7px;
 }
 
+.badge1wip {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: black;
+    text-align: center;
+    white-space: pre-wrap;
+    vertical-align: middle;
+    background-color:gold;
+    border-radius: 10px;
+    margin-left: 7px;
+    
+}
+
+.badge1approved {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: black;
+    text-align: center;
+    white-space: pre-wrap;
+    vertical-align: middle;
+    background-color:#8FBC8F;
+    border-radius: 10px;
+    margin-left: 7px;
+}
+
 .badgebox1 {
     display: inline-block;
     min-width: 10px;

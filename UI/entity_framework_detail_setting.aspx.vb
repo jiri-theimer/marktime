@@ -24,18 +24,47 @@
             Dim lisPars As New List(Of String)
             With lisPars
                 .Add(Me.CurrentPrefix + "_framework_detail-switchHeight")
+                .Add(Me.CurrentPrefix + "_framework_detail-tabskin")
             End With
 
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
                 basUI.SelectRadiolistValue(Me.switchHeight, .GetUserParam(Me.CurrentPrefix + "_framework_detail-switchHeight", "auto"))
+                basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_framework_detail-tabskin", "Default"))
             End With
+            With Master.Factory
+                colsSource.DataSource = .ftBL.GetList_X61(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix))
+                colsSource.DataBind()
+
+                Dim lis As IEnumerable(Of BO.x61PageTab) = .j03UserBL.GetList_PageTabs(.SysUser.PID, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix))
+                For Each c In lis
+                    Dim it As Telerik.Web.UI.RadListBoxItem = colsSource.FindItem(Function(p) p.Value = c.x61ID.ToString)
+                    colsSource.Transfer(it, colsSource, colsDest)
+                    colsSource.ClearSelection()
+                    colsDest.ClearSelection()
+                Next
+            End With
+            colsSource.ClearSelection()
         End If
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
-            Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework_detail-switchHeight", Me.switchHeight.SelectedValue)
+            
+            Dim x61ids As New List(Of Integer)
+            For Each it As Telerik.Web.UI.RadListBoxItem In colsDest.Items
+                x61ids.Add(CInt(it.Value))
+            Next
+            With Master.Factory.j03UserBL
+                If Not .SavePageTabs(Master.Factory.SysUser.PID, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), x61ids) Then
+                    Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                    Return
+                End If
+                .SetUserParam(Me.CurrentPrefix + "_framework_detail-switchHeight", Me.switchHeight.SelectedValue)
+                .SetUserParam(Me.CurrentPrefix + "_framework_detail-tabskin", Me.skin1.SelectedValue)
+            End With
+            
+
             Master.CloseAndRefreshParent("setting")
         End If
     End Sub

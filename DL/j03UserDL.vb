@@ -25,22 +25,7 @@ Public Class j03UserDL
         Return _cDB.GetRecord(Of BO.j03UserSYS)("dbo.j03user_load_sysuser", New With {.login = strLogin}, True)
 
     End Function
-    'Public Function SYS_LoadDockState(strPage As String) As String
-    '    Dim pars As New DL.DbParameters
-    '    pars.Add("j03id", _curUser.PID, DbType.Int32)
-    '    pars.Add("page", strPage, DbType.String)
 
-    '    Return _cDB.GetValueFromSQL("SELECT x37DockState as Value FROM x37SavedDockState WHERE j03ID=@j03id AND x37Page=@page", pars)
-    'End Function
-    'Public Function SYS_SaveDockState(strPage As String, strDockState As String) As Boolean
-    '    Dim pars As New DbParameters
-    '    With pars
-    '        .Add("j03id", _curUser.PID, DbType.Int32)
-    '        .Add("page", strPage, DbType.String)
-    '        .Add("dockstate", strDockState, DbType.String)
-    '    End With
-    '    Return _cDB.RunSP("x37_save", pars)
-    'End Function
     
     Public Function GetVirtualCount(myQuery As BO.myQueryJ03) As Integer
         Dim s As String = "SELECT count(a.j03ID) as Value FROM j03user a INNER JOIN j04userrole j04 on a.j04id=j04.j04id LEFT OUTER JOIN j02Person j02 ON a.j02id=j02.j02id"
@@ -344,5 +329,29 @@ Public Class j03UserDL
         Else
             Return _cDB.RunSQL("INSERT INTO j13FavourteProject(j03ID,p41ID) SELECT @j03id,p41ID FROM p41Project WHERE p41ID IN (" & String.Join(",", p41ids) & ") AND p41ID NOT IN (SELECT p41ID FROM j13FavourteProject WHERE j03ID=@j03id)", pars)
         End If
+    End Function
+
+    Public Function GetList_PageTabs(intJ03ID As Integer, x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
+        Dim pars As New DL.DbParameters, s As String = "SELECT a.x61ID,a.x29ID,a.x61Code,a.x61Name,a.x61Ordinary,a.x61URL as _URL FROM x61PageTab a INNER JOIN j63PageTab_User j63 ON a.x61ID=j63.x61ID WHERE j63.j03ID=@j03id AND a.x29ID=@x29id ORDER BY a.x61Ordinary"
+        pars.Add("j03id", intJ03ID, DbType.Int32)
+        pars.Add("x29id", CInt(x29id), DbType.Int32)
+
+        Dim lis As IEnumerable(Of BO.x61PageTab) = _cDB.GetList(Of BO.x61PageTab)(s, pars)
+        If lis.Count = 0 Then
+            Dim strDefCodes As String = "'summary','p31','time','expense','fee','p56','p91'"
+            _cDB.RunSQL("INSERT INTO j63PageTab_User(x61ID,j03ID) SELECT x61ID,@j03id FROM x61PageTab WHERE x29ID=@x29id AND x61Code IN (" & strDefCodes & ") ORDER BY x61Ordinary", pars)
+            lis = _cDB.GetList(Of BO.x61PageTab)(s, pars)
+        End If
+        Return lis
+    End Function
+    Public Function SavePageTabs(intJ03ID As Integer, x29id As BO.x29IdEnum, x61ids As List(Of Integer)) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("j03id", intJ03ID, DbType.Int32)
+        pars.Add("x29id", CInt(x29id), DbType.Int32)
+        _cDB.RunSQL("DELETE FROM j63PageTab_User WHERE j03ID=@j03id AND x61ID IN (SELECT x61ID FROM x61PageTab WHERE x29ID=@x29id)", pars)
+        For Each intX61ID As Integer In x61ids
+            _cDB.RunSQL("INSERT INTO j63PageTab_User(x61ID,j03ID) VALUES(" & intX61ID.ToString & "," & intJ03ID.ToString & ")")
+        Next
+        Return True
     End Function
 End Class

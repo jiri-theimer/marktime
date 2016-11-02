@@ -421,6 +421,18 @@
             If Not String.IsNullOrEmpty(.MG_AdditionalSqlWHERE) Then
                 s.Append(" AND " & .MG_AdditionalSqlWHERE)
             End If
+            If Not String.IsNullOrEmpty(.TabAutoQuery) Then
+                Select Case .TabAutoQuery
+                    Case "time"
+                        s.Append(" AND p34.p33ID=1")
+                    Case "expense"
+                        s.Append(" AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1")
+                    Case "fee"
+                        s.Append(" AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2")
+                    Case "kusovnik"
+                        s.Append(" AND p34.p33ID=3")
+                End Select
+            End If
         End With
 
         Return bas.TrimWHERE(s.ToString)

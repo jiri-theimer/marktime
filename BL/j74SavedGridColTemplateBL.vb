@@ -111,6 +111,15 @@ Class j74SavedGridColTemplateBL
                             Case Else
                                 c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                         End Select
+                    Case "p41-time"
+                        c.j74Name = "Hodiny v projektu"
+                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p41-expense", "p41-fee"
+                        c.j74Name = "Peněžní výdaje nebo paušály v projektu"
+                        c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "p41-kusovnik"
+                        c.j74Name = "Kusovník v projektu"
+                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                     Case "p91"
                         c.j74Name = My.Resources.common.VychoziPrehledFaktury
                         c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Invoiced,p31Rate_Billing_Invoiced,p31Amount_WithoutVat_Invoiced,p31VatRate_Invoiced,p31Amount_WithVat_Invoiced,p31Text"
@@ -355,6 +364,7 @@ Class j74SavedGridColTemplateBL
             If Not bolHideRatesColumns Then
                 .Add(AGC(My.Resources.common.VychoziSazba, "p31Rate_Billing_Orig", BO.cfENUM.Numeric2))
                 .Add(AGC(My.Resources.common.CastkaBezDPH, "p31Amount_WithoutVat_Orig", BO.cfENUM.Numeric2, , , True))
+                .Add(AGC("Částka vč. DPH", "p31Amount_WithVat_Orig", BO.cfENUM.Numeric2, , , True))
                 .Add(AGC(My.Resources.common.NakladovaSazba, "p31Rate_Internal_Orig", BO.cfENUM.Numeric2))
                 .Add(AGC(My.Resources.common.NakladovaCastka, "p31Amount_Internal", BO.cfENUM.Numeric2, , , True))
             End If

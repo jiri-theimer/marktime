@@ -131,7 +131,7 @@
                         </div>
                         
                         <div class="div6">
-                            <span class="lbl">Vzhled hlavního aplikačního menu:</span>
+                            <span class="lbl">Vzhled (Skin) hlavního aplikačního menu:</span>
                             <asp:DropDownList ID="j03SiteMenuSkin" runat="server">
                                 <asp:ListItem Text="--Výchozí--" Value="Windows7" Selected="true"></asp:ListItem>
                                 <asp:ListItem Text="Metro" Value="Metro"></asp:ListItem>

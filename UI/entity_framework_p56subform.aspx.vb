@@ -25,7 +25,9 @@
             Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
             Me.CurrentMasterPrefix = Request.Item("masterprefix")
             If Me.CurrentMasterPID = 0 Or Me.CurrentMasterPrefix = "" Then Master.StopPage("masterpid or masterprefix missing.")
-            
+            If Request.Item("lasttabkey") <> "" Then
+                Master.Factory.j03UserBL.SetUserParam(Request.Item("lasttabkey"), Request.Item("lasttabval"))
+            End If
         End If
         If Request.Item("pid") <> "" Then
             gridP56.DefaultSelectedPID = BO.BAS.IsNullInt(Request.Item("pid"))

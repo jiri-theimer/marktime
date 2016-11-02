@@ -240,7 +240,8 @@
         {
             var tab = eventArgs.get_tab();
             var s=tab.get_value();
-            $.post("Handler/handler_userparam.ashx", { x36value: s, x36key: "p41_framework_detail-subgrid", oper: "set" }, function (data) {
+           
+            $.post("Handler/handler_userparam.ashx", { x36value: s, x36key: "p41_framework_detail-tab", oper: "set" }, function (data) {
                 if (data == ' ') {
                     return;
                 }                
@@ -536,18 +537,11 @@
         </asp:Panel>
     </asp:Panel>
 
-    <div style="clear: both; width: 100%;"></div>
-    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="false" OnClientTabSelected="OnClientTabSelected">
-        <Tabs>
-            <telerik:RadTab Text="Worksheet summary" Value="-1" Selected="true" Target="fraSubform"></telerik:RadTab>
-            <telerik:RadTab Text="Worksheet přehled" Value="1" Target="fraSubform" meta:resourcekey="tab_worksheetprehled"></telerik:RadTab>
-            <telerik:RadTab Text="Úkoly" Value="4" Target="fraSubform" meta:resourcekey="topLink2"></telerik:RadTab>
-            <telerik:RadTab Text="Rozpočet" Value="5" Target="fraSubform" meta:resourcekey="tab_rozpocet"></telerik:RadTab>
-            <telerik:RadTab Text="Vystavené faktury" Value="2" Target="fraSubform" meta:resourcekey="tab_faktury"></telerik:RadTab>
-            <telerik:RadTab Text="Komentáře a workflow" Value="3" Target="fraSubform" meta:resourcekey="tab_workflow"></telerik:RadTab>
-            <telerik:RadTab Text="x" Value="0" ToolTip="Nezobrazovat pod-přehled" Target="fraSubform" meta:resourcekey="tab_none"></telerik:RadTab>
-        </Tabs>
+    <div style="clear: both;"></div>
+    <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" style="margin-top:10px;">       
     </telerik:RadTabStrip>
+
+    
     <div id="offsetY"></div>
     <iframe frameborder="0" id="fraSubform" name="fraSubform" runat="server" width="100%" height="300px"></iframe>
     <asp:Image ID="imgLoading" runat="server" ImageUrl="Images/loading.gif" style="position:absolute;top:500px;left:200px;" />

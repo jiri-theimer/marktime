@@ -95,6 +95,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.p51PriceList, "p51id_billing", "Fakturační ceník klienta"))
                 lis.Add(New myItem(BO.x29IdEnum.p87BillingLanguage, "p87id", "Fakturační jazyk klienta"))
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu"))
+                lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení klientské role"))
             Case BO.x29IdEnum.p56Task
                 ph1.Text = "Návrhář filtrů nad přehledem úkolů/požadavků"
 
@@ -150,6 +151,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.p70BillingStatus, "p70id", "Fakturace"))
                 lis.Add(New myItem(BO.x29IdEnum.j27Currency, "j27ID_Billing_Orig", "Měna úkonu"))
                 lis.Add(New myItem(BO.x29IdEnum.p95InvoiceRow, "p32.p95id", "Fakturační oddíl"))
+                lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení projektové role"))
         End Select
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
@@ -286,7 +288,9 @@
                 Me.cbxItems.DataSource = Master.Factory.p51PriceListBL.GetList(mq).Where(Function(p) p.p51IsMasterPriceList = False And p.p51IsInternalPriceList = False And p.p51IsCustomTailor = False)
             Case BO.x29IdEnum.x67EntityRole
                 Me.cbxItems.DataTextField = "x67Name"
-                Me.cbxItems.DataSource = Master.Factory.x67EntityRoleBL.GetList(mq).Where(Function(p) p.x29ID = Me.CurrentX29ID)
+                Dim x29Role As BO.x29IdEnum = Me.CurrentX29ID
+                If Me.CurrentX29ID = BO.x29IdEnum.p31Worksheet Then x29Role = BO.x29IdEnum.p41Project
+                Me.cbxItems.DataSource = Master.Factory.x67EntityRoleBL.GetList(mq).Where(Function(p) p.x29ID = x29Role)
                 Me.cbxItemsExtension.Visible = True
                 If strFieldAfter = "j11id" Then
                     Me.cbxItemsExtension.DataTextField = "j11Name"

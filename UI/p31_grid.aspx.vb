@@ -44,6 +44,7 @@ Public Class p31_grid
             If Request.Item("aw") <> "" Then
                 Me.hidMasterAW.Value = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
             End If
+            Me.hidMasterTabAutoQueryFlag.Value = Request.Item("p31tabautoquery")
             With Master
                 .PageTitle = "Worksheet datový přehled"
                 .SiteMenuValue = "cmdP31_Grid"
@@ -389,6 +390,7 @@ Public Class p31_grid
                 .DateUntil = period1.DateUntil
             End If
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
+            .TabAutoQuery = Me.hidMasterTabAutoQueryFlag.Value
         End With
     End Sub
 
