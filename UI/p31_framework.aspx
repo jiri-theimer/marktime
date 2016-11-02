@@ -167,7 +167,7 @@
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" MaxWidth="1000" BackColor="white">
 
-            <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Metro" AutoPostBack="true">
+            <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Default" AutoPostBack="true">
                 <Tabs>
                     <telerik:RadTab Text="<%$ Resources:p31_framework, tabs1_p41 %>" Value="p41" Selected="true" ToolTip="<%$Resources:p31_framework, tabs1_p41_tooltip %>"></telerik:RadTab>
                     <telerik:RadTab Text="TOP 10" Value="top10" ToolTip="Maximálně 10 mnou naposledy vykazovaných projektů"></telerik:RadTab>

@@ -464,13 +464,13 @@ Partial Public Class j02_framework_detail
     Protected WithEvents notepad1 As Global.UI.o23_list
 
     '''<summary>
-    '''opgSubgrid control.
+    '''tabs1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents opgSubgrid As Global.Telerik.Web.UI.RadTabStrip
+    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
 
     '''<summary>
     '''fraSubform control.

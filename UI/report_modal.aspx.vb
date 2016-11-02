@@ -51,9 +51,15 @@ Public Class report_modal
                 Master.StopPage("prefix missing")
             End If
             ViewState("guid") = BO.BAS.GetGUID
-            Me.MultiPIDs = Request.Item("pids")
+            If Request.Item("pids") <> "" Then
+                Me.MultiPIDs = Request.Item("pids")
+            Else
+                If Request.Item("pid") <> "" Then
+                    If Request.Item("pid").IndexOf(",") > 0 Then Me.MultiPIDs = Request.Item("pid")
+                End If
+            End If
             With Master
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                If Me.MultiPIDs = "" Then .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 ''If .DataPID = 0 And Request.Item("guid") = "" Then .StopPage("pid missing")
                 If .DataPID = 0 And Me.MultiPIDs = "" And Request.Item("guid") = "" Then .StopPage("pid missing")
                 If .Factory.SysUser.IsAdmin Then

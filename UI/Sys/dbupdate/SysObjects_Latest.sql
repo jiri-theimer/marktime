@@ -3472,6 +3472,90 @@ END CATCH
 
 GO
 
+----------P---------------j02_inhale_sumrow-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j02_inhale_sumrow') and type = 'P')
+ drop procedure j02_inhale_sumrow
+GO
+
+
+
+
+CREATE procedure [dbo].[j02_inhale_sumrow]
+@j03id_sys int
+,@pid int						---j02id		
+AS
+
+declare @p56_actual_count int,@p56_closed_count int,@p91_count int
+declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
+declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
+declare @o23_exist bit
+
+if exists(SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@pid OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@pid)))
+ begin
+	SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
+	,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
+	FROM p56Task
+	WHERE p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@pid OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@pid)))
+
+ end
+
+
+SELECT @p91_count=COUNT(p91ID)
+from p91Invoice
+WHERE p91ID IN (SELECT p91ID FROM p31Worksheet where j02ID=@pid)
+
+
+if exists(select p31ID FROM p31Worksheet WHERE j02ID=@pid AND p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
+ begin
+  select @p31_wip_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_wip_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_wip_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_wip_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+  WHERE a.j02ID=@pid AND a.p71ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil
+
+ end
+
+if exists(select p31ID FROM p31Worksheet WHERE j02ID=@pid AND p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
+ begin
+  select @p31_approved_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_approved_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_approved_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_approved_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID  
+  WHERE a.j02ID=@pid AND a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil
+  
+ end
+
+if exists(select b07ID from b07Comment WHERE x29ID=102 AND b07RecordPID=@pid)
+ select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=102 AND b07RecordPID=@pid
+
+if exists(select o23ID FROM o23Notepad WHERE j02ID=@pid)
+ set @o23_exist=1
+else
+ set @o23_exist=0
+
+
+select isnull(@p56_actual_count,0) as p56_Actual_Count
+,isnull(@p56_closed_count,0) as p56_Closed_Count
+,isnull(@p91_count,0) as p91_Count
+,isnull(@p31_wip_time_count,0) as p31_Wip_Time_Count
+,isnull(@p31_approved_time_count,0) as p31_Approved_Time_count
+,isnull(@p31_wip_expense_count,0) as p31_Wip_Expense_Count
+,isnull(@p31_approved_expense_count,0) as p31_Approved_Expense_Count
+,isnull(@p31_wip_fee_count,0) as p31_Wip_Fee_Count
+,isnull(@p31_approved_fee_count,0) as p31_Approved_Fee_Count
+,isnull(@p31_wip_kusovnik_count,0) as p31_Wip_Kusovnik_Count
+,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
+,isnull(@b07_count,0) as b07_Count
+,@o23_exist as o23_Exist
+
+
+GO
+
 ----------P---------------j02_recovery-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('j02_recovery') and type = 'P')
@@ -5635,6 +5719,102 @@ END CATCH
 
 
 
+
+GO
+
+----------P---------------p28_inhale_sumrow-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_inhale_sumrow') and type = 'P')
+ drop procedure p28_inhale_sumrow
+GO
+
+
+
+
+CREATE procedure [dbo].[p28_inhale_sumrow]
+@j03id_sys int
+,@pid int						---p28id		
+AS
+
+declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int
+declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
+declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
+declare @o23_exist bit
+
+SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
+,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
+FROM p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
+WHERE b.p28ID_Client=@pid
+
+SELECT @o22_actual_count=COUNT(a.o22ID)
+FROM o22Milestone a INNER JOIN p41Project b ON a.p41ID=b.p41ID
+WHERE b.p41ID=@pid AND o22DateUntil>=dateadd(day,-2,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil
+
+SELECT @p91_count=COUNT(p91ID)
+from p91Invoice
+WHERE p28ID=@pid
+
+if exists(select p30ID FROM p30Contact_Person WHERE (p28ID=@pid OR p41ID IN (select p41ID FROM p41Project WHERE p28ID_Client=@pid)) AND getdate() BETWEEN p30ValidFrom AND p30ValidFrom)
+ set @p30_exist=1
+else
+ set @p30_exist=0
+
+
+if exists(select p28ID FROM p28Contact WHERE p28ParentID=@pid)
+ select @childs_count=count(p28ID) FROM p28Contact WHERE p28ParentID=@pid
+
+
+if exists(select a.p31ID FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID WHERE b.p28ID_Client=@pid AND a.p71ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil)
+ begin
+  select @p31_wip_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_wip_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_wip_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_wip_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+  INNER JOIN p41Project d ON a.p41ID=d.p41ID
+  WHERE d.p28ID_Client=@pid AND a.p71ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil
+
+ end
+
+if exists(select a.p31ID FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID WHERE b.p28ID_Client=@pid AND p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil)
+ begin
+  select @p31_approved_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_approved_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_approved_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_approved_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+  INNER JOIN p41Project d ON a.p41ID=d.p41ID
+  WHERE d.p28ID_Client=@pid AND a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil
+  
+ end
+
+if exists(select b07ID from b07Comment WHERE x29ID=328 AND b07RecordPID=@pid)
+ select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=328 AND b07RecordPID=@pid
+
+if exists(select o23ID FROM o23Notepad WHERE p28ID=@pid)
+ set @o23_exist=1
+else
+ set @o23_exist=0
+
+
+select isnull(@p56_actual_count,0) as p56_Actual_Count
+,isnull(@p56_closed_count,0) as p56_Closed_Count
+,isnull(@o22_actual_count,0) as o22_Actual_Count
+,isnull(@p91_count,0) as p91_Count
+,@p30_exist as p30_Exist
+,isnull(@childs_count,0) as childs_Count
+,isnull(@p31_wip_time_count,0) as p31_Wip_Time_Count
+,isnull(@p31_approved_time_count,0) as p31_Approved_Time_count
+,isnull(@p31_wip_expense_count,0) as p31_Wip_Expense_Count
+,isnull(@p31_approved_expense_count,0) as p31_Approved_Expense_Count
+,isnull(@p31_wip_fee_count,0) as p31_Wip_Fee_Count
+,isnull(@p31_approved_fee_count,0) as p31_Approved_Fee_Count
+,isnull(@p31_wip_kusovnik_count,0) as p31_Wip_Kusovnik_Count
+,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
+,isnull(@b07_count,0) as b07_Count
+,@o23_exist as o23_Exist
 
 GO
 
@@ -8900,37 +9080,101 @@ GO
 
 
 
-
 CREATE procedure [dbo].[p41_inhale_sumrow]
 @j03id_sys int
-,@pid int						---p41id
-,@p56_actual_count int OUTPUT	--_poèet otevøených úkolù v projektu
-,@p56_closed_count int OUTPUT	--_poèet uzavøených úkolù v projektu
-,@o22_actual_count int OUTPUT	--poèet otevøených termínù v projektu
-,@p91_count int OUTPUT			--poèet vystavených faktur
+,@pid int						---p41id		
 AS
 
-set @p56_actual_count=0
-set @p56_closed_count=0
-set @o22_actual_count=0
-set @p91_count=0
+declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int,@is_my_favourite bit,@p40_exist bit
+declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
+declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
+declare @o23_exist bit,@p45_count int
 
-
-SELECT @p56_actual_count=COUNT(*)
+SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
+,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 FROM p56Task
-WHERE p41ID=@pid AND getdate() BETWEEN p56ValidFrom AND p56ValidUntil
+WHERE p41ID=@pid
 
-SELECT @p56_closed_count=COUNT(*)
-FROM p56Task
-WHERE p41ID=@pid AND getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil
-
-SELECT @o22_actual_count=COUNT(*)
+SELECT @o22_actual_count=COUNT(o22ID)
 FROM o22Milestone
 WHERE p41ID=@pid AND o22DateUntil>=dateadd(day,-2,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil
 
-SELECT @p91_count=COUNT(*)
+SELECT @p91_count=COUNT(p91ID)
 from p91Invoice
 WHERE p91ID IN (SELECT p91ID FROM p31Worksheet WHERE p41ID=@pid)
+
+if exists(select p30ID FROM p30Contact_Person WHERE p41ID=@pid AND getdate() BETWEEN p30ValidFrom AND p30ValidFrom)
+ set @p30_exist=1
+else
+ set @p30_exist=0
+
+
+if exists(select p40ID FROM p40WorkSheet_Recurrence WHERE p41ID=@pid)
+ set @p40_exist=1
+else
+ set @p40_exist=0
+
+if exists(select p41ID FROM p41Project WHERE p41ParentID=@pid)
+ select @childs_count=count(p41ID) FROM p41Project WHERE p41ParentID=@pid
+
+if exists(select j13ID FROM j13FavourteProject WHERE p41ID=@pid AND j03ID=@j03id_sys)
+ set @is_my_favourite=1
+else
+ set @is_my_favourite=0
+
+if exists(select p31ID FROM p31Worksheet WHERE p41ID=@pid AND p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
+ begin
+  select @p31_wip_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_wip_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_wip_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_wip_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+  WHERE a.p41ID=@pid AND a.p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil
+
+ end
+
+if exists(select p31ID FROM p31Worksheet WHERE p41ID=@pid AND p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
+ begin
+  select @p31_approved_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_approved_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_approved_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_approved_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+  WHERE a.p41ID=@pid AND a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil
+
+ end
+
+if exists(select b07ID from b07Comment WHERE x29ID=141 AND b07RecordPID=@pid)
+ select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid
+
+if exists(select o23ID FROM o23Notepad WHERE p41ID=@pid)
+ set @o23_exist=1
+else
+ set @o23_exist=0
+
+select @p45_count=COUNT(p45ID) FROM p45Budget WHERE p41ID=@pid
+
+select isnull(@p56_actual_count,0) as p56_Actual_Count
+,isnull(@p56_closed_count,0) as p56_Closed_Count
+,isnull(@o22_actual_count,0) as o22_Actual_Count
+,isnull(@p91_count,0) as p91_Count
+,@p30_exist as p30_Exist
+,isnull(@childs_count,0) as childs_Count
+,@is_my_favourite as is_My_Favourite
+,@p40_exist as p40_Exist
+,isnull(@p31_wip_time_count,0) as p31_Wip_Time_Count
+,isnull(@p31_approved_time_count,0) as p31_Approved_Time_count
+,isnull(@p31_wip_expense_count,0) as p31_Wip_Expense_Count
+,isnull(@p31_approved_expense_count,0) as p31_Approved_Expense_Count
+,isnull(@p31_wip_fee_count,0) as p31_Wip_Fee_Count
+,isnull(@p31_approved_fee_count,0) as p31_Approved_Fee_Count
+,isnull(@p31_wip_kusovnik_count,0) as p31_Wip_Kusovnik_Count
+,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
+,isnull(@b07_count,0) as b07_Count
+,@o23_exist as o23_Exist
+,isnull(@p45_count,0) as p45_Count
 
 GO
 
@@ -13275,57 +13519,6 @@ as
 SELECT o37.p28ID,o38prim.*
 FROM o38Address o38prim INNER JOIN o37Contact_Address o37 ON o38prim.o38ID=o37.o38ID
 WHERE o37.o36ID=1
-
-
-
-GO
-
-----------V---------------view_ProjectRolesAllocation_Read-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('view_ProjectRolesAllocation_Read') and type = 'V')
- drop view view_ProjectRolesAllocation_Read
-GO
-
-
-
-
-
-
-CREATE VIEW [dbo].[view_ProjectRolesAllocation_Read]
-as
-select a.p41ID,o28.p34ID,x69.j02ID,x69.j11ID
-from
-p41Project a INNER JOIN x69EntityRole_Assign x69 ON a.p41ID=x69.x69RecordPID
-INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID
-INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID
-WHERE x67.x29ID=141 AND o28.o28EntryFlag>0
- 
-
-
-
-GO
-
-----------V---------------view_RegionRolesAllocation_Read-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('view_RegionRolesAllocation_Read') and type = 'V')
- drop view view_RegionRolesAllocation_Read
-GO
-
-
-
-
-
-
-CREATE VIEW [dbo].[view_RegionRolesAllocation_Read]
-as
-select a.p41ID,o28.p34ID,x69.j02ID,x69.j11ID
-from
-p41Project a INNER JOIN j18Region j18 ON a.j18ID=j18.j18ID
-INNER JOIN x69EntityRole_Assign x69 ON j18.j18ID=x69.x69RecordPID
-INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID
-INNER JOIN o28ProjectRole_Workload o28 ON x67.x67ID=o28.x67ID
-WHERE x67.x29ID=118 AND o28.o28EntryFlag>0
- 
 
 
 

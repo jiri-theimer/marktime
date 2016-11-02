@@ -119,7 +119,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Date.
+        '''  Looks up a localized string similar to Datum.
         '''</summary>
         Public Shared ReadOnly Property Datum() As String
             Get

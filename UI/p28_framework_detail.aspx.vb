@@ -7,20 +7,17 @@ Public Class p28_framework_detail
     Private Property _curProjectIndex As Integer
     Private Property _curDocIndex As Integer
 
-    Public Enum SubgridType
-        summary = -1
-        p31 = 1
-        p91 = 2
-        p56 = 4
-        b07 = 3
-        _NotSpecified = 0
-    End Enum
-    Public Property CurrentSubgrid As SubgridType
+    Public Property CurrentTab As String
         Get
-            Return DirectCast(CInt(Me.opgSubgrid.SelectedTab.Value), SubgridType)
+            If tabs1.SelectedTab Is Nothing Then
+                tabs1.SelectedIndex = 0
+            End If
+            Return tabs1.SelectedTab.Value
         End Get
-        Set(value As SubgridType)
-            Me.opgSubgrid.Tabs.FindTabByValue(CInt(value).ToString).Selected = True
+        Set(value As String)
+            If value = "" Then Return
+            If tabs1.FindTabByValue(value) Is Nothing Then Return
+            tabs1.FindTabByValue(value).Selected = True
         End Set
     End Property
 
@@ -40,7 +37,7 @@ Public Class p28_framework_detail
             With Master
                 .SiteMenuValue = "p28"
                 If Request.Item("tab") <> "" Then
-                    .Factory.j03UserBL.SetUserParam("p28_framework_detail-subgrid", Request.Item("tab"))
+                    .Factory.j03UserBL.SetUserParam("p28_framework_detail-tab", Request.Item("tab"))
                 End If
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneContactPage <> "" Then
@@ -50,7 +47,8 @@ Public Class p28_framework_detail
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p28_framework_detail-pid")
-                    .Add("p28_framework_detail-subgrid")
+                    .Add("p28_framework_detail-tab")
+                    .Add("p28_framework_detail-tabskin")
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail-switch")
                     .Add("p28_framework_detail-switchHeight")
@@ -68,7 +66,7 @@ Public Class p28_framework_detail
                     Else
                         panSwitch.Style.Item("height") = strHeight & "px"
                     End If
-                    Me.CurrentSubgrid = DirectCast(CInt(.GetUserParam("p28_framework_detail-subgrid", "-1")), SubgridType)
+
                     If Master.DataPID = 0 Then
                         Master.DataPID = BO.BAS.IsNullInt(.GetUserParam("p28_framework_detail-pid", "O"))
                         If Master.DataPID = 0 Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p28")
@@ -87,35 +85,31 @@ Public Class p28_framework_detail
 
             RefreshRecord()
 
+            tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p28_framework_detail-tabskin", "Default")   'až zde jsou vygenerované tab záložky
+            Me.CurrentTab = Master.Factory.j03UserBL.GetUserParam("p28_framework_detail-tab", "summary")
         End If
 
-        For Each t As RadTab In Me.opgSubgrid.Tabs
-            Select Case t.Value
-                Case "-1" : t.NavigateUrl = "entity_framework_p31summary.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-                Case "1" : t.NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-                Case "2" : t.NavigateUrl = "entity_framework_p91subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-                Case "3" : t.NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-                Case "4" : t.NavigateUrl = "entity_framework_p56subform.aspx?masterprefix=p28&masterpid=" & Master.DataPID.ToString
-            End Select
-        Next
-        If Me.CurrentSubgrid = SubgridType._NotSpecified Then
-            fraSubform.Visible = False : imgLoading.Visible = False : fraSubform.Attributes.Item("src") = ""
-            panSwitch.Style.Item("height") = ""
-            For Each t As RadTab In Me.opgSubgrid.Tabs
-                t.NavigateUrl = ""
-            Next
-        Else
+        If Me.CurrentTab <> "" Then
             fraSubform.Visible = True
-            fraSubform.Attributes.Item("src") = Me.opgSubgrid.SelectedTab.NavigateUrl
-            If Me.CurrentSubgrid = SubgridType.p31 And Me.hidHardRefreshFlag.Value = "p31-save" Then
-                fraSubform.Attributes.Item("src") += "&pid=" & Me.hidHardRefreshPID.Value
-            End If
+            fraSubform.Attributes.Item("src") = Me.tabs1.SelectedTab.NavigateUrl.Replace("lasttabkey", "nic")
+            Select Case Me.CurrentTab
+                Case "p31", "time", "expense", "fee", "kusovnik"
+                    If Me.hidHardRefreshFlag.Value = "p31-save" Then
+                        fraSubform.Attributes.Item("src") += "&pid=" & Me.hidHardRefreshPID.Value
+                    End If
+            End Select
+        Else
+            fraSubform.Visible = False : imgLoading.Visible = False
+            panSwitch.Style.Item("height") = ""
         End If
+        
     End Sub
 
     Private Sub RefreshRecord()
         Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p28")
+        Dim cRecSum As BO.p28ContactSum = Master.Factory.p28ContactBL.LoadSumRow(cRec.PID)
+        SetupTabs(cRecSum)
         Handle_Permissions(cRec)
 
         Dim cClient As BO.p28Contact = Nothing
@@ -152,8 +146,6 @@ Public Class p28_framework_detail
 
         RefreshPricelist(cRec)
 
-
-
         RefreshProjectList(cRec)
 
         
@@ -180,57 +172,64 @@ Public Class p28_framework_detail
         Else
             Me.boxO32.Visible = False
         End If
-        Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(Master.DataPID, 0, True)
-        If lisP30.Count > 0 Then
-            Me.boxP30.Visible = True
-            Me.persons1.FillData(lisP30)
-            With Me.boxP30Title
-                If lisP30.Count > 0 Then
-                    .Text = .Text & " (" & lisP30.Count.ToString & ")"
-                    If Master.Factory.SysUser.j04IsMenu_People Then
-                        .Text = "<a href='j02_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString & "' target='_top'>" & .Text & "</a>"
+        If cRecSum.p30_Exist Then
+            Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(Master.DataPID, 0, True)
+            If lisP30.Count > 0 Then
+                Me.boxP30.Visible = True
+                Me.persons1.FillData(lisP30)
+                With Me.boxP30Title
+                    If lisP30.Count > 0 Then
+                        .Text = .Text & " (" & lisP30.Count.ToString & ")"
+                        If Master.Factory.SysUser.j04IsMenu_People Then
+                            .Text = "<a href='j02_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString & "' target='_top'>" & .Text & "</a>"
+                        End If
+
                     End If
 
-                End If
-
-            End With
-        Else
-            Me.boxP30.Visible = False
+                End With
+            Else
+                cRecSum.p30_Exist = False
+            End If
         End If
+        Me.boxP30.Visible = cRecSum.p30_Exist
+        
 
-
-        Dim mqO23 As New BO.myQueryO23
-        mqO23.p28ID = Master.DataPID
-        Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
-
-        If lisO23.Count > 0 Then
-            Me.boxO23.Visible = True
-            With Me.boxO23Title
-                .Text = .Text & " (" & lisO23.Count.ToString & ")"
-                If menu1.FindItemByValue("cmdO23").Visible Then
-                    .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
-                    If lisO23.Count > 10 Then
-                        .Text += ", 10 nejnovějších:"
-                        lisO23 = lisO23.Take(10)
+        If cRecSum.o23_Exist Then
+            Dim mqO23 As New BO.myQueryO23
+            mqO23.p28ID = Master.DataPID
+            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
+            If lisO23.Count > 0 Then
+                Me.boxO23.Visible = True
+                With Me.boxO23Title
+                    .Text = .Text & " (" & lisO23.Count.ToString & ")"
+                    If menu1.FindItemByValue("cmdO23").Visible Then
+                        .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
+                        If lisO23.Count > 10 Then
+                            .Text += ", 10 nejnovějších:"
+                            lisO23 = lisO23.Take(10)
+                        End If
                     End If
-                End If
-            End With
-            notepad1.RefreshData(lisO23, Master.DataPID)
-        Else
-            Me.boxO23.Visible = False
+                End With
+                notepad1.RefreshData(lisO23, Master.DataPID)
+            Else
+                cRecSum.o23_Exist = False
+            End If
         End If
-        Dim mq As New BO.myQueryP31
-        mq.p28ID_Client = cRec.PID
+        Me.boxO23.Visible = cRecSum.o23_Exist
+        
+        
 
-        If Me.CurrentSubgrid = SubgridType.summary Then
-            boxP31Summary.Visible = False
-        Else
+        If cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Wip_Time_Count > 0 Then
+            Dim mq As New BO.myQueryP31
+            mq.p28ID_Client = cRec.PID
             Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
             If cWorksheetSum.RowsCount = 0 Then
                 boxP31Summary.Visible = False
             Else
                 p31summary1.RefreshData(cWorksheetSum, "p28", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), 0, 0)
             End If
+        Else
+            boxP31Summary.Visible = False
         End If
 
         If cRec.b02ID > 0 Then
@@ -240,8 +239,6 @@ Public Class p28_framework_detail
             Me.trWorkflow.Visible = False
         End If
        
-        RefreshComments()
-
         If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact).Count > 0 Then
             x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p28&pid={0}','Images/label_32.png',false);", cRec.PID)
             labels1.RefreshData(BO.x29IdEnum.p28Contact, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p28Contact, cRec.PID))
@@ -255,27 +252,16 @@ Public Class p28_framework_detail
         Else
             boxFF.Visible = False
         End If
-        If Master.Factory.p28ContactBL.HasChildRecords(cRec.PID) Then
+        If cRecSum.childs_Count > 0 Then
             linkChilds.Visible = True
-            Dim mq2 As New BO.myQueryP28
-            mq2.MG_SelectPidFieldOnly = True
-            mq2.p28ParentID = cRec.PID
-            linkChilds.Text += "<span class='badge1'>" & Master.Factory.p28ContactBL.GetList(mq2).Count.ToString & "</span>"
-
+            linkChilds.Text += "<span class='badge1'>" & cRecSum.childs_Count.ToString & "</span>"
+        Else
+            linkChilds.Visible = False
         End If
+        
     End Sub
 
-    Private Sub RefreshComments()
-        Dim mqB07 As New BO.myQueryB07
-        mqB07.RecordDataPID = Master.DataPID
-        mqB07.x29id = BO.x29IdEnum.p28Contact
-        Dim lisB07 As IEnumerable(Of BO.b07Comment) = Master.Factory.b07CommentBL.GetList(mqB07)
-        If lisB07.Count > 0 Then
-            With Me.opgSubgrid.Tabs.FindTabByValue("3")
-                .Text = BO.BAS.OM2(.Text, lisB07.Count.ToString)
-            End With
-        End If
-    End Sub
+    
     Private Sub Handle_Permissions(cRec As BO.p28Contact)
         menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString
         Dim cDisp As BO.p28RecordDisposition = Master.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
@@ -306,16 +292,9 @@ Public Class p28_framework_detail
                 menu1.FindItemByValue("cmdApprove").Visible = .TestPermission(BO.x53PermValEnum.PR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
             End If
             If Not .SysUser.j04IsMenu_Invoice Then
-                ''topLink6.Visible = False
-                With Me.opgSubgrid.Tabs
-                    If Not .FindTabByValue("2") Is Nothing Then
-                        .Remove(.FindTabByValue("2"))  'nemá právo vidět vystavené faktury
-                    End If
-                End With
-                If Me.CurrentSubgrid = SubgridType.p91 Then Me.CurrentSubgrid = SubgridType.p31
+                RemoveTab("p91")
             End If
         End With
-
 
         menu1.FindItemByValue("cmdEdit").Visible = cDisp.OwnerAccess
         menu1.FindItemByValue("cmdCopy").Visible = cDisp.OwnerAccess
@@ -335,8 +314,7 @@ Public Class p28_framework_detail
             menu1.Skin = "Black"
         End If
         If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier Then
-            Me.CurrentSubgrid = SubgridType._NotSpecified   'NE-KLIENT nemá vůbec tabstrip
-            opgSubgrid.Visible = False
+            Me.CurrentTab = ""
         End If
 
     End Sub
@@ -450,7 +428,7 @@ Public Class p28_framework_detail
 
 
     Private Sub p28_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Me.CurrentSubgrid = SubgridType._NotSpecified Then
+        If Not tabs1.Visible Then
             panProjects.Style.Item("max-height") = ""
             panProjects.Style.Item("overflow") = ""
         Else
@@ -500,5 +478,52 @@ Public Class p28_framework_detail
     Private Sub chkShowBoxP41_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowBoxP41.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p28_framework_detail-chkShowBoxP41", BO.BAS.GB(Me.chkShowBoxP41.Checked))
         ReloadPage(Master.DataPID.ToString)
+    End Sub
+
+    Private Sub SetupTabs(crs As BO.p28ContactSum)
+        tabs1.Tabs.Clear()
+
+        Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Master.Factory.j03UserBL.GetList_PageTabs(Master.Factory.SysUser.PID, BO.x29IdEnum.p28Contact)
+        For Each c In lisX61
+            Dim tab As New RadTab(c.x61Name, c.x61Code)
+            tabs1.Tabs.Add(tab)
+            tab.NavigateUrl = c.GetPageUrl("p28", Master.DataPID, BO.BAS.GB(Master.Factory.SysUser.IsApprovingPerson))
+            tab.NavigateUrl += "&lasttabkey=p28_framework_detail-tab&lasttabval=" & c.x61Code
+            tab.Target = "fraSubform"
+            If tabs1.Tabs.Count = 0 Then tab.Selected = True
+            Select Case c.x61Code
+                Case "time"
+                    If crs.p31_Wip_Time_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
+                    If crs.p31_Approved_Time_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
+                Case "expense"
+                    If crs.p31_Wip_Expense_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Expense_Count.ToString & "</span>"
+                    If crs.p31_Approved_Expense_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Expense_Count.ToString & "</span>"
+                Case "fee"
+                    If crs.p31_Wip_Fee_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Fee_Count.ToString & "</span>"
+                    If crs.p31_Approved_Fee_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
+                Case "kusovnik"
+                    If crs.p31_Wip_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Kusovnik_Count.ToString & "</span>"
+                    If crs.p31_Approved_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Kusovnik_Count.ToString & "</span>"
+                Case "p91"
+                    If crs.p91_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+                Case "p56"
+                    If crs.p56_Actual_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+                Case "workflow"
+                    If crs.b07_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
+            End Select
+        Next
+    End Sub
+
+
+
+    Private Sub RemoveTab(strTabValue As String)
+        With tabs1.Tabs
+            If Not .FindTabByValue(strTabValue) Is Nothing Then
+                Master.Notify(String.Format("Pro záložku [{0}] nemáte oprávnění.", .FindTabByValue(strTabValue).Text), NotifyLevel.InfoMessage)
+                .Remove(.FindTabByValue(strTabValue))
+                If .Count > 0 Then tabs1.SelectedIndex = 0
+
+            End If
+        End With
     End Sub
 End Class

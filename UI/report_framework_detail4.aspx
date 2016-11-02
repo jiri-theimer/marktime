@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="report_framework_detail4.aspx.vb" Inherits="UI.report_framework_detail4" %>
-<%@ MasterType VirtualPath="~/Clue.Master" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Subform.Master" CodeBehind="report_framework_detail4.aspx.vb" Inherits="UI.report_framework_detail4" %>
+<%@ MasterType VirtualPath="~/Subform.Master" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 

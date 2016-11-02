@@ -595,7 +595,7 @@ Public Class basUIMT
     Public Shared Sub RenderSawMenuItemAsGrid(MenuItem As Telerik.Web.UI.RadMenuItem, strPrefix As String)
         With MenuItem
             .ToolTip = "Datový přehled"
-            .Text = "<img src='/Images/grid.png'/>"
+            .Text = "<img src='Images/grid.png'/>"
             .NavigateUrl = "entity_framework.aspx?prefix=" & strPrefix
             .Target = ""
         End With

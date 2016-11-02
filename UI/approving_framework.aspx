@@ -137,10 +137,21 @@
             sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query_32.png");
             return (false);
         }
+
+        function report() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Není vybrán ani jeden záznam.");
+                return;
+            }
+
+            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids, "Images/report_32.png", true);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Metro" OnClientTabSelected="OnClientTabSelected">
+    <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Default" OnClientTabSelected="OnClientTabSelected">
         <Tabs>
             <telerik:RadTab Text="Projekty" Value="p41" Selected="true"></telerik:RadTab>
             <telerik:RadTab Text="Klienti" Value="p28"></telerik:RadTab>
@@ -168,6 +179,11 @@
             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
             <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
         </div>
+        <div class="commandcell" style="margin-left:12px;">
+             <button type="button" onclick="report()" title="Tisková sestava (funguje i hromadný tisk)">
+                <img src="Images/report.png" />                
+            </button>
+        </div>
         <div class="commandcell">
             <button type="button" onclick="approve_selected()" title="Schvalovat všechny označené řádky">
                 <img src="Images/approve.png" alt="Schvalovat" />
@@ -178,6 +194,7 @@
                 <img src="Images/export.png" />                
             </button>
         </div>
+        
         <div class="show_hide1" style="float:left;margin-top:10px;">
             <button type="button">
 

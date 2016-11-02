@@ -280,7 +280,7 @@
     
 
 
-    <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Metro" MultiPageID="RadMultiPage1">
+    <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Default" MultiPageID="RadMultiPage1" style="margin-top:10px;">
         <Tabs>
             <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Záznam faktury" Value="detail" Selected="true" ImageUrl="Images/properties.png"></telerik:RadTab>
             <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Položky faktury" Value="p31" ImageUrl="Images/worksheet.png"></telerik:RadTab>

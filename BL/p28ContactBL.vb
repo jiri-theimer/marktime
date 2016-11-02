@@ -23,6 +23,7 @@
     Function ConvertFromDraft(intPID As Integer) As Boolean
     Function LoadMyLastCreated() As BO.p28Contact
     Function HasChildRecords(intPID As Integer) As Boolean
+    Function LoadSumRow(intPID As Integer) As BO.p28ContactSum
 End Interface
 Class p28ContactBL
     Inherits BLMother
@@ -256,5 +257,8 @@ Class p28ContactBL
     End Function
     Public Function HasChildRecords(intPID As Integer) As Boolean Implements Ip28ContactBL.HasChildRecords
         Return _cDL.HasChildRecords(intPID)
+    End Function
+    Public Function LoadSumRow(intPID As Integer) As BO.p28ContactSum Implements Ip28ContactBL.LoadSumRow
+        Return _cDL.LoadSumRow(intPID)
     End Function
 End Class

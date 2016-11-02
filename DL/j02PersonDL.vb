@@ -405,4 +405,13 @@
         Return _cDB.GetList(Of BO.x67EntityRole)(s, pars)
 
     End Function
+
+    Public Function LoadSumRow(intPID As Integer) As BO.j02PersonSum
+        Dim pars As New DbParameters()
+        With pars
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("pid", intPID, DbType.Int32)
+        End With
+        Return _cDB.GetRecord(Of BO.j02PersonSum)("j02_inhale_sumrow", pars, True)
+    End Function
 End Class

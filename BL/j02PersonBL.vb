@@ -15,6 +15,7 @@
     Function GetList_Slaves(intJ02ID As Integer, bolDispCreateP31 As Boolean, dispP31 As BO.j05Disposition_p31ENUM, bolDispCreateP48 As Boolean, dispP48 As BO.j05Disposition_p48ENUM) As IEnumerable(Of BO.j02Person)
     Function GetTeamsInLine(intJ02ID As Integer) As String
     Function GetList_AllAssignedEntityRoles(intPID As Integer, x29id_entity As BO.x29IdEnum) As IEnumerable(Of BO.x67EntityRole)
+    Function LoadSumRow(intPID As Integer) As BO.j02PersonSum
 End Interface
 Class j02PersonBL
     Inherits BLMother
@@ -120,5 +121,8 @@ Class j02PersonBL
     End Function
     Public Function GetList_AllAssignedEntityRoles(intPID As Integer, x29id_entity As BO.x29IdEnum) As IEnumerable(Of BO.x67EntityRole) Implements Ij02PersonBL.GetList_AllAssignedEntityRoles
         Return _cDL.GetList_AllAssignedEntityRoles(intPID, x29id_entity)
+    End Function
+    Public Function LoadSumRow(intPID As Integer) As BO.j02PersonSum Implements Ij02PersonBL.LoadSumRow
+        Return _cDL.LoadSumRow(intPID)
     End Function
 End Class

@@ -109,9 +109,9 @@ Partial Public Class report_framework_detail4
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
+    Public Shadows ReadOnly Property Master() As UI.SubForm
         Get
-            Return CType(MyBase.Master, UI.Clue)
+            Return CType(MyBase.Master, UI.SubForm)
         End Get
     End Property
 End Class

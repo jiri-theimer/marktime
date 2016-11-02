@@ -236,24 +236,7 @@
             sw_decide("b07_create.aspx?masterprefix=p41&masterpid=<%=master.datapid%>", "Images/comment.png", true);
 
         }
-        function OnClientTabSelected(sender, eventArgs)
-        {
-            var tab = eventArgs.get_tab();
-            var s=tab.get_value();
-           
-            $.post("Handler/handler_userparam.ashx", { x36value: s, x36key: "p41_framework_detail-tab", oper: "set" }, function (data) {
-                if (data == ' ') {
-                    return;
-                }                
-            });
-            <%If Me.fraSubform.Visible = False Then%>
-            location.replace("p41_framework_detail.aspx?tab="+s);           
-            <%End If%>
-            if (s=="0")
-                location.replace("p41_framework_detail.aspx?tab="+s)
-            
-                
-        }
+      
         function page_setting(){
             sw_decide("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting.png",false);
         }
