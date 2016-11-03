@@ -452,7 +452,7 @@
     <Content Include="Services\person_service.asmx" />
     <Content Include="stoppage.aspx" />
     <Content Include="stoppage_site.aspx" />
-    <Content Include="Styles\Site_v5.css" />
+    <Content Include="Styles\Site_v6.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Sys\sys_dbobjects.aspx" />

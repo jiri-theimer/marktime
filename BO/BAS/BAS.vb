@@ -511,6 +511,15 @@
         Next
         Return lis
     End Function
+    Public Shared Function ConvertDelimitedString2List(s As String, Optional strDelimiter As String = ",") As List(Of String)
+        Dim lis As New List(Of String)
+        If s = "" Then Return lis
+        Dim a() As String = Split(s, strDelimiter)
+        For i As Integer = 0 To UBound(a)
+            lis.Add(a(i))
+        Next
+        Return lis
+    End Function
     Public Shared Function GetAllMergeFieldsInContent(ByVal strContent As String) As List(Of String)
         'vrátí seznam slučovacích polí, které se vyskytují v strContent
         Dim lisRet As New List(Of String)

@@ -43,6 +43,14 @@ Public Class p31_framework
             hidTasksWorksheetColumns.Value = BO.BAS.GB(value)
         End Set
     End Property
+    Public Property CurrentJ70ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
+        End Get
+        Set(value As Integer)
+            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
+        End Set
+    End Property
     
 
     Private Sub p31_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
@@ -79,6 +87,7 @@ Public Class p31_framework
                     .Add("p31_framework-sort-" & Me.GridPrefix)
                     .Add("p31_framework-groups-autoexpanded")
                     .Add("p31_framework-timer")
+                    .Add("p31_framework-j70id")
                     If tabs1.SelectedIndex <> 1 Then    'v top10 se nefiltruje
                         .Add("p31_framework-filter_setting_p41")
                         .Add("p31_framework-filter_sql_p41")
@@ -98,7 +107,7 @@ Public Class p31_framework
                     Else
                         Me.navigationPane.Width = Unit.Parse(.GetUserParam("p31_framework-navigationPane_width", "350") & "px")
                     End If
-
+                    SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31_framework-j70id")))
                     
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_framework-groupby-" & Me.GridPrefix, IIf(Me.GridPrefix = "p56", "Client", "")))
                     If tabs1.SelectedIndex = 0 Then
@@ -340,7 +349,7 @@ Public Class p31_framework
             If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
             If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then .j02ID_ExplicitQueryFor = Me.CurrentJ02ID
 
-
+            If Me.j70ID.Visible Then .j70ID = Me.CurrentJ70ID
         End With
 
     End Sub
@@ -419,15 +428,20 @@ Public Class p31_framework
                 txtSearch.Style.Item("background-color") = "red"
             End If
         End If
-        
+        Dim b As Boolean = False
         Select Case Me.tabs1.SelectedIndex
-            Case 0, 1
+            Case 0
+                b = True
+                img1.ImageUrl = "Images/project_32.png"
+                lblFormHeader.Text = ""
+            Case 1
                 img1.ImageUrl = "Images/project_32.png"
                 lblFormHeader.Text = Resources.p31_framework.tabs1_p41
             Case 2
                 img1.ImageUrl = "Images/task_32.png"
                 lblFormHeader.Text = Resources.p31_framework.tabs1_todo
         End Select
+        Me.j70ID.Visible = b : Me.clue_query.Visible = b : cmdQuery.Visible = b
 
         If grid1.GetFilterExpression <> "" Then
             cmdCĺearFilter.Visible = True
@@ -435,6 +449,8 @@ Public Class p31_framework
             cmdCĺearFilter.Visible = False
         End If
 
+        Me.clue_query.Visible = Me.j70ID.Visible
+        If Me.j70ID.Visible Then basUIMT.RenderQueryCombo(Me.j70ID)
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
@@ -586,42 +602,6 @@ Public Class p31_framework
 
     End Sub
 
-    ''Private Sub rpP56_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP56.ItemDataBound
-    ''    Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
-    ''    With CType(e.Item.FindControl("TodoHeader"), Label)
-    ''        .Text = cRec.p57Name & ": <i><b>" & cRec.p56Name & "</b></i>"
-    ''    End With
-    ''    With CType(e.Item.FindControl("cmdP31"), HyperLink)
-    ''        .NavigateUrl = "javascript:nw_p56(" & cRec.PID.ToString & ")"
-    ''    End With
-    ''    With CType(e.Item.FindControl("p56PlanUntil"), Label)
-    ''        If Not cRec.p56PlanUntil Is Nothing Then
-    ''            .Text = BO.BAS.FD(cRec.p56PlanUntil, True, True)
-    ''            If cRec.p56PlanUntil < Now Then
-    ''                .ForeColor = Drawing.Color.Red
-    ''            End If
-    ''        End If
-    ''    End With
-    ''    With CType(e.Item.FindControl("cmdEdit"), HyperLink)
-    ''        .NavigateUrl = "javascript:p56_edit(" & cRec.PID.ToString & ")"
-    ''    End With
-    ''    With CType(e.Item.FindControl("Project"), Label)
-    ''        If cRec.p41ID = _lastP41ID Then
-    ''            e.Item.FindControl("panProject").Visible = False
-    ''        Else
-    ''            If cRec.Client = "" Then
-    ''                .Text = cRec.p41Name
-    ''            Else
-    ''                .Text = cRec.Client & " - " & cRec.p41Name
-    ''            End If
-    ''        End If
-    ''    End With
-    ''    With CType(e.Item.FindControl("clue1"), HyperLink)
-    ''        .Attributes("rel") = "clue_p56_record.aspx?mode=readonly&pid=" & cRec.PID.ToString
-    ''    End With
-    ''    _lastP41ID = cRec.p41ID
-    ''End Sub
-
     Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
         With Master.Factory.j03UserBL
             .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, "")
@@ -632,5 +612,28 @@ Public Class p31_framework
 
     Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
         Master.Factory.j03UserBL.SetUserParam("p31_framework-sort-" & Me.GridPrefix, SortExpression)
+    End Sub
+
+    Private Sub SetupJ70Combo(intDef As Integer)
+        Dim mq As New BO.myQuery
+        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p41Project)
+        j70ID.DataBind()
+        j70ID.Items.Insert(0, "--Pojmenovaný filtr projektů--")
+        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+        With Me.j70ID
+            If .SelectedIndex > 0 Then
+                .ToolTip = .SelectedItem.Text
+                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+            Else
+                Me.clue_query.Visible = False
+            End If
+        End With
+
+    End Sub
+
+    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_framework-j70id", Me.j70ID.SelectedValue)
+        grid1.Rebind(False)
+
     End Sub
 End Class

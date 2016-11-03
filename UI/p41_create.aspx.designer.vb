@@ -77,6 +77,15 @@ Partial Public Class p41_create
     Protected WithEvents lblP42ID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''clue_p42 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_p42 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''p42ID control.
     '''</summary>
     '''<remarks>

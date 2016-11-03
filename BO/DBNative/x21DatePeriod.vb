@@ -51,6 +51,7 @@ Public Class x21DatePeriod
         Me.CustomQueryIndex = intCustomQueryIndex
         _DateFrom = datFrom
         _DateUntil = datUntil
+        If bolEnglishVersion And Left(strName, 2) = "**" Then strName = "**Specific period**"
         _x21NameDef = strName
         _x21Name = strName
         Me.EnglishVersion = bolEnglishVersion

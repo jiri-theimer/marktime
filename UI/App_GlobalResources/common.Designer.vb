@@ -164,6 +164,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Filtr období.
+        '''</summary>
+        Friend Shared ReadOnly Property FiltrObdobi() As String
+            Get
+                Return ResourceManager.GetString("FiltrObdobi", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Žádné záznamy.
         '''</summary>
         Friend Shared ReadOnly Property Grid_ZadneZaznamy() As String

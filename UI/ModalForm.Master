@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="x-ua-compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="~/Styles/Site_v5.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/Site_v6.css" rel="stylesheet" type="text/css" />
     <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script src="Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
@@ -67,7 +67,44 @@
             });
 
 
-            
+            $("a.button-reczoom").each(function () {
+
+                // Extract your variables here:
+                var $this = $(this);
+                var myurl = $this.attr('rel');
+
+                var mytitle = $this.attr('title');
+                if (mytitle == null)
+                    mytitle = 'Modal dialog';
+
+
+                $this.qtip({
+                    content: {
+                        text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                        title: {
+                            text: mytitle
+                        },
+
+                    },
+                    position: {
+                        my: 'top center',  // Position my top left...
+                        at: 'bottom center', // at the bottom right of...
+                        viewport: $(window)
+                    },
+                    show: {
+                        event: 'click', // Show it on click...
+                        solo: true, // ...and hide all other tooltips...
+                        modal: true // ...and make it modal
+                    },
+                    hide: false,
+                    style: {
+                        classes: 'qtip-tipped',
+                        width: 700,
+                        height: 300
+
+                    }
+                });
+            });
 
         });
 

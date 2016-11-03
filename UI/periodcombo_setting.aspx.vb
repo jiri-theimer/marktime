@@ -12,7 +12,7 @@ Public Class periodcombo_setting
         If Not Page.IsPostBack Then
             ViewState("guid") = BO.BAS.GetGUID
             With Master
-                .HeaderText = "Vlastní časová období pro filtrování dat"
+                .HeaderText = "Pojmenovaná časová období"
                 .HeaderIcon = "Images/settings_32.png"
                 .AddToolbarButton("Uložit změny", "ok", , "Images/save.png")
                 .Factory.j03UserBL.InhaleUserParams("periodcombo-custom_query")
@@ -76,6 +76,9 @@ Public Class periodcombo_setting
         CType(e.Item.FindControl("txtName"), TextBox).Text = cRec.p85FreeText01
         CType(e.Item.FindControl("del"), ImageButton).CommandArgument = cRec.PID.ToString
 
+        If Left(cRec.p85FreeText01, 2) = "**" Then
+            e.Item.FindControl("trRow").Visible = False
+        End If
     End Sub
 
     Private Sub cmdAdd_Click(sender As Object, e As EventArgs) Handles cmdAdd.Click
@@ -84,7 +87,7 @@ Public Class periodcombo_setting
         Dim c As New BO.p85TempBox
         c.p85FreeDate01 = DateSerial(Year(Now), Month(Now), 1)
         c.p85FreeDate02 = DateSerial(Year(Now), Month(Now), 1).AddMonths(1).AddDays(-1)
-        c.p85FreeText01 = "Vlastní období"
+        c.p85FreeText01 = "Pojmenované období"
         c.p85GUID = ViewState("guid")
         Master.Factory.p85TempBoxBL.Save(c)
         RefreshTempList()
@@ -133,7 +136,7 @@ Public Class periodcombo_setting
                     Master.Notify("V řádku #" & x.ToString & " je nevyplněné datum.", NotifyLevel.ErrorMessage)
                     Return
                 End If
-                If c.p85FreeDate01 >= c.p85FreeDate02 Then
+                If c.p85FreeDate01 > c.p85FreeDate02 Then
                     Master.Notify("V řádku #" & x.ToString & " je datum začátku větší než datum konce.")
                     Return
                 End If
@@ -141,7 +144,7 @@ Public Class periodcombo_setting
             Next
             s = BO.BAS.OM1(s)
             If Len(s) > 500 Then
-                Master.Notify("Počet období přesáhl maximální limit, musíte snížit jejich počet.", NotifyLevel.WarningMessage)
+                Master.Notify("Počet období přesáhl maximální kapacitu, musíte snížit jejich počet.", NotifyLevel.WarningMessage)
                 Return
             End If
             If Master.Factory.j03UserBL.SetUserParam("periodcombo-custom_query", s) Then

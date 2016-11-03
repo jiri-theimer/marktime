@@ -73,7 +73,9 @@
 
                 <tr>
                     <td>
-                        <asp:Label ID="lblP42ID" runat="server" CssClass="lblReq" Text="Typ:"></asp:Label></td>
+                        <asp:Label ID="lblP42ID" runat="server" CssClass="lblReq" Text="Typ:"></asp:Label>
+                        <asp:HyperLink ID="clue_p42" runat="server" CssClass="reczoom" Text="i" Visible="false"></asp:HyperLink>
+                    </td>
                     <td>
 
                         <uc:datacombo ID="p42ID" runat="server" DataTextField="p42Name" DataValueField="pid" AutoPostBack="true" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>

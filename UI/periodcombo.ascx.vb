@@ -81,7 +81,7 @@
    
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+       
     End Sub
 
     Private Sub per1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles per1.SelectedIndexChanged
@@ -106,11 +106,16 @@
 
             Dim a() As String = strCustomQueries.Split("|"), x As Integer = 0
             For Each strPair As String In a
-                x += 1
                 Dim b() As String = strPair.Split(";")
+                x += 1
                 Dim cX21 As New BO.x21DatePeriod(x, BO.BAS.ConvertString2Date(b(0)), BO.BAS.ConvertString2Date(b(1)), b(2), bolEnglish)
+                If Left(cX21.x21Name, 2) = "**" Then
+                    lis.Insert(1, cX21)
+                Else
+                    lis.Add(cX21)
+                End If
 
-                lis.Add(cX21)
+                
             Next
         End If
 
@@ -134,11 +139,16 @@
     Private Sub cmdPeriodComboRefresh_Click(sender As Object, e As EventArgs) Handles cmdPeriodComboRefresh.Click
         If Me.hidExplicitValue.Value = "" Then Return
         'Me.period1.SelectedValue = Me.hidExplicitValue.Value
-        If Me.hidExplicitValue.Value = "-1" Then
+        If Me.hidExplicitValue.Value = "-1" Or Me.hidExplicitValue.Value = "-2" Then
             'nutnost kompletně naplnit combo
             Dim factory As New BL.Factory(, Me.hidLogin.Value)
             SetupData(factory, factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
-            Me.per1.SelectedIndex = Me.per1.Items.Count - 1
+            If Me.hidExplicitValue.Value = "-2" Then
+                Me.per1.SelectedIndex = 1
+            Else
+                Me.per1.SelectedIndex = Me.per1.Items.Count - 1
+            End If
+
             RaiseEvent OnChanged(Me.DateFrom, Me.DateUntil)
             Me.hidExplicitValue.Value = ""
             Return
@@ -147,5 +157,15 @@
 
         RaiseEvent OnChanged(Me.DateFrom, Me.DateUntil)
         Me.hidExplicitValue.Value = ""
+    End Sub
+
+    Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        With per1
+            If .SelectedIndex > 0 Then
+                .ToolTip = .SelectedItem.Text
+            Else
+                .ToolTip = Resources.common.FiltrObdobi
+            End If
+        End With
     End Sub
 End Class

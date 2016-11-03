@@ -64,6 +64,45 @@
                 });
             });
 
+            $("a.button-reczoom").each(function () {
+
+                // Extract your variables here:
+                var $this = $(this);
+                var myurl = $this.attr('rel');
+
+                var mytitle = $this.attr('title');
+                if (mytitle == null)
+                    mytitle = 'Modal dialog';
+
+
+                $this.qtip({
+                    content: {
+                        text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                        title: {
+                            text: mytitle
+                        },
+
+                    },
+                    position: {
+                        my: 'top center',  // Position my top left...
+                        at: 'bottom center', // at the bottom right of...
+                        viewport: $(window)
+                    },
+                    show: {
+                        event: 'click', // Show it on click...
+                        solo: true, // ...and hide all other tooltips...
+                        modal: true // ...and make it modal
+                    },
+                    hide: false,
+                    style: {
+                        classes: 'qtip-tipped',
+                        width: 700,
+                        height: 300
+
+                    }
+                });
+            });
+
         });
         function periodcombo_setting() {
 

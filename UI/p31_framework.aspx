@@ -156,7 +156,11 @@
             sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=me.gridprefix%>&masterprefix=p31_framework&pid=" + j74id, "Images/griddesigner_32.png");
         }
 
-
+        function querybuilder() {
+            var j70id = "<%=Me.CurrentJ70ID%>";
+            sw_master("query_builder.aspx?prefix=p41&pid=" + j70id, "Images/query_32.png");
+            return (false);
+        }
 
     </script>
 
@@ -181,7 +185,9 @@
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
                     <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Projekty" Style="vertical-align: top;"></asp:Label>
-
+                    <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                    <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
                 </div>
                 <div class="commandcell" style="padding-left: 20px;">
                     <asp:TextBox ID="txtSearch" runat="server" Style="width: 140px;" ToolTip="Filtrovat podle názvu/kódu projektu nebo klienta"></asp:TextBox>

@@ -55,6 +55,45 @@
                 });
             });
 
+            $("a.button-reczoom").each(function () {
+
+                // Extract your variables here:
+                var $this = $(this);
+                var myurl = $this.attr('rel');
+
+                var mytitle = $this.attr('title');
+                if (mytitle == null)
+                    mytitle = 'Modal dialog';
+
+
+                $this.qtip({
+                    content: {
+                        text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                        title: {
+                            text: mytitle
+                        },
+
+                    },
+                    position: {
+                        my: 'top center',  // Position my top left...
+                        at: 'bottom center', // at the bottom right of...
+                        viewport: $(window)
+                    },
+                    show: {
+                        event: 'click', // Show it on click...
+                        solo: true, // ...and hide all other tooltips...
+                        modal: true // ...and make it modal
+                    },
+                    hide: false,
+                    style: {
+                        classes: 'qtip-tipped',
+                        width: 700,
+                        height: 300
+
+                    }
+                });
+            });
+
         });
 
         function p31_RowSelected(sender, args) {
@@ -106,7 +145,12 @@
 
         }
         function p31_subgrid_approving(pids) {
-            window.parent.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
+            try{
+                window.parent.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
+            }
+            catch(err){
+                window.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
+            }
         }
         function p31_subgrid_querybuilder(j70id) {           
             window.parent.sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query_32.png", true);

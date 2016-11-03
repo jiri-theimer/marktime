@@ -178,6 +178,11 @@
             Me.clue_j18.Visible = False
             lblJ18Message.Text = ""
         End If
+        If Me.p42ID.SelectedValue <> "" Then
+            Me.clue_p42.Attributes.Item("rel") = "clue_p42_record.aspx?pid=" & Me.p42ID.SelectedValue : clue_p42.Visible = True
+        Else
+            clue_p42.Visible = False
+        End If
         Me.panLimits.Visible = Me.chkDefineLimits.Checked
 
         RefreshState_Pricelist()

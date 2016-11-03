@@ -21,7 +21,7 @@
         </tr>
         <asp:Repeater ID="rp1" runat="server">
             <ItemTemplate>
-                <tr>
+                <tr id="trRow" runat="server">
                     <td>
                         <asp:TextBox ID="txtName" runat="server" style="width:120px;"></asp:TextBox>
                     </td>

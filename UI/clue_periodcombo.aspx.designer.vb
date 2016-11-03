@@ -50,6 +50,15 @@ Partial Public Class clue_periodcombo
     Protected WithEvents txtPeriodName As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cmdSave control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSave As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
