@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/ModalDataRecord.Master" CodeBehind="p41_record.aspx.vb" Inherits="UI.p41_record" %>
+
 <%@ MasterType VirtualPath="~/ModalDataRecord.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/pageheader.ascx" %>
@@ -18,7 +19,7 @@
 
         }
         function p51_billing_add(customtailor) {
-            
+
             dialog_master("p51_record.aspx?pid=0&prefix=p41&customtailor=" + customtailor, true)
 
         }
@@ -75,7 +76,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblJ18ID" runat="server" CssClass="lbl" Text="Středisko:"></asp:Label></td>
+                        <asp:Label ID="lblJ18ID" runat="server" CssClass="lbl" Text="Středisko:"></asp:Label>
+                        <asp:HyperLink ID="clue_j18" runat="server" CssClass="reczoom" Text="i" Visible="false"></asp:HyperLink>
+                    </td>
                     <td>
 
                         <uc:datacombo ID="j18ID" runat="server" DataTextField="j18Name" DataValueField="pid" AutoPostBack="true" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
@@ -117,10 +120,10 @@
                     </tr>
                 </table>
                 <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
-                    
+
                     <SpecialDays>
-                    <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
-                </SpecialDays>
+                        <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
+                    </SpecialDays>
                 </telerik:RadCalendar>
             </asp:Panel>
             <div class="div6">
@@ -145,17 +148,15 @@
                 </div>
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="p41Project"></uc:entityrole_assign>
-
+                    <div style="clear: both;">
+                        <asp:Label ID="lblJ18Message" runat="server" CssClass="infoNotification"></asp:Label>
+                    </div>
                 </div>
             </div>
+
             <div class="div6">
-                        <asp:Label ID="lblRegionRoles" runat="server" CssClass="framework_header_span" Text="Oprávnění k projektu plynoucí z přiřazeného střediska"></asp:Label>
-                    </div>
-                    <uc:entityrole_assign_preview ID="roles_region" runat="server" EntityX29ID="j18Region" NoDataText="V přiřazeném středisku nejsou nastaveny projektové role."></uc:entityrole_assign_preview>
-            
-             <div class="div6">
                 <asp:Label ID="lblParent" runat="server" CssClass="lbl" Text="Nadřízený projekt:"></asp:Label>
-                 <uc:project ID="p41ParentID" runat="server" Width="400px" />
+                <uc:project ID="p41ParentID" runat="server" Width="400px" />
             </div>
         </telerik:RadPageView>
 
@@ -170,19 +171,19 @@
                 <div class="div6">
                     <asp:Label ID="lblP51ID_Billing" runat="server" Text="Ceník sazeb:" CssClass="lbl"></asp:Label>
                     <uc:datacombo ID="p51ID_Billing" runat="server" DataTextField="NameWithCurr" AutoPostBack="true" DataValueField="pid" IsFirstEmptyRow="true" Width="300px" />
-                        
+
                 </div>
                 <div class="div6">
                     <asp:HyperLink ID="cmdNewP51" runat="server" NavigateUrl="javascript:p51_billing_add()" Text="Založit nový ceník"></asp:HyperLink>
-                    <asp:HyperLink ID="cmdEditP51" runat="server" NavigateUrl="javascript:p51_edit()" Text="Upravit ceník" style="margin-left:20px;"></asp:HyperLink>
+                    <asp:HyperLink ID="cmdEditP51" runat="server" NavigateUrl="javascript:p51_edit()" Text="Upravit ceník" Style="margin-left: 20px;"></asp:HyperLink>
                 </div>
             </fieldset>
 
             <table cellpadding="5" cellspacing="2">
-               
+
 
                 <tr>
-                    <td style="width:150px;">
+                    <td style="width: 150px;">
                         <asp:Label ID="lblP87ID" runat="server" Text="Fakturační jazyk projektu:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
@@ -246,7 +247,7 @@
                         </td>
                     </tr>
                     <tr>
-                         <td>
+                        <td>
                             <asp:Label ID="lblp51ID_Internal" runat="server" Text="Ceník nákladových sazeb projektu:" CssClass="lbl"></asp:Label>
 
                         </td>
@@ -268,7 +269,7 @@
 
                     </td>
                     <td>
-                        <uc:person ID="j02ID_Owner" runat="server" Width="300px" flag="all" />
+                        <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
 
                     </td>
                 </tr>
@@ -279,7 +280,7 @@
                     </td>
                     <td>
                         <uc:datacombo ID="p61ID" runat="server" DataTextField="p61Name" AutoPostBack="false" DataValueField="pid" IsFirstEmptyRow="true" Width="300px" />
-                        
+
                     </td>
                 </tr>
                 <tr>
@@ -296,7 +297,7 @@
                         <asp:TextBox ID="p41NameShort" runat="server" Style="width: 100px;"></asp:TextBox>
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td>
                         <asp:Label ID="Label3" runat="server" Text="Omezení úkonů v projektu:" CssClass="lbl"></asp:Label>
                     </td>
@@ -316,7 +317,7 @@
                         <asp:TextBox ID="p41RobotAddress" runat="server" Style="width: 200px;"></asp:TextBox>
                     </td>
                 </tr>
-               
+
                 <tr>
                     <td colspan="2">
                         <span class="infoInForm">Adresa v kopii (CC/BCC) , podle které robot pozná, že načtená poštovní zpráva má vazbu k tomuto projektu.</span>
@@ -328,8 +329,8 @@
                     </td>
                     <td>
                         <asp:TextBox ID="p41ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
-                       
-                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>                   
+
+                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>
                     </td>
                 </tr>
             </table>

@@ -221,16 +221,17 @@
         Me.panPlanDates.Visible = Me.chkPlanDates.Checked
         Dim intJ18ID As Integer = BO.BAS.IsNullInt(Me.j18ID.SelectedValue)
         If intJ18ID > 0 Then
-            Me.roles_region.Visible = True
-            If intJ18ID <> Me.roles_region.LastInhaledDataRecordPID Then
-                Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.j18Region, intJ18ID)
-                Me.roles_region.RefreshData(lisX69, intJ18ID)
+            Me.clue_j18.Visible = True : lblJ18Message.Text = ""
+            Me.clue_j18.Attributes.Item("rel") = "clue_j18_record.aspx?pid=" & intJ18ID.ToString
+            Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.j18Region, intJ18ID)
+            If lisX69.Count > 0 Then
+                Me.lblJ18Message.Text = String.Format("V nastavení střediska [{0}] jsou přiřazeny projektové role, jejichž oprávnění se automaticky dědí do projektu.", Me.j18ID.Text)
             End If
-            Me.lblRegionRoles.Text = BO.BAS.OM2(Me.lblRegionRoles.Text, Me.j18ID.Text) & ":"
         Else
-            Me.roles_region.Visible = False
+            Me.clue_j18.Visible = False
+            lblJ18Message.Text = ""
         End If
-        Me.lblRegionRoles.Visible = Me.roles_region.Visible
+
         panLimits.Visible = Me.chkDefineLimits.Checked
 
         lblP51ID_Billing.Visible = True : Me.p51ID_Billing.Visible = True : Me.cmdNewP51.Visible = True

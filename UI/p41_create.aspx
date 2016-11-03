@@ -81,7 +81,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblJ18ID" runat="server" CssClass="lbl" Text="Středisko:"></asp:Label></td>
+                        <asp:Label ID="lblJ18ID" runat="server" CssClass="lbl" Text="Středisko:"></asp:Label>
+                        <asp:HyperLink ID="clue_j18" runat="server" CssClass="reczoom" Text="i" Visible="false"></asp:HyperLink>
+                    </td>
                     <td>
                         
                         <uc:datacombo ID="j18ID" runat="server" DataTextField="j18Name" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" Width="400px"></uc:datacombo>
@@ -129,7 +131,7 @@
                 </telerik:RadCalendar>
             </asp:Panel>
             <div class="div6">
-                <asp:CheckBox ID="chkDefineLimits" runat="server" Checked="true" AutoPostBack="true" Text="Definovat limity k upozornění" CssClass="chk" />
+                <asp:CheckBox ID="chkDefineLimits" runat="server" Checked="false" AutoPostBack="true" Text="Definovat limity k upozornění" CssClass="chk" />
             </div>
             <asp:Panel ID="panLimits" runat="server">
                 <div class="div6">
@@ -149,10 +151,10 @@
                 </div>
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="p41Project"></uc:entityrole_assign>
+                    
                     <div style="clear:both;">
-                        <asp:Label ID="lblRegionRoles" runat="server" CssClass="valbold" Text="Oprávnění k projektu plynoucí z přiřazeného střediska"></asp:Label>
+                        <asp:Label ID="lblJ18Message" runat="server" CssClass="infoNotification"></asp:Label>
                     </div>
-                    <uc:entityrole_assign_preview ID="roles_region" runat="server" EntityX29ID="j18Region" NoDataText="V přiřazeném středisku nejsou nastaveny projektové role."></uc:entityrole_assign_preview>
                 </div>
             </div>
             <div class="div6">

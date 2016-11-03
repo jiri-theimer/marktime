@@ -63,6 +63,7 @@ Public Class dbupdate_reports
                 End If
                 If cRec Is Nothing Then
                     cRec = New BO.x31Report
+                    cRec.j25ID = cRI.j25id
                 End If
                 With cRec
                     .x29ID = CType(cRI.x29id, BO.x29IdEnum)
@@ -70,7 +71,6 @@ Public Class dbupdate_reports
                     .x31FormatFlag = CType(cRI.x31FormatFlag, BO.x31FormatFlagENUM)
                     .x31IsUsableAsPersonalPage = cRI.personalpage
                     .x31Name = cRI.x31name
-                    .j25ID = cRI.j25id
                 End With
                 If cF.FileExist(strDIR & "\" & strFileName) Then
                     Dim s As String = cF.GetFileContents(strDIR & "\" & strFileName, , False)

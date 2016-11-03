@@ -442,7 +442,7 @@
                     <telerik:RadNumericTextBox ID="p31Amount_Vat_Orig" runat="server" Width="100px" NumberFormat-ZeroPattern="n"></telerik:RadNumericTextBox>
                 </td>
                 <td>
-                    <asp:ImageButton ID="cmdRecalcVat1" runat="server" ImageUrl="Images/recalc.png" style="display:block;" ToolTip="Dopočítat z celkové částky částku bez DPH a částku DPH"/>
+                    <asp:ImageButton ID="cmdRecalcVat1" runat="server" ImageUrl="Images/recalc.png" CssClass="button-link" style="display:block;" ToolTip="Dopočítat z celkové částky částku bez DPH a částku DPH"/>
                 </td>
             </tr>
             <tr>

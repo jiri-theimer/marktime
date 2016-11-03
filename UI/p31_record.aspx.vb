@@ -174,7 +174,7 @@
 
             If Master.IsRecordClone Then
                 Master.DataPID = 0
-                If Not Me.CurrentIsScheduler Then p31Date.SelectedDate = MyDefault_p31Date
+                If Not (Me.CurrentIsScheduler Or Request.Item("clonedate") = "1") Then p31Date.SelectedDate = MyDefault_p31Date
                 If Me.p49ID.Value <> "" Then Me.p49ID.Value = "" : Me.p49_record.Text = ""
             End If
 
@@ -189,6 +189,10 @@
 
             If Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo And (Me.TimeFrom.Text <> "" Or Me.TimeUntil.Text <> "") Then
                 panT.Visible = True
+            End If
+
+            If Not Me.MultiDateInput.Visible Then
+                Master.AddToolbarButton("Uložit a kopírovat", "saveandcopy", 1, "Images/saveandcopy.png", True)
             End If
         End If
     End Sub
@@ -849,6 +853,10 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        SaveChanges(False)
+    End Sub
+
+    Private Sub SaveChanges(bolSaveAndCopy As Boolean)
         Dim bolEnglish As Boolean = False
         If Page.Culture.IndexOf("Czech") < 0 And Page.Culture.IndexOf("Če") < 0 Then bolEnglish = True
         With Master.Factory.p31WorksheetBL
@@ -966,7 +974,12 @@
                     'odstranit temp záznam předlohy
                     Master.Factory.p85TempBoxBL.Delete(Master.Factory.p85TempBoxBL.Load(Me.CurrentP85ID))
                 End If
-                Master.CloseAndRefreshParent("p31-save")
+                If bolSaveAndCopy Then
+                    MakeReadyToCopy()
+                Else
+                    Master.CloseAndRefreshParent("p31-save")
+                End If
+
             Else
                 Master.Notify(.ErrorMessage, NotifyLevel.WarningMessage)
             End If
@@ -1277,5 +1290,15 @@
             Me.p31Amount_Vat_Orig.Value = 0
         End If
         'Master.Notify(Me.p31Amount_WithoutVat_Orig.Value)
+    End Sub
+
+    Private Sub MakeReadyToCopy()
+        Server.Transfer("p31_record.aspx?pid=" & Master.DataPID.ToString & "&clone=1&clonedate=1", False)
+    End Sub
+
+    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
+        If strButtonValue = "saveandcopy" Then
+            SaveChanges(True)
+        End If
     End Sub
 End Class

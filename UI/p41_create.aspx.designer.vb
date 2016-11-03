@@ -95,6 +95,15 @@ Partial Public Class p41_create
     Protected WithEvents lblJ18ID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''clue_j18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_j18 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''j18ID control.
     '''</summary>
     '''<remarks>
@@ -266,22 +275,13 @@ Partial Public Class p41_create
     Protected WithEvents roles1 As Global.UI.entityrole_assign
 
     '''<summary>
-    '''lblRegionRoles control.
+    '''lblJ18Message control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblRegionRoles As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''roles_region control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents roles_region As Global.UI.entityrole_assign_preview
+    Protected WithEvents lblJ18Message As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''lblParent control.
