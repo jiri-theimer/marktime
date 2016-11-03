@@ -448,9 +448,19 @@ Public Class p31_framework
         Else
             cmdCĺearFilter.Visible = False
         End If
+        If Me.j70ID.Visible Then
+            basUIMT.RenderQueryCombo(Me.j70ID)
+            With Me.j70ID
+                If .SelectedIndex > 0 Then
+                    .ToolTip = .SelectedItem.Text
+                    Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+                    Me.clue_query.Visible = True
+                Else
+                    Me.clue_query.Visible = False
+                End If
+            End With
+        End If
 
-        Me.clue_query.Visible = Me.j70ID.Visible
-        If Me.j70ID.Visible Then basUIMT.RenderQueryCombo(Me.j70ID)
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
@@ -620,14 +630,7 @@ Public Class p31_framework
         j70ID.DataBind()
         j70ID.Items.Insert(0, "--Pojmenovaný filtr projektů--")
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        With Me.j70ID
-            If .SelectedIndex > 0 Then
-                .ToolTip = .SelectedItem.Text
-                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-            Else
-                Me.clue_query.Visible = False
-            End If
-        End With
+        
 
     End Sub
 
