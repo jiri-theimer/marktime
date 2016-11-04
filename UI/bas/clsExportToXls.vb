@@ -140,7 +140,7 @@ Public Class clsExportToXls
             RenderDataRow(c, strFields, sheet, x)
             x += 1
         Next
-        Return SaveAsFile(sheet)
+        Return SaveAsFile(sheet, False)
     End Function
 
     Public Function ExportGenericData(lis As IEnumerable(Of Object), strProperties As String, strHeaders As String) As String
@@ -157,7 +157,7 @@ Public Class clsExportToXls
             RenderDataRow(c, strProperties, sheet, x)
             x += 1
         Next
-        Return SaveAsFile(sheet)
+        Return SaveAsFile(sheet, False)
     End Function
 
     Public Sub MergeSheetWithDataTable(ByRef sheet As ExcelWorksheet, dt As DataTable, intStartRow As Integer, intStartColumn As Integer)
@@ -181,7 +181,7 @@ Public Class clsExportToXls
     End Sub
 
     
-    Public Function SaveAsFile(sheet As ExcelWorksheet) As String
+    Public Function SaveAsFile(sheet As ExcelWorksheet, bolGenerateCsvFile As Boolean, Optional strCsvDelimiter As String = ";") As String
 
         Dim strDir As String = _factory.x35GlobalParam.TempFolder
         If strDir = "" Then
@@ -192,11 +192,22 @@ Public Class clsExportToXls
 
         Dim strGUID As String = "MARKTIME_" & BO.BAS.GetGUID()
         Dim strFullPath As String = strDir & "\" & strGUID & ".xlsx"
+        If bolGenerateCsvFile Then
+            strFullPath = strDir & "\" & strGUID & ".csv"
+        End If
         Try
-            sheet.Workbook.Save(strFullPath)
-
+            If bolGenerateCsvFile Then
+                sheet.Workbook.SaveToCsv(0, strFullPath, strCsvDelimiter, System.Text.Encoding.UTF8)
+            Else
+                sheet.Workbook.Save(strFullPath)
+            End If
             sheet.Workbook.Close()
-            Return strGUID & ".xlsx"
+            If bolGenerateCsvFile Then
+                Return strGUID & ".csv"
+            Else
+                Return strGUID & ".xlsx"
+            End If
+
         Catch ex As Exception
             _Error = ex.Message
             Return ""

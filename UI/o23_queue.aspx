@@ -87,6 +87,7 @@
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterGUID" runat="server" />
     <asp:hiddenfield ID="hidDefaultSorting" runat="server" />
+    <asp:HiddenField ID="hidCols" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

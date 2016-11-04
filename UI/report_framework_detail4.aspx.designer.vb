@@ -86,6 +86,24 @@ Partial Public Class report_framework_detail4
     Protected WithEvents cmdGenerate As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdGenerateCSV control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdGenerateCSV As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cbxDelimiter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxDelimiter As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''hidCurX31ID control.
     '''</summary>
     '''<remarks>

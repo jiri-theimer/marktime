@@ -94,7 +94,7 @@ Public Class report_framework_detail4
 
     End Function
 
-    Private Function GenerateXLS(strSourceXlsFullPath As String) As String
+    Private Function GenerateXLS(strSourceXlsFullPath As String, bolGenerateCsvFile As Boolean, Optional strCsvDelimiter As String = ";") As String
         Dim cXLS As New clsExportToXls(Master.Factory)
         Dim sheetDef As ExcelWorksheet = cXLS.LoadSheet(strSourceXlsFullPath, 0, "marktime_definition")
         If sheetDef Is Nothing Then
@@ -154,7 +154,7 @@ Public Class report_framework_detail4
             End Select
         Next
         book.Worksheets.RemoveWorksheet("marktime_definition")
-        Dim strResult As String = cXLS.SaveAsFile(sheetData)
+        Dim strResult As String = cXLS.SaveAsFile(sheetData, bolGenerateCsvFile, strCsvDelimiter)
         Dim cF As New BO.clsFile
         Return cF.GetNameFromFullpath(strResult)
     End Function
@@ -180,12 +180,7 @@ Public Class report_framework_detail4
         End If
     End Sub
 
-    Private Sub cmdGenerate_Click(sender As Object, e As EventArgs) Handles cmdGenerate.Click
-        Dim strTempFile As String = GenerateXLS(InhaleReport())
-        If strTempFile <> "" Then
-            Response.Redirect("binaryfile.aspx?tempfile=" & strTempFile)
-        End If
-    End Sub
+    
 
     Private Sub SetupJ70Combo(intDef As Integer, x29id As BO.x29IdEnum)
         Dim mq As New BO.myQuery
@@ -198,5 +193,18 @@ Public Class report_framework_detail4
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("report_framework_detail-j70id-" & Me.CurrentX31ID.ToString, Me.CurrentJ70ID.ToString)
+    End Sub
+
+    Private Sub cmdGenerate_Click(sender As Object, e As EventArgs) Handles cmdGenerate.Click
+        Dim strTempFile As String = GenerateXLS(InhaleReport(), False)
+        If strTempFile <> "" Then
+            Response.Redirect("binaryfile.aspx?tempfile=" & strTempFile)
+        End If
+    End Sub
+    Private Sub cmdGenerateCSV_Click(sender As Object, e As EventArgs) Handles cmdGenerateCSV.Click
+        Dim strTempFile As String = GenerateXLS(InhaleReport(), True, cbxDelimiter.SelectedValue)
+        If strTempFile <> "" Then
+            Response.Redirect("binaryfile.aspx?tempfile=" & strTempFile)
+        End If
     End Sub
 End Class

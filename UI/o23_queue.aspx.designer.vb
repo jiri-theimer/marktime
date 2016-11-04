@@ -122,6 +122,15 @@ Partial Public Class o23_queue
     Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidCols control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

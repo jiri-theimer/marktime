@@ -23,7 +23,7 @@
             <ItemTemplate>
                 <tr id="trRow" runat="server">
                     <td>
-                        <asp:TextBox ID="txtName" runat="server" style="width:120px;"></asp:TextBox>
+                        <asp:TextBox ID="txtName" runat="server" style="width:150px;"></asp:TextBox>
                     </td>
                     <td>
                         <telerik:RadDatePicker ID="datFrom" runat="server" Width="120px" MaxDate="1.1.3000" MinDate="1.1.1900">
@@ -44,12 +44,13 @@
         </asp:Repeater>
     </table>
     
+    <div style="display:none;">
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
         <SpecialDays>
                     <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
                 </SpecialDays>
     </telerik:RadCalendar>
-
+    </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

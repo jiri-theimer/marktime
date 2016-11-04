@@ -119,6 +119,18 @@
             hh = h1 - h2 - 50;
             self.document.getElementById("divTimeline").style.height = hh + "px";
 
+
+            if (screen.availWidth < 1400) {
+                
+                var ss = jQuery("td[id=tdFirstCol]");
+                var i = 0;
+                ss.each(function () {
+                    $(ss[i]).css("width", "100px");
+                    i = i + 1;
+                });
+              
+            }
+
         });
 
 
@@ -270,7 +282,7 @@
         <asp:Panel ID="panLayout" runat="server">
             <table cellpadding="3">
                 <tr>
-                    <td class="nondate" style="width: 270px;"></td>
+                    <td id="tdFirstCol" class="nondate" style="width: 270px;"></td>
                     <td class="nondate" style="width: 30px; text-align: right;" title="Operativní plán celkem">
                         <asp:Image ID="imgOPLAN" runat="server" ImageUrl="Images/oplan.png" />
                     </td>
@@ -353,14 +365,14 @@
                     <asp:Repeater ID="rp1" runat="server">
                         <ItemTemplate>
                             <tr style="border-top: dotted silver 1px; vertical-align: top;">
-                                <td style="width: 270px;" class="nondate">
+                                <td id="tdFirstCol" style="width: 270px;" class="nondate">
                                     <div>
                                         <asp:ImageButton ID="cmdRemove" runat="server" CommandName="remove" ImageUrl="Images/cut.png" ToolTip="Nezobrazovat" />
                                         <asp:Label ID="person" runat="server" CssClass="valbold"></asp:Label>
                                         <asp:HyperLink ID="clue_person" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
                                     </div>
                                     <div>
-                                        <asp:Label ID="project" runat="server" CssClass="val" Style="padding-left: 15px;"></asp:Label>
+                                        <asp:Label ID="project" runat="server" CssClass="val" Style="padding-left: 15px;word-wrap: break-word;"></asp:Label>
                                     </div>
 
                                     <asp:HiddenField ID="j02id" runat="server" />

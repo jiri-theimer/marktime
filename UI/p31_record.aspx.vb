@@ -287,6 +287,7 @@
             'uživatel  požaduje zapisovat napřímo do konkrétního sešitu
             Me.MyDefault_p34ID = BO.BAS.IsNullInt(Request.Item("p34id"))
         End If
+        
         If Request.Item("p31date") <> "" Then
             Me.MyDefault_p31Date = BO.BAS.ConvertString2Date(Request.Item("p31date"))
         End If
@@ -340,7 +341,7 @@
                 Me.p49ID.Value = .PID.ToString
                 Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, .PID) & "</br>"
             End With
-            
+
         End If
         If intDefP56ID > 0 Then
             Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(intDefP56ID)
@@ -369,7 +370,7 @@
             Me.TimeFrom.Text = c.TimeOnly
             c = New BO.DateTimeByQuerystring(Request.Item("t2"))
             Me.TimeUntil.Text = c.TimeOnly
-            
+
             Dim cT As New BO.clsTime
             Me.p31Value_Orig.Text = cT.ShowAsDec(Me.TimeUntil.Text) - cT.ShowAsDec(Me.TimeFrom.Text)
             Handle_ChangeHoursEntryFlag()
@@ -609,9 +610,9 @@
 
         Dim intDefP34ID As Integer = Me.CurrentP34ID
         Dim intDefP32ID As Integer = Me.CurrentP32ID
-        Dim intCurP34ID As Integer = intDefP32ID, intCurP32ID As Integer = intDefP32ID
+        Dim intCurP34ID As Integer = 0, intCurP32ID As Integer = intDefP32ID
 
-        If intDefP34ID = 0 And Master.DataPID = 0 Then
+        If Master.DataPID = 0 Then
             intDefP34ID = Me.MyDefault_p34ID
         End If
         If intDefP32ID = 0 And Master.DataPID = 0 Then
@@ -642,70 +643,83 @@
                 End If
             End If
 
-            Me.p34ID.DataSource = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(_Project.PID, _Project.p42ID, _Project.j18ID, Me.CurrentJ02ID)
+            Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(_Project.PID, _Project.p42ID, _Project.j18ID, Me.CurrentJ02ID)
+            Me.p34ID.DataSource = lisP34
             Me.p34ID.DataBind()
-
-            If Not bolTryRun_Handle_P34 Then Return 'dál už se nemá pokračovat
-
-
-            If Me.p34ID.Rows > 1 And intDefP34ID > 0 Then
-                Me.CurrentP34ID = intDefP34ID
-            End If
-            If Me.CurrentP34ID <> intCurP34ID Then
-                Handle_ChangeP34()  'došlo ke změně sešitu -> vyvolat změnu sešitu, aby se naplnila nabídka aktivit
-            End If
-            If Me.p32ID.Rows > 1 And intDefP32ID > 0 Then
-                Me.CurrentP32ID = intDefP32ID
-                If Me.CurrentP32ID > 0 And Master.DataPID = 0 Then
-                    'výchozí hodnoty aktivity pro nový záznam
-                    Dim strDefText As String = ""
-                    Dim cP32 As BO.p32Activity = Master.Factory.p32ActivityBL.Load(Me.CurrentP32ID)
-                    Select Case intLangIndex
-                        Case 0 : strDefText = cP32.p32DefaultWorksheetText
-                        Case 1 : strDefText = cP32.p32DefaultWorksheetText_Lang1
-                        Case 2 : strDefText = cP32.p32DefaultWorksheetText_Lang2
-                        Case 3 : strDefText = cP32.p32DefaultWorksheetText_Lang3
-                        Case 4 : strDefText = cP32.p32DefaultWorksheetText_Lang4
+            If Master.DataPID = 0 And bolTryRun_Handle_P34 Then
+                If Not Page.IsPostBack And Request.Item("tabqueryflag") <> "" Then
+                    Select Case Request.Item("tabqueryflag")
+                        Case "time" : lisP34 = lisP34.Where(Function(p) p.p33ID = BO.p33IdENUM.Cas)
+                        Case "expense" : lisP34 = lisP34.Where(Function(p) p.p33ID = BO.p33IdENUM.PenizeBezDPH Or p.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu And p.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj)
+                        Case "fee" : lisP34 = lisP34.Where(Function(p) p.p33ID = BO.p33IdENUM.PenizeBezDPH Or p.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu And p.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem)
                     End Select
-                    If strDefText <> "" Then
-                        If Me.p31Text.Text = "" Then
-                            Me.p31Text.Text = strDefText
-                        Else
-                            Me.p31Text.Text += vbCrLf & vbCrLf & strDefText
-                        End If
+                    For Each c In lisP34
+                        If Not Me.p34ID.RadCombo.Items.FindItemByValue(c.PID.ToString) Is Nothing Then intDefP34ID = c.PID : Exit For
+                    Next                
+            End If
+        End If
+
+        If Not bolTryRun_Handle_P34 Then Return 'dál už se nemá pokračovat
+
+
+        If Me.p34ID.Rows > 1 And intDefP34ID > 0 Then
+            Me.CurrentP34ID = intDefP34ID
+        End If
+        If Me.CurrentP34ID <> intCurP34ID Then
+            Handle_ChangeP34()  'došlo ke změně sešitu -> vyvolat změnu sešitu, aby se naplnila nabídka aktivit
+        End If
+        If Me.p32ID.Rows > 1 And intDefP32ID > 0 Then
+            Me.CurrentP32ID = intDefP32ID
+            If Me.CurrentP32ID > 0 And Master.DataPID = 0 Then
+                'výchozí hodnoty aktivity pro nový záznam
+                Dim strDefText As String = ""
+                Dim cP32 As BO.p32Activity = Master.Factory.p32ActivityBL.Load(Me.CurrentP32ID)
+                Select Case intLangIndex
+                    Case 0 : strDefText = cP32.p32DefaultWorksheetText
+                    Case 1 : strDefText = cP32.p32DefaultWorksheetText_Lang1
+                    Case 2 : strDefText = cP32.p32DefaultWorksheetText_Lang2
+                    Case 3 : strDefText = cP32.p32DefaultWorksheetText_Lang3
+                    Case 4 : strDefText = cP32.p32DefaultWorksheetText_Lang4
+                End Select
+                If strDefText <> "" Then
+                    If Me.p31Text.Text = "" Then
+                        Me.p31Text.Text = strDefText
+                    Else
+                        Me.p31Text.Text += vbCrLf & vbCrLf & strDefText
                     End If
-                    Select Case Me.CurrentP33ID
-                        Case BO.p33IdENUM.Cas
-                            If cP32.p32Value_Default <> 0 And Me.p31Value_Orig.Text = "" Then
-                                Me.p31Value_Orig.Text = cP32.p32Value_Default.ToString
-                            End If
-                        Case BO.p33IdENUM.Kusovnik
-                            If cP32.p32Value_Default <> 0 And BO.BAS.IsNullNum(Me.Units_Orig.Value) = 0 Then
-                                Me.Units_Orig.Value = cP32.p32Value_Default
-                            End If
-                    End Select
-
-                    If cP32.p32IsTextRequired Then Me.lblP31Text.CssClass = "lblReq" Else lblP31Text.CssClass = "lbl"
                 End If
+                Select Case Me.CurrentP33ID
+                    Case BO.p33IdENUM.Cas
+                        If cP32.p32Value_Default <> 0 And Me.p31Value_Orig.Text = "" Then
+                            Me.p31Value_Orig.Text = cP32.p32Value_Default.ToString
+                        End If
+                    Case BO.p33IdENUM.Kusovnik
+                        If cP32.p32Value_Default <> 0 And BO.BAS.IsNullNum(Me.Units_Orig.Value) = 0 Then
+                            Me.Units_Orig.Value = cP32.p32Value_Default
+                        End If
+                End Select
+
+                If cP32.p32IsTextRequired Then Me.lblP31Text.CssClass = "lblReq" Else lblP31Text.CssClass = "lbl"
             End If
+        End If
 
 
-            Me.chkBindToContactPerson.Checked = False : Me.j02ID_ContactPerson.Visible = False
-            Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(_Project.p28ID_Client, _Project.PID, 0).Where(Function(p) p.p30IsDefaultInWorksheet = True)
-            If lisP30.Count > 0 Then
-                Me.chkBindToContactPerson.Checked = True : Me.j02ID_ContactPerson.Visible = True
-                Dim intDefj02ID As Integer = lisP30.First.j02ID
-                If lisP30.Where(Function(p) p.p41ID = _Project.PID).Count > 0 Then
-                    intDefj02ID = lisP30.Where(Function(p) p.p41ID = _Project.PID).First.j02ID
-                End If
-                RefreshContactPersonCombo(True, intDefj02ID)
+        Me.chkBindToContactPerson.Checked = False : Me.j02ID_ContactPerson.Visible = False
+        Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(_Project.p28ID_Client, _Project.PID, 0).Where(Function(p) p.p30IsDefaultInWorksheet = True)
+        If lisP30.Count > 0 Then
+            Me.chkBindToContactPerson.Checked = True : Me.j02ID_ContactPerson.Visible = True
+            Dim intDefj02ID As Integer = lisP30.First.j02ID
+            If lisP30.Where(Function(p) p.p41ID = _Project.PID).Count > 0 Then
+                intDefj02ID = lisP30.Where(Function(p) p.p41ID = _Project.PID).First.j02ID
             End If
+            RefreshContactPersonCombo(True, intDefj02ID)
+        End If
 
 
 
-            If Me.chkBindToP56.Checked Then
-                SetupP56Combo(True, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
-            End If
+        If Me.chkBindToP56.Checked Then
+            SetupP56Combo(True, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
+        End If
         End If
     End Sub
     Private Sub Handle_ChangeP34()

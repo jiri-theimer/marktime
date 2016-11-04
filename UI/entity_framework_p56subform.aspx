@@ -3,10 +3,56 @@
 <%@ Register TagPrefix="uc" TagName="p56_subgrid" Src="~/p56_subgrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             window.parent.stoploading();
 
+            var iframeWidth = '100%';
+            var iframeHeight = '270';
+
+            $("a.reczoom").each(function () {
+
+                // Extract your variables here:
+                var $this = $(this);
+                var myurl = $this.attr('rel');
+
+                var mytitle = $this.attr('title');
+                if (mytitle == null)
+                    mytitle = 'Detail';
+
+
+                $this.qtip({
+                    content: {
+                        text: '<iframe scrolling=no src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
+                        title: {
+                            text: mytitle
+                        },
+
+                    },
+                    position: {
+                        my: 'top center',  // Position my top left...
+                        at: 'bottom center', // at the bottom right of...
+                        viewport: $(window)
+                    },
+
+                    hide: {
+
+                        fixed: true,
+                        delay: 100
+
+                    },
+                    style: {
+                        classes: 'qtip-tipped',
+                        width: 700,
+                        height: 300
+
+                    }
+                });
+            });
+            
         });
         function p56_subgrid_setting(j74id) {
             ///volá se z p56_subgrid

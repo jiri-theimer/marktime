@@ -588,7 +588,7 @@ Public Class report_modal
             End Select
         Next
         book.Worksheets.RemoveWorksheet("marktime_definition")
-        Dim strResult As String = cXLS.SaveAsFile(sheetData)
+        Dim strResult As String = cXLS.SaveAsFile(sheetData, False)
         Dim cF As New BO.clsFile
         Return cF.GetNameFromFullpath(strResult)
     End Function

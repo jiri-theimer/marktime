@@ -41,7 +41,16 @@
         </tr>
     </table>
     <div class="div6">
-        <asp:Button ID="cmdGenerate" runat="server" Text="Vygenerovat sestavu" CssClass="cmd" Font-Bold="true" />
+        <asp:Button ID="cmdGenerate" runat="server" Text="Vygenerovat XLSX soubor" CssClass="cmd" Font-Bold="true" />
+    </div>
+    <div class="div6" style="margin-top:30px;">
+        <asp:Button ID="cmdGenerateCSV" runat="server" Text="Vygenerovat CSV soubor" CssClass="cmd" Font-Bold="true" />
+        <span>Oddělovač polí v CSV souboru:</span>
+        <asp:DropDownList ID="cbxDelimiter" runat="server">
+            <asp:ListItem text="," Value=","></asp:ListItem>
+            <asp:ListItem text=";" Value=";"></asp:ListItem>
+            <asp:ListItem text="|" Value="|" Selected="true"></asp:ListItem>
+        </asp:DropDownList>
     </div>
     <asp:HiddenField ID="hidCurX31ID" runat="server" />
     <asp:HiddenField ID="hidQueryPrefix" runat="server" />

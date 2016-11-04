@@ -23,7 +23,16 @@
             <asp:Image ID="img1" runat="server" ImageUrl="Images/notepad_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
         </div>
+        <asp:panel ID="panFiles" runat="server" cssclass="content-box2">
+            <div class="title">
+                Souborové přílohy
+                
 
+            </div>
+            <div class="content">
+                <uc:fileupload_list ID="files1" runat="server" />
+            </div>
+        </asp:panel>
         
         <div class="content-box2">
             <div class="title">
@@ -86,16 +95,7 @@
 
         <asp:Label ID="lblMessage" runat="server" CssClass="failureNotification"></asp:Label>
 
-        <asp:panel ID="panFiles" runat="server" cssclass="content-box1">
-            <div class="title">
-                Souborové přílohy
-                
-
-            </div>
-            <div class="content">
-                <uc:fileupload_list ID="files1" runat="server" />
-            </div>
-        </asp:panel>
+        
 
         
 

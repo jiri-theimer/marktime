@@ -132,11 +132,20 @@
         }
         function p31_entry() {
             ///volá se z p31_subgrid
-            var p41id = "";
+            var url = "p31_record.aspx?pid=0";            
             <%if Me.CurrentMasterPrefix="p41" then%>
-            p41id = "<%=me.CurrentMasterPID%>";
+            url=url+"&p41id=<%=me.CurrentMasterPID%>";
             <%End If%>
-            window.parent.sw_decide("p31_record.aspx?pid=0&p41id="+p41id, "Images/worksheet.png", false);
+             <%If Me.CurrentMasterPrefix = "p28" Then%>
+            url = url + "&p28id=<%=me.CurrentMasterPID%>";
+            <%End If%>
+            <%If Me.CurrentMasterPrefix = "j02" Then%>
+            url = url + "&j02id=<%=me.CurrentMasterPID%>";
+            <%End If%>
+            <%If gridP31.MasterTabAutoQueryFlag<>"" then%>
+            url = url + "&tabqueryflag=<%=gridP31.MasterTabAutoQueryFlag%>";
+            <%End If%>
+            window.parent.sw_decide(url, "Images/worksheet.png", false);
             return (false);
         }
         function p31_subgrid_setting(j74id) {

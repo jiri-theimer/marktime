@@ -124,7 +124,7 @@ Public Class o23_queue
                 End If
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, True)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, True)
         End With
         With grid1
             .radGridOrig.ShowFooter = False
@@ -145,17 +145,18 @@ Public Class o23_queue
         With mq
             .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
             .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
-
+            .MG_GridSqlColumns = Me.hidCols.Value
         End With
         InhaleMyQuery(mq)
 
         Dim bolInhaleReceiversInLine As Boolean = True
 
-        Dim lis As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList4Grid(mq)
-        If lis Is Nothing Then
+        ''Dim lis As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList4Grid(mq)
+        Dim dt As DataTable = Master.Factory.o23NotepadBL.GetGridDataSource(mq)
+        If dt Is Nothing Then
             Master.Notify(Master.Factory.o23NotepadBL.ErrorMessage, NotifyLevel.ErrorMessage)
         Else
-            grid1.DataSource = lis
+            grid1.DataSourceDataTable = dt
         End If
 
 

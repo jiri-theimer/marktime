@@ -41,6 +41,24 @@ Partial Public Class clue_o23_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''panFiles control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panFiles As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''files1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents files1 As Global.UI.fileupload_list
+
+    '''<summary>
     '''trO23Name control.
     '''</summary>
     '''<remarks>
@@ -165,24 +183,6 @@ Partial Public Class clue_o23_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblMessage As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''panFiles control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panFiles As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''files1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents files1 As Global.UI.fileupload_list
 
     '''<summary>
     '''comments1 control.
