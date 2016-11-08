@@ -79,7 +79,8 @@
                     content: {
                         text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
                         title: {
-                            text: mytitle
+                            text: mytitle,
+                            button: true
                         },
 
                     },
@@ -222,10 +223,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="background-color: white;">
-        <div style="float: left; background-color: white;">
-            <img src="Images/drilldown_32.png" />
-
-        </div>
+       
         <div class="commandcell" style="margin-left: 10px;">
 
             <asp:DropDownList ID="j75ID" runat="server" AutoPostBack="true" DataTextField="j75Name" DataValueField="pid" Style="width: 200px;" ToolTip="DRILL-DOWN šablona"></asp:DropDownList>

@@ -36,6 +36,7 @@ Public Class p91_create_step2
                     .Add(strGridKey)
                     .Add("p91_create-pagesize")
                     .Add("p91_create-rememberdates")
+                    .Add("p91_create-remembermaturity")
                     .Add("p91_create-rememberdates-values")
                     .Add("p91_create-chkSearchByClientOnly")
                 End With
@@ -52,6 +53,7 @@ Public Class p91_create_step2
                 basUI.SelectRadiolistValue(Me.opgGroupBy, .Factory.j03UserBL.GetUserParam("p91_create-group"))
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .Factory.j03UserBL.GetUserParam("p91_create-pagesize", "20"))
                 Me.chkRememberDates.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-rememberdates", "0"))
+                Me.chkRememberMaturiy.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-remembermaturity", "0"))
                 Dim lisP92 As IEnumerable(Of BO.p92InvoiceType) = .Factory.p92InvoiceTypeBL.GetList(New BO.myQuery)
                 Me.p92ID.DataSource = lisP92.Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice).OrderBy(Function(p) p.j27ID)
                 Me.p92ID.DataBind()
@@ -59,17 +61,25 @@ Public Class p91_create_step2
 
             InhaleDefaults()
 
+
+            Dim a() As String = Split(Master.Factory.j03UserBL.GetUserParam("p91_create-rememberdates-values"), "|")
+
+
+
             If Master.Factory.j03UserBL.GetUserParam("p91_create-rememberdates", "0") = "1" Then
-                Dim a() As String = Split(Master.Factory.j03UserBL.GetUserParam("p91_create-rememberdates-values"), "|")
                 If UBound(a) > 1 Then
                     If a(0) <> "" Then Me.p91DateSupply.SelectedDate = BO.BAS.ConvertString2Date(a(0))
                     If a(1) <> "" Then Me.p91Date.SelectedDate = BO.BAS.ConvertString2Date(a(1))
-                    If a(2) <> "" Then Me.p91DateMaturity.SelectedDate = BO.BAS.ConvertString2Date(a(2))
                     If a(3) <> "" Then Me.p91Datep31_From.SelectedDate = BO.BAS.ConvertString2Date(a(3))
                     If a(4) <> "" Then Me.p91Datep31_Until.SelectedDate = BO.BAS.ConvertString2Date(a(4))
                 End If
             End If
-            
+            If Master.Factory.j03UserBL.GetUserParam("p91_create-remembermaturity", "0") = "1" Then
+                If UBound(a) > 1 Then
+                    If a(2) <> "" Then Me.p91DateMaturity.SelectedDate = BO.BAS.ConvertString2Date(a(2))
+                End If
+            End If
+
 
             SetupGrid()
             RecalcVirtualRowCount()
@@ -145,16 +155,20 @@ Public Class p91_create_step2
                 Me.p91text1.Text = cP92.p92InvoiceDefaultText1
             End If
         End If
-        If Me.chkRememberDates.Checked Then
+        If Me.chkRememberDates.Checked Or Me.chkRememberMaturiy.Checked Then
             Dim cLastRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadMyLastCreated()
             If Not cLastRec Is Nothing Then
-                Me.opgDateSupply.ClearSelection()
-                Me.opgDate.ClearSelection()
-                With cLastRec
-                    Me.p91Date.SelectedDate = .p91Date
-                    Me.p91DateMaturity.SelectedDate = .p91DateMaturity
-                    Me.p91DateSupply.SelectedDate = .p91DateSupply
-                End With
+                If Me.chkRememberDates.Checked Then
+                    Me.opgDateSupply.ClearSelection()
+                    Me.opgDate.ClearSelection()
+                    With cLastRec
+                        Me.p91Date.SelectedDate = .p91Date
+                        Me.p91DateSupply.SelectedDate = .p91DateSupply
+                    End With
+                End If
+                If Me.chkRememberMaturiy.Checked Then
+                    Me.p91DateMaturity.SelectedDate = cLastRec.p91DateMaturity
+                End If
             End If
         End If
     End Sub
@@ -399,10 +413,10 @@ Public Class p91_create_step2
                 .j02ID_ContactPerson = BO.BAS.IsNullInt(Me.j02ID_ContactPerson.SelectedValue)
             End With
             Dim intP91ID As Integer = Master.Factory.p91InvoiceBL.Create(cRec)
-
-            If intP91ID <> 0 Then                
+            If intP91ID <> 0 Then
                 Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates", BO.BAS.GB(Me.chkRememberDates.Checked))
-                If Me.chkRememberDates.Checked Then
+                Master.Factory.j03UserBL.SetUserParam("p91_create-remembermaturity", BO.BAS.GB(Me.chkRememberMaturiy.Checked))
+                If Me.chkRememberDates.Checked Or Me.chkRememberMaturiy.Checked Then
                     Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates-values", MFD(Me.p91DateSupply.SelectedDate) & "|" & MFD(Me.p91Date.SelectedDate) & "|" & MFD(Me.p91DateMaturity.SelectedDate) & "|" & MFD(Me.p91Datep31_From.SelectedDate) & "|" & MFD(Me.p91Datep31_Until.SelectedDate))
                 End If
                 Master.DataPID = intP91ID

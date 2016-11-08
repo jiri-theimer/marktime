@@ -316,6 +316,9 @@
                 pars.Add("p28id", .p28ID, DbType.Int32)
                 s.Append(" AND (a.p28ID_Client=@p28id OR a.p28ID_Billing=@p28id)")
             End If
+            If Not .p28IDs Is Nothing Then
+                s.Append(" AND a.p28ID_Client IN (" & String.Join(",", .p28IDs) & ")")
+            End If
             If .p61ID > 0 Then
                 pars.Add("p61id", .b02ID, DbType.Int32)
                 s.Append(" AND a.p61ID=@p61id")

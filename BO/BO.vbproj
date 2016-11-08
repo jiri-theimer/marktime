@@ -112,6 +112,7 @@
     <Compile Include="DBNative\p61ActivityCluster.vb" />
     <Compile Include="DBNative\p63Overhead.vb" />
     <Compile Include="DBNative\p80InvoiceAmountStructure.vb" />
+    <Compile Include="DBNative\p82Proforma_Payment.vb" />
     <Compile Include="DBNative\p98Invoice_Round_Setting_Template.vb" />
     <Compile Include="DBNative\x18EntityCategory.vb" />
     <Compile Include="DBNative\p47CapacityPlan.vb" />

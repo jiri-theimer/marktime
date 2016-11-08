@@ -260,6 +260,9 @@ Public Class p91_framework_detail
 
 
     Private Sub Handle_Permissions(cRec As BO.p91Invoice)
+        menu1.FindItemByValue("cmdAboImport").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Owner)
+        menu1.FindItemByValue("cmdPohoda").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Reader)
+
         menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
         Dim cDisp As BO.p91RecordDisposition = Master.Factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
         x18_binding.Visible = cDisp.OwnerAccess
@@ -281,6 +284,9 @@ Public Class p91_framework_detail
             menu1.FindItemByValue("cmdChangeVat").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdProforma").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdCreditNote").Visible = .OwnerAccess
+            linkEditP31.Visible = .OwnerAccess
+            linkAddP31.Visible = .OwnerAccess
+            linkRemoveP31.Visible = .OwnerAccess
         End With
 
 

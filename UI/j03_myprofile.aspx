@@ -66,7 +66,7 @@
             </tr>
         </table>
 
-        <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true" Skin="Metro">
+        <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true" Skin="Default">
             <Tabs>
                 <telerik:RadTab Text="Můj profil" Selected="true" Value="core"></telerik:RadTab>
                 <telerik:RadTab Text="Nastavit funkci [Najít projekt...]" Value="search"></telerik:RadTab>

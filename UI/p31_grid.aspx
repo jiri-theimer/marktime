@@ -225,7 +225,7 @@
 
 
 
-                    <telerik:RadMenuItem Text="<%$Resources:common,Dalsi %>" ImageUrl="Images/more.png" Value="columns" PostBack="false">
+                    <telerik:RadMenuItem Text="<%$Resources:common,Dalsi %>" ImageUrl="Images/menuarrow.png" Value="columns" PostBack="false">
                         <ContentTemplate>
                             <div style="padding: 20px;">
                                 <div class="div6">

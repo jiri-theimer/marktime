@@ -80,7 +80,7 @@ Public Class approving_framework
                         Me.cbxGroupBy.Items.FindByValue("Client").Enabled = False
                     Case BO.x29IdEnum.j02Person
                         Me.cbxGroupBy.Items.FindByValue("Client").Enabled = False
-
+                        menu1.FindItemByValue("bin").Visible = False
                 End Select
 
             End With
@@ -115,12 +115,15 @@ Public Class approving_framework
 
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
+                    .AddSystemColumn(10)
                     If Me.cbxGroupBy.SelectedValue <> "Client" Then
                         .AddColumn("Client", "Klient")
                     End If
 
                     .AddColumn("Project", "Projekt")
+
                 Case BO.x29IdEnum.p28Contact
+                    .AddSystemColumn(10)
                     .AddColumn("Client", "Klient")
                 Case BO.x29IdEnum.j02Person
                     .AddColumn("Person", "Osoba")
@@ -217,6 +220,12 @@ Public Class approving_framework
                 dataItem("schvaleno_vydaje_fakturovat").ForeColor = Drawing.Color.Brown
             End If
         End If
+        Select Case Me.CurrentX29ID
+            Case BO.x29IdEnum.p41Project
+                dataItem("systemcolumn").Text = "<a href='p41_framework.aspx?pid=" & cRec.PID.ToString & "'><img src='Images/fullscreen.png'/></a>"
+            Case BO.x29IdEnum.p28Contact
+                dataItem("systemcolumn").Text = "<a href='p28_framework.aspx?pid=" & cRec.PID.ToString & "'><img src='Images/fullscreen.png'/></a>"
+        End Select
 
 
     End Sub
@@ -281,8 +290,16 @@ Public Class approving_framework
 
     Private Sub cmdHardRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdHardRefreshOnBehind.Click
         Select Case Me.hidHardRefreshFlag.Value
-            Case "export"
+            Case "pdf"
+                With grid1.radGridOrig.ExportSettings.Pdf
+                    .PageWidth = Unit.Parse("297mm")
+                    .PageHeight = Unit.Parse("210mm")
+                End With
+                grid1.radGridOrig.ExportToPdf()
+            Case "xls"
                 grid1.radGridOrig.MasterTableView.ExportToExcel()
+            Case "doc"
+                grid1.radGridOrig.MasterTableView.ExportToWord()
             Case "j70-run"
                 ReloadPage()
             Case Else

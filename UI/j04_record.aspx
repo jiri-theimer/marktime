@@ -31,13 +31,13 @@
             <div class="content-box2">
                 <div class="title">Rozsah odkazů v nabídce hlavního aplikačního menu</div>
                 <div class="content">
-                    <asp:CheckBox ID="j04IsMenu_Worksheet" runat="server" Text="Menu [Worksheet]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_Project" runat="server" Text="Menu [Projekty]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_Contact" runat="server" Text="Menu [Klienti]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_People" runat="server" Text="Menu [Lidé]" Checked="false" />
+                    <asp:CheckBox ID="j04IsMenu_Worksheet" runat="server" Text="Menu [WORKSHEET]" Checked="true" />
+                    <asp:CheckBox ID="j04IsMenu_Project" runat="server" Text="Menu [PROJEKTY]" Checked="true" />
+                    <asp:CheckBox ID="j04IsMenu_Contact" runat="server" Text="Menu [KLIENTI]" Checked="true" />
+                    <asp:CheckBox ID="j04IsMenu_People" runat="server" Text="Menu [LIDÉ]" Checked="false" />
                     <asp:CheckBox ID="j04IsMenu_Report" runat="server" Text="Menu [Sestavy]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_Invoice" runat="server" Text="Menu [Faktury]" Checked="false" />
-                    <asp:CheckBox ID="j04IsMenu_More" runat="server" Text="Menu [Další]" Checked="true" />
+                    <asp:CheckBox ID="j04IsMenu_Invoice" runat="server" Text="Menu [FAKTURY]" Checked="false" />
+                    <asp:CheckBox ID="j04IsMenu_More" runat="server" Text="Menu [DALŠÍ]" Checked="true" />
                     <asp:CheckBox ID="j04IsMenu_MyProfile" runat="server" Text="Menu [Můj profil]" Checked="true" />
                 </div>
             </div>

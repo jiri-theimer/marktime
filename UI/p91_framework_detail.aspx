@@ -539,15 +539,19 @@
                     <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
 
                     <a href="javascript:griddesigner()" title="Návrhář sloupců">
-                        <img src="Images/griddesigner.png" border="0" class="button-link" /></a>
+                        <img src="Images/griddesigner.png"class="button-link" /></a>
 
 
-                    <a href="javascript:record_p31_edit()" title="Upravit vybranou položku faktury">
-                        <img src="Images/edit.png" border="0" class="button-link" style="margin-left: 30px;" /></a>
-                    <a href="javascript:p31_add()" title="Přidat do faktury další položky">
-                        <img src="Images/new.png" border="0" class="button-link" /></a>
-                    <a href="javascript:p31_remove()" title="Zaškrtlé vyjmout z faktury">
-                        <img src="Images/cut.png" border="0" class="button-link" /></a>                    
+                    
+                    <asp:hyperlink ID="linkEditP31" runat="server" NavigateUrl="javascript:record_p31_edit()" ToolTip="Upravit vybranou položku faktury">
+                        <img src="Images/edit.png" class="button-link" style="margin-left: 30px;" />
+                    </asp:hyperlink>
+                    <asp:hyperlink ID="linkAddP31" runat="server" NavigateUrl="javascript:p31_add()" ToolTip="Přidat do faktury další položky">
+                        <img src="Images/new.png" class="button-link" />
+                    </asp:hyperlink>
+                    <asp:hyperlink ID="linkRemoveP31" runat="server" NavigateUrl="javascript:p31_remove()" ToolTip="Zaškrtlé vyjmout z faktury">
+                        <img src="Images/cut.png" class="button-link" />
+                    </asp:hyperlink>                    
                     <a href="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" title="Přehled worksheet úkonů na celou stránku" target="_top" style="margin-left: 30px;">
                         <img src="Images/fullscreen.png" class="button-link" border="0" />
                     </a>

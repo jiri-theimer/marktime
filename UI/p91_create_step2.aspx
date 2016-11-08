@@ -238,7 +238,8 @@
                 </tr>
             </table>
             <div>
-                <asp:CheckBox ID="chkRememberDates" runat="server" Text="V mé další faktuře nabízet ty samé datumy" CssClass="div6" />
+                <asp:CheckBox ID="chkRememberDates" runat="server" Text="V mé další faktuře nabízet ty samé datumy plnění a vystavení" />
+                <asp:CheckBox ID="chkRememberMaturiy" runat="server" Text="V mé další faktuře nabízet to samé datum splatnosti" />
             </div>
         </div>
         <div class="div6">

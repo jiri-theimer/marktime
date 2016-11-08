@@ -21,12 +21,7 @@
         $(document).ready(function () {
 
 
-            $(".slidingDiv1").hide();
-            $(".show_hide1").show();
 
-            $('.show_hide1').click(function () {
-                $(".slidingDiv1").slideToggle();
-            });
 
 
             InhaleGridHeight();
@@ -46,8 +41,8 @@
             h2 = offset.top;
 
             h3 = h1 - h2 - 150;
-            
-            
+
+
 
         }
 
@@ -148,6 +143,19 @@
             sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids, "Images/report_32.png", true);
 
         }
+        function p31_move2bin() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Není vybrán ani jeden záznam.");
+                return;
+            }
+            var direction = "1";
+            <%If Me.cbxScope.SelectedValue="2" then%>
+            direction = "3";
+            <%end If%>
+            
+            sw_master("p31_move2bin.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids + "&direction=" + direction, "Images/bin.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -159,12 +167,12 @@
         </Tabs>
     </telerik:RadTabStrip>
     <div style="background-color: white; padding: 10px;">
-        <div style="float:left;">
+        <div style="float: left;">
             <img src="Images/approve_32.png" title="Příprava fakturačních podkladů" />
             <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Schvalovat úkony"></asp:Label>
         </div>
 
-        <div class="commandcell" style="padding-left:20px;">
+        <div class="commandcell" style="padding-left: 20px;">
             <asp:DropDownList ID="cbxScope" runat="server" AutoPostBack="true" BackColor="Yellow">
                 <asp:ListItem Text="Rozpracované (čeká na schvalování)" Value="1"></asp:ListItem>
                 <asp:ListItem Text="Schválené (čeká na fakturaci)" Value="2"></asp:ListItem>
@@ -179,59 +187,61 @@
             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
             <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
         </div>
-        <div class="commandcell" style="margin-left:12px;">
-             <button type="button" onclick="report()" title="Tisková sestava (funguje i hromadný tisk)">
-                <img src="Images/report.png" />                
-            </button>
-        </div>
-        <div class="commandcell">
-            <button type="button" onclick="approve_selected()" title="Schvalovat všechny označené řádky">
-                <img src="Images/approve.png" alt="Schvalovat" />
-                Schvalovat/fakturovat vybrané
-            </button>
+        <div class="commandcell" style="margin-left: 12px;">
+            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
+                <Items>
+                    <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
+                        <Items>
+                            <telerik:RadMenuItem Text="Schválit nebo fakturovat označené" Value="approve" NavigateUrl="javascript:approve_selected()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Přesunout nevyfakturované úkony do archivu" Value="bin" NavigateUrl="javascript:p31_move2bin()" ImageUrl="Images/bin.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Tisková sestava (funguje i hromadný tisk)" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Export" ImageUrl="Images/menuarrow.png">
+                        <Items>
+                            <telerik:RadMenuItem Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="DOC" NavigateUrl="javascript:hardrefresh(0,'doc')"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="PDF" NavigateUrl="javascript:hardrefresh(0,'pdf')"></telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Nastavení" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
+                        
+                        <ContentTemplate>
+                            
+                            <div class="div6">
+                                <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
+                                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
+                                    <asp:ListItem Text="20"></asp:ListItem>
+                                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                    <asp:ListItem Text="100"></asp:ListItem>
+                                    <asp:ListItem Text="200"></asp:ListItem>
+                                    <asp:ListItem Text="500"></asp:ListItem>
+                                </asp:DropDownList>
 
-            <button type="button" onclick="hardrefresh(0,'export')" title="Export přehledu do MS Excel">
-                <img src="Images/export.png" />                
-            </button>
+                            </div>
+                            <div class="div6">
+                                <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Souhrny podle">
+                                    <asp:ListItem Text="Bez souhrnů" Value=""></asp:ListItem>
+                                    <asp:ListItem Text="Souhrny podle měny" Value="j27Code"></asp:ListItem>
+                                    <asp:ListItem Text="Souhrny podle klienta projektu" Value="Client"></asp:ListItem>
+
+                                </asp:DropDownList>
+                            </div>
+                            <div class="div6">
+                                <asp:CheckBox ID="chkKusovnik" runat="server" AutoPostBack="true" Text="Zobrazovat i honoráře z kusovníkových úkonů" />
+                            </div>
+                            
+                        </ContentTemplate>
+                    </telerik:RadMenuItem>
+                </Items>
+            </telerik:RadMenu>
+            
         </div>
         
-        <div class="show_hide1" style="float:left;margin-top:10px;">
-            <button type="button">
+
+        <div style="clear: both; width: 100%;"></div>
 
 
-                <img src="Images/arrow_down_menu.png" />
-                Nastavení
-
-            </button>
-        </div>
-        <div style="clear:both; width: 100%;"></div>
-
-        <div class="slidingDiv1">
-            <div class="div6">
-                <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
-                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
-                    <asp:ListItem Text="20"></asp:ListItem>
-                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                    <asp:ListItem Text="100"></asp:ListItem>
-                    <asp:ListItem Text="200"></asp:ListItem>
-                    <asp:ListItem Text="500"></asp:ListItem>
-                </asp:DropDownList>
-
-            </div>
-            <div class="div6">
-                <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Souhrny podle">
-                    <asp:ListItem Text="Bez souhrnů" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Souhrny podle měny" Value="j27Code"></asp:ListItem>
-                    <asp:ListItem Text="Souhrny podle klienta projektu" Value="Client"></asp:ListItem>
-
-                </asp:DropDownList>
-            </div>
-            <div class="div6">
-                <asp:CheckBox ID="chkKusovnik" runat="server" AutoPostBack="true" Text="Zobrazovat i honoráře z kusovníkových úkonů" />
-            </div>
-
-
-        </div>
 
 
         <div id="offsetY"></div>

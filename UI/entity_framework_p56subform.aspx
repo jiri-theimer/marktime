@@ -28,7 +28,7 @@
                     content: {
                         text: '<iframe scrolling=no src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
                         title: {
-                            text: mytitle
+                            text: mytitle                            
                         },
 
                     },

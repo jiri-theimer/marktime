@@ -77,6 +77,15 @@ Partial Public Class p31_move2bin
     Protected WithEvents hiddatapid_p31 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidPIDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPIDs As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdRefresh control.
     '''</summary>
     '''<remarks>

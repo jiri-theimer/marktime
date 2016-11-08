@@ -156,5 +156,31 @@
         Return s
     End Function
 
-   
+    Public Function SaveP82(cRec As BO.p82Proforma_Payment) As Boolean
+        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
+        If cRec.PID <> 0 Then
+            bolINSERT = False
+            strW = "p82ID=@pid"
+            pars.Add("pid", cRec.PID)
+        End If
+        With cRec
+            pars.Add("p90ID", BO.BAS.IsNullDBKey(.p90ID), DbType.Int32)
+            pars.Add("p82Date", .p82Date, DbType.DateTime)
+            pars.Add("p82Amount", .p82Amount, DbType.Double)
+            pars.Add("p82Code", .p82Code, DbType.String)
+        End With
+
+        If _cDB.SaveRecord("p82Proforma_Payment", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+    Public Function DeleteP82(intP82ID As Integer, intP90ID As Integer) As Boolean
+        If _cDB.RunSQL("DELETE FROM p82Proforma_Payment WHERE p94ID=" & intP82ID.ToString) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 End Class

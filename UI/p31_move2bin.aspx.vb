@@ -23,30 +23,50 @@
                 .Add("periodcombo-custom_query")
             End With
             With Master
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                Dim pids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Request.Item("pid"))
+                If pids.Count = 0 Then .StopPage("pid missing")
+                Me.hidPIDs.Value = String.Join(",", pids)
+                .DataPID = pids(0)
                 Me.CurrentPrefix = Request.Item("prefix")
                 If Me.CurrentPrefix = "" Then .StopPage("prefix missing")
-                If .DataPID = 0 Then .StopPage("pid missing")
-                .HeaderText = "Přesunout rozpracovanost do archivu | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
-
+                .HeaderText = "Přesunout rozpracovanost do archivu"
+                If pids.Count = 1 Then
+                    .HeaderText += " | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), .DataPID)
+                End If
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .Factory.j03UserBL.GetUserParam("p31_grid-period")
                 .AddToolbarButton("Uložit změny pro zaškrtlé úkony", "ok", , "Images/save.png")
-
-
-                Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
-                Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
-                Select Case cP42.p42ArchiveFlagP31
-                    Case BO.p42ArchiveFlagP31ENUM.EditingOnly
-                        Me.opgDirection.Items.FindByValue("3").Enabled = False
-                    Case BO.p42ArchiveFlagP31ENUM.NoRecords
-                        Me.opgDirection.Items.FindByValue("3").Enabled = False
-                        Me.opgDirection.Items.FindByValue("1").Enabled = False
-                        Me.opgDirection.SelectedValue = "2"
-                        Master.Notify(String.Format("Typ projektu [{0}] má nastavený zákaz přesouvat úkony do archivu.", cP42.p42Name))
+                If Request.Item("direction") <> "" Then
+                    basUI.SelectRadiolistValue(Me.opgDirection, Request.Item("direction"))
+                End If
+                Dim p41ids As New List(Of Integer)
+                Select Case Me.CurrentPrefix
+                    Case "p41" : p41ids = pids
+                    Case "p28"
+                        Dim mq As New BO.myQueryP41
+                        mq.p28IDs = pids
+                        mq.MG_SelectPidFieldOnly = True
+                        pids = .Factory.p41ProjectBL.GetList(mq).Select(Function(p) p.PID).ToList
+                        For Each pid In pids
+                            p41ids.Add(pid)
+                        Next
                 End Select
+                For Each intP41ID In p41ids
+                    Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(intP41ID)
+                    Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
+                    Select Case cP42.p42ArchiveFlagP31
+                        Case BO.p42ArchiveFlagP31ENUM.EditingOnly
+                            Me.opgDirection.Items.FindByValue("3").Enabled = False
+                        Case BO.p42ArchiveFlagP31ENUM.NoRecords
+                            Me.opgDirection.Items.FindByValue("3").Enabled = False
+                            Me.opgDirection.Items.FindByValue("1").Enabled = False
+                            Me.opgDirection.SelectedValue = "2"
+                            Master.Notify(String.Format("Typ projektu [{0}] má nastavený zákaz přesouvat úkony do archivu.", cP42.p42Name))
+                    End Select
+                Next
                 
+
             End With
 
             SetupGrid()
@@ -69,7 +89,7 @@
             Select Case Me.CurrentPrefix
                 Case "p41"
                 Case Else
-                    .AddColumn("Projekt", "p41Name")
+                    .AddColumn("p41Name", "Projekt")
             End Select
             .AddColumn("p34Name", "Sešit")
             .AddColumn("p32Name", "Aktivita")
@@ -85,9 +105,9 @@
 
         Select Case Me.CurrentPrefix
             Case "p28"
-                mq.p28ID_Client = Master.DataPID
+                mq.p28IDs_Client = BO.BAS.ConvertPIDs2List(Me.hidPIDs.Value)
             Case "p41"
-                mq.p41ID = Master.DataPID
+                mq.p41IDs = BO.BAS.ConvertPIDs2List(Me.hidPIDs.Value)
             Case "j02"
                 mq.j02ID = Master.DataPID
         End Select

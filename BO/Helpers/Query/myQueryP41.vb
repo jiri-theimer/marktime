@@ -33,6 +33,7 @@ Public Class myQueryP41
     Inherits myQuery
 
     Public Property p28ID As Integer
+    Public Property p28IDs As List(Of Integer)
     Public Property p42ID As Integer
 
     Public Property b02ID As Integer

@@ -165,7 +165,7 @@ Public Class p31_approving_step3
             Master.Factory.p85TempBoxBL.Save(cErr)
         Next
 
-        grid1.Rebind(True)
+        grid1.Rebind(True, lisPIDs(0))
 
         If sx.ToString <> "" Then
             Master.Notify(sx.ToString, NotifyLevel.ErrorMessage)

@@ -21,8 +21,11 @@ Public Class p91_remove_worksheet
                 .AddToolbarButton("Přesunout do schválených", "remove2approve", , "Images/approve.png")
 
 
-                .HeaderText = "Vyjmout z faktury vybrané úkony | " & .Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, .DataPID)
+                Dim cRec As BO.p91Invoice = .Factory.p91InvoiceBL.Load(.DataPID)
+                .HeaderText = "Vyjmout z faktury vybrané úkony | " & cRec.p91Code
 
+                Dim cDisp As BO.p91RecordDisposition = Master.Factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
+                If Not cDisp.OwnerAccess Then .StopPage("V kontextu této faktury nemáte oprávnění k funkci.")
                 
             End With
 
