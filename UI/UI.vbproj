@@ -198,6 +198,7 @@
     <Content Include="fileupload_preview.aspx" />
     <Content Include="imap_record.ascx" />
     <Content Include="Integration\mtService.svc" />
+    <Content Include="invoice.ascx" />
     <Content Include="j02_framework.aspx" />
     <Content Include="j03_accesslog.aspx" />
     <Content Include="j61_record.aspx" />
@@ -351,6 +352,7 @@
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
     <Content Include="Services\combo_external_datasource.asmx" />
+    <Content Include="Services\invoice_service.asmx" />
     <Content Include="Styles\SiteMobile_v2.css" />
     <Content Include="Sys\dbupdate.aspx" />
     <Content Include="Sys\dbupdate_reports.aspx" />
@@ -453,7 +455,7 @@
     <Content Include="Services\person_service.asmx" />
     <Content Include="stoppage.aspx" />
     <Content Include="stoppage_site.aspx" />
-    <Content Include="Styles\Site_v6.css" />
+    <Content Include="Styles\Site_v7.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Sys\sys_dbobjects.aspx" />
@@ -804,6 +806,13 @@
     <Compile Include="Integration\ImtService.vb" />
     <Compile Include="Integration\mtService.svc.vb">
       <DependentUpon>mtService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="invoice.ascx.designer.vb">
+      <DependentUpon>invoice.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="invoice.ascx.vb">
+      <DependentUpon>invoice.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="j02_framework.aspx.designer.vb">
       <DependentUpon>j02_framework.aspx</DependentUpon>
@@ -1929,6 +1938,10 @@
     </Compile>
     <Compile Include="Services\combo_external_datasource.asmx.vb">
       <DependentUpon>combo_external_datasource.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\invoice_service.asmx.vb">
+      <DependentUpon>invoice_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Sys\dbupdate.aspx.designer.vb">

@@ -9,7 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="x-ua-compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="~/Styles/Site_v6.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/Site_v7.css" rel="stylesheet" type="text/css" />
        
     <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -82,7 +82,7 @@ html .RadMenu_Default .rmItem {
                 // Extract your variables here:
                 var $this = $(this);
                 var myurl = $this.attr('rel');
-
+                
                 var mytitle = $this.attr('title');
                 if (mytitle == null)
                     mytitle = 'Detail';
@@ -127,6 +127,11 @@ html .RadMenu_Default .rmItem {
                 if (mytitle == null)
                     mytitle = 'Modal dialog';
 
+                var dialogheight = $this.attr('dialogheight');
+                if (dialogheight == "" || dialogheight == null) {
+                    dialogheight = 300;
+                }
+                iframeHeight = dialogheight - 30;
 
                 $this.qtip({
                     content: {
@@ -150,7 +155,7 @@ html .RadMenu_Default .rmItem {
                     style: {
                         classes: 'qtip-tipped',
                         width: 700,
-                        height: 300
+                        height: dialogheight
 
                     }
                 });

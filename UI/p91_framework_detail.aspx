@@ -262,13 +262,7 @@
 
 
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="searchbox">
-                    <ItemTemplate>
-
-                        <input id="search2" style="width: 100px; margin-top: 7px;height:19px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />                       
-                        <div id="search2_result" style="position: relative;left:-150px;"></div>
-                    </ItemTemplate>
-                </telerik:RadMenuItem>
+               
             </Items>
         </telerik:RadMenu>
 
@@ -628,68 +622,5 @@
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 
-    <script type="text/javascript">
-        $(function () {
-
-            $("#search2").autocomplete({
-                source: "Handler/handler_search_invoice.ashx",
-                minLength: 1,
-                select: function (event, ui) {
-                    if (ui.item) {                        
-                        window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
-                        return false;
-                    }
-                },
-                open: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                       .removeAttr('style').hide()
-                       .appendTo('#search2_result').show();
-                },
-                close: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                    .hide();                   
-                }   
-
-
-
-            }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                var s = "<div>";
-                if (item.Closed == "1")
-                    s = s + "<a style='text-decoration:line-through;'>";
-                else
-                    s = s + "<a>";
-
-                s = s + __highlight(item.Invoice, item.FilterString);
-
-
-                s = s + "</a>";
-
-                if (item.Draft == "1")
-                    s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
-
-                s = s + "</div>";
-
-
-                return $(s).appendTo(ul);
-
-
-            };
-        });
-
-        function __highlight(s, t) {
-            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
-            return s.replace(matcher, "<strong>$1</strong>");
-        }
-
-        function search2Focus() {            
-            document.getElementById("search2").value=""; 
-            document.getElementById("search2").style.background = "yellow";
-        }
-        function search2Blur() {
-           
-            document.getElementById("search2").style.background = "";
-            document.getElementById("search2").value = "Najít fakturu...";
-            
-        }
-    </script>
+   
 </asp:Content>

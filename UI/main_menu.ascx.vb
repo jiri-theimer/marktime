@@ -18,6 +18,8 @@ Public Class main_menu
             With link1
                 .CssClass = "button-reczoom"
                 .Attributes.Item("rel") = "clue_search.aspx"
+                .Attributes.Item("dialogheight") = "600"
+                .Attributes.Item("title") = "Více hledání"
                 .Style.Item("background-color") = "#25a0da"
                 .Style.Item("padding") = "0px"
                 .ImageUrl = "Images/menuarrow.png"

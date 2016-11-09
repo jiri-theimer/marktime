@@ -24,7 +24,7 @@
             </asp:RadioButtonList>
 
             <div class="div6">
-                
+                <asp:CheckBox ID="p31_PreFillP32ID" runat="server" Text="Před-vyplňovat aktivitu z naposledy zadávaných úkonů" CssClass="chk" />
             </div>
 
             <table cellpadding="6" id="responsive">

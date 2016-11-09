@@ -41,6 +41,15 @@ Partial Public Class clue_search
     Protected WithEvents chkP41Bin As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''cbxP41Top control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxP41Top As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''trP28 control.
     '''</summary>
     '''<remarks>
@@ -66,6 +75,33 @@ Partial Public Class clue_search
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkP28Bin As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''cbxP28Top control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxP28Top As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''trP91 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trP91 As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''p91id_search control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p91id_search As Global.UI.invoice
 
     '''<summary>
     '''trJ02 control.

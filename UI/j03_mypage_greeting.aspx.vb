@@ -63,18 +63,18 @@
                 menu1.FindItemByValue("admin").Visible = .SysUser.IsAdmin
                 menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
                 menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
-                panSearch_j02.Visible = .SysUser.j04IsMenu_People
-                panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
-                panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
+                ''panSearch_j02.Visible = .SysUser.j04IsMenu_People
+                ''panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
+                ''panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
 
-                If .SysUser.j04IsMenu_More Then
-                    If menu1.FindItemByValue("p56_create").Visible Then
-                        If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
-                            panSearch_p56.Visible = True
-                        End If
-                    End If
-                End If
-                panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible)
+                ''If .SysUser.j04IsMenu_More Then
+                ''    If menu1.FindItemByValue("p56_create").Visible Then
+                ''        If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
+                ''            panSearch_p56.Visible = True
+                ''        End If
+                ''    End If
+                ''End If
+                ''panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible)
                 If .SysUser.j04IsMenu_Project Then
                     RefreshFavourites()
                 End If

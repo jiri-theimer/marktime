@@ -257,7 +257,10 @@
             If Not cRecLast Is Nothing Then
                 With cRecLast
                     Me.MyDefault_p34ID = .p34ID
-                    Me.MyDefault_p32ID = .p32ID
+                    If Master.Factory.j03UserBL.GetUserParam("p31_PreFillP32ID", "1") Then
+                        Me.MyDefault_p32ID = .p32ID 'načítat aktivitu z posledního úkonu
+                    End If
+
                     
                     If DateDiff(DateInterval.Hour, .DateInsert.Value, Now) < 1 Then
                         'do hodiny starý záznam bere jako výchozí datum posledního úkonu + uživatele posledního úkonu
@@ -1173,6 +1176,7 @@
         lisPars.Add("p31_TimeInputInterval")
         lisPars.Add("p31_TimeInput_Start")
         lisPars.Add("p31_TimeInput_End")
+        lisPars.Add("p31_PreFillP32ID")
 
         With Master.Factory.j03UserBL
             .InhaleUserParams(lisPars)

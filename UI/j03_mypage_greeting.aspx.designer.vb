@@ -23,51 +23,6 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''panSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_p28 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_p28 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_p91 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_p91 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_p56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_p56 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_j02 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_j02 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>

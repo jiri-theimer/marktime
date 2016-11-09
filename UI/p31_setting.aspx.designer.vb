@@ -32,6 +32,15 @@ Partial Public Class p31_setting
     Protected WithEvents opgHoursEntryFlag As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
+    '''p31_PreFillP32ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31_PreFillP32ID As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''chkShowTimeInterval control.
     '''</summary>
     '''<remarks>

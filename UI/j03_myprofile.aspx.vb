@@ -11,21 +11,12 @@
             With Master
                 .PageTitle = "Můj profil v MARKTIME"
                 .SiteMenuValue = "cmdMyProfile"
-                Dim lis As New List(Of String)
-                lis.Add("handler_search_project-toprecs")
-                lis.Add("handler_search_project-bin")
-                .Factory.j03UserBL.InhaleUserParams(lis)
-
-                page2.Visible = .Factory.SysUser.j04IsMenu_Project
-                tabs1.FindTabByValue("search").Visible = page2.Visible
+                
             End With
 
 
             RefreshRecord()
-            With Master.Factory.j03UserBL
-                basUI.SelectDropdownlistValue(Me.ShowTopFoundRecords, .GetUserParam("handler_search_project-toprecs", "10"))
-                chkSearchInBin.Checked = BO.BAS.BG(.GetUserParam("handler_search_project-bin"))
-            End With
+           
 
             If Master.Factory.j03UserBL.GetMyTag(True) = "1" Then
                 Master.Notify("Osobní profil byl aktualizován.", NotifyLevel.InfoMessage)
@@ -136,17 +127,7 @@
     ''End Sub
 
   
-    Private Sub cmdSaveSearch_Click(sender As Object, e As EventArgs) Handles cmdSaveSearch.Click
-        With Master.Factory.j03UserBL
-            .SetUserParam("handler_search_project-toprecs", Me.ShowTopFoundRecords.SelectedValue)
-            .SetUserParam("handler_search_project-bin", BO.BAS.GB(Me.chkSearchInBin.Checked))
-            .SetMyTag("1")
-            Response.Redirect("j03_myprofile.aspx")
-        End With
-        
-
-    End Sub
-
+   
     Private Sub cmdDeleteUserParams_Click(sender As Object, e As EventArgs) Handles cmdDeleteUserParams.Click
         If Master.Factory.j03UserBL.DeleteAllUserParams(Master.Factory.SysUser.PID) Then
             Master.Notify("Paměť uživatelského profilu byla vyčištěna.")

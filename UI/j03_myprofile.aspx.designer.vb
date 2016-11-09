@@ -23,33 +23,6 @@ Partial Public Class j03_myprofile
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''tabs1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
-
-    '''<summary>
-    '''RadMultiPage1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
-
-    '''<summary>
-    '''page1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents page1 As Global.Telerik.Web.UI.RadPageView
-
-    '''<summary>
     '''lblLogin control.
     '''</summary>
     '''<remarks>
@@ -165,15 +138,6 @@ Partial Public Class j03_myprofile
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdSave As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdDeleteUserParams control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdDeleteUserParams As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''j03IsLiveChatSupport control.
@@ -311,40 +275,13 @@ Partial Public Class j03_myprofile
     Protected WithEvents j02Office As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''page2 control.
+    '''cmdDeleteUserParams control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents page2 As Global.Telerik.Web.UI.RadPageView
-
-    '''<summary>
-    '''cmdSaveSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSaveSearch As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''chkSearchInBin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkSearchInBin As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''ShowTopFoundRecords control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ShowTopFoundRecords As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cmdDeleteUserParams As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''hiddatapid control.

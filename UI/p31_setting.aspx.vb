@@ -21,6 +21,7 @@
                 lisPars.Add("p31_TimeInputInterval")
                 lisPars.Add("p31_TimeInput_Start")
                 lisPars.Add("p31_TimeInput_End")
+                lisPars.Add("p31_PreFillP32ID")
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
             End With
 
@@ -39,6 +40,7 @@
                 basUI.SelectDropdownlistValue(Me.p31_TimeInput_Start, .GetUserParam("p31_TimeInput_Start", "8"))
                 basUI.SelectDropdownlistValue(Me.p31_TimeInput_End, .GetUserParam("p31_TimeInput_End", "19"))
                 basUI.SelectDropdownlistValue(Me.p31_HoursInputFormat, .GetUserParam("p31_HoursInputFormat", "dec"))
+                Me.p31_PreFillP32ID.Checked = BO.BAS.BG(.GetUserParam("p31_PreFillP32ID", "1"))
             End With
 
            
@@ -59,7 +61,7 @@
                 .SetUserParam("p31_TimeInputInterval", Me.p31_TimeInputInterval.SelectedValue)
                 .SetUserParam("p31_TimeInput_Start", Me.p31_TimeInput_Start.SelectedValue)
                 .SetUserParam("p31_TimeInput_End", Me.p31_TimeInput_End.SelectedValue)
-
+                .SetUserParam("p31_PreFillP32ID", BO.BAS.GB(Me.p31_PreFillP32ID.Checked))
             End With
 
 
