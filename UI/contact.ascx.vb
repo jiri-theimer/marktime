@@ -12,6 +12,14 @@
 
         End Set
     End Property
+    Public Property radComboBoxOrig As Telerik.Web.UI.RadComboBox
+        Get
+            Return cbx1
+        End Get
+        Set(ByVal value As Telerik.Web.UI.RadComboBox)
+            cbx1 = value
+        End Set
+    End Property
     Public Overridable Property AutoPostBack() As Boolean
         Get
             Return cbx1.AutoPostBack

@@ -1122,3 +1122,9 @@ div.noticeboard-box-bin {
         border: 1px solid silver;
         border-bottom: none;
     }
+
+    .radcomboitem_archive{
+        text-decoration:line-through;
+        color:gray;
+       
+    }

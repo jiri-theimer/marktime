@@ -40,13 +40,13 @@
 
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
-                menu1.FindItemByValue("p41_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
-                If .SysUser.j04IsMenu_Invoice Then
-                    menu1.FindItemByValue("p91_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
-                End If
 
-                menu1.FindItemByValue("p28_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator)
-                menu1.FindItemByValue("o23_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)
+                ''If .SysUser.j04IsMenu_Invoice Then
+                ''    menu1.FindItemByValue("p91_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
+                ''End If
+
+                ''menu1.FindItemByValue("p28_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator)
+                ''menu1.FindItemByValue("o23_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)
                 menu1.FindItemByValue("o10_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O10_Creator)
 
                 menu1.FindItemByValue("p56_create").Visible = False

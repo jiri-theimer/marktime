@@ -14,6 +14,18 @@ Public Class main_menu
             AddHandler txt1.DataBinding, AddressOf txt1_DataBinding
             container.Controls.Add(txt1)
 
+            Dim link1 As New HyperLink()
+            With link1
+                .CssClass = "button-reczoom"
+                .Attributes.Item("rel") = "clue_search.aspx"
+                .Style.Item("background-color") = "#25a0da"
+                .Style.Item("padding") = "0px"
+                .ImageUrl = "Images/menuarrow.png"
+                .ToolTip = "Více hledání"
+
+            End With
+            
+            container.Controls.Add(link1)
         End Sub
 
         Private Sub txt1_DataBinding(ByVal sender As Object, ByVal e As EventArgs)
@@ -71,7 +83,30 @@ Public Class main_menu
             If .j04IsMenu_Project Then
                 Me.hidAllowSearch1.Value = "1"
                 ai("", "searchbox1", "", "")
+
             End If
+           
+
+            n = ai("", "new", "", "Images/new_menu.png", )
+            n.SelectedCssClass = ""
+            n.ToolTip = Resources.common.Novy
+            Dim b As Boolean = False
+            If .j04IsMenu_Contact Then
+                If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then ai(Resources.common.Klient, "", "javascript:p28_create()", "", n) : b = True
+            End If
+            If .j04IsMenu_Project Then
+                If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "", "javascript:p41_create()", "", n) : b = True
+            End If
+            If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
+                ai(Resources.common.Ukol, "", "javascript:p56_create()", "", n)
+            End If
+            If .j04IsMenu_Invoice Then
+                If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
+            End If
+            If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+                ai(Resources.common.Dokument, "", "javascript:o23_create()", "", n) : b = True
+            End If
+            If Not b Then menu1.Items.Remove(n)
 
             If .HomeMenu = "" Then
                 ai(Resources.Site.Menu_UVOD, "dashboard", "default.aspx", "")
@@ -79,6 +114,8 @@ Public Class main_menu
                 n = ai(.HomeMenu, "dashboard", "default.aspx", "")
                 RenderCustomHomeMenu(factory, n)
             End If
+
+
 
             If .j04IsMenu_Worksheet Then
                 n = ai("WORKSHEET", "p31", "", "~/Images/menuarrow.png")

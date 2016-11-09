@@ -30,12 +30,13 @@ Public Class contact_service
             nic.Add(xx)
             Return nic.ToArray
         End If
+        factory.j03UserBL.InhaleUserParams("handler_search_contact-toprecs", "handler_search_contact-bin")
 
         Dim result As List(Of RadComboBoxItemData) = Nothing
 
         Dim mq As New BO.myQueryP28
         mq.SearchExpression = filterString
-        mq.TopRecordsOnly = 50
+        mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_contact-toprecs", "50"))
         mq.SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
 
         Select Case strFlag
@@ -47,6 +48,13 @@ Public Class contact_service
                 mq.CanBeClient = BO.BooleanQueryMode.TrueQuery
             Case "supplier"
                 mq.CanBeSupplier = BO.BooleanQueryMode.TrueQuery
+            Case "searchbox"
+                mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+                If factory.j03UserBL.GetUserParam("handler_search_contact-bin", "") = "1" Then
+                    mq.Closed = BO.BooleanQueryMode.NoQuery
+                Else
+                    mq.Closed = BO.BooleanQueryMode.FalseQuery
+                End If
         End Select
 
         Dim lis As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mq)
@@ -60,16 +68,17 @@ Public Class contact_service
                 Else
                     itemData.Text = rec.p28Name
                 End If
+                If .p29ID > 0 Then
+                    itemData.Text += " [" & .p29Name & "]"
+
+                End If
+                If .p28IsDraft Then itemData.Text += " DRAFT"
+                If .IsClosed Then itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
+
+                itemData.Value = .PID.ToString
             End With
 
-            If rec.p29ID > 0 Then
-                itemData.Text += " [" & rec.p29Name & "]"
-
-            End If
-            If rec.p28IsDraft Then itemData.Text += " DRAFT"
-
-
-            itemData.Value = rec.PID.ToString
+            
             result.Add(itemData)
         Next
 

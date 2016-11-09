@@ -26,69 +26,8 @@
 
 
         }
-        function p28_create() {
-            sw_master("p28_record.aspx?pid=0", "Images/contact_32.png");
-
-
-        }
-        function p41_create() {
-            sw_master("p41_create.aspx", "Images/project_32.png");
-        }
-
-        function p56_create() {
-            sw_master("p56_record.aspx?masterprefix=p41&masterpid=0", "Images/task_32.png");
-
-        }
-        function p91_create() {
-            sw_master("p91_create_step1.aspx?prefix=p28", "Images/invoice_32.png", true);
-
-
-        }
-        function p31_create() {
-            sw_master("p31_record.aspx?pid=0", "Images/worksheet_32.png")
-
-
-        }
-        function o23_create() {
-            sw_master("o23_record.aspx?pid=0", "Images/notepad_32.png")
-
-
-        }
-        function o10_create() {
-            sw_master("o10_record.aspx?pid=0", "Images/article_32.png", true)
-
-
-        }
-        function hardrefresh(pid, flag) {
-            if (flag == "p41-create" || flag == "p41-save") {
-                location.replace("p41_framework.aspx?pid=" + pid);
-                return;
-            }
-            if (flag == "p56-save" || flag == "p56-create") {
-                location.replace("p31_framework.aspx");
-                return;
-            }
-            if (flag == "p91-create" || flag == "p91-save") {
-                location.replace("p91_framework.aspx?pid=" + pid);
-                return;
-            }
-
-            if (flag == "p28-save" || flag == "p28-create") {
-                location.replace("p28_framework.aspx?pid=" + pid);
-                return;
-            }
-            if (flag == "o23-save" || flag == "o23-create") {
-                location.replace("o23_framework.aspx?pid=" + pid);
-                return;
-            }
-            if (flag == "j03_myprofile_defaultpage") {
-                location.replace("default.aspx");
-                return;
-            }
-
-            location.replace("j03_mypage_greeting.aspx");
-
-        }
+        
+        
 
         function p48_record(pid) {
 
@@ -146,14 +85,9 @@
                                 <telerik:RadPanelItem Text="Zapisovat úkony" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
                                 
-                                <telerik:RadPanelItem Text="Založit klienta" Value="p28_create" NavigateUrl="javascript:p28_create()" ImageUrl="Images/contact.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Založit projekt" Value="p41_create" NavigateUrl="javascript:p41_create()" ImageUrl="Images/project.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Vytvořit dokument" Value="o23_create" NavigateUrl="javascript:o23_create()" ImageUrl="Images/notepad.png"></telerik:RadPanelItem>
-
+                                
                                 <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Vystavit fakturu" Value="p91_create" NavigateUrl="javascript:p91_create()" ImageUrl="Images/invoice.png" Visible="false"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem IsSeparator="true" Text="<hr>"></telerik:RadPanelItem>
+                                
                                 <telerik:RadPanelItem Text="Osobní tiskové sestavy" Value="myreport" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
@@ -165,8 +99,9 @@
                         <telerik:RadPanelItem Text="Oblíbené projekty" Value="favourites" ImageUrl="Images/favourite.png" Visible="false">
 
                         </telerik:RadPanelItem>
-                        <telerik:RadPanelItem Text="Další" Expanded="false">
+                        <telerik:RadPanelItem Text="Další" Expanded="true">
                             <Items>
+                            <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
                             <telerik:RadPanelItem Text="Napsat článek na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
                                 
 

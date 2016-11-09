@@ -48,6 +48,13 @@ Public Class user_service
                 mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForWorksheetEntry
             Case "p48_entry"
                 mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForP48Entry
+            Case "searchbox"
+                mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+                If factory.j03UserBL.GetUserParam("handler_search_person-bin", "") = "1" Then
+                    mq.Closed = BO.BooleanQueryMode.NoQuery
+                Else
+                    mq.Closed = BO.BooleanQueryMode.FalseQuery
+                End If
             Case Else
                 mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead
         End Select
@@ -64,6 +71,7 @@ Public Class user_service
             Else
                 If usr.j02JobTitle <> "" Then itemData.Text += " [" & usr.j02JobTitle & "]"
             End If
+            If usr.IsClosed Then itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
             
             itemData.Value = usr.PID.ToString
             result.Add(itemData)

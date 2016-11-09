@@ -33,12 +33,18 @@ Public Class project_service
         End If
 
         Dim intJ02ID_Explicit As Integer = factory.SysUser.j02ID
-        factory.j03UserBL.InhaleUserParams("handler_search_project-toprecs")
+        factory.j03UserBL.InhaleUserParams("handler_search_project-toprecs", "handler_search_project-bin")
 
 
         Dim mq As New BO.myQueryP41
         mq.SearchExpression = filterString
-        mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_project-toprecs", "50"))
+        With factory.j03UserBL
+            mq.TopRecordsOnly = BO.BAS.IsNullInt(.GetUserParam("handler_search_project-toprecs", "50"))
+            
+        End With
+
+
+
 
         If strJ02ID_Explicit <> "" Then
             mq.j02ID_ExplicitQueryFor = BO.BAS.IsNullInt(strJ02ID_Explicit)
@@ -53,7 +59,13 @@ Public Class project_service
             Case "createtask"
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForCreateTask
             Case "createinvoice"
-
+            Case "searchbox"
+                mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+                If factory.j03UserBL.GetUserParam("handler_search_project-bin", "") = "1" Then
+                    mq.Closed = BO.BooleanQueryMode.NoQuery
+                Else
+                    mq.Closed = BO.BooleanQueryMode.FalseQuery
+                End If
             Case Else
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
 
@@ -69,12 +81,16 @@ Public Class project_service
             Dim itemData As New RadComboBoxItemData()
             With rec
                 itemData.Text = .FullName & " [" & .p41Code & "]"
+
+                ''If .IsClosed Then itemData.Attributes.Item("class") = "radcomboitem_archive"
+                If .IsClosed Then itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
                 If .p41IsDraft Then
                     If .p41Code.LastIndexOf("DRAFT") < 0 Then itemData.Text += " DRAFT"
                 End If
+                itemData.Value = .PID.ToString
             End With
 
-            itemData.Value = rec.PID.ToString
+
             result.Add(itemData)
         Next
 

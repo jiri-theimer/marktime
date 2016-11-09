@@ -32,8 +32,8 @@ Class p86BankAccountBL
         Dim mq As New BO.myQuery
         mq.Closed = BO.BooleanQueryMode.NoQuery
         Dim lis As IEnumerable(Of BO.p86BankAccount) = GetList(mq).Where(Function(p) p.PID <> cRec.PID)
-        If lis.Where(Function(p) LCase(Trim(p.p86BankAccount)) = LCase(Trim(cRec.p86BankAccount))).Count > 0 Then
-            _Error = "Číslo účtu [" & cRec.p86BankAccount & "] je již nastaveno v jiném účtu." : Return False
+        If lis.Where(Function(p) LCase(Trim(p.p86BankAccount) & p.p86BankCode) = LCase(Trim(cRec.p86BankAccount & cRec.p86BankCode))).Count > 0 Then
+            _Error = "Číslo účtu [" & cRec.p86BankAccount & "/" & cRec.p86BankCode & "] je již nastaveno v jiném účtu." : Return False
         End If
         If cRec.p86IBAN <> "" Then
             If lis.Where(Function(p) LCase(Trim(p.p86IBAN)) = LCase(Trim(cRec.p86IBAN))).Count > 0 Then

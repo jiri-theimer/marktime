@@ -446,6 +446,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Datum", "p91Date", BO.cfENUM.DateOnly))
             .Add(AGC("Plnění", "p91DateSupply", BO.cfENUM.DateOnly))
             .Add(AGC("Splatnost", "p91DateMaturity", BO.cfENUM.DateOnly))
+            .Add(AGC("Datum úhrady", "p91DateBilled", BO.cfENUM.DateOnly))
             .Add(AGC("Aktuální stav", "b02Name"))
 
 
@@ -551,14 +552,14 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Typ klienta", "p29Name", "a.p29ID", "min(p29.p29Name)"))
                 lis.Add(New BO.GridGroupByColumn("Typ faktury", "p92Name", "a.p92ID", "min(p92.p92Name)"))
                 lis.Add(New BO.GridGroupByColumn("Fakturační jazyk", "p87Name", "a.p87ID", "min(p87Name)"))
-                lis.Add(New BO.GridGroupByColumn("Vlastník klienta", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
+                lis.Add(New BO.GridGroupByColumn("Vlastník záznamu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "p28IsDraft", "a.p28IsDraft", "a.p28IsDraft"))
             Case BO.x29IdEnum.o23Notepad
                 lis.Add(New BO.GridGroupByColumn("Typ dokumentu", "o24Name", "a.o24ID", "min(o24Name)"))
                 lis.Add(New BO.GridGroupByColumn("Klient", "ProjectClient", "a.p28ID", "min(p28Name)"))
                 lis.Add(New BO.GridGroupByColumn("Projekt", "Project", "a.p41ID", "min(p41Name)"))
                 lis.Add(New BO.GridGroupByColumn("Aktuální stav", "b02Name", "a.b02ID", "min(b02.b02Name)"))
-                lis.Add(New BO.GridGroupByColumn("Vlastník dokumentu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
+                lis.Add(New BO.GridGroupByColumn("Vlastník záznamu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "o23IsDraft", "a.o23IsDraft", "a.o23IsDraft"))
             Case BO.x29IdEnum.p31Worksheet
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Sesit, "p34Name", "p32.p34ID", "min(p34.p34Name)"))
@@ -579,7 +580,7 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Produkt", "p58Name", "a.p58ID", "min(p58Name)"))
                 lis.Add(New BO.GridGroupByColumn("Priorita zadavatele", "p59NameSubmitter", "a.p59ID_Submitter", "min(p59submitter.p59name)"))
                 lis.Add(New BO.GridGroupByColumn("Příjemce", "ReceiversInLine", "", ""))
-                lis.Add(New BO.GridGroupByColumn("Vlastník úkolu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
+                lis.Add(New BO.GridGroupByColumn("Vlastník záznamu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
             Case BO.x29IdEnum.j02Person
                 lis.Add(New BO.GridGroupByColumn("Pozice", "j07Name", "a.j07ID", "min(j07Name)"))
                 lis.Add(New BO.GridGroupByColumn("Pracovní fond", "c21Name", "a.c21ID", "min(c21Name)"))

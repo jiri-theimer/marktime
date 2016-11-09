@@ -162,21 +162,23 @@
         Dim cRec As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, False)
         With cRec
             Me.Hours_All.Text = BO.BAS.FN(.p31Hours_Orig)
-            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
-                Me.Hours_Billable.Text = BO.BAS.FN(.Hours_Orig_Billable)
-            Else
-                Hours_Billable.Visible = False : lblHours_Billable.Visible = False
-            End If
+            Me.Hours_Billable.Text = BO.BAS.FN(.Hours_Orig_Billable)
+            ''If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+            ''    Me.Hours_Billable.Text = BO.BAS.FN(.Hours_Orig_Billable)
+            ''Else
+            ''    Hours_Billable.Visible = False : lblHours_Billable.Visible = False
+            ''End If
         End With
         If Not cJ02 Is Nothing Then
             Dim dblFond As Double = Master.Factory.c21FondCalendarBL.GetSumHours(cJ02.c21ID, cJ02.j17ID, mq.DateFrom, mq.DateUntil)
             Me.Fond_Hours.Text = BO.BAS.FN(dblFond)
             Util_Total.Text = BO.BAS.FN(100 * cRec.p31Hours_Orig / dblFond) & "%"
-            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
-                Util_Billable.Text = BO.BAS.FN(100 * cRec.Hours_Orig_Billable / dblFond) & "%"
-            Else
-                Util_Billable.Visible = False : lblUtil_Billable.Visible = False
-            End If
+            Util_Billable.Text = BO.BAS.FN(100 * cRec.Hours_Orig_Billable / dblFond) & "%"
+            ''If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+            ''    Util_Billable.Text = BO.BAS.FN(100 * cRec.Hours_Orig_Billable / dblFond) & "%"
+            ''Else
+            ''    Util_Billable.Visible = False : lblUtil_Billable.Visible = False
+            ''End If
 
         End If
 

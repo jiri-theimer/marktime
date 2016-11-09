@@ -5,8 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function fireperiod(radioButtonList) {
-            var val = GetRadioButtonListSelectedValue(radioButtonList);
-            alert(val);
+            var val = GetRadioButtonListSelectedValue(radioButtonList);           
             window.parent.hardrefresh_periodcombo(val);
 
         }

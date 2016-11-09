@@ -14,7 +14,7 @@
         <asp:HiddenField ID="hidMasterPageName" runat="server" Value="Site" />
 
 <script type="text/javascript">
-    <%If panContainer.Visible Then%>
+<%If panContainer.Visible Then%>
 
     <%If Me.hidAllowSearch1.Value = "1" Then%>
     $(function () {        
@@ -73,13 +73,46 @@
         window.open("help.aspx?page=" + page, "_blank");
     }
 
-    function messages() {        
+    function sw_menu_decide(url,img,is_max){        
         try {
-            sw_master("j03_messages.aspx", "Images/globe_32.png", false)
+            sw_master(url, img, is_max)
         }
         catch (err) {
-            sw_local("j03_messages.aspx", "Images/globe_32.png", false)
+            sw_local(url, img, is_max)
         }
+    }
+
+    function messages() {
+        sw_menu_decide("j03_messages.aspx","Images/globe_32.png",false);       
+    }
+
+    function p28_create() {
+        
+        sw_menu_decide("p28_record.aspx?pid=0", "Images/contact_32.png",false);
+    }
+    function p41_create() {
+        sw_menu_decide("p41_create.aspx", "Images/project_32.png",false);
+    }
+
+    function p56_create() {
+        sw_menu_decide("p56_record.aspx?masterprefix=p41&masterpid=0", "Images/task_32.png");
+
+    }
+    function p91_create() {
+        sw_menu_decide("p91_create_step1.aspx?prefix=p28", "Images/invoice_32.png", true);
+
+    }
+    function p31_create() {
+        sw_menu_decide("p31_record.aspx?pid=0", "Images/worksheet_32.png")
+
+    }
+    function o23_create() {
+        sw_menu_decide("o23_record.aspx?pid=0", "Images/notepad_32.png")
+
+    }
+    function o10_create() {
+        sw_menu_decide("o10_record.aspx?pid=0", "Images/article_32.png", true)
+
     }
 
     function setsaw(value) {
@@ -159,6 +192,38 @@
 
         document.getElementById("<%=hidSearch1.Value%>").style.background = "";
         document.getElementById("<%=hidSearch1.Value%>").value = "<%=Resources.Site.NajitProjekt%>";
+    }
+
+
+    function hardrefresh(pid, flag) {
+        if (flag == "p41-create" || flag == "p41-save") {
+            location.replace("p41_framework.aspx?pid=" + pid);
+            return;
+        }
+        if (flag == "p56-save" || flag == "p56-create") {
+            location.replace("p56_framework.aspx?pid="+pid);
+            return;
+        }
+        if (flag == "p91-create" || flag == "p91-save") {
+            location.replace("p91_framework.aspx?pid=" + pid);
+            return;
+        }
+
+        if (flag == "p28-save" || flag == "p28-create") {
+            location.replace("p28_framework.aspx?pid=" + pid);
+            return;
+        }
+        if (flag == "o23-save" || flag == "o23-create") {
+            location.replace("o23_framework.aspx?pid=" + pid);
+            return;
+        }
+        if (flag == "j03_myprofile_defaultpage") {
+            location.replace("default.aspx");
+            return;
+        }
+
+        location.replace("j03_mypage_greeting.aspx");
+
     }
 
 <%end if %>
