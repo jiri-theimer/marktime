@@ -33,13 +33,14 @@ Public Class invoice_service
             nic.Add(xx)
             Return nic.ToArray
         End If
-
+        factory.j03UserBL.InhaleUserParams("handler_search_invoice-toprecs")
 
         Dim result As List(Of RadComboBoxItemData) = Nothing
 
         Dim mq As New BO.myQueryP91
         mq.SearchExpression = filterString
-        mq.TopRecordsOnly = 50
+        mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_invoice-toprecs", "20"))
+
         Select Case strFlag
             Case "searchbox"
                 mq.SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead

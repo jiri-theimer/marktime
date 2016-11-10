@@ -36,7 +36,7 @@ Public Class contact_service
 
         Dim mq As New BO.myQueryP28
         mq.SearchExpression = filterString
-        mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_contact-toprecs", "50"))
+        mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_contact-toprecs", "20"))
         mq.SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
 
         Select Case strFlag
@@ -49,7 +49,6 @@ Public Class contact_service
             Case "supplier"
                 mq.CanBeSupplier = BO.BooleanQueryMode.TrueQuery
             Case "searchbox"
-                mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
                 If factory.j03UserBL.GetUserParam("handler_search_contact-bin", "") = "1" Then
                     mq.Closed = BO.BooleanQueryMode.NoQuery
                 Else

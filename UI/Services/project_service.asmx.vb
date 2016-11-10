@@ -39,7 +39,7 @@ Public Class project_service
         Dim mq As New BO.myQueryP41
         mq.SearchExpression = filterString
         With factory.j03UserBL
-            mq.TopRecordsOnly = BO.BAS.IsNullInt(.GetUserParam("handler_search_project-toprecs", "50"))
+            mq.TopRecordsOnly = BO.BAS.IsNullInt(.GetUserParam("handler_search_project-toprecs", "20"))
             
         End With
 

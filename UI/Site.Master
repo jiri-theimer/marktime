@@ -110,8 +110,7 @@
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
         
-        <uc:main_menu id="mm1" runat="server" MasterPageName="Site"></uc:main_menu>
-       
+        <uc:main_menu id="mm1" runat="server" MasterPageName="Site"></uc:main_menu>    
         <div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>

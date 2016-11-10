@@ -26,8 +26,8 @@
 
 
         }
-        
-        
+
+
 
         function p48_record(pid) {
 
@@ -40,7 +40,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-    
+
     <div style="padding: 10px; background-color: white;">
         <div style="float: left;">
             <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
@@ -49,38 +49,61 @@
             <img src="Images/logo_transparent.png" />
         </div>
         <div style="clear: both;"></div>
-        
+
 
         <div style="min-height: 430px;">
             <div style="float: left;">
-                
+                <asp:panel ID="panSearch" runat="server" CssClass="content-box2">
+                <div class="title">
+                    <img src="Images/search.png" />
+                    <asp:CheckBox ID="chkSearch" runat="server" Text="Nabízet na stránce vyhledávání" AutoPostBack="true" Checked="false" />
+                </div>
+                <div class="content">
+                    <asp:panel ID="panSearch_p28" runat="server" Visible="false">
+                    <img src="Images/contact.png" />
+                    <input id="search_p28" style="width: 200px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít klienta...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_p91" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/invoice.png"" />
+                    <input id="search_p91" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít fakturu...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_p56" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/task.png" />
+                    <input id="search_p56" style="width: 200px; margin-top: 7px;" value="Najít úkol..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít úkol...')" />
+                    </asp:panel>
+                    <asp:panel ID="panSearch_j02" runat="server" style="margin-top:6px;" Visible="false">
+                    <img src="Images/person.png" />
+                    <input id="search_j02" style="width: 200px; margin-top: 7px;" value="Najít osobu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít osobu...')" />
+                    </asp:panel>
+                </div>
+				</asp:panel>
+
                 <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px">
                     <Items>
                         <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
                             <Items>
-                                
+
                                 <telerik:RadPanelItem Text="Zapisovat úkony" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
-                                
-                                
+
+
                                 <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
-                                
+
                                 <telerik:RadPanelItem Text="Osobní tiskové sestavy" Value="myreport" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
 
-                                
+
                             </Items>
                         </telerik:RadPanelItem>
 
                         <telerik:RadPanelItem Text="Oblíbené projekty" Value="favourites" ImageUrl="Images/favourite.png" Visible="false">
-
                         </telerik:RadPanelItem>
                         <telerik:RadPanelItem Text="Další" Expanded="true">
                             <Items>
-                            <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
-                            <telerik:RadPanelItem Text="Napsat článek na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
-                                
+                                <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Napsat článek na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
+
 
                                 <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
                             </Items>
@@ -91,16 +114,16 @@
                                 <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Odeslat poštovní zprávu" Value="sendmail" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
-                                
+
                             </Items>
                         </telerik:RadPanelItem>
-                        
+
                     </Items>
 
                 </telerik:RadPanelBar>
-                
+
             </div>
-            
+
             <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/task.png" alt="Úkol" />
@@ -186,7 +209,7 @@
 
                 </div>
             </asp:Panel>
-            <asp:Panel ID="panX47" runat="server" CssClass="content-box1" style="margin-left:30px;">
+            <asp:Panel ID="panX47" runat="server" CssClass="content-box1" Style="margin-left: 30px;">
                 <div class="title">
                     <img src="Images/timeline.png" />
                     Poslední významnější akce
@@ -194,31 +217,31 @@
                     
                 </div>
                 <div class="content">
-                    <table cellpadding="4" >
-                    <asp:Repeater ID="rpX47" runat="server">
-                        <ItemTemplate>
-                            <tr class="trHover" valign="top">
-                                <td>
-                                <asp:Image ID="img1" runat="server" />
-                                    <asp:Label ID="lbl1" runat="server" CssClass="timestamp"></asp:Label>
-                                </td>
-                               
-                                <td>
-                                    <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                    <asp:Label ID="lbl2" runat="server"></asp:Label>
-                                </td>
-                                
-                                
-                                
+                    <table cellpadding="4">
+                        <asp:Repeater ID="rpX47" runat="server">
+                            <ItemTemplate>
+                                <tr class="trHover" valign="top">
                                     <td>
-                                    
-                                    <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>                                
-                                </td>
-                                
-                            </tr>
-                            
-                        </ItemTemplate>
-                    </asp:Repeater>
+                                        <asp:Image ID="img1" runat="server" />
+                                        <asp:Label ID="lbl1" runat="server" CssClass="timestamp"></asp:Label>
+                                    </td>
+
+                                    <td>
+                                        <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                                        <asp:Label ID="lbl2" runat="server"></asp:Label>
+                                    </td>
+
+
+
+                                    <td>
+
+                                        <asp:Label ID="timestamp" runat="server" CssClass="timestamp"></asp:Label>
+                                    </td>
+
+                                </tr>
+
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </table>
                     <hr />
                     <asp:CheckBox ID="chkP41" runat="server" Text="Nové projekty" AutoPostBack="true" Checked="true" Visible="false" />
@@ -251,13 +274,13 @@
                     </asp:Repeater>
                 </div>
             </asp:Panel>
-            
+
             <asp:Panel ID="panChart1" runat="server" Style="float: right;" Visible="false">
-                <telerik:RadHtmlChart runat="server" ID="chart1" width="600px" Font-Size="Small">
-                    <ChartTitle Text="Vykázané hodiny po dnech (14 dní dozadu)">                        
+                <telerik:RadHtmlChart runat="server" ID="chart1" Width="600px" Font-Size="Small">
+                    <ChartTitle Text="Vykázané hodiny po dnech (14 dní dozadu)">
                     </ChartTitle>
                     <PlotArea>
-                        <Series>                          
+                        <Series>
                             <telerik:ColumnSeries Name="Hodiny Fa" DataFieldY="HodinyFa" Stacked="true">
                                 <Appearance FillStyle-BackgroundColor="LightGreen"></Appearance>
                             </telerik:ColumnSeries>
@@ -278,11 +301,11 @@
                 </telerik:RadHtmlChart>
             </asp:Panel>
             <asp:Panel ID="panChart3" runat="server" Style="float: right;" Visible="false">
-                <telerik:RadHtmlChart runat="server" ID="chart3" width="400px" Height="700px" Font-Size="10px">
-                    <ChartTitle Text="Vykázané hodiny po dnech (30 dní dozadu)">                        
+                <telerik:RadHtmlChart runat="server" ID="chart3" Width="400px" Height="700px" Font-Size="10px">
+                    <ChartTitle Text="Vykázané hodiny po dnech (30 dní dozadu)">
                     </ChartTitle>
                     <PlotArea>
-                        <Series>                             
+                        <Series>
                             <telerik:BarSeries Name="Hodiny Fa" DataFieldY="HodinyFa" Stacked="true">
                                 <Appearance FillStyle-BackgroundColor="LightGreen"></Appearance>
                             </telerik:BarSeries>
@@ -303,18 +326,18 @@
                 </telerik:RadHtmlChart>
             </asp:Panel>
             <asp:Panel ID="panChart2" runat="server" Style="float: right;" Visible="false">
-                <telerik:RadHtmlChart runat="server" ID="chart2" Width="600px" >  
+                <telerik:RadHtmlChart runat="server" ID="chart2" Width="600px">
                     <Legend>
                         <Appearance Position="Right"></Appearance>
-                    </Legend>                  
+                    </Legend>
                     <PlotArea>
                         <Series>
-                            <telerik:PieSeries NameField="Podle" DataFieldY="Hodiny" StartAngle="90">                                
-                                <LabelsAppearance Position="OutsideEnd" DataFormatString="{0} h.">                                   
-                        </LabelsAppearance>                                                  
+                            <telerik:PieSeries NameField="Podle" DataFieldY="Hodiny" StartAngle="90">
+                                <LabelsAppearance Position="OutsideEnd" DataFormatString="{0} h.">
+                                </LabelsAppearance>
                             </telerik:PieSeries>
                         </Series>
-                       
+
                     </PlotArea>
                 </telerik:RadHtmlChart>
             </asp:Panel>
@@ -324,38 +347,38 @@
                 <asp:Image runat="server" ID="imgWelcome" ImageUrl="Images/welcome/start.jpg" Visible="false" />
             </div>
 
-           <asp:Repeater ID="rpNoticeBoard" runat="server">
-            <ItemTemplate>
-                <div class="noticeboard-box" style="margin-top:20px;">
-                    <div class="title">
-                        <img src="Images/article.png" />
-                        <span style="font-weight:bold;font-variant: small-caps;font-size:120%;"><%#Eval("o10Name")%></span>
-                        
-                                                
-                        <span style="font-style:italic;float:right;"> <%#Eval("ValidFrom")%> | <%#Eval("Owner") %></span>
+            <asp:Repeater ID="rpNoticeBoard" runat="server">
+                <ItemTemplate>
+                    <div class="noticeboard-box" style="margin-top: 20px;">
+                        <div class="title">
+                            <img src="Images/article.png" />
+                            <span style="font-weight: bold; font-variant: small-caps; font-size: 120%;"><%#Eval("o10Name")%></span>
+
+
+                            <span style="font-style: italic; float: right;"><%#Eval("ValidFrom")%> | <%#Eval("Owner") %></span>
+                        </div>
+                        <div class="content" style="color: black; background-color: <%#Eval("o10BackColor")%>;">
+                            <%#Eval("o10BodyHtml")%>
+                        </div>
                     </div>
-                    <div class="content" style="color:black;background-color: <%#Eval("o10BackColor")%>;">
-                        <%#Eval("o10BodyHtml")%>
-                    </div>
-                </div>
-            </ItemTemplate>
-        </asp:Repeater>
+                </ItemTemplate>
+            </asp:Repeater>
 
             <div style="clear: both;"></div>
 
             <div style="margin-top: 20px;">
                 <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
 
-                <span style="padding-left:30px;">&nbsp</span>
+                <span style="padding-left: 30px;">&nbsp</span>
                 <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
-                
+
                 <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
-                
-                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin" Checked="true" style="float:right;" />
+
+                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin" Checked="true" Style="float: right;" />
             </div>
         </div>
 
-        
+
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -375,8 +398,176 @@
             });
 
 
-            
+            <%If panSearch_p28.Visible Then%>
+            $(function () {
+
+                $("#search_p28").autocomplete({
+                    source: "Handler/handler_search_contact.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("p28_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Project, item.FilterString);
+
+
+                    s = s + "</a>";
+
+                    if (item.Draft == "1")
+                        s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%End If%>
+            <%If panSearch_p91.Visible Then%>
+            $(function () {
+
+                $("#search_p91").autocomplete({
+                    source: "Handler/handler_search_invoice.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("p91_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Invoice, item.FilterString);
+
+
+                    s = s + "</a>";
+
+                    if (item.Draft == "1")
+                        s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%End If%>
+            <%If panSearch_p56.Visible Then%>
+            $(function () {
+
+                $("#search_p56").autocomplete({
+                    source: "Handler/handler_search_task.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("p56_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Name + " | " + item.Project, item.FilterString);
+
+
+                    s = s + "</a>";
+
+
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%End If%>
+            <%If panSearch_j02.Visible Then%>
+            $(function () {
+
+                $("#search_j02").autocomplete({
+                    source: "Handler/handler_search_person.ashx",
+                    minLength: 1,
+                    select: function (event, ui) {
+                        if (ui.item) {
+                            window.open("j02_framework.aspx?pid=" + ui.item.PID, "_top");
+                            return false;
+                        }
+                    }
+
+
+
+                }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    var s = "<div>";
+                    if (item.Closed == "1")
+                        s = s + "<a style='text-decoration:line-through;'>";
+                    else
+                        s = s + "<a>";
+
+                    s = s + __highlight(item.Project, item.FilterString);
+
+
+                    s = s + "</a>";
+
+
+
+                    s = s + "</div>";
+
+
+                    return $(s).appendTo(ul);
+
+
+                };
+            });
+            <%End If%>
+
+
+            function __highlight(s, t) {
+                var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+                return s.replace(matcher, "<strong>$1</strong>");
+            }
+
+            function search2Focus(ctl) {
+                ctl.value = "";
+                ctl.style.background = "yellow";
+            }
+            function search2Blur(ctl, defaultMessage) {
+
+                ctl.style.background = "";
+                ctl.value = defaultMessage;
+            }
 
     </script>
+
 </asp:Content>
 

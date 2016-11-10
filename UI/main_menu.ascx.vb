@@ -20,9 +20,12 @@ Public Class main_menu
                 .Attributes.Item("rel") = "clue_search.aspx"
                 .Attributes.Item("dialogheight") = "600"
                 .Attributes.Item("title") = "Více hledání"
-                .Style.Item("background-color") = "#25a0da"
-                .Style.Item("padding") = "0px"
+                ''.Style.Item("background-color") = "#25a0da"
+                .Style.Item("padding-left") = "2px"
+                .Style.Item("padding-bottom") = "0px"
+                .Style.Item("padding-top") = "2px"
                 .ImageUrl = "Images/menuarrow.png"
+
                 .ToolTip = "Více hledání"
 
             End With

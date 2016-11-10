@@ -32,24 +32,6 @@ Partial Public Class clue_search
     Protected WithEvents p41id_search As Global.UI.project
 
     '''<summary>
-    '''chkP41Bin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkP41Bin As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''cbxP41Top control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxP41Top As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''trP28 control.
     '''</summary>
     '''<remarks>
@@ -66,24 +48,6 @@ Partial Public Class clue_search
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p28id_search As Global.UI.contact
-
-    '''<summary>
-    '''chkP28Bin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkP28Bin As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''cbxP28Top control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxP28Top As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''trP91 control.
@@ -120,6 +84,87 @@ Partial Public Class clue_search
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02id_search As Global.UI.person
+
+    '''<summary>
+    '''fsP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fsP41 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''cbxP41Top control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxP41Top As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkP41Bin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP41Bin As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''fsP28 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fsP28 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''cbxP28Top control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxP28Top As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkP28Bin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkP28Bin As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''fsP91 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fsP91 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''cbxP91Top control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxP91Top As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''fsJ02 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fsJ02 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''chkJ02Bin control.

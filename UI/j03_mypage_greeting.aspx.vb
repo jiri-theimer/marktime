@@ -25,6 +25,7 @@
                 .Add("j03_mypage_greeting-chkO23")
                 .Add("j03_mypage_greeting-chkP56")
                 .Add("j03_mypage_greeting-chkShowCharts")
+                .Add("j03_mypage_greeting-chkSearch")
             End With
 
             With Master.Factory
@@ -36,6 +37,7 @@
                 chkP91.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP91", "0"))
                 chkO23.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkO23", "0"))
                 chkP56.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP56", "0"))
+                chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "0"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
 
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
@@ -63,18 +65,27 @@
                 menu1.FindItemByValue("admin").Visible = .SysUser.IsAdmin
                 menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
                 menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
-                ''panSearch_j02.Visible = .SysUser.j04IsMenu_People
-                ''panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
-                ''panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
 
-                ''If .SysUser.j04IsMenu_More Then
-                ''    If menu1.FindItemByValue("p56_create").Visible Then
-                ''        If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
-                ''            panSearch_p56.Visible = True
-                ''        End If
-                ''    End If
-                ''End If
-                ''panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible)
+                panSearch_j02.Visible = .SysUser.j04IsMenu_People
+                panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
+                panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
+
+                If .SysUser.j04IsMenu_More Then
+                    If menu1.FindItemByValue("p56_create").Visible Then
+                        If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
+                            panSearch_p56.Visible = True
+                        End If
+                    End If
+                End If
+                panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible)
+
+                If panSearch.Visible Then
+                    If Not Me.chkSearch.Checked Then
+                        panSearch_j02.Visible = False : panSearch_p28.Visible = False : panSearch_p91.Visible = False : panSearch_p56.Visible = False
+                    End If
+
+                End If
+
                 If .SysUser.j04IsMenu_Project Then
                     RefreshFavourites()
                 End If
@@ -522,6 +533,11 @@
 
     Private Sub chkP56_CheckedChanged(sender As Object, e As EventArgs) Handles chkP56.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkP56", BO.BAS.GB(Me.chkP56.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub chkSearch_CheckedChanged(sender As Object, e As EventArgs) Handles chkSearch.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkSearch", BO.BAS.GB(Me.chkSearch.Checked))
         ReloadPage()
     End Sub
 End Class

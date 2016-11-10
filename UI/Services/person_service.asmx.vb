@@ -50,6 +50,7 @@ Public Class user_service
                 mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForP48Entry
             Case "searchbox"
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+                mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
                 If factory.j03UserBL.GetUserParam("handler_search_person-bin", "") = "1" Then
                     mq.Closed = BO.BooleanQueryMode.NoQuery
                 Else
@@ -71,8 +72,11 @@ Public Class user_service
             Else
                 If usr.j02JobTitle <> "" Then itemData.Text += " [" & usr.j02JobTitle & "]"
             End If
-            If usr.IsClosed Then itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
-            
+            If usr.IsClosed Then
+                itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
+            End If
+            If Not usr.j02IsIntraPerson Then itemData.Text += " ...kontaktní osoba"
+
             itemData.Value = usr.PID.ToString
             result.Add(itemData)
         Next
