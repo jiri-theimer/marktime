@@ -200,6 +200,7 @@
         <asp:HiddenField ID="hidCloseAndRefreshParent_Par1" runat="server" />
         <asp:HiddenField ID="hidCloseAndRefreshParent_JsFunction" runat="server" Value="hardrefresh" />
         <asp:HiddenField ID="hidrecordMessage" runat="server" />
+        <asp:HiddenField ID="hidHRJS" runat="server" />
     </form>
 </body>
 

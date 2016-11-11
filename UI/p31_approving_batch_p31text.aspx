@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-
+    
     <table cellpadding="5" cellspacing="2">
         <tr>
             <th></th>
@@ -27,6 +27,7 @@
                         <asp:Label ID="RowIndex" runat="server"></asp:Label>
                         <asp:Image ID="img1" runat="server" />
                         <asp:HiddenField ID="p31id" runat="server" />
+                        <asp:HyperLink ID="go2pid" runat="server"></asp:HyperLink>
                     </td>
                     <td>
                         <asp:DropDownList ID="p72ID" runat="server" AutoPostBack="true">
@@ -35,6 +36,7 @@
                             <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
                             <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
                             <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                            <asp:ListItem Text="Fakturovat později" Value="7"></asp:ListItem>
                         </asp:DropDownList>
                     </td>
                     <td>
@@ -85,4 +87,17 @@
     
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+        });
+
+        
+        function go2id(id) {
+            
+            window.location.href = "#" + id;
+            
+           
+        }
+    </script>
 </asp:Content>

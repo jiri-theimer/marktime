@@ -79,16 +79,7 @@
             return oWindow;
         }
 
-        function dohardrefreshinopener(winparent, pid, flag) {
-            try {
-                winparent.hardrefresh(pid, flag);
-            }
-            catch (err) {
-                alert(err);
-            }
-
-        }
-
+        
         function CloseAndRefresh() {
             var pid = document.getElementById("hidDataPID").value;
             var flag = document.getElementById("hidCloseAndRefreshParent_Flag").value;
@@ -205,7 +196,7 @@
         <asp:HiddenField ID="hidForceOperation" runat="server" Value="" />
         <asp:HiddenField ID="hidCloseAndRefreshParent_Flag" runat="server" Value="refresh" />
         <asp:HiddenField ID="hidPageTitle" runat="server" />
-
+        <asp:HiddenField ID="hidHRJS" runat="server" />
 
         <telerik:RadWindow ID="okno_dialog" runat="server" Modal="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="700px" Height="400px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png">
             <Shortcuts>
@@ -258,6 +249,21 @@
         document.getElementById("<%=me.record_valid_from.clientid%>").value = a[0];
         document.getElementById("<%=Me.record_valid_until.ClientID%>").value = a[1];
         document.getElementById("<%=me.panRecValidity.ClientID%>").style.display = "block";
+    }
+
+
+    function dohardrefreshinopener(winparent, pid, flag) {
+        try {
+            <%if hidHRJS.value="" then%>
+            winparent.hardrefresh(pid, flag);
+            <%Else%>
+            <%="winparent." + Me.hidHRJS.Value + "(pid,flag);"%>
+            <%end if%>
+        }
+        catch (err) {
+            alert(err);
+        }
+
     }
 
 </script>

@@ -201,4 +201,13 @@ Partial Public Class ModalForm
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidrecordMessage As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidHRJS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidHRJS As Global.System.Web.UI.WebControls.HiddenField
 End Class

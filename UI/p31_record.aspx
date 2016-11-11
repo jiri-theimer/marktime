@@ -30,7 +30,7 @@
             ];
 
            
-            <%if Me.hidHoursEntryFlag.Value<>"2" then%>
+            <%If Me.hidHoursEntryFlag.Value = "1" Or Me.hidHoursEntryFlag.Value = "2" Then%>
             $("#<%=p31Value_Orig.ClientID%>").autocomplete({
                 source: hours_interval,
                 minLength: 0,
@@ -245,8 +245,12 @@
 
         function handle_hours() {            
             var h = document.getElementById("<%=Me.p31Value_Orig.ClientID%>").value;
+            var hef = document.getElementById("<%=Me.hidHoursEntryFlag.ClientID%>").value;            
+            var strOper = "hours";
+            if (hef == "2")
+                strOper = "minutes";
 
-            $.post("Handler/handler_time.ashx", { hours: h, oper: "hours" }, function (data) {
+            $.post("Handler/handler_time.ashx", { hours: h, oper: strOper }, function (data) {
                 if (data == ' ') {
                     return;
                 }
@@ -256,18 +260,7 @@
             });
         }
 
-        function handle_minutes() {            
-            var h = document.getElementById("<%=Me.p31Value_Orig.ClientID%>").value;
-
-            $.post("Handler/handler_time.ashx", { hours: h, oper: "minutes" }, function (data) {
-                if (data == ' ') {
-                    return;
-                }
-
-                document.getElementById("<%=Me.HandlerMessage.ClientID%>").innerHTML = data;
-
-            });
-        }
+        
 
         function setting() {
             var p33id = document.getElementById("<%=hidP33ID.ClientID%>").value;

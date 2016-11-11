@@ -36,6 +36,9 @@ Public Class x31Report
     Public Property x31IsRunInDay6 As Boolean
     Public Property x31IsRunInDay7 As Boolean
     Public Property x31RunInTime As String
+    Public Property x31SchedulingReceivers As String
+    Public Property x31LastScheduledRun As DateTime?
+
     Public Property x31DocSqlSource As String
     Public Property x31DocSqlSourceTabs As String
     Public Property x31ExportFileNameMask As String

@@ -101,7 +101,9 @@
 
         function batch_p31text() {
 
-            dialog_master("p31_approving_batch_p31text.aspx?guid=<%=viewstate("guid")%>", true);
+            //dialog_master("p31_approving_batch_p31text.aspx?guid=<%=viewstate("guid")%>", true);
+            location.replace("p31_approving_batch_p31text.aspx?guid=<%=viewstate("guid")%>");
+            
         }
 
         function p31_create(field,pid) {
@@ -282,13 +284,13 @@
             </tr>
         </table>
     </div>
-
-
+  
+    <div style="clear:both;"></div>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr valign="top">
             <td style="min-width: 400px; min-height: 450px;">
-
                 <iframe id="fraSubform" runat="server" width="100%" height="460px" frameborder="0" src=""></iframe>
+               
 
             </td>
             <td>
@@ -312,7 +314,7 @@
     <asp:HiddenField ID="hidFrom" runat="server" />
 
 
-    <telerik:RadWindow ID="okno1" runat="server" Modal="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png">
+    <telerik:RadWindow ID="okno1" runat="server" Modal="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png" KeepInScreenBounds="true" Style="z-index: 9900;">
         <Shortcuts>
             <telerik:WindowShortcut CommandName="Close" Shortcut="Esc" />
         </Shortcuts>

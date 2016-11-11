@@ -7,7 +7,8 @@
     Function Delete(intPID As Integer) As Boolean
     Function GetList(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x31Report)
     Function GetList_PersonalPageSource() As List(Of BO.x31Report)
-
+    Function IsWaiting4AutoGenerate(cRec As BO.x31Report) As Boolean
+    Function UpdateLastScheduledRun(intX31ID As Integer, dat As Date) As Boolean
 End Interface
 Class x31ReportBL
     Inherits BLMother
@@ -74,7 +75,11 @@ Class x31ReportBL
             If Trim(.x31Code) = "" Then
                 _Error = "Chybí kód šablony sestavy/pluginu." : Return False
             End If
+            If .x31IsScheduling Then
+                Dim cT As New BO.clsTime
+                If cT.ConvertTimeToSeconds(.x31RunInTime) = 0 Then _Error = "Čas automatického generování není zadán správně." : Return False
 
+            End If
         End With
 
         If _cDL.Save(cRec, lisX69) Then
@@ -166,5 +171,40 @@ Class x31ReportBL
         Return c
     End Function
 
+    Public Sub GeneratePerScheduling(cRec As BO.x31Report)
+        
+
+        If cRec.x31LastScheduledRun Is Nothing Then
+
+        End If
+    End Sub
     
+
+    Public Function IsWaiting4AutoGenerate(cRec As BO.x31Report) As Boolean Implements Ix31ReportBL.IsWaiting4AutoGenerate
+        If Not cRec.x31IsScheduling Then Return False
+        Dim b As Boolean = False
+        With cRec
+            If .x31IsRunInDay1 And Weekday(Now, FirstDayOfWeek.Monday) = 1 Then b = True
+            If .x31IsRunInDay2 And Weekday(Now, FirstDayOfWeek.Monday) = 2 Then b = True
+            If .x31IsRunInDay3 And Weekday(Now, FirstDayOfWeek.Monday) = 3 Then b = True
+            If .x31IsRunInDay4 And Weekday(Now, FirstDayOfWeek.Monday) = 4 Then b = True
+            If .x31IsRunInDay5 And Weekday(Now, FirstDayOfWeek.Monday) = 5 Then b = True
+            If .x31IsRunInDay6 And Weekday(Now, FirstDayOfWeek.Monday) = 6 Then b = True
+            If .x31IsRunInDay7 And Weekday(Now, FirstDayOfWeek.Monday) = 7 Then b = True
+            If Not b Then Return False
+            Dim cT As New BO.clsTime, secs As Integer = TimeOfDay.Hour * 60 * 60 + TimeOfDay.Minute * 60 + TimeOfDay.Second
+
+            If cT.ConvertTimeToSeconds(.x31RunInTime) > secs Then
+                If .x31LastScheduledRun Is Nothing Then Return True 'sestava ještě nikdy nebyla generována
+                If Day(.x31LastScheduledRun) = Day(Now) And Month(.x31LastScheduledRun) = Month(Now) And Year(.x31LastScheduledRun) = Year(Now) Then
+                    Return False    'dnes již byla generována
+                End If
+                Return True
+            End If
+        End With
+        Return False
+    End Function
+    Public Function UpdateLastScheduledRun(intX31ID As Integer, dat As Date) As Boolean Implements Ix31ReportBL.UpdateLastScheduledRun
+        Return _cDL.UpdateLastScheduledRun(intX31ID, dat)
+    End Function
 End Class

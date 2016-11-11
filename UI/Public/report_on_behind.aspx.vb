@@ -46,7 +46,7 @@ Public Class report_on_behind
         With message
             .Body = "Obsah zprávy: " & strOutputFileName
             .SenderAddress = "jiri.theimer@gmail.com"
-            .SenderName = "JIRI TIMER"
+            .SenderName = "MARKTIME"
             .Subject = "Předmět zprávy: " & strOutputFileName
             '.AddOneFile2FullPath(_factory.x35GlobalParam.TempFolder & "\" & strOutputFileName)
         End With

@@ -21,6 +21,8 @@
             Handle_o22Reminder()
             Handle_p56Reminder()
 
+            Handle_ScheduledReports()
+
             If Now > Today.AddHours(15) And Now < Today.AddHours(17) And Now.DayOfWeek <> DayOfWeek.Sunday And Now.DayOfWeek <> DayOfWeek.Saturday Then
                 Handle_CnbKurzy()
             End If
@@ -133,5 +135,51 @@
         If lisM62.Count = 0 Then
             _Factory.m62ExchangeRateBL.ImportRateList_CNB(datImport)
         End If
+    End Sub
+
+    Public Sub Handle_ScheduledReports()
+        Dim lis As IEnumerable(Of BO.x31Report) = _Factory.x31ReportBL.GetList(New BO.myQuery).Where(Function(p) p.x31IsScheduling = True And p.x31SchedulingReceivers <> "")
+        For Each c In lis
+            If _Factory.x31ReportBL.IsWaiting4AutoGenerate(c) Then
+
+                Dim strRepFullPath As String = _Factory.x35GlobalParam.UploadFolder
+                If c.ReportFolder <> "" Then
+                    strRepFullPath += "\" & c.ReportFolder
+                End If
+                strRepFullPath += "\" & c.ReportFileName
+                Dim cRep As New clsReportOnBehind()
+                Dim strOutputFileName As String = cRep.GenerateReport2Temp(_Factory, strRepFullPath)
+
+                Dim message As New BO.smtpMessage()
+                With message
+                    '.Body = "Obsah zprávy: " & strOutputFileName
+                    '.SenderAddress = "jiri.theimer@gmail.com"
+                    .SenderName = "MARKTIME"
+                    .Subject = "MARKTIME REPORT | " & c.x31Name
+                    .AddOneFile2FullPath(_Factory.x35GlobalParam.TempFolder & "\" & strOutputFileName)
+                End With
+                c.x31SchedulingReceivers = Replace(c.x31SchedulingReceivers, ",", ";")
+                Dim a() As String = Split(c.x31SchedulingReceivers, ";")
+                Dim recipients As New List(Of BO.x43MailQueue_Recipient)
+                For i = 0 To UBound(a)
+                    Dim cc As New BO.x43MailQueue_Recipient()
+                    cc.x43Email = a(i)
+                    cc.x43RecipientFlag = BO.x43RecipientIdEnum.recTO
+                    recipients.Add(cc)
+                Next
+                With _Factory.x40MailQueueBL
+                    Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, BO.x29IdEnum.x31Report, c.PID)
+                    If intMessageID > 0 Then
+                        _Factory.x31ReportBL.UpdateLastScheduledRun(c.PID, Now)
+                        If Not .SendMessageFromQueque(intMessageID) Then
+                            Response.Write(.ErrorMessage)
+                        End If
+                    Else
+                        Response.Write(.ErrorMessage)
+                    End If
+                End With
+            End If
+        Next
+
     End Sub
 End Class

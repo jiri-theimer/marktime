@@ -82,6 +82,9 @@
         hidCloseAndRefreshParent_Flag.Value = strFlag
         hidCloseAndRefreshParent_Par1.Value = strPar1
         hidCloseAndRefreshParent_JsFunction.Value = strJsFunction
+        If Me.hidHRJS.Value <> "" Then
+            hidCloseAndRefreshParent_JsFunction.Value = Me.hidHRJS.Value
+        End If
     End Sub
    
 
@@ -110,6 +113,7 @@
         End If
         
         If Not Page.IsPostBack Then
+            hidHRJS.Value = Request.Item("hrjs")    'js funkce, která se má volat po submit záznamu
             With CType(toolbar1.FindItemByValue("help"), Telerik.Web.UI.RadToolBarButton)
                 If Me.HelpTopicID = "" Then
                     .NavigateUrl = "http://www.marktime.net/doc/html/index.html"

@@ -13,12 +13,16 @@
             With Master
                 ViewState("guid") = Request.Item("guid")
                 If ViewState("guid") = "" Then .StopPage("guid is missing")
+                ViewState("backurl") = Request.UrlReferrer.PathAndQuery
+
 
                 .HeaderText = "Hromadná úprava popisu, hodnoty a sazby schvalovaných úkonů"
                 .HeaderIcon = "Images/approve_32.png"
-                
 
-                .AddToolbarButton("Potvrdit", "save", , "Images/ok.png")
+                .AddToolbarButton("Zrušit změny a zpět", "goback", , "Images/back.png")
+                .AddToolbarButton("Potvrdit změny a zpět", "save", , "Images/ok.png")
+
+                .HideShowToolbarButton("close", False)
             End With
 
 
@@ -45,14 +49,23 @@
             img.ImageUrl = cP72.ImageUrl
         End If
         If cRec.p33ID = BO.p33IdENUM.Cas Or cRec.p33ID = BO.p33IdENUM.Kusovnik Then
-            If cP72.p72ID = BO.p72IdENUM.Fakturovat Then
-                DirectCast(cbx.FindControl("Value_Edit"), TextBox).Text = cRec.p31Value_Approved_Billing.ToString
-                DirectCast(cbx.FindControl("Rate_Edit"), Telerik.Web.UI.RadNumericTextBox).Value = cRec.p31Rate_Billing_Approved
-            Else
-                DirectCast(cbx.FindControl("Value_Edit"), TextBox).Text = "0"
-                DirectCast(cbx.FindControl("Rate_Edit"), Telerik.Web.UI.RadNumericTextBox).Value = 0
-            End If
+            Select Case cP72.p72ID
+                Case BO.p72IdENUM.Fakturovat, BO.p72IdENUM.FakturovatPozdeji
+                    If cRec.IsRecommendedHHMM() Then
+                        DirectCast(cbx.FindControl("Value_Edit"), TextBox).Text = _cTime.ShowAsHHMM(cRec.p31Value_Approved_Billing.ToString)
+                    Else
+                        DirectCast(cbx.FindControl("Value_Edit"), TextBox).Text = cRec.p31Value_Approved_Billing.ToString
+                    End If
+
+                    DirectCast(cbx.FindControl("Rate_Edit"), Telerik.Web.UI.RadNumericTextBox).Value = cRec.p31Rate_Billing_Approved
+                Case Else
+                    DirectCast(cbx.FindControl("Value_Edit"), TextBox).Text = "0"
+                    DirectCast(cbx.FindControl("Rate_Edit"), Telerik.Web.UI.RadNumericTextBox).Value = 0
+            End Select
+
         End If
+        ClientScript.RegisterStartupScript(Me.GetType, "hash", "go2id(" & intP31ID.ToString & ");", True)
+
     End Sub
 
     Private Sub rp1_ItemCreated(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemCreated
@@ -118,6 +131,8 @@
             CType(e.Item.FindControl("Client"), Label).Text = .ClientName
             CType(e.Item.FindControl("p41Name"), Label).Text = .p41Name
         End With
+        CType(e.Item.FindControl("go2pid"), HyperLink).Attributes.Item("name") = cRec.PID.ToString
+
 
     End Sub
 
@@ -158,28 +173,35 @@
     End Function
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        If strButtonValue = "save" Then
-            Dim cT As New BO.clsTime, xx As Integer = 0
+        Select Case strButtonValue
+            Case "save"
+                Dim cT As New BO.clsTime, xx As Integer = 0
 
-            For Each ri As RepeaterItem In rp1.Items
-                xx += 1
-                Dim cApprove As BO.p31WorksheetApproveInput = InhaleAR(ri)
-                If Not Master.Factory.p31WorksheetBL.Validate_Before_Save_Approving(cApprove, True) Then
-                    Master.Notify("#" & xx.ToString & ": " & Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
-                    Return
-                End If
-            Next
+                For Each ri As RepeaterItem In rp1.Items
+                    xx += 1
+                    Dim cApprove As BO.p31WorksheetApproveInput = InhaleAR(ri)
+                    If Not Master.Factory.p31WorksheetBL.Validate_Before_Save_Approving(cApprove, True) Then
+                        Master.Notify("#" & xx.ToString & ": " & Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                        Return
+                    End If
+                Next
 
-            For Each ri As RepeaterItem In rp1.Items
-                Dim cApprove As BO.p31WorksheetApproveInput = InhaleAR(ri)
-                If Master.Factory.p31WorksheetBL.Save_Approving(cApprove, True) Then
+                For Each ri As RepeaterItem In rp1.Items
+                    Dim cApprove As BO.p31WorksheetApproveInput = InhaleAR(ri)
+                    If Master.Factory.p31WorksheetBL.Save_Approving(cApprove, True) Then
 
-                End If
+                    End If
 
-            Next
-            Master.CloseAndRefreshParent("p31text")
-        End If
+                Next
+                ReloadPage()
+            Case "goback"
+                ReloadPage()
+        End Select
+
+
     End Sub
 
-    
+    Private Sub ReloadPage()
+        Response.Redirect(ViewState("backurl") & "&reloadonly=1", True)
+    End Sub
 End Class

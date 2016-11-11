@@ -85,7 +85,10 @@ Public Class p31_approving_step3
             End With
             SetupJ74Combo()
 
-            SetupTempData()
+            If Request.Item("reloadonly") = "" Then
+                SetupTempData()
+            End If
+
 
             SetupGrid()
 

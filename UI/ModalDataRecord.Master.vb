@@ -190,6 +190,9 @@
         If Request.Item("clone") = "1" Then
             hidIsRecordClone.Value = "1"
         End If
+        If Not Page.IsPostBack Then
+            hidHRJS.Value = Request.Item("hrjs")    'js funkce, která se má volat po submit záznamu
+        End If
     End Sub
     
     Private Sub DoLogOut()

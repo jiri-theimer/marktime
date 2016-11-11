@@ -42,7 +42,7 @@
             </td>
             <td>
                 <asp:DropDownList ID="x29ID" runat="server">
-                    <asp:ListItem Text="Nemá vztah k vybranému záznamu, nabízí se přes menu [Sestavy]" Value="" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Bez kontextu k vybranému záznamu, nabízí se přes menu [DALŠÍ->Tiskové sestavy]" Value="" Selected="true"></asp:ListItem>
                     <asp:ListItem Text="Vybraný záznam projektu" Value="141"></asp:ListItem>
                     <asp:ListItem Text="Vybraný záznam klienta" Value="328"></asp:ListItem>
                     <asp:ListItem Text="Vybraný záznam osoby" Value="102"></asp:ListItem>
@@ -138,6 +138,31 @@
         </div>
     </asp:Panel>
     
+    <asp:Panel ID="panScheduling" runat="server" CssClass="content-box2">
+        <div class="title">
+            <img src="Images/calendar.png" />
+            <asp:CheckBox ID="x31IsScheduling" runat="server" Text="Sestavu bude aplikace pravidelně odesílat mailem" AutoPostBack="true" />
+        </div>
+        <asp:panel ID="panIsScheduling" runat="server" CssClass="content">
+           <div class="div6">
+               <span>Den v týdnu:</span>
+               <asp:CheckBox ID="x31IsRunInDay1" runat="server" Text="Pondělí" />
+                <asp:CheckBox ID="x31IsRunInDay2" runat="server" Text="Úterý" />
+                <asp:CheckBox ID="x31IsRunInDay3" runat="server" Text="Středa" />
+                <asp:CheckBox ID="x31IsRunInDay4" runat="server" Text="Čtvrtek" />
+                <asp:CheckBox ID="x31IsRunInDay5" runat="server" Text="Pátek" />
+                <asp:CheckBox ID="x31IsRunInDay6" runat="server" Text="Sobota" />
+                <asp:CheckBox ID="x31IsRunInDay7" runat="server" Text="Neděle" />
+           </div>
+           <div class="div6">
+               <span>Čas generování (HH:MM):</span>
+               <asp:TextBox ID="x31RunInTime" runat="server" Width="50px"></asp:TextBox>
+               <span>Příjemci (e-mail) sestavy:</span>
+               <asp:TextBox ID="x31SchedulingReceivers" runat="server" Width="500px"></asp:TextBox>
+           </div>
+            
+        </asp:panel>
+    </asp:Panel>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

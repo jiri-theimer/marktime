@@ -88,30 +88,30 @@
 
     function p28_create() {
         
-        sw_menu_decide("p28_record.aspx?pid=0", "Images/contact_32.png",false);
+        sw_menu_decide("p28_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/contact_32.png", false);
     }
     function p41_create() {
-        sw_menu_decide("p41_create.aspx", "Images/project_32.png",false);
+        sw_menu_decide("p41_create.aspx?hrjs=hardrefresh_menu", "Images/project_32.png", false);
     }
 
     function p56_create() {
-        sw_menu_decide("p56_record.aspx?masterprefix=p41&masterpid=0", "Images/task_32.png");
+        sw_menu_decide("p56_record.aspx?masterprefix=p41&masterpid=0&hrjs=hardrefresh_menu", "Images/task_32.png");
 
     }
     function p91_create() {
-        sw_menu_decide("p91_create_step1.aspx?prefix=p28", "Images/invoice_32.png", true);
+        sw_menu_decide("p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", "Images/invoice_32.png", true);
 
     }
     function p31_create() {
-        sw_menu_decide("p31_record.aspx?pid=0", "Images/worksheet_32.png")
+        sw_menu_decide("p31_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/worksheet_32.png")
 
     }
     function o23_create() {
-        sw_menu_decide("o23_record.aspx?pid=0", "Images/notepad_32.png")
+        sw_menu_decide("o23_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/notepad_32.png")
 
     }
     function o10_create() {
-        sw_menu_decide("o10_record.aspx?pid=0", "Images/article_32.png", true)
+        sw_menu_decide("o10_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/article_32.png", true)
 
     }
 
@@ -195,7 +195,7 @@
     }
 
 
-    function hardrefresh(pid, flag) {
+    function hardrefresh_menu(pid, flag) {        
         if (flag == "p41-create" || flag == "p41-save") {
             location.replace("p41_framework.aspx?pid=" + pid);
             return;
@@ -222,7 +222,7 @@
             return;
         }
 
-        location.replace("j03_mypage_greeting.aspx");
+        
 
     }
 

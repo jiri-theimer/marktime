@@ -239,6 +239,15 @@ Partial Public Class ModalDataRecord
     Protected WithEvents hidPageTitle As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidHRJS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidHRJS As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''okno_dialog control.
     '''</summary>
     '''<remarks>

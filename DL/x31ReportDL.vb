@@ -49,10 +49,12 @@
             pars.Add("x31IsRunInDay6", .x31IsRunInDay6, DbType.Boolean)
             pars.Add("x31IsRunInDay7", .x31IsRunInDay7, DbType.Boolean)
             pars.Add("x31RunInTime", .x31RunInTime, DbType.String)
+            pars.Add("x31SchedulingReceivers", .x31SchedulingReceivers, DbType.String)
             pars.Add("x31DocSqlSource", .x31DocSqlSource, DbType.String)
             pars.Add("x31DocSqlSourceTabs", .x31DocSqlSourceTabs, DbType.String)
             pars.Add("x31ExportFileNameMask", .x31ExportFileNameMask, DbType.String)
             pars.Add("x31QueryFlag", .x31QueryFlag, DbType.Int32)
+
 
             pars.Add("x31validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("x31validuntil", .ValidUntil, DbType.DateTime)
@@ -75,6 +77,12 @@
         Dim pars As New DbParameters()
         pars.Add("pid", intPID)
         Return _cDB.RunSQL("UPDATE x31Report SET x31FileName=" & BO.BAS.GS(strReportFileName) & " WHERE x31ID=@pid", pars)
+    End Function
+    Public Function UpdateLastScheduledRun(intPID As Integer, dat As Date) As Boolean
+        Dim pars As New DbParameters()
+        pars.Add("pid", intPID)
+        pars.Add("d", dat, DbType.DateTime)
+        Return _cDB.RunSQL("UPDATE x31Report SET x31LastScheduledRun=@d WHERE x31ID=@pid", pars)
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean

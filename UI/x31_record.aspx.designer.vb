@@ -239,6 +239,114 @@ Partial Public Class x31_record
     Protected WithEvents x31DocSqlSourceTabs As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panScheduling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panScheduling As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x31IsScheduling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsScheduling As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panIsScheduling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panIsScheduling As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x31IsRunInDay1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsRunInDay1 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x31IsRunInDay2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsRunInDay2 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x31IsRunInDay3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsRunInDay3 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x31IsRunInDay4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsRunInDay4 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x31IsRunInDay5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsRunInDay5 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x31IsRunInDay6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsRunInDay6 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x31IsRunInDay7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31IsRunInDay7 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x31RunInTime control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31RunInTime As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''x31SchedulingReceivers control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31SchedulingReceivers As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

@@ -80,6 +80,18 @@
             Me.x31DocSqlSourceTabs.Text = .x31DocSqlSourceTabs
             Me.x31ExportFileNameMask.Text = .x31ExportFileNameMask
             basUI.SelectDropdownlistValue(Me.x31QueryFlag, CInt(.x31QueryFlag).ToString)
+            Me.x31IsScheduling.Checked = .x31IsScheduling
+            If .x31IsScheduling Then
+                Me.x31RunInTime.Text = .x31RunInTime
+                Me.x31IsRunInDay1.Checked = .x31IsRunInDay1
+                Me.x31IsRunInDay2.Checked = .x31IsRunInDay2
+                Me.x31IsRunInDay3.Checked = .x31IsRunInDay3
+                Me.x31IsRunInDay4.Checked = .x31IsRunInDay4
+                Me.x31IsRunInDay5.Checked = .x31IsRunInDay5
+                Me.x31IsRunInDay6.Checked = .x31IsRunInDay6
+                Me.x31IsRunInDay7.Checked = .x31IsRunInDay7
+                Me.x31SchedulingReceivers.Text = .x31SchedulingReceivers
+            End If
 
             Master.Factory.o27AttachmentBL.CopyRecordsToTemp(upload1.GUID, Master.DataPID, BO.x29IdEnum.x31Report)
             uploadlist1.RefreshData_TEMP()
@@ -122,6 +134,17 @@
                 .x31DocSqlSourceTabs = Me.x31DocSqlSourceTabs.Text
                 .x31ExportFileNameMask = Me.x31ExportFileNameMask.Text
                 .x31QueryFlag = BO.BAS.IsNullInt(Me.x31QueryFlag.SelectedValue)
+
+                .x31IsScheduling = Me.x31IsScheduling.Checked
+                .x31IsRunInDay1 = Me.x31IsRunInDay1.Checked
+                .x31IsRunInDay2 = Me.x31IsRunInDay2.Checked
+                .x31IsRunInDay3 = Me.x31IsRunInDay3.Checked
+                .x31IsRunInDay4 = Me.x31IsRunInDay4.Checked
+                .x31IsRunInDay5 = Me.x31IsRunInDay5.Checked
+                .x31IsRunInDay6 = Me.x31IsRunInDay6.Checked
+                .x31IsRunInDay7 = Me.x31IsRunInDay7.Checked
+                .x31RunInTime = Me.x31RunInTime.Text
+                .x31SchedulingReceivers = Me.x31SchedulingReceivers.Text
             End With
             If Me.uploadlist1.ItemsCount = 0 Then
                 Master.Notify("Chybí soubor šablony sestavy", NotifyLevel.WarningMessage)
@@ -199,13 +222,19 @@
     Private Sub x31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.x31FormatFlag.SelectedItem.Attributes.Item("style") = "font-weight:bold;color:blue;"
         x31IsPeriodRequired.Visible = True : x31IsUsableAsPersonalPage.Visible = True : panDocFormat.Visible = False : Me.x31QueryFlag.Visible = True
+        Me.panScheduling.Visible = False
 
         Select Case Me.CurrentFormat
             Case BO.x31FormatFlagENUM.DOCX
                 x31IsPeriodRequired.Visible = False : x31IsUsableAsPersonalPage.Visible = False : panDocFormat.Visible = True : Me.x31QueryFlag.Visible = False
             Case BO.x31FormatFlagENUM.ASPX
                 Me.x31QueryFlag.Visible = False
+            Case BO.x31FormatFlagENUM.Telerik
+                If Me.x29ID.SelectedValue = "" Then
+                    Me.panScheduling.Visible = True
+                End If
         End Select
+        panIsScheduling.Visible = Me.x31IsScheduling.Checked
     End Sub
 
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click

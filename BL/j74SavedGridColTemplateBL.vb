@@ -320,8 +320,10 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Titul", "j02TitleBeforeName"))
             .Add(AGC("E-mail", "j02Email"))
             .Add(AGC("Pozice", "j07Name"))
+            .Add(AGC("Osobní číslo (kód)", "j02Code"))
             .Add(AGC("Fond", "c21Name"))
             .Add(AGC("Středisko", "j18Name"))
+            .Add(AGC("Oslovení", "j02Salutation"))
 
             .Add(AGC("Interní osoba", "j02IsIntraPerson", BO.cfENUM.Checkbox))
             .Add(AGC("Založeno", "j02DateInsert", BO.cfENUM.DateTime))

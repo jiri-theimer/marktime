@@ -1194,7 +1194,12 @@
                 If strFormat = "hhmm" Then
                     s += "'" & cT.ShowAsHHMM((CDbl(i) / 60).ToString) & "'"
                 Else
-                    s += "'" & (CDbl(i) / 60).ToString & "'"
+                    If Me.p31_default_HoursEntryFlag.Value = "2" Then
+                        s += "'" & (CDbl(i)).ToString & "'"    'čas se zadává v minutách
+                    Else
+                        s += "'" & (CDbl(i) / 60).ToString & "'"    'čas se zadává v hodinách
+                    End If
+
                 End If
             Next
             ViewState("hours_offer") = s
