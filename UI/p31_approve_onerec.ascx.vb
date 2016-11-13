@@ -167,6 +167,7 @@
     Public Sub InhaleRecord(cRec As BO.p31Worksheet, Optional bolDraftIfInEditing As Boolean = True)
         p31id.Value = cRec.PID.ToString
         With cRec
+            Me.p31Date.SelectedDate = .p31Date
             p33id.Value = CInt(.p33ID).ToString
             SetValue(.p31Value_Approved_Billing, False)
 
@@ -321,6 +322,7 @@
             .Rate_Billing_Approved = BO.BAS.IsNullNum(Me.Rate_Billing_Approved.Value)
             .Rate_Internal_Approved = BO.BAS.IsNullNum(Me.Rate_Internal_Approved.Value)
             .p31Text = Me.p31Text.Text
+            .p31Date = Me.p31Date.SelectedDate
             .p31ApprovingSet = Me.p31ApprovingSet.Text
         End With
         With Me.Factory.p31WorksheetBL

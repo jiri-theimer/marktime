@@ -53,6 +53,7 @@ Public Class p28_framework_detail
                     .Add("p28_framework_detail-switch")
                     .Add("p28_framework_detail-switchHeight")
                     .Add("p28_framework_detail-chkShowBoxP41")
+                    .Add("p28_framework_detail-searchbox")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -76,6 +77,7 @@ Public Class p28_framework_detail
                         End If
                     End If
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
+                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p28_framework_detail-searchbox", "0"))
                 End With
 
             End With

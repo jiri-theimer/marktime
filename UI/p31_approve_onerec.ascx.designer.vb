@@ -203,6 +203,15 @@ Partial Public Class p31_approve_onerec
     Protected WithEvents p31Text As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''p31Date control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31Date As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
     '''p31ApprovingSet control.
     '''</summary>
     '''<remarks>

@@ -210,6 +210,9 @@
         function p31_grid(){            
             window.open("p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>","_top")
         }
+        function page_setting(){
+            sw_decide("entity_framework_detail_setting.aspx?prefix=p91", "Images/setting_32.png",false);
+        }
     </script>
 
 </asp:Content>
@@ -247,6 +250,9 @@
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="more">
                     <Items>
+                        <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
+                        </telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report('');" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet PIVOT za fakturu" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
@@ -262,7 +268,13 @@
 
 
                 </telerik:RadMenuItem>
-               
+               <telerik:RadMenuItem Value="searchbox">
+                    <ItemTemplate>
+
+                        <input id="search2" style="width: 100px; margin-top: 7px;height:19px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />                       
+                        <div id="search2_result" style="position: relative;left:-150px;"></div>
+                    </ItemTemplate>
+                </telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
 
@@ -622,5 +634,70 @@
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 
-   
+   <script type="text/javascript">
+    <%if menu1.FindItemByValue("searchbox").visible then%>
+       $(function () {
+
+           $("#search2").autocomplete({
+               source: "Handler/handler_search_invoice.ashx",
+               minLength: 1,
+               select: function (event, ui) {
+                   if (ui.item) {                        
+                       window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
+                       return false;
+                   }
+               },
+               open: function (event, ui) {
+                   $('ul.ui-autocomplete')
+                      .removeAttr('style').hide()
+                      .appendTo('#search2_result').show();
+               },
+               close: function (event, ui) {
+                   $('ul.ui-autocomplete')
+                   .hide();                   
+               }   
+
+
+
+           }).data("ui-autocomplete")._renderItem = function (ul, item) {
+               var s = "<div>";
+               if (item.Closed == "1")
+                   s = s + "<a style='text-decoration:line-through;'>";
+               else
+                   s = s + "<a>";
+
+               s = s + __highlight(item.Invoice, item.FilterString);
+
+
+               s = s + "</a>";
+
+               if (item.Draft == "1")
+                   s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+               s = s + "</div>";
+
+
+               return $(s).appendTo(ul);
+
+
+           };
+       });
+
+       function __highlight(s, t) {
+           var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+           return s.replace(matcher, "<strong>$1</strong>");
+       }
+
+       function search2Focus() {            
+           document.getElementById("search2").value=""; 
+           document.getElementById("search2").style.background = "yellow";
+       }
+       function search2Blur() {
+           
+           document.getElementById("search2").style.background = "";
+           document.getElementById("search2").value = "Najít fakturu...";
+            
+       }
+    <%end if%>
+    </script>
 </asp:Content>

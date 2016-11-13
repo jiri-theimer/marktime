@@ -25,6 +25,8 @@ Public Class p91_framework_detail
                     .Add("p91_framework_detail-j74id")
                     .Add("p91_framework_detail-pagesize")
                     .Add("p91_framework_detail-chkFFShowFilledOnly")
+                    .Add("p91_framework_detail-tabskin")
+                    .Add("p91_framework_detail-searchbox")
                 End With
 
                 With .Factory.j03UserBL
@@ -33,6 +35,7 @@ Public Class p91_framework_detail
                     basUI.SelectRadiolistValue(Me.opgGroupBy, .GetUserParam("p91_framework_detail-group", "flat"))
                     basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p91_framework_detail-pagesize", "20"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p91_framework_detail-chkFFShowFilledOnly", "0"))
+                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p91_framework_detail-searchbox", "0"))
                 End With
 
                 If .DataPID = 0 Then
@@ -62,6 +65,7 @@ Public Class p91_framework_detail
             If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
                 basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p91")
             End If
+            tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_framework_detail-tabskin", "Default")
         End If
 
     End Sub

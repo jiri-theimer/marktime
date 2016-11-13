@@ -9,9 +9,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <asp:CheckBox ID="chkSearchBox" runat="server" Text="Na stránce zapnout vyhledávač" />
+        <asp:CheckBox ID="chkSearchBox" runat="server" Text="Na stránce zapnout vyhledávač" CssClass="chk" />
     </div>
-    <div class="content-box2">
+    <asp:panel ID="panSwitchHeight" runat="server" cssclass="content-box2">
         <div class="title">
             Výška horní poloviny stránky (boxy nad pod-přehledem)
         </div>
@@ -26,7 +26,7 @@
                 <asp:ListItem Text="700" Value="700"></asp:ListItem>
             </asp:RadioButtonList>
         </div>
-    </div>
+    </asp:panel>
 
     <div class="content-box2" style="margin-top:20px;">
         <div class="title">
@@ -58,7 +58,7 @@
                 </asp:DropDownList>
             </div>
 
-
+            <asp:Panel ID="panTabs" runat="server">
             <table cellpadding="8">
                 <tr valign="top">
                     <td>
@@ -84,6 +84,7 @@
 
                 </tr>
             </table>
+            </asp:Panel>
         </div>
     </div>
 

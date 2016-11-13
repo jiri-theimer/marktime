@@ -242,7 +242,7 @@ Public Class p31_approving_step3
                         .Rate_Billing_Approved = cRec.p31Rate_Billing_Approved
                         .Rate_Internal_Approved = cRec.p31Rate_Internal_Approved
                     End If
-
+                    .p31Date = cRec.p31Date
                 End With
                 If Not Master.Factory.p31WorksheetBL.Save_Approving(cApprove, True) Then
                     Dim cErr As New BO.p85TempBox
@@ -603,6 +603,7 @@ Public Class p31_approving_step3
                         .VatRate_Approved = cRec.p31VatRate_Approved
                 End Select
                 .p31Text = cRec.p31Text
+                .p31Date = cRec.p31Date
             End With
 
             With Master.Factory.p31WorksheetBL

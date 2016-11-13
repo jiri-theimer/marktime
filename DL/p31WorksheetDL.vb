@@ -116,7 +116,7 @@
         pars.Add("val", dbValue)
         Return _cDB.RunSQL("UPDATE p31Worksheet_Temp SET " & strField & "=@val WHERE p31GUID=@guid AND p31ID=@pid", pars)
     End Function
-    Public Function Save_Approving(strGUID_TempData As String, intPID As Integer, p71id As BO.p71IdENUM, p72id As BO.p72IdENUM, dblValue_Approved_Billing As Double, dblRate_Billing_Approved As Double, dblValue_Approved_Internal As Double, dblRate_Internal_Approved As Double, strP31Text As String, dblVatRate_Approved As Double, strApprovingSet As String) As Boolean
+    Public Function Save_Approving(strGUID_TempData As String, intPID As Integer, p71id As BO.p71IdENUM, p72id As BO.p72IdENUM, dblValue_Approved_Billing As Double, dblRate_Billing_Approved As Double, dblValue_Approved_Internal As Double, dblRate_Internal_Approved As Double, strP31Text As String, dblVatRate_Approved As Double, strApprovingSet As String, datDate As Date?) As Boolean
         Dim pars As New DbParameters
         With pars
             If strGUID_TempData <> "" Then
@@ -133,7 +133,7 @@
             .Add("rate_internal_approved", dblRate_Internal_Approved, DbType.Double)
             .Add("p31Text", strP31Text, DbType.String)
             .Add("vatrate_approved", dblVatRate_Approved, DbType.Double)
-
+            .Add("dat_p31date", datDate, DbType.DateTime)
             .Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
         End With
         If strGUID_TempData <> "" Then

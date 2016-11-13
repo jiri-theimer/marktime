@@ -15,7 +15,7 @@
                 <asp:ListItem Text="Schváleno" Value="1"></asp:ListItem>
                 <asp:ListItem Text="Nerozhodnuto (zůstane rozpracované)" Value="0"></asp:ListItem>
                 <asp:ListItem Text="Neschváleno" Value="2"></asp:ListItem>
-                
+
             </asp:RadioButtonList>
         </div>
         <table cellpadding="0">
@@ -104,8 +104,12 @@
         </div>
         <asp:TextBox ID="p31Text" runat="server" TextMode="MultiLine" Style="width: 97%; height: 50px;"></asp:TextBox>
         <div>
+            <span>Datum úkonu:</span>
+            <telerik:RadDatePicker ID="p31Date" runat="server" Width="120px">
+                <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server" EmptyMessage="Povinné pole"></DateInput>
+            </telerik:RadDatePicker>
             <span>Zařadit do billing dávky:</span>
-        <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="150px" AllowCustomText="true"></telerik:RadComboBox>
+            <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="150px" AllowCustomText="true"></telerik:RadComboBox>
         </div>
     </div>
 </div>
