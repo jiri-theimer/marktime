@@ -534,7 +534,7 @@
     Private Function GetSelectField(strPrefix As String) As String
         Select Case strPrefix
             Case "p28" : Return "p28Name"
-            Case "p41" : Return "p41Name"
+            Case "p41" : Return "isnull(p41NameShort,p41Name)"
             Case "j02" : Return "j02LastName+' '+j02Firstname"
             Case "p56" : Return "p56Name+' ('+isnull(p56Code,'')+')'"
             Case "p34" : Return "p34Name"

@@ -8,6 +8,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="div6">
+        <asp:CheckBox ID="chkSearchBox" runat="server" Text="Na stránce zapnout vyhledávač" />
+    </div>
     <div class="content-box2">
         <div class="title">
             Výška horní poloviny stránky (boxy nad pod-přehledem)

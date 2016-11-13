@@ -21,7 +21,14 @@
         
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
         With cRec
-            ph1.Text = .p41Code & " - " & .p41Name
+            ph1.Text = .p41Code
+            If .p41NameShort = "" Then
+                ph1.Text += " - " & .p41Name
+                Me.p41Name.Visible = False
+            Else
+                ph1.Text += " - " & .p41NameShort
+                Me.p41Name.Text = .p41Name
+            End If
             Me.Client.Text = .Client
             Me.j18Name.Text = .j18Name
             Me.p42Name.Text = .p42Name

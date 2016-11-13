@@ -260,7 +260,7 @@
             If Not String.IsNullOrEmpty(.MG_GridGroupByField) Then
                 If .MG_GridSqlColumns.ToLower.IndexOf(.MG_GridGroupByField.ToLower) < 0 Then
                     Select Case .MG_GridGroupByField
-                        Case "ProjectCodeAndName" : .MG_GridSqlColumns += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name as ProjectCodeAndName"
+                        Case "ProjectCodeAndName" : .MG_GridSqlColumns += ",isnull(p28client.p28Name+char(32)+'-'+char(32),'')+isnull(p41NameShort,p41Name) as ProjectCodeAndName"
                         Case "Client" : .MG_GridSqlColumns += ",p28client.p28Name as Client"
                         Case "p59NameSubmitter" : .MG_GridSqlColumns += ",p59submitter.p59Name as p59NameSubmitter"
                         Case "ReceiversInLine" : .MG_GridSqlColumns += ",dbo.p56_getroles_inline(a.p56ID) as ReceiversInLine"
@@ -287,7 +287,7 @@
                 If strPrimarySortField = "Client" Then strPrimarySortField = "p28client.p28Name"
                 If strPrimarySortField = "Owner" Then strPrimarySortField = "j02owner.j02LastName+char(32)+j02owner.j02FirstName"
                 If strPrimarySortField = "p59NameSubmitter" Then strPrimarySortField = "p59submitter.p59Name"
-                If strPrimarySortField = "ProjectCodeAndName" Then strPrimarySortField = "isnull(p28client.p28Name+char(32)+'-'+char(32),'')+p41Name"
+                If strPrimarySortField = "ProjectCodeAndName" Then strPrimarySortField = "isnull(p28client.p28Name+char(32)+'-'+char(32),'')+isnull(p41NameShort,p41Name)"
                 If strPrimarySortField = "ReceiversInLine" Then strPrimarySortField = "dbo.p56_getroles_inline(a.p56ID)"
                 If strPrimarySortField = "IsClosed" Then strPrimarySortField = "CASE WHEN GETDATE() BETWEEN a.p56ValidFrom AND a.p56ValidUntil THEN 0 else 1 END"
                 If strORDERBY = "" Or LCase(strPrimarySortField) = Replace(Replace(LCase(.MG_SortString), " desc", ""), " asc", "") Then
@@ -408,7 +408,7 @@
 
     Private Function GetSF() As String
         Dim s As String = "a.p41ID,a.o22ID,a.p57ID,a.j02ID_Owner,a.b02ID,a.p58ID,a.p59ID_Submitter,a.p59ID_Receiver,a.o43ID as _o43ID,a.p56Name,a.p56NameShort,a.p56Code,a.p56Description,a.p56Ordinary,a.p56PlanFrom,a.p56PlanUntil,a.p56ReminderDate,a.p56Plan_Hours,a.p56Plan_Expenses,a.p56RatingValue,a.p56CompletePercent,a.p56ExternalPID,a.p56IsPlan_Hours_Ceiling,a.p56IsPlan_Expenses_Ceiling,a.p56IsHtml"
-        Return s & "," & bas.RecTail("p56", "a") & ",p28client.p28Name as _Client,p57.p57Name as _p57Name,p58.p58Name as _p58Name,p59submitter.p59Name as _p59NameSubmitter,p41.p41Name as _p41Name,p41.p41Code as _p41Code,o22.o22Name as _o22Name,b02.b02Name as _b02Name,b02.b02Color as _b02Color,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p57.p57IsHelpdesk as _p57IsHelpdesk,p57.b01ID as _b01ID,p56free.*"
+        Return s & "," & bas.RecTail("p56", "a") & ",p28client.p28Name as _Client,p57.p57Name as _p57Name,p58.p58Name as _p58Name,p59submitter.p59Name as _p59NameSubmitter,isnull(p41.p41NameShort,p41.p41Name) as _p41Name,p41.p41Code as _p41Code,o22.o22Name as _o22Name,b02.b02Name as _b02Name,b02.b02Color as _b02Color,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p57.p57IsHelpdesk as _p57IsHelpdesk,p57.b01ID as _b01ID,p56free.*"
     End Function
     Private Function GetSQLPart1(intTOP As Integer) As String
         Dim s As String = "SELECT"

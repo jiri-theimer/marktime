@@ -348,7 +348,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.FA, "p32IsBillable", BO.cfENUM.Checkbox))
             .Add(AGC(My.Resources.common.Sesit, "p34Name"))
 
-            .Add(AGC(My.Resources.common.Projekt, "p41Name"))
+            .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)"))
             .Add(AGC(My.Resources.common.KlientProjektu, "ClientName", , , "p28Client.p28Name"))
             .Add(AGC(My.Resources.common.NazevUkolu, "p56Name"))
             .Add(AGC(My.Resources.common.KodUkolu, "p56Code"))
@@ -426,7 +426,7 @@ Class j74SavedGridColTemplateBL
 
             .Add(AGC("Měna", "j27Code"))
             .Add(AGC("Typ faktury", "p92Name"))
-            .Add(AGC("Projekt", "p41Name"))
+            .Add(AGC("Projekt", "p41Name", , , "isnull(p41NameShort,p41Name)"))
             .Add(AGC("DPH region", "j17Name"))
 
             .Add(AGC("Bez dph", "p91Amount_WithoutVat", BO.cfENUM.Numeric, , , True))
@@ -478,7 +478,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Nazev, "p56Name"))
             .Add(AGC("Aktuální stav", "b02Name"))            
             .Add(AGC(My.Resources.common.Klient, "Client", , , "p28client.p28Name"))
-            .Add(AGC(My.Resources.common.Projekt, "p41Name"))
+            .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)"))
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code"))
             .Add(AGC(My.Resources.common.Prijemce, "ReceiversInLine", , , "dbo.p56_getroles_inline(a.p56ID)"))
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
@@ -511,7 +511,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Název", "o23Name"))
             .Add(AGC("Kód dokumentu", "o23Code"))
             .Add(AGC("Aktuální stav", "b02Name"))
-            .Add(AGC("Projekt", "Project", , , "p41.p41Name"))
+            .Add(AGC("Projekt", "Project", , , "isnull(p41.p41NameShort,p41.p41Name)"))
             .Add(AGC("Klient projektu", "ProjectClient", , , "p28_client.p28Name"))
             .Add(AGC("Firma", "DocCompany", , , "p28.p28Name"))
             .Add(AGC("Faktura", "p91Code"))
@@ -559,7 +559,7 @@ Class j74SavedGridColTemplateBL
             Case BO.x29IdEnum.o23Notepad
                 lis.Add(New BO.GridGroupByColumn("Typ dokumentu", "o24Name", "a.o24ID", "min(o24Name)"))
                 lis.Add(New BO.GridGroupByColumn("Klient", "ProjectClient", "a.p28ID", "min(p28Name)"))
-                lis.Add(New BO.GridGroupByColumn("Projekt", "Project", "a.p41ID", "min(p41Name)"))
+                lis.Add(New BO.GridGroupByColumn("Projekt", "Project", "a.p41ID", "min(isnull(p41NameShort,p41Name))"))
                 lis.Add(New BO.GridGroupByColumn("Aktuální stav", "b02Name", "a.b02ID", "min(b02.b02Name)"))
                 lis.Add(New BO.GridGroupByColumn("Vlastník záznamu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "o23IsDraft", "a.o23IsDraft", "a.o23IsDraft"))
@@ -568,7 +568,7 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.p32Name, "p32Name", "a.p32ID", "min(p34.p34Name+' - '+p32.p32Name)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Osoba, "Person", "a.j02ID", "min(j02.j02LastName+' '+j02.j02Firstname)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.KlientProjektu, "ClientName", "p41.p28ID_Client", "min(p28Client.p28Name)"))
-                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Projekt, "p41Name", "a.p41ID", "min(isnull(p28Client.p28Name+' - ','')+p41.p41Name)"))
+                lis.Add(New BO.GridGroupByColumn(My.Resources.common.Projekt, "p41Name", "a.p41ID", "min(isnull(p28Client.p28Name+' - ','')+isnull(p41.p41NameShort,p41.p41Name))"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Faktura, "p91Code", "a.p91ID", "min(p91.p91Code)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.Schvaleno, "p71Name", "a.p71ID", "min(p71.p71Name)"))
                 lis.Add(New BO.GridGroupByColumn(My.Resources.common.FakturacniStatus, "p70Name", "a.p70ID", "min(p70.p70Name)"))
@@ -577,7 +577,7 @@ Class j74SavedGridColTemplateBL
             Case BO.x29IdEnum.p56Task
                 lis.Add(New BO.GridGroupByColumn("Typ úkolu", "p57Name", "a.p57ID", "min(p57.p57Name)"))
                 lis.Add(New BO.GridGroupByColumn("Klient", "Client", "p41.p28ID_Client", "min(p28client.p28Name)"))
-                lis.Add(New BO.GridGroupByColumn("Projekt", "ProjectCodeAndName", "a.p41ID", "min(isnull(p28client.p28Name+' - ','')+p41Name)"))
+                lis.Add(New BO.GridGroupByColumn("Projekt", "ProjectCodeAndName", "a.p41ID", "min(isnull(p28client.p28Name+' - ','')+isnull(p41NameShort,p41Name))"))
                 lis.Add(New BO.GridGroupByColumn("Aktuální stav", "b02Name", "a.b02ID", "min(b02.b02Name)"))
                 lis.Add(New BO.GridGroupByColumn("Produkt", "p58Name", "a.p58ID", "min(p58Name)"))
                 lis.Add(New BO.GridGroupByColumn("Priorita zadavatele", "p59NameSubmitter", "a.p59ID_Submitter", "min(p59submitter.p59name)"))

@@ -427,7 +427,7 @@ Public Class p91_framework_detail
             .MG_CurrentPageIndex = grid1.radGridOrig.MasterTableView.CurrentPageIndex
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             .MG_GridGroupByField = strGroupField
-            .MG_GridSqlColumns = hidCols.Value & ",a.p41ID as p41IDX,p41.p41Name as p41NameX"
+            .MG_GridSqlColumns = hidCols.Value & ",a.p41ID as p41IDX,isnull(p41.p41NameShort,p41.p41Name) as p41NameX"
             .MG_AdditionalSqlFROM = hidFrom.Value
         End With
 

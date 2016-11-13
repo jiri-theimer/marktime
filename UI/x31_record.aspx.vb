@@ -91,6 +91,7 @@
                 Me.x31IsRunInDay6.Checked = .x31IsRunInDay6
                 Me.x31IsRunInDay7.Checked = .x31IsRunInDay7
                 Me.x31SchedulingReceivers.Text = .x31SchedulingReceivers
+                Me.x31LastScheduledRun.Text = BO.BAS.FD(.x31LastScheduledRun, True, True)
             End If
 
             Master.Factory.o27AttachmentBL.CopyRecordsToTemp(upload1.GUID, Master.DataPID, BO.x29IdEnum.x31Report)
@@ -235,6 +236,7 @@
                 End If
         End Select
         panIsScheduling.Visible = Me.x31IsScheduling.Checked
+        If Me.x31LastScheduledRun.Text = "" Then cmdClearLastScheduledRun.Visible = False
     End Sub
 
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
@@ -243,5 +245,10 @@
 
     Private Sub uploadlist1_AfterSetAsDeleted(cFile As BO.p85TempBox) Handles uploadlist1.AfterSetAsDeleted
         ViewState("upload_changed") = "1"
+    End Sub
+
+    Private Sub cmdClearLastScheduledRun_Click(sender As Object, e As EventArgs) Handles cmdClearLastScheduledRun.Click
+        Master.Factory.x31ReportBL.UpdateLastScheduledRun(Master.DataPID, Nothing)
+        Me.x31LastScheduledRun.Text = ""
     End Sub
 End Class

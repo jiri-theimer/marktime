@@ -303,10 +303,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblp41NameShort" runat="server" Text="Zkrácený název:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblp41NameShort" runat="server" Text="Zkrácený (preferovaný) název:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="p41NameShort" runat="server" Style="width: 100px;"></asp:TextBox>
+                        <asp:TextBox ID="p41NameShort" runat="server" Style="width: 300px;"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

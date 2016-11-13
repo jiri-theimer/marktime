@@ -24,7 +24,7 @@
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
             For Each invalidFile As Telerik.Web.UI.UploadedFile In upload1.InvalidFiles
-                Master.Notify(String.Format("Soubor [{0}] nelze použít jako grafické logo. Podmínky: png formát, maximální šířka 300px, maximální výška 200px.", invalidFile.FileName), 2)
+                Master.Notify(String.Format("Soubor [{0}] nelze použít jako grafické logo. Podmínky: png formát, maximální šířka 600px, maximální výška 200px.", invalidFile.FileName), 2)
             Next
             If upload1.UploadedFiles.Count = 0 Then
                 Return
@@ -38,8 +38,8 @@
                 Try
                     validFile.SaveAs(strTemp, True)
                     Dim img As System.Drawing.Image = System.Drawing.Image.FromFile(strTemp)
-                    If img.Width > 300 Or img.Height > 200 Then
-                        Master.Notify("Podmínky: PNG formát, maximální šířka 300px, maximální výška 200px.", NotifyLevel.InfoMessage)
+                    If img.Width > 600 Or img.Height > 200 Then
+                        Master.Notify("Podmínky: PNG formát, maximální šířka 600px, maximální výška 200px.", NotifyLevel.InfoMessage)
                         Return
                     End If
                     If cF.CopyFile(strTemp, strDest) Then

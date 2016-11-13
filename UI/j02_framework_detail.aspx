@@ -231,7 +231,13 @@
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
                     </Items>
                 </telerik:RadMenuItem>
-                
+                <telerik:RadMenuItem Value="searchbox">
+                    <ItemTemplate>
+
+                        <input id="search2" style="width: 100px; margin-top: 7px;" value="Najít osobu..." onfocus="search2Focus()" onblur="search2Blur()" />
+                        <div id="search2_result" style="position: relative;left:-150px;"></div>
+                    </ItemTemplate>
+                </telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
 
@@ -452,5 +458,69 @@
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 
+    <script type="text/javascript">
+        <%if menu1.FindItemByValue("searchbox").visible then%>
+        $(function () {
+
+            $("#search2").autocomplete({
+                source: "Handler/handler_search_person.ashx",
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {                        
+                        window.open("j02_framework.aspx?pid=" + ui.item.PID,"_top");
+                        return false;
+                    }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search2_result').show();
+                },
+                close: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                    .hide();                   
+                }   
+
+
+
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var s = "<div>";
+                if (item.Closed == "1")
+                    s = s + "<a style='text-decoration:line-through;'>";
+                else
+                    s = s + "<a>";
+
+                s = s + __highlight(item.Project, item.FilterString);
+
+
+                s = s + "</a>";
+
+
+
+                s = s + "</div>";
+
+
+                return $(s).appendTo(ul);
+
+
+            };
+        });
+
+        function __highlight(s, t) {
+            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+            return s.replace(matcher, "<strong>$1</strong>");
+        }
+
+        function search2Focus() {            
+            document.getElementById("search2").value=""; 
+            document.getElementById("search2").style.background = "yellow";
+        }
+        function search2Blur() {
+           
+            document.getElementById("search2").style.background = "";
+            document.getElementById("search2").value = "Najít osobu...";
+        }
+        <%end if%>
+    </script>
 </asp:Content>
 

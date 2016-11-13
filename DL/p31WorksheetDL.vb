@@ -624,7 +624,7 @@
         s.Append(",a.p31Hours_Orig,a.p31Hours_Trimmed,a.p31Hours_Approved_Billing,a.p31Hours_Approved_Internal,a.p31Hours_Invoiced,a.p31HHMM_Orig,a.p31HHMM_Trimmed,a.p31HHMM_Approved_Billing,a.p31HHMM_Approved_Internal,a.p31HHMM_Invoiced,a.p31Rate_Billing_Orig,a.p31Rate_Internal_Orig,a.p31Rate_Billing_Approved,a.p31Rate_Internal_Approved,a.p31Rate_Billing_Invoiced,a.p31Amount_WithoutVat_Approved,a.p31Amount_WithVat_Approved,a.p31Amount_Vat_Approved,a.p31VatRate_Approved,a.p31ExchangeRate_Domestic,a.p31ExchangeRate_Invoice,a.p31Amount_Internal")
         s.Append(",a.p31DateTimeFrom_Orig,a.p31DateTimeUntil_Orig,a.p31Value_Orig_Entried,a.p31Calc_Pieces,a.p31Calc_PieceAmount,a.p35ID")
         s.Append(",p31free.*")
-        s.Append(",j02.j02LastName+' '+j02.j02FirstName as Person,p32.p32Name,p32.p34ID,p32.p32IsBillable,p34.p33ID,p34.p34Name,p34.p34IncomeStatementFlag,p41.p41Name,p41.p41NameShort,p41.p28ID_Client,p28Client.p28Name as ClientName,p28Client.p28CompanyShortName,p56.p56Name,p56.p56Code,j02owner.j02LastName+' '+j02owner.j02FirstName as Owner")
+        s.Append(",j02.j02LastName+' '+j02.j02FirstName as Person,p32.p32Name,p32.p34ID,p32.p32IsBillable,p34.p33ID,p34.p34Name,p34.p34IncomeStatementFlag,isnull(p41.p41NameShort,p41.p41Name) as p41Name,p41.p28ID_Client,p28Client.p28Name as ClientName,p28Client.p28CompanyShortName,p56.p56Name,p56.p56Code,j02owner.j02LastName+' '+j02owner.j02FirstName as Owner")
         s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.o23ID_First,a.p28ID_Supplier,supplier.p28Name as SupplierName,a.p49ID,a.j02ID_ContactPerson,cp.j02LastName+' '+cp.j02FirstName as ContactPerson," & bas.RecTail("p31", "a"))
         Return s.ToString
     End Function
@@ -951,7 +951,7 @@
     End Function
     Public Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31DataSourceForTimeline)
         Dim s As String = "SELECT a.j02ID,a.p41ID,min(p41.p28ID_Client) as p28ID,a.p31Date,sum(a.p31Hours_Orig) as Hours_Orig,a.p32ID,min(p32.p32Name) as p32Name,min(p34.p34Name) as p34Name"
-        s += ",min(p34.p34Color) as p34Color,min(p32.p32Color) as p32Color,min(p41.p41Name) as Project,min(p28.p28Name) as Client,min(a.p31ID) as p31ID_min,max(a.p31ID) as p31ID_max"
+        s += ",min(p34.p34Color) as p34Color,min(p32.p32Color) as p32Color,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client,min(a.p31ID) as p31ID_min,max(a.p31ID) as p31ID_max"
         s += " FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID"
         s += " LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
         s += " WHERE p34.p33ID=1 AND a.j02ID IN (" & String.Join(",", j02ids) & ") AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.j02ID,a.p41ID,a.p32ID,a.p31Date"
@@ -1061,7 +1061,7 @@
         Dim s As String = ""
         Select Case x29id
             Case BO.x29IdEnum.p41Project
-                s += "select min(a.p41ID) as PID,min(p41.p41Code) as Code,min(p41.p41Name) as Project,min(p28.p28Name) as Client"
+                s += "select min(a.p41ID) as PID,min(p41.p41Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client"
             Case BO.x29IdEnum.p28Contact
                 s += "select min(p28.p28ID) as PID,min(p28.p28Code) as Code,min(p28.p28Name) as Client"
             Case BO.x29IdEnum.j02Person

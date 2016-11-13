@@ -78,10 +78,11 @@
         pars.Add("pid", intPID)
         Return _cDB.RunSQL("UPDATE x31Report SET x31FileName=" & BO.BAS.GS(strReportFileName) & " WHERE x31ID=@pid", pars)
     End Function
-    Public Function UpdateLastScheduledRun(intPID As Integer, dat As Date) As Boolean
+    Public Function UpdateLastScheduledRun(intPID As Integer, dat As Date?) As Boolean
         Dim pars As New DbParameters()
         pars.Add("pid", intPID)
         pars.Add("d", dat, DbType.DateTime)
+
         Return _cDB.RunSQL("UPDATE x31Report SET x31LastScheduledRun=@d WHERE x31ID=@pid", pars)
     End Function
 

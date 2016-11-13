@@ -25,7 +25,7 @@
     <name>b02WorkflowStatus</name>
   </Table>
   <Table>
-    <ID>784721848</ID>
+    <ID>848722076</ID>
     <name>b05Workflow_History</name>
   </Table>
   <Table>
@@ -185,11 +185,11 @@
     <name>o13AttachmentType</name>
   </Table>
   <Table>
-    <ID>2128726636</ID>
+    <ID>45243216</ID>
     <name>o19Milestone_NonPerson</name>
   </Table>
   <Table>
-    <ID>2096726522</ID>
+    <ID>13243102</ID>
     <name>o20Milestone_Receiver</name>
   </Table>
   <Table>
@@ -197,11 +197,11 @@
     <name>o21MilestoneType</name>
   </Table>
   <Table>
-    <ID>1440724185</ID>
+    <ID>1504724413</ID>
     <name>o22Milestone</name>
   </Table>
   <Table>
-    <ID>1552724584</ID>
+    <ID>1616724812</ID>
     <name>o23Notepad</name>
   </Table>
   <Table>
@@ -217,7 +217,7 @@
     <name>o25DmsBinding</name>
   </Table>
   <Table>
-    <ID>1104722988</ID>
+    <ID>1168723216</ID>
     <name>o27Attachment</name>
   </Table>
   <Table>
@@ -281,15 +281,15 @@
     <name>p29ContactType</name>
   </Table>
   <Table>
-    <ID>688721506</ID>
+    <ID>752721734</ID>
     <name>p30Contact_Person</name>
   </Table>
   <Table>
-    <ID>1200723330</ID>
+    <ID>1264723558</ID>
     <name>p31Worksheet</name>
   </Table>
   <Table>
-    <ID>1712725154</ID>
+    <ID>1776725382</ID>
     <name>p31WorkSheet_FreeField</name>
   </Table>
   <Table>
@@ -357,15 +357,15 @@
     <name>p46BudgetPerson</name>
   </Table>
   <Table>
-    <ID>864722133</ID>
+    <ID>928722361</ID>
     <name>p47CapacityPlan</name>
   </Table>
   <Table>
-    <ID>13243102</ID>
+    <ID>77243330</ID>
     <name>p48OperativePlan</name>
   </Table>
   <Table>
-    <ID>1008722646</ID>
+    <ID>1072722874</ID>
     <name>p49FinancialPlan</name>
   </Table>
   <Table>
@@ -385,11 +385,11 @@
     <name>p53VatRate</name>
   </Table>
   <Table>
-    <ID>1312723729</ID>
+    <ID>1376723957</ID>
     <name>p56Task</name>
   </Table>
   <Table>
-    <ID>1904725838</ID>
+    <ID>1968726066</ID>
     <name>p56Task_FreeField</name>
   </Table>
   <Table>
@@ -435,6 +435,10 @@
   <Table>
     <ID>416720537</ID>
     <name>p81InvoiceAmount</name>
+  </Table>
+  <Table>
+    <ID>688721506</ID>
+    <name>p82Proforma_Payment</name>
   </Table>
   <Table>
     <ID>299148111</ID>
@@ -609,7 +613,7 @@
     <name>x56SnippetProperty</name>
   </Table>
   <Table>
-    <ID>976722532</ID>
+    <ID>1040722760</ID>
     <name>x57UserPageBinding</name>
   </Table>
   <Table>

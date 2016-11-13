@@ -347,6 +347,24 @@ Partial Public Class x31_record
     Protected WithEvents x31SchedulingReceivers As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''x31LastScheduledRun control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31LastScheduledRun As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdClearLastScheduledRun control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClearLastScheduledRun As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

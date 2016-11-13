@@ -124,7 +124,7 @@ Public Class p28_framework_detail
             End If
 
             If .p28CompanyShortName > "" Then
-                Me.Contact.Text += "<div>" & .p28CompanyName & "</div>"
+                Me.Contact.Text += "<div style='color:green;'>" & .p28CompanyName & "</div>"
             End If
             Me.Owner.Text = .Owner
             Me.p28RegID.Text = .p28RegID

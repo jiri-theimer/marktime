@@ -41,6 +41,15 @@ Partial Public Class clue_p41_record
     Protected WithEvents cmdFavourite As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''p41Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''p42Name control.
     '''</summary>
     '''<remarks>

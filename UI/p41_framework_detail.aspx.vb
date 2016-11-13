@@ -129,6 +129,9 @@ Public Class p41_framework_detail
             ViewState("p28id_client") = .p28ID_Client.ToString
 
             Me.Project.Text = .p41Name & " <span style='color:gray;padding-left:10px;'>" & .p41Code & "</span>"
+            If .p41NameShort <> "" Then
+                Me.Project.Text += "<div style='color:green;'>" & .p41NameShort & "</div>"
+            End If
 
             If .p28ID_Client > 0 Then
                 Me.Client.Text = .Client : Me.Client.Visible = True

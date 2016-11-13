@@ -52,6 +52,7 @@ Public Class j02_framework_detail
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
                     .Add("j02_framework_detail-switch")
                     .Add("j02_framework_detail-switchHeight")
+                    .Add("j02_framework_detail-searchbox")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -75,6 +76,7 @@ Public Class j02_framework_detail
                         panSwitch.Style.Item("height") = strHeight & "px"
                     End If
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
+                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("j02_framework_detail-searchbox", "0"))
                 End With
 
             End With
@@ -87,6 +89,7 @@ Public Class j02_framework_detail
             End If
             tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("j02_framework_detail-tabskin", "Default")   'až zde jsou vygenerované tab záložky
             Me.CurrentTab = Master.Factory.j03UserBL.GetUserParam("j02_framework_detail-tab", "summary")
+
         End If
 
         If Me.CurrentTab <> "" Then

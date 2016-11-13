@@ -22,6 +22,7 @@
                 
             </div>
             <div class="content">
+                <asp:Label ID="p41Name" runat="server" CssClass="valboldblue"></asp:Label>
                 <table cellpadding="6">
                     <tr>
                         <td>Typ projektu:</td>

@@ -37,6 +37,10 @@
 
             sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet_32.png")
         }
+
+        function hardrefresh(pid,flag) {
+            location.replace("default.aspx");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">

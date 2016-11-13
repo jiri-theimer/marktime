@@ -122,9 +122,9 @@ Public Class p41Project
     Public ReadOnly Property FullName As String
         Get
             If p28ID_Client > 0 Then
-                Return _Client & " - " & Me.p41Name
+                If Me.p41NameShort = "" Then Return _Client & " - " & Me.p41Name Else Return _Client & " - " & Me.p41NameShort
             Else
-                Return Me.p41Name
+                If Me.p41NameShort = "" Then Return Me.p41Name Else Return Me.p41NameShort
             End If
         End Get
     End Property

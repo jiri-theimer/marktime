@@ -25,12 +25,14 @@
             With lisPars
                 .Add(Me.CurrentPrefix + "_framework_detail-switchHeight")
                 .Add(Me.CurrentPrefix + "_framework_detail-tabskin")
+                .Add(Me.CurrentPrefix + "_framework_detail-searchbox")
             End With
 
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
                 basUI.SelectRadiolistValue(Me.switchHeight, .GetUserParam(Me.CurrentPrefix + "_framework_detail-switchHeight", "auto"))
                 basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_framework_detail-tabskin", "Default"))
+                Me.chkSearchBox.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework_detail-searchbox", "0"))
             End With
             With Master.Factory
                 colsSource.DataSource = .ftBL.GetList_X61(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix))
@@ -45,6 +47,14 @@
                 Next
             End With
             colsSource.ClearSelection()
+
+            Select Case Me.CurrentPrefix
+                Case "p28" : chkSearchBox.Text = "Na stránce zapnutý vyhledávač klienta"
+                Case "j02" : chkSearchBox.Text = "Na stránce zapnutý vyhledávač osoby"
+
+                Case Else
+                    chkSearchBox.Visible = False
+            End Select
         End If
     End Sub
 
@@ -62,6 +72,7 @@
                 End If
                 .SetUserParam(Me.CurrentPrefix + "_framework_detail-switchHeight", Me.switchHeight.SelectedValue)
                 .SetUserParam(Me.CurrentPrefix + "_framework_detail-tabskin", Me.skin1.SelectedValue)
+                .SetUserParam(Me.CurrentPrefix + "_framework_detail-searchbox", BO.BAS.GB(Me.chkSearchBox.Checked))
             End With
             
 

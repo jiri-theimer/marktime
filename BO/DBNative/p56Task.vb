@@ -105,6 +105,7 @@
             Return _p41Name
         End Get
     End Property
+    
 
     Friend Property _p41Code As String
 
@@ -116,6 +117,7 @@
     Public ReadOnly Property ProjectCodeAndName As String
         Get
             Return _p41Code & " - " & _p41Name
+
         End Get
     End Property
 

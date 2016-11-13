@@ -34,7 +34,7 @@
 
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
         With cRec
-            ph1.Text = .p41Code & " - " & .p41Name
+            ph1.Text = .FullName
         End With
         If Master.Factory.p41ProjectBL.IsMyFavouriteProject(cRec.PID) Then
             cmdFavourite.ImageUrl = "Images/favourite.png"

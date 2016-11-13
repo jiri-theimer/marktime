@@ -152,10 +152,10 @@
 
                 Dim message As New BO.smtpMessage()
                 With message
-                    '.Body = "Obsah zprávy: " & strOutputFileName
-                    '.SenderAddress = "jiri.theimer@gmail.com"
-                    .SenderName = "MARKTIME"
-                    .Subject = "MARKTIME REPORT | " & c.x31Name
+                    .Body = "Automaticky generovaná zpráva ze systému MARKTIME." & vbCrLf & vbCrLf & "Report: " & c.x31Name & vbCrLf & vbCrLf & vbCrLf & "Pozdrav posílá MARKTIME robot!"
+                    .SenderAddress = _Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
+                    .SenderName = "MARKTIME robot"
+                    .Subject = BO.BAS.OM3(c.x31Name, 30) & " | MARKTIME REPORT"
                     .AddOneFile2FullPath(_Factory.x35GlobalParam.TempFolder & "\" & strOutputFileName)
                 End With
                 c.x31SchedulingReceivers = Replace(c.x31SchedulingReceivers, ",", ";")
@@ -164,7 +164,7 @@
                 For i = 0 To UBound(a)
                     Dim cc As New BO.x43MailQueue_Recipient()
                     cc.x43Email = a(i)
-                    cc.x43RecipientFlag = BO.x43RecipientIdEnum.recTO
+                    cc.x43RecipientFlag = BO.x43RecipientIdEnum.recBCC
                     recipients.Add(cc)
                 Next
                 With _Factory.x40MailQueueBL

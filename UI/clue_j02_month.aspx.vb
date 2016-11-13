@@ -56,12 +56,12 @@
                     .ColTypes = "S|N|N|S|D|D"
                 End With
             Case "2"
-                s.Append("SELECT min(p28Name),min(p41Name),sum(p31Hours_Orig),convert(varchar(10),count(*))+'x',min(p31Date),max(p31Date)")
+                s.Append("SELECT min(p28Name),min(isnull(p41NameShort,p41Name)),sum(p31Hours_Orig),convert(varchar(10),count(*))+'x',min(p31Date),max(p31Date)")
                 s.Append(" FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID  INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID")
                 s.Append(" LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID")
                 s.Append(" WHERE p34.p33ID=1 AND a.j02ID=@j02id AND p31Date BETWEEN @d1 AND @d2")
                 s.Append(" GROUP BY a.p41ID")
-                s.Append(" ORDER BY min(p28Name),min(p41Name)")
+                s.Append(" ORDER BY min(p28Name),min(isnull(p41NameShort,p41Name))")
                 With plug1
                     .ColHeaders = "Klient|Projekt|Hodiny||Od|Do"
                     .ColHideRepeatedValues = "1"
@@ -69,7 +69,7 @@
                     .ColTypes = "S|S|N|S|D|D"
                 End With
             Case "3"
-                s.Append("SELECT min(p41Name),min(p32Name),sum(p31Hours_Orig),convert(varchar(10),count(*))+'x',min(p31Date),max(p31Date)")
+                s.Append("SELECT min(isnull(p41NameShort,p41Name)),min(p32Name),sum(p31Hours_Orig),convert(varchar(10),count(*))+'x',min(p31Date),max(p31Date)")
                 s.Append(" FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID  INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID")
                 s.Append(" LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID")
                 s.Append(" WHERE p34.p33ID=1 AND a.j02ID=@j02id AND p31Date BETWEEN @d1 AND @d2")

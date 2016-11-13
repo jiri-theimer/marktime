@@ -49,9 +49,11 @@ Class x40MailQueueBL
             If Trim(.Subject) = "" And Trim(.Body) = "" Then
                 _Error = "Předmět zprávy i text zprávy jsou prázdné." : Return 0
             End If
-            If .Body.IndexOf("--") > 0 Then
-                .Body = Replace(.Body, "[!--", "<!--")
-                .Body = Replace(.Body, "--]", "-->")
+            If Not String.IsNullOrEmpty(.Body) Then
+                If .Body.IndexOf("--") > 0 Then
+                    .Body = Replace(.Body, "[!--", "<!--")
+                    .Body = Replace(.Body, "--]", "-->")
+                End If
             End If
         End With
         Dim cX40 As New BO.x40MailQueue()

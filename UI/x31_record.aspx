@@ -160,7 +160,11 @@
                <span>Příjemci (e-mail) sestavy:</span>
                <asp:TextBox ID="x31SchedulingReceivers" runat="server" Width="500px"></asp:TextBox>
            </div>
-            
+            <div class="div6">
+                <span>Kdy naposledy byla sestava generována:</span>
+                <asp:Label ID="x31LastScheduledRun" runat="server" CssClass="valbold"></asp:Label>
+                <asp:Button ID="cmdClearLastScheduledRun" runat="server" CssClass="cmd" Text="Vyčistit čas posl.generování" />
+            </div>
         </asp:panel>
     </asp:Panel>
 </asp:Content>

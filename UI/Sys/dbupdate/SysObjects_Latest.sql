@@ -3900,6 +3900,8 @@ BEGIN TRY
 
 	DELETE FROM x69EntityRole_Assign WHERE x67ID=@x67id
 
+	UPDATE j04UserRole SET x67ID=(SELECT TOP 1 x67ID FROM x67EntityRole WHERE x67ID<>@x67id) WHERE j04ID=@pid
+
 	DELETE FROM x67EntityRole WHERE x67ID=@x67id
 
 	delete from j04UserRole where j04ID=@pid
@@ -5754,7 +5756,7 @@ SELECT @p91_count=COUNT(p91ID)
 from p91Invoice
 WHERE p28ID=@pid
 
-if exists(select p30ID FROM p30Contact_Person WHERE (p28ID=@pid OR p41ID IN (select p41ID FROM p41Project WHERE p28ID_Client=@pid)) AND getdate() BETWEEN p30ValidFrom AND p30ValidFrom)
+if exists(select p30ID FROM p30Contact_Person WHERE (p28ID=@pid OR p41ID IN (select p41ID FROM p41Project WHERE p28ID_Client=@pid)) AND getdate() BETWEEN p30ValidFrom AND p30ValidUntil)
  set @p30_exist=1
 else
  set @p30_exist=0
@@ -9103,7 +9105,7 @@ SELECT @p91_count=COUNT(p91ID)
 from p91Invoice
 WHERE p91ID IN (SELECT p91ID FROM p31Worksheet WHERE p41ID=@pid)
 
-if exists(select p30ID FROM p30Contact_Person WHERE p41ID=@pid AND getdate() BETWEEN p30ValidFrom AND p30ValidFrom)
+if exists(select p30ID FROM p30Contact_Person WHERE p41ID=@pid AND getdate() BETWEEN p30ValidFrom AND p30ValidUntil)
  set @p30_exist=1
 else
  set @p30_exist=0
@@ -10532,11 +10534,14 @@ if @p63id is null
 	RETURN
  end
 
-declare @j27id int,@datSupply datetime,@p41id_first int,@j02id int,@j17id int,@x15id int,@vatrate float
+declare @j27id int,@datSupply datetime,@p41id_first int,@j02id int,@j17id int,@x15id int,@vatrate float,@p92invoicetype int
 
-select @j27id=a.j27id,@datSupply=a.p91DateSupply,@p41id_first=a.p41ID_First,@j02id=a.j02ID_Owner,@x15id=a.x15ID,@j17id=a.j17ID
+select @j27id=a.j27id,@datSupply=a.p91DateSupply,@p41id_first=a.p41ID_First,@j02id=a.j02ID_Owner,@x15id=a.x15ID,@j17id=a.j17ID,@p92invoicetype=b.p92InvoiceType
 from p91invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
 where a.p91id=@p91id
+
+if @p92invoicetype=2
+ RETURN	---dobropis je vždy bez pøirážky
 
 declare @overhead float,@sum float,@p32id int,@p63IsIncludeTime bit,@p63IsIncludeExpense bit,@p63IsIncludeFees bit,@p63PercentRate float,@p31text nvarchar(1000)
 
@@ -11371,7 +11376,11 @@ if @langindex=2
  end
 
 
-select case when a.p31ID IS NULL THEN case when @langindex=1 then isnull(p95.p95Name_BillingLang1,p95.p95Name) when @langindex=2 then isnull(p95.p95Name_BillingLang2,p95.p95Name) else p95.p95Name end else p31.p31Text END as Oddil
+select case when a.p31ID IS NULL THEN case when @langindex=1 then isnull(p95.p95Name_BillingLang1,p95.p95Name)
+ when @langindex=2 then isnull(p95.p95Name_BillingLang2,p95.p95Name)
+ when @langindex=10 then p95.p95Name+' / '+p95.p95Name_BillingLang1
+ when @langindex=20 then p95.p95Name+' / '+p95.p95Name_BillingLang2
+  else p95.p95Name end else p31.p31Text END as Oddil
 ,a.p81Amount_WithoutVat as BezDPH
 ,a.p81VatRate as DPHSazba
 ,a.p81Amount_Vat as DPH
@@ -12045,6 +12054,7 @@ update p91invoice set p91amount_withoutvat_none=@p91amount_withoutvat_none,p91am
 ,p91proformaamount_vat_standard=@p91proformaamount_vat_standard,p91proformaamount_vat_low=@p91proformaamount_vat_low,p91proformaamount_withoutvat_standard=@p91proformaamount_withoutvat_standard
 ,p91proformaamount_withoutvat_low=@p91proformaamount_withoutvat_low,p91proformaamount_withoutvat_none=@p91proformaamount_withoutvat_none,p91proformaamount_vatrate=@p91proformaamount_vatrate
 ,p41id_first=@p41id_first
+,p91DateUpdate=getdate()
 WHERE p91id=@p91id
 
 

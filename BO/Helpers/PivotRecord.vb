@@ -138,7 +138,7 @@ Public Class PivotRowColumnField
                 _GroupByField = "p32.p32IsBillable"
                 s = "Fakturovatelná aktivita"
             Case PivotRowColumnFieldType.p41Name
-                _SelectField = "min(p41.p41Name)"
+                _SelectField = "min(isnull(p41.p41NameShort,p41.p41Name))"
                 _GroupByField = "a.p41ID"
                 s = "Projekt"
             Case PivotRowColumnFieldType.p42Name
