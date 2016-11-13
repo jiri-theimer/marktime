@@ -176,6 +176,15 @@ Partial Public Class j03_myprofile
     Protected WithEvents j03ModalWindowsFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''j03ProjectMaskIndex control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j03ProjectMaskIndex As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblj02Email control.
     '''</summary>
     '''<remarks>

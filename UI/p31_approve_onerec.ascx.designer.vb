@@ -273,4 +273,22 @@ Partial Public Class p31_approve_onerec
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidGUID_TempData As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP41ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP41ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidJ02ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidJ02ID As Global.System.Web.UI.WebControls.HiddenField
 End Class

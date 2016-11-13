@@ -46,7 +46,7 @@
 
         Dim cClient As BO.p28Contact = Nothing
         With cRec
-            Me.RecordHeader.Text = BO.BAS.OM3(.p41Name, 30)
+            Me.RecordHeader.Text = BO.BAS.OM3(.PrefferedName, 30)
             Me.RecordHeader.NavigateUrl = "mobile_p41_framework.aspx?pid=" & .PID.ToString
             Me.RecordName.Text = "[" & .p41Code & "] " & .p41Name
             Me.cmdP31Grid.NavigateUrl = "mobile_grid.aspx?prefix=p31&masterprefix=p41&masterpid=" & .PID.ToString

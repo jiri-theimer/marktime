@@ -43,7 +43,8 @@ Public Class handler_search_project
         For Each cP41 In lisP41
             Dim c As New NameValue
 
-            c.Project = cP41.FullName & " [" & cP41.p41Code & "]"
+            ''c.Project = cP41.FullName & " [" & cP41.p41Code & "]"
+            c.Project = cP41.ProjectWithMask(factory.SysUser.j03ProjectMaskIndex)
 
             c.PID = cP41.PID.ToString
             If cP41.IsClosed Then c.Closed = "1"

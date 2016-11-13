@@ -148,9 +148,18 @@
                     </asp:DropDownList>
 
                 </div>
-
+                <div class="div6">
+                    <span>Maska ve vyhledávači projektu:</span>
+                    <asp:DropDownList ID="j03ProjectMaskIndex" runat="server">
+                        <asp:ListItem Text="Klient+název projektu+kód projektu" Value="0"></asp:ListItem>
+                        <asp:ListItem Text="Název projektu" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="Název projektu+kód projektu" Value="2"></asp:ListItem>
+                        <asp:ListItem Text="Název projektu+klient" Value="3"></asp:ListItem>
+                        <asp:ListItem Text="Kód projektu" Value="4"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
                 <table cellpadding="10">
-
+                   
                     <tr>
                         <td>
                             <asp:Label ID="lblj02Email" Text="E-mail:" runat="server" CssClass="lbl" AssociatedControlID="j02Email"></asp:Label>

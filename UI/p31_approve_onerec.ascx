@@ -101,6 +101,7 @@
         </table>
         <div>
             <asp:Label ID="lblP31Text" runat="server" Text="Podrobný popis úkonu:" CssClass="lbl"></asp:Label>
+            <input id="search7" style="width: 200px;border:solid 1px white;color:#696969;font-family:'Segoe UI';margin-left:50px;" value="Našeptávač textů" onfocus="search7Focus()" onblur="search7Blur()" title="Hledání podle částečné shody textu úkonu, názvu klienta, názvu nebo kódu projektu a názvu aktivity" />
         </div>
         <asp:TextBox ID="p31Text" runat="server" TextMode="MultiLine" Style="width: 97%; height: 50px;"></asp:TextBox>
         <div>
@@ -119,3 +120,62 @@
 <asp:HiddenField ID="isbillable" runat="server" />
 <asp:HiddenField ID="hidIsVertical" runat="server" Value="0" />
 <asp:HiddenField ID="hidGUID_TempData" runat="server" />
+<asp:HiddenField ID="hidP41ID" runat="server" />
+<asp:HiddenField ID="hidJ02ID" runat="server" />
+<script type="text/javascript">
+    
+    $(function () {
+
+        $("#search7").autocomplete({
+            source: "Handler/handler_search_worksheet.ashx?p41id=<%=Me.hidP41ID.Value%>&j02id=<%=Me.hidJ02ID.Value%>",
+            minLength: 2,
+            select: function (event, ui) {
+                if (ui.item) {
+
+                    document.getElementById("<%=p31Text.ClientID%>").value = ui.item.p31Text;
+                    return false;
+                }
+            },
+            close: function (event, ui) {
+                $('ul.ui-autocomplete')
+                .hide();
+            }
+
+
+
+        }).data("ui-autocomplete")._renderItem = function (ul, item) {
+            var s = "<div><a>";
+
+            s = s + __highlight(item.p31Date + "<span style='color:silver;'>:" + item.Project + "</span><br><i>" + item.Text2Html + "</i>", item.FilterString);
+
+
+            s = s + "</a>";
+
+
+
+            s = s + "</div>";
+
+
+            return $(s).appendTo(ul);
+
+
+        };
+    });
+
+    function __highlight(s, t) {
+        var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+        return s.replace(matcher, "<strong>$1</strong>");
+    }
+
+    function search7Focus() {
+        document.getElementById("search7").value = "";
+        document.getElementById("search7").style.background = "whitesmoke";
+        document.getElementById("search7").style.border = "solid 1px silver";
+    }
+    function search7Blur() {
+
+        document.getElementById("search7").style.background = "";
+        document.getElementById("search7").style.border = "solid 1px white";
+        document.getElementById("search7").value = "Našeptávač textů";
+    }
+</script>

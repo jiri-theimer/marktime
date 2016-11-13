@@ -69,7 +69,9 @@
                 <li><a href="javascript:hardrefresh('new','1')">Nový worksheet úkon</a></li>
                 <asp:Repeater ID="rp1" runat="server">
                     <ItemTemplate>
-                         <li><a href="mobile_p31_framework.aspx?p41id=<%#Eval("pid")%>"><%#Eval("FullName")%></a></li>
+                         <li>                             
+                             <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                         </li>
                     </ItemTemplate>
                 </asp:Repeater>
                

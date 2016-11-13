@@ -102,4 +102,13 @@
       
 
     End Sub
+
+    Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
+        Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
+        With CType(e.Item.FindControl("link1"), HyperLink)
+            .NavigateUrl = "mobile_p31_framework.aspx?p41id=" & cRec.PID.ToString
+            .Text = cRec.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
+        End With
+
+    End Sub
 End Class

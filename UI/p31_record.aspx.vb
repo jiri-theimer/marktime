@@ -358,7 +358,8 @@
             Me.p41ID.Value = intDefP41ID.ToString
             Handle_ChangeP41(True)
             If Not _Project Is Nothing Then
-                p41ID.Text = _Project.FullName
+                ''p41ID.Text = _Project.FullName
+                p41ID.Text = _Project.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
             End If
         End If
         If intDefP56ID > 0 Then
@@ -500,7 +501,7 @@
                 Me.p41ID.Value = .p41ID.ToString
                 Handle_ChangeP41(False)
                 If Not _Project Is Nothing Then
-                    Me.p41ID.Text = _Project.FullName
+                    Me.p41ID.Text = _Project.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
                 End If
 
             End If

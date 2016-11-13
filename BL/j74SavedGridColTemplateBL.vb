@@ -349,6 +349,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Sesit, "p34Name"))
 
             .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)"))
+            .Add(AGC(My.Resources.common.KodProjektu, "p41Code"))
             .Add(AGC(My.Resources.common.KlientProjektu, "ClientName", , , "p28Client.p28Name"))
             .Add(AGC(My.Resources.common.NazevUkolu, "p56Name"))
             .Add(AGC(My.Resources.common.KodUkolu, "p56Code"))

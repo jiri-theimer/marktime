@@ -40,7 +40,6 @@ Public Class project_service
         mq.SearchExpression = filterString
         With factory.j03UserBL
             mq.TopRecordsOnly = BO.BAS.IsNullInt(.GetUserParam("handler_search_project-toprecs", "20"))
-            
         End With
 
 
@@ -80,8 +79,8 @@ Public Class project_service
         For Each rec As BO.p41Project In lis
             Dim itemData As New RadComboBoxItemData()
             With rec
-                itemData.Text = .FullName & " [" & .p41Code & "]"
-
+                ''itemData.Text = .FullName & " [" & .p41Code & "]"
+                itemData.Text = .ProjectWithMask(factory.SysUser.j03ProjectMaskIndex)
                 ''If .IsClosed Then itemData.Attributes.Item("class") = "radcomboitem_archive"
                 If .IsClosed Then itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
                 If .p41IsDraft Then

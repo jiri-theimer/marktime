@@ -425,8 +425,7 @@
             Return
         End If
         Dim cRecP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
-        Me.Project.Text = cRecP41.p41Name
-        If cRecP41.p41NameShort <> "" Then Me.Project.Text = cRecP41.p41NameShort
+        Me.Project.Text = cRecP41.PrefferedName
         Me.Project.NavigateUrl = "mobile_p41_framework.aspx?pid=" & Me.CurrentP41ID.ToString
 
         If cRecP41.p28ID_Client <> 0 Then

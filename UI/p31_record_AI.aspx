@@ -6,6 +6,8 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+
+
     <script type="text/javascript">
         $(document).ready(function () {
 

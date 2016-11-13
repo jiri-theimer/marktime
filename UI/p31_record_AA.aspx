@@ -8,6 +8,10 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <%If panApproving.Visible Then%>
+     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
+     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+    <%End If%>
     <script type="text/javascript">
         $(document).ready(function () {
 

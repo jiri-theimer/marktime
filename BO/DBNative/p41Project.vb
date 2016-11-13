@@ -128,6 +128,25 @@ Public Class p41Project
             End If
         End Get
     End Property
+    Public ReadOnly Property ProjectWithMask(intMaskIndex As Integer) As String        
+        Get
+            Dim s As String = Me.p41NameShort
+            If s = "" Then s = Me.p41Name
+            Select Case intMaskIndex
+                Case 1 : Return s  'pouze název
+                Case 2 : Return s & " [" & Me.p41Code & "]"  'název projektu + kód
+                Case 3 : Return s & " [" & _Client & "]"    'název+klient
+                Case 4 : Return Me.p41Code                'pouze kód projektu
+                Case Else : Return FullName & " [" & Me.p41Code & "]"
+            End Select
+        End Get
+    End Property
+    Public ReadOnly Property PrefferedName As String
+        Get
+            If Me.p41NameShort Then Return Me.p41NameShort
+            Return Me.p41Name
+        End Get
+    End Property
     Public ReadOnly Property Owner As String
         Get
             Return _Owner
