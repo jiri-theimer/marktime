@@ -141,6 +141,7 @@
         Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadTempRecord(intP31ID, ViewState("guid"))
         Dim cApprove As New BO.p31WorksheetApproveInput(cRec.PID, cRec.p33ID)
         With cApprove
+            .p31Date = cRec.p31Date
             .GUID_TempData = ViewState("guid")
             .p72id = CType(CType(ri.FindControl("p72ID"), DropDownList).SelectedValue, BO.p72IdENUM)
             If .p72id = BO.p72IdENUM._NotSpecified Then

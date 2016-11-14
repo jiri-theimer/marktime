@@ -36,7 +36,9 @@
             If .p33ID <> BO.p33IdENUM.Cas Then
                 Master.StopPage("Funkce [Rozdělit] funguje pouze pro časové úkony.", True)
             End If
-            If .p71ID > BO.p71IdENUM.Nic Then Master.StopPage("Záznam byl již dříve schválen.")
+            If ViewState("guid") = "" And .p71ID > BO.p71IdENUM.Nic Then
+                Master.StopPage("Záznam byl již dříve schválen.")
+            End If
             If .p91ID <> 0 Then Master.StopPage("Záznam byl již dříve vyfakturován.")
         End With
         
@@ -69,7 +71,7 @@
                 If ViewState("guid") <> "" Then
                     Dim c As New BO.p85TempBox()
                     c.p85GUID = ViewState("guid")
-                    c.p85DataPID = Master.DataPID
+                    c.p85DataPID = intP31ID_New
                     Master.Factory.p85TempBoxBL.Save(c)
 
                     AddRecord2Approving(intP31ID_New)
@@ -91,6 +93,7 @@
         Dim cApprove As New BO.p31WorksheetApproveInput(cRec.PID, cRec.p33ID)
         With cApprove
             .GUID_TempData = ViewState("guid")
+            .p31Date = cRec.p31Date
             .p71id = BO.p71IdENUM.Schvaleno
             If cRec.p32IsBillable Then
                 .p72id = BO.p72IdENUM.Fakturovat

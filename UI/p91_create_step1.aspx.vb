@@ -203,6 +203,7 @@ Public Class p91_create_step1
                 Dim intP31ID As Integer = .LastSavedPID
                 Dim cRec As BO.p31Worksheet = .Load(intP31ID)
                 Dim cA As New BO.p31WorksheetApproveInput(intP31ID, cRec.p33ID)
+                cA.p31Date = cRec.p31Date
                 cA.p72id = BO.p72IdENUM.Fakturovat
                 cA.p71id = BO.p71IdENUM.Schvaleno
                 cA.Value_Approved_Billing = cRec.p31Amount_WithoutVat_Orig

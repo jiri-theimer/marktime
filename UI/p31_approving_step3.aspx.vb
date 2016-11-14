@@ -139,6 +139,7 @@ Public Class p31_approving_step3
             Dim cApprove As New BO.p31WorksheetApproveInput(cRec.PID, cRec.p33ID)
             With cApprove
                 .GUID_TempData = ViewState("guid")
+                .p31Date = cRec.p31Date
                 ''.p71id = BO.p71IdENUM.Schvaleno
                 .p71id = p71id
                 .p72id = explicit_p72id
@@ -610,6 +611,7 @@ Public Class p31_approving_step3
                 If .Save_Approving(cApprove, False) Then
 
                 Else
+                    Dim xx As Integer = 1
                     'strErrs += "<hr>" & .ErrorMessage
                 End If
             End With

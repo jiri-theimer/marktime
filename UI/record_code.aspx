@@ -25,7 +25,16 @@
                 <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
             </td>
         </tr>
+        <tr valign="top">
+            <td>
+                Posledních 10 záznamů:
+            </td>
+            <td>
+                <asp:Label ID="last10" runat="server"></asp:Label>
+            </td>
+        </tr>
     </table>
+    
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

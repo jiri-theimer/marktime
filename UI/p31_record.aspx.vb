@@ -1009,6 +1009,7 @@
         Dim cApprove As New BO.p31WorksheetApproveInput(Master.DataPID, cRec.p33ID)
         With cApprove
             .GUID_TempData = Me.GuidApprove
+            .p31Date = cRec.p31Date
             .p71id = BO.p71IdENUM.Schvaleno
             If cRec.p32IsBillable Then
                 .p72id = BO.p72IdENUM.Fakturovat

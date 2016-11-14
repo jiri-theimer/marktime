@@ -48,6 +48,7 @@
                         'pokud záznam kontaktu nemá vazbu na p29, pak jinak nejsme schopni ověřit
                         bolCanEdit = cDisp.OwnerAccess
                     End If
+                    ShowLast10("select top 10 p28Code,p29Name FROM p28Contact a LEFT OUTER JOIN p29ContactType b ON a.p29ID=b.p29ID WHERE a.p28IsDraft=0 ORDER BY p28ID DESC")
                 Case BO.x29IdEnum.p41Project
                     Dim cRec As BO.p41Project = .p41ProjectBL.Load(Master.DataPID)
                     Dim cDisp As BO.p41RecordDisposition = .p41ProjectBL.InhaleRecordDisposition(cRec)
@@ -55,7 +56,7 @@
                     Dim cTR As BO.p42ProjectType = .p42ProjectTypeBL.Load(cRec.p42ID)
                     intX38ID = cTR.x38ID
                     bolIamOwner = cDisp.OwnerAccess
-                    
+                    ShowLast10("select top 10 p41Code,p42Name FROM p41Project a LEFT OUTER JOIN p42ProjectType b ON a.p42ID=b.p42ID WHERE a.p41IsDraft=0 ORDER BY p41ID DESC")
                 Case BO.x29IdEnum.p91Invoice
                     Dim cRec As BO.p91Invoice = .p91InvoiceBL.Load(Master.DataPID)
                     Dim cDisp As BO.p91RecordDisposition = .p91InvoiceBL.InhaleRecordDisposition(cRec)
@@ -63,6 +64,7 @@
                     Dim cTR As BO.p92InvoiceType = .p92InvoiceTypeBL.Load(cRec.p92ID)
                     intX38ID = cTR.x38ID
                     bolIamOwner = cDisp.OwnerAccess
+                    ShowLast10("select top 10 p91Code,p92Name FROM p91Invoice a LEFT OUTER JOIN p92InvoiceType b ON a.p92ID=b.p92ID WHERE a.p91IsDraft=0 ORDER BY p91ID DESC")
                 Case BO.x29IdEnum.p90Proforma
                     Dim cRec As BO.p90Proforma = .p90ProformaBL.Load(Master.DataPID)
                     Me.txtCode.Text = cRec.p90Code : Me.Owner.Text = cRec.Owner
@@ -71,6 +73,7 @@
                     If cRec.j02ID_Owner = .SysUser.j02ID Or .TestPermission(BO.x53PermValEnum.GR_P90_Owner) Then
                         bolIamOwner = True
                     End If
+                    ShowLast10("select top 10 p90Code,p89Name FROM p90Proforma a LEFT OUTER JOIN p89ProformaType b ON a.p89ID=b.p89ID WHERE a.p90IsDraft=0 ORDER BY p90ID DESC")
                 Case BO.x29IdEnum.p56Task
                     Dim cRec As BO.p56Task = .p56TaskBL.Load(Master.DataPID)
                     Dim cDisp As BO.p56RecordDisposition = .p56TaskBL.InhaleRecordDisposition(cRec)
@@ -162,5 +165,12 @@
                 Master.Notify("Změna kód záznamu se nepodařila, viz chyba:<br>" & strErr, NotifyLevel.ErrorMessage)
             End If
         End If
+    End Sub
+
+    Private Sub ShowLast10(strSQL As String)
+        Dim dt As DataTable = Master.Factory.pluginBL.GetDataTable(strSQL, Nothing)
+        For Each row As DataRow In dt.Rows
+            Me.last10.Text += row.Item(0) & " (" & row.Item(1) & ")<br>"
+        Next
     End Sub
 End Class

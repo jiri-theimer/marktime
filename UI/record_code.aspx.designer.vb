@@ -32,6 +32,15 @@ Partial Public Class record_code
     Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''last10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents last10 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

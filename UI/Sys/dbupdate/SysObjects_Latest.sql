@@ -7069,6 +7069,7 @@ CREATE  procedure [dbo].[p31_save_approving]
 ,@rate_internal_approved float
 ,@p31text nvarchar(2000)
 ,@vatrate_approved float
+,@dat_p31date datetime
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -7093,6 +7094,10 @@ left outer join p32activity p32 on a.p32id=p32.p32id
 left outer join p34activitygroup p34 on p32.p34id=p34.p34id
 left outer join p33ActivityInputType p33 on p34.p33id=p33.p33id
 where a.p31id=@p31id
+
+if @dat_p31date is not null
+ set @p31date=@dat_p31date
+
 
 if @p33code='M'
  begin
@@ -7145,7 +7150,7 @@ if @p33code='T'
 if ltrim(rtrim(@approvingset))=''
  set @approvingset=null
 
-update p31worksheet set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset
+update p31worksheet set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@p31date
 where p31id=@p31id
 
 if @p71id=2 or @p71id=3
@@ -7292,6 +7297,7 @@ CREATE  procedure [dbo].[p31_save_approving_temp]
 ,@rate_internal_approved float
 ,@p31text nvarchar(2000)
 ,@vatrate_approved float
+,@dat_p31date datetime
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -7319,6 +7325,9 @@ left outer join p32activity p32 on a.p32id=p32.p32id
 left outer join p34activitygroup p34 on p32.p34id=p34.p34id
 left outer join p33ActivityInputType p33 on p34.p33id=p33.p33id
 where a.p31id=@p31id
+
+if @dat_p31date is not null
+ set @p31date=@dat_p31date
 
 if @p33code='M'
  begin
@@ -7371,7 +7380,7 @@ if @p33code='T'
 if ltrim(rtrim(@approvingset))=''
  set @approvingset=null
 
-update p31worksheet_temp set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset
+update p31worksheet_temp set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@dat_p31date
 where p31GUID=@guid AND p31id=@p31id
 
 if @p71id=2 or @p71id=3
