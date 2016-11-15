@@ -42,7 +42,7 @@
         End If
 
         With cRec
-            If cD.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cD.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then
+            If .p71ID = BO.p71IdENUM.Nic And (cD.RecordDisposition = BO.p31RecordDisposition.CanEdit Or cD.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit) Then
                 cmdText.Visible = True
             End If
             If cD.RecordDisposition = BO.p31RecordDisposition.CanApprove Or cD.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Then

@@ -40,6 +40,10 @@
             sw_master("x40_record.aspx?pid=" + pid, "Images/email_32.png");
 
         }
+        function report() {
+            sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png", true);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -53,10 +57,13 @@
                     <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Můj profil"></asp:Label>
 
                 </td>
-
+                <td style="padding-left: 20px;" id="tdX31" runat="server">
+                    <img src="Images/report.png" />
+                    <a type="button" href="javascript:report()">Osobní tiskové sestavy</a>
+                </td>
                 <td style="padding-left: 20px;">
                     <img src="Images/plugin.png" />
-                    <a type="button" href="javascript:personalpage()">Zvolit si osobní (výchozí) stránku</a>
+                    <a type="button" href="javascript:personalpage()">Zvolit si startovací (výchozí) stránku</a>
                 </td>
                 <td style="padding-left: 20px;">
                     <img src="Images/email.png" />

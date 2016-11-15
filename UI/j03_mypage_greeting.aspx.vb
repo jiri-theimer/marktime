@@ -42,7 +42,7 @@
 
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
-
+                menu1.FindItemByValue("myreport").Visible = .TestPermission(BO.x53PermValEnum.GR_X31_Personal)
                 ''If .SysUser.j04IsMenu_Invoice Then
                 ''    menu1.FindItemByValue("p91_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
                 ''End If

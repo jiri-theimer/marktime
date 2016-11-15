@@ -11,7 +11,7 @@
             With Master
                 .PageTitle = "Můj profil v MARKTIME"
                 .SiteMenuValue = "cmdMyProfile"
-                
+                tdX31.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal)
             End With
 
 

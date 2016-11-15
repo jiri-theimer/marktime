@@ -23,6 +23,15 @@ Partial Public Class j03_myprofile
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''tdX31 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tdX31 As Global.System.Web.UI.HtmlControls.HtmlTableCell
+
+    '''<summary>
     '''lblLogin control.
     '''</summary>
     '''<remarks>

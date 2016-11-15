@@ -50,6 +50,9 @@ Public Class report_modal
             If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified Then
                 Master.StopPage("prefix missing")
             End If
+            If Me.CurrentX29ID = BO.x29IdEnum.j02Person Then
+                If Not Master.Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal) Then Master.StopPage("Chybí oprávnění k osobním sestavám.")
+            End If
             ViewState("guid") = BO.BAS.GetGUID
             If Request.Item("pids") <> "" Then
                 Me.MultiPIDs = Request.Item("pids")

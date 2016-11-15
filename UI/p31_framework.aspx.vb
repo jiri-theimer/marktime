@@ -156,7 +156,7 @@ Public Class p31_framework
 
             If tabs1.SelectedIndex = 2 Then
                 'úkoly
-                cmdNewTask.Visible = True
+                cmdNewTask.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
             Else
                 cmdNewTask.Visible = False
             End If
