@@ -20,8 +20,13 @@
                 Me.x38ID.DataBind()
                 Me.x38ID_Draft.DataSource = lisX38.Where(Function(p) p.x38IsDraft = True)
                 Me.x38ID_Draft.DataBind()
-                Me.x31ID.DataSource = .Factory.x31ReportBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.p90Proforma)
+                Me.x38ID_Payment.DataSource = Master.Factory.x38CodeLogicBL.GetList(BO.x29IdEnum.p82Proforma_Payment)
+                Me.x38ID_Payment.DataBind()
+                Dim lisX31 As IEnumerable(Of BO.x31Report) = .Factory.x31ReportBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.p90Proforma)
+                Me.x31ID.DataSource = lisX31
                 Me.x31ID.DataBind()
+                Me.x31ID_Payment.DataSource = lisX31
+                Me.x31ID_Payment.DataBind()
                 
                 Me.p93ID.DataSource = .Factory.p93InvoiceHeaderBL.GetList(New BO.myQuery)
                 Me.p93ID.DataBind()
@@ -49,7 +54,9 @@
             
             Me.x38ID.SelectedValue = .x38ID.ToString
             Me.x38ID_Draft.SelectedValue = .x38ID_Draft.ToString
+            Me.x38ID_Payment.SelectedValue = .x38ID_Payment.ToString
             Me.x31ID.SelectedValue = .x31ID.ToString
+            Me.x31ID_Payment.SelectedValue = .x31ID_Payment.ToString
 
             Me.p93ID.SelectedValue = .p93ID.ToString
 
@@ -80,8 +87,10 @@
             With cRec
                 .x38ID = BO.BAS.IsNullInt(Me.x38ID.SelectedValue)
                 .x38ID_Draft = BO.BAS.IsNullInt(Me.x38ID_Draft.SelectedValue)
+                .x38ID_Payment = BO.BAS.IsNullInt(Me.x38ID_Payment.SelectedValue)
                 .j27ID = Master.Factory.x35GlobalParam.GetValueInteger("j27ID_Invoice", 2)
                 .x31ID = BO.BAS.IsNullInt(Me.x31ID.SelectedValue)
+                .x31ID_Payment = BO.BAS.IsNullInt(Me.x31ID_Payment.SelectedValue)
                 .p93ID = BO.BAS.IsNullInt(Me.p93ID.SelectedValue)
                 .p89Name = Me.p89Name.Text
 

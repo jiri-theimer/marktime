@@ -26,6 +26,12 @@
 
             If Master.IsRecordClone Then
                 Master.DataPID = 0
+                Me.p90Amount_Billed.Value = 0
+                Me.p90DateBilled.SelectedDate = Nothing
+                Me.p82Code.Visible = False
+                link_x31_dpp.Visible = False
+                Me.p90Code.Visible = False : Me.link_x31id.Visible = False
+                Me.p90TextDPP.Text = ""
             End If
 
         End If
@@ -46,7 +52,9 @@
             Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
             Return
         End If
+
         Dim cRec As BO.p90Proforma = Master.Factory.p90ProformaBL.Load(Master.DataPID)
+        Dim cP89 As BO.p89ProformaType = Master.Factory.p89ProformaTypeBL.Load(cRec.p89ID)
         With cRec
             Master.HeaderText = String.Format("Záznam zálohové faktury [{0}]", .p90Code)
             Me.p90Code.Text = .p90Code
@@ -59,6 +67,7 @@
             Me.j02ID_Owner.Text = .Owner
             Me.p90text1.Text = .p90Text1
             Me.p90text2.Text = .p90Text2
+            Me.p90TextDPP.Text = .p90TextDPP
             Me.p90Date.SelectedDate = .p90Date
             If Not BO.BAS.IsNullDBDate(.p90DateMaturity) Is Nothing Then
                 Me.p90DateMaturity.SelectedDate = .p90DateMaturity
@@ -76,6 +85,14 @@
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
 
+            link_x31id.NavigateUrl = "javascript:report(" & cP89.x31ID.ToString & ")"
+            If .p82Code <> "" Then
+                p82Code.Visible = True : p82Code.Text = .p82Code : Me.p82Code.NavigateUrl = "javascript:dppcode(" & .p82ID.ToString & ")"
+                link_x31_dpp.Visible = True : link_x31_dpp.NavigateUrl = "javascript:report(" & cP89.x31ID_Payment.ToString & ")"
+            Else
+                Me.p82Code.Visible = False
+                link_x31_dpp.Visible = False
+            End If
         End With
 
     End Sub
@@ -115,6 +132,7 @@
                
                 .p90Text1 = Me.p90text1.Text
                 .p90Text2 = Me.p90text2.Text
+                .p90TextDPP = Me.p90TextDPP.Text
                 .p90Date = Me.p90Date.SelectedDate
                 .p90DateMaturity = BO.BAS.IsNullDBDate(Me.p90DateMaturity.SelectedDate)
 

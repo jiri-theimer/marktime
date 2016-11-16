@@ -2438,6 +2438,9 @@ if @x29id=328
 if @x29id=356	---úkol (technicky nemùže být DRAFT a musí existovat p57id a tím i x38id
  select @pid_last=max(p56ID),@code_max_used=max(dbo.remove_alphacharacters(p56code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p56Task where p56Code NOT LIKE 'TEMP%' and p56Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND p57ID IN (SELECT p57ID FROM p57TaskType WHERE x38ID=@x38id)
 
+if @x29id=382	---úhrada zálohové faktury
+ select @pid_last=max(p82ID),@code_max_used=max(dbo.remove_alphacharacters(p82Code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM p82Proforma_Payment where p82Code NOT LIKE 'TEMP%' and p82Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue
+
 
 if @x29id=223 and @isdraft=0	---dokument
  select @pid_last=max(o23ID),@code_max_used=max(dbo.remove_alphacharacters(o23code,@x38Scale,@x38ConstantBeforeValue,@x38ConstantAfterValue)) FROM o23Notepad where o23IsDraft=0 AND o23Code NOT LIKE 'TEMP%' and o23Code LIKE @x38ConstantBeforeValue+'%'+@x38ConstantAfterValue AND o24ID IN (SELECT o24ID FROM o24NotepadType WHERE x38ID=@x38id)
@@ -2474,53 +2477,6 @@ if @val<=@x38ExplicitIncrementStart
 set @code_new=@x38ConstantBeforeValue+right('0000000000'+convert(varchar(10),@val),@x38Scale)+@x38ConstantAfterValue
 return(@code_new)
 
-if @x29id=141 and @code_new<>''	---kód projektu musí být jedineèný napøíè všemi záznam v tabulce
-begin
-	if exists(select p41ID FROM p41Project WHERE p41Code LIKE @code_new)
-	set @code_new=''	---v tabulce již je uložená hodnota klíèe @code_new
-end
-
-if @x29id=356 and @code_new<>''	---úkol
-begin
-	if exists(select p56ID FROM p56Task WHERE p56Code LIKE @code_new)
-	set @code_new=''
-end
-
-if @x29id=223 and @code_new<>''	---dokument
-begin
-	return(@code_new)
-	if exists(select o23ID FROM o23Notepad WHERE o23Code LIKE @code_new)
-	 set @code_new=''
-end
-
-
-if @x29id=328 and @code_new<>''	---klient
-begin
- if exists(select p28ID FROM p28Contact WHERE p28Code LIKE @code_new)
-  set @code_new=''
-end
-
-if @x29id=391 and @code_new<>''	---faktura
-begin
- if exists(select p91ID FROM p91Invoice WHERE p91Code LIKE @code_new)
-  set @code_new=''
-end
-
-if @x29id=390 and @code_new<>''	---záloha
-begin
- if exists(select p90ID FROM p90Proforma WHERE p90Code LIKE @code_new)
-  set @code_new=''
-end
-
-
-if @code_new='' and @attempt_number<=1
-begin
- set @code_new=dbo.x38_get_freecode(@x38id,@x29id,@datapid,@isdraft,2)	---druhý pokus, když se nepodaøilo zjistit hodnotu kódu napoprvé
-
-end
-
-
-RETURN(@code_new)
 
 END
 
@@ -10316,10 +10272,7 @@ GO
 
 
 
-
-
-
-create    PROCEDURE [dbo].[p90_aftersave]
+CREATE    PROCEDURE [dbo].[p90_aftersave]
 @p90id int
 ,@j03id_sys int
 
@@ -10327,6 +10280,46 @@ AS
 
 if exists(select p90ID FROM p90Proforma WHERE p90ID=@p90id AND (p90Code LIKE 'TEMP%' OR p90Code IS NULL))
  exec p90_update_code @p90id,@j03id_sys
+
+declare @p90Amount_Billed float,@p90DateBilled datetime,@login varchar(50),@p90Code varchar(50),@p89id int
+
+select @p90Amount_Billed=p90Amount_Billed,@p90DateBilled=p90DateBilled,@login=p90UserUpdate,@p90Code=p90Code,@p89id=p89ID FROM p90Proforma WHERE p90ID=@p90id
+
+if isnull(@p90Amount_Billed,0)>0 and @p90DateBilled is not null AND not exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@p90id)
+ begin
+  insert into p82Proforma_Payment(p90ID,p82Amount,p82Date,p82Code,p82DateInsert,p82UserInsert) values(@p90id,@p90Amount_Billed,@p90DateBilled,'TEMP'+convert(varchar(10),@p90id),getdate(),@login)
+
+ end
+
+if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@p90id) and isnull(@p90Amount_Billed,0)=0
+ DELETE FROM p82Proforma_Payment WHERE p90ID=@p90id
+
+if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@p90id)
+ begin
+   declare @p82Code varchar(50),@x38id int,@p82id int
+   select @p82id=p82ID,@p82Code=p82Code FROM p82Proforma_Payment WHERE p90ID=@p90id
+  
+
+   if @p82Code is null or left(@p82Code,4)='TEMP'
+    begin
+	 select @x38id=x38ID_Payment FROM p89ProformaType WHERE p89ID=@p89id
+
+	 if @x38id is null
+	  select @x38id=x38ID FROM x38CodeLogic WHERE x29ID=382
+
+	 if @x38id is not null
+      set @p82Code=dbo.x38_get_freecode(@x38id,382,@p82id,0,1)
+
+	 if @p82Code=''
+	  set @p82Code='DPP-'+@p90Code
+
+	 UPDATE p82Proforma_Payment SET p82Code=@p82Code WHERE p90ID=@p90id 
+	end
+ 
+   
+ end
+ update p82Proforma_Payment set p82Amount=@p90Amount_Billed,p82Date=@p90DateBilled,p82DateUpdate=getdate(),p82UserUpdate=@login WHERE p90ID=@p90id
+
 
 ---automaticky se spouští po uložení záznamu faktury
 if exists(select p99ID FROM p99Invoice_Proforma WHERE p90ID=@p90id)

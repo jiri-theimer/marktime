@@ -114,6 +114,10 @@
         sw_menu_decide("o10_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/article_32.png", true)
 
     }
+    function p90_create() {
+        sw_menu_decide("p90_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/proforma_32.png")
+
+    }
 
     function setsaw(value) {
         createCookie('MT50-SAW', value, 30);

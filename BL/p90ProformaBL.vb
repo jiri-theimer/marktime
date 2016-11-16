@@ -3,6 +3,8 @@
     Function Save(cRec As BO.p90Proforma, lisFF As List(Of BO.FreeField)) As Boolean
     Function Load(intPID As Integer) As BO.p90Proforma
     Function LoadMyLastCreated() As BO.p90Proforma
+    Function LoadByP82ID(intP82ID As Integer) As BO.p90Proforma
+    Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma)
     
@@ -70,6 +72,9 @@ Class p90ProformaBL
     Public Function LoadMyLastCreated() As BO.p90Proforma Implements Ip90ProformaBL.LoadMyLastCreated
         Return _cDL.LoadMyLastCreated()
     End Function
+    Public Function LoadByP82ID(intP82ID As Integer) As BO.p90Proforma Implements Ip90ProformaBL.LoadByP82ID
+        Return _cDL.LoadByP82ID(intP82ID)
+    End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ip90ProformaBL.Delete
         Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.p90Proforma, intPID)
         If _cDL.Delete(intPID) Then
@@ -81,5 +86,8 @@ Class p90ProformaBL
     End Function
     Public Function GetList(mq As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma) Implements Ip90ProformaBL.GetList
         Return _cDL.GetList(mq)
+    End Function
+    Public Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean Implements Ip90ProformaBL.UpdateP82Code
+        Return _cDL.UpdateP82Code(intP90ID, strP82Code)
     End Function
 End Class

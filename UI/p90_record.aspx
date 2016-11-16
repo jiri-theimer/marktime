@@ -15,20 +15,23 @@
             dialog_master("record_code.aspx?prefix=p90&pid=<%=Master.DataPID%>");
 
         }
+        function dppcode(p82id) {
+
+            dialog_master("record_code.aspx?prefix=p82&pid="+p82id);
+
+        }
         function hardrefresh(pid, flag, codeValue) {
             if (flag == "record-code") {
-                document.getElementById("<%=Me.p90Code.ClientID%>").innerText = codeValue;
-                alert("Změna čísla zálohy byla uložena.")
-                return;
+                location.replace("p90_record.aspx?pid=<%=master.DataPID%>");
             }
 
 
 
         }
 
-        function report() {
+        function report(x31id) {
 
-            dialog_master("report_modal.aspx?prefix=p90&pid=<%=master.datapid%>", true);
+            dialog_master("report_modal.aspx?prefix=p90&pid=<%=master.datapid%>&x31id="+x31id, true);
 
         }
 
@@ -52,7 +55,7 @@
                         <uc:datacombo ID="p89ID" runat="server" DataTextField="p89Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px" AutoPostBack="true"></uc:datacombo>
                         <asp:HyperLink ID="p90Code" runat="server" ToolTip="Číslo zálohy"></asp:HyperLink>
                         <span style="padding-left: 30px;"></span>
-                        <asp:HyperLink ID="report" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()"></asp:HyperLink>
+                        <asp:HyperLink ID="link_x31id" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()"></asp:HyperLink>
                     </td>
                 </tr>
                 <tr>
@@ -63,12 +66,7 @@
                         <telerik:RadNumericTextBox ID="p90Amount" runat="server" Width="100px"></telerik:RadNumericTextBox>
                         <uc:datacombo ID="j27ID" runat="server" DataTextField="j27Code" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="false" Width="100px"></uc:datacombo>
 
-                        <asp:Label ID="Label4" Text="Již uhrazeno:" runat="server" CssClass="lbl"></asp:Label>
-                        <telerik:RadNumericTextBox ID="p90Amount_Billed" runat="server" Width="100px"></telerik:RadNumericTextBox>
-                        <asp:Label ID="Label5" Text="Datum úhrady:" runat="server" CssClass="lbl"></asp:Label>
-                        <telerik:RadDatePicker ID="p90DateBilled" runat="server"  Width="120px" SharedCalendarID="SharedCalendar">
-                            <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
-                        </telerik:RadDatePicker>
+                        
                     </td>
                 </tr>
                 <tr valign="top">
@@ -126,27 +124,49 @@
                 </tr>
 
 
-                <tr>
-                    <td>
-                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq"></asp:Label>
-
-                    </td>
-                    <td>
-                        <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
-
-                    </td>
-                </tr>
-
+                
             </table>
 
-            <div>Text faktury</div>
+            
+            <div>Text zálohy</div>
             <div>
                 <asp:TextBox ID="p90text1" runat="server" TextMode="MultiLine" Style="height: 70px; width: 100%;"></asp:TextBox>
             </div>
-            <div>Technický text faktury</div>
+            <div>Technický text zálohy</div>
             <div>
                 <asp:TextBox ID="p90text2" runat="server" TextMode="MultiLine" Style="height: 30px; width: 100%;"></asp:TextBox>
             </div>
+            <div class="content-box2" style="margin-top:10px;">
+                <div class="title">
+                    Úhrada zálohy
+                </div>
+                <div class="content">
+
+                    <asp:Label ID="Label4" Text="Již uhrazeno:" runat="server" CssClass="lbl"></asp:Label>
+                        <telerik:RadNumericTextBox ID="p90Amount_Billed" runat="server" Width="100px"></telerik:RadNumericTextBox>
+                        <asp:Label ID="Label5" Text="Datum úhrady:" runat="server" CssClass="lbl"></asp:Label>
+                        <telerik:RadDatePicker ID="p90DateBilled" runat="server"  Width="120px" SharedCalendarID="SharedCalendar">
+                            <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
+                        </telerik:RadDatePicker>
+                    <asp:HyperLink ID="p82Code" runat="server" ToolTip="Číslo dokladu o přijaté platbě"></asp:HyperLink>
+                    <span style="padding-left: 30px;"></span>
+                        <asp:HyperLink ID="link_x31_dpp" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report_dpp()"></asp:HyperLink>
+
+                    <div>Text k dokladu o přijaté platbě</div>
+                    <div>
+                        <asp:TextBox ID="p90TextDPP" runat="server" TextMode="MultiLine" Style="height: 30px; width: 100%;"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+
+           <div class="div6">
+               <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq"></asp:Label>
+               <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
+           </div>
+                        
+
+                  
+
         </telerik:RadPageView>
         <telerik:RadPageView ID="ff" runat="server">
 

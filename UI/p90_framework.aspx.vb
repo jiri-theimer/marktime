@@ -49,10 +49,12 @@ Public Class p90_framework
             .radGridOrig.ShowFooter = False
             .AddSystemColumn(20)
             .AddColumn("p90Code", "Číslo")
+            .AddColumn("p82Code", "DPP", , , , , "Číslo dokladu o přijaté platbě")
             .AddColumn("p90Date", "Datum", BO.cfENUM.DateOnly)
             .AddColumn("p28Name", "Klient")
 
             .AddColumn("p90Amount", "Částka", BO.cfENUM.Numeric2)
+
             .AddColumn("p90Amount_Debt", "Dluh", BO.cfENUM.Numeric2)
             .AddColumn("p90Text1", "Text")
             .AddColumn("j27Code", "")

@@ -68,13 +68,13 @@ Partial Public Class p90_record
     Protected WithEvents p90Code As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''report control.
+    '''link_x31id control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents report As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents link_x31id As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''lblAmount control.
@@ -102,42 +102,6 @@ Partial Public Class p90_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j27ID As Global.UI.datacombo
-
-    '''<summary>
-    '''Label4 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p90Amount_Billed control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p90Amount_Billed As Global.Telerik.Web.UI.RadNumericTextBox
-
-    '''<summary>
-    '''Label5 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p90DateBilled control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p90DateBilled As Global.Telerik.Web.UI.RadDatePicker
 
     '''<summary>
     '''Label1 control.
@@ -266,24 +230,6 @@ Partial Public Class p90_record
     Protected WithEvents p28ID As Global.UI.contact
 
     '''<summary>
-    '''lblOwner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblOwner As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j02ID_Owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j02ID_Owner As Global.UI.person
-
-    '''<summary>
     '''p90text1 control.
     '''</summary>
     '''<remarks>
@@ -300,6 +246,87 @@ Partial Public Class p90_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p90text2 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p90Amount_Billed control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p90Amount_Billed As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''Label5 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p90DateBilled control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p90DateBilled As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''p82Code control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p82Code As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''link_x31_dpp control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents link_x31_dpp As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''p90TextDPP control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p90TextDPP As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblOwner As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j02ID_Owner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
     '''ff control.

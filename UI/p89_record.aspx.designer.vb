@@ -68,6 +68,24 @@ Partial Public Class p89_record
     Protected WithEvents x38ID_Draft As Global.UI.datacombo
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x38ID_Payment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x38ID_Payment As Global.UI.datacombo
+
+    '''<summary>
     '''lblP93ID control.
     '''</summary>
     '''<remarks>
@@ -102,6 +120,24 @@ Partial Public Class p89_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x31ID As Global.UI.datacombo
+
+    '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x31ID_Payment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31ID_Payment As Global.UI.datacombo
 
     '''<summary>
     '''Master property.

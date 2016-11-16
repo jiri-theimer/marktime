@@ -10,6 +10,12 @@
 
         Return _cDB.GetRecord(Of BO.p90Proforma)(s, New With {.p90id = intPID})
     End Function
+    Public Function LoadByP82ID(intP82ID As Integer) As BO.p90Proforma
+        Dim s As String = GetSQLPart1(0)
+        s += " WHERE p82.p82ID=@p82id"
+
+        Return _cDB.GetRecord(Of BO.p90Proforma)(s, New With {.p82id = intP82ID})
+    End Function
     Public Function LoadMyLastCreated() As BO.p90Proforma
         Dim s As String = GetSQLPart1(1)
         s += " WHERE a.j02ID_Owner=@j02id_owner ORDER BY a.p90ID DESC"
@@ -44,6 +50,7 @@
 
             pars.Add("p90Text1", .p90Text1, DbType.String, , , True, "Text")
             pars.Add("p90Text2", .p90Text2, DbType.String, , , True, "p90Text2")
+            pars.Add("p90TextDPP", .p90TextDPP, DbType.String, , , True, "p90TextDPP")
 
 
             pars.Add("p90Date", BO.BAS.IsNullDBDate(.p90Date), DbType.DateTime)
@@ -147,40 +154,25 @@
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
         s += " a.*,j27.j27Code as _j27Code,p89.p89Name as _p89Name," & bas.RecTail("p90", "a")
-        s += ",p28.p28Name as _p28Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner"
+        s += ",p28.p28Name as _p28Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p82.p82Code as _p82Code,p82.p82ID as _p82ID"
         s += " FROM p90Proforma a INNER JOIN p89ProformaType p89 ON a.p89ID=p89.p89ID"
         s += " LEFT OUTER JOIN p28Contact p28 ON a.p28ID=p28.p28ID"
         s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID=j27.j27ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
+        s += " LEFT OUTER JOIN p82Proforma_Payment p82 ON a.p90ID=p82.p90ID"
 
         Return s
     End Function
 
-    Public Function SaveP82(cRec As BO.p82Proforma_Payment) As Boolean
-        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
-        If cRec.PID <> 0 Then
-            bolINSERT = False
-            strW = "p82ID=@pid"
-            pars.Add("pid", cRec.PID)
-        End If
-        With cRec
-            pars.Add("p90ID", BO.BAS.IsNullDBKey(.p90ID), DbType.Int32)
-            pars.Add("p82Date", .p82Date, DbType.DateTime)
-            pars.Add("p82Amount", .p82Amount, DbType.Double)
-            pars.Add("p82Code", .p82Code, DbType.String)
-        End With
-
-        If _cDB.SaveRecord("p82Proforma_Payment", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+    Public Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean
+        Dim pars As New DbParameters()
+        pars.Add("p82code", strP82Code, DbType.String)
+        pars.Add("p90id", intP90ID, DbType.Int32)
+        If _cDB.RunSQL("UPDATE p82Proforma_Payment SET p82Code=@p82code WHERE p90ID=@p90id", pars) Then
             Return True
         Else
             Return False
         End If
     End Function
-    Public Function DeleteP82(intP82ID As Integer, intP90ID As Integer) As Boolean
-        If _cDB.RunSQL("DELETE FROM p82Proforma_Payment WHERE p94ID=" & intP82ID.ToString) Then
-            Return True
-        Else
-            Return False
-        End If
-    End Function
+    
 End Class

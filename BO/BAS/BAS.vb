@@ -32,6 +32,7 @@
             Case "p41" : Return x29IdEnum.p41Project
             Case "p91" : Return x29IdEnum.p91Invoice
             Case "p90" : Return x29IdEnum.p90Proforma
+            Case "p82" : Return x29IdEnum.p82Proforma_Payment
             Case "p28" : Return x29IdEnum.p28Contact
             Case "p29" : Return x29IdEnum.p29ContactType
             Case "b02" : Return x29IdEnum.b02WorkflowStatus

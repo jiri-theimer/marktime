@@ -18,6 +18,20 @@
     Public Property p90Amount_Debt As Double
     Public Property p90Text1 As String
     Public Property p90Text2 As String
+    Public Property p90TextDPP As String
+
+    Private Property _p82ID As Integer
+    Public ReadOnly Property p82ID As Integer
+        Get
+            Return _p82ID
+        End Get
+    End Property
+    Private Property _p82Code As String
+    Public ReadOnly Property p82Code As String
+        Get
+            Return _p82Code
+        End Get
+    End Property
 
     Private Property _j27Code As String
     Public ReadOnly Property j27Code As String

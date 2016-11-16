@@ -23,9 +23,12 @@
                 pars.Add("j27ID", BO.BAS.IsNullDBKey(.j27ID), DbType.Int32)
                 pars.Add("x38ID", BO.BAS.IsNullDBKey(.x38ID), DbType.Int32)
                 pars.Add("x38ID_Draft", BO.BAS.IsNullDBKey(.x38ID_Draft), DbType.Int32)
+                pars.Add("x38ID_Payment", BO.BAS.IsNullDBKey(.x38ID_Payment), DbType.Int32)
+
                 pars.Add("p93ID", BO.BAS.IsNullDBKey(.p93ID), DbType.Int32)
                 pars.Add("j19ID", BO.BAS.IsNullDBKey(.j19ID), DbType.Int32)
                 pars.Add("x31ID", BO.BAS.IsNullDBKey(.x31ID), DbType.Int32)
+                pars.Add("x31ID_Payment", BO.BAS.IsNullDBKey(.x31ID_Payment), DbType.Int32)
                 pars.Add("p89Code", .p89Code, DbType.String)
                 pars.Add("p89Name", .p89Name, DbType.String, , , True, "Název typu")
 

@@ -389,6 +389,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Zálohová faktura.
+        '''</summary>
+        Friend Shared ReadOnly Property ZalohovaFaktura() As String
+            Get
+                Return ResourceManager.GetString("ZalohovaFaktura", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to ZÁZNAM.
         '''</summary>
         Friend Shared ReadOnly Property Zaznam() As String

@@ -30,6 +30,7 @@
     p57TaskType = 357
     p58Product = 358
     p90Proforma = 390
+    p82Proforma_Payment = 382
     p91Invoice = 391
     b01WorkflowTemplate = 601
     b02WorkflowStatus = 602

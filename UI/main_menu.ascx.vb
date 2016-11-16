@@ -108,6 +108,7 @@ Public Class main_menu
             If .j04IsMenu_Invoice Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
             End If
+            If factory.TestPermission(BO.x53PermValEnum.GR_P90_Create) Then ai(Resources.common.ZalohovaFaktura, "", "javascript:p90_create()", "", n)
             If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
                 ai(Resources.common.Dokument, "", "javascript:o23_create()", "", n) : b = True
             End If

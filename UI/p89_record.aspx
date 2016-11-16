@@ -27,6 +27,15 @@
 
             </td>
         </tr>
+         <tr>
+            <td>
+                <asp:Label ID="Label2" Text="Číselná řada úhrad zálohy:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="x38ID_Payment" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="250px"></uc:datacombo>
+               
+            </td>
+        </tr>
        
         <tr valign="top">
             <td>
@@ -39,12 +48,20 @@
         </tr>
         <tr valign="top">
             <td>
-                <asp:Label ID="lblx31ID" Text="Výchozí sestava:" runat="server" CssClass="lbl"></asp:Label>
+                <asp:Label ID="lblx31ID" Text="Výchozí sestava zálohy:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
                 <uc:datacombo ID="x31ID" runat="server" AutoPostBack="false" DataTextField="NameWithCode" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                <span class="infoInForm">Doklad zálohy bude možné tisknout i přes ostatní šablony sestav.</span>
-
+                
+            </td>
+        </tr>
+     <tr valign="top">
+            <td>
+                <asp:Label ID="Label3" Text="Sestava DPP:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <uc:datacombo ID="x31ID_Payment" runat="server" AutoPostBack="false" DataTextField="NameWithCode" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                
             </td>
         </tr>
      

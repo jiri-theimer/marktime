@@ -846,6 +846,13 @@
     <index_keys>p82ID</index_keys>
   </Table>
   <Table>
+    <tableid>688721506</tableid>
+    <tablename>p82Proforma_Payment</tablename>
+    <index_name>UNIQUE_p82Proforma_Payment_p82Code</index_name>
+    <index_description>nonclustered, unique, unique key located on PRIMARY</index_description>
+    <index_keys>p82Code</index_keys>
+  </Table>
+  <Table>
     <tableid>299148111</tableid>
     <tablename>p84LanguageExpression</tablename>
     <index_name>PK_p84LanguageExpression</index_name>
