@@ -14,7 +14,7 @@
     <asp:ImageButton ID="cmdFullScreen" runat="server" ImageUrl="Images/fullscreen.png" ToolTip="Přehled faktur na celou stránku" OnClientClick="return p91_fullscreen()" CssClass="button-link" />
 
     <button type="button" id="cmdSetting" class="show_hide1xxp91" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface; height: 23px;">
-
+        <span>Další</span>
         <img src="Images/arrow_down.gif" alt="Nastavení" />
     </button>
 

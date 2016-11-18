@@ -29,11 +29,11 @@
         </tr>
          <tr>
             <td>
-                <asp:Label ID="Label2" Text="Číselná řada úhrad zálohy:" runat="server" CssClass="lbl"></asp:Label>
+                <asp:Label ID="Label2" Text="Číselná řada DPP:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
                 <uc:datacombo ID="x38ID_Payment" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="250px"></uc:datacombo>
-               
+               (Doklad přijaté platby zálohy)
             </td>
         </tr>
        
@@ -61,7 +61,7 @@
             </td>
             <td>
                 <uc:datacombo ID="x31ID_Payment" runat="server" AutoPostBack="false" DataTextField="NameWithCode" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                
+                (Sestava pro doklad přijaté platby zálohy)
             </td>
         </tr>
      

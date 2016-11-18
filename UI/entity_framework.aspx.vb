@@ -245,6 +245,7 @@ Public Class entity_framework
                     img1.ImageUrl = "Images/invoice_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Faktury].")
             End Select
+            panExport.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_ExportGrid)
         End With
 
 
@@ -941,9 +942,10 @@ Public Class entity_framework
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
-                Dim cSum As BO.p91InvoiceSum = Master.Factory.p91InvoiceBL.GetSumRow(mq)
-                grid1.VirtualRowCount = cSum.Count
-                Me.hidFooterSum.Value = grid1.GenerateFooterItemString(cSum)
+                grid1.VirtualRowCount = Master.Factory.p91InvoiceBL.GetVirtualCount(mq)
+                ''Dim cSum As BO.p91InvoiceSum = Master.Factory.p91InvoiceBL.GetSumRow(mq)
+                ''grid1.VirtualRowCount = cSum.Count
+                ''Me.hidFooterSum.Value = grid1.GenerateFooterItemString(cSum)
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 InhaleMyQuery_j02(mq)

@@ -197,7 +197,7 @@
                             <telerik:RadMenuItem Text="Tisková sestava (funguje i hromadný tisk)" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Export" ImageUrl="Images/menuarrow.png">
+                    <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="DOC" NavigateUrl="javascript:hardrefresh(0,'doc')"></telerik:RadMenuItem>

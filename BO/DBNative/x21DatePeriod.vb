@@ -78,7 +78,8 @@ Public Class x21DatePeriod
                     Return s & " [" & BO.BAS.FD(_DateUntil) & "]"
                 Case x21IdEnum.DoDnes, x21IdEnum.DoMinulyMesic, x21IdEnum.DoMinulyMesic2, x21IdEnum.DoMinulyMesic3, x21IdEnum.DoMinulyRok
                     Return s & " [ -> " & BO.BAS.FD(_DateUntil) & "]"
-
+                Case x21IdEnum.MesicTento, x21IdEnum.MesicMinuly
+                    Return s
                 Case Else
                     Return s & " [" & BO.BAS.FD(_DateFrom) & " - " & BO.BAS.FD(_DateUntil) & "]"
             End Select
@@ -152,11 +153,11 @@ Public Class x21DatePeriod
             Case x21IdEnum.MesicTento
                 _DateFrom = DateSerial(_Today.Year, _Today.Month, 1)
                 _DateUntil = _DateFrom.AddMonths(1).AddDays(-1)
-                _x21NameDef = Format(_DateFrom, "MM") & "/" & Format(_DateFrom, "yyyy")
+                _x21NameDef = "Tento měsíc " & Format(_DateFrom, "MM") & "/" & Format(_DateFrom, "yyyy")
             Case x21IdEnum.MesicMinuly
                 _DateFrom = DateSerial(_Today.Year, _Today.Month, 1).AddMonths(-1)
                 _DateUntil = _DateFrom.AddMonths(1).AddDays(-1)
-                _x21NameDef = Format(_DateFrom, "MM") & "/" & Format(_DateFrom, "yyyy")
+                _x21NameDef = "Minulý měsíc " & Format(_DateFrom, "MM") & "/" & Format(_DateFrom, "yyyy")
             Case x21IdEnum.MesicMinus2
                 _DateFrom = DateSerial(_Today.Year, _Today.Month, 1).AddMonths(-2)
                 _DateUntil = _DateFrom.AddMonths(1).AddDays(-1)

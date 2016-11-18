@@ -201,7 +201,7 @@
                 <div class="commandcell" style="float: right; margin-right: 10px;">
                     
                     <button type="button" id="cmdSetting" class="show_hide1" style="float: right; padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Další nastavení přehledu">
-
+                        <span>Další</span>
                         <img src="Images/arrow_down.gif" alt="Nastavení" />
                     </button>
                                       

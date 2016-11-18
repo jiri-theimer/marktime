@@ -28,15 +28,15 @@
                     <asp:ListItem Text="Pouze uzavřené úkoly" Value="3"></asp:ListItem>
                 </asp:DropDownList>
             </td>
-            <td style="padding-left:20px;">
+            <td style="padding-left: 20px;">
                 <asp:ImageButton ID="cmdP56_p31new" runat="server" ImageUrl="Images/worksheet.png" ToolTip="Zapsat úkon k úkolu" OnClientClick="return p31_entry_p56()" CssClass="button-link" />
                 <asp:ImageButton ID="cmdP56_new" runat="server" ImageUrl="Images/new.png" ToolTip="Nový úkol" OnClientClick="return p56_record(0,true)" CssClass="button-link" />
                 <asp:ImageButton ID="cmdP56_clone" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat úkol" OnClientClick="return p56_clone()" CssClass="button-link" />
                 <asp:ImageButton ID="cmdFullScreen" runat="server" ImageUrl="Images/fullscreen.png" ToolTip="Přehled úkolů na celou stránku" OnClientClick="return p56_fullscreen()" CssClass="button-link" />
             </td>
-            <td style="padding-left:20px;">
-                <button type="button" id="cmdSetting" class="show_hide1xxp56" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;height:23px;">
-                    
+            <td style="padding-left: 20px;">
+                <button type="button" id="cmdSetting" class="show_hide1xxp56" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface; height: 23px;">
+                    <span>Další</span>
                     <img src="Images/arrow_down.gif" alt="Nastavení" />
                 </button>
             </td>
@@ -62,11 +62,21 @@
         <asp:ListItem Text="500"></asp:ListItem>
     </asp:DropDownList>
 
-    <asp:image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" style="margin-left:20px;" />
+    <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
     <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat úkony za vybrané úkoly" NavigateUrl="javascript:approving();"></asp:HyperLink>
 
-    <span style="padding-left: 20px;"></span>
-    <img src="Images/export.png" alt="export" />
+
+
+
+    <asp:HiddenField ID="hidReceiversInLine" runat="server" />
+    <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
+    <asp:HiddenField ID="hidDefaultSorting" runat="server" />
+    <asp:HiddenField ID="hidCols" runat="server" />
+    <asp:HiddenField ID="hidFrom" runat="server" />
+
+    <asp:Panel ID="panExport" runat="server" style="margin-top:10px;">
+        <span style="margin-left:2px;"></span>
+        <img src="Images/export.png" alt="export" />
         <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
         <img src="Images/xls.png" alt="xls" />
@@ -77,12 +87,7 @@
 
         <img src="Images/doc.png" alt="doc" />
         <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-    <asp:HiddenField ID="hidReceiversInLine" runat="server" />
-    <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
-    <asp:HiddenField ID="hidDefaultSorting" runat="server" />
-    <asp:HiddenField ID="hidCols" runat="server" />
-    <asp:HiddenField ID="hidFrom" runat="server" />
+    </asp:Panel>
 </div>
 
 
@@ -125,7 +130,7 @@
 
         }
         p56_subgrid_approving(pids);
-        
+
 
 
     }

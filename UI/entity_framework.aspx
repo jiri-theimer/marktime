@@ -222,7 +222,7 @@
 
                     </button>
                     <button type="button" id="cmdSetting" class="show_hide1" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Další možnosti datového přehledu">
-
+                        <span>Další</span>
 
                         <img src="Images/arrow_down.gif" />
                     </button>
@@ -270,7 +270,8 @@
                                 <asp:ListItem Text="200"></asp:ListItem>
                                 <asp:ListItem Text="500"></asp:ListItem>
                             </asp:DropDownList>
-                            
+                         </div>
+                         <asp:Panel ID="panExport" runat="server">
                             <img src="Images/export.png" alt="export" />
                             <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
@@ -283,7 +284,7 @@
                             <img src="Images/doc.png" alt="doc" />
                             <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
                             
-                        </div>
+                        </asp:Panel>
                         <div class="div6">
                             <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" />
 

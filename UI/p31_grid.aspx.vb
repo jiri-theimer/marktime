@@ -492,8 +492,9 @@ Public Class p31_grid
     End Sub
 
     Private Sub Handle_Permissions()
-        With Master.Factory.SysUser
-            cmdApprove.Visible = .IsApprovingPerson
+        With Master.Factory
+            cmdApprove.Visible = .SysUser.IsApprovingPerson
+            panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_ExportGrid)
         End With
 
 

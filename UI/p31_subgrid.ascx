@@ -35,7 +35,7 @@
     </div>
     <div class="commandcell" style="padding-left: 10px;">
         <button type="button" id="cmdSetting" class="show_hide1xx" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface; height: 23px;" title="Více nastavení k přehledu">
-
+            <span>Další</span>
             <img src="Images/arrow_down.gif" alt="Nastavení" />
         </button>
     </div>
@@ -76,8 +76,10 @@
             <asp:ListItem Text="Billing dávka" Value="p31ApprovingSet"></asp:ListItem>
         </asp:DropDownList>
         <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
+        <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
+        <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();" meta:resourcekey="cmdApprove"></asp:HyperLink>
     </asp:Panel>
-    <div style="margin-top: 20px;">
+    <asp:panel ID="panExport" runat="server" style="margin-top: 20px;">
         <img src="Images/export.png" alt="export" />
         <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
@@ -90,10 +92,9 @@
         <img src="Images/doc.png" alt="doc" />
         <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
-        <asp:Image ID="imgApprove" ImageUrl="Images/approve.png" runat="server" Style="margin-left: 20px;" />
-        <asp:HyperLink ID="cmdApprove" runat="server" Text="Schvalovat/Pře-schvalovat označené úkony" NavigateUrl="javascript:approving();" meta:resourcekey="cmdApprove"></asp:HyperLink>
+        
 
-    </div>
+    </asp:panel>
 </div>
 <uc:datagrid ID="grid2" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first" HeaderText="Projektový worksheet"></uc:datagrid>
 <asp:HiddenField ID="hidMasterDataPID" runat="server" />

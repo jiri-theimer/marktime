@@ -176,6 +176,15 @@ Partial Public Class entity_framework
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''panExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''cmdExport control.
     '''</summary>
     '''<remarks>

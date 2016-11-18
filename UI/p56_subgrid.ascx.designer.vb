@@ -104,42 +104,6 @@ Partial Public Class p56_subgrid
     Protected WithEvents cmdApprove As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''cmdExport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''cmdXLS control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''cmdPDF control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''cmdDOC control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
     '''hidReceiversInLine control.
     '''</summary>
     '''<remarks>
@@ -183,6 +147,51 @@ Partial Public Class p56_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''panExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdXLS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdPDF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdDOC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''gridP56 control.

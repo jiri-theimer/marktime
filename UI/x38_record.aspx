@@ -19,7 +19,7 @@
                     <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
                     <asp:ListItem Text="Daňová faktura" Value="391"></asp:ListItem>
                     <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
-                    <asp:ListItem Text="Úhrada zálohy" Value="382"></asp:ListItem>
+                    <asp:ListItem Text="Doklad přijaté platby zálohy (DPP)" Value="382"></asp:ListItem>
                     <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
                 </asp:DropDownList>
                 <asp:CheckBox ID="x38IsDraft" runat="server" Text="Tato řada se nabízí pro číslování [DRAFT] záznamů" />

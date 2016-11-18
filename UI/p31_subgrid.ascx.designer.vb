@@ -167,6 +167,33 @@ Partial Public Class p31_subgrid
     Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''imgApprove control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgApprove As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''cmdApprove control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdApprove As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''panExport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''cmdExport control.
     '''</summary>
     '''<remarks>
@@ -201,24 +228,6 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''imgApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgApprove As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''cmdApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdApprove As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''grid2 control.

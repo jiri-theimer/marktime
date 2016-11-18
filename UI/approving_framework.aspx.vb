@@ -82,7 +82,7 @@ Public Class approving_framework
                         Me.cbxGroupBy.Items.FindByValue("Client").Enabled = False
                         menu1.FindItemByValue("bin").Visible = False
                 End Select
-
+                menu1.FindItemByValue("export").Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_ExportGrid)
             End With
             With Master.Factory.j03UserBL
                 SetupGrid(.GetUserParam("approving_framework-filter_setting-" + Me.CurrentPrefix), .GetUserParam("approving_framework-filter_sql-" + Me.CurrentPrefix))
