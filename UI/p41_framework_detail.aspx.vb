@@ -605,7 +605,10 @@ Public Class p41_framework_detail
             If crs.p45_Count > 0 Then s += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
             cti(s, "p45")
         End If
-        
+        If crs.b07_Count > 0 Then
+            s = "Komentáře a workflow<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
+            cti(s, "workflow")
+        End If
     End Sub
 
     ''Private Sub SetupTabs(crs As BO.p41ProjectSum)
