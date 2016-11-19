@@ -85,7 +85,7 @@ Public Class p31_pivot
                   
                 End With
 
-
+                cmdQuery.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
 
             End With
             SetupJ70Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31-j70id")))

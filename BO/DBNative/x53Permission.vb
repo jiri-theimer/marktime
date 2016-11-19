@@ -36,7 +36,7 @@
     GR_P91_Draft_Creator = 34                'Oprávnění vystavovat DRAFT faktury za všechny projekty
     GR_O10_Creator = 35                   'Zapisovat články na nástěnku
     GR_X31_Personal = 36                  'Přístup k osobním tiskovým sestavám
-    GR_ExportGrid = 37               'Možnost exportovat přehledy do XLS/DOC/PDF
+    GR_GridTools = 37                   'Pokročilé nástroje v datových přehledech (vytvářet pojmenované filtry/návrhář sloupců/export do XLS/PDF/DOC)
     
     'Oprávnění projektové role
     PR_P41_Owner = 1                    'Oprávnění vlastníka projektu

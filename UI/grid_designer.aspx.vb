@@ -45,6 +45,7 @@
             End If
             ViewState("masterprefix") = Request.Item("masterprefix")
             With Master
+                .neededPermission = BO.x53PermValEnum.GR_GridTools
                 .HeaderIcon = "Images/griddesigner_32.png"
                 .HeaderText = "Šablony datového přehledu"
                 .AddToolbarButton(Resources.grid_designer.Vybrat, "ok", , "Images/ok.png")

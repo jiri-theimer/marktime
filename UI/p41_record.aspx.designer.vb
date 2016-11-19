@@ -545,13 +545,13 @@ Partial Public Class p41_record
     Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
-    '''Label1 control.
+    '''lblP61ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblP61ID As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p61ID control.

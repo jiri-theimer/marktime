@@ -176,7 +176,9 @@ Public Class p31_subgrid
                 ''Me.txtSearch.Text = .GetUserParam("p31_subgrid-search")
                 Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-groups-autoexpanded", "1"))
             End With
-            panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_ExportGrid)
+            panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
+            cmdGridDesigner.Visible = panExport.Visible
+            cmdQuery.Visible = panExport.Visible
             SetupJ70Combo(BO.BAS.IsNullInt(Factory.j03UserBL.GetUserParam("p31_subgrid-j70id")))
             RecalcVirtualRowCount()
             SetupP31Grid()

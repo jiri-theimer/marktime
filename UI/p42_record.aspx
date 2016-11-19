@@ -26,6 +26,52 @@
                 <uc:datacombo ID="x38ID_Draft" runat="server" DataTextField="x38Name" DataValueField="pid" IsFirstEmptyRow="true" Width="200px"></uc:datacombo>
             </td>
         </tr>
+        
+        
+    </table>
+
+    <div class="content-box2">
+        <div class="title">
+            Projekt pracuje s níže zaškrtlými moduly:
+        </div>
+        <div class="content">            
+            <div class="div6">
+                <asp:CheckBox ID="p42IsModule_p31" runat="server" Text="WORKSHEET" AutoPostBack="true" />
+                <span class="infoInForm">Zapisování/schvalování/fakturace worksheet úkonů (hodiny/výdaje/pevné (paušální) odměny/kusovníkové úkony).</span>
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="p42IsModule_p56" runat="server" Text="ÚKOLY" />
+                <span class="infoInForm">Zakládání úkolů k řešení s termínem, jejich přidělování řešitelům (osoby/týmy). Možnost zapisovat k úkolům worksheet úkony, schvalování, fakturace.</span>
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="p42IsModule_o22" runat="server" Text="Kalendářové UDÁLOSTI" />
+                <span class="infoInForm">Zakládání termínů do kalendáře, jejich notifikace, synchronizace s externím kalendářem.</span>
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="p42IsModule_o23" runat="server" Text="DOKUMENTY" />
+                <span class="infoInForm">Dokumentem může být např. fakturační poznámka, výdajový doklad, došlá faktura, došlá pošta apod.</span>
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="p42IsModule_p48" runat="server" Text="Operativní plánování" />
+                <span class="infoInForm">Operativní plánování hodin pracovníků v projektech do konkrétních dnů na nejbližší měsíc, maximálně 2 měsíce dopředu. Naplánované hodiny lze následně překlápět do reálných časových výkazů.</span>
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="p42IsModule_p45" runat="server" Text="Projektové ROZPOČTY" />
+                <span class="infoInForm">Dlouhodobé limity hodin a výdajeů, plánování kapacit na člověko/měsíce. Verzování rozpočtů.</span>
+            </div>
+        </div>
+    </div>
+
+    <asp:panel ID="panP34IDs" runat="server" CssClass="content-box2">
+        <div class="title">
+            <asp:Label ID="ph1" runat="server" Text="Povolené sešity pro vykazování" />
+        </div>
+        <div class="content">
+            <asp:CheckBoxList ID="p34ids" runat="server" AutoPostBack="false" DataValueField="pid" DataTextField="p34Name" RepeatColumns="3" CellPadding="8" CellSpacing="2"></asp:CheckBoxList>
+        </div>
+    </asp:panel>
+
+    <table cellpadding="3" cellspacing="2">     
         <tr>
             <td>
                 <asp:Label ID="lblB01ID" Text="Workflow šablona:" runat="server" CssClass="lbl"></asp:Label>
@@ -35,7 +81,7 @@
 
 
             </td>
-        </tr>
+        </tr>   
         <tr>
             <td>
                 <asp:Label ID="lblCode" Text="Kód:" runat="server" CssClass="lbl" AssociatedControlID="p42Code"></asp:Label></td>
@@ -57,18 +103,6 @@
                 <telerik:RadNumericTextBox ID="p42Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
-    </table>
-
-    <div class="content-box2">
-        <div class="title">
-            <asp:Label ID="ph1" runat="server" Text="Povolené sešity pro vykazování" />
-        </div>
-        <div class="content">
-            <asp:CheckBoxList ID="p34ids" runat="server" AutoPostBack="false" DataValueField="pid" DataTextField="p34Name" RepeatColumns="3" CellPadding="8" CellSpacing="2"></asp:CheckBoxList>
-        </div>
-    </div>
-
-    <table cellpadding="3" cellspacing="2">
         <tr>
             <td>
                 <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Ochrana proti archivování projektu:"></asp:Label></td>

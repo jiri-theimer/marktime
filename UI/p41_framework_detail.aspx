@@ -291,7 +291,7 @@
                         <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png" meta:resourcekey="cmdO23"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png" meta:resourcekey="cmdO22"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdO22" Text="Kalendář projektu" NavigateUrl="javascript:scheduler()" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="calendarO22" Text="Kalendář projektu" NavigateUrl="javascript:scheduler()" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         
                         
@@ -401,7 +401,7 @@
 
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="trP51" runat="server">
                         <td style="vertical-align: top;">
                             <asp:Label ID="lblX51" runat="server" Text="Fakturační ceník:" CssClass="lbl" meta:resourcekey="lblX51"></asp:Label>
                         </td>
@@ -411,7 +411,7 @@
                             <asp:HyperLink ID="clue_p51id_billing" runat="server" CssClass="reczoom" Text="i" title="Detail ceníku projektu"></asp:HyperLink>
                             <asp:Label ID="lblX51_Message" runat="server" CssClass="lbl"></asp:Label>
 
-                            <asp:HyperLink ID="clue_p41_billing" runat="server" CssClass="reczoom" Text="i" title="Detail fakturačního nastavení projektu"></asp:HyperLink>
+                            
 
                         </td>
                     </tr>

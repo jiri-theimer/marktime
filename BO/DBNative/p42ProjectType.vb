@@ -21,6 +21,13 @@ Public Class p42ProjectType
     Public Property p42ArchiveFlag As p42ArchiveFlagENUM = p42ArchiveFlagENUM.NoLimit
     Public Property p42ArchiveFlagP31 As p42ArchiveFlagP31ENUM = p42ArchiveFlagP31ENUM.EditingOrApproved
 
+    Public Property p42IsModule_p31 As Boolean
+    Public Property p42IsModule_o23 As Boolean
+    Public Property p42IsModule_p56 As Boolean
+    Public Property p42IsModule_p45 As Boolean
+    Public Property p42IsModule_o22 As Boolean
+    Public Property p42IsModule_p48 As Boolean
+
     Private Property _b01Name As String
     Public ReadOnly Property b01Name As String
         Get

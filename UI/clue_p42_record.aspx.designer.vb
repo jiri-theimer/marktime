@@ -23,6 +23,78 @@ Partial Public Class clue_p42_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''panModules control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panModules As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p42IsModule_p31 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p42IsModule_p31 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p42IsModule_p56 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p42IsModule_p56 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p42IsModule_o22 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p42IsModule_o22 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p42IsModule_o23 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p42IsModule_o23 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p42IsModule_p45 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p42IsModule_p45 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p42IsModule_p48 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p42IsModule_p48 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panP34IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panP34IDs As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''rpP34 control.
     '''</summary>
     '''<remarks>

@@ -6,6 +6,7 @@ Public Class p41_framework_detail
     
     Public Property CurrentTab As String
         Get
+            If tabs1.Tabs.Count = 0 Then Return ""
             If tabs1.SelectedTab Is Nothing Then
                 tabs1.SelectedIndex = 0
             End If
@@ -94,7 +95,7 @@ Public Class p41_framework_detail
                 basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p41")
             End If
             tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p41_framework_detail-tabskin", "Default")   'až zde jsou vygenerované tab záložky
-            Me.CurrentTab = Master.Factory.j03UserBL.GetUserParam("p41_framework_detail-tab", "summary")
+            Me.CurrentTab = Master.Factory.j03UserBL.GetUserParam("p41_framework_detail-tab")
         End If
 
         If Me.CurrentTab <> "" Then
@@ -119,9 +120,10 @@ Public Class p41_framework_detail
         Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p41")
 
+        Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
-        SetupTabs(cRecSum)
-        Handle_Permissions(cRec)
+        SetupTabs(cRecSum, cP42)
+        Handle_Permissions(cRec, cP42)
 
         Dim cClient As BO.p28Contact = Nothing
 
@@ -181,36 +183,48 @@ Public Class p41_framework_detail
             End If
         End With
 
-        RefreshBillingLanguage(cRec, cClient)
 
-        RefreshPricelist(cRec, cClient)
 
-        RefreshOtherBillingSetting(cRec, cClient)
-
-        If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
-            Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, Master.Factory.SysUser.j02ID)
-            With menu1.FindItemByValue("p31")
-                For Each c In lisP34
-                    Dim mi As New Telerik.Web.UI.RadMenuItem(String.Format(Resources.p41_framework_detail.ZapsatUkonDo, c.p34Name), "javascript:p31_entry_menu(" & c.PID.ToString & ")")
-                    mi.ImageUrl = "Images/worksheet.png"
-                    .Items.Add(mi)
-                Next
-                If lisP34.Count = 0 Then
-                    Dim mi As New Telerik.Web.UI.RadMenuItem(Resources.p41_framework_detail.NedisponujeteOpravnenimZapisovat)
-                    mi.ForeColor = Drawing.Color.Red
-                    menu1.FindItemByValue("p31").Items.Add(mi)
-                End If
-            End With
+        If cP42.p42IsModule_p31 Then
+            RefreshBillingLanguage(cRec, cClient)
+            RefreshPricelist(cRec, cClient)
+            ''RefreshOtherBillingSetting(cRec, cClient)
         Else
-            Dim mi As New Telerik.Web.UI.RadMenuItem("V projektu nemůžete zapisovat worksheet úkony.")
-            If cRec.IsClosed Then
-                menu1.Skin = "Black"
-                mi.Text = Resources.p41_framework_detail.VArchivuNelzeWorksheet
-            End If
-            If cRec.p41IsDraft Then mi.Text = Resources.p41_framework_detail.VDraftNelzeWorksheet
-            mi.ForeColor = Drawing.Color.Red
-            menu1.FindItemByValue("p31").Items.Add(mi)
+            trP51.Visible = False
         End If
+
+
+
+
+        If cP42.p42IsModule_p31 Then
+            If Not (cRec.IsClosed Or cRec.p41IsDraft) Then
+                Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.PID, cRec.p42ID, cRec.j18ID, Master.Factory.SysUser.j02ID)
+                With menu1.FindItemByValue("p31")
+                    For Each c In lisP34
+                        Dim mi As New Telerik.Web.UI.RadMenuItem(String.Format(Resources.p41_framework_detail.ZapsatUkonDo, c.p34Name), "javascript:p31_entry_menu(" & c.PID.ToString & ")")
+                        mi.ImageUrl = "Images/worksheet.png"
+                        .Items.Add(mi)
+                    Next
+                    If lisP34.Count = 0 Then
+                        Dim mi As New Telerik.Web.UI.RadMenuItem(Resources.p41_framework_detail.NedisponujeteOpravnenimZapisovat)
+                        mi.ForeColor = Drawing.Color.Red
+                        menu1.FindItemByValue("p31").Items.Add(mi)
+                    End If
+                End With
+            Else
+                Dim mi As New Telerik.Web.UI.RadMenuItem("V projektu nemůžete zapisovat worksheet úkony.")
+                If cRec.IsClosed Then
+                    menu1.Skin = "Black"
+                    mi.Text = Resources.p41_framework_detail.VArchivuNelzeWorksheet
+                End If
+                If cRec.p41IsDraft Then mi.Text = Resources.p41_framework_detail.VDraftNelzeWorksheet
+                mi.ForeColor = Drawing.Color.Red
+                menu1.FindItemByValue("p31").Items.Add(mi)
+            End If
+        Else
+            hmi("p31", False)
+        End If
+        
 
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, cRec.PID)
@@ -326,9 +340,16 @@ Public Class p41_framework_detail
     End Sub
 
 
-    
+    Private Sub hmi(strMenuValue As String, bolVisible As Boolean)
+        Dim mi As RadMenuItem = menu1.FindItemByValue(strMenuValue)
+        If mi Is Nothing Then Return
+        mi.Visible = bolVisible
 
-    Private Sub Handle_Permissions(cRec As BO.p41Project)
+        ''If Not bolVisible Then mi.Remove()
+        'If Not bolVisible Then menu1.Items.Remove(mi)
+    End Sub
+
+    Private Sub Handle_Permissions(cRec As BO.p41Project, cP42 As BO.p42ProjectType)
         menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString
 
         Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
@@ -337,37 +358,53 @@ Public Class p41_framework_detail
         With Master.Factory
             menu1.FindItemByValue("cmdNew").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
             menu1.FindItemByValue("cmdCopy").Visible = menu1.FindItemByValue("cmdNew").Visible
-            menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
-            menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString
-            menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator)
-            menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
+            If cP42.p42IsModule_p31 Then
+                menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+                menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString
+            Else
+                hmi("cmdPivot", False)
+            End If
+
+            If cP42.p42IsModule_o23 Then menu1.FindItemByValue("cmdO23").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator) Else hmi("cmdO23", False)
+            If cP42.p42IsModule_o22 Then menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator) Else hmi("cmdO22", False)
+            menu1.FindItemByValue("calendarO22").Visible = menu1.FindItemByValue("cmdO22").Visible
+
             If cRec.b01ID <> 0 Then menu1.FindItemByValue("cmdB07").Visible = False
 
-            Dim bolCanApproveOrInvoice As Boolean = .TestPermission(BO.x53PermValEnum.GR_P31_Approver, BO.x53PermValEnum.GR_P91_Creator)
-            If Not bolCanApproveOrInvoice Then bolCanApproveOrInvoice = .TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
-            If bolCanApproveOrInvoice = False And cDisp.x67IDs.Count > 0 Then
-                Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = Master.Factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
-                If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
-                    bolCanApproveOrInvoice = True
+            If cP42.p42IsModule_p31 Then
+                Dim bolCanApproveOrInvoice As Boolean = .TestPermission(BO.x53PermValEnum.GR_P31_Approver, BO.x53PermValEnum.GR_P91_Creator)
+                If Not bolCanApproveOrInvoice Then bolCanApproveOrInvoice = .TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
+                If bolCanApproveOrInvoice = False And cDisp.x67IDs.Count > 0 Then
+                    Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = Master.Factory.x67EntityRoleBL.GetList_o28(cDisp.x67IDs)
+                    If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
+                        bolCanApproveOrInvoice = True
+                    End If
                 End If
+                menu1.FindItemByValue("cmdApprove").Visible = bolCanApproveOrInvoice
+                If Not bolCanApproveOrInvoice Then Me.p31summary1.DisableApprovingButton()
+                Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
+            Else
+                hmi("cmdApprove", False)
+                p31summary1.Visible = False
             End If
-            menu1.FindItemByValue("cmdApprove").Visible = bolCanApproveOrInvoice
-            If Not bolCanApproveOrInvoice Then Me.p31summary1.DisableApprovingButton()
-            Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
-            ''Me.bigsummary1.IsApprovingPerson = bolCanApprove
-            ''gridP31.AllowApproving = bolCanApprove
-            ''gridP56.AllowApproving = bolCanApprove
+            hmi("cmdP48", cP42.p42IsModule_p48)
+            aP48.Visible = cP42.p42IsModule_p48
         End With
         With cDisp
-            menu1.FindItemByValue("cmdP56").Visible = .P56_Create
-            ''gridP56.IsAllowedCreateTasks = .P56_Create
+            If cP42.p42IsModule_p56 Then menu1.FindItemByValue("cmdP56").Visible = .P56_Create Else hmi("cmdP56", False)
 
             boxP30.Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdP31Recalc").Visible = .P31_RecalcRates
-            menu1.FindItemByValue("cmdP31Move2Bin").Visible = .P31_Move2Bin
-            menu1.FindItemByValue("cmdP31MoveToOtherProject").Visible = .P31_MoveToOtherProject
+            If cP42.p42IsModule_p31 Then
+                menu1.FindItemByValue("cmdP31Recalc").Visible = .P31_RecalcRates
+                menu1.FindItemByValue("cmdP31Move2Bin").Visible = .P31_Move2Bin
+                menu1.FindItemByValue("cmdP31MoveToOtherProject").Visible = .P31_MoveToOtherProject
+                menu1.FindItemByValue("cmdP40Create").Visible = .OwnerAccess
+            Else
+                hmi("cmdP31Recalc", False) : hmi("cmdP31Move2Bin", False) : hmi("cmdP31MoveToOtherProject", False) : hmi("cmdP40Create", False)
+            End If
+            
+
             menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdP40Create").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdP30").Visible = .OwnerAccess
 
             If Not .p91_Read Then RemoveTab("p91")
@@ -391,21 +428,23 @@ Public Class p41_framework_detail
 
 
         If cRec.IsClosed Then menu1.FindItemByValue("cmdO22").Visible = False : menu1.FindItemByValue("cmdP40Create").Visible = False : menu1.FindItemByValue("cmdP56").Visible = False 'projekt je v archivu
+        If cRec.IsClosed Then hmi("cmdO22", False) : hmi("cmdP40Create", False) : hmi("cmdP56", False) 'projekt je v archivu
+
     End Sub
 
-    Private Sub RefreshOtherBillingSetting(cRec As BO.p41Project, cClient As BO.p28Contact)
-        Dim b As Boolean = False
-        With cRec
-            If .p87ID > 0 Or .p92ID > 0 Or .p28ID_Billing > 0 Then
-                b = True
-            End If
-        End With
-      
-        Me.clue_p41_billing.Visible = b
-        If b Then
-            Me.clue_p41_billing.Attributes("rel") = "clue_p41_record_billingsetting.aspx?pid=" & cRec.PID.ToString
-        End If
-    End Sub
+    ''Private Sub RefreshOtherBillingSetting(cRec As BO.p41Project, cClient As BO.p28Contact)
+    ''    Dim b As Boolean = False
+    ''    With cRec
+    ''        If .p87ID > 0 Or .p92ID > 0 Or .p28ID_Billing > 0 Then
+    ''            b = True
+    ''        End If
+    ''    End With
+
+    ''    Me.clue_p41_billing.Visible = b
+    ''    If b Then
+    ''        Me.clue_p41_billing.Attributes("rel") = "clue_p41_record_billingsetting.aspx?pid=" & cRec.PID.ToString
+    ''    End If
+    ''End Sub
 
     Private Sub RefreshPricelist(cRec As BO.p41Project, cClient As BO.p28Contact)
         Me.clue_p51id_billing.Visible = False : Me.p51Name_Billing.Visible = False : Me.lblX51_Message.Text = ""
@@ -475,7 +514,7 @@ Public Class p41_framework_detail
 
                 ReloadPage(Me.hidHardRefreshPID.Value)
             Case "p31-save", "p31-delete"
-                
+
 
             Case "p51-save"
                 Master.Notify("Pokud jste změnili sazby v ceníku a potřebujete přepočítat sazby u již uložené rozpracovanosti, použijte k tomu nástroj [Přepočítat sazby rozpracovaných úkonů].", NotifyLevel.InfoMessage)
@@ -524,49 +563,93 @@ Public Class p41_framework_detail
 
     End Sub
 
-
-    Private Sub SetupTabs(crs As BO.p41ProjectSum)
-        tabs1.Tabs.Clear()
-
-        Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Master.Factory.j03UserBL.GetList_PageTabs(Master.Factory.SysUser.PID, BO.x29IdEnum.p41Project)
-        For Each c In lisX61
-            Dim tab As New RadTab(c.x61Name, c.x61Code)
-            tabs1.Tabs.Add(tab)
-            tab.NavigateUrl = c.GetPageUrl("p41", Master.DataPID, Me.hidIsCanApprove.Value)
-            tab.NavigateUrl += "&lasttabkey=p41_framework_detail-tab&lasttabval=" & c.x61Code
-            tab.Target = "fraSubform"
-            If tabs1.Tabs.Count = 0 Then tab.Selected = True
-            Select Case c.x61Code
-                Case "time"
-                    If crs.p31_Wip_Time_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
-                    If crs.p31_Approved_Time_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
-                Case "expense"
-                    If crs.p31_Wip_Expense_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Expense_Count.ToString & "</span>"
-                    If crs.p31_Approved_Expense_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Expense_Count.ToString & "</span>"
-                Case "fee"
-                    If crs.p31_Wip_Fee_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Fee_Count.ToString & "</span>"
-                    If crs.p31_Approved_Fee_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
-                Case "kusovnik"
-                    If crs.p31_Wip_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Kusovnik_Count.ToString & "</span>"
-                    If crs.p31_Approved_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Kusovnik_Count.ToString & "</span>"
-                Case "p91"
-                    If crs.p91_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
-                Case "p56"
-                    If crs.p56_Actual_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
-                Case "workflow"
-                    If crs.b07_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
-                Case "p45"
-                    If crs.p45_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
-            End Select
-        Next
+    Private Sub cti(strName As String, strX61Code As String)
+        Dim cX61 As New BO.x61PageTab
+        cX61.x61Code = strX61Code
+        Dim tab As New RadTab(strName, strX61Code)
+        tabs1.Tabs.Add(tab)
+        tab.NavigateUrl = cX61.GetPageUrl("p41", Master.DataPID, Me.hidIsCanApprove.Value)
+        tab.NavigateUrl += "&lasttabkey=p41_framework_detail-tab&lasttabval=" & strX61Code
+        tab.Target = "fraSubform"
+        If tabs1.Tabs.Count = 0 Then tab.Selected = True
     End Sub
+    Private Sub SetupTabs(crs As BO.p41ProjectSum, cP42 As BO.p42ProjectType)
+        tabs1.Tabs.Clear()
+        Dim s As String = ""
+        If cP42.p42IsModule_p31 Then
+            s = "Summary" : cti(s, "summary")
+            s = "Worksheet přehled" : cti(s, "p31")
+            s = "Hodiny"
+            If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
+            If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
+            cti(s, "time")
+            s = "Výdaje"
+            If crs.p31_Wip_Expense_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Expense_Count.ToString & "</span>"
+            If crs.p31_Approved_Expense_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Expense_Count.ToString & "</span>"
+            cti(s, "expense")
+            s = "Odměny"
+            If crs.p31_Wip_Fee_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Fee_Count.ToString & "</span>"
+            If crs.p31_Approved_Fee_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
+            cti(s, "fee")
+            s = "Faktury"
+            If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+            cti(s, "p91")
+        End If
+        If cP42.p42IsModule_p56 Then
+            s = "Úkoly"
+            If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+            cti(s, "p56")
+        End If
+        If cP42.p42IsModule_p45 Then
+            s = "Rozpočet"
+            If crs.p45_Count > 0 Then s += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
+            cti(s, "p45")
+        End If
+        
+    End Sub
+
+    ''Private Sub SetupTabs(crs As BO.p41ProjectSum)
+    ''    tabs1.Tabs.Clear()
+
+    ''    Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Master.Factory.j03UserBL.GetList_PageTabs(Master.Factory.SysUser.PID, BO.x29IdEnum.p41Project)
+    ''    For Each c In lisX61
+    ''        Dim tab As New RadTab(c.x61Name, c.x61Code)
+    ''        tabs1.Tabs.Add(tab)
+    ''        tab.NavigateUrl = c.GetPageUrl("p41", Master.DataPID, Me.hidIsCanApprove.Value)
+    ''        tab.NavigateUrl += "&lasttabkey=p41_framework_detail-tab&lasttabval=" & c.x61Code
+    ''        tab.Target = "fraSubform"
+    ''        If tabs1.Tabs.Count = 0 Then tab.Selected = True
+    ''        Select Case c.x61Code
+    ''            Case "time"
+    ''                If crs.p31_Wip_Time_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
+    ''                If crs.p31_Approved_Time_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
+    ''            Case "expense"
+    ''                If crs.p31_Wip_Expense_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Expense_Count.ToString & "</span>"
+    ''                If crs.p31_Approved_Expense_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Expense_Count.ToString & "</span>"
+    ''            Case "fee"
+    ''                If crs.p31_Wip_Fee_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Fee_Count.ToString & "</span>"
+    ''                If crs.p31_Approved_Fee_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
+    ''            Case "kusovnik"
+    ''                If crs.p31_Wip_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Kusovnik_Count.ToString & "</span>"
+    ''                If crs.p31_Approved_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Kusovnik_Count.ToString & "</span>"
+    ''            Case "p91"
+    ''                If crs.p91_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+    ''            Case "p56"
+    ''                If crs.p56_Actual_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+    ''            Case "workflow"
+    ''                If crs.b07_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
+    ''            Case "p45"
+    ''                If crs.p45_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
+    ''        End Select
+    ''    Next
+    ''End Sub
 
 
 
     Private Sub RemoveTab(strTabValue As String)
         With tabs1.Tabs
             If Not .FindTabByValue(strTabValue) Is Nothing Then
-                Master.Notify(String.Format("Pro záložku [{0}] nemáte oprávnění.", .FindTabByValue(strTabValue).Text), NotifyLevel.InfoMessage)
+                ''Master.Notify(String.Format("Pro záložku [{0}] nemáte oprávnění.", .FindTabByValue(strTabValue).Text), NotifyLevel.InfoMessage)
                 .Remove(.FindTabByValue(strTabValue))
                 If .Count > 0 Then tabs1.SelectedIndex = 0
 
@@ -574,5 +657,5 @@ Public Class p41_framework_detail
         End With
     End Sub
 
-   
+
 End Class

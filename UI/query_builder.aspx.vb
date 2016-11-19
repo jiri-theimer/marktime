@@ -46,6 +46,7 @@
             Me.CurrentPrefix = Request.Item("prefix")
             If ViewState("x36key") = "" Then ViewState("x36key") = Me.CurrentPrefix & "-j70id"
             With Master
+                .neededPermission = BO.x53PermValEnum.GR_GridTools
                 .Factory.j03UserBL.InhaleUserParams(CStr(ViewState("x36key")))
 
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))

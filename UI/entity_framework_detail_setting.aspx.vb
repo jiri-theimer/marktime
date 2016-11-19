@@ -54,6 +54,8 @@
                 Case "p91"
                     Me.chkSearchBox.Text = "Na stránce zapnutý vyhledávač faktury"
                     panTabs.Visible = False : panSwitchHeight.Visible = False
+                Case "p41"
+                    panTabs.Visible = False : chkSearchBox.Visible = False
                 Case Else
                     chkSearchBox.Visible = False
             End Select

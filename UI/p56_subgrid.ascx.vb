@@ -52,7 +52,7 @@ Public Class p56_subgrid
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p56_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p56_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID)))
             End With
-            panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_ExportGrid)
+            panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
 
             SetupGridP56()
 

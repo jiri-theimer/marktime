@@ -277,7 +277,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" runat="server" Text="Výběr povolených aktivit:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblP61ID" runat="server" Text="Výběr povolených aktivit:" CssClass="lbl"></asp:Label>
 
                     </td>
                     <td>

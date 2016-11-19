@@ -55,6 +55,12 @@
             Me.x38ID.SelectedValue = .x38ID.ToString
             Me.x38ID_Draft.SelectedValue = .x38ID_Draft.ToString
             Me.p42IsDefault.Checked = .p42IsDefault
+            Me.p42IsModule_p31.Checked = .p42IsModule_p31
+            Me.p42IsModule_o23.Checked = .p42IsModule_o23
+            Me.p42IsModule_p56.Checked = .p42IsModule_p56
+            Me.p42IsModule_p45.Checked = .p42IsModule_p45
+            Me.p42IsModule_o22.Checked = .p42IsModule_o22
+            Me.p42IsModule_p48.Checked = .p42IsModule_p48
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
 
@@ -96,6 +102,12 @@
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.p42ArchiveFlag = CInt(Me.p42ArchiveFlag.SelectedValue)
             cRec.p42ArchiveFlagP31 = CInt(Me.p42ArchiveFlagP31.SelectedValue)
+            cRec.p42IsModule_p31 = Me.p42IsModule_p31.Checked
+            cRec.p42IsModule_o23 = Me.p42IsModule_o23.Checked
+            cRec.p42IsModule_p56 = Me.p42IsModule_p56.Checked
+            cRec.p42IsModule_p45 = Me.p42IsModule_p45.Checked
+            cRec.p42IsModule_o22 = Me.p42IsModule_o22.Checked
+            cRec.p42IsModule_p48 = Me.p42IsModule_p48.Checked
 
             Dim mq As New BO.myQuery
             mq.AddItemToPIDs(-1)
@@ -119,4 +131,7 @@
 
     
    
+    Private Sub p42_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        Me.panP34IDs.Visible = Me.p42IsModule_p31.Checked
+    End Sub
 End Class

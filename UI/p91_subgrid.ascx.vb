@@ -37,6 +37,7 @@ Public Class p91_subgrid
             End With
 
             SetupGridP91()
+            cmdExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
         End If
 
         With Me.period1

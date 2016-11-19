@@ -29,6 +29,12 @@
                 pars.Add("p42IsDefault", .p42IsDefault, DbType.Boolean)
                 pars.Add("p42ArchiveFlag", CInt(.p42ArchiveFlag), DbType.Int32)
                 pars.Add("p42ArchiveFlagP31", CInt(.p42ArchiveFlagP31), DbType.Int32)
+                pars.Add("p42IsModule_p31", .p42IsModule_p31, DbType.Boolean)
+                pars.Add("p42IsModule_o23", .p42IsModule_o23, DbType.Boolean)
+                pars.Add("p42IsModule_p56", .p42IsModule_p56, DbType.Boolean)
+                pars.Add("p42IsModule_p45", .p42IsModule_p45, DbType.Boolean)
+                pars.Add("p42IsModule_o22", .p42IsModule_o22, DbType.Boolean)
+                pars.Add("p42IsModule_p48", .p42IsModule_p48, DbType.Boolean)
 
                 pars.Add("p42validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p42validuntil", .ValidUntil, DbType.DateTime)

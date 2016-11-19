@@ -165,6 +165,7 @@
     End Sub
 
     Private Sub p41_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+
         Me.panPlanDates.Visible = Me.chkPlanDates.Checked
         Dim intJ18ID As Integer = BO.BAS.IsNullInt(Me.j18ID.SelectedValue)
         If intJ18ID > 0 Then
@@ -178,14 +179,22 @@
             Me.clue_j18.Visible = False
             lblJ18Message.Text = ""
         End If
-        If Me.p42ID.SelectedValue <> "" Then
+        Dim intP42ID As Integer = BO.BAS.IsNullInt(Me.p42ID.SelectedValue)
+        If intP42ID > 0 Then
             Me.clue_p42.Attributes.Item("rel") = "clue_p42_record.aspx?pid=" & Me.p42ID.SelectedValue : clue_p42.Visible = True
+            Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(intP42ID)
+            RadTabStrip1.FindTabByValue("billing").Visible = cP42.p42IsModule_p31
+            Me.RadMultiPage1.FindPageViewByID("billing").Visible = cP42.p42IsModule_p31
+            chkDefineLimits.Visible = cP42.p42IsModule_p31
+            Me.p61ID.Visible = cP42.p42IsModule_p31
+            lblP61ID.Visible = Me.p61ID.Visible
+            If Not chkDefineLimits.Visible Then chkDefineLimits.Checked = False
         Else
             clue_p42.Visible = False
         End If
         Me.panLimits.Visible = Me.chkDefineLimits.Checked
 
-        RefreshState_Pricelist()
+
     End Sub
 
     Private Sub RefreshState_Pricelist()

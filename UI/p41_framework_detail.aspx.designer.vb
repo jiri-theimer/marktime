@@ -248,6 +248,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents aP48 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''trP51 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trP51 As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
     '''lblX51 control.
     '''</summary>
     '''<remarks>
@@ -282,15 +291,6 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblX51_Message As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''clue_p41_billing control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_p41_billing As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''lblP42Name control.

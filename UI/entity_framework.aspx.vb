@@ -245,7 +245,9 @@ Public Class entity_framework
                     img1.ImageUrl = "Images/invoice_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Faktury].")
             End Select
-            panExport.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_ExportGrid)
+            panExport.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
+            cmdGridDesiger.Visible = panExport.Visible
+            cmdQuery.Visible = panExport.Visible
         End With
 
 
