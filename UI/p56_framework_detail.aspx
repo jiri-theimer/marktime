@@ -436,10 +436,10 @@
     </asp:Panel>
 
     <div style="clear: both; width: 100%;"></div>
-    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Metro" Width="100%" AutoPostBack="true">
+    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Default" Width="100%" AutoPostBack="true" ShowBaseLine="true">
         <Tabs>
 
-            <telerik:RadTab Text="Worksheet přehled" Value="p31" Selected="true"></telerik:RadTab>
+            <telerik:RadTab Text="Worksheet přehled" Value="p31" Selected="true"></telerik:RadTab>            
             <telerik:RadTab Text="Historie" Value="b05"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>

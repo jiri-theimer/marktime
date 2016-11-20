@@ -181,7 +181,7 @@ Public Class p41_framework_detail
                 Me.ParentProject.NavigateUrl = "p41_framework.aspx?pid=" & .p41ParentID.ToString
                 Me.ParentProject.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ParentID)
             End If
-            If .p41BillingMemo <> "" Then
+            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) And .p41BillingMemo <> "" Then
                 boxBillingMemo.Visible = True
                 Me.p41BillingMemo.Text = BO.BAS.CrLfText2Html(.p41BillingMemo)
                 If Not cClient Is Nothing Then
@@ -243,7 +243,7 @@ Public Class p41_framework_detail
         Me.roles_project.RefreshData(lisX69, cRec.PID)
 
 
-        If cRecSum.o23_Exist Then
+        If cRecSum.o23_Count > 0 And cP42.p42SubgridO23Flag = 0 Then
             Dim mqO23 As New BO.myQueryO23
             mqO23.p41ID = Master.DataPID
             mqO23.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
@@ -262,10 +262,12 @@ Public Class p41_framework_detail
                 End With
                 notepad1.RefreshData(lisO23, Master.DataPID)
             Else
-                cRecSum.o23_Exist = False
+                boxO23.Visible = False
             End If
+        Else
+            Me.boxO23.Visible = False
         End If
-        Me.boxO23.Visible = cRecSum.o23_Exist
+
         If cRecSum.p30_Exist Then
             Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(0, Master.DataPID, False)
             If lisP30.Count > 0 Then
@@ -616,6 +618,11 @@ Public Class p41_framework_detail
             s = "Rozpočet"
             If crs.p45_Count > 0 Then s += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
             cti(s, "p45")
+        End If
+        If cP42.p42IsModule_o23 And cP42.p42SubgridO23Flag = 1 Then
+            s = "Dokumenty"
+            If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
+            cti(s, "o23")
         End If
         If crs.b07_Count > 0 Then
             s = "Komentáře a workflow<span class='badge1'>" & crs.b07_Count.ToString & "</span>"

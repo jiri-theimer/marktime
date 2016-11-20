@@ -464,31 +464,22 @@ Partial Public Class p28_framework_detail
     Protected WithEvents persons1 As Global.UI.contactpersons
 
     '''<summary>
-    '''boxO23 control.
+    '''boxBillingMemo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents boxO23 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents boxBillingMemo As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''boxO23Title control.
+    '''p28BillingMemo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents boxO23Title As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''notepad1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
+    Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''boxP41 control.

@@ -45,11 +45,6 @@
 </div>
 
 
-
-
-
-
-
 <div class="slidingDiv1xxp56" style="padding: 20px;">
     <button type="button" onclick="p56_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
     <span style="padding-left: 40px;">Stránkování:</span>

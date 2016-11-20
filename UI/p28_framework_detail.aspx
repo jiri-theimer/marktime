@@ -465,20 +465,16 @@
                 <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>
             </div>
         </asp:Panel>
-
-        <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
+        <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
             <div class="title">
-                <img src="Images/notepad.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
+                <img src="Images/billing.png" style="margin-right: 10px;" />
+                <span>Fakturační poznámka klienta</span>                
             </div>
-            <div class="content" style="overflow: auto; max-height: 200px;">
-
-                <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p28Contact"></uc:o23_list>
-
-
+            <div class="content">
+                <asp:Label ID="p28BillingMemo" runat="server"></asp:Label>
             </div>
         </asp:Panel>
-
+       
 
         <asp:Panel ID="boxP41" runat="server" CssClass="content-box1">
             <div class="title">

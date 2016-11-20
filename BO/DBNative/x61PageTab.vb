@@ -22,6 +22,8 @@
                 Return "entity_framework_p91subform.aspx?" & s
             Case "p45"
                 Return "p41_framework_detail_budget.aspx?" & s
+            Case "o23"
+                Return "entity_framework_o23subform.aspx?" & s
             Case "workflow"
                 Return "entity_framework_b07subform.aspx?" & s
             Case Else

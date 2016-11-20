@@ -16,7 +16,7 @@
     Public Property p31_Approved_Fee_Count As Integer
     Public Property p31_Approved_Kusovnik_Count As Integer
     Public Property b07_Count As Integer
-    Public Property o23_Exist As Boolean
+    Public Property o23_Count As Integer
     Public Property p45_Count As Integer
 
 End Class

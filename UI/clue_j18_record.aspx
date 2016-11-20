@@ -14,8 +14,8 @@
            <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
        </div>
 
-        <div class="div6">
-            <asp:Label ID="lblRolesHeader" runat="server" CssClass="framework_header_span" Text="Nastavení projektových rolí střediska, které se dědí do projektu"></asp:Label>
+        <div>
+            <asp:Label ID="lblRolesHeader" runat="server" CssClass="lbl" Text="Projektové role střediska, které se dědí do projektu:"></asp:Label>
         </div>
         <uc:entityrole_assign_preview ID="roles_region" runat="server" EntityX29ID="j18Region" NoDataText="V tomto středisku nejsou nastaveny projektové role."></uc:entityrole_assign_preview>
 

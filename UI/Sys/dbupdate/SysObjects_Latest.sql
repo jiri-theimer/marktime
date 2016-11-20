@@ -3445,7 +3445,7 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@p91_count int
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_exist bit
+declare @o23_count int
 
 if exists(SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@pid OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@pid)))
  begin
@@ -3490,9 +3490,9 @@ if exists(select b07ID from b07Comment WHERE x29ID=102 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=102 AND b07RecordPID=@pid
 
 if exists(select o23ID FROM o23Notepad WHERE j02ID=@pid)
- set @o23_exist=1
+ select @o23_count=count(o23ID) FROM o23Notepad WHERE j02ID=@pid and getdate() between o23ValidFrom and o23ValidUntil
 else
- set @o23_exist=0
+ set @o23_count=0
 
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
@@ -3507,7 +3507,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p31_wip_kusovnik_count,0) as p31_Wip_Kusovnik_Count
 ,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
 ,isnull(@b07_count,0) as b07_Count
-,@o23_exist as o23_Exist
+,isnull(@o23_count,0) as o23_Count
 
 
 GO
@@ -5697,7 +5697,7 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_exist bit
+declare @o23_count int
 
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 ,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
@@ -5752,9 +5752,9 @@ if exists(select b07ID from b07Comment WHERE x29ID=328 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=328 AND b07RecordPID=@pid
 
 if exists(select o23ID FROM o23Notepad WHERE p28ID=@pid)
- set @o23_exist=1
+ select @o23_count=count(o23ID) FROM o23Notepad WHERE p28ID=@pid AND getdate() between o23ValidFrom AND o23ValidUntil
 else
- set @o23_exist=0
+ set @o23_count=0
 
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
@@ -5772,7 +5772,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p31_wip_kusovnik_count,0) as p31_Wip_Kusovnik_Count
 ,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
 ,isnull(@b07_count,0) as b07_Count
-,@o23_exist as o23_Exist
+,isnull(@o23_count,0) as o23_Count
 
 GO
 
@@ -9055,31 +9055,46 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int,@is_my_favourite bit,@p40_exist bit
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_exist bit,@p45_count int
+declare @o23_count int,@p45_count int
 
+declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit
+
+select @p42IsModule_p31=a.p42IsModule_p31,@p42IsModule_p56=a.p42IsModule_p56,@p42IsModule_o23=a.p42IsModule_o23,@p42IsModule_p45=p42IsModule_p45
+FROM p42ProjectType a INNER JOIN p41Project b ON a.p42ID=b.p42ID
+WHERE b.p41ID=@pid
+
+if @p42IsModule_p56=1
+begin
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 ,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 FROM p56Task
 WHERE p41ID=@pid
+end
+
 
 SELECT @o22_actual_count=COUNT(o22ID)
 FROM o22Milestone
 WHERE p41ID=@pid AND o22DateUntil>=dateadd(day,-2,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil
 
+if @p42IsModule_p31=1
+begin
 SELECT @p91_count=COUNT(p91ID)
 from p91Invoice
 WHERE p91ID IN (SELECT p91ID FROM p31Worksheet WHERE p41ID=@pid)
+end
 
 if exists(select p30ID FROM p30Contact_Person WHERE p41ID=@pid AND getdate() BETWEEN p30ValidFrom AND p30ValidUntil)
  set @p30_exist=1
 else
  set @p30_exist=0
 
-
+if @p42IsModule_p31=1
+begin
 if exists(select p40ID FROM p40WorkSheet_Recurrence WHERE p41ID=@pid)
  set @p40_exist=1
 else
  set @p40_exist=0
+end
 
 if exists(select p41ID FROM p41Project WHERE p41ParentID=@pid)
  select @childs_count=count(p41ID) FROM p41Project WHERE p41ParentID=@pid
@@ -9089,6 +9104,8 @@ if exists(select j13ID FROM j13FavourteProject WHERE p41ID=@pid AND j03ID=@j03id
 else
  set @is_my_favourite=0
 
+if @p42IsModule_p31=1
+begin
 if exists(select p31ID FROM p31Worksheet WHERE p41ID=@pid AND p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
  begin
   select @p31_wip_time_count=sum(case when c.p33ID=1 then 1 end)
@@ -9112,16 +9129,22 @@ if exists(select p31ID FROM p31Worksheet WHERE p41ID=@pid AND p71ID=1 AND p91ID 
   WHERE a.p41ID=@pid AND a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil
 
  end
+end
+
 
 if exists(select b07ID from b07Comment WHERE x29ID=141 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid
 
+if @p42IsModule_o23=1
+begin
 if exists(select o23ID FROM o23Notepad WHERE p41ID=@pid)
- set @o23_exist=1
+ select @o23_count=count(o23ID) FROM o23Notepad WHERE p41ID=@pid AND getdate() between o23ValidFrom AND o23ValidUntil
 else
- set @o23_exist=0
+ set @o23_count=0
+end
 
-select @p45_count=COUNT(p45ID) FROM p45Budget WHERE p41ID=@pid
+if @p42IsModule_p45=1
+ select @p45_count=COUNT(p45ID) FROM p45Budget WHERE p41ID=@pid
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p56_closed_count,0) as p56_Closed_Count
@@ -9140,7 +9163,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p31_wip_kusovnik_count,0) as p31_Wip_Kusovnik_Count
 ,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
 ,isnull(@b07_count,0) as b07_Count
-,@o23_exist as o23_Exist
+,isnull(@o23_count,0) as o23_Count
 ,isnull(@p45_count,0) as p45_Count
 
 GO

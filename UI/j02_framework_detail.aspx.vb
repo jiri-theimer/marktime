@@ -199,22 +199,7 @@ Public Class j02_framework_detail
             If Me.TeamsInLine.Text = "" Then lblTeams.Visible = False
         End With
 
-        If cRecSum.o23_Exist Then
-            Dim mqO23 As New BO.myQueryO23
-            mqO23.j02ID = Master.DataPID
-            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
-
-            If lisO23.Count > 0 Then
-                Me.boxO23.Visible = True
-                notepad1.RefreshData(lisO23, Master.DataPID)
-                boxO23Title.Text = BO.BAS.OM2(boxO23Title.Text, lisO23.Count.ToString)
-
-            Else
-                cRecSum.o23_Exist = False
-            End If
-        End If
-        Me.boxO23.Visible = cRecSum.o23_Exist
-
+    
         panMasters.Visible = False : panSlaves.Visible = False
         cmdAddJ05.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
         Dim lisJ05 As IEnumerable(Of BO.j05MasterSlave) = Master.Factory.j05MasterSlaveBL.GetList(cRec.PID, 0, 0)
@@ -370,6 +355,8 @@ Public Class j02_framework_detail
                     If crs.p91_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
                 Case "p56"
                     If crs.p56_Actual_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+                Case "o23"
+                    If crs.o23_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
                 Case "workflow"
                     If crs.b07_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
             End Select

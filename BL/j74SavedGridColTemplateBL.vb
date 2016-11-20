@@ -180,7 +180,13 @@ Class j74SavedGridColTemplateBL
                         c.j74ColumnNames = "p56Code,p56Name,b02Name"
                 End Select
             Case BO.x29IdEnum.o23Notepad
-                c.j74ColumnNames = "o24Name,o23Name,Project"
+                Select Case strMasterPrefix
+                    Case "p41"
+                        c.j74ColumnNames = "o24Name,o23Name"
+                    Case Else
+                        c.j74ColumnNames = "o24Name,o23Name,Project"
+                End Select
+
         End Select
         c.j03ID = intJ03ID
         Return Save(c, Nothing)

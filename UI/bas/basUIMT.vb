@@ -269,7 +269,7 @@ Public Class basUIMT
         Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
         If bolShowClueTip Then
             With dataItem("systemcolumn")
-                .Text = "<a class='reczoom' title='Detail dokumentu' rel='clue_o23_record.aspx?pid=" & cRec.Item("pid").ToString & "'>i</a>"
+                .Text = "<a class='reczoom' title='Detail dokumentu' rel='clue_o23_record.aspx?pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>"
             End With
         End If
         If bolShowFilePreview Then

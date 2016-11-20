@@ -429,18 +429,7 @@
 
 
 
-        <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
-
-            <div class="title">
-                <img src="Images/notepad.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
-            </div>
-            <div class="content" style="overflow: auto; max-height: 200px;">
-                <uc:o23_list ID="notepad1" runat="server" EntityX29ID="j02Person"></uc:o23_list>
-            </div>
-
-        </asp:Panel>
-
+     
     </asp:Panel>
     <div style="clear: both;"></div>
     <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" style="margin-top:10px;">       

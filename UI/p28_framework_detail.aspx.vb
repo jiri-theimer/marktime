@@ -140,9 +140,13 @@ Public Class p28_framework_detail
                 Me.ParentContact.NavigateUrl = "p28_framework.aspx?pid=" & .p28ParentID.ToString
                 Me.ParentContact.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .p28ParentID)
             End If
+            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) And .p28BillingMemo <> "" Then
+                boxBillingMemo.Visible = True
+                Me.p28BillingMemo.Text = BO.BAS.CrLfText2Html(.p28BillingMemo)
+            Else
+                boxBillingMemo.Visible = False
+            End If
         End With
-
-
 
         RefreshBillingLanguage(cRec)
 
@@ -196,30 +200,7 @@ Public Class p28_framework_detail
         Me.boxP30.Visible = cRecSum.p30_Exist
         
 
-        If cRecSum.o23_Exist Then
-            Dim mqO23 As New BO.myQueryO23
-            mqO23.p28ID = Master.DataPID
-            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
-            If lisO23.Count > 0 Then
-                Me.boxO23.Visible = True
-                With Me.boxO23Title
-                    .Text = .Text & " (" & lisO23.Count.ToString & ")"
-                    If menu1.FindItemByValue("cmdO23").Visible Then
-                        .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
-                        If lisO23.Count > 10 Then
-                            .Text += ", 10 nejnovějších:"
-                            lisO23 = lisO23.Take(10)
-                        End If
-                    End If
-                End With
-                notepad1.RefreshData(lisO23, Master.DataPID)
-            Else
-                cRecSum.o23_Exist = False
-            End If
-        End If
-        Me.boxO23.Visible = cRecSum.o23_Exist
-        
-        
+  
 
         If cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Wip_Time_Count > 0 Then
             Dim mq As New BO.myQueryP31
@@ -510,6 +491,8 @@ Public Class p28_framework_detail
                     If crs.p91_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
                 Case "p56"
                     If crs.p56_Actual_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+                Case "o23"
+                    If crs.o23_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
                 Case "workflow"
                     If crs.b07_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
             End Select
