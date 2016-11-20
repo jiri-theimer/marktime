@@ -130,6 +130,7 @@
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
+            Me.p41BillingMemo.Text = .p41BillingMemo
         End With
         roles1.InhaleInitialData(cRec.PID)
 
@@ -302,6 +303,7 @@
             .ValidUntil = Master.RecordValidUntil
 
             .p41ParentID = BO.BAS.IsNullInt(Me.p41ParentID.Value)
+            .p41BillingMemo = Trim(Me.p41BillingMemo.Text)
         End With
 
         Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()

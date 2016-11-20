@@ -76,7 +76,7 @@
                         <img src="Images/arrow_down.gif" alt="Nastavení" />
                     </button>
                     </asp:Panel>
-
+                    <asp:Label ID="BillingMemo" runat="server" CssClass="infoNotification" Font-Italic="true"></asp:Label>
                 </td>
             </tr>
         </table>

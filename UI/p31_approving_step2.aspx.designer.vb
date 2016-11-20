@@ -68,6 +68,15 @@ Partial Public Class p31_approving_step2
     Protected WithEvents lblO23 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''BillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents BillingMemo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''notepad1 control.
     '''</summary>
     '''<remarks>

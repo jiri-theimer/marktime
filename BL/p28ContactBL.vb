@@ -129,6 +129,9 @@ Class p28ContactBL
                     Return False
                 End If
             End If
+            If Len(.p28BillingMemo) > 1000 Then
+                _Error = "Obsah fakturační poznámky je příliš dlouhý (nad 1.000 znaků). Pro tak dlouhé fakturační poznámky nebo souborové přílohy klienta využívejte modul DOKUMENTY." : Return False
+            End If
         End With
         If Not lisFF Is Nothing Then
             If Not BL.BAS.ValidateFF(lisFF) Then

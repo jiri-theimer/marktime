@@ -536,6 +536,24 @@ Partial Public Class p41_framework_detail
     Protected WithEvents roles_project As Global.UI.entityrole_assign_inline
 
     '''<summary>
+    '''boxBillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxBillingMemo As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p41BillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41BillingMemo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''boxO23 control.
     '''</summary>
     '''<remarks>

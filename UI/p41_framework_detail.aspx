@@ -505,7 +505,15 @@
                 <uc:entityrole_assign_inline ID="roles_project" runat="server" EntityX29ID="p41Project" NoDataText="V projektu nejsou přiřazeny projektové role."></uc:entityrole_assign_inline>
             </div>
         </asp:Panel>
-
+        <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/billing.png" style="margin-right: 10px;" />
+                <span>Fakturační poznámka projektu</span>                
+            </div>
+            <div class="content">
+                <asp:Label ID="p41BillingMemo" runat="server"></asp:Label>
+            </div>
+        </asp:Panel>
         <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
             <div class="title">
                 <img src="Images/notepad.png" style="margin-right: 10px;" />

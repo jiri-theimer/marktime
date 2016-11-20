@@ -28,6 +28,7 @@ Public Enum myQueryP41_QuickQuery
     WithParentProject = 18
     WithChildProject = 19
     Favourites = 20
+    WithBillingMemo = 21
 End Enum
 Public Class myQueryP41
     Inherits myQuery

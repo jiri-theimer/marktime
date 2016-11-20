@@ -626,6 +626,15 @@ Partial Public Class p28_record
     Protected WithEvents p51ID_Internal As Global.UI.datacombo
 
     '''<summary>
+    '''p28BillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''ff control.
     '''</summary>
     '''<remarks>

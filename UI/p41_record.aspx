@@ -258,6 +258,8 @@
                         </td>
                     </tr>
                 </table>
+                <div>Fakturační poznámka projektu:</div>
+                <asp:TextBox ID="p41BillingMemo" runat="server" style="width:99%;height:60px;" TextMode="MultiLine"></asp:TextBox>
             </asp:Panel>
         </telerik:RadPageView>
         <telerik:RadPageView ID="ff" runat="server">

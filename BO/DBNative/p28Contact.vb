@@ -40,6 +40,7 @@ Public Class p28Contact
     Public Property p28SupplierFlag As p28SupplierFlagENUM
     Public Property p28SupplierID As String
     Public Property p28ExternalPID As String
+    Public Property p28BillingMemo As String
     Private Property _p28name As String
     Private Property _Owner As String
 

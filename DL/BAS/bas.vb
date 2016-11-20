@@ -517,6 +517,8 @@
                 Return "a.p28ID IN (SELECT p28ParentID FROM p28Contact WHERE p28ParentID IS NOT NULL)"
             Case BO.myQueryP28_QuickQuery.WithOverHead
                 Return "a.p63ID IS NOT NULL"
+            Case BO.myQueryP28_QuickQuery.WithBillingMemo
+                Return "a.p28BillingMemo IS NOT NULL"
             Case Else
                 Return ""
         End Select
@@ -576,6 +578,8 @@
                 Return "a.p41ID IN (SELECT p41ParentID FROM p41Project WHERE p41ParentID IS NOT NULL)"
             Case BO.myQueryP41_QuickQuery.Favourites
                 Return "a.p41ID IN (SELECT p41ID FROM j13FavourteProject WHERE j03ID=" & cUser.PID.ToString & ")"
+            Case BO.myQueryP41_QuickQuery.WithBillingMemo
+                Return "a.p41BillingMemo IS NOT NULL"
             Case Else
                 Return ""
         End Select

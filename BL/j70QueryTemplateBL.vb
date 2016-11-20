@@ -88,6 +88,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(18, "Má nadřízený projekt"))
                 lis.Add(New BO.OtherQueryItem(19, "Má pod sebou podřízené projekty"))
                 lis.Add(New BO.OtherQueryItem(20, "Moje oblíbené projekty"))
+                lis.Add(New BO.OtherQueryItem(21, "Vyplněna fakturační poznámka projektu"))
             Case BO.x29IdEnum.p28Contact
                 lis.Add(New BO.OtherQueryItem(3, "Projekty klienta obsahují rozpracované úkony, které čekají na schvalování"))
                 lis.Add(New BO.OtherQueryItem(5, "Projektovy klienta obsahují schválené úkony, které čekají na fakturaci"))
@@ -105,6 +106,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(25, "Má nadřízeného klienta"))
                 lis.Add(New BO.OtherQueryItem(26, "Má pod sebou podřízené klienty"))
                 lis.Add(New BO.OtherQueryItem(27, "Nastavena režijní fakturační přirážka"))
+                lis.Add(New BO.OtherQueryItem(29, "Vyplněna fakturační poznámka klienta"))
             Case BO.x29IdEnum.j02Person
                 lis.Add(New BO.OtherQueryItem(6, "Pouze interní osoby"))
                 lis.Add(New BO.OtherQueryItem(7, "Pouze kontaktní osoby"))

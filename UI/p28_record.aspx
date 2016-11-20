@@ -376,7 +376,8 @@
                     </td>
                 </tr>
             </table>
-
+            <div>Fakturační poznámka klienta:</div>
+            <asp:TextBox ID="p28BillingMemo" runat="server" style="width:99%;height:60px;" TextMode="MultiLine"></asp:TextBox>
         </telerik:RadPageView>
         <telerik:RadPageView ID="ff" runat="server">
 

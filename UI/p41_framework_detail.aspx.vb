@@ -181,6 +181,18 @@ Public Class p41_framework_detail
                 Me.ParentProject.NavigateUrl = "p41_framework.aspx?pid=" & .p41ParentID.ToString
                 Me.ParentProject.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ParentID)
             End If
+            If .p41BillingMemo <> "" Then
+                boxBillingMemo.Visible = True
+                Me.p41BillingMemo.Text = BO.BAS.CrLfText2Html(.p41BillingMemo)
+                If Not cClient Is Nothing Then
+                    If cClient.p28BillingMemo <> "" Then
+                        Me.p41BillingMemo.Text += "<hr>" & String.Format("Fakturační poznámka klienta: {0}", BO.BAS.CrLfText2Html(cClient.p28BillingMemo))
+                    End If
+                End If
+            Else
+                boxBillingMemo.Visible = False
+            End If
+
         End With
 
 

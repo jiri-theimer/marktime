@@ -206,8 +206,9 @@
         <div class="innerform_light">
             <uc:o23_list ID="notepad1" runat="server"></uc:o23_list>
             <div class="div6">
-                <asp:HyperLink ID="cmdNewO23" runat="server" Text="Napsat novou poznámku" NavigateUrl="javascript:o23_record(0)"></asp:HyperLink>
+                <asp:HyperLink ID="cmdNewO23" runat="server" Text="Napsat novou poznámku" NavigateUrl="javascript:o23_record(0)" Visible="false"></asp:HyperLink>
             </div>
+            <asp:Label ID="BillingMemo" runat="server" CssClass="infoNotification" Font-Italic="true"></asp:Label>
         </div>
     </div>
     

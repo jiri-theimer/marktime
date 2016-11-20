@@ -473,6 +473,15 @@ Partial Public Class p41_create
     Protected WithEvents p41InvoiceDefaultText2 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''p41BillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41BillingMemo As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''ff control.
     '''</summary>
     '''<remarks>
