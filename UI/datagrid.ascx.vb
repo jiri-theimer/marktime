@@ -582,7 +582,7 @@ Public Class datagrid
         Dim lis As New List(Of String)
 
         For i As Integer = intFirstSumColZeroIndex To dt.Columns.Count - 1
-            lis.Add(dt.Columns(i).ColumnName & ";" & BO.BAS.FN(dt.Rows(0).Item(i)))
+            If Not dt.Rows(0).Item(i) Is System.DBNull.Value Then lis.Add(dt.Columns(i).ColumnName & ";" & BO.BAS.FN(dt.Rows(0).Item(i)))
         Next
         Return String.Join("|", lis)
     End Function

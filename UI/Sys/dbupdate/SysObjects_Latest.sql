@@ -12512,6 +12512,12 @@ if exists(select x47ID FROM x47EventLog where x29ID=223 and x45ID=22301 and x47D
 if exists(select x47ID FROM x47EventLog where x29ID=356 and x45ID=35601 and x47Description is null and x47RecordPID NOT IN (SELECT p56ID FROM p56Task))
    update x47EventLog set x47Description='deleted' where x29ID=356 and x45ID=35601 and x47RecordPID NOT IN (SELECT p56ID FROM p56Task)
 
+
+update a set x47Name=b.p91Code,x47NameReference=b.p91Client
+FROM
+x47EventLog a INNER JOIN p91Invoice b ON a.x47RecordPID=b.p91ID
+where a.x29ID=391
+
 GO
 
 ----------P---------------x18_delete-------------------------
