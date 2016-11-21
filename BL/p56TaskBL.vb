@@ -19,6 +19,7 @@
     Function InhaleRecordDisposition(cRec As BO.p56Task) As BO.p56RecordDisposition
     Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
     Function GetTotalTasksCount() As Integer
+    Function GetGridFooterSums(myQuery As BO.myQueryP56, strSumFields As String) As DataTable
 End Interface
 Class p56TaskBL
     Inherits BLMother
@@ -230,5 +231,8 @@ Class p56TaskBL
     End Function
     Public Function GetTotalTasksCount() As Integer Implements Ip56TaskBL.GetTotalTasksCount
         Return _cDL.GetTotalTasksCount()
+    End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP56, strSumFields As String) As DataTable Implements Ip56TaskBL.GetGridFooterSums
+        Return _cDL.GetGridFooterSums(myQuery, strSumFields)
     End Function
 End Class

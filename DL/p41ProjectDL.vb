@@ -465,6 +465,20 @@
 
         Return _cDB.GetRecord(Of BO.GetInteger)(s, pars).Value
     End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP41, strSumFields As String) As DataTable
+        Dim s As String = "SELECT count(a.p41ID) as VirtualCount"
+        Dim pars As New DL.DbParameters
+        If strSumFields <> "" Then
+            For Each strField As String In Split(strSumFields, "|")
+                s += "," & strField
+            Next
+        End If
+        s += " " & GetSQLPart2(myQuery)
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        If strW <> "" Then s += " WHERE " & strW
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
 
     Private Function GetSF() As String
         Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"

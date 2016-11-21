@@ -19,6 +19,7 @@
     Function HasChildRecords(intPID As Integer) As Boolean
     Function GetTopProjectsByWorksheetEntry(intJ02ID As Integer, intGetTopRecs As Integer) As List(Of Integer)
     Function IsMyFavouriteProject(intPID As Integer) As Boolean
+    Function GetGridFooterSums(myQuery As BO.myQueryP41, strSumFields As String) As DataTable
 End Interface
 Class p41ProjectBL
     Inherits BLMother
@@ -291,5 +292,8 @@ Class p41ProjectBL
     End Function
     Public Function IsMyFavouriteProject(intPID As Integer) As Boolean Implements Ip41ProjectBL.IsMyFavouriteProject
         Return _cDL.IsMyFavouriteProject(intPID)
+    End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP41, strSumFields As String) As DataTable Implements Ip41ProjectBL.GetGridFooterSums
+        Return _cDL.GetGridFooterSums(myQuery, strSumFields)
     End Function
 End Class

@@ -24,6 +24,7 @@
     Function LoadMyLastCreated() As BO.p28Contact
     Function HasChildRecords(intPID As Integer) As Boolean
     Function LoadSumRow(intPID As Integer) As BO.p28ContactSum
+    Function GetGridFooterSums(myQuery As BO.myQueryP28, strSumFields As String) As DataTable
 End Interface
 Class p28ContactBL
     Inherits BLMother
@@ -263,5 +264,8 @@ Class p28ContactBL
     End Function
     Public Function LoadSumRow(intPID As Integer) As BO.p28ContactSum Implements Ip28ContactBL.LoadSumRow
         Return _cDL.LoadSumRow(intPID)
+    End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP28, strSumFields As String) As DataTable Implements Ip28ContactBL.GetGridFooterSums
+        Return _cDL.GetGridFooterSums(myQuery, strSumFields)
     End Function
 End Class

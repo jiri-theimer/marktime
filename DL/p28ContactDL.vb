@@ -425,6 +425,20 @@
 
         Return _cDB.GetRecord(Of BO.GetInteger)(s, pars).Value
     End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP28, strSumFields As String) As DataTable
+        Dim s As String = "SELECT count(a.p28ID) as VirtualCount"
+        Dim pars As New DL.DbParameters
+        If strSumFields <> "" Then
+            For Each strField As String In Split(strSumFields, "|")
+                s += "," & strField
+            Next
+        End If
+        s += " " & GetSQLPart2(myQuery)
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        If strW <> "" Then s += " WHERE " & strW
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
 
     Private Function GetSQLPart1(intTOP As Integer) As String
         Dim s As String = "SELECT"

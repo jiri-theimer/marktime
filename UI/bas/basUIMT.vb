@@ -428,6 +428,7 @@ Public Class basUIMT
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
             Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+            If cRec.Item(0) Is System.DBNull.Value Then Return
             With cRec
                 p31_grid_Handle_ItemDataBound_Engine(dataItem, .Item("p31Date_Grid"), BO.BAS.IsNullInt(.Item("p72ID_AfterTrimming")), BO.BAS.IsNullInt(.Item("p72ID_AfterApprove")), BO.BAS.IsNullInt(.Item("p70ID")), BO.BAS.IsNullInt(.Item("p71ID")), .Item("IsClosed"), BO.BAS.IsNullInt(.Item("o23ID_First")), BO.BAS.IsNullInt(.Item("p49ID")), .Item("p33ID"), BO.BAS.IsNullNum(.Item("p31Hours_Trimmed_Grid")), BO.BAS.IsNullNum(.Item("p31Hours_Orig_Grid")), .Item("p34IncomeStatementFlag"))
             End With

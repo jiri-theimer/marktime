@@ -329,6 +329,24 @@ Partial Public Class p31_subgrid
     Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSumCols control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSumCols As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidFooterString control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidFooterString As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidFrom control.
     '''</summary>
     '''<remarks>

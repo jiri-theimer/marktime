@@ -16,14 +16,7 @@ Public Class p31_subgrid
             Me.hidMasterDataPID.Value = value.ToString
         End Set
     End Property
-    ''Private Property CurrentQuickQuery As BO.myQueryP31_QuickQuery
-    ''    Get
-    ''        Return CType(BO.BAS.IsNullInt(Me.hidQuickQuery.Value), BO.myQueryP31_QuickQuery)
-    ''    End Get
-    ''    Set(value As BO.myQueryP31_QuickQuery)
-    ''        Me.hidQuickQuery.Value = CInt(value).ToString
-    ''    End Set
-    ''End Property
+  
 
     Public Property CurrentJ70ID As Integer
         Get
@@ -139,7 +132,7 @@ Public Class p31_subgrid
         If Me.MasterDataPID = 0 Then Return
 
         If Not Page.IsPostBack Then
-            ViewState("footersum") = ""
+            ''ViewState("footersum") = ""
             With Factory.j03UserBL
                 Dim lisPars As New List(Of String), strKey As String = "p31_subgrid-j74id_" & Me.MasterPrefixWithQueryFlag
                 If Me.hidJ74RecordState.Value <> "" Then strKey += "-" & Me.hidJ74RecordState.Value
@@ -215,10 +208,10 @@ Public Class p31_subgrid
         grid2.ClearColumns()
 
         Me.hidDefaultSorting.Value = _curJ74.j74OrderBy
-        Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect, , , , strAddSqlFrom)
+        Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.grid2, _curJ74, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect, , , , strAddSqlFrom, , strSqlSumCols)
         Me.hidFrom.Value = strAddSqlFrom
-
+        Me.hidSumCols.Value = strSqlSumCols
         
 
         If _curJ74.j74IsFilteringByColumn Then
@@ -250,55 +243,54 @@ Public Class p31_subgrid
         End With
     End Sub
 
-    Private Sub grid2_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid2.DetailTableDataBind
-        Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
-        Dim mq As New BO.myQueryP31
-        Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
-        Select Case LCase(colDrill.LinqQueryField)
-            Case "p71id"
-                mq.p71ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p71IdENUM)
-            Case "p70id"
-                mq.p70ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p70IdENUM)
-            Case Else
-                BO.BAS.SetPropertyValue(mq, colDrill.LinqQueryField, BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")))
-        End Select
+    ''Private Sub grid2_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid2.DetailTableDataBind
+    ''    Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
+    ''    Dim mq As New BO.myQueryP31
+    ''    Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
+    ''    Select Case LCase(colDrill.LinqQueryField)
+    ''        Case "p71id"
+    ''            mq.p71ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p71IdENUM)
+    ''        Case "p70id"
+    ''            mq.p70ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p70IdENUM)
+    ''        Case Else
+    ''            BO.BAS.SetPropertyValue(mq, colDrill.LinqQueryField, BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")))
+    ''    End Select
 
 
-        With mq
-            .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
-            .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
-            .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
-            If Me.hidDefaultSorting.Value <> "" Then
-                If .MG_SortString = "" Then
-                    .MG_SortString = Me.hidDefaultSorting.Value
-                Else
-                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
-                End If
-            End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                If .MG_SortString = "" Then
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue
-                Else
-                    .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
-                End If
-            End If
-        End With
-        p31_InhaleMyQuery(mq)
-        With e.DetailTableView
-            .AllowCustomPaging = True
-            .AllowSorting = True
-            If .VirtualItemCount = 0 Then .VirtualItemCount = GetRowsCount(mq)
-            .DataSource = Factory.p31WorksheetBL.GetList(mq)
+    ''    With mq
+    ''        .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+    ''        .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
+    ''        .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
+    ''        If Me.hidDefaultSorting.Value <> "" Then
+    ''            If .MG_SortString = "" Then
+    ''                .MG_SortString = Me.hidDefaultSorting.Value
+    ''            Else
+    ''                .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+    ''            End If
+    ''        End If
+    ''        If Me.cbxGroupBy.SelectedValue <> "" Then
+    ''            If .MG_SortString = "" Then
+    ''                .MG_SortString = Me.cbxGroupBy.SelectedValue
+    ''            Else
+    ''                .MG_SortString = Me.cbxGroupBy.SelectedValue & "," & .MG_SortString
+    ''            End If
+    ''        End If
+    ''    End With
+    ''    p31_InhaleMyQuery(mq)
+    ''    With e.DetailTableView
+    ''        .AllowCustomPaging = True
+    ''        .AllowSorting = True
+    ''        If .VirtualItemCount = 0 Then .VirtualItemCount = GetRowsCount(mq)
+    ''        .DataSource = Factory.p31WorksheetBL.GetList(mq)
 
-        End With
-    End Sub
+    ''    End With
+    ''End Sub
     Private Function GetRowsCount(mq As BO.myQueryP31) As Integer
         Dim cSum As BO.p31WorksheetSum = Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
         Return cSum.RowsCount
     End Function
 
     Private Sub grid2_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid2.ItemDataBound
-        'If TypeOf e.Item.DataItem Is DataRowView Then Return
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
         If _curIsExport Then
             If TypeOf e.Item Is GridHeaderItem Then
@@ -324,18 +316,20 @@ Public Class p31_subgrid
             .MG_PageSize = CInt(Me.cbxPaging.SelectedValue)
             .MG_CurrentPageIndex = grid2.radGridOrig.MasterTableView.CurrentPageIndex
         End With
-        If Me.hidDrillDownField.Value <> "" Then
-            'drill down úroveň
-            Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
+        ''If Me.hidDrillDownField.Value <> "" Then
+        ''    'drill down úroveň
+        ''    Dim colDrill As BO.GridGroupByColumn = Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
 
-            Dim dtDD As DataTable = Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid2.radGridOrig.MasterTableView.Attributes("sumfields"))
-            grid2.VirtualRowCount = dtDD.Rows.Count
-            grid2.DataSourceDataTable = dtDD
-            Return
-        End If
+        ''    Dim dtDD As DataTable = Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid2.radGridOrig.MasterTableView.Attributes("sumfields"))
+        ''    grid2.VirtualRowCount = dtDD.Rows.Count
+        ''    grid2.DataSourceDataTable = dtDD
+        ''    Return
+        ''End If
         If _curIsExport Then mq.MG_PageSize = 2000
         Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(mq)
         If dt Is Nothing Then
+            grid2.VirtualRowCount = 0
+            grid2.DataSource = Nothing
             Return
         End If
 
@@ -347,7 +341,6 @@ Public Class p31_subgrid
                 mqAll.TopRecordsOnly = 0
                 mqAll.MG_SelectPidFieldOnly = True
                 mqAll.MG_AdditionalSqlFROM = Me.hidFrom.Value
-                mqAll.MG_GridSqlColumns = Me.hidCols.Value
                 p31_InhaleMyQuery(mqAll)
                 Dim dtAll As DataTable = Me.Factory.p31WorksheetBL.GetGridDataSource(mqAll)
                 Dim x As Integer, intNewPageIndex As Integer = 0
@@ -358,6 +351,7 @@ Public Class p31_subgrid
                     End If
                     If dbRow.Item("pid") = Me.DefaultSelectedPID Then
                         grid2.radGridOrig.CurrentPageIndex = intNewPageIndex
+                        p31_InhaleMyQuery(mq)
                         mq.MG_CurrentPageIndex = intNewPageIndex
                         dt = Me.Factory.p31WorksheetBL.GetGridDataSource(mq) 'nový zdroj pro grid
                         Exit For
@@ -408,11 +402,11 @@ Public Class p31_subgrid
 
     Private Sub grid2_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles grid2.NeedFooterSource
         footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
-        If ViewState("footersum") = "" And grid2.radGridOrig.PageCount > 1 Then
+        If Me.hidFooterString.Value = "" And grid2.radGridOrig.PageCount > 1 Then
             RecalcVirtualRowCount()
         End If
 
-        grid2.ParseFooterItemString(footerItem, ViewState("footersum"))
+        grid2.ParseFooterItemString(footerItem, Me.hidFooterString.Value)
 
         If Me.DefaultSelectedPID <> 0 Then
             grid2.SelectRecords(Me.DefaultSelectedPID)
@@ -457,16 +451,10 @@ Public Class p31_subgrid
         Dim mq As New BO.myQueryP31
         p31_InhaleMyQuery(mq)
 
-        Dim cSum As BO.p31WorksheetSum = Me.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
-        If Not cSum Is Nothing Then
-            grid2.VirtualRowCount = cSum.RowsCount
-            ViewState("footersum") = grid2.GenerateFooterItemString(cSum)
-        Else
-            ViewState("footersum") = ""
-            grid2.VirtualRowCount = 0
-        End If
+        Dim dt As DataTable = Me.Factory.p31WorksheetBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
+        grid2.VirtualRowCount = dt.Rows(0).Item(0)
+        Me.hidFooterString.Value = grid2.CompleteFooterString(dt, Me.hidSumCols.Value)
 
-        'grid1.VirtualRowCount = Master.Factory.p31WorksheetBL.GetVirtualCount(mq)
         grid2.radGridOrig.CurrentPageIndex = 0
         Me.lblHeaderP31.Text = BO.BAS.OM2(Me.lblHeaderP31.Text, BO.BAS.FNI(grid2.VirtualRowCount))
     End Sub
@@ -544,12 +532,6 @@ Public Class p31_subgrid
 
 
    
-
-    ''Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
-    ''    Me.Factory.j03UserBL.SetUserParam("p31_subgrid-search", txtSearch.Text)
-    ''    RecalcVirtualRowCount()
-    ''    gridP31.Rebind(False)
-    ''End Sub
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         RefreshState()

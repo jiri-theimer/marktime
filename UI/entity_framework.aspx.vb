@@ -309,15 +309,13 @@ Public Class entity_framework
             Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
             Me.hidSumCols.Value = strSumCols
         End With
+        
         With grid1
-            Select Case Me.CurrentX29ID
-                Case BO.x29IdEnum.p91Invoice
-                    .radGridOrig.ShowFooter = True
-                Case Else
-                    .radGridOrig.ShowFooter = False
-            End Select
-            '.radGridOrig.SelectedItemStyle.BackColor = Drawing.Color.Red
-
+            If Me.hidSumCols.Value = "" Then
+                .radGridOrig.ShowFooter = False
+            Else
+                .radGridOrig.ShowFooter = True
+            End If
         End With
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -925,19 +923,21 @@ Public Class entity_framework
     End Sub
 
     Private Sub RecalcVirtualRowCount()
+        Dim dtSum As DataTable = Nothing
+
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
                 Dim mq As New BO.myQueryP41
                 InhaleMyQuery_p41(mq)
-                grid1.VirtualRowCount = Master.Factory.p41ProjectBL.GetVirtualCount(mq)
+                dtSum = Master.Factory.p41ProjectBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28
                 InhaleMyQuery_p28(mq)
-                grid1.VirtualRowCount = Master.Factory.p28ContactBL.GetVirtualCount(mq)
+                dtSum = Master.Factory.p28ContactBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
             Case BO.x29IdEnum.p56Task
                 Dim mq As New BO.myQueryP56
                 InhaleMyQuery_p56(mq)
-                grid1.VirtualRowCount = Master.Factory.p56TaskBL.GetVirtualCount(mq)
+                dtSum = Master.Factory.p56TaskBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
             Case BO.x29IdEnum.o23Notepad
                 Dim mq As New BO.myQueryO23
                 InhaleMyQuery_o23(mq)
@@ -945,16 +945,17 @@ Public Class entity_framework
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
-                ''grid1.VirtualRowCount = Master.Factory.p91InvoiceBL.GetVirtualCount(mq)
-                Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
-                grid1.VirtualRowCount = dt.Rows(0).Item(0)
-                Me.hidFooterSum.Value = grid1.CompleteFooterString(dt, Me.hidSumCols.Value)
+                dtSum = Master.Factory.p91InvoiceBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 InhaleMyQuery_j02(mq)
                 grid1.VirtualRowCount = Master.Factory.j02PersonBL.GetList(mq).Count
         End Select
-        
+
+        If Not dtSum Is Nothing Then
+            grid1.VirtualRowCount = dtSum.Rows(0).Item(0)
+            Me.hidFooterSum.Value = grid1.CompleteFooterString(dtSum, Me.hidSumCols.Value)
+        End If
 
         grid1.radGridOrig.CurrentPageIndex = 0
 

@@ -144,10 +144,9 @@ Public Class o23_subgrid
                         intNewPageIndex += 1 : x = 1
                     End If
                     If dbRow.Item("pid") = Me.DefaultSelectedPID Then
+                        InhaleQuery(mq)
                         gridO23.radGridOrig.CurrentPageIndex = intNewPageIndex
                         mq.MG_CurrentPageIndex = intNewPageIndex
-                        mq.MG_GridSqlColumns = Me.hidCols.Value
-                        mq.MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
                         dt = Me.Factory.o23NotepadBL.GetGridDataSource(mq) 'nový zdroj pro grid
                         Exit For
                     End If
