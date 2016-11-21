@@ -115,6 +115,7 @@
                                 .p91ID = cRec.PID
                                 .p94Amount = CDbl(c.Castka) / 100
                                 .p94Date = Today
+                                .p94Description = c.DoplnujiciUdaj
                             End With
                             If Master.Factory.p91InvoiceBL.SaveP94(cP94) Then
                                 intHandled += 1

@@ -141,23 +141,24 @@ Class x31ReportBL
         lisX31.Add(c)
         lisX31.Add(GPPS(-999, "Osobní stránka", "j03_mypage.aspx", -10))
         If _cUser.j04IsMenu_Worksheet Then
-            lisX31.Add(GPPS(-2, "[Worksheet -> Zapisovat]", "p31_framework.aspx", -11))
-            lisX31.Add(GPPS(-3, "[Worksheet -> Zapisovat přes KALENDÁŘ]", "p31_scheduler.aspx", -11))
-            lisX31.Add(GPPS(-3, "[Worksheet -> Zapisovat přes DAYLINE]", "p31_timeline.aspx", -11))
+            lisX31.Add(GPPS(-2, "[WORKSHEET -> Zapisovat]", "p31_framework.aspx", -11))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes KALENDÁŘ]", "p31_scheduler.aspx", -11))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes DAYLINE]", "p31_timeline.aspx", -11))
 
-            lisX31.Add(GPPS(-3, "[Worksheet -> Zapisovat přes STOPKY]", "p31_timer.aspx", -11))
-            lisX31.Add(GPPS(-3, "[Worksheet -> Datový přehled]", "p31_grid.aspx", -11))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes STOPKY]", "p31_timer.aspx", -11))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Datový přehled]", "p31_grid.aspx", -11))
             If Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                lisX31.Add(GPPS(-3, "[Worksheet -> PIVOT]", "p31_pivot.aspx", -11))
+                lisX31.Add(GPPS(-3, "[WORKSHEET -> PIVOT]", "p31_pivot.aspx", -11))
             End If
         End If
 
-        If _cUser.j04IsMenu_Project Then lisX31.Add(GPPS(-4, "[Projekty]", "p41_framework.aspx", -12))
-        If _cUser.j04IsMenu_Contact Then lisX31.Add(GPPS(-5, "[Klienti]", "p28_framework.aspx", -13))
+        If _cUser.j04IsMenu_Project Then lisX31.Add(GPPS(-4, "[PROJEKTY]", "p41_framework.aspx", -12))
+        If _cUser.j04IsMenu_Contact Then lisX31.Add(GPPS(-5, "[KLIENTI]", "p28_framework.aspx", -13))
         If _cUser.j04IsMenu_Report Then lisX31.Add(GPPS(-6, "[Tiskové sestavy]", "report_framework.aspx", -14))
+        If _cUser.j04IsMenu_Invoice Then lisX31.Add(GPPS(-5, "[FAKTURY]", "p91_framework.aspx", -14))
 
         lisX31.Add(GPPS(-998, "[Dokumenty]", "o23_framework.aspx", -30))
-        lisX31.Add(GPPS(-998, "[Dispečink úkolů]", "p56_framework.aspx", -30))
+        lisX31.Add(GPPS(-998, "[Úkoly]", "p56_framework.aspx", -30))
         lisX31.Add(GPPS(-998, "[Kalendář]", "entity_scheduler.aspx", -30))
         lisX31.Add(GPPS(-998, "[Helpdesk (zapisování požadavků)]", "helpdesk_default.aspx", -100))
 

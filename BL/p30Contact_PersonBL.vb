@@ -7,6 +7,7 @@
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP28ID As Integer, intP41ID As Integer, intJ02ID As Integer) As IEnumerable(Of BO.p30Contact_Person)
     Function GetList_J02(intP28ID As Integer, intP41ID As Integer, bolIncludeClientProjects As Boolean) As IEnumerable(Of BO.j02Person)
+    Function GetList_p27() As IEnumerable(Of BO.p27ContactPersonRole)
 End Interface
 
 Class p30Contact_PersonBL
@@ -79,5 +80,8 @@ Class p30Contact_PersonBL
     End Function
     Public Function GetList_J02(intP28ID As Integer, intP41ID As Integer, bolIncludeClientProjects As Boolean) As IEnumerable(Of BO.j02Person) Implements Ip30Contact_PersonBL.GetList_J02
         Return _cDL.GetList_J02(intP28ID, intP41ID, bolIncludeClientProjects)
+    End Function
+    Public Function GetList_p27() As IEnumerable(Of BO.p27ContactPersonRole) Implements Ip30Contact_PersonBL.GetList_p27
+        Return _cDL.GetList_p27()
     End Function
 End Class

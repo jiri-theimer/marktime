@@ -307,6 +307,7 @@
             <asp:HiddenField ID="hidMasterPrefix" runat="server" />
             <asp:HiddenField ID="hidMasterPID" runat="server" />
             <asp:HiddenField ID="hidCols" runat="server" />
+                        <asp:HiddenField ID="hidSumCols" runat="server" />
             <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />

@@ -8,6 +8,7 @@
     Function LoadMyLastCreated(bolLoadTheSameTypeIfNoData As Boolean, intP41ID As Integer) As BO.p31Worksheet
     Function LoadMyLastCreated_TimeRecord() As BO.p31Worksheet
     Function LoadSumRow(myQuery As BO.myQueryP31, bolIncludeWaiting4Approval As Boolean, bolIncludeWaiting4Invoice As Boolean, Optional strGUID_TempData As String = "") As BO.p31WorksheetSum
+    Function GetGridFooterSums(myQuery As BO.myQueryP31, strSumFields As String, Optional strGUID_TempData As String = "") As DataTable
     Function GetList_BigSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.p31WorksheetBigSummary)
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQuery, Optional strGUID_TempData As String = "") As IEnumerable(Of BO.p31Worksheet)
@@ -428,5 +429,8 @@ Class p31WorksheetBL
     End Function
     Public Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable Implements Ip31WorksheetBL.GetDrillDownDatasource
         Return _cDL.GetDrillDownDatasource(groupCol, sumCols, strParentSqlWhere, mq)
+    End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP31, strSumFields As String, Optional strGUID_TempData As String = "") As DataTable Implements Ip31WorksheetBL.GetGridFooterSums
+        Return _cDL.GetGridFooterSums(myQuery, strSumFields, strGUID_TempData)
     End Function
 End Class

@@ -43,6 +43,7 @@
             pars.Add("p94Date", .p94Date, DbType.DateTime)
             pars.Add("p94Amount", .p94Amount, DbType.Double)
             pars.Add("p94Code", .p94Code, DbType.String)
+            pars.Add("p94Description", .p94Description, DbType.String)
         End With
 
         If _cDB.SaveRecord("p94Invoice_Payment", pars, bolINSERT, strW, True, _curUser.j03Login) Then
@@ -470,6 +471,20 @@
         If strW <> "" Then s += " WHERE " & strW
 
         Return _cDB.GetRecord(Of BO.GetInteger)(s, pars).Value
+    End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP91, strSumFields As String) As DataTable
+        Dim s As String = "SELECT count(a.p91ID) as VirtualCount"
+        Dim pars As New DL.DbParameters
+        If strSumFields <> "" Then
+            For Each strField As String In Split(strSumFields, "|")
+                s += "," & strField
+            Next
+        End If
+        s += " " & GetSQLPart2(myQuery)
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        If strW <> "" Then s += " WHERE " & strW
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
     Public Function GetSumRow(myQuery As BO.myQueryP91) As BO.p91InvoiceSum
         Dim s As String = "SELECT count(a.p91ID) as Count,sum(p91Amount_WithoutVat) as p91Amount_WithoutVat,sum(p91Amount_Vat) as p91Amount_Vat,sum(p91Amount_WithVat) as p91Amount_WithVat"

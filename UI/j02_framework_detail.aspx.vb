@@ -317,13 +317,16 @@ Public Class j02_framework_detail
     Private Sub rpP30_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP30.ItemDataBound
         Dim cRec As BO.p30Contact_Person = CType(e.Item.DataItem, BO.p30Contact_Person)
         With CType(e.Item.FindControl("Company"), HyperLink)
-            If cRec.p28CompanyName <> "" Then
-                .Text = cRec.p28CompanyName
-            Else
+            If cRec.p28ID <> 0 Then
                 .Text = cRec.p28Name
+                .NavigateUrl = "p28_framework.aspx?pid=" & cRec.p28ID.ToString
             End If
-            .NavigateUrl = "p28_framework.aspx?pid=" & cRec.p28ID.ToString
+            If cRec.p41ID <> 0 Then
+                .Text = cRec.Project
+                .NavigateUrl = "p41_framework.aspx?pid=" & cRec.p41ID.ToString
+            End If
         End With
+        CType(e.Item.FindControl("p27Name"), Label).Text = cRec.p27Name
     End Sub
 
 

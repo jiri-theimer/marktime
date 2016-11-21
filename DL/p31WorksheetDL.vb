@@ -576,6 +576,20 @@
 
         Return _cDB.GetRecord(Of BO.GetInteger)(s, pars).Value
     End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP31, strSumFields As String, Optional strGUID_TempData As String = "") As DataTable
+        Dim s As String = "SELECT count(a.p31ID) as VirtualCount"
+        Dim pars As New DL.DbParameters
+        If strSumFields <> "" Then
+            For Each strField As String In Split(strSumFields, "|")
+                s += "," & strField
+            Next
+        End If
+        s += " " & GetSQLPart2(strGUID_TempData, myQuery)
+        Dim strW As String = GetSQLWHERE(myQuery, pars, strGUID_TempData)
+        If strW <> "" Then s += " WHERE " & strW
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    End Function
     Public Function LoadSumRow(myQuery As BO.myQueryP31, bolIncludeWaiting4Approval As Boolean, bolIncludeWaiting4Invoice As Boolean, Optional strGUID_TempData As String = "") As BO.p31WorksheetSum
         Dim s As String = "SELECT " & GetSF_SUM(bolIncludeWaiting4Approval, bolIncludeWaiting4Invoice) & " " & GetSQLPart2(strGUID_TempData, myQuery)
         Dim pars As New DL.DbParameters

@@ -304,9 +304,10 @@ Public Class entity_framework
             If cJ74.x29ID = BO.x29IdEnum.p56Task Then
                 If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
             End If
-            Dim strAddtionalSqlFrom As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom)
+            Dim strAddtionalSqlFrom As String = "", strSumCols As String = ""
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom, , strSumCols)
             Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
+            Me.hidSumCols.Value = strSumCols
         End With
         With grid1
             Select Case Me.CurrentX29ID
@@ -944,10 +945,10 @@ Public Class entity_framework
             Case BO.x29IdEnum.p91Invoice
                 Dim mq As New BO.myQueryP91
                 InhaleMyQuery_p91(mq)
-                grid1.VirtualRowCount = Master.Factory.p91InvoiceBL.GetVirtualCount(mq)
-                ''Dim cSum As BO.p91InvoiceSum = Master.Factory.p91InvoiceBL.GetSumRow(mq)
-                ''grid1.VirtualRowCount = cSum.Count
-                ''Me.hidFooterSum.Value = grid1.GenerateFooterItemString(cSum)
+                ''grid1.VirtualRowCount = Master.Factory.p91InvoiceBL.GetVirtualCount(mq)
+                Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
+                grid1.VirtualRowCount = dt.Rows(0).Item(0)
+                Me.hidFooterSum.Value = grid1.CompleteFooterString(dt, Me.hidSumCols.Value)
             Case BO.x29IdEnum.j02Person
                 Dim mq As New BO.myQueryJ02
                 InhaleMyQuery_j02(mq)
@@ -962,6 +963,7 @@ Public Class entity_framework
     Private Sub grid1_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles grid1.NeedFooterSource
         If hidFooterSum.Value = "" Then Return
         footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+
         grid1.ParseFooterItemString(footerItem, hidFooterSum.Value)
     End Sub
 

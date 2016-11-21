@@ -3577,6 +3577,12 @@ AS
 BEGIN TRANSACTION
 
 BEGIN TRY
+	if exists(select j75ID FROM j75DrillDownTemplate WHERE j03ID=@pid)
+	 begin
+		DELETE FROM j76DrillDownTemplate_Item WHERE j75ID IN (SELECT j75ID FROM j75DrillDownTemplate WHERE j03ID=@pid)
+
+		DELETE FROM j75DrillDownTemplate WHERE j03ID=@pid
+	 end
 
 	if exists(select j90ID FROM j90LoginAccessLog where j03ID=@pid)
       DELETE FROM j90LoginAccessLog where j03ID=@pid 
@@ -11128,7 +11134,7 @@ BEGIN
   insert into p85TempBox(p85GUID,p85DataPID,p85Prefix) values(@guid,@p31id,'p31')
 
   ---exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
-  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
+  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@p31date,@err_ret OUTPUT
 
   print 'p31_save_approving, p31id: '+convert(varchar(10),@p31id)+', error: '+@err_ret
   

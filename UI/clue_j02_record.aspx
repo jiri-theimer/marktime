@@ -74,6 +74,7 @@
                         <div class="div6">
                             <asp:image ID="imgBind" runat="server" ImageUrl="Images/contact.png" />
                             <asp:hyperlink ID="BindLink" runat="server" Target="_top"></asp:hyperlink>
+                            <asp:Label ID="p27Name" runat="server"></asp:Label>
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>

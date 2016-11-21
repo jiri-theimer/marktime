@@ -1,7 +1,8 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
-    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 10) As String
+    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 10, Optional ByRef strGetSumCols As String = "") As String
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
+        Dim lisSqlSumCols As New List(Of String)
         Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
         With grid
             .ClearColumns()
@@ -43,64 +44,76 @@ Public Class basUIMT
             If cJ74.j74MasterPrefix = "mobile_grid" Then
                 .AddSystemColumn(5, "mob")
             End If
-            If cJ74.j74DrillDownField1 = "" Then
-                For Each s In Split(cJ74.j74ColumnNames, ",")
-                    Dim strField As String = Trim(s)
+            Dim intIndex As Integer = 0
+            For Each s In Split(cJ74.j74ColumnNames, ",")
+                Dim strField As String = Trim(s)
 
-                    Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
+                Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
 
-                    If Not c Is Nothing Then
-                        .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
-                        lisSqlSEL.Add(c.ColumnSqlSyntax_Select)
-                        If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
+                If Not c Is Nothing Then
+                    .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
+                    lisSqlSEL.Add(c.ColumnSqlSyntax_Select)
+                    If c.IsShowTotals Then
+                        If c.ColumnDBName <> "" Then
+                            lisSqlSumCols.Add("sum(" & c.ColumnDBName & ") as " & c.ColumnName)
+                        Else
+                            lisSqlSumCols.Add("sum(" & c.ColumnName & ") as " & c.ColumnName)
+                        End If
                     End If
-                Next
-                grid.SetFilterSetting(strFilterSetting, strFilterExpression)
-            Else
-                Dim colDrill As BO.GridGroupByColumn = factory.j74SavedGridColTemplateBL.GroupByPallet(cJ74.x29ID).Where(Function(p) p.ColumnField = cJ74.j74DrillDownField1).First
-                .AddColumn(colDrill.ColumnField, colDrill.ColumnHeader)
-                .AddColumn("RowsCount", "Počet", BO.cfENUM.Numeric0, , , , , True)
-                Dim strSumFields As String = ""
-                For Each s In Split(cJ74.j74ColumnNames, ",")   'součtové sloupce
-                    Dim strField As String = Trim(s)
-                    Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField And p.IsShowTotals = True)
-                    If Not c Is Nothing Then
-                        .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , True)
-                        strSumFields += "|" & c.ColumnName
-                    End If
-                Next
-                If strSumFields <> "" Then grid.radGridOrig.MasterTableView.Attributes("sumfields") = BO.BAS.OM1(strSumFields)
-                Dim gtv As New GridTableView(.radGridOrig)
-                With gtv
-                    .HierarchyLoadMode = GridChildLoadMode.ServerOnDemand
-                    .RetainExpandStateOnRebind = True
-                    .Name = "grid"
-                    .AllowCustomPaging = True
-                    .AllowFilteringByColumn = False
-                    .AllowSorting = True
-                    .PageSize = intPageSize
-                    .DataKeyNames = Split("pid", ",")
-                    .ClientDataKeyNames = Split("pid", ",")
-                    .ShowHeadersWhenNoRecords = False
-                    .ShowFooter = False
-                    If strSortExpression <> "" Then .SortExpressions.AddSortExpression(strSortExpression)
-                End With
 
-                .radGridOrig.MasterTableView.DetailTables.Add(gtv)
-                .AddSystemColumn(5, , gtv)
-                For Each s In Split(cJ74.j74ColumnNames, ",")
-                    Dim strField As String = Trim(s)
+                    If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
+                End If
+                intIndex += 1
+            Next
+            grid.SetFilterSetting(strFilterSetting, strFilterExpression)
+            ''If cJ74.j74DrillDownField1 = "" Then
 
-                    Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
-                    If Not c Is Nothing Then
-                        .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering, , gtv)
-                    End If
-                Next
-            End If
+            ''Else
+            ''    Dim colDrill As BO.GridGroupByColumn = factory.j74SavedGridColTemplateBL.GroupByPallet(cJ74.x29ID).Where(Function(p) p.ColumnField = cJ74.j74DrillDownField1).First
+            ''    .AddColumn(colDrill.ColumnField, colDrill.ColumnHeader)
+            ''    .AddColumn("RowsCount", "Počet", BO.cfENUM.Numeric0, , , , , True)
+            ''    Dim strSumFields As String = ""
+            ''    For Each s In Split(cJ74.j74ColumnNames, ",")   'součtové sloupce
+            ''        Dim strField As String = Trim(s)
+            ''        Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField And p.IsShowTotals = True)
+            ''        If Not c Is Nothing Then
+            ''            .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , True)
+            ''            strSumFields += "|" & c.ColumnName
+            ''        End If
+            ''    Next
+            ''    If strSumFields <> "" Then grid.radGridOrig.MasterTableView.Attributes("sumfields") = BO.BAS.OM1(strSumFields)
+            ''    Dim gtv As New GridTableView(.radGridOrig)
+            ''    With gtv
+            ''        .HierarchyLoadMode = GridChildLoadMode.ServerOnDemand
+            ''        .RetainExpandStateOnRebind = True
+            ''        .Name = "grid"
+            ''        .AllowCustomPaging = True
+            ''        .AllowFilteringByColumn = False
+            ''        .AllowSorting = True
+            ''        .PageSize = intPageSize
+            ''        .DataKeyNames = Split("pid", ",")
+            ''        .ClientDataKeyNames = Split("pid", ",")
+            ''        .ShowHeadersWhenNoRecords = False
+            ''        .ShowFooter = False
+            ''        If strSortExpression <> "" Then .SortExpressions.AddSortExpression(strSortExpression)
+            ''    End With
+
+            ''    .radGridOrig.MasterTableView.DetailTables.Add(gtv)
+            ''    .AddSystemColumn(5, , gtv)
+            ''    For Each s In Split(cJ74.j74ColumnNames, ",")
+            ''        Dim strField As String = Trim(s)
+
+            ''        Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
+            ''        If Not c Is Nothing Then
+            ''            .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering, , gtv)
+            ''        End If
+            ''    Next
+            ''End If
 
         End With
 
         If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
+        strGetSumCols = String.Join("|", lisSqlSumCols)
         Return String.Join(",", lisSqlSEL)
 
         'Dim strRet As String = String.Join(",", lisSqlSEL)

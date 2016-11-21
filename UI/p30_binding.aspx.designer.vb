@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class p30_binding
 
     '''<summary>
-    '''p27ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p27ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''j02ID control.
     '''</summary>
     '''<remarks>
@@ -30,6 +21,15 @@ Partial Public Class p30_binding
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02ID As Global.UI.person
+
+    '''<summary>
+    '''p27ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p27ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cmdSave control.

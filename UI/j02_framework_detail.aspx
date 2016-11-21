@@ -412,13 +412,16 @@
 
         <asp:Panel ID="panP30" runat="server" CssClass="content-box1">
             <div class="title">
-                <img src="Images/contact.png" style="margin-right: 10px;" />Svázané firmy (klienti)
+                <img src="Images/contact.png" />
+                <img src="Images/project.png" style="margin-right: 10px;" />
+                Kontaktní osoba pro klienty/projekty
             </div>
             <div class="content">
                 <asp:Repeater ID="rpP30" runat="server">
                     <ItemTemplate>
                         <div class="div6">
                             <asp:HyperLink ID="Company" runat="server" Target="_top"></asp:HyperLink>
+                            <asp:Label ID="p27Name" runat="server"></asp:Label>
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>

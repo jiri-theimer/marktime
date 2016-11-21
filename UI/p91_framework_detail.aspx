@@ -558,9 +558,9 @@
                     <asp:hyperlink ID="linkRemoveP31" runat="server" NavigateUrl="javascript:p31_remove()" ToolTip="Zaškrtlé vyjmout z faktury">
                         <img src="Images/cut.png" class="button-link" />
                     </asp:hyperlink>                    
-                    <a href="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" title="Přehled worksheet úkonů na celou stránku" target="_top" style="margin-left: 30px;">
-                        <img src="Images/fullscreen.png" class="button-link" border="0" />
-                    </a>
+                    <asp:hyperlink ID="linkFullScreen" runat="server" NavigateUrl="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" ToolTip="Přehled worksheet úkonů na celou stránku" target="_top" style="margin-left: 30px;">
+                        <img src="Images/fullscreen.png" class="button-link" />
+                    </asp:hyperlink>
 
                 </div>
                 <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick"></uc:datagrid>

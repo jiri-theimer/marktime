@@ -6,7 +6,7 @@
     End Sub
 
     Private Function GetSQLPart1() As String
-        Dim s As String = "select a.*,j02.*,p27.p27Name as _p27Name,p28.p28CompanyName as _p28CompanyName,p28.p28Name as _p28Name,p41.p41Name as _p41Name,p41.p41Code as _p41Code," & bas.RecTail("p30", "a", False, True)
+        Dim s As String = "select a.*,j02.*,p27.p27Name as _p27Name,p28.p28CompanyName as _p28CompanyName,p28.p28Name as _p28Name,isnull(p41.p41NameShort,p41.p41Name) as _p41Name,p41.p41Code as _p41Code," & bas.RecTail("p30", "a", False, True)
         s += ",j02.j02ValidFrom as _validfrom,j02.j02ValidUntil as _validuntil"
         s += " FROM p30Contact_Person a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN p28Contact p28 ON a.p28ID=p28.p28ID LEFT OUTER JOIN p27ContactPersonRole p27 ON a.p27ID=p27.p27ID LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
         Return s
@@ -132,5 +132,7 @@
         Return _cDB.RunSP("p30_delete", pars)
     End Function
 
-
+    Public Function GetList_p27() As IEnumerable(Of BO.p27ContactPersonRole)
+        Return _cDB.GetList(Of BO.p27ContactPersonRole)("SELECT p27ID as pid,p27Name," & bas.RecTail("p27", "") & " FROM p27ContactPersonRole WHERE getdate() between p27ValidFrom AND p27ValidUntil")
+    End Function
 End Class

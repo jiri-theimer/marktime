@@ -347,6 +347,15 @@ Partial Public Class entity_framework
     Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSumCols control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSumCols As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidAdditionalFrom control.
     '''</summary>
     '''<remarks>

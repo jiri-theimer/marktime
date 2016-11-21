@@ -35,11 +35,12 @@
             <table cellpadding="4">
 
                 <tr style="vertical-align:top;">
-                    <td>
-                        <asp:DropDownList ID="p27ID" runat="server" AutoPostBack="true" Visible="false"></asp:DropDownList>
-                    </td>
+                    
                     <td>
                         <uc:person ID="j02ID" runat="server" Flag="all2" Width="400px" />
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="p27ID" runat="server" DataTextField="p27Name" DataValueField="pid"></asp:DropDownList>
                     </td>
                     <td>
                         <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="Přidat vybranou osobu" />

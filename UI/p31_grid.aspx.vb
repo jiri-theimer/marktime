@@ -206,10 +206,11 @@ Public Class p31_grid
                 If Not cJ74 Is Nothing Then SetupJ74Combo(cJ74.PID)
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
-            Dim strAddSqlFrom As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, , strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom)
+            Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, , strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom, , strSqlSumCols)
             Me.hidFrom.Value = strAddSqlFrom
-            
+            Me.hidSumCols.Value = strSqlSumCols
+
 
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
@@ -244,53 +245,53 @@ Public Class p31_grid
 
     End Sub
 
-    Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
-        Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
-        Dim mq As New BO.myQueryP31
-        Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
-        Select Case LCase(colDrill.LinqQueryField)
-            Case "p71id"
-                mq.p71ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p71IdENUM)
-            Case "p70id"
-                mq.p70ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p70IdENUM)
-            Case Else
-                BO.BAS.SetPropertyValue(mq, colDrill.LinqQueryField, BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")))
-        End Select
+    ''Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
+    ''    Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
+    ''    Dim mq As New BO.myQueryP31
+    ''    Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
+    ''    Select Case LCase(colDrill.LinqQueryField)
+    ''        Case "p71id"
+    ''            mq.p71ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p71IdENUM)
+    ''        Case "p70id"
+    ''            mq.p70ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p70IdENUM)
+    ''        Case Else
+    ''            BO.BAS.SetPropertyValue(mq, colDrill.LinqQueryField, BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")))
+    ''    End Select
 
 
-        With mq
-            .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
-            .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
-            .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
-            If Me.hidDefaultSorting.Value <> "" Then
-                If .MG_SortString = "" Then
-                    .MG_SortString = Me.hidDefaultSorting.Value
-                Else
-                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
-                End If
-            End If
-            If Me.cbxGroupBy.SelectedValue <> "" Then
-                Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
-                If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
-                If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
-                If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
+    ''    With mq
+    ''        .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+    ''        .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
+    ''        .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
+    ''        If Me.hidDefaultSorting.Value <> "" Then
+    ''            If .MG_SortString = "" Then
+    ''                .MG_SortString = Me.hidDefaultSorting.Value
+    ''            Else
+    ''                .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+    ''            End If
+    ''        End If
+    ''        If Me.cbxGroupBy.SelectedValue <> "" Then
+    ''            Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
+    ''            If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
+    ''            If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
+    ''            If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
 
-                If .MG_SortString = "" Then
-                    .MG_SortString = strPrimarySortField
-                Else
-                    .MG_SortString = strPrimarySortField & "," & .MG_SortString
-                End If
-            End If
-        End With
-        InhaleMyQuery(mq)
-        With e.DetailTableView
-            .AllowCustomPaging = True
-            .AllowSorting = True
-            If .VirtualItemCount = 0 Then .VirtualItemCount = GetRowsCount(mq)
-            .DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
+    ''            If .MG_SortString = "" Then
+    ''                .MG_SortString = strPrimarySortField
+    ''            Else
+    ''                .MG_SortString = strPrimarySortField & "," & .MG_SortString
+    ''            End If
+    ''        End If
+    ''    End With
+    ''    InhaleMyQuery(mq)
+    ''    With e.DetailTableView
+    ''        .AllowCustomPaging = True
+    ''        .AllowSorting = True
+    ''        If .VirtualItemCount = 0 Then .VirtualItemCount = GetRowsCount(mq)
+    ''        .DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
 
-        End With
-    End Sub
+    ''    End With
+    ''End Sub
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
         _needFilterIsChanged = True
@@ -394,25 +395,17 @@ Public Class p31_grid
         End With
     End Sub
 
-    Private Function GetRowsCount(mq As BO.myQueryP31) As Integer
-        Dim cSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
-        Return cSum.RowsCount
-    End Function
+    
     Private Sub RecalcVirtualRowCount()
         If Me.hidDrillDownField.Value <> "" Then Return 'pro drill-down nepočítat
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
-        Dim cSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, False, False)
-        If Not cSum Is Nothing Then
-            grid1.VirtualRowCount = cSum.RowsCount
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
+        grid1.VirtualRowCount = dt.Rows(0).Item(0)
+        Me.hidFooterString.Value = grid1.CompleteFooterString(dt, Me.hidSumCols.Value)
 
-            ViewState("footersum") = grid1.GenerateFooterItemString(cSum)
-        Else
-            ViewState("footersum") = ""
-            grid1.VirtualRowCount = 0
-        End If
-
+      
         grid1.radGridOrig.CurrentPageIndex = 0
         If grid1.VirtualRowCount > 100000 Then
             Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
@@ -464,7 +457,7 @@ Public Class p31_grid
         footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
 
 
-        grid1.ParseFooterItemString(footerItem, ViewState("footersum"))
+        grid1.ParseFooterItemString(footerItem, Me.hidFooterString.Value)
 
     End Sub
 

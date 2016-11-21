@@ -24,6 +24,7 @@
     Function CreateCreditNote(intP91ID As Integer, intP92ID_CreditNote As Integer) As Integer
     Function RecalcFPR(d1 As Date, d2 As Date, Optional intP51ID As Integer = 0) As Boolean
     Function InhaleRecordDisposition(cRec As BO.p91Invoice) As BO.p91RecordDisposition
+    Function GetGridFooterSums(myQuery As BO.myQueryP91, strSumFields As String) As DataTable
 End Interface
 
 Class p91InvoiceBL
@@ -210,5 +211,8 @@ Class p91InvoiceBL
     End Function
     Public Function GetGridDataSource(myQuery As BO.myQueryP91) As DataTable Implements Ip91InvoiceBL.GetGridDataSource
         Return _cDL.GetGridDataSource(myQuery)
+    End Function
+    Public Function GetGridFooterSums(myQuery As BO.myQueryP91, strSumFields As String) As DataTable Implements Ip91InvoiceBL.GetGridFooterSums
+        Return _cDL.GetGridFooterSums(myQuery, strSumFields)
     End Function
 End Class

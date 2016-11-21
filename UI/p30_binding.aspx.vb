@@ -19,7 +19,6 @@
         If Not Page.IsPostBack Then
 
             With Master
-
                 .DataPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
                 Me.CurrentPrefix = Request.Item("masterprefix")
 
@@ -32,8 +31,15 @@
                         cmdSave.Text = "Přiřadit osobu k projektu"
                 End Select
             End With
-
-            
+            With Me.p27ID
+                .DataSource = Master.Factory.p30Contact_PersonBL.GetList_p27()
+                .DataBind()
+                If .Items.Count > 0 Then
+                    .Items.Insert(0, "")
+                Else
+                    .Visible = False
+                End If
+            End With
 
             RefreshList()
         End If
@@ -43,6 +49,7 @@
         Dim cRec As New BO.p30Contact_Person
         cRec.p27ID = BO.BAS.IsNullInt(Me.p27ID.SelectedValue)
         cRec.j02ID = BO.BAS.IsNullInt(Me.j02ID.Value)
+        cRec.p27ID = BO.BAS.IsNullInt(Me.p27ID.SelectedValue)
         If cRec.j02ID = 0 Then
             Master.Notify("Musíte vybrat osobu.", NotifyLevel.ErrorMessage)
             Return

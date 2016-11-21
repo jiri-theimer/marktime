@@ -59,6 +59,24 @@ Partial Public Class p91_pay
     Protected WithEvents j27Code As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblDescription control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDescription As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p94Description control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p94Description As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''rpHistory control.
     '''</summary>
     '''<remarks>

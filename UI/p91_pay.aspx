@@ -34,6 +34,14 @@
                 <asp:Label ID="j27Code" runat="server"></asp:Label>
             </td>
         </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblDescription" runat="server" CssClass="lbl" Text="Poznámka:"></asp:Label>
+            </td>
+            <td>
+                <asp:TextBox ID="p94Description" runat="server" Width="400px"></asp:TextBox>
+            </td>
+        </tr>
     </table>
 
     <fieldset>
@@ -51,6 +59,9 @@
                         <td>
                             <asp:Button ID="cmdDelete" runat="server" CssClass="cmd" Text="Odstranit úhradu z faktury" />
                         </td>
+                        <td>
+                            <%#Eval("p94Description")%>
+                        </td>
                     </tr>
                 </ItemTemplate>
             </asp:Repeater>
@@ -58,6 +69,9 @@
                 <td>Dluh:</td>
                 <td align="right">
                     <asp:Label ID="p91Amount_Debt" runat="server" CssClass="valboldred"></asp:Label>
+                </td>
+                <td>
+
                 </td>
                 <td>
 

@@ -73,5 +73,6 @@
                 CType(e.Item.FindControl("imgBind"), Image).ImageUrl = "Images/project.png"
             End If
         End With
+        CType(e.Item.FindControl("p27Name"), Label).Text = cRec.p27Name
     End Sub
 End Class

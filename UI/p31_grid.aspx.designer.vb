@@ -293,6 +293,15 @@ Partial Public Class p31_grid
     Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSumCols control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSumCols As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidFrom control.
     '''</summary>
     '''<remarks>
@@ -318,6 +327,15 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidMasterTabAutoQueryFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidFooterString control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidFooterString As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

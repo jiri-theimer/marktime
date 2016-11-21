@@ -43,6 +43,7 @@
             cRec.p94Amount = BO.BAS.IsNullNum(Me.p94Amount.Value)
             cRec.p94Date = Me.p94Date.SelectedDate
             cRec.p91ID = Master.DataPID
+            cRec.p94Description = Me.p94Description.Text
 
             With Master.Factory.p91InvoiceBL
                 If .SaveP94(cRec) Then

@@ -300,9 +300,11 @@
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />
+    <asp:HiddenField ID="hidSumCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:HiddenField ID="hidMasterTabAutoQueryFlag" runat="server" />
+    <asp:HiddenField ID="hidFooterString" runat="server" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

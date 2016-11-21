@@ -574,25 +574,30 @@ Public Class datagrid
                         s += "|" & col.DataField & ";" & BO.BAS.FN(o)
                     End If
                 End If
-                'If col.DefaultInsertValue = "sum" Then
-
-
-                'End If
             End If
         Next
-
-
         Return BO.BAS.OM1(s)
     End Function
+    Public Function CompleteFooterString(dt As DataTable, strSumFields As String, Optional intFirstSumColZeroIndex As Integer = 1) As String
+        Dim lis As New List(Of String)
+
+        For i As Integer = intFirstSumColZeroIndex To dt.Columns.Count - 1
+            lis.Add(dt.Columns(i).ColumnName & ";" & BO.BAS.FN(dt.Rows(0).Item(i)))
+        Next
+        Return String.Join("|", lis)
+    End Function
+    
 
     Public Sub ParseFooterItemString(footerItem As GridFooterItem, strFooterString As String)
         If strFooterString = "" Then Return
         Dim a() As String = Split(strFooterString, "|")
-        For Each strPair As String In a
-            Dim b() As String = Split(strPair, ";")
-            footerItem.Item(b(0)).Text = b(1)
-        Next
-
+        With grid1.MasterTableView.Columns
+            For Each strPair As String In a
+                Dim b() As String = Split(strPair, ";")
+                Dim col As GridColumn = .FindByDataField(b(0))
+                If Not col Is Nothing Then footerItem.Item(col).Text = b(1)
+            Next
+        End With
     End Sub
 
     Private Sub grid1_PageIndexChanged(sender As Object, e As GridPageChangedEventArgs) Handles grid1.PageIndexChanged
