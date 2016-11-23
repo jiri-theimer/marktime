@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="p31_approve_onerec" Src="~/p31_approve_onerec.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -13,6 +14,8 @@
     
 
     <uc:p31_approve_onerec ID="approve1" runat="server" IsVertical="true" CommandSaveText="Potvrdit" HeaderText="Vybraný úkon" showCancelCommand="false" />
+    <uc:freefields ID="ff1" runat="server" />
+
     <div>
     <button type="button" ID="cmdSplitRecord" runat="server" onclick="javascript:split_record()">Rozdělit úkon na 2 kusy</button>    
     </div>

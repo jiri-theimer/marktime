@@ -2,6 +2,8 @@
     Inherits System.Web.UI.UserControl
     Public Event AfterSave(ByRef strErr As String)
     Public Event CancelSave()
+    Public Event BeforeSave(ByRef lisFF As List(Of BO.FreeField))
+
 
     Public ReadOnly Property CurrentP31ID As Integer
         Get

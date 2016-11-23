@@ -61,14 +61,12 @@
 
             End Select
 
-
-
-
             If .p56ID <> 0 Then
                 Me.Task.Text = .p56Name
             Else
                 lblP56.Visible = False
             End If
+            Handle_FF(.p34ID)
         End With
     End Sub
 
@@ -78,5 +76,13 @@
             Return
         End If
         Me.hidRefreshParent.Value = "1"
+    End Sub
+
+    Private Sub Handle_FF(intP34ID As Integer)
+        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID)
+        If fields.Count > 0 Then
+            ff1.FillData(fields)
+        End If
+
     End Sub
 End Class

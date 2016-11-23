@@ -55,6 +55,7 @@ Class j03UserBL
             If Trim(.j03Login) = "" Then _Error = "Chybí přihlašovací jméno (login)." : Return False
             If .j04ID = 0 Then _Error = "Chybí aplikační role." : Return False
             If .PID <> 0 And .j02ID = 0 Then _Error = "Chybí vazba na osobní profil." : Return False
+            If .PID = 0 Then .j03ModalWindowsFlag = 1
         End With
         If IsExistUserByLogin(cRec.j03Login, cRec.PID) Then
             _Error = "Uživatelské jméno [" & cRec.j03Login & "] již je v databázi obsazeno." : Return False

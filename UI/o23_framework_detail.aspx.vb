@@ -164,11 +164,12 @@
                     Me.BindTempEntity.Enabled = Master.Factory.SysUser.j04IsMenu_Project
                     Me.clue_bindtemp_entity.Attributes("rel") = "clue_p41_record.aspx?pid=" & .p41ID.ToString
                 End If
+
             End If
             If .p28ID <> 0 Then
                 If .x29ID = BO.x29IdEnum.p28Contact Then
                     Me.BindEntity.Text = .p28Name
-                    Me.BindEntity.NavigateUrl = "p28_framework.aspx?pid=" & .p41ID.ToString
+                    Me.BindEntity.NavigateUrl = "p28_framework.aspx?pid=" & .p28ID.ToString
                     Me.BindEntity.Enabled = Master.Factory.SysUser.j04IsMenu_Contact
                     Me.clue_bind_entity.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
                 Else

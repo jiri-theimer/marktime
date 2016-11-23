@@ -16,6 +16,9 @@
         <asp:Label ID="lblIC" runat="server" CssClass="lbl" Text="IČ účetní jednotky:"></asp:Label>
         <asp:textbox ID="txtIC" runat="server"></asp:textbox>
     </div>
+    <div class="div6">
+        <asp:CheckBox ID="chkText90" runat="server" Text="Text faktury omezovat pouze na prvních 90 znaků." />
+    </div>
     <fieldset>
         <legend>Hromadné generování faktur podle období zdanitelného plnění</legend>
 

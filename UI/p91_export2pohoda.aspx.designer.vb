@@ -32,6 +32,15 @@ Partial Public Class p91_export2pohoda
     Protected WithEvents txtIC As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''chkText90 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkText90 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>

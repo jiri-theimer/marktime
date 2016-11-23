@@ -218,7 +218,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <span class="infoInForm">Odběratele definujte v případě, že klient projektu se liší od subjektu, kterému se bude vystavovat faktura.</span>
+                            <span class="infoInForm">Vyplňte, pokud se projekt bude fakturovat jinému subjektu než klientovi projektu.</span>
                         </td>
                     </tr>
 

@@ -722,8 +722,6 @@
                 RefreshContactPersonCombo(True, intDefj02ID)
             End If
 
-
-
             If Me.chkBindToP56.Checked Then
                 SetupP56Combo(True, BO.BAS.IsNullInt(Me.p56ID.SelectedValue))
             End If
@@ -1115,7 +1113,6 @@
 
     Private Sub p31_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Me.p56ID.Rows <= 1 Or Me.chkBindToP56.Checked = False Then Me.p56ID.Visible = False Else Me.p56ID.Visible = True
-        Me.panP49.Visible = panM.Visible
         Me.panTrimming.Visible = panT.Visible
         If Not _Sheet Is Nothing And panM.Visible Then
             Dim bolVydaj As Boolean = False
@@ -1123,12 +1120,30 @@
 
             lblSupplier.Visible = bolVydaj : Me.p28ID_Supplier.Visible = bolVydaj : p31Code.Visible = bolVydaj : lblCode.Visible = bolVydaj
         End If
+
+        If Not _Project Is Nothing Then
+            Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(_Project.p42ID)
+            If Me.chkBindToP56.Checked Then
+                panP56.Visible = True
+            Else
+                panP56.Visible = cP42.p42IsModule_p56
+            End If
+            If notepad1.RowsCount > 0 Then
+                panO23.Visible = True
+            Else
+                panO23.Visible = cP42.p42IsModule_o23
+            End If
+            If panM.Visible Then
+                panP49.Visible = cP42.p42IsModule_p45
+            Else
+                panP49.Visible = False
+            End If
+        Else
+            panP49.Visible = False
+        End If
         If Me.panP49.Visible Then
             If Me.p49ID.Value <> "" Then cmdClearP49ID.Visible = True Else Me.cmdClearP49ID.Visible = False
         End If
-
-
-
     End Sub
 
     Private Sub chkBindToP56_CheckedChanged(sender As Object, e As EventArgs) Handles chkBindToP56.CheckedChanged

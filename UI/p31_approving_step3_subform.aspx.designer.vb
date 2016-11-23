@@ -23,6 +23,15 @@ Partial Public Class p31_approving_step3_subform
     Protected WithEvents approve1 As Global.UI.p31_approve_onerec
 
     '''<summary>
+    '''ff1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ff1 As Global.UI.freefields
+
+    '''<summary>
     '''cmdSplitRecord control.
     '''</summary>
     '''<remarks>

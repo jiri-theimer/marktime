@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p31_approve_onerec" Src="~/p31_approve_onerec.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <%If panApproving.Visible Then%>
@@ -257,6 +258,8 @@
            
 
             <uc:p31_approve_onerec ID="approve1" runat="server" IsVertical="false" HeaderText="Schvalování worksheet úkonu" ShowCancelCommand="true"/>
+
+            <uc:freefields ID="ff1" runat="server" />
        
     </asp:Panel>
 
@@ -278,11 +281,11 @@
 
 
 
-    <div class="bigtext">
+    <asp:panel ID="panP31Text" runat="server" CssClass="bigtext">
         <div class="div6">
             <asp:Label ID="p31text" runat="server" Style="color: Black;"></asp:Label>
         </div>
-    </div>
+    </asp:panel>
     <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
 
     <div style="padding-top:30px;"></div>

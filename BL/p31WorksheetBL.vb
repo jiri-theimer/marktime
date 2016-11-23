@@ -43,6 +43,7 @@
     Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
 
     Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean
+    Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean) As Boolean
     ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
 End Interface
 Class p31WorksheetBL
@@ -432,5 +433,8 @@ Class p31WorksheetBL
     End Function
     Public Function GetGridFooterSums(myQuery As BO.myQueryP31, strSumFields As String, Optional strGUID_TempData As String = "") As DataTable Implements Ip31WorksheetBL.GetGridFooterSums
         Return _cDL.GetGridFooterSums(myQuery, strSumFields, strGUID_TempData)
+    End Function
+    Public Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean) As Boolean Implements Ip31WorksheetBL.SaveFreeFields
+        Return _cDL.SaveFreeFields(intP31ID, lisFF, bolIsTempRecord)
     End Function
 End Class

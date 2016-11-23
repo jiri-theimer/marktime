@@ -148,6 +148,12 @@
 
 
     End Function
+    Public Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean) As Boolean
+        Dim strTab As String = "p31WorkSheet_FreeField"
+        If bolIsTempRecord Then strTab = "p31WorkSheet_FreeField_Temp"
+        Return bas.SaveFreeFields(_cDB, lisFF, strTab, intP31ID, _curUser)
+
+    End Function
     Public Function SaveOrigRecord(cRec As BO.p31WorksheetEntryInput, p33ID As BO.p33IdENUM, lisFF As List(Of BO.FreeField)) As Boolean
         Dim strX45IDs_Handle As String = "" 'aplikační údálosti, které se mají následně odchytávat
 

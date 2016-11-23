@@ -10,6 +10,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
+                ViewState("can_continue") = "0"
                 ViewState("masterprefix") = Request.Item("masterprefix")
                 ViewState("masterpid") = Request.Item("masterpid")
                 ViewState("pids") = Request.Item("pids")
@@ -39,10 +40,12 @@
 
                 .HeaderIcon = "Images/approve_32.png"
                 Dim lisPars As New List(Of String)
-                With lisPars                
+                With lisPars
                     .Add("p31_grid-period")
                     .Add("periodcombo-custom_query")
+                    .Add("p31_approving_step2-chkSkipThisStep")
                 End With
+                Me.chkSkipThisStep.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving_step2-chkSkipThisStep", "0"))
                 .AddToolbarButton("Pokračovat", "continue", , "Images/continue.png")
             End With
 
@@ -148,10 +151,15 @@
             Else
                 Master.Notify("Z výběru worksheet úkonů pro schvalování jich systém několik zamítnul (" & intRefused.ToString & " - odlišené červeným písmem). Pravděpodobně se jedná o již vyfakturované úkony.", NotifyLevel.InfoMessage)
             End If
-
+        Else
+            ViewState("can_continue") = "1"
         End If
-        
+
         grid1.DataSource = lis.Where(Function(p) p.p91ID = 0 Or p.p31IsPlanRecord = False)
+
+        If lis.Where(Function(p) p.p91ID = 0 Or p.p31IsPlanRecord = False).Count = 0 Then
+            ViewState("can_continue") = "0"
+        End If
 
         Dim p41ids As List(Of Integer) = lis.Select(Function(p) p.p41ID).Distinct.ToList
         Dim p28ids As List(Of Integer) = lis.Select(Function(p) p.p28ID_Client).Distinct.ToList
@@ -171,48 +179,55 @@
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "continue" Then
-            Dim lisP31IDs As List(Of Integer) = grid1.GetAllPIDs()
-            If lisP31IDs.Count = 0 Then
-                Master.Notify("Žádné úkony pro schvalování.", NotifyLevel.WarningMessage) : Return
-            End If
-            Dim mq As New BO.myQueryP31
-            mq.PIDs = lisP31IDs
-            Dim lisOrigP31 As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
-
-            With Master.Factory.p85TempBoxBL
-                .Truncate(ViewState("guid"))
-                For Each cRec In lisOrigP31.Where(Function(p) p.p91ID = 0 And p.p31IsPlanRecord = False)
-                    'vyloučit již vyfakturované úkony nebo plán záznamy
-                    Dim c As New BO.p85TempBox()
-                    c.p85GUID = ViewState("guid")
-                    c.p85DataPID = cRec.PID
-                    .Save(c)
-                Next
-                'For Each intP31ID In lisP31IDs
-                '    Dim c As New BO.p85TempBox()
-                '    c.p85GUID = ViewState("guid")
-                '    c.p85DataPID = intP31ID
-                '    .Save(c)
-                'Next
-            End With
-
-            Dim strURL As String = "p31_approving_step3.aspx?guid=" & ViewState("guid") & "&gridheight=" & Me.hidGridHeight.Value
-            If ViewState("clearapprove") = "1" Then
-                strURL += "&clearapprove=1"
-            End If
-            If ViewState("masterprefix") <> "" Then
-                strURL += "&masterprefix=" & ViewState("masterprefix") & "&masterpid=" & ViewState("masterpid")
-            End If
-            If Me.p31ApprovingSet.Text <> "" Then
-                strURL += "&approvingset=" & Server.UrlEncode(Me.p31ApprovingSet.Text)
-            End If
-            
-            
-            Response.Redirect(strURL)
+            Master.Factory.j03UserBL.SetUserParam("p31_approving_step2-chkSkipThisStep", BO.BAS.GB(Me.chkSkipThisStep.Checked))
+            Handle_Continue(False)
         End If
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         RefreshRecord()
+    End Sub
+
+    Private Sub Handle_Continue(bolAutoPilot As Boolean)
+        Dim lisP31IDs As List(Of Integer) = grid1.GetAllPIDs()
+        If lisP31IDs.Count = 0 Then
+            Master.Notify("Žádné úkony pro schvalování.", NotifyLevel.WarningMessage) : Return
+        End If
+        Dim mq As New BO.myQueryP31
+        mq.PIDs = lisP31IDs
+        Dim lisOrigP31 As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+
+        With Master.Factory.p85TempBoxBL
+            .Truncate(ViewState("guid"))
+            For Each cRec In lisOrigP31.Where(Function(p) p.p91ID = 0 And p.p31IsPlanRecord = False)
+                'vyloučit již vyfakturované úkony nebo plán záznamy
+                Dim c As New BO.p85TempBox()
+                c.p85GUID = ViewState("guid")
+                c.p85DataPID = cRec.PID
+                .Save(c)
+            Next
+
+        End With
+
+        Dim strURL As String = "p31_approving_step3.aspx?guid=" & ViewState("guid") & "&gridheight=" & Me.hidGridHeight.Value
+        If ViewState("clearapprove") = "1" Then
+            strURL += "&clearapprove=1"
+        End If
+        If ViewState("masterprefix") <> "" Then
+            strURL += "&masterprefix=" & ViewState("masterprefix") & "&masterpid=" & ViewState("masterpid")
+        End If
+        If Me.p31ApprovingSet.Text <> "" Then
+            strURL += "&approvingset=" & Server.UrlEncode(Me.p31ApprovingSet.Text)
+        End If
+
+
+        Response.Redirect(strURL)
+
+    End Sub
+
+    
+
+    Private Sub cmdAutoContinue_Click(sender As Object, e As EventArgs) Handles cmdAutoContinue.Click
+        Handle_Continue(True)
     End Sub
 End Class

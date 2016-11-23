@@ -13550,6 +13550,74 @@ GROUP BY a.p41ID,a.j02ID
 
 GO
 
+----------V---------------view_p41_wip-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p41_wip') and type = 'V')
+ drop view view_p41_wip
+GO
+
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_p41_wip]
+as
+select a.p41ID
+,sum(a.p31Hours_Orig) as Hodiny
+,sum(case when a.p31Amount_WithoutVat_Orig<>0 then p31Amount_WithoutVat_Orig end) as Castka_Celkem
+,sum(case when p34.p33ID=1 then p31Amount_WithoutVat_Orig end) as Honorar
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Honorar_CZK
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Honorar_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then p31Amount_WithoutVat_Orig end) as Vydaje
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Vydaje_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Vydaje_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then p31Amount_WithoutVat_Orig end) as Odmeny
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Odmeny_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Odmeny_EUR
+from
+p31WorkSheet a
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p71ID IS NULL AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY a.p41ID
+
+
+
+
+GO
+
+----------V---------------view_p41_worksheet-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p41_worksheet') and type = 'V')
+ drop view view_p41_worksheet
+GO
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_p41_worksheet]
+as
+select a.p41ID
+,sum(a.p31Hours_Orig) as Vykazano_Hodiny
+,sum(a.p31Hours_Invoiced) as Vyfakturovano_Hodiny
+,sum(a.p31Amount_WithoutVat_Invoiced_Domestic) as Vyfakturovano_Celkem_Domestic
+,sum(case when p34.p33ID=1 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Hodiny_Domestic
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Odmeny_Domestic
+from
+p31WorkSheet a
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY a.p41ID
+
+
+
+GO
+
 ----------V---------------view_PrimaryAddress-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('view_PrimaryAddress') and type = 'V')

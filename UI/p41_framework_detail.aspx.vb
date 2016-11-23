@@ -131,6 +131,7 @@ Public Class p41_framework_detail
             ViewState("p28id_client") = .p28ID_Client.ToString
 
             Me.Project.Text = .p41Name & " <span style='color:gray;padding-left:10px;'>" & .p41Code & "</span>"
+            If .p41ParentID > 0 Then Me.Project.ForeColor = basUIMT.ChildProjectColor
             If .p41NameShort <> "" Then
                 Me.Project.Text += "<div style='color:green;'>" & .p41NameShort & "</div>"
             End If
@@ -592,7 +593,7 @@ Public Class p41_framework_detail
         Dim s As String = ""
         If cP42.p42IsModule_p31 Then
             s = "Summary" : cti(s, "summary")
-            s = "Worksheet přehled" : cti(s, "p31")
+            s = "Worksheet" : cti(s, "p31")
             s = "Hodiny"
             If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
             If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"

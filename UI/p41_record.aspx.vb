@@ -89,7 +89,7 @@
             End If
             If .p28ID_Billing <> 0 Then
                 Me.p28ID_Billing.Value = .p28ID_Billing.ToString
-                Me.p28ID_Billing.Text = .ClientBilling
+                Me.p28ID_Billing.Text = Master.Factory.p28ContactBL.Load(.p28ID_Billing).p28Name
             End If
             If Not (BO.BAS.IsNullDBDate(.p41PlanFrom) Is Nothing Or BO.BAS.IsNullDBDate(.p41PlanUntil) Is Nothing) Then
                 Me.chkPlanDates.Checked = True

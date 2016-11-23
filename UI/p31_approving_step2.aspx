@@ -18,6 +18,9 @@
 
             InhaleGridHeight();
 
+            <%If ViewState("can_continue") = "1" And Me.chkSkipThisStep.Checked Then%>
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdAutoContinue, "", False)%>;
+            <%end If%>
         });
 
         function InhaleGridHeight() {
@@ -33,8 +36,9 @@
             h2 = offset.top;
 
             h3 = h1 - h2 - 150;
-
+           
             document.getElementById("<%=hidGridHeight.clientid%>").value = h3;
+     
 
         }
 
@@ -44,7 +48,7 @@
 
         }
         function hardrefresh(pid, flag) {
-            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;                       
 
         }
     </script>
@@ -57,6 +61,7 @@
             <tr valign="top">
                 <td>
                     <asp:Label ID="lblCount" runat="server" CssClass="lbl" Text="Počet úkonů pro schvalovací proces:"></asp:Label>
+                    
                     <div>
                         <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="z toho zamítnuté pro schvalování:"></asp:Label>
                     </div>
@@ -78,6 +83,9 @@
                     </asp:Panel>
                     <asp:Label ID="BillingMemo" runat="server" CssClass="infoNotification" Font-Italic="true"></asp:Label>
                 </td>
+                <td>
+                    <asp:CheckBox ID="chkSkipThisStep" runat="server" Text="Tento krok příště automaticky přeskakovat" Font-Bold="true" />
+                </td>
             </tr>
         </table>
     </div>
@@ -98,6 +106,7 @@
 
     <asp:HiddenField ID="hidGridHeight" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+    <asp:Button ID="cmdAutoContinue" runat="server" Style="display: none;" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

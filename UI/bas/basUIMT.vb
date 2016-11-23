@@ -1,5 +1,10 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
+    Public Shared ReadOnly Property ChildProjectColor As System.Drawing.Color
+        Get
+            Return Drawing.Color.Firebrick
+        End Get
+    End Property
     Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 10, Optional ByRef strGetSumCols As String = "") As String
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlSumCols As New List(Of String)
@@ -319,6 +324,9 @@ Public Class basUIMT
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
             End If
+            If Not cRec.Item("ParentID") Is System.DBNull.Value Then dataItem.ForeColor = ChildProjectColor
+
+
         Else
             Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
             If cRec.IsClosed Then dataItem.Font.Strikeout = True
@@ -327,7 +335,7 @@ Public Class basUIMT
 
 
     End Sub
-    
+
     Public Shared Sub j02_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs)
         If Not TypeOf e.Item Is GridDataItem Then Return
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)

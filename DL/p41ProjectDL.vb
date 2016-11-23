@@ -200,7 +200,7 @@
                     End Select
                 End If
             End If
-            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft,j13.j13ID"
+            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft,j13.j13ID,a.p41ParentID as ParentID"
             .MG_AdditionalSqlFROM += " LEFT OUTER JOIN (SELECT j13ID,p41ID FROM j13FavourteProject WHERE j03ID=" & _curUser.PID.ToString & ") j13 ON a.p41ID=j13.p41ID"
         End With
 
@@ -482,7 +482,7 @@
 
     Private Function GetSF() As String
         Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"
-        s += ",p28client.p28Name as _Client,p28billing.p28Name as _ClientBilling,p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal"
+        s += ",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing"
         s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID,a.p41BillingMemo," & bas.RecTail("p41", "a")
         s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41RobotAddress,p41free.*"
         Return s
@@ -497,9 +497,9 @@
     Private Function GetSQLPart2(mq As BO.myQueryP41) As String
         Dim s As String = "FROM p41Project a INNER JOIN p42ProjectType p42 ON a.p42ID=p42.p42ID"
         s += " LEFT OUTER JOIN p28Contact p28client ON a.p28ID_Client=p28client.p28ID"
-        s += " LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"
+        ''s += " LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"
         s += " LEFT OUTER JOIN p51PriceList p51billing ON a.p51ID_Billing=p51billing.p51ID"
-        s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
+        ''s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
         s += " LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
         s += " LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID"

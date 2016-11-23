@@ -203,7 +203,7 @@
                         </td>
                         <td>
                             <uc:contact ID="p28ID_Billing" runat="server" Width="300px" />
-
+                            <span class="infoInForm">Vyplňte, pokud se projekt bude fakturovat jinému subjektu než klientovi projektu.</span>
                         </td>
                     </tr>
 

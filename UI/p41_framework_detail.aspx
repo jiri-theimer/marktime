@@ -277,7 +277,7 @@
                 </telerik:RadMenuItem>
 
 
-                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/worksheet.png" Value="p31" meta:resourcekey="menu_zapsat_worksheet"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Text="ZAPSAT WORKSHEET" ImageUrl="Images/arrow_down_menu.png" Value="p31" meta:resourcekey="menu_zapsat_worksheet"></telerik:RadMenuItem>
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="more" meta:resourcekey="menu_dalsi">
                     <Items>
@@ -292,6 +292,7 @@
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png" meta:resourcekey="cmdO22"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="calendarO22" Text="Kalendář projektu" NavigateUrl="javascript:scheduler()" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán projektu" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png" meta:resourcekey="cmdP48"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         
                         
@@ -303,8 +304,7 @@
 
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář" NavigateUrl="javascript:b07_record();" ImageUrl="Images/comment.png" meta:resourcekey="cmdB07"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png" meta:resourcekey="cmdX40"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdP48" Text="Operativní plán" NavigateUrl="javascript:p48_plan();" ImageUrl="Images/oplan.png" meta:resourcekey="cmdP48"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png" meta:resourcekey="cmdX40"></telerik:RadMenuItem>                        
                         <telerik:RadMenuItem Value="cmdLog" Text="Historie záznamu" NavigateUrl="javascript: timeline()" ImageUrl="Images/event.png" meta:resourcekey="cmdLog"></telerik:RadMenuItem>
                     </Items>
 
@@ -334,6 +334,17 @@
             <div class="content">
 
                 <table cellpadding="10" cellspacing="2" id="responsive">
+                    <tr id="trParent" runat="server" visible="false">
+                        <td>
+                            <asp:Label ID="Label3" runat="server" Text="Nadřízený projekt:" CssClass="lbl"></asp:Label>
+
+                        </td>
+                        <td>                            
+                            <asp:HyperLink ID="ParentProject" runat="server" Target="_top"></asp:HyperLink>
+
+                        </td>
+
+                    </tr>
                     <tr valign="baseline">
                         <td style="min-width: 120px;">
                             <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl" meta:resourcekey="lblProject"></asp:Label>
@@ -351,6 +362,7 @@
                         </td>
 
                     </tr>
+                    
                     <tr valign="baseline">
                         <td>
 
@@ -366,17 +378,7 @@
                         </td>
 
                     </tr>
-                     <tr id="trParent" runat="server" visible="false">
-                        <td>
-                            <asp:Label ID="Label3" runat="server" Text="Nadřízený projekt:" CssClass="lbl"></asp:Label>
-
-                        </td>
-                        <td>                            
-                            <asp:HyperLink ID="ParentProject" runat="server" Target="_top"></asp:HyperLink>
-
-                        </td>
-
-                    </tr>
+                     
                     <tr id="trWorkflow" runat="server">
                         <td>
                             <asp:Label ID="lblB02ID" runat="server" Text="Workflow stav:" CssClass="lbl"></asp:Label>

@@ -518,6 +518,15 @@ Partial Public Class p31_record_AA
     Protected WithEvents approve1 As Global.UI.p31_approve_onerec
 
     '''<summary>
+    '''ff1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ff1 As Global.UI.freefields
+
+    '''<summary>
     '''panInvoicing control.
     '''</summary>
     '''<remarks>
@@ -543,6 +552,15 @@ Partial Public Class p31_record_AA
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents update_p31date As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''panP31Text control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panP31Text As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''p31text control.

@@ -92,12 +92,12 @@ Public Class p41Project
         End Get
     End Property
 
-    Private Property _ClientBilling As String
-    Public ReadOnly Property ClientBilling As String
-        Get
-            Return _ClientBilling
-        End Get
-    End Property
+    ''Private Property _ClientBilling As String
+    ''Public ReadOnly Property ClientBilling As String
+    ''    Get
+    ''        Return _ClientBilling
+    ''    End Get
+    ''End Property
 
     Private Property _p51Name_Billing As String
     Public ReadOnly Property p51Name_Billing As String
@@ -106,12 +106,12 @@ Public Class p41Project
         End Get
     End Property
 
-    Private Property _p51Name_Internal As String
-    Public ReadOnly Property p51Name_Internal As String
-        Get
-            Return _p51Name_Internal
-        End Get
-    End Property
+    ''Private Property _p51Name_Internal As String
+    ''Public ReadOnly Property p51Name_Internal As String
+    ''    Get
+    ''        Return _p51Name_Internal
+    ''    End Get
+    ''End Property
 
     Private Property _p87ID_Client As Integer
     Public ReadOnly Property p87ID_Client As Integer

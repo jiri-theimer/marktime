@@ -480,7 +480,7 @@
         <asp:TextBox ID="p31Text" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
         <uc:freefields ID="ff1" runat="server" />
     </div>
-    <div class="content-box1" style="min-width:50px;">
+    <asp:panel ID="panP56" runat="server" CssClass="content-box1" style="min-width:50px;">
         <div class="title">
             <img src="Images/task.png" alt="Úkol" />
             <asp:CheckBox ID="chkBindToP56" runat="server" Text="Projektový úkol" AutoPostBack="true" meta:resourcekey="chkBindToP56" />
@@ -490,7 +490,7 @@
             <uc:datacombo ID="p56ID" runat="server" Width="400px" DataTextField="NameWithTypeAndCode" DataValueField="pid" IsFirstEmptyRow="true" Visible="false" AutoPostBack="false" Filter="Contains" />
         </div>
 
-    </div>
+    </asp:panel>
     <div class="content-box1" style="min-width:50px;">
         <div class="title">
             <img src="Images/contactperson.png" alt="Kontaktní osoba" />
@@ -500,7 +500,7 @@
             <asp:DropDownList ID="j02ID_ContactPerson" runat="server" Visible="false" DataValueField="pid" DataTextField="FullNameDescWithEmail"></asp:DropDownList>
         </div>
     </div>
-    <div class="content-box1" style="min-width:170px;">
+    <asp:panel ID="panO23" runat="server" CssClass="content-box1" style="min-width:170px;">
         <div class="title">
             <img src="Images/notepad.png" alt="Dokument" /><asp:Label ID="lblDokumenty" runat="server" Text="Dokumenty" meta:resourcekey="lblDokumenty"></asp:Label>
             
@@ -509,7 +509,7 @@
             <div><asp:HyperLink ID="cmdDoc" runat="server" Text="Nahrát/Spárovat dokument" NavigateUrl="javascript:o23_record()" meta:resourcekey="cmdDoc"></asp:HyperLink></div>
             <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p31Worksheet"></uc:o23_list>
         </div>
-    </div>
+    </asp:panel>
 
     <asp:panel ID="panP49" runat="server" cssclass="content-box1" style="min-width:170px;" Visible="false">
         <div class="title">

@@ -49,7 +49,12 @@ Public Class p91_export2pohoda
         Dim dbRow As DataRow
 
 
-        Dim strSQL As String = "select p91.*,p93.*,'' as stredisko,p41.projekt as contract,left(p91text1,90) as text90,j27.j27Code,p28.*,o38prim.*,p86.*"
+        Dim strSQL As String = "select p91.*,p93.*,'' as stredisko,p41.projekt as contract,j27.j27Code,p28.*,o38prim.*,p86.*"
+        If chkText90.Checked Then
+            strSQL += ",left(p91text1,90) as text90"
+        Else
+            strSQL += ",left(p91text1,1000) as text90"
+        End If
         strSQL += " from p91invoice p91"
         strSQL += " left outer join p28Contact p28 on p91.p28id=p28.p28id"
         'strSQL += " LEFT OUTER JOIN j03user p28_j03_owner on p28.j03ID_Creator=p28_j03_owner.j03id"
@@ -131,14 +136,14 @@ Public Class p91_export2pohoda
 
             nd = GetChild(ndHeader, "inv:partnerIdentity")
             nd = GetChild(nd, "typ:address")
-            ChangeChild(nd, "typ:company", dbRow.Item("p28Name").ToString)
+            ChangeChild(nd, "typ:company", dbRow.Item("p91Client").ToString)
             ChangeChild(nd, "typ:division", "")
             ChangeChild(nd, "typ:name", "")
-            ChangeChild(nd, "typ:city", dbRow.Item("o38City").ToString)
-            ChangeChild(nd, "typ:street", dbRow.Item("o38Street").ToString)
-            ChangeChild(nd, "typ:zip", dbRow.Item("o38ZIP").ToString)
-            ChangeChild(nd, "typ:ico", dbRow.Item("p28RegID").ToString)
-            ChangeChild(nd, "typ:dic", dbRow.Item("p28VatID").ToString)
+            ChangeChild(nd, "typ:city", dbRow.Item("p91ClientAddress1_City").ToString)
+            ChangeChild(nd, "typ:street", dbRow.Item("p91ClientAddress1_Street").ToString)
+            ChangeChild(nd, "typ:zip", dbRow.Item("p91ClientAddress1_ZIP").ToString)
+            ChangeChild(nd, "typ:ico", dbRow.Item("p91Client_RegID").ToString)
+            ChangeChild(nd, "typ:dic", dbRow.Item("p91Client_VatID").ToString)
 
             Dim strBA As String = dbRow.Item("p86BankAccount").ToString
             Dim strBankCode As String = dbRow.Item("p86BankCode").ToString

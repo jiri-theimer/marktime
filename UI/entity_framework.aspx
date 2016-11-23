@@ -60,7 +60,7 @@
             pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value + "&parentWidth=" + pane.get_width());
             <%Else%>
             var pane = sender.getPaneById("<%=navigationPane.ClientID%>");
-            pane.set_width(screen.availWidth-5);
+            pane.set_width(screen.availWidth-20);
             <%end If%>
             
         }
@@ -86,6 +86,7 @@
             var pid = args.getDataKeyValue("pid");
             location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
             <%end If%>
+            
         }
 
         function GetAllSelectedPIDs() {
@@ -200,7 +201,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="offsetY"></div>
-    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
+    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight" Orientation="Vertical">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;">
                 <div style="float: left;">

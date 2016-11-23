@@ -269,15 +269,18 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.TypProjektu, "p42Name"))
             .Add(AGC(My.Resources.common.Stredisko, "j18Name"))
             .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
-            .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))
+            .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name", , "LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
             .Add(AGC("Fakturační poznámka", "p41BillingMemo", , , "a.p41BillingMemo"))
             .Add(AGC("Nadřízený projekt", "ParentProject", , , "p41parent.p41Name", , "LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"))
             .Add(AGC("Kód nadř.projektu", "ParentCode", , , "p41parent.p41Code", , "LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"))
+            
             .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly, , "a.p41PlanFrom"))
             .Add(AGC(My.Resources.common.PlanEnd, "p41PlanUntil", BO.cfENUM.DateOnly, , "a.p41PlanUntil"))
             .Add(AGC(My.Resources.common.LimitHodin, "p41LimitHours_Notification", BO.cfENUM.Numeric, , "a.p41LimitHours_Notification", True))
             .Add(AGC(My.Resources.common.LimitniHonorar, "p41LimitFee_Notification", BO.cfENUM.Numeric, , "a.p41LimitFee_Notification", True))
+
+            .Add(AGC("Odběratel faktury", "InvoiceClient", , , "p28billing.p28Name", , "LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
             .Add(AGC(My.Resources.common.Zalozeno, "p41DateInsert", BO.cfENUM.DateTime, , "a.p41DateInsert"))
@@ -285,6 +288,22 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Aktualizace, "p41DateUpdate", BO.cfENUM.DateTime, , "a.p41DateUpdate"))
             .Add(AGC(My.Resources.common.Aktualizoval, "p41UserUpdate", , , "a.p41UserUpdate"))
             .Add(AGC(My.Resources.common.ExterniKod, "p41ExternalPID", , , "a.p41ExternalPID"))
+            If Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                .Add(AGC("Vykázané hodiny", "Vykazano_Hodiny", BO.cfENUM.Numeric2, , "view_p41_worksheet.Vykazano_Hodiny", True, "LEFT OUTER JOIN view_p41_worksheet ON a.p41ID=view_p41_worksheet.p41ID"))
+                .Add(AGC("FAKTURA/hodiny", "Vyfakturovano_Hodiny", BO.cfENUM.Numeric2, , "view_p41_worksheet.Vyfakturovano_Hodiny", True, "LEFT OUTER JOIN view_p41_worksheet ON a.p41ID=view_p41_worksheet.p41ID"))
+                .Add(AGC("FAKTURA/částka", "Vyfakturovano_Castka", BO.cfENUM.Numeric2, , "view_p41_worksheet.Vyfakturovano_Celkem_Domestic", True, "LEFT OUTER JOIN view_p41_worksheet ON a.p41ID=view_p41_worksheet.p41ID"))
+                .Add(AGC("WIP/Hodiny", "WIP_Hodiny", BO.cfENUM.Numeric2, , "view_p41_wip.Hodiny", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Částka", "WIP_Castka", BO.cfENUM.Numeric2, , "view_p41_wip.Castka_Celkem", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Honorář", "WIP_Honorar", BO.cfENUM.Numeric2, , "view_p41_wip.Honorar", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Honorář CZK", "WIP_Honorar_CZK", BO.cfENUM.Numeric2, , "view_p41_wip.Honorar_CZK", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Honorář EUR", "WIP_Honorar_EUR", BO.cfENUM.Numeric2, , "view_p41_wip.Honorar_EUR", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Výdaje", "WIP_Vydaje", BO.cfENUM.Numeric2, , "view_p41_wip.Vydaje", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Výdaje CZK", "WIP_Vydaje_CZK", BO.cfENUM.Numeric2, , "view_p41_wip.Vydaje_CZK", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Výdaje EUR", "WIP_Vydaje_EUR", BO.cfENUM.Numeric2, , "view_p41_wip.Vydaje_EUR", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Odměny", "WIP_Odmeny", BO.cfENUM.Numeric2, , "view_p41_wip.Odmeny", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Odměny CZK", "WIP_Odmeny_CZK", BO.cfENUM.Numeric2, , "view_p41_wip.Odmeny_CZK", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+                .Add(AGC("WIP/Odměny EUR", "WIP_Odmeny_EUR", BO.cfENUM.Numeric2, , "view_p41_wip.Odmeny_EUR", True, "LEFT OUTER JOIN view_p41_wip ON a.p41ID=view_p41_wip.p41ID"))
+            End If
         End With
         AppendFreeFields(BO.x29IdEnum.p41Project, lis)
 

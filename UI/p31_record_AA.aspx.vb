@@ -8,6 +8,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         approve1.Factory = Master.Factory
+        ff1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
             With Master
@@ -53,6 +54,8 @@
                     cmdApprove.Text = "Schvalovat worksheet úkon"
                 End If
                 approve1.HeaderText = cmdApprove.Text
+
+                Handle_FF(.p34ID)
             End If
             If .IsClosed Then
                 lblLockedReasonMessage.Text = "Schválený záznam byl přesunutý do archivu."
@@ -216,19 +219,30 @@
         panApproving.Visible = True
         approve1.InhaleRecord(Master.Factory.p31WorksheetBL.Load(Master.DataPID))
         cmdApprove.Visible = False
+        Me.panP31Text.Visible = False
     End Sub
 
     Private Sub approve1_AfterSave(ByRef strErr As String) Handles approve1.AfterSave
         If strErr <> "" Then
             Master.Notify(strErr, 2)
         Else
+            Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False)
             Master.CloseAndRefreshParent("p31-save")
         End If
         cmdApprove.Visible = True
+        Me.panP31Text.Visible = True
     End Sub
 
     Private Sub approve1_CancelSave() Handles approve1.CancelSave
         panApproving.Visible = False
         cmdApprove.Visible = True
+    End Sub
+
+    Private Sub Handle_FF(intP34ID As Integer)
+        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID)
+        If fields.Count > 0 Then
+            ff1.FillData(fields)
+        End If
+
     End Sub
 End Class
