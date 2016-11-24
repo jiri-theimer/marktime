@@ -7,7 +7,7 @@
     Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer, bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
     Function GetList(x28FieldNames As List(Of String), bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
     Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x28EntityField)
-    Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer) As List(Of BO.FreeField)
+    Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer, Optional strTempGUID As String = "") As List(Of BO.FreeField)
     Function GetList_x26(intX28ID As Integer) As IEnumerable(Of BO.x26EntityField_Binding)
 End Interface
 Class x28EntityFieldBL
@@ -85,8 +85,8 @@ Class x28EntityFieldBL
     Public Overloads Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x28EntityField) Implements Ix28EntityFieldBL.GetList
         Return _cDL.GetList(intX23ID)
     End Function
-    Public Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer) As List(Of BO.FreeField) Implements Ix28EntityFieldBL.GetListWithValues
-        Return _cDL.GetListWithValues(x29id, intRecordPID, intEntityType)
+    Public Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer, Optional strTempGUID As String = "") As List(Of BO.FreeField) Implements Ix28EntityFieldBL.GetListWithValues
+        Return _cDL.GetListWithValues(x29id, intRecordPID, intEntityType, strTempGUID)
 
 
     End Function

@@ -74,12 +74,14 @@
         If strErr <> "" Then
             Master.Notify(strErr, NotifyLevel.WarningMessage)
             Return
+        Else
+            Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), True, ViewState("guid"))
         End If
         Me.hidRefreshParent.Value = "1"
     End Sub
 
     Private Sub Handle_FF(intP34ID As Integer)
-        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID)
+        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID, ViewState("guid"))
         If fields.Count > 0 Then
             ff1.FillData(fields)
         End If

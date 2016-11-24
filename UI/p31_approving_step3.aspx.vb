@@ -267,7 +267,6 @@ Public Class p31_approving_step3
                     cErr.p85DataPID = cRec.PID
                     cErr.p85FreeText01 = Master.Factory.p31WorksheetBL.ErrorMessage
                     Master.Factory.p85TempBoxBL.Save(cErr)
-
                 End If
             End If
 
@@ -595,7 +594,7 @@ Public Class p31_approving_step3
     End Sub
 
     Private Function SaveChanges() As Boolean
-        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")), x As Integer = 0
         Dim strErrs As String = ""
         For Each cTemp In lis
             Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadTempRecord(cTemp.p85DataPID, ViewState("guid"))
@@ -625,14 +624,11 @@ Public Class p31_approving_step3
 
             With Master.Factory.p31WorksheetBL
                 If .Save_Approving(cApprove, False) Then
-
-                Else
-                    Dim xx As Integer = 1
-                    'strErrs += "<hr>" & .ErrorMessage
+                    x += 1
                 End If
             End With
         Next
-
+        If x > 0 Then Master.Factory.p31WorksheetBL.SaveFreeFields_Batch_AfterApproving(ViewState("guid"))
         Return True
     End Function
 

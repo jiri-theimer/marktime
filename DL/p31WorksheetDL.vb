@@ -148,11 +148,16 @@
 
 
     End Function
-    Public Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean) As Boolean
+    Public Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean, strP31Guid As String) As Boolean
         Dim strTab As String = "p31WorkSheet_FreeField"
         If bolIsTempRecord Then strTab = "p31WorkSheet_FreeField_Temp"
-        Return bas.SaveFreeFields(_cDB, lisFF, strTab, intP31ID, _curUser)
+        Return bas.SaveFreeFields(_cDB, lisFF, strTab, intP31ID, _curUser, strP31Guid)
 
+    End Function
+    Public Function SaveFreeFields_Batch_AfterApproving(strP31Guid As String) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("guid", strP31Guid, DbType.String)
+        Return _cDB.RunSP("p31_save_freefields_after_approving", pars)
     End Function
     Public Function SaveOrigRecord(cRec As BO.p31WorksheetEntryInput, p33ID As BO.p33IdENUM, lisFF As List(Of BO.FreeField)) As Boolean
         Dim strX45IDs_Handle As String = "" 'aplikační údálosti, které se mají následně odchytávat
@@ -687,7 +692,12 @@
         s.Append(" LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID LEFT OUTER JOIN j02Person cp ON a.j02ID_ContactPerson=cp.j02ID LEFT OUTER JOIN p28Contact supplier ON a.p28ID_Supplier=supplier.p28ID")
         s.Append(" LEFT OUTER JOIN j27Currency j27billing_orig ON a.j27ID_Billing_Orig=j27billing_orig.j27ID")
         s.Append(" LEFT OUTER JOIN p95InvoiceRow p95 ON p32.p95ID=p95.p95ID")
-        s.Append(" LEFT OUTER JOIN p31WorkSheet_FreeField p31free ON a.p31ID=p31free.p31ID")
+        If strGUID_TempData = "" Then
+            s.Append(" LEFT OUTER JOIN p31WorkSheet_FreeField p31free ON a.p31ID=p31free.p31ID")
+        Else
+            s.Append(" LEFT OUTER JOIN (select * from p31WorkSheet_FreeField_Temp WHERE p31GUID='" & strGUID_TempData & "') p31free ON a.p31ID=p31free.p31ID")
+        End If
+
         If Not myQuery Is Nothing Then
             With myQuery
                 If .MG_AdditionalSqlFROM <> "" Then s.Append(" " & .MG_AdditionalSqlFROM)

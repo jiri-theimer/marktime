@@ -169,7 +169,7 @@
     Public Function GetList_x26(intX28ID As Integer) As IEnumerable(Of BO.x26EntityField_Binding)
         Return _cDB.GetList(Of BO.x26EntityField_Binding)("SELECT * FROM x26EntityField_Binding WHERE x28ID=@pid", New With {.pid = intX28ID})
     End Function
-    Public Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer) As List(Of BO.FreeField)
+    Public Function GetListWithValues(x29id As BO.x29IdEnum, intRecordPID As Integer, intEntityType As Integer, Optional strTempGUID As String = "") As List(Of BO.FreeField)
         Dim pars As New DbParameters
 
         Dim s As String = InhaleGetListSQL(x29id, pars, intEntityType, True)
@@ -196,7 +196,11 @@
                 Case BO.x29IdEnum.p90Proforma
                     dr = _cDB.GetDataReader("select * from p90Proforma_FreeField WHERE p90ID=" & intRecordPID.ToString)
                 Case BO.x29IdEnum.p31Worksheet
-                    dr = _cDB.GetDataReader("select * from p31WorkSheet_FreeField WHERE p31ID=" & intRecordPID.ToString)
+                    If strTempGUID = "" Then
+                        dr = _cDB.GetDataReader("select * from p31WorkSheet_FreeField WHERE p31ID=" & intRecordPID.ToString)
+                    Else
+                        dr = _cDB.GetDataReader("select * from p31WorkSheet_FreeField_Temp WHERE p31GUID='" & strTempGUID & "' AND p31ID=" & intRecordPID.ToString)
+                    End If
                 Case BO.x29IdEnum.p56Task
                     dr = _cDB.GetDataReader("select * from p56Task_FreeField WHERE p56ID=" & intRecordPID.ToString)
                 Case BO.x29IdEnum.j02Person

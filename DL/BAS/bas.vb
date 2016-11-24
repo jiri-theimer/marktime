@@ -105,19 +105,28 @@
     End Sub
 
     
-    Shared Function SaveFreeFields(cDB As DbHandler, lisFF As List(Of BO.FreeField), strTableFF As String, intPID As Integer, Optional cCurUser As BO.j03UserSYS = Nothing) As Boolean
+    Shared Function SaveFreeFields(cDB As DbHandler, lisFF As List(Of BO.FreeField), strTableFF As String, intPID As Integer, Optional cCurUser As BO.j03UserSYS = Nothing, Optional strTempGUID As String = "") As Boolean
         If lisFF.Count = 0 Then Return False
         Dim bolInsert As Boolean = True, strW As String = "", strFieldPID As String = Left(strTableFF, 3) & "ID"
-        If cDB.GetIntegerValueFROMSQL("SELECT " & strFieldPID & " FROM " & strTableFF & " WHERE " & strFieldPID & "=" & intPID.ToString) <> 0 Then
-            bolInsert = False : strW = strFieldPID & "=@pid"
+        If strTempGUID = "" Then
+            If cDB.GetIntegerValueFROMSQL("SELECT " & strFieldPID & " FROM " & strTableFF & " WHERE " & strFieldPID & "=" & intPID.ToString) <> 0 Then
+                bolInsert = False : strW = strFieldPID & "=@pid"
+            End If
+        Else
+            If cDB.GetIntegerValueFROMSQL("SELECT " & strFieldPID & " FROM " & strTableFF & " WHERE " & strFieldPID & "=" & intPID.ToString & " AND " & Left(strTableFF, 3) & "guid = '" & strTempGUID & "'") <> 0 Then
+                bolInsert = False : strW = strFieldPID & "=@pid AND " & Left(strTableFF, 3) & "guid = '" & strTempGUID & "'"
+            End If
         End If
+        
         Dim pars As New DbParameters
         If bolInsert Then
             pars.Add(strFieldPID, intPID, DbType.Int32)
         Else
             pars.Add("pid", intPID, DbType.Int32)
         End If
-
+        If strTempGUID <> "" And bolInsert Then
+            pars.Add(Left(strTableFF, 3) & "guid", strTempGUID, DbType.String)
+        End If
         For Each c In lisFF
             Select Case c.x24ID
                 Case BO.x24IdENUM.tString
@@ -132,7 +141,7 @@
                     Else
                         pars.Add(c.x28Field, BO.BAS.IsNullDBKey(c.DBValue), DbType.Int32)   'combo položka (ID)
                         pars.Add(c.x28Field & "Text", c.ComboText, DbType.String)           'combo položka (TEXT)
-                        
+
                     End If
 
                 Case BO.x24IdENUM.tBoolean

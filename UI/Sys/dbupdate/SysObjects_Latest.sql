@@ -7468,6 +7468,160 @@ else
 
 GO
 
+----------P---------------p31_save_freefields_after_approving-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_save_freefields_after_approving') and type = 'P')
+ drop procedure p31_save_freefields_after_approving
+GO
+
+
+
+
+
+CREATE  procedure [dbo].[p31_save_freefields_after_approving]
+@guid varchar(50)
+
+AS
+
+if not exists(select p31ID FROM p31WorkSheet_FreeField_Temp WHERE p31GUID=@guid)
+ return
+
+INSERT INTO p31WorkSheet_FreeField(p31ID)
+SELECT p31ID
+FROM
+p31WorkSheet_FreeField_Temp
+WHERE p31GUID=@guid AND p31ID NOT IN (SELECT p31ID FROM p31WorkSheet_FreeField)
+
+
+UPDATE a
+   SET [p31FreeText01] = b.p31FreeText01
+      ,[p31FreeText02] = b.p31FreeText02
+      ,[p31FreeText03] = b.p31FreeText03
+      ,[p31FreeText04] = b.p31FreeText04
+      ,[p31FreeText05] = b.p31FreeText05
+      ,[p31FreeText06] = b.p31FreeText06
+      ,[p31FreeText07] = b.p31FreeText07
+      ,[p31FreeText08] = b.p31FreeText08
+      ,[p31FreeText09] = b.p31FreeText09
+      ,[p31FreeText10] = b.p31FreeText10
+      ,[p31FreeBoolean01] = b.p31FreeBoolean01
+      ,[p31FreeBoolean02] = b.p31FreeBoolean02
+      ,[p31FreeBoolean03] = b.p31FreeBoolean03
+      ,[p31FreeBoolean04] = b.p31FreeBoolean04
+      ,[p31FreeBoolean05] = b.p31FreeBoolean05
+      ,[p31FreeBoolean06] = b.p31FreeBoolean06
+      ,[p31FreeBoolean07] = b.p31FreeBoolean07
+      ,[p31FreeBoolean08] = b.p31FreeBoolean08
+      ,[p31FreeBoolean09] = b.p31FreeBoolean09
+      ,[p31FreeBoolean10] = b.p31FreeBoolean10
+      ,[p31FreeDate01] = b.p31FreeDate01
+      ,[p31FreeDate02] = b.p31FreeDate02
+      ,[p31FreeDate03] = b.p31FreeDate03
+      ,[p31FreeDate04] = b.p31FreeDate04
+      ,[p31FreeDate05] = b.p31FreeDate05
+      ,[p31FreeDate06] = b.p31FreeDate06
+      ,[p31FreeDate07] = b.p31FreeDate07
+      ,[p31FreeDate08] = b.p31FreeDate08
+      ,[p31FreeDate09] = b.p31FreeDate09
+      ,[p31FreeDate10] = b.p31FreeDate10
+      ,[p31FreeNumber01] = b.p31FreeNumber01
+      ,[p31FreeNumber02] = b.p31FreeNumber02
+      ,[p31FreeNumber03] = b.p31FreeNumber03
+      ,[p31FreeNumber04] = b.p31FreeNumber04
+      ,[p31FreeNumber05] = b.p31FreeNumber05
+      ,[p31FreeNumber06] = b.p31FreeNumber06
+      ,[p31FreeNumber07] = b.p31FreeNumber07
+      ,[p31FreeNumber08] = b.p31FreeNumber08
+      ,[p31FreeNumber09] = b.p31FreeNumber09
+      ,[p31FreeNumber10] = b.p31FreeNumber10
+      ,[p31FreeCombo01] = b.p31FreeCombo01
+      ,[p31FreeCombo02] = b.p31FreeCombo02
+      ,[p31FreeCombo03] = b.p31FreeCombo03
+      ,[p31FreeCombo04] = b.p31FreeCombo04
+      ,[p31FreeCombo05] = b.p31FreeCombo05
+      ,[p31FreeCombo06] = b.p31FreeCombo06
+      ,[p31FreeCombo07] = b.p31FreeCombo07
+      ,[p31FreeCombo08] = b.p31FreeCombo08
+      ,[p31FreeCombo09] = b.p31FreeCombo09
+      ,[p31FreeCombo10] = b.p31FreeCombo10
+      ,[p31FreeCombo01Text] = b.p31FreeCombo01Text
+      ,[p31FreeCombo02Text] = b.p31FreeCombo02Text
+      ,[p31FreeCombo03Text] = b.p31FreeCombo03Text
+      ,[p31FreeCombo04Text] = b.p31FreeCombo04Text
+      ,[p31FreeCombo05Text] = b.p31FreeCombo05Text
+      ,[p31FreeCombo06Text] = b.p31FreeCombo06Text
+      ,[p31FreeCombo07Text] = b.p31FreeCombo07Text
+      ,[p31FreeCombo08Text] = b.p31FreeCombo08Text
+      ,[p31FreeCombo09Text] = b.p31FreeCombo09Text
+      ,[p31FreeCombo10Text] = b.p31FreeCombo10Text
+FROM p31WorkSheet_FreeField a INNER JOIN p31WorkSheet_FreeField_Temp b ON a.p31ID=b.p31ID
+WHERE b.p31GUID=@guid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p31_setup_temp-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_setup_temp') and type = 'P')
@@ -7483,6 +7637,142 @@ CREATE procedure [dbo].[p31_setup_temp]
 @p31id int	---p31id
 ,@guid varchar(50)
 AS
+
+if exists(select p31ID FROM p31WorkSheet_FreeField WHERE p31ID=@p31id)
+ begin	---k záznamu existují uživatelská pole
+   if not exists(select p31ID FROM p31WorkSheet_FreeField_Temp WHERE p31GUID=@guid AND p31ID=@p31id)
+    begin
+	  INSERT INTO p31WorkSheet_FreeField_Temp
+	  (
+	  [p31GUID]
+           ,[p31ID]
+           ,[p31FreeText01]
+           ,[p31FreeText02]
+           ,[p31FreeText03]
+           ,[p31FreeText04]
+           ,[p31FreeText05]
+           ,[p31FreeText06]
+           ,[p31FreeText07]
+           ,[p31FreeText08]
+           ,[p31FreeText09]
+           ,[p31FreeText10]
+           ,[p31FreeBoolean01]
+           ,[p31FreeBoolean02]
+           ,[p31FreeBoolean03]
+           ,[p31FreeBoolean04]
+           ,[p31FreeBoolean05]
+           ,[p31FreeBoolean06]
+           ,[p31FreeBoolean07]
+           ,[p31FreeBoolean08]
+           ,[p31FreeBoolean09]
+           ,[p31FreeBoolean10]
+           ,[p31FreeDate01]
+           ,[p31FreeDate02]
+           ,[p31FreeDate03]
+           ,[p31FreeDate04]
+           ,[p31FreeDate05]
+           ,[p31FreeDate06]
+           ,[p31FreeDate07]
+           ,[p31FreeDate08]
+           ,[p31FreeDate09]
+           ,[p31FreeDate10]
+           ,[p31FreeNumber01]
+           ,[p31FreeNumber02]
+           ,[p31FreeNumber03]
+           ,[p31FreeNumber04]
+           ,[p31FreeNumber05]
+           ,[p31FreeNumber06]
+           ,[p31FreeNumber07]
+           ,[p31FreeNumber08]
+           ,[p31FreeNumber09]
+           ,[p31FreeNumber10]
+           ,[p31FreeCombo01]
+           ,[p31FreeCombo02]
+           ,[p31FreeCombo03]
+           ,[p31FreeCombo04]
+           ,[p31FreeCombo05]
+           ,[p31FreeCombo06]
+           ,[p31FreeCombo07]
+           ,[p31FreeCombo08]
+           ,[p31FreeCombo09]
+           ,[p31FreeCombo10]
+           ,[p31FreeCombo01Text]
+           ,[p31FreeCombo02Text]
+           ,[p31FreeCombo03Text]
+           ,[p31FreeCombo04Text]
+           ,[p31FreeCombo05Text]
+           ,[p31FreeCombo06Text]
+           ,[p31FreeCombo07Text]
+           ,[p31FreeCombo08Text]
+           ,[p31FreeCombo09Text]
+           ,[p31FreeCombo10Text])
+		   SELECT @guid
+           ,[p31ID]
+           ,[p31FreeText01]
+           ,[p31FreeText02]
+           ,[p31FreeText03]
+           ,[p31FreeText04]
+           ,[p31FreeText05]
+           ,[p31FreeText06]
+           ,[p31FreeText07]
+           ,[p31FreeText08]
+           ,[p31FreeText09]
+           ,[p31FreeText10]
+           ,[p31FreeBoolean01]
+           ,[p31FreeBoolean02]
+           ,[p31FreeBoolean03]
+           ,[p31FreeBoolean04]
+           ,[p31FreeBoolean05]
+           ,[p31FreeBoolean06]
+           ,[p31FreeBoolean07]
+           ,[p31FreeBoolean08]
+           ,[p31FreeBoolean09]
+           ,[p31FreeBoolean10]
+           ,[p31FreeDate01]
+           ,[p31FreeDate02]
+           ,[p31FreeDate03]
+           ,[p31FreeDate04]
+           ,[p31FreeDate05]
+           ,[p31FreeDate06]
+           ,[p31FreeDate07]
+           ,[p31FreeDate08]
+           ,[p31FreeDate09]
+           ,[p31FreeDate10]
+           ,[p31FreeNumber01]
+           ,[p31FreeNumber02]
+           ,[p31FreeNumber03]
+           ,[p31FreeNumber04]
+           ,[p31FreeNumber05]
+           ,[p31FreeNumber06]
+           ,[p31FreeNumber07]
+           ,[p31FreeNumber08]
+           ,[p31FreeNumber09]
+           ,[p31FreeNumber10]
+           ,[p31FreeCombo01]
+           ,[p31FreeCombo02]
+           ,[p31FreeCombo03]
+           ,[p31FreeCombo04]
+           ,[p31FreeCombo05]
+           ,[p31FreeCombo06]
+           ,[p31FreeCombo07]
+           ,[p31FreeCombo08]
+           ,[p31FreeCombo09]
+           ,[p31FreeCombo10]
+           ,[p31FreeCombo01Text]
+           ,[p31FreeCombo02Text]
+           ,[p31FreeCombo03Text]
+           ,[p31FreeCombo04Text]
+           ,[p31FreeCombo05Text]
+           ,[p31FreeCombo06Text]
+           ,[p31FreeCombo07Text]
+           ,[p31FreeCombo08Text]
+           ,[p31FreeCombo09Text]
+           ,[p31FreeCombo10Text]
+		   FROM p31WorkSheet_FreeField WHERE p31ID=@p31id
+	end
+
+ end
+
 
 if exists(select p31ID FROM p31Worksheet_Temp WHERE p31GUID=@guid AND p31ID=@p31id)
  return ---temp data se na úvod plní pouze jednou
@@ -12495,6 +12785,9 @@ if exists(select p85ID FROM p85TempBox)
 if exists(select p31ID FROM p31Worksheet_Temp)
  truncate table p31Worksheet_Temp
 
+
+if exists(select p31ID FROM p31WorkSheet_FreeField_Temp)
+ truncate table p31WorkSheet_FreeField_Temp
 
  if exists(select x47ID FROM x47EventLog where x29ID=141 and x45ID=14101 and x47Description is null and x47RecordPID NOT IN (SELECT p41ID FROM p41Project))
    update x47EventLog set x47Description='deleted' where x29ID=141 and x45ID=14101 and x47RecordPID NOT IN (SELECT p41ID FROM p41Project)

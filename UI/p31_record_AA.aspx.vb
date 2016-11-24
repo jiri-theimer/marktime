@@ -226,7 +226,7 @@
         If strErr <> "" Then
             Master.Notify(strErr, 2)
         Else
-            Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False)
+            Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False, "")
             Master.CloseAndRefreshParent("p31-save")
         End If
         cmdApprove.Visible = True

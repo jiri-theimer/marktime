@@ -36,6 +36,7 @@ Public Class x28EntityField
     Public Property x28Grid_Field As String
     Public Property x28Grid_SqlSyntax As String
     Public Property x28Grid_SqlFrom As String
+    Public Property x28IsGridTotals As Boolean
 
     Protected Property _x29Name As String
     Public ReadOnly Property x29Name As String

@@ -43,7 +43,8 @@
     Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
 
     Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean
-    Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean) As Boolean
+    Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean, strP31Guid As String) As Boolean
+    Function SaveFreeFields_Batch_AfterApproving(strP31Guid As String) As Boolean
     ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
 End Interface
 Class p31WorksheetBL
@@ -297,7 +298,7 @@ Class p31WorksheetBL
     Public Function Save_Approving(cApproveInput As BO.p31WorksheetApproveInput, bolTempData As Boolean) As Boolean Implements Ip31WorksheetBL.Save_Approving
         If Not Validate_Before_Save_Approving(cApproveInput, bolTempData) Then Return False
 
-        With cApproveInput
+        With cApproveInput            
             Select Case .p33ID
                 Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                     Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, .Rate_Billing_Approved, .Value_Approved_Internal, .Rate_Internal_Approved, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date)
@@ -434,7 +435,10 @@ Class p31WorksheetBL
     Public Function GetGridFooterSums(myQuery As BO.myQueryP31, strSumFields As String, Optional strGUID_TempData As String = "") As DataTable Implements Ip31WorksheetBL.GetGridFooterSums
         Return _cDL.GetGridFooterSums(myQuery, strSumFields, strGUID_TempData)
     End Function
-    Public Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean) As Boolean Implements Ip31WorksheetBL.SaveFreeFields
-        Return _cDL.SaveFreeFields(intP31ID, lisFF, bolIsTempRecord)
+    Public Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean, strP31Guid As String) As Boolean Implements Ip31WorksheetBL.SaveFreeFields
+        Return _cDL.SaveFreeFields(intP31ID, lisFF, bolIsTempRecord, strP31Guid)
+    End Function
+    Public Function SaveFreeFields_Batch_AfterApproving(strP31Guid As String) As Boolean Implements Ip31WorksheetBL.SaveFreeFields_Batch_AfterApproving
+        Return _cDL.SaveFreeFields_Batch_AfterApproving(strP31Guid)
     End Function
 End Class
