@@ -1113,6 +1113,7 @@
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND a.p91ID IS NULL THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_celkem_fakturovat"
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=6 AND a.p91ID IS NULL THEN a.p31Hours_Orig END) as schvaleno_hodiny_pausal"
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove IN (2,3) AND a.p91ID IS NULL THEN a.p31Hours_Orig END) as schvaleno_hodiny_odpis"
+        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=7 AND a.p91ID IS NULL THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny_pozdeji"
         s += ",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN 1 END) as schvaleno_pocet"
         s += ",MIN(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_prvni"
         s += ",MAX(case when a.p71ID=1 AND a.p91ID IS NULL THEN p31Date END) as schvaleno_posledni"

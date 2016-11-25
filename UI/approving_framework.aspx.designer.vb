@@ -122,6 +122,15 @@ Partial Public Class approving_framework
     Protected WithEvents chkKusovnik As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkFirstLastCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkFirstLastCount As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''grid1 control.
     '''</summary>
     '''<remarks>

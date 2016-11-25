@@ -166,7 +166,10 @@
                 <span style="padding-left: 50px;"></span>
                 <button type="button" onclick="batch_p31text()" style="width: 280px;">Hromadná úprava popisu, hodnoty a sazby úkonu (všechny úkony)</button>
             </div>
-
+            <div class="div6">
+                <asp:Button ID="cmdBatch_7" Text="Vybrané záznamy [Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
+                
+            </div>
 
         </div>
     </div>

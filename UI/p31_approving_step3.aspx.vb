@@ -160,7 +160,7 @@ Public Class p31_approving_step3
                 .p71id = p71id
                 .p72id = explicit_p72id
                 .p31ApprovingSet = cRec.p31ApprovingSet
-                If explicit_p72id = BO.p72IdENUM.Fakturovat Then
+                If explicit_p72id = BO.p72IdENUM.Fakturovat Or explicit_p72id = BO.p72IdENUM.FakturovatPozdeji Then
                     Select Case cRec.p33ID
                         Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                             .Rate_Billing_Approved = cRec.p31Rate_Billing_Orig
@@ -576,6 +576,9 @@ Public Class p31_approving_step3
     Private Sub cmdBatch_6_Click(sender As Object, e As EventArgs) Handles cmdBatch_6.Click
         BatchOper_P72(BO.p71IdENUM.Schvaleno, BO.p72IdENUM.ZahrnoutDoPausalu)
     End Sub
+    Private Sub cmdBatch_7_Click(sender As Object, e As EventArgs) Handles cmdBatch_7.Click
+        BatchOper_P72(BO.p71IdENUM.Schvaleno, BO.p72IdENUM.FakturovatPozdeji)
+    End Sub
 
     Private Sub cmdBatch_Clear_Click(sender As Object, e As EventArgs) Handles cmdBatch_Clear.Click
         BatchOper_P72(BO.p71IdENUM.Nic, BO.p72IdENUM._NotSpecified)
@@ -688,4 +691,6 @@ Public Class p31_approving_step3
         Master.Factory.p31WorksheetBL.UpdateDeleteApprovingSet("", p31ids, True, ViewState("guid"))
         grid1.Rebind(True)
     End Sub
+
+    
 End Class

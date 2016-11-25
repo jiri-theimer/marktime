@@ -294,8 +294,9 @@
     Private Sub SaveWizard()
         Dim mq As New BO.myQueryP32
         mq.p33ID = BO.p33IdENUM.Cas
-        Dim lis As IEnumerable(Of BO.p32Activity) = Master.Factory.p32ActivityBL.GetList(mq).Where(Function(p) p.p32IsBillable = True)
-        Dim intP34ID As Integer = lis(0).p34ID, strP34Name As String = lis(0).p34Name
+        ''Dim lisx As IEnumerable(Of BO.p32Activity) = Master.Factory.p32ActivityBL.GetList(mq).Where(Function(p) p.p32IsBillable = True)
+        Dim lis As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList(mq).Where(Function(p) p.p33ID = BO.p33IdENUM.Cas Or p.p33ID = BO.p33IdENUM.Kusovnik)
+        Dim intP34ID As Integer = lis(0).PID, strP34Name As String = lis(0).p34Name
 
         For Each ri As RepeaterItem In rpWizard.Items
             Dim c As New BO.p85TempBox

@@ -57,10 +57,12 @@ Public Class approving_framework
                     .Add("approving_framework-j70id-p41")
                     .Add("approving_framework-j70id-p28")
                     .Add("approving_framework-j70id-j02")
+                    .Add("approving_framework-chkFirstLastCount")
                 End With
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
+                    Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("approving_framework-chkFirstLastCount", "1"))
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam("p31_grid-period")
                     If Request.Item("prefix") = "" Then
@@ -142,8 +144,10 @@ Public Class approving_framework
                 If Me.chkKusovnik.Checked Then
                     .AddColumn("rozpracovano_kusovnik_honorar", "Honorář z kusovníku", BO.cfENUM.Numeric2, , , , , True)
                 End If
-                .AddColumn("rozpracovano_prvni", "První", BO.cfENUM.DateOnly)
-                .AddColumn("rozpracovano_posledni", "Poslední", BO.cfENUM.DateOnly)
+                If chkFirstLastCount.Checked Then
+                    .AddColumn("rozpracovano_prvni", "První", BO.cfENUM.DateOnly)
+                    .AddColumn("rozpracovano_posledni", "Poslední", BO.cfENUM.DateOnly)
+                End If
                 .AddColumn("rozpracovano_pocet", "Počet", BO.cfENUM.Numeric0, , , , , True)
             End If
             If Me.cbxScope.SelectedValue = "2" Then
@@ -156,8 +160,11 @@ Public Class approving_framework
                 End If
                 .AddColumn("schvaleno_hodiny_pausal", "Hodiny v paušálu", BO.cfENUM.Numeric2, , , , , True)
                 .AddColumn("schvaleno_hodiny_odpis", "Odepsané hodiny", BO.cfENUM.Numeric2, , , , , True)
-                .AddColumn("schvaleno_prvni", "První", BO.cfENUM.DateOnly)
-                .AddColumn("schvaleno_posledni", "Poslední", BO.cfENUM.DateOnly)
+                .AddColumn("schvaleno_hodiny_pozdeji", "Hodiny fakturovat později", BO.cfENUM.Numeric2, , , , , True)
+                If Me.chkFirstLastCount.Checked Then
+                    .AddColumn("schvaleno_prvni", "První", BO.cfENUM.DateOnly)
+                    .AddColumn("schvaleno_posledni", "Poslední", BO.cfENUM.DateOnly)
+                End If
                 .AddColumn("schvaleno_pocet", "Počet", BO.cfENUM.Numeric0, , , , , True)
             End If
             .SetFilterSetting(strFilterSetting, strFilterExpression)
@@ -332,6 +339,11 @@ Public Class approving_framework
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("approving_framework-j70id-" & Me.CurrentPrefix, j70ID.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub chkFirstLastCount_CheckedChanged(sender As Object, e As EventArgs) Handles chkFirstLastCount.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("approving_framework-chkFirstLastCount", BO.BAS.GB(Me.chkFirstLastCount.Checked))
         ReloadPage()
     End Sub
 End Class

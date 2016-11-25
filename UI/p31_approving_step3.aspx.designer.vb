@@ -86,6 +86,15 @@ Partial Public Class p31_approving_step3
     Protected WithEvents cmdBatch_2 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdBatch_7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_7 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''j74id control.
     '''</summary>
     '''<remarks>

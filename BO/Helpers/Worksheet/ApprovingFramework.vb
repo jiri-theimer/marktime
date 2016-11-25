@@ -19,6 +19,7 @@
     Public Property schvaleno_hodiny_fakturovat As Double?
     Public Property schvaleno_hodiny_pausal As Double?
     Public Property schvaleno_hodiny_odpis As Double?
+    Public Property schvaleno_hodiny_pozdeji As Double?
     Public Property schvaleno_honorar_fakturovat As Double?
     Public Property schvaleno_vydaje_fakturovat As Double?
     Public Property schvaleno_odmeny_fakturovat As Double?

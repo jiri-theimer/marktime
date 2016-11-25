@@ -230,7 +230,9 @@
                             <div class="div6">
                                 <asp:CheckBox ID="chkKusovnik" runat="server" AutoPostBack="true" Text="Zobrazovat i honoráře z kusovníkových úkonů" />
                             </div>
-                            
+                            <div class="div6">
+                                <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
+                            </div>
                         </ContentTemplate>
                     </telerik:RadMenuItem>
                 </Items>

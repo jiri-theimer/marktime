@@ -326,10 +326,10 @@
         Next
         Dim strOF As String = strF
         Dim strTA As String = strT, strHA As String = strH, strCA As String = strC, strFA As String = strF
-        strT += "|N" : strTA += "|N"
-        strH += "|Hodiny" : strHA += "|Hodiny k fakturaci"
-        strC += "|11" : strCA += "|11"
-        strF += ",sum(p31Hours_Orig)" : strFA += ",sum(p31Hours_Approved_Billing)"
+        strT += "|N" : strTA += "|N|N|N|N"
+        strH += "|Hodiny" : strHA += "|Hodiny k fakturaci|Hodiny do paušálu|Hodiny k odpisu|Hodiny fakt.později"
+        strC += "|11" : strCA += "|11|11|11|11"
+        strF += ",sum(p31Hours_Orig)" : strFA += ",sum(case when a.p72ID_AfterApprove=4 then p31Hours_Approved_Billing end),sum(case when a.p72ID_AfterApprove=6 THEN p31Hours_Orig end),sum(case when a.p72ID_AfterApprove IN (2,3) THEN p31Hours_Orig end),sum(case when a.p72ID_AfterApprove=7 THEN p31Hours_Approved_Billing end)"
 
         For Each intJ27ID As Integer In basUI.GetCheckedItems(Me.j27ids)
             strT += "|N" : strTA += "|N"
