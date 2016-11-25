@@ -29,8 +29,8 @@
             <%=ViewState("hours_offer")%>
             ];
 
-           
-            <%If Me.hidHoursEntryFlag.Value = "1" Or Me.hidHoursEntryFlag.Value = "2" Then%>
+            
+            <%If Me.hidHoursEntryFlag.Value = "1" Or Me.hidHoursEntryFlag.Value = "2" Or Me.hidHoursEntryFlag.Value = "3" Then%>
             $("#<%=p31Value_Orig.ClientID%>").autocomplete({
                 source: hours_interval,
                 minLength: 0,

@@ -203,7 +203,8 @@
     <div id="offsetY"></div>
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight" Orientation="Vertical">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
-            <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;">
+            
+            <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;background:#F1F1F1;">
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
                 </div>

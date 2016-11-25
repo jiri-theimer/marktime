@@ -77,7 +77,7 @@ Public Class p28_framework_detail
                         End If
                     End If
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
-                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p28_framework_detail-searchbox", "0"))
+                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p28_framework_detail-searchbox", "1"))
                 End With
 
             End With

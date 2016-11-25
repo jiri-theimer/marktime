@@ -41,15 +41,6 @@ Partial Public Class p91_create_step2
     Protected WithEvents p28id As Global.UI.contact
 
     '''<summary>
-    '''lblO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblO23 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''TotalAmount control.
     '''</summary>
     '''<remarks>
@@ -77,22 +68,13 @@ Partial Public Class p91_create_step2
     Protected WithEvents TotalCount As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''notepad1 control.
+    '''bm1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
-
-    '''<summary>
-    '''cmdNewO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewO23 As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
     '''lblp92ID control.

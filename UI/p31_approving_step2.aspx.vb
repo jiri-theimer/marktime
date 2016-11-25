@@ -59,40 +59,7 @@
     End Sub
 
     Private Sub RefreshRecord()
-        Dim mqO23 As New BO.myQueryO23
-        notepad1.EntityX29ID = BO.BAS.GetX29FromPrefix(ViewState("masterprefix"))
-        panO23.Visible = True
-        Select Case ViewState("masterprefix")
-            Case "p28"
-                lblO23.Text = "Fakturační poznámky ke klientovi"
-                mqO23.p28ID = BO.BAS.IsNullInt(ViewState("masterpid"))
-                Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(mqO23.p28ID)
-                If cRec.p28BillingMemo <> "" Then Me.BillingMemo.Text = BO.BAS.CrLfText2Html(cRec.p28BillingMemo)
-            Case "p41"
-                lblO23.Text = "Fakturační poznámky k projektu"
-                mqO23.p41ID = BO.BAS.IsNullInt(ViewState("masterpid"))
-                Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(mqO23.p41ID)
-                If cRec.p41BillingMemo <> "" Then Me.BillingMemo.Text = BO.BAS.CrLfText2Html(cRec.p41BillingMemo)
-                If cRec.p28ID_Client > 0 Then
-                    Dim cClient As BO.p28Contact = Master.Factory.p28ContactBL.Load(cRec.p28ID_Client)
-                    If cClient.p28BillingMemo <> "" Then Me.BillingMemo.Text += "<br>" & BO.BAS.CrLfText2Html(cClient.p28BillingMemo)
-                End If
-            Case "j02"
-                lblO23.Text = "Fakturační poznámky k osobě"
-                mqO23.j02ID = BO.BAS.IsNullInt(ViewState("masterpid"))
-            Case Else
-                panO23.Visible = False
-        End Select
-        If panO23.Visible Then
-            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23).Where(Function(p) p.o24IsBillingMemo = True)
-            If lisO23.Count > 0 Then
-                notepad1.RefreshData(lisO23, Master.DataPID)
-                Me.lblO23.Text += " (" & notepad1.RowsCount.ToString & ")"
-            Else
-                panO23.Visible = False
-            End If
-        End If
-        
+        bm1.RefreshData(Master.Factory, ViewState("masterprefix"), BO.BAS.IsNullInt(ViewState("masterpid")))
     End Sub
 
     Private Sub SetupGrid()

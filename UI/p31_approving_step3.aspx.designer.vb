@@ -140,31 +140,13 @@ Partial Public Class p31_approving_step3
     Protected WithEvents opgGroupBy As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
-    '''notepad1 control.
+    '''bm1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
-
-    '''<summary>
-    '''cmdNewO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewO23 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''BillingMemo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents BillingMemo As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
     '''RowCount control.

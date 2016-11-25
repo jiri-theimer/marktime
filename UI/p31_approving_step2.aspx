@@ -4,17 +4,12 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="billingmemo" Src="~/billingmemo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".slidingDiv1").hide();
-            $(".show_hide1").show();
-
-            $('.show_hide1').click(function () {
-                $(".slidingDiv1").slideToggle();
-            });
+           
 
             InhaleGridHeight();
 
@@ -56,7 +51,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="height: 50px;">
+    <div>
         <table cellpadding="5" cellspacing="2">
             <tr valign="top">
                 <td>
@@ -72,30 +67,17 @@
                         <asp:Label ID="CountRefused" runat="server" CssClass="valbold" ForeColor="red"></asp:Label>
                     </div>
                 </td>
+               <td>
+                   <uc:billingmemo ID="bm1" runat="server" />
+               </td>
                
-                <td>
-                    <asp:Panel ID="panO23" runat="server">
-                    <button type="button" id="cmdO23" class="show_hide1">
-                        <img src="Images/notepad.png" />
-                        <asp:Label ID="lblO23" runat="server" Text="Fakturační poznámky"></asp:Label>
-                        <img src="Images/arrow_down.gif" alt="Nastavení" />
-                    </button>
-                    </asp:Panel>
-                    <asp:Label ID="BillingMemo" runat="server" CssClass="infoNotification" Font-Italic="true"></asp:Label>
-                </td>
                 <td>
                     <asp:CheckBox ID="chkSkipThisStep" runat="server" Text="Tento krok příště automaticky přeskakovat" Font-Bold="true" />
                 </td>
             </tr>
         </table>
     </div>
-    <div class="slidingDiv1">
-        <uc:o23_list ID="notepad1" runat="server"></uc:o23_list>
-        <div class="div6">
-            <asp:HyperLink ID="cmdNewO23" runat="server" Text="Napsat novou poznámku" NavigateUrl="javascript:o23_record(0)"></asp:HyperLink>
-        </div>
-
-    </div>
+   
     <div id="offsetY"></div>
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
     <div class="div6">

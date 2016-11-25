@@ -194,15 +194,6 @@ Partial Public Class p91_create_step1
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''lblO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblO23 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''TotalAmount control.
     '''</summary>
     '''<remarks>
@@ -212,22 +203,13 @@ Partial Public Class p91_create_step1
     Protected WithEvents TotalAmount As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''notepad1 control.
+    '''bm1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
-
-    '''<summary>
-    '''cmdNewO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewO23 As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
     '''cbxPaging control.

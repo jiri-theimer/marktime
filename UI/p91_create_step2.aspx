@@ -2,7 +2,7 @@
 
 <%@ MasterType VirtualPath="~/ModalForm.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="billingmemo" Src="~/billingmemo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
@@ -28,12 +28,7 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".slidingDiv1").hide();
-            $(".show_hide1").show();
-
-            $('.show_hide1').click(function () {
-                $(".slidingDiv1").slideToggle();
-            });
+           
 
         });
 
@@ -124,7 +119,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Panel ID="panSelectedEntity" runat="server">
         <table cellpadding="10">
-            <tr>
+            <tr valign="top">
 
                 <td>
                     <asp:Label ID="lblHeader" CssClass="framework_header_span" runat="server"></asp:Label>
@@ -135,28 +130,18 @@
                     <uc:contact ID="p28id" runat="server" AutoPostBack="true" Width="300px" Flag="nondraft" />
                 </td>
 
-                <td>
-                    <button type="button" id="cmdO23" class="show_hide1">
-                        <img src="Images/notepad.png" />
-                        <asp:Label ID="lblO23" runat="server" Text="Fakturační poznámky"></asp:Label>
-                        <img src="Images/arrow_down.gif" alt="Nastavení" />
-                    </button>
-                </td>
+               
                 <td>
                     <span>K fakturaci bez DPH:</span>
                     <asp:Label ID="TotalAmount" runat="server" CssClass="valbold" ForeColor="Green"></asp:Label>
                     <asp:Label ID="TotalHours" runat="server" CssClass="valboldblue" Style="margin-left: 20px;"></asp:Label>
                     <asp:Label ID="TotalCount" runat="server" CssClass="valbold" Style="margin-left: 20px;"></asp:Label>
+
+                    <uc:billingmemo ID="bm1" runat="server" />
                 </td>
             </tr>
         </table>
-        <div class="slidingDiv1">
-            <uc:o23_list ID="notepad1" runat="server"></uc:o23_list>
-            <div class="div6">
-                <asp:HyperLink ID="cmdNewO23" runat="server" Text="Napsat novou poznámku" NavigateUrl="javascript:o23_record(0)"></asp:HyperLink>
-            </div>
-
-        </div>
+       
 
     </asp:Panel>
 

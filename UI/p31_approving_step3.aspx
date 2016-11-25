@@ -4,7 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="billingmemo" Src="~/billingmemo.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -206,13 +206,7 @@
         </div>
     </div>
     <div class="slidingDiv3">
-        <div class="innerform_light">
-            <uc:o23_list ID="notepad1" runat="server"></uc:o23_list>
-            <div class="div6">
-                <asp:HyperLink ID="cmdNewO23" runat="server" Text="Napsat novou poznámku" NavigateUrl="javascript:o23_record(0)" Visible="false"></asp:HyperLink>
-            </div>
-            <asp:Label ID="BillingMemo" runat="server" CssClass="infoNotification" Font-Italic="true"></asp:Label>
-        </div>
+        <uc:billingmemo ID="bm1" runat="server" />
     </div>
     
 

@@ -35,7 +35,7 @@ Public Class p91_framework_detail
                     basUI.SelectRadiolistValue(Me.opgGroupBy, .GetUserParam("p91_framework_detail-group", "flat"))
                     basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p91_framework_detail-pagesize", "20"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p91_framework_detail-chkFFShowFilledOnly", "0"))
-                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p91_framework_detail-searchbox", "0"))
+                    menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p91_framework_detail-searchbox", "1"))
                 End With
 
                 If .DataPID = 0 Then

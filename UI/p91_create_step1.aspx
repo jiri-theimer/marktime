@@ -6,9 +6,9 @@
 <%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
-<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="billingmemo" Src="~/billingmemo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -143,7 +143,7 @@
     </asp:Panel>
     <asp:Panel ID="panSelectedEntity" runat="server">
         <table cellpadding="10">
-            <tr>
+            <tr valign="top">
                 <td>
                     <asp:Image ID="imgEntity" runat="server" />
                 </td>
@@ -156,26 +156,16 @@
                 <td>
                     <uc:periodcombo ID="period1" runat="server" Width="250px"></uc:periodcombo>
                 </td>
-                <td>
-                    <button type="button" id="cmdO23" class="show_hide1">
-                        <img src="Images/notepad.png" />
-                        <asp:Label ID="lblO23" runat="server" Text="Fakturační poznámky"></asp:Label>
-                        <img src="Images/arrow_down.gif" alt="Nastavení" />
-                    </button>
-                </td>
+               
                 <td>
                     <span>K fakturaci bez DPH:</span>
                     <asp:Label ID="TotalAmount" runat="server" CssClass="valbold" ForeColor="Green"></asp:Label>
+                    <uc:billingmemo ID="bm1" runat="server" />
                 </td>
+             
             </tr>
         </table>
-        <div class="slidingDiv1">
-            <uc:o23_list ID="notepad1" runat="server"></uc:o23_list>
-            <div class="div6">
-                <asp:HyperLink ID="cmdNewO23" runat="server" Text="Napsat novou poznámku" NavigateUrl="javascript:o23_record(0)"></asp:HyperLink>
-            </div>
-
-        </div>
+       
         <table cellpadding="6">
             <tr>
                 <td>

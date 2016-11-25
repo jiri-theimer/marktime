@@ -180,6 +180,7 @@
     <Content Include="b02_record.aspx" />
     <Content Include="b06_record.aspx" />
     <Content Include="b65_record.aspx" />
+    <Content Include="billingmemo.ascx" />
     <Content Include="blank.aspx" />
     <Content Include="clue_o24_record.aspx" />
     <Content Include="clue_p41_myworksheet.aspx" />
@@ -664,6 +665,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="bas\clsMergeDOC.vb" />
+    <Compile Include="billingmemo.ascx.designer.vb">
+      <DependentUpon>billingmemo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="billingmemo.ascx.vb">
+      <DependentUpon>billingmemo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="blank.aspx.designer.vb">
       <DependentUpon>blank.aspx</DependentUpon>
     </Compile>

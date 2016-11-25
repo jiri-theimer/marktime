@@ -180,15 +180,7 @@ Public Class p91_create_step2
     Private Sub RefreshRecord()
         If Me.CurrentP28ID = 0 Then Return
 
-        Dim mq As New BO.myQueryP31
-        Dim mqO23 As New BO.myQueryO23
-        mqO23.p28ID = Me.CurrentP28ID
-        notepad1.EntityX29ID = BO.x29IdEnum.p28Contact
-        
-        Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23).Where(Function(p) p.o24IsBillingMemo = True)
-        notepad1.RefreshData(lisO23, mqO23.p28ID)
-
-        Me.lblO23.Text = BO.BAS.OM2(Me.lblO23.Text, notepad1.RowsCount.ToString)
+        bm1.RefreshData(Master.Factory, Me.CurrentPrefix, Me.CurrentP28ID)
         If Me.p28id.Value <> "" Then
             Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(CInt(Me.p28id.Value), 0, True).Where(Function(p) p.IsClosed = False)
             Me.j02ID_ContactPerson.DataSource = lisJ02

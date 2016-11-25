@@ -98,46 +98,16 @@ Public Class p31_approving_step3
     End Sub
 
     Private Sub RefreshRecord()
-        Dim mqO23 As New BO.myQueryO23
-        notepad1.EntityX29ID = BO.BAS.GetX29FromPrefix(ViewState("masterprefix"))
-        Dim s As String = "", b As Boolean = False
-        Select Case Me.CurrentMasterPrefix
-            Case "p28"
-                b = True
-                mqO23.p28ID = BO.BAS.IsNullInt(Me.CurrentMasterPID)
-                Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(mqO23.p28ID)
-                If cRec.p28BillingMemo <> "" Then Me.BillingMemo.Text = BO.BAS.CrLfText2Html(cRec.p28BillingMemo)
-            Case "p41"
-                b = True
-                mqO23.p41ID = BO.BAS.IsNullInt(Me.CurrentMasterPID)
-                Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(mqO23.p41ID)
-                If cRec.p41BillingMemo <> "" Then Me.BillingMemo.Text = BO.BAS.CrLfText2Html(cRec.p41BillingMemo)
-                If cRec.p28ID_Client > 0 Then
-                    Dim cClient As BO.p28Contact = Master.Factory.p28ContactBL.Load(cRec.p28ID_Client)
-                    If cClient.p28BillingMemo <> "" Then Me.BillingMemo.Text += "<br>" & BO.BAS.CrLfText2Html(cClient.p28BillingMemo)
-                End If
-            Case "j02"
-                b = True
-                mqO23.j02ID = BO.BAS.IsNullInt(Me.CurrentMasterPID)
-            Case Else
-                Master.HideShowToolbarButton("o23", False)
-        End Select
-        If b Then
-            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23).Where(Function(p) p.o24IsBillingMemo = True)
-            If lisO23.Count > 0 Then
-                notepad1.RefreshData(lisO23, Master.DataPID)
-                cmdNewO23.Visible = True
-                Master.RenameToolbarButton("o23", String.Format("Fakturační poznámky ({0})", notepad1.RowsCount.ToString))
-            Else
-                If Me.BillingMemo.Text <> "" Then
-                    Master.RenameToolbarButton("o23", "<strong style='color:blue;'>Fakturační poznámka vyplněna</strong>")
-                Else
-                    Master.HideShowToolbarButton("o23", False)
-                End If
+        bm1.RefreshData(Master.Factory, Me.CurrentMasterPrefix, BO.BAS.IsNullInt(Me.CurrentMasterPID))
+        bm1.HideTogleButton()
+        If bm1.IsEmpty Then
+            Master.HideShowToolbarButton("o23", False)
+        Else
+            Master.RenameToolbarButton("o23", "<strong style='color:blue;'>Fakturační poznámka</strong>")
+            If bm1.o23Rows() > 0 Then
+                Master.RenameToolbarButton("o23", String.Format("Fakturační poznámky ({0})", bm1.o23Rows().ToString))
             End If
-
         End If
-
     End Sub
 
     Private Sub BatchOper_P72(p71id As BO.p71IdENUM, explicit_p72id As BO.p72IdENUM)

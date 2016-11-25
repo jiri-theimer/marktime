@@ -81,21 +81,7 @@ Public Class p91_create_step1
         If Master.DataPID = 0 Then Return
         lblEntityHeader.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Master.DataPID)
 
-        Dim mq As New BO.myQueryP31
-        Dim mqO23 As New BO.myQueryO23
-
-        notepad1.EntityX29ID = BO.BAS.GetX29FromPrefix(Me.CurrentPrefix)
-        Select Case Me.CurrentPrefix
-            Case "p28"
-                mqO23.p28ID = Master.DataPID
-            Case "p41"
-                mqO23.p41ID = Master.DataPID
-            Case "j02"
-                mqO23.j02ID = Master.DataPID
-        End Select
-        Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23).Where(Function(p) p.o24IsBillingMemo = True)
-        notepad1.RefreshData(lisO23, Master.DataPID)
-
+        bm1.RefreshData(Master.Factory, Me.CurrentPrefix, Master.DataPID)
 
     End Sub
 
@@ -134,24 +120,20 @@ Public Class p91_create_step1
                 Me.p28id.Visible = True
                 lblFindEntity.Text = "Vyberte klienta:"
 
-                lblO23.Text = "Fakturační poznámky ke klientovi"
                 imgEntity.ImageUrl = "Images/contact_32.png"
             Case "p41"
                 Me.p41id.Visible = True
                 Me.lblFindEntity.Text = "Vyberte projekt:"
 
-                lblO23.Text = "Fakturační poznámky k projektu"
                 imgEntity.ImageUrl = "Images/project_32.png"
             Case "j02"
                 Me.j02id.Visible = True
                 lblFindEntity.Text = "Vyberte osobu:"
-                lblO23.Text = "Fakturační poznámky k osobě"
                 imgEntity.ImageUrl = "Images/person_32.png"
             Case "quick"
                 Me.panQuick.Visible = True
                 RefreshQuickEnvironment()
         End Select
-        Me.lblO23.Text += " (" & notepad1.RowsCount.ToString & ")"
 
         If Master.DataPID > 0 Then
             panSelectedEntity.Visible = True
