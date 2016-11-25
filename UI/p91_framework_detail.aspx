@@ -12,7 +12,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" type="text/css" href="Plugins/Plugin.css" />
-       
+
 
 
     <script type="text/javascript">
@@ -98,15 +98,15 @@
         function p31_add() {           
             sw_decide("p91_add_worksheet_gateway.aspx?pid=<%=Master.DataPID%>","Images/worksheet.png");
         }
-        function p31_remove(){       
+        function p31_batch(oper){       
             var p31ids=GetAllSelectedPIDs();
             if (p31ids==""){
                 alert("Musíte vybrat minimálně jeden záznam.");
                 return;
             }
-            sw_decide("p91_remove_worksheet.aspx?pid=<%=Master.DataPID%>&p31ids="+p31ids,"Images/cut.png");
+            sw_decide("p91_remove_worksheet.aspx?oper="+oper+"&pid=<%=Master.DataPID%>&p31ids="+p31ids,"Images/cut.png");
         }
-
+        
         function hardrefresh(pid, flag) {           
             if (flag=="p91-save" || flag=="workflow-dialog"){
                 parent.window.location.replace("p91_framework.aspx?pid="+pid);
@@ -217,7 +217,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 44px;border-bottom:solid 1px gray;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 44px; border-bottom: solid 1px gray;">
 
         <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
             <Items>
@@ -228,7 +228,7 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="saw" text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p91_framework_detail.aspx?saw=1" ToolTip="Otevřít fakturu v nové záložce prohlížeče"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="saw" Text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p91_framework_detail.aspx?saw=1" ToolTip="Otevřít fakturu v nové záložce prohlížeče"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
@@ -268,25 +268,25 @@
 
 
                 </telerik:RadMenuItem>
-               <telerik:RadMenuItem Value="searchbox">
+                <telerik:RadMenuItem Value="searchbox">
                     <ItemTemplate>
 
-                        <input id="search2" style="width: 100px; margin-top: 7px;height:19px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />                       
-                        <div id="search2_result" style="position: relative;left:-150px;"></div>
+                        <input id="search2" style="width: 100px; margin-top: 7px; height: 19px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />
+                        <div id="search2_result" style="position: relative; left: -150px;"></div>
                     </ItemTemplate>
                 </telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
 
     </asp:Panel>
-    
-
-    <div style="clear:both;"></div>
-    
-    
 
 
-    <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Default" MultiPageID="RadMultiPage1" style="margin-top:10px;">
+    <div style="clear: both;"></div>
+
+
+
+
+    <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Default" MultiPageID="RadMultiPage1" Style="margin-top: 10px;">
         <Tabs>
             <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Záznam faktury" Value="detail" Selected="true" ImageUrl="Images/properties.png"></telerik:RadTab>
             <telerik:RadTab Text="&nbsp;&nbsp;&nbsp;Položky faktury" Value="p31" ImageUrl="Images/worksheet.png"></telerik:RadTab>
@@ -301,13 +301,13 @@
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="baseline">
                         <td style="min-width: 120px;" id="rlbl">
-                            <asp:Label ID="lblCode" runat="server" Text="Číslo dokladu:" CssClass="lbl"></asp:Label>                            
+                            <asp:Label ID="lblCode" runat="server" Text="Číslo dokladu:" CssClass="lbl"></asp:Label>
                         </td>
                         <td style="min-width: 200px; max-width: 350px;">
                             <asp:Image ID="imgRecord" runat="server" Visible="false" />
                             <asp:Label ID="p91Code" runat="server" CssClass="valbold"></asp:Label>
                             <asp:Button ID="cmdConvertDraft" runat="server" CssClass="cmd" Text="Převést Draft na oficiální číslo" />
-                            
+
                         </td>
                         <td id="rlbl">
                             <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
@@ -335,7 +335,7 @@
                         <td>
                             <asp:HyperLink ID="cmdReportAttachment" runat="server" Text="Sestava přílohy"></asp:HyperLink>
                             <div>
-                            <asp:HyperLink ID="cmdReportLetter" runat="server" Text="Průvodní dopis"></asp:HyperLink>
+                                <asp:HyperLink ID="cmdReportLetter" runat="server" Text="Průvodní dopis"></asp:HyperLink>
                             </div>
                         </td>
                         <td id="rlbl">
@@ -383,7 +383,7 @@
                             <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
                             <img src="Images/workflow.png" />
                             <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
-                        </td>                       
+                        </td>
                     </tr>
                     <tr>
                         <td id="rlbl">
@@ -494,12 +494,12 @@
                 </table>
 
                 <div class="div6">
-                <uc:plugin_datatable ID="plug1" TableID="tab1" runat="server"
-            ColHeaders="Položka|Částka bez DPH|DPH%|Částka DPH|Částka vč. DPH|" NoDataMessage="Žádná data."
-            ColHideRepeatedValues="0" ColTypes="S|N|N|N|N|S" ColFlexSubtotals="0|11|0|11|11|0"
-            TableCaption="" />
+                    <uc:plugin_datatable ID="plug1" TableID="tab1" runat="server"
+                        ColHeaders="Položka|Částka bez DPH|DPH%|Částka DPH|Částka vč. DPH|" NoDataMessage="Žádná data."
+                        ColHideRepeatedValues="0" ColTypes="S|N|N|N|N|S" ColFlexSubtotals="0|11|0|11|11|0"
+                        TableCaption="" />
                 </div>
-          
+
                 <asp:Panel ID="panText1" runat="server" CssClass="content-box1">
                     <div class="title">Text faktury</div>
                     <div class="content" style="background-color: #ffffcc;">
@@ -535,7 +535,7 @@
                         <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
                     </asp:RadioButtonList>
                 </div>
-                <div>
+                <div class="commandcell">
                     <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
                         <asp:ListItem Text="20" Selected="true"></asp:ListItem>
                         <asp:ListItem Text="50"></asp:ListItem>
@@ -545,24 +545,32 @@
                     <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
 
                     <a href="javascript:griddesigner()" title="Návrhář sloupců">
-                        <img src="Images/griddesigner.png"class="button-link" /></a>
-
-
-                    
-                    <asp:hyperlink ID="linkEditP31" runat="server" NavigateUrl="javascript:record_p31_edit()" ToolTip="Upravit vybranou položku faktury">
-                        <img src="Images/edit.png" class="button-link" style="margin-left: 30px;" />
-                    </asp:hyperlink>
-                    <asp:hyperlink ID="linkAddP31" runat="server" NavigateUrl="javascript:p31_add()" ToolTip="Přidat do faktury další položky">
-                        <img src="Images/new.png" class="button-link" />
-                    </asp:hyperlink>
-                    <asp:hyperlink ID="linkRemoveP31" runat="server" NavigateUrl="javascript:p31_remove()" ToolTip="Zaškrtlé vyjmout z faktury">
-                        <img src="Images/cut.png" class="button-link" />
-                    </asp:hyperlink>                    
-                    <asp:hyperlink ID="linkFullScreen" runat="server" NavigateUrl="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>" ToolTip="Přehled worksheet úkonů na celou stránku" target="_top" style="margin-left: 30px;">
-                        <img src="Images/fullscreen.png" class="button-link" />
-                    </asp:hyperlink>
-
+                        <img src="Images/griddesigner.png" class="button-link" /></a>
                 </div>
+                <div class="commandcell">
+                    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" RenderMode="Lightweight" Style="z-index: 100;">
+                        <Items>
+                            <telerik:RadMenuItem Text="Položka faktury" ImageUrl="Images/menuarrow.png">
+                                <Items>
+                                    <telerik:RadMenuItem Text="Přidat do faktury položku" Value="new" NavigateUrl="javascript:p31_add()"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Upravit vybranou položku" Value="edit" NavigateUrl="javascript:record_p31_edit()"></telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Akce" value="akce" ImageUrl="Images/menuarrow.png">
+                                <Items>
+                                    <telerik:RadMenuItem Text="Označené vyjmout z faktury" Value="remove" NavigateUrl="javascript:p31_batch('cut')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Označené -> zahrnout do paušálu" Value="p70-6" NavigateUrl="javascript:p31_batch('batch-6')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Označené -> viditelný odpis" Value="p70-2" NavigateUrl="javascript:p31_batch('batch-2')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Označené -> skrytý odpis" Value="p70-3" NavigateUrl="javascript:p31_batch('batch-3')"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Zobrazit přehled na celou stránku" Value="fullscreen" Target="_top" NavigateUrl="p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>"></telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenu>
+                </div>
+                <div style="clear: both;"></div>
                 <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick"></uc:datagrid>
 
             </telerik:RadPageView>
@@ -600,18 +608,18 @@
                         </td>
 
                     </tr>
-              
+
                 </table>
 
-                
-                
+
+
                 <div class="content-box2">
                     <div class="title">Technický text faktury</div>
                     <div class="content" style="background-color: #ffffcc;">
                         <asp:Label ID="p91Text2" runat="server" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </div>
-                
+
 
 
 
@@ -627,77 +635,77 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p31" runat="server" />
-    
+
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 
 
-   <script type="text/javascript">
-    <%if menu1.FindItemByValue("searchbox").visible then%>
-       $(function () {
+    <script type="text/javascript">
+    <%If menu1.FindItemByValue("searchbox").Visible Then%>
+        $(function () {
 
-           $("#search2").autocomplete({
-               source: "Handler/handler_search_invoice.ashx",
-               minLength: 1,
-               select: function (event, ui) {
-                   if (ui.item) {                        
-                       window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
-                       return false;
-                   }
-               },
-               open: function (event, ui) {
-                   $('ul.ui-autocomplete')
-                      .removeAttr('style').hide()
-                      .appendTo('#search2_result').show();
-               },
-               close: function (event, ui) {
-                   $('ul.ui-autocomplete')
-                   .hide();                   
-               }   
-
-
-
-           }).data("ui-autocomplete")._renderItem = function (ul, item) {
-               var s = "<div>";
-               if (item.Closed == "1")
-                   s = s + "<a style='text-decoration:line-through;'>";
-               else
-                   s = s + "<a>";
-
-               s = s + __highlight(item.Invoice, item.FilterString);
+            $("#search2").autocomplete({
+                source: "Handler/handler_search_invoice.ashx",
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {                        
+                        window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
+                        return false;
+                    }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search2_result').show();
+                },
+                close: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                    .hide();                   
+                }   
 
 
-               s = s + "</a>";
 
-               if (item.Draft == "1")
-                   s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var s = "<div>";
+                if (item.Closed == "1")
+                    s = s + "<a style='text-decoration:line-through;'>";
+                else
+                    s = s + "<a>";
 
-               s = s + "</div>";
+                s = s + __highlight(item.Invoice, item.FilterString);
 
 
-               return $(s).appendTo(ul);
+                s = s + "</a>";
+
+                if (item.Draft == "1")
+                    s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
+
+                s = s + "</div>";
 
 
-           };
-       });
+                return $(s).appendTo(ul);
 
-       function __highlight(s, t) {
-           var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
-           return s.replace(matcher, "<strong>$1</strong>");
-       }
 
-       function search2Focus() {            
-           document.getElementById("search2").value=""; 
-           document.getElementById("search2").style.background = "yellow";
-       }
-       function search2Blur() {
+            };
+        });
+
+        function __highlight(s, t) {
+            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+            return s.replace(matcher, "<strong>$1</strong>");
+        }
+
+        function search2Focus() {            
+            document.getElementById("search2").value=""; 
+            document.getElementById("search2").style.background = "yellow";
+        }
+        function search2Blur() {
            
-           document.getElementById("search2").style.background = "";
-           document.getElementById("search2").value = "Najít fakturu...";
+            document.getElementById("search2").style.background = "";
+            document.getElementById("search2").value = "Najít fakturu...";
             
-       }
-    <%end if%>
+        }
+        <%End If%>
     </script>
 </asp:Content>

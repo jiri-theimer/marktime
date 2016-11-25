@@ -38,13 +38,13 @@
             var p41id = <%=me.p41ID.ClientID%>_get_value();
 
             sw_decide("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id=" + p41id, "Images/worksheet.png");
-            return (false);
+            
         }
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
             sw_decide("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png");
-            return (false);
+            
         }
 
 
@@ -127,10 +127,10 @@
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
             if (pid == "") {
                 alert("Musíte vybrat záznam")
-                return (false);
+                return;
             }            
             sw_decide("p31_record_split.aspx?pid=" + pid, "Images/split.png", false);
-            return (false);
+            
             
         }
 
@@ -204,7 +204,10 @@
         </div>
 
         <div style="margin-top: 10px;">
-            <asp:Button ID="cmdNewP31" runat="server" Text="Nový úkon" CssClass="cmd" OnClientClick="return p31_entry();" />
+            <button type="button" onclick="p31_entry()" id="cmdNew" runat="server">
+                Nový úkon
+            </button>
+            
         </div>
     </div>
 

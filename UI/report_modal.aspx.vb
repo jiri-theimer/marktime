@@ -107,7 +107,7 @@ Public Class report_modal
             InhaleOtherInputParameters()
             If Me.MultiPIDs <> "" Then
                 Dim pids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
-                If pids.Count > 50 Then Master.StopPage("Generovat hromadně sestavu lze maximálně pro 50 záznamů.")
+                If pids.Count > 100 Then Master.StopPage("Generovat hromadně sestavu lze maximálně pro 100 záznamů.")
                 period1.Visible = True
                 Master.HideShowToolbarButton("mail", False)
 

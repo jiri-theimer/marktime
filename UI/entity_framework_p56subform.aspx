@@ -77,10 +77,10 @@
             var p56id = document.getElementById("<%=hiddatapid_p56.ClientID%>").value;
             if (p56id == "" || p56id == null) {
                 alert("Není vybrán úkol.");
-                return (false);
+                return;
             }
             window.parent.sw_decide("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p56id=" + p56id, "Images/worksheet.png", true);
-            return (false);
+            
         }
         function p56_record(pid, bolReturnFalse) {
             window.parent.sw_decide("p56_record.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&pid=" + pid, "Images/task.png", true);
@@ -93,10 +93,10 @@
             var pid = document.getElementById("<%=hiddatapid_p56.ClientID%>").value;
             if (pid == "" || pid == null) {
                 alert("Není vybrán záznam.");
-                return (false);
+                return;                
             }
             window.parent.sw_decide("p56_record.aspx?clone=1&p41id=<%=Master.DataPID%>&pid=" + pid, "Images/task.png", true);
-            return (false);
+            
         }
     </script>
 </asp:Content>

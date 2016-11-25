@@ -9,7 +9,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <asp:Label ID="lbl1" CssClass="framework_header_span" Text="Vybrané úkony k vyjmutí z faktury:" runat="server"></asp:Label>
+        <asp:Label ID="lbl1" CssClass="framework_header_span" Text="Vybrané worksheet úkony z faktury:" runat="server"></asp:Label>
     </div>
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
 

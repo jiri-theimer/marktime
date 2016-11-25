@@ -13,16 +13,33 @@ Public Class p91_remove_worksheet
             With Master
                 ViewState("p31ids") = Request.Item("p31ids")
                 If ViewState("p31ids") = "" Then .StopPage("p31ids missing.")
+                ViewState("oper") = Request.Item("oper")
+                If ViewState("oper") = "" Then
+                    .StopPage("oper is missing.")
+                End If
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .DataPID = 0 Then .StopPage("pid missing")
-                .HeaderIcon = "Images/cut_32.png"
-                .AddToolbarButton("Přesunout do archivu", "remove2bin", , "Images/bin.png")
-                .AddToolbarButton("Přesunout do rozpracovanosti", "remove2wip", , "Images/worksheet.png")
-                .AddToolbarButton("Přesunout do schválených", "remove2approve", , "Images/approve.png")
-
 
                 Dim cRec As BO.p91Invoice = .Factory.p91InvoiceBL.Load(.DataPID)
-                .HeaderText = "Vyjmout z faktury vybrané úkony | " & cRec.p91Code
+                Select Case ViewState("oper")
+                    Case "cut"
+                        .HeaderIcon = "Images/cut_32.png"
+                        .AddToolbarButton("Přesunout do archivu", "remove2bin", , "Images/bin.png")
+                        .AddToolbarButton("Přesunout do rozpracovanosti", "remove2wip", , "Images/worksheet.png")
+                        .AddToolbarButton("Přesunout do schválených", "remove2approve", , "Images/approve.png")
+                        .HeaderText = "Vyjmout z faktury vybrané úkony, faktura: " & cRec.p91Code
+                    Case "batch-3"
+                        .HeaderText = "Odepsat z faktury vybrané úkony, faktura: " & cRec.p91Code
+                        .AddToolbarButton("Přiřadit úkonům status [Skrytý odpis]", "batch-3", , "Images/ok.png")
+                    Case "batch-2"
+                        .HeaderText = "Odepsat z faktury vybrané úkony, faktura: " & cRec.p91Code
+                        .AddToolbarButton("Přiřadit úkonům status [Viditelný odpis]", "batch-2", , "Images/ok.png")
+                    Case "batch-6"
+                        .HeaderText = "Zahrnout do paušálu vybrané úkony, faktura: " & cRec.p91Code
+                        .AddToolbarButton("Přiřadit úkonům status [Zahrnuto do paušálu]", "batch-6", , "Images/ok.png")
+                End Select
+
+
 
                 Dim cDisp As BO.p91RecordDisposition = Master.Factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
                 If Not cDisp.OwnerAccess Then .StopPage("V kontextu této faktury nemáte oprávnění k funkci.")
@@ -67,15 +84,16 @@ Public Class p91_remove_worksheet
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
+        Dim pids As New List(Of Integer)
+        Dim a() As String = Split(ViewState("p31ids"), ",")
+        For i As Integer = 0 To UBound(a)
+            pids.Add(CInt(a(i)))
+        Next
+
         Select Case strButtonValue
             Case "remove2approve", "remove2wip", "remove2bin"
-                Dim pids As New List(Of Integer)
-                Dim a() As String = Split(ViewState("p31ids"), ",")
-                For i As Integer = 0 To UBound(a)
-                    pids.Add(CInt(a(i)))
-                Next
                 With Master.Factory.p31WorksheetBL
-                    
+
                     If strButtonValue = "remove2approve" Then
                         If .RemoveFromInvoice(Master.DataPID, pids) Then
                             Master.CloseAndRefreshParent("p31-remove")
@@ -102,7 +120,23 @@ Public Class p91_remove_worksheet
                         End If
                     End If
                 End With
+            Case "batch-3", "batch-2", "batch-6"
+                Dim lis As New List(Of BO.p31WorksheetInvoiceChange)
+                For Each intP31ID As Integer In pids
+                    Dim c As New BO.p31WorksheetInvoiceChange
+                    c.p31ID = intP31ID
+                    Select Case strButtonValue
+                        Case "batch-3" : c.p70ID = BO.p70IdENUM.SkrytyOdpis
+                        Case "batch-2" : c.p70ID = BO.p70IdENUM.ViditelnyOdpis
+                        Case "batch-6" : c.p70ID = BO.p70IdENUM.ZahrnutoDoPausalu
+                    End Select
+                    lis.Add(c)
+                Next
+                If Master.Factory.p31WorksheetBL.UpdateInvoice(Master.DataPID, lis) Then
+                    Master.CloseAndRefreshParent("p31-remove")
+                End If
+
         End Select
-        
+
     End Sub
 End Class

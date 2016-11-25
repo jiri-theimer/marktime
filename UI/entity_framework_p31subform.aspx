@@ -6,7 +6,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
         <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
-
+     
     <script type="text/javascript">
         $(document).ready(function () {
             window.parent.stoploading();
@@ -115,10 +115,10 @@
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
             if (pid == "") {
                 alert("Musíte vybrat záznam")
-                return (false);
+                return;
             }
             window.parent.sw_local("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png", false);
-            return (false);
+            
         }
         function p31_split() {
             ///volá se z p31_subgrid
@@ -126,10 +126,10 @@
             if (pid == "")
             {
                 alert("Musíte vybrat záznam")
-                return (false);
+                return;
             }
             window.parent.sw_decide("p31_record_split.aspx?pid=" + pid, "Images/split.png", false);
-            return (false);
+            
         }
         function p31_entry() {
             ///volá se z p31_subgrid
@@ -147,7 +147,7 @@
             url = url + "&tabqueryflag=<%=gridP31.MasterTabAutoQueryFlag%>";
             <%End If%>
             window.parent.sw_decide(url, "Images/worksheet.png", false);
-            return (false);
+            
         }
         function p31_subgrid_setting(j74id) {
             ///volá se z p31_subgrid

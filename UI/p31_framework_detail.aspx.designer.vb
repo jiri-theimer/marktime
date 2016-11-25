@@ -194,13 +194,13 @@ Partial Public Class p31_framework_detail
     Protected WithEvents p41ID As Global.UI.project
 
     '''<summary>
-    '''cmdNewP31 control.
+    '''cmdNew control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNewP31 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cmdNew As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''gridP31 control.

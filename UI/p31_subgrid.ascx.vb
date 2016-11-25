@@ -98,11 +98,10 @@ Public Class p31_subgrid
     End Property
     Public Property AllowApproving As Boolean
         Get
-            Return cmdApprove.Visible
+            Return recmenu1.FindItemByValue("cmdApprove").Visible
         End Get
         Set(value As Boolean)
-            cmdApprove.Visible = value
-            imgApprove.Visible = value
+            recmenu1.FindItemByValue("cmdApprove").Visible = value
         End Set
     End Property
 
@@ -170,7 +169,8 @@ Public Class p31_subgrid
                 Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-groups-autoexpanded", "1"))
             End With
             panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
-            cmdGridDesigner.Visible = panExport.Visible
+            linkGridDesigner.Visible = panExport.Visible
+            Me.j74id.Visible = panExport.Visible
             cmdQuery.Visible = panExport.Visible
             SetupJ70Combo(BO.BAS.IsNullInt(Factory.j03UserBL.GetUserParam("p31_subgrid-j70id")))
             RecalcVirtualRowCount()
@@ -544,14 +544,16 @@ Public Class p31_subgrid
         End If
         If Not BO.BAS.IsNullDBDate(Me.ExplicitDateFrom) Is Nothing Then
             Me.period1.Visible = False
-            Me.cmdExplicitPeriod.Text = BO.BAS.FD(Me.ExplicitDateFrom)
-            cmdExplicitPeriod.Visible = True
+            Me.ExplicitPeriod.Text = BO.BAS.FD(Me.ExplicitDateFrom)
+
+            cmdClearExplicitPeriod.Visible = True
             If Me.ExplicitDateFrom < Me.ExplicitDateUntil Then
-                Me.cmdExplicitPeriod.Text += " - " & BO.BAS.FD(Me.ExplicitDateUntil)
+                Me.ExplicitPeriod.Text += " - " & BO.BAS.FD(Me.ExplicitDateUntil)
             End If
 
         Else
-            Me.cmdExplicitPeriod.Visible = False
+            Me.ExplicitPeriod.Text = ""
+            Me.cmdClearExplicitPeriod.Visible = False
             With Me.period1
                 .Visible = True
                 If .SelectedValue <> "" Then
@@ -575,14 +577,15 @@ Public Class p31_subgrid
         ''    txtSearch.Style.Item("background-color") = "red"
         ''End If
         If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
-        Me.cmdFullScreen.Visible = Me.AllowFullScreen
+        recmenu1.FindItemByValue("cmdFullScreen").Visible = Me.AllowFullScreen
+
+        If Me.AllowFullScreen Or Me.AllowApproving Then
+            recmenu1.FindItemByValue("akce").Visible = True
+        Else
+            recmenu1.FindItemByValue("akce").Visible = False
+        End If
     End Sub
-    Private Sub cmdExplicitPeriod_Click(sender As Object, e As EventArgs) Handles cmdExplicitPeriod.Click
-        Me.ExplicitDateFrom = DateSerial(1900, 1, 1)
-        Me.ExplicitDateUntil = DateSerial(3000, 1, 1)
-        RecalcVirtualRowCount()
-        grid2.Rebind(False)
-    End Sub
+    
 
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-groupby-" & Me.MasterPrefixWithQueryFlag, Me.cbxGroupBy.SelectedValue)
@@ -701,5 +704,12 @@ Public Class p31_subgrid
 
     Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
         GridExport("doc")
+    End Sub
+
+    Private Sub cmdClearExplicitPeriod_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearExplicitPeriod.Click
+        Me.ExplicitDateFrom = DateSerial(1900, 1, 1)
+        Me.ExplicitDateUntil = DateSerial(3000, 1, 1)
+        RecalcVirtualRowCount()
+        grid2.Rebind(False)
     End Sub
 End Class

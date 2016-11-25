@@ -7,13 +7,26 @@
             Return BO.BAS.IsNullInt(Me.hidCurP41ID.Value)
         End Get
     End Property
+    Public Property CurrentTab As String
+        Get
+            If tabs1.Tabs.Count = 0 Then Return ""
+            If tabs1.SelectedTab Is Nothing Then
+                tabs1.SelectedIndex = 0
+            End If
+            Return tabs1.SelectedTab.Value
+        End Get
+        Set(value As String)
+            If tabs1.FindTabByValue(value) Is Nothing Then Return
+            tabs1.FindTabByValue(value).Selected = True
+        End Set
+    End Property
     Private Sub p56_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         With Master
-            gridP31.Factory = .Factory
+
             ff1.Factory = .Factory
         End With
 
@@ -28,7 +41,7 @@
 
                 Dim lisPars As New List(Of String)
                 With lisPars
-                    .Add("p56_framework_detail-opgSubgrid")
+                    .Add("p56_framework_detail-tab")
                     .Add("p56_framework_detail-pid")
                     .Add("p56_framework_detail-chkFFShowFilledOnly")
                 End With
@@ -46,9 +59,7 @@
                         End If
                     End If
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
-                    If .GetUserParam("p56_framework_detail-opgSubgrid", "p31") = "b05" Then
-                        Me.opgSubgrid.SelectedIndex = 1
-                    End If
+                    Me.CurrentTab = Master.Factory.j03UserBL.GetUserParam("p56_framework_detail-tab")
                 End With
 
             End With
@@ -61,7 +72,18 @@
             End If
         End If
 
-        gridP31.MasterDataPID = Master.DataPID
+        If Me.CurrentTab <> "" Then
+            fraSubform.Visible = True
+            fraSubform.Attributes.Item("src") = Me.tabs1.SelectedTab.NavigateUrl.Replace("lasttabkey", "nic")
+            Select Case Me.CurrentTab
+                Case "p31", "time", "expense", "fee", "kusovnik"
+                    If Me.hidHardRefreshFlag.Value = "p31-save" Then
+                        fraSubform.Attributes.Item("src") += "&pid=" & Me.hidHardRefreshPID.Value
+                    End If
+            End Select
+        Else
+            fraSubform.Visible = False
+        End If
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.p56Task, cP41 As BO.p41Project)
@@ -121,6 +143,12 @@
     End Sub
 
     Private Sub RefreshRecord()
+        With tabs1.FindTabByValue("p31")
+            .NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p56&masterpid=" & Master.DataPID.ToString & "&lasttabkey=p56_framework_detail-tab&lasttabval=p31"
+        End With
+        With tabs1.FindTabByValue("b07")
+            .NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p56&masterpid=" & Master.DataPID.ToString & "&lasttabkey=p56_framework_detail-tab&lasttabval=b07"
+        End With
         Dim mq As New BO.myQueryP56
         mq.AddItemToPIDs(Master.DataPID)
         mq.Closed = BO.BooleanQueryMode.NoQuery
@@ -245,9 +273,7 @@
 
         RefreshImapBox(cRec)
 
-        If opgSubgrid.SelectedIndex = 1 Then
-            history1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
-        End If
+
     End Sub
 
     Private Sub RefreshImapBox(cRec As BO.p56Task)
@@ -270,10 +296,7 @@
                 Master.DataPID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
             Case "p56-delete"
                 Response.Redirect("entity_framework_detail_missing.aspx?prefix=p56")
-            Case "p31-save"
-                gridP31.DefaultSelectedPID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
-                gridP31.Rebind(False)
-                Return
+           
             Case Else
 
         End Select
@@ -293,21 +316,5 @@
         Response.Redirect("p56_framework_detail.aspx?pid=" & strPID)
     End Sub
 
-    Private Sub opgSubgrid_TabClick(sender As Object, e As Telerik.Web.UI.RadTabStripEventArgs) Handles opgSubgrid.TabClick
-        Master.Factory.j03UserBL.SetUserParam("p56_framework_detail-opgSubgrid", Me.opgSubgrid.SelectedTab.Value)
-        If Me.opgSubgrid.SelectedTab.Value = "b05" Then
-            history1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
-        End If
-
-    End Sub
-
-    Private Sub p56_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        gridP31.Visible = False : history1.Visible = False
-        Select Case Me.opgSubgrid.SelectedIndex
-            Case 0
-                gridP31.Visible = True
-            Case 1
-                history1.Visible = True
-        End Select
-    End Sub
+    
 End Class

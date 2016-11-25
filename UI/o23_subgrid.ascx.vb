@@ -11,11 +11,11 @@ Public Class o23_subgrid
 
     Public Property IsAllowedCreateDocs As Boolean
         Get
-            Return cmdO23_new.Visible
+            Return recmenu1.FindItemByValue("new").Visible
         End Get
         Set(value As Boolean)
-            Me.cmdO23_new.Visible = value
-            cmdO23_clone.Visible = value
+            recmenu1.FindItemByValue("new").Visible = value
+            recmenu1.FindItemByValue("clone").Visible = value
         End Set
     End Property
 

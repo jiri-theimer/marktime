@@ -41,13 +41,22 @@ Partial Public Class p31_subgrid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''cmdExplicitPeriod control.
+    '''ExplicitPeriod control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdExplicitPeriod As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents ExplicitPeriod As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdClearExplicitPeriod control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClearExplicitPeriod As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
     '''clue_query control.
@@ -77,40 +86,13 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''cmdNew control.
+    '''recmenu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNew As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdCopy control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCopy As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdSplit control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSplit As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdFullScreen control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''j74id control.
@@ -122,13 +104,13 @@ Partial Public Class p31_subgrid
     Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cmdGridDesigner control.
+    '''linkGridDesigner control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdGridDesigner As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents linkGridDesigner As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''cbxPaging control.
@@ -165,24 +147,6 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''imgApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgApprove As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''cmdApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdApprove As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''panExport control.

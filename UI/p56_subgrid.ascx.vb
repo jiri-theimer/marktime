@@ -9,21 +9,21 @@ Public Class p56_subgrid
 
     Public Property AllowApproving As Boolean
         Get
-            Return cmdApprove.Visible
+            Return recmenu1.FindItemByValue("cmdApprove").Visible
         End Get
         Set(value As Boolean)
-            cmdApprove.Visible = value
-            imgApprove.Visible = value
+            recmenu1.FindItemByValue("cmdApprove").Visible = value
+
         End Set
     End Property
     
     Public Property IsAllowedCreateTasks As Boolean
         Get
-            Return cmdP56_new.Visible
+            Return recmenu1.FindItemByValue("new").Visible
         End Get
         Set(value As Boolean)
-            Me.cmdP56_new.Visible = value
-            cmdP56_clone.Visible = value
+            recmenu1.FindItemByValue("new").Visible = value
+            recmenu1.FindItemByValue("clone").Visible = value
         End Set
     End Property
 

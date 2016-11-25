@@ -631,41 +631,7 @@ Public Class p41_framework_detail
         End If
     End Sub
 
-    ''Private Sub SetupTabs(crs As BO.p41ProjectSum)
-    ''    tabs1.Tabs.Clear()
-
-    ''    Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Master.Factory.j03UserBL.GetList_PageTabs(Master.Factory.SysUser.PID, BO.x29IdEnum.p41Project)
-    ''    For Each c In lisX61
-    ''        Dim tab As New RadTab(c.x61Name, c.x61Code)
-    ''        tabs1.Tabs.Add(tab)
-    ''        tab.NavigateUrl = c.GetPageUrl("p41", Master.DataPID, Me.hidIsCanApprove.Value)
-    ''        tab.NavigateUrl += "&lasttabkey=p41_framework_detail-tab&lasttabval=" & c.x61Code
-    ''        tab.Target = "fraSubform"
-    ''        If tabs1.Tabs.Count = 0 Then tab.Selected = True
-    ''        Select Case c.x61Code
-    ''            Case "time"
-    ''                If crs.p31_Wip_Time_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
-    ''                If crs.p31_Approved_Time_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
-    ''            Case "expense"
-    ''                If crs.p31_Wip_Expense_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Expense_Count.ToString & "</span>"
-    ''                If crs.p31_Approved_Expense_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Expense_Count.ToString & "</span>"
-    ''            Case "fee"
-    ''                If crs.p31_Wip_Fee_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Fee_Count.ToString & "</span>"
-    ''                If crs.p31_Approved_Fee_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
-    ''            Case "kusovnik"
-    ''                If crs.p31_Wip_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1wip'>" & crs.p31_Wip_Kusovnik_Count.ToString & "</span>"
-    ''                If crs.p31_Approved_Kusovnik_Count > 0 Then tab.Text += "<span class='badge1approved'>" & crs.p31_Approved_Kusovnik_Count.ToString & "</span>"
-    ''            Case "p91"
-    ''                If crs.p91_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
-    ''            Case "p56"
-    ''                If crs.p56_Actual_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
-    ''            Case "workflow"
-    ''                If crs.b07_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
-    ''            Case "p45"
-    ''                If crs.p45_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
-    ''        End Select
-    ''    Next
-    ''End Sub
+   
 
 
 

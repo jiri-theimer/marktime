@@ -277,7 +277,7 @@ Public Class p91_framework_detail
             menu1.FindItemByValue("cmdO22").Visible = .TestPermission(BO.x53PermValEnum.GR_O22_Creator)
             menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
             menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
-            linkFullScreen.Visible = .SysUser.j04IsMenu_Worksheet
+            recmenu1.FindItemByValue("fullscreen").Visible = .SysUser.j04IsMenu_Worksheet
         End With
         With cDisp
             menu1.FindItemByValue("cmdPay").Visible = .OwnerAccess
@@ -289,9 +289,9 @@ Public Class p91_framework_detail
             menu1.FindItemByValue("cmdChangeVat").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdProforma").Visible = .OwnerAccess
             menu1.FindItemByValue("cmdCreditNote").Visible = .OwnerAccess
-            linkEditP31.Visible = .OwnerAccess
-            linkAddP31.Visible = .OwnerAccess
-            linkRemoveP31.Visible = .OwnerAccess
+            recmenu1.FindItemByValue("edit").Visible = .OwnerAccess
+            recmenu1.FindItemByValue("new").Visible = .OwnerAccess
+            recmenu1.FindItemByValue("akce").Visible = .OwnerAccess
         End With
 
 

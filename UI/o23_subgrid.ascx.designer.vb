@@ -32,31 +32,13 @@ Partial Public Class o23_subgrid
     Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cmdO23_new control.
+    '''recmenu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdO23_new As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdO23_clone control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdO23_clone As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdFullScreen control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''cbxPaging control.

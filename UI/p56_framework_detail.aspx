@@ -4,8 +4,6 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
-<%@ Register TagPrefix="uc" TagName="p31_subgrid" Src="~/p31_subgrid.ascx" %>
-<%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="imap_record" Src="~/imap_record.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
@@ -16,9 +14,29 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-           
+            AdjustHeight();
 
         });
+
+        function AdjustHeight(){
+            var h1 = new Number;
+            var h2 = new Number;
+            var hh = new Number;
+
+            h1 = $(window).height();
+
+            ss = self.document.getElementById("offsetY");
+            var offset = $(ss).offset();
+
+            h2 = offset.top;
+            hh = h1 - h2;
+
+            if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
+                hh=hh-10;
+            }
+            hh=hh-4;
+            document.getElementById("<%=me.fraSubform.ClientID%>").style.height=hh+"px";
+        }
 
         function sw_decide(url, iconUrl, is_maximize) {
             var isInIFrame = (window.location != window.parent.location);
@@ -90,51 +108,7 @@
 
         }
 
-        function p31_entry() {
-            ///volá se z p31_subgrid
-            sw_decide("p31_record.aspx?pid=0&p56id=<%=master.DataPID%>","Images/worksheet_32.png",true);
-            return(false);
-
-        }
-        
-        function p31_clone() {
-            ///volá se z p31_subgrid
-            var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_decide("p31_record.aspx?clone=1&pid="+pid,"Images/worksheet_32.png",true);
-            return(false);
-        }
-        function p31_entry_menu(p34id) {
-            ///z menu1
-            sw_decide("p31_record.aspx?pid=0&p56id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet_32.png",true);
-            
-
-        }
-
-        function p31_RowSelected(sender, args) {
-
-            document.getElementById("<%=hiddatapid_p31.clientid%>").value = args.getDataKeyValue("pid");
-
-        }
-
-        function p31_RowDoubleClick(sender, args) {
-            record_p31_edit();
-        }
-
-        function record_p31_edit() {
-            var pid=document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            sw_decide("p31_record.aspx?pid="+pid,"Images/worksheet_32.png");
-
-        }
-
-        function p31_subgrid_setting(j74id) {
-          
-            sw_decide("grid_designer.aspx?prefix=p31&masterprefix=p56&pid="+j74id, "Images/griddesigner_32.png",true);
-        }
-        function p56_subgrid_setting(j74id) {
-            ///volá se z p56_subgrid
-            sw_decide("grid_designer.aspx?prefix=p56&masterprefix=p56&pid="+j74id, "Images/griddesigner_32.png",true);
-        }
-        
+      
 
         function o23_record(pid) {
             
@@ -436,16 +410,16 @@
     </asp:Panel>
 
     <div style="clear: both; width: 100%;"></div>
-    <telerik:RadTabStrip ID="opgSubgrid" runat="server" Skin="Default" Width="100%" AutoPostBack="true" ShowBaseLine="true">
+    <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" ShowBaseLine="true">
         <Tabs>
 
-            <telerik:RadTab Text="Worksheet přehled" Value="p31" Selected="true"></telerik:RadTab>            
-            <telerik:RadTab Text="Historie" Value="b05"></telerik:RadTab>
+            <telerik:RadTab Text="Worksheet přehled" Value="p31" Selected="true" Target="fraSubform"></telerik:RadTab>            
+            <telerik:RadTab Text="Historie" Value="b07" Target="fraSubform"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
 
-    <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="p56Task" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowMultiSelect="true"></uc:p31_subgrid>
-    <uc:b07_list ID="history1" runat="server" ShowInsertButton="false" ShowHeader="False" JS_Reaction="b07_reaction" />
+   <div id="offsetY"></div>
+    <iframe frameborder="0" id="fraSubform" name="fraSubform" runat="server" width="100%" height="300px"></iframe>
     
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />

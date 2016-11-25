@@ -716,40 +716,13 @@ Partial Public Class p91_framework_detail
     Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''linkEditP31 control.
+    '''recmenu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents linkEditP31 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''linkAddP31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkAddP31 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''linkRemoveP31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkRemoveP31 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''linkFullScreen control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkFullScreen As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''grid1 control.

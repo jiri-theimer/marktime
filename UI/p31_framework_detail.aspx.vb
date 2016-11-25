@@ -126,7 +126,7 @@
 
     Private Sub p31_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
 
-        Me.cmdNewP31.Text = String.Format(Resources.p31_framework_detail.cmdNewP31, BO.BAS.FD(cal1.SelectedDate))
+        Me.cmdNew.InnerText = String.Format(Resources.p31_framework_detail.cmdNewP31, BO.BAS.FD(cal1.SelectedDate))
         'If cal1.CalendarColumns > 1 And Month(cal1.SelectedDate) <> Month(cal1.VisibleStartDate) Then
         '    RefreshStatistic()
         'End If

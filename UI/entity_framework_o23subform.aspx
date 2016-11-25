@@ -73,7 +73,7 @@
         function o23_record(pid, bolReturnFalse) {
             window.parent.sw_decide("o23_record.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&pid=" + pid, "Images/notepad.png", true);
             if (bolReturnFalse == true)
-                return (false)
+                return (false);
 
         }
         function o23_clone() {
@@ -81,10 +81,10 @@
             var pid = document.getElementById("<%=hiddatapid_o23.ClientID%>").value;
             if (pid == "" || pid == null) {
                 alert("Není vybrán záznam.");
-                return (false);
+                return;
             }
             window.parent.sw_decide("o23_record.aspx?clone=1&p41id=<%=Master.DataPID%>&pid=" + pid, "Images/notepad.png", true);
-            return (false);
+            
         }
     </script>
 </asp:Content>
