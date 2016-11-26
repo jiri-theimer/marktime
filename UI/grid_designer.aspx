@@ -78,6 +78,14 @@
                         </div>
                     </EmptyMessageTemplate>
                 </telerik:RadListBox>
+                <div style="margin-top:20px;">
+                    <asp:RadioButtonList ID="j74ScrollingFlag" runat="server" RepeatDirection="Vertical">
+                        <asp:ListItem Text="Pevné ukotvení záhlaví tabulky (názvy sloupců)" Value="2"></asp:ListItem>
+                        <asp:ListItem Text="Ukotvení všeho nad tabulkou (filtrování)" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="Bez podpory ukotvení" Value="0"></asp:ListItem>
+                    </asp:RadioButtonList>
+                   
+                </div>
                 <div style="margin-top:20px;display:none;">
                     <asp:label ID="lblDrillDown" runat="server" Text="Drill-down v přehledu:"></asp:label>
                     <asp:DropDownList ID="j74DrillDownField1" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnField"></asp:DropDownList>
@@ -102,7 +110,8 @@
                         <asp:ListItem text="<%$Resources:grid_designer,Sestupne %>" Value="DESC"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div style="margin-top:20px;">
+                
+                <div style="margin-top:20px;display:none;">
                     <asp:CheckBox ID="j74IsVirtualScrolling" runat="server" CssClass="chk" Text="Zapnutá funkce [Virtual Scrolling]" />
                 </div>
             </td>

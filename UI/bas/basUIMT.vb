@@ -5,7 +5,7 @@ Public Class basUIMT
             Return Drawing.Color.Firebrick
         End Get
     End Property
-    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 10, Optional ByRef strGetSumCols As String = "") As String
+    Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlSumCols As New List(Of String)
         Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
@@ -15,35 +15,42 @@ Public Class basUIMT
             .DataKeyNames = "pid"
             .AllowCustomSorting = True
 
-            If cJ74.j74DrillDownField1 = "" Then
-                'bez drill-down
-                .AllowCustomPaging = bolCustomPaging
-                If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
-                '.AddSystemColumn(5)
+            ''If cJ74.j74DrillDownField1 = "" Then
+            'bez drill-down
+            .AllowCustomPaging = bolCustomPaging
+            If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
 
-                .PageSize = intPageSize
-                If intSysColumnWidth > 0 Then .AddSystemColumn(intSysColumnWidth)
-                .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
-                .AllowFilteringByColumn = cJ74.j74IsFilteringByColumn
-                If cJ74.j74IsVirtualScrolling Then
-                    .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
+
+            .PageSize = intPageSize
+            If intSysColumnWidth > 0 Then .AddSystemColumn(intSysColumnWidth)
+            .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
+            .AllowFilteringByColumn = cJ74.j74IsFilteringByColumn
+            Select Case cJ74.j74ScrollingFlag
+                Case BO.j74ScrollingFlagENUM.Scrolling
                     .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
-                    .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
+                Case BO.j74ScrollingFlagENUM.StaticHeaders
+                    .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
                     .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
-                    .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
-                End If
-                .radGridOrig.MasterTableView.Name = "grid"
-                If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
-            Else
-                'hiearchický grid - drill-down
-                .AddSystemColumn(5)
-                .AllowCustomPaging = False
-                .DataKeyNames = "pid"
-                .PageSize = 100
-                .AllowFilteringByColumn = False
-                .radGridOrig.MasterTableView.Name = "drilldown"
-
+            End Select
+            If cJ74.j74IsVirtualScrolling Then
+                .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
+                .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+                .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
+                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+                .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
             End If
+            .radGridOrig.MasterTableView.Name = "grid"
+            If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
+            ''Else
+            ''    'hiearchický grid - drill-down
+            ''    .AddSystemColumn(5)
+            ''    .AllowCustomPaging = False
+            ''    .DataKeyNames = "pid"
+            ''    .PageSize = 100
+            ''    .AllowFilteringByColumn = False
+            ''    .radGridOrig.MasterTableView.Name = "drilldown"
+
+            ''End If
 
             Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID)
             If cJ74.j74MasterPrefix = "mobile_grid" Then
@@ -624,9 +631,15 @@ Public Class basUIMT
     End Sub
     Public Shared Sub Handle_GridTelerikExport(grid1 As UI.datagrid, strFormat As String)
         With grid1
+            If .radGridOrig.ClientSettings.Scrolling.AllowScroll Then
+                .radGridOrig.ClientSettings.Scrolling.AllowScroll = False
+                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
+            End If
+
             .Page.Response.ClearHeaders()
             .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
             .PageSize = 2000
+
             .Rebind(False)
             Select Case strFormat
                 Case "xls"
@@ -646,6 +659,7 @@ Public Class basUIMT
                     .radGridOrig.ExportToWord()
             End Select
 
+            
         End With
     End Sub
 

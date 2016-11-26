@@ -167,6 +167,7 @@
                     End If
                 End If
             End If
+            basUI.SelectRadiolistValue(Me.j74ScrollingFlag, CInt(.j74ScrollingFlag).ToString)
             Me.j74IsFilteringByColumn.Checked = cRec.j74IsFilteringByColumn
             Me.j74IsVirtualScrolling.Checked = cRec.j74IsVirtualScrolling
             basUI.SelectDropdownlistValue(Me.j74DrillDownField1, .j74DrillDownField1)
@@ -194,6 +195,7 @@
             .j74ColumnNames = BO.BAS.OM1(s)
             .j74OrderBy = GetOrderBy()
             .j74IsFilteringByColumn = Me.j74IsFilteringByColumn.Checked
+            .j74ScrollingFlag = BO.BAS.IsNullInt(Me.j74ScrollingFlag.SelectedValue)
             .j74IsVirtualScrolling = Me.j74IsVirtualScrolling.Checked
             .j74DrillDownField1 = Me.j74DrillDownField1.SelectedValue
         End With

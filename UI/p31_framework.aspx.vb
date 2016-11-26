@@ -196,9 +196,9 @@ Public Class p31_framework
             End If
             Dim strAddSqlFrom As String = ""
             If tabs1.SelectedIndex = 0 Then
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 16)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
             Else
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 16)
+                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
             End If
             hidFrom.Value = strAddSqlFrom
 

@@ -271,8 +271,10 @@ Public Class datagrid
     End Sub
     Public Sub AddCheckboxSelector()
         Dim col As New GridClientSelectColumn()
-        col.ItemStyle.Width = Unit.Parse("20px")
         grid1.MasterTableView.Columns.Add(col)
+        col.HeaderStyle.Width = Unit.Parse("25px")
+        ''col.ItemStyle.Width = Unit.Parse("25px")
+        
     End Sub
     Public Sub AddButton(strText As String, strCommandName As String, strHeaderText As String, Optional strImageUrl As String = "")
         Dim cmd As New GridButtonColumn
@@ -419,7 +421,7 @@ Public Class datagrid
         col.DataField = strFieldName
         col.AllowFiltering = False
         col.AllowSorting = False
-        col.ItemStyle.Width = Unit.Parse(intWidth.ToString & "px")
+        ''col.ItemStyle.Width = Unit.Parse(intWidth.ToString & "px")
         col.HeaderStyle.Width = Unit.Parse(intWidth.ToString & "px")
         col.Exportable = False
         col.ReadOnly = True
@@ -437,16 +439,6 @@ Public Class datagrid
 
 
     Private Sub grid1_DataBound(sender As Object, e As System.EventArgs) Handles grid1.DataBound
-        With grid1.MasterTableView
-            If .Columns.Count > 0 Then
-                If TypeOf .Columns(0) Is GridClientSelectColumn Then
-                    .Columns(0).ItemStyle.Width = Unit.Parse("20px")
-                End If
-            End If
-
-
-        End With
-
         If Not grid1.ShowFooter Then Return
         If grid1.MasterTableView.GetItems(GridItemType.Footer).Count = 0 Then Return
         Dim footerItem As GridFooterItem = grid1.MasterTableView.GetItems(GridItemType.Footer)(0)

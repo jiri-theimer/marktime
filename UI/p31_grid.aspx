@@ -32,6 +32,8 @@
             $("#<%=Me.txtSearch.ClientID%>").focus(function () { $(this).select(); });
 
 
+            
+
         });
 
 
@@ -178,6 +180,8 @@
             sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query_32.png");
             return (false);
         }
+
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -287,11 +291,11 @@
             <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="margin-left: 10px; font-weight: bold; color: red;"></asp:LinkButton>
         </div>
     </div>
-    <div id="offsetY"></div>
+
+    <div id="gridContainer">
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
-
-
-
+    </div>
+    
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />

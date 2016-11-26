@@ -46,6 +46,7 @@
             pars.Add("j74RecordState", .j74RecordState, DbType.Int32)
             pars.Add("j74OrderBy", .j74OrderBy, DbType.String)
             pars.Add("j74IsFilteringByColumn", .j74IsFilteringByColumn, DbType.Boolean)
+            pars.Add("j74ScrollingFlag", .j74ScrollingFlag, DbType.Int32)
             pars.Add("j74IsVirtualScrolling", .j74IsVirtualScrolling, DbType.Boolean)
             pars.Add("j74DrillDownField1", .j74DrillDownField1, DbType.String)
 

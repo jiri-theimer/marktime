@@ -62,9 +62,11 @@
             var pane = sender.getPaneById("<%=navigationPane.ClientID%>");
             pane.set_width(screen.availWidth-20);
             <%end If%>
+
             
         }
 
+      
 
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
@@ -295,26 +297,26 @@
                     </div>
                 </div>
             </div>
-
+            <div id="gridContainer">
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
-            
+            </div>
            <asp:HiddenField ID="hidSAW" runat="server" />
             <asp:HiddenField ID="hiddatapid" runat="server" />
             <asp:HiddenField ID="hidDefaultSorting" runat="server" />
             <asp:HiddenField ID="hidJ62ID" runat="server" />
             <asp:HiddenField ID="hidX29ID" runat="server" Value="141" />
             <asp:HiddenField ID="hidPrefix" runat="server" Value="p41" />
-            <asp:HiddenField ID="hidFooterSum" runat="server" />
+            <asp:HiddenField ID="hidFooterSum" runat="server" Value="" />
             <asp:HiddenField ID="hidUIFlag" runat="server" />
             <asp:HiddenField ID="hidMasterPrefix" runat="server" />
             <asp:HiddenField ID="hidMasterPID" runat="server" />
             <asp:HiddenField ID="hidCols" runat="server" />
-                        <asp:HiddenField ID="hidSumCols" runat="server" />
+            <asp:HiddenField ID="hidSumCols" runat="server" />
             <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
                         
-            <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
+            
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

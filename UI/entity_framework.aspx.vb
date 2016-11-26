@@ -301,13 +301,14 @@ Public Class entity_framework
                 End If
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-            If cJ74.x29ID = BO.x29IdEnum.p56Task Then
-                If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
-            End If
+           
             Dim strAddtionalSqlFrom As String = "", strSumCols As String = ""
             Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom, , strSumCols)
             Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
             Me.hidSumCols.Value = strSumCols
+            If cJ74.j74ScrollingFlag > BO.j74ScrollingFlagENUM.NoScrolling Then
+                navigationPane.Scrolling = SplitterPaneScrolling.None
+            End If
         End With
         
         With grid1
@@ -1113,31 +1114,9 @@ Public Class entity_framework
 
     Private Sub GridExport(strFormat As String)
         _curIsExport = True
-        With grid1
-            .Page.Response.ClearHeaders()
-            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
-            .PageSize = 2000
-            .Rebind(False)
-            Select Case strFormat
-                Case "xls"
-                    .radGridOrig.ExportToExcel()
-                Case "pdf"
+        basUIMT.Handle_GridTelerikExport(Me.grid1, strFormat)
 
-                    With .radGridOrig.ExportSettings.Pdf
-                        If grid1.radGridOrig.Columns.Count > 4 Then
-                            .PageWidth = Unit.Parse("297mm")
-                            .PageHeight = Unit.Parse("210mm")
-                        Else
-                            .PageHeight = Unit.Parse("297mm")
-                            .PageWidth = Unit.Parse("210mm")
-                        End If
-                    End With
-                    .radGridOrig.ExportToPdf()
-                Case "doc"
-                    .radGridOrig.ExportToWord()
-            End Select
-
-        End With
+      
     End Sub
 
     Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click

@@ -207,7 +207,7 @@ Public Class p31_grid
             End If
             Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
             Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, , strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom, , strSqlSumCols)
+            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom, , strSqlSumCols)
             Me.hidFrom.Value = strAddSqlFrom
             Me.hidSumCols.Value = strSqlSumCols
 
@@ -217,6 +217,7 @@ Public Class p31_grid
             If Not Me.txtSearch.Visible Then Me.txtSearch.Text = ""
             If cJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
         End With
+        
 
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -543,30 +544,9 @@ Public Class p31_grid
 
     Private Sub GridExport(strFormat As String)
         _curIsExport = True
-        With grid1
-            .Page.Response.ClearHeaders()
-            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
-            .PageSize = 2000
-            .Rebind(False)
-            Select Case strFormat
-                Case "xls"
-                    .radGridOrig.ExportToExcel()
-                Case "pdf"
-                    With .radGridOrig.ExportSettings.Pdf
-                        If grid1.radGridOrig.Columns.Count > 4 Then
-                            .PageWidth = Unit.Parse("297mm")
-                            .PageHeight = Unit.Parse("210mm")
-                        Else
-                            .PageHeight = Unit.Parse("297mm")
-                            .PageWidth = Unit.Parse("210mm")
-                        End If
-                    End With
-                    .radGridOrig.ExportToPdf()
-                Case "doc"
-                    .radGridOrig.ExportToWord()
-            End Select
+        basUIMT.Handle_GridTelerikExport(grid1, strFormat)
 
-        End With
+
     End Sub
 
     Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click

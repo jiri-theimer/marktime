@@ -1,4 +1,9 @@
-﻿Public Class j74SavedGridColTemplate
+﻿Public Enum j74ScrollingFlagENUM
+    NoScrolling = 0
+    Scrolling = 1
+    StaticHeaders = 2
+End Enum
+Public Class j74SavedGridColTemplate
     Inherits BOMother
     Public Property j03ID As Integer
     Public Property j02ID_Owner As Integer
@@ -13,5 +18,6 @@
     Public Property j74IsVirtualScrolling As Boolean
     Public Property j74DrillDownField1 As String
 
-    
+    Public Property j74ScrollingFlag As j74ScrollingFlagENUM = j74ScrollingFlagENUM.NoScrolling
+
 End Class

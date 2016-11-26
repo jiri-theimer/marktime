@@ -104,6 +104,15 @@ Partial Public Class grid_designer
     Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
 
     '''<summary>
+    '''j74ScrollingFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j74ScrollingFlag As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
     '''lblDrillDown control.
     '''</summary>
     '''<remarks>

@@ -106,7 +106,7 @@
 
 </head>
 <body style="margin: 0px; height: 100%;">
-    <form runat="server" style="height: 100%; margin: 0px;">
+    <form runat="server" style="height: 100%; margin: 0px;overflow:hidden;">
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
         
