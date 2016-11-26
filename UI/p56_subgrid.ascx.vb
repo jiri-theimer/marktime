@@ -35,7 +35,6 @@ Public Class p56_subgrid
                 With lisPars
                     .Add("p56_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID))
                     .Add("p56_subgrid-pagesize")
-                    .Add("p56_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID))
                     .Add("p56_subgrid-cbxP56Validity")
                     .Add(strKey)
                 End With
@@ -271,30 +270,8 @@ Public Class p56_subgrid
         _curIsExport = True
 
         SetupGridP56()
-        With gridP56
-            .Page.Response.ClearHeaders()
-            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
-            .PageSize = 2000
-            .Rebind(False)
-            Select Case strFormat
-                Case "xls"
-                    .radGridOrig.ExportToExcel()
-                Case "pdf"
-                    With .radGridOrig.ExportSettings.Pdf
-                        If gridP56.radGridOrig.Columns.Count > 4 Then
-                            .PageWidth = Unit.Parse("297mm")
-                            .PageHeight = Unit.Parse("210mm")
-                        Else
-                            .PageHeight = Unit.Parse("297mm")
-                            .PageWidth = Unit.Parse("210mm")
-                        End If
-                    End With
-                    .radGridOrig.ExportToPdf()
-                Case "doc"
-                    .radGridOrig.ExportToWord()
-            End Select
-
-        End With
+        basUIMT.Handle_GridTelerikExport(Me.gridP56, strFormat)
+        
     End Sub
 
     Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click

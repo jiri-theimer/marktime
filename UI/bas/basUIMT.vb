@@ -622,5 +622,31 @@ Public Class basUIMT
             .Target = ""
         End With
     End Sub
+    Public Shared Sub Handle_GridTelerikExport(grid1 As UI.datagrid, strFormat As String)
+        With grid1
+            .Page.Response.ClearHeaders()
+            .Page.Response.Cache.SetCacheability(HttpCacheability.[Private])
+            .PageSize = 2000
+            .Rebind(False)
+            Select Case strFormat
+                Case "xls"
+                    .radGridOrig.ExportToExcel()
+                Case "pdf"
+                    With .radGridOrig.ExportSettings.Pdf
+                        If grid1.radGridOrig.Columns.Count > 4 Then
+                            .PageWidth = Unit.Parse("297mm")
+                            .PageHeight = Unit.Parse("210mm")
+                        Else
+                            .PageHeight = Unit.Parse("297mm")
+                            .PageWidth = Unit.Parse("210mm")
+                        End If
+                    End With
+                    .radGridOrig.ExportToPdf()
+                Case "doc"
+                    .radGridOrig.ExportToWord()
+            End Select
+
+        End With
+    End Sub
 
 End Class

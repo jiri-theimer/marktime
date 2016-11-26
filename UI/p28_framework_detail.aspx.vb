@@ -52,14 +52,12 @@ Public Class p28_framework_detail
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail-switch")
                     .Add("p28_framework_detail-switchHeight")
-                    .Add("p28_framework_detail-chkShowBoxP41")
                     .Add("p28_framework_detail-searchbox")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                 End With
                 With .Factory.j03UserBL
-                    Me.chkShowBoxP41.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkShowBoxP41", "1"))
                     panSwitch.Style.Item("display") = .GetUserParam("p28_framework_detail-switch", "block")
                     Dim strHeight As String = .GetUserParam("p28_framework_detail-switchHeight", "auto")
                     If strHeight = "auto" Then
@@ -128,9 +126,19 @@ Public Class p28_framework_detail
             If .p28CompanyShortName > "" Then
                 Me.Contact.Text += "<div style='color:green;'>" & .p28CompanyName & "</div>"
             End If
-            Me.Owner.Text = .Owner
-            Me.p28RegID.Text = .p28RegID
-            Me.p28VatID.Text = .p28VatID
+            If .p28RegID <> "" Or .p28VatID <> "" Then
+                Me.linkIC.Text = .p28RegID
+                If .p28RegID.Replace(" ", "").Length = 8 Then
+                    Me.linkIC.NavigateUrl = "https://or.justice.cz/ias/ui/rejstrik-$firma?ico=" & .p28RegID.Replace(" ", "")
+                    Me.linkARES.NavigateUrl = "http://wwwinfo.mfcr.cz/cgi-bin/ares/darv_res.cgi?ico=" & .p28RegID & "&jazyk=cz&xml=1"
+                Else
+                    linkARES.Visible = False
+                End If
+                Me.p28VatID.Text = .p28VatID
+            Else
+                trICDIC.Visible = False
+            End If
+            
             If .p29ID > 0 Then
                 Me.p29Name.Text = "[" & .p29Name & "]"
             End If
@@ -152,7 +160,7 @@ Public Class p28_framework_detail
 
         RefreshPricelist(cRec)
 
-        RefreshProjectList(cRec)
+        ''RefreshProjectList(cRec)
 
         
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p28Contact, cRec.PID)
@@ -160,24 +168,16 @@ Public Class p28_framework_detail
         If Me.roles1.RowsCount = 0 Then panRoles.Visible = False
 
         Dim lisO37 As IEnumerable(Of BO.o37Contact_Address) = Master.Factory.p28ContactBL.GetList_o37(cRec.PID)
-        If lisO37.Count > 0 Then
+        Dim lisO32 As IEnumerable(Of BO.o32Contact_Medium) = Master.Factory.p28ContactBL.GetList_o32(cRec.PID)
+        If lisO37.Count > 0 Or lisO32.Count > 0 Then
             Me.boxO37.Visible = True
-            Me.address1.FillData(lisO37)
-            boxO37Title.Text = BO.BAS.OM2(boxO37Title.Text, lisO37.Count.ToString)
+            If lisO37.Count > 0 Then Me.address1.FillData(lisO37)
+            If lisO32.Count > 0 Then Me.medium1.FillData(lisO32)
         Else
             Me.boxO37.Visible = False
         End If
 
-        Dim lisO32 As IEnumerable(Of BO.o32Contact_Medium) = Master.Factory.p28ContactBL.GetList_o32(cRec.PID)
-        If lisO32.Count > 0 Then
-            Me.boxO32.Visible = True
-            Me.medium1.FillData(lisO32)
-            With Me.boxO32Title
-                .Text = BO.BAS.OM2(.Text, lisO32.Count.ToString)
-            End With
-        Else
-            Me.boxO32.Visible = False
-        End If
+
         If cRecSum.p30_Exist Then
             Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(Master.DataPID, 0, True)
             If lisP30.Count > 0 Then
@@ -232,8 +232,6 @@ Public Class p28_framework_detail
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p28Contact, Master.DataPID, cRec.p29ID)
         If lisFF.Count > 0 Then
             ff1.FillData(lisFF, Not Me.chkFFShowFilledOnly.Checked)
-        Else
-            boxFF.Visible = False
         End If
         If cRecSum.childs_Count > 0 Then
             linkChilds.Visible = True
@@ -302,46 +300,6 @@ Public Class p28_framework_detail
 
     End Sub
 
-    Private Sub RefreshProjectList(cRec As BO.p28Contact)
-
-        Dim mq As New BO.myQueryP41
-        mq.p28ID = cRec.PID
-        mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
-        mq.Closed = BO.BooleanQueryMode.NoQuery
-
-
-        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).OrderBy(Function(p) p.IsClosed).ThenByDescending(Function(p) p.PID)
-        If lis.Count = 0 Then
-            boxP41.Visible = False : Return
-        Else
-            boxP41.Visible = True
-            Dim intClosed As Integer = lis.Where(Function(p) p.IsClosed = True).Count
-            Dim intOpened As Integer = lis.Count - intClosed
-            Dim s As String = ""
-            With boxP41Title
-                If intClosed > 0 Then
-                    ''.Text = .Text & " (" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & ")"
-                    s = "<span class='badge1'>" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & "</span>"
-                Else
-                    ''.Text = .Text & " (" & intOpened.ToString & ")"
-                    s = "<span class='badge1'>" & intOpened.ToString & "</span>"
-                End If
-
-                .Text = "<a href='javascript:projects()'>" & .Text & s & "</a>"
-            End With
-
-        End If
-        If Not Me.chkShowBoxP41.Checked Then Return
-
-        If lis.Count > 10 Then lis = lis.Take(11) 'omezit na maximálně 10+1
-        rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
-        rpP41.DataBind()
-
-    End Sub
-
-
-
-    
 
     Private Sub RefreshPricelist(cRec As BO.p28Contact)
         Me.clue_p51id_billing.Visible = False : Me.p51Name_Billing.Visible = False : lblX51.Visible = False
@@ -410,47 +368,8 @@ Public Class p28_framework_detail
     End Sub
 
 
-    Private Sub p28_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Not tabs1.Visible Then
-            panProjects.Style.Item("max-height") = ""
-            panProjects.Style.Item("overflow") = ""
-        Else
-            panProjects.Style.Item("max-height") = "250px"
-            panProjects.Style.Item("overflow") = "auto"
-        End If
-        
-    End Sub
 
-    Private Sub rpP41_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP41.ItemDataBound
-        _curProjectIndex += 1
-        Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
-        With CType(e.Item.FindControl("aProject"), HyperLink)
-            If cRec.p41NameShort > "" Then
-                .Text = cRec.p41NameShort
-            Else
-                .Text = cRec.p41Name
-            End If
-            .Text += " (" & cRec.p41Code & ")"
-            If cRec.IsClosed Then .Font.Strikeout = True : .ForeColor = Drawing.Color.Gray
-            If Master.Factory.SysUser.j04IsMenu_Project Then
-                .NavigateUrl = "p41_framework.aspx?pid=" & cRec.PID.ToString
-
-
-                If _curProjectIndex > 10 Then
-                    'poslední nad 10
-                    .Text = "Všechny projekty klienta>>"
-                    .NavigateUrl = "javascript:projects()"
-                    .Target = ""
-                    .ForeColor = Drawing.Color.Green
-                    .Font.Bold = True
-                    e.Item.FindControl("clue_project").Visible = False
-                End If
-            End If
-        End With
-        If e.Item.FindControl("clue_project").Visible Then CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
-
-
-    End Sub
+  
 
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p28_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
@@ -458,10 +377,6 @@ Public Class p28_framework_detail
     End Sub
 
    
-    Private Sub chkShowBoxP41_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowBoxP41.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("p28_framework_detail-chkShowBoxP41", BO.BAS.GB(Me.chkShowBoxP41.Checked))
-        ReloadPage(Master.DataPID.ToString)
-    End Sub
 
     Private Sub SetupTabs(crs As BO.p28ContactSum)
         tabs1.Tabs.Clear()
@@ -495,6 +410,8 @@ Public Class p28_framework_detail
                     If crs.o23_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
                 Case "workflow"
                     If crs.b07_Count > 0 Then tab.Text += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
+                Case "p41"
+                    tab.Text += "<span class='badge1'>" & crs.p41_Actual_Count.ToString & "+" & crs.p41_Closed_Count.ToString & "</span>"
             End Select
         Next
     End Sub

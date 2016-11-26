@@ -9,57 +9,16 @@
 
 
     <script type="text/javascript">
-        function dd_designer() {
-            var j75id = "";
-            
-            sw_master("drilldown_designer.aspx?x29id=102&masterprefix=j02_framework_detail&pid=" + j75id, "Images/drilldown_32.png",true);
       
-
-        function RowSelected(sender, args) {
-
-            document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");
-
-            
-        }
-
-        function RowDoubleClick(sender, args) {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            alert(pid);
-            
-            //if (args.get_tableView().get_name() == "level1") {
-            //    alert("Event executed only once for each double-clicked row in the hierarchy");
-                //execute some custom logic here     
-            //}
-            
-        }
-
-        function GetAllSelectedPIDs() {
-
-            var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
-            var sel = masterTable.get_selectedItems();
-            var pids = "";
-
-            for (i = 0; i < sel.length; i++) {
-                if (pids == "")
-                    pids = sel[i].getDataKeyValue("pid");
-                else
-                    pids = pids + "," + sel[i].getDataKeyValue("pid");
-            }
-
-            return (pids);
-        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <button type="button" onclick="dd_designer()">DRILL-DOWN designer</button>
-    <a href="webform2.aspx?ano=ne">webform2 - vyvolat uměle chybu</a>
-
+    
     <asp:Button ID="cmdPokus" runat="server" Text="test" />
 
 
-    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
-
-
+   
+    <asp:TextBox ID="txtResult" runat="server"></asp:TextBox>
 
     <asp:HiddenField ID="hiddatapid" runat="server" />
 

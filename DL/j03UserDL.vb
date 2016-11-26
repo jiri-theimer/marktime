@@ -333,13 +333,17 @@ Public Class j03UserDL
     End Function
 
     Public Function GetList_PageTabs(intJ03ID As Integer, x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
-        Dim pars As New DL.DbParameters, s As String = "SELECT a.x61ID,a.x29ID,a.x61Code,a.x61Name,a.x61Ordinary,a.x61URL as _URL FROM x61PageTab a INNER JOIN j63PageTab_User j63 ON a.x61ID=j63.x61ID WHERE j63.j03ID=@j03id AND a.x29ID=@x29id ORDER BY a.x61Ordinary"
+        Dim pars As New DL.DbParameters, s As String = "SELECT a.x61ID,a.x29ID,a.x61Code,a.x61Name,a.x61Ordinary,a.x61URL as _URL FROM x61PageTab a INNER JOIN j63PageTab_User j63 ON a.x61ID=j63.x61ID WHERE j63.j03ID=@j03id AND a.x29ID=@x29id ORDER BY j63.j63ID"
         pars.Add("j03id", intJ03ID, DbType.Int32)
         pars.Add("x29id", CInt(x29id), DbType.Int32)
 
         Dim lis As IEnumerable(Of BO.x61PageTab) = _cDB.GetList(Of BO.x61PageTab)(s, pars)
         If lis.Count = 0 Then
             Dim strDefCodes As String = "'summary','p31','time','expense','fee','p56','p91'"
+            Select Case x29id
+                Case BO.x29IdEnum.p28Contact : strDefCodes = "'summary','p31','time','expense','fee','p41','p91'"
+            End Select
+
             _cDB.RunSQL("INSERT INTO j63PageTab_User(x61ID,j03ID) SELECT x61ID,@j03id FROM x61PageTab WHERE x29ID=@x29id AND x61Code IN (" & strDefCodes & ") ORDER BY x61Ordinary", pars)
             lis = _cDB.GetList(Of BO.x61PageTab)(s, pars)
         End If

@@ -193,6 +193,7 @@
     <Content Include="entity_framework_o23subform.aspx" />
     <Content Include="entity_framework_p31subform.aspx" />
     <Content Include="entity_framework_p31summary.aspx" />
+    <Content Include="entity_framework_p41subform.aspx" />
     <Content Include="entity_framework_p56subform.aspx" />
     <Content Include="entity_framework_p91subform.aspx" />
     <Content Include="entity_scheduler.aspx" />
@@ -354,6 +355,25 @@
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
     <Content Include="report_framework_detail4.aspx" />
+    <None Include="Service References\SpolehlivostDPH\rozhraniCRPDPH.wsdl" />
+    <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.InformaceOPlatciType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SpolehlivostDPH\UI.SpolehlivostDPH.StatusType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\VatService\configuration91.svcinfo" />
+    <None Include="Service References\VatService\configuration.svcinfo" />
+    <None Include="Service References\VatService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+    <None Include="Service References\SpolehlivostDPH\configuration91.svcinfo" />
+    <None Include="Service References\SpolehlivostDPH\configuration.svcinfo" />
+    <None Include="Service References\SpolehlivostDPH\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
     <Content Include="Services\combo_external_datasource.asmx" />
     <Content Include="Services\invoice_service.asmx" />
     <Content Include="Styles\SiteMobile_v2.css" />
@@ -496,6 +516,9 @@
     <Content Include="x50_record.aspx" />
     <Content Include="x55_record.aspx" />
     <Content Include="x67_record.aspx" />
+    <Content Include="Service References\VatService\UI.VatService.matchCode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.aspx.designer.vb">
@@ -761,6 +784,13 @@
     </Compile>
     <Compile Include="entity_framework_p31summary.aspx.vb">
       <DependentUpon>entity_framework_p31summary.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_p41subform.aspx.designer.vb">
+      <DependentUpon>entity_framework_p41subform.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_p41subform.aspx.vb">
+      <DependentUpon>entity_framework_p41subform.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_framework_p56subform.aspx.designer.vb">
@@ -1960,6 +1990,16 @@
       <DependentUpon>report_framework_detail4.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Service References\SpolehlivostDPH\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\VatService\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Services\combo_external_datasource.asmx.vb">
       <DependentUpon>combo_external_datasource.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -3043,6 +3083,7 @@
     <Content Include="Site.Master" />
     <Content Include="SubForm.Master" />
     <Content Include="packages.config" />
+    <None Include="Service References\VatService\checkVatService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -3065,6 +3106,10 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SpolehlivostDPH\" />
+    <WCFMetadataStorage Include="Service References\VatService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

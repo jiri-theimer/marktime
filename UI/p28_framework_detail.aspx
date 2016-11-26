@@ -304,19 +304,20 @@
         <div class="content-box1">
             <div class="title">
                 <img src="Images/properties.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxCoreTitle" Text="Záznam klienta" runat="server"></asp:Label>        
-                <asp:HyperLink ID="linkChilds" runat="server" Text="Podřízení klienti" Visible="false" style="float:right;" NavigateUrl="javascript:childs()"></asp:HyperLink>        
+                <asp:Label ID="boxCoreTitle" Text="Záznam klienta" runat="server"></asp:Label>                        
+                <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Pouze vyplněná uživatelská pole" style="float:right;" />  
             </div>
             <div class="content">
+                <div style="float:left;">
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="top">
-                        <td style="min-width: 120px;">
+                        <td >
                             <asp:Label ID="lblContact" runat="server" Text="Název:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
 
                             <asp:Label ID="Contact" runat="server" CssClass="valbold"></asp:Label>
-                            <asp:Image ID="imgFlag_Contact" runat="server" />
+                            
                             <asp:Label ID="p29Name" runat="server" CssClass="val"></asp:Label>
                             <asp:Image ID="imgDraft" runat="server" ImageUrl="Images/draft_icon.gif" Visible="false" AlternateText="DRAFT záznam" Style="float: right;" />
                             <asp:Panel ID="panDraftCommands" runat="server" Visible="false">
@@ -324,7 +325,7 @@
                                     Převést z režimu DRAFT na oficiální záznam
                                 </button>
                             </asp:Panel>
-
+                           
                         </td>
 
 
@@ -358,29 +359,31 @@
                         <td>
                             <asp:Label ID="p51Name_Billing" runat="server" CssClass="valbold"></asp:Label>
                             <asp:HyperLink ID="clue_p51id_billing" runat="server" CssClass="reczoom" Text="i" title="Detail ceníku"></asp:HyperLink>
-
+                            <asp:Image ID="imgFlag_Contact" runat="server" ToolTip="Fakturační jazyk" />
                         </td>
 
                     </tr>
-                    <tr valign="top">
+                    <tr valign="top" id="trICDIC" runat="server">
                         <td>
-                            <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Vlastník klienta:"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="IČ / DIČ:"></asp:Label>
 
                         </td>
                         <td>
-                            <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
-                            <asp:Label ID="lblRegID" runat="server" CssClass="lbl" Text="IČ:" Style="padding-left: 10px;"></asp:Label>
-
-                            <asp:Label ID="p28RegID" runat="server" CssClass="valbold"></asp:Label>
-                            <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="DIČ:"></asp:Label>
-
+                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz"></asp:HyperLink>
+                           <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank"></asp:HyperLink>        
                             <asp:Label ID="p28VatID" runat="server" CssClass="valbold"></asp:Label>
                         </td>
                     </tr>
                 </table>
-
+                </div>
+                <div style="float:left;">
+                    <uc:freefields_readonly ID="ff1" runat="server" />
+                    
+                </div>
+                <div style="clear:both;"></div>
             </div>
-
+            
+            <asp:HyperLink ID="linkChilds" runat="server" Text="Podřízení klienti" Visible="false" NavigateUrl="javascript:childs()"></asp:HyperLink>      
         </div>
         <asp:panel ID="boxX18" runat="server" CssClass="content-box1">
             <div class="title">
@@ -405,7 +408,10 @@
 
 
         <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
-            <div class="title">Obsazení klientských rolí</div>
+            <div class="title">
+                <img src="Images/projectrole.png" style="margin-right: 10px;" />
+                Obsazení klientských rolí
+            </div>
             <div class="content">
                 <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="p28Contact" NoDataText=""></uc:entityrole_assign_inline>
             </div>
@@ -420,40 +426,22 @@
 
 
 
-        <asp:Panel ID="boxO32" runat="server" CssClass="content-box1">
+        
+
+        <asp:Panel ID="boxO37" runat="server" CssClass="content-box1">
             <div class="title">
+                <img src="Images/address.png" />
                 <img src="Images/email.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxO32Title" runat="server" Text="Kontaktní média"></asp:Label>
+                <asp:Label ID="boxO37Title" runat="server" Text="Adresy a kontaktní média"></asp:Label>
             </div>
             <div class="content">
+                <uc:p28_address ID="address1" runat="server"></uc:p28_address>
                 <uc:p28_medium ID="medium1" runat="server"></uc:p28_medium>
             </div>
         </asp:Panel>
 
 
-        <asp:Panel ID="boxO37" runat="server" CssClass="content-box1">
-            <div class="title">
-                <img src="Images/address.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxO37Title" runat="server" Text="Adresy"></asp:Label>
-            </div>
-            <div class="content">
-                <uc:p28_address ID="address1" runat="server"></uc:p28_address>
-            </div>
-        </asp:Panel>
-
-
-        <asp:Panel ID="boxFF" runat="server" CssClass="content-box1">
-            <div class="title">
-                <img src="Images/form.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxFFTitle" runat="server" Text="Uživatelská pole"></asp:Label>
-                <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Zobrazovat pouze vyplněná pole" />
-            </div>
-            <div class="content">
-                <uc:freefields_readonly ID="ff1" runat="server" />
-            </div>
-
-        </asp:Panel>
-
+        
 
         <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">
             <div class="title">
@@ -476,29 +464,7 @@
         </asp:Panel>
        
 
-        <asp:Panel ID="boxP41" runat="server" CssClass="content-box1">
-            <div class="title">
-                <img src="Images/project.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxP41Title" runat="server" Text="Projekty"></asp:Label>
-                <asp:CheckBox ID="chkShowBoxP41" runat="server" AutoPostBack="true" Text="Plnit box názvy projektů" Checked="true" />
-            </div>
-            <asp:Panel ID="panProjects" runat="server" CssClass="content" Style="overflow: auto; max-height: 200px;">
-
-                <asp:Repeater ID="rpP41" runat="server">
-                    <ItemTemplate>
-                        <div style="padding: 5px; float: left;">
-                            <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
-
-                            <asp:HyperLink ID="aProject" runat="server" Target="_top"></asp:HyperLink>
-
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-
-
-            </asp:Panel>
-
-        </asp:Panel>
+        
 
     </asp:Panel>
     <div style="clear: both;"></div>

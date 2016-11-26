@@ -157,6 +157,7 @@
             </div>
 
             <div class="div6">
+                <img src="Images/tree.png" />
                 <asp:Label ID="lblParent" runat="server" CssClass="lbl" Text="Nadřízený projekt:"></asp:Label>
                 <uc:project ID="p41ParentID" runat="server" Width="400px" />
             </div>

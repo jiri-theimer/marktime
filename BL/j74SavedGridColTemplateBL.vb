@@ -141,9 +141,14 @@ Class j74SavedGridColTemplateBL
                         c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
                     Case "mobile_grid"
                         c.j74ColumnNames = "FullName"
+                    Case "p28"
+                        c.j74Name = "Projekty klienta"
+                        c.j74ColumnNames = "p41Name,p41Code,p42Name"    'projekty v záložce pod klientem
+                    Case "p41"
+                        c.j74Name = "Pod-projekty"
+                        c.j74ColumnNames = "p41Code,p41Name,p42Name"    'podřízené projekty
                 End Select
-                ''c.j74ColumnNames = "Client,p41Name"
-                c.j74ColumnNames = "Client,p41Name"
+                If c.j74ColumnNames = "" Then c.j74ColumnNames = "Client,p41Name"
             Case BO.x29IdEnum.p28Contact
                 c.j74ColumnNames = "p28Name"
             Case BO.x29IdEnum.p91Invoice

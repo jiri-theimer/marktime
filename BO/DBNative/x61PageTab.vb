@@ -26,6 +26,8 @@
                 Return "entity_framework_o23subform.aspx?" & s
             Case "workflow"
                 Return "entity_framework_b07subform.aspx?" & s
+            Case "p41"
+                Return "entity_framework_p41subform.aspx?" & s
             Case Else
                 Return _URL
         End Select

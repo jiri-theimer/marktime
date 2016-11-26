@@ -23,13 +23,13 @@ Partial Public Class pokus
     Protected WithEvents cmdPokus As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''grid1 control.
+    '''txtResult control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents grid1 As Global.UI.datagrid
+    Protected WithEvents txtResult As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''hiddatapid control.
