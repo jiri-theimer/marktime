@@ -112,7 +112,9 @@
 
 </asp:Panel>
 <div style="clear: both; width: 100%;"></div>
+
 <uc:datagrid ID="grid2" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first" HeaderText="Projektový worksheet"></uc:datagrid>
+
 <asp:HiddenField ID="hidMasterDataPID" runat="server" />
 <asp:HiddenField ID="hidX29ID" runat="server" />
 <asp:HiddenField ID="hidNeedRefreshP31_subgrid" runat="server" />

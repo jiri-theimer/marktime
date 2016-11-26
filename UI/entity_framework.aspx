@@ -297,9 +297,9 @@
                     </div>
                 </div>
             </div>
-            <div id="gridContainer">
+            
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
-            </div>
+            
            <asp:HiddenField ID="hidSAW" runat="server" />
             <asp:HiddenField ID="hiddatapid" runat="server" />
             <asp:HiddenField ID="hidDefaultSorting" runat="server" />

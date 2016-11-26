@@ -81,7 +81,7 @@
                 <div style="margin-top:20px;">
                     <asp:RadioButtonList ID="j74ScrollingFlag" runat="server" RepeatDirection="Vertical">
                         <asp:ListItem Text="Pevné ukotvení záhlaví tabulky (názvy sloupců)" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="Ukotvení všeho nad tabulkou (filtrování)" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="Ukotvení všeho nad tabulkou (filtrování a menu)" Value="1"></asp:ListItem>
                         <asp:ListItem Text="Bez podpory ukotvení" Value="0"></asp:ListItem>
                     </asp:RadioButtonList>
                    

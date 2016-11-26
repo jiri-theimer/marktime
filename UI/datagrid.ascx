@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="datagrid.ascx.vb" Inherits="UI.datagrid" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<div id="gogo1"></div>
+<div id="gridContainer">
 <telerik:RadGrid ID="grid1" AutoGenerateColumns="false" runat="server" ShowFooter="true" EnableViewState="true" AllowPaging="true" AllowSorting="true" Skin="Default" EnableLinqExpressions="false">
     <MasterTableView Width="100%"/>    
     <ExportSettings ExportOnlyData="true" OpenInNewWindow="true" FileName="marktime_export" UseItemStyles="true">
@@ -19,6 +19,7 @@
     <FooterStyle BackColor="#bcc7d8" HorizontalAlign="Right" />
     
 </telerik:RadGrid>
+</div>
 
 <telerik:RadAjaxLoadingPanel runat="server" ID="RadAjaxLoadingPanel1" RenderMode="Lightweight" Transparency="30" BackColor="#E0E0E0">
     <div style="float:none;padding-top:80px;">
@@ -97,7 +98,7 @@
         <%End If%>
         scrollArea.style.height = hx1 + "px";
         <%end if%>
-        
+       
     }
 
 </script>

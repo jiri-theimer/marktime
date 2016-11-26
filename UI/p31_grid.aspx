@@ -292,9 +292,9 @@
         </div>
     </div>
 
-    <div id="gridContainer">
+    
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
-    </div>
+    
     
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
