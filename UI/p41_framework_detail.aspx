@@ -98,6 +98,10 @@
             sw_decide("p41_create.aspx?clone=1&pid=" + pid,"Images/project.png",true);
 
         }
+        function record_new_child(){
+            var pid = <%=master.DataPID%>;
+            sw_decide("p41_create.aspx?client_family=1&pid=<%=Master.DataPID%>&create_parent=1","Images/project.png",true);
+        }
 
         function favourite(){
             hardrefresh(<%=Master.DataPID%>,'favourite');
@@ -267,6 +271,7 @@
                         <telerik:RadMenuItem Value="cmdNew" Text="Založit nový projekt" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png" ToolTip="Z aktuálního projektu se předvyplní klient, typ, středisko,projektové role, fakturační ceník, jazyk a typ faktury." meta:resourcekey="menu_novy"></telerik:RadMenuItem>
 
                         <telerik:RadMenuItem Value="cmdCopy" Text="Založit nový projekt kopírováním" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" ToolTip="Nový projekt se kompletně předvyplní podle vzoru tohoto záznamu." meta:resourcekey="menu_kopirovat"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdNewChild" Text="Založit nový pod-projekt" NavigateUrl="javascript:record_new_child();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
 
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat nebo vystavit fakturu" NavigateUrl="javascript:approve()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>

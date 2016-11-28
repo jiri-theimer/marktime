@@ -91,6 +91,12 @@ Public Class p41Project
             Return _Client
         End Get
     End Property
+    Private Property _ParentName As String
+    Public ReadOnly Property ParentName As String
+        Get
+            Return _ParentName
+        End Get
+    End Property
 
     ''Private Property _ClientBilling As String
     ''Public ReadOnly Property ClientBilling As String
@@ -125,6 +131,7 @@ Public Class p41Project
             If p28ID_Client > 0 Then
                 If Me.p41NameShort = "" Then Return _Client & " - " & Me.p41Name Else Return _Client & " - " & Me.p41NameShort
             Else
+                If Me.p41ParentID > 0 Then Return _ParentName & " -> " & Me.p41Name
                 If Me.p41NameShort = "" Then Return Me.p41Name Else Return Me.p41NameShort
             End If
         End Get
@@ -138,6 +145,8 @@ Public Class p41Project
                 Case 2 : Return s & " [" & Me.p41Code & "]"  'název projektu + kód
                 Case 3 : Return s & " [" & _Client & "]"    'název+klient
                 Case 4 : Return Me.p41Code                'pouze kód projektu
+                Case 5 : If Me.p41ParentID > 0 Then Return _ParentName & " -> " & Me.PrefferedName Else Return Me.PrefferedName 'nadřízený+podřízený projekt
+
                 Case Else : Return FullName & " [" & Me.p41Code & "]"
             End Select
         End Get

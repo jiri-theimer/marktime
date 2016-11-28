@@ -40,7 +40,7 @@
             End If
             If .p41ID > 0 Then
                 pars.Add("p41id", .p41ID, DbType.Int32)
-                strW += " AND a.p41ID=@p41id"
+                strW += " AND (a.p41ID=@p41id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41ParentID=@p41id))"
             End If
             If .p28ID > 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)
@@ -122,9 +122,9 @@
     End Function
 
     Private Function GetSQLPart1() As String
-        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName+isnull(' '+j02.j02TitleBeforeName,'') as _Person,p28.p28Name as _Client,p41.p41Name as _Project,p34.p34Name as _p34Name,p32.p32Name as _p32Name,p34.p34Color as _p34Color,p32.p32Color as _p32Color," & bas.RecTail("p48", "a")
+        Dim s As String = "select a.*,j02.j02LastName+' '+j02.j02FirstName+isnull(' '+j02.j02TitleBeforeName,'') as _Person,p28.p28Name as _Client,case when p41.p41ParentID IS NULL THEN isnull(p41.p41NameShort,p41.p41Name) ELSE p41parent.p41Name+'->'+p41.p41Name END as _Project,p34.p34Name as _p34Name,p32.p32Name as _p32Name,p34.p34Color as _p34Color,p32.p32Color as _p32Color," & bas.RecTail("p48", "a")
         s += " FROM p48OperativePlan a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
-        s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
+        s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID LEFT OUTER JOIN p41project p41Parent ON p41.p41ParentID=p41parent.p41ID"
         s += " LEFT OUTER JOIN p32Activity p32 ON a.p32ID=p32.p32ID"
         s += " LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
         Return s

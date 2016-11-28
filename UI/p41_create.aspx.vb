@@ -94,6 +94,11 @@
                 Me.p92id.SelectedValue = .p92ID.ToString
             End With
             roles1.InhaleInitialData(cRec.PID)
+            If Request.Item("create_parent") = "1" Then
+                'založit pod-projekt
+                Me.p41ParentID.Value = cRec.PID.ToString
+                Me.p41ParentID.Text = cRec.FullName
+            End If
         End If
         If Request.Item("clone") = "1" And Request.Item("pid") <> "" Then
             Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(Request.Item("pid")))
@@ -110,6 +115,10 @@
                 If .p28ID_Billing <> 0 Then
                     Me.p28ID_Billing.Value = .p28ID_Billing.ToString
                     Me.p28ID_Billing.Text = Master.Factory.p28ContactBL.Load(.p28ID_Billing).p28Name
+                End If
+                If .p41ParentID <> 0 Then
+                    Me.p41ParentID.Value = .p41ParentID.ToString
+                    Me.p41ParentID.Text = Master.Factory.p41ProjectBL.Load(.p41ParentID).FullName
                 End If
                 If Not (BO.BAS.IsNullDBDate(.p41PlanFrom) Is Nothing Or BO.BAS.IsNullDBDate(.p41PlanUntil) Is Nothing) Then
                     Me.chkPlanDates.Checked = True

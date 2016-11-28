@@ -373,6 +373,7 @@ Public Class p41_framework_detail
         With Master.Factory
             menu1.FindItemByValue("cmdNew").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator)
             menu1.FindItemByValue("cmdCopy").Visible = menu1.FindItemByValue("cmdNew").Visible
+            menu1.FindItemByValue("cmdNewChild").Visible = menu1.FindItemByValue("cmdNew").Visible
             If cP42.p42IsModule_p31 Then
                 menu1.FindItemByValue("cmdPivot").Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
                 menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString

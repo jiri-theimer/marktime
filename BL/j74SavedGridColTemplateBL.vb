@@ -278,8 +278,9 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name", , "LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
             .Add(AGC("Fakturační poznámka", "p41BillingMemo", , , "a.p41BillingMemo"))
-            .Add(AGC("Nadřízený projekt", "ParentProject", , , "p41parent.p41Name", , "LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"))
-            .Add(AGC("Kód nadř.projektu", "ParentCode", , , "p41parent.p41Code", , "LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"))
+            .Add(AGC("Nadřízený projekt", "ParentProject", , , "p41parent.p41Name"))
+            .Add(AGC("Kód nadř.projektu", "ParentCode", , , "p41parent.p41Code"))
+            ''.Add(AGC("Nadřízený+pod-projekt", "ParentWithChild", , , "isnull(p41parent.p41Name+'->'+a.p41name,a.p41Name)"))
             
             .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly, , "a.p41PlanFrom"))
             .Add(AGC(My.Resources.common.PlanEnd, "p41PlanUntil", BO.cfENUM.DateOnly, , "a.p41PlanUntil"))

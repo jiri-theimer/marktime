@@ -451,7 +451,7 @@
                     s.Append("a.p41Name LIKE @expr+'%' OR a.p41Code LIKE '%'+@expr+'%' OR p28client.p28Name LIKE @expr+'%' OR a.p41NameShort LIKE @expr+'%' OR p28client.p28CompanyName LIKE @expr+'%'")
                 Else
                     'něco jako fulltext
-                    s.Append("a.p41Name LIKE '%'+@expr+'%' OR a.p41Code LIKE '%'+@expr+'%' OR a.p41NameShort LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyName LIKE '%'+@expr+'%'")
+                    s.Append("a.p41Name LIKE '%'+@expr+'%' OR a.p41Code LIKE '%'+@expr+'%' OR a.p41NameShort LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyName LIKE '%'+@expr+'%' OR p41parent.p41Name LIKE '%'+@expr+'%'")
                 End If
                 s.Append(")")
                 pars.Add("expr", .SearchExpression, DbType.String)
@@ -485,7 +485,7 @@
 
     Private Function GetSF() As String
         Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"
-        s += ",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing"
+        s += ",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing,p41parent.p41Name as _ParentName"
         s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID,a.p41BillingMemo," & bas.RecTail("p41", "a")
         s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41RobotAddress,p41free.*"
         Return s
@@ -503,6 +503,7 @@
         ''s += " LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"
         s += " LEFT OUTER JOIN p51PriceList p51billing ON a.p51ID_Billing=p51billing.p51ID"
         ''s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
+        s += " LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"
         s += " LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
         s += " LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID"

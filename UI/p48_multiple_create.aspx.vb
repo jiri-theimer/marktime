@@ -13,6 +13,7 @@
             ViewState("guid") = BO.BAS.GetGUID()
             Dim intYear As Integer = BO.BAS.IsNullInt(Request.Item("year"))
             Dim intMonth As Integer = BO.BAS.IsNullInt(Request.Item("month"))
+            Dim intProjectMask As Integer = Master.Factory.SysUser.j03ProjectMaskIndex
 
             If Request.Item("input") <> "" Then
                 Dim s As String = Request.Item("input")
@@ -31,7 +32,7 @@
                         End If
                         .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
                         If intLastP41ID <> .p85OtherKey2 And .p85OtherKey2 > 0 Then
-                            strLastProject = Master.Factory.p41ProjectBL.Load(.p85OtherKey2).FullName
+                            strLastProject = Master.Factory.p41ProjectBL.Load(.p85OtherKey2).ProjectWithMask(intProjectMask)
                         End If
                         If .p85OtherKey2 <> 0 Then
                             .p85FreeText02 = strLastProject
@@ -47,7 +48,7 @@
                 If intJ02ID = 0 Then intJ02ID = Master.Factory.SysUser.j02ID
                 Dim d As Date = dt1.DateOnly, intLastP41ID As Integer = BO.BAS.IsNullInt(Request.Item("p41id"))
                 Dim strLastProject As String = ""
-                If intLastP41ID <> 0 Then strLastProject = Master.Factory.p41ProjectBL.Load(intLastP41ID).FullName
+                If intLastP41ID <> 0 Then strLastProject = Master.Factory.p41ProjectBL.Load(intLastP41ID).ProjectWithMask(intProjectMask)
                 While d <= dt2.DateOnly
                     Dim c As New BO.p85TempBox
                     With c
