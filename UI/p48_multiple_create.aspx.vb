@@ -142,7 +142,11 @@
         CType(e.Item.FindControl("p41id"), HiddenField).Value = cRec.p85OtherKey2.ToString
         CType(e.Item.FindControl("p48Date"), Label).Text = BO.BAS.FD(cRec.p85FreeDate01)
         CType(e.Item.FindControl("Person"), Label).Text = cRec.p85FreeText01
-        CType(e.Item.FindControl("Project"), Label).Text = cRec.p85FreeText02
+        ''CType(e.Item.FindControl("Project"), Label).Text = cRec.p85FreeText02
+        With CType(e.Item.FindControl("p41ID_Input"), UI.project)
+            .Text = cRec.p85FreeText02
+            .Value = cRec.p85OtherKey2.ToString
+        End With
         CType(e.Item.FindControl("p48Hours"), TextBox).Text = cRec.p85FreeFloat01.ToString
         CType(e.Item.FindControl("p48TimeFrom"), TextBox).Text = cRec.p85FreeText03
         CType(e.Item.FindControl("p48TimeUntil"), TextBox).Text = cRec.p85FreeText04
@@ -187,6 +191,9 @@
             c.p85FreeText03 = CType(ri.FindControl("p48TimeFrom"), TextBox).Text
             c.p85FreeText04 = CType(ri.FindControl("p48TimeUntil"), TextBox).Text
             c.p85Message = CType(ri.FindControl("p48Text"), TextBox).Text
+            c.p85OtherKey2 = BO.BAS.IsNullInt(CType(ri.FindControl("p41ID_Input"), UI.project).Value)
+            c.p85FreeText02 = CType(ri.FindControl("p41ID_Input"), UI.project).Text
+
 
             Master.Factory.p85TempBoxBL.Save(c)
         Next

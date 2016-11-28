@@ -154,6 +154,7 @@
 
                     <td>
                         <asp:Label ID="Project" runat="server" ForeColor="DarkOrange"></asp:Label>
+                        <uc:project ID="p41ID_Input" runat="server" Width="250px" AutoPostBack="false" />
                     </td>
 
                     <td>

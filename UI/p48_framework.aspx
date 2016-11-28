@@ -224,7 +224,7 @@
     <div style="background-color: white; padding: 10px;">
         <div style="float: left;">
             <img src="Images/oplan_32.png" />
-            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Operativní plán"></asp:Label>
+            <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Text="Operativní plán"></asp:Label>
         </div>
 
 
