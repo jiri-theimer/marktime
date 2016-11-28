@@ -136,7 +136,7 @@ Public Class o23_queue
     End Sub
 
     Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
-        basUIMT.o23_grid_Handle_ItemDataBound(sender, e, True, True)
+        basUIMT.o23_grid_Handle_ItemDataBound(sender, e, True)
 
     End Sub
 

@@ -290,7 +290,7 @@ Public Class basUIMT
 
 
     End Sub
-    Public Shared Sub o23_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, bolShowFilePreview As Boolean, Optional bolMobile As Boolean = False)
+    Public Shared Sub o23_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolMobile As Boolean = False)
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -301,12 +301,20 @@ Public Class basUIMT
                 .Text = "<a class='reczoom' title='Detail dokumentu' rel='clue_o23_record.aspx?pid=" & cRec.Item("pid").ToString & "' style='margin-left:-10px;'>i</a>"
             End With
         End If
-        If bolShowFilePreview Then
-            With dataItem("systemcolumn")
-                .Text += "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank'>Náhled</a>"
-            End With
-        End If
         With cRec
+            If .Item("IsO27") Then
+                Dim s As String = "<a href='fileupload_preview.aspx?prefix=o23&pid=" & cRec.Item("pid").ToString & "' target='_blank' title='Dokument má souborové přílohy'><img src='Images/attachment.png'/></a>"
+                If bolShowClueTip Then
+                    With dataItem.Cells
+                        If .Count >= 5 Then
+                            .Item(4).Text = s & .Item(4).Text
+                        End If
+                    End With
+                Else
+                    dataItem("systemcolumn").Text += s
+                End If
+
+            End If
             If .Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
             If .Item("o23IsEncrypted_Grid") Then dataItem("systemcolumn").CssClass = "spy"
             If CType(BO.BAS.IsNullInt(.Item("o23LockedFlag_Grid")), BO.o23LockedTypeENUM) > BO.o23LockedTypeENUM._NotSpecified Then dataItem("systemcolumn").CssClass = "locked"

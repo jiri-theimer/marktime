@@ -255,7 +255,7 @@
                 End If
             End If
             .MG_GridSqlColumns += ",a.o23ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.o23ValidFrom AND a.o23ValidUntil THEN 0 else 1 END) as IsClosed,a.o23IsDraft as IsDraft"
-            .MG_GridSqlColumns += ",a.o23IsEncrypted as o23IsEncrypted_Grid,a.o23LockedFlag as o23LockedFlag_Grid,a.b02ID,b02.b02Color"
+            .MG_GridSqlColumns += ",a.o23IsEncrypted as o23IsEncrypted_Grid,a.o23LockedFlag as o23LockedFlag_Grid,a.b02ID,b02.b02Color,convert(bit,case when o27.o27ExistInt=1 then 1 else 0 end) as IsO27"
         End With
 
         
@@ -377,6 +377,7 @@
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID"
         s += " LEFT OUTER JOIN o23Notepad_FreeField o23free ON a.o23ID=o23free.o23ID"
+        s += " LEFT OUTER JOIN (select distinct o23ID,1 as o27ExistInt FROM o27Attachment WHERE o23ID IS NOT NULL) o27 ON a.o23ID=o27.o23ID"
         If Not mq Is Nothing Then
             If mq.MG_AdditionalSqlFROM <> "" Then s += " " & mq.MG_AdditionalSqlFROM
         End If

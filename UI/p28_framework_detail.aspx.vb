@@ -129,20 +129,25 @@ Public Class p28_framework_detail
             If .p28CompanyShortName > "" Then
                 Me.Contact.Text += "<div style='color:green;'>" & .p28CompanyName & "</div>"
             End If
-            If .p28RegID <> "" Or .p28VatID <> "" Then
-                Me.linkIC.Text = .p28RegID : linkARES.Visible = False
-                If Len(.p28RegID) = 8 And (UCase(Left(.p28VatID, 2)) = "CZ" Or .p28VatID = "") Then
-                    Me.linkIC.NavigateUrl = "https://or.justice.cz/ias/ui/rejstrik-$firma?ico=" & .p28RegID.Replace(" ", "")
-                    Me.linkARES.NavigateUrl = "http://wwwinfo.mfcr.cz/cgi-bin/ares/darv_res.cgi?ico=" & .p28RegID & "&jazyk=cz&xml=1"
-                    linkARES.Visible = True
+            If .p28RegID <> "" Or .p28VatID <> "" Or .p28Person_BirthRegID <> "" Then
+                Dim cM As New BO.SubjectMonitoring(cRec)
+                If .p28RegID <> "" Then
+                    Me.linkIC.Visible = True
+                    Me.linkIC.Text = .p28RegID
+                    Me.linkIC.NavigateUrl = cM.JusticeUrl : Me.linkIC.ToolTip = cM.JusticeName
+                    Me.linkARES.NavigateUrl = cM.AresUrl
+                    If Me.linkARES.NavigateUrl <> "" Then Me.linkARES.Visible = True
                 End If
-                If .p28RegID <> "" And (UCase(Left(.p28VatID, 2)) = "SK") Then
-                    Me.linkIC.NavigateUrl = "http://www.orsr.sk/hladaj_ico.asp?ICO=" & .p28RegID
-                    linkIC.ToolTip = "OBCHODNÝ REGISTER | MINISTERSTVO SPRAVODLIVOSTI SLOVENSKEJ REPUBLIKY"
+                If .p28VatID <> "" Then
+                    Me.linkDIC.Visible = True
+                    Me.linkDIC.Text = .p28VatID
+                    Me.linkDIC.NavigateUrl = "javascript:vat_info('" & .p28VatID & "')"
                 End If
-
-                Me.linkDIC.Text = .p28VatID
-                If .p28VatID <> "" Then Me.linkDIC.NavigateUrl = "javascript:vat_info('" & .p28VatID & "')"
+                If cM.IsirUrl > "" Then
+                    Me.linkISIR.Visible = True : Me.linkISIR.NavigateUrl = cM.IsirUrl
+                End If
+                
+              
             Else
                 trICDIC.Visible = False
             End If

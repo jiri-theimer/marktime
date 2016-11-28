@@ -71,7 +71,7 @@ Public Class o23_subgrid
 
 
     Private Sub gridO23_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles gridO23.ItemDataBound
-        basUIMT.o23_grid_Handle_ItemDataBound(sender, e, True, True)
+        basUIMT.o23_grid_Handle_ItemDataBound(sender, e, True)
         If _curIsExport Then
             If TypeOf e.Item Is GridHeaderItem Then
                 e.Item.BackColor = Drawing.Color.Silver

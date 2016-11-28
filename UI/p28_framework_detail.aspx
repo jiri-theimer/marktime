@@ -374,10 +374,11 @@
 
                         </td>
                         <td>
-                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz"></asp:HyperLink>
-                           <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank"></asp:HyperLink>
+                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false"></asp:HyperLink>
+                           <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank" visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="linkISIR" runat="server" Text="ISIR" Target="_blank" Visible="false" ToolTip="Insolvenční restřík | JUSTICE.cz"></asp:HyperLink>
                             <span style="margin-left:20px;">DIČ:</span>
-                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech"></asp:HyperLink>
+                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false"></asp:HyperLink>
                             
                         </td>
                     </tr>

@@ -169,7 +169,7 @@
             Case BO.x29IdEnum.p28Contact
                 basUIMT.p28_grid_Handle_ItemDataBound(sender, e, True, True)
             Case BO.x29IdEnum.o23Notepad
-                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, False, True)
+                basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, True)
             Case BO.x29IdEnum.p56Task
                 basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, True)
             Case BO.x29IdEnum.p91Invoice

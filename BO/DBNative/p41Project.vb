@@ -144,7 +144,7 @@ Public Class p41Project
     End Property
     Public ReadOnly Property PrefferedName As String
         Get
-            If Me.p41NameShort Then Return Me.p41NameShort
+            If Me.p41NameShort <> "" Then Return Me.p41NameShort
             Return Me.p41Name
         End Get
     End Property
