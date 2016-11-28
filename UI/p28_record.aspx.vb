@@ -22,6 +22,11 @@
                     .neededPermission = BO.x53PermValEnum.GR_P28_Creator
                     .neededPermissionIfSecond = BO.x53PermValEnum.GR_P28_Draft_Creator
                 End If
+                With .Factory.j03UserBL
+                    .InhaleUserParams("p28_record-chkWhisper")
+                    Me.chkWhisper.Checked = BO.BAS.BG(.GetUserParam("p28_record-chkWhisper", "1"))
+                End With
+
             End With
             Me.p29ID.DataSource = Master.Factory.p29ContactTypeBL.GetList(New BO.myQuery)
             Me.p29ID.DataBind()
@@ -583,7 +588,7 @@
         Else
             p28IsCompany.SelectedIndex = 0
             Me.p28CompanyName.Text = cRec.Company
-            Me.p28VatID.Text = cRec.DIC
+            If Me.p28VatID.Text = "" Then Me.p28VatID.Text = cRec.DIC
             SaveTempO37()
             Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o37"))
             Dim cTemp As New BO.p85TempBox()
@@ -637,5 +642,70 @@
     Private Sub p63ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p63ID.NeedMissingItem
         Dim cRec As BO.p63Overhead = Master.Factory.p63OverheadBL.Load(CInt(strFoundedMissingItemValue))
         If Not cRec Is Nothing Then strAddMissingItemText = cRec.NameWithRate
+    End Sub
+
+    Private Sub cmdVIES_Click(sender As Object, e As EventArgs) Handles cmdVIES.Click
+        Dim strVAT As String = Trim(Me.p28VatID.Text)
+        If strVAT = "" Then
+            Master.Notify("Musíte vyplnit DIČ.", NotifyLevel.WarningMessage)
+            Return
+        End If
+        Dim bolValid As Boolean = False, strName As String = "", strAddress = ""
+        Try
+            Dim c As New VatService.checkVatPortTypeClient
+            c.checkVat(Left(strVAT, 2), Right(strVAT, Len(strVAT) - 2), bolValid, strName, strAddress)
+            If Not bolValid Then
+                Master.Notify("Neplatné DIČ", NotifyLevel.ErrorMessage)
+                Return
+            End If
+        Catch ex As Exception
+            Master.Notify("VIES web service, Error: " & ex.Message, NotifyLevel.ErrorMessage)
+            Return
+        End Try
+        Me.p28VatID.Text = strVAT
+        p28IsCompany.SelectedIndex = 0
+        Me.p28CompanyName.Text = strName
+
+        SaveTempO37()
+        Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o37"))
+        Dim cTemp As New BO.p85TempBox()
+        If lisTemp.Where(Function(p) p.p85FreeText09 = "vies").Count > 0 Then
+            cTemp = lisTemp(0)
+        End If
+        Dim a() As String = Split(strAddress & Chr(10) & Chr(10), Chr(10))
+        If Len(strAddress) > 10 Then
+            With cTemp
+                .p85GUID = ViewState("guid_o37")
+                .p85OtherKey1 = BO.o36IdEnum.InvoiceAddress
+                .p85FreeText01 = a(1) 'město na druhém místě
+                .p85FreeText02 = a(0)   'ulice na prvním místě
+
+                Select Case Left(strVAT, 2)
+                    Case "CZ"
+                        .p85FreeText04 = "Česká republika"
+                        If Len(a(2)) >= 6 Then .p85FreeText03 = Trim(Left(a(2), 6)) 'psč
+                    Case "SK"
+                        .p85FreeText04 = "Slovenská republika"
+                        .p85FreeText03 = Trim(Left(a(1), 6)) 'psč u slováků brát z ulice
+                        .p85FreeText01 = Trim(Replace(.p85FreeText01, Left(a(1), 6), ""))  'město
+                    Case "DE" : .p85FreeText04 = "Bundesrepublik Deutschland"
+                    Case "AT" : .p85FreeText04 = "Republik Österreich"
+                    Case Else
+
+                End Select
+
+                .p85FreeText09 = "vies"
+            End With
+
+            Master.Factory.p85TempBoxBL.Save(cTemp)
+        Else
+            Master.Notify("Subjekt byl nalezen v registru VIES, ale adresu nelze načíst.", NotifyLevel.InfoMessage)
+        End If
+        
+        RefreshTempO37()
+    End Sub
+
+    Private Sub chkWhisper_CheckedChanged(sender As Object, e As EventArgs) Handles chkWhisper.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p28_record-chkWhisper", BO.BAS.GB(Me.chkWhisper.Checked))
     End Sub
 End Class

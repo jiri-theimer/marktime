@@ -183,8 +183,7 @@
             </div>
             <div class="div6">
                 <asp:CheckBox ID="chkAutoFilter" runat="server" Text="Nabízet nad sloupci filtrování dat" AutoPostBack="true" CssClass="chk" />
-                <asp:CheckBox ID="chkUseInternalApproving" runat="server" Text="Využívat i interní (vnitropodnikové) schvalování" AutoPostBack="true" CssClass="chk" />
-                <asp:CheckBox ID="chkStaticHeaders" runat="server" Text="Nadpisy sloupců ukotvovat nahoře" AutoPostBack="true" CssClass="chk" />
+                <asp:CheckBox ID="chkUseInternalApproving" runat="server" Text="Využívat i interní (vnitropodnikové) schvalování" AutoPostBack="true" CssClass="chk" />                
             </div>
             <fieldset>
                 <legend>Souhrny</legend>
@@ -282,7 +281,7 @@
             </tr>
         </table>
     </div>
-  
+    <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
     <div style="clear:both;"></div>
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr valign="top">
@@ -305,7 +304,7 @@
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-    <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+    
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />

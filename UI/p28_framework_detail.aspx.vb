@@ -118,27 +118,35 @@ Public Class p28_framework_detail
         With cRec
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p28Name, "p28_framework_detail.aspx?pid=" & Master.DataPID.ToString, .IsClosed)
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
+
             Me.Contact.Text = .p28Name
             If .p28Code <> "" Then
                 Me.Contact.Text += " <span style='color:gray;padding-left:10px;'>" & .p28Code & "</span>"
             End If
+            If .p28ParentID > 0 Then Me.Contact.ForeColor = basUIMT.ChildProjectColor
+
 
             If .p28CompanyShortName > "" Then
                 Me.Contact.Text += "<div style='color:green;'>" & .p28CompanyName & "</div>"
             End If
             If .p28RegID <> "" Or .p28VatID <> "" Then
-                Me.linkIC.Text = .p28RegID
-                If .p28RegID.Replace(" ", "").Length = 8 Then
+                Me.linkIC.Text = .p28RegID : linkARES.Visible = False
+                If Len(.p28RegID) = 8 And (UCase(Left(.p28VatID, 2)) = "CZ" Or .p28VatID = "") Then
                     Me.linkIC.NavigateUrl = "https://or.justice.cz/ias/ui/rejstrik-$firma?ico=" & .p28RegID.Replace(" ", "")
                     Me.linkARES.NavigateUrl = "http://wwwinfo.mfcr.cz/cgi-bin/ares/darv_res.cgi?ico=" & .p28RegID & "&jazyk=cz&xml=1"
-                Else
-                    linkARES.Visible = False
+                    linkARES.Visible = True
                 End If
-                Me.p28VatID.Text = .p28VatID
+                If .p28RegID <> "" And (UCase(Left(.p28VatID, 2)) = "SK") Then
+                    Me.linkIC.NavigateUrl = "http://www.orsr.sk/hladaj_ico.asp?ICO=" & .p28RegID
+                    linkIC.ToolTip = "OBCHODNÝ REGISTER | MINISTERSTVO SPRAVODLIVOSTI SLOVENSKEJ REPUBLIKY"
+                End If
+
+                Me.linkDIC.Text = .p28VatID
+                If .p28VatID <> "" Then Me.linkDIC.NavigateUrl = "javascript:vat_info('" & .p28VatID & "')"
             Else
                 trICDIC.Visible = False
             End If
-            
+
             If .p29ID > 0 Then
                 Me.p29Name.Text = "[" & .p29Name & "]"
             End If

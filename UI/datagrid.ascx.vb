@@ -69,7 +69,6 @@ Public Class datagrid
             If value > 100000 Then
                 grid1.PagerStyle.Mode = GridPagerMode.NumericPages
 
-
             Else
                 grid1.PagerStyle.Mode = GridPagerMode.NextPrevAndNumeric
             End If
@@ -257,11 +256,11 @@ Public Class datagrid
                 .FirstPageToolTip = "První strana"
                 .PrevPageToolTip = "Předchozí strana"
                 .NextPageToolTip = "Další strana"
-                .PagerTextFormat = "{4} Strana {0} z {1}, záznam {2} až {3} z {5}"
+                .PagerTextFormat = "{4} Strana {0}/{1}, {2} - {3} z {5}"
             End If
             
         End With
-
+        
 
 
         With grid1.MasterTableView

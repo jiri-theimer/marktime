@@ -7,6 +7,7 @@ Public Class NameValue
     Public Property Closed As String = "0"
     Public Property FilterString As String
     Public Property Draft As String = "0"
+    Public Property Italic As String = "0"
 End Class
 Public Class handler_search_project
     Implements System.Web.IHttpHandler

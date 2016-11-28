@@ -65,25 +65,36 @@
         }
 
         function RowDoubleClick_p41(sender, args) {
-            var pid = document.getElementById("<%=hiddatapid_p41.ClientID%>").value;
-            window.open("p41_framework.aspx?pid=" + pid, "_top");
+            p41_framework();
         }
 
-
-
-        function p41_record(pid) {
-            window.parent.sw_decide("p41_record.aspx?pid=" + pid, "Images/project.png", true);
-
-
-        }
-        function p41_clone() {
-
+        function p41_framework() {
             var pid = document.getElementById("<%=hiddatapid_p41.ClientID%>").value;
             if (pid == "" || pid == null) {
                 alert("Není vybrán záznam.");
                 return;
             }
-            window.parent.sw_decide("p41_record.aspx?clone=1&pid=" + pid, "Images/project.png", true);
+            window.open("p41_framework.aspx?pid=" + pid, "_top");
+        }
+
+
+        
+        function p41_create(is_clone) {            
+            var s = "p41_create.aspx?source=subform";
+            <%If Me.CurrentMasterPrefix="p28" then%>
+            s = s + "&p28id=<%=Me.CurrentMasterPID%>";
+            <%end If%>
+            if (is_clone == true) {
+                var pid = document.getElementById("<%=hiddatapid_p41.ClientID%>").value;
+
+                if (pid == "" || pid == null) {
+                    alert("Není vybrán záznam.");
+                    return;
+                }
+                s = s + "&clone=1&pid=" + pid;
+            }                                                 
+
+            window.parent.sw_decide(s, "Images/project.png", true);
 
         }
     </script>
@@ -109,16 +120,22 @@
             <asp:ListItem Text="Pouze otevřené projekty" Value="2"></asp:ListItem>
             <asp:ListItem Text="Pouze přesunuté do archivu" Value="3"></asp:ListItem>
         </asp:DropDownList>
+        <asp:DropDownList ID="x67ID" runat="server" AutoPostBack="true" DataTextField="x67Name" DataValueField="pid" style="max-width:220px;"></asp:DropDownList>
+
+        
     </div>
     <div class="commandcell" style="margin-left: 10px;">
         <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                     <Items>
-                        <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p41_record(0,false)"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p41_clone()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Detail (Dvoj-klik)" Value="detail" NavigateUrl="javascript:p41_framework()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p41_create(false)"></telerik:RadMenuItem>                        
+                        <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p41_create(true)"></telerik:RadMenuItem>
                     </Items>
                 </telerik:RadMenuItem>
+               
                 <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
                     <Items>
 

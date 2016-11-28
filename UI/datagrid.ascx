@@ -11,10 +11,9 @@
 
     <ClientSettings>
         <Selecting AllowRowSelect="true" />
-        <ClientEvents OnRowContextMenu="ContextSelect" OnGridCreated="GridCreated" OnCommand="OnGridCommand" />
-       
+        <ClientEvents OnRowContextMenu="ContextSelect" OnGridCreated="GridCreated" OnCommand="OnGridCommand" />        
     </ClientSettings>
-    <PagerStyle Position="Top" AlwaysVisible="false" />
+    <PagerStyle Position="Top" AlwaysVisible="false" Mode="NextPrevAndNumeric" Wrap="false" />
     <SortingSettings SortToolTip="Klikněte zde pro třídění" SortedDescToolTip="Setříděno sestupně" SortedAscToolTip="Setříděno vzestupně" />
     <FooterStyle BackColor="#bcc7d8" HorizontalAlign="Right" />
     
@@ -55,22 +54,7 @@
         }
     }
 
-    function GridCreated(sender, eventArgs) {
-        var row = sender.get_masterTableView().get_selectedItems()[0];
-
-        //if the position of the selected row is below the viewable grid area  
-        if (row) {
-            var xx = row.get_element().offsetTop + row.get_element().offsetHeight + 20;
-            //alert("top: " + xx + ", height: " + $(window).height());
-            if (xx > $(window).height()) {
-                //alert(row.get_element().getAttribute("id"));
-
-                window.location.hash = row.get_element().getAttribute("id");
-
-            }
-
-
-        }
+    function GridCreated(sender, eventArgs) {        
         
         <%If grid1.ClientSettings.Scrolling.AllowScroll Then%>
         
@@ -81,24 +65,39 @@
         var ss = self.document.getElementById("gridContainer");
         offset = $(ss).offset();
         hx1 = hx1 - offset.top;
-
+        hx1 = hx1 - 5;
         ss.style.height = hx1 + "px";       
         
         var scrollArea = sender.GridDataDiv;
         var parent = $get("gridContainer");
         var gridHeader = sender.GridHeaderDiv;
-        
-        
+                
         scrollArea.style.height = hx1 + "px";                       
         <%end if%>
         <%If grid1.ClientSettings.Scrolling.UseStaticHeaders Then%>
-        hx1 = parent.clientHeight - gridHeader.clientHeight;
+        hx1 = parent.clientHeight - gridHeader.clientHeight-20;
         <%if grid1.ShowFooter then%>
-        hx1 = hx1 - 60;
+        hx1 = hx1 - 40;
         <%End If%>
         scrollArea.style.height = hx1 + "px";
         <%end if%>
        
+
+        var row = sender.get_masterTableView().get_selectedItems()[0];
+          
+        if (row) {
+            var rowPos1 = row.get_element().offsetTop + row.get_element().offsetHeight + 20;
+            //alert("top: " + xx + ", height: " + $(window).height());
+            if (rowPos1 > $(window).height()) {
+                //alert(row.get_element().getAttribute("id"));
+
+                window.location.hash = row.get_element().getAttribute("id");
+
+            }
+
+
+        }
+
     }
 
 </script>

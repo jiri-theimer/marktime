@@ -50,6 +50,15 @@ Partial Public Class j02_record
     Protected WithEvents core As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''chkWhisper control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkWhisper As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''j02IsIntraPerson control.
     '''</summary>
     '''<remarks>
@@ -59,13 +68,13 @@ Partial Public Class j02_record
     Protected WithEvents j02IsIntraPerson As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
-    '''lblTitle control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblTitle As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''j02TitleBeforeName control.
@@ -138,15 +147,6 @@ Partial Public Class j02_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02Email As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''emailValidator control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents emailValidator As Global.System.Web.UI.WebControls.RegularExpressionValidator
 
     '''<summary>
     '''lblj02Code control.

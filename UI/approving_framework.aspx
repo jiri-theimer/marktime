@@ -24,27 +24,11 @@
 
 
 
-            InhaleGridHeight();
+
 
         });
 
-        function InhaleGridHeight() {
-            var h1 = new Number;
-            var h2 = new Number;
-            var h3 = new Number;
 
-            h1 = $(window).height();
-
-            var ss = self.document.getElementById("offsetY");
-            var offset = $(ss).offset();
-
-            h2 = offset.top;
-
-            h3 = h1 - h2 - 150;
-
-
-
-        }
 
         function periodcombo_setting() {
 
@@ -150,10 +134,10 @@
                 return;
             }
             var direction = "1";
-            <%If Me.cbxScope.SelectedValue="2" then%>
+            <%If Me.cbxScope.SelectedValue = "2" Then%>
             direction = "3";
-            <%end If%>
-            
+            <%End If%>
+
             sw_master("p31_move2bin.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids + "&direction=" + direction, "Images/bin.png", true);
         }
     </script>
@@ -166,7 +150,7 @@
             <telerik:RadTab Text="Osoby" Value="j02"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
-    <div style="background-color: white; padding: 10px;">
+    <div style="background-color: white;">
         <div style="float: left;">
             <img src="Images/approve_32.png" title="Příprava fakturačních podkladů" />
             <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Schvalovat úkony"></asp:Label>
@@ -205,9 +189,15 @@
                         </Items>
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Nastavení" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
-                        
+
                         <ContentTemplate>
-                            
+                            <div class="div6">
+                                <asp:RadioButtonList ID="cbxScrollingFlag" runat="server" RepeatDirection="Vertical" AutoPostBack="true">
+                                    <asp:ListItem Text="Pevné ukotvení záhlaví tabulky (názvy sloupců)" Value="2"></asp:ListItem>
+                                    <asp:ListItem Text="Ukotvení všeho nad tabulkou (filtrování a menu)" Value="1" Selected="true"></asp:ListItem>
+                                    <asp:ListItem Text="Bez podpory ukotvení" Value="0"></asp:ListItem>
+                                </asp:RadioButtonList>
+                            </div>
                             <div class="div6">
                                 <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
                                 <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
@@ -237,21 +227,19 @@
                     </telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenu>
-            
+
         </div>
-        
-
-        <div style="clear: both; width: 100%;"></div>
 
 
+        <div style="clear: both;"></div>
+        <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
 
 
-        <div id="offsetY"></div>
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowDblClick="RowDoubleClick" OnRowSelected="RowSelected" AllowFilteringByColumn="true"></uc:datagrid>
 
-
+    
     </div>
-    <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
+
     <asp:HiddenField ID="hidCurPID" runat="server" />
     <asp:HiddenField ID="hidCurPrefix" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />

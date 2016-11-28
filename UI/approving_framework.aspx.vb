@@ -58,6 +58,7 @@ Public Class approving_framework
                     .Add("approving_framework-j70id-p28")
                     .Add("approving_framework-j70id-j02")
                     .Add("approving_framework-chkFirstLastCount")
+                    .Add("approving_framework-cbxScrollingFlag")
                 End With
 
                 With .Factory.j03UserBL
@@ -76,6 +77,7 @@ Public Class approving_framework
                     basUI.SelectDropdownlistValue(Me.cbxScope, .GetUserParam("approving_framework-scope", "1"))
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("approving_framework-groupby-" & Me.CurrentPrefix, ""))
                     Me.chkKusovnik.Checked = BO.BAS.BG(.GetUserParam("approving_framework-kusovnik", "0"))
+                    basUI.SelectRadiolistValue(Me.cbxScrollingFlag, .GetUserParam("approving_framework-cbxScrollingFlag", "2"))
                 End With
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
@@ -116,10 +118,19 @@ Public Class approving_framework
             .AllowMultiSelect = True
             .AddCheckboxSelector()
             .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            If cbxScrollingFlag.SelectedValue <> "0" Then
+                .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+            End If
+            If cbxScrollingFlag.SelectedValue = "2" Then
+                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+            End If
+
+
+            .radGridOrig.ShowFooter = True
 
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
-                    .AddSystemColumn(10)
+                    .AddSystemColumn(25)
                     If Me.cbxGroupBy.SelectedValue <> "Client" Then
                         .AddColumn("Client", "Klient")
                     End If
@@ -127,7 +138,7 @@ Public Class approving_framework
                     .AddColumn("Project", "Projekt")
 
                 Case BO.x29IdEnum.p28Contact
-                    .AddSystemColumn(10)
+                    .AddSystemColumn(25)
                     .AddColumn("Client", "Klient")
                 Case BO.x29IdEnum.j02Person
                     .AddColumn("Person", "Osoba")
@@ -299,16 +310,8 @@ Public Class approving_framework
 
     Private Sub cmdHardRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdHardRefreshOnBehind.Click
         Select Case Me.hidHardRefreshFlag.Value
-            Case "pdf"
-                With grid1.radGridOrig.ExportSettings.Pdf
-                    .PageWidth = Unit.Parse("297mm")
-                    .PageHeight = Unit.Parse("210mm")
-                End With
-                grid1.radGridOrig.ExportToPdf()
-            Case "xls"
-                grid1.radGridOrig.MasterTableView.ExportToExcel()
-            Case "doc"
-                grid1.radGridOrig.MasterTableView.ExportToWord()
+            Case "pdf", "xls", "doc"
+                basUIMT.Handle_GridTelerikExport(grid1, Me.hidHardRefreshFlag.Value)
             Case "j70-run"
                 ReloadPage()
             Case Else
@@ -344,6 +347,11 @@ Public Class approving_framework
 
     Private Sub chkFirstLastCount_CheckedChanged(sender As Object, e As EventArgs) Handles chkFirstLastCount.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("approving_framework-chkFirstLastCount", BO.BAS.GB(Me.chkFirstLastCount.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub cbxScrollingFlag_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxScrollingFlag.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("approving_framework-cbxScrollingFlag", Me.cbxScrollingFlag.SelectedValue)
         ReloadPage()
     End Sub
 End Class

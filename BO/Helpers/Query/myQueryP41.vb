@@ -59,4 +59,5 @@ Public Class myQueryP41
     Public Property j02ID_ContactPerson As Integer          'Kontaktní osoba projektu nebo klienta projektu
 
     Public Property x25ID As Integer    'štítek
+    Public Property x67ID_ProjectRole As Integer    'projektová role
 End Class

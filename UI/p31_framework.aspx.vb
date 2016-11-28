@@ -201,6 +201,9 @@ Public Class p31_framework
                 Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
             End If
             hidFrom.Value = strAddSqlFrom
+            If cJ74.j74ScrollingFlag > BO.j74ScrollingFlagENUM.NoScrolling Then
+                navigationPane.Scrolling = SplitterPaneScrolling.None
+            End If
 
             If tabs1.SelectedIndex = 1 Or tabs1.SelectedIndex = 3 Then grid1.AllowFilteringByColumn = False 'v top10 a v oblíbených se nefiltruje
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn

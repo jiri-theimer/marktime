@@ -11,169 +11,133 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class entity_framework_p41subform
+Partial Public Class vat_registration
 
     '''<summary>
-    '''lblHeaderP41 control.
+    '''txtDIC control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblHeaderP41 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents txtDIC As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cbxGroupBy control.
+    '''cmdVerify control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cmdVerify As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''cbxValidity control.
+    '''vies_error control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxValidity As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents vies_error As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x67ID control.
+    '''vies_country control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x67ID As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents vies_country As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''recmenu1 control.
+    '''vies_vatnumber control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents vies_vatnumber As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxPaging control.
+    '''vies_isvalid control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents vies_isvalid As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''panExport control.
+    '''vies_name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents vies_name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdExport control.
+    '''vies_address control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents vies_address As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdXLS control.
+    '''mf_error control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents mf_error As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdPDF control.
+    '''dic_mf control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents dic_mf As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdDOC control.
+    '''nespolehlivyPlatce control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents nespolehlivyPlatce As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''grid1 control.
+    '''bankovni_ucet control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents grid1 As Global.UI.datagrid
+    Protected WithEvents bankovni_ucet As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''hidDefaultSorting control.
+    '''bankovni_ucet_datum control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents bankovni_ucet_datum As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''hidCols control.
+    '''fu_mf control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidFrom control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidMasterPrefix control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidMasterPID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hiddatapid_p41 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hiddatapid_p41 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents fu_mf As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Master property.
@@ -181,9 +145,9 @@ Partial Public Class entity_framework_p41subform
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
+    Public Shadows ReadOnly Property Master() As UI.ModalForm
         Get
-            Return CType(MyBase.Master, UI.Clue)
+            Return CType(MyBase.Master, UI.ModalForm)
         End Get
     End Property
 End Class

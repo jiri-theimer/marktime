@@ -219,6 +219,10 @@
 
             AdjustHeight();
         }
+        function vat_info(vat) {            
+            sw_decide("vat_registration.aspx?vat="+vat,"Images/help_32.png",false);
+
+        }
        
         function page_setting(){
             sw_decide("entity_framework_detail_setting.aspx?prefix=p28", "Images/setting_32.png",false);
@@ -310,6 +314,17 @@
             <div class="content">
                 <div style="float:left;">
                 <table cellpadding="10" cellspacing="2" id="responsive">
+                    <tr id="trParent" runat="server" visible="false">
+                        <td>
+                            <asp:Label ID="Label3" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
+
+                        </td>
+                        <td>                            
+                            <asp:HyperLink ID="ParentContact" runat="server" Target="_top"></asp:HyperLink>
+
+                        </td>
+
+                    </tr>
                     <tr valign="top">
                         <td >
                             <asp:Label ID="lblContact" runat="server" Text="Název:" CssClass="lbl"></asp:Label>
@@ -330,17 +345,7 @@
 
 
                     </tr>
-                    <tr id="trParent" runat="server" visible="false">
-                        <td>
-                            <asp:Label ID="Label3" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
-
-                        </td>
-                        <td>                            
-                            <asp:HyperLink ID="ParentContact" runat="server" Target="_top"></asp:HyperLink>
-
-                        </td>
-
-                    </tr>
+                    
                     <tr id="trWorkflow" runat="server" visible="false">
                         <td>
                             <asp:Label ID="lblB02ID" runat="server" Text="Workflow stav:" CssClass="lbl"></asp:Label>
@@ -365,13 +370,15 @@
                     </tr>
                     <tr valign="top" id="trICDIC" runat="server">
                         <td>
-                            <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="IČ / DIČ:"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="IČ:"></asp:Label>
 
                         </td>
                         <td>
                             <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz"></asp:HyperLink>
-                           <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank"></asp:HyperLink>        
-                            <asp:Label ID="p28VatID" runat="server" CssClass="valbold"></asp:Label>
+                           <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank"></asp:HyperLink>
+                            <span style="margin-left:20px;">DIČ:</span>
+                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech"></asp:HyperLink>
+                            
                         </td>
                     </tr>
                 </table>

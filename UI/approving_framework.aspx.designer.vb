@@ -86,6 +86,15 @@ Partial Public Class approving_framework
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
+    '''cbxScrollingFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxScrollingFlag As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
     '''lblPaging control.
     '''</summary>
     '''<remarks>
@@ -131,15 +140,6 @@ Partial Public Class approving_framework
     Protected WithEvents chkFirstLastCount As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''grid1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents grid1 As Global.UI.datagrid
-
-    '''<summary>
     '''cmdHardRefreshOnBehind control.
     '''</summary>
     '''<remarks>
@@ -147,6 +147,15 @@ Partial Public Class approving_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdHardRefreshOnBehind As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''grid1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
     '''hidCurPID control.

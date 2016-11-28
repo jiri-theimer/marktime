@@ -610,6 +610,10 @@ Public Class p41_framework_detail
             If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
             cti(s, "p91")
         End If
+        If crs.childs_Count > 0 Then
+            s = "Pod-projekty<span class='badge1'>" & crs.childs_Count.ToString & "</span>"
+            cti(s, "p41")
+        End If
         If cP42.p42IsModule_p56 Then
             s = "Úkoly"
             If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
@@ -629,6 +633,7 @@ Public Class p41_framework_detail
             s = "Komentáře a workflow<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
             cti(s, "workflow")
         End If
+        
     End Sub
 
    

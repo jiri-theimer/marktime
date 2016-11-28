@@ -326,7 +326,7 @@
                 
                 <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>                
 
-                <asp:HyperLink ID="cmdChilds" runat="server" Text="Podřízené projekty" NavigateUrl="javascript:childs()" Visible="false" style="float:right;"></asp:HyperLink>
+                
                 <asp:HyperLink ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" NavigateUrl="javascript:favourite()" style="float:right;border-radius:5px;border:solid 1px gray;"></asp:HyperLink>
                 
                 
@@ -351,7 +351,7 @@
                         </td>
                         <td>
 
-                            <asp:Label ID="Project" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Label ID="Project" runat="server" CssClass="valbold"></asp:Label>                            
                             <asp:Image ID="imgFlag_Project" runat="server" />
                             <asp:Image ID="imgDraft" runat="server" ImageUrl="Images/draft_icon.gif" Visible="false" AlternateText="DRAFT záznam" Style="float: right;" />
                             <asp:Panel ID="panDraftCommands" runat="server" Visible="false">
@@ -359,6 +359,9 @@
                                     Převést z režimu DRAFT na oficiální záznam
                                 </button>
                             </asp:Panel>
+                            <div>
+                                <asp:HyperLink ID="cmdChilds" runat="server" Text="Pod-projekty" NavigateUrl="javascript:childs()" Visible="false"></asp:HyperLink>
+                            </div>
                         </td>
 
                     </tr>

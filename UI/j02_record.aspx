@@ -8,6 +8,8 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+        <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
+    <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:HiddenField ID="hidGUID" runat="server" />
@@ -23,7 +25,10 @@
         <telerik:RadPageView ID="core" runat="server" Selected="true">
 
             <div class="content-box2">
-                <div class="title">Typ osobního profilu</div>
+                <div class="title">
+                    Typ osobního profilu
+                    <asp:CheckBox ID="chkWhisper" runat="server" Text="Zapnutý našeptávač podobných osob" AutoPostBack="true" Checked="true" style="float:right;" />
+                </div>
                 <div class="content">
                     <asp:RadioButtonList ID="j02IsIntraPerson" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
                         <asp:ListItem Text="<%$ Resources:j02_record, j02IsIntraPerson_1 %>" Value="1" Selected="true"></asp:ListItem>
@@ -32,41 +37,32 @@
 
                 </div>
             </div>
+            <div class="div6">
+            </div>
+
             <table cellpadding="5" cellspacing="2">
                 <tr>
-                    <td style="width: 140px;">
-                        <asp:Label ID="lblTitle" Text="Titul:" runat="server" CssClass="lbl" AssociatedControlID="j02TitleBeforeName" meta:resourcekey="lblTitle"></asp:Label>
+                    <td>
+                        <asp:Label ID="Label1" Text="Osoba:" runat="server" CssClass="lblReq"></asp:Label>
                     </td>
                     <td>
-                        <uc:datacombo ID="j02TitleBeforeName" runat="server" Width="70px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains" DefaultValues="Bc.;BcA.;Ing.;Ing.arch.;MUDr.;MVDr.;MgA.;Mgr.;JUDr.;PhDr.;RNDr.;PharmDr.;ThLic.;ThDr.;Ph.D.;Th.D.;prof.;doc.;PaedDr.;Dr.;PhMr."></uc:datacombo>
-                    </td>
-                    <td>
+                        <uc:datacombo ID="j02TitleBeforeName" runat="server" Width="80px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains" DefaultValues="Bc.;BcA.;Ing.;Ing.arch.;MUDr.;MVDr.;MgA.;Mgr.;JUDr.;PhDr.;RNDr.;PharmDr.;ThLic.;ThDr.;Ph.D.;Th.D.;prof.;doc.;PaedDr.;Dr.;PhMr."></uc:datacombo>
                         <asp:Label ID="lblFirstName" Text="Jméno:" runat="server" CssClass="lblReq" AssociatedControlID="j02FirstName" meta:resourcekey="lblFirstName"></asp:Label>
-                    </td>
-                    <td>
                         <asp:TextBox ID="j02FirstName" runat="server" Style="width: 100px;"></asp:TextBox>
-                    </td>
-                    <td>
                         <asp:Label ID="lblLastName" Text="Příjmení:" runat="server" CssClass="lblReq" AssociatedControlID="j02LastName" meta:resourcekey="lblLastName"></asp:Label>
-                    </td>
-                    <td>
                         <asp:TextBox ID="j02LastName" runat="server" Style="width: 160px;"></asp:TextBox>
-                    </td>
-                    <td>
                         <uc:datacombo ID="j02TitleAfterName" runat="server" Width="70px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains" DefaultValues="CSc.;DrSc.;dr. h. c.;DiS."></uc:datacombo>
+                        
+                        
                     </td>
                 </tr>
-            </table>
-            <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td style="width: 140px;">
                         <asp:Label ID="lblj02Email" Text="E-mail adresa:" runat="server" CssClass="lblReq" AssociatedControlID="j02Email" meta:resourcekey="lblj02Email"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="j02Email" runat="server" Style="width: 300px;"></asp:TextBox>
-                        <div>
-                            <asp:RegularExpressionValidator ID="emailValidator" runat="server" Display="Dynamic" ForeColor="Red" ErrorMessage="Zadejte validní e-mail adresu." ValidationExpression="^[\w\.\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]{1,})*(\.[a-zA-Z]{2,6}){1,2}$" ControlToValidate="j02Email"></asp:RegularExpressionValidator>
-                        </div>
+                        
 
 
                     </td>
@@ -77,6 +73,11 @@
                     </td>
                     <td>
                         <asp:TextBox ID="j02Code" runat="server" Style="width: 300px;"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="search_dupl_result" style="position:relative;left:0px;top:0px;z-index:1000px;"></div>
                     </td>
                 </tr>
                 <tr>
@@ -210,25 +211,25 @@
             <fieldset>
                 <legend>Omezení zpětně zapisovat hodiny</legend>
 
-                <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl" ></asp:Label>
+                <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl"></asp:Label>
                 <asp:DropDownList ID="j02TimesheetEntryDaysBackLimit" runat="server">
-                            <asp:ListItem Value="" Text="Bez omezení"></asp:ListItem>
-                            <asp:ListItem Value="999" Text="Povolen pouze aktuální týden"></asp:ListItem>
-                            <asp:ListItem Value="1" Text="-1 den"></asp:ListItem>
-                            <asp:ListItem Value="2" Text="-2 dny"></asp:ListItem>
-                            <asp:ListItem Value="3" Text="-3 dny"></asp:ListItem>
-                            <asp:ListItem Value="4" Text="-4 dny"></asp:ListItem>
-                            <asp:ListItem Value="5" Text="-5 dní"></asp:ListItem>
-                            <asp:ListItem Value="6" Text="-6 dní"></asp:ListItem>
-                            <asp:ListItem Value="7" Text="-7 dní"></asp:ListItem>
-                            <asp:ListItem Value="8" Text="-8 dní"></asp:ListItem>
-                            <asp:ListItem Value="9" Text="-9 dní"></asp:ListItem>
-                            <asp:ListItem Value="10" Text="-10 dní"></asp:ListItem>
-                            <asp:ListItem Value="14" Text="-14 dní"></asp:ListItem>
-                            <asp:ListItem Value="20" Text="-20 dní"></asp:ListItem>
-                            <asp:ListItem Value="30" Text="-30 dní"></asp:ListItem>
-                        </asp:DropDownList>
-                <div style="margin-top:10px;">
+                    <asp:ListItem Value="" Text="Bez omezení"></asp:ListItem>
+                    <asp:ListItem Value="999" Text="Povolen pouze aktuální týden"></asp:ListItem>
+                    <asp:ListItem Value="1" Text="-1 den"></asp:ListItem>
+                    <asp:ListItem Value="2" Text="-2 dny"></asp:ListItem>
+                    <asp:ListItem Value="3" Text="-3 dny"></asp:ListItem>
+                    <asp:ListItem Value="4" Text="-4 dny"></asp:ListItem>
+                    <asp:ListItem Value="5" Text="-5 dní"></asp:ListItem>
+                    <asp:ListItem Value="6" Text="-6 dní"></asp:ListItem>
+                    <asp:ListItem Value="7" Text="-7 dní"></asp:ListItem>
+                    <asp:ListItem Value="8" Text="-8 dní"></asp:ListItem>
+                    <asp:ListItem Value="9" Text="-9 dní"></asp:ListItem>
+                    <asp:ListItem Value="10" Text="-10 dní"></asp:ListItem>
+                    <asp:ListItem Value="14" Text="-14 dní"></asp:ListItem>
+                    <asp:ListItem Value="20" Text="-20 dní"></asp:ListItem>
+                    <asp:ListItem Value="30" Text="-30 dní"></asp:ListItem>
+                </asp:DropDownList>
+                <div style="margin-top: 10px;">
                     <label class="lbl">Výběr časových sešitů</label>
                     <uc:datacombo ID="j02TimesheetEntryDaysBackLimit_p34IDs" DataValueField="pid" DataTextField="p34Name" runat="server" AllowCheckboxes="true" Width="200px" />
                 </div>
@@ -236,7 +237,7 @@
                 <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony. Omezení se vztahuje na osobu zapisovače úkonu, nikoliv na osobu záznamu úkonu.</span>
             </fieldset>
             <table cellpadding="5" cellspacing="2">
-                
+
                 <tr>
                     <td>
                         <asp:Label ID="lblj02RobotAddress" runat="server" Text="Adresa pro IMAP robota:" CssClass="lbl" meta:resourcekey="lblj02RobotAddress"></asp:Label>
@@ -264,4 +265,66 @@
     </telerik:RadMultiPage>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
+    <script type="text/javascript">
+        <%If Me.chkWhisper.Checked Then%>
+        $(function () {
+
+            $("#<%=Me.j02LastName.ClientID%>").autocomplete({
+                source: "Handler/handler_search_person.ashx?fo=j02LastName",
+                minLength: 1,
+                select: function (event, ui) {
+                    if (ui.item) {
+                        dialog_master("clue_j02_record.aspx?pid=" + ui.item.PID, false)
+                        return false;
+                    }
+                },
+                open: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                       .removeAttr('style').hide()
+                       .appendTo('#search_dupl_result').show();
+                },
+                close: function (event, ui) {
+                    $('ul.ui-autocomplete')
+                    .html("")
+                    .hide();
+                }
+
+
+
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                var s = "<div style='background-color:khaki;width:500px;'>";
+                if (item.Closed == "1")
+                    s = s + "<a style='text-decoration:line-through;'>";
+                else
+                    s = s + "<a>";
+
+                s = s + __highlight(item.Project, item.FilterString);
+
+
+                s = s + "</a>";
+
+                if (item.Italic == "1")
+                    s = "<i>" + s + "</i>"
+
+                s = s + "</div>";
+
+
+                return $(s).appendTo(ul);
+
+
+            };
+        });
+
+        
+        
+       
+
+        function __highlight(s, t) {
+            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
+            return s.replace(matcher, "<strong>$1</strong>");
+        }
+
+
+       <%end if%>
+    </script>
 </asp:Content>

@@ -50,15 +50,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdChilds control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdChilds As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''cmdFavourite control.
     '''</summary>
     '''<remarks>
@@ -138,6 +129,15 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panDraftCommands As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdChilds control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdChilds As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''lblClient control.

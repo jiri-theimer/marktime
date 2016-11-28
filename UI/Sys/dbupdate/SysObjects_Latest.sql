@@ -5703,7 +5703,7 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_count int
+declare @o23_count int,@p41_actual_count int,@p41_closed_count int
 
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 ,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
@@ -5762,6 +5762,12 @@ if exists(select o23ID FROM o23Notepad WHERE p28ID=@pid)
 else
  set @o23_count=0
 
+SELECT @p41_actual_count=sum(case when getdate() BETWEEN p41ValidFrom AND p41ValidUntil then 1 end)
+,@p41_closed_count=sum(case when getdate() NOT BETWEEN p41ValidFrom AND p41ValidUntil then 1 end)
+FROM p41Project
+WHERE p28ID_Client=@pid
+ 
+
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p56_closed_count,0) as p56_Closed_Count
@@ -5779,6 +5785,8 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
 ,isnull(@b07_count,0) as b07_Count
 ,isnull(@o23_count,0) as o23_Count
+,isnull(@p41_actual_count,0) as p41_actual_count
+,isnull(@p41_closed_count,0) as p41_closed_count
 
 GO
 

@@ -77,6 +77,7 @@ Class j74SavedGridColTemplateBL
         c.j74RecordState = recState
         If c.j74MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j74MasterPrefix = "p31_grid") Or c.j74MasterPrefix = "p31_framework" Then
             c.j74IsFilteringByColumn = True 'pro hlavní přehledy nahodit sloupcový auto-filter
+            c.j74ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders    'pro hlavní přehledy nastavit ukotvení záhlaví
         End If
 
         Select Case x29id

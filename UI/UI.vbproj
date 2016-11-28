@@ -446,7 +446,6 @@
     <Content Include="j04_record.aspx" />
     <Content Include="j07_record.aspx" />
     <Content Include="j11_record.aspx" />
-    <Content Include="license.aspx" />
     <Content Include="p28_record.aspx" />
     <Content Include="p29_record.aspx" />
     <Content Include="p32_record.aspx" />
@@ -486,6 +485,7 @@
     <Content Include="timesheet_calendar.ascx" />
     <Content Include="treemenu.ascx" />
     <Content Include="person.ascx" />
+    <Content Include="vat_registration.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2491,13 +2491,6 @@
       <DependentUpon>j11_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="license.aspx.designer.vb">
-      <DependentUpon>license.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="license.aspx.vb">
-      <DependentUpon>license.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="ModalDataRecord.Master.designer.vb">
       <DependentUpon>ModalDataRecord.Master</DependentUpon>
     </Compile>
@@ -2793,6 +2786,13 @@
     </Compile>
     <Compile Include="p31_approving_step3_subform.aspx.vb">
       <DependentUpon>p31_approving_step3_subform.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="vat_registration.aspx.designer.vb">
+      <DependentUpon>vat_registration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vat_registration.aspx.vb">
+      <DependentUpon>vat_registration.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="WebForm2.aspx.designer.vb">

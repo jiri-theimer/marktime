@@ -33,12 +33,18 @@ Public Class entity_framework_p41subform
             End If
 
             ViewState("j74id") = ""
+            Dim mq As New BO.myQuery
+            mq.Closed = BO.BooleanQueryMode.FalseQuery
+            x67ID.DataSource = Master.Factory.x67EntityRoleBL.GetList(mq).Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project)
+            x67ID.DataBind()
+            x67ID.Items.Insert(0, "--Filtr podle projektové role osoby--")
             With Master.Factory.j03UserBL
                 Dim lisPars As New List(Of String), strKey As String = "entiy_framework_p41subform-j74id_" & Me.CurrentMasterPrefix
                 With lisPars
                     .Add("entiy_framework_p41subform-groupby-" & Me.CurrentMasterPrefix)
                     .Add("entiy_framework_p41subform-pagesize")
                     .Add("entiy_framework_p41subform-validity")
+                    .Add("entiy_framework_p41subform-x67id")
                     .Add(strKey)
                 End With
                 .InhaleUserParams(lisPars)
@@ -50,12 +56,17 @@ Public Class entity_framework_p41subform
                     ViewState("j74id") = cJ74.PID
                     .SetUserParam(strKey, ViewState("j74id"))
                 End If
+                basUI.SelectDropdownlistValue(Me.x67ID, .GetUserParam("entiy_framework_p41subform-x67id"))
                 basUI.SelectDropdownlistValue(Me.cbxValidity, .GetUserParam("entiy_framework_p41subform-validity", "1"))
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("entiy_framework_p41subform-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("entiy_framework_p41subform-groupby-" & Me.CurrentMasterPrefix))
             End With
-            panExport.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
-
+            With Master.Factory
+                panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)
+                recmenu1.FindItemByValue("new").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator)
+                recmenu1.FindItemByValue("clone").Visible = recmenu1.FindItemByValue("new").Visible
+            End With
+            
             SetupGrid()
         End If
 
@@ -194,6 +205,10 @@ Public Class entity_framework_p41subform
                 mq.p41ParentID = Me.CurrentMasterPID
             Case "p28"
                 mq.p28ID = Me.CurrentMasterPID
+            Case "j02"
+                mq.j02ID_ExplicitQueryFor = Me.CurrentMasterPID
+                mq.x67ID_ProjectRole = BO.BAS.IsNullInt(Me.x67ID.SelectedValue)
+
             Case Else
 
         End Select
@@ -240,5 +255,19 @@ Public Class entity_framework_p41subform
 
     Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
         GridExport("doc")
+    End Sub
+
+    
+    Private Sub x67ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles x67ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entiy_framework_p41subform-x67id", Me.x67ID.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub entity_framework_p41subform_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Me.CurrentMasterPrefix = "j02" Then
+            Me.x67ID.Visible = True
+        Else
+            Me.x67ID.Visible = False
+        End If
     End Sub
 End Class

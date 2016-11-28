@@ -2,7 +2,7 @@
 Public Class basUIMT
     Public Shared ReadOnly Property ChildProjectColor As System.Drawing.Color
         Get
-            Return Drawing.Color.Firebrick
+            Return Drawing.Color.MediumVioletRed
         End Get
     End Property
     Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String
@@ -28,9 +28,13 @@ Public Class basUIMT
             Select Case cJ74.j74ScrollingFlag
                 Case BO.j74ScrollingFlagENUM.Scrolling
                     .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+                    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
                 Case BO.j74ScrollingFlagENUM.StaticHeaders
                     .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
                     .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+                Case Else
+                    .radGridOrig.ClientSettings.Scrolling.AllowScroll = False
+                    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
             End Select
             If cJ74.j74IsVirtualScrolling Then
                 .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
@@ -366,6 +370,7 @@ Public Class basUIMT
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
             End If
+            If Not cRec.Item("ParentID") Is System.DBNull.Value Then dataItem.ForeColor = ChildProjectColor
         Else
             Dim cRec As BO.p28Contact = CType(e.Item.DataItem, BO.p28Contact)
 

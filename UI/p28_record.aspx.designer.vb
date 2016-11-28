@@ -50,6 +50,24 @@ Partial Public Class p28_record
     Protected WithEvents p28IsCompany As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
+    '''p28Code control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28Code As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''p28IsDraft control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28IsDraft As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''lblp29ID control.
     '''</summary>
     '''<remarks>
@@ -68,22 +86,13 @@ Partial Public Class p28_record
     Protected WithEvents p29ID As Global.UI.datacombo
 
     '''<summary>
-    '''p28Code control.
+    '''chkWhisper control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p28Code As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''p28IsDraft control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p28IsDraft As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents chkWhisper As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''panCompany control.
@@ -230,6 +239,15 @@ Partial Public Class p28_record
     Protected WithEvents p28VatID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cmdVIES control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdVIES As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''p28SupplierFlag control.
     '''</summary>
     '''<remarks>
@@ -363,15 +381,6 @@ Partial Public Class p28_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdAddP30 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAddP30 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''j02ID control.

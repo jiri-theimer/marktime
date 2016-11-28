@@ -21,11 +21,21 @@ Public Class handler_search_contact
         'factory.j03UserBL.InhaleUserParams("handler_search_p-toprecs", "handler_search_project-bin")
 
         'context.Response.Write("Hello World!")
-        Dim strFilterString As String = context.Request.Item("term")
+        Dim strFilterString As String = context.Request.Item("term"), strFO As String = context.Request.Item("fo")
         
         Dim mq As New BO.myQueryP28
         mq.Closed = BO.BooleanQueryMode.NoQuery
-        mq.SearchExpression = strFilterString
+        Select Case strFO
+            Case "p28Name"
+                mq.ColumnFilteringExpression = "a.p28Name LIKE '%" & strFilterString & "%'"    'hledat pouze podle názvu klienta
+            Case "p28RegID"
+                mq.ColumnFilteringExpression = "a.p28RegID LIKE '%" & strFilterString & "%'"    'hledat pouze podle IČ
+            Case "p28VatID"
+                mq.ColumnFilteringExpression = "a.p28VatID LIKE '%" & strFilterString & "%'"    'hledat pouze podle DIČ            
+            Case Else
+                mq.SearchExpression = strFilterString
+        End Select
+
         'If factory.j03UserBL.GetUserParam("handler_search_project-bin", "0") = "1" Then
         '    mq.Closed = BO.BooleanQueryMode.NoQuery
         'End If
@@ -42,8 +52,12 @@ Public Class handler_search_contact
                 Else
                     c.Project = .p28CompanyShortName & " - " & .p28CompanyName & " [" & .p28Code & "]"
                 End If
-                If .p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier Then c.Project = "<i>" & c.Project & "</i>"
+                If .p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier Then c.Italic = "1"
 
+                Select Case strFO
+                    Case "p28RegID" : c.Project = .p28RegID & " - " & c.Project
+                    Case "p28VatID" : c.Project = .p28VatID & " - " & c.Project
+                End Select
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"
                 If .p28IsDraft Then c.Draft = "1"

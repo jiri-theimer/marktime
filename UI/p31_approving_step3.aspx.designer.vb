@@ -122,15 +122,6 @@ Partial Public Class p31_approving_step3
     Protected WithEvents chkUseInternalApproving As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''chkStaticHeaders control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkStaticHeaders As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''opgGroupBy control.
     '''</summary>
     '''<remarks>
@@ -284,6 +275,15 @@ Partial Public Class p31_approving_step3
     Protected WithEvents hours_6 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cmdRefresh control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''fraSubform control.
     '''</summary>
     '''<remarks>
@@ -327,15 +327,6 @@ Partial Public Class p31_approving_step3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''cmdRefresh control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''hidMasterPrefix control.

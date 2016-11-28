@@ -54,7 +54,6 @@ Public Class p31_approving_step3
                     .Add("p31_approving-use_internal_approving")
                     .Add("p31_approving-group")
                     .Add("p31_approving-autofilter")
-                    .Add("p31_approving-static_headers")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 If .Factory.j03UserBL.GetUserParam("p31_approving-group") <> "" Then
@@ -62,7 +61,7 @@ Public Class p31_approving_step3
                 End If
                 Me.chkUseInternalApproving.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-use_internal_approving", "0"))
                 Me.chkAutoFilter.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-autofilter", "0"))
-                grid1.radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-static_headers", "0"))
+
 
                 .AddToolbarButton("Uložit změny", "save", , "Images/save.png")
 
@@ -271,11 +270,6 @@ Public Class p31_approving_step3
                 strGridHeight = intGridHeight.ToString & "px"
                 strFraheight = intFraHeight.ToString & "px"
             End If
-            With grid1.radGridOrig.ClientSettings.Scrolling
-                .AllowScroll = True
-
-                .ScrollHeight = Unit.Parse(strGridHeight)
-            End With
 
             fraSubform.Attributes.Item("height") = strFraheight
         End If
@@ -638,12 +632,7 @@ Public Class p31_approving_step3
         grid1.Rebind(True, BO.BAS.IsNullInt(Me.hiddatapid.Value))
     End Sub
 
-    Private Sub chkStaticHeaders_CheckedChanged(sender As Object, e As EventArgs) Handles chkStaticHeaders.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_approving-static_headers", BO.BAS.GB(Me.chkStaticHeaders.Checked))
-        grid1.radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = chkStaticHeaders.Checked
-        grid1.Rebind(True)
-    End Sub
-
+    
     Private Sub cmdBatch_ApprovingSet_Click(sender As Object, e As EventArgs) Handles cmdBatch_ApprovingSet.Click
         Dim strName As String = Trim(Me.p31ApprovingSet.Text)
         If strName = "" Then

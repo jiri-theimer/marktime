@@ -18,13 +18,21 @@ Public Class handler_search_person
             Return
         End If
      
-        Dim strFilterString As String = context.Request.Item("term")
+        Dim strFilterString As String = context.Request.Item("term"), strFO As String = context.Request.Item("fo")
 
         Dim mq As New BO.myQueryJ02
         ''mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
         mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
-        mq.SearchExpression = strFilterString
+
         mq.Closed = BO.BooleanQueryMode.NoQuery
+        Select Case strFO
+            Case "j02LastName"
+                mq.ColumnFilteringExpression = "a.j02LastName LIKE '%" & strFilterString & "%'"    'hledat pouze podle příjmení
+            Case "j02Email"
+                mq.ColumnFilteringExpression = "a.j02Email LIKE '%" & strFilterString & "%'"    'hledat pouze podle mailu             
+            Case Else
+                mq.SearchExpression = strFilterString
+        End Select
 
         mq.TopRecordsOnly = 10
         Dim lisJ02 As IEnumerable(Of BO.j02Person) = factory.j02PersonBL.GetList(mq)
