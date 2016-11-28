@@ -126,7 +126,7 @@ Class j74SavedGridColTemplateBL
                         c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Invoiced,p31Rate_Billing_Invoiced,p31Amount_WithoutVat_Invoiced,p31VatRate_Invoiced,p31Amount_WithVat_Invoiced,p31Text"
                     Case "approving_step3"  'schvalovací rozhraní
                         c.j74Name = "Rozhraní pro schvalování úkonů | Příprava k fakturaci"
-                        c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Orig,p31Amount_WithoutVat_Approved,p31Text,p31ApprovingSet"
+                        c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Orig,p31Amount_WithoutVat_Approved,p31Text"
                     Case "p31_grid"
                         c.j74Name = My.Resources.common.VychoziPrehled
                         c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
