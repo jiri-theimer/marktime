@@ -48,19 +48,30 @@ Public Class p41_framework_detail_budget
         If Not cDisp.p45_Read Then
             Master.StopPage("V tomto projektu nemáte přístup k rozpočtu.")
         End If
+        menu1.FindItemByValue("new").Visible = cDisp.p45_Owner
+        menu1.FindItemByValue("clone").Visible = cDisp.p45_Owner
+
         Me.cmdP45.Visible = cDisp.p45_Owner
 
         Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
         If lis.Count > 0 Then
             Me.p45ID.DataSource = lis
             Me.p45ID.DataBind()
-            cmdP45.InnerText = "Nastavení rozpočtu"
+            menu1.FindItemByValue("edit").Visible = cDisp.p45_Owner
+            menu1.FindItemByValue("new").Text = "Založit novou verzi rozpočtu"
+            menu1.FindItemByValue("clone").Text = "Založit aktuální rozpočet do nové verze"
+            menu1.FindItemByValue("new_p49").Visible = cDisp.p45_Owner
             cmdP47.Visible = cmdBudgetP46.Checked
             cmdNewP49.Visible = cmdBudgetP49.Checked : cmdConvert2P31.Visible = cmdBudgetP49.Checked
         Else
+            menu1.FindItemByValue("edit").Visible = False
+            menu1.FindItemByValue("new").Text = "Založit první rozpočet projektu"
+            menu1.FindItemByValue("clone").Visible = False
+            menu1.FindItemByValue("new_p49").Visible = False
             Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
             cmdP45.InnerText = "Založit rozpočet"
         End If
+        
     End Sub
 
 

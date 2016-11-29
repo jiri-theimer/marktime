@@ -11,124 +11,151 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p41_framework_detail_budget
+Partial Public Class p45_record
 
     '''<summary>
-    '''p45ID control.
+    '''panCreateClone control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p45ID As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents panCreateClone As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''menu1 control.
+    '''chkCloneP46 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents chkCloneP46 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''cmdP45 control.
+    '''chkCloneP47 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdP45 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents chkCloneP47 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''cmdBudgetP46 control.
+    '''chkCloneP49 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdBudgetP46 As Global.System.Web.UI.WebControls.RadioButton
+    Protected WithEvents chkCloneP49 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''cmdBudgetP49 control.
+    '''chkMakeCurrentAsFirstVersion control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdBudgetP49 As Global.System.Web.UI.WebControls.RadioButton
+    Protected WithEvents chkMakeCurrentAsFirstVersion As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''cmdP47 control.
+    '''lblVersionIndex control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdP47 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents lblVersionIndex As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdNewP49 control.
+    '''p45VersionIndex control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNewP49 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents p45VersionIndex As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdConvert2P31 control.
+    '''lblFrom control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdConvert2P31 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents lblFrom As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''gridBudget control.
+    '''p45PlanFrom control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents gridBudget As Global.UI.datagrid
+    Protected WithEvents p45PlanFrom As Global.Telerik.Web.UI.RadDatePicker
 
     '''<summary>
-    '''panP49Setting control.
+    '''lblUntil control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panP49Setting As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents lblUntil As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''chkP49GroupByP34 control.
+    '''p45PlanUntil control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkP49GroupByP34 As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents p45PlanUntil As Global.Telerik.Web.UI.RadDatePicker
 
     '''<summary>
-    '''chkP49GroupByP32 control.
+    '''Label2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkP49GroupByP32 As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''hidBudgetPID control.
+    '''p45Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidBudgetPID As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents p45Name As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''hidClonePID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidClonePID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP41ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP41ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''SharedCalendar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
 
     '''<summary>
     '''Master property.
@@ -136,9 +163,9 @@ Partial Public Class p41_framework_detail_budget
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
+    Public Shadows ReadOnly Property Master() As UI.ModalDataRecord
         Get
-            Return CType(MyBase.Master, UI.Clue)
+            Return CType(MyBase.Master, UI.ModalDataRecord)
         End Get
     End Property
 End Class

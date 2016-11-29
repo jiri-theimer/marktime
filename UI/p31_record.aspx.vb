@@ -1120,7 +1120,7 @@
 
             lblSupplier.Visible = bolVydaj : Me.p28ID_Supplier.Visible = bolVydaj : p31Code.Visible = bolVydaj : lblCode.Visible = bolVydaj
         End If
-
+        If _Project Is Nothing And p41ID.Value <> "" Then _Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(Me.p41ID.Value))
         If Not _Project Is Nothing Then
             Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(_Project.p42ID)
             If Me.chkBindToP56.Checked Then
@@ -1138,8 +1138,6 @@
             Else
                 panP49.Visible = False
             End If
-        Else
-            panP49.Visible = False
         End If
         If Me.panP49.Visible Then
             If Me.p49ID.Value <> "" Then cmdClearP49ID.Visible = True Else Me.cmdClearP49ID.Visible = False

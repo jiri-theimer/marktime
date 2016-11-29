@@ -105,7 +105,7 @@
                 <asp:Label ID="lblP41ID" runat="server" Text="Projekt:"></asp:Label>
             </td>
             <td>
-                <uc:project ID="p41ID" runat="server" Width="400px" AutoPostBack="false" />
+                <uc:project ID="p41ID" runat="server" Width="400px" AutoPostBack="true" Flag="p48" />
             </td>
         </tr>
         <tr>
@@ -154,7 +154,7 @@
 
                     <td>
                         <asp:Label ID="Project" runat="server" ForeColor="DarkOrange"></asp:Label>
-                        <uc:project ID="p41ID_Input" runat="server" Width="250px" AutoPostBack="false" />
+                        <uc:project ID="p41ID_Input" runat="server" Width="250px" AutoPostBack="false" flag="p48" />
                     </td>
 
                     <td>

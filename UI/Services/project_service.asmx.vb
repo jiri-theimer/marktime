@@ -55,6 +55,9 @@ Public Class project_service
             Case "p31_entry"
                 'omezit pouze na projekty, ke kterým má osoba oprávnění zapisovat worksheet
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
+            Case "p48"
+                'zapisovat operativní plán
+                mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForOperPlanEntry
             Case "createtask"
                 mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForCreateTask
             Case "createinvoice"

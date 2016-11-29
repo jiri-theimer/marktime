@@ -34,12 +34,17 @@ Class p45BudgetBL
             If BO.BAS.IsNullDBDate(.p45PlanFrom) Is Nothing Then _Error = "Chybí datum plánovaného zahájení." : Return False
             If BO.BAS.IsNullDBDate(.p45PlanUntil) Is Nothing Then _Error = "Chybí datum plánovaného dokončení." : Return False
             If .p45PlanFrom > .p45PlanUntil Then _Error = "Plánované dokončení musí být větší než než plánované zahájení." : Return False
+            If .IsClosed Then
+                If GetList(cRec.p41ID).Where(Function(p) p.IsClosed = False And p.PID <> .PID).Count = 0 Then
+                    _Error = "Minimálně jedna verze rozpočtu v projektu musí být nastavena jako [Aktuální]." : Return False
+                End If
+            End If
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt." : Return False
             If .PID = 0 Then
-                .p45VersionIndex = GetList(.p41ID).Count + 1
+                .p45VersionIndex = GetList(.p41ID).Max(Function(p) .p45VersionIndex) + 1
             End If
             If Not lisP46 Is Nothing And Not lisP49 Is Nothing Then
-                If lisP46.Count = 0 And lisP49.Count = 0 Then _Error = "V rozpočtu musíte definovat buď rozpočet hodin nebo peněžní rozpočet nebo obojí." : Return False
+                If lisP46.Count = 0 And lisP49.Count = 0 Then _Error = "V rozpočtu musíte definovat buď rozpočet hodin nebo finanční rozpočet nebo obojí." : Return False
             End If
             If Not lisP46 Is Nothing Then
                 If cRec.PID <> 0 Then

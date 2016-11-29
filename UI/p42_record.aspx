@@ -60,8 +60,8 @@
                 <span class="infoInForm">Operativní plánování hodin pracovníků v projektech do konkrétních dnů na nejbližší měsíc, maximálně 2 měsíce dopředu. Naplánované hodiny lze následně překlápět do reálných časových výkazů.</span>
             </div>
             <div class="div6">
-                <asp:CheckBox ID="p42IsModule_p45" runat="server" Text="Projektové ROZPOČTY" />
-                <span class="infoInForm">Dlouhodobé limity hodin a výdajeů, plánování kapacit na člověko/měsíce. Verzování rozpočtů.</span>
+                <asp:CheckBox ID="p42IsModule_p45" runat="server" Text="Projektové ROZPOČTY a kapacitní PLÁNY" />
+                <span class="infoInForm">Verzované rozpočty odhadů/limitů hodin, výdajeů a příjmů. Kapacitní plánování na člověko-měsíce.</span>
             </div>
         </div>
     </div>

@@ -252,4 +252,14 @@
     End Sub
 
     
+    Private Sub p41ID_AutoPostBack_SelectedIndexChanged(NewValue As String, OldValue As String) Handles p41ID.AutoPostBack_SelectedIndexChanged
+        For Each ri As RepeaterItem In rp1.Items
+            With CType(ri.FindControl("p41ID_Input"), UI.project)
+                If BO.BAS.IsNullInt(.Value) = 0 Then
+                    .Text = Me.p41ID.Text
+                    .Value = Me.p41ID.Value
+                End If
+            End With
+        Next
+    End Sub
 End Class
