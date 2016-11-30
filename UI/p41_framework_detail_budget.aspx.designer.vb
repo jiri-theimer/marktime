@@ -32,15 +32,6 @@ Partial Public Class p41_framework_detail_budget
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''cmdP45 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdP45 As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
     '''cmdBudgetP46 control.
     '''</summary>
     '''<remarks>

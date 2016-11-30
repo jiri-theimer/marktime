@@ -24,12 +24,9 @@
             window.parent.sw_local("p45_record.aspx?clone="+clone+"&p41id=<%=master.datapid%>&pid=" + pid, "Images/budget_32.png", true);
 
         }
-        function p45_detail() {
-            var p45id = "";
-            <%If Me.p45ID.Items.Count > 0 Then%>
-            p45id = document.getElementById("<%=Me.p45ID.ClientID%>").value;
-            <%End If%>
-            window.parent.sw_local("p45_project.aspx?pid=<%=master.datapid%>&p45id=" + p45id, "Images/budget_32.png", true);
+        function p45_p46() {
+            var p45id=document.getElementById("<%=Me.p45ID.ClientID%>").value;
+            window.parent.sw_local("p45_p46.aspx?pid=" + p45id, "Images/budget_32.png", true);
 
         }
         function RowSelected_budget(sender, args) {
@@ -73,7 +70,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
         <div style="float:left;">
-            <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName" BackColor="yellow" style="height:26px;"></asp:DropDownList>
+            <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName" BackColor="yellow" ></asp:DropDownList>
         </div>
         <div style="float: left;">            
             <telerik:RadMenu ID="menu1" Skin="Telerik" runat="server" ClickToOpen="true">
@@ -82,7 +79,7 @@
                     <Items>                        
                         <telerik:RadMenuItem Text="Hlavička rozpočtu" Value="edit" NavigateUrl="javascript:p45_record(-1,false)"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Limity hodin časového rozpočtu" Value="p46" NavigateUrl="javascript:p45_p46()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Nastavení časového rozpočtu" Value="p46" NavigateUrl="javascript:p45_p46()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Kapacitní plán časového rozpočtu" Value="p47" NavigateUrl="javascript:p47_plan()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Zapsat položku finančního rozpočtu" Value="new_p49" NavigateUrl="javascript:p49_record(0)"></telerik:RadMenuItem>
@@ -94,13 +91,13 @@
             </Items>
             </telerik:RadMenu>
             
-            <button type="button" id="cmdP45" runat="server" onclick="p45_detail()" class="cmd">Nastavení rozpočtu</button>
+            
 
         </div>
         <div style="float: left;">
 
-            <asp:RadioButton ID="cmdBudgetP46" Text="Rozpočet hodin" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p46')" />
-            <asp:RadioButton ID="cmdBudgetP49" Text="Rozpočet výdajů a fixních odměn" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p49')" />
+            <asp:RadioButton ID="cmdBudgetP46" Text="Časový rozpočet" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p46')" />
+            <asp:RadioButton ID="cmdBudgetP49" Text="Finanční rozpočet" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p49')" />
             <button type="button" id="cmdP47" runat="server" onclick="p47_plan()" class="cmd" visible="false">Kapacitní plán projektu</button>
             <button type="button" id="cmdNewP49" runat="server" onclick="p49_record(0)" class="cmd" visible="false" title="Nová položka peněžního rozpočtu">
                 <img src="Images/new.png" alt="Nový" /></button>

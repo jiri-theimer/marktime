@@ -25,6 +25,7 @@
     p31Rate_Billing_Orig = 3101
     p31Rate_Billing_Approved = 3102
     p31Rate_Billing_Invoiced = 3103
+    p31Rate_Internal_Orig = 3104
 End Enum
 Public Enum PivotSumFieldType
     p31Hours_Orig = 1
@@ -63,7 +64,8 @@ Public Enum PivotSumFieldType
     Fees_Invoiced = 44
 
 
-
+    p31Amount_HoursFee_Internal = 30
+    p31Amount_HoursFee_Internal_Approved = 31
 
 End Enum
 Public Class PivotRowColumnField
@@ -193,6 +195,10 @@ Public Class PivotRowColumnField
                 _SelectField = "p31Rate_Billing_Invoiced"
                 _GroupByField = "p31Rate_Billing_Invoiced"
                 s = "Vyfakturovaná sazba"
+            Case PivotRowColumnFieldType.p31Rate_Internal_Orig
+                _SelectField = "p31Rate_Internal_Orig"
+                _GroupByField = "p31Rate_Internal_Orig"
+                s = "Nákladová sazba"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub
@@ -306,6 +312,12 @@ Public Class PivotSumField
             Case PivotSumFieldType.Fees_Invoiced
                 _SelectField = "SUM(case when a.p91ID IS NOT NULL AND p34.p34IncomeStatementFlag=2 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Invoiced END)"
                 s = "Vyfakturované pevné odměny"
+            Case PivotSumFieldType.p31Amount_HoursFee_Internal
+                _SelectField = "sum(a.p31Amount_Internal)"
+                s = "Honorář z nákladových sazeb"
+            Case PivotSumFieldType.p31Amount_HoursFee_Internal_Approved
+                _SelectField = "sum(a.p31Amount_Internal_Approved)"
+                s = "Nákladový honorář schválený"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

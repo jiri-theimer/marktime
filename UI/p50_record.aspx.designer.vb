@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class p50_record
 
     '''<summary>
+    '''p50RatesFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p50RatesFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''p51ID control.
     '''</summary>
     '''<remarks>
@@ -32,13 +41,67 @@ Partial Public Class p50_record
     Protected WithEvents clue1 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''p50RatesFlag control.
+    '''lblFrom control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p50RatesFlag As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents lblFrom As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p50ValidFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p50ValidFrom As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''lblUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblUntil As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p50ValidUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p50ValidUntil As Global.Telerik.Web.UI.RadDatePicker
+
+    '''<summary>
+    '''panRecalcCostRates control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRecalcCostRates As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''period2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents period2 As Global.UI.periodcombo
+
+    '''<summary>
+    '''cmdRecalcCostRates control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRecalcCostRates As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''panRecalcFPR control.

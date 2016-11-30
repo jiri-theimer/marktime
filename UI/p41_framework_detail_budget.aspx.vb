@@ -51,8 +51,6 @@ Public Class p41_framework_detail_budget
         menu1.FindItemByValue("new").Visible = cDisp.p45_Owner
         menu1.FindItemByValue("clone").Visible = cDisp.p45_Owner
 
-        Me.cmdP45.Visible = cDisp.p45_Owner
-
         Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
         If lis.Count > 0 Then
             Me.p45ID.DataSource = lis
@@ -69,7 +67,6 @@ Public Class p41_framework_detail_budget
             menu1.FindItemByValue("clone").Visible = False
             menu1.FindItemByValue("new_p49").Visible = False
             Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
-            cmdP45.InnerText = "Založit rozpočet"
         End If
         
     End Sub
@@ -206,6 +203,10 @@ Public Class p41_framework_detail_budget
 
     Private Sub chkP49GroupByP32_CheckedChanged(sender As Object, e As EventArgs) Handles chkP49GroupByP32.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p41_framework_detail_budget-chkP49GroupByP32", BO.BAS.GB(Me.chkP49GroupByP32.Checked))
+        gridBudget.Rebind(False)
+    End Sub
+
+    Private Sub p45ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p45ID.SelectedIndexChanged
         gridBudget.Rebind(False)
     End Sub
 End Class

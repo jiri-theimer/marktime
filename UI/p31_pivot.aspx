@@ -136,6 +136,7 @@
                     <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>
                     <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
                     <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
+                    <asp:ListItem Text="Nákladová sazba" Value="3104"></asp:ListItem>                    
                 </asp:DropDownList>
                 <span>-></span>
                 <asp:DropDownList ID="row2" runat="server" AutoPostBack="true">
@@ -166,6 +167,7 @@
                     <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>
                     <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
                     <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
+                    <asp:ListItem Text="Nákladová sazba" Value="3104"></asp:ListItem>   
                 </asp:DropDownList>
                 <span>-></span>
                 <asp:DropDownList ID="row3" runat="server" AutoPostBack="true">
@@ -196,6 +198,7 @@
                     <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>
                     <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
                     <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
+                    <asp:ListItem Text="Nákladová sazba" Value="3104"></asp:ListItem>   
                 </asp:DropDownList>
             </div>
         </div>

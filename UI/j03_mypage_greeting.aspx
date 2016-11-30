@@ -38,7 +38,7 @@
             sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet_32.png")
         }
 
-        function hardrefresh(pid,flag) {
+        function hardrefresh(pid, flag) {
             location.replace("default.aspx");
         }
     </script>
@@ -131,20 +131,39 @@
             <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/task.png" alt="Úkol" />
-                    Blízké úkoly (otevřené) s termínem
+                    Otevřené úkoly s definovaným termínem
                     <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
                 </div>
                 <div class="content">
+                    <table>  
+                        <tr>
+                            <th>Projekt</th>
+                            <th>Název úkolu</th>
+                            <th>Termín</th>
+                            <th></th>
+                        </tr>                      
                     <asp:Repeater ID="rpP56" runat="server">
                         <ItemTemplate>
-                            <div class="div6">
-                                <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
-                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                <asp:Label ID="p56PlanUntil" runat="server"></asp:Label>
-                                <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
-                            </div>
+                            <tr class="trHover">
+                                <td>
+                                    <asp:Label ID="Project" runat="server"></asp:Label>
+                                </td>
+                                <td style="max-width:300px;">
+                                    <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
+                                    <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+
+                                </td>
+                                <td>
+                                    <asp:Label ID="p56PlanUntil" runat="server"></asp:Label>
+                                    <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
+                                </td>
+                                <td>
+                                    <asp:Label ID="b02Name" runat="server"></asp:Label>
+                                </td>
+                            </tr>
                         </ItemTemplate>
                     </asp:Repeater>
+                    </table>
                 </div>
             </asp:Panel>
             <asp:Panel ID="panO22" runat="server" CssClass="content-box1">

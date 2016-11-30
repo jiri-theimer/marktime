@@ -17,7 +17,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p41ID
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p45id
             End With
             Me.CurrentP41ID = BO.BAS.IsNullInt(Request.Item("p41id"))
 
@@ -63,7 +63,7 @@
                 Master.ChangeToolbarSkin("BlackMetroTouch")
             End If
         End With
-       D)
+
         
         ''Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
 
@@ -103,7 +103,7 @@
             cRec.SetPID(0)
             '' Dim intNewP45ID As Integer = 0
             With Master.Factory.p45BudgetBL
-                If Not .Save(cRec, lisP46, lisP49) Then
+                If Not .Save(cRec) Then
                     Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
                     Return
                 Else
@@ -133,7 +133,7 @@
             Else
                 cRec.ValidUntil = DateSerial(3000, 1, 1)
             End If
-            If .Save(cRec, Nothing, Nothing) Then
+            If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID
                 If Me.chkMakeCurrentAsFirstVersion.Checked Then
                     If Not .MakeActualVersion(Master.DataPID) Then

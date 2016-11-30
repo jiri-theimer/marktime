@@ -172,7 +172,7 @@
     <value>Měna</value>
   </data>
   <data name="NakladovaCastka" xml:space="preserve">
-    <value>Nákladová částka</value>
+    <value>Nákladový honorář</value>
   </data>
   <data name="NakladovaSazba" xml:space="preserve">
     <value>Nákladová sazba</value>

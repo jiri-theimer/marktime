@@ -180,7 +180,7 @@ Public Class p91_create_step2
     Private Sub RefreshRecord()
         If Me.CurrentP28ID = 0 Then Return
 
-        bm1.RefreshData(Master.Factory, Me.CurrentPrefix, Me.CurrentP28ID)
+        bm1.RefreshData(Master.Factory, "p28", Me.CurrentP28ID)
         If Me.p28id.Value <> "" Then
             Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(CInt(Me.p28id.Value), 0, True).Where(Function(p) p.IsClosed = False)
             Me.j02ID_ContactPerson.DataSource = lisJ02

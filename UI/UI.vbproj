@@ -242,7 +242,6 @@
     <Content Include="p41_framework.aspx" />
     <Content Include="p41_framework_detail_budget.aspx" />
     <Content Include="p45_p46.aspx" />
-    <Content Include="p45_project.aspx" />
     <Content Include="p45_project_p49.aspx" />
     <Content Include="p45_record.aspx" />
     <Content Include="p47_framework.aspx" />
@@ -1141,13 +1140,6 @@
     </Compile>
     <Compile Include="p45_p46.aspx.vb">
       <DependentUpon>p45_p46.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p45_project.aspx.designer.vb">
-      <DependentUpon>p45_project.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p45_project.aspx.vb">
-      <DependentUpon>p45_project.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p45_project_p49.aspx.designer.vb">

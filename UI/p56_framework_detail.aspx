@@ -148,6 +148,12 @@
         }
 
        
+        function p31_entry_menu(p34id) {
+            ///z menu1           
+            sw_decide("p31_record.aspx?pid=0&p56id=<%=Master.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
+            
+
+        }
 
 
 

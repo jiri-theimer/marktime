@@ -186,7 +186,7 @@ Class j75DrillDownTemplateBL
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_WithoutVat_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Approved))
-            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Invoiced))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Invoiced))            
         End If
 
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_Approved_Billing))
@@ -215,6 +215,9 @@ Class j75DrillDownTemplateBL
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses_WIP))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses_Approved))
             lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.Expenses_Invoiced))
+
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Internal))
+            lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Amount_HoursFee_Internal_Approved))
         End If
 
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Hours_BIN))

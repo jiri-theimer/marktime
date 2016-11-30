@@ -127,16 +127,7 @@
             });
         }
 
-        function trydel() {
-
-            if (confirm("Opravdu odstranit tuto verzi rozpočtu?")) {
-                hardrefresh(0, "delete");
-                return (true);
-            }
-            else {
-                return (false);
-            }
-        }
+        
         function hardrefresh(pid, flag) {
 
 
@@ -145,15 +136,7 @@
         }
     </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
-    <asp:Panel ID="panHeader" runat="server" Style="padding: 10px;">
-        <asp:Label ID="lblP45" runat="server" CssClass="lbl" Text="Pracovat ve verzi rozpočtu:"></asp:Label>
-        <asp:DropDownList ID="p45ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="VersionWithName"></asp:DropDownList>
-        <asp:Button ID="cmdNewVersion" runat="server" Text="Založit novou verzi rozpočtu" CssClass="cmd" />
-        <asp:Button ID="cmdDeleteVersion" runat="server" Text="Odstranit tuto verzi rozpočtu" CssClass="cmd" OnClientClick="return trydel()" />
-
-    </asp:Panel>
-
+<asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">    
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 

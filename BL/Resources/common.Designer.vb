@@ -344,7 +344,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Nákladová částka.
+        '''  Looks up a localized string similar to Nákladový honorář.
         '''</summary>
         Public Shared ReadOnly Property NakladovaCastka() As String
             Get

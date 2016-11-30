@@ -19,6 +19,7 @@ Public Class p45_p46
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("guid") = BO.BAS.GetGUID
+
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p45ID
                 If .DataPID = 0 Then .StopPage("pid is missing.")
@@ -35,8 +36,6 @@ Public Class p45_p46
                 cmdAddPerson.Visible = False                
                 Master.Notify("Rozpočet projektu můžete pouze číst, nikoliv upravovat.")
             End If
-
-            RefreshRecord()
 
             SetupPersonsOffer()
         End If
@@ -56,7 +55,8 @@ Public Class p45_p46
     Private Sub RefreshRecord()
         Dim cRec As BO.p45Budget = Master.Factory.p45BudgetBL.Load(Master.DataPID)
         Me.CurrentP41ID = cRec.p41ID
-
+        ViewState("d1") = cRec.p45PlanFrom
+        ViewState("d2") = cRec.p45PlanUntil
         SetupTempData()
 
       
@@ -87,6 +87,7 @@ Public Class p45_p46
 
     Private Sub SetupTempData()
         Dim lisP46 As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Master.DataPID)
+       
         For Each c In lisP46
             Dim cTemp As New BO.p85TempBox
             With cTemp
@@ -136,40 +137,7 @@ Public Class p45_p46
     End Sub
 
 
-    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        Select Case strButtonValue
-            Case "save"
-                Dim lisP46 As New List(Of BO.p46BudgetPerson)
-                Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), True)
-                For Each cTemp In lisTemp.Where(Function(p) p.p85Prefix = "p46")
-                    Dim item As New BO.p46BudgetPerson
-                    With cTemp
-                        item.SetPID(.p85DataPID)
-                        item.j02ID = .p85OtherKey1
-                        item.p46HoursBillable = .p85FreeFloat01
-                        item.p46HoursNonBillable = .p85FreeFloat02
-                        item.p46HoursTotal = item.p46HoursBillable + item.p46HoursNonBillable
-                        If .p85OtherKey2 = 0 Then
-                            item.p46ExceedFlag = BO.p46ExceedFlagENUM.StrictFaStrictNefa
-                        Else
-                            item.p46ExceedFlag = .p85OtherKey2
-                        End If
-                        item.p46Description = .p85FreeText02
-                        item.IsSetAsDeleted = .p85IsDeleted
-                    End With
-                    lisP46.Add(item)
-                Next
-                
-
-                With Master.Factory.p45BudgetBL
-                    If .Save(c, lisP46, Nothing) Then
-                        Master.CloseAndRefreshParent("p45-save")
-                    Else
-                        Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
-                    End If
-                End With
-        End Select
-    End Sub
+   
 
     Private Sub grid1_ItemCommand(sender As Object, e As GridCommandEventArgs) Handles grid1.ItemCommand
         If e.CommandName = "delete" Then
@@ -202,6 +170,7 @@ Public Class p45_p46
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
 
         Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+       
         grid1.DataSource = lis.Where(Function(p) p.p85Prefix = "p46")
 
         RecalcStatement(lis)
@@ -213,28 +182,33 @@ Public Class p45_p46
         mq.Billable = BO.BooleanQueryMode.TrueQuery
         Dim lisP32 As IEnumerable(Of BO.p32Activity) = Master.Factory.p32ActivityBL.GetList(mq)
         Dim datRate As Date = Now, intP32ID As Integer = lisP32(0).PID
-        If Not Me.p45PlanFrom.IsEmpty Then datRate = Me.p45PlanFrom.SelectedDate
+        datRate = ViewState("d1")
+        Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = "p46")
         For Each ri As RepeaterItem In rpJ02.Items
             With CType(ri.FindControl("Person"), CheckBox)
                 If .Checked Then
-                    b = True
                     Dim intJ02ID As Integer = CInt(CType(ri.FindControl("hidJ02ID"), HiddenField).Value)
                     Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(intJ02ID)
-                    Dim cTemp As New BO.p85TempBox()
-                    With cTemp
-                        .p85GUID = ViewState("guid")
-                        .p85Prefix = "p46"
-                        .p85OtherKey1 = intJ02ID
-                        .p85FreeText01 = cJ02.FullNameDesc
-                        .p85FreeNumber01 = Master.Factory.p31WorksheetBL.LoadRate(False, datRate, intJ02ID, Me.CurrentP41ID, intP32ID, 0)    'fakturační sazba
-                        .p85FreeNumber02 = Master.Factory.p31WorksheetBL.LoadRate(True, datRate, intJ02ID, Me.CurrentP41ID, intP32ID, 0)    'nákladová sazba
-                    End With
-                    Master.Factory.p85TempBoxBL.Save(cTemp)
+                    If lisTemp.Where(Function(p) p.p85OtherKey1 = cJ02.PID).Count = 0 Then
+                        b = True
+                        Dim cTemp As New BO.p85TempBox()
+                        With cTemp
+                            .p85GUID = ViewState("guid")
+                            .p85Prefix = "p46"
+                            .p85OtherKey1 = intJ02ID
+                            .p85FreeText01 = cJ02.FullNameDesc
+                            .p85FreeNumber01 = Master.Factory.p31WorksheetBL.LoadRate(False, datRate, intJ02ID, Me.CurrentP41ID, intP32ID, 0)    'fakturační sazba
+                            .p85FreeNumber02 = Master.Factory.p31WorksheetBL.LoadRate(True, datRate, intJ02ID, Me.CurrentP41ID, intP32ID, 0)    'nákladová sazba
+                        End With
+                        Master.Factory.p85TempBoxBL.Save(cTemp)
+                    End If
+                    
                 End If
             End With
         Next
         If b Then
             grid1.Rebind()
+            SetupPersonsOffer()
         Else
             Master.Notify("Musíte zaškrtnout minimálně jednu osobu.", NotifyLevel.WarningMessage)
         End If
@@ -262,9 +236,13 @@ Public Class p45_p46
     End Sub
 
     Private Sub RecalcStatement(lis As IEnumerable(Of BO.p85TempBox))
+        Dim mqP49 As New BO.myQueryP49
+        mqP49.p45ID = Master.DataPID
+        Dim lisP49 As IEnumerable(Of BO.p49FinancialPlan) = Master.Factory.p49FinancialPlanBL.GetList(mqP49)
+
         Me.result_profit.Text = "" : Me.result_lost.Text = ""
-        Dim dblExpenses As Double = lis.Where(Function(p) p.p85Prefix = "p49" And p.p85OtherKey6 = 1).Sum(Function(p) p.p85FreeFloat01)
-        Dim dblIncome As Double = lis.Where(Function(p) p.p85Prefix = "p49" And p.p85OtherKey6 = 2).Sum(Function(p) p.p85FreeFloat01)
+        Dim dblExpenses As Double = lisP49.Where(Function(p) p.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj).Sum(Function(p) p.p49Amount)
+        Dim dblIncome As Double = lisP49.Where(Function(p) p.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem).Sum(Function(p) p.p49Amount)
 
         Me.total_expense.Text = BO.BAS.FN(dblExpenses)
         Me.total_income.Text = BO.BAS.FN(dblIncome)
@@ -295,5 +273,38 @@ Public Class p45_p46
     End Sub
 
   
+    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
+        Select Case strButtonValue
+            Case "save"
+                Dim lisP46 As New List(Of BO.p46BudgetPerson)
+                Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), True)
+                For Each cTemp In lisTemp.Where(Function(p) p.p85Prefix = "p46")
+                    Dim item As New BO.p46BudgetPerson
+                    With cTemp
+                        item.SetPID(.p85DataPID)
+                        item.j02ID = .p85OtherKey1
+                        item.p46HoursBillable = .p85FreeFloat01
+                        item.p46HoursNonBillable = .p85FreeFloat02
+                        item.p46HoursTotal = item.p46HoursBillable + item.p46HoursNonBillable
+                        If .p85OtherKey2 = 0 Then
+                            item.p46ExceedFlag = BO.p46ExceedFlagENUM.StrictFaStrictNefa
+                        Else
+                            item.p46ExceedFlag = .p85OtherKey2
+                        End If
+                        item.p46Description = .p85FreeText02
+                        item.IsSetAsDeleted = .p85IsDeleted
+                    End With
+                    lisP46.Add(item)
+                Next
 
+                With Master.Factory.p45BudgetBL
+                    If .SaveListP46(Master.DataPID, lisP46) Then
+                        Master.CloseAndRefreshParent("p45-save")
+                    Else
+                        Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                    End If
+
+                End With
+        End Select
+    End Sub
 End Class

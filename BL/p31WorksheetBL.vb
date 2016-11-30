@@ -25,6 +25,7 @@
     Function MoveFromBin(pids As List(Of Integer)) As Boolean
     Function Move2Project(intDestP41ID As Integer, pids As List(Of Integer)) As Boolean
     Function RecalcRates(pids As List(Of Integer)) As Boolean
+    Function Recalc_Internal_Rates(dat1 As Date, dat2 As Date, intP51ID As Integer) As Boolean
     Function RemoveFromApproving(pids As List(Of Integer)) As Boolean
     Function AppendToInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean
     Function RemoveFromInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean
@@ -346,6 +347,9 @@ Class p31WorksheetBL
             _Error = "Na vstupu není žádný úkon." : Return False
         End If
         Return _cDL.RecalcRates(pids)
+    End Function
+    Public Function Recalc_Internal_Rates(dat1 As Date, dat2 As Date, intP51ID As Integer) As Boolean Implements Ip31WorksheetBL.Recalc_Internal_Rates
+        Return _cDL.Recalc_Internal_Rates(dat1, dat2, intP51ID)
     End Function
     Public Function RemoveFromApproving(pids As List(Of Integer)) As Boolean Implements Ip31WorksheetBL.RemoveFromApproving
         If pids.Count = 0 Then

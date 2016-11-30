@@ -642,7 +642,13 @@ if @prefix='p28'
  select @ret=p28name FROM p28contact where p28id=@pid
 
 if @prefix='p41'
-  select @ret=p41Name+isnull(' | '+b.p28name,'') FROM p41Project a LEFT OUTER JOIN p28Contact b on a.p28ID_Client=b.p28ID where a.p41id=@pid
+ begin
+  if not exists(select p41ID FROM p41Project WHERE p41ID=@pid AND p41ParentID IS NOT NULL)
+   select @ret=isnull(p41NameShort,p41Name)+isnull(' | '+b.p28name,'') FROM p41Project a LEFT OUTER JOIN p28Contact b on a.p28ID_Client=b.p28ID where a.p41id=@pid
+  else
+   select @ret=isnull(b.p41NameShort,b.p41Name)+'->'+isnull(a.p41NameShort,a.p41name) FROM p41Project a LEFT OUTER JOIN p41Project b on a.p41ParentID=b.p41ID where a.p41id=@pid
+ end
+  
 
 if @prefix='p91'
   select @ret=p91code+isnull(' | '+b.p28name,'') FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID where a.p91id=@pid
@@ -1766,6 +1772,84 @@ BEGIN
 RETURN(@ret)
    
 END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------FN---------------p41_get_p41code_parentproject_plus_ordinary-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_p41code_parentproject_plus_ordinary') and type = 'FN')
+ drop function p41_get_p41code_parentproject_plus_ordinary
+GO
+
+
+
+
+
+CREATE    FUNCTION [dbo].[p41_get_p41code_parentproject_plus_ordinary](@pid int)
+RETURNS varchar(50)
+AS
+BEGIN
+  ---vrací kód projektu podle logiky kód nadøízeného projektu + poøadové èíslo projektu v rámci nadøízeného projektu
+
+ DECLARE @ret varchar(50),@p41id_master int,@p41code_master varchar(50),@pocet int,@suffix varchar(10)
+
+ select @p41id_master=p41ParentID FROM p41Project WHERE p41ID=@pid
+
+ if @p41id_master is null
+  RETURN('?????'+convert(varchar(10),@pid))
+
+ select @p41code_master=p41Code From p41Project where p41ID=@p41id_master
+
+
+ select @pocet=count(*) FROM p41Project WHERE p41ParentID=@p41id_master and p41ID<>@pid
+
+ set @pocet=isnull(@pocet,0)+1
+ set @suffix=right('000'+convert(varchar(10),@pocet),3)
+ 
+ set @ret=@p41code_master+'-'+@suffix
+ 
+ 
+
+ WHILE (exists(select p41ID FROM p41Project WHERE p41Code like @ret))
+  BEGIN
+    set @pocet=@pocet+1
+	set @suffix=right('000'+convert(varchar(10),@pocet),3)
+	set @ret=@p41code_master+'-'+@suffix
+	if @pocet>=999
+	 BREAK
+  END
+
+
+
+RETURN(@ret)
+   
+END
+
 
 
 
@@ -6853,6 +6937,67 @@ if @is_access_approve=1
 
 if @is_access_edit=1 and @is_access_approve=1
  set @record_disposition=4	---nejvyšší právo: èíst + editovat + schvalovat záznam
+
+GO
+
+----------P---------------p31_recalc_internal_rates-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_recalc_internal_rates') and type = 'P')
+ drop procedure p31_recalc_internal_rates
+GO
+
+
+
+
+CREATE    PROCEDURE [dbo].[p31_recalc_internal_rates]
+@d1 datetime
+,@d2 datetime
+,@p51id int
+
+AS
+
+declare @p31ID int,@p31Date datetime,@j02ID int,@p32ID int,@p41id int
+declare @p31amount_internal float,@p31value_orig float,@p31rate_internal_orig float
+declare @j27id_internal int
+
+DECLARE curCR CURSOR FOR 
+SELECT p31ID,p31Date,p41ID,j02ID,p32ID,p31Value_Orig
+from p31Worksheet WHERE p31Date BETWEEN @d1 AND @d2 AND p32ID IN (SELECT p32ID FROM p32Activity a INNER JOIN p34ActivityGroup b ON a.p34ID=b.p34ID WHERE b.p33ID IN (1,3))
+
+OPEN curCR
+FETCH NEXT FROM curCR 
+INTO @p31ID,@p31Date,@p41id,@j02ID,@p32ID,@p31value_orig
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  set @j27id_internal=null
+  set @p31rate_internal_orig=null
+
+  exec p31_getrate_tu @p31date,2, @p41id, @j02ID, @p32ID, @j27id_internal OUTPUT , @p31rate_internal_orig OUTPUT  
+
+  set @p31amount_internal=@p31value_orig*@p31rate_internal_orig	
+
+  update p31WorkSheet set p31Amount_Internal=@p31amount_internal,p31Rate_Internal_Orig=@p31rate_internal_orig,j27ID_Internal=@j27id_internal
+  WHERE p31ID=@p31ID
+
+  FETCH NEXT FROM curCR 
+  INTO @p31ID,@p31Date,@p41id,@j02ID,@p32ID,@p31value_orig
+END
+CLOSE curCR
+DEALLOCATE curCR
+	
+	
+	
+	
+	
+	
+	
+	
+ 
+ 
+
+
+
+
 
 GO
 

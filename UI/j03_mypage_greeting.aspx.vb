@@ -1,6 +1,7 @@
 ﻿Public Class j03_mypage_greeting
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
+    Private Property _curIsShowP57name As Boolean = False
 
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -188,6 +189,7 @@
 
         Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
         If lisP56.Count > 0 Then
+            If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
             Me.panP56.Visible = True
             Me.p56Count.Text = lisP56.Count.ToString
             rpP56.DataSource = lisP56
@@ -243,7 +245,12 @@
     Private Sub rpP56_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP56.ItemDataBound
         Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
         With CType(e.Item.FindControl("link1"), HyperLink)
-            .Text = cRec.NameWithTypeAndCode
+            If _curIsShowP57name Then
+                .Text = cRec.NameWithTypeAndCode
+            Else
+                .Text = cRec.p56Name
+            End If
+
             .NavigateUrl = "p56_framework.aspx?pid=" & cRec.PID.ToString
             If cRec.IsClosed Then .Font.Strikeout = True
         End With
@@ -255,6 +262,13 @@
         Else
             e.Item.FindControl("img1").Visible = False
         End If
+        With CType(e.Item.FindControl("Project"), Label)
+            .Text = BO.BAS.OM3(cRec.p41Name, 20)
+        End With
+        With CType(e.Item.FindControl("b02Name"), Label)
+            .Text = cRec.b02Name
+            If cRec.b02Color <> "" Then .Style.Item("background-color") = cRec.b02Color
+        End With
         If Not BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
             With CType(e.Item.FindControl("p56PlanUntil"), Label)
                 .Text = BO.BAS.FD(cRec.p56PlanUntil, True, True)
