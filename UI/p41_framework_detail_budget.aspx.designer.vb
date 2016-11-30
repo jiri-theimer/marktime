@@ -50,31 +50,31 @@ Partial Public Class p41_framework_detail_budget
     Protected WithEvents cmdBudgetP49 As Global.System.Web.UI.WebControls.RadioButton
 
     '''<summary>
-    '''cmdP47 control.
+    '''linkP47 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdP47 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents linkP47 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''cmdNewP49 control.
+    '''linkNewP49 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNewP49 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents linkNewP49 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''cmdConvert2P31 control.
+    '''linkConvert2P31 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdConvert2P31 As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents linkConvert2P31 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''gridBudget control.

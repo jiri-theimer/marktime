@@ -344,42 +344,43 @@
                 Me.p49ID.Value = .PID.ToString
                 Me.p49_record.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p49FinancialPlan, .PID) & "</br>"
             End With
+        Else
+            If intDefP56ID > 0 Then
+                Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(intDefP56ID)
+                If Not cP56 Is Nothing Then intDefP41ID = cP56.p41ID
+            End If
+            If intDefP41ID = 0 And Request.Item("p28id") <> "" Then
+                intDefP41ID = FindDefaultP41ID_FromClient(BO.BAS.IsNullInt(Request.Item("p28id")))
+            End If
 
-        End If
-        If intDefP56ID > 0 Then
-            Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(intDefP56ID)
-            If Not cP56 Is Nothing Then intDefP41ID = cP56.p41ID
-        End If
-        If intDefP41ID = 0 And Request.Item("p28id") <> "" Then
-            intDefP41ID = FindDefaultP41ID_FromClient(BO.BAS.IsNullInt(Request.Item("p28id")))
-        End If
+            If intDefP41ID > 0 Then
+                Me.p41ID.Value = intDefP41ID.ToString
+                Handle_ChangeP41(True)
+                If Not _Project Is Nothing Then
+                    ''p41ID.Text = _Project.FullName
+                    p41ID.Text = _Project.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
+                End If
+            End If
+            If intDefP56ID > 0 Then
+                Me.chkBindToP56.Checked = True
+                SetupP56Combo(False, intDefP56ID)
+            End If
+            If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then Me.CurrentIsScheduler = True
+            If Master.DataPID = 0 And Me.CurrentIsScheduler Then
+                Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo   'požadavek na zápis hodin z denního kalendáře, přepnout na čas od/do
+                Dim c As New BO.DateTimeByQuerystring(Request.Item("t1"))
+                Me.p31Date.SelectedDate = c.DateOnly
+                Me.TimeFrom.Text = c.TimeOnly
+                c = New BO.DateTimeByQuerystring(Request.Item("t2"))
+                Me.TimeUntil.Text = c.TimeOnly
 
-        If intDefP41ID > 0 Then
-            Me.p41ID.Value = intDefP41ID.ToString
-            Handle_ChangeP41(True)
-            If Not _Project Is Nothing Then
-                ''p41ID.Text = _Project.FullName
-                p41ID.Text = _Project.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
+                Dim cT As New BO.clsTime
+                Me.p31Value_Orig.Text = cT.ShowAsDec(Me.TimeUntil.Text) - cT.ShowAsDec(Me.TimeFrom.Text)
+                Handle_ChangeHoursEntryFlag()
+
             End If
         End If
-        If intDefP56ID > 0 Then
-            Me.chkBindToP56.Checked = True
-            SetupP56Combo(False, intDefP56ID)
-        End If
-        If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then Me.CurrentIsScheduler = True
-        If Master.DataPID = 0 And Me.CurrentIsScheduler Then
-            Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo   'požadavek na zápis hodin z denního kalendáře, přepnout na čas od/do
-            Dim c As New BO.DateTimeByQuerystring(Request.Item("t1"))
-            Me.p31Date.SelectedDate = c.DateOnly
-            Me.TimeFrom.Text = c.TimeOnly
-            c = New BO.DateTimeByQuerystring(Request.Item("t2"))
-            Me.TimeUntil.Text = c.TimeOnly
-
-            Dim cT As New BO.clsTime
-            Me.p31Value_Orig.Text = cT.ShowAsDec(Me.TimeUntil.Text) - cT.ShowAsDec(Me.TimeFrom.Text)
-            Handle_ChangeHoursEntryFlag()
-
-        End If
+        
 
     End Sub
 

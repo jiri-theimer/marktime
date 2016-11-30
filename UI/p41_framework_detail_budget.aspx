@@ -56,6 +56,7 @@
                 alert("Musíte vybrat položku rozpočtu.");
                 return
             }
+            
             window.parent.sw_local("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p49id=" + p49id, "Images/worksheet_32.png", true);
             return (false);
         }
@@ -80,12 +81,12 @@
                         <telerik:RadMenuItem Text="Hlavička rozpočtu" Value="edit" NavigateUrl="javascript:p45_record(-1,false)"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Nastavení časového rozpočtu" Value="p46" NavigateUrl="javascript:p45_p46()"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Kapacitní plán časového rozpočtu" Value="p47" NavigateUrl="javascript:p47_plan()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Kapacitní plán" Value="p47" NavigateUrl="javascript:p47_plan()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Zapsat položku finančního rozpočtu" Value="new_p49" NavigateUrl="javascript:p49_record(0)"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Přidat položku finančního rozpočtu" Value="new_p49" NavigateUrl="javascript:p49_record(0)"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Nový rozpočet" Value="new" NavigateUrl="javascript:p45_record(0,false)"></telerik:RadMenuItem>                        
-                        <telerik:RadMenuItem Text="Zkopírovat do nové verze" Value="clone" NavigateUrl="javascript:p45_record(0,true)"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Zkopírovat rozpočet do nové verze" Value="clone" NavigateUrl="javascript:p45_record(0,true)"></telerik:RadMenuItem>
                     </Items>
                 </telerik:RadMenuItem>
             </Items>
@@ -98,11 +99,13 @@
 
             <asp:RadioButton ID="cmdBudgetP46" Text="Časový rozpočet" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p46')" />
             <asp:RadioButton ID="cmdBudgetP49" Text="Finanční rozpočet" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p49')" />
-            <button type="button" id="cmdP47" runat="server" onclick="p47_plan()" class="cmd" visible="false">Kapacitní plán projektu</button>
-            <button type="button" id="cmdNewP49" runat="server" onclick="p49_record(0)" class="cmd" visible="false" title="Nová položka peněžního rozpočtu">
-                <img src="Images/new.png" alt="Nový" /></button>
-            <button type="button" id="cmdConvert2P31" runat="server" onclick="p49_to_p31()" class="cmd" visible="false" title="Překlopit položku rozpočtu do worksheet úkonu">
-                <img src="Images/worksheet.png" alt="Worksheet" /></button>
+            
+            <asp:HyperLink ID="linkP47" runat="server" Text="Kapacitní plán" NavigateUrl="javascript:p47_plan()"></asp:HyperLink>
+            
+            <asp:HyperLink ID="linkNewP49" runat="server" NavigateUrl="javascript:p49_record(0)" Visible="false" Text="Přidat" ToolTip="Zapsat novou položku do finančního rozpočtu"></asp:HyperLink>
+            <asp:HyperLink ID="linkConvert2P31" runat="server" NavigateUrl="javascript:p49_to_p31()" Visible="false" Text="Překlopit" ToolTip="Překlopit plánovaný výdaj/příjem do worksheet úkonu"></asp:HyperLink>
+
+          
         </div>
     </div>
      <div style="clear:both;"></div>

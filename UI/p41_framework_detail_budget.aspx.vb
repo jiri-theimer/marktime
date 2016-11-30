@@ -59,8 +59,8 @@ Public Class p41_framework_detail_budget
             menu1.FindItemByValue("new").Text = "Založit novou verzi rozpočtu"
             menu1.FindItemByValue("clone").Text = "Založit aktuální rozpočet do nové verze"
             menu1.FindItemByValue("new_p49").Visible = cDisp.p45_Owner
-            cmdP47.Visible = cmdBudgetP46.Checked
-            cmdNewP49.Visible = cmdBudgetP49.Checked : cmdConvert2P31.Visible = cmdBudgetP49.Checked
+            linkP47.Visible = cmdBudgetP46.Checked
+            linkNewP49.Visible = cmdBudgetP49.Checked : linkConvert2P31.Visible = cmdBudgetP49.Checked
         Else
             menu1.FindItemByValue("edit").Visible = False
             menu1.FindItemByValue("new").Text = "Založit první rozpočet projektu"
