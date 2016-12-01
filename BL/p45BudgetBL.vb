@@ -11,6 +11,7 @@ Public Interface Ip45BudgetBL
     Function GetList_p46(intPID As Integer) As IEnumerable(Of BO.p46BudgetPerson)
     Function GetList_p46_extended(intPID As Integer, intP41ID As Integer) As IEnumerable(Of BO.p46BudgetPersonExtented)
     Function MakeActualVersion(intP45ID As Integer) As Boolean
+    Function CloneBudget(intP45ID_Source As Integer, intP45ID_Dest As Integer, bolClone_p49 As Boolean, bolClone_p46 As Boolean, bolClone_p47 As Boolean) As Boolean
 End Interface
 Class p45BudgetBL
     Inherits BLMother
@@ -42,9 +43,13 @@ Class p45BudgetBL
             End If
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt." : Return False
             If .PID = 0 Then
-                .p45VersionIndex = GetList(.p41ID).Max(Function(p) .p45VersionIndex) + 1
+                If GetList(.p41ID).Count > 0 Then
+                    .p45VersionIndex = GetList(.p41ID).Max(Function(p) .p45VersionIndex) + 1
+                Else
+                    .p45VersionIndex = 1
+                End If
+
             End If
-           
 
             ''If Not lisP49 Is Nothing Then
             ''    Dim x As Integer = 1
@@ -137,5 +142,8 @@ Class p45BudgetBL
         End If
 
         Return _cDL.SaveListP46(intP45ID, lisP46)
+    End Function
+    Public Function CloneBudget(intP45ID_Source As Integer, intP45ID_Dest As Integer, bolClone_p49 As Boolean, bolClone_p46 As Boolean, bolClone_p47 As Boolean) As Boolean Implements Ip45BudgetBL.CloneBudget
+        Return _cDL.CloneBudget(intP45ID_Source, intP45ID_Dest, bolClone_p49, bolClone_p46, bolClone_p47)
     End Function
 End Class

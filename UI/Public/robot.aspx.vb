@@ -62,7 +62,7 @@
         Dim lisP40 As IEnumerable(Of BO.p40WorkSheet_Recurrence) = _Factory.p40WorkSheet_RecurrenceBL.GetList_WaitingForGenerate(datNow)
         If lisP40.Count = 0 Then Return
 
-        log4net.LogManager.GetLogger("robotlog").Info("p40-GetList_WaitingForGenerate: " & lisP40.ToString)
+        log4net.LogManager.GetLogger("robotlog").Info("p40-GetList_WaitingForGenerate, records: " & lisP40.Count.ToString)
 
         Dim lisP53 As IEnumerable(Of BO.p53VatRate) = _Factory.p53VatRateBL.GetList(New BO.myQuery)
 
@@ -101,8 +101,10 @@
                 End With
                 Dim bol As Boolean = _Factory.p31WorksheetBL.SaveOrigRecord(cP31, Nothing)
                 If bol Then
+                    log4net.LogManager.GetLogger("robotlog").Info("p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", p31ID=" & _Factory.p31WorksheetBL.LastSavedPID.ToString)
                     _Factory.p40WorkSheet_RecurrenceBL.Update_p31Instance(cP39.p39ID, _Factory.p31WorksheetBL.LastSavedPID, "")
                 Else
+                    log4net.LogManager.GetLogger("robotlog").Info("p40-new robot worksheet record,p39ID=" & cP39.p39ID.ToString & ", ERROR=" & _Factory.p31WorksheetBL.ErrorMessage)
                     _Factory.p40WorkSheet_RecurrenceBL.Update_p31Instance(cP39.p39ID, 0, _Factory.p31WorksheetBL.ErrorMessage)
                 End If
             End If

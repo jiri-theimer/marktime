@@ -21,6 +21,7 @@ Public Class p41_framework_detail_budget
                 .Add("p41_framework_detail_budget-prefix")
                 .Add("p41_framework_detail_budget-chkP49GroupByP34")
                 .Add("p41_framework_detail_budget-chkP49GroupByP32")
+                .Add("p41_framework_detail_budget-chkVysledovka")
             End With
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
@@ -35,6 +36,7 @@ Public Class p41_framework_detail_budget
                     Me.chkP49GroupByP32.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkP49GroupByP32"))
 
                 End If
+                Me.chkVysledovka.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkVysledovka", "1"))
             End With
             RefreshRecord()
 
@@ -50,24 +52,31 @@ Public Class p41_framework_detail_budget
         End If
         menu1.FindItemByValue("new").Visible = cDisp.p45_Owner
         menu1.FindItemByValue("clone").Visible = cDisp.p45_Owner
+        menu1.FindItemByValue("p46").Visible = cDisp.p45_Owner
 
-        Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
+        Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID), bolEmpty As Boolean = True
         If lis.Count > 0 Then
+            bolEmpty = False
             Me.p45ID.DataSource = lis
             Me.p45ID.DataBind()
             menu1.FindItemByValue("edit").Visible = cDisp.p45_Owner
             menu1.FindItemByValue("new").Text = "Založit novou verzi rozpočtu"
-            menu1.FindItemByValue("clone").Text = "Založit aktuální rozpočet do nové verze"
+            menu1.FindItemByValue("clone").Text = "Zkopírovat aktuální rozpočet do nové verze"
             menu1.FindItemByValue("new_p49").Visible = cDisp.p45_Owner
             linkP47.Visible = cmdBudgetP46.Checked
-            linkNewP49.Visible = cmdBudgetP49.Checked : linkConvert2P31.Visible = cmdBudgetP49.Checked
+            linkNewP49.Visible = cmdBudgetP49.Checked : linkConvert2P31.Visible = cmdBudgetP49.Checked        
         Else
             menu1.FindItemByValue("edit").Visible = False
             menu1.FindItemByValue("new").Text = "Založit první rozpočet projektu"
             menu1.FindItemByValue("clone").Visible = False
             menu1.FindItemByValue("new_p49").Visible = False
+            menu1.FindItemByValue("p46").Visible = False
             Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
         End If
+        menu1.FindItemByValue("p47").Visible = linkP47.Visible
+        Me.chkVysledovka.Visible = Not bolEmpty
+        menu1.FindItemByValue("report").Visible = Not bolEmpty
+
         
     End Sub
 
@@ -208,5 +217,19 @@ Public Class p41_framework_detail_budget
 
     Private Sub p45ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p45ID.SelectedIndexChanged
         gridBudget.Rebind(False)
+    End Sub
+
+    Private Sub chkVysledovka_CheckedChanged(sender As Object, e As EventArgs) Handles chkVysledovka.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p41_framework_detail_budget-chkVysledovka", BO.BAS.GB(Me.chkVysledovka.Checked))
+        gridBudget.Rebind(False)
+
+    End Sub
+
+    Private Sub p41_framework_detail_budget_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Me.p45ID.Items.Count = 0 Then Me.chkVysledovka.Checked = False
+        If Me.chkVysledovka.Checked Then
+            stat1.RefreshData(Master.Factory, BO.BAS.IsNullInt(Me.p45ID.SelectedValue))
+        End If
+        stat1.Visible = Me.chkVysledovka.Checked
     End Sub
 End Class

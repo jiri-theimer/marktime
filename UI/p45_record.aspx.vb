@@ -82,45 +82,7 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
-        If BO.BAS.IsNullInt(Me.hidClonePID.Value) <> 0 Then
-            Dim cRec As BO.p45Budget = Master.Factory.p45BudgetBL.Load(CInt(Me.hidClonePID.Value))
-            Dim lisP46 As New List(Of BO.p46BudgetPerson)
-            If Me.chkCloneP46.Checked Then lisP46 = Master.Factory.p45BudgetBL.GetList_p46(cRec.PID).ToList
-            Dim mqP49 As New BO.myQueryP49
-            mqP49.p45ID = cRec.PID
-            Dim lisP49 As New List(Of BO.p49FinancialPlan)
-            If Me.chkCloneP49.Checked Then lisP49 = Master.Factory.p49FinancialPlanBL.GetList(mqP49).ToList
-            For Each c In lisP46
-                c.SetPID(0)
-            Next
-            For Each c In lisP49
-                c.SetPID(0)
-            Next
-            Dim mqP47 As New BO.myQueryP47
-            mqP47.p45ID = cRec.PID
-            Dim lisP47 As List(Of BO.p47CapacityPlan) = Master.Factory.p47CapacityPlanBL.GetList(mqP47)
-
-            cRec.SetPID(0)
-            '' Dim intNewP45ID As Integer = 0
-            With Master.Factory.p45BudgetBL
-                If Not .Save(cRec) Then
-                    Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
-                    Return
-                Else
-                    Master.DataPID = .LastSavedPID
-                    ''If Me.chkMakeCurrentAsFirstVersion.Checked Then
-                    ''    .MakeActualVersion(Master.DataPID)
-                    ''End If
-                    If Me.chkCloneP47.Checked Then
-                        lisP46 = .GetList_p46(Master.DataPID).ToList
-                        For Each c In lisP47
-                            c.p46ID = lisP46.First(Function(p) p.j02ID = c.j02ID).PID
-                        Next
-                        Master.Factory.p47CapacityPlanBL.SaveProjectPlan(Master.DataPID, lisP47, Nothing)
-                    End If
-                End If
-            End With
-        End If
+      
         With Master.Factory.p45BudgetBL
             Dim cRec As BO.p45Budget = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.p45Budget)
             If Not Me.p45PlanFrom.IsEmpty Then cRec.p45PlanFrom = Me.p45PlanFrom.SelectedDate
@@ -135,6 +97,10 @@
             End If
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID
+                If BO.BAS.IsNullInt(Me.hidClonePID.Value) <> 0 Then
+                    'kopírovat rozpočet
+                    .CloneBudget(BO.BAS.IsNullInt(Me.hidClonePID.Value), Master.DataPID, chkCloneP49.Checked, chkCloneP46.Checked, chkCloneP47.Checked)
+                End If
                 If Me.chkMakeCurrentAsFirstVersion.Checked Then
                     If Not .MakeActualVersion(Master.DataPID) Then
                         Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)

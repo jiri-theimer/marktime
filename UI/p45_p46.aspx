@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="vysledovka" Src="~/p45_vysledovka.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -247,76 +248,11 @@
     </telerik:GridNumericColumnEditor>
 
 
-
-
-    <div class="content-box2" style="margin-top: 20px;">
-        <div class="title">
-            Výsledovka rozpočtu
-            <asp:Button ID="cmdRefreshStatement" runat="server" CssClass="cmd" Text="Přepočítat" />
-        </div>
-        <div class="content">
-            <table cellpadding="10">
-                <tr>
-                    <th colspan="2">Náklady</th>
-
-                    <th colspan="2">Výnosy</th>
-
-                </tr>
-                <tr>
-                    <td>Nákladová cena hodin:
-
-                    </td>
-                    <td align="right">
-                        <asp:Label ID="total_costfee" runat="server" CssClass="valboldred"></asp:Label>
-                    </td>
-                    <td>Fakturační cena hodin:
-
-                    </td>
-                    <td align="right">
-                        <asp:Label ID="total_billingfee" runat="server" CssClass="valbold" Style="color: green;"></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Peněžní výdaje:
-
-                    </td>
-                    <td align="right">
-                        <asp:Label ID="total_expense" runat="server" CssClass="valboldred"></asp:Label>
-                    </td>
-                    <td>Fixní odměny:
-
-                    </td>
-                    <td align="right">
-                        <asp:Label ID="total_income" runat="server" CssClass="valboldblue"></asp:Label>
-                    </td>
-                </tr>
-                <tr style="border-top: solid 1px gray;">
-                    <td>
-                        <img src="Images/sum.png" />
-                    </td>
-                    <td>
-                        <asp:Label ID="total_cost" runat="server" CssClass="valboldred"></asp:Label>
-                    </td>
-                    <td></td>
-                    <td>
-                        <asp:Label ID="total_billing" runat="server" CssClass="valboldblue"></asp:Label>
-                    </td>
-                </tr>
-                <tr style="border-top: solid 1px gray;">
-                    <td>
-                        <img src="Images/finplan.png" />
-                        <asp:Image ID="imgEmotion" runat="server" ImageUrl="Images/emotion_amazing.png" />
-                    </td>
-                    <td></td>
-                    <td>
-                        <asp:Label ID="result_lost" runat="server" CssClass="valboldred"></asp:Label>
-                        <asp:Label ID="result_profit" runat="server" CssClass="valboldblue"></asp:Label>
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
+    <div>
+    <asp:Button ID="cmdRefreshStatement" runat="server" CssClass="cmd" Text="Přepočítat" />
     </div>
+    <uc:vysledovka id="stat1" runat="server"></uc:vysledovka>
+
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
     <asp:HiddenField ID="hidP41ID" runat="server" />
 

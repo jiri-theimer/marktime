@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="p41_framework_detail_budget.aspx.vb" Inherits="UI.p41_framework_detail_budget" %>
-
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="vysledovka" Src="~/p45_vysledovka.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -61,10 +61,17 @@
             return (false);
         }
         function p47_plan() {
+            window.open("p47_project.aspx?pid=<%=Master.DataPID%>&p45id=<%=Me.p45ID.SelectedValue%>", "_blank");
+            return;
             window.parent.sw_local("p47_project.aspx?pid=<%=Master.DataPID%>&p45id=<%=Me.p45ID.SelectedValue%>", "Images/plan_32.png", true);
         }
         function budgetprefix_change(prefix) {
             location.replace("p41_framework_detail_budget.aspx?masterpid=<%=Master.DataPID%>&budgetprefix=" + prefix);
+        }
+        function report() {
+            var p45id = document.getElementById("<%=Me.p45ID.ClientID%>").value;
+            window.parent.sw_local("report_modal.aspx?prefix=p45&pid=" + p45id, "Images/reporting.png", true);
+
         }
     </script>
 </asp:Content>
@@ -79,6 +86,7 @@
                 <telerik:RadMenuItem Text="Rozpočet" ImageUrl="Images/menuarrow.png">
                     <Items>                        
                         <telerik:RadMenuItem Text="Hlavička rozpočtu" Value="edit" NavigateUrl="javascript:p45_record(-1,false)"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Tisková sestava" Value="report" NavigateUrl="javascript:report()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Nastavení časového rozpočtu" Value="p46" NavigateUrl="javascript:p45_p46()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Kapacitní plán" Value="p47" NavigateUrl="javascript:p47_plan()"></telerik:RadMenuItem>
@@ -100,7 +108,7 @@
             <asp:RadioButton ID="cmdBudgetP46" Text="Časový rozpočet" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p46')" />
             <asp:RadioButton ID="cmdBudgetP49" Text="Finanční rozpočet" AutoPostBack="false" runat="server" onclick="budgetprefix_change('p49')" />
             
-            <asp:HyperLink ID="linkP47" runat="server" Text="Kapacitní plán" NavigateUrl="javascript:p47_plan()"></asp:HyperLink>
+            <asp:HyperLink ID="linkP47" runat="server" Text="Kapacitní plán" NavigateUrl="javascript:p47_plan()" Visible="false"></asp:HyperLink>
             
             <asp:HyperLink ID="linkNewP49" runat="server" NavigateUrl="javascript:p49_record(0)" Visible="false" Text="Přidat" ToolTip="Zapsat novou položku do finančního rozpočtu"></asp:HyperLink>
             <asp:HyperLink ID="linkConvert2P31" runat="server" NavigateUrl="javascript:p49_to_p31()" Visible="false" Text="Překlopit" ToolTip="Překlopit plánovaný výdaj/příjem do worksheet úkonu"></asp:HyperLink>
@@ -113,8 +121,12 @@
 
     <asp:Panel ID="panP49Setting" runat="server">
         <asp:CheckBox ID="chkP49GroupByP34" runat="server" Text="Mezisoučty za sešity" AutoPostBack="true" Checked="true" />
-        <asp:CheckBox ID="chkP49GroupByP32" runat="server" Text="Mezisoučty za aktivity" AutoPostBack="true" />
+        <asp:CheckBox ID="chkP49GroupByP32" runat="server" Text="Mezisoučty za aktivity" AutoPostBack="true" />        
     </asp:Panel>
+
+    <asp:CheckBox ID="chkVysledovka" runat="server" Text="Zobrazovat rychlou výsledovku rozpočtu" AutoPostBack="true" Checked="true" />
+
+    <uc:vysledovka id="stat1" runat="server"></uc:vysledovka>
 
     <asp:HiddenField ID="hidBudgetPID" runat="server" />
 

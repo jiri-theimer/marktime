@@ -173,7 +173,7 @@ Public Class p45_p46
        
         grid1.DataSource = lis.Where(Function(p) p.p85Prefix = "p46")
 
-        RecalcStatement(lis)
+        stat1.RefreshData(Master.Factory, Master.DataPID, ViewState("guid"))
     End Sub
 
     Private Sub cmdInsertPersons_Click(sender As Object, e As EventArgs) Handles cmdInsertPersons.Click
@@ -231,46 +231,10 @@ Public Class p45_p46
     End Sub
 
     Private Sub cmdRefreshStatement_Click(sender As Object, e As EventArgs) Handles cmdRefreshStatement.Click
-        RecalcStatement(Master.Factory.p85TempBoxBL.GetList(ViewState("guid"), False))
-
+        stat1.RefreshData(Master.Factory, Master.DataPID, ViewState("guid"))
     End Sub
 
-    Private Sub RecalcStatement(lis As IEnumerable(Of BO.p85TempBox))
-        Dim mqP49 As New BO.myQueryP49
-        mqP49.p45ID = Master.DataPID
-        Dim lisP49 As IEnumerable(Of BO.p49FinancialPlan) = Master.Factory.p49FinancialPlanBL.GetList(mqP49)
-
-        Me.result_profit.Text = "" : Me.result_lost.Text = ""
-        Dim dblExpenses As Double = lisP49.Where(Function(p) p.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj).Sum(Function(p) p.p49Amount)
-        Dim dblIncome As Double = lisP49.Where(Function(p) p.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Prijem).Sum(Function(p) p.p49Amount)
-
-        Me.total_expense.Text = BO.BAS.FN(dblExpenses)
-        Me.total_income.Text = BO.BAS.FN(dblIncome)
-
-        lis = lis.Where(Function(p) p.p85Prefix = "p46")
-        Dim dblCostFee As Double = lis.Sum(Function(p) (p.p85FreeFloat01 + p.p85FreeFloat02) * p.p85FreeNumber02)
-        Dim dblBillingFee As Double = lis.Sum(Function(p) p.p85FreeFloat01 * p.p85FreeNumber01)
-        Me.total_costfee.Text = BO.BAS.FN(dblCostFee)
-        Me.total_billingfee.Text = BO.BAS.FN(dblBillingFee)
-
-        Me.total_cost.Text = BO.BAS.FN(dblExpenses + dblCostFee)
-        Me.total_billing.Text = BO.BAS.FN(dblIncome + dblBillingFee)
-
-        Dim dblResult As Double = (dblIncome + dblBillingFee) - (dblExpenses + dblCostFee)
-        Select Case dblResult
-            Case Is > 0
-                Me.result_profit.Text = "+" + BO.BAS.FN(dblResult)
-                imgEmotion.ImageUrl = "Images/emotion_happy.png"
-            Case Is < 0
-                Me.result_lost.Text = BO.BAS.FN(dblResult)
-                imgEmotion.ImageUrl = "Images/emotion_unhappy.png"
-            Case 0
-                Me.result_profit.Text = "?"
-                imgEmotion.ImageUrl = "Images/emotion_amazing.png"
-        End Select
-
-
-    End Sub
+    
 
   
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick

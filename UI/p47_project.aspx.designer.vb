@@ -14,33 +14,6 @@ Option Explicit On
 Partial Public Class p47_project
 
     '''<summary>
-    '''panHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panHeader As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblP45 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblP45 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p45ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p45ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''lblHeader control.
     '''</summary>
     '''<remarks>
@@ -48,6 +21,15 @@ Partial Public Class p47_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblBudget control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblBudget As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''m1 control.
@@ -129,6 +111,15 @@ Partial Public Class p47_project
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidLimD2 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidP45ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP45ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

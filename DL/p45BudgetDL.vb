@@ -90,32 +90,6 @@
             If _cDB.SaveRecord("p45Budget", pars, bolINSERT, strW, True, _curUser.j03Login) Then
                 Dim intLastSavedP45ID As Integer = _cDB.LastSavedRecordPID
               
-                ''If Not lisP49 Is Nothing Then
-                ''    For Each c In lisP49
-                ''        pars = New DbParameters
-                ''        If c.PID = 0 Then
-                ''            bolINSERT = True : strW = ""
-                ''        Else
-                ''            bolINSERT = False : strW = "p49ID=@pid" : pars.Add("pid", c.PID, DbType.Int32)
-                ''        End If
-                ''        If c.PID <> 0 And c.IsSetAsDeleted Then
-                ''            _cDB.RunSQL("DELETE FROM p49FinancialPlan WHERE p49ID=@pid", pars)
-                ''        Else
-                ''            pars.Add("p45ID", intLastSavedP45ID, DbType.Int32)
-                ''            pars.Add("p28ID_Supplier", BO.BAS.IsNullDBKey(c.p28ID_Supplier), DbType.Int32)
-                ''            pars.Add("p34ID", BO.BAS.IsNullDBKey(c.p34ID), DbType.Int32)
-                ''            pars.Add("p32ID", BO.BAS.IsNullDBKey(c.p32ID), DbType.Int32)
-                ''            pars.Add("j27ID", BO.BAS.IsNullDBKey(c.j27ID), DbType.Int32)
-                ''            pars.Add("j02ID", BO.BAS.IsNullDBKey(c.j02ID), DbType.Int32)
-                ''            pars.Add("p49DateFrom", c.p49DateFrom, DbType.DateTime)
-                ''            pars.Add("p49DateUntil", c.p49DateUntil, DbType.DateTime)
-                ''            pars.Add("p49Amount", c.p49Amount, DbType.Double)
-                ''            pars.Add("p49Text", c.p49Text, DbType.String)
-
-                ''            _cDB.SaveRecord("p49FinancialPlan", pars, bolINSERT, strW, True, _curUser.j03Login, False)
-                ''        End If
-                ''    Next
-                ''End If
                 pars = New DbParameters
                 With pars
                     .Add("p45id", intLastSavedP45ID, DbType.Int32)
@@ -131,6 +105,22 @@
                 Return False
             End If
         End Using
+    End Function
+    Public Function CloneBudget(intP45ID_Source As Integer, intP45ID_Dest As Integer, bolClone_p49 As Boolean, bolClone_p46 As Boolean, bolClone_p47 As Boolean) As Boolean
+        Dim pars As New DbParameters()
+        With pars
+            .Add("p45id_source", intP45ID_Source, DbType.Int32)
+            .Add("p45id_dest", intP45ID_Dest, DbType.Int32)
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("is_p46", bolClone_p46, DbType.Boolean)
+            .Add("is_p47", bolClone_p47, DbType.Boolean)
+            .Add("is_p49", bolClone_p49, DbType.Boolean)
+        End With
+        If _cDB.RunSP("p45_clone", pars) Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
 
     Public Function GetList(intP41ID As Integer, Optional myQuery As BO.myQuery = Nothing) As IEnumerable(Of BO.p45Budget)

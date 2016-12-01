@@ -705,6 +705,11 @@ if @prefix='p56'
   select @ret=p56Code+' | '+c.p57Name+': '+isnull(p56Name,'')+' | '+isnull(b.p41NameShort,b.p41Name) from p56Task a inner join p41Project b on a.p41ID=b.p41id INNER JOIN p57TaskType c ON a.p57ID=c.p57ID where a.p56id=@pid 
 
  end
+
+ if @prefix='p45'
+  select @ret=p45Name+' | '+isnull(b.p41NameShort,b.p41Name) from p45Budget a inner join p41Project b on a.p41ID=b.p41id where a.p45ID=@pid 
+
+
   
 
 if @prefix='c21'
@@ -6977,6 +6982,8 @@ BEGIN
   set @p31amount_internal=@p31value_orig*@p31rate_internal_orig	
 
   update p31WorkSheet set p31Amount_Internal=@p31amount_internal,p31Rate_Internal_Orig=@p31rate_internal_orig,j27ID_Internal=@j27id_internal
+  ,p31Rate_Internal_Approved=case when p71ID=1 THEN @p31rate_internal_orig else NULL END
+  ,p31Amount_Internal_Approved=case when p71ID=1 THEN p31Hours_Approved_Internal*@p31rate_internal_orig else NULL END
   WHERE p31ID=@p31ID
 
   FETCH NEXT FROM curCR 
@@ -9725,6 +9732,100 @@ DECLARE curW CURSOR FOR
 	CLOSE curW
 	DEALLOCATE curW
 
+
+
+
+
+
+
+GO
+
+----------P---------------p45_clone-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p45_clone') and type = 'P')
+ drop procedure p45_clone
+GO
+
+
+
+
+CREATE    PROCEDURE [dbo].[p45_clone]
+@p45id_source int
+,@p45id_dest int
+,@j03id_sys int
+,@is_p46 bit
+,@is_p47 bit
+,@is_p49 bit
+AS
+
+---kopíruje rozpoèet do nového
+
+declare @j02id int,@login varchar(50)
+
+select @login=j03Login FROM j03User WHERE j03ID=@j03id_sys
+
+select @j02id=j02ID FROM j03User WHERE j03ID=@j03id_sys
+
+if @is_p47=1
+ set @is_p46=1
+
+if @is_p47=1
+ delete from p47CapacityPlan where p46ID IN (SELECT p46ID FROM p46BudgetPerson where p45ID=@p45ID_dest)
+
+if @is_p46=1
+ delete from p46BudgetPerson where p45ID=@p45ID_dest
+
+if @is_p49=1
+begin
+  delete from p49FinancialPlan where p45ID=@p45id_dest
+
+  INSERT INTO p49FinancialPlan(p45ID,p34ID,p32ID,p28ID_Supplier,j02ID,j27ID,p49Amount,p49DateFrom,p49DateUntil,p49Text
+  ,p49DateInsert,p49UserInsert,p49DateUpdate,p49UserUpdate,p49ValidFrom,p49ValidUntil)
+  select @p45id_dest,p34ID,p32ID,p28ID_Supplier,j02ID,j27ID,p49Amount,p49DateFrom,p49DateUntil,p49Text
+  ,p49DateInsert,p49UserInsert,p49DateUpdate,p49UserUpdate,p49ValidFrom,p49ValidUntil
+  FROM
+  p49FinancialPlan
+  WHERE p45ID=@p45id_source
+end
+
+declare @p46id_source int,@p46id_new int
+
+if @is_p46=1
+begin
+   DECLARE curW CURSOR FOR 
+	select p46ID from p46BudgetPerson WHERE p45ID=@p45id_source
+	
+	OPEN curW
+	FETCH NEXT FROM curW 
+	INTO @p46id_source
+	WHILE @@FETCH_STATUS = 0
+	BEGIN				
+
+	    INSERT INTO p46BudgetPerson(p45ID,j02ID,p46ExceedFlag,p46HoursBillable,p46HoursNonBillable,p46HoursTotal,p46BillingRate,j27ID_BillingRate,p46CostRate
+		,j27ID_CostRate,p46Description,p46DateInsert,p46UserInsert,p46DateUpdate,p46UserUpdate,p46ValidFrom,p46ValidUntil)
+		SELECT @p45id_dest,j02ID,p46ExceedFlag,p46HoursBillable,p46HoursNonBillable,p46HoursTotal,p46BillingRate,j27ID_BillingRate,p46CostRate
+		,j27ID_CostRate,p46Description,p46DateInsert,p46UserInsert,p46DateUpdate,p46UserUpdate,p46ValidFrom,p46ValidUntil
+		FROM
+		p46BudgetPerson
+		WHERE p46ID=@p46id_source
+
+		SELECT @p46id_new=@@IDENTITY
+
+		if @is_p47=1
+		 begin
+		   INSERT INTO p47CapacityPlan(p46ID,p47DateFrom,p47DateUntil,p47HoursBillable,p47HoursNonBillable,p47HoursTotal,p47Description
+		   ,p47DateInsert,p47UserInsert,p47DateUpdate,p47UserUpdate,p47ValidFrom,p47ValidUntil)
+		   SELECT @p46id_new,p47DateFrom,p47DateUntil,p47HoursBillable,p47HoursNonBillable,p47HoursTotal,p47Description
+		   ,p47DateInsert,p47UserInsert,p47DateUpdate,p47UserUpdate,p47ValidFrom,p47ValidUntil
+		   FROM p47CapacityPlan WHERE p46ID=@p46id_source
+		  end
+
+   	  FETCH NEXT FROM curW 
+   	  INTO @p46id_source
+	END
+	CLOSE curW
+	DEALLOCATE curW
+end
 
 
 

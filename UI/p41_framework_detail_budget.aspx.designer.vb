@@ -113,6 +113,24 @@ Partial Public Class p41_framework_detail_budget
     Protected WithEvents chkP49GroupByP32 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkVysledovka control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkVysledovka As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''stat1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents stat1 As Global.UI.p45_vysledovka
+
+    '''<summary>
     '''hidBudgetPID control.
     '''</summary>
     '''<remarks>

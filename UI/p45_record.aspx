@@ -21,7 +21,7 @@
                 <asp:CheckBox ID="chkCloneP47" runat="server" Text="Zkopírovat kapacitní plán" Checked="true" />
             </div>
             <div>
-                <asp:CheckBox ID="chkCloneP49" runat="server" Text="Zkopírovat rozpočtové položky výdajů a odměn" Checked="true" />
+                <asp:CheckBox ID="chkCloneP49" runat="server" Text="Zkopírovat finanční rozpočet" Checked="true" />
             </div>
         </div>
     </asp:Panel>

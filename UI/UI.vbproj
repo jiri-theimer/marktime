@@ -244,6 +244,7 @@
     <Content Include="p45_p46.aspx" />
     <Content Include="p45_project_p49.aspx" />
     <Content Include="p45_record.aspx" />
+    <Content Include="p45_vysledovka.ascx" />
     <Content Include="p47_framework.aspx" />
     <Content Include="ChangePassword.aspx" />
     <Content Include="ChangePasswordSuccess.aspx" />
@@ -1155,6 +1156,13 @@
     <Compile Include="p45_record.aspx.vb">
       <DependentUpon>p45_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p45_vysledovka.ascx.designer.vb">
+      <DependentUpon>p45_vysledovka.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p45_vysledovka.ascx.vb">
+      <DependentUpon>p45_vysledovka.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p47_framework.aspx.designer.vb">
       <DependentUpon>p47_framework.aspx</DependentUpon>

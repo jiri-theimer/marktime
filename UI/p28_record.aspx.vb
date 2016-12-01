@@ -113,6 +113,13 @@
                 If cP51.p51IsCustomTailor Then
                     Me.hidP51ID_Tailor.Value = cP51.PID.ToString
                     Me.opgPriceList.SelectedValue = "3"
+                    If Not Page.IsPostBack Then
+                        If Master.IsRecordClone Then
+                            Me.p51ID_Billing.SelectedValue = ""
+                            opgPriceList.SelectedIndex = 0
+                        End If
+                    End If
+                    
                 Else
                     Me.opgPriceList.SelectedValue = "2"
                 End If
@@ -154,6 +161,12 @@
             With cTemp
                 .p85GUID = ViewState("guid_o32")
                 .p85DataPID = c.PID
+                If Not Page.IsPostBack Then
+                    If Master.IsRecordClone Then
+                        .p85DataPID = 0
+                    End If
+                End If
+                
                 .p85OtherKey1 = c.o33ID
                 .p85FreeText01 = c.o32Value
                 .p85FreeText02 = c.o32Description
@@ -177,6 +190,15 @@
                 .p85FreeText04 = c.o38Country
                 .p85FreeText05 = c.o38Name
                 .p85FreeText09 = c.o38AresID
+                If Not Page.IsPostBack Then
+                    If Master.IsRecordClone Then
+                        .p85OtherKey2 = 0
+                        .p85DataPID = 0
+                        .p85FreeText09 = ""
+                    End If
+                End If
+                
+
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next

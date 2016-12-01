@@ -7,6 +7,7 @@ Public Class p47_project
 
     Public Class PlanMatrix
         Public Property Person As String
+
         Public Property Total As String
         Public Property PID As Integer
         Public Property RowIndex As Integer
@@ -66,10 +67,10 @@ Public Class p47_project
     End Property
     Public Property CurrentP45ID As Integer
         Get
-            Return BO.BAS.IsNullInt(Me.p45ID.SelectedValue)
+            Return BO.BAS.IsNullInt(Me.hidP45ID.Value)
         End Get
         Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.p45ID, value.ToString)
+            Me.hidP45ID.Value = value.ToString
         End Set
     End Property
     
@@ -84,12 +85,14 @@ Public Class p47_project
             ViewState("guid") = BO.BAS.GetGUID
             ViewState("guid_p44") = BO.BAS.GetGUID
             With Master
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p41id
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))    'p41ID
                 .HeaderText = "Kapacitní plán | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
+                Me.CurrentP45ID = BO.BAS.IsNullInt(Request.Item("p45id"))
+                If Me.CurrentP45ID = 0 Then
+                    .StopPage("p45id is missing")
+                End If
             End With
-           
-            SetupP45Combo()
-            Me.CurrentP45ID = BO.BAS.IsNullInt(Request.Item("p45id"))
+            
 
             RefreshRecord()
 
@@ -97,11 +100,7 @@ Public Class p47_project
         End If
     End Sub
 
-    Private Sub SetupP45Combo()
-        Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID)
-        Me.p45ID.DataSource = lis
-        Me.p45ID.DataBind()
-    End Sub
+    
 
     Private Sub AddGroupHeader(strName As String, strHeaderText As String)
         Dim group As New GridColumnGroup
@@ -223,10 +222,15 @@ Public Class p47_project
 
 
     Private Sub RefreshRecord()
+        Dim lisP46 As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Me.CurrentP45ID)
+        If lisP46.Count = 0 Then
+            Master.StopPage("Do časového rozpočtu zatím nebyla zařazena ani jedna osoba.")
+            Return
+        End If
         Dim mq As New BO.myQueryP47, d1 As Date = DateSerial(Year(Now), 1, 1), d2 As Date = DateSerial(Year(Now), 12, 31)
         mq.p45ID = Me.CurrentP45ID
         Dim cRec As BO.p45Budget = Master.Factory.p45BudgetBL.Load(Me.CurrentP45ID)
-        
+        lblBudget.Text = cRec.VersionWithName
         lblHeader.Text = BO.BAS.FD(cRec.p45PlanFrom) & " - " & BO.BAS.FD(cRec.p45PlanUntil) & " (" & DateDiff(DateInterval.Day, cRec.p45PlanFrom, cRec.p45PlanUntil).ToString & "d.)"
         If Not Page.IsPostBack Then
             Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(cRec.p41ID)
@@ -260,9 +264,10 @@ Public Class p47_project
         Me.LimitD2 = d2
         SetupGrid()
 
-        
+
         mq.DateFrom = d1
         mq.DateUntil = d2
+
 
 
         Dim lisP47 As IEnumerable(Of BO.p47CapacityPlan) = Master.Factory.p47CapacityPlanBL.GetList(mq).OrderBy(Function(p) p.Person).ThenBy(Function(p) p.j02ID)
@@ -277,6 +282,10 @@ Public Class p47_project
                 .p85FreeDate01 = c.p47DateFrom
                 .p85FreeDate02 = c.p47DateUntil
                 .p85FreeText01 = c.Person
+                'Dim cc As BO.p46BudgetPerson = lisP46.Where(Function(p) p.j02ID = c.j02ID)(0)
+                Dim cc As BO.p46BudgetPerson = lisP46.First(Function(p) p.j02ID = c.j02ID)
+                .p85FreeText02 = cc.p46HoursBillable.ToString + "+" + cc.p46HoursNonBillable.ToString
+                If cc.p46HoursBillable > 0 And cc.p46HoursNonBillable > 0 Then .p85FreeText02 += "=" + cc.p46HoursTotal.ToString
 
                 .p85FreeFloat01 = c.p47HoursBillable
                 .p85FreeFloat02 = c.p47HoursNonBillable
@@ -285,7 +294,7 @@ Public Class p47_project
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
         Dim j02ids As IEnumerable(Of Integer) = lisP47.Select(Function(p) p.j02ID).Distinct
-        Dim lisP46 As IEnumerable(Of BO.p46BudgetPerson) = Master.Factory.p45BudgetBL.GetList_p46(Me.CurrentP45ID)
+
         For Each c In lisP46
             If j02ids.Where(Function(p) p = c.j02ID).Count = 0 Then
                 Dim cTemp As New BO.p85TempBox()
@@ -297,12 +306,14 @@ Public Class p47_project
                     .p85FreeDate01 = Me.LimitD1
                     .p85FreeDate02 = Me.LimitD1.AddMonths(1).AddDays(-1)
                     .p85FreeText01 = c.Person
+                    .p85FreeText02 = c.p46HoursBillable.ToString + "+" + c.p46HoursNonBillable.ToString
+                    If c.p46HoursBillable > 0 And c.p46HoursNonBillable > 0 Then .p85FreeText02 += "=" + c.p46HoursTotal.ToString
                 End With
                 Master.Factory.p85TempBoxBL.Save(cTemp)
             End If
         Next
 
-        
+
 
     End Sub
 
@@ -319,7 +330,8 @@ Public Class p47_project
             If c.p85OtherKey1 <> intLastP46ID Then
                 intRowIndex += 1
                 row = New PlanMatrix()
-                row.Person = c.p85FreeText01
+                row.Person = c.p85FreeText01 & " (" & c.p85FreeText02 & ")"
+
                 row.RowIndex = intRowIndex
                 row.PID = c.p85OtherKey1
                 lis.Add(row)
@@ -454,9 +466,7 @@ Public Class p47_project
     End Sub
 
     
-    Private Sub p45ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles p45ID.SelectedIndexChanged
-        Server.Transfer("p47_project.aspx?pid=" & Master.DataPID.ToString & "&p45id=" & Me.CurrentP45ID.ToString)
-    End Sub
+   
 
     Private Sub cmdClear_Click(sender As Object, e As EventArgs) Handles cmdClear.Click
         Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))

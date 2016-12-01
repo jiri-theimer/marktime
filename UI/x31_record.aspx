@@ -49,6 +49,7 @@
                     <asp:ListItem Text="Vybraný záznam úkolu" Value="356"></asp:ListItem>
                     <asp:ListItem Text="Vybraný záznam faktury" Value="391"></asp:ListItem>
                     <asp:ListItem Text="Vybraný záznam  zálohové faktury" Value="390"></asp:ListItem>
+                    <asp:ListItem Text="Vybraná verze rozpočtu" Value="345"></asp:ListItem>
                     <asp:ListItem Text="Schvalování" Value="999"></asp:ListItem>
                 </asp:DropDownList>
             </td>
