@@ -170,7 +170,7 @@
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         With myQuery
             Dim strSort As String = .MG_SortString
-            If strSort = "" Then strSort = "p28client.p28Name,p41Name"
+            If strSort = "" Then strSort = "p28client.p28Name,a.p41Name"
 
             If .MG_PageSize > 0 Then
                 'použít stránkování do gridu

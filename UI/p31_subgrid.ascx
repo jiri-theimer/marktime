@@ -27,7 +27,7 @@
 
     </div>
     <div class="commandcell" style="margin-left:10px;">
-        <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true">
+        <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true" style="z-index:2000;">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                     <Items>
