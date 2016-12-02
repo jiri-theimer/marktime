@@ -25,6 +25,8 @@
     Function HasChildRecords(intPID As Integer) As Boolean
     Function LoadSumRow(intPID As Integer) As BO.p28ContactSum
     Function GetGridFooterSums(myQuery As BO.myQueryP28, strSumFields As String) As DataTable
+    Function AppendOrRemove_IsirMoniting(intP28ID As Integer, bolRemove As Boolean) As Boolean
+    Function LoadO48Record(intP28ID As Integer) As BO.o48IsirMonitoring
 End Interface
 Class p28ContactBL
     Inherits BLMother
@@ -267,5 +269,11 @@ Class p28ContactBL
     End Function
     Public Function GetGridFooterSums(myQuery As BO.myQueryP28, strSumFields As String) As DataTable Implements Ip28ContactBL.GetGridFooterSums
         Return _cDL.GetGridFooterSums(myQuery, strSumFields)
+    End Function
+    Public Function AppendOrRemove_IsirMoniting(intP28ID As Integer, bolRemove As Boolean) As Boolean Implements Ip28ContactBL.AppendOrRemove_IsirMoniting
+        Return _cDL.AppendOrRemove_IsirMoniting(intP28ID, bolRemove)
+    End Function
+    Public Function LoadO48Record(intP28ID As Integer) As BO.o48IsirMonitoring Implements Ip28ContactBL.LoadO48Record
+        Return _cDL.LoadO48Record(intP28ID)
     End Function
 End Class

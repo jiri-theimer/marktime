@@ -107,6 +107,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(26, "Má pod sebou podřízené klienty"))
                 lis.Add(New BO.OtherQueryItem(27, "Nastavena režijní fakturační přirážka"))
                 lis.Add(New BO.OtherQueryItem(29, "Vyplněna fakturační poznámka klienta"))
+                lis.Add(New BO.OtherQueryItem(30, "Zařazen do monitoringu insolvence"))
             Case BO.x29IdEnum.j02Person
                 lis.Add(New BO.OtherQueryItem(6, "Pouze interní osoby"))
                 lis.Add(New BO.OtherQueryItem(7, "Pouze kontaktní osoby"))

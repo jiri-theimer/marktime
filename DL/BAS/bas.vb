@@ -528,6 +528,8 @@
                 Return "a.p63ID IS NOT NULL"
             Case BO.myQueryP28_QuickQuery.WithBillingMemo
                 Return "a.p28BillingMemo IS NOT NULL"
+            Case BO.myQueryP28_QuickQuery.IsirMonitoring
+                Return "a.p28ID IN (SELECT p28ID FROM o48IsirMonitoring)"
             Case Else
                 Return ""
         End Select

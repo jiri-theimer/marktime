@@ -100,6 +100,7 @@
     <Compile Include="DBNative\o41InboxAccount.vb" />
     <Compile Include="DBNative\o42ImapRule.vb" />
     <Compile Include="DBNative\o43ImapRobotHistory.vb" />
+    <Compile Include="DBNative\o48IsirMonitoring.vb" />
     <Compile Include="DBNative\p27ContactPersonRole.vb" />
     <Compile Include="DBNative\p39WorkSheet_Recurrence_Plan.vb" />
     <Compile Include="DBNative\p40WorkSheet_Recurrence.vb" />

@@ -503,4 +503,20 @@
         End With
         Return _cDB.GetRecord(Of BO.p28ContactSum)("p28_inhale_sumrow", pars, True)
     End Function
+    Public Function AppendOrRemove_IsirMoniting(intP28ID As Integer, bolRemove As Boolean) As Boolean
+        Dim pars As New DbParameters
+        With pars
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("pid", intP28ID, DbType.Int32)
+            If bolRemove Then
+                .Add("append_remove_flag", 2, DbType.Int32)
+            Else
+                .Add("append_remove_flag", 1, DbType.Int32)
+            End If
+        End With
+        Return _cDB.RunSP("p28_append_remove_isir", pars)
+    End Function
+    Public Function LoadO48Record(intP28ID As Integer) As BO.o48IsirMonitoring
+        Return _cDB.GetRecord(Of BO.o48IsirMonitoring)("select *," & bas.RecTail("o48", "") & " from o48IsirMonitoring where p28ID=@p28id", New With {.p28id = intP28ID})
+    End Function
 End Class

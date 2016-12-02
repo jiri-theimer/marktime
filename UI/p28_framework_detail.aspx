@@ -230,6 +230,9 @@
         function stoploading(){            
             document.getElementById("<%=me.imgLoading.clientid%>").style.display="none";
         }
+        function o48_edit(){
+            sw_decide("o48_record.aspx?prefix=p28&pid=<%=master.datapid%>","",false);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -376,9 +379,11 @@
                         <td>
                             <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false"></asp:HyperLink>
                            <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank" visible="false"></asp:HyperLink>
-                            <asp:HyperLink ID="linkISIR" runat="server" Text="ISIR" Target="_blank" Visible="false" ToolTip="Insolvenční restřík | JUSTICE.cz"></asp:HyperLink>
+                            
                             <span style="margin-left:20px;">DIČ:</span>
                             <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false"></asp:HyperLink>
+
+                            
                             
                         </td>
                     </tr>
@@ -386,7 +391,10 @@
                 </div>
                 <div style="float:left;">
                     <uc:freefields_readonly ID="ff1" runat="server" />
-                    
+                   
+                    <asp:HyperLink ID="linkISIR" runat="server" Text="ISIR" Target="_blank" Visible="false" ToolTip="Insolvenční restřík | JUSTICE.cz"></asp:HyperLink>
+                    +Monitoring:
+                            <asp:HyperLink ID="linkISIR_Monitoring" runat="server" Text="NE" NavigateUrl="javascript:o48_edit()" ToolTip="Zapnout monitoring klienta v insolvenčním rejstříku"></asp:HyperLink>
                 </div>
                 <div style="clear:both;"></div>
             </div>

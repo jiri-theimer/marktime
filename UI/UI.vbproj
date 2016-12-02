@@ -234,6 +234,7 @@
     <Content Include="o24_record.aspx" />
     <Content Include="o41_record.aspx" />
     <Content Include="o42_record.aspx" />
+    <Content Include="o48_record.aspx" />
     <Content Include="p28_framework.aspx" />
     <Content Include="p31summary.ascx" />
     <Content Include="p31_framework_timer.aspx" />
@@ -353,6 +354,7 @@
     <Content Include="p91_proforma.aspx" />
     <Content Include="p98_record.aspx" />
     <Content Include="panelmenu.ascx" />
+    <Content Include="Public\isirinfo.aspx" />
     <Content Include="Public\log_app_update_public.aspx" />
     <Content Include="query_builder.aspx" />
     <Content Include="Public\mtservice_recovery.aspx" />
@@ -1085,6 +1087,13 @@
     </Compile>
     <Compile Include="o42_record.aspx.vb">
       <DependentUpon>o42_record.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="o48_record.aspx.designer.vb">
+      <DependentUpon>o48_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="o48_record.aspx.vb">
+      <DependentUpon>o48_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p28_framework.aspx.designer.vb">
@@ -1977,6 +1986,13 @@
     <Compile Include="panelmenu.ascx.vb">
       <DependentUpon>panelmenu.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\isirinfo.aspx.designer.vb">
+      <DependentUpon>isirinfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\isirinfo.aspx.vb">
+      <DependentUpon>isirinfo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Public\log_app_update_public.aspx.designer.vb">
       <DependentUpon>log_app_update_public.aspx</DependentUpon>

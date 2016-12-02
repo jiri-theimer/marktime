@@ -239,15 +239,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents linkARES As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''linkISIR control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkISIR As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''linkDIC control.
     '''</summary>
     '''<remarks>
@@ -264,6 +255,24 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ff1 As Global.UI.freefields_readonly
+
+    '''<summary>
+    '''linkISIR control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkISIR As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkISIR_Monitoring control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkISIR_Monitoring As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''linkChilds control.

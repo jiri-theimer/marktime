@@ -252,7 +252,9 @@ Public Class p28_framework_detail
         Else
             linkChilds.Visible = False
         End If
-        
+        If cRecSum.o48_Exist Then linkISIR_Monitoring.Text = "ANO" : linkISIR.Font.Bold = True Else linkISIR_Monitoring.Text = "NE"
+
+
     End Sub
 
     

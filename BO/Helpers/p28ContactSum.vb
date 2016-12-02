@@ -17,6 +17,7 @@
     Public Property o23_Count As Integer
     Public Property p41_Actual_Count As Integer
     Public Property p41_Closed_Count As Integer
+    Public Property o48_Exist As Boolean
 
 
 End Class

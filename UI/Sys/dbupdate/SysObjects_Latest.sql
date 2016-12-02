@@ -5611,6 +5611,40 @@ exec [x90_appendlog] 328,@p28id,@j03id_sys
 
 GO
 
+----------P---------------p28_append_remove_isir-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_append_remove_isir') and type = 'P')
+ drop procedure p28_append_remove_isir
+GO
+
+
+
+
+CREATE procedure [dbo].[p28_append_remove_isir]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int						---p28id		
+,@append_remove_flag int		----1 - pøidat, 2 - odstranit
+AS
+
+if @append_remove_flag=1
+ begin
+  if exists(select p28ID FROM o48IsirMonitoring WHERE p28ID=@pid)
+   return
+  
+  declare @login varchar(50)
+
+  select @login=j03Login FROM j03User WHERE j03ID=@j03id_sys
+
+  insert into o48IsirMonitoring(p28ID,o48UserInsert,o48DateInsert,o48UserUpdate,o48DateUpdate) VALUES(@pid,@login,getdate(),@login,getdate())
+
+  return
+ end
+
+if @append_remove_flag=2
+ DELETE FROM o48IsirMonitoring WHERE p28ID=@pid
+
+GO
+
 ----------P---------------p28_convertdraft-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p28_convertdraft') and type = 'P')
@@ -5728,6 +5762,9 @@ BEGIN TRY
 	if exists(SELECT o32ID FROM o32Contact_Medium WHERE p28ID=@pid)
 	 DELETE FROM o32Contact_Medium WHERE p28ID=@pid
 
+	if exists(select o48ID FROM o48IsirMonitoring WHERE p28ID=@pid)
+	 DELETE FROM o48IsirMonitoring WHERE p28ID=@pid
+
 	if exists(select o37ID FROM o37Contact_Address WHERE p28ID=@pid)
 	 begin
 	  DELETE FROM o37Contact_Address WHERE p28ID=@pid
@@ -5792,7 +5829,7 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_count int,@p41_actual_count int,@p41_closed_count int
+declare @o23_count int,@p41_actual_count int,@p41_closed_count int, @o48_exist bit
 
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 ,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
@@ -5856,7 +5893,9 @@ SELECT @p41_actual_count=sum(case when getdate() BETWEEN p41ValidFrom AND p41Val
 FROM p41Project
 WHERE p28ID_Client=@pid
  
-
+set @o48_exist=0
+if exists(select o48ID FROM o48IsirMonitoring WHERE p28ID=@pid)
+ set @o48_exist=1
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p56_closed_count,0) as p56_Closed_Count
@@ -5876,6 +5915,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@o23_count,0) as o23_Count
 ,isnull(@p41_actual_count,0) as p41_actual_count
 ,isnull(@p41_closed_count,0) as p41_closed_count
+,@o48_exist as o48_Exist
 
 GO
 
