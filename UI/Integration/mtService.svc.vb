@@ -45,7 +45,7 @@ Class mtService
         Return True
     End Function
 
-    Public Function SaveTask(intPID As Integer, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveTask
+    Public Function SaveTask(intPID As Integer, strExternalPID As String, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), intO24ID As Integer, uploadedTempFiles As List(Of String), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveTask
         VerifyUser(strLogin, strPassword)
         Dim sr As New BO.ServiceResult()
 
@@ -100,21 +100,40 @@ Class mtService
         VerifyUser(strLogin, strPassword)
         Return _factory.p56TaskBL.LoadByExternalPID(strExternalPID)
     End Function
-    Public Function ListProjects(intP28ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p41Project) Implements ImtService.ListProjects
+    Public Function ListTasks4WorksheetEnty(intP41ID As Integer, intJ02ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p56Task) Implements ImtService.ListTasks4WorksheetEnty
+        VerifyUser(strLogin, strPassword)
+        Dim mq As New BO.myQueryP56
+        mq.p41ID = intP41ID
+        mq.Closed = BO.BooleanQueryMode.FalseQuery
+        mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForWorksheetEntry
+        mq.j02ID_ExplicitQueryFor = intJ02ID
+
+        Return _factory.p56TaskBL.GetList(mq)
+    End Function
+    Public Function ListProjects(intP28ID As Integer, bolWorksheetEnty As Boolean, strLogin As String, strPassword As String) As IEnumerable(Of BO.p41Project) Implements ImtService.ListProjects
         VerifyUser(strLogin, strPassword)
 
         Dim mq As New BO.myQueryP41
         mq.Closed = BO.BooleanQueryMode.NoQuery
         mq.p28ID = intP28ID
+        If bolWorksheetEnty Then
+            mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
+        Else
+            mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+        End If
         Return _factory.p41ProjectBL.GetList(mq)
     End Function
     Public Function ListClients(strLogin As String, strPassword As String) As IEnumerable(Of BO.p28Contact) Implements ImtService.ListClients
         VerifyUser(strLogin, strPassword)
-
         Dim mq As New BO.myQueryP28
+
         mq.Closed = BO.BooleanQueryMode.NoQuery
+        mq.SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
+
         Return _factory.p28ContactBL.GetList(mq)
+
     End Function
+    
     Public Function ListProducts(intP28ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p58Product) Implements ImtService.ListProducts
         VerifyUser(strLogin, strPassword)
 
@@ -136,6 +155,12 @@ Class mtService
 
         Return _factory.p34ActivityGroupBL.GetList(_mqDef)
     End Function
+    Public Function ListSheets4Project(intP41ID As Integer, intJ02ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p34ActivityGroup) Implements ImtService.ListSheets4Project
+        VerifyUser(strLogin, strPassword)
+        Dim cP41 As BO.p41Project = _factory.p41ProjectBL.Load(intP41ID)
+
+        Return _factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(intP41ID, cP41.p42ID, cP41.j18ID, intJ02ID)
+    End Function
     Public Function ListActivities(strLogin As String, strPassword As String) As IEnumerable(Of BO.p32Activity) Implements ImtService.ListActivities
         VerifyUser(strLogin, strPassword)
 
@@ -150,14 +175,21 @@ Class mtService
         mq.Closed = BO.BooleanQueryMode.NoQuery
         Return _factory.j02PersonBL.GetList(mq)
     End Function
-    Public Function ListContactPersons(strLogin As String, strPassword As String, intP28ID As Integer) As IEnumerable(Of BO.j02Person) Implements ImtService.ListContactPersons
+    Public Function ListContactPersons(strLogin As String, strPassword As String, intP28ID As Integer, intP41ID As Integer) As IEnumerable(Of BO.j02Person) Implements ImtService.ListContactPersons
         VerifyUser(strLogin, strPassword)
         Dim mq As New BO.myQueryJ02
         mq.p28ID = intP28ID
+        mq.p41ID = intP41ID
+        mq.Closed = BO.BooleanQueryMode.FalseQuery
+        mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
         Return _factory.j02PersonBL.GetList(mq)
     End Function
     Public Function LoadPerson(intPID As Integer, strLogin As String, strPassword As String) As BO.j02Person Implements ImtService.LoadPerson
         VerifyUser(strLogin, strPassword)
+        If intPID = 0 Then
+            Dim cJ03 As BO.j03User = _factory.j03UserBL.LoadByLogin(strLogin)
+            intPID = cJ03.j02ID
+        End If
         Return _factory.j02PersonBL.Load(intPID)
     End Function
     Public Function LoadPersonByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.j02Person Implements ImtService.LoadPersonByExternalPID
@@ -209,6 +241,8 @@ Class mtService
                 Dim cP32 As BO.p32Activity = _factory.p32ActivityBL.Load(.p32ID)
                 .p34ID = cP32.p34ID
             End If
+
+            
             If .p31HoursEntryflag = BO.p31HoursEntryFlagENUM.NeniCas Then
                 'ověřit, zda se jedná o hodiny
                 If .p34ID <> 0 Then
@@ -216,6 +250,11 @@ Class mtService
                     If cP34.p33ID = BO.p33IdENUM.Cas Then .p31HoursEntryflag = BO.p31HoursEntryFlagENUM.Hodiny
                 End If
                 If .TimeFrom <> "" Or .TimeUntil <> "" Then .p31HoursEntryflag = BO.p31HoursEntryFlagENUM.PresnyCasOdDo
+            End If
+            If .p31HoursEntryflag <> BO.p31HoursEntryFlagENUM.NeniCas Then
+                If Not .ValidateEntryTime(5, False) Then
+                    sr.ErrorMessage = .ErrorMessage : Return sr
+                End If
             End If
         End With
         
@@ -390,5 +429,211 @@ Class mtService
             Throw New FaultException(ex.Message)
         End Try
         Return sr
+    End Function
+
+    Public Function UploadBinaryToTempFile(chunkBytes As Byte(), intPartZeroIndex As Integer, intTotalSize As Integer, strArchiveFileName As String, strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.UploadBinaryToTempFile
+        VerifyUser(strLogin, strPassword)
+        Dim sr As New BO.ServiceResult()
+        Dim cF As New BO.clsFile
+
+        Dim strPath As String = _factory.x35GlobalParam.TempFolder & "\" & strArchiveFileName
+        If intPartZeroIndex = 0 Then
+            If cF.FileExist(strPath) Then
+                cF.DeleteFile(strPath)
+            End If
+        End If
+
+        cF.AppendAllBytesToFile(strPath, chunkBytes)
+        sr.IsSuccess = True
+        Return sr
+
+        
+    End Function
+    Public Function ListDocTypes(strLogin As String, strPassword As String) As IEnumerable(Of BO.o24NotepadType) Implements ImtService.ListDocTypes
+        VerifyUser(strLogin, strPassword)
+        
+        Return _factory.o24NotepadTypeBL.GetList(_mqDef)
+    End Function
+
+    Public Function SaveDocument(intPID As Integer, strExternalPID As String, uploadedTempFiles As List(Of String), fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveDocument
+        VerifyUser(strLogin, strPassword)
+
+        Dim sr As New BO.ServiceResult()
+        If fields Is Nothing Then
+            sr.ErrorMessage = "fields is nothing" : Return sr
+        End If
+        If intPID = 0 And Not _factory.o23NotepadBL.LoadByExternalPID(strExternalPID) Is Nothing Then
+            sr.ErrorMessage = "V MARKTIME již existuje dokument k této Outlook položce! Upravovat nebo odstranit tento dokument lze pouze v MARKTIME rozhraní." : Return sr
+        End If
+        Dim strGUID As String = ""
+        If Not uploadedTempFiles Is Nothing Then
+            Dim cF As New BO.clsFile
+            'temp nahrané soubory
+            For Each strFileName As String In uploadedTempFiles
+                If strGUID = "" Then strGUID = BO.BAS.GetGUID()
+                Dim c As New BO.p85TempBox
+                c.p85GUID = strGUID
+                c.p85Prefix = "o27"
+                c.p85OtherKey1 = 1  'o13id=1
+                c.p85FreeText02 = strFileName
+                c.p85FreeNumber01 = cF.GetFileSize(_factory.x35GlobalParam.TempFolder & "\" & strFileName)
+                c.p85FreeText03 = cF.GetContentType(_factory.x35GlobalParam.TempFolder & "\" & strFileName)
+                If Right(LCase(strFileName), 3) = "msg" Then
+                    c.p85FreeText01 = "MS-Outlook"
+                End If
+
+                _factory.p85TempBoxBL.Save(c)
+            Next
+        End If
+
+        Dim cRec As New BO.o23Notepad
+        If intPID = 0 Then
+            cRec.o23GUID = strGUID
+            cRec.o23ExternalPID = strExternalPID
+        Else
+            cRec = _factory.o23NotepadBL.Load(intPID)
+        End If
+        If cRec Is Nothing Then
+            sr.ErrorMessage = "record not found" : Return sr
+        End If
+        For Each c In fields
+            Try
+                BO.BAS.SetPropertyValue(cRec, c.Key, c.Value)
+            Catch ex As Exception
+                sr.ErrorMessage = "Property [" & c.Key & "], error: " & ex.Message : Return sr
+            End Try
+        Next
+
+        Try
+            If _factory.o23NotepadBL.Save(cRec, strGUID, Nothing, Nothing) Then
+                sr.PID = _factory.o23NotepadBL.LastSavedPID
+                sr.IsSuccess = True
+            Else
+                sr.ErrorMessage = _factory.o23NotepadBL.ErrorMessage
+                sr.IsSuccess = False
+            End If
+        Catch ex As Exception
+            Throw New FaultException(ex.Message)
+
+        End Try
+        Return sr
+    End Function
+
+    Public Function ListComboSource(strDataPrefix As String, strFlag As String, bolFirstEmptyRow As Boolean, intParentPID As Integer, strLogin As String, strPassword As String) As List(Of BO.ComboSource) Implements ImtService.ListComboSource
+        Dim s As String = "", ret As New List(Of BO.ComboSource)
+        If strDataPrefix = "" Then Return ret
+        VerifyUser(strLogin, strPassword)
+
+        Select Case strDataPrefix
+            Case "p28"
+                Dim mq As New BO.myQueryP28
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                mq.SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
+               
+                Dim lis As IEnumerable(Of BO.p28Contact) = _factory.p28ContactBL.GetList(mq)
+                For Each c In lis
+                    Dim cc As New BO.ComboSource
+                    cc.pid = c.PID : cc.ItemText = c.p28Name : cc.ItemFlag = ""
+                    ret.Add(cc)
+                Next
+                Select Case strFlag
+                    Case "1", "2"    'klienti pro zápis worksheet                        
+                        Dim mqP41 As New BO.myQueryP41
+                        mqP41.Closed = BO.BooleanQueryMode.FalseQuery
+                        If strFlag = "1" Then
+                            mqP41.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry  'zapisování úkonů
+                        End If
+                        If strFlag = "2" Then
+                            mqP41.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead  'projekt klienta
+                        End If
+                        Dim p28ids As List(Of Integer) = _factory.p41ProjectBL.GetList(mqP41).Select(Function(p) p.p28ID_Client).Distinct.ToList
+                        For Each intP28ID As Integer In p28ids
+                            If Not ret.Find(Function(p) p.pid = intP28ID) Is Nothing Then
+                                ret.Find(Function(p) p.pid = intP28ID).ItemFlag = "1"
+                            End If
+                        Next
+                        ret.RemoveAll(Function(p) p.ItemFlag = "")
+                End Select
+            Case "p41"
+                Dim mq As New BO.myQueryP41, intMask As Integer = _factory.SysUser.j03ProjectMaskIndex
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+                If intParentPID > 0 Then mq.p28ID = intParentPID
+                Select Case strFlag
+                    Case "1"    'projekty pro zápis worksheet, intParentPID=p28ID
+                        mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForWorksheetEntry
+                    Case "2"    'Projekty, kde je minimálně jeden otevřený úkol
+                        mq.QuickQuery = BO.myQueryP41_QuickQuery.WithOpenTasks
+                    Case Else    'všechny otevřené projekty
+                End Select
+                Dim lis As IEnumerable(Of BO.p41Project) = _factory.p41ProjectBL.GetList(mq)
+                If intParentPID = -1 Then lis = lis.Where(Function(p) p.p28ID_Client = 0) 'projekty bez klienta
+                For Each c In lis
+                    Dim cc As New BO.ComboSource
+                    cc.pid = c.PID : cc.ItemFlag = ""
+                    If intParentPID = 0 Then
+                        cc.ItemText = c.ProjectWithMask(intMask)
+                    Else
+                        cc.ItemText = c.PrefferedName & " [" & c.p41Code & "]"
+                    End If
+                    ret.Add(cc)
+                Next
+            Case "p91"
+                Dim mq As New BO.myQueryP91
+                mq.SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                If intParentPID > 0 Then mq.p28ID = intParentPID
+                Dim lis As IEnumerable(Of BO.p91Invoice) = _factory.p91InvoiceBL.GetList(mq)
+                For Each c In lis
+                    Dim cc As New BO.ComboSource
+                    cc.pid = c.PID
+                    If intParentPID = 0 Then
+                        cc.ItemText = c.p91Code & " - " & c.p91Client & " (" & BO.BAS.FN(c.p91Amount_TotalDue) & " " & c.j27Code
+                    Else
+                        cc.ItemText = c.p91Code & " - " & BO.BAS.FD(c.p91DateSupply) & " (" & BO.BAS.FN(c.p91Amount_TotalDue) & " " & c.j27Code
+                    End If
+
+                    ret.Add(cc)
+                Next
+            Case "j02"
+                Dim mq As New BO.myQueryJ02
+                mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                Dim lis As IEnumerable(Of BO.j02Person) = _factory.j02PersonBL.GetList(mq)
+                For Each c In lis
+                    Dim cc As New BO.ComboSource
+                    cc.pid = c.PID
+                    cc.ItemText = c.FullNameDesc
+                    ret.Add(cc)
+                Next
+            Case "p56"
+                Dim mq As New BO.myQueryP56
+                mq.p41ID = intParentPID
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
+                Dim lis As IEnumerable(Of BO.p56Task) = _factory.p56TaskBL.GetList(mq, True)
+                For Each c In lis
+                    Dim cc As New BO.ComboSource
+                    cc.pid = c.PID
+                    cc.ItemText = c.p57Name & ": " & c.p56Name & " ..." & c.ReceiversInLine
+
+                    ret.Add(cc)
+                Next
+            Case Else
+
+        End Select
+        If bolFirstEmptyRow Then
+            Dim cc As New BO.ComboSource
+            cc.pid = 0
+            ret.Insert(0, cc)
+        End If
+        Return ret
+
+    End Function
+
+    Public Function LoadMsOfficeBinding(strEntryID As String, strLogin As String, strPassword As String) As BO.MsOfficeBinding Implements ImtService.LoadMsOfficeBinding
+        If strEntryID = "" Then Return Nothing
+        VerifyUser(strLogin, strPassword)
+        Return _factory.o23NotepadBL.LoadMsOfficeBinding(strEntryID)
     End Function
 End Class

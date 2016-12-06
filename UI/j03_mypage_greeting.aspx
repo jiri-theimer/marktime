@@ -26,7 +26,7 @@
 
 
         }
-
+       
 
 
         function p48_record(pid) {
@@ -88,6 +88,7 @@
                             <Items>
 
                                 <telerik:RadPanelItem Text="Zapisovat úkony" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Zapsat jeden úkon" Value="p31_create_one" NavigateUrl="javascript:p31_create()" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
 
 

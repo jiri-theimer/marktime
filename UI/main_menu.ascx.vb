@@ -90,7 +90,7 @@ Public Class main_menu
                 ai("", "searchbox1", "", "")
 
             End If
-           
+
 
             n = ai("", "new", "", "Images/new_menu.png", )
             n.SelectedCssClass = ""
@@ -101,6 +101,9 @@ Public Class main_menu
             End If
             If .j04IsMenu_Project Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "", "javascript:p41_create()", "", n) : b = True
+            End If
+            If .j04IsMenu_Worksheet Then
+                ai("Worksheet úkon", "", "javascript:p31_create()", "", n) : b = True
             End If
             If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
                 ai(Resources.common.Ukol, "", "javascript:p56_create()", "", n)

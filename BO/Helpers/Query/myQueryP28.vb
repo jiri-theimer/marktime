@@ -2,6 +2,7 @@
     _NotSpecified = 0
 
     AllowedForRead = 2              'pouze kontakty, ke kterým má právo na čtení
+
 End Enum
 Public Enum myQueryP28_QuickQuery
     _NotSpecified = 0

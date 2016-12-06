@@ -14,8 +14,8 @@ Public Interface ImtService
 
 
   
-    <OperationContract()>        
-    Function SaveTask(intPID As Integer, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), strLogin As String, strPassword As String) As BO.ServiceResult
+    <OperationContract()>
+    Function SaveTask(intPID As Integer, strExternalPID As String, fields As Dictionary(Of String, Object), receivers As List(Of BO.x69EntityRole_Assign), intO24ID As Integer, uploadedTempFiles As List(Of String), strLogin As String, strPassword As String) As BO.ServiceResult
     <OperationContract()>
     Function LoadTaskExtended(intPID As Integer, strLogin As String, strPassword As String) As BO.p56TaskWsExtended
     <OperationContract()>
@@ -27,7 +27,7 @@ Public Interface ImtService
     Function SaveWorksheet(intPID As Integer, fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult
 
     <OperationContract()>
-    Function ListProjects(intP28ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p41Project)
+    Function ListProjects(intP28ID As Integer, bolWorksheetEnty As Boolean, strLogin As String, strPassword As String) As IEnumerable(Of BO.p41Project)
     <OperationContract()>
     Function LoadProject(intPID As Integer, strLogin As String, strPassword As String) As BO.p41Project
     <OperationContract()>
@@ -66,7 +66,7 @@ Public Interface ImtService
     <OperationContract()>
     Function ListPossibleWorkflowSteps(intRecordPID As Integer, strRecordPrefix As String, intJ02ID As Integer, strLogin As String, strPassword As String) As List(Of BO.WorkflowStepPossible4User)
     <OperationContract()>
-    Function ListContactPersons(strLogin As String, strPassword As String, intP28ID As Integer) As IEnumerable(Of BO.j02Person)
+    Function ListContactPersons(strLogin As String, strPassword As String, intP28ID As Integer, intP41ID As Integer) As IEnumerable(Of BO.j02Person)
     <OperationContract()>
     Function LoadPerson(intPID As Integer, strLogin As String, strPassword As String) As BO.j02Person
     <OperationContract()>
@@ -78,6 +78,20 @@ Public Interface ImtService
     Function SaveContactPerson(intJ02ID As Integer, intP28ID As Integer, strLogin As String, strPassword As String) As BO.ServiceResult
     <OperationContract()>
     Function DeleteContactPerson(intJ02ID As Integer, intP28ID As Integer, strLogin As String, strPassword As String) As BO.ServiceResult
+    <OperationContract()>
+    Function ListSheets4Project(intP41ID As Integer, intJ02ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p34ActivityGroup)
+    <OperationContract()>
+    Function ListTasks4WorksheetEnty(intP41ID As Integer, intJ02ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p56Task)
+    <OperationContract()>
+    Function UploadBinaryToTempFile(chunkBytes As Byte(), intPartZeroIndex As Integer, intTotalSize As Integer, strArchiveFileName As String, strLogin As String, strPassword As String) As BO.ServiceResult
+    <OperationContract()>
+    Function ListDocTypes(strLogin As String, strPassword As String) As IEnumerable(Of BO.o24NotepadType)
+    <OperationContract()>
+    Function ListComboSource(strDataPrefix As String, strFlag As String, bolFirstEmptyRow As Boolean, intParentPID As Integer, strLogin As String, strPassword As String) As List(Of BO.ComboSource)
+    <OperationContract()>
+    Function SaveDocument(intPID As Integer, strExternalPID As String, uploadedTempFiles As List(Of String), fields As Dictionary(Of String, Object), strLogin As String, strPassword As String) As BO.ServiceResult
+    <OperationContract()>
+    Function LoadMsOfficeBinding(strEntryID As String, strLogin As String, strPassword As String) As BO.MsOfficeBinding
 End Interface
 
 

@@ -10,6 +10,11 @@
 
         Return _cDB.GetRecord(Of BO.o23Notepad)(s, New With {.o23id = intPID})
     End Function
+    Public Function LoadByExternalPID(strExternalPID As String) As BO.o23Notepad
+        Dim s As String = GetSQLPart1(0)
+        s += " WHERE a.o23ExternalPID LIKE @externalpid"
+        Return _cDB.GetRecord(Of BO.o23Notepad)(s, New With {.externalpid = strExternalPID})
+    End Function
     Public Function Load4Grid(intPID As Integer) As BO.o23NotepadGrid
         Dim s As String = GetSQLPart1_Grid(0) & " " & GetSQLPart2_Grid(Nothing)
         s += " WHERE a.o23ID=@o23id"
@@ -58,6 +63,7 @@
                 pars.Add("o23LastLockedBy", .o23LastLockedBy, DbType.String)
 
                 pars.Add("o23GUID", .o23GUID, DbType.String)
+                pars.Add("o23ExternalPID", .o23ExternalPID, DbType.String)
 
                 pars.Add("o23validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("o23validuntil", .ValidUntil, DbType.DateTime)
@@ -437,5 +443,14 @@
         pars.Add("pid", intPID)
         pars.Add("o43ID", BO.BAS.IsNullDBKey(intO43ID), DbType.Int32)
         Return _cDB.SaveRecord("o23Notepad", pars, False, "o23ID=@pid", False)
+    End Function
+
+    Public Function LoadMsOfficeBinding(strEntryID As String) As BO.MsOfficeBinding
+        Dim pars As New DbParameters()
+        With pars
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("entry_id", strEntryID, DbType.String)
+        End With
+        Return _cDB.GetRecord(Of BO.MsOfficeBinding)("msoffice_find_binding", pars, True)
     End Function
 End Class

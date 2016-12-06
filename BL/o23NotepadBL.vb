@@ -5,6 +5,7 @@ Public Interface Io23NotepadBL
     Function Load(intPID As Integer) As BO.o23Notepad
     Function Load4Grid(intPID As Integer) As BO.o23NotepadGrid
     Function LoadMyLastCreated() As BO.o23Notepad
+    Function LoadByExternalPID(strExternalPID As String) As BO.o23Notepad
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryO23) As IEnumerable(Of BO.o23Notepad)
     Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o23NotepadGrid)
@@ -20,6 +21,7 @@ Public Interface Io23NotepadBL
     Function LockFilesInDocument(cRec As BO.o23Notepad, lockFlag As BO.o23LockedTypeENUM) As Boolean
     Function UnLockFilesInDocument(cRec As BO.o23Notepad) As Boolean
     Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
+    Function LoadMsOfficeBinding(strEntryID As String) As BO.MsOfficeBinding
 End Interface
 Class o23NotepadBL
     Inherits BLMother
@@ -254,5 +256,11 @@ Class o23NotepadBL
     End Function
     Public Function GetGridDataSource(myQuery As BO.myQueryO23) As DataTable Implements Io23NotepadBL.GetGridDataSource
         Return _cDL.GetGridDataSource(myQuery)
+    End Function
+    Public Function LoadByExternalPID(strExternalPID As String) As BO.o23Notepad Implements Io23NotepadBL.LoadByExternalPID
+        Return _cDL.LoadByExternalPID(strExternalPID)
+    End Function
+    Public Function LoadMsOfficeBinding(strEntryID As String) As BO.MsOfficeBinding Implements Io23NotepadBL.LoadMsOfficeBinding
+        Return _cDL.LoadMsOfficeBinding(strEntryID)
     End Function
 End Class

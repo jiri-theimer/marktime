@@ -120,7 +120,7 @@ Public Class p31Worksheet
     Public Property p31Amount_WithoutVat_FixedCurrency As Double
 
 
-
+    Public Property p31ExternalPID As String
 
     Public Property c11ID As Integer
     Public Property j02ID_ApprovedBy As Integer

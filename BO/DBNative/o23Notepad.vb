@@ -23,6 +23,7 @@ Public Class o23Notepad
     Public Property j02ID_Owner As Integer
     Public Property o23IsEncrypted As Boolean
     Public Property o23GUID As String
+    Public Property o23ExternalPID As String
 
     Friend Property _o24IsBillingMemo As Boolean
 

@@ -261,8 +261,6 @@
             If .CanBeSupplier = BO.BooleanQueryMode.TrueQuery Then s.Append(" AND a.p28SupplierFlag IN (2,3)")
             If .CanBeSupplier = BO.BooleanQueryMode.FalseQuery Then s.Append(" AND a.p28SupplierFlag=1")
 
-
-
             Select Case .SpecificQuery
                 Case BO.myQueryP28_SpecificQuery.AllowedForRead
                     If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P28_Owner) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P28_Reader) Then

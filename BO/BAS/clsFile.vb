@@ -169,10 +169,14 @@ Public Class clsFile
             Case "jpg", "jpeg" : Return "image/jpeg"
             Case "gif", "png", "bmp" : Return "image/" & strExt
             Case "msg" : Return "message/rfc822"
+            Case "txt" : Return "text/plain"
+            Case "htm", "html" : Return "text/html"
             Case Else
                 Return ("application/." & strExt).Replace("..", ".")
         End Select
     End Function
+
+    
 
     Public Function GetBinaryContent(strFullPath As String) As Byte()
         If Not File.Exists(strFullPath) Then Return Nothing
@@ -186,8 +190,42 @@ Public Class clsFile
 
         Return ret
 
-        
+
     End Function
+    Public Function GetBinaryPart(strFullPath As String, intStartZeroIndex As Integer, intPartSize As Integer) As Byte()
+        ''Dim bytesall() As Byte = GetBinaryContent(strFullPath)
+        Dim buffer() As Byte = New Byte(intPartSize - 1) {}
+
+        Using fs As New FileStream(strFullPath, FileMode.Open, FileAccess.Read, FileShare.None)
+            If fs.Length < intStartZeroIndex + buffer.Length Then
+                buffer = New Byte(fs.Length - intStartZeroIndex - 1) {}
+            End If
+            fs.Seek(intStartZeroIndex, SeekOrigin.Begin)
+            fs.Read(buffer, 0, buffer.Length)
+
+        End Using
+        Return buffer
+
+    End Function
+
+    Public Function SaveBinary2File(b() As Byte, strFullPath As String) As Boolean
+
+        System.IO.File.WriteAllBytes(strFullPath, b)
+        If File.Exists(strFullPath) Then
+            Return True
+        Else
+            Return False
+        End If
+
+    End Function
+
+    Public Sub AppendAllBytesToFile(path As String, bytes As Byte())
+        'argument-checking here.
+
+        Using stream = New FileStream(path, FileMode.Append)
+            stream.Write(bytes, 0, bytes.Length)
+        End Using
+    End Sub
 End Class
 
 

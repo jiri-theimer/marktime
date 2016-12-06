@@ -198,6 +198,7 @@
                 pars.Add("p31DateTimeFrom_Orig", BO.BAS.IsNullDBDate(.p31DateTimeFrom_Orig), DbType.DateTime)
                 pars.Add("p31DateTimeUntil_Orig", BO.BAS.IsNullDBDate(.p31DateTimeUntil_Orig), DbType.DateTime)
                 pars.Add("p31Value_Orig_Entried", Left(.Value_Orig_Entried, 20), DbType.String)
+                pars.Add("p31ExternalPID", .p31ExternalPID, DbType.String)
 
                 pars.Add("p31Code", .p31Code, DbType.String)
 

@@ -42,7 +42,7 @@
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
 
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
-                menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
+                menu1.FindItemByValue("p31_create_one").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p31_scheduler").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("myreport").Visible = .TestPermission(BO.x53PermValEnum.GR_X31_Personal)
                 ''If .SysUser.j04IsMenu_Invoice Then

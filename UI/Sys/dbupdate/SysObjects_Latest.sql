@@ -4801,6 +4801,47 @@ END CATCH
 
 GO
 
+----------P---------------msoffice_find_binding-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('msoffice_find_binding') and type = 'P')
+ drop procedure msoffice_find_binding
+GO
+
+
+
+
+
+CREATE procedure [dbo].[msoffice_find_binding]
+@j03id_sys int
+,@entry_id varchar(200)
+AS
+
+declare @o23id int,@docname nvarchar(255),@p31id int,@ukon nvarchar(255),@p56id int,@task nvarchar(255),@o22id int,@appointment nvarchar(255)
+
+if exists(select o23ID FROM o23Notepad WHERE o23ExternalPID like @entry_id)
+ select top 1 @o23id=a.o23ID,@docname=b.o24Name+': '+a.o23Name FROM o23Notepad a INNER JOIN o24NotepadType b ON a.o24ID=b.o24ID WHERE a.o23ExternalPID like @entry_id
+
+if exists(select p56ID FROM p56Task WHERE p56ExternalPID like @entry_id)
+ select top 1 @p56id=a.p56ID,@task=b.p57Name+': '+a.p56Name FROM p56Task a INNER JOIN p57TaskType b ON a.p57ID=b.p57ID WHERE a.p56ExternalPID like @entry_id
+
+if exists(select o22ID FROM o22Milestone WHERE o22ExternalPID like @entry_id)
+ select top 1 @o22id=a.o22ID,@appointment=b.o21Name+': '+a.o22Name FROM o22Milestone a INNER JOIN o21MilestoneType b ON a.o21ID=b.o21ID WHERE a.o22ExternalPID like @entry_id
+
+
+if @o23id is null and @p56id is null and @o22id is null
+ begin
+  if exists(select p31ID FROM p31Worksheet WHERE p31ExternalPID like @entry_id)
+   select top 1 @p31id=a.p31ID,@ukon=convert(varchar(10),a.p31Date,104)+'/'+isnull(b.p41NameShort,b.p41Name) FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID WHERE a.p31ExternalPID like @entry_id
+ end
+
+
+select @entry_id as EntryID, @o23id as o23ID,@docname as DocName,@p31id as p31ID,@ukon as Ukon,@p56id as p56ID,@task as Task,@o22id as o22ID,@appointment as Appointment
+
+
+
+
+GO
+
 ----------P---------------o10_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('o10_delete') and type = 'P')
@@ -8527,7 +8568,7 @@ if isnull(ltrim(rtrim(@p31text)),'')='' and @p32IsTextRequired=1
 
 if @p32Value_Minimum<>0 and @value_orig<=@p32Value_Minimum
  begin
-  set @err='Pro aktivitu ['+@p32name+'] musí být vykázaná hodnota vìtší než: '+convert(varchar(10),@p32Value_Minimum)
+  set @err='Pro aktivitu ['+@p32name+'] musí být vykázaná hodnota vìtší než: '+convert(varchar(10),@p32Value_Minimum)+' (nyní pøedáváte hodnotu: '+convert(varchar(10),@value_orig)+')'
   if @p33id=1
    set @err=@err+'h.'
 

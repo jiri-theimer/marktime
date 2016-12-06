@@ -21195,6 +21195,39 @@
     <TableName>o22Milestone</TableName>
   </Table>
   <Table>
+    <name>o22ExternalPID</name>
+    <id>1792725439</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>200</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>24</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>24</colorder>
+    <offset>-22</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>200</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>o22Milestone</TableName>
+  </Table>
+  <Table>
     <name>o23ID</name>
     <id>1904725838</id>
     <xtype>56</xtype>
@@ -22238,6 +22271,39 @@
     <type>39</type>
     <usertype>2</usertype>
     <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>o23Notepad</TableName>
+  </Table>
+  <Table>
+    <name>o23ExternalPID</name>
+    <id>1904725838</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>200</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>33</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>33</colorder>
+    <offset>-30</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>200</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
@@ -31700,7 +31766,7 @@
     <xtype>167</xtype>
     <typestat>2</typestat>
     <xusertype>167</xusertype>
-    <length>40</length>
+    <length>200</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>38</colid>
@@ -31718,7 +31784,7 @@
     <status>24</status>
     <type>39</type>
     <usertype>2</usertype>
-    <prec>40</prec>
+    <prec>200</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
@@ -37739,6 +37805,39 @@
     <isnullable>1</isnullable>
     <tdscollation>AAAAAAA=</tdscollation>
     <type_name>int</type_name>
+    <TableName>p31Worksheet</TableName>
+  </Table>
+  <Table>
+    <name>p31ExternalPID</name>
+    <id>1552724584</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>200</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>96</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>96</colorder>
+    <offset>-85</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>200</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
@@ -49684,7 +49783,7 @@
     <xtype>167</xtype>
     <typestat>2</typestat>
     <xusertype>167</xusertype>
-    <length>40</length>
+    <length>200</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>32</colid>
@@ -49702,7 +49801,7 @@
     <status>24</status>
     <type>39</type>
     <usertype>2</usertype>
-    <prec>40</prec>
+    <prec>200</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
@@ -58259,7 +58358,7 @@
     <xtype>167</xtype>
     <typestat>2</typestat>
     <xusertype>167</xusertype>
-    <length>40</length>
+    <length>200</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>29</colid>
@@ -58277,7 +58376,7 @@
     <status>24</status>
     <type>39</type>
     <usertype>2</usertype>
-    <prec>40</prec>
+    <prec>200</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
