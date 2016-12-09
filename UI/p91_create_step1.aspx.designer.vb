@@ -212,15 +212,6 @@ Partial Public Class p91_create_step1
     Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
-    '''cbxPaging control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''opgGroupBy control.
     '''</summary>
     '''<remarks>

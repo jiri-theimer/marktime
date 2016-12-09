@@ -83,8 +83,8 @@
                         Case 0
                         Case 1
                             Master.DataPID = pids(0)
-                        Case Is > 30
-                            .StopPage("Najednou je možné vybrat maximállně 30 položek.")
+                        Case Is > 100
+                            .StopPage("Najednou je možné vybrat maximállně 100 položek.")
                         Case Else
                             Me.CurrentInputPIDs = String.Join(",", pids)
                     End Select

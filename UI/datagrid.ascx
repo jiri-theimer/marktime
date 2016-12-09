@@ -8,7 +8,7 @@
         <Pdf BorderStyle="Thin" BorderType="AllBorders" DefaultFontFamily="Calibri" PageBottomMargin="20" PageTopMargin="20" PageLeftMargin="30" PageRightMargin="20"></Pdf>
     </ExportSettings>
     <GroupingSettings CaseSensitive="false" ExpandTooltip="Rozbalit řádky" CollapseTooltip="Sbalit řádky" />
-
+    
     <ClientSettings>
         <Selecting AllowRowSelect="true" />
         <ClientEvents OnRowContextMenu="ContextSelect" OnGridCreated="GridCreated" OnCommand="OnGridCommand" />        

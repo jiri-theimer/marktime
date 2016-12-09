@@ -846,7 +846,7 @@
     <index_keys>p80ID</index_keys>
   </Table>
   <Table>
-    <tableid>624721278</tableid>
+    <tableid>1046294787</tableid>
     <tablename>p81InvoiceAmount</tablename>
     <index_name>PK_p81InvoiceAmount</index_name>
     <index_description>clustered, unique, primary key located on PRIMARY</index_description>

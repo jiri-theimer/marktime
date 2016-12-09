@@ -21,6 +21,8 @@ Public Class p91_create_step1
             With Master
                 Me.CurrentPrefix = IIf(Request.Item("prefix") = "", "p41", Request.Item("prefix"))
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                ViewState("masterpids") = Request.Item("masterpids")    'pokud se na vstupu předává více PIDů
+               
                 If Request.Item("nogateway") = "1" Then
                     panGateWay.Visible = False
                 End If
@@ -65,7 +67,7 @@ Public Class p91_create_step1
                 period1.SetupData(.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = strDefPeriod
                 basUI.SelectRadiolistValue(Me.opgGroupBy, .Factory.j03UserBL.GetUserParam("p91_create-group"))
-                basUI.SelectDropdownlistValue(Me.cbxPaging, .Factory.j03UserBL.GetUserParam("p91_create-pagesize", "20"))
+                ''basUI.SelectDropdownlistValue(Me.cbxPaging, .Factory.j03UserBL.GetUserParam("p91_create-pagesize", "20"))
             End With
 
             SetupGrid()
@@ -219,12 +221,12 @@ Public Class p91_create_step1
                 End If
 
             End If
-            If Master.DataPID = 0 Then
+            If Master.DataPID = 0 And ViewState("masterpids") = "" Then
                 Master.Notify("Musíte vybrat klienta, projekt nebo osobu!", NotifyLevel.WarningMessage) : Return
             End If
-            If ViewState("rows") = 0 Then
-                Master.Notify("Na vstupu nejsou žádné worksheet úkony!", NotifyLevel.WarningMessage) : Return
-            End If
+            ''If ViewState("rows") = 0 Then
+            ''    Master.Notify("Na vstupu nejsou žádné worksheet úkony!", NotifyLevel.WarningMessage) : Return
+            ''End If
 
             Dim mq As New BO.myQueryP31
             InhaleMyQuery(mq)
@@ -252,7 +254,7 @@ Public Class p91_create_step1
     Private Sub SetupGrid()
         Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
 
-        basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), True, False)
+        basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 1000, False, False)
 
         Dim strGroupField As String = "", strHeaderText As String = ""
         Select Case Me.opgGroupBy.SelectedValue
@@ -309,15 +311,25 @@ Public Class p91_create_step1
     End Sub
 
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
-        Dim intPID As Integer = Master.DataPID
-        If intPID = 0 Then intPID = -666
+        Dim masterpids As New List(Of Integer)
+        If ViewState("masterpids") <> "" Then
+            masterpids = BO.BAS.ConvertPIDs2List(ViewState("masterpids"))
+        End If
+        If Master.DataPID = 0 Then
+            masterpids.Add(-666)
+        Else
+            masterpids.Add(Master.DataPID)
+        End If
         Select Case Me.CurrentPrefix
             Case "p28"
-                mq.p28ID_Client = intPID
+                ''mq.p28ID_Client = intPID
+                mq.p28IDs_Client = masterpids
             Case "p41"
-                mq.p41ID = intPID
+                '' mq.p41ID = intPID
+                mq.p41IDs = masterpids
             Case "j02"
-                mq.j02ID = intPID
+                ''mq.j02ID = intPID
+                mq.j02IDs = masterpids
             Case "quick"
                 mq.AddItemToPIDs(Master.DataPID)
         End Select
@@ -353,7 +365,7 @@ Public Class p91_create_step1
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
         With mq
-            .MG_PageSize = CInt(Me.cbxPaging.SelectedValue)
+            .MG_PageSize = 1000
             .MG_CurrentPageIndex = grid1.radGridOrig.MasterTableView.CurrentPageIndex
             .MG_SortString = strSort
 
@@ -374,13 +386,13 @@ Public Class p91_create_step1
         grid1.Rebind(False)
     End Sub
 
-    Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p91_create-pagesize", Me.cbxPaging.SelectedValue)
-        SetupGrid()
-        RecalcVirtualRowCount()
-        grid1.Rebind(False)
+    ''Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
+    ''    Master.Factory.j03UserBL.SetUserParam("p91_create-pagesize", Me.cbxPaging.SelectedValue)
+    ''    SetupGrid()
+    ''    RecalcVirtualRowCount()
+    ''    grid1.Rebind(False)
 
-    End Sub
+    ''End Sub
 
     Private Sub RefreshQuickEnvironment()
         If Me.p31Date_Quick.IsEmpty Then Me.p31Date_Quick.SelectedDate = Today

@@ -19,6 +19,7 @@ Public Class Global_asax
 
     Sub Session_Start(ByVal sender As Object, ByVal e As EventArgs)
         ' Fires when the session is started
+       
     End Sub
 
     Sub Application_BeginRequest(ByVal sender As Object, ByVal e As EventArgs)
@@ -54,6 +55,16 @@ Public Class Global_asax
 
     Sub Application_Error(ByVal sender As Object, ByVal e As EventArgs)
         ' Fires when an error occurs
+        ''Dim exc As Exception = Server.GetLastError
+        ''If TypeOf exc Is HttpException Then
+        ''    If exc.Message.Contains("NoCatch") Or exc.Message.Contains("maxUrlLength") Then
+        ''        Return
+        ''    End If
+
+        ''    'Redirect HTTP errors to HttpError page
+        ''    Server.Transfer("ErrorPage.aspx")
+        ''End If
+        
     End Sub
 
     Sub Session_End(ByVal sender As Object, ByVal e As EventArgs)

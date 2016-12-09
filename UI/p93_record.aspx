@@ -71,7 +71,7 @@
             <td>
                 <asp:Label ID="Label8" runat="server" CssClass="lbl" Text="Registrace v rejstříku:"></asp:Label></td>
             <td>
-                <asp:TextBox ID="p93Registration" runat="server" Style="width: 400px;"></asp:TextBox>
+                <asp:TextBox ID="p93Registration" runat="server" Style="width: 700px;"></asp:TextBox>
             </td>
         </tr>
 

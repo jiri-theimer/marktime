@@ -506,7 +506,6 @@ Public Class datagrid
                 RaiseEvent FilterCommand(filterPair.First, filterPair.Second, BO.BAS.GB(CType(ctl, CheckBox).Checked))
             End If
 
-
         End If
 
         If e.CommandName = RadGrid.ExpandCollapseCommandName Then
@@ -740,6 +739,7 @@ Public Class datagrid
         Next
 
         grid1.MasterTableView.FilterExpression = strFilterExpression
+
     End Sub
 
    

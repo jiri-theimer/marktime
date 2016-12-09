@@ -64041,7 +64041,7 @@
   </Table>
   <Table>
     <name>p81ID</name>
-    <id>624721278</id>
+    <id>1046294787</id>
     <xtype>56</xtype>
     <typestat>1</typestat>
     <xusertype>56</xusertype>
@@ -64074,7 +64074,7 @@
   </Table>
   <Table>
     <name>p91ID</name>
-    <id>624721278</id>
+    <id>1046294787</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
     <xusertype>56</xusertype>
@@ -64107,7 +64107,7 @@
   </Table>
   <Table>
     <name>p95ID</name>
-    <id>624721278</id>
+    <id>1046294787</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
     <xusertype>56</xusertype>
@@ -64140,7 +64140,7 @@
   </Table>
   <Table>
     <name>p31ID</name>
-    <id>624721278</id>
+    <id>1046294787</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
     <xusertype>56</xusertype>
@@ -64173,7 +64173,7 @@
   </Table>
   <Table>
     <name>p81VatRate</name>
-    <id>624721278</id>
+    <id>1046294787</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
     <xusertype>62</xusertype>
@@ -64205,9 +64205,9 @@
   </Table>
   <Table>
     <name>p81Amount_WithoutVat</name>
-    <id>624721278</id>
+    <id>1046294787</id>
     <xtype>62</xtype>
-    <typestat>1</typestat>
+    <typestat>0</typestat>
     <xusertype>62</xusertype>
     <length>8</length>
     <xprec>53</xprec>
@@ -64217,42 +64217,10 @@
     <bitpos>0</bitpos>
     <reserved>0</reserved>
     <colstat>0</colstat>
-    <cdefault>656721392</cdefault>
+    <cdefault>1062294844</cdefault>
     <domain>0</domain>
     <number>0</number>
     <colorder>6</colorder>
-    <offset>6</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>0</status>
-    <type>62</type>
-    <usertype>8</usertype>
-    <prec>53</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>0</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>float</type_name>
-    <TableName>p81InvoiceAmount</TableName>
-  </Table>
-  <Table>
-    <name>p81Amount_WithVat</name>
-    <id>624721278</id>
-    <xtype>62</xtype>
-    <typestat>0</typestat>
-    <xusertype>62</xusertype>
-    <length>8</length>
-    <xprec>53</xprec>
-    <xscale>0</xscale>
-    <colid>7</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>7</colorder>
     <offset>-5</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -64268,8 +64236,40 @@
     <TableName>p81InvoiceAmount</TableName>
   </Table>
   <Table>
+    <name>p81Amount_WithVat</name>
+    <id>1046294787</id>
+    <xtype>62</xtype>
+    <typestat>0</typestat>
+    <xusertype>62</xusertype>
+    <length>8</length>
+    <xprec>53</xprec>
+    <xscale>0</xscale>
+    <colid>7</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>7</colorder>
+    <offset>-6</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>109</type>
+    <usertype>8</usertype>
+    <prec>53</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>float</type_name>
+    <TableName>p81InvoiceAmount</TableName>
+  </Table>
+  <Table>
     <name>p81Amount_Vat</name>
-    <id>624721278</id>
+    <id>1046294787</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
     <xusertype>62</xusertype>
@@ -64285,7 +64285,7 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>8</colorder>
-    <offset>-6</offset>
+    <offset>-7</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>

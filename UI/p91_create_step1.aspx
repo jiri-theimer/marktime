@@ -166,17 +166,7 @@
             </tr>
         </table>
        
-        <table cellpadding="6">
-            <tr>
-                <td>
-                    <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
-                        <asp:ListItem Text="20" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="50"></asp:ListItem>
-                        <asp:ListItem Text="100"></asp:ListItem>
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    <asp:RadioButtonList ID="opgGroupBy" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
+        <asp:RadioButtonList ID="opgGroupBy" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
                         <asp:ListItem Text="Bez souhrnů" Value="" Selected="true"></asp:ListItem>
                         <asp:ListItem Text="Souhrny podle fakturačních oddílů" Value="p95"></asp:ListItem>
                         <asp:ListItem Text="Souhrny podle sešitů" Value="p34"></asp:ListItem>
@@ -185,9 +175,6 @@
                         <asp:ListItem Text="Podle projektů" Value="p41"></asp:ListItem>
                         <asp:ListItem Text="Souhrny podle měny" Value="j27"></asp:ListItem>
                     </asp:RadioButtonList>
-                </td>
-            </tr>
-        </table>
 
 
     </asp:Panel>

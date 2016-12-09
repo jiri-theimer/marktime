@@ -993,11 +993,6 @@
     <text>((0))</text>
   </Table>
   <Table>
-    <id>656721392</id>
-    <name>p81Amount_WithoutVat</name>
-    <text>((0))</text>
-  </Table>
-  <Table>
     <id>667149422</id>
     <name>p31FreeBoolean05</name>
     <text>((0))</text>
@@ -1565,6 +1560,11 @@
   <Table>
     <id>1060198827</id>
     <name>p28FreeBoolean01</name>
+    <text>((0))</text>
+  </Table>
+  <Table>
+    <id>1062294844</id>
+    <name>p81Amount_WithoutVat</name>
     <text>((0))</text>
   </Table>
   <Table>

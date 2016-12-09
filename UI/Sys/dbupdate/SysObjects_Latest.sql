@@ -4819,13 +4819,13 @@ AS
 declare @o23id int,@docname nvarchar(255),@p31id int,@ukon nvarchar(255),@p56id int,@task nvarchar(255),@o22id int,@appointment nvarchar(255)
 
 if exists(select o23ID FROM o23Notepad WHERE o23ExternalPID like @entry_id)
- select top 1 @o23id=a.o23ID,@docname=b.o24Name+': '+a.o23Name FROM o23Notepad a INNER JOIN o24NotepadType b ON a.o24ID=b.o24ID WHERE a.o23ExternalPID like @entry_id
+ select top 1 @o23id=a.o23ID,@docname=b.o24Name+': '+a.o23Name+' | '+isnull(o23UserInsert+convert(varchar(20),o23DateInsert),'') FROM o23Notepad a INNER JOIN o24NotepadType b ON a.o24ID=b.o24ID WHERE a.o23ExternalPID like @entry_id
 
 if exists(select p56ID FROM p56Task WHERE p56ExternalPID like @entry_id)
- select top 1 @p56id=a.p56ID,@task=b.p57Name+': '+a.p56Name FROM p56Task a INNER JOIN p57TaskType b ON a.p57ID=b.p57ID WHERE a.p56ExternalPID like @entry_id
+ select top 1 @p56id=a.p56ID,@task=b.p57Name+': '+a.p56Name+' | '+isnull(p56UserInsert+convert(varchar(20),p56DateInsert),'') FROM p56Task a INNER JOIN p57TaskType b ON a.p57ID=b.p57ID WHERE a.p56ExternalPID like @entry_id
 
 if exists(select o22ID FROM o22Milestone WHERE o22ExternalPID like @entry_id)
- select top 1 @o22id=a.o22ID,@appointment=b.o21Name+': '+a.o22Name FROM o22Milestone a INNER JOIN o21MilestoneType b ON a.o21ID=b.o21ID WHERE a.o22ExternalPID like @entry_id
+ select top 1 @o22id=a.o22ID,@appointment=b.o21Name+': '+a.o22Name+' | '+isnull(o22UserInsert+convert(varchar(20),o22DateInsert),'') FROM o22Milestone a INNER JOIN o21MilestoneType b ON a.o21ID=b.o21ID WHERE a.o22ExternalPID like @entry_id
 
 
 if @o23id is null and @p56id is null and @o22id is null
@@ -11292,7 +11292,7 @@ if exists(select p81ID FROM p81InvoiceAmount WHERE p91ID=@p91id)
 if @p80id is null OR (@time=0 and @expense=0 and @fee=0)
  begin	---bez explicitní struktury rozpisu ceny (podle fakturaèních oddílù)
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
-	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,isnull(round(sum(a.p31Amount_WithoutVat_Invoiced),2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 	WHERE a.p91ID=@p91id
 	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
@@ -11301,7 +11301,7 @@ if @p80id is null OR (@time=0 and @expense=0 and @fee=0)
 if @p80id is not null AND @expense=0
  begin
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
-	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,isnull(round(sum(a.p31Amount_WithoutVat_Invoiced),2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1
 	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
@@ -11310,7 +11310,7 @@ if @p80id is not null AND @expense=0
 if @p80id is not null AND @expense=1
  begin	---výdaje 1:1
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
-	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,round(a.p31Amount_WithoutVat_Invoiced,2)
+	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,isnull(round(a.p31Amount_WithoutVat_Invoiced,2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1	
  end
@@ -11318,7 +11318,7 @@ if @p80id is not null AND @expense=1
 if @p80id is not null AND @fee=0
  begin
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
-	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,isnull(round(sum(a.p31Amount_WithoutVat_Invoiced),2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2
 	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
@@ -11327,7 +11327,7 @@ if @p80id is not null AND @fee=0
 if @p80id is not null AND @fee=1
  begin	---pevné odmìny 1:1
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
-	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,round(a.p31Amount_WithoutVat_Invoiced,2)
+	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,isnull(round(a.p31Amount_WithoutVat_Invoiced,2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 	WHERE a.p91ID=@p91id AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2	
  end
@@ -11335,7 +11335,7 @@ if @p80id is not null AND @fee=1
 if @p80id is not null AND @time=0
  begin
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p81VatRate,p81Amount_WithoutVat)
-	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,round(sum(a.p31Amount_WithoutVat_Invoiced),2)
+	SELECT @p91id,p32.p95ID,p31VatRate_Invoiced,isnull(round(sum(a.p31Amount_WithoutVat_Invoiced),2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 	WHERE a.p91ID=@p91id AND p34.p33ID IN (1,3)
 	GROUP BY p32.p95ID,a.p31VatRate_Invoiced
@@ -11344,7 +11344,7 @@ if @p80id is not null AND @time=0
 if @p80id is not null AND @time=1
  begin	---èasové úkony 1:1
 	INSERT INTO p81InvoiceAmount(p91ID,p95ID,p31ID,p81VatRate,p81Amount_WithoutVat)
-	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,round(a.p31Amount_WithoutVat_Invoiced,2)
+	SELECT @p91id,p32.p95ID,a.p31ID,p31VatRate_Invoiced,isnull(round(a.p31Amount_WithoutVat_Invoiced,2),0)
 	FROM p31Worksheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 	WHERE a.p91ID=@p91id AND p34.p33ID IN (1,3)
  end

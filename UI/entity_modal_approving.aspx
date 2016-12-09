@@ -80,8 +80,8 @@
 
 
         function invoice() {
-
-            location.replace("p91_create_step1.aspx?nogateway=1&prefix=<%=Me.CurrentPrefix%>&pid=<%=master.DataPID%>&period=<%=Me.period1.SelectedValue%>");
+            
+            location.replace("p91_create_step1.aspx?nogateway=1&prefix=<%=Me.CurrentPrefix%>&pid=<%=master.DataPID%>&period=<%=Me.period1.SelectedValue%>&masterpids=<%=Me.CurrentInputPIDs%>");
         }
         function invoice_append() {
 

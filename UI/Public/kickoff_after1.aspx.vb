@@ -631,10 +631,26 @@
     End Function
 
     Private Sub CreateQuery(strJ70Name As String, x29ID As BO.x29IdEnum, intBinFlag As Integer, Optional strJ71Field As String = "", Optional intJ71RecordPID As Integer = 0, Optional strJ71RecordName As String = "")
-        Dim intJ02ID As Integer = _Factory.j02PersonBL.GetList(New BO.myQueryJ02)(0).PID
+        Dim mqJ02 As New BO.myQueryJ02
+        mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
+        mqJ02.Closed = BO.BooleanQueryMode.FalseQuery
+        Dim intJ02ID As Integer = 0
+        Try
+            intJ02ID = _Factory.j02PersonBL.GetList(mqJ02)(0).PID
+        Catch ex As Exception
+            Response.Write(ex.Message & "<hr>CreateQuery start")
+            Return
+        End Try
         Dim mq As New BO.myQueryJ03
         mq.j02ID = intJ02ID
-        Dim intJ03ID As Integer = _Factory.j03UserBL.GetList(mq)(0).PID
+        Dim intJ03ID As Integer = 0
+        Try
+            intJ03ID = _Factory.j03UserBL.GetList(mq)(0).PID
+        Catch ex As Exception
+            Response.Write(ex.Message & "<hr>intJ02ID: " & intJ02ID.ToString)
+            Return
+        End Try
+
         Dim intJ11ID As Integer = _Factory.j11TeamBL.GetList()(0).PID
         Dim c As New BO.j70QueryTemplate
         c.j70Name = strJ70Name
