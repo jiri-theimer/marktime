@@ -41,7 +41,7 @@ Public Class admin_workflow
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Workflow návrhář"
-                .SiteMenuValue = "cmdWorkflow"
+                .SiteMenuValue = "admin_framework"
                 .TestNeededPermission(BO.x53PermValEnum.GR_Admin)
 
                 Dim lisPars As New List(Of String)

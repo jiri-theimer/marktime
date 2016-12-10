@@ -4,11 +4,11 @@
 
         <asp:panel runat="server" ID="panContainer" style="background-color: #25a0da;height:32px;" Visible="false">
 
-            <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Auto" Skin="Windows7" ClickToOpen="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2901;background-color:blue !important;">                            
+            <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Auto" Skin="Windows7" ClickToOpen="true" EnableRoundedCorners="true" EnableShadows="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2901;background-color:blue !important;">                            
             </telerik:RadMenu>
 
         </asp:panel>
-        <div id="search1_result" style="position: relative;z-index:9999;"></div>
+        <div id="search1_result" style="position:relative;z-index:9000;"></div>
        <asp:HiddenField ID="hidSearch1" runat="server" />
         <asp:HiddenField ID="hidAllowSearch1" runat="server" Value="0" />
         <asp:HiddenField ID="hidMasterPageName" runat="server" Value="Site" />
@@ -23,15 +23,17 @@
             minLength: 1,
             select: function (event, ui) {
                 if (ui.item) {
-                    location.replace("p41_framework.aspx?pid=" + ui.item.PID);
+                    if (ui.item.PID != null)
+                     location.replace("p41_framework.aspx?pid=" + ui.item.PID);
+                    
                     return false;
                 }
             }
             <%If Me.hidMasterPageName.Value="Site" then%>
             ,
             open: function (event, ui) {
-                $('ul.ui-autocomplete')
-                   .removeAttr('style').hide()
+                $('ul.ui-autocomplete')                   
+                    .removeAttr('style').hide()
                    .appendTo('#search1_result').show();
             },
             close: function (event, ui) {
@@ -49,11 +51,15 @@
             else
                 s = s + "<a>";
 
+            if (item.PID == null)
+                s="<div><span style='color:silver;'>"
 
             s = s + __highlight1(item.Project, item.FilterString);
 
-
-            s = s + "</a>";
+            if (item.PID == null)
+                s = s + "</span>"
+            else
+                s = s + "</a>";
 
             if (item.Draft == "1")
                 s = s + "<img src='Images/draft.png' alt='DRAFT'/>"

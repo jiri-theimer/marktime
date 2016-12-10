@@ -42,10 +42,19 @@ Public Class handler_search_invoice
 
         mq.TopRecordsOnly = 10
         Dim lisP91 As IEnumerable(Of BO.p91Invoice) = factory.p91InvoiceBL.GetList(mq)
-
         Dim lis As New List(Of SearchInvoice)
+        Dim c As New SearchInvoice
+        Select Case lisP91.Count
+            Case 0
+                c.Invoice = "Ani jedna faktura pro zadanou podmínku."
+            Case Is >= mq.TopRecordsOnly
+                c.Invoice = String.Format("Nalezeno více než {0} faktur.<br>Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných faktur.", mq.TopRecordsOnly.ToString)
+            Case Else
+                c.Invoice = String.Format("Počet nalezených faktur: {0}.", lisP91.Count.ToString)
+        End Select
+        c.FilterString = strFilterString : lis.Add(c)
         For Each cP91 In lisP91
-            Dim c As New SearchInvoice
+            c = New SearchInvoice
             With cP91
                 c.Invoice = .p91Code & " - "
                 If .p91Client = "" Then

@@ -12,9 +12,9 @@ Public Class j03UserSYS
     Public Property j04IsMenu_Report As Boolean
     Public Property j04IsMenu_Invoice As Boolean
     Public Property j04IsMenu_Proforma As Boolean
-    Public Property j04IsMenu_More As Boolean
+    Public Property j04IsMenu_Notepad As Boolean
     Public Property j04IsMenu_MyProfile As Boolean
-    Public Property HomeMenu As String       'pokud je vyplněno, pak uživateli se má vykreslit vlastní HOME menú ÚVOD
+    Public Property j60ID As Integer        'ID hlavního menu
 
     Private Property _IsApprovingPerson As Boolean    'detekce, zda uživatel může potenciálně schvalovat nějaký worksheet
     Private Property _IsMasterPerson As Boolean       'detekce, zda osoba má pod sebou nějaké podřízené

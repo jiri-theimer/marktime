@@ -79,8 +79,19 @@ Public Class project_service
 
         result = New List(Of RadComboBoxItemData)(lis.Count)
 
+        Dim itemData As New RadComboBoxItemData()
+        itemData.Enabled = False
+        Select Case lis.Count
+            Case 0
+                If filterString <> "" Then itemData.Text = "Ani jeden projekt pro zadanou podmínku."
+            Case Is >= mq.TopRecordsOnly
+                itemData.Text = String.Format("Nalezeno více než {0} projektů. Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných projektů.", mq.TopRecordsOnly.ToString)
+            Case Else
+                If filterString <> "" Then itemData.Text = String.Format("Počet nalezených projektů: {0}.", lis.Count.ToString)
+        End Select
+        If itemData.Text <> "" Then result.Add(itemData)
         For Each rec As BO.p41Project In lis
-            Dim itemData As New RadComboBoxItemData()
+            itemData = New RadComboBoxItemData()
             With rec
                 ''itemData.Text = .FullName & " [" & .p41Code & "]"
                 itemData.Text = .ProjectWithMask(factory.SysUser.j03ProjectMaskIndex)
@@ -91,8 +102,6 @@ Public Class project_service
                 End If
                 itemData.Value = .PID.ToString
             End With
-
-
             result.Add(itemData)
         Next
 

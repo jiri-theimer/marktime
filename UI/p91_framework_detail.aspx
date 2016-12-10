@@ -650,8 +650,10 @@
                 source: "Handler/handler_search_invoice.ashx",
                 minLength: 1,
                 select: function (event, ui) {
-                    if (ui.item) {                        
-                        window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
+                    if (ui.item) {  
+                        if (ui.item.PID != null)
+                            window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
+
                         return false;
                     }
                 },
@@ -674,10 +676,16 @@
                 else
                     s = s + "<a>";
 
+                if (item.PID == null)
+                    s="<div><span style='color:silver;'>"
+
                 s = s + __highlight(item.Invoice, item.FilterString);
 
 
-                s = s + "</a>";
+                if (item.PID == null)
+                    s = s + "</span>"
+                else
+                    s = s + "</a>";
 
                 if (item.Draft == "1")
                     s = s + "<img src='Images/draft.png' alt='DRAFT'/>"

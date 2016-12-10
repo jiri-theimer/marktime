@@ -1,6 +1,7 @@
 ﻿
 Public Class j04UserRole
     Inherits BOMother
+    Public Property j60ID As Integer
     Public Property j04Name As String
     Public Property j04Aspx_PersonalPage As String
     Public Property j04Aspx_PersonalPage_Mobile As String
@@ -19,6 +20,7 @@ Public Class j04UserRole
     Public Property j04IsMenu_Proforma As Boolean
     Public Property j04IsMenu_MyProfile As Boolean = True
     Public Property j04IsMenu_More As Boolean = True
+    Public Property j04IsMenu_Notepad As Boolean
 
     Private Property _x67RoleValue As String
 

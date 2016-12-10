@@ -83,6 +83,7 @@
     <Compile Include="DBNative\j18Region.vb" />
     <Compile Include="DBNative\j23NonPerson.vb" />
     <Compile Include="DBNative\j24NonPersonType.vb" />
+    <Compile Include="DBNative\j60MenuTemplate.vb" />
     <Compile Include="DBNative\j61TextTemplate.vb" />
     <Compile Include="DBNative\j62MenuHome.vb" />
     <Compile Include="DBNative\j70QueryTemplate.vb" />

@@ -13,7 +13,7 @@ Public Class p51_framework
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Ceníky sazeb"
-                .SiteMenuValue = "p51"
+                .SiteMenuValue = "p51_framework"
                 .TestNeededPermission(BO.x53PermValEnum.GR_P51_Admin)
 
                 Dim lisPars As New List(Of String)

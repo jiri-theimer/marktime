@@ -12,7 +12,7 @@
             Dim lisPars As New List(Of String)
             With Master
                 .PageTitle = "Nástěnka"
-                .SiteMenuValue = "o10"
+                .SiteMenuValue = "o10_framework"
 
                 Me.linkNew.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_O10_Creator)
                 Me.cbxOwner.Visible = Me.linkNew.Visible

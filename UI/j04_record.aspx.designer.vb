@@ -59,6 +59,24 @@ Partial Public Class j04_record
     Protected WithEvents j04Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j60ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j60ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''j04IsMenu_Worksheet control.
     '''</summary>
     '''<remarks>
@@ -113,13 +131,22 @@ Partial Public Class j04_record
     Protected WithEvents j04IsMenu_Invoice As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''j04IsMenu_More control.
+    '''j04IsMenu_Proforma control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j04IsMenu_More As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents j04IsMenu_Proforma As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''j04IsMenu_Notepad control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j04IsMenu_Notepad As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''j04IsMenu_MyProfile control.

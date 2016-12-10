@@ -47,7 +47,7 @@ Public Class p31_grid
             Me.hidMasterTabAutoQueryFlag.Value = Request.Item("p31tabautoquery")
             With Master
                 .PageTitle = "Worksheet datový přehled"
-                .SiteMenuValue = "cmdP31_Grid"
+                .SiteMenuValue = "p31_grid"
 
                 Dim lisPars As New List(Of String)
                 With lisPars

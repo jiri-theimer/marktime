@@ -41,8 +41,18 @@ Public Class handler_search_project
         Dim lisP41 As IEnumerable(Of BO.p41Project) = factory.p41ProjectBL.GetList(mq)
 
         Dim lis As New List(Of NameValue)
+        Dim c As New NameValue
+        Select Case lisP41.Count
+            Case 0
+                c.Project = "Ani jeden projekt pro zadanou podmínku."
+            Case Is >= mq.TopRecordsOnly
+                c.Project = String.Format("Nalezeno více než {0} projektů. Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných projektů.", mq.TopRecordsOnly.ToString)
+            Case Else
+                c.Project = String.Format("Počet nalezených projektů: {0}.", lisP41.Count.ToString)
+        End Select
+        c.FilterString = strFilterString : lis.Add(c)
         For Each cP41 In lisP41
-            Dim c As New NameValue
+            c = New NameValue
 
             ''c.Project = cP41.FullName & " [" & cP41.p41Code & "]"
             c.Project = cP41.ProjectWithMask(factory.SysUser.j03ProjectMaskIndex)

@@ -42,7 +42,7 @@ Public Class p31_pivot
                 End If
 
                 .PageTitle = "Worksheet PIVOT"
-                .SiteMenuValue = "cmdP31_Pivot"
+                .SiteMenuValue = "p31_pivot"
 
                 Dim lisPars As New List(Of String)
                 With lisPars

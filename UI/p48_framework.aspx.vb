@@ -95,7 +95,7 @@
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Operativní plánování"
-                .SiteMenuValue = "p48"
+                .SiteMenuValue = "p48_framework"
             End With
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")

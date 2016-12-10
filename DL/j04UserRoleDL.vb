@@ -19,6 +19,7 @@
 
             With pars
                 .Add("x67ID", BO.BAS.IsNullDBKey(cRec.x67ID), DbType.Int32)
+                .Add("j60ID", BO.BAS.IsNullDBKey(cRec.j60ID), DbType.Int32)
                 .Add("j04name", cRec.j04Name, DbType.String, , , True, "Název role")
                 .Add("j04aspx_personalpage", cRec.j04Aspx_PersonalPage, DbType.String, , , True, "ASPX - osobní stránka")
                 .Add("j04aspx_personalpage_mobile", cRec.j04Aspx_PersonalPage_Mobile, DbType.String, , , True, "ASPX - osobní stránka pro mobilní zařízení")
@@ -33,6 +34,7 @@
                 .Add("j04IsMenu_Report", cRec.j04IsMenu_Report, DbType.Boolean)
                 .Add("j04IsMenu_Invoice", cRec.j04IsMenu_Invoice, DbType.Boolean)
                 .Add("j04IsMenu_Proforma", cRec.j04IsMenu_Proforma, DbType.Boolean)
+                .Add("j04IsMenu_Notepad", cRec.j04IsMenu_Notepad, DbType.Boolean)
                 .Add("j04IsMenu_MyProfile", cRec.j04IsMenu_MyProfile, DbType.Boolean)
                 .Add("j04IsMenu_More", cRec.j04IsMenu_More, DbType.Boolean)
                 .Add("j04validfrom", cRec.ValidFrom, DbType.DateTime)

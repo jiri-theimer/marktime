@@ -15,8 +15,9 @@
                 .HeaderIcon = "Images/settings_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Aplikační role"
-                
+                Me.j60ID.DataSource = .Factory.j62MenuHomeBL.GetList_J60()
             End With
+
             SetupPersonalPageCombo()
             RefreshRecord()
 
@@ -66,6 +67,7 @@
 
         Dim cRec As BO.j04UserRole = Master.Factory.j04UserRoleBL.Load(Master.DataPID)
         With cRec
+            basUI.SelectDropdownlistValue(Me.j60ID, .j60ID.ToString)
             Me.j04Name.Text = .j04Name
             Me.j04Aspx_PersonalPage.SelectedValue = .j04Aspx_PersonalPage
             Me.j04Aspx_PersonalPage_Mobile.SelectedValue = .j04Aspx_PersonalPage_Mobile
@@ -75,7 +77,7 @@
             Me.j04IsMenu_People.Checked = .j04IsMenu_People
             Me.j04IsMenu_Report.Checked = .j04IsMenu_Report
             Me.j04IsMenu_Invoice.Checked = .j04IsMenu_Invoice
-            Me.j04IsMenu_More.Checked = .j04IsMenu_More
+            Me.j04IsMenu_Notepad.Checked = .j04IsMenu_Notepad
             Me.j04IsMenu_MyProfile.Checked = .j04IsMenu_MyProfile
 
             Me.j04Aspx_OnePersonPage.Text = .j04Aspx_OnePersonPage
@@ -112,6 +114,7 @@
         With Master.Factory.j04UserRoleBL
             Dim cRec As BO.j04UserRole = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.j04UserRole)
             With cRec
+                .j60ID = BO.BAS.IsNullInt(Me.j60ID.SelectedValue)
                 .j04Name = Me.j04Name.Text
                 .j04Aspx_PersonalPage = Me.j04Aspx_PersonalPage.SelectedValue
                 .j04Aspx_PersonalPage_Mobile = Me.j04Aspx_PersonalPage_Mobile.SelectedValue
@@ -123,8 +126,8 @@
                 .j04IsMenu_People = Me.j04IsMenu_People.Checked
                 .j04IsMenu_Report = Me.j04IsMenu_Report.Checked
                 .j04IsMenu_Invoice = Me.j04IsMenu_Invoice.Checked
+                .j04IsMenu_Notepad = Me.j04IsMenu_Notepad.Checked
                 .j04IsMenu_MyProfile = Me.j04IsMenu_MyProfile.Checked
-                .j04IsMenu_More = Me.j04IsMenu_More.Checked
 
                 .j04Aspx_OnePersonPage = Me.j04Aspx_OnePersonPage.Text
                 .j04Aspx_OneProjectPage = Me.j04Aspx_OneProjectPage.Text

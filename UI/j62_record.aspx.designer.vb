@@ -14,42 +14,6 @@ Option Explicit On
 Partial Public Class j62_record
 
     '''<summary>
-    '''lblX29ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblX29ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x29ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x29ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''lblParentID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblParentID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j62ParentID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j62ParentID As Global.UI.datacombo
-
-    '''<summary>
     '''lblName control.
     '''</summary>
     '''<remarks>
@@ -86,6 +50,60 @@ Partial Public Class j62_record
     Protected WithEvents j62Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j62Name_ENG control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j62Name_ENG As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''j62IsSeparator control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j62IsSeparator As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''tabLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabLink As Global.System.Web.UI.HtmlControls.HtmlTable
+
+    '''<summary>
+    '''j60Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j60Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''hidJ60ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidJ60ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''lblUrl control.
     '''</summary>
     '''<remarks>
@@ -93,6 +111,15 @@ Partial Public Class j62_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblUrl As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cbxUrls control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxUrls As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''j62Url control.
@@ -104,13 +131,49 @@ Partial Public Class j62_record
     Protected WithEvents j62Url As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''cbxUrls control.
+    '''j62Tag control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxUrls As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents j62Tag As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblX29ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblX29ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x29ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x29ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''lblParentID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblParentID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j62ParentID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j62ParentID As Global.UI.datacombo
 
     '''<summary>
     '''lblTarget control.

@@ -12,7 +12,7 @@
         timer1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
-            Master.SiteMenuValue = "cmdP31_Timer"
+            Master.SiteMenuValue = "p31_timer"
             With Master.Factory.j03UserBL
                 .InhaleUserParams("p31_timer-grid")
                 Me.chkShowP31Grid.Checked = BO.BAS.BG(.GetUserParam("p31_timer-grid", "0"))

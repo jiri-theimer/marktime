@@ -16,7 +16,7 @@ Public Class admin_framework
             ViewState("prefix") = Request.Item("prefix")
             With Master
                 .PageTitle = "Nastavení systému"
-                .SiteMenuValue = "cmdAdmin"
+                .SiteMenuValue = "admin_framework"
                 .TestNeededPermission(BO.x53PermValEnum.GR_Admin)
 
                 ViewState("page") = Right(ViewState("prefix"), 3) & "_record.aspx"
@@ -216,7 +216,8 @@ Public Class admin_framework
             .AddItem("Střediska", "j18", NU("j18"), "other")
             .AddItem("Regiony", "j17", NU("j17"), "other")
             .AddItem("Textové šablony", "j61", NU("j61"), "other")
-            .AddItem("Konfigurace menu [Úvod]", "j62", NU("j62"), "other")
+            .AddItem("Struktura hlavního menu", "j62", NU("j62"), "other")
+            .AddItem("Návrhář workflow šablon", "workflow", "admin_workflow.aspx", "other")
 
             .AddItem("Gadget nastavení", "x55", NU("x55"), "other")
 
@@ -341,7 +342,8 @@ Public Class admin_framework
                     .AddColumn("x29Name", "Entita")
                 Case "j62"
                     .AddColumn("TreeMenuItem", "Název položky menu")
-                    .AddColumn("x29Name", "Entita")
+                    .AddColumn("x29Name", "Modul")
+                    .AddColumn("j62Tag", "Tag")
                     .AddColumn("j62Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "c21"
                     .AddColumn("c21Name", "Název pracovního fondu")
@@ -762,7 +764,7 @@ Public Class admin_framework
                     Dim lis As IEnumerable(Of BO.j61TextTemplate) = .j61TextTemplateBL.GetList(mqDef)
                     grid1.DataSource = lis
                 Case "j62"
-                    Dim lis As IEnumerable(Of BO.j62MenuHome) = .j62MenuHomeBL.GetList(mqDef)
+                    Dim lis As IEnumerable(Of BO.j62MenuHome) = .j62MenuHomeBL.GetList(0, mqDef)
                     grid1.DataSource = lis
                 Case "p58"
                     Dim lis As IEnumerable(Of BO.p58Product) = .p58ProductBL.GetList(mqDef)

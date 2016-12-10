@@ -300,8 +300,8 @@
                 <div class="content">
                     <asp:Label ID="AppName" runat="server" CssClass="valbold"></asp:Label>
                     <button type="button" onclick="sw_master('x35_record.aspx?key=AppName','Images/setting_32.png')">Nastavit</button>
-                    <span>Název se objeví v menu, pokud si konfigurejete vlastní menu [Úvod].</span>
-                    <a href="admin_framework.aspx?prefix=j62">Administrace menu [Úvod]</a>
+                    
+                    <a href="admin_framework.aspx?prefix=j62">Upravit strukturu hlavního menu</a>
                 </div>
             </div>
             <div class="content-box1">

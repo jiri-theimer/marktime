@@ -36,7 +36,7 @@ Public Class report_framework
                     Return  'obsah byl změněn na výchozí (startovací) stránku, dál už nemá cenu pokračovat
                 End If
                 .PageTitle = "Tiskové sestavy a pluginy"
-                .SiteMenuValue = "cmdReports"
+                .SiteMenuValue = "report_framework"
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("report_framework-structure")

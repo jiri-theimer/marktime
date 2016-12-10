@@ -77,7 +77,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .PageTitle = "Worksheet Timeline"
+                .PageTitle = "Worksheet DAYLINE"
                 .SiteMenuValue = "p31_timeline"
 
             End With

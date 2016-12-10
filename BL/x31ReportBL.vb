@@ -137,38 +137,60 @@ Class x31ReportBL
         Dim c As New BO.x31Report
         c.SetPID(-1)
         c.SetPluginUrl("j03_mypage_greeting.aspx", -10)
-        c.x31Name = "Úvodní pozdrav"
+        c.x29ID = BO.x29IdEnum.j03User
+        c.x31Name = "ÚVOD"
+        c.x31Code = "dashboard"
         lisX31.Add(c)
-        lisX31.Add(GPPS(-999, "Osobní stránka", "j03_mypage.aspx", -10))
+        lisX31.Add(GPPS(-999, "Vlastní osobní stránka", "j03_mypage.aspx", -10, BO.x29IdEnum.j03User, "dashboard"))
         If _cUser.j04IsMenu_Worksheet Then
-            lisX31.Add(GPPS(-2, "[WORKSHEET -> Zapisovat]", "p31_framework.aspx", -11))
-            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes KALENDÁŘ]", "p31_scheduler.aspx", -11))
-            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes DAYLINE]", "p31_timeline.aspx", -11))
+            lisX31.Add(GPPS(-2, "[WORKSHEET -> Zapisovat]", "p31_framework.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_framework"))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes KALENDÁŘ]", "p31_scheduler.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_scheduler"))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes DAYLINE]", "p31_timeline.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_timeline"))
 
-            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes STOPKY]", "p31_timer.aspx", -11))
-            lisX31.Add(GPPS(-3, "[WORKSHEET -> Datový přehled]", "p31_grid.aspx", -11))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Zapisovat přes STOPKY]", "p31_timer.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_timer"))
+            lisX31.Add(GPPS(-3, "[WORKSHEET -> Datový přehled]", "p31_grid.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_grid"))
             If Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                lisX31.Add(GPPS(-3, "[WORKSHEET -> PIVOT]", "p31_pivot.aspx", -11))
+                lisX31.Add(GPPS(-3, "[WORKSHEET -> PIVOT]", "p31_pivot.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_pivot"))
             End If
+            lisX31.Add(GPPS(-3, "Schvalovat, připravit podklady k fakturaci", "approving_framework.aspx", -11, BO.x29IdEnum.p31Worksheet, "p31_approving"))
         End If
 
-        If _cUser.j04IsMenu_Project Then lisX31.Add(GPPS(-4, "[PROJEKTY]", "p41_framework.aspx", -12))
-        If _cUser.j04IsMenu_Contact Then lisX31.Add(GPPS(-5, "[KLIENTI]", "p28_framework.aspx", -13))
-        If _cUser.j04IsMenu_Report Then lisX31.Add(GPPS(-6, "[Tiskové sestavy]", "report_framework.aspx", -14))
-        If _cUser.j04IsMenu_Invoice Then lisX31.Add(GPPS(-5, "[FAKTURY]", "p91_framework.aspx", -14))
+        If _cUser.j04IsMenu_Project Then lisX31.Add(GPPS(-4, "[PROJEKTY]", "p41_framework.aspx", -12, BO.x29IdEnum.p41Project, "p41"))
+        If _cUser.j04IsMenu_Contact Then lisX31.Add(GPPS(-5, "[KLIENTI]", "p28_framework.aspx", -13, BO.x29IdEnum.p28Contact, "p28"))
+        If _cUser.j04IsMenu_Report Then lisX31.Add(GPPS(-6, "[Tiskové sestavy]", "report_framework.aspx", -14, BO.x29IdEnum.x31Report, "report_framework"))
+        If _cUser.j04IsMenu_Invoice Then
+            lisX31.Add(GPPS(-5, "[FAKTURY]", "p91_framework.aspx", -14, BO.x29IdEnum.p91Invoice, "p91"))
+            lisX31.Add(GPPS(-998, "[Zálohové faktury]", "p90_framework.aspx", -30, BO.x29IdEnum.p90Proforma, "p90_framework"))
+        End If
+        
+        If _cUser.j04IsMenu_People Then
+            lisX31.Add(GPPS(-5, "[LIDÉ]", "j02_framework.aspx", -14, BO.x29IdEnum.j02Person, "j02"))
+        End If
 
-        lisX31.Add(GPPS(-998, "[Dokumenty]", "o23_framework.aspx", -30))
-        lisX31.Add(GPPS(-998, "[Úkoly]", "p56_framework.aspx", -30))
-        lisX31.Add(GPPS(-998, "[Kalendář]", "entity_scheduler.aspx", -30))
-        lisX31.Add(GPPS(-998, "[Helpdesk (zapisování požadavků)]", "helpdesk_default.aspx", -100))
+
+        lisX31.Add(GPPS(-998, "[Dokumenty]", "o23_framework.aspx", -30, BO.x29IdEnum.o23Notepad, "o23"))
+        lisX31.Add(GPPS(-998, "[Úkoly]", "p56_framework.aspx", -30, BO.x29IdEnum.p56Task, "p56"))
+        lisX31.Add(GPPS(-998, "[Kalendář]", "entity_scheduler.aspx", -30, BO.x29IdEnum.o22Milestone, "entity_scheduler"))
+
+        If _cUser.IsAdmin Then
+            lisX31.Add(GPPS(-998, "[Administrace systému]", "admin_framework.aspx", -30, BO.x29IdEnum.System, "admin_framework"))
+            lisX31.Add(GPPS(-998, "[Ceníky sazeb]", "p51_framework.aspx", -30, BO.x29IdEnum.p51PriceList, "p51_framework"))
+        End If
+        
+        lisX31.Add(GPPS(-998, "[Nástěnka]", "o10_framework.aspx", -30, BO.x29IdEnum.o10NoticeBoard, "o10_framework"))
+        lisX31.Add(GPPS(-998, "[Operativní plánování]", "p48_framework.aspx", -30, BO.x29IdEnum.p48OperativePlan, "p48_framework"))
+
+       
 
         Return lisX31
     End Function
-    Private Function GPPS(intPID As Integer, strX31Name As String, strURL As String, intOrdinary As Integer) As BO.x31Report
+    Private Function GPPS(intPID As Integer, strX31Name As String, strURL As String, intOrdinary As Integer, moduleX29ID As BO.x29IdEnum, Optional tag As String = "") As BO.x31Report
         Dim c As New BO.x31Report
         c.SetPID(intPID)
         c.SetPluginUrl(strURL, intOrdinary)
         c.x31Name = strX31Name
+        c.x29ID = moduleX29ID
+        c.x31Code = tag
         Return c
     End Function
 

@@ -35,7 +35,7 @@ Public Class approving_framework
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Schvalování | Příprava podkladů k fakturaci"
-                .SiteMenuValue = "cmdP31_Approving"
+                .SiteMenuValue = "p31_approving"
 
                 Dim lisPars As New List(Of String)
                 With lisPars
