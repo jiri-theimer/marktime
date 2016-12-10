@@ -430,7 +430,9 @@
                     minLength: 1,
                     select: function (event, ui) {
                         if (ui.item) {
-                            window.open("p28_framework.aspx?pid=" + ui.item.PID, "_top");
+                            if (ui.item.PID != null)
+                                window.open("p28_framework.aspx?pid=" + ui.item.PID, "_top");
+
                             return false;
                         }
                     }
@@ -442,7 +444,7 @@
                     else
                         s = s + "<a>";
 
-                    s = s + __highlight(item.Project, item.FilterString);
+                    s = s + __highlight(item.ItemText, item.FilterString);
 
 
                     s = s + "</a>";
@@ -467,7 +469,9 @@
                     minLength: 1,
                     select: function (event, ui) {
                         if (ui.item) {
-                            window.open("p91_framework.aspx?pid=" + ui.item.PID, "_top");
+                            if (ui.item.PID != null)
+                                window.open("p91_framework.aspx?pid=" + ui.item.PID, "_top");
+
                             return false;
                         }
                     }
@@ -481,8 +485,10 @@
                     else
                         s = s + "<a>";
 
-                    s = s + __highlight(item.Invoice, item.FilterString);
+                    s = s + __highlight(item.ItemText, item.FilterString);
 
+                    if (item.ItemComment != null)
+                        s = s + "<br><i style='color:gray;font-size:11px;'>" + item.ItemComment + "</i>";
 
                     s = s + "</a>";
 
@@ -506,7 +512,9 @@
                     minLength: 1,
                     select: function (event, ui) {
                         if (ui.item) {
-                            window.open("p56_framework.aspx?pid=" + ui.item.PID, "_top");
+                            if (ui.item.PID != null)
+                                window.open("p56_framework.aspx?pid=" + ui.item.PID, "_top");
+
                             return false;
                         }
                     }
@@ -520,8 +528,10 @@
                     else
                         s = s + "<a>";
 
-                    s = s + __highlight(item.Name + " | " + item.Project, item.FilterString);
+                    s = s + __highlight(item.ItemText, item.FilterString);
 
+                    if (item.ItemComment != null)
+                        s = s + "<br><i style='color:gray;font-size:11px;'>" + item.ItemComment + "</i>";
 
                     s = s + "</a>";
 
@@ -544,7 +554,9 @@
                     minLength: 1,
                     select: function (event, ui) {
                         if (ui.item) {
-                            window.open("j02_framework.aspx?pid=" + ui.item.PID, "_top");
+                            if (ui.item.PID != null)
+                                window.open("j02_framework.aspx?pid=" + ui.item.PID, "_top");
+
                             return false;
                         }
                     }
@@ -557,8 +569,9 @@
                         s = s + "<a style='text-decoration:line-through;'>";
                     else
                         s = s + "<a>";
+                    
 
-                    s = s + __highlight(item.Project, item.FilterString);
+                    s = s + __highlight(item.ItemText, item.FilterString);
 
 
                     s = s + "</a>";

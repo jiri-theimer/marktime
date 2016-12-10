@@ -29,6 +29,9 @@
 
             ff1.Factory = .Factory
         End With
+        sb1.ashx = "handler_search_task.ashx"
+        sb1.aspx = "p56_framework.aspx"
+        sb1.TextboxLabel = "Najít úkol..."
 
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString

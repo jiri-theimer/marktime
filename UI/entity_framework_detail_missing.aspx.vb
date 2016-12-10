@@ -11,10 +11,11 @@
                 Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(ViewState("masterprefix")), BO.BAS.IsNullInt(ViewState("masterpid")))
                 Me.MasterRecord.NavigateUrl = ViewState("masterprefix") & "_framework.aspx?pid=" & ViewState("masterpid")
             End If
+            ViewState("prefix") = Request.Item("prefix")
             Master.SiteMenuValue = Request.Item("prefix")
             Select Case BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
                 Case BO.x29IdEnum.p28Contact
-                    panSearch_p28.Visible = True
+                    panSearch.Visible = Master.Factory.SysUser.j04IsMenu_Contact
                     img1.ImageUrl = "Images/contact_32.png"
                     Dim mq As New BO.myQueryP28
                     mq.SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
@@ -41,7 +42,7 @@
                         cmdNew.NavigateUrl = "javascript:p41_create()"
                     End If
                 Case BO.x29IdEnum.p56Task
-                    panSearch_p56.Visible = True
+                    panSearch.Visible = True
                     img1.ImageUrl = "Images/task_32.png"
                     Dim mq As New BO.myQueryP56
                     mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
@@ -53,7 +54,7 @@
                     cmdNew.NavigateUrl = "javascript:p56_create()"
                 Case BO.x29IdEnum.p91Invoice
                     img1.ImageUrl = "Images/invoice_32.png"
-                    panSearch_p91.Visible = True
+                    panSearch.Visible = Master.Factory.SysUser.j04IsMenu_Invoice
                     Dim mq As New BO.myQueryP91
                     mq.SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
                     Dim lis As IEnumerable(Of BO.p91Invoice) = Master.Factory.p91InvoiceBL.GetList(mq)
@@ -65,7 +66,7 @@
                         cmdNew.NavigateUrl = "javascript:p91_create()"
                     End If
                 Case BO.x29IdEnum.j02Person
-                    panSearch_j02.Visible = True
+                    panSearch.Visible = Master.Factory.SysUser.j04IsMenu_People
                     img1.ImageUrl = "Images/person_32.png"
                     Dim mq As New BO.myQueryJ02
                     Dim lis As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
@@ -90,7 +91,7 @@
                         cmdNew.NavigateUrl = "javascript:x31_create()"
                     End If
                 Case BO.x29IdEnum.o23Notepad
-                    panSearch_o23.Visible = True
+                    panSearch.Visible = Master.Factory.SysUser.j04IsMenu_Notepad
                     img1.ImageUrl = "Images/notepad_32.png"
                     Dim mq As New BO.myQueryO23
                     mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
@@ -114,4 +115,31 @@
         End If
     End Sub
 
+    Private Sub entity_framework_detail_missing_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Me.panSearch.Visible Then
+            Select Case ViewState("prefix")
+                Case "p28"
+                    sb1.ashx = "handler_search_contact.ashx"
+                    sb1.aspx = "p28_framework.aspx"
+                    sb1.TextboxLabel = "Najít klienta..."
+                Case "p91"
+                    sb1.ashx = "handler_search_invoice.ashx"
+                    sb1.aspx = "p91_framework.aspx"
+                    sb1.TextboxLabel = "Najít fakturu..."
+                Case "p56"
+                    sb1.ashx = "handler_search_task.ashx"
+                    sb1.aspx = "p56_framework.aspx"
+                    sb1.TextboxLabel = "Najít úkol..."
+                Case "j02"
+                    sb1.ashx = "handler_search_person.ashx"
+                    sb1.aspx = "j02_framework.aspx"
+                    sb1.TextboxLabel = "Najít osobu..."
+                Case "o23"
+                    sb1.ashx = "handler_search_notepad.ashx"
+                    sb1.aspx = "o23_framework.aspx"
+                    sb1.TextboxLabel = "Najít dokument..."
+            End Select
+        End If
+        
+    End Sub
 End Class

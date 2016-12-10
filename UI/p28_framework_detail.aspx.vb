@@ -443,4 +443,12 @@ Public Class p28_framework_detail
             End If
         End With
     End Sub
+
+    Private Sub p28_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If menu1.FindItemByValue("searchbox").Visible Then
+            sb1.ashx = "handler_search_contact.ashx"
+            sb1.aspx = "p28_framework.aspx"
+            sb1.TextboxLabel = "Najít klienta..."
+        End If
+    End Sub
 End Class

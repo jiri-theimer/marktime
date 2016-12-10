@@ -1,17 +1,6 @@
 ﻿Imports System.Web
 Imports System.Web.Services
 
-Public Class NotepadValue
-    Public Property Name As String
-    Public Property Project As String
-    Public Property Client As String
-    Public Property Code As String
-    Public Property Owner As String
-    Public Property PID As String
-    Public Property Closed As String = "0"
-    Public Property Draft As String = "0"
-    Public Property FilterString As String
-End Class
 Public Class handler_search_notepad
     Implements System.Web.IHttpHandler
 
@@ -38,16 +27,25 @@ Public Class handler_search_notepad
 
         mq.TopRecordsOnly = 40
         Dim lisO23 As IEnumerable(Of BO.o23NotepadGrid) = factory.o23NotepadBL.GetList4Grid(mq)
+        Dim lis As New List(Of BO.SearchBoxItem)
+        Dim c As New BO.SearchBoxItem
+        Select Case lisO23.Count
+            Case 0
+                c.ItemText = "Ani jeden dokument pro zadanou podmínku."
+            Case Is >= mq.TopRecordsOnly
+                c.ItemText = String.Format("Nalezeno více než {0} dokumentů.<br>Je třeba zpřesnit podmínku hledání.", mq.TopRecordsOnly.ToString)
+            Case Else
+                c.ItemText = String.Format("Počet nalezených dokumentů: {0}.", lisO23.Count.ToString)
+        End Select
+        c.FilterString = strFilterString : lis.Add(c)
 
-        Dim lis As New List(Of NotepadValue)
         For Each cO23 In lisO23
-            Dim c As New NotepadValue
+            c = New BO.SearchBoxItem
             With cO23
-                c.Name = .o24Name & ": " & .o23Name
-                c.Owner = .Owner
-                c.Project = .Project & ""
-                c.Client = .p28Name & ""
-                c.Code = .o23Code
+                c.ItemText = .o24Name & ": " & .o23Name & " (" & .Owner & ")"
+
+                c.ItemComment = .p28Name & " | " & .Project
+               
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"
                 If .o23IsDraft Then c.Draft = "1"

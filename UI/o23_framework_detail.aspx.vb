@@ -369,7 +369,9 @@
     End Sub
 
     Private Sub o23_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-
+        sb1.ashx = "handler_search_notepad.ashx"
+        sb1.aspx = "o23_framework.aspx"
+        sb1.TextboxLabel = "Najít dokument..."
     End Sub
 
     

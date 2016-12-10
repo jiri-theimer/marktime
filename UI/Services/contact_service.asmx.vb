@@ -59,8 +59,20 @@ Public Class contact_service
         Dim lis As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mq)
         result = New List(Of RadComboBoxItemData)(lis.Count)
 
+        Dim itemData As New RadComboBoxItemData()
+        itemData.Enabled = False
+        Select Case lis.Count
+            Case 0
+                If filterString <> "" Then itemData.Text = "Ani jeden klient pro zadanou podmínku."
+            Case Is >= mq.TopRecordsOnly
+                itemData.Text = String.Format("Nalezeno více než {0} klientů. Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných klientů.", mq.TopRecordsOnly.ToString)
+            Case Else
+                If filterString <> "" Then itemData.Text = String.Format("Počet nalezených klientů: {0}.", lis.Count.ToString)
+        End Select
+        If itemData.Text <> "" Then result.Add(itemData)
+
         For Each rec As BO.p28Contact In lis
-            Dim itemData As New RadComboBoxItemData()
+            itemData = New RadComboBoxItemData()
             With rec
                 If .p28IsCompany Then
                     itemData.Text = rec.p28CompanyName
@@ -69,7 +81,6 @@ Public Class contact_service
                 End If
                 If .p29ID > 0 Then
                     itemData.Text += " [" & .p29Name & "]"
-
                 End If
                 If .p28IsDraft Then itemData.Text += " DRAFT"
                 If .IsClosed Then itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"

@@ -113,49 +113,13 @@ Partial Public Class entity_framework_detail_missing
     Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''panSearch_p28 control.
+    '''sb1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panSearch_p28 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_p91 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_p91 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_p56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_p56 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_j02 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_j02 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''panSearch_o23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch_o23 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents sb1 As Global.UI.searchbox
 
     '''<summary>
     '''Master property.

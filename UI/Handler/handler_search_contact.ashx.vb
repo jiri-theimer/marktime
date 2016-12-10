@@ -42,27 +42,39 @@ Public Class handler_search_contact
 
         mq.TopRecordsOnly = 20
         Dim lisP28 As IEnumerable(Of BO.p28Contact) = factory.p28ContactBL.GetList(mq)
-
-        Dim lis As New List(Of NameValue)
+        Dim lis As New List(Of BO.SearchBoxItem)
+        Dim c As New BO.SearchBoxItem
+        If strFO = "" Then
+            Select Case lisP28.Count
+                Case 0
+                    c.ItemText = "Ani jeden klient pro zadanou podmínku."
+                Case Is >= mq.TopRecordsOnly
+                    c.ItemText = String.Format("Nalezeno více než {0} klientů.<br>Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných klientů.", mq.TopRecordsOnly.ToString)
+                Case Else
+                    c.ItemText = String.Format("Počet nalezených klientů: {0}.", lisP28.Count.ToString)
+            End Select
+            c.FilterString = strFilterString : lis.Add(c)
+        End If
         For Each cP28 In lisP28
-            Dim c As New NameValue
+            c = New BO.SearchBoxItem
             With cP28
                 If .p28CompanyShortName = "" Then
-                    c.Project = .p28Name & " [" & .p28Code & "]"
+                    c.ItemText = .p28Name
                 Else
-                    c.Project = .p28CompanyShortName & " - " & .p28CompanyName & " [" & .p28Code & "]"
+                    c.ItemText = .p28CompanyShortName & " - " & .p28CompanyName
                 End If
+                c.ItemText += " (" & .p28Code & ")"
                 If .p28SupplierFlag = BO.p28SupplierFlagENUM.NotClientNotSupplier Then c.Italic = "1"
 
                 Select Case strFO
-                    Case "p28RegID" : c.Project = .p28RegID & " - " & c.Project
-                    Case "p28VatID" : c.Project = .p28VatID & " - " & c.Project
+                    Case "p28RegID" : c.ItemText = .p28RegID & " - " & c.ItemText
+                    Case "p28VatID" : c.ItemText = .p28VatID & " - " & c.ItemText
                 End Select
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"
                 If .p28IsDraft Then c.Draft = "1"
             End With
-            
+
 
             c.FilterString = strFilterString
 

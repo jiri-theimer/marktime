@@ -9,6 +9,7 @@
 <%@ Register TagPrefix="uc" TagName="entityrole_assign" Src="~/entityrole_assign.ascx" %>
 <%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
     <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
@@ -493,6 +494,8 @@
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
+   
+
     <script type="text/javascript">
         <%If Me.chkWhisper.Checked Then%>
         $(function () {
@@ -502,7 +505,8 @@
                 minLength: 1,
                 select: function (event, ui) {
                     if (ui.item) {
-                        dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
+                        if (ui.item.PID != null)
+                         dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
                         
                         return false;
                     }
@@ -526,7 +530,7 @@
                 else
                     s = s + "<a>";                
 
-                s = s + __highlight(item.Project, item.FilterString);
+                s = s + __highlight(item.ItemText, item.FilterString);
 
 
                 s = s + "</a>";
@@ -551,7 +555,8 @@
                 minLength: 1,
                 select: function (event, ui) {
                     if (ui.item) {
-                        dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
+                        if (ui.item.PID != null)
+                         dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
 
                         return false;
                     }
@@ -575,7 +580,7 @@
                 else
                     s = s + "<a>";                
 
-                s = s + __highlight(item.Project, item.FilterString);
+                s = s + __highlight(item.ItemText, item.FilterString);
 
 
                 s = s + "</a>";
@@ -600,7 +605,8 @@
                 minLength: 1,
                 select: function (event, ui) {
                     if (ui.item) {
-                        dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
+                        if (ui.item.PID != null)
+                         dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
 
                         return false;
                     }
@@ -624,7 +630,7 @@
                 else
                     s = s + "<a>";                
 
-                s = s + __highlight(item.Project, item.FilterString);
+                s = s + __highlight(item.ItemText, item.FilterString);
 
 
                 s = s + "</a>";

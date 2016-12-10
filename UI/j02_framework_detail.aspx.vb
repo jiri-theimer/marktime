@@ -378,4 +378,12 @@ Public Class j02_framework_detail
             End If
         End With
     End Sub
+
+    Private Sub j02_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If menu1.FindItemByValue("searchbox").Visible Then
+            sb1.ashx = "handler_search_person.ashx"
+            sb1.aspx = "j02_framework.aspx"
+            sb1.TextboxLabel = "Najít osobu..."
+        End If
+    End Sub
 End Class

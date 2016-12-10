@@ -277,6 +277,7 @@
             Case Else
                 lblSupplierID.Visible = False : p28SupplierID.Visible = False
         End Select
+      
     End Sub
     Private Sub RefreshState_Pricelist()
         lblP51ID_Billing.Visible = True : Me.p51ID_Billing.Visible = True

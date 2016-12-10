@@ -9,6 +9,7 @@
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
+<%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" type="text/css" href="Plugins/Plugin.css" />
@@ -640,80 +641,7 @@
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
-
-
-    <script type="text/javascript">
-    <%If menu1.FindItemByValue("searchbox").Visible Then%>
-        $(function () {
-
-            $("#search2").autocomplete({
-                source: "Handler/handler_search_invoice.ashx",
-                minLength: 1,
-                select: function (event, ui) {
-                    if (ui.item) {  
-                        if (ui.item.PID != null)
-                            window.open("p91_framework.aspx?pid=" + ui.item.PID,"_top");
-
-                        return false;
-                    }
-                },
-                open: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                       .removeAttr('style').hide()
-                       .appendTo('#search2_result').show();
-                },
-                close: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                    .hide();                   
-                }   
-
-
-
-            }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                var s = "<div>";
-                if (item.Closed == "1")
-                    s = s + "<a style='text-decoration:line-through;'>";
-                else
-                    s = s + "<a>";
-
-                if (item.PID == null)
-                    s="<div><span style='color:silver;'>"
-
-                s = s + __highlight(item.Invoice, item.FilterString);
-
-
-                if (item.PID == null)
-                    s = s + "</span>"
-                else
-                    s = s + "</a>";
-
-                if (item.Draft == "1")
-                    s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
-
-                s = s + "</div>";
-
-
-                return $(s).appendTo(ul);
-
-
-            };
-        });
-
-        function __highlight(s, t) {
-            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
-            return s.replace(matcher, "<strong>$1</strong>");
-        }
-
-        function search2Focus() {            
-            document.getElementById("search2").value=""; 
-            document.getElementById("search2").style.background = "yellow";
-        }
-        function search2Blur() {
-           
-            document.getElementById("search2").style.background = "";
-            document.getElementById("search2").value = "Najít fakturu...";
-            
-        }
-        <%End If%>
-    </script>
+    <uc:searchbox id="sb1" runat="server"></uc:searchbox>
+   
+    
 </asp:Content>

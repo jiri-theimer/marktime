@@ -32,6 +32,8 @@
                 Me.CurrentJ60ID = BO.BAS.IsNullInt(Request.Item("j60id"))
                 If Me.CurrentJ60ID = 0 Then
                     .StopPage("j60id is missing.")
+                Else
+                    Me.j60Name.Text = .Factory.j62MenuHomeBL.GetList_J60().Where(Function(p) p.PID = Me.CurrentJ60ID)(0).j60Name
                 End If
 
                 Me.j62ParentID.DataSource = .Factory.j62MenuHomeBL.GetList(Me.CurrentJ60ID, New BO.myQuery).Where(Function(p) p.PID <> .DataPID)

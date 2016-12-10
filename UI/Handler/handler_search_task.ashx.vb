@@ -1,14 +1,6 @@
 ﻿Imports System.Web
 Imports System.Web.Services
 
-Public Class TaskValue
-    Public Property Name As String
-    Public Property Project As String
-    Public Property Client As String
-    Public Property PID As String
-    Public Property Closed As String = "0"
-    Public Property FilterString As String
-End Class
 Public Class handler_search_task
     Implements System.Web.IHttpHandler
 
@@ -38,22 +30,32 @@ Public Class handler_search_task
 
         mq.TopRecordsOnly = BO.BAS.IsNullInt(factory.j03UserBL.GetUserParam("handler_search_task-toprecs", "40"))
         Dim lisP56 As IEnumerable(Of BO.p56Task) = factory.p56TaskBL.GetList(mq)
+        Dim c As New BO.SearchBoxItem
+        Dim lis As New List(Of BO.SearchBoxItem)
+        Select Case lisP56.Count
+            Case 0
+                c.ItemText = "Ani jeden úkol pro zadanou podmínku."
+            Case Is >= mq.TopRecordsOnly
+                c.ItemText = String.Format("Nalezeno více než {0} úkolů.<br>Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných úkolů.", mq.TopRecordsOnly.ToString)
+            Case Else
+                c.ItemText = String.Format("Počet nalezených úkolů: {0}.", lisP56.Count.ToString)
+        End Select
+        c.FilterString = strFilterString : lis.Add(c)
 
-        Dim lis As New List(Of TaskValue)
         For Each cP56 In lisP56
-            Dim c As New TaskValue
+            c = New BO.SearchBoxItem
             With cP56
                 If .p57IsHelpdesk Then
-                    c.Name = .p56Name & " (" & .p56Code & ")"
+                    c.ItemText = .p56Name & " (" & .p56Code & ")"
                 Else
-                    c.Name = .p57Name & ": " & .p56Name
+                    c.ItemText = .p57Name & ": " & .p56Name
                 End If
-                c.Project = .ProjectCodeAndName
-                c.Client = .Client
+                c.ItemComment = .ProjectCodeAndName
+
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"
             End With
-            
+
 
             c.FilterString = strFilterString
 

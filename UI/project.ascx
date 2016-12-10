@@ -24,8 +24,7 @@ Width="250px">
         context["filterstring"] = eventArgs.get_text();
         context["j02id_explicit"] = document.getElementById("<%=hidj02id_explicit.ClientID%>").value;
         context["flag"] = document.getElementById("<%=hidflag.clientid%>").value;
-
-
+        
     }
 
     function <%=Me.ClientID%>_get_value() {

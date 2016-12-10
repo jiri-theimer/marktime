@@ -537,6 +537,11 @@ Public Class p91_framework_detail
     End Sub
 
     Private Sub p91_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If menu1.FindItemByValue("searchbox").Visible Then
+            sb1.ashx = "handler_search_invoice.ashx"
+            sb1.aspx = "p91_framework.aspx"
+            sb1.TextboxLabel = "Najít fakturu..."
+        End If
         Dim s As String = ""
         With plug1
             .AddDbParameter("pid", Master.DataPID)

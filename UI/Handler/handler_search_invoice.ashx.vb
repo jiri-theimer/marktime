@@ -1,15 +1,6 @@
 ﻿Imports System.Web
 Imports System.Web.Services
 
-Public Class SearchInvoice
-    Public Property Invoice As String
-    Public Property p91Text1 As String
-    Public Property PID As String
-    Public Property Closed As String = "0"
-    Public Property FilterString As String
-    Public Property Draft As String = "0"
-End Class
-
 Public Class handler_search_invoice
     Implements System.Web.IHttpHandler
 
@@ -42,34 +33,28 @@ Public Class handler_search_invoice
 
         mq.TopRecordsOnly = 10
         Dim lisP91 As IEnumerable(Of BO.p91Invoice) = factory.p91InvoiceBL.GetList(mq)
-        Dim lis As New List(Of SearchInvoice)
-        Dim c As New SearchInvoice
+        Dim lis As New List(Of BO.SearchBoxItem)
+        Dim c As New BO.SearchBoxItem
         Select Case lisP91.Count
             Case 0
-                c.Invoice = "Ani jedna faktura pro zadanou podmínku."
+                c.ItemText = "Ani jedna faktura pro zadanou podmínku."
             Case Is >= mq.TopRecordsOnly
-                c.Invoice = String.Format("Nalezeno více než {0} faktur.<br>Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných faktur.", mq.TopRecordsOnly.ToString)
+                c.ItemText = String.Format("Nalezeno více než {0} faktur.<br>Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných faktur.", mq.TopRecordsOnly.ToString)
             Case Else
-                c.Invoice = String.Format("Počet nalezených faktur: {0}.", lisP91.Count.ToString)
+                c.ItemText = String.Format("Počet nalezených faktur: {0}.", lisP91.Count.ToString)
         End Select
         c.FilterString = strFilterString : lis.Add(c)
         For Each cP91 In lisP91
-            c = New SearchInvoice
+            c = New BO.SearchBoxItem
             With cP91
-                c.Invoice = .p91Code & " - "
-                If .p91Client = "" Then
-                    c.Invoice += " " & .p28Name
-                Else
-                    c.Invoice += " " & .p91Client
-                End If
-                c.Invoice += " (" & BO.BAS.FN(.p91Amount_TotalDue) & " " & .j27Code & ")"
-                c.p91Text1 = .p91Text1
+                c.ItemText = .p91Code + " - " + .p91Client
+                c.ItemText += " (" & BO.BAS.FN(.p91Amount_TotalDue) & " " & .j27Code & ")"
+                c.ItemComment = .p91Text1
                 c.PID = .PID.ToString
                 If .IsClosed Then c.Closed = "1"
                 If .p91IsDraft Then c.Draft = "1"
+                c.ToolTip = .p92Name & ": " & BO.BAS.FD(.p91DateSupply)
             End With
-
-
             c.FilterString = strFilterString
 
             lis.Add(c)

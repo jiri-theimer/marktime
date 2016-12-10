@@ -11,8 +11,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <table cellpadding="6" cellspacing="2">
-        
-        
+
+
         <tr>
             <td>
                 <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název:"></asp:Label>
@@ -28,12 +28,11 @@
             </td>
         </tr>
 
-       
+
     </table>
     <table id="tabLink" runat="server" cellpadding="6" cellspacing="2">
         <tr>
-            <td>
-                Menu šablona:
+            <td>Menu šablona:
             </td>
             <td>
                 <asp:Label ID="j60Name" CssClass="valboldblue" runat="server"></asp:Label>
@@ -41,7 +40,7 @@
             </td>
         </tr>
         <tr style="vertical-align: top;">
-            <td style="width:120px;">
+            <td style="width: 120px;">
                 <asp:Label ID="lblUrl" runat="server" CssClass="lblReq" Text="Odkaz (URL):"></asp:Label>
             </td>
             <td>
@@ -49,8 +48,8 @@
                 <asp:DropDownList ID="cbxUrls" runat="server" AutoPostBack="true" Style="width: 300px;" DataTextField="x31Name" DataValueField="PersonalPageValue"></asp:DropDownList>
                 <b>-></b>
                 <asp:TextBox ID="j62Url" runat="server" Style="width: 300px;"></asp:TextBox>
-                
-                
+
+
 
 
             </td>
@@ -62,16 +61,16 @@
             </td>
         </tr>
         <tr>
-            <td style="width:120px;">
+            <td style="width: 120px;">
                 <asp:Label ID="lblX29ID" Text="Modul:" runat="server" CssClass="lbl"></asp:Label>
             </td>
             <td>
                 <asp:DropDownList ID="x29ID" runat="server" DataTextField="x29Name" DataValueField="x29ID" AutoPostBack="true">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>                    
+                    <asp:ListItem Text="" Value=""></asp:ListItem>
                     <asp:ListItem Text="Osobní (přístupné všem)" Value="103"></asp:ListItem>
                     <asp:ListItem Text="Worksheet" Value="331"></asp:ListItem>
                     <asp:ListItem Text="Projekty" Value="141"></asp:ListItem>
-                    <asp:ListItem Text="Klienti" Value="328"></asp:ListItem>                    
+                    <asp:ListItem Text="Klienti" Value="328"></asp:ListItem>
                     <asp:ListItem Text="Faktury" Value="391"></asp:ListItem>
                     <asp:ListItem Text="Zálohové faktury" Value="390"></asp:ListItem>
                     <asp:ListItem Text="Lidé" Value="102"></asp:ListItem>
@@ -99,35 +98,43 @@
                 </asp:DropDownList>
                 <asp:Label ID="lblImageUrl" runat="server" CssClass="lbl" Text="Grafická ikona (URL):"></asp:Label>
                 <asp:TextBox ID="j62ImageUrl" runat="server" Style="width: 200px;"></asp:TextBox>
-                
+
             </td>
         </tr>
-        <tr>
-            <td>
-                <asp:Label ID="lblJ70ID" runat="server" CssClass="lbl" Text="Pojmenovaný filtr k přehledu:"></asp:Label>
-            </td>
-            <td>
-                <uc:datacombo ID="j70ID" runat="server" DataTextField="j70Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:Label ID="lblJ74ID" runat="server" CssClass="lbl" Text="Pojmenovaná šablona sloupců:"></asp:Label>
-            </td>
-            <td>
-                <uc:datacombo ID="j74ID" runat="server" DataTextField="j74Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-            </td>
-        </tr>
-        <tr style="display:none;">
-            <td>
-                <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Souhrny podle:"></asp:Label>
-            </td>
-            <td>
-                <asp:DropDownList ID="j62GridGroupBy" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnField">                   
-                </asp:DropDownList>
-            </td>
-        </tr>
+
     </table>
+    <div class="content-box2">
+        <div class="title">Pouze pro datový přehled</div>
+        <div class="content">
+            <table>
+                <tr>
+                    <td>
+                        <asp:Label ID="lblJ70ID" runat="server" CssClass="lbl" Text="Pojmenovaný filtr k přehledu:"></asp:Label>
+                    </td>
+                    <td>
+                        <uc:datacombo ID="j70ID" runat="server" DataTextField="j70Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="lblJ74ID" runat="server" CssClass="lbl" Text="Pojmenovaná šablona sloupců:"></asp:Label>
+                    </td>
+                    <td>
+                        <uc:datacombo ID="j74ID" runat="server" DataTextField="j74Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                    </td>
+                </tr>
+                <tr style="display: none;">
+                    <td>
+                        <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Souhrny podle:"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="j62GridGroupBy" runat="server" DataTextField="ColumnHeader" DataValueField="ColumnField">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
     <div class="content-box2">
         <div class="title">

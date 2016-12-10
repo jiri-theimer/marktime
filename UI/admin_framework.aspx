@@ -83,6 +83,7 @@
             <asp:ImageButton ID="cmdCollapseAll" runat="server" ImageUrl="Images/collapse.png" ToolTip="Sbalit celé menu" CssClass="button-link" />
         </div>
         <div class="commandcell" style="min-width: 200px;">
+            
             <asp:Label ID="lblPath" runat="server" CssClass="framework_header_span" Style="padding-left: 10px;"></asp:Label>
         </div>
         <div class="commandcell">
@@ -301,7 +302,7 @@
                     <asp:Label ID="AppName" runat="server" CssClass="valbold"></asp:Label>
                     <button type="button" onclick="sw_master('x35_record.aspx?key=AppName','Images/setting_32.png')">Nastavit</button>
                     
-                    <a href="admin_framework.aspx?prefix=j62">Upravit strukturu hlavního menu</a>
+                    <a href="admin_framework.aspx?prefix=j62">Upravit strukturu aplikačního menu</a>
                 </div>
             </div>
             <div class="content-box1">

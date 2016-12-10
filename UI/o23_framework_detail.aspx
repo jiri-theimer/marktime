@@ -9,6 +9,7 @@
 <%@ Register TagPrefix="uc" TagName="fileupload" Src="~/fileupload.ascx" %>
 <%@ Register TagPrefix="uc" TagName="imap_record" Src="~/imap_record.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
    
@@ -353,71 +354,10 @@
     
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+    <uc:searchbox id="sb1" runat="server"></uc:searchbox>
 
-
+    
     <script type="text/javascript">
-        $(function () {
-
-            $("#search2").autocomplete({
-                source: "Handler/handler_search_notepad.ashx",
-                minLength: 1,
-                select: function (event, ui) {
-                    if (ui.item) {                        
-                        window.open("o23_framework.aspx?pid=" + ui.item.PID,"_top");
-                        return false;
-                    }
-                },
-                open: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                       .removeAttr('style').hide()
-                       .appendTo('#search2_result').show();
-                },
-                close: function (event, ui) {
-                    $('ul.ui-autocomplete')
-                    .hide();                   
-                }   
-
-
-
-            }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                var s = "<div>";
-                if (item.Closed == "1")
-                    s = s + "<a style='text-decoration:line-through;'>";
-                else
-                    s = s + "<a>";
-
-                s = s + __highlight(item.Name+" ("+item.Owner+") "+" | "+item.Code+" | "+item.Client+" | "+item.Project, item.FilterString);
-
-
-                s = s + "</a>";
-
-                if (item.Draft == "1")
-                    s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
-
-                s = s + "</div>";
-
-
-                return $(s).appendTo(ul);
-
-
-            };
-        });
-
-        function __highlight(s, t) {
-            var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
-            return s.replace(matcher, "<strong>$1</strong>");
-        }
-
-        function search2Focus() {            
-            document.getElementById("search2").value=""; 
-            document.getElementById("search2").style.background = "yellow";
-        }
-        function search2Blur() {
-           
-            document.getElementById("search2").style.background = "";
-            document.getElementById("search2").value = "Najít dokument...";
-        }
-
         function file_preview(prefix,pid) {
             ///náhled na soubor
             //window.parent.sw_master("fileupload_preview.aspx?prefix="+prefix+"&pid="+pid,"Images/attachment_32.png",true);

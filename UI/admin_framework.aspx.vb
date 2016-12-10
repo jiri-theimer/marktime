@@ -56,6 +56,7 @@ Public Class admin_framework
                     Dim cmd As New RadMenuItem("Import kurzů z ČNB", "javascript: sw_master('m62_import_setting.aspx','Images/setting.png',false)")
                     cmd.PostBack = False
                     menu1.Items.Add(cmd)
+                
             End Select
 
             Dim cF As New BO.clsFile
@@ -75,8 +76,8 @@ Public Class admin_framework
             b = True
             
         End If
-
         lblPath.Text = panelmenu1.GetSelectedPath()
+
 
         panDashboard.Visible = Not b
         panGRID.Visible = b
@@ -216,7 +217,7 @@ Public Class admin_framework
             .AddItem("Střediska", "j18", NU("j18"), "other")
             .AddItem("Regiony", "j17", NU("j17"), "other")
             .AddItem("Textové šablony", "j61", NU("j61"), "other")
-            .AddItem("Struktura hlavního menu", "j62", NU("j62"), "other")
+            .AddItem("Struktura aplikačního menu", "menu", "admin_menu.aspx", "other")
             .AddItem("Návrhář workflow šablon", "workflow", "admin_workflow.aspx", "other")
 
             .AddItem("Gadget nastavení", "x55", NU("x55"), "other")
@@ -340,11 +341,11 @@ Public Class admin_framework
                     .AddColumn("j61Name", "Název šablony")
                     .AddColumn("Owner", "Vlastník")
                     .AddColumn("x29Name", "Entita")
-                Case "j62"
-                    .AddColumn("TreeMenuItem", "Název položky menu")
-                    .AddColumn("x29Name", "Modul")
-                    .AddColumn("j62Tag", "Tag")
-                    .AddColumn("j62Ordinary", "#", BO.cfENUM.Numeric0)
+                    ''Case "j62"
+                    ''    .AddColumn("TreeMenuItem", "Název položky menu")
+                    ''    .AddColumn("x29Name", "Modul")
+                    ''    .AddColumn("j62Tag", "Tag")
+                    ''    .AddColumn("j62Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "c21"
                     .AddColumn("c21Name", "Název pracovního fondu")
                     .AddColumn("c21Ordinary", "#", BO.cfENUM.Numeric0)
@@ -763,9 +764,9 @@ Public Class admin_framework
                 Case "j61"
                     Dim lis As IEnumerable(Of BO.j61TextTemplate) = .j61TextTemplateBL.GetList(mqDef)
                     grid1.DataSource = lis
-                Case "j62"
-                    Dim lis As IEnumerable(Of BO.j62MenuHome) = .j62MenuHomeBL.GetList(0, mqDef)
-                    grid1.DataSource = lis
+                    ''Case "j62"
+                    ''    Dim lis As IEnumerable(Of BO.j62MenuHome) = .j62MenuHomeBL.GetList(0, mqDef)
+                    ''    grid1.DataSource = lis
                 Case "p58"
                     Dim lis As IEnumerable(Of BO.p58Product) = .p58ProductBL.GetList(mqDef)
                     grid1.DataSource = lis

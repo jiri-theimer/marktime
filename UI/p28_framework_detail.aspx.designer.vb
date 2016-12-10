@@ -527,6 +527,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''sb1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sb1 As Global.UI.searchbox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
