@@ -67,7 +67,16 @@
 
         }
 
+        function invoice_selected() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "" || pids == null) {
+                alert("Není vybrán řádek.");
+                return
+            }
 
+            sw_master("entity_modal_invoicing.aspx?prefix=<%=me.hidCurPrefix.Value%>&pids=" + pids, "", true);
+
+        }
 
 
         function GetAllSelectedPIDs() {
@@ -176,7 +185,8 @@
                 <Items>
                     <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
                         <Items>
-                            <telerik:RadMenuItem Text="Schválit nebo fakturovat označené" Value="approve" NavigateUrl="javascript:approve_selected()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Zahájit schvalovací/fakturační průvodce pro označené" Value="approve" NavigateUrl="javascript:approve_selected()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Hromadně vygenerovat DRAFT faktury" Value="draft" NavigateUrl="javascript:invoice_selected()" ImageUrl="Images/invoice.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Přesunout nevyfakturované úkony do archivu" Value="bin" NavigateUrl="javascript:p31_move2bin()" ImageUrl="Images/bin.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Tisková sestava (funguje i hromadný tisk)" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                         </Items>

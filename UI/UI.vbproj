@@ -197,6 +197,7 @@
     <Content Include="entity_framework_p41subform.aspx" />
     <Content Include="entity_framework_p56subform.aspx" />
     <Content Include="entity_framework_p91subform.aspx" />
+    <Content Include="entity_modal_invoicing.aspx" />
     <Content Include="entity_scheduler.aspx" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="fileupload_preview.aspx" />
@@ -819,6 +820,13 @@
     </Compile>
     <Compile Include="entity_framework_p91subform.aspx.vb">
       <DependentUpon>entity_framework_p91subform.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_modal_invoicing.aspx.designer.vb">
+      <DependentUpon>entity_modal_invoicing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_modal_invoicing.aspx.vb">
+      <DependentUpon>entity_modal_invoicing.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_scheduler.aspx.designer.vb">

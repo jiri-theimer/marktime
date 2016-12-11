@@ -64,8 +64,6 @@ Public Class p91_create_step2
 
             Dim a() As String = Split(Master.Factory.j03UserBL.GetUserParam("p91_create-rememberdates-values"), "|")
 
-
-
             If Master.Factory.j03UserBL.GetUserParam("p91_create-rememberdates", "0") = "1" Then
                 If UBound(a) > 1 Then
                     If a(0) <> "" Then Me.p91DateSupply.SelectedDate = BO.BAS.ConvertString2Date(a(0))
