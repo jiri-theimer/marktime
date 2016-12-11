@@ -268,7 +268,7 @@ Public Class main_menu
             If Not bolGO Then Continue For 'skočit na další c v cyklu
 
             Dim n As New RadMenuItem(c.j62Name)
-            If strLang = "en-US" And c.j62Name_ENG <> "" Then n.Text = c.j62Name_ENG
+            If strLang = "en-US" And c.j62Name_ENG <> "" Then n.Text = c.j62Name_ENG 'menu v angličtině
             n.ImageUrl = c.j62ImageUrl
             n.Value = c.j62Tag
 
