@@ -23,6 +23,9 @@ Public Class clsDBTree
             If BasicWHERE > "" Then strSQL += " AND " & BasicWHERE
             _cDB.RunSQL(strSQL)
             If bolUpdatePrevNext Then
+                strSQL = " update " & strTable & " set " & strField_Order & "=1," & strField_Prev & " = 0, " & strField_Next & "=0 WHERE 1=1"
+                If BasicWHERE > "" Then strSQL += " AND " & BasicWHERE
+                _cDB.RunSQL(strSQL)
                 strSQL = " update " & strTable & " set " & strField_Prev & "=" & strField_Order & "," & strField_Next & " = " & strField_Order & " WHERE " & strField_Prev & "<>" & strField_Next & " and " & strField_ID & "<>0"
                 If BasicWHERE > "" Then strSQL += " AND " & BasicWHERE
                 _cDB.RunSQL(strSQL)

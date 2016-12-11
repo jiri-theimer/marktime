@@ -74,7 +74,7 @@ Public Class main_menu
         panContainer.Visible = False
     End Sub
     Public Sub RefreshData(factory As BL.Factory, strCurrentHelpID As String, strCurrentSiteMenuValue As String)
-        Dim bolCurSAW As Boolean = False
+        Dim bolCurSAW As Boolean = False, strLang As String = basUI.GetCookieValue(Request, "MT50-CultureInfo")
         If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then bolCurSAW = True
 
         Me.panContainer.Visible = True
@@ -88,9 +88,7 @@ Public Class main_menu
             If .j04IsMenu_Project Then
                 Me.hidAllowSearch1.Value = "1"
                 ai("", "searchbox1", "", "")
-
             End If
-
 
             n = ai("", "new", "", "Images/new_menu.png", )
             n.SelectedCssClass = ""
@@ -116,120 +114,21 @@ Public Class main_menu
                 ai(Resources.common.Dokument, "", "javascript:o23_create()", "", n) : b = True
             End If
             If Not b Then menu1.Items.Remove(n)
+        End With
 
+        RenderDbMenu(factory, strLang)
 
-            RenderDbMenu(factory)
-
-            ''If .HomeMenu = "" Then
-            ''    ai(Resources.Site.Menu_UVOD, "dashboard", "default.aspx", "")
-            ''Else
-            ''    'n = ai(.HomeMenu, "dashboard", "default.aspx", "")
-
-
-
-            ''End If
-
-
-
-            ''If .j04IsMenu_Worksheet Then
-            ''    n = ai("WORKSHEET", "p31", "", "~/Images/menuarrow.png")
-            ''    ai(Resources.Site.Zapisovat, "p31_framework", "p31_framework.aspx", "Images/worksheet.png", n)
-            ''    ai("Zapisovat přes KALENDÁŘ", "p31_scheduler", "p31_scheduler.aspx", "Images/worksheet.png", n)
-            ''    ai("Zapisovat přes DAYLINE", "p31_timeline", "p31_timeline.aspx", "Images/worksheet.png", n)
-            ''    ai(Resources.Site.cmdP31_Timer, "cmdP31_Timer", "p31_timer.aspx", "Images/worksheet.png", n)
-            ''    ai(Resources.Site.Grid, "cmdP31_Grid", "p31_grid.aspx", "Images/grid.png", n)
-            ''    If factory.SysUser.IsApprovingPerson Then
-            ''        ai(Resources.Site.Schvalovat_Pripravit_Fakturaci, "cmdP31_Approving", "approving_framework.aspx", "Images/approve.png", n)
-            ''    End If
-
-
-            ''    If factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then ai("PIVOT", "cmdP31_Pivot", "p31_pivot.aspx", "Images/pivot.png", n)
-            ''End If
-
-            ''If .j04IsMenu_Project Then
-            ''    If bolCurSAW Then
-            ''        n = ai(Resources.Site.Menu_PROJEKTY, "p41", "", "~/Images/menuarrow.png")
-            ''        ai("Detail", "p41_record", "p41_framework_detail.aspx", "", n)
-            ''        ai("Přehled", "p41_grid", "entity_framework.aspx?prefix=p41", "", n)
-            ''    Else
-            ''        ai(Resources.Site.Menu_PROJEKTY, "p41", "p41_framework.aspx", "")
-            ''    End If
-            ''End If
-
-
-            ''If .j04IsMenu_Contact Then
-            ''    If bolCurSAW Then
-            ''        n = ai(Resources.Site.Menu_KLIENTI, "p28", "", "~/Images/menuarrow.png")
-            ''        ai("Detail", "p28_record", "p28_framework_detail.aspx", "", n)
-            ''        ai("Přehled", "p28_grid", "entity_framework.aspx?prefix=p28", "", n)
-            ''    Else
-            ''        ai(Resources.Site.Menu_KLIENTI, "p28", "p28_framework.aspx", "")
-            ''    End If
-            ''End If
-            ''If .j04IsMenu_People Then
-            ''    If bolCurSAW Then
-            ''        n = ai(Resources.Site.Menu_LIDE, "j02", "", "~/Images/menuarrow.png")
-            ''        ai("Detail", "j02_record", "j02_framework_detail.aspx", "", n)
-            ''        ai("Přehled", "j02_grid", "entity_framework.aspx?prefix=j02", "", n)
-            ''    Else
-            ''        ai(Resources.Site.Menu_LIDE, "j02", "j02_framework.aspx", "")
-            ''    End If
-            ''End If
-            ''If .j04IsMenu_Invoice Then
-            ''    If bolCurSAW Then
-            ''        n = ai(Resources.Site.Menu_FAKTURY, "p91", "", "~/Images/menuarrow.png")
-            ''        ai("Detail", "p91_record", "p91_framework_detail.aspx", "", n)
-            ''        ai("Přehled", "p91_grid", "entity_framework.aspx?prefix=p91", "", n)
-            ''    Else
-            ''        ai(Resources.Site.Menu_FAKTURY, "p91", "p91_framework.aspx", "")
-            ''    End If
-            ''End If
-
+        With factory.SysUser
             n = ai(.Person, "me", "", "~/Images/menuarrow.png")
             If .Person = "" Then n.Text = .j03Login
             If .j04IsMenu_MyProfile Then ai(Resources.Site.MujProfil, "cmdMyProfile", "j03_myprofile.aspx", "", n)
             ai(Resources.Site.ZmenitHeslo, "cmdChangePassword", "changepassword.aspx", "", n)
             ai(Resources.Site.OdhlasitSe, "cmdLogout", "Account/Login.aspx?logout=1", "", n)
 
-            If 1 = 2 Then
-                n = ai(Resources.Site.Menu_DALSI, "more", "", "~/Images/menuarrow.png")
-                n.GroupSettings.RepeatColumns = 2
-                n.GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
-                ''menu1.Items.Add(n)
-                If bolAdmin Then ai(Resources.Site.AdministraceSystemu, "cmdAdmin", "admin_framework.aspx", "Images/setting.png", n)
-                If .j04IsMenu_Report Then ai(Resources.Site.cmdReports, "cmdReports", "report_framework.aspx", "Images/reporting.png", n)
-                ai(Resources.Site.DispecinkUkolu, "p56", "p56_framework.aspx", "Images/task.png", n)
-                ai("Nástěnka", "o10", "o10_framework.aspx", "Images/article.png", n)
-                If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator) Or factory.TestPermission(BO.x53PermValEnum.GR_O23_Draft_Creator) Then
-                    ai(Resources.Site.Dokumenty, "o23", "o23_framework.aspx", "Images/notepad.png", n)
-                End If
-
-                ai(Resources.Site.Kalendar, "entity_scheduler", "entity_scheduler.aspx", "Images/calendar.png", n)
-                If factory.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Then
-                    ai(Resources.Site.OperativniPlanovani, "p48", "p48_framework.aspx", "Images/oplan.png", n)
-                End If
-
-                ''ai("Rozpočty výdajů a fixních odměn", "p49", "p49_framework.aspx", "Images/finplan.png", n)
-                If factory.TestPermission(BO.x53PermValEnum.GR_P90_Reader) Then
-                    ai(Resources.Site.ZalohoveFaktury, "p90_framework", "p90_framework.aspx", "Images/proforma.png", n)
-                End If
-                If factory.TestPermission(BO.x53PermValEnum.GR_P51_Admin) Then
-                    ai(Resources.Site.Ceniky, "p51", "p51_framework.aspx", "Images/billing.png", n)
-                End If
-
-                ai(Resources.Site.Stitky, "x18", "x18_framework.aspx", "Images/label.png", n)
-                ai(Resources.Site.OdeslanaPosta, "x40", "x40_framework.aspx", "Images/email.png", n)
-                If bolAdmin Then ai(Resources.Site.NavrharWorkflow, "cmdWorkflow", "admin_workflow.aspx", "Images/workflow.png", n)
-
-
-                If n.Items.Count <= 8 Then n.GroupSettings.RepeatColumns = 1
-            End If
-
             If .MessagesCount > 0 Then
                 n = ai("<img src='Images/globe.png'/>" + .MessagesCount.ToString, "messages", "javascript:messages()", "")
                 n.ToolTip = "Zprávy a upozornění ze systému"
             End If
-            ''If Is_SAW_Switcher() Then
             If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
                 n = ai("<img src='Images/saw_turn_off.png'/>", "saw", "javascript:setsaw('0')", "")
                 n.ToolTip = "Přepnout do módu 1: zobrazovat levý navigační panel"
@@ -239,7 +138,7 @@ Public Class main_menu
             End If
             ''End If
 
-            Select Case basUI.GetCookieValue(Request, "MT50-CultureInfo")
+            Select Case strLang
                 Case "en-US"
                     n = ai("<img src='Images/Flags/menu_uk.gif'/>", "lang", "", "")
                 Case "-"
@@ -259,7 +158,39 @@ Public Class main_menu
         End With
         Me.SelectedValue = strCurrentSiteMenuValue
 
-        ''SetupSearchbox()
+        ''If 1 = 2 Then
+        ''    n = ai(Resources.Site.Menu_DALSI, "more", "", "~/Images/menuarrow.png")
+        ''    n.GroupSettings.RepeatColumns = 2
+        ''    n.GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
+        ''    ''menu1.Items.Add(n)
+        ''    If bolAdmin Then ai(Resources.Site.AdministraceSystemu, "cmdAdmin", "admin_framework.aspx", "Images/setting.png", n)
+        ''    If .j04IsMenu_Report Then ai(Resources.Site.cmdReports, "cmdReports", "report_framework.aspx", "Images/reporting.png", n)
+        ''    ai(Resources.Site.DispecinkUkolu, "p56", "p56_framework.aspx", "Images/task.png", n)
+        ''    ai("Nástěnka", "o10", "o10_framework.aspx", "Images/article.png", n)
+        ''    If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator) Or factory.TestPermission(BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+        ''        ai(Resources.Site.Dokumenty, "o23", "o23_framework.aspx", "Images/notepad.png", n)
+        ''    End If
+
+        ''    ai(Resources.Site.Kalendar, "entity_scheduler", "entity_scheduler.aspx", "Images/calendar.png", n)
+        ''    If factory.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Then
+        ''        ai(Resources.Site.OperativniPlanovani, "p48", "p48_framework.aspx", "Images/oplan.png", n)
+        ''    End If
+
+        ''    ''ai("Rozpočty výdajů a fixních odměn", "p49", "p49_framework.aspx", "Images/finplan.png", n)
+        ''    If factory.TestPermission(BO.x53PermValEnum.GR_P90_Reader) Then
+        ''        ai(Resources.Site.ZalohoveFaktury, "p90_framework", "p90_framework.aspx", "Images/proforma.png", n)
+        ''    End If
+        ''    If factory.TestPermission(BO.x53PermValEnum.GR_P51_Admin) Then
+        ''        ai(Resources.Site.Ceniky, "p51", "p51_framework.aspx", "Images/billing.png", n)
+        ''    End If
+
+        ''    ai(Resources.Site.Stitky, "x18", "x18_framework.aspx", "Images/label.png", n)
+        ''    ai(Resources.Site.OdeslanaPosta, "x40", "x40_framework.aspx", "Images/email.png", n)
+        ''    If bolAdmin Then ai(Resources.Site.NavrharWorkflow, "cmdWorkflow", "admin_workflow.aspx", "Images/workflow.png", n)
+
+
+        ''    If n.Items.Count <= 8 Then n.GroupSettings.RepeatColumns = 1
+        ''End If
     End Sub
     Private Function Is_SAW_Switcher() As Boolean
         If Request.Url.ToString.IndexOf("entity_framework") > 0 Or Request.Url.ToString.IndexOf("p31_framework") > 0 Then Return True
@@ -304,12 +235,42 @@ Public Class main_menu
     End Sub
 
 
-    Private Sub RenderDbMenu(factory As BL.Factory)
-        Dim lisJ62 As IEnumerable(Of BO.j62MenuHome) = factory.j62MenuHomeBL.GetList(factory.SysUser.j60ID, New BO.myQuery)
-        Dim ns As New Dictionary(Of Integer, RadMenuItem)
+    Private Sub RenderDbMenu(factory As BL.Factory, strLang As String)
+        Dim mq As New BO.myQuery
+        mq.MG_GridSqlColumns = "a.x29ID,j62Name,a.j62Name_ENG,a.j62ParentID,a.j74ID,a.j70ID,a.j62Url,a.j62Target,a.j62ImageUrl,a.j62Tag,a.j62TreeLevel as _j62TreeLevel"    'kvůli co nejvyšší rychlosti
+        Dim lisJ62 As IEnumerable(Of BO.j62MenuHome) = factory.j62MenuHomeBL.GetList(factory.SysUser.j60ID, mq)
+        Dim ns As New Dictionary(Of Integer, RadMenuItem), bolGO As Boolean = False
 
         For Each c In lisJ62
+            bolGO = True
+            With factory.SysUser
+                Select Case c.x29ID
+                    Case BO.x29IdEnum.p31Worksheet
+                        bolGO = .j04IsMenu_Worksheet
+                        If c.j62Tag = "p31_pivot" Then bolGO = factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+                        If c.j62Tag = "p31_approving" Then bolGO = .IsApprovingPerson
+                    Case BO.x29IdEnum.p41Project
+                        bolGO = .j04IsMenu_Project
+                    Case BO.x29IdEnum.p28Contact
+                        bolGO = factory.SysUser.j04IsMenu_Contact
+                    Case BO.x29IdEnum.p91Invoice : bolGO = .j04IsMenu_Invoice
+                    Case BO.x29IdEnum.p90Proforma : bolGO = .j04IsMenu_Proforma
+                    Case BO.x29IdEnum.j02Person : bolGO = .j04IsMenu_People
+                    Case BO.x29IdEnum.o23Notepad
+                        bolGO = .j04IsMenu_Notepad
+                    Case BO.x29IdEnum.System : bolGO = .IsAdmin
+                    Case BO.x29IdEnum.p51PriceList : bolGO = factory.TestPermission(BO.x53PermValEnum.GR_P51_Admin)
+                    Case BO.x29IdEnum.x31Report : bolGO = .j04IsMenu_Report
+
+                End Select
+            End With
+
+            If Not bolGO Then Continue For 'skočit na další c v cyklu
+
             Dim n As New RadMenuItem(c.j62Name)
+            If strLang = "en-US" And c.j62Name_ENG <> "" Then n.Text = c.j62Name_ENG
+            n.ImageUrl = c.j62ImageUrl
+            n.Value = c.j62Tag
 
             If c.j62IsSeparator Then
                 If c.j62ParentID = 0 Then
@@ -326,25 +287,15 @@ Public Class main_menu
                     Else
                         n.NavigateUrl += "?j62id=" & c.PID.ToString
                     End If
+                    n.Value = "hm" & c.PID.ToString
                 End If
-
-                ''If n.NavigateUrl.IndexOf("javascript") < 0 Then
-                ''    If n.NavigateUrl.IndexOf("?") > 0 Then
-                ''        n.NavigateUrl += "&j62id=" & c.PID.ToString
-                ''    Else
-                ''        n.NavigateUrl += "?j62id=" & c.PID.ToString
-                ''    End If
-                ''End If
                 n.Target = c.j62Target
             End If
 
 
-            n.ImageUrl = c.j62ImageUrl
-            n.Value = c.j62Tag
+
             Dim nParent As RadMenuItem = Nothing
             If c.j62ParentID > 0 Then
-                ''nParent = menu1.FindItemByValue("dashboard").Items.FindItemByValue("hm" + c.j62ParentID.ToString)
-                'nParent = menu1.FindItemByValue(c.j62ParentID.ToString)
                 Try
                     nParent = ns.First(Function(p) p.Key = c.j62ParentID).Value()
                 Catch ex As Exception
@@ -358,7 +309,7 @@ Public Class main_menu
                     If .Level = 0 Then
                         .ImageUrl = "~/Images/menuarrow.png"
                         If menu1.ClickToOpen Then .NavigateUrl = ""
-                        If .Items.Count > 5 Then
+                        If .Items.Count > 6 Then
                             .GroupSettings.RepeatColumns = 2
                             .GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
                         End If
@@ -368,15 +319,7 @@ Public Class main_menu
             End If
             ns.Add(c.PID, n)
         Next
-        ''For Each c In menu1.GetAllItems().Where(Function(p) p.ToolTip <> "")
-        ''    c.Value = c.ToolTip : c.ToolTip = ""
-        ''Next
-        ''If lisJ62.Count > 0 Then
-        ''    With menu1.FindItemByValue("dashboard")
-        ''        .ImageUrl = "~/Images/menuarrow.png"
-        ''        If menu1.ClickToOpen Then .NavigateUrl = ""
-        ''    End With
-        ''End If
+
     End Sub
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender

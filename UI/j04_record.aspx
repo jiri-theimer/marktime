@@ -28,31 +28,15 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label runat="server" ID="Label2" Text="Šablona hlavního menu:" CssClass="lbl"></asp:Label>
+                        <asp:Label runat="server" ID="Label2" Text="Šablona aplikačního menu:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <asp:DropDownList ID="j60ID" runat="server" DataValueField="pid" DataTextField="j60Name"></asp:DropDownList>
                     </td>
                 </tr>
             </table>
-            <div class="content-box2">
-                <div class="title">Přístupné moduly (odkazy hlavního menu)</div>
-                <div class="content">
-                    <asp:CheckBox ID="j04IsMenu_Worksheet" runat="server" Text="[WORKSHEET]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_Project" runat="server" Text="[PROJEKTY]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_Contact" runat="server" Text="[KLIENTI]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_People" runat="server" Text="[LIDÉ]" Checked="false" />
-                    <asp:CheckBox ID="j04IsMenu_Report" runat="server" Text="[TISKOVÉ SESTAVY | PLUGINY]" Checked="true" />
-                    <hr />
-                    <asp:CheckBox ID="j04IsMenu_Invoice" runat="server" Text="[FAKTURY]" Checked="false" />
-                    <asp:CheckBox ID="j04IsMenu_Proforma" runat="server" Text="[ZÁLOHOVÉ FAKTURY]" Checked="false" />
-                    <asp:CheckBox ID="j04IsMenu_Notepad" runat="server" Text="[DOKUMENTY]" Checked="true" />
-                    <asp:CheckBox ID="j04IsMenu_MyProfile" runat="server" Text="[MůJ PROFIL]" Checked="true" />
-                </div>
-            </div>
-
-            
-            <div class="content-box2">
+                        
+            <div class="content-box1">
                 <div class="title">
                     <asp:label ID="ph1" runat="server" Text="Oprávnění aplikační role" />
                     
@@ -64,7 +48,39 @@
                     <asp:CheckBoxList ID="x53ids" runat="server" DataValueField="pid" DataTextField="x53Name" RepeatColumns="1" CellPadding="8" CellSpacing="2"></asp:CheckBoxList>
                 </div>
             </div>
-            
+            <div class="content-box1">
+                <div class="title">Přístupné moduly (odkazy hlavního menu)</div>
+                <div class="content">
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Worksheet" runat="server" Text="[WORKSHEET]" Checked="true" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Project" runat="server" Text="[PROJEKTY]" Checked="true" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Contact" runat="server" Text="[KLIENTI]" Checked="true" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_People" runat="server" Text="[LIDÉ]" Checked="false" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Report" runat="server" Text="[TISKOVÉ SESTAVY | PLUGINY]" Checked="true" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Invoice" runat="server" Text="[FAKTURY]" Checked="false" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Proforma" runat="server" Text="[ZÁLOHOVÉ FAKTURY]" Checked="false" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Notepad" runat="server" Text="[DOKUMENTY]" Checked="true" CssClass="chk" />
+                    </div>
+                    <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_MyProfile" runat="server" Text="[MůJ PROFIL]" Checked="true" CssClass="chk" />
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
         </telerik:RadPageView>
         <telerik:RadPageView ID="page2" runat="server">
             <table cellpadding="5" cellspacing="2">

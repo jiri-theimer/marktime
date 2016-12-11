@@ -14,6 +14,60 @@ Option Explicit On
 Partial Public Class j62_record
 
     '''<summary>
+    '''j60Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j60Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''hidJ60ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidJ60ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''lblX29ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblX29ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x29ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x29ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''lblParentID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblParentID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j62ParentID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j62ParentID As Global.UI.datacombo
+
+    '''<summary>
     '''lblName control.
     '''</summary>
     '''<remarks>
@@ -86,24 +140,6 @@ Partial Public Class j62_record
     Protected WithEvents tabLink As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
-    '''j60Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j60Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''hidJ60ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ60ID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''lblUrl control.
     '''</summary>
     '''<remarks>
@@ -138,42 +174,6 @@ Partial Public Class j62_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j62Tag As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''lblX29ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblX29ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x29ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x29ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''lblParentID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblParentID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j62ParentID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j62ParentID As Global.UI.datacombo
 
     '''<summary>
     '''lblTarget control.
@@ -264,6 +264,15 @@ Partial Public Class j62_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j62GridGroupBy As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''panPerm control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPerm As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''ph1 control.

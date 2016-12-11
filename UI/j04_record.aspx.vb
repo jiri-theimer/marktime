@@ -16,6 +16,7 @@
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Aplikační role"
                 Me.j60ID.DataSource = .Factory.j62MenuHomeBL.GetList_J60()
+                Me.j60ID.DataBind()
             End With
 
             SetupPersonalPageCombo()
@@ -77,6 +78,7 @@
             Me.j04IsMenu_People.Checked = .j04IsMenu_People
             Me.j04IsMenu_Report.Checked = .j04IsMenu_Report
             Me.j04IsMenu_Invoice.Checked = .j04IsMenu_Invoice
+            Me.j04IsMenu_Proforma.Checked = .j04IsMenu_Proforma
             Me.j04IsMenu_Notepad.Checked = .j04IsMenu_Notepad
             Me.j04IsMenu_MyProfile.Checked = .j04IsMenu_MyProfile
 
@@ -126,6 +128,7 @@
                 .j04IsMenu_People = Me.j04IsMenu_People.Checked
                 .j04IsMenu_Report = Me.j04IsMenu_Report.Checked
                 .j04IsMenu_Invoice = Me.j04IsMenu_Invoice.Checked
+                .j04IsMenu_Proforma = Me.j04IsMenu_Proforma.Checked
                 .j04IsMenu_Notepad = Me.j04IsMenu_Notepad.Checked
                 .j04IsMenu_MyProfile = Me.j04IsMenu_MyProfile.Checked
 

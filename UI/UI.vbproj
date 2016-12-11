@@ -205,6 +205,7 @@
     <Content Include="invoice.ascx" />
     <Content Include="j02_framework.aspx" />
     <Content Include="j03_accesslog.aspx" />
+    <Content Include="j60_record.aspx" />
     <Content Include="j61_record.aspx" />
     <Content Include="j62_record.aspx" />
     <Content Include="log_app_update.aspx" />
@@ -886,6 +887,13 @@
     </Compile>
     <Compile Include="j03_accesslog.aspx.vb">
       <DependentUpon>j03_accesslog.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j60_record.aspx.designer.vb">
+      <DependentUpon>j60_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j60_record.aspx.vb">
+      <DependentUpon>j60_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j61_record.aspx.designer.vb">

@@ -77,6 +77,42 @@ Partial Public Class j04_record
     Protected WithEvents j60ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''ph1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdUnCheckAll control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdUnCheckAll As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdCheckAll control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCheckAll As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''x53ids control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x53ids As Global.System.Web.UI.WebControls.CheckBoxList
+
+    '''<summary>
     '''j04IsMenu_Worksheet control.
     '''</summary>
     '''<remarks>
@@ -156,42 +192,6 @@ Partial Public Class j04_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j04IsMenu_MyProfile As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''ph1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdUnCheckAll control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdUnCheckAll As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdCheckAll control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCheckAll As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''x53ids control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x53ids As Global.System.Web.UI.WebControls.CheckBoxList
 
     '''<summary>
     '''page2 control.

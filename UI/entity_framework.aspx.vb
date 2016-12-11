@@ -139,7 +139,6 @@ Public Class entity_framework
             If Me.CurrentJ62ID <> 0 Then
                 _curJ62 = Master.Factory.j62MenuHomeBL.Load(Me.CurrentJ62ID)
                 If _curJ62 Is Nothing Then Master.StopPage("j62 record not found")
-                Me.j62Name.Text = _curJ62.j62Name
             Else
                 Master.SiteMenuValue = Me.CurrentPrefix
             End If
@@ -254,23 +253,13 @@ Public Class entity_framework
     End Sub
 
     Private Sub SetupJ70Combo(intDef As Integer)
-        If Not _curJ62 Is Nothing Then
-            If _curJ62.j70ID <> 0 Then
-                Me.j70ID.Items.Add(New ListItem("", _curJ62.j70ID.ToString))
-                Me.j70ID.Visible = False : cmdQuery.Visible = False
-                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & _curJ62.j70ID.ToString
-                Return
-            End If
-        End If
         If Me.CurrentMasterPID > 0 Then
             Me.j70ID.Visible = False : cmdQuery.Visible = False : Me.clue_query.Visible = False
-            With Me.j62Name
+            With Me.MasterEntity
+                .Visible = True
                 .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
-                .CssClass = ""
                 .Text = "<a href='" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString & "'>" & .Text & "</a>"
             End With
-
-
             Return 'pokud se zobrazuje přehled v rámci nadřazeného záznam, pak se nefiltruje
         End If
 
@@ -278,6 +267,16 @@ Public Class entity_framework
         j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID)
         j70ID.DataBind()
         j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
+        If Not _curJ62 Is Nothing Then
+            If _curJ62.j70ID <> 0 Then
+                intDef = _curJ62.j70ID
+                If Me.j70ID.Items.FindByValue(intDef.ToString) Is Nothing Then
+                    Dim c As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(intDef)
+                    Me.j70ID.Items.Add(New ListItem(c.j70Name, intDef.ToString))
+                End If
+            End If
+        End If
+
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
         With Me.j70ID
             If .SelectedIndex > 0 Then
@@ -974,6 +973,7 @@ Public Class entity_framework
    
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Me.CurrentJ62ID = 0
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "-j70id", Me.CurrentJ70ID.ToString)
         ReloadPage()
     End Sub

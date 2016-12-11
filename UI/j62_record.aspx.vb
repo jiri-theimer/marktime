@@ -33,7 +33,11 @@
                 If Me.CurrentJ60ID = 0 Then
                     .StopPage("j60id is missing.")
                 Else
-                    Me.j60Name.Text = .Factory.j62MenuHomeBL.GetList_J60().Where(Function(p) p.PID = Me.CurrentJ60ID)(0).j60Name
+                    Dim cJ60 As BO.j60MenuTemplate = .Factory.j62MenuHomeBL.Load_j60(Me.CurrentJ60ID)
+                    Me.j60Name.Text = cJ60.j60Name
+                    If cJ60.j60IsSystem And BO.ASS.GetConfigVal("Guru") <> "1" Then
+                        .StopPage("Systémové menu nelze upravovat.")
+                    End If
                 End If
 
                 Me.j62ParentID.DataSource = .Factory.j62MenuHomeBL.GetList(Me.CurrentJ60ID, New BO.myQuery).Where(Function(p) p.PID <> .DataPID)
@@ -155,7 +159,7 @@
             Next
             Me.cbxUrls.SelectedIndex = 0
         End If
-
+        SetupQueryAndColumns()
     End Sub
 
     

@@ -4,6 +4,7 @@ Public Class p31_grid
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
     Private Property _curJ74 As BO.j74SavedGridColTemplate
+    Private Property _curJ62 As BO.j62MenuHome
     Private Property _needFilterIsChanged As Boolean = False
     Private Property _curIsExport As Boolean
 
@@ -35,6 +36,15 @@ Public Class p31_grid
             hidMasterPID.Value = value.ToString
         End Set
     End Property
+    Public Property CurrentJ62ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidJ62ID.Value)
+        End Get
+        Set(value As Integer)
+            hidJ62ID.Value = value.ToString
+            Master.SiteMenuValue = "hm" & value.ToString
+        End Set
+    End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
@@ -46,8 +56,7 @@ Public Class p31_grid
             End If
             Me.hidMasterTabAutoQueryFlag.Value = Request.Item("p31tabautoquery")
             With Master
-                .PageTitle = "Worksheet datový přehled"
-                .SiteMenuValue = "p31_grid"
+                .PageTitle = "WORKSHEET datový přehled"
 
                 Dim lisPars As New List(Of String)
                 With lisPars
@@ -79,6 +88,14 @@ Public Class p31_grid
                 ''End If
             End With
 
+            Me.CurrentJ62ID = BO.BAS.IsNullInt(Request.Item("j62id"))
+            If Me.CurrentJ62ID <> 0 Then
+                _curJ62 = Master.Factory.j62MenuHomeBL.Load(Me.CurrentJ62ID)
+                If _curJ62 Is Nothing Then Master.StopPage("j62 record not found")
+            Else
+                Master.SiteMenuValue = "p31_grid"
+            End If
+
             With Master.Factory.j03UserBL
                 Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_grid-groups-autoexpanded", "1"))
                 SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
@@ -93,6 +110,7 @@ Public Class p31_grid
                 SetupGrid(.GetUserParam("p31_grid-filter_setting"), .GetUserParam("p31_grid-filter_sql"), .GetUserParam("p31_grid-sort"))
 
             End With
+            
 
             RecalcVirtualRowCount()
             Handle_Permissions()
@@ -111,6 +129,15 @@ Public Class p31_grid
         j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p31Worksheet)
         j70ID.DataBind()
         j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
+        If Not _curJ62 Is Nothing Then
+            If _curJ62.j70ID <> 0 Then
+                intDef = _curJ62.j70ID
+                If Me.j70ID.Items.FindByValue(intDef.ToString) Is Nothing Then
+                    Dim c As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(intDef)
+                    Me.j70ID.Items.Add(New ListItem(c.j70Name, intDef.ToString))
+                End If
+            End If
+        End If
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
         With Me.j70ID
             If .SelectedIndex > 0 Then
@@ -131,6 +158,18 @@ Public Class p31_grid
     End Property
 
     Private Sub SetupJ74Combo(intDef As Integer)
+        If Not _curJ62 Is Nothing Then
+            If _curJ62.j74ID <> 0 Then
+                intDef = _curJ62.j74ID
+                _curJ74 = Master.Factory.j74SavedGridColTemplateBL.Load(intDef)
+                j74id.Items.Clear()
+                Me.j74id.Items.Add(New ListItem(_curJ74.j74Name, intDef.ToString))
+                Me.j74id.Enabled = False
+                If _curJ62.j62GridGroupBy <> "" Then basUI.SelectDropdownlistValue(Me.cbxGroupBy, _curJ62.j62GridGroupBy)
+                Return
+            End If
+        End If
+
         Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = "" Or p.j74MasterPrefix = "p31_grid")
         If lisJ74.Count = 0 Then
             'uživatel zatím nemá žádnou šablonu - založit první j74IsSystem=1
@@ -146,7 +185,7 @@ Public Class p31_grid
         If Me.CurrentJ74ID > 0 Then
             _curJ74 = lisJ74.Where(Function(p) p.PID = Me.CurrentJ74ID)(0)
         End If
-        
+
 
     End Sub
 
@@ -419,12 +458,18 @@ Public Class p31_grid
 
 
     Private Sub ReloadPage()
-        If Me.CurrentMasterPID = 0 Then
-            Response.Redirect("p31_grid.aspx")
-        Else
-            Response.Redirect("p31_grid.aspx?masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString)
+        Dim s As String = ""
+        If Me.CurrentMasterPID <> 0 Then
+            s += "masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString
         End If
-
+        If Me.CurrentJ62ID > 0 Then
+            If s = "" Then
+                s = "j62id=" & Me.CurrentJ62ID.ToString
+            Else
+                s += "&j62id=" & Me.CurrentJ62ID.ToString
+            End If
+        End If
+        Response.Redirect(basUI.AddQuerystring2Page("p31_grid.aspx", s))
     End Sub
 
     Private Sub p31_grid_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -497,6 +542,7 @@ Public Class p31_grid
     End Sub
 
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
+        Me.CurrentJ62ID = 0
         Master.Factory.j03UserBL.SetUserParam("p31_grid-groupby", Me.cbxGroupBy.SelectedValue)
         ReloadPage()
 
@@ -506,6 +552,7 @@ Public Class p31_grid
         ''grid1.Rebind(True)
     End Sub
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Me.CurrentJ62ID = 0
         Master.Factory.j03UserBL.SetUserParam("p31-j70id", Me.CurrentJ70ID.ToString)
         ReloadPage()
     End Sub

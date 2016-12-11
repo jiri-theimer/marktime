@@ -22,7 +22,7 @@ Public Class admin_menu
                
             End With
 
-            Me.cbxJ60ID.DataSource = Master.Factory.j62MenuHomeBL.GetList_J60()
+            Me.cbxJ60ID.DataSource = Master.Factory.j62MenuHomeBL.GetList_J60().OrderByDescending(Function(p) p.PID)
             Me.cbxJ60ID.DataBind()
 
             Me.CurrentJ60ID = BO.BAS.IsNullInt(Request.Item("j60id"))
@@ -40,16 +40,26 @@ Public Class admin_menu
     End Sub
 
     Private Sub RefreshTree()
-        
-        Dim lis As IEnumerable(Of BO.j62MenuHome) = Master.Factory.j62MenuHomeBL.GetList(Me.CurrentJ60ID, New BO.myQuery)
+        Dim mq As New BO.myQuery
+        mq.Closed = BO.BooleanQueryMode.NoQuery
+        Dim lis As IEnumerable(Of BO.j62MenuHome) = Master.Factory.j62MenuHomeBL.GetList(Me.CurrentJ60ID, mq)
 
         With tree1
             .Clear()
             For Each c In lis
                 Dim strParentID As String = ""
                 If c.j62ParentID <> 0 Then strParentID = c.j62ParentID.ToString
-
-                .AddItem(c.j62Name, c.PID.ToString, "javascript:rec(" & c.PID.ToString & ")", strParentID, c.j62ImageUrl, c.j62Name_ENG)
+                Dim n As New RadTreeNode(c.j62Name)
+                n.ImageUrl = c.j62ImageUrl
+                n.NavigateUrl = "javascript:rec(" & c.PID.ToString & ")"
+                n.Value = c.PID.ToString
+                If c.IsClosed Then n.Font.Strikeout = True
+                If c.j62Ordinary <> 0 Then
+                    n.Text += " #" & c.j62Ordinary.ToString
+                End If
+                n.ToolTip = c.j62Tag & " | " & c.j62Url
+                .AddItem(n, strParentID)
+                ''.AddItem(c.j62Name, c.PID.ToString, "javascript:rec(" & c.PID.ToString & ")", strParentID, c.j62ImageUrl, c.j62Name_ENG)
 
               
 
@@ -61,10 +71,16 @@ Public Class admin_menu
     End Sub
 
     Private Sub cmdRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdRefreshOnBehind.Click
-        Me.cbxJ60ID.DataSource = Master.Factory.j62MenuHomeBL.GetList_J60()
+        Dim x As Integer = Me.CurrentJ60ID
+        Me.cbxJ60ID.DataSource = Master.Factory.j62MenuHomeBL.GetList_J60().OrderByDescending(Function(p) p.PID)
         Me.cbxJ60ID.DataBind()
+        Me.CurrentJ60ID = x
 
         RefreshRecord()
 
+    End Sub
+
+    Private Sub cbxJ60ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxJ60ID.SelectedIndexChanged
+        RefreshRecord()
     End Sub
 End Class

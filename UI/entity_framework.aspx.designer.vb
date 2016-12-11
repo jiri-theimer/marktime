@@ -59,13 +59,13 @@ Partial Public Class entity_framework
     Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''j62Name control.
+    '''MasterEntity control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j62Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''j70ID control.

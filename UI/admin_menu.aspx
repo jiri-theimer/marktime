@@ -33,6 +33,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
+        <span class="lbl">MENU šablona:</span>
         <asp:DropDownList ID="cbxJ60ID" DataTextField="j60Name" DataValueField="pid" runat="server" AutoPostBack="true" Style="min-width: 200px;"></asp:DropDownList>
         <button type="button" onclick="rec(0)">Nová menu položka</button>
         <button type="button" onclick="header()">Hlavička menu</button>
