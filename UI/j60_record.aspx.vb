@@ -14,9 +14,7 @@
                 .HeaderIcon = "Images/workflow_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "MENU šablona"
-                If BO.ASS.GetConfigVal("Guru") <> "1" Then
-                    .StopPage("Systémové menu nelze upravovat.")
-                End If
+               
             End With
 
             RefreshRecord()
@@ -40,6 +38,12 @@
 
         Dim cRec As BO.j60MenuTemplate = Master.Factory.j62MenuHomeBL.Load_j60(Master.DataPID)
         If cRec Is Nothing Then Master.StopPage("record is missing.")
+        If cRec.j60IsSystem And Not Master.IsRecordClone Then
+            If BO.ASS.GetConfigVal("Guru") <> "1" Then
+                Master.StopPage("Systémové menu nelze upravovat.")
+            End If
+        End If
+        
 
 
         With cRec

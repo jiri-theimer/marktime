@@ -3842,11 +3842,11 @@ CREATE   procedure [dbo].[j03user_load_sysuser]
 AS
 
 declare @j03id int,@j02id int,@j04id int,@personal_page varchar(200),@personal_page_mobile varchar(200)
-declare @j03Cache_TimeStamp datetime,@j03Cache_MessagesCount int,@j03Cache_IsApprovingPerson bit,@j03Cache_j11IDs varchar(200),@j03Cache_HomeMenu varchar(50)
+declare @j03Cache_TimeStamp datetime,@j03Cache_MessagesCount int,@j03Cache_IsApprovingPerson bit,@j03Cache_j11IDs varchar(200),@j60id int
 
 select @j03id=a.j03ID,@j02id=a.j02ID,@j04id=a.j04id,@personal_page=b.j04Aspx_PersonalPage,@personal_page_mobile=b.j04Aspx_PersonalPage_Mobile
 ,@j03Cache_TimeStamp=isnull(a.j03Cache_TimeStamp,convert(datetime,'01.01.2000',104)),@j03Cache_MessagesCount=isnull(a.j03Cache_MessagesCount,0),@j03Cache_IsApprovingPerson=a.j03Cache_IsApprovingPerson
-,@j03Cache_j11IDs=a.j03Cache_j11IDs,@j03Cache_HomeMenu=j03Cache_HomeMenu
+,@j03Cache_j11IDs=a.j03Cache_j11IDs,@j60id=b.j60ID
 FROM j03user a INNER JOIN j04UserRole b on a.j04ID=b.j04ID
 WHERE a.j03Login=@login
 
@@ -3854,13 +3854,14 @@ if datediff(minute,@j03Cache_TimeStamp,getdate())>5
  begin
 	exec dbo.j03_recovery_cache @j03id,@j02id
 
-	select @j03Cache_MessagesCount=j03Cache_MessagesCount,@j03Cache_IsApprovingPerson=j03Cache_IsApprovingPerson,@j03Cache_j11IDs=j03Cache_j11IDs,@j03Cache_HomeMenu=j03Cache_HomeMenu
+	select @j03Cache_MessagesCount=j03Cache_MessagesCount,@j03Cache_IsApprovingPerson=j03Cache_IsApprovingPerson,@j03Cache_j11IDs=j03Cache_j11IDs
 	FROM j03User WHERE j03ID=@j03id
 
 	---insert into j90LoginAccessLog(j03ID,j90Date) values(@j03id,getdate())
  end
 
-
+if @j60id is null
+ select @j60id=j60ID FROM j60MenuTemplate WHERE j60IsSystem=1
 
 declare @is_master bit
 set @is_master=0
@@ -3874,11 +3875,11 @@ select a.*,a.j03id as _pid
 ,a.j03validfrom as _validfrom,a.j03validuntil as _validuntil,a.j03IsLiveChatSupport,a.j03SiteMenuSkin,a.j03IsSiteMenuOnClick
 ,x67.x67RoleValue as _RoleValue
 ,j02.j02Email as _j02Email,@j03Cache_IsApprovingPerson as _IsApprovingPerson,@is_master as _IsMasterPerson,@j03Cache_MessagesCount as j03Cache_MessagesCount
-,@j03Cache_MessagesCount as _MessagesCount,@j03Cache_j11IDs as _j11IDs,@j03Cache_HomeMenu as HomeMenu
+,@j03Cache_MessagesCount as _MessagesCount,@j03Cache_j11IDs as _j11IDs
 ,case when a.j03Aspx_PersonalPage IS NULL THEN @personal_page ELSE a.j03Aspx_PersonalPage END as _PersonalPage
-,j04.j04IsMenu_Worksheet,j04.j04IsMenu_Report,j04.j04IsMenu_Project,j04.j04IsMenu_People,j04.j04IsMenu_Contact,j04.j04IsMenu_Invoice,j04.j04IsMenu_Proforma,j04.j04IsMenu_MyProfile,j04.j04IsMenu_More
+,j04.j04IsMenu_Worksheet,j04.j04IsMenu_Report,j04.j04IsMenu_Project,j04.j04IsMenu_People,j04.j04IsMenu_Contact,j04.j04IsMenu_Invoice,j04.j04IsMenu_Proforma,j04.j04IsMenu_Notepad,j04IsMenu_MyProfile
 ,j04.j04Aspx_OneProjectPage as OneProjectPage,j04.j04Aspx_OneContactPage as OneContactPage,j04.j04Aspx_OneInvoicePage as OneInvoicePage,j04.j04Aspx_OnePersonPage as OnePersonPage
-,j02.j07ID
+,j02.j07ID,@j60id as j60ID
 FROM j03user a INNER JOIN j04userrole j04 on a.j04id=j04.j04id LEFT OUTER JOIN j02Person j02 ON a.j02id=j02.j02id
 INNER JOIN x67EntityRole x67 ON j04.x67ID=x67.x67ID
 WHERE a.j03ID=@j03id
@@ -4497,6 +4498,139 @@ END CATCH
 
 GO
 
+----------P---------------j60_clone-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j60_clone') and type = 'P')
+ drop procedure j60_clone
+GO
+
+
+
+
+
+CREATE    PROCEDURE [dbo].[j60_clone]
+@j03id_sys int
+,@j60id_orig int
+,@j60id_dest int
+
+AS
+
+declare @j62id int,@login varchar(50),@j62id_new int,@parentid_orig int,@uid varchar(50),@parentid_new int
+
+select @login=j03Login FROM j03User where j03ID=@j03id_sys
+
+DECLARE curCR CURSOR FOR 
+SELECT j62ID FROM j62MenuHome WHERE j60ID=@j60id_orig ORDER BY j62TreeIndex,j62Ordinary,j62Name
+
+OPEN curCR
+FETCH NEXT FROM curCR 
+INTO @j62id
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  set @uid=convert(varchar(10),@j62id)
+
+  select @parentid_orig=j62ParentID FROM j62MenuHome WHERE j62ID=@j62id
+   
+  insert into j62MenuHome(j62UserUpdate,j60ID,x29ID,j62Name,j62Name_ENG,j74ID,j70ID,x31ID,j62URL,j62Target,j62Ordinary,j62GridGroupBy,j62ImageUrl,j62IsSeparator,j62TreeIndex,j62TreeLevel,j62TreePrev,j62TreeNext,j62DateInsert,j62UserInsert,j62DateUpdate,j62ValidFrom,j62ValidUntil,j62Tag)
+  select @uid,@j60id_dest,x29ID,j62Name,j62Name_ENG,j74ID,j70ID,x31ID,j62URL,j62Target,j62Ordinary,j62GridGroupBy,j62ImageUrl,j62IsSeparator,j62TreeIndex,j62TreeLevel,j62TreePrev,j62TreeNext,getdate(),@login,getdate(),j62ValidFrom,j62ValidUntil,j62Tag
+  FROM
+  j62MenuHome
+  WHERE j62ID=@j62id
+
+  SELECT @j62id_new=@@IDENTITY
+
+  if @parentid_orig is not null
+   begin
+     select @parentid_new=j62ID FROM j62MenuHome WHERE j62UserUpdate=convert(varchar(10),@parentid_orig) AND j60ID=@j60id_dest
+
+	 update j62MenuHome set j62ParentID=@parentid_new,j62UserUpdate=@login WHERE j62ID=@j62id_new
+
+   end    
+
+  FETCH NEXT FROM curCR 
+  INTO @j62id
+END
+CLOSE curCR
+DEALLOCATE curCR
+	
+	
+	
+	
+	
+	
+	
+	
+ 
+ 
+
+
+
+
+
+GO
+
+----------P---------------j60_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j60_delete') and type = 'P')
+ drop procedure j60_delete
+GO
+
+
+
+
+CREATE   procedure [dbo].[j60_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--j60ID
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní šablony hlavního aplikaèního menu
+
+if exists(select j04ID FROM j04UserRole WHERE j60ID=@pid)
+ set @err_ret='K menu šablonì má vazbu minimálnì jedna aplikaèní role.'
+
+if exists(select j60ID FROM j60MenuTemplate WHERE j60ID=@pid AND j60IsSystem=1)
+ set @err_ret='Výchozí (system) menu šablonu nelze odstranit ani upravovat.' 
+
+if isnull(@err_ret,'')<>''
+ return 
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+
+	delete from j62MenuHome WHERE j60ID=@pid
+	
+	delete from j60MenuTemplate where j60ID=@pid
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------j61_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('j61_delete') and type = 'P')
@@ -4569,6 +4703,8 @@ CREATE   procedure [dbo].[j62_delete]
 AS
 --odstranìní záznamu položky HOME menu z tabulky j62MenuHome
 
+if exists(select j62ID FROM j62MenuHome WHERE j62ParentID=@pid)
+ set @err_ret='Tato položka má pod sebou minimálnì jednu podøízenou položku.'
 
 if isnull(@err_ret,'')<>''
  return 

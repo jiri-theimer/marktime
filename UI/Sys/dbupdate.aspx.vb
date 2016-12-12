@@ -2,9 +2,14 @@
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
 
+    Private Sub dbupdate_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _MasterPage = Me.Master
+    End Sub
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        _MasterPage = Me.Master
+        Master.NoMenu = True
+
         If Not Page.IsPostBack Then
             Dim cF As New BO.clsFile
             lblLastSpLog.Text = "Naposledy provedená SP aktualizace: " & cF.GetFileContents(Master.Factory.x35GlobalParam.UploadFolder & "\sql_step2_sp.log")

@@ -3,9 +3,11 @@
     Protected WithEvents _MasterPage As ModalForm
     Private _lisP92 As IEnumerable(Of BO.p92InvoiceType)
     Private Class InvoiceEntity
+        Public Property PID As Integer
         Public Property p92ID As Integer
         Public Property Name As String
-        Public Sub New(strName As String, intP92ID As Integer)
+        Public Sub New(intPID As Integer, strName As String, intP92ID As Integer)
+            Me.PID = intPID
             Me.Name = strName
             Me.p92ID = intP92ID
         End Sub
@@ -169,17 +171,21 @@
                     If intP92ID = 0 Then
                         Dim intP28ID As Integer = c.p28ID_Billing
                         If intP28ID = 0 Then intP28ID = c.p28ID_Client
+                        If intP28ID = 0 Then
+                            Master.StopPage("Na vstupu je minimálně jeden projekt bez vazby na klienta.")
+                        End If
+
                         Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(intP28ID)
                         intP92ID = cP28.p92ID
                     End If
-                    lis1.Add(New InvoiceEntity(c.Client & " - " & c.PrefferedName, intP92ID))
+                    lis1.Add(New InvoiceEntity(c.PID, c.Client & " - " & c.PrefferedName, intP92ID))
                 Next
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28
                 mq.PIDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
                 Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq)
                 For Each c In lis
-                    lis1.Add(New InvoiceEntity(c.p28Name, c.p92ID))
+                    lis1.Add(New InvoiceEntity(c.PID, c.p28Name, c.p92ID))
                 Next
             Case Else
                 Return
@@ -206,6 +212,8 @@
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "save" Then
+            Dim errs As New List(Of String), x As Integer = 0, intLastP91ID As Integer = 0
+
             Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates", BO.BAS.GB(Me.chkRememberDates.Checked))
             Master.Factory.j03UserBL.SetUserParam("p91_create-remembermaturity", BO.BAS.GB(Me.chkRememberMaturiy.Checked))
             If Me.chkRememberDates.Checked Or Me.chkRememberMaturiy.Checked Then
@@ -215,6 +223,8 @@
             For Each ri As RepeaterItem In rp1.Items
                 Dim intPID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("pid"), HiddenField).Value)
                 Dim intP92ID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("p92ID"), DropDownList).SelectedValue)
+                Dim strRecord As String = CType(ri.FindControl("Entity"), Label).Text
+                Dim strP91Text1 As String = ""
 
                 Dim intP28ID As Integer
                 Dim mqP31 As New BO.myQueryP31
@@ -228,43 +238,59 @@
                     Dim c As BO.p41Project = Master.Factory.p41ProjectBL.Load(intPID)
                     intP28ID = c.p28ID_Billing
                     If intP28ID = 0 Then intP28ID = c.p28ID_Client
-
+                    strP91Text1 = c.p41InvoiceDefaultText1
+                    If strP91Text1 = "" And c.p28ID_Client <> 0 Then
+                        Dim cc As BO.p28Contact = Master.Factory.p28ContactBL.Load(c.p28ID_Client)
+                        strP91Text1 = cc.p28InvoiceDefaultText1
+                    End If
                 End If
                 If Me.CurrentX29ID = BO.x29IdEnum.p28Contact Then
                     mqP31.p28ID_Client = intPID
                     intP28ID = intPID
                     Dim c As BO.p28Contact = Master.Factory.p28ContactBL.Load(intPID)
-
+                    strP91Text1 = c.p28InvoiceDefaultText1
                 End If
                 Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mqP31)
                 Dim strGUID As String = BO.BAS.GetGUID
                 For Each c In lisP31.Where(Function(p) p.p71ID = BO.p71IdENUM.Nic)
                     Dim cA As New BO.p31WorksheetApproveInput(c.PID, c.p33ID)
+                    cA.p31Date = c.p31Date
                     cA.p71id = BO.p71IdENUM.Schvaleno
-                    If c.p31Rate_Billing_Orig = 0 Then
+                    cA.VatRate_Approved = c.p31VatRate_Orig
+                    If c.p33ID = BO.p33IdENUM.Cas Then
+                        cA.Rate_Internal_Approved = c.p31Rate_Internal_Orig
+                    End If
+                    If c.p31Rate_Billing_Orig = 0 Or c.p31Value_Orig = 0 Then
                         cA.p72id = BO.p72IdENUM.ZahrnoutDoPausalu
                         cA.Value_Approved_Billing = 0
                     Else
                         cA.p72id = BO.p72IdENUM.Fakturovat
+                        cA.Rate_Billing_Approved = c.p31Rate_Billing_Orig
                         cA.Value_Approved_Billing = c.p31Value_Orig
-                        cA.VatRate_Approved = c.p31VatRate_Orig
+                    End If
+                    If Not Master.Factory.p31WorksheetBL.Save_Approving(cA, False) Then
+                        errs.Add(strRecord & "(" & BO.BAS.FD(c.p31Date) & "/" & c.Person & "): " & Master.Factory.p31WorksheetBL.ErrorMessage)
                     End If
 
-                    Master.Factory.p31WorksheetBL.Save_Approving(cA, False)
                 Next
+                mqP31.QuickQuery = BO.myQueryP31_QuickQuery.Approved
+                lisP31 = Master.Factory.p31WorksheetBL.GetList(mqP31)
                 For Each c In lisP31.Where(Function(p) p.p71ID = BO.p71IdENUM.Schvaleno)
                     Dim cTMP As New BO.p85TempBox
                     cTMP.p85GUID = strGUID
                     cTMP.p85DataPID = c.PID
+                    cTMP.p85Prefix = "p31"
                     Master.Factory.p85TempBoxBL.Save(cTMP)
                 Next
+                If strP91Text1 = "" Or chkUseBillingSetting.Checked = False Then strP91Text1 = Me.p91text1.Text
                 Dim cRec As New BO.p91Create
                 With cRec
                     .p28ID = intP28ID
                     .IsDraft = True
                     .TempGUID = strGUID
                     .p92ID = BO.BAS.IsNullInt(Me.p92ID.SelectedValue)
-                    .InvoiceText1 = Me.p91text1.Text
+
+                    .InvoiceText1 = strP91Text1
                     .DateIssue = Me.p91Date.SelectedDate
                     .DateMaturity = Me.p91DateMaturity.SelectedDate
                     .DateSupply = Me.p91DateSupply.SelectedDate
@@ -272,18 +298,24 @@
                     .DateP31_Until = Me.p91Datep31_Until.SelectedDate
                 End With
                 Dim intP91ID As Integer = Master.Factory.p91InvoiceBL.Create(cRec)
-                If intP91ID <> 0 Then
-
+                If intP91ID = 0 Then
+                    errs.Add(strRecord & ": " & Master.Factory.p91InvoiceBL.ErrorMessage)                
+                Else
+                    x += 1
+                    intLastP91ID = intP91ID
                 End If
             Next
+            If errs.Count > 0 Then
+                Me.Errors.Text = String.Join("<hr>", errs)
+            End If
+            If errs.Count > 0 Or x = 0 Then
+                Master.Notify(String.Format("Počet vygenerovaných DRAFT faktur: {0}, počet chyb: {1}.", x, errs.Count), NotifyLevel.InfoMessage)
+                Master.HideShowToolbarButton("save", False)
+            Else
+                ClientScript.RegisterStartupScript(Me.GetType, "hash", "window.parent.window.open('p91_framework.aspx?pid=" & intLastP91ID.ToString & "','_top');", True)
+            End If
             
-            ''Dim intP91ID As Integer = Master.Factory.p91InvoiceBL.Create(cRec)
-            'If intP91ID <> 0 Then
-
-
-            'Else
-            '    Master.Notify(Master.Factory.p91InvoiceBL.ErrorMessage, NotifyLevel.ErrorMessage)
-            'End If
+                
 
 
         End If
@@ -297,6 +329,8 @@
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As InvoiceEntity = CType(e.Item.DataItem, InvoiceEntity)
         CType(e.Item.FindControl("Entity"), Label).Text = cRec.Name
+        CType(e.Item.FindControl("pid"), HiddenField).Value = cRec.PID.ToString
+
         With CType(e.Item.FindControl("p92ID"), DropDownList)
             .DataSource = _lisP92
             .DataBind()
