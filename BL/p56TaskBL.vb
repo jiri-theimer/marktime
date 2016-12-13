@@ -102,9 +102,9 @@ Class p56TaskBL
                 If cP57.b01ID > 0 Then
                     InhaleDefaultWorkflowMove(_LastSavedPID, cP57.b01ID)    'je třeba nahodit výchozí workflow stav
                 End If
-                Me.RaiseAppEvent(BO.x45IDEnum.p56_new, _LastSavedPID)
+                Me.RaiseAppEvent(BO.x45IDEnum.p56_new, _LastSavedPID, , , cRec.p56IsNoNotify)
             Else
-                Me.RaiseAppEvent(BO.x45IDEnum.p56_update, _LastSavedPID)
+                Me.RaiseAppEvent(BO.x45IDEnum.p56_update, _LastSavedPID, , , cRec.p56IsNoNotify)
             End If
             Return True
         Else

@@ -49,6 +49,7 @@ Public Class p41Project
 
     Public Property p41LimitHours_Notification As Double
     Public Property p41LimitFee_Notification As Double
+    Public Property p41IsNoNotify As Boolean
 
     Private Property _Owner As String
     Private Property _p42name As String

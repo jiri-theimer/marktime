@@ -608,6 +608,15 @@ Partial Public Class p41_record
     Protected WithEvents p41WorksheetOperFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''p41IsNoNotify control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41IsNoNotify As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''lblp41RobotAddress control.
     '''</summary>
     '''<remarks>

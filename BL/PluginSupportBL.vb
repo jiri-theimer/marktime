@@ -72,7 +72,8 @@ Class PluginSupportBL
     End Function
     
     Public Function MergeRecordSQL(strSQL As String, strTemplateContent As String) As String Implements IPluginSupportBL.MergeRecordSQL
-        Dim fields As List(Of String) = BO.BAS.GetAllMergeFieldsInContent(strTemplateContent)
+        Dim cM As New BO.clsMergeContent
+        Dim fields As List(Of String) = cM.GetAllMergeFieldsInContent(strTemplateContent)
         If fields.Count = 0 Then Return strTemplateContent
 
         Dim intRows As Integer = 0

@@ -68,6 +68,7 @@
         Dim cRecLast As BO.p56Task = Master.Factory.p56TaskBL.LoadMyLastCreated()
         If cRecLast Is Nothing Then Return
         With cRecLast
+            Me.p56IsNoNotify.Checked = .p56IsNoNotify
             Me.p57ID.SelectedValue = .p57ID.ToString
             roles1.InhaleInitialData(.PID)
         End With
@@ -96,6 +97,7 @@
             Handle_FF()
             SetupO22Combo()
             Me.o22ID.SelectedValue = .o22ID.ToString
+            Me.p56IsNoNotify.Checked = .p56IsNoNotify
 
             Me.p56Name.Text = .p56Name
             If Not BO.BAS.IsNullDBDate(.p56PlanFrom) Is Nothing Then Me.p56PlanFrom.SelectedDate = .p56PlanFrom
@@ -195,7 +197,7 @@
                 .p56PlanFrom = BO.BAS.IsNullDBDate(Me.p56PlanFrom.SelectedDate)
                 .p56PlanUntil = BO.BAS.IsNullDBDate(Me.p56PlanUntil.SelectedDate)
                 .p56ReminderDate = BO.BAS.IsNullDBDate(Me.p56ReminderDate.SelectedDate)
-
+                .p56IsNoNotify = Me.p56IsNoNotify.Checked
 
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
                 .p56Description = Me.p56Description.Text

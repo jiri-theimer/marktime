@@ -152,12 +152,12 @@ Class p41ProjectBL
                 If cP42.b01ID > 0 Then
                     InhaleDefaultWorkflowMove(_LastSavedPID, cP42.b01ID)    'je třeba nahodit výchozí workflow stav
                 End If
-                Me.RaiseAppEvent(BO.x45IDEnum.p41_new, _LastSavedPID)
+                Me.RaiseAppEvent(BO.x45IDEnum.p41_new, _LastSavedPID, , , cRec.p41IsNoNotify)
             Else
                 If cRec.b01ID > 0 And cRec.b02ID = 0 Then
                     InhaleDefaultWorkflowMove(cRec.PID, cRec.b01ID) 'chybí hodnota workflow stavu
                 End If
-                Me.RaiseAppEvent(BO.x45IDEnum.p41_update, _LastSavedPID)
+                Me.RaiseAppEvent(BO.x45IDEnum.p41_update, _LastSavedPID, , , cRec.p41IsNoNotify)
             End If
             Return True
         Else

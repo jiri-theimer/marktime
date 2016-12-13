@@ -18,6 +18,14 @@ Class b06WorkflowStepBL
     Inherits BLMother
     Implements Ib06WorkflowStepBL
     Private WithEvents _cDL As DL.b06WorkflowStepDL
+    Private Class MR
+        Public Property j02ID As Integer
+        Public Property j11ID As Integer
+        Public Sub New(intJ02ID As Integer, intJ11ID As Integer)
+            Me.j02ID = intJ02ID
+            Me.j11ID = intJ11ID
+        End Sub
+    End Class
 
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
@@ -178,32 +186,39 @@ Class b06WorkflowStepBL
             Next
             lisNominee = lisAll
         End If
-        Dim intCurB02ID As Integer = 0
+
+        Dim intCurB02ID As Integer = 0, bolStopAutoNotification As Boolean = False, intJ02ID_Owner As Integer = 0, intP41ID_Ref As Integer = 0
+
         Select Case x29id
             Case BO.x29IdEnum.p41Project
                 Dim cRec As BO.p41Project = Me.Factory.p41ProjectBL.Load(intRecordPID)
-                intCurB02ID = cRec.b02ID
+                intCurB02ID = cRec.b02ID : bolStopAutoNotification = cRec.p41IsNoNotify
+                intJ02ID_Owner = cRec.j02ID_Owner
                 If Not lisNominee Is Nothing Then
                     Me.Factory.p41ProjectBL.Save(cRec, Nothing, Nothing, lisNominee, Nothing)
                 End If
             Case BO.x29IdEnum.p56Task
                 Dim cRec As BO.p56Task = Me.Factory.p56TaskBL.Load(intRecordPID)
-                intCurB02ID = cRec.b02ID
+                intCurB02ID = cRec.b02ID : bolStopAutoNotification = cRec.p56IsNoNotify
+                intJ02ID_Owner = cRec.j02ID_Owner : intP41ID_Ref = cRec.p41ID
                 If Not lisNominee Is Nothing Then
                     Me.Factory.p56TaskBL.Save(cRec, lisNominee, Nothing, "")
                 End If
             Case BO.x29IdEnum.p91Invoice
                 Dim cRec As BO.p91Invoice = Me.Factory.p91InvoiceBL.Load(intRecordPID)
+                intJ02ID_Owner = cRec.j02ID_Owner : intP41ID_Ref = cRec.p41ID_First
                 intCurB02ID = cRec.b02ID
             Case BO.x29IdEnum.p28Contact
                 Dim cRec As BO.p28Contact = Me.Factory.p28ContactBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID
+                intJ02ID_Owner = cRec.j02ID_Owner
                 If Not lisNominee Is Nothing Then
                     Me.Factory.p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, lisNominee, Nothing, Nothing)
                 End If
             Case BO.x29IdEnum.o23Notepad
                 Dim cRec As BO.o23Notepad = Me.Factory.o23NotepadBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID
+                intJ02ID_Owner = cRec.j02ID_Owner : intP41ID_Ref = cRec.p41ID
                 If Not lisNominee Is Nothing Then
                     Me.Factory.o23NotepadBL.Save(cRec, "", lisNominee, Nothing)
                 End If
@@ -243,8 +258,105 @@ Class b06WorkflowStepBL
         End If
         _cDL.RunB09Commands(intRecordPID, x29id, cB06.PID)
 
+        If Not bolStopAutoNotification Then
+            'test případné mailové notifikace
+            Dim objects As New List(Of Object)
+            Select Case x29id
+                Case BO.x29IdEnum.p56Task
+                    objects.Add(Factory.p56TaskBL.Load(intRecordPID))
+                Case BO.x29IdEnum.p41Project
+                    objects.Add(Factory.p41ProjectBL.Load(intRecordPID))
+                Case BO.x29IdEnum.p28Contact
+                    objects.Add(Factory.p28ContactBL.Load(intRecordPID))
+                Case BO.x29IdEnum.p91Invoice
+                    objects.Add(Factory.p91InvoiceBL.Load(intRecordPID))
+                Case BO.x29IdEnum.o23Notepad
+                    objects.Add(Factory.o23NotepadBL.Load(intRecordPID))
+            End Select
+            If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
+
+            Handle_Notification(cB06, intRecordPID, x29id, intJ02ID_Owner, objects, intP41ID_Ref)
+        End If
         Return True
     End Function
+
+    Private Sub Handle_Notification(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, intJ02ID_Owner As Integer, objects As List(Of Object), intP41ID_Ref As Integer)
+        Dim lisB11 As IEnumerable(Of BO.b11WorkflowMessageToStep) = GetList_B11(cB06.PID)
+        If lisB11.Count = 0 Then Return 'ke kroku nejsou definovány notifikační události
+
+        Dim strLinkUrl As String = Factory.x35GlobalParam.GetValueString("AppHost") & "/" & BO.BAS.GetDataPrefix(x29id) & "_framework.aspx?pid=" & intRecordPID.ToString & "&force=detail"
+        Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Factory.x67EntityRoleBL.GetList_x69(x29id, intRecordPID)
+        Dim lisX69Ref As IEnumerable(Of BO.x69EntityRole_Assign) = Nothing
+        If intP41ID_Ref <> 0 Then
+            lisX69Ref = Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, intP41ID_Ref)
+        End If
+        For Each c In lisB11
+            Dim mrs As New List(Of MR)
+
+            If c.b11IsRecordOwner Then
+                mrs.Add(New MR(intJ02ID_Owner, 0))
+            End If
+            If c.x67ID <> 0 Then
+                If lisX69.Where(Function(p) p.x67ID = c.x67ID).Count > 0 Then
+                    Dim cRole As BO.x69EntityRole_Assign = lisX69.Where(Function(p) p.x67ID = c.x67ID)(0)
+                    mrs.Add(New MR(cRole.j02ID, cRole.j11ID))
+                End If
+                If Not lisX69Ref Is Nothing Then
+                    If lisX69Ref.Where(Function(p) p.x67ID = c.x67ID).Count > 0 Then
+                        Dim cRole As BO.x69EntityRole_Assign = lisX69Ref.Where(Function(p) p.x67ID = c.x67ID)(0)
+                        mrs.Add(New MR(cRole.j02ID, cRole.j11ID))
+                    End If
+                End If
+            End If
+            If c.j11ID > 0 Then
+                mrs.Add(New MR(0, c.j11ID))
+            End If
+            If c.j04ID <> 0 Then
+                Dim mq As New BO.myQueryJ03
+                mq.j04ID = c.j04ID
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                For Each cJ03 In Factory.j03UserBL.GetList(mq).Where(Function(p) p.j02ID <> 0)
+                    mrs.Add(New MR(cJ03.j02ID, 0))
+                Next
+            End If
+
+            If mrs.Count > 0 Then
+                Dim j02ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j02ID <> 0).Select(Function(p) p.j02ID).Distinct
+                Dim j11ids As IEnumerable(Of Integer) = mrs.Where(Function(p) p.j11ID <> 0).Select(Function(p) p.j11ID).Distinct
+                Dim lisReceivers As IEnumerable(Of BO.j02Person) = Factory.j02PersonBL.GetList_j02_join_j11(j02ids.ToList, j11ids.ToList).Where(Function(p) p.IsClosed = False)
+                If lisReceivers.Count > 0 Then
+                    Dim cMerge As New BO.clsMergeContent
+                    Dim cB65 As BO.b65WorkflowMessage = Factory.b65WorkflowMessageBL.Load(c.b65ID)
+                    Dim mes As New BO.smtpMessage
+                    mes.SenderAddress = Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
+                    mes.SenderName = "MARKTIME robot"
+
+                    mes.Body = cMerge.MergeContent(objects, cB65.b65MessageBody, strLinkUrl)
+                    If mes.Body.IndexOf("#RolesInline#") > 0 And x29id = BO.x29IdEnum.p56Task Then
+                        mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
+                    End If
+
+                    mes.Subject = cB65.b65MessageSubject
+                    If mes.Subject.IndexOf("[") > 0 Then mes.Subject = cMerge.MergeContent(objects, cB65.b65MessageSubject, strLinkUrl)
+
+                    For Each person In lisReceivers
+                        'pro každou osobu jedna zpráva
+                        Dim recipients As New List(Of BO.x43MailQueue_Recipient)
+                        Dim recipient As New BO.x43MailQueue_Recipient
+                        With recipient
+                            .x43Email = person.j02Email
+                            .x43DisplayName = person.FullNameAsc
+                            .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
+                        End With
+                        recipients.Add(recipient)
+                        Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, BO.x29IdEnum.j02Person, person.PID)
+                    Next
+
+                End If
+            End If
+        Next
+
+    End Sub
 
 
     Public Function GetPossibleWorkflowSteps4Person(strRecordPrefix As String, intRecordPID As Integer, intJ02ID As Integer) As List(Of BO.WorkflowStepPossible4User) Implements Ib06WorkflowStepBL.GetPossibleWorkflowSteps4Person

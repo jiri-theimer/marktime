@@ -315,6 +315,11 @@
                     </td>
                 </tr>
                 <tr>
+                    <td colspan="2">
+                        <asp:CheckBox ID="p41IsNoNotify" runat="server" Text="V projektu vypnout automatické e-mail notifikace" CssClass="chk" />
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         <asp:Label ID="lblp41RobotAddress" runat="server" Text="Adresa pro IMAP robota:" CssClass="lbl"></asp:Label>
                     </td>

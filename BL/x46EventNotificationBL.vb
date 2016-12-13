@@ -95,7 +95,7 @@ Class x46EventNotificationBL
                 Dim cRec As BO.p56Task = Factory.p56TaskBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
-                strLinkUrl += "/dr.aspx?prefix=p56&pid=" & cX47.x47RecordPID.ToString
+                strLinkUrl += "/p56_framework.aspx?pid=" & cRec.PID.ToString
             Case BO.x29IdEnum.p91Invoice
                 Dim cRec As BO.p91Invoice = Factory.p91InvoiceBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
@@ -153,7 +153,7 @@ Class x46EventNotificationBL
                     If .p41ID > 0 Then objectReference = Factory.p41ProjectBL.Load(.p41ID)
                     If .p28ID > 0 Then objectReference = Factory.p28ContactBL.Load(.p28ID)
                 End With
-                strLinkUrl += "/dr.aspx?prefix=o23&pid=" & cX47.x47RecordPID.ToString
+                strLinkUrl += "/o23_framework.aspx?pid=" & cX47.x47RecordPID.ToString
             Case BO.x29IdEnum.o22Milestone
                 Dim cRec As BO.o22Milestone = Factory.o22MilestoneBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
@@ -231,7 +231,8 @@ Class x46EventNotificationBL
                 End If
                 If lisReceivers.Count > 0 Then
                     'zkompletovat zprávu a odeslat do mail fronty
-                    mes.Body = MergeContent(objects, strMergedBody, strLinkUrl)
+                    Dim cMerge As New BO.clsMergeContent
+                    mes.Body = cMerge.MergeContent(objects, strMergedBody, strLinkUrl)
                     mes.Subject = strMergedSubject
 
 
@@ -245,15 +246,6 @@ Class x46EventNotificationBL
 
     
     Private Sub CompleteMessages(cX47 As BO.x47EventLog, message As BO.smtpMessage, lisReceivers As IEnumerable(Of BO.j02Person))
-        'Dim lisX43 As New List(Of BO.x43MailQueue_Recipient)
-        'For Each cPerson In lisReceivers
-        '    Dim c As New BO.x43MailQueue_Recipient()
-        '    c.x43Email = cPerson.j02Email
-        '    c.x43DisplayName = cPerson.FullNameAsc
-        '    c.x43RecipientFlag = BO.x43RecipientIdEnum.recTO
-        '    lisX43.Add(c)
-        'Next
-       
         For Each cJ02 In lisReceivers
             'pro každou osobu jedna zpráva
             Dim recipients As New List(Of BO.x43MailQueue_Recipient)
@@ -269,72 +261,6 @@ Class x46EventNotificationBL
     End Sub
     
 
-    Private Function MergeContent(objects As List(Of Object), strTemplateContent As String, strLinkUrl As String) As String
-        strTemplateContent = Replace(strTemplateContent, "[%link%]", strLinkUrl, , , CompareMethod.Text)
-
-        Dim fields As List(Of String) = GetAllMergeFieldsInContent(strTemplateContent)
-        Dim reps As New List(Of BO.EasyStringColletion)
-
-        For Each c In objects
-            For Each field As String In fields
-                Dim val As Object = BO.BAS.GetPropertyValue(c, field)
-                Dim strReplace As String = ""
-                If Not val Is Nothing Then
-                    Select Case val.GetType.ToString
-                        Case "System.String"
-                            strReplace = val
-                        Case "System.DateTime"
-                            strReplace = BO.BAS.FD(val, True)
-                        Case "System.Double"
-                            strReplace = BO.BAS.FN(val)
-                        Case "System.Boolean"
-                            If val Then strReplace = "ANO" Else strReplace = "NE"
-                        Case "System.Int32"
-                            strReplace = BO.BAS.FNI(val)
-                        Case Else
-                            strReplace = val.ToString
-                    End Select
-                    If strReplace <> "" Then reps.Add(New BO.EasyStringColletion(field, strReplace))
-                End If
-            Next
-        Next
-        For Each c In reps  'nahradit nalezené pole
-            strTemplateContent = Replace(strTemplateContent, "[%" & c.Key & "%]", c.Value, , , CompareMethod.Text)
-        Next
-        For Each field In fields    'nahradit zbylá prázdná pole
-            If strTemplateContent.IndexOf("[%" & field & "%]") > 0 Then
-                strTemplateContent = Replace(strTemplateContent, "[%" & field & "%]", "")
-            End If
-        Next
-
-        Return strTemplateContent
-    End Function
-    Private Function GetAllMergeFieldsInContent(ByVal strContent As String) As List(Of String)
-        'vrátí seznam slučovacích polí, které se vyskytují v strContent
-        Return BO.BAS.GetAllMergeFieldsInContent(strContent)
-        'Dim strTmp As String = strContent
-        'Dim lngPosLeft As Integer, LeftMark As String = "[%", RightMark As String = "%]"
-        'Dim lngPosRight As Integer, lisRet As New List(Of String)
-
-        'lngPosLeft = InStr(1, strTmp, LeftMark, 1)
-        'lngPosRight = InStr(1, strTmp, RightMark, 1)
-
-        'Do While lngPosLeft > 0 And lngPosRight > 0
-        '    Dim strField As String = ""
-        '    If lngPosRight - lngPosLeft - Len(RightMark) > 0 Then
-        '        strField = Mid$(strTmp, lngPosLeft + Len(LeftMark), lngPosRight - lngPosLeft - Len(RightMark))
-        '        strField = Replace(strField, ",", "ß") 'ß za čárku
-        '    End If
-        '    If strField <> "" Then
-        '        lisRet.Add(strField)
-        '    End If
-        '    ' Find the next occurrence
-        '    lngPosLeft = InStr(lngPosLeft + Len(LeftMark), strTmp, LeftMark, 1)
-        '    lngPosRight = InStr(lngPosRight + Len(RightMark), strTmp, RightMark, 1)
-        'Loop
-
-        'Return lisRet
-
-    End Function
+   
 
 End Class

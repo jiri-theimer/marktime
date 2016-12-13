@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BAS\clsHandleHtml.vb" />
+    <Compile Include="BAS\clsMergeContent.vb" />
     <Compile Include="BAS\Crypto.vb" />
     <Compile Include="DBNative\b01WorkflowTemplate.vb" />
     <Compile Include="DBNative\b02WorkflowStatus.vb" />

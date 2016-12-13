@@ -521,45 +521,7 @@
         Next
         Return lis
     End Function
-    Public Shared Function GetAllMergeFieldsInContent(ByVal strContent As String) As List(Of String)
-        'vrátí seznam slučovacích polí, které se vyskytují v strContent
-        Dim lisRet As New List(Of String)
-
-        If strContent.IndexOf("[%") >= 0 Then
-            've výchozím popisu aktivity jsou slučovací pole z projektu
-            Dim matches As System.Text.RegularExpressions.MatchCollection = System.Text.RegularExpressions.Regex.Matches(strContent, "\[%.*?\%]")
-            For Each m As System.Text.RegularExpressions.Match In matches
-                Dim strField As String = Replace(m.Value, "[%", "").Replace("%]", "")
-                'strDefText = Replace(strDefText, m.Value, BO.BAS.GetPropertyValue(cP41, strField))
-                lisRet.Add(strField)
-            Next
-        End If
-        Return lisRet
-
-        ''Dim strTmp As String = strContent
-        ''Dim lngPosLeft As Integer, LeftMark As String = "[%", RightMark As String = "%]"
-        ''Dim lngPosRight As Integer
-
-        ''lngPosLeft = InStr(1, strTmp, LeftMark, 1)
-        ''lngPosRight = InStr(1, strTmp, RightMark, 1)
-
-        ''Do While lngPosLeft > 0 And lngPosRight > 0
-        ''    Dim strField As String = ""
-        ''    If lngPosRight - lngPosLeft - Len(RightMark) > 0 Then
-        ''        strField = Mid$(strTmp, lngPosLeft + Len(LeftMark), lngPosRight - lngPosLeft - Len(RightMark))
-        ''        'strField = Replace(strField, ",", "ß") 'ß za čárku
-        ''    End If
-        ''    If strField <> "" Then
-        ''        lisRet.Add(strField)
-        ''    End If
-        ''    ' Find the next occurrence
-        ''    lngPosLeft = InStr(lngPosLeft + Len(LeftMark), strTmp, LeftMark, 1)
-        ''    lngPosRight = InStr(lngPosRight + Len(RightMark), strTmp, RightMark, 1)
-        ''Loop
-
-        ''Return lisRet
-
-    End Function
+    
 
     Public Shared Function GetFileExtensionIcon(strExtension As String) As String
         If strExtension = "" Then Return "other.png"

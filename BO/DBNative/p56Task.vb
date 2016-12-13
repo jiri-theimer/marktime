@@ -26,6 +26,8 @@
     Public Property p56IsPlan_Expenses_Ceiling As Boolean   'zastropovat plán výdajů (nelze překročit)
 
     Public Property p56IsHtml As Boolean    'zadání/popis úkolu je v HTML
+    Public Property p56IsNoNotify As Boolean
+
 
     Public Property p56CompletePercent As Integer
     Public Property p56RatingValue As Integer?
