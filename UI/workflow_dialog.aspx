@@ -23,7 +23,9 @@
         </div>
         <div class="content">
             <asp:RadioButtonList ID="opgB06ID" runat="server" AutoPostBack="true" CssClass="chk" CellPadding="4" CellSpacing="2"></asp:RadioButtonList>
-            
+            <asp:Panel ID="panNotify" runat="server" Visible="false">
+                <asp:CheckBox ID="chkNotifyComment" runat="server" Text="Notifikovat komentář poštovní zprávou" Checked="true" CssClass="chk" />
+            </asp:Panel>
             <asp:Panel ID="panNominee" runat="server" Visible="false" CssClass="div6">
                 <asp:Button ID="cmdAddNominee" runat="server" Text="Obsadit roli" CssClass="cmd" />
                 <asp:Repeater ID="rpNominee" runat="server">

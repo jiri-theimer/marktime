@@ -275,15 +275,6 @@ Partial Public Class p56_record
     Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
-    '''p56IsNoNotify control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p56IsNoNotify As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''ph1 control.
     '''</summary>
     '''<remarks>
@@ -318,6 +309,15 @@ Partial Public Class p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p56Description As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''p56IsNoNotify control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56IsNoNotify As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''SharedCalendar control.

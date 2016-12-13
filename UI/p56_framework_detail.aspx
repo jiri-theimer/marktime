@@ -274,14 +274,15 @@
                     </td>
 
                 </tr>
-                <tr id="trWorkflow" runat="server">
+                <tr id="trWorkflow" runat="server" valign="top">
                     <td>
                         <asp:Label ID="lblB02ID" runat="server" Text="Workflow stav:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
-                        <img src="Images/workflow.png" />
-                        <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
+                        <br />
+                        <button type="button" onclick="workflow()" class="cmd" title="Změnit stav úkolu, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona..."><img src="Images/workflow.png" /> Posunout/doplnit</button>
+                        
                     </td>
                 </tr>
                 <tr valign="top">

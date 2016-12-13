@@ -41,6 +41,24 @@ Partial Public Class b07_create
     Protected WithEvents b07Value As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cmdAddReceiver control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddReceiver As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''history1 control.
     '''</summary>
     '''<remarks>

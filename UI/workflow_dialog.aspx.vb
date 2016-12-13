@@ -147,7 +147,7 @@
             End If
             If BO.BAS.IsNullInt(opgB06ID.SelectedValue) = 0 Then
                 'pouze zapsat komentář
-                If SendCommentOnly() Then
+                If SendCommentOnly(Me.chkNotifyComment.Checked) Then
                     Master.CloseAndRefreshParent("workflow-dialog")
                 End If
                 Return
@@ -157,6 +157,8 @@
             If cB06.b06IsNominee And rpNominee.Items.Count > 0 Then
                 lisNominee = GetNomineeList()
             End If
+
+
             If Master.Factory.b06WorkflowStepBL.RunWorkflowStep(cB06, Me.CurrentRecordPID, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.b07Value.Text, upload1.GUID, True, lisNominee) Then
                 Master.CloseAndRefreshParent("workflow-dialog")
             Else
@@ -165,7 +167,7 @@
         End If
     End Sub
 
-    Private Function SendCommentOnly() As Boolean
+    Private Function SendCommentOnly(bolNotifyComment As Boolean) As Boolean
         Dim cRec As New BO.b07Comment
         With cRec
             .x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentPrefix)
@@ -174,7 +176,7 @@
         End With
 
         With Master.Factory.b07CommentBL
-            If .Save(cRec, upload1.GUID) Then
+            If .Save(cRec, upload1.GUID, Nothing) Then
                 Return True
             Else
                 Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -276,7 +278,12 @@
     End Sub
 
     Private Sub opgB06ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgB06ID.SelectedIndexChanged
-        If opgB06ID.SelectedValue = "" Then Return
+        If opgB06ID.SelectedValue = "" Then
+            Me.panNotify.Visible = True
+            Return
+        Else
+            Me.panNotify.Visible = False
+        End If
 
         Dim cRec As BO.b06WorkflowStep = Master.Factory.b06WorkflowStepBL.Load(opgB06ID.SelectedValue)
         panNominee.Visible = cRec.b06IsNominee

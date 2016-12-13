@@ -13,15 +13,6 @@ Class x46EventNotificationBL
     Implements Ix46EventNotificationBL
     Private WithEvents _cDL As DL.x46EventNotificationDL
 
-    Private Class MR
-        Public Property j02ID As Integer
-        Public Property j11ID As Integer
-        Public Sub New(intJ02ID As Integer, intJ11ID As Integer)
-            Me.j02ID = intJ02ID
-            Me.j11ID = intJ11ID
-        End Sub
-    End Class
-
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
     End Sub
@@ -78,7 +69,7 @@ Class x46EventNotificationBL
         Dim cX45 As BO.x45Event = Me.Factory.ftBL.LoadX45(CInt(cX47.x45ID))
         Dim objects As New List(Of Object), intJ02ID_Owner As Integer = 0, intJ02ID_Owner_Reference As Integer = 0, objectReference As Object = Nothing
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Factory.x67EntityRoleBL.GetList_x69(cX47.x29ID, cX47.x47RecordPID)
-        Dim mrs As New List(Of MR)
+        Dim mrs As New List(Of BO.PersonOrTeam)
 
         Select Case cX45.x29ID
             Case BO.x29IdEnum.p41Project
@@ -122,7 +113,7 @@ Class x46EventNotificationBL
                 If cRec.b07ID_Parent <> 0 Then
                     'notifikovat i autora komentáře, na který se reaguje
                     Dim cRecParent As BO.b07Comment = Factory.b07CommentBL.Load(cRec.b07ID_Parent)
-                    mrs.Add(New MR(cRecParent.j02ID_Owner, 0))
+                    mrs.Add(New BO.PersonOrTeam(cRecParent.j02ID_Owner, 0))
                 End If
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
@@ -168,7 +159,7 @@ Class x46EventNotificationBL
                 'notifikovat všechny osoby k události
                 Dim lisO20 As IEnumerable(Of BO.o20Milestone_Receiver) = Factory.o22MilestoneBL.GetList_o20(cRec.PID)
                 For Each c In lisO20
-                    mrs.Add(New MR(c.j02ID, c.j11ID))
+                    mrs.Add(New BO.PersonOrTeam(c.j02ID, c.j11ID))
                 Next
                 strLinkUrl += "/dr.aspx?prefix=o22&pid=" & cX47.x47RecordPID.ToString
             Case BO.x29IdEnum.p36LockPeriod
@@ -192,30 +183,30 @@ Class x46EventNotificationBL
             Dim strMergedSubject As String = c.x46MessageSubject, strMergedBody As String = c.x46MessageTemplate
 
             If c.x46IsForRecordOwner Then
-                mrs.Add(New MR(intJ02ID_Owner, 0))
+                mrs.Add(New BO.PersonOrTeam(intJ02ID_Owner, 0))
             End If
             If c.x46IsForAllRoles Then
                 For Each cRole In lisX69
-                    mrs.Add(New MR(cRole.j02ID, cRole.j11ID))
+                    mrs.Add(New BO.PersonOrTeam(cRole.j02ID, cRole.j11ID))
                 Next
             Else
                 If c.x67ID <> 0 Then
                     If lisX69.Where(Function(p) p.x67ID = c.x67ID).Count > 0 Then
                         Dim cRole As BO.x69EntityRole_Assign = lisX69.Where(Function(p) p.x67ID = c.x67ID)(0)
-                        mrs.Add(New MR(cRole.j02ID, cRole.j11ID))
+                        mrs.Add(New BO.PersonOrTeam(cRole.j02ID, cRole.j11ID))
                     End If
                 End If
             End If
             If c.j02ID > 0 Then
-                mrs.Add(New MR(c.j02ID, 0))
+                mrs.Add(New BO.PersonOrTeam(c.j02ID, 0))
             End If
             If c.j11ID > 0 Then
-                mrs.Add(New MR(0, c.j11ID))
+                mrs.Add(New BO.PersonOrTeam(0, c.j11ID))
             End If
             If cX47.x29ID_Reference > BO.x29IdEnum._NotSpecified And cX47.x47RecordPID_Reference > 0 Then
                 'příjemcem zprávy může být i osoba se vztahem k referenční entitě
                 If c.x46IsForRecordOwner_Reference And intJ02ID_Owner_Reference > 0 Then
-                    mrs.Add(New MR(intJ02ID_Owner_Reference, 0))    'vlastník referenčního záznamu
+                    mrs.Add(New BO.PersonOrTeam(intJ02ID_Owner_Reference, 0))    'vlastník referenčního záznamu
                 End If
             End If
 

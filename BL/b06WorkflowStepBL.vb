@@ -18,14 +18,7 @@ Class b06WorkflowStepBL
     Inherits BLMother
     Implements Ib06WorkflowStepBL
     Private WithEvents _cDL As DL.b06WorkflowStepDL
-    Private Class MR
-        Public Property j02ID As Integer
-        Public Property j11ID As Integer
-        Public Sub New(intJ02ID As Integer, intJ11ID As Integer)
-            Me.j02ID = intJ02ID
-            Me.j11ID = intJ11ID
-        End Sub
-    End Class
+    
 
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
@@ -235,7 +228,7 @@ Class b06WorkflowStepBL
         c.x29ID = x29id
         c.b07Value = strComment
         c.b07WorkflowInfo = cB06.NameWithTargetStatus
-        If Me.Factory.b07CommentBL.Save(c, strUploadGUID) Then
+        If Me.Factory.b07CommentBL.Save(c, strUploadGUID, Nothing) Then
             intB07ID = Me.Factory.b07CommentBL.LastSavedPID
         End If
 
@@ -275,12 +268,12 @@ Class b06WorkflowStepBL
             End Select
             If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
 
-            Handle_Notification(cB06, intRecordPID, x29id, intJ02ID_Owner, objects, intP41ID_Ref)
+            Handle_Notification(cB06, intRecordPID, x29id, intJ02ID_Owner, objects, intP41ID_Ref, strComment)
         End If
         Return True
     End Function
 
-    Private Sub Handle_Notification(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, intJ02ID_Owner As Integer, objects As List(Of Object), intP41ID_Ref As Integer)
+    Private Sub Handle_Notification(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, intJ02ID_Owner As Integer, objects As List(Of Object), intP41ID_Ref As Integer, strComment As String)
         Dim lisB11 As IEnumerable(Of BO.b11WorkflowMessageToStep) = GetList_B11(cB06.PID)
         If lisB11.Count = 0 Then Return 'ke kroku nejsou definovány notifikační události
 
@@ -291,32 +284,32 @@ Class b06WorkflowStepBL
             lisX69Ref = Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p41Project, intP41ID_Ref)
         End If
         For Each c In lisB11
-            Dim mrs As New List(Of MR)
+            Dim mrs As New List(Of BO.PersonOrTeam)
 
             If c.b11IsRecordOwner Then
-                mrs.Add(New MR(intJ02ID_Owner, 0))
+                mrs.Add(New BO.PersonOrTeam(intJ02ID_Owner, 0))
             End If
             If c.x67ID <> 0 Then
                 If lisX69.Where(Function(p) p.x67ID = c.x67ID).Count > 0 Then
                     Dim cRole As BO.x69EntityRole_Assign = lisX69.Where(Function(p) p.x67ID = c.x67ID)(0)
-                    mrs.Add(New MR(cRole.j02ID, cRole.j11ID))
+                    mrs.Add(New BO.PersonOrTeam(cRole.j02ID, cRole.j11ID))
                 End If
                 If Not lisX69Ref Is Nothing Then
                     If lisX69Ref.Where(Function(p) p.x67ID = c.x67ID).Count > 0 Then
                         Dim cRole As BO.x69EntityRole_Assign = lisX69Ref.Where(Function(p) p.x67ID = c.x67ID)(0)
-                        mrs.Add(New MR(cRole.j02ID, cRole.j11ID))
+                        mrs.Add(New BO.PersonOrTeam(cRole.j02ID, cRole.j11ID))
                     End If
                 End If
             End If
             If c.j11ID > 0 Then
-                mrs.Add(New MR(0, c.j11ID))
+                mrs.Add(New BO.PersonOrTeam(0, c.j11ID))
             End If
             If c.j04ID <> 0 Then
                 Dim mq As New BO.myQueryJ03
                 mq.j04ID = c.j04ID
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
                 For Each cJ03 In Factory.j03UserBL.GetList(mq).Where(Function(p) p.j02ID <> 0)
-                    mrs.Add(New MR(cJ03.j02ID, 0))
+                    mrs.Add(New BO.PersonOrTeam(cJ03.j02ID, 0))
                 Next
             End If
 
@@ -335,6 +328,7 @@ Class b06WorkflowStepBL
                     If mes.Body.IndexOf("#RolesInline#") > 0 And x29id = BO.x29IdEnum.p56Task Then
                         mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
                     End If
+                    mes.Body = Replace(mes.Body, "#comment#", strComment, , , CompareMethod.Text)
 
                     mes.Subject = cB65.b65MessageSubject
                     If mes.Subject.IndexOf("[") > 0 Then mes.Subject = cMerge.MergeContent(objects, cB65.b65MessageSubject, strLinkUrl)

@@ -1,6 +1,6 @@
 ﻿Public Interface Ib07CommentBL
     Inherits IFMother
-    Function Save(cRec As BO.b07Comment, strUploadGUID As String) As Boolean
+    Function Save(cRec As BO.b07Comment, strUploadGUID As String, notifyReceivers As List(Of BO.PersonOrTeam)) As Boolean
     Function Load(intPID As Integer) As BO.b07Comment
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryB07) As IEnumerable(Of BO.b07Comment)
@@ -23,7 +23,7 @@ Class b07CommentBL
         _cDL = New DL.b07CommentDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.b07Comment, strUploadGUID As String) As Boolean Implements Ib07CommentBL.Save
+    Public Function Save(cRec As BO.b07Comment, strUploadGUID As String, notifyReceivers As List(Of BO.PersonOrTeam)) As Boolean Implements Ib07CommentBL.Save
         Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Nothing
 
         If strUploadGUID <> "" Then

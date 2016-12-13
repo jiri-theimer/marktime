@@ -32,6 +32,24 @@ Partial Public Class workflow_dialog
     Protected WithEvents opgB06ID As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
+    '''panNotify control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panNotify As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chkNotifyComment control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkNotifyComment As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''panNominee control.
     '''</summary>
     '''<remarks>

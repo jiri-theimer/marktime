@@ -124,7 +124,7 @@
                     </td>
                     <td>
                         <uc:person ID="j02ID_Owner" runat="server" Width="150px" />
-                        <asp:CheckBox ID="p56IsNoNotify" runat="server" Text="V úkolu vypnout automatické e-mail notifikace" CssClass="chk" />
+                        
                         
                     </td>
                 </tr>
@@ -148,7 +148,9 @@
                 </div>
 
             </div>
-            
+            <div class="div6">
+            <asp:CheckBox ID="p56IsNoNotify" runat="server" Text="V úkolu vypnout automatické e-mail notifikace" CssClass="chk" />
+            </div>
 
             <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 

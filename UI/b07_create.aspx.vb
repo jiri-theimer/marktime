@@ -36,6 +36,7 @@
         Me.uploadlist1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
+            ViewState("guid") = BO.BAS.GetGUID
             Me.CurrentPrefix = Request.Item("masterprefix")
             Me.CurrentRecordPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
             If Me.CurrentRecordPID = 0 Or Me.CurrentPrefix = "" Then
@@ -51,7 +52,7 @@
                 .AddToolbarButton("Uložit komentář", "save", , "Images/save.png")
             End With
 
-           
+
             history1.RefreshData(Master.Factory, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID, Me.CurrentParentID)
         End If
     End Sub
@@ -68,7 +69,7 @@
             End With
 
             With Master.Factory.b07CommentBL
-                If .Save(cRec, upload1.GUID) Then
+                If .Save(cRec, upload1.GUID, Nothing) Then
                     Master.CloseAndRefreshParent("b07-save")
                 Else
                     Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -79,5 +80,70 @@
 
     Private Sub upload1_AfterUploadAll() Handles upload1.AfterUploadAll
         Me.uploadlist1.RefreshData_TEMP()
+    End Sub
+
+    Private Sub cmdAddReceiver_Click(sender As Object, e As EventArgs) Handles cmdAddReceiver.Click
+        SaveTemp()
+        AddReceiver(0)
+    End Sub
+    Private Sub AddReceiver(intJ02ID As Integer)
+        Dim c As New BO.p85TempBox
+        c.p85GUID = ViewState("guid")
+        If intJ02ID <> 0 Then
+            c.p85OtherKey1 = intJ02ID
+            c.p85FreeText01 = Master.Factory.j02PersonBL.Load(intJ02ID).FullNameDesc
+        End If
+        Master.Factory.p85TempBoxBL.Save(c)
+        RefreshTempList()
+    End Sub
+    Private Sub RefreshTempList()
+        rp1.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        rp1.DataBind()
+    End Sub
+
+    Private Sub SaveTemp()
+        Dim lisTEMP As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        For Each ri As RepeaterItem In rp1.Items
+            Dim intP85ID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("p85id"), HiddenField).Value)
+
+            Dim cRec As BO.p85TempBox = lisTEMP.Where(Function(p) p.PID = intP85ID)(0)
+            With cRec
+                .p85OtherKey1 = BO.BAS.IsNullInt(CType(ri.FindControl("j02id"), UI.person).Value)
+                .p85FreeText01 = CType(ri.FindControl("j02id"), UI.person).Text
+                .p85OtherKey2 = BO.BAS.IsNullInt(CType(ri.FindControl("j11id"), DropDownList).SelectedValue)
+
+            End With
+            Master.Factory.p85TempBoxBL.Save(cRec)
+
+        Next
+    End Sub
+
+    Private Sub rp1_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rp1.ItemCommand
+        SaveTemp()
+        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(CType(e.Item.FindControl("p85id"), HiddenField).Value))
+        If e.CommandName = "delete" Then
+            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+                RefreshTempList()
+            End If
+        End If
+    End Sub
+
+    Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
+        Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
+        CType(e.Item.FindControl("p85id"), HiddenField).Value = cRec.PID.ToString
+        With CType(e.Item.FindControl("del"), ImageButton)
+            .CommandName = "delete"
+        End With
+        With CType(e.Item.FindControl("j11id"), DropDownList)
+            .DataSource = Master.Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = False)
+            .DataBind()
+            .Items.Insert(0, "")
+        End With
+        basUI.SelectDropdownlistValue(CType(e.Item.FindControl("j11id"), DropDownList), cRec.p85OtherKey2.ToString)
+        With CType(e.Item.FindControl("j02id"), UI.person)
+            .Value = cRec.p85OtherKey1.ToString
+            .Text = cRec.p85FreeText01
+        End With
+        
     End Sub
 End Class
