@@ -26,7 +26,7 @@
     </asp:DropDownList>
 </div>
 <div class="commandcell" style="margin-left: 10px;">
-    <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true">
+    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" EnableRoundedCorners="false" EnableShadows="false" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
             <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                 <Items>
@@ -38,12 +38,12 @@
                 <Items>
                     <telerik:RadMenuItem Text="Zapsat worksheet úkon k úkolu" Value="p31new" NavigateUrl="javascript:p31_entry_p56()"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Schvalovat worksheet úkony za označené úkoly" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Zobrazit přehled na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p56_fullscreen()"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Zobrazit na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p56_fullscreen()"></telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenuItem>
             <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                 <ContentTemplate>
-
+                <div style="padding:8px;">
                     <div style="margin-top: 20px;">
                         <button type="button" onclick="p56_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
                     </div>
@@ -74,7 +74,7 @@
                         <img src="Images/doc.png" alt="doc" />
                         <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
                     </asp:Panel>
-
+                </div>
                 </ContentTemplate>
             </telerik:RadMenuItem>
         </Items>

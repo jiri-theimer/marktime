@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="b07_list.ascx.vb" Inherits="UI.b07_list" %>
-<asp:panel ID="panHeader" runat="server" cssclass="innerform_light">
+<asp:panel ID="panHeader" runat="server">
     <img src="Images/comment.png" />
     <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Text="Komentáře"></asp:Label>
     <button type="button" style="margin-left: 20px;" onclick="javascript:comment()" runat="server" id="cmdAdd">Přidat</button>

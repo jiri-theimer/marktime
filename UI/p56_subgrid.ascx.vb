@@ -130,7 +130,7 @@ Public Class p56_subgrid
     Private Sub gridP56_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles gridP56.NeedDataSource
         If MasterDataPID = 0 Then Return
 
-        Dim mq As New BO.myQueryP56, intClosed As Integer, intOpened As Integer, bolReceiversInLine As Boolean = False
+        Dim mq As New BO.myQueryP56
         InhaleTasksQuery(mq)
 
         ''If Me.hidReceiversInLine.Value = "1" Then bolReceiversInLine = True
@@ -164,9 +164,7 @@ Public Class p56_subgrid
             gridP56.DataSourceDataTable = dt
         End If
 
-        Dim strCount As String = intOpened.ToString & "+" & intClosed.ToString
-        If intClosed = 0 And intOpened = 0 Then strCount = "0"
-        lblHeaderP56.Text = BO.BAS.OM2(lblHeaderP56.Text, strCount)
+        lblHeaderP56.Text = BO.BAS.OM2(lblHeaderP56.Text, dt.Rows.Count.ToString)
 
         If Me.DefaultSelectedPID <> 0 Then
             If dt.AsEnumerable.Where(Function(p) p.Item("pid") = Me.DefaultSelectedPID).Count > 0 Then

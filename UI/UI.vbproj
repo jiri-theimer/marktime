@@ -198,6 +198,12 @@
     <Content Include="entity_framework_p41subform.aspx" />
     <Content Include="entity_framework_p56subform.aspx" />
     <Content Include="entity_framework_p91subform.aspx" />
+    <Content Include="entity_framework_rec_o23.aspx" />
+    <Content Include="entity_framework_rec_p31.aspx" />
+    <Content Include="entity_framework_rec_p56.aspx" />
+    <Content Include="entity_framework_rec_p91.aspx" />
+    <Content Include="entity_framework_rec_summary.aspx" />
+    <Content Include="entity_menu.ascx" />
     <Content Include="entity_modal_invoicing.aspx" />
     <Content Include="entity_scheduler.aspx" />
     <Content Include="ErrorPage.aspx" />
@@ -241,11 +247,18 @@
     <Content Include="o48_record.aspx" />
     <Content Include="p28_framework.aspx" />
     <Content Include="p31summary.ascx" />
+    <Content Include="p31summary_drilldown.ascx" />
     <Content Include="p31_framework_timer.aspx" />
     <Content Include="p31_record_split.aspx" />
     <Content Include="p31_scheduler.aspx" />
     <Content Include="p41_framework.aspx" />
+    <Content Include="p41_framework_detail.aspx" />
     <Content Include="p41_framework_detail_budget.aspx" />
+    <Content Include="p41_framework_detail_rec.aspx" />
+    <Content Include="p41_framework_rec_board.aspx" />
+    <Content Include="p41_framework_rec_p31.aspx" />
+    <Content Include="p41_framework_rec_p45.aspx" />
+    <Content Include="p41_menu.ascx" />
     <Content Include="p45_p46.aspx" />
     <Content Include="p45_project_p49.aspx" />
     <Content Include="p45_record.aspx" />
@@ -421,7 +434,7 @@
     <Content Include="p31_timeline.aspx" />
     <Content Include="p31_timer.aspx" />
     <Content Include="p34_after_create.aspx" />
-    <Content Include="p41_framework_detail.aspx" />
+    <Content Include="p41_framework_detail_delete.aspx" />
     <Content Include="p48_framework.aspx" />
     <Content Include="p48_multiple_create.aspx" />
     <Content Include="p48_multiple_edit_delete.aspx" />
@@ -831,6 +844,48 @@
       <DependentUpon>entity_framework_p91subform.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="entity_framework_rec_o23.aspx.designer.vb">
+      <DependentUpon>entity_framework_rec_o23.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_rec_o23.aspx.vb">
+      <DependentUpon>entity_framework_rec_o23.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_rec_p31.aspx.designer.vb">
+      <DependentUpon>entity_framework_rec_p31.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_rec_p31.aspx.vb">
+      <DependentUpon>entity_framework_rec_p31.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_rec_p56.aspx.designer.vb">
+      <DependentUpon>entity_framework_rec_p56.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_rec_p56.aspx.vb">
+      <DependentUpon>entity_framework_rec_p56.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_rec_p91.aspx.designer.vb">
+      <DependentUpon>entity_framework_rec_p91.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_rec_p91.aspx.vb">
+      <DependentUpon>entity_framework_rec_p91.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_rec_summary.aspx.designer.vb">
+      <DependentUpon>entity_framework_rec_summary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_rec_summary.aspx.vb">
+      <DependentUpon>entity_framework_rec_summary.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_menu.ascx.designer.vb">
+      <DependentUpon>entity_menu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_menu.ascx.vb">
+      <DependentUpon>entity_menu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="entity_modal_invoicing.aspx.designer.vb">
       <DependentUpon>entity_modal_invoicing.aspx</DependentUpon>
     </Compile>
@@ -1144,6 +1199,13 @@
       <DependentUpon>p31summary.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="p31summary_drilldown.ascx.designer.vb">
+      <DependentUpon>p31summary_drilldown.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p31summary_drilldown.ascx.vb">
+      <DependentUpon>p31summary_drilldown.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="p31_framework_timer.aspx.designer.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>
     </Compile>
@@ -1172,12 +1234,54 @@
       <DependentUpon>p41_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="p41_framework_detail.aspx.designer.vb">
+      <DependentUpon>p41_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework_detail.aspx.vb">
+      <DependentUpon>p41_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="p41_framework_detail_budget.aspx.designer.vb">
       <DependentUpon>p41_framework_detail_budget.aspx</DependentUpon>
     </Compile>
     <Compile Include="p41_framework_detail_budget.aspx.vb">
       <DependentUpon>p41_framework_detail_budget.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_framework_detail_rec.aspx.designer.vb">
+      <DependentUpon>p41_framework_detail_rec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework_detail_rec.aspx.vb">
+      <DependentUpon>p41_framework_detail_rec.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_framework_rec_board.aspx.designer.vb">
+      <DependentUpon>p41_framework_rec_board.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework_rec_board.aspx.vb">
+      <DependentUpon>p41_framework_rec_board.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_framework_rec_p31.aspx.designer.vb">
+      <DependentUpon>p41_framework_rec_p31.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework_rec_p31.aspx.vb">
+      <DependentUpon>p41_framework_rec_p31.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_framework_rec_p45.aspx.designer.vb">
+      <DependentUpon>p41_framework_rec_p45.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_framework_rec_p45.aspx.vb">
+      <DependentUpon>p41_framework_rec_p45.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p41_menu.ascx.designer.vb">
+      <DependentUpon>p41_menu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="p41_menu.ascx.vb">
+      <DependentUpon>p41_menu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p45_p46.aspx.designer.vb">
       <DependentUpon>p45_p46.aspx</DependentUpon>
@@ -2326,11 +2430,11 @@
       <DependentUpon>p34_after_create.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="p41_framework_detail.aspx.designer.vb">
-      <DependentUpon>p41_framework_detail.aspx</DependentUpon>
+    <Compile Include="p41_framework_detail_delete.aspx.designer.vb">
+      <DependentUpon>p41_framework_detail_delete.aspx</DependentUpon>
     </Compile>
-    <Compile Include="p41_framework_detail.aspx.vb">
-      <DependentUpon>p41_framework_detail.aspx</DependentUpon>
+    <Compile Include="p41_framework_detail_delete.aspx.vb">
+      <DependentUpon>p41_framework_detail_delete.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p48_framework.aspx.designer.vb">

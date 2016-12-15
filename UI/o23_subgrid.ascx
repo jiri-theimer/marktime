@@ -15,7 +15,7 @@
     </asp:DropDownList>
 </div>
 <div class="commandcell" style="margin-left: 10px;">
-    <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true">
+    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
             <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                 <Items>
@@ -26,7 +26,7 @@
             <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
                 <Items>
 
-                    <telerik:RadMenuItem Text="Zobrazit přehled na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:o23_fullscreen()"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Zobrazit na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:o23_fullscreen()"></telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenuItem>
             <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">

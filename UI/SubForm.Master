@@ -1,8 +1,9 @@
 ﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="SubForm.master.vb" Inherits="UI.SubForm" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="main_menu" Src="~/main_menu.ascx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title runat="server" id="pageTitle" enableviewstate="true">MARKTIME 5.0</title>
@@ -71,7 +72,7 @@ html .RadMenu_Default .rmItem {
     </style>
     <script type="text/javascript">
         
-        $(document).ready(function () {
+        $(document).ready(function () {            
 
             var iframeWidth = '100%';
             var iframeHeight = '270';

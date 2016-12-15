@@ -16,17 +16,17 @@
     <uc:periodcombo ID="period1" runat="server" Width="200px"></uc:periodcombo>
 </div>
 <div class="commandcell" style="margin-left: 10px;">
-    <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true">
+    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
             <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
                 <Items>
 
-                    <telerik:RadMenuItem Text="Zobrazit přehled na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p91_fullscreen()"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Zobrazit na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p91_fullscreen()"></telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenuItem>
             <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                 <ContentTemplate>
-                    <div style="min-width: 200px;">
+                    <div style="min-width: 200px;padding:10px;">
                         <div style="margin-top: 20px;">
                             <button type="button" onclick="p91_subgrid_setting(<%=ViewState("j74id")%>,'<%=BO.BAS.GetDataPrefix(Me.x29ID)%>')">Sloupce</button>
 

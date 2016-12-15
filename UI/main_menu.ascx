@@ -14,8 +14,8 @@
         <asp:HiddenField ID="hidMasterPageName" runat="server" Value="Site" />
 
 <script type="text/javascript">
-<%If panContainer.Visible Then%>
-
+    <%If panContainer.Visible Then%>    
+   
     <%If Me.hidAllowSearch1.Value = "1" Then%>
     $(function () {        
         $("#<%=hidSearch1.Value%>").autocomplete({

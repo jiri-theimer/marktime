@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p41_framework_detail
+Partial Public Class p41_framework_rec_p45
 
     '''<summary>
     '''Master property.
@@ -19,9 +19,9 @@ Partial Public Class p41_framework_detail
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
+    Public Shadows ReadOnly Property Master() As UI.SubForm
         Get
-            Return CType(MyBase.Master, UI.Clue)
+            Return CType(MyBase.Master, UI.SubForm)
         End Get
     End Property
 End Class

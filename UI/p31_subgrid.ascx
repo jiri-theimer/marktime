@@ -27,7 +27,7 @@
 
     </div>
     <div class="commandcell" style="margin-left:10px;">
-        <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true" style="z-index:2000;">
+        <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                     <Items>
@@ -44,6 +44,7 @@
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                     <ContentTemplate>
+                        <div style="padding:10px;">
                         <div style="margin-top: 20px;">
                             <div style="padding-right:10px;">
                             <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="min-width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
@@ -102,6 +103,7 @@
                                 <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
                            
                         </asp:Panel>
+                        </div>
                     </ContentTemplate>
                 </telerik:RadMenuItem>
             </Items>
