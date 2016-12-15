@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
+<%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
@@ -430,7 +431,7 @@
         </asp:Panel>
 
 
-
+        <uc:alertbox id="alert1" runat="server"></uc:alertbox>
 
 
      

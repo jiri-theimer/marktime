@@ -8,6 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="imap_record" Src="~/imap_record.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
+<%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     
@@ -407,6 +408,7 @@
             <uc:imap_record ID="imap1" runat="server"></uc:imap_record>
         </div>
     </asp:Panel>
+    <uc:alertbox id="alert1" runat="server"></uc:alertbox>
 
     <div style="clear: both; width: 100%;"></div>
 

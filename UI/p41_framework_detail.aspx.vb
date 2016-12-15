@@ -55,7 +55,8 @@ Public Class p41_framework_detail
                     .Add("p41_framework_detail-tabskin")
                     .Add("p41_framework_detail-chkFFShowFilledOnly")
                     .Add("p41_framework_detail-switch")
-                    .Add("p41_framework_detail-switchHeight")
+                    .Add("p41_framework_detail_pos")
+                    ''.Add("p41_framework_detail-switchHeight")
                 End With
 
                 With .Factory.j03UserBL
@@ -74,12 +75,12 @@ Public Class p41_framework_detail
                     End If
                 End If
                 With .Factory.j03UserBL
-                    Dim strHeight As String = .GetUserParam("p41_framework_detail-switchHeight", "auto")
-                    If strHeight = "auto" Then
-                        panSwitch.Style.Item("height") = "" : panSwitch.Style.Item("overflow") = ""
-                    Else
-                        panSwitch.Style.Item("height") = strHeight & "px"
-                    End If
+                    ''Dim strHeight As String = .GetUserParam("p41_framework_detail-switchHeight", "auto")
+                    ''If strHeight = "auto" Then
+                    ''    panSwitch.Style.Item("height") = "" : panSwitch.Style.Item("overflow") = ""
+                    ''Else
+                    ''    panSwitch.Style.Item("height") = strHeight & "px"
+                    ''End If
                     If Request.Item("force") = "comment" Then
                         Me.CurrentTab = "workflow"
                     End If
@@ -112,7 +113,7 @@ Public Class p41_framework_detail
             panSwitch.Style.Item("height") = ""
         End If
        
-        
+
     End Sub
 
 
@@ -339,7 +340,6 @@ Public Class p41_framework_detail
         End If
 
         RefreshP40(cRecSum)
-
 
     End Sub
 
@@ -584,6 +584,9 @@ Public Class p41_framework_detail
         cX61.x61Code = strX61Code
         Dim tab As New RadTab(strName, strX61Code)
         tabs1.Tabs.Add(tab)
+        If strX61Code = "rec" Then            
+            Return
+        End If
         tab.NavigateUrl = cX61.GetPageUrl("p41", Master.DataPID, Me.hidIsCanApprove.Value)
         tab.NavigateUrl += "&lasttabkey=p41_framework_detail-tab&lasttabval=" & strX61Code
         tab.Target = "fraSubform"
@@ -592,6 +595,11 @@ Public Class p41_framework_detail
     Private Sub SetupTabs(crs As BO.p41ProjectSum, cP42 As BO.p42ProjectType)
         tabs1.Tabs.Clear()
         Dim s As String = ""
+        If Me.hidPOS.Value = "1" Then
+            panSwitch.Style.Item("position") = "absolute"
+            panSwitch.Style.Item("top") = "100px"
+            cti("Projekt", "rec")
+        End If
         If cP42.p42IsModule_p31 Then
             s = "Summary" : cti(s, "summary")
             s = "Worksheet" : cti(s, "p31")

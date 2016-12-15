@@ -588,6 +588,8 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Typ projektu", "p42Name", "a.p42ID", "min(p42.p42Name)"))
                 lis.Add(New BO.GridGroupByColumn("Středisko", "j18Name", "a.j18ID", "min(j18.j18Name)"))
                 lis.Add(New BO.GridGroupByColumn("DRAFT", "p41IsDraft", "a.p41IsDraft", "a.p41IsDraft"))
+                ''lis.Add(New BO.GridGroupByColumn("Nadřízený projekt", "ParentName", "a.p41ParentID", "min(p41parent.p41Name)"))
+
             Case BO.x29IdEnum.p28Contact
                 lis.Add(New BO.GridGroupByColumn("Typ klienta", "p29Name", "a.p29ID", "min(p29.p29Name)"))
                 lis.Add(New BO.GridGroupByColumn("Typ faktury", "p92Name", "a.p92ID", "min(p92.p92Name)"))

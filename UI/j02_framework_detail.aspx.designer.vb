@@ -437,6 +437,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents rpP30 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''alert1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents alert1 As Global.UI.alertbox
+
+    '''<summary>
     '''tabs1 control.
     '''</summary>
     '''<remarks>

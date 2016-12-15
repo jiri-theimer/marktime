@@ -254,7 +254,7 @@ Public Class p28_framework_detail
         End If
         If cRecSum.o48_Exist Then linkISIR_Monitoring.Text = "ANO" : linkISIR.Font.Bold = True Else linkISIR_Monitoring.Text = "NE"
 
-
+        
     End Sub
 
     
@@ -429,6 +429,10 @@ Public Class p28_framework_detail
                     tab.Text += "<span class='badge1'>" & crs.p41_Actual_Count.ToString & "+" & crs.p41_Closed_Count.ToString & "</span>"
             End Select
         Next
+        If crs.b07_Count > 0 Then
+            If lisX61.Where(Function(p) p.x61Code = "workflow").Count = 0 Then Me.alert1.Append("Ke klientovi byl zapsán minimálně jeden komentář. V nastavení vzhledu stránky klienta si přidejte záložku [Komentáře a workflow].")
+        End If
+
     End Sub
 
 

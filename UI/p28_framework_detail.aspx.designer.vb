@@ -455,6 +455,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''alert1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents alert1 As Global.UI.alertbox
+
+    '''<summary>
     '''tabs1 control.
     '''</summary>
     '''<remarks>

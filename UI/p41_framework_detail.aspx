@@ -8,13 +8,14 @@
 <%@ Register TagPrefix="uc" TagName="entity_worksheet_summary" Src="~/entity_worksheet_summary.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     
     <script type="text/javascript">
         $(document).ready(function () {           
+           
 
             AdjustHeight();
         });
@@ -247,6 +248,7 @@
         function stoploading(){            
             document.getElementById("<%=me.imgLoading.clientid%>").style.display="none";
         }
+       
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -321,10 +323,10 @@
     </asp:Panel>
 
     <div style="clear:both;"></div>
-  <p></p>
+ 
 
 
-    <asp:Panel ID="panSwitch" runat="server" Style="height: 300px; overflow: auto;">
+    <asp:Panel ID="panSwitch" runat="server">
         <div class="content-box1">
             <div class="title">                
                 <img src="Images/properties.png" style="margin-right: 10px;" />
@@ -536,10 +538,11 @@
 
             </div>
         </asp:Panel>
+        <uc:alertbox id="alert1" runat="server"></uc:alertbox>
     </asp:Panel>
 
-    <div style="clear: both;"></div>
-    <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" style="margin-top:10px;">       
+    <div style="clear:both;"></div>
+    <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" style="margin-top:0px;">               
     </telerik:RadTabStrip>
 
     
@@ -553,6 +556,7 @@
     <asp:HiddenField ID="hidIsBin" runat="server" />
     <asp:HiddenField ID="hidIsCanApprove" runat="server" />
     <asp:HiddenField ID="hidParentWidth" runat="server" />
+    <asp:HiddenField ID="hidPOS" runat="server" Value="" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 

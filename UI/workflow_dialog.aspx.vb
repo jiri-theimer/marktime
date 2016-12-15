@@ -26,6 +26,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Me.upload1.Factory = Master.Factory
         Me.uploadlist1.Factory = Master.Factory
+        receiver1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
             ViewState("guid") = BO.BAS.GetGUID
@@ -147,7 +148,7 @@
             End If
             If BO.BAS.IsNullInt(opgB06ID.SelectedValue) = 0 Then
                 'pouze zapsat komentář
-                If SendCommentOnly(Me.chkNotifyComment.Checked) Then
+                If SendCommentOnly() Then
                     Master.CloseAndRefreshParent("workflow-dialog")
                 End If
                 Return
@@ -167,7 +168,7 @@
         End If
     End Sub
 
-    Private Function SendCommentOnly(bolNotifyComment As Boolean) As Boolean
+    Private Function SendCommentOnly() As Boolean
         Dim cRec As New BO.b07Comment
         With cRec
             .x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentPrefix)
@@ -294,5 +295,9 @@
         If cRec.b06IsNomineeRequired Then
             If rpNominee.Items.Count = 0 Then InsertBlankNominee()
         End If
+    End Sub
+
+    Private Sub cmdAddNotifyReceiver_Click(sender As Object, e As EventArgs) Handles cmdAddNotifyReceiver.Click
+        receiver1.AddReceiver(0, 0)
     End Sub
 End Class

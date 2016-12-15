@@ -127,6 +127,7 @@
             Dim cX45 As BO.x45Event = Master.Factory.ftBL.LoadX45(BO.BAS.IsNullInt(Me.x45ID.SelectedValue))
             Me.x45MessageTemplate.Text = cX45.x45MessageTemplate
             Me.panReference.Visible = cX45.x45IsReference
+            Me.panReceiver.Visible = Not cX45.x45IsManualReceiver
             If cX45.x45IsReference Then
                 Select Case cX45.x29ID
                     Case BO.x29IdEnum.p56Task
@@ -141,28 +142,36 @@
                 End Select
                 
             End If
-            If cX45.x29ID > BO.x29IdEnum._NotSpecified Then
-                Dim lisX67 As IEnumerable(Of BO.x67EntityRole) = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = cX45.x29ID)
-                Me.x67ID.DataSource = lisX67
-                Me.x67ID.DataBind()
-                Me.x67ID.SelectedValue = strLastX67ID
-                If lisX67.Count > 0 Then
-                    Me.x67ID.Visible = True : Me.lblX67ID.Visible = True
+            If Not cX45.x45IsManualReceiver Then
+                lblReceiverMessage.Text = ""
+                If cX45.x29ID > BO.x29IdEnum._NotSpecified Then
+                    Dim lisX67 As IEnumerable(Of BO.x67EntityRole) = Master.Factory.x67EntityRoleBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = cX45.x29ID)
+                    Me.x67ID.DataSource = lisX67
+                    Me.x67ID.DataBind()
+                    Me.x67ID.SelectedValue = strLastX67ID
+                    If lisX67.Count > 0 Then
+                        Me.x67ID.Visible = True : Me.lblX67ID.Visible = True
+                    End If
+                    Dim lisX29 As IEnumerable(Of BO.x29Entity) = Master.Factory.ftBL.GetList_X29().Where(Function(p) p.PID = CInt(cX45.x29ID))
+                    If lisX29.Count > 0 Then
+                        Me.x46IsForRecordOwner.Text = BO.BAS.OM2(Me.x46IsForRecordOwner.Text, lisX29(0).x29NameSingle)
+                    End If
                 End If
-                Dim lisX29 As IEnumerable(Of BO.x29Entity) = Master.Factory.ftBL.GetList_X29().Where(Function(p) p.PID = CInt(cX45.x29ID))
-                If lisX29.Count > 0 Then
-                    Me.x46IsForRecordOwner.Text = BO.BAS.OM2(Me.x46IsForRecordOwner.Text, lisX29(0).x29NameSingle)
-                End If
-
+                Select Case cX45.x29ID
+                    Case BO.x29IdEnum.o22Milestone
+                        Me.lblMessage.Text = "Automatickým příjemcem této události budou všechny zapojené osoby do dané kalendářové události (milníku)."
+                    Case BO.x29IdEnum.b07Comment
+                        Me.lblMessage.Text = "V případě reakce na komentář bude automatickým příjemcem autor původního komentáře."
+                End Select
             Else
-
+                lblReceiverMessage.Text = "Příjemce notifikace určuje ručně uživatel, který vyvolal tuto událost."
             End If
-            Select Case cX45.x29ID
-                Case BO.x29IdEnum.o22Milestone
-                    Me.lblMessage.Text = "Automatickým příjemcem této události budou všechny zapojené osoby do dané kalendářové události (milníku)."
-                Case BO.x29IdEnum.b07Comment
-                    Me.lblMessage.Text = "V případě reakce na komentář bude automatickým příjemcem autor původního komentáře."
-            End Select
+            x46IsExcludeAuthor.Visible = Me.panReceiver.Visible
+            x46IsForRecordOwner.Visible = Me.panReceiver.Visible
+            x46IsForRecordOwner_Reference.Visible = Me.panReceiver.Visible
+            x46IsForAllReferenceRoles.Visible = Me.panReceiver.Visible
+            x67ID_Reference.Visible = Me.panReceiver.Visible
+            lblx67ID_Reference.Visible = Me.panReceiver.Visible
         End If
 
         If Me.x29ID_Reference.SelectedValue <> "" And Me.panReference.Visible Then
@@ -171,7 +180,7 @@
             Me.x67ID_Reference.DataSource = lisX67
             Me.x67ID_Reference.DataBind()
             Me.x67ID_Reference.SelectedValue = s
-            If lisX67.Count > 0 Then
+            If lisX67.Count > 0 And Me.panReceiver.Visible Then
                 Me.x67ID_Reference.Visible = True
             Else
                 Me.x67ID_Reference.Visible = False
@@ -180,13 +189,17 @@
         Me.x46MessageTemplate.Visible = Not Me.x46IsUseSystemTemplate.Checked
         Me.x45MessageTemplate.Visible = Not Me.x46MessageTemplate.Visible
         Me.x46IsForAllRoles.Visible = Me.x67ID.Visible
-        Me.x46IsForAllReferenceRoles.Visible = Me.x67ID_Reference.Visible
+        If Me.panReceiver.Visible Then
+            Me.x46IsForAllReferenceRoles.Visible = Me.x67ID_Reference.Visible
 
-        If Me.x46IsForAllRoles.Visible Then
-            Me.x67ID.Visible = Not Me.x46IsForAllRoles.Checked
-        End If
-        If Me.x46IsForAllReferenceRoles.Visible Then
-            Me.x67ID_Reference.Visible = Not Me.x46IsForAllReferenceRoles.Checked
+
+
+            If Me.x46IsForAllRoles.Visible Then
+                Me.x67ID.Visible = Not Me.x46IsForAllRoles.Checked
+            End If
+            If Me.x46IsForAllReferenceRoles.Visible Then
+                Me.x67ID_Reference.Visible = Not Me.x46IsForAllReferenceRoles.Checked
+            End If
         End If
     End Sub
 End Class

@@ -41,13 +41,22 @@ Partial Public Class workflow_dialog
     Protected WithEvents panNotify As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''chkNotifyComment control.
+    '''cmdAddNotifyReceiver control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkNotifyComment As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents cmdAddNotifyReceiver As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''receiver1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents receiver1 As Global.UI.person_or_team
 
     '''<summary>
     '''panNominee control.

@@ -59,6 +59,15 @@ Partial Public Class x46_record
     Protected WithEvents page1 As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''lblReceiverMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblReceiverMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''x46IsExcludeAuthor control.
     '''</summary>
     '''<remarks>
@@ -66,6 +75,15 @@ Partial Public Class x46_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x46IsExcludeAuthor As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panReceiver control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panReceiver As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''lblJ02ID control.
@@ -176,13 +194,13 @@ Partial Public Class x46_record
     Protected WithEvents x29ID_Reference As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Label2 control.
+    '''lblx67ID_Reference control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblx67ID_Reference As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''x67ID_Reference control.

@@ -275,15 +275,6 @@ Partial Public Class p91_framework_detail
     Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdWorkflow control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdWorkflow As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''lblDebt control.
     '''</summary>
     '''<remarks>
@@ -678,6 +669,15 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents comments1 As Global.UI.b07_list
+
+    '''<summary>
+    '''alert1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents alert1 As Global.UI.alertbox
 
     '''<summary>
     '''p31 control.

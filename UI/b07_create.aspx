@@ -5,8 +5,8 @@
 <%@ Register TagPrefix="uc" TagName="fileupload" Src="~/fileupload.ascx" %>
 <%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
-<%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
-<%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="person_or_team" Src="~/person_or_team.ascx" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
@@ -30,22 +30,12 @@
 
     <div class="content-box2">
         <div class="title">
+            <img src="Images/email.png" />
             Komu poslat notifikaci komentáře
             <asp:Button ID="cmdAddReceiver" runat="server" CssClass="cmd" Text="Přidat" />
         </div>
         <div class="content">
-            <asp:Repeater ID="rp1" runat="server">
-                <ItemTemplate>
-                    <div>
-                        <span>Osoba:</span>
-                        <uc:person ID="j02id" runat="server" Width="200px" Flag="all" />
-                        <span>nebo tým:</span>
-                        <asp:DropDownList ID="j11id" runat="server" DataTextField="j11Name" DataValueField="pid" Style="width: 200px;"></asp:DropDownList>
-                        <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
-                        <asp:HiddenField ID="p85id" runat="server" />
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>
+            <uc:person_or_team id="receiver1" runat="server"></uc:person_or_team>
         </div>
     </div>
 

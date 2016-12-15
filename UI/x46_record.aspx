@@ -23,10 +23,11 @@
 
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
         <telerik:RadPageView ID="page1" runat="server" Selected="true">
+            <asp:label ID="lblReceiverMessage" runat="server" CssClass="infoNotification"></asp:label>
             <div>
                 <asp:CheckBox ID="x46IsExcludeAuthor" runat="server" Checked="true" Text="Z příjemců zprávy automaticky vyloučit osobu, která vyvolala tuto událost" ForeColor="red" />
             </div>
-            <div class="content-box2">
+            <asp:panel ID="panReceiver" runat="server" CssClass="content-box2">
                 <div class="title">Příjemci události</div>
                 <div class="content">
                     <table cellpadding="6">
@@ -71,7 +72,7 @@
 
                     </table>
                 </div>
-            </div>
+            </asp:panel>
 
             <asp:Panel ID="panReference" runat="server" CssClass="content-box2">
 
@@ -91,15 +92,15 @@
                                     <asp:ListItem Text="Faktura" Value="391"></asp:ListItem>
                                     <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
                                     <asp:ListItem Text="Worksheet záznam" Value="331"></asp:ListItem>
-                                    <asp:ListItem Text="Poznámka" Value="223"></asp:ListItem>
-                                    <asp:ListItem Text="Událost v kalendáři" Value="222"></asp:ListItem>
+                                    <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
+                                    <asp:ListItem Text="Kalendářová událost" Value="222"></asp:ListItem>
                                 </asp:DropDownList>
 
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label2" Text="Příjemce (role z referenční entity):" runat="server" CssClass="lbl"></asp:Label>
+                                <asp:Label ID="lblx67ID_Reference" Text="Příjemce (role z referenční entity):" runat="server" CssClass="lbl"></asp:Label>
                             </td>
                             <td>
                                 <uc:datacombo ID="x67ID_Reference" runat="server" DataTextField="x67Name" Visible="false" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>

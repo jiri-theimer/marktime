@@ -581,6 +581,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents notepad1 As Global.UI.o23_list
 
     '''<summary>
+    '''alert1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents alert1 As Global.UI.alertbox
+
+    '''<summary>
     '''tabs1 control.
     '''</summary>
     '''<remarks>
@@ -651,6 +660,15 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidParentWidth As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidPOS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPOS As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

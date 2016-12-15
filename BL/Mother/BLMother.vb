@@ -25,7 +25,7 @@
         End Get
     End Property
 
-    Public Sub RaiseAppEvent(x45ID As BO.x45IDEnum, intRecordPID As Integer, Optional strRecordName As String = Nothing, Optional strDescription As String = Nothing, Optional bolStopAutoNotification As Boolean = False)
+    Public Sub RaiseAppEvent(x45ID As BO.x45IDEnum, intRecordPID As Integer, Optional strRecordName As String = Nothing, Optional strDescription As String = Nothing, Optional bolStopAutoNotification As Boolean = False, Optional lisExplicitNotifyReceivers As List(Of BO.PersonOrTeam) = Nothing)
         Dim cLogEvent As New BO.x47EventLog
         With cLogEvent
             .x45ID = x45ID
@@ -39,7 +39,11 @@
             'notifikovat událost mailem
             Dim cX47 As BO.x47EventLog = Factory.x47EventLogBL.Load(Factory.x47EventLogBL.LastSavedPID)
             If cX47.x45IsAllowNotification Then 'zjistit, zda událost má globálně povolenou notifikaci
-                Factory.x46EventNotificationBL.GenerateNotifyMessages(cX47)
+                If Not lisExplicitNotifyReceivers Is Nothing Then
+                    If lisExplicitNotifyReceivers.Count = 0 Then lisExplicitNotifyReceivers = Nothing
+                End If
+                Factory.x46EventNotificationBL.GenerateNotifyMessages(cX47, lisExplicitNotifyReceivers)
+
             End If
         End If
 

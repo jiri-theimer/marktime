@@ -38,7 +38,13 @@ Class b07CommentBL
             If strUploadGUID <> "" Then
                 Me.Factory.o27AttachmentBL.UploadAndSaveUserControl(lisTempUpload, BO.x29IdEnum.b07Comment, Me.LastSavedPID)
             End If
-            Me.RaiseAppEvent(BO.x45IDEnum.b07_new, _LastSavedPID)
+            Dim bolStopNotification As Boolean = False
+            If notifyReceivers Is Nothing Then
+                bolStopNotification = True
+            Else
+                If notifyReceivers.Count = 0 Then bolStopNotification = True
+            End If
+            Me.RaiseAppEvent(BO.x45IDEnum.b07_new, _LastSavedPID, , , bolStopNotification, notifyReceivers)
             Return True
         Else
             Return False

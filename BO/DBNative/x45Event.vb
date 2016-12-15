@@ -78,6 +78,7 @@ Public Class x45Event
     Public Property x45MessageTemplate As String
     Public Property x45Ordinary As Integer
     Public Property x45IsAllowNotification As Boolean
+    Public Property x45IsManualReceiver As Boolean
     Public Property x45IsReference As Boolean
 
     Public ReadOnly Property NameWithCode As String

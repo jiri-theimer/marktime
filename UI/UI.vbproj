@@ -176,6 +176,7 @@
     <Content Include="admin_logofile.aspx" />
     <Content Include="admin_menu.aspx" />
     <Content Include="admin_workflow.aspx" />
+    <Content Include="alertbox.ascx" />
     <Content Include="approving_framework.aspx" />
     <Content Include="b01_record.aspx" />
     <Content Include="b02_record.aspx" />
@@ -357,6 +358,7 @@
     <Content Include="p91_proforma.aspx" />
     <Content Include="p98_record.aspx" />
     <Content Include="panelmenu.ascx" />
+    <Content Include="person_or_team.ascx" />
     <Content Include="Public\isirinfo.aspx" />
     <Content Include="Public\log_app_update_public.aspx" />
     <Content Include="query_builder.aspx" />
@@ -555,6 +557,13 @@
     </Compile>
     <Compile Include="admin_workflow.aspx.vb">
       <DependentUpon>admin_workflow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="alertbox.ascx.designer.vb">
+      <DependentUpon>alertbox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="alertbox.ascx.vb">
+      <DependentUpon>alertbox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="approving_framework.aspx.designer.vb">
@@ -2010,6 +2019,13 @@
     </Compile>
     <Compile Include="panelmenu.ascx.vb">
       <DependentUpon>panelmenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="person_or_team.ascx.designer.vb">
+      <DependentUpon>person_or_team.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="person_or_team.ascx.vb">
+      <DependentUpon>person_or_team.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Public\isirinfo.aspx.designer.vb">

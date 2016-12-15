@@ -10,6 +10,7 @@
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
 <%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
+<%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" type="text/css" href="Plugins/Plugin.css" />
@@ -382,8 +383,8 @@
                         </td>
                         <td colspan="3">
                             <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
-                            <img src="Images/workflow.png" />
-                            <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
+                            <br />
+                            <button type="button" onclick="workflow()" class="cmd" title="Změnit stav faktury, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona..."><img src="Images/workflow.png" /> Posunout/doplnit</button>
                         </td>
                     </tr>
                     <tr>
@@ -520,6 +521,7 @@
 
                 <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p91Invoice"></uc:o23_list>
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
+                <uc:alertbox id="alert1" runat="server"></uc:alertbox>
             </telerik:RadPageView>
             <telerik:RadPageView ID="p31" runat="server">
 
