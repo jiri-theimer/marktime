@@ -150,8 +150,13 @@
         End Select
     End Sub
     Private Sub Hadle_WorksheetDates()
-        Me.p91Datep31_From.SelectedDate = period1.DateFrom
-        Me.p91Datep31_Until.SelectedDate = period1.DateUntil
+        Try
+            Me.p91Datep31_From.SelectedDate = period1.DateFrom
+            Me.p91Datep31_Until.SelectedDate = period1.DateUntil
+        Catch ex As Exception
+
+        End Try
+        
     End Sub
 
     Private Sub opgDateSupply_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgDateSupply.SelectedIndexChanged
@@ -212,6 +217,12 @@
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "save" Then
+            If p91Datep31_From.IsEmpty Then p91Datep31_From.SelectedDate = Today
+            If p91Datep31_Until.IsEmpty Then p91Datep31_Until.SelectedDate = Today
+            If p91DateMaturity.IsEmpty Or p91Date.IsEmpty Or p91DateSupply.IsEmpty Then
+                Master.Notify("Chybí datum splatnosti, vystavení, plnění.", NotifyLevel.ErrorMessage) : Return
+                Return
+            End If
             Dim errs As New List(Of String), x As Integer = 0, intLastP91ID As Integer = 0
 
             Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates", BO.BAS.GB(Me.chkRememberDates.Checked))
@@ -299,7 +310,7 @@
                 End With
                 Dim intP91ID As Integer = Master.Factory.p91InvoiceBL.Create(cRec)
                 If intP91ID = 0 Then
-                    errs.Add(strRecord & ": " & Master.Factory.p91InvoiceBL.ErrorMessage)                
+                    errs.Add(strRecord & ": " & Master.Factory.p91InvoiceBL.ErrorMessage)
                 Else
                     x += 1
                     intLastP91ID = intP91ID
@@ -314,8 +325,8 @@
             Else
                 ClientScript.RegisterStartupScript(Me.GetType, "hash", "window.parent.window.open('p91_framework.aspx?pid=" & intLastP91ID.ToString & "','_top');", True)
             End If
-            
-                
+
+
 
 
         End If
