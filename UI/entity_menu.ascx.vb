@@ -355,7 +355,7 @@ Public Class entity_menu
         End If
         If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
-                ami("Založit pro klienta nový projekt", "cmdNewP41", "javascript:p41_new();", "Images/project.png", mi, , True)
+                ami("Založit pro klienta nový projekt", "cmdNewP41", "javascript:p28_p41_new();", "Images/project.png", mi, , True)
             End If
         End If
         If Me.Factory.SysUser.IsApprovingPerson Then

@@ -10,6 +10,7 @@
         cmdApproving.NavigateUrl = ""
         cmdApproving.Enabled = False
     End Sub
+    
     Public Sub RefreshData(cWorksheetSum As BO.p31WorksheetSum, strPrefix As String, intRecordPID As Integer, bolAllowHonorar As Boolean, dblLimitHours_Notification As Double, dblLImitFee_Notification As Double)
         If Not bolAllowHonorar Then dblLImitFee_Notification = 0
         With cWorksheetSum

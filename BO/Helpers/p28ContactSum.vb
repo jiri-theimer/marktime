@@ -19,5 +19,9 @@
     Public Property p41_Closed_Count As Integer
     Public Property o48_Exist As Boolean
 
+    Public Property Last_Invoice As String
+    Public Property Last_Wip_Worksheet As String
+
+
 
 End Class

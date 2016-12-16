@@ -192,10 +192,21 @@
     <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/worksheet.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxP31SummaryTitle" runat="server" Text="Worksheet summary"></asp:Label>
+            <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
         </div>
         <div class="content">
             <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
+
+            <div style="width:100%;">
+                <span class="val">Poslední vystavená faktura:</span>
+                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+
+            </div>
+            <div style="width:100%;">
+                <span class="val">Poslední nevyfakturovaný úkon:</span>
+                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+
+            </div>
         </div>
     </asp:Panel>
     <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">

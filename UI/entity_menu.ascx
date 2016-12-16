@@ -100,6 +100,11 @@
         var pid = <%=Me.DataPID%>;
         sw_decide("p41_create.aspx?client_family=1&pid=<%=Me.DataPID%>&create_parent=1","Images/project.png",true);
     }
+    function p28_p41_new() {
+            
+        sw_decide("p41_create.aspx?p28id=<%=Me.DataPID%>","Images/project_32.png",true);
+
+    }
     function p31_recurrence_record(pid) {
         sw_decide("p31_record.aspx?pid=" + pid, "Images/worksheet.png");
 
@@ -138,7 +143,7 @@
     }
         
     function p48_plan(){            
-        window.open("p48_framework.aspx?masterprefix=p41&masterpid=<%=Me.DataPID%>","_top");
+        window.open("p48_framework.aspx?masterprefix=<%=me.DataPrefix%>&masterpid=<%=Me.DataPID%>","_top");
     }
 
     function workflow(){            

@@ -246,6 +246,7 @@
     <Content Include="o42_record.aspx" />
     <Content Include="o48_record.aspx" />
     <Content Include="p28_framework.aspx" />
+    <Content Include="p28_framework_detail.aspx" />
     <Content Include="p28_framework_rec_board.aspx" />
     <Content Include="p31summary.ascx" />
     <Content Include="p31summary_drilldown.ascx" />
@@ -406,7 +407,7 @@
     <Content Include="o23_list.ascx" />
     <Content Include="o23_record.aspx" />
     <Content Include="p28_address.ascx" />
-    <Content Include="p28_framework_detail.aspx" />
+    <Content Include="p28_framework_detail_delete.aspx" />
     <Content Include="p28_medium.ascx" />
     <Content Include="p31_approve_onerec.ascx" />
     <Content Include="p31_approving_batch_p31text.aspx" />
@@ -1187,6 +1188,13 @@
     </Compile>
     <Compile Include="p28_framework.aspx.vb">
       <DependentUpon>p28_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p28_framework_detail.aspx.designer.vb">
+      <DependentUpon>p28_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_framework_detail.aspx.vb">
+      <DependentUpon>p28_framework_detail.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p28_framework_rec_board.aspx.designer.vb">
@@ -2231,11 +2239,11 @@
       <DependentUpon>p28_address.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="p28_framework_detail.aspx.designer.vb">
-      <DependentUpon>p28_framework_detail.aspx</DependentUpon>
+    <Compile Include="p28_framework_detail_delete.aspx.designer.vb">
+      <DependentUpon>p28_framework_detail_delete.aspx</DependentUpon>
     </Compile>
-    <Compile Include="p28_framework_detail.aspx.vb">
-      <DependentUpon>p28_framework_detail.aspx</DependentUpon>
+    <Compile Include="p28_framework_detail_delete.aspx.vb">
+      <DependentUpon>p28_framework_detail_delete.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p28_medium.ascx.designer.vb">

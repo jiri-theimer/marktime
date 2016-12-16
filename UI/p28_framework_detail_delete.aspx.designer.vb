@@ -11,7 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p41_framework_rec_board
+Partial Public Class p28_framework_detail_delete
+
+    '''<summary>
+    '''panMenuContainer control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panMenuContainer As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''menu1 control.
@@ -20,7 +29,16 @@ Partial Public Class p41_framework_rec_board
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.UI.entity_menu
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+
+    '''<summary>
+    '''panSwitch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSwitch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''boxCoreTitle control.
@@ -32,13 +50,13 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdFavourite control.
+    '''chkFFShowFilledOnly control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdFavourite As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents chkFFShowFilledOnly As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''trParent control.
@@ -59,40 +77,40 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''ParentProject control.
+    '''ParentContact control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ParentProject As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents ParentContact As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''lblProject control.
+    '''lblContact control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblProject As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblContact As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Project control.
+    '''Contact control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Project As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Contact As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''imgFlag_Project control.
+    '''p29Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents imgFlag_Project As Global.System.Web.UI.WebControls.Image
+    Protected WithEvents p29Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''imgDraft control.
@@ -111,51 +129,6 @@ Partial Public Class p41_framework_rec_board
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panDraftCommands As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cmdChilds control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdChilds As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''lblClient control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblClient As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Client control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Client As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''clue_client control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_client As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''imgFlag_Client control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgFlag_Client As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
     '''trWorkflow control.
@@ -194,51 +167,6 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents cmdWorkflow As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''trPlan control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trPlan As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''lblPlan control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblPlan As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''PlanPeriod control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents PlanPeriod As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''aP48 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents aP48 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''trP51 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trP51 As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
     '''lblX51 control.
     '''</summary>
     '''<remarks>
@@ -266,67 +194,94 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents clue_p51id_billing As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''lblX51_Message control.
+    '''imgFlag_Contact control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblX51_Message As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents imgFlag_Contact As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''lblP42Name control.
+    '''trICDIC control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblP42Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents trICDIC As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
-    '''p42Name control.
+    '''Label1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p42Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''clue_p42name control.
+    '''linkIC control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents clue_p42name As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents linkIC As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''lblJ18Name control.
+    '''linkARES control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblJ18Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents linkARES As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''j18Name control.
+    '''linkDIC control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j18Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents linkDIC As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''clue_j18name control.
+    '''ff1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents clue_j18name As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents ff1 As Global.UI.freefields_readonly
+
+    '''<summary>
+    '''linkISIR control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkISIR As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkISIR_Monitoring control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkISIR_Monitoring As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkChilds control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkChilds As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''boxX18 control.
@@ -365,33 +320,6 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents labels1 As Global.UI.x18_readonly
 
     '''<summary>
-    '''boxP40 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxP40 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxP40Title control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxP40Title As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''rpP40 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpP40 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
     '''boxP31Summary control.
     '''</summary>
     '''<remarks>
@@ -419,22 +347,58 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents p31summary1 As Global.UI.entity_worksheet_summary
 
     '''<summary>
-    '''Last_Invoice control.
+    '''panRoles control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Last_Invoice As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panRoles As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Last_WIP_Worksheet control.
+    '''roles1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Last_WIP_Worksheet As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents roles1 As Global.UI.entityrole_assign_inline
+
+    '''<summary>
+    '''boxO37 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxO37 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''boxO37Title control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxO37Title As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''address1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents address1 As Global.UI.p28_address
+
+    '''<summary>
+    '''medium1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents medium1 As Global.UI.p28_medium
 
     '''<summary>
     '''boxP30 control.
@@ -473,69 +437,6 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents persons1 As Global.UI.contactpersons
 
     '''<summary>
-    '''boxFF control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxFF As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxFFTitle control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxFFTitle As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''chkFFShowFilledOnly control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkFFShowFilledOnly As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''ff1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ff1 As Global.UI.freefields_readonly
-
-    '''<summary>
-    '''boxRoles control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxRoles As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxRolesTitle control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxRolesTitle As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''roles_project control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents roles_project As Global.UI.entityrole_assign_inline
-
-    '''<summary>
     '''boxBillingMemo control.
     '''</summary>
     '''<remarks>
@@ -545,40 +446,13 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents boxBillingMemo As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''p41BillingMemo control.
+    '''p28BillingMemo control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p41BillingMemo As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''boxO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxO23 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxO23Title control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxO23Title As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''notepad1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
+    Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''alert1 control.
@@ -590,13 +464,85 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents alert1 As Global.UI.alertbox
 
     '''<summary>
-    '''comments1 control.
+    '''tabs1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents comments1 As Global.UI.b07_list
+    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''fraSubform control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fraSubform As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''imgLoading control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgLoading As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''hidHardRefreshFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidHardRefreshPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDetailMode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDetailMode As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidParentWidth control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidParentWidth As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''cmdRefresh control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''sb1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sb1 As Global.UI.searchbox
 
     '''<summary>
     '''Master property.

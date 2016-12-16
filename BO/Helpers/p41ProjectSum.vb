@@ -19,4 +19,7 @@
     Public Property o23_Count As Integer
     Public Property p45_Count As Integer
 
+    Public Property Last_Invoice As String
+    Public Property Last_Wip_Worksheet As String
+
 End Class

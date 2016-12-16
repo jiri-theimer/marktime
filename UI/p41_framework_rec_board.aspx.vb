@@ -47,9 +47,8 @@
         Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
         Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
 
-        Handle_Permissions(cRec, cP42, cDisp)
-
         menu1.p41_RefreshRecord(cRec, cRecSum, "board", cDisp)
+        Handle_Permissions(cRec, cP42, cDisp)
 
         Dim cClient As BO.p28Contact = Nothing
 
@@ -184,16 +183,22 @@
         Dim mq As New BO.myQueryP31
         mq.p41ID = cRec.PID
 
-        If cRec.p41LimitFee_Notification > 0 Or cRec.p41LimitHours_Notification > 0 Then
-            Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
-            If cWorksheetSum.RowsCount = 0 Then
-                boxP31Summary.Visible = False
+        If cP42.p42IsModule_p31 Then
+            Me.Last_Invoice.Text = cRecSum.Last_Invoice
+            Me.Last_WIP_Worksheet.Text = cRecSum.Last_Wip_Worksheet
+            If cRec.p41LimitFee_Notification > 0 Or cRec.p41LimitHours_Notification > 0 Or cRecSum.p31_Wip_Time_Count > 0 Or cRecSum.p31_Wip_Expense_Count > 0 Or cRecSum.p31_Wip_Fee_Count > 0 Or cRecSum.p31_Approved_Time_Count > 0 Or cRecSum.p31_Approved_Expense_Count > 0 Then
+                Dim cWorksheetSum As BO.p31WorksheetSum = Master.Factory.p31WorksheetBL.LoadSumRow(mq, True, True)
+                If cWorksheetSum.RowsCount = 0 Then
+                    boxP31Summary.Visible = False
+                Else
+                    p31summary1.RefreshData(cWorksheetSum, "p41", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), cRec.p41LimitHours_Notification, cRec.p41LimitFee_Notification)
+                End If
             Else
-                p31summary1.RefreshData(cWorksheetSum, "p41", Master.DataPID, Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates), cRec.p41LimitHours_Notification, cRec.p41LimitFee_Notification)
+                p31summary1.Visible = False
+                If cRecSum.Last_Invoice = "" And cRecSum.Last_Wip_Worksheet = "" Then Me.boxP31Summary.Visible = False
             End If
-        Else
-            boxP31Summary.Visible = False
         End If
+       
 
 
 
@@ -257,7 +262,7 @@
 
             Else
 
-                p31summary1.Visible = False
+                Me.boxP31Summary.Visible = False
             End If
 
             aP48.Visible = cP42.p42IsModule_p48
