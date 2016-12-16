@@ -1,8 +1,10 @@
 ﻿Imports Telerik.Web.UI
 
-Public Class entity_framework_p41subform
+Public Class entity_framework_rec_p41
     Inherits System.Web.UI.Page
+    Protected WithEvents _MasterPage As SubForm
     Private Property _curIsExport As Boolean
+    Public Property DefaultSelectedPID As Integer
     Public Property CurrentMasterPrefix As String
         Get
             Return hidMasterPrefix.Value
@@ -11,67 +13,86 @@ Public Class entity_framework_p41subform
             hidMasterPrefix.Value = value
         End Set
     End Property
-    Public Property CurrentMasterPID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.hidMasterPID.Value)
-        End Get
-        Set(value As Integer)
-            hidMasterPID.Value = value.ToString
-        End Set
-    End Property
-    Public Property DefaultSelectedPID As Integer
 
+    Private Sub entity_framework_rec_p41_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _MasterPage = Me.Master
+        menu1.Factory = Master.Factory
+    End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
         If Not Page.IsPostBack Then
-            Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
-            Me.CurrentMasterPrefix = Request.Item("masterprefix")
-            If Me.CurrentMasterPID = 0 Or Me.CurrentMasterPrefix = "" Then Master.StopPage("masterpid or masterprefix missing.")
-            If Request.Item("lasttabkey") <> "" Then
-                Master.Factory.j03UserBL.SetUserParam(Request.Item("lasttabkey"), Request.Item("lasttabval"))
-            End If
+            With Master
+                .DataPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
+                Me.CurrentMasterPrefix = Request.Item("masterprefix")
+                If .DataPID = 0 Or Me.CurrentMasterPrefix = "" Then .StopPage("masterpid or masterprefix is missing")
 
-            ViewState("j74id") = ""
-            Dim mq As New BO.myQuery
-            mq.Closed = BO.BooleanQueryMode.FalseQuery
-            x67ID.DataSource = Master.Factory.x67EntityRoleBL.GetList(mq).Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project)
-            x67ID.DataBind()
-            x67ID.Items.Insert(0, "--Filtr podle projektové role osoby--")
-            With Master.Factory.j03UserBL
+                .SiteMenuValue = Me.CurrentMasterPrefix
+                menu1.DataPrefix = Me.CurrentMasterPrefix
+
+                ViewState("j74id") = ""
+                Dim mq As New BO.myQuery
+                mq.Closed = BO.BooleanQueryMode.FalseQuery
+                x67ID.DataSource = Master.Factory.x67EntityRoleBL.GetList(mq).Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project)
+                x67ID.DataBind()
+                x67ID.Items.Insert(0, "--Filtr podle projektové role osoby--")
+
                 Dim lisPars As New List(Of String), strKey As String = "entiy_framework_p41subform-j74id_" & Me.CurrentMasterPrefix
                 With lisPars
+                    .Add(Me.CurrentMasterPrefix & "_menu-tabskin")
                     .Add("entiy_framework_p41subform-groupby-" & Me.CurrentMasterPrefix)
                     .Add("entiy_framework_p41subform-pagesize")
                     .Add("entiy_framework_p41subform-validity")
                     .Add("entiy_framework_p41subform-x67id")
                     .Add(strKey)
                 End With
-                .InhaleUserParams(lisPars)
-                ViewState("j74id") = .GetUserParam(strKey, "0")
+                With .Factory.j03UserBL
+                    .InhaleUserParams(lisPars)
+                    menu1.TabSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-tabskin")
 
-                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
-                    Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID, Me.CurrentMasterPrefix)
-                    Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID, Me.CurrentMasterPrefix)
-                    ViewState("j74id") = cJ74.PID
-                    .SetUserParam(strKey, ViewState("j74id"))
-                End If
-                basUI.SelectDropdownlistValue(Me.x67ID, .GetUserParam("entiy_framework_p41subform-x67id"))
-                basUI.SelectDropdownlistValue(Me.cbxValidity, .GetUserParam("entiy_framework_p41subform-validity", "1"))
-                basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("entiy_framework_p41subform-pagesize", "10"))
-                basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("entiy_framework_p41subform-groupby-" & Me.CurrentMasterPrefix))
+                    ViewState("j74id") = .GetUserParam(strKey, "0")
+
+                    If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
+                        Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID, Me.CurrentMasterPrefix)
+                        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID, Me.CurrentMasterPrefix)
+                        ViewState("j74id") = cJ74.PID
+                        .SetUserParam(strKey, ViewState("j74id"))
+                    End If
+                    basUI.SelectDropdownlistValue(Me.x67ID, .GetUserParam("entiy_framework_p41subform-x67id"))
+                    basUI.SelectDropdownlistValue(Me.cbxValidity, .GetUserParam("entiy_framework_p41subform-validity", "1"))
+                    basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("entiy_framework_p41subform-pagesize", "10"))
+                    basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("entiy_framework_p41subform-groupby-" & Me.CurrentMasterPrefix))
+                End With
             End With
             With Master.Factory
                 panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)
                 recmenu1.FindItemByValue("new").Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Creator)
                 recmenu1.FindItemByValue("clone").Visible = recmenu1.FindItemByValue("new").Visible
             End With
-            
-            SetupGrid()
-        End If
 
+            SetupGrid()
+
+            RefreshRecord()
+        End If
     End Sub
 
+    Private Sub RefreshRecord()
+        Select Case Me.CurrentMasterPrefix
+            Case "p41"
+                Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+                Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
+                Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
+                menu1.p41_RefreshRecord(cRec, cRecSum, "p41")
+            Case "p28"
+                Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
+                Dim cRecSum As BO.p28ContactSum = Master.Factory.p28ContactBL.LoadSumRow(cRec.PID)
+                menu1.p28_RefreshRecord(cRec, cRecSum, "p41")
+            Case "j02"
+                Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
+                Dim cRecSum As BO.j02PersonSum = Master.Factory.j02PersonBL.LoadSumRow(cRec.PID)
+                menu1.j02_RefreshRecord(cRec, cRecSum, "p41")
+        End Select
+
+    End Sub
 
     Private Sub SetupGrid()
         Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
@@ -119,7 +140,7 @@ Public Class entity_framework_p41subform
     End Sub
 
     Private Sub ReloadPage()
-        Response.Redirect("entity_framework_p41subform.aspx?masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString, True)
+        Response.Redirect("entity_framework_rec_p41.aspx?masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Master.DataPID.ToString, True)
     End Sub
 
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
@@ -156,7 +177,7 @@ Public Class entity_framework_p41subform
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        
+
         Dim mq As New BO.myQueryP41
         InhaleQuery(mq)
 
@@ -202,11 +223,11 @@ Public Class entity_framework_p41subform
 
         Select Case Me.CurrentMasterPrefix
             Case "p41"
-                mq.p41ParentID = Me.CurrentMasterPID
+                mq.p41ParentID = Master.DataPID
             Case "p28"
-                mq.p28ID = Me.CurrentMasterPID
+                mq.p28ID = Master.DataPID
             Case "j02"
-                mq.j02ID_ExplicitQueryFor = Me.CurrentMasterPID
+                mq.j02ID_ExplicitQueryFor = Master.DataPID
                 mq.x67ID_ProjectRole = BO.BAS.IsNullInt(Me.x67ID.SelectedValue)
 
             Case Else
@@ -257,13 +278,13 @@ Public Class entity_framework_p41subform
         GridExport("doc")
     End Sub
 
-    
+
     Private Sub x67ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles x67ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entiy_framework_p41subform-x67id", Me.x67ID.SelectedValue)
         ReloadPage()
     End Sub
 
-    Private Sub entity_framework_p41subform_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+    Private Sub entity_framework_rec_p41_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Me.CurrentMasterPrefix = "j02" Then
             Me.x67ID.Visible = True
         Else

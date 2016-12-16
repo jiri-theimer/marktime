@@ -60,7 +60,7 @@
             Case "j02"
                 Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
                 Dim cRecSum As BO.j02PersonSum = Master.Factory.j02PersonBL.LoadSumRow(cRec.PID)
-                menu1.j02_RefreshRecord(cRec, cRecSum, "j02")
+                menu1.j02_RefreshRecord(cRec, cRecSum, "p91")
         End Select
 
     End Sub

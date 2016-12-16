@@ -5,26 +5,13 @@
 
     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
         <Items>
-            <telerik:RadMenuItem Value="begin">
-                <ItemTemplate>
-                    <asp:Image ID="imgLogo" runat="server" ImageUrl="Images/project_32.png" />                    
-                </ItemTemplate>
-            </telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
-            </telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px"></telerik:RadMenuItem>
             <telerik:RadMenuItem Value="saw" Text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p41_framework_detail.aspx?saw=1" ToolTip="Otevřít aktuální záznam v nové záložce prohlížeče"></telerik:RadMenuItem>
                        
-            <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" meta:resourcekey="menu_zaznam">                
-            </telerik:RadMenuItem>      
+            <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record"></telerik:RadMenuItem>      
             
-            <telerik:RadMenuItem Value="searchbox">
-                    <ItemTemplate>
-                        <%If sb1.ashx <> "" Then%>
-                        <input id="search2" style="width: 100px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus()" onblur="search2Blur()" />
-                        <div id="search2_result" style="position: relative;left:-150px;"></div>
-                        <%end if %>
-                    </ItemTemplate>
-                </telerik:RadMenuItem>                 
+            <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>                 
 
         </Items>
     </telerik:RadMenu>

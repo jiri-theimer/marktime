@@ -29,7 +29,7 @@
                 ''Case "workflow"
                 ''    Return "entity_framework_b07subform.aspx?" & s
             Case "p41"
-                Return "entity_framework_p41subform.aspx?" & s
+                Return "entity_framework_rec_p41.aspx?" & s
             Case Else
                 Return _URL
         End Select

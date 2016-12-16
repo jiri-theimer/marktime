@@ -190,16 +190,10 @@
     <Content Include="clue_search.aspx" />
     <Content Include="drilldown_designer.aspx" />
     <Content Include="entity_framework.aspx" />
-    <Content Include="entity_framework_b07subform.aspx" />
     <Content Include="entity_framework_detail_setting.aspx" />
-    <Content Include="entity_framework_o23subform.aspx" />
-    <Content Include="entity_framework_p31subform.aspx" />
-    <Content Include="entity_framework_p31summary.aspx" />
-    <Content Include="entity_framework_p41subform.aspx" />
-    <Content Include="entity_framework_p56subform.aspx" />
-    <Content Include="entity_framework_p91subform.aspx" />
     <Content Include="entity_framework_rec_o23.aspx" />
     <Content Include="entity_framework_rec_p31.aspx" />
+    <Content Include="entity_framework_rec_p41.aspx" />
     <Content Include="entity_framework_rec_p56.aspx" />
     <Content Include="entity_framework_rec_p91.aspx" />
     <Content Include="entity_framework_rec_summary.aspx" />
@@ -212,6 +206,8 @@
     <Content Include="Integration\mtService.svc" />
     <Content Include="invoice.ascx" />
     <Content Include="j02_framework.aspx" />
+    <Content Include="j02_framework_detail.aspx" />
+    <Content Include="j02_framework_rec_board.aspx" />
     <Content Include="j03_accesslog.aspx" />
     <Content Include="j60_record.aspx" />
     <Content Include="j61_record.aspx" />
@@ -323,7 +319,7 @@
     <Content Include="help.aspx" />
     <Content Include="helpdesk_default.aspx" />
     <Content Include="j02_batch.aspx" />
-    <Content Include="j02_framework_detail.aspx" />
+    <Content Include="j02_framework_detail_delete.aspx" />
     <Content Include="j03_messages.aspx" />
     <Content Include="j03_mypage.aspx" />
     <Content Include="j03_mypage_greeting.aspx" />
@@ -786,60 +782,11 @@
       <DependentUpon>entity_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="entity_framework_b07subform.aspx.designer.vb">
-      <DependentUpon>entity_framework_b07subform.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_b07subform.aspx.vb">
-      <DependentUpon>entity_framework_b07subform.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="entity_framework_detail_setting.aspx.designer.vb">
       <DependentUpon>entity_framework_detail_setting.aspx</DependentUpon>
     </Compile>
     <Compile Include="entity_framework_detail_setting.aspx.vb">
       <DependentUpon>entity_framework_detail_setting.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_framework_o23subform.aspx.designer.vb">
-      <DependentUpon>entity_framework_o23subform.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_o23subform.aspx.vb">
-      <DependentUpon>entity_framework_o23subform.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_framework_p31subform.aspx.designer.vb">
-      <DependentUpon>entity_framework_p31subform.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_p31subform.aspx.vb">
-      <DependentUpon>entity_framework_p31subform.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_framework_p31summary.aspx.designer.vb">
-      <DependentUpon>entity_framework_p31summary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_p31summary.aspx.vb">
-      <DependentUpon>entity_framework_p31summary.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_framework_p41subform.aspx.designer.vb">
-      <DependentUpon>entity_framework_p41subform.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_p41subform.aspx.vb">
-      <DependentUpon>entity_framework_p41subform.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_framework_p56subform.aspx.designer.vb">
-      <DependentUpon>entity_framework_p56subform.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_p56subform.aspx.vb">
-      <DependentUpon>entity_framework_p56subform.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_framework_p91subform.aspx.designer.vb">
-      <DependentUpon>entity_framework_p91subform.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_p91subform.aspx.vb">
-      <DependentUpon>entity_framework_p91subform.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_framework_rec_o23.aspx.designer.vb">
@@ -854,6 +801,13 @@
     </Compile>
     <Compile Include="entity_framework_rec_p31.aspx.vb">
       <DependentUpon>entity_framework_rec_p31.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="entity_framework_rec_p41.aspx.designer.vb">
+      <DependentUpon>entity_framework_rec_p41.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="entity_framework_rec_p41.aspx.vb">
+      <DependentUpon>entity_framework_rec_p41.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_framework_rec_p56.aspx.designer.vb">
@@ -950,6 +904,20 @@
     </Compile>
     <Compile Include="j02_framework.aspx.vb">
       <DependentUpon>j02_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j02_framework_detail.aspx.designer.vb">
+      <DependentUpon>j02_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j02_framework_detail.aspx.vb">
+      <DependentUpon>j02_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="j02_framework_rec_board.aspx.designer.vb">
+      <DependentUpon>j02_framework_rec_board.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="j02_framework_rec_board.aspx.vb">
+      <DependentUpon>j02_framework_rec_board.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j03_accesslog.aspx.designer.vb">
@@ -1780,11 +1748,11 @@
       <DependentUpon>j02_batch.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="j02_framework_detail.aspx.designer.vb">
-      <DependentUpon>j02_framework_detail.aspx</DependentUpon>
+    <Compile Include="j02_framework_detail_delete.aspx.designer.vb">
+      <DependentUpon>j02_framework_detail_delete.aspx</DependentUpon>
     </Compile>
-    <Compile Include="j02_framework_detail.aspx.vb">
-      <DependentUpon>j02_framework_detail.aspx</DependentUpon>
+    <Compile Include="j02_framework_detail_delete.aspx.vb">
+      <DependentUpon>j02_framework_detail_delete.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j03_messages.aspx.designer.vb">

@@ -1,0 +1,197 @@
+﻿Public Class j02_framework_rec_board
+    Inherits System.Web.UI.Page
+    Protected WithEvents _MasterPage As SubForm
+    Public Property CurrentJ03ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidJ03ID.Value)
+        End Get
+        Set(value As Integer)
+            hidJ03ID.Value = value.ToString
+        End Set
+    End Property
+    Private Sub j02_framework_rec_board_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _MasterPage = Me.Master
+        menu1.Factory = Master.Factory
+        menu1.DataPrefix = "j02"
+        ff1.Factory = Master.Factory
+    End Sub
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        If Not Page.IsPostBack Then
+            With Master
+                .SiteMenuValue = "j02"
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+
+                Dim lisPars As New List(Of String)
+                With lisPars
+                    .Add("j02_framework_detail-tabskin")
+                    .Add("j02_framework_detail-chkFFShowFilledOnly")
+                    .Add("j02_framework_detail_pos")
+                    .Add("j02_framework_detail-searchbox")
+                End With
+                With .Factory.j03UserBL
+                    .InhaleUserParams(lisPars)
+                    menu1.TabSkin = .GetUserParam("j02_framework_detail-tabskin")
+                    Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
+
+                End With
+            End With
+
+
+            RefreshRecord()
+
+        End If
+    End Sub
+
+    Private Sub RefreshRecord()
+        Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
+        If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=j02")
+
+        Dim cRecSum As BO.j02PersonSum = Master.Factory.j02PersonBL.LoadSumRow(cRec.PID)
+        
+        menu1.j02_RefreshRecord(cRec, cRecSum, "board")
+
+        With cRec
+            Me.panIntraPerson.Visible = .j02IsIntraPerson
+            Me.boxJ05.Visible = .j02IsIntraPerson
+        End With
+
+
+        With Me.panIntraPerson
+            Me.c21Name.Visible = .Visible
+            Me.lblFond.Visible = .Visible
+        End With
+
+        If cRec.j02IsIntraPerson Then
+            Dim cUser As BO.j03User = Nothing
+            Dim mq As New BO.myQueryJ03
+            mq.j02ID = cRec.PID
+            Dim lisJ03 As IEnumerable(Of BO.j03User) = Master.Factory.j03UserBL.GetList(mq)
+            If lisJ03.Count > 0 Then
+                panAccount.Visible = True
+                cUser = lisJ03(0)
+                With cUser
+                    Me.j03Login.Text = .j03Login
+                    Me.j04Name.Text = .j04Name
+                End With
+                AccountMessage.Text = ""
+                Me.CurrentJ03ID = cUser.PID
+                cmdLog.Visible = True
+            Else
+                Me.panAccount.Visible = False
+                AccountMessage.Text = "Tento osobní profil není svázán s uživatelským účtem."
+                cmdLog.Visible = False
+            End If
+        End If
+        Handle_Permissions(cRec)
+
+
+        With cRec
+            Me.FullNameAsc.Text = .FullNameAsc
+            Me.j02Email.Text = .j02Email
+            Me.j02Code.Text = .j02Code
+            Me.j02Email.NavigateUrl = "mailto:" & .j02Email
+            If .j02Phone <> "" Then
+                Me.Mediums.Text += " | " & .j02Phone
+            End If
+            If .j02Mobile <> "" Then
+                Me.Mediums.Text += " | " & .j02Mobile
+            End If
+            If .j02Office <> "" Then
+                Me.Mediums.Text += " | " & .j02Office
+            End If
+            If Me.Mediums.Text <> "" Then
+                Me.Mediums.Text = BO.BAS.OM1(Trim(Me.Mediums.Text))
+            End If
+            If .j02Salutation <> "" Then
+                Me.Correspondence.Text = String.Format("Oslovení pro korespondenci: {0}", "<b>" & .j02Salutation & "</b>")
+            End If
+
+
+            Me.j07Name.Text = .j07Name
+            If Not cRec.j02IsIntraPerson Then
+                Me.j07Name.Text = .j02JobTitle
+            End If
+            Me.c21Name.Text = .c21Name
+            If .j17ID > 0 Then
+                Me.j17Name.Text = Master.Factory.j17CountryBL.Load(.j17ID).j17Name : lblJ17Name.Visible = True
+            Else
+                Me.lblJ17Name.Visible = False
+            End If
+            If .j18ID = 0 Then
+                lblJ18Name.Visible = False
+            Else
+                lblJ18Name.Visible = True : Me.j18Name.Text = .j18Name
+            End If
+            Me.TeamsInLine.Text = Master.Factory.j02PersonBL.GetTeamsInLine(.PID)
+            If Me.TeamsInLine.Text = "" Then lblTeams.Visible = False
+        End With
+
+
+        panMasters.Visible = False : panSlaves.Visible = False
+        cmdAddJ05.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
+        Dim lisJ05 As IEnumerable(Of BO.j05MasterSlave) = Master.Factory.j05MasterSlaveBL.GetList(cRec.PID, 0, 0)
+
+        If lisJ05.Count > 0 Then
+            panSlaves.Visible = True
+            rpSlaves.DataSource = lisJ05
+            rpSlaves.DataBind()
+        End If
+        lisJ05 = Master.Factory.j05MasterSlaveBL.GetList(0, cRec.PID, 0)
+        If lisJ05.Count > 0 Then
+            panMasters.Visible = True
+            rpMasters.DataSource = lisJ05
+            rpMasters.DataBind()
+        End If
+
+
+
+
+        Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.j02Person, Master.DataPID, cRec.j07ID)
+        If lisFF.Count > 0 Then
+            ff1.FillData(lisFF, Not Me.chkFFShowFilledOnly.Checked)
+        Else
+            boxFF.Visible = False
+        End If
+
+        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person).Count > 0 Then
+            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=j02&pid={0}','Images/label_32.png',false);", cRec.PID)
+            labels1.RefreshData(BO.x29IdEnum.j02Person, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.j02Person, cRec.PID))
+        Else
+            boxX18.Visible = False
+        End If
+
+        Me.rpP30.DataSource = Master.Factory.p30Contact_PersonBL.GetList(0, 0, Master.DataPID)
+        Me.rpP30.DataBind()
+        If rpP30.Items.Count > 0 Then
+            boxP30.Visible = True
+        Else
+            boxP30.Visible = False
+        End If
+
+        If cRecSum.b07_Count > 0 Then
+            comments1.Visible = True
+            comments1.RefreshData(Master.Factory, BO.x29IdEnum.j02Person, cRec.PID)
+        Else
+            comments1.Visible = False
+        End If
+    End Sub
+
+    Private Sub Handle_Permissions(cRec As BO.j02Person)
+
+        Dim b As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
+        x18_binding.Visible = b
+        With cmdAccount
+            .Visible = b
+            If Me.CurrentJ03ID = 0 And b Then
+                .NavigateUrl = "javascript:j03_create()"
+                .Text = "Založit uživatelský účet"
+            Else
+                .NavigateUrl = "javascript:j03_edit()"
+                .Text = "Nastavení uživatelského účtu"
+            End If
+        End With
+
+       
+    End Sub
+End Class

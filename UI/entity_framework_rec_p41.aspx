@@ -1,64 +1,29 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="entity_framework_p41subform.aspx.vb" Inherits="UI.entity_framework_p41subform" %>
-
-<%@ MasterType VirtualPath="~/Clue.Master" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="entity_framework_rec_p41.aspx.vb" Inherits="UI.entity_framework_rec_p41" %>
+<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ Register TagPrefix="uc" TagName="entity_menu" Src="~/entity_menu.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    <link href="Scripts/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="Scripts/jquery.qtip.min.js"></script>
-
     <script type="text/javascript">
-        $(document).ready(function () {
-            window.parent.stoploading();
+        function hardrefresh(pid, flag) {
 
-            var iframeWidth = '100%';
-            var iframeHeight = '270';
-
-            $("a.reczoom").each(function () {
-
-                // Extract your variables here:
-                var $this = $(this);
-                var myurl = $this.attr('rel');
-
-                var mytitle = $this.attr('title');
-                if (mytitle == null)
-                    mytitle = 'Detail';
+            if (flag == "<%=Me.CurrentMasterPrefix%>-save") {
+                parent.window.location.replace("<%=Me.CurrentMasterPrefix%>_framework.aspx?pid=" + pid);
+                return;
+            }
+            if (flag == "<%=Me.CurrentMasterPrefix%>-delete") {
+                parent.window.location.replace("<%=Me.CurrentMasterPrefix%>_framework.aspx");
+                return;
+            }
 
 
-                $this.qtip({
-                    content: {
-                        text: '<iframe scrolling=no src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
-                        title: {
-                            text: mytitle
-                        },
+            location.replace("entity_framework_rec_p41.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=master.datapid%>");
 
-                    },
-                    position: {
-                        my: 'top center',  // Position my top left...
-                        at: 'bottom center', // at the bottom right of...
-                        viewport: $(window)
-                    },
+        }
 
-                    hide: {
-
-                        fixed: true,
-                        delay: 100
-
-                    },
-                    style: {
-                        classes: 'qtip-tipped',
-                        width: 700,
-                        height: 300
-
-                    }
-                });
-            });
-
-        });
         function p41_subgrid_setting(j74id) {
-            window.parent.sw_decide("grid_designer.aspx?prefix=p41&masterprefix=<%=Me.CurrentMasterPrefix%>&pid=" + j74id, "Images/griddesigner.png", true);
+            sw_decide("grid_designer.aspx?prefix=p41&masterprefix=<%=Me.CurrentMasterPrefix%>&pid=" + j74id, "Images/griddesigner.png", true);
         }
         function RowSelected_p41(sender, args) {
             document.getElementById("<%=hiddatapid_p41.ClientID%>").value = args.getDataKeyValue("pid");
@@ -78,11 +43,11 @@
         }
 
 
-        
-        function p41_create(is_clone) {            
+
+        function p41_create(is_clone) {
             var s = "p41_create.aspx?source=subform";
             <%If Me.CurrentMasterPrefix="p28" then%>
-            s = s + "&p28id=<%=Me.CurrentMasterPID%>";
+            s = s + "&p28id=<%=Master.DataPID%>";
             <%end If%>
             if (is_clone == true) {
                 var pid = document.getElementById("<%=hiddatapid_p41.ClientID%>").value;
@@ -92,15 +57,15 @@
                     return;
                 }
                 s = s + "&clone=1&pid=" + pid;
-            }                                                 
+            }
 
-            window.parent.sw_decide(s, "Images/project.png", true);
+            sw_decide(s, "Images/project.png", true);
 
         }
     </script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <uc:entity_menu id="menu1" runat="server"></uc:entity_menu>
 
     <div class="commandcell">
         <img src="Images/project.png" alt="Dokumenty" />
@@ -125,7 +90,7 @@
         
     </div>
     <div class="commandcell" style="margin-left: 10px;">
-        <telerik:RadMenu ID="recmenu1" Skin="Telerik" runat="server" ClickToOpen="true">
+        <telerik:RadMenu ID="recmenu1" RenderMode="Auto" Skin="Metro" style="z-index:2000;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                     <Items>
@@ -139,7 +104,7 @@
                 <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
                     <Items>
 
-                        <telerik:RadMenuItem Text="Zobrazit přehled na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p41_fullscreen()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Zobrazit na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p41_fullscreen()"></telerik:RadMenuItem>
                     </Items>
                 </telerik:RadMenuItem>
                 <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
@@ -191,17 +156,13 @@
     <asp:HiddenField ID="hidDefaultSorting" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
-    <asp:HiddenField ID="hidMasterPrefix" runat="server" />
+    
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hiddatapid_p41" runat="server" />
 
+    <asp:HiddenField ID="hidMasterPrefix" runat="server" />
+
     <script type="text/javascript">
-        $(document).ready(function () {
-
-
-
-        });
-
         function GetAllSelectedP41IDs() {
 
             var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
@@ -220,12 +181,8 @@
 
 
         function p41_fullscreen() {
-            window.open("p41_Framework.aspx?masterpid=<%=Me.CurrentMasterPID%>&masterprefix=<%=Me.CurrentMasterPrefix%>", "_top");
+            window.open("p41_Framework.aspx?masterpid=<%=Master.DataPID%>&masterprefix=<%=Me.CurrentMasterPrefix%>", "_top");
 
         }
     </script>
-
-
-
-
 </asp:Content>

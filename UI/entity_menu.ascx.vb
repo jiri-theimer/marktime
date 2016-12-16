@@ -55,20 +55,34 @@ Public Class entity_menu
                 menu1.FindItemByValue("saw").NavigateUrl = Me.DataPrefix & "_framework_detail.aspx?saw=1"
             End If
         End If
+
+        Dim s As String = ""
         Select Case Me.DataPrefix
             Case "p28"
+                s = "<img src='Images/contact_32.png'/>"
                 sb1.ashx = "handler_search_contact.ashx"
                 sb1.aspx = "p28_framework.aspx"
                 sb1.TextboxLabel = "Najít klienta..."
             Case "j02"
-                sb1.ashx = "handler_search_persont.ashx"
+                s = "<img src='Images/person_32.png'/>"
+                sb1.ashx = "handler_search_person.ashx"
                 sb1.aspx = "j02_framework.aspx"
                 sb1.TextboxLabel = "Najít osobu..."
             Case "p41"
+                s = "<img src='Images/project_32.png'/>"
                 sb1.Visible = False
         End Select
-        
-        
+        menu1.FindItemByValue("begin").Controls.Add(New LiteralControl(s))
+
+        If sb1.ashx = "" Then
+            If Not menu1.FindItemByValue("searchbox") Is Nothing Then menu1.Items.Remove(menu1.FindItemByValue("searchbox")) 'searchbox není
+        Else
+            With menu1.FindItemByValue("searchbox")
+                s = "<input id='search2' style='width: 100px; margin-top: 7px;' value='" & sb1.TextboxLabel & "' onfocus='search2Focus()' onblur='search2Blur()' />"
+                s += "<div id='search2_result' style='position: relative;left:-150px;'></div>"
+                .Controls.Add(New LiteralControl(s))
+            End With
+        End If
     End Sub
 
     Public Sub p41_RefreshRecord(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum, strTabValue As String, Optional cDisp As BO.p41RecordDisposition = Nothing)
@@ -91,10 +105,7 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k projektu.")
         End If
-        With menu1.FindItemByValue("begin")
-            CType(.FindControl("imgLogo"), Image).ImageUrl = "Images/project_32.png"
-        End With
-        
+       
 
         With cRec
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
@@ -191,7 +202,7 @@ Public Class entity_menu
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
         End If
 
-        menu1.Items.Remove(menu1.FindItemByValue("searchbox"))  'searchbox u projektu není
+
 
     End Sub
 
@@ -357,16 +368,16 @@ Public Class entity_menu
 
     Private Sub p28_SetupMenu(cRec As BO.p28Contact, cDisp As BO.p28RecordDisposition)
         If cRec.IsClosed Then menu1.Skin = "Black"
-        With menu1.FindItemByValue("begin")
-            CType(.FindControl("imgLogo"), Image).ImageUrl = "Images/contact_32.png"
-        End With
+       
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
+        
         basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
 
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
+        If mi.Items.Count > 0 Then Return 'menu už bylo dříve zpracované
         mi.Text = "ZÁZNAM KLIENTA"
         If cDisp.OwnerAccess Then
             ami("Upravit kartu klienta", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění.")
@@ -423,7 +434,7 @@ Public Class entity_menu
         If cRec Is Nothing Then Return
         Me.DataPID = cRec.PID
 
-        j02_SetupTabs(cRecSum)
+        j02_SetupTabs(cRec, cRecSum)
         j02_SetupMenu(cRec)
 
         Me.CurrentTab = strTabValue
@@ -432,9 +443,7 @@ Public Class entity_menu
 
     Private Sub j02_SetupMenu(cRec As BO.j02Person)
         If cRec.IsClosed Then menu1.Skin = "Black"
-        With menu1.FindItemByValue("begin")
-            CType(.FindControl("imgLogo"), Image).ImageUrl = "Images/person_32.png"
-        End With
+        
         If Not Me.Factory.SysUser.j04IsMenu_People Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k prohlížení osobních profilů.")
         End If
@@ -443,8 +452,9 @@ Public Class entity_menu
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
         mi.Text = "ZÁZNAM OSOBY"
+        If mi.Items.Count > 0 Then Return 'menu už bylo dříve zpracované
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
-            ami("Upravit kartu osoby", "cmdEdit", "javascript:record_new();", "Images/new.png", mi, "Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.")
+            ami("Upravit kartu osoby", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.")
             ami("Založit osobu", "cmdNew", "javascript:record_new();", "Images/new.png", mi, , True)
             ami("Založit osobu kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nově zakládaná osoba se kompletně předvyplní z aktuálního osobního profilu.")
         End If
@@ -476,10 +486,13 @@ Public Class entity_menu
         ami("Zapsat komentář/poznámku", "cmdB07", "javascript:b07_record();", "Images/comment.png", mi, , True)
     End Sub
 
-    Private Sub j02_SetupTabs(crs As BO.j02PersonSum)
+    Private Sub j02_SetupTabs(cRec As BO.j02Person, crs As BO.j02PersonSum)
         tabs1.Tabs.Clear()
-        If Me.hidPOS.Value = "1" Then
-            cti("Osoba", "board")
+        If cRec.j02IsIntraPerson Then
+            cti("Osoba a uživatel", "board")
+        Else
+            cti("Kontaktní osoba", "board")
+            Return
         End If
         Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Me.Factory.j03UserBL.GetList_PageTabs(Me.Factory.SysUser.PID, BO.x29IdEnum.j02Person)
         For Each c In lisX61
@@ -507,7 +520,9 @@ Public Class entity_menu
 
             cti(s, c.x61Code)
         Next
-      
+
 
     End Sub
+
+    
 End Class

@@ -11,7 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class entity_framework_p41subform
+Partial Public Class entity_framework_rec_p41
+
+    '''<summary>
+    '''menu1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
     '''lblHeaderP41 control.
@@ -149,15 +158,6 @@ Partial Public Class entity_framework_p41subform
     Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidMasterPrefix control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''hidMasterPID control.
     '''</summary>
     '''<remarks>
@@ -176,14 +176,23 @@ Partial Public Class entity_framework_p41subform
     Protected WithEvents hiddatapid_p41 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidMasterPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
+    Public Shadows ReadOnly Property Master() As UI.SubForm
         Get
-            Return CType(MyBase.Master, UI.Clue)
+            Return CType(MyBase.Master, UI.SubForm)
         End Get
     End Property
 End Class
