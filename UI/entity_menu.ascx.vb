@@ -49,8 +49,26 @@ Public Class entity_menu
             If Request.Item("tab") <> "" Then
                 Me.Factory.j03UserBL.SetUserParam(Me.DataPrefix & "_framework_detail-tab", Request.Item("tab"))
             End If
+            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), Me.DataPrefix)
+            Else
+                menu1.FindItemByValue("saw").NavigateUrl = Me.DataPrefix & "_framework_detail.aspx?saw=1"
+            End If
         End If
-
+        Select Case Me.DataPrefix
+            Case "p28"
+                sb1.ashx = "handler_search_contact.ashx"
+                sb1.aspx = "p28_framework.aspx"
+                sb1.TextboxLabel = "Najít klienta..."
+            Case "j02"
+                sb1.ashx = "handler_search_persont.ashx"
+                sb1.aspx = "j02_framework.aspx"
+                sb1.TextboxLabel = "Najít osobu..."
+            Case "p41"
+                sb1.Visible = False
+        End Select
+        
+        
     End Sub
 
     Public Sub p41_RefreshRecord(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum, strTabValue As String, Optional cDisp As BO.p41RecordDisposition = Nothing)
@@ -76,6 +94,8 @@ Public Class entity_menu
         With menu1.FindItemByValue("begin")
             CType(.FindControl("imgLogo"), Image).ImageUrl = "Images/project_32.png"
         End With
+        
+
         With cRec
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Dim strLevel1 As String = .FullName
@@ -171,7 +191,7 @@ Public Class entity_menu
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
         End If
 
-
+        menu1.Items.Remove(menu1.FindItemByValue("searchbox"))  'searchbox u projektu není
 
     End Sub
 
@@ -192,7 +212,11 @@ Public Class entity_menu
         mi.ImageUrl = strImg
         mi.ToolTip = strToolTip
         mi.Target = strTarget
-        If Not miParent Is Nothing Then miParent.Items.Add(mi) Else menu1.Items.Add(mi)
+        If Not miParent Is Nothing Then
+            miParent.Items.Add(mi)
+        Else
+            menu1.Items.Insert(menu1.Items.Count - 1, mi)
+        End If
 
         Return mi
     End Function
@@ -315,8 +339,6 @@ Public Class entity_menu
                     If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
                 Case "o23"
                     If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
-                Case "workflow"
-                    If crs.b07_Count > 0 Then s += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
                 Case "p41"
                     s += "<span class='badge1'>" & crs.p41_Actual_Count.ToString & "+" & crs.p41_Closed_Count.ToString & "</span>"
             End Select
@@ -393,6 +415,99 @@ Public Class entity_menu
         End If
 
 
+
+    End Sub
+
+
+    Public Sub j02_RefreshRecord(cRec As BO.j02Person, cRecSum As BO.j02PersonSum, strTabValue As String)
+        If cRec Is Nothing Then Return
+        Me.DataPID = cRec.PID
+
+        j02_SetupTabs(cRecSum)
+        j02_SetupMenu(cRec)
+
+        Me.CurrentTab = strTabValue
+        Handle_SelectedTab()
+    End Sub
+
+    Private Sub j02_SetupMenu(cRec As BO.j02Person)
+        If cRec.IsClosed Then menu1.Skin = "Black"
+        With menu1.FindItemByValue("begin")
+            CType(.FindControl("imgLogo"), Image).ImageUrl = "Images/person_32.png"
+        End With
+        If Not Me.Factory.SysUser.j04IsMenu_People Then
+            Handle_NoAccess("Nedisponujete přístupovým oprávněním k prohlížení osobních profilů.")
+        End If
+        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.FullNameAsc, "j02_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+
+
+        Dim mi As RadMenuItem = menu1.FindItemByValue("record")
+        mi.Text = "ZÁZNAM OSOBY"
+        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
+            ami("Upravit kartu osoby", "cmdEdit", "javascript:record_new();", "Images/new.png", mi, "Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění.")
+            ami("Založit osobu", "cmdNew", "javascript:record_new();", "Images/new.png", mi, , True)
+            ami("Založit osobu kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nově zakládaná osoba se kompletně předvyplní z aktuálního osobního profilu.")
+        End If
+        
+        If Me.Factory.SysUser.IsApprovingPerson Then
+            If cRec.j02IsIntraPerson Then ami("Schvalovat nebo fakturovat práci osoby", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
+        End If
+        ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+
+        mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
+        ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
+        If cRec.j02IsIntraPerson Then
+            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+                ami("PIVOT za osobu", "cmdPivot", "p31_pivot.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+            End If
+
+            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+                ami("Vytvořit dokument", "cmdO23", "javascript:o23_record(0);", "Images/notepad.png", mi, , True)
+            End If
+            If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:o22_record(0);", "Images/calendar.png", mi, , True)
+            ami("Kalendář osoby", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
+
+            ami("Operativní plán osoby", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
+            ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
+
+            ami("Historie aktivit osoby", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
+        End If
+
+        ami("Zapsat komentář/poznámku", "cmdB07", "javascript:b07_record();", "Images/comment.png", mi, , True)
+    End Sub
+
+    Private Sub j02_SetupTabs(crs As BO.j02PersonSum)
+        tabs1.Tabs.Clear()
+        If Me.hidPOS.Value = "1" Then
+            cti("Osoba", "board")
+        End If
+        Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Me.Factory.j03UserBL.GetList_PageTabs(Me.Factory.SysUser.PID, BO.x29IdEnum.j02Person)
+        For Each c In lisX61
+            Dim s As String = c.x61Name
+            Select Case c.x61Code
+                Case "time"
+                    If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
+                    If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
+                Case "expense"
+                    If crs.p31_Wip_Expense_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Expense_Count.ToString & "</span>"
+                    If crs.p31_Approved_Expense_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Expense_Count.ToString & "</span>"
+                Case "fee"
+                    If crs.p31_Wip_Fee_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Fee_Count.ToString & "</span>"
+                    If crs.p31_Approved_Fee_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
+                Case "kusovnik"
+                    If crs.p31_Wip_Kusovnik_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Kusovnik_Count.ToString & "</span>"
+                    If crs.p31_Approved_Kusovnik_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Kusovnik_Count.ToString & "</span>"
+                Case "p91"
+                    If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+                Case "p56"
+                    If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+                Case "o23"
+                    If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
+            End Select
+
+            cti(s, c.x61Code)
+        Next
+      
 
     End Sub
 End Class

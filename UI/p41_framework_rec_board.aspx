@@ -11,6 +11,7 @@
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="treemenu" Src="~/treemenu.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -31,6 +32,10 @@
 
 
             location.replace("p41_framework_rec_board.aspx?pid=<%=master.datapid%>");
+
+        }
+        function childs() {
+            window.open("p41_framework.aspx?masterprefix=p41&masterpid=<%=master.DataPID%>", "_top")
 
         }
     </script>
@@ -54,17 +59,7 @@
 
 
             <table cellpadding="10" cellspacing="2" id="responsive">
-                <tr id="trParent" runat="server" visible="false">
-                    <td>
-                        <asp:Label ID="Label3" runat="server" Text="Nadřízený projekt:" CssClass="lbl"></asp:Label>
-
-                    </td>
-                    <td>
-                        <asp:HyperLink ID="ParentProject" runat="server" Target="_top"></asp:HyperLink>
-
-                    </td>
-
-                </tr>
+                
                 <tr valign="baseline">
                     <td style="min-width: 120px;">
                         <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl" meta:resourcekey="lblProject"></asp:Label>
@@ -79,9 +74,7 @@
                                 Převést z režimu DRAFT na oficiální záznam
                             </button>
                         </asp:Panel>
-                        <div>
-                            <asp:HyperLink ID="cmdChilds" runat="server" Text="Pod-projekty" NavigateUrl="javascript:childs()" Visible="false"></asp:HyperLink>
-                        </div>
+                        
                     </td>
 
                 </tr>
@@ -157,7 +150,7 @@
 
 
             </table>
-
+            <uc:treemenu ID="tree1" runat="server" Visible="false" />
 
         </div>
     </div>

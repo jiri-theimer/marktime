@@ -102,11 +102,14 @@
             End If
 
             Me.imgDraft.Visible = .p41IsDraft
-            If .p41ParentID <> 0 Then
-                Me.trParent.Visible = True
-                Me.ParentProject.NavigateUrl = "p41_framework.aspx?pid=" & .p41ParentID.ToString
-                Me.ParentProject.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ParentID)
+            If cRecSum.childs_Count > 0 Or cRec.p41ParentID <> 0 Then
+                RenderTree(cRec, cRecSum)
             End If
+            ''If .p41ParentID <> 0 Then
+            ''    Me.trParent.Visible = True
+            ''    Me.ParentProject.NavigateUrl = "p41_framework.aspx?pid=" & .p41ParentID.ToString
+            ''    Me.ParentProject.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .p41ParentID)
+            ''End If
             If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) And .p41BillingMemo <> "" Then
                 boxBillingMemo.Visible = True
                 Me.p41BillingMemo.Text = BO.BAS.CrLfText2Html(.p41BillingMemo)
@@ -215,10 +218,7 @@
         Else
             boxX18.Visible = False
         End If
-        If cRecSum.childs_Count > 0 Then
-            cmdChilds.Visible = True
-            cmdChilds.Text += "<span class='badge1'>" & cRecSum.childs_Count.ToString & "</span>"
-        End If
+       
         If cRecSum.is_My_Favourite Then
             cmdFavourite.ImageUrl = "Images/favourite.png"
             cmdFavourite.ToolTip = "Vyřadit z mých oblíbených projektů"
@@ -333,7 +333,7 @@
         If Not Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
             Me.clue_p51id_billing.Visible = False  'uživatel nemá oprávnění vidět sazby
         End If
-
+        If Me.p51Name_Billing.Text = "" And lblX51_Message.Text = "" Then trP51.Visible = False
     End Sub
 
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
@@ -361,5 +361,28 @@
 
     Private Sub ReloadPage()
         Response.Redirect("p41_framework_rec_board.aspx?pid=" & Master.DataPID.ToString)
+    End Sub
+
+    Private Sub RenderTree(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum)
+        tree1.Visible = True
+        Dim strTopID As String = cRec.p41ParentID.ToString
+        If strTopID = "0" Then strTopID = ""
+        If cRec.p41ParentID <> 0 Then
+            Dim n As New Telerik.Web.UI.RadTreeNode(cRec.ParentName, cRec.p41ParentID.ToString, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString)
+            n.Target = "_top" : n.ImageUrl = "Images/tree.png"
+            tree1.AddItem(n)
+        End If
+        tree1.AddItem(cRec.PrefferedName, cRec.PID.ToString, "javascript:childs()", strTopID, "Images/tree.png")
+        Dim mq As New BO.myQueryP41
+        mq.p41ParentID = cRec.PID
+        mq.Closed = BO.BooleanQueryMode.NoQuery
+        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
+        For Each c In lis
+            Dim n As New Telerik.Web.UI.RadTreeNode(c.PrefferedName, c.PID.ToString, "p41_framework.aspx?pid=" & c.PID.ToString)
+            n.Target = "_top"
+            If c.IsClosed Then n.Font.Strikeout = True
+            tree1.AddItem(n, cRec.PID.ToString)
+        Next
+        tree1.ExpandAll()
     End Sub
 End Class

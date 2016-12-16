@@ -41,33 +41,6 @@ Partial Public Class p41_framework_rec_board
     Protected WithEvents cmdFavourite As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''trParent control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trParent As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''Label3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''ParentProject control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ParentProject As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''lblProject control.
     '''</summary>
     '''<remarks>
@@ -111,15 +84,6 @@ Partial Public Class p41_framework_rec_board
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panDraftCommands As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cmdChilds control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdChilds As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''lblClient control.
@@ -327,6 +291,15 @@ Partial Public Class p41_framework_rec_board
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents clue_j18name As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''tree1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tree1 As Global.UI.TreeMenu
 
     '''<summary>
     '''boxX18 control.

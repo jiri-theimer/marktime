@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="entity_menu.ascx.vb" Inherits="UI.entity_menu" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
 <asp:Panel ID="panMenuContainer" runat="server" Style="height:43px;border-bottom: solid 1px gray;background-color:#E8E8E8;">
 
     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
@@ -11,11 +12,19 @@
             </telerik:RadMenuItem>
             <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px">
             </telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="saw" Text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p41_framework_detail.aspx?saw=1" ToolTip="Otevřít projekt v nové záložce prohlížeče"></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="switch" NavigateUrl="javascript:OnSwitch()" Text="&darr;&uarr;" ToolTip="Skrýt/zobrazit horní polovinu detailu projektu (boxy)">
-            </telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="saw" Text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p41_framework_detail.aspx?saw=1" ToolTip="Otevřít aktuální záznam v nové záložce prohlížeče"></telerik:RadMenuItem>
+                       
             <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record" meta:resourcekey="menu_zaznam">                
-            </telerik:RadMenuItem>                       
+            </telerik:RadMenuItem>      
+            
+            <telerik:RadMenuItem Value="searchbox">
+                    <ItemTemplate>
+                        <%If sb1.ashx <> "" Then%>
+                        <input id="search2" style="width: 100px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus()" onblur="search2Blur()" />
+                        <div id="search2_result" style="position: relative;left:-150px;"></div>
+                        <%end if %>
+                    </ItemTemplate>
+                </telerik:RadMenuItem>                 
 
         </Items>
     </telerik:RadMenu>
@@ -29,6 +38,7 @@
 <asp:HiddenField ID="hidPOS" runat="server" Value="1" />
  <asp:HiddenField ID="hidParentWidth" runat="server" />
 <asp:HiddenField ID="hidDataPrefix" runat="server" />
+<uc:searchbox id="sb1" runat="server"></uc:searchbox>
 
 <script type="text/javascript">
     function report() {
@@ -188,4 +198,6 @@
     function timeline(){            
         sw_decide("entity_timeline.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/timeline.png",true);
     }
+
+    
 </script>
