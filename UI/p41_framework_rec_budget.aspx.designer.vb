@@ -11,7 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class p41_framework_detail_budget
+Partial Public Class p41_framework_rec_budget
+
+    '''<summary>
+    '''menu1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
     '''p45ID control.
@@ -23,13 +32,13 @@ Partial Public Class p41_framework_detail_budget
     Protected WithEvents p45ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''menu1 control.
+    '''recmenu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''cmdBudgetP46 control.
@@ -145,9 +154,9 @@ Partial Public Class p41_framework_detail_budget
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.Clue
+    Public Shadows ReadOnly Property Master() As UI.SubForm
         Get
-            Return CType(MyBase.Master, UI.Clue)
+            Return CType(MyBase.Master, UI.SubForm)
         End Get
     End Property
 End Class

@@ -3,6 +3,13 @@ Public Class entity_menu
     Inherits System.Web.UI.UserControl
     Public Property Factory As BL.Factory
     Public Property DataPrefix As String
+        Get
+            Return hidDataPrefix.Value
+        End Get
+        Set(value As String)
+            hidDataPrefix.Value = value
+        End Set
+    End Property
     Public Property DataPID As Integer
 
     Public Property CurrentTab As String
@@ -46,36 +53,29 @@ Public Class entity_menu
 
     End Sub
 
-    Public Sub p41_RefreshRecord(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum, strTabValue As String)
+    Public Sub p41_RefreshRecord(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum, strTabValue As String, Optional cDisp As BO.p41RecordDisposition = Nothing)
         If cRec Is Nothing Then Return
         Me.DataPID = cRec.PID
 
         Dim cP42 As BO.p42ProjectType = Me.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         p41_SetupTabs(cRecSum, cP42)
-        p41_SetupMenu(cRec, cP42)
+        p41_SetupMenu(cRec, cP42, cDisp)
 
         Me.CurrentTab = strTabValue
-        If tabs1.SelectedTab Is Nothing And tabs1.Tabs.Count > 0 Then
-            'pokud není označená záložka, pak skočit na první
-            Dim c As New BO.x61PageTab
-            c.x61Code = "board"
-            Server.Transfer(c.GetPageUrl(Me.DataPrefix, Me.DataPID, ""), False)
-        End If
-        If Not tabs1.SelectedTab Is Nothing Then
-            tabs1.SelectedTab.NavigateUrl = ""
-            tabs1.SelectedTab.Style.Item("cursor") = "default"
-        End If
+        Handle_SelectedTab()
     End Sub
 
     
 
-    Private Sub p41_SetupMenu(cRec As BO.p41Project, cP42 As BO.p42ProjectType)
+    Private Sub p41_SetupMenu(cRec As BO.p41Project, cP42 As BO.p42ProjectType, cDisp As BO.p41RecordDisposition)
         If cRec.IsClosed Then menu1.Skin = "Black"
-        Dim cDisp As BO.p41RecordDisposition = Me.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+        If cDisp Is Nothing Then cDisp = Me.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then
+            Handle_NoAccess("Nedisponujete přístupovým oprávněním k projektu.")
+        End If
         With menu1.FindItemByValue("begin")
             CType(.FindControl("imgLogo"), Image).ImageUrl = "Images/project_32.png"
         End With
-
         With cRec
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Dim strLevel1 As String = .FullName
@@ -88,6 +88,8 @@ Public Class entity_menu
         End With
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
+        If mi.Items.Count > 0 Then Return 'menu už bylo dříve zpracované
+
         mi.Text = "ZÁZNAM PROJEKTU"
         If cDisp.OwnerAccess Then
             ami("Upravit kartu projektu", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění.")
@@ -202,7 +204,7 @@ Public Class entity_menu
         Dim tab As New RadTab(strName, strX61Code)
         tabs1.Tabs.Add(tab)
       
-        tab.NavigateUrl = cX61.GetPageUrl("p41", Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code
+        tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code
 
         If tabs1.Tabs.Count = 0 Then tab.Selected = True
     End Sub
@@ -243,7 +245,7 @@ Public Class entity_menu
         If cP42.p42IsModule_p45 Then
             s = "Rozpočet"
             If crs.p45_Count > 0 Then s += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
-            cti(s, "p45")
+            cti(s, "budget")
         End If
         If cP42.p42IsModule_o23 And cP42.p42SubgridO23Flag = 1 Then
             s = "Dokumenty"
@@ -253,10 +255,6 @@ Public Class entity_menu
 
     End Sub
 
-
-
-
-
     Private Sub RemoveTab(strTabValue As String)
         With tabs1.Tabs
             If Not .FindTabByValue(strTabValue) Is Nothing Then
@@ -265,5 +263,136 @@ Public Class entity_menu
 
             End If
         End With
+    End Sub
+    Private Sub Handle_SelectedTab()
+        If tabs1.SelectedTab Is Nothing And tabs1.Tabs.Count > 0 Then
+            'pokud není označená záložka, pak skočit na první
+            Dim c As New BO.x61PageTab
+            c.x61Code = "board"
+            Server.Transfer(c.GetPageUrl(Me.DataPrefix, Me.DataPID, ""), False)
+        End If
+        If Not tabs1.SelectedTab Is Nothing Then
+            tabs1.SelectedTab.NavigateUrl = ""
+            tabs1.SelectedTab.Style.Item("cursor") = "default"
+        End If
+    End Sub
+
+    Public Sub p28_RefreshRecord(cRec As BO.p28Contact, cRecSum As BO.p28ContactSum, strTabValue As String, Optional cDisp As BO.p28RecordDisposition = Nothing)
+        If cRec Is Nothing Then Return
+        Me.DataPID = cRec.PID
+        If cDisp Is Nothing Then cDisp = Me.Factory.p28ContactBL.InhaleRecordDisposition(cRec)
+        p28_SetupTabs(cRecSum)
+        p28_SetupMenu(cRec, cDisp)
+
+        Me.CurrentTab = strTabValue
+        Handle_SelectedTab()
+    End Sub
+
+    Private Sub p28_SetupTabs(crs As BO.p28ContactSum)
+        tabs1.Tabs.Clear()
+        If Me.hidPOS.Value = "1" Then
+            cti("Klient", "board")
+        End If
+        Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Me.Factory.j03UserBL.GetList_PageTabs(Me.Factory.SysUser.PID, BO.x29IdEnum.p28Contact)
+        For Each c In lisX61
+            Dim s As String = c.x61Name
+            Select Case c.x61Code
+                Case "time"
+                    If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
+                    If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
+                Case "expense"
+                    If crs.p31_Wip_Expense_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Expense_Count.ToString & "</span>"
+                    If crs.p31_Approved_Expense_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Expense_Count.ToString & "</span>"
+                Case "fee"
+                    If crs.p31_Wip_Fee_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Fee_Count.ToString & "</span>"
+                    If crs.p31_Approved_Fee_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
+                Case "kusovnik"
+                    If crs.p31_Wip_Kusovnik_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Kusovnik_Count.ToString & "</span>"
+                    If crs.p31_Approved_Kusovnik_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Kusovnik_Count.ToString & "</span>"
+                Case "p91"
+                    If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+                Case "p56"
+                    If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+                Case "o23"
+                    If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
+                Case "workflow"
+                    If crs.b07_Count > 0 Then s += "<span class='badge1'>" & crs.b07_Count.ToString & "</span>"
+                Case "p41"
+                    s += "<span class='badge1'>" & crs.p41_Actual_Count.ToString & "+" & crs.p41_Closed_Count.ToString & "</span>"
+            End Select
+
+            cti(s, c.x61Code)
+        Next
+        ''If crs.b07_Count > 0 Then
+        ''    If lisX61.Where(Function(p) p.x61Code = "workflow").Count = 0 Then Me.alert1.Append("Ke klientovi byl zapsán minimálně jeden komentář. V nastavení vzhledu stránky klienta si přidejte záložku [Komentáře a workflow].")
+        ''End If
+
+    End Sub
+
+    Private Sub Handle_NoAccess(strMessage As String)
+        Response.Redirect("stoppage.aspx?err=1&message=" & Server.UrlEncode(strMessage), True)
+    End Sub
+
+    Private Sub p28_SetupMenu(cRec As BO.p28Contact, cDisp As BO.p28RecordDisposition)
+        If cRec.IsClosed Then menu1.Skin = "Black"
+        With menu1.FindItemByValue("begin")
+            CType(.FindControl("imgLogo"), Image).ImageUrl = "Images/contact_32.png"
+        End With
+        If Not cDisp.ReadAccess Then
+            Handle_NoAccess("Nedisponujete přístupovým oprávněním ke klientovi.")
+        End If
+        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+
+
+        Dim mi As RadMenuItem = menu1.FindItemByValue("record")
+        mi.Text = "ZÁZNAM KLIENTA"
+        If cDisp.OwnerAccess Then
+            ami("Upravit kartu klienta", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost přesunutí do archviu nebo nenávratného odstranění.")
+        End If
+        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then
+            ami("Založit klienta", "cmdNew", "javascript:record_new();", "Images/new.png", mi, , True)
+            ami("Založit klienta kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový klient se kompletně předvyplní podle vzoru tohoto záznamu.")
+        End If
+        If cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientAndSupplier Or cRec.p28SupplierFlag = BO.p28SupplierFlagENUM.ClientOnly Then
+            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then
+                ami("Založit pro klienta nový projekt", "cmdNewP41", "javascript:p41_new();", "Images/project.png", mi, , True)
+            End If
+        End If
+        If Me.Factory.SysUser.IsApprovingPerson Then
+            If cRec.p28SupplierFlag <> BO.p28SupplierFlagENUM.NotClientNotSupplier Then
+                ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
+            End If
+
+        End If
+
+        ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+
+        mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
+        ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
+        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
+            ami("PIVOT za klienta", "cmdPivot", "p31_pivot.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+        End If
+        If cDisp.OwnerAccess And Not cRec.IsClosed Then
+            ami("Přiřadit ke klientovi kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
+        End If
+        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
+            ami("Vytvořit dokument", "cmdO23", "javascript:o23_record(0);", "Images/notepad.png", mi, , True)
+        End If
+
+        If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:o22_record(0);", "Images/calendar.png", mi, , True)
+        ami("Kalendář klienta", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
+
+        If cRec.b02ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:b07_record();", "Images/comment.png", mi, , True)
+
+
+
+        ami("Operativní plán projektů klienta", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
+        ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
+        If cDisp.OwnerAccess Then
+            ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
+        End If
+
+
+
     End Sub
 End Class

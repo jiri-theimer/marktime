@@ -24,7 +24,7 @@
                 If .DataPID = 0 Or Me.CurrentMasterPrefix = "" Then .StopPage("masterpid or masterprefix is missing")
 
                 .SiteMenuValue = Me.CurrentMasterPrefix
-
+                menu1.DataPrefix = Me.CurrentMasterPrefix
 
                 Dim lisPars As New List(Of String)
                 With lisPars
@@ -55,16 +55,19 @@
     End Sub
 
     Private Sub RefreshRecord()
-        menu1.DataPrefix = Me.CurrentMasterPrefix
+        Dim strTab As String = gridP31.MasterTabAutoQueryFlag
+        If strTab = "" Then strTab = "p31"
+
         Select Case Me.CurrentMasterPrefix
             Case "p41"
                 Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
                 Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
                 Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
-
-                Dim strTab As String = gridP31.MasterTabAutoQueryFlag
-                If strTab = "" Then strTab = "p31"
                 menu1.p41_RefreshRecord(cRec, cRecSum, strTab)
+            Case "p28"
+                Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
+                Dim cRecSum As BO.p28ContactSum = Master.Factory.p28ContactBL.LoadSumRow(cRec.PID)
+                menu1.p28_RefreshRecord(cRec, cRecSum, strTab)
         End Select
 
     End Sub

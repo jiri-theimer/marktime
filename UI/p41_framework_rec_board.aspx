@@ -38,7 +38,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <uc:entity_menu id="menu1" runat="server"></uc:entity_menu>
 
-
+    <div style="height:10px;clear:both;"></div>
     <div class="content-box1">
         <div class="title">
             <img src="Images/properties.png" style="margin-right: 10px;" />

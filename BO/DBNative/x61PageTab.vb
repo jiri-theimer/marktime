@@ -11,7 +11,7 @@
         If strIsApprovingPerson <> "" Then s += "&IsApprovingPerson=" & strIsApprovingPerson
         Select Case x61Code
             Case "board"
-                Return "p41_framework_rec_board.aspx?pid=" & intMasterPID.ToString
+                Return strMasterPrefix & "_framework_rec_board.aspx?pid=" & intMasterPID.ToString
             Case "summary"
                 Return "entity_framework_rec_summary.aspx?" & s
             Case "p31"
@@ -22,8 +22,8 @@
                 Return "entity_framework_rec_p56.aspx?" & s
             Case "p91"
                 Return "entity_framework_rec_p91.aspx?" & s
-            Case "p45"
-                Return "p41_framework_detail_budget.aspx?" & s
+            Case "budget"
+                Return "p41_framework_rec_budget.aspx?pid=" & intMasterPID.ToString
             Case "o23"
                 Return "entity_framework_rec_o23.aspx?" & s
                 ''Case "workflow"

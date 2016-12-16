@@ -43,7 +43,7 @@ Public Class p28_framework_detail
                 If .Factory.SysUser.OneContactPage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneContactPage, "pid=" & .DataPID.ToString))
                 End If
-
+                Server.Transfer("p28_framework_rec_board.aspx?pid=" & .DataPID.ToString)    'testování
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p28_framework_detail-pid")

@@ -6,6 +6,7 @@
         _MasterPage = Me.Master
         menu1.Factory = Master.Factory
         menu1.DataPrefix = "p41"
+        ff1.Factory = Master.Factory
         p31summary1.Factory = Master.Factory
     End Sub
 
@@ -44,10 +45,11 @@
 
         Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
         Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
+        Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
 
-        Handle_Permissions(cRec, cP42)
+        Handle_Permissions(cRec, cP42, cDisp)
 
-        menu1.p41_RefreshRecord(cRec, cRecSum, "board")
+        menu1.p41_RefreshRecord(cRec, cRecSum, "board", cDisp)
 
         Dim cClient As BO.p28Contact = Nothing
 
@@ -244,9 +246,7 @@
     End Sub
 
 
-    Private Sub Handle_Permissions(cRec As BO.p41Project, cP42 As BO.p42ProjectType)
-
-        Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
+    Private Sub Handle_Permissions(cRec As BO.p41Project, cP42 As BO.p42ProjectType, cDisp As BO.p41RecordDisposition)
 
         x18_binding.Visible = cDisp.OwnerAccess
         With Master.Factory
@@ -333,7 +333,7 @@
 
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p41_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
-        RefreshRecord()
+        ReloadPage()
     End Sub
 
     Private Sub rpP40_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP40.ItemDataBound
@@ -352,5 +352,9 @@
     Private Sub cmdFavourite_Click(sender As Object, e As ImageClickEventArgs) Handles cmdFavourite.Click
         Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
         ClientScript.RegisterStartupScript(Me.GetType, "hash", "window.open('p41_framework.aspx','_top');", True)
+    End Sub
+
+    Private Sub ReloadPage()
+        Response.Redirect("p41_framework_rec_board.aspx?pid=" & Master.DataPID.ToString)
     End Sub
 End Class

@@ -28,6 +28,7 @@
 <asp:HiddenField ID="hidIsCanApprove" runat="server" />
 <asp:HiddenField ID="hidPOS" runat="server" Value="1" />
  <asp:HiddenField ID="hidParentWidth" runat="server" />
+<asp:HiddenField ID="hidDataPrefix" runat="server" />
 
 <script type="text/javascript">
     function report() {
@@ -83,6 +84,18 @@
         sw_decide("p41_create.aspx?clone=1&pid=" + pid,"Images/project.png",true);
 
     }
+    function record_new() {
+        <%If Me.DataPrefix="p41" then%>
+        sw_decide("p41_create.aspx?client_family=1&pid=<%=Me.DataPID%>","Images/project.png",true);
+        <%end If%>
+        <%If Me.DataPrefix="p28" then%>
+        sw_decide("p28_record.aspx?pid=0","Images/contact.png",true);
+        <%end If%>
+        <%If Me.DataPrefix="j02" then%>
+        sw_decide("j02_record.aspx?pid=0","Images/contact.png",true);
+        <%end If%>
+
+    }
     function record_new_child(){
         var pid = <%=Me.DataPID%>;
         sw_decide("p41_create.aspx?client_family=1&pid=<%=Me.DataPID%>&create_parent=1","Images/project.png",true);
@@ -92,10 +105,10 @@
 
     }
     function p30_binding() {
-        sw_decide("p30_binding.aspx?masterprefix=p41&masterpid=<%=me.datapid%>", "Images/person.png", false);
+        sw_decide("p30_binding.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=me.datapid%>", "Images/person.png", false);
     }
     function page_setting(){
-        sw_decide("entity_framework_detail_setting.aspx?prefix=p41", "Images/setting.png",false);
+        sw_decide("entity_framework_detail_setting.aspx?prefix=<%=Me.DataPrefix%>", "Images/setting.png",false);
     }
     function p30_record(pid) {            
         sw_decide("p30_binding.aspx?masterprefix=p41&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/person.png",true);
@@ -156,7 +169,7 @@
             return(false)
     }
 
-    function approve(){     
+    function approve(){             
         var isInIFrame = (window.location != window.parent.location);
         if (isInIFrame==true){
             window.parent.sw_master("entity_modal_approving.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/approve_32.png",true);

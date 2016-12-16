@@ -66,4 +66,13 @@ Partial Public Class entity_menu
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidParentWidth As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDataPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDataPrefix As Global.System.Web.UI.WebControls.HiddenField
 End Class

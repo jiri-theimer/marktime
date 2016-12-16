@@ -1,85 +1,100 @@
 ﻿Imports Telerik.Web.UI
-
-Public Class p41_framework_detail_budget
+Public Class p41_framework_rec_budget
     Inherits System.Web.UI.Page
- 
+    Protected WithEvents _MasterPage As SubForm
 
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub p41_framework_rec_budget_Init(sender As Object, e As EventArgs) Handles Me.Init
+        _MasterPage = Me.Master
+        menu1.Factory = Master.Factory
+        menu1.DataPrefix = "p41"
+    End Sub
+
+   
+
+    Private Sub p41_framework_rec_budget_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .DataPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
-                If .DataPID = 0 Then .StopPage("masterpid is missing")
+                .SiteMenuValue = "p41"
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+
                 If Request.Item("budgetprefix") <> "" Then
                     .Factory.j03UserBL.SetUserParam("p41_framework_detail_budget-prefix", Request.Item("budgetprefix"))
                 End If
-                If Request.Item("lasttabkey") <> "" Then
-                    Master.Factory.j03UserBL.SetUserParam(Request.Item("lasttabkey"), Request.Item("lasttabval"))
-                End If
-            End With
-            Dim lisPars As New List(Of String)
-            With lisPars
-                .Add("p41_framework_detail_budget-prefix")
-                .Add("p41_framework_detail_budget-chkP49GroupByP34")
-                .Add("p41_framework_detail_budget-chkP49GroupByP32")
-                .Add("p41_framework_detail_budget-chkVysledovka")
-            End With
-            With Master.Factory.j03UserBL
-                .InhaleUserParams(lisPars)
 
-                If .GetUserParam("p41_framework_detail_budget-prefix", "p46") = "p46" Then
-                    cmdBudgetP46.Checked = True : cmdBudgetP46.Font.Bold = True
-                    panP49Setting.Visible = False
-                Else
-                    cmdBudgetP49.Checked = True : cmdBudgetP49.Font.Bold = True
-                    panP49Setting.Visible = True
-                    Me.chkP49GroupByP34.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkP49GroupByP34", "1"))
-                    Me.chkP49GroupByP32.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkP49GroupByP32"))
+                Dim lisPars As New List(Of String)
+                With lisPars
+                    .Add("p41_framework_detail-tabskin")
+                    .Add("p41_framework_detail_budget-prefix")
+                    .Add("p41_framework_detail_budget-chkP49GroupByP34")
+                    .Add("p41_framework_detail_budget-chkP49GroupByP32")
+                    .Add("p41_framework_detail_budget-chkVysledovka")
+                End With
+                With .Factory.j03UserBL
+                    .InhaleUserParams(lisPars)
+                    menu1.TabSkin = .GetUserParam("p41_framework_detail-tabskin")
 
-                End If
-                Me.chkVysledovka.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkVysledovka", "1"))
+                    If .GetUserParam("p41_framework_detail_budget-prefix", "p46") = "p46" Then
+                        cmdBudgetP46.Checked = True : cmdBudgetP46.Font.Bold = True
+                        panP49Setting.Visible = False
+                    Else
+                        cmdBudgetP49.Checked = True : cmdBudgetP49.Font.Bold = True
+                        panP49Setting.Visible = True
+                        Me.chkP49GroupByP34.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkP49GroupByP34", "1"))
+                        Me.chkP49GroupByP32.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkP49GroupByP32"))
+
+                    End If
+                    Me.chkVysledovka.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail_budget-chkVysledovka", "1"))
+                End With
             End With
+
+
             RefreshRecord()
 
             SetupGrid()
+
         End If
     End Sub
 
     Private Sub RefreshRecord()
-        Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
-        Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)
+        Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+        If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p41")
+
+        Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
+        Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
+
+        menu1.p41_RefreshRecord(cRec, cRecSum, "budget")
+
+        Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
         If Not cDisp.p45_Read Then
             Master.StopPage("V tomto projektu nemáte přístup k rozpočtu.")
         End If
-        menu1.FindItemByValue("new").Visible = cDisp.p45_Owner
-        menu1.FindItemByValue("clone").Visible = cDisp.p45_Owner
-        menu1.FindItemByValue("p46").Visible = cDisp.p45_Owner
+        recmenu1.FindItemByValue("new").Visible = cDisp.p45_Owner
+        recmenu1.FindItemByValue("clone").Visible = cDisp.p45_Owner
+        recmenu1.FindItemByValue("p46").Visible = cDisp.p45_Owner
 
         Dim lis As IEnumerable(Of BO.p45Budget) = Master.Factory.p45BudgetBL.GetList(Master.DataPID), bolEmpty As Boolean = True
         If lis.Count > 0 Then
             bolEmpty = False
             Me.p45ID.DataSource = lis
             Me.p45ID.DataBind()
-            menu1.FindItemByValue("edit").Visible = cDisp.p45_Owner
-            menu1.FindItemByValue("new").Text = "Založit novou verzi rozpočtu"
-            menu1.FindItemByValue("clone").Text = "Zkopírovat aktuální rozpočet do nové verze"
-            menu1.FindItemByValue("new_p49").Visible = cDisp.p45_Owner
+            recmenu1.FindItemByValue("edit").Visible = cDisp.p45_Owner
+            recmenu1.FindItemByValue("new").Text = "Založit novou verzi rozpočtu"
+            recmenu1.FindItemByValue("clone").Text = "Zkopírovat aktuální rozpočet do nové verze"
+            recmenu1.FindItemByValue("new_p49").Visible = cDisp.p45_Owner
             linkP47.Visible = cmdBudgetP46.Checked
-            linkNewP49.Visible = cmdBudgetP49.Checked : linkConvert2P31.Visible = cmdBudgetP49.Checked        
+            linkNewP49.Visible = cmdBudgetP49.Checked : linkConvert2P31.Visible = cmdBudgetP49.Checked
         Else
-            menu1.FindItemByValue("edit").Visible = False
-            menu1.FindItemByValue("new").Text = "Založit první rozpočet projektu"
-            menu1.FindItemByValue("clone").Visible = False
-            menu1.FindItemByValue("new_p49").Visible = False
-            menu1.FindItemByValue("p46").Visible = False
+            recmenu1.FindItemByValue("edit").Visible = False
+            recmenu1.FindItemByValue("new").Text = "Založit první rozpočet projektu"
+            recmenu1.FindItemByValue("clone").Visible = False
+            recmenu1.FindItemByValue("new_p49").Visible = False
+            recmenu1.FindItemByValue("p46").Visible = False
             Me.p45ID.Visible = False : cmdBudgetP46.Visible = False : cmdBudgetP49.Visible = False
         End If
-        menu1.FindItemByValue("p47").Visible = linkP47.Visible
+        recmenu1.FindItemByValue("p47").Visible = linkP47.Visible
         Me.chkVysledovka.Visible = Not bolEmpty
-        menu1.FindItemByValue("report").Visible = Not bolEmpty
-
-        
+        recmenu1.FindItemByValue("report").Visible = Not bolEmpty
     End Sub
-
 
     Private Sub SetupGrid()
         With gridBudget
@@ -136,7 +151,7 @@ Public Class p41_framework_detail_budget
                 .AddColumn("p31Code", "Kód dokladu", , , , , , , , "real")
                 .AddColumn("p31Count", "Počet", BO.cfENUM.Numeric0, , , , , , , "real")
 
-                
+
             End If
 
 
@@ -204,7 +219,7 @@ Public Class p41_framework_detail_budget
 
     End Sub
 
-   
+
     Private Sub chkP49GroupByP34_CheckedChanged(sender As Object, e As EventArgs) Handles chkP49GroupByP34.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p41_framework_detail_budget-chkP49GroupByP34", BO.BAS.GB(Me.chkP49GroupByP34.Checked))
         gridBudget.Rebind(False)

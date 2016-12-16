@@ -199,7 +199,7 @@
 
             window.open("p31_grid.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&aw="+aw, "_top");
         }
-        function approve(pid) {
+        function approve_local(pid) {
             var aw = document.getElementById("<%=Me.hidAdditionalWhere.ClientID%>").value;
             if (aw == "")
                 aw = "<%=Me.CurrentLevel.GroupByField%>=" + pid;

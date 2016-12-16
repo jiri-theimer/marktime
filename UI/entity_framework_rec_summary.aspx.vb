@@ -24,6 +24,7 @@
                 If .DataPID = 0 Or Me.CurrentMasterPrefix = "" Then .StopPage("masterpid or masterprefix is missing")
 
                 .SiteMenuValue = Me.CurrentMasterPrefix
+                menu1.DataPrefix = Me.CurrentMasterPrefix
 
                 summary1.CurrentMasterPrefix = Me.CurrentMasterPrefix
                 summary1.CurrentMasterPID = Master.DataPID
@@ -52,7 +53,7 @@
     End Sub
 
     Private Sub RefreshRecord()
-        menu1.DataPrefix = Me.CurrentMasterPrefix
+
         Select Case Me.CurrentMasterPrefix
             Case "p41"
                 Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
@@ -60,6 +61,15 @@
                 Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
 
                 menu1.p41_RefreshRecord(cRec, cRecSum, "summary")
+                If Me.CurrentMasterPrefix = "p41" Then
+                    summary1.IsApprovingPerson = menu1.IsExactApprovingPerson
+                Else
+                    summary1.IsApprovingPerson = Master.Factory.SysUser.IsApprovingPerson
+                End If
+            Case "p28"
+                Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
+                Dim cRecSum As BO.p28ContactSum = Master.Factory.p28ContactBL.LoadSumRow(cRec.PID)
+                menu1.p28_RefreshRecord(cRec, cRecSum, "summary")
         End Select
 
     End Sub

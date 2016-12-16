@@ -27,7 +27,7 @@
 
     </div>
     <div class="commandcell" style="margin-left:10px;">
-        <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
+        <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                     <Items>

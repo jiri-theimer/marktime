@@ -387,7 +387,7 @@ Public Class p31summary_drilldown
         End With
         If Me.IsApprovingPerson Then
             With dataItem("approve")
-                .Text = "<a href=" & Chr(34) & "javascript:approve(" & cRec.Item("pid").ToString & ")" & Chr(34) & " title='Schvalovat nebo fakturovat'><img src='Images/approve.png'></a>"
+                .Text = "<a href=" & Chr(34) & "javascript:approve_local(" & cRec.Item("pid").ToString & ")" & Chr(34) & " title='Schvalovat nebo fakturovat'><img src='Images/approve.png'></a>"
             End With
         End If
         If Not cRec.Item("prefix") Is System.DBNull.Value Then
