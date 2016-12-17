@@ -141,6 +141,7 @@
     <Compile Include="Helpers\AresRecord.vb" />
     <Compile Include="Helpers\DateTimeByQuerystring.vb" />
     <Compile Include="Helpers\MsOfficeBinding.vb" />
+    <Compile Include="Helpers\p56TaskSum.vb" />
     <Compile Include="Helpers\PersonOrTeam.vb" />
     <Compile Include="Helpers\SearchBoxItem.vb" />
     <Compile Include="Helpers\SubjectMonitoring.vb" />
@@ -163,7 +164,6 @@
     <Compile Include="Helpers\p28RecordDisposition.vb" />
     <Compile Include="Helpers\p41ProjectSum.vb" />
     <Compile Include="Helpers\p56RecordDisposition.vb" />
-    <Compile Include="Helpers\p56TaskWithWorksheetSum.vb" />
     <Compile Include="Helpers\p91Create.vb" />
     <Compile Include="Helpers\p91InvoiceSum.vb" />
     <Compile Include="Helpers\p91RecordDisposition.vb" />

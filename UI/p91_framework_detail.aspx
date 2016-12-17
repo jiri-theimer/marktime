@@ -219,7 +219,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 44px; border-bottom: solid 1px gray;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height:43px;border-bottom: solid 1px gray;background-color:#E8E8E8;">
 
         <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
             <Items>
@@ -551,7 +551,7 @@
                         <img src="Images/griddesigner.png" class="button-link" /></a>
                 </div>
                 <div class="commandcell">
-                    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" RenderMode="Lightweight" Style="z-index: 100;">
+                    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" style="z-index:100;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
                         <Items>
                             <telerik:RadMenuItem Text="Položka faktury" ImageUrl="Images/menuarrow.png">
                                 <Items>

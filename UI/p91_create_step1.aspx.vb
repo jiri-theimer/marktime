@@ -22,7 +22,8 @@ Public Class p91_create_step1
                 Me.CurrentPrefix = IIf(Request.Item("prefix") = "", "p41", Request.Item("prefix"))
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 ViewState("masterpids") = Request.Item("masterpids")    'pokud se na vstupu předává více PIDů
-               
+                
+
                 If Request.Item("nogateway") = "1" Then
                     panGateWay.Visible = False
                 End If
@@ -132,6 +133,8 @@ Public Class p91_create_step1
                 Me.j02id.Visible = True
                 lblFindEntity.Text = "Vyberte osobu:"
                 imgEntity.ImageUrl = "Images/person_32.png"
+            Case "p56"
+                imgEntity.ImageUrl = "Images/task_32.png"
             Case "quick"
                 Me.panQuick.Visible = True
                 RefreshQuickEnvironment()
@@ -330,6 +333,8 @@ Public Class p91_create_step1
             Case "j02"
                 ''mq.j02ID = intPID
                 mq.j02IDs = masterpids
+            Case "p56"
+                mq.p56IDs = masterpids
             Case "quick"
                 mq.AddItemToPIDs(Master.DataPID)
         End Select

@@ -86,15 +86,6 @@ Partial Public Class clue_p41_record
     Protected WithEvents p51Name_Billing As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''ParentProject control.
     '''</summary>
     '''<remarks>

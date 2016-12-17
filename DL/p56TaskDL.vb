@@ -26,6 +26,14 @@
         s += " WHERE a.p56Code LIKE @code"
         Return _cDB.GetRecord(Of BO.p56Task)(s, New With {.code = strCode})
     End Function
+    Public Function LoadSumRow(intPID As Integer) As BO.p56TaskSum
+        Dim pars As New DbParameters()
+        With pars
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("pid", intPID, DbType.Int32)
+        End With
+        Return _cDB.GetRecord(Of BO.p56TaskSum)("p56_inhale_sumrow", pars, True)
+    End Function
 
     Public Function Save(cRec As BO.p56Task, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
         Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
@@ -373,32 +381,32 @@
 
         Return _cDB.GetList(Of BO.p56Task)(s, pars)
     End Function
-    Public Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean) As IEnumerable(Of BO.p56TaskWithWorksheetSum)
-        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & ",p31.p31RowsCount,p31.Hours_Orig,p31.Expenses_Orig,p31.Incomes_Orig", pars As New DbParameters
-        If bolInhaleReceiversInLine Then
-            s += ",dbo.p56_getroles_inline(a.p56ID) as _ReceiversInLine"
-        End If
-        s += " " & GetSQLPart2(myQuery)
-        s += " LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig"
-        s += " FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID"
-        Dim strW As String = GetSQLWHERE(myQuery, pars)
-        If strW <> "" Then s += " WHERE " & strW
+    ''Public Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, bolInhaleReceiversInLine As Boolean) As IEnumerable(Of BO.p56TaskWithWorksheetSum)
+    ''    Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly) & ",p31.p31RowsCount,p31.Hours_Orig,p31.Expenses_Orig,p31.Incomes_Orig", pars As New DbParameters
+    ''    If bolInhaleReceiversInLine Then
+    ''        s += ",dbo.p56_getroles_inline(a.p56ID) as _ReceiversInLine"
+    ''    End If
+    ''    s += " " & GetSQLPart2(myQuery)
+    ''    s += " LEFT OUTER JOIN (SELECT xa.p56ID,COUNT(xa.p31ID) as p31RowsCount,sum(case when xc.p33ID=1 then p31Hours_Orig end) as Hours_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end) as Expenses_Orig,sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end) as Incomes_Orig"
+    ''    s += " FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID WHERE xa.p56ID IS NOT NULL GROUP BY xa.p56ID) p31 ON a.p56ID=p31.p56ID"
+    ''    Dim strW As String = GetSQLWHERE(myQuery, pars)
+    ''    If strW <> "" Then s += " WHERE " & strW
 
-        With myQuery
-            If .MG_SortString = "" Then
-                If .p41ID <> 0 Then
-                    s += " ORDER BY a.p56Ordinary,a.p56ID DESC"
-                Else
-                    s += " ORDER BY a.p56ID DESC"
-                End If
-            Else
-                s += " ORDER BY " & ParseSortExpression(.MG_SortString)
-            End If
-        End With
-        Return _cDB.GetList(Of BO.p56TaskWithWorksheetSum)(s, pars)
+    ''    With myQuery
+    ''        If .MG_SortString = "" Then
+    ''            If .p41ID <> 0 Then
+    ''                s += " ORDER BY a.p56Ordinary,a.p56ID DESC"
+    ''            Else
+    ''                s += " ORDER BY a.p56ID DESC"
+    ''            End If
+    ''        Else
+    ''            s += " ORDER BY " & ParseSortExpression(.MG_SortString)
+    ''        End If
+    ''    End With
+    ''    Return _cDB.GetList(Of BO.p56TaskWithWorksheetSum)(s, pars)
 
 
-    End Function
+    ''End Function
     Public Function GetVirtualCount(myQuery As BO.myQueryP56) As Integer
         Dim s As String = "SELECT count(a.p56ID) as Value " & GetSQLPart2(myQuery)
         Dim pars As New DL.DbParameters

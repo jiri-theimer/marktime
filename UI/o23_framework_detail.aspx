@@ -119,7 +119,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 44px;border-bottom:solid 1px gray;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height:43px;border-bottom: solid 1px gray;background-color:#E8E8E8;">
 
         <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" width="100%" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>

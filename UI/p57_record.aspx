@@ -32,7 +32,7 @@
             <td>
                 <uc:datacombo ID="b01ID" runat="server" AutoPostBack="false" DataTextField="b01Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
 
-                <asp:CheckBox ID="p57IsHelpdesk" runat="server" Text="Tento typ slouží k zapisování helpdesk požadavků" CssClass="chk" />
+                <asp:CheckBox ID="p57IsHelpdesk" runat="server" Text="Tento typ slouží k zapisování helpdesk požadavků" CssClass="chk" Visible="false" />
             </td>
         </tr>
         <tr>

@@ -4,14 +4,11 @@
     Public Property x29ID As BO.x29IdEnum
     Public Property x61Name As String
     Public Property x61Ordinary As Integer
-    Private Property _URL As String
 
     Public Function GetPageUrl(strMasterPrefix As String, intMasterPID As Integer, strIsApprovingPerson As String) As String
         Dim s As String = "masterprefix=" & strMasterPrefix & "&masterpid=" & intMasterPID.ToString
         If strIsApprovingPerson <> "" Then s += "&IsApprovingPerson=" & strIsApprovingPerson
         Select Case x61Code
-            Case "board"
-                Return strMasterPrefix & "_framework_rec_board.aspx?pid=" & intMasterPID.ToString
             Case "summary"
                 Return "entity_framework_rec_summary.aspx?" & s
             Case "p31"
@@ -31,7 +28,7 @@
             Case "p41"
                 Return "entity_framework_rec_p41.aspx?" & s
             Case Else
-                Return _URL
+                Return strMasterPrefix & "_framework_detail.aspx?pid=" & intMasterPID.ToString  'výchozí board stránka
         End Select
     End Function
 

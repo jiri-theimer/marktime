@@ -55,9 +55,13 @@
         
         
     function p31_entry_menu(p34id) {
-        ///z menu1           
+        ///z menu1
+        <%If Me.DataPrefix="p41" then%>
         sw_decide("p31_record.aspx?pid=0&p41id=<%=Me.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
-            
+        <%End If%>
+        <%If Me.DataPrefix = "p56" Then%>
+        sw_decide("p31_record.aspx?pid=0&p56id=<%=Me.DataPID%>&p34id="+p34id,"Images/worksheet.png",true);
+        <%End If%>
 
     }
 
@@ -78,7 +82,11 @@
             alert("Není vybrán záznam.");
             return
         }
+        <%If Me.DataPrefix="p41" then%>
         sw_decide("p41_create.aspx?clone=1&pid=" + pid,"Images/project.png",true);
+        <%Else%>
+        sw_decide("<%=Me.DataPrefix%>_record.aspx?clone=1&pid=" + pid,"Images/copy.png",true);
+        <%End If%>
 
     }
     function record_new() {
@@ -89,7 +97,10 @@
         sw_decide("p28_record.aspx?pid=0","Images/contact.png",true);
         <%end If%>
         <%If Me.DataPrefix="j02" then%>
-        sw_decide("j02_record.aspx?pid=0","Images/contact.png",true);
+        sw_decide("j02_record.aspx?pid=0","Images/person.png",true);
+        <%end If%>       
+        <%If Me.DataPrefix = "o23" Then%>
+        sw_decide("o23_record.aspx?pid=0","Images/notepad.png",true);
         <%end If%>
 
     }

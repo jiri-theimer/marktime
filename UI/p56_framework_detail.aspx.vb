@@ -2,174 +2,87 @@
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As SubForm
 
-    Public ReadOnly Property CurrentP41ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.hidCurP41ID.Value)
-        End Get
-    End Property
-    Public Property CurrentTab As String
-        Get
-            If tabs1.Tabs.Count = 0 Then Return ""
-            If tabs1.SelectedTab Is Nothing Then
-                tabs1.SelectedIndex = 0
-            End If
-            Return tabs1.SelectedTab.Value
-        End Get
-        Set(value As String)
-            If tabs1.FindTabByValue(value) Is Nothing Then Return
-            tabs1.FindTabByValue(value).Selected = True
-        End Set
-    End Property
     Private Sub p56_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
+        menu1.Factory = Master.Factory
+        menu1.DataPrefix = "p56"
+        ff1.Factory = Master.Factory
     End Sub
 
+    
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        With Master
-
-            ff1.Factory = .Factory
-        End With
-        sb1.ashx = "handler_search_task.ashx"
-        sb1.aspx = "p56_framework.aspx"
-        sb1.TextboxLabel = "Najít úkol..."
-
         If Not Page.IsPostBack Then
-            Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             With Master
                 .SiteMenuValue = "p56"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                If .Factory.SysUser.OneContactPage <> "" Then
-                    Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneContactPage, "pid=" & .DataPID.ToString))
+                If Request.Item("tab") <> "" Then
+                    .Factory.j03UserBL.SetUserParam("p56_framework_detail-tab", Request.Item("tab"))
                 End If
-
                 Dim lisPars As New List(Of String)
                 With lisPars
-                    .Add("p56_framework_detail-tab")
                     .Add("p56_framework_detail-pid")
+                    .Add("p56_framework_detail-tab")
+                    .Add("p56_framework_detail-tabskin")
                     .Add("p56_framework_detail-chkFFShowFilledOnly")
+                    .Add("p56_framework_detail_pos")
                 End With
+                Dim intPID As Integer = Master.DataPID
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-                End With
-                With .Factory.j03UserBL
-
-                    If Master.DataPID = 0 Then
-                        Master.DataPID = BO.BAS.IsNullInt(.GetUserParam("p56_framework_detail-pid", "O"))
-                        If Master.DataPID = 0 Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p56")
+                    'úvodní dispečerská stránka
+                    If intPID = 0 Then
+                        intPID = BO.BAS.IsNullInt(.GetUserParam("p56_framework_detail-pid", "O"))
+                        If intPID = 0 Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p56")
                     Else
-                        If Master.DataPID <> BO.BAS.IsNullInt(.GetUserParam("p56_framework_detail-pid", "O")) Then
-                            .SetUserParam("p56_framework_detail-pid", Master.DataPID.ToString)
+                        If intPID <> BO.BAS.IsNullInt(.GetUserParam("p56_framework_detail-pid", "O")) Then
+                            .SetUserParam("p56_framework_detail-pid", intPID.ToString)
                         End If
                     End If
+                    If Request.Item("board") = "" Then
+                        Dim strTab As String = .GetUserParam("p56_framework_detail-tab", "board")
+                        Select Case strTab
+                            Case "p31", "time", "expense", "fee", "kusovnik"
+                                Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p56&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab, False)
+                            Case "o23", "p91", "p56", "summary", "p41"
+                                Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p56&masterpid=" & intPID.ToString, False)
+                            Case Else
+                                'zůstat zde na BOARD stránce
+                        End Select
+                    End If
+                    menu1.TabSkin = .GetUserParam("p56_framework_detail-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
-                    Me.CurrentTab = Master.Factory.j03UserBL.GetUserParam("p56_framework_detail-tab")
-                End With
 
+                End With
+                Master.DataPID = intPID
             End With
 
 
             RefreshRecord()
 
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p56")
-            End If
-        End If
-
-        If Me.CurrentTab <> "" Then
-            fraSubform.Visible = True
-            fraSubform.Attributes.Item("src") = Me.tabs1.SelectedTab.NavigateUrl.Replace("lasttabkey", "nic")
-            Select Case Me.CurrentTab
-                Case "p31", "time", "expense", "fee", "kusovnik"
-                    If Me.hidHardRefreshFlag.Value = "p31-save" Then
-                        fraSubform.Attributes.Item("src") += "&pid=" & Me.hidHardRefreshPID.Value
-                    End If
-            End Select
-        Else
-            fraSubform.Visible = False
-        End If
-    End Sub
-
-    Private Sub Handle_Permissions(cRec As BO.p56Task, cP41 As BO.p41Project)
-        Dim cDisp As BO.p56RecordDisposition = Master.Factory.p56TaskBL.InhaleRecordDisposition(cRec)
-        With cDisp
-            If Not .ReadAccess Then
-                Master.StopPage("Nedisponujete oprávněním číst tento úkol.")
-            End If
-            x18_binding.Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdCopy").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdNew").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
-            
-        End With
-        menu1.FindItemByValue("cmdPivot").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
-        menu1.FindItemByValue("cmdPivot").NavigateUrl = "p31_pivot.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString
-
-        If cDisp.P31_Create Then
-            If Not cRec.IsClosed Then
-                Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(cRec.p41ID, cP41.p42ID, cP41.j18ID, Master.Factory.SysUser.j02ID)
-                With menu1.FindItemByValue("p31")
-                    For Each c In lisP34
-                        Dim mi As New Telerik.Web.UI.RadMenuItem(String.Format("Zapsat úkon do [{0}]", c.p34Name), "javascript:p31_entry_menu(" & c.PID.ToString & ")")
-                        mi.ImageUrl = "Images/worksheet.png"
-                        .Items.Add(mi)
-                    Next
-                    If lisP34.Count = 0 Then
-                        Dim mi As New Telerik.Web.UI.RadMenuItem("V projektu úkolu nedisponujete oprávněním k zapisování úkonů.")
-                        mi.ForeColor = Drawing.Color.Red
-                        menu1.FindItemByValue("p31").Items.Add(mi)
-                    End If
-                End With
-            Else
-                Dim mi As New Telerik.Web.UI.RadMenuItem("Do uzavřeného úkolu nelze zapisovat nové úkony.")
-                mi.ForeColor = Drawing.Color.Red
-                menu1.FindItemByValue("p31").Items.Add(mi)
-                menu1.Skin = "Black"
-            End If
-        Else
-            Dim mi As New Telerik.Web.UI.RadMenuItem("V úkolu nedisponujete oprávněním k zapisování úkonů.")
-            mi.ForeColor = Drawing.Color.Red
-            menu1.FindItemByValue("p31").Items.Add(mi)
-        End If
-        Dim bolCanApprove As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
-        Dim cDispP41 As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41)
-
-        If bolCanApprove = False And cDispP41.x67IDs.Count > 0 Then
-            Dim lisO28 As IEnumerable(Of BO.o28ProjectRole_Workload) = Master.Factory.x67EntityRoleBL.GetList_o28(cDispP41.x67IDs)
-            If lisO28.Where(Function(p) p.o28PermFlag = BO.o28PermFlagENUM.CistASchvalovatVProjektu Or p.o28PermFlag = BO.o28PermFlagENUM.CistAEditASchvalovatVProjektu).Count > 0 Then
-                bolCanApprove = True
-            End If
-        End If
-        menu1.FindItemByValue("cmdApprove").Visible = bolCanApprove
-        If cRec.b01ID <> 0 Then
-            menu1.FindItemByValue("cmdB07").Visible = False
         End If
     End Sub
 
     Private Sub RefreshRecord()
-        With tabs1.FindTabByValue("p31")
-            .NavigateUrl = "entity_framework_p31subform.aspx?masterprefix=p56&masterpid=" & Master.DataPID.ToString & "&lasttabkey=p56_framework_detail-tab&lasttabval=p31"
-        End With
-        With tabs1.FindTabByValue("b07")
-            .NavigateUrl = "entity_framework_b07subform.aspx?masterprefix=p56&masterpid=" & Master.DataPID.ToString & "&lasttabkey=p56_framework_detail-tab&lasttabval=b07"
-        End With
-        Dim mq As New BO.myQueryP56
-        mq.AddItemToPIDs(Master.DataPID)
-        mq.Closed = BO.BooleanQueryMode.NoQuery
-        Dim lis As IEnumerable(Of BO.p56TaskWithWorksheetSum) = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq)
-        If lis.Count = 0 Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p56")
-        Dim cRec As BO.p56TaskWithWorksheetSum = lis(0)
-
+        Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(Master.DataPID)
+        If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p56")
         Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(cRec.p41ID)
-        Me.hidCurP41ID.Value = cP41.PID.ToString
+        Dim cRecSum As BO.p56TaskSum = Master.Factory.p56TaskBL.LoadSumRow(Master.DataPID)
+        Dim cDisp As BO.p56RecordDisposition = Master.Factory.p56TaskBL.InhaleRecordDisposition(cRec)
 
-        Handle_Permissions(cRec, cP41)
+        menu1.p56_RefreshRecord(cRec, cRecSum, cP41, "board", cDisp)
+
+        If Not cDisp.ReadAccess Then Master.StopPage("Nedisponujete oprávněním číst tento úkol.")
+        x18_binding.Visible = cDisp.OwnerAccess
 
         With cRec
             Me.Owner.Text = .Owner : Me.Timestamp.Text = .Timestamp
             Me.p56Code.Text = .p56Code
             Me.p56Name.Text = .p56Name
             Me.Project.Text = .ProjectCodeAndName
-            Me.Project.NavigateUrl = "p41_framework.aspx?pid=" & .p41ID.ToString
+            If Master.Factory.SysUser.j04IsMenu_Project Then
+                Me.Project.NavigateUrl = "p41_framework.aspx?pid=" & .p41ID.ToString
+            End If
             Me.clue_project.Attributes("rel") = "clue_p41_record.aspx?pid=" & .p41ID.ToString
 
             Me.p57Name.Text = .p57Name
@@ -208,19 +121,19 @@
             Else
                 lblDeadline.Visible = False
             End If
-            Me.Hours_Orig.Text = BO.BAS.FN(.Hours_Orig)
-            If .Expenses_Orig <> 0 Then
+            Me.Hours_Orig.Text = BO.BAS.FN(cRecSum.Hours_Orig)
+            If cRecSum.Expenses_Orig <> 0 Then
                 trExpenses.Visible = True
-                Me.Expenses_Orig.Text = BO.BAS.FN(.Expenses_Orig)
+                Me.Expenses_Orig.Text = BO.BAS.FN(cRecSum.Expenses_Orig)
             End If
             If cRec.p56Plan_Hours > 0 Then
                 trPlanHours.Visible = True
                 p56Plan_Hours.Text = BO.BAS.FN(.p56Plan_Hours)
-                Select Case .p56Plan_Hours - .Hours_Orig
+                Select Case .p56Plan_Hours - cRecSum.Hours_Orig
                     Case Is > 0
-                        Me.PlanHoursSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Hours - .Hours_Orig) & "h.</span>"
+                        Me.PlanHoursSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Hours - cRecSum.Hours_Orig) & "h.</span>"
                     Case Is < 0
-                        Me.PlanHoursSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(.Hours_Orig - .p56Plan_Hours) & "h.</span>"
+                        Me.PlanHoursSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(cRecSum.Hours_Orig - .p56Plan_Hours) & "h.</span>"
                     Case 0
                         Me.PlanHoursSummary.Text += "vykázáno přesně podle plánu."
                 End Select
@@ -228,17 +141,18 @@
             If .p56Plan_Expenses > 0 Then
                 trPlanExpenses.Visible = True
                 p56Plan_Expenses.Text = BO.BAS.FN(.p56Plan_Expenses)
-                Select Case .p56Plan_Expenses - .Expenses_Orig
+                Select Case .p56Plan_Expenses - cRecSum.Expenses_Orig
                     Case Is > 0
-                        Me.PlanExpensesSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Expenses - .Expenses_Orig) & ",-</span>"
+                        Me.PlanExpensesSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Expenses - cRecSum.Expenses_Orig) & ",-</span>"
                     Case Is < 0
-                        PlanExpensesSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(.Expenses_Orig - .p56Plan_Expenses) & ",-.</span>"
+                        PlanExpensesSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(cRecSum.Expenses_Orig - .p56Plan_Expenses) & ",-.</span>"
                     Case 0
                         PlanExpensesSummary.Text = "vykázáno přesně podle plánu."
                 End Select
             End If
         End With
-
+        Me.Last_Invoice.Text = cRecSum.Last_Invoice
+        Me.Last_WIP_Worksheet.Text = cRecSum.Last_Wip_Worksheet
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p56Task, cRec.PID)
         Me.roles_task.RefreshData(lisX69, cRec.PID)
@@ -257,8 +171,6 @@
         End If
 
 
-        basUIMT.RenderHeaderMenu(cRec.IsClosed, Me.panMenuContainer, menu1)
-        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & Master.DataPID.ToString, cRec.IsClosed)
 
         If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p56Task).Count > 0 Then
             x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p56&pid={0}','Images/label_32.png',false);", cRec.PID)
@@ -276,9 +188,8 @@
 
         RefreshImapBox(cRec)
 
-
+        comments1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, cRec.PID)
     End Sub
-
     Private Sub RefreshImapBox(cRec As BO.p56Task)
         If cRec.o43ID <> 0 Then
             'úkol byl založen IMAP robotem
@@ -288,36 +199,4 @@
             boxIMAP.Visible = False
         End If
     End Sub
-    
-
-
-    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
-        If Me.hidHardRefreshFlag.Value = "" And Me.hidHardRefreshPID.Value = "" Then Return
-
-        Select Case Me.hidHardRefreshFlag.Value
-            Case "p56-save"
-                Master.DataPID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
-            Case "p56-delete"
-                Response.Redirect("entity_framework_detail_missing.aspx?prefix=p56")
-           
-            Case Else
-
-        End Select
-        ReloadPage(Master.DataPID.ToString)
-
-        Me.hidHardRefreshFlag.Value = ""
-        Me.hidHardRefreshPID.Value = ""
-
-    End Sub
-
-    Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("p56_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
-        ReloadPage(Master.DataPID.ToString)
-    End Sub
-
-    Private Sub ReloadPage(strPID As String)
-        Response.Redirect("p56_framework_detail.aspx?pid=" & strPID)
-    End Sub
-
-    
 End Class

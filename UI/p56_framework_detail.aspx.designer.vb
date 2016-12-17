@@ -14,22 +14,13 @@ Option Explicit On
 Partial Public Class p56_framework_detail
 
     '''<summary>
-    '''panMenuContainer control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panMenuContainer As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
     '''boxCoreTitle control.
@@ -365,6 +356,24 @@ Partial Public Class p56_framework_detail
     Protected WithEvents PlanExpensesSummary As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''Last_WIP_Worksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Last_WIP_Worksheet As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Last_Invoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Last_Invoice As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''boxFF control.
     '''</summary>
     '''<remarks>
@@ -473,49 +482,13 @@ Partial Public Class p56_framework_detail
     Protected WithEvents p56Description As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''tabs1 control.
+    '''comments1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
-
-    '''<summary>
-    '''fraSubform control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents fraSubform As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''hidHardRefreshFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidHardRefreshPID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hiddatapid_p31 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hiddatapid_p31 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents comments1 As Global.UI.b07_list
 
     '''<summary>
     '''hidCurP41ID control.
@@ -525,33 +498,6 @@ Partial Public Class p56_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidCurP41ID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidParentWidth control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidParentWidth As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''cmdRefresh control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''sb1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents sb1 As Global.UI.searchbox
 
     '''<summary>
     '''Master property.

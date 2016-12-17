@@ -593,12 +593,12 @@ Public Class p31_framework
 
         Return Master.Factory.p56TaskBL.GetList(mq, Me.IsUseReceiversInLine)
     End Function
-    Private Function GetTasksListWithWorksheetSum() As IEnumerable(Of BO.p56TaskWithWorksheetSum)
-        Dim mq As New BO.myQueryP56
-        InhaleMyTaskQuery(mq)
+    ''Private Function GetTasksListWithWorksheetSum() As IEnumerable(Of BO.p56TaskWithWorksheetSum)
+    ''    Dim mq As New BO.myQueryP56
+    ''    InhaleMyTaskQuery(mq)
 
-        Return Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq, Me.IsUseReceiversInLine)
-    End Function
+    ''    Return Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq, Me.IsUseReceiversInLine)
+    ''End Function
 
     Private Sub InhaleMyTaskQuery(ByRef mq As BO.myQueryP56)
         With mq

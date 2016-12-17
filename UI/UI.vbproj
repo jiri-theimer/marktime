@@ -207,7 +207,6 @@
     <Content Include="invoice.ascx" />
     <Content Include="j02_framework.aspx" />
     <Content Include="j02_framework_detail.aspx" />
-    <Content Include="j02_framework_rec_board.aspx" />
     <Content Include="j03_accesslog.aspx" />
     <Content Include="j60_record.aspx" />
     <Content Include="j61_record.aspx" />
@@ -243,7 +242,6 @@
     <Content Include="o48_record.aspx" />
     <Content Include="p28_framework.aspx" />
     <Content Include="p28_framework_detail.aspx" />
-    <Content Include="p28_framework_rec_board.aspx" />
     <Content Include="p31summary.ascx" />
     <Content Include="p31summary_drilldown.ascx" />
     <Content Include="p31_framework_timer.aspx" />
@@ -251,7 +249,6 @@
     <Content Include="p31_scheduler.aspx" />
     <Content Include="p41_framework.aspx" />
     <Content Include="p41_framework_detail.aspx" />
-    <Content Include="p41_framework_rec_board.aspx" />
     <Content Include="p41_framework_rec_budget.aspx" />
     <Content Include="p45_p46.aspx" />
     <Content Include="p45_project_p49.aspx" />
@@ -913,13 +910,6 @@
       <DependentUpon>j02_framework_detail.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="j02_framework_rec_board.aspx.designer.vb">
-      <DependentUpon>j02_framework_rec_board.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="j02_framework_rec_board.aspx.vb">
-      <DependentUpon>j02_framework_rec_board.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="j03_accesslog.aspx.designer.vb">
       <DependentUpon>j03_accesslog.aspx</DependentUpon>
     </Compile>
@@ -1165,13 +1155,6 @@
       <DependentUpon>p28_framework_detail.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="p28_framework_rec_board.aspx.designer.vb">
-      <DependentUpon>p28_framework_rec_board.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p28_framework_rec_board.aspx.vb">
-      <DependentUpon>p28_framework_rec_board.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="p31summary.ascx.designer.vb">
       <DependentUpon>p31summary.ascx</DependentUpon>
     </Compile>
@@ -1219,13 +1202,6 @@
     </Compile>
     <Compile Include="p41_framework_detail.aspx.vb">
       <DependentUpon>p41_framework_detail.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p41_framework_rec_board.aspx.designer.vb">
-      <DependentUpon>p41_framework_rec_board.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p41_framework_rec_board.aspx.vb">
-      <DependentUpon>p41_framework_rec_board.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p41_framework_rec_budget.aspx.designer.vb">

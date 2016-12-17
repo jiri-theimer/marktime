@@ -1,6 +1,7 @@
 ﻿Public Class SubForm
     Inherits System.Web.UI.MasterPage
     Private Property _Factory As BL.Factory = Nothing
+    Private _quickDataPID As Integer = 0
 
     Public ReadOnly Property Factory As BL.Factory
         Get
@@ -19,9 +20,11 @@
     End Property
     Public Property DataPID() As Integer
         Get
+            If _quickDataPID <> 0 Then Return _quickDataPID
             Return BO.BAS.IsNullInt(hidDataPID.Value)
         End Get
         Set(ByVal value As Integer)
+            _quickDataPID = value
             hidDataPID.Value = value.ToString
         End Set
     End Property

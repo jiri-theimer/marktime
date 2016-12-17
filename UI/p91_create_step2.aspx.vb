@@ -109,8 +109,14 @@ Public Class p91_create_step2
                     Me.p91text1.Text = cP28.p28InvoiceDefaultText1
                     If cP28.p28InvoiceMaturityDays > 0 Then intMaturityDays = cP28.p28InvoiceMaturityDays
                     intP92ID = cP28.p92ID
-                Case "p41"
-                    Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(intDataPID)
+                Case "p41", "p56"
+                    Dim cP41 As BO.p41Project = Nothing
+                    If Me.CurrentPrefix = "p56" Then
+                        Dim c As BO.p56Task = Master.Factory.p56TaskBL.Load(intDataPID)
+                        cP41 = Master.Factory.p41ProjectBL.Load(c.p41ID)
+                    Else
+                        cP41 = Master.Factory.p41ProjectBL.Load(intDataPID)
+                    End If
                     cP28 = Master.Factory.p28ContactBL.Load(cP41.p28ID_Client)
                     If Not cP28 Is Nothing Then
                         If cP28.p28InvoiceMaturityDays > 0 Then intMaturityDays = cP28.p28InvoiceMaturityDays

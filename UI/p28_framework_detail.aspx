@@ -1,7 +1,225 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="p28_framework_detail.aspx.vb" Inherits="UI.p28_framework_detail" %>
-<%@ MasterType VirtualPath="~/Clue.Master" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/SubForm.Master" CodeBehind="p28_framework_detail.aspx.vb" Inherits="UI.p28_framework_detail" %>
+
+<%@ MasterType VirtualPath="~/SubForm.Master" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="uc" TagName="entity_menu" Src="~/entity_menu.ascx" %>
+<%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
+<%@ Register TagPrefix="uc" TagName="p28_address" Src="~/p28_address.ascx" %>
+<%@ Register TagPrefix="uc" TagName="p28_medium" Src="~/p28_medium.ascx" %>
+<%@ Register TagPrefix="uc" TagName="contactpersons" Src="~/contactpersons.ascx" %>
+<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="entity_worksheet_summary" Src="~/entity_worksheet_summary.ascx" %>
+<%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
+<%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="treemenu" Src="~/treemenu.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script type="text/javascript">
+        function b07_reaction(b07id) {
+            sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p28&masterpid=<%=Master.datapid%>", "Images/comment_32.png", true)
+
+        }
+       
+        function hardrefresh(pid, flag) {
+            if (flag == "p28-save") {
+                parent.window.location.replace("p28_framework.aspx?pid=" + pid);
+                return;
+            }
+            if (flag == "p28-delete") {
+                parent.window.location.replace("p28_framework.aspx");
+                return;
+            }
+
+
+            location.replace("p28_framework_detail.aspx?pid=<%=master.datapid%>");
+        }
+        function childs() {
+            window.open("p28_framework.aspx?masterprefix=p28&masterpid=<%=master.DataPID%>", "_top")
+
+        }
+        function vat_info(vat) {
+            sw_decide("vat_registration.aspx?vat=" + vat, "Images/help_32.png", false);
+
+        }
+        function o48_edit() {
+            sw_decide("o48_record.aspx?prefix=p28&pid=<%=master.datapid%>", "", false);
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <uc:entity_menu ID="menu1" runat="server"></uc:entity_menu>
+    <div style="height:10px;clear:both;"></div>
+    <div class="content-box1">
+        <div class="title">
+            <img src="Images/properties.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxCoreTitle" Text="Záznam klienta" runat="server"></asp:Label>
+            <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Pouze vyplněná uživatelská pole" Style="float: right;" />
+        </div>
+        <div class="content">
+            <div style="float: left;">
+                <table cellpadding="10" cellspacing="2" id="responsive">
+                    
+                    <tr valign="top">
+                        <td>
+                            <asp:Label ID="lblContact" runat="server" Text="Název:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+
+                            <asp:Label ID="Contact" runat="server" CssClass="valbold"></asp:Label>
+
+                            <asp:Label ID="p29Name" runat="server" CssClass="val"></asp:Label>
+                            <asp:Image ID="imgDraft" runat="server" ImageUrl="Images/draft_icon.gif" Visible="false" AlternateText="DRAFT záznam" Style="float: right;" />
+                            <asp:Panel ID="panDraftCommands" runat="server" Visible="false">
+                                <button type="button" onclick="draft2normal()">
+                                    Převést z režimu DRAFT na oficiální záznam
+                                </button>
+                            </asp:Panel>
+
+                        </td>
+
+
+                    </tr>
+
+                    <tr id="trWorkflow" runat="server" visible="false">
+                        <td>
+                            <asp:Label ID="lblB02ID" runat="server" Text="Workflow stav:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
+                            <img src="Images/workflow.png" />
+                            <asp:HyperLink ID="cmdWorkflow" runat="server" Text="Posunout/doplnit" NavigateUrl="javascript: workflow()"></asp:HyperLink>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td>
+                            <asp:Label ID="lblX51" runat="server" Text="Fakturační ceník:" CssClass="lbl"></asp:Label>
+
+                        </td>
+                        <td>
+                            <asp:Label ID="p51Name_Billing" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:HyperLink ID="clue_p51id_billing" runat="server" CssClass="reczoom" Text="i" title="Detail ceníku"></asp:HyperLink>
+                            <asp:Image ID="imgFlag_Contact" runat="server" ToolTip="Fakturační jazyk" />
+                        </td>
+
+                    </tr>
+                    <tr valign="top" id="trICDIC" runat="server">
+                        <td>
+                            <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="IČ:"></asp:Label>
+
+                        </td>
+                        <td>
+                            <asp:HyperLink ID="linkIC" runat="server" Target="_blank" ToolTip="JUSTICE.cz" Visible="false"></asp:HyperLink>
+                            <asp:HyperLink ID="linkARES" runat="server" Text="ARES" Target="_blank" Visible="false"></asp:HyperLink>
+
+                            <span style="margin-left: 20px;">DIČ:</span>
+                            <asp:HyperLink ID="linkDIC" runat="server" ToolTip="Ověření subjektu v DPH registrech" Visible="false"></asp:HyperLink>
+
+
+
+                        </td>
+                    </tr>
+                </table>
+                <uc:treemenu ID="tree1" runat="server" Visible="false" />
+            </div>
+            <div style="float: left;">
+                <uc:freefields_readonly ID="ff1" runat="server" />
+
+                <asp:HyperLink ID="linkISIR" runat="server" Text="ISIR" Target="_blank" Visible="false" ToolTip="Insolvenční restřík | JUSTICE.cz"></asp:HyperLink>
+                +Monitoring:
+                            <asp:HyperLink ID="linkISIR_Monitoring" runat="server" Text="NE" NavigateUrl="javascript:o48_edit()" ToolTip="Zapnout monitoring klienta v insolvenčním rejstříku"></asp:HyperLink>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+
+        
+    </div>
+    <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/label.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
+            <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
+        </div>
+        <div class="content">
+            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+        </div>
+    </asp:Panel>
+
+    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/worksheet.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
+        </div>
+        <div class="content">
+            <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
+           
+            <div style="width:100%;">
+                <span class="val">Poslední vystavená faktura:</span>
+                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+
+            </div>
+            <div style="width:100%;">
+                <span class="val">Poslední nevyfakturovaný úkon:</span>
+                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+
+            </div>
+        </div>
+    </asp:Panel>
+
+
+    <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/projectrole.png" style="margin-right: 10px;" />
+            Obsazení klientských rolí
+        </div>
+        <div class="content">
+            <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="p28Contact" NoDataText=""></uc:entityrole_assign_inline>
+        </div>
+    </asp:Panel>
+
+    <asp:Panel ID="boxO37" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/address.png" />
+            <img src="Images/email.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxO37Title" runat="server" Text="Adresy a kontaktní média"></asp:Label>
+        </div>
+        <div class="content">
+            <uc:p28_address ID="address1" runat="server"></uc:p28_address>
+            <uc:p28_medium ID="medium1" runat="server"></uc:p28_medium>
+        </div>
+    </asp:Panel>
+
+    <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/person.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby klienta"></asp:Label>
+            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" Style="margin-left: 20px;"></asp:HyperLink>
+        </div>
+        <div class="content">
+            <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>
+        </div>
+    </asp:Panel>
+    <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/billing.png" style="margin-right: 10px;" />
+            <span>Fakturační poznámka klienta</span>
+        </div>
+        <div class="content">
+            <asp:Label ID="p28BillingMemo" runat="server"></asp:Label>
+        </div>
+    </asp:Panel>
+
+    <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
+
+    <div style="clear: both;"></div>
+    
+    
+    <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
+
+    <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
+    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
+
+
+    <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

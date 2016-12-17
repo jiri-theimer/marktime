@@ -92,6 +92,8 @@ Public Class o23_subgrid
                 mq.p28ID = MasterDataPID
             Case BO.x29IdEnum.j02Person
                 mq.j02ID = MasterDataPID
+            Case BO.x29IdEnum.p56Task
+                mq.p56ID = MasterDataPID
         End Select
 
         mq.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead

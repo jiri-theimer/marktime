@@ -47,10 +47,9 @@
                             <asp:Label ID="p51Name_Billing" runat="server" CssClass="valbold"></asp:Label>
 
                         </td>
-                        <td>Vlastník:</td>
+                        <td>Nadřízený projekt:</td>
                         <td>
-                            <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
-                            <span style="padding-left:20px;">Nadřízený projekt:</span>
+                           
                             <asp:HyperLink ID="ParentProject" runat="server" Target="_top"></asp:HyperLink>
                         </td>
                     </tr>

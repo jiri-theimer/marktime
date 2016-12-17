@@ -72,6 +72,11 @@
                 Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
                 Dim cRecSum As BO.j02PersonSum = Master.Factory.j02PersonBL.LoadSumRow(cRec.PID)
                 menu1.j02_RefreshRecord(cRec, cRecSum, strTab)
+            Case "p56"
+                Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(Master.DataPID)
+                Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(cRec.p41ID)
+                Dim cRecSum As BO.p56TaskSum = Master.Factory.p56TaskBL.LoadSumRow(Master.DataPID)
+                menu1.p56_RefreshRecord(cRec, cRecSum, cP41, strTab)
         End Select
 
     End Sub

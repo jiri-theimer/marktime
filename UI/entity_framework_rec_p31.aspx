@@ -63,7 +63,16 @@
         }
         function p31_entry() {
             ///volá se z p31_subgrid
+            <%If Me.CurrentMasterPrefix="p41" then%>
             var url = "p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>";
+            <%end If%>
+            <%If Me.CurrentMasterPrefix = "p56" Then%>
+            var url = "p31_record.aspx?pid=0&p56id=<%=Master.DataPID%>";
+            <%end If%>
+            <%If Me.CurrentMasterPrefix = "p28" Then%>
+            var url = "p31_record.aspx?pid=0&p28id=<%=Master.DataPID%>";
+            <%end If%>
+            url = url + "&tabqueryflag=<%=gridP31.MasterTabAutoQueryFlag%>";
 
             sw_decide(url, "Images/worksheet.png", false);
 

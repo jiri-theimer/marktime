@@ -40,12 +40,12 @@
     Private Sub RefreshRecord()
         If Master.DataPID = 0 Then Return
 
-        Dim mq As New BO.myQueryP56
-        mq.AddItemToPIDs(Master.DataPID)
-        mq.Closed = BO.BooleanQueryMode.NoQuery
-        Dim lis As IEnumerable(Of BO.p56TaskWithWorksheetSum) = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq)
-        Dim cRec As BO.p56TaskWithWorksheetSum = lis(0)
-
+        ''Dim mq As New BO.myQueryP56
+        ''mq.AddItemToPIDs(Master.DataPID)
+        ''mq.Closed = BO.BooleanQueryMode.NoQuery
+        ''Dim lis As IEnumerable(Of BO.p56TaskWithWorksheetSum) = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq)
+        Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(Master.DataPID)
+        Dim cRecSum As BO.p56TaskSum = Master.Factory.p56TaskBL.LoadSumRow(Master.DataPID)
         Dim cClient As BO.p28Contact = Nothing
         With cRec
             Me.p56Code.Text = .p56Code
@@ -96,19 +96,19 @@
 
 
         With cRec
-            Me.Hours_Orig.Text = BO.BAS.FN(.Hours_Orig)
-            If .Expenses_Orig <> 0 Then
+            Me.Hours_Orig.Text = BO.BAS.FN(cRecSum.Hours_Orig)
+            If cRecSum.Expenses_Orig <> 0 Then
                 trExpenses.Visible = True
-                Me.Expenses_Orig.Text = BO.BAS.FN(.Expenses_Orig)
+                Me.Expenses_Orig.Text = BO.BAS.FN(cRecSum.Expenses_Orig)
             End If
             If cRec.p56Plan_Hours > 0 Then
                 trPlanHours.Visible = True
                 p56Plan_Hours.Text = BO.BAS.FN(.p56Plan_Hours)
-                Select Case .p56Plan_Hours - .Hours_Orig
+                Select Case .p56Plan_Hours - cRecSum.Hours_Orig
                     Case Is > 0
-                        Me.PlanHoursSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Hours - .Hours_Orig) & "h.</span>"
+                        Me.PlanHoursSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Hours - cRecSum.Hours_Orig) & "h.</span>"
                     Case Is < 0
-                        Me.PlanHoursSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(.Hours_Orig - .p56Plan_Hours) & "h.</span>"
+                        Me.PlanHoursSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(cRecSum.Hours_Orig - .p56Plan_Hours) & "h.</span>"
                     Case 0
                         Me.PlanHoursSummary.Text += "vykázáno přesně podle plánu."
                 End Select
@@ -116,11 +116,11 @@
             If .p56Plan_Expenses > 0 Then
                 trPlanExpenses.Visible = True
                 p56Plan_Expenses.Text = BO.BAS.FN(.p56Plan_Expenses)
-                Select Case .p56Plan_Expenses - .Expenses_Orig
+                Select Case .p56Plan_Expenses - cRecSum.Expenses_Orig
                     Case Is > 0
-                        Me.PlanExpensesSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Expenses - .Expenses_Orig) & ",-</span>"
+                        Me.PlanExpensesSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Expenses - cRecSum.Expenses_Orig) & ",-</span>"
                     Case Is < 0
-                        PlanExpensesSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(.Expenses_Orig - .p56Plan_Expenses) & ",-.</span>"
+                        PlanExpensesSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(cRecSum.Expenses_Orig - .p56Plan_Expenses) & ",-.</span>"
                     Case 0
                         PlanExpensesSummary.Text = "vykázáno přesně podle plánu."
                 End Select

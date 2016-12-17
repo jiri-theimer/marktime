@@ -33,7 +33,7 @@
             Me.j18Name.Text = .j18Name
             Me.p42Name.Text = .p42Name
             Me.p51Name_Billing.Text = .p51Name_Billing
-            Me.Owner.Text = .Owner
+
             Me.Timestamp.Text = .Timestamp
             Me.b02Name.Text = .b02Name
             If Not (.p41PlanFrom Is Nothing Or .p41PlanUntil Is Nothing) Then

@@ -43,7 +43,7 @@
             <table cellpadding="5" cellspacing="2">
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" Text="Osoba:" runat="server" CssClass="lblReq"></asp:Label>
+                        <asp:Label ID="Label1" Text="Titul+Jméno+Příjmení:" runat="server" CssClass="lblReq"></asp:Label>
                     </td>
                     <td>
                         <uc:datacombo ID="j02TitleBeforeName" runat="server" Width="80px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains" DefaultValues="Bc.;BcA.;Ing.;Ing.arch.;MUDr.;MVDr.;MgA.;Mgr.;JUDr.;PhDr.;RNDr.;PharmDr.;ThLic.;ThDr.;Ph.D.;Th.D.;prof.;doc.;PaedDr.;Dr.;PhMr."></uc:datacombo>
@@ -274,6 +274,7 @@
                 minLength: 1,
                 select: function (event, ui) {
                     if (ui.item) {
+                        if (ui.item.PID != null)
                         dialog_master("clue_j02_record.aspx?pid=" + ui.item.PID, false)
                         return false;
                     }
@@ -298,7 +299,7 @@
                 else
                     s = s + "<a>";
 
-                s = s + __highlight(item.Project, item.FilterString);
+                s = s + __highlight(item.ItemText, item.FilterString);
 
 
                 s = s + "</a>";

@@ -7,7 +7,7 @@
     Function LoadByExternalPID(strExternalPID As String) As BO.p56Task
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56Task)
-    Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56TaskWithWorksheetSum)
+    ''Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56TaskWithWorksheetSum)
     Function GetGridDataSource(myQuery As BO.myQueryP56) As DataTable
     Function GetVirtualCount(myQuery As BO.myQueryP56) As Integer
     Function GetRolesInline(intPID As Integer) As String
@@ -20,6 +20,7 @@
     Function UpdateImapSource(intPID As Integer, intO43ID As Integer) As Boolean
     Function GetTotalTasksCount() As Integer
     Function GetGridFooterSums(myQuery As BO.myQueryP56, strSumFields As String) As DataTable
+    Function LoadSumRow(intPID As Integer) As BO.p56TaskSum
 End Interface
 Class p56TaskBL
     Inherits BLMother
@@ -135,9 +136,9 @@ Class p56TaskBL
     Public Function GetList(mq As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56Task) Implements Ip56TaskBL.GetList
         Return _cDL.GetList(mq, bolInhaleReceiversInLine)
     End Function
-    Public Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56TaskWithWorksheetSum) Implements Ip56TaskBL.GetList_WithWorksheetSum
-        Return _cDL.GetList_WithWorksheetSum(myQuery, bolInhaleReceiversInLine)
-    End Function
+    ''Public Function GetList_WithWorksheetSum(myQuery As BO.myQueryP56, Optional bolInhaleReceiversInLine As Boolean = False) As IEnumerable(Of BO.p56TaskWithWorksheetSum) Implements Ip56TaskBL.GetList_WithWorksheetSum
+    ''    Return _cDL.GetList_WithWorksheetSum(myQuery, bolInhaleReceiversInLine)
+    ''End Function
     Public Function GetList_WaitingOnReminder(datReminderFrom As Date, datReminderUntil As Date) As IEnumerable(Of BO.p56Task) Implements Ip56TaskBL.GetList_WaitingOnReminder
         Return _cDL.GetList_WaitingOnReminder(datReminderFrom, datReminderUntil)
     End Function
@@ -234,5 +235,8 @@ Class p56TaskBL
     End Function
     Public Function GetGridFooterSums(myQuery As BO.myQueryP56, strSumFields As String) As DataTable Implements Ip56TaskBL.GetGridFooterSums
         Return _cDL.GetGridFooterSums(myQuery, strSumFields)
+    End Function
+    Public Function LoadSumRow(intPID As Integer) As BO.p56TaskSum Implements Ip56TaskBL.LoadSumRow
+        Return _cDL.LoadSumRow(intPID)
     End Function
 End Class

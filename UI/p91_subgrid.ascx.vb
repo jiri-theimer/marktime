@@ -140,6 +140,8 @@ Public Class p91_subgrid
                     .p28ID = MasterDataPID
                 Case BO.x29IdEnum.j02Person
                     .j02ID = MasterDataPID
+                Case BO.x29IdEnum.p56Task
+                    .p56ID = MasterDataPID
             End Select
 
             .Closed = BO.BooleanQueryMode.NoQuery
