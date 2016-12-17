@@ -48,16 +48,19 @@
         Select Case Me.CurrentMasterPrefix
             Case "p41"
                 Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+                If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p41")
                 Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
                 Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
 
                 menu1.p41_RefreshRecord(cRec, cRecSum, "p56")
             Case "p28"
                 Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
+                If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p28")
                 Dim cRecSum As BO.p28ContactSum = Master.Factory.p28ContactBL.LoadSumRow(cRec.PID)
                 menu1.p28_RefreshRecord(cRec, cRecSum, "p56")
             Case "j02"
                 Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
+                If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=j02")
                 Dim cRecSum As BO.j02PersonSum = Master.Factory.j02PersonBL.LoadSumRow(cRec.PID)
                 menu1.j02_RefreshRecord(cRec, cRecSum, "p56")
         End Select
