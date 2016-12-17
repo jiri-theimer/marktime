@@ -23,7 +23,7 @@ Public Class p41_framework_rec_budget
 
                 Dim lisPars As New List(Of String)
                 With lisPars
-                    .Add("p41_framework_detail-tabskin")
+                    .Add("p41_menu-tabskin-tabskin")
                     .Add("p41_framework_detail_budget-prefix")
                     .Add("p41_framework_detail_budget-chkP49GroupByP34")
                     .Add("p41_framework_detail_budget-chkP49GroupByP32")
@@ -31,7 +31,7 @@ Public Class p41_framework_rec_budget
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-                    menu1.TabSkin = .GetUserParam("p41_framework_detail-tabskin")
+                    menu1.TabSkin = .GetUserParam("p41_menu-tabskin-tabskin")
 
                     If .GetUserParam("p41_framework_detail_budget-prefix", "p46") = "p46" Then
                         cmdBudgetP46.Checked = True : cmdBudgetP46.Font.Bold = True

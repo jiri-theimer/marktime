@@ -27,7 +27,7 @@
                 With lisPars
                     .Add("p41_framework_detail-pid")
                     .Add("p41_framework_detail-tab")
-                    .Add("p41_framework_detail-tabskin")
+                    .Add("p41_menu-tabskin-tabskin")
                     .Add("p41_framework_detail-chkFFShowFilledOnly")
                     .Add("p41_framework_detail_pos")
                 End With
@@ -60,7 +60,7 @@
                     
                     Master.DataPID = intPID
 
-                    menu1.TabSkin = .GetUserParam("p41_framework_detail-tabskin")
+                    menu1.TabSkin = .GetUserParam("p41_menu-tabskin-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With

@@ -23,16 +23,15 @@
 
             Dim lisPars As New List(Of String)
             With lisPars
-                .Add(Me.CurrentPrefix + "_framework_detail-switchHeight")
-                .Add(Me.CurrentPrefix + "_framework_detail-tabskin")
-                .Add(Me.CurrentPrefix + "_framework_detail-searchbox")
+                .Add(Me.CurrentPrefix + "_menu-tabskin")
+                .Add(Me.CurrentPrefix + "_menu-searchbox")
             End With
 
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
-                basUI.SelectRadiolistValue(Me.switchHeight, .GetUserParam(Me.CurrentPrefix + "_framework_detail-switchHeight", "auto"))
-                basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_framework_detail-tabskin", "Default"))
-                Me.chkSearchBox.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework_detail-searchbox", "0"))
+
+                basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_menu-tabskin", "Default"))
+                Me.chkSearchBox.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "menu-searchbox", "0"))
             End With
             With Master.Factory
                 colsSource.DataSource = .ftBL.GetList_X61(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix))
@@ -53,7 +52,7 @@
                 Case "j02" : chkSearchBox.Text = "Na stránce zapnutý vyhledávač osoby"
                 Case "p91"
                     Me.chkSearchBox.Text = "Na stránce zapnutý vyhledávač faktury"
-                    panTabs.Visible = False : panSwitchHeight.Visible = False
+                    panTabs.Visible = False
                 Case "p41"
                     panTabs.Visible = False : chkSearchBox.Visible = False
                 Case Else
@@ -77,9 +76,9 @@
                 End With
             End If
             With Master.Factory.j03UserBL
-                If panSwitchHeight.Visible Then .SetUserParam(Me.CurrentPrefix + "_framework_detail-switchHeight", Me.switchHeight.SelectedValue)
-                .SetUserParam(Me.CurrentPrefix + "_framework_detail-tabskin", Me.skin1.SelectedValue)
-                .SetUserParam(Me.CurrentPrefix + "_framework_detail-searchbox", BO.BAS.GB(Me.chkSearchBox.Checked))
+
+                .SetUserParam(Me.CurrentPrefix + "_menu-tabskin", Me.skin1.SelectedValue)
+                .SetUserParam(Me.CurrentPrefix + "_menu-searchbox", BO.BAS.GB(Me.chkSearchBox.Checked))
             End With
             Master.CloseAndRefreshParent("setting")
         End If

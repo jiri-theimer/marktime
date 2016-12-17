@@ -23,7 +23,7 @@
                 With lisPars
                     .Add("p56_framework_detail-pid")
                     .Add("p56_framework_detail-tab")
-                    .Add("p56_framework_detail-tabskin")
+                    .Add("p56_menu-tabskin-tabskin")
                     .Add("p56_framework_detail-chkFFShowFilledOnly")
                     .Add("p56_framework_detail_pos")
                 End With
@@ -50,7 +50,7 @@
                                 'zůstat zde na BOARD stránce
                         End Select
                     End If
-                    menu1.TabSkin = .GetUserParam("p56_framework_detail-tabskin")
+                    menu1.TabSkin = .GetUserParam("p56_menu-tabskin-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With

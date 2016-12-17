@@ -23,24 +23,6 @@ Partial Public Class entity_framework_detail_setting
     Protected WithEvents chkSearchBox As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''panSwitchHeight control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSwitchHeight As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''switchHeight control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents switchHeight As Global.System.Web.UI.WebControls.RadioButtonList
-
-    '''<summary>
     '''skin1 control.
     '''</summary>
     '''<remarks>

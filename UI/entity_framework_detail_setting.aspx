@@ -8,29 +8,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="div6">
+    <div class="div6" style="display:none;">
         <asp:CheckBox ID="chkSearchBox" runat="server" Text="Na stránce zapnout vyhledávač" CssClass="chk" />
     </div>
-    <asp:panel ID="panSwitchHeight" runat="server" cssclass="content-box2">
-        <div class="title">
-            Výška horní poloviny stránky (boxy nad pod-přehledem)
-        </div>
-        <div class="content">
-            <asp:RadioButtonList ID="switchHeight" runat="server" CellPadding="6" RepeatColumns="3" RepeatDirection="Horizontal">
-                <asp:ListItem Text="auto" Value="auto"></asp:ListItem>
-                <asp:ListItem Text="200" Value="200"></asp:ListItem>
-                <asp:ListItem Text="300" Value="300"></asp:ListItem>
-                <asp:ListItem Text="400" Value="400"></asp:ListItem>
-                <asp:ListItem Text="500" Value="500"></asp:ListItem>
-                <asp:ListItem Text="600" Value="600"></asp:ListItem>
-                <asp:ListItem Text="700" Value="700"></asp:ListItem>
-            </asp:RadioButtonList>
-        </div>
-    </asp:panel>
+   
 
     <div class="content-box2" style="margin-top:20px;">
         <div class="title">
-            Záložky pod-přehledů
+            Záložky
         </div>
         <div class="content">
             <div class="div6">
