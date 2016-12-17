@@ -30,9 +30,8 @@
                 With lisPars
                     .Add("j02_framework_detail-pid")
                     .Add("j02_framework_detail-tab")
-                    .Add("j02_menu-tabskin-tabskin")
+                    .Add("j02_menu-tabskin")
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
-                    .Add("j02_framework_detail_pos")
                 End With
                 Dim intPID As Integer = Master.DataPID
                 With .Factory.j03UserBL
@@ -56,7 +55,7 @@
                                 'zůstat zde na BOARD stránce
                         End Select
                     End If
-                    menu1.TabSkin = .GetUserParam("j02_menu-tabskin-tabskin")
+                    menu1.TabSkin = .GetUserParam("j02_menu-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
                 Master.DataPID = intPID

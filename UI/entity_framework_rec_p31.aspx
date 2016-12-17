@@ -72,6 +72,9 @@
             <%If Me.CurrentMasterPrefix = "p28" Then%>
             var url = "p31_record.aspx?pid=0&p28id=<%=Master.DataPID%>";
             <%end If%>
+             <%If Me.CurrentMasterPrefix = "j02" Then%>
+            var url = "p31_record.aspx?pid=0&j02id=<%=Master.DataPID%>";
+            <%end If%>
             url = url + "&tabqueryflag=<%=gridP31.MasterTabAutoQueryFlag%>";
 
             sw_decide(url, "Images/worksheet.png", false);

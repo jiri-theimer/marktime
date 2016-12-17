@@ -57,7 +57,7 @@
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="top">
                         <td style="min-width: 120px;">
-                            <asp:Label ID="lblPerson" runat="server" Text="Osoba:" CssClass="lbl"></asp:Label>
+                            <asp:Label ID="lblPerson" runat="server" Text="Jméno:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
 
