@@ -23,7 +23,7 @@
                 With lisPars
                     .Add("p56_framework_detail-pid")
                     .Add("p56_framework_detail-tab")
-                    .Add("p56_menu-tabskin-tabskin")
+                    .Add("p56_menu-tabskin")
                     .Add("p56_framework_detail-chkFFShowFilledOnly")
                     .Add("p56_framework_detail_pos")
                 End With
@@ -50,7 +50,7 @@
                                 'zůstat zde na BOARD stránce
                         End Select
                     End If
-                    menu1.TabSkin = .GetUserParam("p56_menu-tabskin-tabskin")
+                    menu1.TabSkin = .GetUserParam("p56_menu-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With
@@ -76,7 +76,7 @@
         x18_binding.Visible = cDisp.OwnerAccess
 
         With cRec
-            Me.Owner.Text = .Owner : Me.Timestamp.Text = .Timestamp
+            Me.Owner.Text = .Owner : Me.Timestamp.Text = .UserInsert & "/" & .DateInsert
             Me.p56Code.Text = .p56Code
             Me.p56Name.Text = .p56Name
             Me.Project.Text = .ProjectCodeAndName

@@ -50,7 +50,9 @@
             sw_decide("p31_record.aspx?pid=0&p41id=<%=Master.DataPID%>&p56id=" + p56id, "Images/worksheet.png", true);
 
         }
-        function p56_record(pid, bolReturnFalse) {
+        function p56_record(pid, bolReturnFalse) {            
+            if (pid == null)
+                pid = "0";            
             sw_decide("p56_record.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Master.DataPID%>&pid=" + pid, "Images/task.png", true);
             if (bolReturnFalse == true)
                 return (false)

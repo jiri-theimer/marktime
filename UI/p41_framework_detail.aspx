@@ -29,6 +29,12 @@
                 parent.window.location.replace("p41_framework.aspx");
                 return;
             }
+            if (flag == "draft2normal") {
+                document.getElementById('<%= cmdConvertDraft2Normal.ClientID%>').click();
+                return;
+            }
+
+            
 
 
             location.replace("p41_framework_detail.aspx?pid=<%=master.datapid%>");
@@ -46,7 +52,7 @@
     <div style="height:10px;clear:both;"></div>
     <div class="content-box1">
         <div class="title">
-            <img src="Images/properties.png" style="margin-right: 10px;" />
+            <asp:Image ID="imgRecord" runat="server" style="margin-right: 10px;" ImageUrl="Images/properties.png" />            
 
             <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
 
@@ -147,7 +153,17 @@
                     </td>
 
                 </tr>
+                <tr valign="top">
+                    <td>
+                        <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Vlastník záznamu:"></asp:Label>
 
+                    </td>
+                    <td>
+                        <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
+                        <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+
+                    </td>
+                </tr>
 
             </table>
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
@@ -259,4 +275,6 @@
 
     <div style="clear:both;"></div>
     <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
+
+    <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
 </asp:Content>

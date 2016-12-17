@@ -23,6 +23,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
+    '''imgRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgRecord As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''boxCoreTitle control.
     '''</summary>
     '''<remarks>
@@ -291,6 +300,33 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents clue_j18name As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Owner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Timestamp control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''tree1 control.
@@ -570,6 +606,15 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents comments1 As Global.UI.b07_list
+
+    '''<summary>
+    '''cmdConvertDraft2Normal control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdConvertDraft2Normal As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.

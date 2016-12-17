@@ -398,7 +398,7 @@
 
                 <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
 
-                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin" Checked="true" Style="float: right;" />
+                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin a obrázky" Checked="true" Style="float: right;" />
             </div>
         </div>
 

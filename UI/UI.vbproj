@@ -400,7 +400,6 @@
     <Content Include="o23_list.ascx" />
     <Content Include="o23_record.aspx" />
     <Content Include="p28_address.ascx" />
-    <Content Include="p28_framework_detail_delete.aspx" />
     <Content Include="p28_medium.ascx" />
     <Content Include="p31_approve_onerec.ascx" />
     <Content Include="p31_approving_batch_p31text.aspx" />
@@ -425,7 +424,6 @@
     <Content Include="p31_timeline.aspx" />
     <Content Include="p31_timer.aspx" />
     <Content Include="p34_after_create.aspx" />
-    <Content Include="p41_framework_detail_delete.aspx" />
     <Content Include="p48_framework.aspx" />
     <Content Include="p48_multiple_create.aspx" />
     <Content Include="p48_multiple_edit_delete.aspx" />
@@ -2183,13 +2181,6 @@
       <DependentUpon>p28_address.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="p28_framework_detail_delete.aspx.designer.vb">
-      <DependentUpon>p28_framework_detail_delete.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p28_framework_detail_delete.aspx.vb">
-      <DependentUpon>p28_framework_detail_delete.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="p28_medium.ascx.designer.vb">
       <DependentUpon>p28_medium.ascx</DependentUpon>
     </Compile>
@@ -2356,13 +2347,6 @@
     </Compile>
     <Compile Include="p34_after_create.aspx.vb">
       <DependentUpon>p34_after_create.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p41_framework_detail_delete.aspx.designer.vb">
-      <DependentUpon>p41_framework_detail_delete.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p41_framework_detail_delete.aspx.vb">
-      <DependentUpon>p41_framework_detail_delete.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p48_framework.aspx.designer.vb">

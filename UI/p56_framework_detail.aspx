@@ -113,30 +113,28 @@
                     </td>
                     <td>
                         <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
-                        <br />
-                        <button type="button" onclick="workflow()" class="cmd" title="Změnit stav úkolu, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona...">
-                            <img src="Images/workflow.png" />
-                            Posunout/doplnit</button>
-
+                        <a href="javascript: workflow()" title="Změnit stav úkolu, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona..."><img src="Images/workflow.png" />Posunout/doplnit</a>
+                      
                     </td>
                 </tr>
-                <tr valign="top">
-                    <td>
-                        <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Vlastník:"></asp:Label>
-
-                    </td>
-                    <td>
-                        <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
-                        <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
-
-                    </td>
-                </tr>
+                
                 <tr>
                     <td>
                         <asp:Label ID="lblDeadline" runat="server" Text="Termín:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <asp:Label ID="p56PlanUntil" runat="server" CssClass="valbold"></asp:Label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td>
+                        <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Vlastník záznamu:"></asp:Label>
+
+                    </td>
+                    <td>
+                        <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
+                        <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+
                     </td>
                 </tr>
             </table>

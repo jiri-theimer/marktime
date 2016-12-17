@@ -14,22 +14,13 @@ Option Explicit On
 Partial Public Class o23_framework_detail
 
     '''<summary>
-    '''panMenuContainer control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panMenuContainer As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
     '''tableRecord control.
@@ -498,15 +489,6 @@ Partial Public Class o23_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''sb1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents sb1 As Global.UI.searchbox
 
     '''<summary>
     '''Master property.

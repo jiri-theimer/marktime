@@ -537,7 +537,7 @@ Public Class p31_grid
             cmdGridDesigner.Visible = panExport.Visible
             cmdQuery.Visible = panExport.Visible
         End With
-
+        If Not cmdGridDesigner.Visible And j74id.Items.Count <= 1 Then Me.j74id.Visible = False
 
     End Sub
 

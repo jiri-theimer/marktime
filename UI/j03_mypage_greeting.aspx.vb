@@ -133,6 +133,7 @@
     End Sub
 
     Private Sub ShowImage()
+        If Not chkShowCharts.Checked Then Return
         imgWelcome.Visible = True
         If Request.Item("image") <> "" Then
             imgWelcome.ImageUrl = "Images/Welcome/" & Request.Item("image")

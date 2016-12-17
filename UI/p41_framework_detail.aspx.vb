@@ -88,7 +88,7 @@
         Dim cClient As BO.p28Contact = Nothing
 
         With cRec
-            ViewState("p28id_client") = .p28ID_Client.ToString
+            Me.Owner.Text = .Owner : Me.Timestamp.Text = .UserInsert & "/" & .DateInsert
 
             Me.Project.Text = .p41Name & " <span style='color:gray;padding-left:10px;'>" & .p41Code & "</span>"
             If .p41ParentID > 0 Then Me.Project.ForeColor = basUIMT.ChildProjectColor
@@ -137,6 +137,7 @@
             End If
 
             Me.imgDraft.Visible = .p41IsDraft
+            If .p41IsDraft Then imgRecord.ImageUrl = "Images/draft.png"
             If cRecSum.childs_Count > 0 Or cRec.p41ParentID <> 0 Then
                 RenderTree(cRec, cRecSum)
             End If
@@ -419,5 +420,15 @@
             tree1.AddItem(n, cRec.PID.ToString)
         Next
         tree1.ExpandAll()
+    End Sub
+
+    Private Sub cmdConvertDraft2Normal_Click(sender As Object, e As EventArgs) Handles cmdConvertDraft2Normal.Click
+        With Master.Factory.p41ProjectBL
+            If .ConvertFromDraft(Master.DataPID) Then
+                ReloadPage()
+            Else
+                Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+            End If
+        End With
     End Sub
 End Class

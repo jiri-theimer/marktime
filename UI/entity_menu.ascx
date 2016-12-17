@@ -139,7 +139,7 @@
     }
         
         
-    function b07_record() {
+    function menu_b07_record() {
 
         sw_decide("b07_create.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>", "Images/comment.png", true);
 
@@ -147,9 +147,7 @@
     function scheduler(){            
         window.open("entity_scheduler.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>","_top")
     }
-    function p40_record(p40id){            
-        sw_decide("p40_record.aspx?p41id=<%=Me.DataPID%>&pid="+p40id,"Images/worksheet_recurrence.png",true);
-    }
+    
         
     function p48_plan(){            
         window.open("p48_framework.aspx?masterprefix=<%=me.DataPrefix%>&masterpid=<%=Me.DataPID%>","_top");
@@ -167,21 +165,17 @@
     function p31_recalc(){            
         sw_decide("p31_recalc.aspx?prefix=p41&pid=<%=me.datapid%>","Images/recalc.png",true);
     }
-    function o23_record(pid) {
+    function menu_o23_record(pid) {
             
         sw_decide("o23_record.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/notepad.png",true);
 
     }
-    function o22_record(pid) {
+    function menu_o22_record(pid) {
             
         sw_decide("o22_record.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/calendar.png",true);
 
     }
-    function p56_record(pid,bolReturnFalse) {
-        sw_decide("p56_record.aspx?masterprefix=p41&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/task.png",true);
-        if (bolReturnFalse==true)
-            return(false)
-    }
+    
 
     function approve(){             
         var isInIFrame = (window.location != window.parent.location);
@@ -198,5 +192,15 @@
         sw_decide("entity_timeline.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/timeline.png",true);
     }
 
-    
+    <%if me.DataPrefix="p41" then%>
+    function menu_p40_record(p40id){            
+        sw_decide("p40_record.aspx?p41id=<%=Me.DataPID%>&pid="+p40id,"Images/worksheet_recurrence.png",true);
+    }
+
+    function menu_p56_record(pid,bolReturnFalse) {
+        sw_decide("p56_record.aspx?masterprefix=p41&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/task.png",true);
+        if (bolReturnFalse==true)
+            return(false)
+    }
+    <%end if%>
 </script>

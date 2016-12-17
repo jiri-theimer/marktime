@@ -6,18 +6,19 @@
 
     Private Sub o23_framework_detail_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
-    End Sub
-
-  
-    
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         With Master
+            menu1.Factory = .Factory
+            menu1.DataPrefix = "o23"
             ff1.Factory = .Factory
             Me.Fileupload_list__readonly.Factory = .Factory
             dropbox1.Factory = .Factory
             upload1.Factory = .Factory
         End With
+    End Sub
 
+  
+    
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("verified") = ""
             upload1.GUID = BO.BAS.GetGUID
@@ -30,7 +31,7 @@
 
                 Dim lisPars As New List(Of String)
                 With lisPars
-
+                    .Add("o23_menu-tabskin")
                     .Add("o23_framework_detail-pid")
                     .Add("o23_framework_detail-chkFFShowFilledOnly")
                 End With
@@ -47,6 +48,7 @@
                             .SetUserParam("o23_framework_detail-pid", Master.DataPID.ToString)
                         End If
                     End If
+                    menu1.TabSkin = .GetUserParam("o23_menu-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("o23_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
 
@@ -55,25 +57,17 @@
 
             RefreshRecord()
 
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "o23")
-            End If
         End If
 
 
     End Sub
 
-    Private Sub Handle_Permissions(cRec As BO.o23Notepad)
-        menu1.FindItemByValue("cmdNew").Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator)
-
-        Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23NotepadBL.InhaleRecordDisposition(cRec)
+    Private Sub Handle_Permissions(cRec As BO.o23Notepad, cDisp As BO.o23RecordDisposition)
         With cDisp
             If Not .ReadAccess Then
                 Master.StopPage("Nedisponujete oprávněním přistupovat k tomuto dokumentu.")
             End If
             x18_binding.Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdEdit").Visible = .OwnerAccess
-            menu1.FindItemByValue("cmdCopy").Visible = .OwnerAccess
             If Not .OwnerAccess Then
                 lblPermissionMessage.Text = "Disponujete základní úrovní přístupu k dokumentu."
             End If
@@ -83,49 +77,43 @@
         Else
             panDraftCommands.Visible = False
         End If
-        menu1.FindItemByValue("cmdB07").Visible = cDisp.Comments
+
         upload1.Visible = cDisp.FileAppender
-        menu1.FindItemByValue("cmdLockUnlockFlag1").Visible = cDisp.LockUnlockFiles_Flag1
 
         Select Case cRec.o23LockedFlag
             Case BO.o23LockedTypeENUM.LockAllFiles
-                menu1.FindItemByValue("cmdLockUnlockFlag1").ImageUrl = "Images/unlock.png"
                 upload1.Visible = False   'přístup k souborům dokumentu uzamčen
                 Fileupload_list__readonly.LockFlag = CInt(cRec.o23LockedFlag)
-                menu1.FindItemByValue("cmdLockUnlockFlag1").Text = "Otevřít přístup k souborům dokumentu"
                 filesPreview.Visible = False
             Case Else
-                menu1.FindItemByValue("cmdLockUnlockFlag1").ImageUrl = "Images/lock.png"
                 Fileupload_list__readonly.LockFlag = 0
-                menu1.FindItemByValue("cmdLockUnlockFlag1").Text = "Dočasně uzavřít přístup k souborům dokumentu"
         End Select
 
 
 
-        
-        
+
+
     End Sub
 
     Private Sub RefreshRecord()
         Dim cRec As BO.o23NotepadGrid = Master.Factory.o23NotepadBL.Load4Grid(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=o23")
+        Dim cDisp As BO.o23RecordDisposition = Master.Factory.o23NotepadBL.InhaleRecordDisposition(cRec)
 
-        basUIMT.RenderHeaderMenu(cRec.IsClosed, Me.panMenuContainer, menu1)
-        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & Master.DataPID.ToString, cRec.IsClosed)
-
+        menu1.o23_RefreshRecord(cRec, "board", cDisp)
 
         If cRec.o23IsEncrypted And ViewState("verified") <> "1" Then
             tableRecord.Visible = False
-            menu1.Enabled = False
+            menu1.Visible = False
             panEntryPassword.Visible = True
             panBody.Visible = False
             Return
         Else
             tableRecord.Visible = True
-            menu1.Enabled = True
+            menu1.Visible = True
             panEntryPassword.Visible = False
         End If
-        Handle_Permissions(cRec)
+        Handle_Permissions(cRec, cDisp)
 
         Me.BindEntity.Text = "Zatím čeká na přiřazení k dokumentu..." : clue_bind_entity.Visible = False
         With cRec
@@ -265,9 +253,7 @@
 
             End If
             
-            If .IsClosed Then menu1.Skin = "Black"
-
-
+            
         End With
 
         Me.Fileupload_list__readonly.RefreshData_O23(Master.DataPID)
@@ -292,6 +278,7 @@
             boxFF.Visible = False
         End If
         comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Notepad, Master.DataPID)
+        If comments1.RowsCount = 0 Then comments1.Visible = False
 
         Dim cO24 As BO.o24NotepadType = Master.Factory.o24NotepadTypeBL.Load(cRec.o24ID)
         If cO24.o24MaxOneFileSize > 0 Then upload1.MaxFileSize = cO24.o24MaxOneFileSize
@@ -300,7 +287,6 @@
         If cO24.b01ID <> 0 Then
             Me.trWorkflow.Visible = True
             Me.b02Name.Text = cRec.b02Name
-            menu1.FindItemByValue("cmdB07").Visible = False
         Else
             Me.trWorkflow.Visible = False
         End If
@@ -368,15 +354,7 @@
 
     End Sub
 
-    Private Sub o23_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        sb1.ashx = "handler_search_notepad.ashx"
-        sb1.aspx = "o23_framework.aspx"
-        sb1.TextboxLabel = "Najít dokument..."
-    End Sub
 
-    
-
-    
     Private Sub upload1_AfterUploadAll() Handles upload1.AfterUploadAll
         With Master.Factory.o23NotepadBL
             Dim cRec As BO.o23Notepad = .Load(Master.DataPID)

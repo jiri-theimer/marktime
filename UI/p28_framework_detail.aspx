@@ -22,8 +22,8 @@
 
         }
        
-        function hardrefresh(pid, flag) {
-            if (flag == "p28-save") {
+        function hardrefresh(pid, flag) {            
+            if (flag == "p28-save" || flag=="p28-create") {
                 parent.window.location.replace("p28_framework.aspx?pid=" + pid);
                 return;
             }
@@ -31,7 +31,10 @@
                 parent.window.location.replace("p28_framework.aspx");
                 return;
             }
-
+            if (flag == "draft2normal") {
+                document.getElementById('<%= cmdConvertDraft2Normal.ClientID%>').click();
+                return;
+            }
 
             location.replace("p28_framework_detail.aspx?pid=<%=master.datapid%>");
         }
@@ -53,7 +56,7 @@
     <div style="height:10px;clear:both;"></div>
     <div class="content-box1">
         <div class="title">
-            <img src="Images/properties.png" style="margin-right: 10px;" />
+            <asp:Image ID="imgRecord" runat="server" style="margin-right: 10px;" ImageUrl="Images/properties.png" />            
             <asp:Label ID="boxCoreTitle" Text="Záznam klienta" runat="server"></asp:Label>
             <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Pouze vyplněná uživatelská pole" Style="float: right;" />
         </div>
@@ -217,9 +220,6 @@
     
     <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
 
-    <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
-    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-
-
-    <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+   
+    <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
 </asp:Content>

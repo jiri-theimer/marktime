@@ -63,7 +63,7 @@ Public Class contact_service
         itemData.Enabled = False
         Select Case lis.Count
             Case 0
-                If filterString <> "" Then itemData.Text = "Ani jeden klient pro zadanou podmínku."
+                If Len(filterString) > 0 And Len(filterString) < 15 Then itemData.Text = "Ani jeden klient pro zadanou podmínku."
             Case Is >= mq.TopRecordsOnly
                 itemData.Text = String.Format("Nalezeno více než {0} klientů. Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných klientů.", mq.TopRecordsOnly.ToString)
             Case Else

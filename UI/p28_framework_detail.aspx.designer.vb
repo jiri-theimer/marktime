@@ -23,6 +23,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
+    '''imgRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgRecord As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''boxCoreTitle control.
     '''</summary>
     '''<remarks>
@@ -446,31 +455,13 @@ Partial Public Class p28_framework_detail
     Protected WithEvents comments1 As Global.UI.b07_list
 
     '''<summary>
-    '''hidHardRefreshFlag control.
+    '''cmdConvertDraft2Normal control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidHardRefreshPID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''cmdRefresh control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cmdConvertDraft2Normal As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.

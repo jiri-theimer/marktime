@@ -73,6 +73,11 @@ Public Class entity_menu
                 sb1.ashx = "handler_search_task.ashx"
                 sb1.aspx = "p56_framework.aspx"
                 sb1.TextboxLabel = "Najít úkol..."
+            Case "o23"
+                s = "<img src='Images/notepad_32.png'/>"
+                sb1.ashx = "handler_search_notepad.ashx"
+                sb1.aspx = "o23_framework.aspx"
+                sb1.TextboxLabel = "Najít dokument..."
             Case "p41"
                 s = "<img src='Images/project_32.png'/>"
                 sb1.Visible = False
@@ -148,6 +153,9 @@ Public Class entity_menu
             End If
             Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
         End If
+        If cRec.b01ID > 0 Then
+            ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
+        End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
 
         If cP42.p42IsModule_p31 Then
@@ -181,11 +189,11 @@ Public Class entity_menu
             ami("Přiřadit k projektu kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
         End If
         If Not cRec.IsClosed Then
-            If cP42.p42IsModule_p56 Then ami("Vytvořit úkol", "cmdP56", "javascript:p56_record(0);", "Images/person.png", mi, , True)
-            If cP42.p42IsModule_o22 Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:o22_record(0);", "Images/calendar.png", mi, , True)
+            If cP42.p42IsModule_p56 Then ami("Vytvořit úkol", "cmdP56", "javascript:menu_p56_record(0);", "Images/person.png", mi, , True)
+            If cP42.p42IsModule_o22 Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
         End If
         If cP42.p42IsModule_o23 Then
-            ami("Vytvořit dokument", "cmdO23", "javascript:o23_record(0);", "Images/notepad.png", mi)
+            ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi)
         End If
         If cP42.p42IsModule_p48 Then
             ami("Operativní plán projektu", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
@@ -193,14 +201,14 @@ Public Class entity_menu
 
         If cP42.p42IsModule_p31 Then
             If cDisp.OwnerAccess Then
-                ami("Definovat opakovanou odměnu/paušál/úkon", "cmdP40Create", "javascript:p40_record(0);", "Images/worksheet_recurrence.png", mi, , True)
+                ami("Definovat opakovanou odměnu/paušál/úkon", "cmdP40Create", "javascript:menu_p40_record(0);", "Images/worksheet_recurrence.png", mi, , True)
             End If
             If cDisp.P31_RecalcRates Then ami("Přepočítat sazby rozpracovaných čas.úkonů", "cmdP31Recalc", "javascript:p31_recalc();", "Images/recalc.png", mi)
             If cDisp.P31_Move2Bin Then ami("Přesunout nevyfakturované úkony do/z archivu", "cmdP31Move2Bin", "javascript:p31_move2bin();", "Images/bin.png", mi)
             If cDisp.P31_MoveToOtherProject Then ami("Přesunout rozpracovanost na jiný projekt", "cmdP31MoveToOtherProject", "javascript:p31_move2project();", "Images/cut.png", mi)
         End If
 
-        If cRec.b01ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:b07_record();", "Images/comment.png", mi, , True)
+        If cRec.b01ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
         ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
@@ -287,9 +295,11 @@ Public Class entity_menu
             cti(s, "p56")
         End If
         If cP42.p42IsModule_p45 Then
-            s = "Rozpočet"
-            If crs.p45_Count > 0 Then s += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
-            cti(s, "budget")
+            If cDisp.p45_Read Then
+                s = "Rozpočet"
+                If crs.p45_Count > 0 Then s += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
+                cti(s, "budget")
+            End If
         End If
         If cP42.p42IsModule_o23 Then
             s = "Dokumenty"
@@ -409,7 +419,9 @@ Public Class entity_menu
             End If
 
         End If
-
+        If cRec.b02ID > 0 Then
+            ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
+        End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
@@ -421,13 +433,13 @@ Public Class entity_menu
             ami("Přiřadit ke klientovi kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
         End If
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
-            ami("Vytvořit dokument", "cmdO23", "javascript:o23_record(0);", "Images/notepad.png", mi, , True)
+            ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If
 
-        If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:o22_record(0);", "Images/calendar.png", mi, , True)
+        If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
         ami("Kalendář klienta", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
 
-        If cRec.b02ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:b07_record();", "Images/comment.png", mi, , True)
+        If cRec.b02ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
 
 
 
@@ -484,9 +496,9 @@ Public Class entity_menu
             End If
 
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
-                ami("Vytvořit dokument", "cmdO23", "javascript:o23_record(0);", "Images/notepad.png", mi, , True)
+                ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
             End If
-            If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:o22_record(0);", "Images/calendar.png", mi, , True)
+            If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
             ami("Kalendář osoby", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
 
             ami("Operativní plán osoby", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
@@ -495,7 +507,7 @@ Public Class entity_menu
             ami("Historie aktivit osoby", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
         End If
 
-        ami("Zapsat komentář/poznámku", "cmdB07", "javascript:b07_record();", "Images/comment.png", mi, , True)
+        ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
     End Sub
 
     Private Sub j02_SetupTabs(cRec As BO.j02Person, crs As BO.j02PersonSum)
@@ -609,6 +621,9 @@ Public Class entity_menu
             ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
         End If
         Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApprove)
+        If cRec.b01ID > 0 Then
+            ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
+        End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
 
         If cDisp.P31_Create Then
@@ -645,10 +660,10 @@ Public Class entity_menu
             ami("PIVOT úkolu", "cmdPivot", "p31_pivot.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
 
-        ami("Vytvořit dokument", "cmdO23", "javascript:o23_record(0);", "Images/notepad.png", mi, , True)
+        ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
 
 
-        If cRec.b01ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:b07_record();", "Images/comment.png", mi, , True)
+        If cRec.b01ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
         ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
@@ -657,4 +672,58 @@ Public Class entity_menu
 
 
     End Sub
+
+    Public Sub o23_RefreshRecord(cRec As BO.o23Notepad, strTabValue As String, Optional cDisp As BO.o23RecordDisposition = Nothing)
+        If cRec Is Nothing Then Return
+        Me.DataPID = cRec.PID
+        If cDisp Is Nothing Then cDisp = Me.Factory.o23NotepadBL.InhaleRecordDisposition(cRec)
+
+        cti("Dokument", "board")
+
+        o23_SetupMenu(cRec, cDisp)
+
+        Me.CurrentTab = strTabValue
+        Handle_SelectedTab()
+
+
+    End Sub
+
+    Private Sub o23_SetupMenu(cRec As BO.o23Notepad, cDisp As BO.o23RecordDisposition)
+        If cRec.IsClosed Then menu1.Skin = "Black"
+        If cDisp Is Nothing Then cDisp = Me.Factory.o23NotepadBL.InhaleRecordDisposition(cRec)
+        If Not cDisp.ReadAccess Then
+            Handle_NoAccess("Nedisponujete oprávněním přistupovat k dokumentu.")
+        End If
+        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+
+        Dim mi As RadMenuItem = menu1.FindItemByValue("record")
+        If mi.Items.Count > 0 Then Return 'menu už bylo dříve zpracované
+
+        mi.Text = "ZÁZNAM DOKUMENTU"
+        If cDisp.OwnerAccess Then
+            ami("Upravit kartu dokumentu", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění.")
+        End If
+        If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator) Then
+            ami("Vytvořit dokument", "cmdNew", "javascript:p56_record_new(" & cRec.p41ID.ToString & ");", "Images/new.png", mi, , True)
+        End If
+        If cDisp.OwnerAccess Then
+            ami("Vytvořit dokument kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový dokument se kompletně předvyplní podle vzoru tohoto záznamu.")
+        End If
+        If cDisp.LockUnlockFiles_Flag1 Then
+            If cRec.o23LockedFlag = BO.o23LockedTypeENUM.LockAllFiles Then
+                ami("Otevřít přístup k souborům dokumentu", "cmdLockUnlockFlag1", "javascript:hardrefresh(-1,'lockunlock');", "Images/unlock.png", mi, , True)
+            Else
+                ami("Dočasně uzavřít přístup k souborům dokumentu", "cmdLockUnlockFlag1", "javascript:hardrefresh(-1,'lockunlock');", "Images/lock.png", mi, , True)
+            End If
+
+        End If
+        If cRec.b02ID = 0 Then
+            If cDisp.Comments Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
+        Else
+            ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
+        End If
+        ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+
+    End Sub
+
 End Class

@@ -176,6 +176,24 @@ Partial Public Class p56_framework_detail
     Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblDeadline control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDeadline As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p56PlanUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56PlanUntil As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>
@@ -201,24 +219,6 @@ Partial Public Class p56_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lblDeadline control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblDeadline As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p56PlanUntil control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p56PlanUntil As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''roles_task control.

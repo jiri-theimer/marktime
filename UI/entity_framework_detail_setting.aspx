@@ -8,10 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="div6" style="display:none;">
-        <asp:CheckBox ID="chkSearchBox" runat="server" Text="Na stránce zapnout vyhledávač" CssClass="chk" />
-    </div>
-   
+    
 
     <div class="content-box2" style="margin-top:20px;">
         <div class="title">

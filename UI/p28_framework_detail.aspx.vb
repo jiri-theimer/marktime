@@ -25,7 +25,7 @@
                 With lisPars
                     .Add("p28_framework_detail-pid")
                     .Add("p28_framework_detail-tab")
-                    .Add("p28_menu-tabskin-tabskin")
+                    .Add("p28_menu-tabskin")
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail_pos")
                 End With
@@ -53,7 +53,7 @@
                                 'zůstat zde na BOARD stránce
                         End Select
                     End If
-                    menu1.TabSkin = .GetUserParam("p28_menu-tabskin-tabskin")
+                    menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
                 Master.DataPID = intPID
@@ -114,6 +114,7 @@
                 Me.p29Name.Text = "[" & .p29Name & "]"
             End If
             imgDraft.Visible = .p28IsDraft
+            If .p28IsDraft Then imgRecord.ImageUrl = "Images/draft.png"
             ''If .p28ParentID <> 0 Then
             ''    Me.trParent.Visible = True
             ''    Me.ParentContact.NavigateUrl = "p28_framework.aspx?pid=" & .p28ParentID.ToString
@@ -304,24 +305,7 @@
 
 
 
-    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
-        If Me.hidHardRefreshFlag.Value = "" And Me.hidHardRefreshPID.Value = "" Then Return
-
-        Select Case Me.hidHardRefreshFlag.Value
-            Case "draft2normal"
-                With Master.Factory.p28ContactBL
-                    If .ConvertFromDraft(Master.DataPID) Then
-                        ReloadPage()
-                    Else
-                        Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
-                    End If
-                End With
-            Case Else
-                ReloadPage()
-        End Select
-        Me.hidHardRefreshFlag.Value = ""
-        Me.hidHardRefreshPID.Value = ""
-    End Sub
+   
 
 
     Private Sub ReloadPage()
@@ -334,4 +318,13 @@
         ReloadPage()
     End Sub
 
+    Private Sub cmdConvertDraft2Normal_Click(sender As Object, e As EventArgs) Handles cmdConvertDraft2Normal.Click
+        With Master.Factory.p28ContactBL
+            If .ConvertFromDraft(Master.DataPID) Then
+                ReloadPage()
+            Else
+                Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+            End If
+        End With
+    End Sub
 End Class
