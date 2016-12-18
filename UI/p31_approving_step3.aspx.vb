@@ -65,7 +65,7 @@ Public Class p31_approving_step3
 
                 .AddToolbarButton("Uložit změny", "save", , "Images/save.png")
 
-                .AddToolbarButton("Tisková sestava", "report", 1, "Images/report.png", False, "javascript:report()")
+                .AddToolbarButton("Sestava", "report", 1, "Images/report.png", False, "javascript:report()")
 
                 .AddToolbarButton("Zapsat nový úkon", "p31_create", 1, "Images/worksheet.png", False, "javascript:p31_create('" & Me.CurrentMasterPrefix & "id'," & Me.CurrentMasterPID.ToString & ")")
 

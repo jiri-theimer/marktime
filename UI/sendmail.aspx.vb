@@ -33,6 +33,9 @@
                 Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If Master.DataPID = 0 Then Master.StopPage("pid missing")
                 Me.cmdInsertLink.Visible = True
+                If Me.CurrentX29ID = BO.x29IdEnum.j02Person And Master.DataPID <> Master.Factory.SysUser.j02ID Then
+                    If Master.DataPID <> 0 Then Me.txtTo.Text = Master.Factory.j02PersonBL.Load(Master.DataPID).j02Email
+                End If
             Else
                 Me.CurrentX29ID = BO.x29IdEnum.j02Person
                 Master.DataPID = Master.Factory.SysUser.j02ID

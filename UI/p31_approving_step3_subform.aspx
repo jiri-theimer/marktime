@@ -17,7 +17,8 @@
     <uc:freefields ID="ff1" runat="server" />
 
     <div>
-    <button type="button" ID="cmdSplitRecord" runat="server" onclick="javascript:split_record()">Rozdělit úkon na 2 kusy</button>    
+    <button type="button" ID="cmdSplitRecord" runat="server" onclick="javascript:split_record()">Rozdělit úkon na 2 kusy</button>  
+   <button type="button" ID="cmdSourceRecord" runat="server" onclick="javascript:source_record()">Upravit zdrojový úkon</button>  
     </div>
     <table cellpadding="5" cellspacing="2">
         <tr>
@@ -117,6 +118,9 @@
 
         function split_record() {
             window.parent.sw_orig("p31_record_split.aspx?pid=<%=Master.DataPID%>&guid=<%=ViewState("guid")%>");
+        }
+        function source_record(){
+            window.parent.sw_orig("p31_record.aspx?pid=<%=Master.DataPID%>&edit_approve=1&guid_approve=<%=ViewState("guid")%>");            
         }
 
         <%If hidRefreshParent.Value = "1" Then%>

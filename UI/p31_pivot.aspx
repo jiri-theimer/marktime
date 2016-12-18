@@ -129,6 +129,7 @@
                     <asp:ListItem Text="Klient faktury" Value="9102"></asp:ListItem>
                     <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
                     <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>
+                    <asp:ListItem Text="Den" Value="9905"></asp:ListItem>
                     <asp:ListItem Text="Rok fakturace" Value="9903"></asp:ListItem>
                     <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>
                     <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>

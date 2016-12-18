@@ -1278,4 +1278,14 @@
         End If
 
     End Sub
+    Public Function UpdateTemp_After_EditOrig(intP31ID As Integer, strGUID As String) As Boolean
+        Dim pars As New DbParameters
+        With pars
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("p31id", intP31ID, DbType.Int32)
+            .Add("guid", strGUID, DbType.String)
+        End With
+        Return _cDB.RunSP("p31_update_temp_after_edit_orig", pars)
+
+    End Function
 End Class

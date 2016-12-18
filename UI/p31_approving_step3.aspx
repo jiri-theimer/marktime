@@ -106,8 +106,7 @@
             
         }
 
-        function p31_create(field,pid) {
-
+        function p31_create(field,pid) {            
             dialog_master("p31_record.aspx?"+field+"="+pid+"&pid=0&guid_approve=<%=viewstate("guid")%>",false,800,600);
         }
 
@@ -153,8 +152,8 @@
             <div class="div6">
                 <asp:Button ID="cmdBatch_6" Text="Vybrané záznamy [Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
                 <span style="padding-left: 50px;"></span>
-                <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané záznamy zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" />
-                <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky"></telerik:RadComboBox>
+                <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané záznamy zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="false" />
+                <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky" Visible="false"></telerik:RadComboBox>
             </div>
             <div class="div6">
                 <asp:Button ID="cmdBatch_3" Text="Vybrané záznamy [Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />

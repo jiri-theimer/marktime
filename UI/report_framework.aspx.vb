@@ -107,8 +107,8 @@ Public Class report_framework
                         strIMG = "Images/xls.png"
                 End Select
 
-                If DateDiff(DateInterval.Day, c.ValidFrom, Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday, FirstWeekOfYear.System) < 6 Then strIMG = "Images/upgraded_32.png"
                 If c.x31QueryFlag > BO.x31QueryFlagENUM._None Then strIMG = "Images/query.png"
+                If DateDiff(DateInterval.Day, c.ValidFrom, Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday, FirstWeekOfYear.System) < 6 Then strIMG = "Images/upgraded_32.png"
                 .AddItem(c.x31Name, c.PID.ToString, strURL, "j25-" & c.j25ID.ToString, strIMG, , strTarget)
             Next
 

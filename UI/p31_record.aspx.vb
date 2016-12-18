@@ -205,7 +205,10 @@
         If Request.Item("scheduler") = "1" Then
             Me.CurrentIsScheduler = True
         End If
-        If Master.DataPID <> 0 Or Master.IsRecordClone Then Return
+        If Master.DataPID <> 0 Or Master.IsRecordClone Then
+            If Request.Item("edit_approve") = "1" Then Me.GuidApprove = Request.Item("guid_approve") 'editace záznamu vyvolána ze schvalovacího dialogu
+            Return
+        End If
 
         Dim intDefP41ID As Integer = BO.BAS.IsNullInt(Request.Item("p41id"))
         Dim intDefP56ID As Integer = BO.BAS.IsNullInt(Request.Item("p56id"))
@@ -480,8 +483,12 @@
                 'záznam lze editovat
                 'lze pokračovat v editaci
             Case Else
-                'záznam pouze pro čtení
-                If Not Master.IsRecordClone Then Server.Transfer("p31_record_AA.aspx?pid=" & Master.DataPID.ToString)
+                If Request.Item("edit_approve") = "1" Then
+                Else
+                    'záznam pouze pro čtení
+                    If Not Master.IsRecordClone Then Server.Transfer("p31_record_AA.aspx?pid=" & Master.DataPID.ToString)
+                End If
+                
         End Select
 
         Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(Master.DataPID)
@@ -974,6 +981,8 @@
             End If
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
+            Dim bolNewRec As Boolean = False
+            If cRec.PID = 0 Then bolNewRec = True
 
             If .SaveOrigRecord(cRec, lisFF) Then
                 Master.DataPID = .LastSavedPID
@@ -982,13 +991,16 @@
                     Server.Transfer("p31_record_approve.aspx?pid=" & Master.DataPID.ToString & "&p91id=" & Me.CurrentP91ID.ToString, False)
                     Return
                 End If
-                If Me.GuidApprove <> "" Then
+                If Me.GuidApprove <> "" And bolNewRec Then
                     'zařadit úkon do rozpracovaného schvalování
                     Dim c As New BO.p85TempBox()
                     c.p85GUID = Me.GuidApprove
                     c.p85DataPID = Master.DataPID
                     Master.Factory.p85TempBoxBL.Save(c)
                     AddRecord2Approving()
+                End If
+                If Me.GuidApprove <> "" And Not bolNewRec Then
+                    Master.Factory.p31WorksheetBL.UpdateTemp_After_EditOrig(Master.DataPID, Me.GuidApprove) 'záznam otevřený k editaci ze schvalovacího dialogu
                 End If
                 If Me.CurrentP85ID > 0 Then
                     'odstranit temp záznam předlohy

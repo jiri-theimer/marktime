@@ -41,6 +41,15 @@ Partial Public Class p31_approving_step3_subform
     Protected WithEvents cmdSplitRecord As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''cmdSourceRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSourceRecord As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''lblPerson control.
     '''</summary>
     '''<remarks>

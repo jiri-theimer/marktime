@@ -197,6 +197,7 @@ Public Class x40_framework
                 .UpdateMessageState(intX40ID, status)
             Next
         End With
-        ReloadPage()
+        grid1.Rebind(True, pids(0))
+        ''ReloadPage()
     End Sub
 End Class

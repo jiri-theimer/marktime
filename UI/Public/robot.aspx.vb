@@ -9,7 +9,7 @@
             _Factory = New BL.Factory(, BO.ASS.GetConfigVal("robot_account", "admin"))
             If _Factory.SysUser Is Nothing Then
                 log4net.LogManager.GetLogger("robotlog").Info("Service user is not inhaled!")
-                Response.Write("Service user is not inhaled!")
+                Response.Write("Service user not exists!")
                 Return
             End If
             Handle_p40Queue()

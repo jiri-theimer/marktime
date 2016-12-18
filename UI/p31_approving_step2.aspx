@@ -80,7 +80,7 @@
    
     <div id="offsetY"></div>
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
-    <div class="div6">
+    <div class="div6" style="display:none;">
         <span>Nezařazené zařadit do billing dávky:</span>
         <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="250px" AllowCustomText="true"></telerik:RadComboBox>
         

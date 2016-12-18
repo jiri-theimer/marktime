@@ -317,7 +317,6 @@
     <Content Include="help.aspx" />
     <Content Include="helpdesk_default.aspx" />
     <Content Include="j02_batch.aspx" />
-    <Content Include="j02_framework_detail_delete.aspx" />
     <Content Include="j03_messages.aspx" />
     <Content Include="j03_mypage.aspx" />
     <Content Include="j03_mypage_greeting.aspx" />
@@ -1728,13 +1727,6 @@
     </Compile>
     <Compile Include="j02_batch.aspx.vb">
       <DependentUpon>j02_batch.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="j02_framework_detail_delete.aspx.designer.vb">
-      <DependentUpon>j02_framework_detail_delete.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="j02_framework_detail_delete.aspx.vb">
-      <DependentUpon>j02_framework_detail_delete.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j03_messages.aspx.designer.vb">

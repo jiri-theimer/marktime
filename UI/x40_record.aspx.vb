@@ -15,7 +15,7 @@
                 If .DataPID = 0 Then .StopPage("Na vstupu chybí ID zprávy.")
                 .HeaderText = "Poštovní zpráva"
                 .HeaderIcon = "Images/email_32.png"
-
+                cmdDelete.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
             End With
 
 
@@ -90,5 +90,15 @@
         Else
             Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage)
         End If
+    End Sub
+
+    Private Sub cmdDelete_Click(sender As Object, e As EventArgs) Handles cmdDelete.Click
+        With Master.Factory.x40MailQueueBL
+            If .Delete(Master.DataPID) Then
+                Master.CloseAndRefreshParent("delete")
+            Else
+                Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage)
+            End If
+        End With
     End Sub
 End Class

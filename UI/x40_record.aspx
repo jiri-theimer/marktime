@@ -35,6 +35,11 @@
                 <asp:Button ID="cmdChangeStateOnNeedConfirm" Text="Změnit stav zprávy na [Čeká na odeslání]" runat="server" CssClass="cmd" />
             </td>
         </tr>
+         <tr>
+            <td colspan="2">
+                <asp:Button ID="cmdDelete" Text="Odstranit zprávu" runat="server" CssClass="cmd" Visible="false" />
+            </td>
+        </tr>
         <tr>
             <td>
                 <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Čas:"></asp:Label>

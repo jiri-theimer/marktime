@@ -50,6 +50,15 @@ Partial Public Class x40_record
     Protected WithEvents cmdChangeStateOnNeedConfirm As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdDelete control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''Label2 control.
     '''</summary>
     '''<remarks>

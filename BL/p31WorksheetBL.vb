@@ -46,6 +46,7 @@
     Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean
     Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean, strP31Guid As String) As Boolean
     Function SaveFreeFields_Batch_AfterApproving(strP31Guid As String) As Boolean
+    Function UpdateTemp_After_EditOrig(intP31ID As Integer, strGUID As String) As Boolean
     ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
 End Interface
 Class p31WorksheetBL
@@ -444,5 +445,8 @@ Class p31WorksheetBL
     End Function
     Public Function SaveFreeFields_Batch_AfterApproving(strP31Guid As String) As Boolean Implements Ip31WorksheetBL.SaveFreeFields_Batch_AfterApproving
         Return _cDL.SaveFreeFields_Batch_AfterApproving(strP31Guid)
+    End Function
+    Public Function UpdateTemp_After_EditOrig(intP31ID As Integer, strGUID As String) As Boolean Implements Ip31WorksheetBL.UpdateTemp_After_EditOrig
+        Return _cDL.UpdateTemp_After_EditOrig(intP31ID, strGUID)
     End Function
 End Class

@@ -109,8 +109,8 @@
             <telerik:RadDatePicker ID="p31Date" runat="server" Width="120px">
                 <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server" EmptyMessage="Povinné pole"></DateInput>
             </telerik:RadDatePicker>
-            <span>Zařadit do billing dávky:</span>
-            <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="150px" AllowCustomText="true"></telerik:RadComboBox>
+            <span style="display:none;">Zařadit do billing dávky:</span>
+            <telerik:RadComboBox ID="p31ApprovingSet" Visible="false" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="150px" AllowCustomText="true"></telerik:RadComboBox>
         </div>
     </div>
 </div>

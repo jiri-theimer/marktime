@@ -15,6 +15,7 @@
     p72Name = 7201
     Year = 9901
     Month = 9902
+    Day = 9905
     YearInvoice = 9903
     MonthInvoice = 9904
     j27code_orig = 2701
@@ -103,6 +104,10 @@ Public Class PivotRowColumnField
                 _SelectField = "min(j18_j02.j18Name)"
                 _GroupByField = "j02.j18ID"
                 s = "Středisko osoby"
+            Case PivotRowColumnFieldType.Day
+                _SelectField = "convert(varchar(10), a.p31Date, 126)"
+                _GroupByField = _SelectField
+                s = "Den"
             Case PivotRowColumnFieldType.Month
                 _SelectField = "convert(varchar(7), a.p31Date, 126)"
                 _GroupByField = _SelectField

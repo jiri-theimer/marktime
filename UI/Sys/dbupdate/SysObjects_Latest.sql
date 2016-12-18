@@ -1300,6 +1300,34 @@ END
 
 GO
 
+----------FN---------------p28_address_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_address_inline') and type = 'FN')
+ drop function p28_address_inline
+GO
+
+
+
+CREATE    FUNCTION [dbo].[p28_address_inline](@p28id int,@o36id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené adresy z profilu kontaktu @p28id pro typ adresy @o36id
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+isnull(o38street+', ','')+isnull(o38city+', ','')+isnull(o38zip,'')
+from
+o38Address a INNER JOIN o37Contact_Address b ON a.o38ID=b.o38ID
+WHERE b.p28ID=@p28id and b.o36ID=@o36id
+
+
+RETURN(@s)
+   
+END
+
+GO
+
 ----------FN---------------p28_addresses_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p28_addresses_inline') and type = 'FN')
@@ -2734,6 +2762,54 @@ if exists(select b05id from b05Workflow_History WHERE b06id=@pid)
   
 
 delete from b06WorkflowStep where b06ID=@pid
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------P---------------b07_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('b07_delete') and type = 'P')
+ drop procedure b07_delete
+GO
+
+
+
+
+CREATE   procedure [dbo].[b07_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--b07id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu komentáøe z tabulky b07Comment
+if exists(select b07ID from b07Comment WHERE b07ID_Parent=@pid)
+ set @err_ret='Existuje minimálnì jeden podøízený komentáø!'
+
+if exists(select b05ID from b05Workflow_History WHERE b07ID=@pid)
+ set @err_ret='Nelze odstranit, protože má vazbu na historii workflow stavového mechanismu!'
+
+ 
+
+if isnull(@err_ret,'')<>''
+ return 
+
+
+if exists(select b05id from b05Workflow_History WHERE b07ID=@pid)
+ DELETE FROM b07Comment WHERE b07ID=@pid
+
+  
+
+delete from b07Comment where b07ID=@pid
+
 
 
 
@@ -6007,6 +6083,7 @@ declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_c
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p41_actual_count int,@p41_closed_count int, @o48_exist bit
+declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100)
 
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
 ,@p56_closed_count=sum(case when getdate() NOT BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
@@ -6074,6 +6151,14 @@ set @o48_exist=0
 if exists(select o48ID FROM o48IsirMonitoring WHERE p28ID=@pid)
  set @o48_exist=1
 
+
+if @p91_count>0
+ select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice WHERE p28ID=@pid ORDER BY p91ID DESC
+
+if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
+ select TOP 1 @last_wip_worksheet=convert(varchar(20),a.p31DateInsert,104)+'/'++c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE b.p28ID_Client=@pid ORDER BY a.p31ID DESC
+
+
 select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p56_closed_count,0) as p56_Closed_Count
 ,isnull(@o22_actual_count,0) as o22_Actual_Count
@@ -6093,6 +6178,8 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p41_actual_count,0) as p41_actual_count
 ,isnull(@p41_closed_count,0) as p41_closed_count
 ,@o48_exist as o48_Exist
+,@last_invoice as Last_Invoice
+,@last_wip_worksheet as Last_Wip_Worksheet
 
 GO
 
@@ -8928,7 +9015,7 @@ set @real_nonbillable=isnull(@real_nonbillable,0)
 set @real_billable=isnull(@real_billable,0)
 set @real_total=isnull(@real_total,0)
 
-if @p46ExceedFlag=2 AND @real_total+@value_orig>@p46HoursTotal
+if @p46ExceedFlag=2 AND @real_total+@value_orig>@p46HoursTotal and @p46HoursTotal>0
  begin
   set @err='Vykázané hodiny by pøekroèily plán hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursTotal)+'h.).'
   return
@@ -8937,13 +9024,13 @@ if @p46ExceedFlag=2 AND @real_total+@value_orig>@p46HoursTotal
 select @p32IsBillable=p32IsBillable FROM p32Activity WHERE p32ID=@p32id
 
 
-if @p46ExceedFlag IN (1,3) AND @p32IsBillable=1 AND @real_billable+@value_orig>@p46HoursBillable
+if @p46ExceedFlag IN (1,3) AND @p32IsBillable=1 AND @real_billable+@value_orig>@p46HoursBillable and @p46HoursBillable>0
  begin
   set @err='Vykázané fakturovatelné hodiny by pøekroèily plán fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursBillable)+'h.).'
   return
  end
 
-if @p46ExceedFlag IN (1,4) AND @p32IsBillable=0 AND @real_nonbillable+@value_orig>@p46HoursNonBillable
+if @p46ExceedFlag IN (1,4) AND @p32IsBillable=0 AND @real_nonbillable+@value_orig>@p46HoursNonBillable and @p46HoursBillable>0
  begin
   set @err='Vykázané ne-fakturovatelné hodiny by pøekroèily plán ne-fakturovatelných hodin rozpoètu projektu ('+convert(varchar(10),@p46HoursNonBillable)+'h.).'
   return
@@ -9024,6 +9111,96 @@ AS
 
 
 
+
+
+GO
+
+----------P---------------p31_update_temp_after_edit_orig-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_update_temp_after_edit_orig') and type = 'P')
+ drop procedure p31_update_temp_after_edit_orig
+GO
+
+
+
+CREATE procedure [dbo].[p31_update_temp_after_edit_orig]
+@j03id_sys int				--pøihlášený uživatel
+,@p31id int	---p31id
+,@guid varchar(50)
+---volá se po editaci pùvodního worksheet záznam ze schvalovacího dialgu
+AS
+update a set p41ID=b.p41ID,j02ID=b.j02ID,p32ID=b.p32ID,p56ID=b.p56ID,j02ID_ContactPerson=b.j02ID_ContactPerson,p28ID_Supplier=b.p28ID_Supplier,p49ID=b.p49ID
+,p31Date=b.p31Date,p31Text=b.p31Text,p31Value_Orig_Entried=b.p31Value_Orig_Entried
+,p31Hours_Orig=b.p31Hours_Orig,p31Minutes_Orig=b.p31Minutes_Orig,p31Value_Orig=b.p31Value_Orig
+,p31Amount_WithoutVat_Orig=b.p31Amount_WithoutVat_Orig,p31Amount_WithVat_Orig=b.p31Amount_WithVat_Orig,p31Amount_Vat_Orig=b.p31Amount_Vat_Orig,p31VatRate_Orig=b.p31VatRate_Orig
+FROM
+p31Worksheet_Temp a INNER JOIN p31Worksheet b ON a.p31ID=b.p31ID
+WHERE a.p31ID=@p31id AND a.p31GUID=@guid AND b.p31ID=@p31id
+
+
+UPDATE a
+   SET [p31FreeText01] = b.p31FreeText01
+      ,[p31FreeText02] = b.p31FreeText02
+      ,[p31FreeText03] = b.p31FreeText03
+      ,[p31FreeText04] = b.p31FreeText04
+      ,[p31FreeText05] = b.p31FreeText05
+      ,[p31FreeText06] = b.p31FreeText06
+      ,[p31FreeText07] = b.p31FreeText07
+      ,[p31FreeText08] = b.p31FreeText08
+      ,[p31FreeText09] = b.p31FreeText09
+      ,[p31FreeText10] = b.p31FreeText10
+      ,[p31FreeBoolean01] = b.p31FreeBoolean01
+      ,[p31FreeBoolean02] = b.p31FreeBoolean02
+      ,[p31FreeBoolean03] = b.p31FreeBoolean03
+      ,[p31FreeBoolean04] = b.p31FreeBoolean04
+      ,[p31FreeBoolean05] = b.p31FreeBoolean05
+      ,[p31FreeBoolean06] = b.p31FreeBoolean06
+      ,[p31FreeBoolean07] = b.p31FreeBoolean07
+      ,[p31FreeBoolean08] = b.p31FreeBoolean08
+      ,[p31FreeBoolean09] = b.p31FreeBoolean09
+      ,[p31FreeBoolean10] = b.p31FreeBoolean10
+      ,[p31FreeDate01] = b.p31FreeDate01
+      ,[p31FreeDate02] = b.p31FreeDate02
+      ,[p31FreeDate03] = b.p31FreeDate03
+      ,[p31FreeDate04] = b.p31FreeDate04
+      ,[p31FreeDate05] = b.p31FreeDate05
+      ,[p31FreeDate06] = b.p31FreeDate06
+      ,[p31FreeDate07] = b.p31FreeDate07
+      ,[p31FreeDate08] = b.p31FreeDate08
+      ,[p31FreeDate09] = b.p31FreeDate09
+      ,[p31FreeDate10] = b.p31FreeDate10
+      ,[p31FreeNumber01] = b.p31FreeNumber01
+      ,[p31FreeNumber02] = b.p31FreeNumber02
+      ,[p31FreeNumber03] = b.p31FreeNumber03
+      ,[p31FreeNumber04] = b.p31FreeNumber04
+      ,[p31FreeNumber05] = b.p31FreeNumber05
+      ,[p31FreeNumber06] = b.p31FreeNumber06
+      ,[p31FreeNumber07] = b.p31FreeNumber07
+      ,[p31FreeNumber08] = b.p31FreeNumber08
+      ,[p31FreeNumber09] = b.p31FreeNumber09
+      ,[p31FreeNumber10] = b.p31FreeNumber10
+      ,[p31FreeCombo01] = b.p31FreeCombo01
+      ,[p31FreeCombo02] = b.p31FreeCombo02
+      ,[p31FreeCombo03] = b.p31FreeCombo03
+      ,[p31FreeCombo04] = b.p31FreeCombo04
+      ,[p31FreeCombo05] = b.p31FreeCombo05
+      ,[p31FreeCombo06] = b.p31FreeCombo06
+      ,[p31FreeCombo07] = b.p31FreeCombo07
+      ,[p31FreeCombo08] = b.p31FreeCombo08
+      ,[p31FreeCombo09] = b.p31FreeCombo09
+      ,[p31FreeCombo10] = b.p31FreeCombo10
+      ,[p31FreeCombo01Text] = b.p31FreeCombo01Text
+      ,[p31FreeCombo02Text] = b.p31FreeCombo02Text
+      ,[p31FreeCombo03Text] = b.p31FreeCombo03Text
+      ,[p31FreeCombo04Text] = b.p31FreeCombo04Text
+      ,[p31FreeCombo05Text] = b.p31FreeCombo05Text
+      ,[p31FreeCombo06Text] = b.p31FreeCombo06Text
+      ,[p31FreeCombo07Text] = b.p31FreeCombo07Text
+      ,[p31FreeCombo08Text] = b.p31FreeCombo08Text
+      ,[p31FreeCombo09Text] = b.p31FreeCombo09Text
+      ,[p31FreeCombo10Text] = b.p31FreeCombo10Text
+FROM p31WorkSheet_FreeField_Temp a INNER JOIN p31WorkSheet_FreeField b ON a.p31ID=b.p31ID
+WHERE a.p31ID=@p31id AND a.p31GUID=@guid AND b.p31ID=@p31id
 
 
 GO
@@ -9729,6 +9906,7 @@ declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_c
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p45_count int
+declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100)
 
 declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit
 
@@ -9819,6 +9997,13 @@ end
 if @p42IsModule_p45=1
  select @p45_count=COUNT(p45ID) FROM p45Budget WHERE p41ID=@pid
 
+if @p91_count>0
+ select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice a INNER JOIN p31Worksheet b ON a.p91ID=b.p91ID WHERE b.p41ID=@pid ORDER BY a.p91ID DESC
+
+if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
+ select TOP 1 @last_wip_worksheet=convert(varchar(20),a.p31DateInsert,104)+'/'++c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE a.p41ID=@pid ORDER BY a.p31ID DESC
+
+
 select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p56_closed_count,0) as p56_Closed_Count
 ,isnull(@o22_actual_count,0) as o22_Actual_Count
@@ -9838,6 +10023,8 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@b07_count,0) as b07_Count
 ,isnull(@o23_count,0) as o23_Count
 ,isnull(@p45_count,0) as p45_Count
+,@last_invoice as Last_Invoice
+,@last_wip_worksheet as Last_Wip_Worksheet
 
 GO
 
@@ -10571,6 +10758,108 @@ END CATCH
 
 
 
+
+
+GO
+
+----------P---------------p56_inhale_sumrow-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p56_inhale_sumrow') and type = 'P')
+ drop procedure p56_inhale_sumrow
+GO
+
+
+
+
+
+CREATE procedure [dbo].[p56_inhale_sumrow]
+@j03id_sys int
+,@pid int						---p56id		
+AS
+
+declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int
+declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
+declare @o23_count int,@p91_count int
+declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100)
+declare @Hours_Orig float,@Expenses_Orig float,@Incomes_Orig float
+
+declare @is_p31id bit
+set @is_p31id=0
+
+if exists(select p31ID FROM p31Worksheet WHERE p56ID=@pid)
+ set @is_p31id=1
+
+if @is_p31id=1
+ begin
+	select @Hours_Orig=sum(case when xc.p33ID=1 then p31Hours_Orig end)
+	,@Expenses_Orig=sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=1 then p31Value_Orig end)
+	,@Incomes_Orig=sum(case when xc.p33ID IN (2,5) AND xc.p34IncomeStatementFlag=2 then p31Value_Orig end)
+	FROM p31Worksheet xa INNER JOIN p32Activity xb ON xa.p32ID=xb.p32ID INNER JOIN p34ActivityGroup xc ON xb.p34ID=xc.p34ID
+	WHERE xa.p56ID=@pid and getdate() BETWEEN xa.p31ValidFrom AND xa.p31ValidUntil
+end
+
+if @is_p31id=1
+begin
+SELECT @p91_count=COUNT(p91ID)
+from p91Invoice
+WHERE p91ID IN (SELECT p91ID FROM p31Worksheet WHERE p56ID=@pid)
+end
+
+if @is_p31id=1
+begin
+if exists(select p31ID FROM p31Worksheet WHERE p56ID=@pid AND p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
+ begin
+  select @p31_wip_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_wip_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_wip_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_wip_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+  WHERE a.p56ID=@pid AND a.p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil
+
+ end
+
+if exists(select p31ID FROM p31Worksheet WHERE p56ID=@pid AND p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
+ begin
+  select @p31_approved_time_count=sum(case when c.p33ID=1 then 1 end)
+  ,@p31_approved_expense_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=1 then 1 end)
+  ,@p31_approved_fee_count=sum(case when c.p33ID IN (2,5) AND c.p34IncomeStatementFlag=2 then 1 end)
+  ,@p31_approved_kusovnik_count=sum(case when c.p33ID=3 then 1 end)
+  from
+  p31Worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID INNER JOIN p34ActivityGroup c ON b.p34ID=c.p34ID
+  WHERE a.p56ID=@pid AND a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil
+
+ end
+end
+
+
+if exists(select o23ID FROM o23Notepad WHERE p56ID=@pid)
+ select @o23_count=count(o23ID) FROM o23Notepad WHERE p56ID=@pid AND getdate() between o23ValidFrom AND o23ValidUntil
+else
+ set @o23_count=0
+
+
+
+if @p91_count>0
+ select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice a INNER JOIN p31Worksheet b ON a.p91ID=b.p91ID WHERE b.p56ID=@pid ORDER BY a.p91ID DESC
+
+if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
+ select TOP 1 @last_wip_worksheet=convert(varchar(20),a.p31DateInsert,104)+'/'++c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE a.p56ID=@pid ORDER BY a.p31ID DESC
+
+
+select isnull(@p91_count,0) as p91_Count
+,isnull(@p31_wip_time_count,0) as p31_Wip_Time_Count
+,isnull(@p31_approved_time_count,0) as p31_Approved_Time_count
+,isnull(@p31_wip_expense_count,0) as p31_Wip_Expense_Count
+,isnull(@p31_approved_expense_count,0) as p31_Approved_Expense_Count
+,isnull(@p31_wip_fee_count,0) as p31_Wip_Fee_Count
+,isnull(@p31_approved_fee_count,0) as p31_Approved_Fee_Count
+,isnull(@p31_wip_kusovnik_count,0) as p31_Wip_Kusovnik_Count
+,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
+,isnull(@o23_count,0) as o23_Count
+,@last_invoice as Last_Invoice
+,@last_wip_worksheet as Last_Wip_Worksheet
+,@Hours_Orig as Hours_Orig,@Expenses_Orig as Expenses_Orig,@Incomes_Orig as Incomes_Orig
 
 
 GO
@@ -13967,6 +14256,68 @@ if @x38id is not null and isnull(@isdraft,0)=0
 
 
 select @ret_code=dbo.x38_get_freecode(@x38id,@x29id,@datapid,@isdraft,@attempt_number)
+
+
+GO
+
+----------P---------------x40_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x40_delete') and type = 'P')
+ drop procedure x40_delete
+GO
+
+
+
+
+
+
+
+
+
+CREATE   procedure [dbo].[x40_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--x40id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu odeslané e-mail zprávy
+
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+
+	delete from x43MailQueue_Recipient where x40ID=@pid
+
+	delete from o27Attachment where x40ID=@pid
+
+	delete from x40MailQueue where x40ID=@pid
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 GO

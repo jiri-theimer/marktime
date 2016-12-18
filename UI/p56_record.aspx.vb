@@ -79,6 +79,9 @@
             InhaleMyDefault()
             SetupO22Combo()
             Me.Project.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Me.CurrentP41ID)
+            If Me.p57ID.SelectedIndex = 0 And Me.p57ID.Rows > 1 Then
+                Me.p57ID.SelectedIndex = 1
+            End If
             Handle_FF()
             Return
         End If
