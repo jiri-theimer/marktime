@@ -189,6 +189,10 @@
             sw_decide("b07_create.aspx?parentpid="+b07id+"&masterprefix=p91&masterpid=<%=master.datapid%>","Images/comment.png", true)
            
         }
+        function b07_delete(b07id, flag) {
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+
+        }
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
             sw_decide("grid_designer.aspx?nodrilldown=1&x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner.png");
@@ -215,6 +219,12 @@
         function page_setting(){
             sw_decide("entity_framework_detail_setting.aspx?prefix=p91", "Images/setting_32.png",false);
         }
+        function sendmail() {
+            sw_decide("sendmail.aspx?prefix=p91&pid=<%=Master.DataPID%>", "Images/email_32.png")
+
+
+        }
+
     </script>
 
 </asp:Content>
@@ -244,6 +254,9 @@
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdProforma" Text="Spárovat fakturu s uhrazenou zálohou" NavigateUrl="javascript:proforma();" ImageUrl="Images/proforma.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdCreditNote" Text="Vytvořit k faktuře opravný doklad" NavigateUrl="javascript:creditnote();" ImageUrl="Images/correction_down.gif"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava/pdf/e-mail" NavigateUrl="javascript:report('');" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:RadMenuItem>
                     </Items>
 
                 </telerik:RadMenuItem>
@@ -254,8 +267,7 @@
                     <Items>
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                         </telerik:RadMenuItem>
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report('');" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+                        
                         <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet PIVOT za fakturu" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>

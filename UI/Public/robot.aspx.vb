@@ -170,7 +170,7 @@
                     recipients.Add(cc)
                 Next
                 With _Factory.x40MailQueueBL
-                    Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, BO.x29IdEnum.x31Report, c.PID)
+                    Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, BO.x29IdEnum.x31Report, c.PID, BO.x40StateENUM.InQueque)
                     If intMessageID > 0 Then
                         _Factory.x31ReportBL.UpdateLastScheduledRun(c.PID, Now)
                         If Not .SendMessageFromQueque(intMessageID) Then

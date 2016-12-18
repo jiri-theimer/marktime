@@ -74,7 +74,7 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Odeslat poštou jako PDF.
+        '''  Looks up a localized string similar to Odeslat e-mail s PDF.
         '''</summary>
         Friend Shared ReadOnly Property OdeslatPostou() As String
             Get
@@ -88,6 +88,15 @@ Namespace Resources
         Friend Shared ReadOnly Property Sestava() As String
             Get
                 Return ResourceManager.GetString("Sestava", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tisk.
+        '''</summary>
+        Friend Shared ReadOnly Property Tisk() As String
+            Get
+                Return ResourceManager.GetString("Tisk", resourceCulture)
             End Get
         End Property
     End Class

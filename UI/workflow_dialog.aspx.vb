@@ -141,6 +141,7 @@
         If strButtonValue = "save" Then
             upload1.TryUploadhWaitingFilesOnClientSide()
             If panNominee.Visible Then SaveTempX69()
+            receiver1.SaveTemp()
 
             If opgB06ID.SelectedItem Is Nothing Then
                 Master.Notify("Musíte zvolit krok!", 2)
@@ -177,7 +178,7 @@
         End With
 
         With Master.Factory.b07CommentBL
-            If .Save(cRec, upload1.GUID, Nothing) Then
+            If .Save(cRec, upload1.GUID, Me.receiver1.GetList()) Then
                 Return True
             Else
                 Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)

@@ -57,7 +57,6 @@ Class x46EventNotificationBL
     End Function
 
     Public Sub GenerateNotifyMessages(cX47 As BO.x47EventLog, Optional lisExplicitNotifyReceivers As List(Of BO.PersonOrTeam) = Nothing) Implements Ix46EventNotificationBL.GenerateNotifyMessages
-        Dim strLinkUrl As String = Factory.x35GlobalParam.GetValueString("AppHost")
         Dim lisX46 As IEnumerable(Of BO.x46EventNotification) = GetList(New BO.myQuery, , CInt(cX47.x45ID))
         If cX47.x29ID_Reference > BO.x29IdEnum._NotSpecified Then
             'odfiltrovat notifikace pouze na ty, které se týkají refereční entity nebo všech referencí
@@ -73,6 +72,7 @@ Class x46EventNotificationBL
         If Not lisExplicitNotifyReceivers Is Nothing Then
             mrs = lisExplicitNotifyReceivers    'příjemci notifikace jsou ručně předáni
         End If
+
         Select Case cX45.x29ID
             Case BO.x29IdEnum.p41Project
                 Dim cRec As BO.p41Project = Factory.p41ProjectBL.Load(cX47.x47RecordPID)
@@ -83,17 +83,14 @@ Class x46EventNotificationBL
                     mq.p41ID = cX47.x47RecordPID
                     objects.Add(Factory.p31WorksheetBL.LoadSumRow(mq, True, True))
                 End If
-                strLinkUrl += "/p41_framework.aspx?pid=" & cRec.PID.ToString & "&force=detail"
             Case BO.x29IdEnum.p56Task
                 Dim cRec As BO.p56Task = Factory.p56TaskBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
-                strLinkUrl += "/p56_framework.aspx?pid=" & cRec.PID.ToString
             Case BO.x29IdEnum.p91Invoice
                 Dim cRec As BO.p91Invoice = Factory.p91InvoiceBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
-                strLinkUrl += "/p91_framework.aspx?pid=" & cRec.PID.ToString & "&force=detail"
             Case BO.x29IdEnum.p28Contact
                 Dim cRec As BO.p28Contact = Factory.p28ContactBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
@@ -103,36 +100,27 @@ Class x46EventNotificationBL
                     mq.p28ID_Client = cX47.x47RecordPID
                     objects.Add(Factory.p31WorksheetBL.LoadSumRow(mq, True, True))
                 End If
-                strLinkUrl += "/p28_framework.aspx?pid=" & cRec.PID.ToString & "&force=detail"
             Case BO.x29IdEnum.j02Person
                 objects.Add(Factory.j02PersonBL.Load(cX47.x47RecordPID))
-                strLinkUrl += "/dr.aspx?prefix=j02&pid=" & cX47.x47RecordPID.ToString
             Case BO.x29IdEnum.p51PriceList
                 objects.Add(Factory.p51PriceListBL.Load(cX47.x47RecordPID))
-                strLinkUrl += "/dr.aspx?prefix=p51&pid=" & cX47.x47RecordPID.ToString
             Case BO.x29IdEnum.b07Comment
                 Dim cRec As BO.b07Comment = Factory.b07CommentBL.Load(cX47.x47RecordPID)
-                ''If cRec.b07ID_Parent <> 0 Then
-                ''    'notifikovat i autora komentáře, na který se reaguje
-                ''    Dim cRecParent As BO.b07Comment = Factory.b07CommentBL.Load(cRec.b07ID_Parent)
-                ''    mrs.Add(New BO.PersonOrTeam(cRecParent.j02ID_Owner, 0))
-                ''End If
                 intJ02ID_Owner = cRec.j02ID_Owner
                 objects.Add(cRec)
                 With cRec
-                    If .x29ID = BO.x29IdEnum.p41Project Then objectReference = Factory.p41ProjectBL.Load(.b07RecordPID) : strLinkUrl += "/p41_framework.aspx?pid=" & .b07RecordPID.ToString & "&force=comment"
-                    If .x29ID = BO.x29IdEnum.p28Contact Then objectReference = Factory.p28ContactBL.Load(.b07RecordPID) : strLinkUrl += "/p28_framework.aspx?pid=" & .b07RecordPID.ToString & "&force=comment"
-                    If .x29ID = BO.x29IdEnum.p56Task Then objectReference = Factory.p56TaskBL.Load(.b07RecordPID) : strLinkUrl += "/dr.aspx?prefix=p56&pid=" & .b07RecordPID.ToString
-                    If .x29ID = BO.x29IdEnum.p91Invoice Then objectReference = Factory.p91InvoiceBL.Load(.b07RecordPID) : strLinkUrl += "/p91_framework.aspx?pid=" & .b07RecordPID.ToString
-                    If .x29ID = BO.x29IdEnum.o22Milestone Then objectReference = Factory.o22MilestoneBL.Load(.b07RecordPID) : strLinkUrl += "/dr.aspx?prefix=o22&pid=" & .b07RecordPID.ToString
-                    If .x29ID = BO.x29IdEnum.p31Worksheet Then objectReference = Factory.p31WorksheetBL.Load(.b07RecordPID) : strLinkUrl += "/dr.aspx?prefix=p31&pid=" & .b07RecordPID.ToString
+                    If .x29ID = BO.x29IdEnum.p41Project Then objectReference = Factory.p41ProjectBL.Load(.b07RecordPID)
+                    If .x29ID = BO.x29IdEnum.p28Contact Then objectReference = Factory.p28ContactBL.Load(.b07RecordPID)
+                    If .x29ID = BO.x29IdEnum.p56Task Then objectReference = Factory.p56TaskBL.Load(.b07RecordPID)
+                    If .x29ID = BO.x29IdEnum.p91Invoice Then objectReference = Factory.p91InvoiceBL.Load(.b07RecordPID)
+                    If .x29ID = BO.x29IdEnum.o22Milestone Then objectReference = Factory.o22MilestoneBL.Load(.b07RecordPID)
+                    If .x29ID = BO.x29IdEnum.p31Worksheet Then objectReference = Factory.p31WorksheetBL.Load(.b07RecordPID)
                     If .x29ID = BO.x29IdEnum.o23Notepad Then
                         Dim c As BO.o23Notepad = Factory.o23NotepadBL.Load(.b07RecordPID)
                         If c.o23IsEncrypted Then
                             c.o23BodyPlainText = "Obsah je zašifrovaný."
                         End If
                         objectReference = c
-                        strLinkUrl += "/dr.aspx?prefix=o23&pid=" & .b07RecordPID.ToString
                     End If
                 End With
             Case BO.x29IdEnum.o23Notepad
@@ -146,7 +134,6 @@ Class x46EventNotificationBL
                     If .p41ID > 0 Then objectReference = Factory.p41ProjectBL.Load(.p41ID)
                     If .p28ID > 0 Then objectReference = Factory.p28ContactBL.Load(.p28ID)
                 End With
-                strLinkUrl += "/o23_framework.aspx?pid=" & cX47.x47RecordPID.ToString
             Case BO.x29IdEnum.o22Milestone
                 Dim cRec As BO.o22Milestone = Factory.o22MilestoneBL.Load(cX47.x47RecordPID)
                 intJ02ID_Owner = cRec.j02ID_Owner
@@ -165,13 +152,14 @@ Class x46EventNotificationBL
                         mrs.Add(New BO.PersonOrTeam(c.j02ID, c.j11ID))
                     Next
                 End If
-                
-                strLinkUrl += "/dr.aspx?prefix=o22&pid=" & cX47.x47RecordPID.ToString
+
             Case BO.x29IdEnum.p36LockPeriod
                 objects.Add(Factory.p36LockPeriodBL.Load(cX47.x47RecordPID))
             Case Else
 
         End Select
+
+
 
         If Not objectReference Is Nothing Then
             intJ02ID_Owner_Reference = objectReference.j02ID_Owner
@@ -182,6 +170,7 @@ Class x46EventNotificationBL
         mes.SenderAddress = Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
         mes.SenderName = "MARKTIME robot"
 
+        Dim strLinkUrl As String = Factory.GetRecordLinkUrl(BO.BAS.GetDataPrefix(cX45.x29ID), cX47.x47RecordPID)
 
         For Each c In lisX46
             Dim strMergedSubject As String = c.x46MessageSubject, strMergedBody As String = c.x46MessageTemplate
@@ -259,7 +248,7 @@ Class x46EventNotificationBL
                 .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
             End With
             recipients.Add(recipient)
-            Factory.x40MailQueueBL.SaveMessageToQueque(message, recipients, x29ID_Message, intRecordPID_Message)
+            Factory.x40MailQueueBL.SaveMessageToQueque(message, recipients, x29ID_Message, intRecordPID_Message, BO.x40StateENUM.InQueque)
         Next
     End Sub
     

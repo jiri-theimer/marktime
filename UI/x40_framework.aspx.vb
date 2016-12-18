@@ -179,4 +179,24 @@ Public Class x40_framework
         Master.Factory.j03UserBL.SetUserParam("x40_framework-entity", Me.cbxQueryEntity.SelectedValue)
         ReloadPage()
     End Sub
+
+    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
+        ReloadPage()
+    End Sub
+
+    Private Sub cmdBatch_Click(sender As Object, e As EventArgs) Handles cmdBatch.Click
+        Dim pids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.hidHardRefreshPID.Value)
+        If pids.Count = 0 Then
+            Master.Notify("Na vstupu není ani jeden vybraný záznam.", NotifyLevel.ErrorMessage)
+            Return
+        End If
+        Dim status As BO.x40StateENUM = CType(Me.hidHardRefreshFlag.Value, BO.x40StateENUM)
+        If status = BO.x40StateENUM._NotSpecified Then Master.Notify("status missing.") : Return
+        With Master.Factory.x40MailQueueBL
+            For Each intX40ID As Integer In pids
+                .UpdateMessageState(intX40ID, status)
+            Next
+        End With
+        ReloadPage()
+    End Sub
 End Class

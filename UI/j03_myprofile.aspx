@@ -67,7 +67,7 @@
                 </td>
                 <td style="padding-left: 20px;">
                     <img src="Images/email.png" />
-                    <a type="button" href="javascript:sendmail()">Odeslat poštovní zprávu</a>
+                    <a type="button" href="javascript:sendmail()">Odeslat e-mail</a>
                 </td>
 
             </tr>

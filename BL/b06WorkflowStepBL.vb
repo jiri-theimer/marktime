@@ -277,7 +277,7 @@ Class b06WorkflowStepBL
         Dim lisB11 As IEnumerable(Of BO.b11WorkflowMessageToStep) = GetList_B11(cB06.PID)
         If lisB11.Count = 0 Then Return 'ke kroku nejsou definovány notifikační události
 
-        Dim strLinkUrl As String = Factory.x35GlobalParam.GetValueString("AppHost") & "/" & BO.BAS.GetDataPrefix(x29id) & "_framework.aspx?pid=" & intRecordPID.ToString & "&force=detail"
+        Dim strLinkUrl As String = Factory.GetRecordLinkUrl(BO.BAS.GetDataPrefix(x29id), intRecordPID)
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Factory.x67EntityRoleBL.GetList_x69(x29id, intRecordPID)
         Dim lisX69Ref As IEnumerable(Of BO.x69EntityRole_Assign) = Nothing
         If intP41ID_Ref <> 0 Then
@@ -343,7 +343,7 @@ Class b06WorkflowStepBL
                             .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
                         End With
                         recipients.Add(recipient)
-                        Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, BO.x29IdEnum.j02Person, person.PID)
+                        Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque)
                     Next
 
                 End If

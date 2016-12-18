@@ -68,9 +68,10 @@ Public Class report_modal
                 If .Factory.SysUser.IsAdmin Then
                     .AddToolbarButton(Resources.report_modal.NastaveniSablony, "setting", "0", "Images/setting.png", False, "javascript:x31_record()")
                 End If
-                .AddToolbarButton("PDF merge", "merge", "0", "Images/merge.png", False)
-                .AddToolbarButton("PDF export", "pdf", "0", "Images/pdf.png")
-                .AddToolbarButton(Resources.report_modal.OdeslatPostou, "mail", "0", "Images/email.png")
+                .AddToolbarButton("PDF merge", "merge", 0, "Images/merge.png", False)
+                .AddToolbarButton("PDF export", "pdf", 0, "Images/pdf.png")
+                .AddToolbarButton(Resources.report_modal.OdeslatPostou, "mail", 0, "Images/email.png")
+                .AddToolbarButton(Resources.report_modal.Tisk, "print", 0, "Images/report.png", False, "javascript:rvprint()")
                 .RadToolbar.FindItemByValue("merge").CssClass = "show_hide1"
 
             End With

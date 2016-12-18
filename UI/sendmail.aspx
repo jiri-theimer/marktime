@@ -92,6 +92,14 @@
                         <asp:TextBox ID="txtSubject" runat="server" Style="width: 700px;"></asp:TextBox>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        Kontext:
+                    </td>
+                    <td>
+                        <asp:Label ID="EntityContext" runat="server" CssClass="val"></asp:Label>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
@@ -110,7 +118,7 @@
                 <asp:ImageButton ID="cmdNew" runat="server" ImageUrl="Images/new.png" ToolTip="Nová šablona" OnClientClick="return j61_create()" CssClass="button-link" />
                 <asp:ImageButton ID="cmdClone" runat="server" ImageUrl="Images/copy.png" ToolTip="Kopírovat šablonu" OnClientClick="return j61_clone()" CssClass="button-link" />
 
-
+                <asp:Button ID="cmdInsertLink" runat="server" Text="Vložit přímý odkaz na kontextový záznam" CssClass="cmd" Visible="false" />
         </div>
         <div class="content">
             <asp:TextBox ID="txtBody" runat="server" TextMode="MultiLine" Style="width: 99%; height: 200px;"></asp:TextBox>

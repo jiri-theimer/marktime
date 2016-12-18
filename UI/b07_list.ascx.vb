@@ -88,7 +88,7 @@
             .NavigateUrl = "javascript:" & Me.hidJS_Reaction.Value & "(" & cRec.PID.ToString & ")"
         End With
         With CType(e.Item.FindControl("aDelete"), HyperLink)
-            If cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin Then
+            If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And cRec.b07Value <> "" Then
                 .Visible = True
                 .NavigateUrl = "javascript:b07_delete(" & cRec.PID.ToString & ")"
             Else

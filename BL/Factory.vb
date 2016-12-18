@@ -652,7 +652,9 @@
             Return s
         End If
 
-
+    End Function
+    Public Function GetRecordLinkUrl(strPrefix As String, intRecordPID As Integer)
+        Return x35GlobalParam.GetValueString("AppHost") & "/dr.aspx?prefix=" & strPrefix & "&pid=" & intRecordPID.ToString
     End Function
 
     Public Function GetRecordFileName(x29id As BO.x29IdEnum, intRecordPID As Integer, strFileSuffix As String, bolAppendTimestamp As Boolean, Optional strReportName As String = "") As String

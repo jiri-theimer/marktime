@@ -126,4 +126,7 @@
   <data name="Sestava" xml:space="preserve">
     <value>Report:</value>
   </data>
+  <data name="Tisk" xml:space="preserve">
+    <value>Print</value>
+  </data>
 </root>

@@ -2,7 +2,7 @@
 Public Interface Ix40MailQueueBL
     Inherits IFMother
 
-    Function SaveMessageToQueque(message As BO.smtpMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer
+    Function SaveMessageToQueque(message As BO.smtpMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer
     Function SendMessageFromQueque(cRec As BO.x40MailQueue) As Boolean
     Function SendMessageFromQueque(intX40ID As Integer) As Boolean
     Function UpdateMessageState(intX40ID As Integer, NewState As BO.x40StateENUM) As Boolean
@@ -39,7 +39,7 @@ Class x40MailQueueBL
         Return _cDL.GetList(myQuery)
     End Function
 
-    Public Function SaveMessageToQueue(mes As BO.smtpMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer) As Integer Implements Ix40MailQueueBL.SaveMessageToQueque
+    Public Function SaveMessageToQueue(mes As BO.smtpMessage, recipients As List(Of BO.x43MailQueue_Recipient), x29id As BO.x29IdEnum, intRecordPID As Integer, status As BO.x40StateENUM) As Integer Implements Ix40MailQueueBL.SaveMessageToQueque
         _Error = ""
         If recipients Is Nothing Then recipients = New List(Of BO.x43MailQueue_Recipient)
         If recipients.Count = 0 Then
@@ -58,15 +58,16 @@ Class x40MailQueueBL
         End With
         Dim cX40 As New BO.x40MailQueue()
         With cX40
+            .x40State = status
             .x29ID = x29id
             .x40RecordPID = intRecordPID
-            .x40State = BO.x40StateENUM.InQueque
             .x40Body = mes.Body
             .x40IsHtmlBody = mes.IsHtmlBody
             .x40Subject = mes.Subject
             .x40SenderName = mes.SenderName
             .x40SenderAddress = mes.SenderAddress
             .j03ID_Sys = _cUser.PID
+
         End With
         'nejdříve uložit x40 záznam do databáze
         If _cDL.Save(cX40, recipients) Then

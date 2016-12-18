@@ -32,20 +32,26 @@
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
                 Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If Master.DataPID = 0 Then Master.StopPage("pid missing")
+                Me.cmdInsertLink.Visible = True
             Else
                 Me.CurrentX29ID = BO.x29IdEnum.j02Person
                 Master.DataPID = Master.Factory.SysUser.j02ID
             End If
+            Me.EntityContext.Text = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False) & ": " & Master.Factory.GetRecordCaption(Me.CurrentX29ID, Master.DataPID, True)
             Me.upload1.GUID = BO.BAS.GetGUID
             Me.uploadlist1.GUID = Me.upload1.GUID
             With Master
                 .HeaderText = "Odeslat poštovní zprávu"
                 .HeaderIcon = "Images/email_32.png"
-                .AddToolbarButton("Odeslat zprávu", "ok", , "Images/ok.png", , , , True)
+                .AddToolbarButton("Zařadit k odeslání", "queue", , "Images/queue.png", , , , True)
+                .AddToolbarButton("Odeslat zprávu", "ok", , "Images/email.png", , , , True)
             End With
             SetupCombos()
+            If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And Me.CurrentX29ID <> BO.x29IdEnum.j02Person Then
+                Me.txtBody.Text = vbCrLf & vbCrLf & "Přímý odkaz: " & Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
+            End If
             If Master.Factory.SysUser.j02ID <> 0 Then
-                Me.txtBody.Text = vbCrLf & vbCrLf & Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID).j02EmailSignature
+                Me.txtBody.Text += vbCrLf & vbCrLf & Master.Factory.j02PersonBL.Load(Master.Factory.SysUser.j02ID).j02EmailSignature
             End If
             
             SetupTemplates()
@@ -131,7 +137,7 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        If strButtonValue = "ok" Then
+        If strButtonValue = "ok" Or strButtonValue = "queue" Then
             Dim message As New BO.smtpMessage()
             With message
                 .Body = Trim(Me.txtBody.Text)
@@ -141,7 +147,6 @@
                 If uploadlist1.ItemsCount > 0 Then
                     .o27UploadGUID = upload1.GUID
                 End If
-
             End With
             Me.txtTo.Text = Replace(Replace(Me.txtTo.Text, " ", ""), ";", ",")
             Dim a() As String = Split(Trim(Me.txtTo.Text), ",")
@@ -164,7 +169,7 @@
                     recipients.Add(cX43)
                 Next
             End If
-            
+
             Me.txtBCC.Text = Replace(Replace(Me.txtBCC.Text, " ", ""), ";", ",")
             If Me.txtBCC.Text <> "" Then
                 a = Split(Me.txtBCC.Text, ",")
@@ -175,27 +180,32 @@
                     recipients.Add(cX43)
                 Next
             End If
-            
 
+            Dim messageStatus As BO.x40StateENUM = BO.x40StateENUM.InQueque
+            If strButtonValue = "queue" Then messageStatus = BO.x40StateENUM.WaitOnConfirm
             With Master.Factory.x40MailQueueBL
-                Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, Me.CurrentX29ID, Master.DataPID)
+                Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, Me.CurrentX29ID, Master.DataPID, messageStatus)
                 If intMessageID > 0 Then
-                    If .SendMessageFromQueque(intMessageID) Then
-                        Master.CloseAndRefreshParent("send-mail")
+                    If messageStatus = BO.x40StateENUM.InQueque Then
+                        'rovnou odeslat
+                        If .SendMessageFromQueque(intMessageID) Then
+                            Master.CloseAndRefreshParent("send-mail")
+                        Else
+                            Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                        End If
                     Else
-                        Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
+                        'zpráva zařazena k potvrzení
+                        Master.CloseAndRefreshParent("save-mail")
                     End If
                 Else
                     Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
                 End If
-                'If .SendMessage(message, recipients, Me.CurrentX29ID, Master.DataPID) Then
+                
 
-                '    Master.CloseAndRefreshParent("send-mail")
-                'Else
-                '    Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
-                'End If
+
+
             End With
-            
+
         End If
     End Sub
 
@@ -400,5 +410,10 @@
         End With
         Master.Factory.p85TempBoxBL.Save(cTemp)
         uploadlist1.RefreshData_TEMP()
+    End Sub
+
+    
+    Private Sub cmdInsertLink_Click(sender As Object, e As EventArgs) Handles cmdInsertLink.Click
+        Me.txtBody.Text += vbCrLf & vbCrLf & "Přímý odkaz: " & Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
     End Sub
 End Class

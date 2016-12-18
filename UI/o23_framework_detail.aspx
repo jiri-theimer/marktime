@@ -37,6 +37,10 @@
             sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=o23&masterpid=<%=master.datapid%>","Images/comment_32.png", true)
            
         }
+        function b07_delete(b07id, flag) {
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+
+        }
 
         
         function dropbox_folder(o25id) {

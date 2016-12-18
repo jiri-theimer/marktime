@@ -14,7 +14,7 @@
                 If .DataPID = 0 Then .StopPage("pid is missing")
 
                 Dim cRec As BO.b07Comment = .Factory.b07CommentBL.Load(.DataPID)
-                If .Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
+                If Not .Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
                     If cRec.j02ID_Owner <> .Factory.SysUser.j02ID Then .StopPage("Musíte být vlastníkem záznamu nebo admin.")
                 End If
                 Dim mq As New BO.myQueryB07

@@ -121,9 +121,12 @@
     <value>Nastavení šablony</value>
   </data>
   <data name="OdeslatPostou" xml:space="preserve">
-    <value>Odeslat poštou jako PDF</value>
+    <value>Odeslat e-mail s PDF</value>
   </data>
   <data name="Sestava" xml:space="preserve">
     <value>Sestava:</value>
+  </data>
+  <data name="Tisk" xml:space="preserve">
+    <value>Tisk</value>
   </data>
 </root>

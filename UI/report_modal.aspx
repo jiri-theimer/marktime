@@ -53,7 +53,9 @@
             dialog_master("x31_record.aspx?pid=<%=me.CurrentX31ID%>",true)
             
         }
-
+        function rvprint() {
+            <%=rv1.ClientID%>.PrintReport(); 
+        }
     </script>
 
 </asp:Content>
@@ -78,7 +80,9 @@
             </td>
           
 
-            <td align="right"></td>
+            <td align="right">
+               
+            </td>
         </tr>
     </table>
 

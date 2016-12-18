@@ -191,6 +191,11 @@
     function timeline(){            
         sw_decide("entity_timeline.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/timeline.png",true);
     }
+    function menu_sendmail() {
+        sw_decide("sendmail.aspx?prefix=<%=me.DataPrefix%>&pid=<%=me.DataPID%>", "Images/email_32.png")
+
+
+    }
 
     <%if me.DataPrefix="p41" then%>
     function menu_p40_record(p40id){            

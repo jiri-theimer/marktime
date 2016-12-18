@@ -122,6 +122,15 @@ Partial Public Class sendmail
     Protected WithEvents txtSubject As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''EntityContext control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents EntityContext As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''upload1 control.
     '''</summary>
     '''<remarks>
@@ -174,6 +183,15 @@ Partial Public Class sendmail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdClone As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''cmdInsertLink control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdInsertLink As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''txtBody control.

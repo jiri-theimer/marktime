@@ -19,7 +19,7 @@
         }
 
         function sendmail() {
-            sw_master("sendmail.aspx", "Images/email_32.png")
+            sw_master("sendmail.aspx?prefix=<%=me.CurrentMasterPrefix%>&pid=<%=me.CurrentMasterPID%>", "Images/email_32.png")
 
 
         }
@@ -32,6 +32,18 @@
 
         function RowDoubleClick(sender, args) {
             record_detail();
+        }
+
+        function batch(status) {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Musíte vybrat alespoň jednu zprávu v přehledu.");
+                return;                
+            }
+            
+            document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = status;
+            document.getElementById("<%=me.hidHardRefreshPID.ClientID%>").value=pids;
+            document.getElementById("<%=Me.cmdBatch.ClientID%>").click();
         }
 
         function GetAllSelectedPIDs() {
@@ -52,8 +64,8 @@
 
         function hardrefresh(pid, flag) {
 
-
-            location.replace("x40_framework.aspx")
+            document.getElementById("<%=me.cmdRefresh.clientid%>").click();
+            //location.replace("x40_framework.aspx")
 
         }
         function periodcombo_setting() {
@@ -147,5 +159,9 @@
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
 
+    <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
+    <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
+
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+    <asp:Button ID="cmdBatch" runat="server" Style="display: none;" />
 </asp:Content>

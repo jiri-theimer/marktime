@@ -113,6 +113,24 @@ Partial Public Class x40_framework
     Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidHardRefreshFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidHardRefreshPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdRefresh control.
     '''</summary>
     '''<remarks>
@@ -120,6 +138,15 @@ Partial Public Class x40_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.

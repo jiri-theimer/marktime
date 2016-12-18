@@ -116,8 +116,7 @@
                         <telerik:RadPanelItem Text="Osobní nastavení">
                             <Items>
                                 <telerik:RadPanelItem Text="Zvolit si jinou startovací (výchozí) stránku" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Odeslat poštovní zprávu" Value="sendmail" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadPanelItem>
+                                <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>                                
                                 <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
 
                             </Items>
