@@ -2,6 +2,8 @@
     Inherits System.Web.UI.UserControl
     Private Property _intSelectedB07ID As Integer
     Private Property _lastB07ID As Integer
+    Private Property _sysUser As BO.j03UserSYS
+
     Public Property ShowInsertButton As Boolean
         Get
             Return cmdAdd.Visible
@@ -45,7 +47,7 @@
     End Sub
 
     Public Sub RefreshData(factory As BL.Factory, x29id As BO.x29IdEnum, intRecordPID As Integer, Optional intSelectedB07ID As Integer = 0)
-
+        _sysUser = factory.SysUser
         Dim mq As New BO.myQueryB07
         mq.RecordDataPID = intRecordPID
         mq.x29id = x29id
@@ -84,6 +86,14 @@
 
         With CType(e.Item.FindControl("aAnswer"), HyperLink)
             .NavigateUrl = "javascript:" & Me.hidJS_Reaction.Value & "(" & cRec.PID.ToString & ")"
+        End With
+        With CType(e.Item.FindControl("aDelete"), HyperLink)
+            If cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin Then
+                .Visible = True
+                .NavigateUrl = "javascript:b07_delete(" & cRec.PID.ToString & ")"
+            Else
+                .Visible = False
+            End If
         End With
         CType(e.Item.FindControl("Timestamp"), Label).Text = BO.BAS.FD(cRec.DateInsert, True, True)
         With CType(e.Item.FindControl("att1"), HyperLink)

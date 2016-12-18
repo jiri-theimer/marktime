@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -17,7 +18,11 @@
 
         }
 
+        function sendmail() {
+            sw_master("sendmail.aspx", "Images/email_32.png")
 
+
+        }
 
         function RowSelected(sender, args) {
 
@@ -51,6 +56,10 @@
             location.replace("x40_framework.aspx")
 
         }
+        function periodcombo_setting() {
+
+            sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -59,16 +68,53 @@
             <img src="Images/email_32.png" alt="Odeslaná pošta" />
         </div>
         <div class="commandcell" style="padding-left: 10px;">
-            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Odeslané poštovní zprávy" Style="vertical-align: top;"></asp:Label>
+            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="OUTBOX" Style="vertical-align: top;"></asp:Label>
         </div>
-
-        <div class="commandcell" style="padding-left: 50px;">
-            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
+        <div class="commandcell" style="padding-left:10px;">
+            <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
+        </div>
+        <div class="commandcell" style="padding-left:10px;">
+            <asp:DropDownList ID="cbxQueryStatus" runat="server" AutoPostBack="true">
+                <asp:ListItem Text="--Status zprávy--" Value=""></asp:ListItem>
+                <asp:ListItem Text="Odesílá se" Value="1"></asp:ListItem>
+                <asp:ListItem Text="Odesláno" Value="3"></asp:ListItem>
+                <asp:ListItem Text="Čeká na odeslání" Value="5"></asp:ListItem>
+                <asp:ListItem Text="Chyba" Value="2"></asp:ListItem>
+                <asp:ListItem Text="Zastaveno" Value="4"></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <div class="commandcell" style="padding-left:10px;">
+            <asp:DropDownList ID="cbxQueryEntity" runat="server" AutoPostBack="true" style="width:150px;">
+                <asp:ListItem Text="--Kontext zprávy--" Value=""></asp:ListItem>
+                <asp:ListItem Text="Vystavená faktura" Value="391"></asp:ListItem>
+                <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
+                <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
+                <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
+                <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
+                <asp:ListItem Text="Bez-kontextová tisková sestava" Value="931"></asp:ListItem>
+                <asp:ListItem Text="Osobní" Value="102"></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <div class="commandcell" style="padding-left: 10px;">
+            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 2000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
                 <Items>
-
-                    <telerik:RadMenuItem Text="DETAIL" Value="record" PostBack="false" ImageUrl="Images/edit.png" NavigateUrl="javascript:record_detail()"></telerik:RadMenuItem>
-
-                    <telerik:RadMenuItem Text="OBNOVIT" Visible="false" ImageUrl="Images/refresh.png" Value="refresh" NavigateUrl="x40_framework.aspx"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="ZÁZNAM" ImageUrl="Images/menuarrow.png">
+                    <Items>
+                        <telerik:RadMenuItem Text="Detail zprávy (dvoj-klik)" Value="record" PostBack="false" ImageUrl="Images/edit.png" NavigateUrl="javascript:record_detail()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Nová zpráva" Value="new" PostBack="false" ImageUrl="Images/new.png" NavigateUrl="javascript:sendmail()"></telerik:RadMenuItem>
+                    </Items>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="AKCE" ImageUrl="Images/menuarrow.png">
+                        <Items>
+                            <telerik:RadMenuItem Text="Označené změnit na [Odeslat]" Value="odeslat" NavigateUrl="javascript:batch(1)"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Označené změnit na [Čeká na odeslání]" Value="confirm" NavigateUrl="javascript:batch(5)"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Označené změnit na [Zastaveno]" Value="stop" NavigateUrl="javascript:batch(4)"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Obnovit přehled" Value="refresh" NavigateUrl="x40_framework.aspx" ImageUrl="Images/refresh.png"></telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenuItem>
+                    
 
                     <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="columns" PostBack="false">
                         <ContentTemplate>
@@ -92,6 +138,8 @@
 
         </div>
     </div>
+    <div style="clear:both;"></div>
+    <asp:HyperLink ID="linkEntity" runat="server" Visible="false" Font-Bold="true"></asp:HyperLink>
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" AllowFilteringByColumn="true"></uc:datagrid>
 
 

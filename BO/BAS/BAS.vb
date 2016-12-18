@@ -12,6 +12,8 @@
             Case x29IdEnum.o23Notepad And Not bolMnozneCislo : Return "Dokument"
             Case x29IdEnum.o23Notepad And bolMnozneCislo : Return "Dokumenty"
             Case BO.x29IdEnum.p31Worksheet : Return "Worksheet úkon"
+            Case BO.x29IdEnum.p56Task And Not bolMnozneCislo : Return "Úkol"
+            Case BO.x29IdEnum.x31Report And Not bolMnozneCislo : Return "Tisková sestava"
 
             Case BO.x29IdEnum.j02Person And Not bolMnozneCislo : Return "Osoba"
             Case BO.x29IdEnum.j02Person And bolMnozneCislo : Return "Lidé"
@@ -19,6 +21,7 @@
             Case BO.x29IdEnum.p91Invoice And bolMnozneCislo : Return "Faktury"
             Case BO.x29IdEnum.p56Task And Not bolMnozneCislo : Return "Úkol"
             Case BO.x29IdEnum.p56Task And bolMnozneCislo : Return "Úkoly"
+
             Case Else
                 Return ""
         End Select

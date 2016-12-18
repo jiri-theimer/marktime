@@ -4,6 +4,7 @@
     IsError = 2
     IsProceeded = 3
     IsStopped = 4
+    WaitOnConfirm = 5
 End Enum
 
 Public Class x40MailQueue
@@ -33,4 +34,34 @@ Public Class x40MailQueue
     Public Property x40ErrorMessage As String
 
     Public Property x40IsAutoNotification As Boolean
+
+    Public ReadOnly Property StatusAlias As String
+        Get
+            Select Case Me.x40State
+                Case x40StateENUM.InQueque : Return "Odesílá se"
+                Case x40StateENUM.IsError : Return "Chyba"
+                Case x40StateENUM.IsProceeded : Return "Odesláno"
+                Case x40StateENUM.IsStopped : Return "Zastaveno"
+                Case x40StateENUM.WaitOnConfirm : Return "Čeká na odeslání"
+                Case Else : Return "?"""
+            End Select
+        End Get
+    End Property
+    Public ReadOnly Property StatusColor As String
+        Get
+            Select Case Me.x40State
+                Case x40StateENUM.InQueque : Return "#996633"
+                Case x40StateENUM.IsError : Return "#ff0000"
+                Case x40StateENUM.IsProceeded : Return "#008000"
+                Case x40StateENUM.IsStopped : Return "#ff66ff"
+                Case x40StateENUM.WaitOnConfirm : Return "#0000ff"
+                Case Else : Return "?"""
+            End Select
+        End Get
+    End Property
+    Public ReadOnly Property Context As String
+        Get
+            Return BO.BAS.GetX29EntityAlias(x29ID, False)
+        End Get
+    End Property
 End Class

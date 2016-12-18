@@ -231,7 +231,7 @@
 
         <uc:alertbox id="alert1" runat="server"></uc:alertbox>
 
-    <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
+    <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <asp:HiddenField ID="hidJ03ID" runat="server" />
 </asp:Content>

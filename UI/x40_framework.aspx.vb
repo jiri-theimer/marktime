@@ -39,27 +39,31 @@ Public Class x40_framework
 
                     .Add("x40_framework-filter_setting")
                     .Add("x40_framework-filter_sql")
+                    .Add("x40_framework-period")
+                    .Add("x40_framework-status")
+                    .Add("x40_framework-entity")
+                    .Add("periodcombo-custom_query")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
-
-
 
             End With
             With Master.Factory.j03UserBL
                 cbxPaging.SelectedValue = .GetUserParam("x40_framework-pagesize", "20")
-
+                basUI.SelectDropdownlistValue(Me.cbxQueryStatus, .GetUserParam("x40_framework-status"))
+                basUI.SelectDropdownlistValue(Me.cbxQueryEntity, .GetUserParam("x40_framework-entity"))
             End With
 
 
             With Master.Factory.j03UserBL
+                period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
+                period1.SelectedValue = .GetUserParam("x40_framework-period")
                 SetupGrid(.GetUserParam("x40_framework-filter_setting"), .GetUserParam("x40_framework-filter_sql"))
             End With
             If Me.CurrentMasterPrefix <> "" Then
-                With Me.lblFormHeader
-                    .CssClass = ""
+                With Me.linkEntity
                     .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
-                    If .Text.Length > 30 Then .Text = Left(.Text, 28) & "..."
-                    .Text = "<a href='" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString & "'>" & .Text & "</a>"
+                    .NavigateUrl = Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString
+                    .Visible = True
                 End With
             End If
         End If
@@ -70,11 +74,15 @@ Public Class x40_framework
             .ClearColumns()
             .PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
             .radGridOrig.ShowFooter = False
+            .AllowMultiSelect = True
+            .AddCheckboxSelector()
 
             .AddSystemColumn(20, "UserInsert")
             .AddColumn("DateUpdate", "Čas", BO.cfENUM.DateTime, , , , , , False)
+            .AddColumn("Context", "Kontext", , , , , , , False)
             .AddColumn("x40State", "Stav", , , , , , , False)
-            .AddColumn("x40SenderName", "Odesílatel")
+            .AddColumn("x40SenderAddress", "Od (adresa)")
+            .AddColumn("x40SenderName", "Od (jméno)")
             '.AddColumn("x40SenderAddress", "Adresa")
             .AddColumn("x40Recipient", "Příjemce")
             .AddColumn("x40Subject", "Předmět zprávy")
@@ -103,14 +111,25 @@ Public Class x40_framework
             End With
         End If
         Dim mq As New BO.myQueryX40
+        mq.TopRecordsOnly = 1000
         mq.ColumnFilteringExpression = grid1.GetFilterExpression
+        If period1.SelectedValue <> "" Then
+            mq.DateFrom = period1.DateFrom
+            mq.DateUntil = period1.DateUntil
+        End If
         If Me.CurrentMasterPrefix <> "" Then
-            mq.x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix)
+            mq.x29ID_RecordPID = BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix)
             mq.RecordPID = Me.CurrentMasterPID
         Else
             If Not Master.Factory.SysUser.IsAdmin Then
                 mq.j03ID_MyRecords = Master.Factory.SysUser.PID
             End If
+        End If
+        If Me.cbxQueryStatus.SelectedIndex > 0 Then
+            mq.x40State = CType(BO.BAS.IsNullInt(Me.cbxQueryStatus.SelectedValue), BO.x40StateENUM)
+        End If
+        If Me.cbxQueryEntity.SelectedIndex > 0 Then
+            mq.x29ID_ExplicitQuery = CType(BO.BAS.IsNullInt(Me.cbxQueryEntity.SelectedValue), BO.x29IdEnum)
         End If
         
 
@@ -122,8 +141,42 @@ Public Class x40_framework
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("x40_framework-pagesize", cbxPaging.SelectedValue)
 
-        grid1.PageSize = BO.BAS.IsNullInt(cbxPaging.SelectedItem.Text)
-        If grid1.radGridOrig.CurrentPageIndex > 0 Then grid1.radGridOrig.CurrentPageIndex = 0
-        grid1.Rebind(True)
+        ReloadPage()
+    End Sub
+
+    Private Sub x40_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        basUIMT.RenderQueryCombo(Me.cbxQueryStatus)
+        basUIMT.RenderQueryCombo(cbxQueryEntity)
+        With Me.period1
+            If .SelectedValue <> "" Then
+                .BackColor = Drawing.Color.Red
+            Else
+                .BackColor = Nothing
+            End If
+        End With
+    End Sub
+
+    Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
+        Master.Factory.j03UserBL.SetUserParam("x40_framework-period", Me.period1.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub ReloadPage()
+        If Me.CurrentMasterPrefix = "" Then
+            Response.Redirect("x40_framework.aspx")
+        Else
+            Response.Redirect("x40_framework.aspx?masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString)
+        End If
+
+    End Sub
+
+    Private Sub cbxQueryStatus_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQueryStatus.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x40_framework-status", Me.cbxQueryStatus.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub cbxQueryEntity_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQueryEntity.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x40_framework-entity", Me.cbxQueryEntity.SelectedValue)
+        ReloadPage()
     End Sub
 End Class

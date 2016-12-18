@@ -11,14 +11,28 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
     <table cellpadding="5" cellspacing="2">
-        <tr>
+        <tr valign="top">
             <td>
                 <asp:Label ID="Label3" runat="server" CssClass="lbl" Text="Stav zprávy:"></asp:Label>
 
             </td>
             <td>
                 <asp:Label ID="x40State" runat="server" CssClass="valbold"></asp:Label>
+                
+                
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
                 <asp:Button ID="cmdChangeState" Text="Změnit stav zprávy" runat="server" CssClass="cmd" />
+                
+                
+                    
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:Button ID="cmdChangeStateOnNeedConfirm" Text="Změnit stav zprávy na [Čeká na odeslání]" runat="server" CssClass="cmd" />
             </td>
         </tr>
         <tr>

@@ -268,7 +268,7 @@
     </asp:Panel>
 
     <div style="clear:both;"></div>
-    <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
+    <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <asp:HiddenField ID="hidCurP41ID" runat="server" />
 </asp:Content>

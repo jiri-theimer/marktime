@@ -224,20 +224,10 @@ Public Class basUIMT
             dataItem("UserInsert").CssClass = "attachment"
 
         End If
-        Select Case cRec.x40State
-            Case BO.x40StateENUM.InQueque
-                dataItem("x40State").Text = "Čeká na odeslání"
+        dataItem("x40State").Text = cRec.StatusAlias
+        dataItem.Style.Item("color") = cRec.StatusColor
 
-            Case BO.x40StateENUM.IsError
-                dataItem("x40State").Text = "Chyba"
-                dataItem.ForeColor = Drawing.Color.Red
-            Case BO.x40StateENUM.IsProceeded
-                dataItem("x40State").Text = "Odesláno"
-                dataItem.ForeColor = Drawing.Color.Green
-            Case BO.x40StateENUM.IsStopped
-                dataItem("x40State").Text = "Zastaveno"
-                dataItem.ForeColor = Drawing.Color.Magenta
-        End Select
+        
     End Sub
 
     Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolDT As Boolean = False, Optional bolMobile As Boolean = False)

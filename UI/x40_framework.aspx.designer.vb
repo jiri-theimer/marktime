@@ -23,6 +23,33 @@ Partial Public Class x40_framework
     Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''period1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents period1 As Global.UI.periodcombo
+
+    '''<summary>
+    '''cbxQueryStatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxQueryStatus As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxQueryEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxQueryEntity As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
@@ -39,6 +66,15 @@ Partial Public Class x40_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''linkEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkEntity As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''grid1 control.

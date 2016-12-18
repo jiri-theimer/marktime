@@ -85,6 +85,10 @@
                 pars.Add("ownerid", .j02ID_Owner, DbType.Int32)
                 strW += " AND a.j02ID_Owner=@ownerid"
             End If
+            If .b07ID_Parent <> 0 Then
+                pars.Add("parentpid", .b07ID_Parent, DbType.Int32)
+                strW += " AND a.b07ID_Parent=@parentpid"
+            End If
         End With
 
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)

@@ -19,6 +19,10 @@
             sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p41&masterpid=<%=Master.datapid%>", "Images/comment_32.png", true)
 
         }
+        function b07_delete(b07id, flag) {
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+
+        }
         function hardrefresh(pid, flag) {
 
             if (flag == "p41-create") {
@@ -274,7 +278,7 @@
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
     <div style="clear:both;"></div>
-    <uc:b07_list ID="comments1" runat="server" JS_Create="b07_record()" JS_Reaction="b07_reaction" />
+    <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
 </asp:Content>

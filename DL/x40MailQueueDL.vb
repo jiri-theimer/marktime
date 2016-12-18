@@ -32,6 +32,8 @@
                 cRec.x40State = BO.x40StateENUM.InQueque
             Case BO.x40StateENUM.IsStopped
                 cRec.x40State = BO.x40StateENUM.IsStopped
+            Case BO.x40StateENUM.WaitOnConfirm
+                cRec.x40State = BO.x40StateENUM.WaitOnConfirm
 
         End Select
         Return Save(cRec, Nothing)
@@ -114,13 +116,19 @@
                 strW += " AND (a.x40Recipient like '%'+@expr+'%' OR a.x40Subject LIKE '%'+@expr+'%')"
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
+            If .DateFrom > DateSerial(1900, 1, 1) Then
+                strW += " AND a.x40DateInsert>=@datefrom" : pars.Add("datefrom", .DateFrom, DbType.DateTime)
+            End If
+            If .DateUntil < DateSerial(3000, 1, 1) Then
+                strW += " AND a.x40DateInsert<@dateuntil" : pars.Add("dateuntil", .DateUntil.AddDays(1), DbType.DateTime)
+            End If
           
-            If Not .x29ID Is Nothing Then
-                Select Case .x29ID
+            If Not .x29ID_RecordPID Is Nothing And .RecordPID <> 0 Then
+                Select Case .x29ID_RecordPID
                     Case BO.x29IdEnum.p28Contact
                         strW += " AND ((a.x40RecordPID=@pid and a.x29ID=328) OR (a.x29ID=391 AND a.x40RecordPID IN (SELECT p91ID FROM p91Invoice WHERE p28ID=@pid)))"
                     Case BO.x29IdEnum.p41Project
-                        strW += " AND ((a.x40RecordPID=@pid and a.x29ID=141) OR (a.x29ID=391 AND a.x40RecordPID IN (SELECT p91ID FROM p91Invoice WHERE p28ID IN (SELECT p28ID_Client FROM p41Project WHERE p41ID=@pid))))"
+                        strW += " AND ((a.x40RecordPID=@pid and a.x29ID=141) OR (a.x29ID=391 AND a.x40RecordPID IN (SELECT p91ID FROM p31Worksheet WHERE p91ID IS NOT NULL AND p41ID=@pid)) OR (a.x29ID=356 AND a.x40RecordPID IN (SELECT p56ID FROM p56Task WHERE p41ID=@pid)))"
                     Case BO.x29IdEnum.j02Person
                         Dim prs As New DbParameters
                         prs.Add("pid", .RecordPID, DbType.Int32)
@@ -131,7 +139,11 @@
                         strW += " AND a.x29ID=@x29id AND a.x40RecordPID=@pid"
                 End Select
                 pars.Add("pid", .RecordPID, DbType.Int32)
-                pars.Add("x29id", .x29ID, DbType.Int32)
+                pars.Add("x29id", .x29ID_RecordPID, DbType.Int32)
+            End If
+            If Not .x29ID_ExplicitQuery Is Nothing Then
+                strW += " AND a.x29ID=@x29id"
+                pars.Add("x29id", .x29ID_ExplicitQuery, DbType.Int32)
             End If
             If Not .x40State Is Nothing Then
                 strW += " AND a.x40State=@x40state"
@@ -144,6 +156,7 @@
             If .ColumnFilteringExpression <> "" Then
                 strW += " AND " & ParseFilterExpression(.ColumnFilteringExpression)
             End If
+
         End With
         
 

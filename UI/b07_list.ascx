@@ -27,6 +27,7 @@
                         <div style="padding-top: 4px;">
                             <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
                             <asp:HyperLink ID="aAnswer" runat="server" Text="Reagovat"></asp:HyperLink>
+                            <asp:HyperLink ID="aDelete" runat="server" Text="Odstranit" Visible="false"></asp:HyperLink>
                         </div>
                     </td>
                 </tr>

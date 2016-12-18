@@ -157,6 +157,7 @@ Public Class entity_menu
             ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
         End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+        ami("Odeslat zprávu", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         If cP42.p42IsModule_p31 Then
             mi = ami("ZAPSAT WORKSHEET", "p31", "", "Images/arrow_down_menu.png", Nothing)
@@ -423,6 +424,7 @@ Public Class entity_menu
             ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
         End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+        ami("Odeslat zprávu", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
         ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
@@ -487,6 +489,7 @@ Public Class entity_menu
             If cRec.j02IsIntraPerson Then ami("Schvalovat nebo fakturovat práci osoby", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
         End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+        ami("Odeslat zprávu", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
         ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
@@ -625,6 +628,7 @@ Public Class entity_menu
             ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
         End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+        ami("Odeslat zprávu", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         If cDisp.P31_Create Then
             If cP42.p42IsModule_p31 Then
@@ -723,6 +727,7 @@ Public Class entity_menu
             ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
         End If
         ami("Tisková sestava", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
+        ami("Odeslat zprávu", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
     End Sub
 

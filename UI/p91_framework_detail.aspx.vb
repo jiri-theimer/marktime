@@ -25,7 +25,7 @@ Public Class p91_framework_detail
                     .Add("p91_framework_detail-j74id")
                     .Add("p91_framework_detail-pagesize")
                     .Add("p91_framework_detail-chkFFShowFilledOnly")
-                    .Add("p91_framework_detail-tabskin")
+                    .Add("p91_menu-tabskin")
                     .Add("p91_framework_detail-searchbox")
                 End With
 
@@ -65,7 +65,7 @@ Public Class p91_framework_detail
             If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
                 basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p91")
             End If
-            tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_framework_detail-tabskin", "Default")
+            tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-tabskin", "Default")
         End If
 
     End Sub

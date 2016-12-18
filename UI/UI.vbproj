@@ -181,6 +181,7 @@
     <Content Include="b01_record.aspx" />
     <Content Include="b02_record.aspx" />
     <Content Include="b06_record.aspx" />
+    <Content Include="b07_delete.aspx" />
     <Content Include="b65_record.aspx" />
     <Content Include="billingmemo.ascx" />
     <Content Include="blank.aspx" />
@@ -705,6 +706,13 @@
     <Compile Include="b06_record.aspx.vb">
       <DependentUpon>b06_record.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="b07_delete.aspx.designer.vb">
+      <DependentUpon>b07_delete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="b07_delete.aspx.vb">
+      <DependentUpon>b07_delete.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="b65_record.aspx.designer.vb">
       <DependentUpon>b65_record.aspx</DependentUpon>

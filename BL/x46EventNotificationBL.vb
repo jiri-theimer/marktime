@@ -183,7 +183,6 @@ Class x46EventNotificationBL
         mes.SenderName = "MARKTIME robot"
 
 
-
         For Each c In lisX46
             Dim strMergedSubject As String = c.x46MessageSubject, strMergedBody As String = c.x46MessageTemplate
             If lisExplicitNotifyReceivers Is Nothing Then
@@ -244,6 +243,12 @@ Class x46EventNotificationBL
 
     
     Private Sub CompleteMessages(cX47 As BO.x47EventLog, message As BO.smtpMessage, lisReceivers As IEnumerable(Of BO.j02Person))
+        Dim x29ID_Message As BO.x29IdEnum = cX47.x29ID, intRecordPID_Message As Integer = cX47.x47RecordPID
+        If cX47.x29ID = BO.x29IdEnum.b07Comment Then
+            x29ID_Message = cX47.x29ID_Reference
+            intRecordPID_Message = cX47.x47RecordPID_Reference
+        End If
+        
         For Each cJ02 In lisReceivers
             'pro každou osobu jedna zpráva
             Dim recipients As New List(Of BO.x43MailQueue_Recipient)
@@ -254,7 +259,7 @@ Class x46EventNotificationBL
                 .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
             End With
             recipients.Add(recipient)
-            Factory.x40MailQueueBL.SaveMessageToQueque(message, recipients, BO.x29IdEnum.j02Person, cJ02.PID)
+            Factory.x40MailQueueBL.SaveMessageToQueque(message, recipients, x29ID_Message, intRecordPID_Message)
         Next
     End Sub
     

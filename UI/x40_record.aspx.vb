@@ -24,6 +24,7 @@
     End Sub
 
     Private Sub RefreshRecord()
+        cmdChangeStateOnNeedConfirm.Visible = False
         Dim cRec As BO.x40MailQueue = Master.Factory.x40MailQueueBL.Load(Master.DataPID)
         With cRec
             Me.DateInsert.Text = BO.BAS.FD(.DateInsert)
@@ -35,23 +36,29 @@
             Me.x40Subject.Text = .x40Subject
             Me.x40Body.Text = .x40Body
             Me.x40ErrorMessage.Text = .x40ErrorMessage
+            Me.x40State.Text = .StatusAlias
+
             Select Case .x40State
                 Case BO.x40StateENUM.InQueque
-                    Me.x40State.Text = "Čeká ve frontě na odeslání"
+                    Me.x40State.Text += " (každých 5 minut systém pošle 10 zpráv)"
                     cmdChangeState.Text = "Změnit stav zprávy na [Zastaveno]" : cmdChangeState.CommandArgument = "4"
-
+                    cmdChangeStateOnNeedConfirm.Visible = True
                 Case BO.x40StateENUM.IsError
-                    Me.x40State.Text = "Při pokusu o odeslání došlo k chybě"
+                    Me.x40State.Text += " (při pokusu o odeslání došlo k chybě)"
                     Me.x40State.ForeColor = Drawing.Color.Red
-                    cmdChangeState.Text = "Změnit stav zprávy na [Čeká na odeslání]" : cmdChangeState.CommandArgument = "1"
+                    cmdChangeState.Text = "Změnit stav zprávy na [Odeslat]" : cmdChangeState.CommandArgument = "1"
+                    cmdChangeStateOnNeedConfirm.Visible = True
                 Case BO.x40StateENUM.IsProceeded
-                    Me.x40State.Text = "Odesláno (" & BO.BAS.FD(.x40WhenProceeded, True) & ")"
-                    Me.x40State.ForeColor = Drawing.Color.Green
+                    Me.x40State.Text += " (zpracováno v čase: " & BO.BAS.FD(.x40WhenProceeded, True) & ")"
                     cmdChangeState.Visible = False
                 Case BO.x40StateENUM.IsStopped
-                    Me.x40State.Text = "Zastaveno"
                     Me.x40State.ForeColor = Drawing.Color.Magenta
-                    cmdChangeState.Text = "Změnit stav zprávy na [Čeká na odeslání]" : cmdChangeState.CommandArgument = "1"
+                    cmdChangeState.Text = "Změnit stav zprávy na [Odeslat]" : cmdChangeState.CommandArgument = "1"
+                    cmdChangeStateOnNeedConfirm.Visible = True
+                Case BO.x40StateENUM.WaitOnConfirm
+                    Me.x40State.Text += " (čeká se, až někdo odešle zprávu)"
+                    cmdChangeState.Text = "Změnit stav zprávy na [Odeslat]" : cmdChangeState.CommandArgument = "1"
+                    cmdChangeStateOnNeedConfirm.Visible = False
             End Select
             Me.Timestamp.Text = .Timestamp
         End With
@@ -69,9 +76,19 @@
                 newState = BO.x40StateENUM.IsStopped
             Case "1"
                 newState = BO.x40StateENUM.InQueque
+            Case "5"
+                newState = BO.x40StateENUM.WaitOnConfirm
         End Select
         If Master.Factory.x40MailQueueBL.UpdateMessageState(Master.DataPID, newState) Then
             Master.CloseAndRefreshParent("save")
+        End If
+    End Sub
+
+    Private Sub cmdChangeStateOnNeedConfirm_Click(sender As Object, e As EventArgs) Handles cmdChangeStateOnNeedConfirm.Click
+        If Master.Factory.x40MailQueueBL.UpdateMessageState(Master.DataPID, BO.x40StateENUM.WaitOnConfirm) Then
+            Master.CloseAndRefreshParent("save")
+        Else
+            Master.Notify(Master.Factory.x40MailQueueBL.ErrorMessage)
         End If
     End Sub
 End Class

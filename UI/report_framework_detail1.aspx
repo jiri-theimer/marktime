@@ -46,7 +46,7 @@
         }
 
         function sendbymail() {
-            sw_local("sendmail.aspx?x31id=<%=me.CurrentX31ID%>&datfrom=<%=Format(period1.DateFrom,"dd.MM.yyyy")%>&datuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>", "Images/email_32.png")
+            sw_local("sendmail.aspx?prefix=x31&pid=<%=me.CurrentX31ID%>&x31id=<%=me.CurrentX31ID%>&datfrom=<%=Format(period1.DateFrom,"dd.MM.yyyy")%>&datuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>", "Images/email_32.png")
         }
 
         function x31_record() {

@@ -164,7 +164,7 @@
 
         </telerik:RadPageView>
         <telerik:RadPageView ID="smtp" runat="server">
-            <asp:CheckBox ID="chkIsSmtp" runat="server" Text="Odeslaná pošta osoby odchází z vlastního SMTP účtu" AutoPostBack="true" meta:resourcekey="chkIsSmtp" />
+            <asp:CheckBox ID="chkIsSmtp" runat="server" Text="Odeslaná pošta osoby odchází z osobního SMTP účtu" AutoPostBack="true" meta:resourcekey="chkIsSmtp" />
             <asp:Panel ID="panSMTP" runat="server">
                 <table cellpadding="5" cellspacing="2">
                     <tr>

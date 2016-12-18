@@ -185,6 +185,7 @@ Class x40MailQueueBL
                 .From = New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName)
             Else
                 .From = New MailAddress(strGlobalSenderAddress, cRec.x40SenderName)
+                cRec.x40SenderAddress = strGlobalSenderAddress
                 .ReplyToList.Add(New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName))
             End If
             .Body = cRec.x40Body
@@ -238,6 +239,8 @@ Class x40MailQueueBL
                 Dim cPerson As BO.j02Person = Me.Factory.j02PersonBL.Load(_cUser.j02ID)
                 If cPerson.j02SmtpServer <> "" Then
                     'osoba má vlastní SMTP účet
+                    cRec.x40SenderAddress = _cUser.PersonEmail
+                    cRec.x40SenderName = _cUser.Person
                     mail.From = New MailAddress(_cUser.PersonEmail, _cUser.Person)
                     Dim basicAuthenticationInfo As New System.Net.NetworkCredential()
                     If cPerson.j02IsSmtpVerify Then
@@ -251,7 +254,8 @@ Class x40MailQueueBL
             End If
             Try
                 .Send(mail)
-                log4net.LogManager.GetLogger("smtplog").Info("Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+                log4net.LogManager.GetLogger("smtplog").Info("Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+
                 For i As Integer = 0 To mail.Attachments.Count - 1
                     log4net.LogManager.GetLogger("smtplog").Info("Message attachment: " & mail.Attachments(i).ContentDisposition.FileName)
                 Next
@@ -264,7 +268,7 @@ Class x40MailQueueBL
                 _Error = ex.Message
                 cRec.x40State = BO.x40StateENUM.IsError
                 cRec.x40ErrorMessage = _Error
-                log4net.LogManager.GetLogger("smtplog").Error("Error: " & _Error & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
+                log4net.LogManager.GetLogger("smtplog").Error("Error: " & _Error & vbCrLf & "Sender: " & mail.From.Address & "/" & mail.From.DisplayName & vbCrLf & "Message recipients: " & cRec.x40Recipient & vbCrLf & "Message subject: " & cRec.x40Subject & vbCrLf & "Message body: " & cRec.x40Body)
             End Try
 
         End With
@@ -276,8 +280,8 @@ Class x40MailQueueBL
     End Function
     Public Function UpdateMessageState(intX40ID As Integer, NewState As BO.x40StateENUM) As Boolean Implements Ix40MailQueueBL.UpdateMessageState
         If intX40ID = 0 Then _Error = "ID zprávy je nula." : Return False
-        If Not (NewState = BO.x40StateENUM.InQueque Or NewState = BO.x40StateENUM.IsStopped) Then
-            _Error = "Změnit stav lze pouze na [Zastaveno] nebo [Čeká na odeslání]." : Return False
+        If Not (NewState = BO.x40StateENUM.InQueque Or NewState = BO.x40StateENUM.IsStopped Or NewState = BO.x40StateENUM.WaitOnConfirm) Then
+            _Error = "Změnit stav lze pouze na [Zastaveno], [Mail fronta] nebo [Čeká na potvrzení]." : Return False
         End If
         Return _cDL.UpdateMessageState(intX40ID, NewState)
     End Function
