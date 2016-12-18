@@ -43,6 +43,11 @@
             sw_decide("p56_record.aspx?pid=0&p41id="+p41id, "Images/task_32.png", true);
 
         }
+        function o23_record(pid) {
+
+            window.open("o23_framework.aspx?pid=" + pid, "_top");
+
+        }
 
     </script>
 

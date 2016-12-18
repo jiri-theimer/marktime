@@ -53,6 +53,11 @@
         function o48_edit() {
             sw_decide("o48_record.aspx?prefix=p28&pid=<%=master.datapid%>", "", false);
         }
+        function o23_record(pid) {
+
+            window.open("o23_framework.aspx?pid=" + pid, "_top");
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

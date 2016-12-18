@@ -46,6 +46,11 @@
             sw_decide("j05_record.aspx?pid=" + j05id, "Images/masterslave_32.png", false);
 
         }
+        function o23_record(pid) {
+
+            window.open("o23_framework.aspx?pid=" + pid, "_top");
+
+        }
        
     </script>
 </asp:Content>

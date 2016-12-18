@@ -48,6 +48,11 @@
             window.open("p41_framework.aspx?masterprefix=p41&masterpid=<%=master.DataPID%>", "_top")
 
         }
+        function o23_record(pid) {
+
+            window.open("o23_framework.aspx?pid=" + pid,"_top");
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
