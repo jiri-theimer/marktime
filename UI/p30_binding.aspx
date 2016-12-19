@@ -75,10 +75,10 @@
         <div class="div6">
             nebo <button type="button" onclick="j02_edit(0)">Založit novou osobu</button>
         </div>
-        <div class="content-box2" class="content-box2" style="padding-top: 10px;">
+        <div class="content-box2" style="padding-top: 10px;">
             <div class="title">
                 <img alt="Osoba" src="Images/person.png" width="16px" height="16px" />
-                <span class="framework_header_span">Přiřazené kontaktní osoby</span>
+                <asp:label ID="lblBoundHeader" runat="server" cssclass="framework_header_span" Text="Přiřazené kontaktní osoby"></asp:label>
 
             </div>
             <asp:Panel ID="panP30" runat="server" CssClass="content">

@@ -8,7 +8,7 @@ EnableTextSelection="true"
 MarkFirstMatch="true" 
 EnableLoadOnDemand="true"
 AutoCompleteSeparator=","
-ShowToggleImage="false"
+ShowToggleImage="false" MinFilterLength="1"
 AllowCustomText="true"
 Width="250px">
 <WebServiceSettings Method="LoadComboData" Path="~/Services/person_service.asmx" UseHttpGet="false" />

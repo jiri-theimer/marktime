@@ -11,7 +11,7 @@
             With Master
                 .PageTitle = "Můj profil v MARKTIME"
                 .SiteMenuValue = "cmdMyProfile"
-                tdX31.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal)
+                recmenu1.FindItemByValue("report").Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal)
             End With
 
 
@@ -29,9 +29,9 @@
 
         Dim cRec As BO.j03User = Master.Factory.j03UserBL.Load(Master.Factory.SysUser.PID)
         With cRec
+            Me.lblHeader.Text = .Person
             Me.j04Name.Text = .j04Name
             Me.j03login.Text = .j03Login
-            Me.FullName.Text = .Person
             Me.j03IsLiveChatSupport.Checked = .j03IsLiveChatSupport
             Me.j03IsSiteMenuOnClick.Checked = .j03IsSiteMenuOnClick
             If .j03PasswordExpiration Is Nothing Then
@@ -43,12 +43,17 @@
             basUI.SelectDropdownlistValue(Me.j03SiteMenuSkin, .j03SiteMenuSkin)
             basUI.SelectDropdownlistValue(Me.j03ModalWindowsFlag, .j03ModalWindowsFlag.ToString)
             basUI.SelectDropdownlistValue(Me.j03ProjectMaskIndex, .j03ProjectMaskIndex.ToString)
+
         End With
+
         If cRec.j02ID <> 0 Then
             Me.panJ02Update.Visible = True
             Dim cJ02 As BO.j02Person = Master.Factory.j02PersonBL.Load(cRec.j02ID)
             With cJ02
-                If .IsClosed Then Me.FullName.Font.Strikeout = True : Me.FullName.ToolTip = "Osobní profil byl přesunut do archivu."
+                Me.Teams.Text = Master.Factory.j02PersonBL.GetTeamsInLine(.PID)
+                Me.j07Name.Text = .j07Name
+                Me.j18Name.Text = .j18Name
+                If .IsClosed Then Me.lblHeader.Font.Strikeout = True : Me.lblHeader.ToolTip = "Osobní profil byl přesunut do archivu."
                 Me.j02clue.Attributes("rel") = "clue_j02_record.aspx?pid=" & .PID.ToString
                 Me.j02Email.Text = .j02Email
                 Me.j02Mobile.Text = .j02Mobile
@@ -99,6 +104,11 @@
         If Me.hidHardRefreshFlag.Value = "send-mail" Then
             Master.Notify("Poštovní zpráva byla odeslána.", NotifyLevel.InfoMessage)
         End If
+        If Me.hidHardRefreshFlag.Value = "sweep" Then
+            If Master.Factory.j03UserBL.DeleteAllUserParams(Master.Factory.SysUser.PID) Then
+                Master.Notify("Paměť uživatelského profilu byla vyčištěna.")
+            End If
+        End If
         hidHardRefreshFlag.Value = ""
         hidHardRefreshPID.Value = ""
     End Sub
@@ -130,9 +140,5 @@
 
   
    
-    Private Sub cmdDeleteUserParams_Click(sender As Object, e As EventArgs) Handles cmdDeleteUserParams.Click
-        If Master.Factory.j03UserBL.DeleteAllUserParams(Master.Factory.SysUser.PID) Then
-            Master.Notify("Paměť uživatelského profilu byla vyčištěna.")
-        End If
-    End Sub
+    
 End Class

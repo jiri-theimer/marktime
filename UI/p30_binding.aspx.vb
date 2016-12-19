@@ -26,9 +26,11 @@
                     Case "p28"
                         .HeaderText = "Kontaktní osoby | " & .Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .DataPID)
                         cmdSave.Text = "Přiřadit osobu ke klientovi"
+                        lblBoundHeader.Text = .HeaderText
                     Case "p41"
                         .HeaderText = "Kontaktní osoby | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
                         cmdSave.Text = "Přiřadit osobu k projektu"
+                        lblBoundHeader.Text = .HeaderText
                     Case Else
                         panMasterRecord.Visible = True
                         panPersons.Visible = False

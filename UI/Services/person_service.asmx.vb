@@ -39,7 +39,8 @@ Public Class user_service
             'zdroj všech e-mail adres pro uc: email_receiver
             If filterString.IndexOf(";") > 0 Then filterString = Replace(filterString, ";", ",")
             Dim a() As String = Split(filterString, ",")
-            Dim lisE As IEnumerable(Of BO.GetString) = factory.ftBL.GetList_Emails(a(UBound(a)), 50)
+            filterString = Trim(a(UBound(a)))
+            Dim lisE As IEnumerable(Of BO.GetString) = factory.ftBL.GetList_Emails(filterString, 50)
             result = New List(Of RadComboBoxItemData)(lisE.Count)
             For Each c In lisE
                 Dim itemData As New RadComboBoxItemData()

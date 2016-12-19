@@ -44,6 +44,9 @@
             sw_master("report_modal.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>", "Images/reporting.png", true);
 
         }
+        function sweep() {
+            hardrefresh("", "sweep");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -54,22 +57,30 @@
                     <img src="Images/user_32.png" />
                 </td>
                 <td>
+                    <asp:HyperLink ID="j02clue" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
                     <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Můj profil"></asp:Label>
-
+                    
                 </td>
-                <td style="padding-left: 20px;" id="tdX31" runat="server">
-                    <img src="Images/report.png" />
-                    <a type="button" href="javascript:report()">Osobní tiskové sestavy</a>
+                <td>
+                    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
+                        <Items>
+                            <telerik:RadMenuItem Text="MůJ PROFIL" ImageUrl="Images/menuarrow.png">
+                                <Items>
+                                    <telerik:RadMenuItem Text="Osobní tiskové sestavy" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Nastavit si startovací (výchozí) stránku" Value="clone" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Odeslat e-mail" Value="clone" NavigateUrl="javascript:sendmail()" ImageUrl="Images/email.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Text="Vyčistit paměť (cache) v mém uživatelském profilu" Value="clone" NavigateUrl="javascript:sweep()" ImageUrl="Images/sweep.png"></telerik:RadMenuItem>
+                                    
+                                </Items>
+                            </telerik:RadMenuItem>
+                           
+                        </Items>
+                    </telerik:RadMenu>
                 </td>
-                <td style="padding-left: 20px;">
-                    <img src="Images/plugin.png" />
-                    <a type="button" href="javascript:personalpage()">Zvolit si startovací (výchozí) stránku</a>
-                </td>
-                <td style="padding-left: 20px;">
-                    <img src="Images/email.png" />
-                    <a type="button" href="javascript:sendmail()">Odeslat e-mail</a>
-                </td>
-
+              
             </tr>
         </table>
 
@@ -94,22 +105,29 @@
 
                 </td>
             </tr>
-
             <tr>
                 <td>
-                    <asp:Label ID="lblPerson" runat="server" CssClass="lbl" Text="Osobní profil:"></asp:Label>
+                    <asp:Label ID="Label5" runat="server" CssClass="lbl" Text="Pozice:"></asp:Label>
                 </td>
                 <td>
-                    <asp:Label ID="FullName" runat="server" CssClass="valbold"></asp:Label>
-                    <asp:HyperLink ID="j02clue" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
-                    <asp:Label ID="PersonalMessage" runat="server" CssClass="valboldblue"></asp:Label>
+                    <asp:Label ID="j07Name" runat="server" CssClass="valbold"></asp:Label>
+                    <asp:Label ID="Label6" runat="server" CssClass="lbl" Text="Středisko:" Style="padding-left: 20px;"></asp:Label>
+                    <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
+                </td>
+            </tr>
+         
+            <tr>
+                <td>
+                    <asp:Label ID="Label4" runat="server" CssClass="lbl" Text="Členství v týmech:"></asp:Label>
+                </td>
+                <td>
+                    <asp:Label ID="Teams" runat="server" CssClass="valbold"></asp:Label>
+
                 </td>
             </tr>
 
-
-
         </table>
-
+        <asp:Label ID="PersonalMessage" runat="server" CssClass="valboldblue"></asp:Label>
 
 
         <asp:Panel ID="panJ02Update" runat="server" CssClass="content-box2">
@@ -117,7 +135,7 @@
 
                 <asp:Label ID="ph1" runat="server" Text="Aktualizovat můj MARKTIME profil" Style="display: inline-block; min-width: 150px;"></asp:Label>
                 <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="Uložit změny v osobním profilu" />
-                
+
             </div>
             <div class="content">
                 <div class="div6" style="display: none;">
@@ -167,7 +185,7 @@
                     </asp:DropDownList>
                 </div>
                 <table cellpadding="10">
-                   
+
                     <tr>
                         <td>
                             <asp:Label ID="lblj02Email" Text="E-mail:" runat="server" CssClass="lbl" AssociatedControlID="j02Email"></asp:Label>
@@ -223,7 +241,7 @@
                 </table>
             </div>
         </asp:Panel>
-        <asp:Button ID="cmdDeleteUserParams" runat="server" Text="Vyčistit paměť (cache) v mém uživatelském profilu" CssClass="cmd" />
+        
 
     </div>
     <asp:HiddenField ID="hiddatapid" runat="server" />
@@ -231,4 +249,5 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:LinkButton ID="cmdRefreshOnBehind" runat="server" Text="refreshonbehind" Style="display: none;"></asp:LinkButton>
+    
 </asp:Content>

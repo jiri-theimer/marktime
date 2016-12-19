@@ -86,6 +86,15 @@ Partial Public Class p30_binding
     Protected WithEvents cmdSave As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''lblBoundHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblBoundHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''panP30 control.
     '''</summary>
     '''<remarks>

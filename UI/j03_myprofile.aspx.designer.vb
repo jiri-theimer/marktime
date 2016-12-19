@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class j03_myprofile
 
     '''<summary>
+    '''j02clue control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02clue As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''lblHeader control.
     '''</summary>
     '''<remarks>
@@ -23,13 +32,13 @@ Partial Public Class j03_myprofile
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''tdX31 control.
+    '''recmenu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents tdX31 As Global.System.Web.UI.HtmlControls.HtmlTableCell
+    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''lblLogin control.
@@ -86,31 +95,58 @@ Partial Public Class j03_myprofile
     Protected WithEvents j04Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblPerson control.
+    '''Label5 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblPerson As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''FullName control.
+    '''j07Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents FullName As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents j07Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''j02clue control.
+    '''Label6 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j02clue As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j18Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j18Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Label4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Teams control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Teams As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''PersonalMessage control.
@@ -291,15 +327,6 @@ Partial Public Class j03_myprofile
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02Office As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdDeleteUserParams control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdDeleteUserParams As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''hiddatapid control.

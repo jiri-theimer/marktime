@@ -59,9 +59,9 @@
 
             pars.Add("x40Subject", .x40Subject, DbType.String)
             pars.Add("x40Body", .x40Body, DbType.String)
-            pars.Add("x40Recipient", .x40Recipient, DbType.String)
-            pars.Add("x40CC", .x40CC, DbType.String)
-            pars.Add("x40BCC", .x40BCC, DbType.String)
+            pars.Add("x40Recipient", Trim(.x40Recipient), DbType.String)
+            pars.Add("x40CC", Trim(.x40CC), DbType.String)
+            pars.Add("x40BCC", Trim(.x40BCC), DbType.String)
             pars.Add("x40Attachments", .x40Attachments, DbType.String)
 
             pars.Add("x40SenderName", .x40SenderName, DbType.String)
