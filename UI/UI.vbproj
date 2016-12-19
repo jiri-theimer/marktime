@@ -190,6 +190,7 @@
     <Content Include="clue_p48_record.aspx" />
     <Content Include="clue_search.aspx" />
     <Content Include="drilldown_designer.aspx" />
+    <Content Include="email_receiver.ascx" />
     <Content Include="entity_framework.aspx" />
     <Content Include="entity_framework_detail_setting.aspx" />
     <Content Include="entity_framework_rec_o23.aspx" />
@@ -776,6 +777,13 @@
     <Compile Include="drilldown_designer.aspx.vb">
       <DependentUpon>drilldown_designer.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="email_receiver.ascx.designer.vb">
+      <DependentUpon>email_receiver.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="email_receiver.ascx.vb">
+      <DependentUpon>email_receiver.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="entity_framework.aspx.designer.vb">
       <DependentUpon>entity_framework.aspx</DependentUpon>

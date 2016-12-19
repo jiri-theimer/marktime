@@ -4,6 +4,8 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="fileupload" Src="~/fileupload.ascx" %>
 <%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="email_receiver" Src="~/email_receiver.ascx" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -21,6 +23,9 @@
 
             dialog_master("j61_record.aspx?clone=1&pid=<%=me.j61id.selectedvalue%>&x29id=940", true);
             return (false);
+        }
+        function p30_create() {
+            dialog_master("p30_binding.aspx?masterprefix=<%=Me.hidMasterPrefix_p30.Value%>&masterpid=<%=Me.hidMasterPID_p30.value%>", true);
         }
 
         function hardrefresh(pid, flag) {
@@ -60,9 +65,8 @@
 
                     </td>
                     <td>
-                        <div>
-                        </div>
-                        <asp:TextBox ID="txtTo" runat="server" Style="width: 700px; height: 44px;" TextMode="MultiLine"></asp:TextBox>
+                        <uc:email_receiver ID="txtTo" runat="server" Width="700px" />
+                        
                     </td>
                 </tr>
                 <tr>
@@ -71,7 +75,7 @@
 
                     </td>
                     <td>
-                        <asp:TextBox ID="txtCC" runat="server" Style="width: 700px;"></asp:TextBox>
+                        <uc:email_receiver ID="txtCC" runat="server" Width="700px" />
                     </td>
                 </tr>
                 <tr>
@@ -80,7 +84,7 @@
 
                     </td>
                     <td>
-                        <asp:TextBox ID="txtBCC" runat="server" Style="width: 700px;"></asp:TextBox>
+                        <uc:email_receiver ID="txtBCC" runat="server" Width="700px" />
                     </td>
                 </tr>
                 <tr valign="top">
@@ -98,9 +102,11 @@
                     </td>
                     <td>
                         <asp:Label ID="EntityContext" runat="server" CssClass="val"></asp:Label>
+                        
                     </td>
                 </tr>
             </table>
+            <asp:HyperLink ID="linkNewPerson" runat="server" Text="Založit novou kontaktní osobu" NavigateUrl="javascript:p30_create()"></asp:HyperLink>
         </div>
     </div>
 
@@ -132,6 +138,8 @@
     <asp:HiddenField ID="hidPrefix" runat="server" Value="j02" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
+    <asp:HiddenField ID="hidMasterPrefix_p30" runat="server" />
+    <asp:HiddenField ID="hidMasterPID_p30" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

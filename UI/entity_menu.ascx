@@ -118,15 +118,11 @@
         sw_decide("p31_record.aspx?pid=" + pid, "Images/worksheet.png");
 
     }
-    function p30_binding() {
-        sw_decide("p30_binding.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=me.datapid%>", "Images/person.png", false);
-    }
+    
     function page_setting(){
         sw_decide("entity_framework_detail_setting.aspx?prefix=<%=Me.DataPrefix%>", "Images/setting.png",false);
     }
-    function p30_record(pid) {            
-        sw_decide("p30_binding.aspx?masterprefix=p41&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/person.png",true);
-    }
+    
         
     function draft2normal() {
 
@@ -209,6 +205,20 @@
         sw_decide("p56_record.aspx?masterprefix=p41&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/task.png",true);
         if (bolReturnFalse==true)
             return(false)
+    }
+   
+    <%end if%>
+    <%If Me.DataPrefix = "p28" Or Me.DataPrefix = "p41" Then%>
+    function p30_binding() {
+        sw_decide("p30_binding.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=me.datapid%>", "Images/person.png", false);
+    }
+    function p30_record(pid) {            
+        sw_decide("p30_binding.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/person.png",true);
+    }
+    function menu_p28_invoice_draft() {        
+
+        sw_decide("entity_modal_invoicing.aspx?prefix=<%=Me.DataPrefix%>&pids=<%=me.DataPID%>", "Images/invoice.png", true);
+
     }
     <%end if%>
 </script>

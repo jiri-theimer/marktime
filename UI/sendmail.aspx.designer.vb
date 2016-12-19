@@ -65,7 +65,7 @@ Partial Public Class sendmail
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtTo As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtTo As Global.UI.email_receiver
 
     '''<summary>
     '''lblCC control.
@@ -83,7 +83,7 @@ Partial Public Class sendmail
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtCC As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtCC As Global.UI.email_receiver
 
     '''<summary>
     '''lblBCC control.
@@ -101,7 +101,7 @@ Partial Public Class sendmail
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtBCC As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtBCC As Global.UI.email_receiver
 
     '''<summary>
     '''lblSubject control.
@@ -129,6 +129,15 @@ Partial Public Class sendmail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents EntityContext As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''linkNewPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkNewPerson As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''upload1 control.
@@ -237,6 +246,24 @@ Partial Public Class sendmail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMasterPrefix_p30 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPrefix_p30 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidMasterPID_p30 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPID_p30 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

@@ -227,6 +227,7 @@
                 strW += " AND (a.j02firstname like @expr+'%' OR a.j02LastName LIKE '%'+@expr+'%' OR a.j02Email LIKE '%'+@expr+'%')"
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
+            If .MG_AdditionalSqlWHERE <> "" Then strW += " AND " & .MG_AdditionalSqlWHERE
         End With
         Return bas.TrimWHERE(strW)
     End Function

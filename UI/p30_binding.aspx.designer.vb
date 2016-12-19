@@ -14,6 +14,51 @@ Option Explicit On
 Partial Public Class p30_binding
 
     '''<summary>
+    '''panMasterRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panMasterRecord As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p28id control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28id As Global.UI.contact
+
+    '''<summary>
+    '''p41id control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41id As Global.UI.project
+
+    '''<summary>
+    '''cmdContinue control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdContinue As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''panPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPersons As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''j02ID control.
     '''</summary>
     '''<remarks>

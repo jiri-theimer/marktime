@@ -26,7 +26,7 @@ Public Class combo_external_datasource
         Dim cX23 As BO.x23EntityField_Combo = factory.x23EntityField_ComboBL.Load(CInt(strX23ID))
         Dim strSQL As String = cX23.x23DataSource, pars As New List(Of BO.PluginDbParameter)
         pars.Add(New BO.PluginDbParameter("filterString", filterString))
-        'strSQL = Replace(strSQL, "#filterString#", filterString, , , CompareMethod.Text)
+
 
         Dim dt As DataTable = factory.pluginBL.GetDataTable(strSQL, pars)
 

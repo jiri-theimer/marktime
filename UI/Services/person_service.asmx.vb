@@ -35,6 +35,21 @@ Public Class user_service
 
         Dim result As List(Of RadComboBoxItemData) = Nothing
 
+        If strFlag = "email" Then
+            'zdroj všech e-mail adres pro uc: email_receiver
+            If filterString.IndexOf(";") > 0 Then filterString = Replace(filterString, ";", ",")
+            Dim a() As String = Split(filterString, ",")
+            Dim lisE As IEnumerable(Of BO.GetString) = factory.ftBL.GetList_Emails(a(UBound(a)), 50)
+            result = New List(Of RadComboBoxItemData)(lisE.Count)
+            For Each c In lisE
+                Dim itemData As New RadComboBoxItemData()
+                itemData.Text = c.Value
+                result.Add(itemData)
+            Next
+            Return result.ToArray
+        End If
+
+
         Dim mq As New BO.myQueryJ02
         mq.SearchExpression = filterString
         mq.TopRecordsOnly = 50
@@ -76,6 +91,7 @@ Public Class user_service
                 itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
             End If
             If Not usr.j02IsIntraPerson Then itemData.Text += " ...kontaktní osoba"
+            
 
             itemData.Value = usr.PID.ToString
             result.Add(itemData)

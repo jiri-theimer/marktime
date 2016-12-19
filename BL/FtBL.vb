@@ -22,6 +22,7 @@
     Function LoadX45(intX45ID As Integer) As BO.x45Event
     Function GetList_X45(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x45Event)
     Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
+    Function GetList_Emails(strFilterExpression As String, intTOP As Integer) As IEnumerable(Of BO.GetString)
 End Interface
 Class FtBL
     Inherits BLMother
@@ -158,5 +159,8 @@ Class FtBL
     End Function
     Public Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab) Implements IFtBL.GetList_X61
         Return _cDL.GetList_X61(x29id)
+    End Function
+    Public Function GetList_Emails(strFilterExpression As String, intTOP As Integer) As IEnumerable(Of BO.GetString) Implements IFtBL.GetList_Emails
+        Return _cDL.GetList_Emails(strFilterExpression, intTOP)
     End Function
 End Class

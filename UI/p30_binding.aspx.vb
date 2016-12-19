@@ -29,6 +29,9 @@
                     Case "p41"
                         .HeaderText = "Kontaktní osoby | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
                         cmdSave.Text = "Přiřadit osobu k projektu"
+                    Case Else
+                        panMasterRecord.Visible = True
+                        panPersons.Visible = False
                 End Select
             End With
             With Me.p27ID
@@ -46,6 +49,10 @@
     End Sub
 
     Private Sub cmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
+        Handle_Save()
+    End Sub
+
+    Private Sub Handle_Save()
         Dim cRec As New BO.p30Contact_Person
         cRec.p27ID = BO.BAS.IsNullInt(Me.p27ID.SelectedValue)
         cRec.j02ID = BO.BAS.IsNullInt(Me.j02ID.Value)
@@ -81,17 +88,21 @@
                 Else
                     lisP30 = Master.Factory.p30Contact_PersonBL.GetList(cP41.p28ID_Client, 0, 0)
                 End If
-
+            Case Else
+                Return  'zatím není znám prefix
         End Select
         rpP30.DataSource = lisP30
         rpP30.DataBind()
         Dim intJ02ID_Default As Integer = BO.BAS.IsNullInt(Request.Item("default_j02id"))
         If intJ02ID_Default <> 0 Then
             If lisP30.Where(Function(p) p.j02ID = intJ02ID_Default).Count = 0 Then
+
                 Dim cRec As BO.j02Person = Master.Factory.j02PersonBL.Load(intJ02ID_Default)
                 Me.j02ID.Value = cRec.PID.ToString
                 Me.j02ID.Text = cRec.FullNameDesc
-                Master.Notify(String.Format("Osobu [{0}] nyní můžete přiřadit.", cRec.FullNameAsc))
+                Handle_Save()   'automaticky novou osobu přiřadit a zavřít okno
+
+                '''Master.Notify(String.Format("Osobu [{0}] nyní můžete přiřadit.", cRec.FullNameAsc))
             End If
         End If
         
@@ -172,5 +183,22 @@
         CType(e.Item.FindControl("clue_j02"), HyperLink).Attributes("rel") = "clue_j02_record.aspx?pid=" & cRec.j02ID.ToString
 
 
+    End Sub
+
+    Private Sub cmdContinue_Click(sender As Object, e As EventArgs) Handles cmdContinue.Click
+        Dim s As String = ""
+        If Me.p41id.Value <> "" Then
+            s += "masterprefix=p41&masterpid=" & Me.p41id.Value
+        Else
+            If Me.p28id.Value <> "" Then
+                s += "masterprefix=p28&masterpid=" & Me.p28id.Value
+            End If
+        End If
+        If s = "" Then
+            Master.Notify("Musíte vybrat projekt nebo klienta.", NotifyLevel.WarningMessage)
+            Return
+        Else
+            Server.Transfer("p30_binding.aspx?" & s)
+        End If
     End Sub
 End Class

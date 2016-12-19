@@ -4,7 +4,15 @@ Public Class FtDL
     Public Sub New(ServiceUser As BO.j03UserSYS)
         _curUser = ServiceUser
     End Sub
-
+    Public Function GetList_Emails(strFilterExpression As String, intTOP As Integer) As IEnumerable(Of BO.GetString)
+        strFilterExpression = Trim(strFilterExpression)
+        Dim s As String = "select TOP " & intTOP.ToString & " Adresa as Value FROM dbo.view_Emails"
+        If strFilterExpression <> "" Then s += " WHERE Adresa LIKE '%'+@expr+'%'"
+        s += " ORDER BY Adresa"
+        Dim pars As New DbParameters
+        pars.Add("expr", strFilterExpression, DbType.String)
+        Return _cDB.GetList(Of BO.GetString)(s, pars)
+    End Function
     Public Function GetList_X53(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x53Permission)
         Dim s As String = "select *," & bas.RecTail("x53", , True, False) & " FROM x53Permission WHERE " & bas.RecValiditySqlWhere("x53", "", mq)
         s += bas.ParseWhereMultiPIDs("x53id", mq)

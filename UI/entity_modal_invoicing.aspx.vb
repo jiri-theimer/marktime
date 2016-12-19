@@ -110,6 +110,9 @@
                 Me.p92ID.DataBind()
             End With
 
+            If Not TestIfAnyInputData() Then
+                Master.StopPage("Na vstupu nejsou schválené nebo rozpracované úkony, které lze vyfakturovat.")
+            End If
             RefreshRecord()
 
             
@@ -185,6 +188,7 @@
                     End If
                     lis1.Add(New InvoiceEntity(c.PID, c.Client & " - " & c.PrefferedName, intP92ID))
                 Next
+
             Case BO.x29IdEnum.p28Contact
                 Dim mq As New BO.myQueryP28
                 mq.PIDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
@@ -199,6 +203,23 @@
         rp1.DataBind()
 
     End Sub
+    Private Function TestIfAnyInputData() As Boolean
+        Dim mq As New BO.myQueryP31
+        mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
+        Select Case Me.CurrentX29ID
+            Case BO.x29IdEnum.p41Project
+                mq.p41IDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
+            Case BO.x29IdEnum.p28Contact
+                mq.p28IDs_Client = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
+            Case Else
+                Return False
+        End Select
+        If Master.Factory.p31WorksheetBL.GetVirtualCount(mq) > 0 Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
     Private Sub entity_modal_invoicing_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         With Me.period1
@@ -220,7 +241,7 @@
             If p91Datep31_From.IsEmpty Then p91Datep31_From.SelectedDate = Today
             If p91Datep31_Until.IsEmpty Then p91Datep31_Until.SelectedDate = Today
             If p91DateMaturity.IsEmpty Or p91Date.IsEmpty Or p91DateSupply.IsEmpty Then
-                Master.Notify("Chybí datum splatnosti, vystavení, plnění.", NotifyLevel.ErrorMessage) : Return
+                Master.Notify("Chybí datum splatnosti, vystavení nebo plnění.", NotifyLevel.ErrorMessage) : Return
                 Return
             End If
             Dim errs As New List(Of String), x As Integer = 0, intLastP91ID As Integer = 0
@@ -268,17 +289,28 @@
                     cA.p31Date = c.p31Date
                     cA.p71id = BO.p71IdENUM.Schvaleno
                     cA.VatRate_Approved = c.p31VatRate_Orig
-                    If c.p33ID = BO.p33IdENUM.Cas Then
-                        cA.Rate_Internal_Approved = c.p31Rate_Internal_Orig
-                    End If
-                    If c.p31Rate_Billing_Orig = 0 Or c.p31Value_Orig = 0 Then
-                        cA.p72id = BO.p72IdENUM.ZahrnoutDoPausalu
-                        cA.Value_Approved_Billing = 0
-                    Else
-                        cA.p72id = BO.p72IdENUM.Fakturovat
-                        cA.Rate_Billing_Approved = c.p31Rate_Billing_Orig
-                        cA.Value_Approved_Billing = c.p31Value_Orig
-                    End If
+                    Select Case c.p33ID
+                        Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
+                            cA.Rate_Internal_Approved = c.p31Rate_Internal_Orig
+                            If c.p31Rate_Billing_Orig = 0 Or c.p31Value_Orig = 0 Then
+                                cA.p72id = BO.p72IdENUM.ZahrnoutDoPausalu
+                                cA.Value_Approved_Billing = 0
+                            Else
+                                cA.p72id = BO.p72IdENUM.Fakturovat
+                                cA.Rate_Billing_Approved = c.p31Rate_Billing_Orig
+                                cA.Value_Approved_Billing = c.p31Value_Orig
+                            End If
+                        Case Else   'peníze
+                            If Not c.p32IsBillable Then
+                                cA.p72id = BO.p72IdENUM.ViditelnyOdpis
+                                cA.Value_Approved_Billing = 0
+                            Else
+                                cA.p72id = BO.p72IdENUM.Fakturovat
+                                cA.Value_Approved_Billing = c.p31Value_Orig
+                            End If
+                    End Select
+                    
+                   
                     If Not Master.Factory.p31WorksheetBL.Save_Approving(cA, False) Then
                         errs.Add(strRecord & "(" & BO.BAS.FD(c.p31Date) & "/" & c.Person & "): " & Master.Factory.p31WorksheetBL.ErrorMessage)
                     End If
