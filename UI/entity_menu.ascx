@@ -166,7 +166,10 @@
         sw_decide("p31_recalc.aspx?prefix=p41&pid=<%=me.datapid%>","Images/recalc.png",true);
     }
     function menu_o23_record(pid) {
-            
+        <%If Me.DataPrefix="o23" then%>
+        sw_decide("o23_record.aspx?pid=0","Images/notepad.png",true);
+        return;
+        <%End If%>
         sw_decide("o23_record.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/notepad.png",true);
 
     }

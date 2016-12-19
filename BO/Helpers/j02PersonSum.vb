@@ -12,4 +12,8 @@
     Public Property p31_Approved_Kusovnik_Count As Integer
     Public Property b07_Count As Integer
     Public Property o23_Count As Integer
+
+    Public Property Last_Access As Date?
+    Public Property Last_Worksheet As String
+
 End Class

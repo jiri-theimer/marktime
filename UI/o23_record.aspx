@@ -247,6 +247,16 @@
                         <asp:TextBox ID="o23BodyPlainText" runat="server" TextMode="MultiLine" Style="width: 99%; height: 150px; font-family: 'Courier New';" ToolTip="Podrobný popis dokumentu"></asp:TextBox>
                     </div>
                 </div>
+                <div class="content-box2">
+                    <div class="title">
+                        <img src="Images/projectrole.png" width="16px" height="16px" />
+                        <asp:Label ID="ph1" runat="server" Text="Příjemci (čtenáři) dokumentu"></asp:Label>
+                        <asp:Button ID="cmdAddX69" runat="server" CssClass="cmd" Text="Přidat" />
+                    </div>
+                    <div class="content">
+                        <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="o23Notepad"></uc:entityrole_assign>
+                    </div>
+                </div>
 
 
             </telerik:RadPageView>
@@ -281,16 +291,7 @@
                         </td>
                     </tr>
                 </table>
-                <div class="content-box2">
-                    <div class="title">
-                        <img src="Images/projectrole.png" width="16px" height="16px" />
-                        <asp:Label ID="ph1" runat="server" Text="Příjemci (čtenáři) dokumentu"></asp:Label>
-                        <asp:Button ID="cmdAddX69" runat="server" CssClass="cmd" Text="Přidat" />
-                    </div>
-                    <div class="content">
-                        <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="o23Notepad"></uc:entityrole_assign>
-                    </div>
-                </div>
+                
 
                 <div class="div6">
                     <asp:CheckBox ID="o23IsEncrypted" runat="server" Text="Obsah zašifrovat a ochránit heslem" AutoPostBack="true" />

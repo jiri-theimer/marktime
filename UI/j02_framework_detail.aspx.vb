@@ -79,7 +79,7 @@
             Me.panIntraPerson.Visible = .j02IsIntraPerson
             Me.boxJ05.Visible = .j02IsIntraPerson
         End With
-
+       
 
         With Me.panIntraPerson
             Me.c21Name.Visible = .Visible
@@ -87,6 +87,17 @@
         End With
 
         If cRec.j02IsIntraPerson Then
+            With cRecSum
+                Me.Last_Access.Text = BO.BAS.FD(.Last_Access, True, True)
+                Me.Last_Worksheet.Text = .Last_Worksheet
+                If .p56_Actual_Count > 0 Then
+                    Me.link_p56_actual_count.Text = .p56_Actual_Count.ToString
+                    Me.link_p56_actual_count.NavigateUrl = "entity_framework_rec_p56.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString
+                Else
+                    link_p56_actual_count.Visible = False
+                End If
+            End With
+
             Dim cUser As BO.j03User = Nothing
             Dim mq As New BO.myQueryJ03
             mq.j02ID = cRec.PID

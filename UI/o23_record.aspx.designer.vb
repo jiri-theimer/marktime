@@ -482,6 +482,33 @@ Partial Public Class o23_record
     Protected WithEvents o23BodyPlainText As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''ph1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdAddX69 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddX69 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''roles1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents roles1 As Global.UI.entityrole_assign
+
+    '''<summary>
     '''files control.
     '''</summary>
     '''<remarks>
@@ -543,33 +570,6 @@ Partial Public Class o23_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02ID_Owner As Global.UI.person
-
-    '''<summary>
-    '''ph1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdAddX69 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAddX69 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''roles1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents roles1 As Global.UI.entityrole_assign
 
     '''<summary>
     '''o23IsEncrypted control.

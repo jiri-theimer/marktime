@@ -257,6 +257,33 @@ Partial Public Class j02_framework_detail
     Protected WithEvents cmdAccount As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''Last_Access control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Last_Access As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Last_Worksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Last_Worksheet As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''link_p56_actual_count control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents link_p56_actual_count As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''boxJ05 control.
     '''</summary>
     '''<remarks>

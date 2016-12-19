@@ -3610,7 +3610,7 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@p91_count int
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_count int
+declare @o23_count int,@last_access datetime,@last_worksheet varchar(100)
 
 if exists(SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@pid OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@pid)))
  begin
@@ -3621,11 +3621,20 @@ if exists(SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67En
 
  end
 
+declare @is_p31id bit,@j03id int
+select @j03id=j03ID FROM j03User WHERE j02ID=@pid
+set @is_p31id=0
 
-SELECT @p91_count=COUNT(p91ID)
-from p91Invoice
-WHERE p91ID IN (SELECT p91ID FROM p31Worksheet where j02ID=@pid)
+if exists(select p31ID FROM p31Worksheet WHERE j02ID=@pid)
+ set @is_p31id=1
 
+if @is_p31id=1
+  SELECT @p91_count=COUNT(p91ID) from p91Invoice WHERE p91ID IN (SELECT p91ID FROM p31Worksheet where j02ID=@pid)
+
+
+if @is_p31id=1
+begin
+select TOP 1 @last_worksheet=dbo.GetDDMMYYYYHHMM(a.p31DateInsert)+'/'+c.p34Name FROM p31Worksheet a INNER JOIN p32Activity d ON a.p32ID=d.p32ID INNER JOIN p34ActivityGroup c ON d.p34ID=c.p34ID WHERE a.j02ID_Owner=@pid ORDER BY a.p31ID DESC
 
 if exists(select p31ID FROM p31Worksheet WHERE j02ID=@pid AND p71ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
  begin
@@ -3639,6 +3648,7 @@ if exists(select p31ID FROM p31Worksheet WHERE j02ID=@pid AND p71ID IS NULL AND 
 
  end
 
+
 if exists(select p31ID FROM p31Worksheet WHERE j02ID=@pid AND p71ID=1 AND p91ID IS NULL AND getdate() BETWEEN p31ValidFrom AND p31ValidUntil)
  begin
   select @p31_approved_time_count=sum(case when c.p33ID=1 then 1 end)
@@ -3650,6 +3660,7 @@ if exists(select p31ID FROM p31Worksheet WHERE j02ID=@pid AND p71ID=1 AND p91ID 
   WHERE a.j02ID=@pid AND a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil
   
  end
+end
 
 if exists(select b07ID from b07Comment WHERE x29ID=102 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=102 AND b07RecordPID=@pid
@@ -3659,6 +3670,8 @@ if exists(select o23ID FROM o23Notepad WHERE j02ID=@pid)
 else
  set @o23_count=0
 
+if @j03id is not null
+ select TOP 1 @last_access=j90Date FROM j90LoginAccessLog WHERE j03ID=@j03id ORDER BY j90ID DESC
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p56_closed_count,0) as p56_Closed_Count
@@ -3673,6 +3686,8 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p31_approved_kusovnik_count,0) as p31_Approved_Kusovnik_Count
 ,isnull(@b07_count,0) as b07_Count
 ,isnull(@o23_count,0) as o23_Count
+,@last_worksheet as Last_Worksheet
+,@last_access as Last_Access
 
 
 GO
@@ -6156,7 +6171,7 @@ if @p91_count>0
  select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice WHERE p28ID=@pid ORDER BY p91ID DESC
 
 if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
- select TOP 1 @last_wip_worksheet=convert(varchar(20),a.p31DateInsert,104)+'/'++c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE b.p28ID_Client=@pid ORDER BY a.p31ID DESC
+ select TOP 1 @last_wip_worksheet=dbo.GetDDMMYYYYHHMM(a.p31DateInsert)+'/'+c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE b.p28ID_Client=@pid ORDER BY a.p31ID DESC
 
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
@@ -10001,7 +10016,7 @@ if @p91_count>0
  select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice a INNER JOIN p31Worksheet b ON a.p91ID=b.p91ID WHERE b.p41ID=@pid ORDER BY a.p91ID DESC
 
 if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
- select TOP 1 @last_wip_worksheet=convert(varchar(20),a.p31DateInsert,104)+'/'++c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE a.p41ID=@pid ORDER BY a.p31ID DESC
+ select TOP 1 @last_wip_worksheet=dbo.GetDDMMYYYYHHMM(a.p31DateInsert)+'/'+c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE a.p41ID=@pid ORDER BY a.p31ID DESC
 
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
@@ -10844,7 +10859,7 @@ if @p91_count>0
  select TOP 1 @last_invoice=p91Code+'/'+convert(varchar(10),p91DateSupply,104) FROM p91Invoice a INNER JOIN p31Worksheet b ON a.p91ID=b.p91ID WHERE b.p56ID=@pid ORDER BY a.p91ID DESC
 
 if @p31_wip_time_count>0 or @p31_approved_time_count>0 or @p31_approved_expense_count>0
- select TOP 1 @last_wip_worksheet=convert(varchar(20),a.p31DateInsert,104)+'/'++c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE a.p56ID=@pid ORDER BY a.p31ID DESC
+ select TOP 1 @last_wip_worksheet=dbo.GetDDMMYYYYHHMM(a.p31DateInsert)+'/'+c.j02FirstName+' '+c.j02LastName+'/'+d.p32Name FROM p31Worksheet a INNER JOIN j02Person c ON a.j02ID=c.j02ID INNER JOIN p32Activity d ON a.p32ID=d.p32ID WHERE a.p56ID=@pid ORDER BY a.p31ID DESC
 
 
 select isnull(@p91_count,0) as p91_Count

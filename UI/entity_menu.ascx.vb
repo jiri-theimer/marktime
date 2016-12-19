@@ -516,9 +516,9 @@ Public Class entity_menu
     Private Sub j02_SetupTabs(cRec As BO.j02Person, crs As BO.j02PersonSum)
         tabs1.Tabs.Clear()
         If cRec.j02IsIntraPerson Then
-            cti("Osoba a uživatel", "board")
+            cti(cRec.FullNameAsc, "board")
         Else
-            cti("Kontaktní osoba", "board")
+            cti(System.String.Format("{0} (kontaktní osoba)", cRec.FullNameAsc), "board")
             Return
         End If
         Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Me.Factory.j03UserBL.GetList_PageTabs(Me.Factory.SysUser.PID, BO.x29IdEnum.j02Person)
@@ -708,7 +708,7 @@ Public Class entity_menu
             ami("Upravit kartu dokumentu", "cmdEdit", "javascript:record_edit();", "Images/edit.png", mi, "Zahrnuje i možnost uzavření (přesunutí do archivu) nebo nenávratného odstranění.")
         End If
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator) Then
-            ami("Vytvořit dokument", "cmdNew", "javascript:menu_o23_record(" & cRec.p41ID.ToString & ");", "Images/new.png", mi, , True)
+            ami("Vytvořit dokument", "cmdNew", "javascript:menu_o23_record(0);", "Images/new.png", mi, , True)
         End If
         If cDisp.OwnerAccess Then
             ami("Vytvořit dokument kopírováním", "cmdCopy", "javascript:record_clone();", "Images/copy.png", mi, "Nový dokument se kompletně předvyplní podle vzoru tohoto záznamu.")
