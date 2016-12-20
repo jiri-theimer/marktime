@@ -18,6 +18,7 @@
 
                 Me.x15ID.DataSource = .Factory.ftBL.GetList_X15(New BO.myQuery)
                 Me.x15ID.DataBind()
+
                 Dim cRec As BO.p91Invoice = .Factory.p91InvoiceBL.Load(.DataPID)
                 .HeaderText = "Převést fakturu na jinou DPH sazbu | " & cRec.p91Code
             End With

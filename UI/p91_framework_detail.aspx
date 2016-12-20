@@ -268,13 +268,13 @@
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                         </telerik:RadMenuItem>
                         
-                        <telerik:RadMenuItem Value="cmdPivot" Text="Worksheet PIVOT za fakturu" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="PIVOT faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO23" Text="Vytvořit dokument" NavigateUrl="javascript:o23_record(0);" ImageUrl="Images/notepad.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdO22" Text="Zapsat událost do kalendáře" NavigateUrl="javascript:o22_record(0);" ImageUrl="Images/calendar.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat k faktuře komentář" NavigateUrl="javascript:b07_comment();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdB07" Text="Zapsat komentář/poznámku" NavigateUrl="javascript:b07_comment();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdAboImport" Text="Import úhrad z ABO souboru" NavigateUrl="javascript:abo_import();" ImageUrl="Images/payment.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdPohoda" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" ImageUrl="Images/license.png"></telerik:RadMenuItem>

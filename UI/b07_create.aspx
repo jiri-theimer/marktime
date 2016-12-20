@@ -9,6 +9,11 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script type="text/javascript">
+        function b07_delete(pid) {
+            location.replace("b07_delete.aspx?pid=" + pid);
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>

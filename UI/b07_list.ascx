@@ -51,6 +51,10 @@
         window.parent.sw_local("b07_create.aspx?parentpid=" + pid + "&masterprefix=" + document.getElementById("<%=Me.hidPrefix.ClientID%>").value + "&masterpid=" + document.getElementById("<%=Me.hidRecordPID.ClientID%>").value, "Images/comment_32.png", true);
 
     }
+    function trydeleteb07(pid) {
 
+        window.parent.sw_local("b07_delete.aspx?pid=" + pid, "Images/comment_32.png", true);
+
+    }
     
 </script>

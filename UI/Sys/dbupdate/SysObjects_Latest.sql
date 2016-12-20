@@ -14661,6 +14661,40 @@ VALUES(@x29id,@pid,@j03id_sys,getdate(),@flag,@j02id_sys,@validfrom,@validuntil)
 
 GO
 
+----------V---------------view_Emails-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_Emails') and type = 'V')
+ drop view view_Emails
+GO
+
+
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_Emails]
+as
+
+select j02Email as Adresa
+from
+j02Person
+WHERE j02Email is not null
+UNION SELECT o32Value as Adresa
+FROM
+o32Contact_Medium
+WHERE o33ID=2
+UNION SELECT x40Recipient as Adresa
+FROM
+x40MailQueue
+WHERE x40Recipient IS NOT NULL
+
+
+
+
+GO
+
 ----------V---------------view_LastWorksheetDateOfPerson-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('view_LastWorksheetDateOfPerson') and type = 'V')

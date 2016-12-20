@@ -158,39 +158,7 @@ Public Class main_menu
         End With
         Me.SelectedValue = strCurrentSiteMenuValue
 
-        ''If 1 = 2 Then
-        ''    n = ai(Resources.Site.Menu_DALSI, "more", "", "~/Images/menuarrow.png")
-        ''    n.GroupSettings.RepeatColumns = 2
-        ''    n.GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
-        ''    ''menu1.Items.Add(n)
-        ''    If bolAdmin Then ai(Resources.Site.AdministraceSystemu, "cmdAdmin", "admin_framework.aspx", "Images/setting.png", n)
-        ''    If .j04IsMenu_Report Then ai(Resources.Site.cmdReports, "cmdReports", "report_framework.aspx", "Images/reporting.png", n)
-        ''    ai(Resources.Site.DispecinkUkolu, "p56", "p56_framework.aspx", "Images/task.png", n)
-        ''    ai("Nástěnka", "o10", "o10_framework.aspx", "Images/article.png", n)
-        ''    If factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator) Or factory.TestPermission(BO.x53PermValEnum.GR_O23_Draft_Creator) Then
-        ''        ai(Resources.Site.Dokumenty, "o23", "o23_framework.aspx", "Images/notepad.png", n)
-        ''    End If
-
-        ''    ai(Resources.Site.Kalendar, "entity_scheduler", "entity_scheduler.aspx", "Images/calendar.png", n)
-        ''    If factory.TestPermission(BO.x53PermValEnum.GR_P48_Creator) Then
-        ''        ai(Resources.Site.OperativniPlanovani, "p48", "p48_framework.aspx", "Images/oplan.png", n)
-        ''    End If
-
-        ''    ''ai("Rozpočty výdajů a fixních odměn", "p49", "p49_framework.aspx", "Images/finplan.png", n)
-        ''    If factory.TestPermission(BO.x53PermValEnum.GR_P90_Reader) Then
-        ''        ai(Resources.Site.ZalohoveFaktury, "p90_framework", "p90_framework.aspx", "Images/proforma.png", n)
-        ''    End If
-        ''    If factory.TestPermission(BO.x53PermValEnum.GR_P51_Admin) Then
-        ''        ai(Resources.Site.Ceniky, "p51", "p51_framework.aspx", "Images/billing.png", n)
-        ''    End If
-
-        ''    ai(Resources.Site.Stitky, "x18", "x18_framework.aspx", "Images/label.png", n)
-        ''    ai(Resources.Site.OdeslanaPosta, "x40", "x40_framework.aspx", "Images/email.png", n)
-        ''    If bolAdmin Then ai(Resources.Site.NavrharWorkflow, "cmdWorkflow", "admin_workflow.aspx", "Images/workflow.png", n)
-
-
-        ''    If n.Items.Count <= 8 Then n.GroupSettings.RepeatColumns = 1
-        ''End If
+        
     End Sub
     Private Function Is_SAW_Switcher() As Boolean
         If Request.Url.ToString.IndexOf("entity_framework") > 0 Or Request.Url.ToString.IndexOf("p31_framework") > 0 Then Return True
