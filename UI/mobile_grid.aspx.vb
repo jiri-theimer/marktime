@@ -137,10 +137,10 @@
             Dim strAddtionalSqlFrom As String = ""
             Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, False, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom)
             Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
+            Me.hidFirstLinkCol.Value = grid1.radGridOrig.Columns(1).UniqueName
         End With
         With grid1
-          
-            .AllowFilteringByColumn = True
+            .AllowFilteringByColumn = False
             .radGridOrig.RenderMode = Telerik.Web.UI.RenderMode.Auto
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p91Invoice
@@ -171,7 +171,7 @@
             Case BO.x29IdEnum.o23Notepad
                 basUIMT.o23_grid_Handle_ItemDataBound(sender, e, False, True)
             Case BO.x29IdEnum.p56Task
-                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, True)
+                basUIMT.p56_grid_Handle_ItemDataBound(sender, e, False, True, Me.hidFirstLinkCol.Value)
             Case BO.x29IdEnum.p91Invoice
                 basUIMT.p91_grid_Handle_ItemDataBound(sender, e, True, True)
         End Select

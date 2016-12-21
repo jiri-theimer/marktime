@@ -122,15 +122,6 @@ Partial Public Class clue_o23_record
     Protected WithEvents BindValue As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Owner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''trWorkflow control.
     '''</summary>
     '''<remarks>
@@ -147,6 +138,15 @@ Partial Public Class clue_o23_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Owner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Timestamp control.

@@ -52,10 +52,24 @@ Public Class p56_subgrid
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p56_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID)))
             End With
             panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
-
+            RecalcVirtualRowCount()
             SetupGridP56()
 
         End If
+    End Sub
+
+    Private Sub RecalcVirtualRowCount()
+
+        If Me.MasterDataPID = 0 Or Me.x29ID = BO.x29IdEnum._NotSpecified Then Return
+        Dim mq As New BO.myQueryP56
+        InhaleTasksQuery(mq)
+
+        Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridFooterSums(mq, Me.hidSumCols.Value)
+        gridP56.VirtualRowCount = dt.Rows(0).Item(0)
+        Me.hidFooterString.Value = gridP56.CompleteFooterString(dt, Me.hidSumCols.Value)
+
+        gridP56.radGridOrig.CurrentPageIndex = 0
+        Me.lblHeaderP56.Text = BO.BAS.OM2(Me.lblHeaderP56.Text, BO.BAS.FNI(gridP56.VirtualRowCount))
     End Sub
 
     Private Sub SetupGridP56()
@@ -66,9 +80,10 @@ Public Class p56_subgrid
         If cJ74.j74ColumnNames.IndexOf("ReceiversInLine") > 0 Then Me.hidReceiversInLine.Value = "1" Else Me.hidReceiversInLine.Value = ""
         If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
         Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-        Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
+        Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
+        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, , , , strAddSqlFrom, , strSqlSumCols)
         Me.hidFrom.Value = strAddSqlFrom
+        Me.hidSumCols.Value = strSqlSumCols
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
@@ -132,6 +147,8 @@ Public Class p56_subgrid
 
         Dim mq As New BO.myQueryP56
         InhaleTasksQuery(mq)
+        mq.MG_PageSize = CInt(Me.cbxPaging.SelectedValue)
+        mq.MG_CurrentPageIndex = gridP56.radGridOrig.MasterTableView.CurrentPageIndex
 
         ''If Me.hidReceiversInLine.Value = "1" Then bolReceiversInLine = True
 
@@ -164,7 +181,7 @@ Public Class p56_subgrid
             gridP56.DataSourceDataTable = dt
         End If
 
-        lblHeaderP56.Text = BO.BAS.OM2(lblHeaderP56.Text, dt.Rows.Count.ToString)
+        ''lblHeaderP56.Text = BO.BAS.OM2(lblHeaderP56.Text, dt.Rows.Count.ToString)
 
         If Me.DefaultSelectedPID <> 0 Then
             If dt.AsEnumerable.Where(Function(p) p.Item("pid") = Me.DefaultSelectedPID).Count > 0 Then
@@ -195,6 +212,7 @@ Public Class p56_subgrid
 
     Private Sub cbxP56Validity_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxP56Validity.SelectedIndexChanged
         Factory.j03UserBL.SetUserParam("p56_subgrid-cbxP56Validity", Me.cbxP56Validity.SelectedValue)
+        RecalcVirtualRowCount()
         gridP56.Rebind(False)
     End Sub
 
@@ -204,9 +222,10 @@ Public Class p56_subgrid
     ''    gridP56.ParseFooterItemString(footerItem, ViewState("footersum"))
     ''End Sub
 
-    Public Sub Rebind(bolKeepSelectedRecord As Boolean)
-        gridP56.Rebind(bolKeepSelectedRecord)
-    End Sub
+    ''Public Sub Rebind(bolKeepSelectedRecord As Boolean)
+    ''    RecalcVirtualRowCount()
+    ''    gridP56.Rebind(bolKeepSelectedRecord)
+    ''End Sub
 
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
         With gridP56.radGridOrig.MasterTableView
@@ -230,11 +249,13 @@ Public Class p56_subgrid
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
         End With
+        RecalcVirtualRowCount()
         gridP56.Rebind(True)
     End Sub
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Me.Factory.j03UserBL.SetUserParam("p56_subgrid-pagesize", Me.cbxPaging.SelectedValue)
+        RecalcVirtualRowCount()
         SetupGridP56()
         gridP56.Rebind(True)
     End Sub
@@ -258,6 +279,13 @@ Public Class p56_subgrid
     End Sub
 
     Private Sub gridP56_NeedFooterSource(footerItem As GridFooterItem, footerDatasource As Object) Handles gridP56.NeedFooterSource
+        footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"
+        If Me.hidFooterString.Value = "" And gridP56.radGridOrig.PageCount > 1 Then
+            RecalcVirtualRowCount()
+        End If
+
+        gridP56.ParseFooterItemString(footerItem, Me.hidFooterString.Value)
+
         If Me.DefaultSelectedPID <> 0 Then
             gridP56.SelectRecords(Me.DefaultSelectedPID)
         End If

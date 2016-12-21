@@ -8,14 +8,16 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <div class="well">
+        <asp:Label ID="lblWelcome" runat="server"></asp:Label>
+    </div>
 
     <div class="container" >
        
         
         <ul class="nav nav-pills nav-stacked">
             <h3>
-                <asp:Label ID="lblWelcome" runat="server"></asp:Label>
+                
             </h3>
             <li style="background-color:#25a0da;">
                 <a href="mobile_p31_calendar.aspx" style="color:white;">

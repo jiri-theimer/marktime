@@ -56,9 +56,10 @@ Public Class basUIMT
 
             ''End If
 
-            Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID)
+            Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID), bolMobile As Boolean = False
             If cJ74.j74MasterPrefix = "mobile_grid" Then
-                .AddSystemColumn(5, "mob")
+                ''    ''.AddSystemColumn(5, "mob")
+                bolMobile = True
             End If
             Dim intIndex As Integer = 0
             For Each s In Split(cJ74.j74ColumnNames, ",")
@@ -68,6 +69,7 @@ Public Class basUIMT
 
                 If Not c Is Nothing Then
                     .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
+
                     lisSqlSEL.Add(c.ColumnSqlSyntax_Select)
                     If c.IsShowTotals Then
                         If c.ColumnDBName <> "" Then
@@ -230,7 +232,7 @@ Public Class basUIMT
         
     End Sub
 
-    Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolDT As Boolean = False, Optional bolMobile As Boolean = False)
+    Public Shared Sub p56_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolDT As Boolean = False, Optional strMobileLinkColumn As String = "")
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -253,9 +255,11 @@ Public Class basUIMT
                 If BO.BAS.IsNullInt(.Item("b02ID_Grid")) > 0 Then
                     If .Item("b02Color_Grid") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color_Grid")
                 End If
-                If bolMobile Then
-                    dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+                If strMobileLinkColumn <> "" Then
+                    dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
+                    ''    ''dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
                 End If
+
             End With
         Else
             Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)

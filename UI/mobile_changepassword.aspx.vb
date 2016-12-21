@@ -9,10 +9,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                With .Factory.SysUser
-                    lblUser.Text = .Person
-                End With
-               
+
                 If .Factory.SysUser.j03IsMustChangePassword Then
                     .Notify("Ve vašem uživatelském profilu je nastaveno, že si musíte změnit přístupové heslo.", NotifyLevel.InfoMessage)
                 End If

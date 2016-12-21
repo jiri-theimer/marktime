@@ -50,8 +50,8 @@
             <div class="div6">
                 <asp:CheckBox ID="p42IsModule_o23" runat="server" Text="DOKUMENTY" AutoPostBack="true" />
                 <asp:DropDownList ID="p42SubgridO23Flag" runat="server">
-                    <asp:ListItem Text="Dokumenty projektu zobrazovat v boxu [Dokumenty]" Value="0"></asp:ListItem>
-                    <asp:ListItem Text="Pod-přehled dokumentů v samostatné záložce" Value="1"></asp:ListItem>                    
+                    <asp:ListItem Text="Dokumenty projektu zobrazovat navíc i v boxu [Dokumenty]" Value="0"></asp:ListItem>
+                    <asp:ListItem Text="Dokumenty projektu pouze v samostatné záložce [Dokumenty]" Value="1"></asp:ListItem>                    
                 </asp:DropDownList>
                 <span class="infoInForm">Dokumentem může být např. fakturační poznámka, výdajový doklad, došlá faktura, došlá pošta apod.</span>
             </div>

@@ -245,3 +245,9 @@ tr.trHover:hover {
 .p91_yellow {
     background-color: yellow;
 }
+
+ .radcomboitem_archive{
+        text-decoration:line-through;
+        color:gray;
+       
+    }

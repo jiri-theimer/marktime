@@ -91,8 +91,9 @@
 <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
 <asp:HiddenField ID="hidDefaultSorting" runat="server" />
 <asp:HiddenField ID="hidCols" runat="server" />
+<asp:HiddenField ID="hidSumCols" runat="server" />
 <asp:HiddenField ID="hidFrom" runat="server" />
-
+<asp:HiddenField ID="hidFooterString" runat="server" />
 
 <div style="clear: both; width: 100%;"></div>
 

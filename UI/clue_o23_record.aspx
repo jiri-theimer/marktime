@@ -49,16 +49,12 @@
                         <td>Název:</td>
                         <td>
                             <asp:Label ID="o23Name" runat="server" CssClass="valbold"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Datum:</td>
-                        <td>
+                            <span>Datum:</span>
                             <asp:Label ID="o23Date" runat="server" CssClass="valbold"></asp:Label>
-
-                            <asp:Label ID="o23ReminderDate" runat="server" CssClass="val" ForeColor="green"></asp:Label>
+                            <asp:Label ID="o23ReminderDate" runat="server" CssClass="val" ForeColor="green" style="margin-left:20px;"></asp:Label>
                         </td>
                     </tr>
+               
                     <tr id="trBind" runat="server">
                         <td>
                             <asp:Label ID="BindName" runat="server"></asp:Label>
@@ -66,13 +62,7 @@
                         <td>
                             <asp:Label ID="BindValue" runat="server" CssClass="valboldred"></asp:Label>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Vlastník:</td>
-                        <td>
-                            <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
-                        </td>
-                    </tr>
+                    </tr>                   
                     <tr id="trWorkflow" runat="server">
                         <td>Workflow stav:</td>
                         <td>
@@ -83,7 +73,9 @@
             </div>
         </div>
         <div class="div6">
-            <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+            <span>Vlastník záznamu:</span>
+            <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
+            <asp:Label ID="Timestamp" runat="server" CssClass="timestamp" style="margin-left:20px;"></asp:Label>
         </div>
 
         <asp:Panel ID="panBody" runat="server" CssClass="content-box1">

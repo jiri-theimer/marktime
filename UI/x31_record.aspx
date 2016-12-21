@@ -42,14 +42,17 @@
             </td>
             <td>
                 <asp:DropDownList ID="x29ID" runat="server">
-                    <asp:ListItem Text="Bez kontextu k vybranému záznamu, nabízí se přes menu [DALŠÍ->Tiskové sestavy]" Value="" Selected="true"></asp:ListItem>
-                    <asp:ListItem Text="Vybraný záznam projektu" Value="141"></asp:ListItem>
-                    <asp:ListItem Text="Vybraný záznam klienta" Value="328"></asp:ListItem>
-                    <asp:ListItem Text="Vybraný záznam osoby" Value="102"></asp:ListItem>
-                    <asp:ListItem Text="Vybraný záznam úkolu" Value="356"></asp:ListItem>
-                    <asp:ListItem Text="Vybraný záznam faktury" Value="391"></asp:ListItem>
-                    <asp:ListItem Text="Vybraný záznam  zálohové faktury" Value="390"></asp:ListItem>
-                    <asp:ListItem Text="Vybraná verze rozpočtu" Value="345"></asp:ListItem>
+                    <asp:ListItem Text="Bez kontextu vybraného záznamu, v menu [DALŠÍ->Tiskové sestavy]" Value="" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
+                    <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
+                    <asp:ListItem Text="Osoba" Value="102"></asp:ListItem>
+                    <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
+                    <asp:ListItem Text="Daňová faktura" Value="391"></asp:ListItem>
+                    <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
+                    <asp:ListItem Text="Rozpočet projektu" Value="345"></asp:ListItem>
+                    <asp:ListItem Text="Úhrada faktury" Value="394"></asp:ListItem>
+                    <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
+                    <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
                     <asp:ListItem Text="Schvalování" Value="999"></asp:ListItem>
                 </asp:DropDownList>
             </td>

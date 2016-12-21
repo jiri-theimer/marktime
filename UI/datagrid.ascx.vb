@@ -288,8 +288,9 @@ Public Class datagrid
             .HeaderStyle.Width = Unit.Parse("16px")
         End With
     End Sub
-    Public Sub AddLink(strText As String, strCommandName As String, strHeaderText As String, Optional strImageUrl As String = "", Optional strNavigateUrl As String = "")
+    Public Sub AddLink(strText As String, strCommandName As String, strHeaderText As String, Optional strImageUrl As String = "", Optional strNavigateUrl As String = "", Optional strField As String = "")
         Dim cmd As New GridHyperLinkColumn
+
         grid1.MasterTableView.Columns.Add(cmd)
         With cmd
             .UniqueName = strCommandName
@@ -299,6 +300,7 @@ Public Class datagrid
             .ItemStyle.Width = Unit.Parse("16px")
             .HeaderStyle.Width = Unit.Parse("16px")
             .NavigateUrl = strNavigateUrl
+            .DataTextField = strField
         End With
     End Sub
 

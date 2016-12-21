@@ -4,7 +4,7 @@
 runat="server" 
 rendermode="Auto"
 DropDownWidth="400" 
-EnableTextSelection="true" 
+EnableTextSelection="true"
 MarkFirstMatch="true" 
 EnableLoadOnDemand="true"
 ToolTip="Projekt"

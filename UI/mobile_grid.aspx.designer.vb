@@ -140,6 +140,15 @@ Partial Public Class mobile_grid
     Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidFirstLinkCol control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidFirstLinkCol As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidAdditionalFrom control.
     '''</summary>
     '''<remarks>
@@ -165,6 +174,15 @@ Partial Public Class mobile_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidClosedQueryValue As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''cmdPostpack control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPostpack As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.

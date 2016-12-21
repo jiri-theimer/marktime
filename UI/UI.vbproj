@@ -229,6 +229,7 @@
     <Content Include="mobile_p56_framework.aspx" />
     <Content Include="mobile_p91_framework.aspx" />
     <Content Include="mobile_report.aspx" />
+    <Content Include="mobile_search.aspx" />
     <Content Include="mobile_start.aspx" />
     <Content Include="mobile_stoppage.aspx" />
     <Content Include="o10_framework.aspx" />
@@ -1061,6 +1062,13 @@
     </Compile>
     <Compile Include="mobile_report.aspx.vb">
       <DependentUpon>mobile_report.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_search.aspx.designer.vb">
+      <DependentUpon>mobile_search.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_search.aspx.vb">
+      <DependentUpon>mobile_search.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="mobile_start.aspx.designer.vb">

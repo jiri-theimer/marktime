@@ -4,11 +4,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-     <div class="page-header">
-        <h3>
-            <asp:Label ID="lblUser" runat="server"></asp:Label><small>, změna přihlašovacího hesla</small>
-        </h3>
-
+     <div class="well">
+            Změnit si přihlašovací heslo        
     </div>
 
     <div style="background-color: white; padding: 10px;">

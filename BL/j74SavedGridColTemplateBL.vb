@@ -182,6 +182,9 @@ Class j74SavedGridColTemplateBL
                     Case "p31_framework"
                         c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
                         c.j74ColumnNames = "p57Name,p56Name"
+                    Case "mobile_grid"
+                        c.j74Name = My.Resources.common.VychoziPrehled
+                        c.j74ColumnNames = "p56Code,p56Name"
                     Case Else
                         c.j74ColumnNames = "p56Code,p56Name,b02Name"
                 End Select
