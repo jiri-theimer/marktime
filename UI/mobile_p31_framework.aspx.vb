@@ -202,7 +202,7 @@
         Me.p32ID.Items.Insert(0, "--Aktivita úkonu--")
 
         Dim cRec As BO.p34ActivityGroup = Master.Factory.p34ActivityGroupBL.Load(Me.CurrentP34ID)
-        ''Me.p34Name.Text = cRec.p34Name
+        Me.lblRecordHeader.Text = BO.BAS.OM3(cRec.p34Name, 15)
         Me.CurrentP33ID = cRec.p33ID
         Select Case cRec.p33ID
             Case BO.p33IdENUM.Cas
@@ -285,12 +285,12 @@
             Me.linkCurProject.NavigateUrl = "mobile_p41_framework.aspx?pid=" & Me.CurrentP41ID.ToString
         End If
         If Me.CurrentP31ID = 0 Then
-            Me.lblRecordHeader.Text = "Zápis nového úkonu"
+            ''Me.lblRecordHeader.Text = "Zápis nového úkonu"
             imgHeader.ImageUrl = "Images/new.png"
             Me.cmdDelete.Visible = False
         Else
             imgHeader.ImageUrl = "Images/fe.png"
-            Me.lblRecordHeader.Text = "Úprava vybraného úkonu"
+            ''Me.lblRecordHeader.Text = "Úprava úkonu"
             Me.cmdDelete.Visible = True
         End If
 
