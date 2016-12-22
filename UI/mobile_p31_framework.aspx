@@ -82,14 +82,16 @@
                     <span class="icon-bar"></span>
                 </button>
                 <img src="Images/worksheet.png" class="navbar-brand" />                
+                <asp:Image ID="imgHeader" runat="server" ImageUrl="Images/new.png" Style="margin-right: 6px;" />
                 <asp:label ID="lblRecordHeader" runat="server" CssClass="navbar-brand" Text="Zapsat úkon"></asp:label>
 
                
                 
             </div>
             <div class="collapse navbar-collapse" id="myNavbarOnSite">
-              <li><asp:HyperLink ID="linkCurProject" runat="server" NavigateUrl="mobile_p41_framework.aspx"></asp:HyperLink></li>
-               
+                <ul class="nav navbar-nav">
+                    <li><asp:HyperLink ID="linkCurProject" runat="server" NavigateUrl="mobile_p41_framework.aspx"></asp:HyperLink></li>
+                </ul>
             </div>
 
     </nav>
@@ -101,12 +103,7 @@
 
 
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <asp:Image ID="imgHeader" runat="server" ImageUrl="Images/new.png" Style="margin-right: 6px;" />
-            <asp:Label ID="p34Name" Font-Bold="true" runat="server"></asp:Label>
-            <asp:Label ID="TimeStamp" runat="server" Font-Italic="true" Font-Size="Small"></asp:Label>
-        </div>
+    <div class="panel panel-default">        
         <div class="panel-body">
 
             <div>
@@ -189,6 +186,9 @@
             <div style="margin-top: 5px;">
                 <asp:DropDownList ID="j02ID_ContactPerson" runat="server" AutoPostBack="false" DataTextField="FullNameDescWithEmail" DataValueField="pid" ToolTip="Kontaktní osoba" CssClass="form-control"></asp:DropDownList>
             </div>
+            <div>
+                <asp:Label ID="TimeStamp" runat="server" Font-Italic="true" Font-Size="Small"></asp:Label>
+            </div>
             <div style="margin-top: 20px;">
                 <button type="button" class="btn btn-primary" onclick="hardrefresh('save','1')">Uložit změny</button>
                 <button type="button" class="btn btn-primary" onclick="hardrefresh('saveandcopy','1')">Uložit & kopírovat</button>
@@ -217,7 +217,7 @@
     <asp:HiddenField ID="HardRefreshValue" runat="server" />
     <asp:HiddenField ID="HardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidMask" runat="server" Value="1" />
-    
+
     <asp:HiddenField ID="hidP56ID" runat="server" />
     <asp:HiddenField ID="hidP33ID" runat="server" />
     <asp:HiddenField ID="hidP31ID" runat="server" />

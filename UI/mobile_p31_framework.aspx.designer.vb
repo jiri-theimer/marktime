@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class mobile_p31_framework
 
     '''<summary>
+    '''imgHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgHeader As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
     '''lblRecordHeader control.
     '''</summary>
     '''<remarks>
@@ -39,33 +48,6 @@ Partial Public Class mobile_p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p41id As Global.UI.project
-
-    '''<summary>
-    '''imgHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgHeader As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''p34Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p34Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''TimeStamp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents TimeStamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p31Date control.
@@ -237,6 +219,15 @@ Partial Public Class mobile_p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j02ID_ContactPerson As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''TimeStamp control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TimeStamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdDelete control.

@@ -202,7 +202,7 @@
         Me.p32ID.Items.Insert(0, "--Aktivita úkonu--")
 
         Dim cRec As BO.p34ActivityGroup = Master.Factory.p34ActivityGroupBL.Load(Me.CurrentP34ID)
-        Me.p34Name.Text = cRec.p34Name
+        ''Me.p34Name.Text = cRec.p34Name
         Me.CurrentP33ID = cRec.p33ID
         Select Case cRec.p33ID
             Case BO.p33IdENUM.Cas
@@ -248,8 +248,7 @@
         Dim cRecP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
         If bolSetProjectComboText Then
             Me.p41id.Text = cRecP41.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
-            Me.linkCurProject.Text = "<img src='Images/project.png' /> " & Me.p41id.Text
-            Me.linkCurProject.NavigateUrl = "mobile_p41_framework.aspx?pid=" & Me.CurrentP41ID.ToString
+            
         End If
 
         Me.p34ID.DataSource = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(Me.CurrentP41ID, cRecP41.p42ID, cRecP41.j18ID, Master.Factory.SysUser.j02ID)
@@ -281,6 +280,10 @@
 
    
     Private Sub mobile_p31_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Me.CurrentP41ID <> 0 Then
+            Me.linkCurProject.Text = "<img src='Images/project.png' /> " & Me.p41id.Text
+            Me.linkCurProject.NavigateUrl = "mobile_p41_framework.aspx?pid=" & Me.CurrentP41ID.ToString
+        End If
         If Me.CurrentP31ID = 0 Then
             Me.lblRecordHeader.Text = "Zápis nového úkonu"
             imgHeader.ImageUrl = "Images/new.png"
@@ -290,7 +293,7 @@
             Me.lblRecordHeader.Text = "Úprava vybraného úkonu"
             Me.cmdDelete.Visible = True
         End If
-       
+
     End Sub
 
     Private Sub RefreshRecord(intP31ID As Integer)
