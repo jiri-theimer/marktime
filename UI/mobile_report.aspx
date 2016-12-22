@@ -6,6 +6,15 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+   
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+       
+        })
+
+    
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div>
@@ -15,15 +24,15 @@
     <div style="padding:6px;">
         <asp:LinkButton ID="cmdRunDefaultReport" CssClass="btn btn-primary btn-xs" runat="server" Text="Zobrazit náhled vybrané sestavy" Visible="false"></asp:LinkButton>
     </div>
-    <uc:periodcombo ID="period1" runat="server" Width="100%"></uc:periodcombo>
+    <uc:periodcombo ID="period1" runat="server" Width="100%" Visible="false"></uc:periodcombo>
     <asp:HyperLink ID="cmdDocMergeResult" runat="server" Text="Zobrazit výsledek" Visible="false"></asp:HyperLink>
     <asp:HyperLink ID="cmdXlsResult" runat="server" Text="XLS výstup" Visible="false"></asp:HyperLink>
-
-    <div id="divReportViewer">
-        <telerik:ReportViewer ID="rv1" runat="server" Width="100%" ShowParametersButton="true" ShowHistoryButtons="false" ValidateRequestMode="Disabled">            
+    <div id="offsetY"></div>
+   
+        <telerik:ReportViewer ID="rv1" runat="server" Width="100%" Height="400px" ShowParametersButton="true" ShowHistoryButtons="false" ValidateRequestMode="Disabled">            
             <Resources PrintToolTip="Tisk" ExportSelectFormatText="Exportovat do zvoleného formátu" TogglePageLayoutToolTip="Přepnout na náhled k tisku" NextPageToolTip="Další strana" PreviousPageToolTip="Předchozí strana" RefreshToolTip="Obnovit" LastPageToolTip="Poslední strana" FirstPageToolTip="První strana" ></Resources>
         </telerik:ReportViewer>
-    </div>
+   
 
     <asp:HiddenField ID="hidX29ID" runat="server" />
     <asp:HiddenField ID="hidPrefix" runat="server" />

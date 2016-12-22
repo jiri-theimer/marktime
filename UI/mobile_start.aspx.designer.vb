@@ -14,13 +14,31 @@ Option Explicit On
 Partial Public Class mobile_start
 
     '''<summary>
-    '''lblWelcome control.
+    '''RecordHeader control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblWelcome As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents RecordHeader As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkEntryWorksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkEntryWorksheet As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkPersonalReports control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkPersonalReports As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''linkLastProject control.
@@ -39,15 +57,6 @@ Partial Public Class mobile_start
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents linkLastClient As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''linkLastInvoice control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkLastInvoice As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''Master property.

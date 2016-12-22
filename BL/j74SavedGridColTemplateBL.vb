@@ -165,7 +165,7 @@ Class j74SavedGridColTemplateBL
                         c.j74Name = "Výchozí přehled v detailu osoby"
                         c.j74ColumnNames = "p91Code,p28Name,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
                     Case "mobile_grid"
-                        c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat"
+                        c.j74ColumnNames = "p91Code,p91Client,p91Amount_WithoutVat"
                     Case Else
                         c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat,p91Amount_Debt"
                 End Select
@@ -191,6 +191,8 @@ Class j74SavedGridColTemplateBL
             Case BO.x29IdEnum.o23Notepad
                 Select Case strMasterPrefix
                     Case "p41"
+                        c.j74ColumnNames = "o24Name,o23Name"
+                    Case "mobile_grid"
                         c.j74ColumnNames = "o24Name,o23Name"
                     Case Else
                         c.j74ColumnNames = "o24Name,o23Name,Project"

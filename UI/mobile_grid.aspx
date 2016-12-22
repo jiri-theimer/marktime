@@ -54,5 +54,5 @@
     <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
     <asp:HiddenField ID="hidJ74ID" runat="server" />
     <asp:HiddenField ID="hidClosedQueryValue" runat="server" />
-    <asp:Button ID="cmdPostpack" runat="server" Text="postback" />
+    
 </asp:Content>

@@ -185,7 +185,19 @@
 
         
 
+        function rp(url) {
+            var h = screen.availHeight;
+            if (screen.height < h)
+                h = screen.height;
 
+            if (url.indexOf("?") > 0)
+                url = url + "&";
+            else
+                url=url+"?"
+            
+
+           location.replace(url + "h=" + h);
+        }
         
 
     </script>
@@ -233,7 +245,7 @@
                     
                     <li <%=IIf(Me.hidMenuPrefix.Value = "p56", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p56">ÚKOLY</a></li>
                     <%If _Factory.SysUser.j04IsMenu_Report Then%>
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "report", "class='active'", "")%>><a href="mobile_report.aspx">SESTAVY</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "report", "class='active'", "")%>><a href="javascript:rp('mobile_report.aspx')">SESTAVY</a></li>
                     <%End If%>
                     <li <%=IIf(Me.hidMenuPrefix.Value = "myprofile", "class='active'", "")%>>
                         <asp:HyperLink ID="linkMyProfile" runat="server" NavigateUrl="mobile_myprofile.aspx"></asp:HyperLink>

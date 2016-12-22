@@ -32,6 +32,9 @@ Public Class mobile_report
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
+            If Request.Item("h") <> "" Then
+                rv1.Height = Unit.Parse((BO.BAS.IsNullInt(Request.Item("h")) - 200).ToString & "px")
+            End If
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
             End If
@@ -64,13 +67,14 @@ Public Class mobile_report
                     If Me.CurrentX31ID <> 0 Then
                         If Request.Item("x31id") = "" Then
                             cmdRunDefaultReport.Visible = True
+                            Me.period1.Visible = Master.Factory.x31ReportBL.Load(Me.CurrentX31ID).x31IsPeriodRequired
                         Else
                             RenderReport()
                         End If
                     End If
                 End With
             End With
-            
+
         End If
 
     End Sub
@@ -120,6 +124,7 @@ Public Class mobile_report
 
     Private Sub RenderReport()
         cmdRunDefaultReport.Visible = False
+        period1.Visible = False
         If Me.CurrentX31ID = 0 Then
             Return
         End If
@@ -129,7 +134,7 @@ Public Class mobile_report
             Master.StopPage("Nelze načíst sestavu.<hr>" & Master.Factory.x31ReportBL.ErrorMessage)
             Return
         End If
-
+        period1.Visible = cRec.x31IsPeriodRequired
         If Not (cRec.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Or cRec.x31FormatFlag = BO.x31FormatFlagENUM.XLSX) Then
             Master.StopPage("NOT TRDX/DOCX/XLSX format.")
         End If

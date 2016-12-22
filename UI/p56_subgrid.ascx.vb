@@ -311,4 +311,8 @@ Public Class p56_subgrid
     Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
         GridExport("doc")
     End Sub
+
+    Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        basUIMT.RenderQueryCombo(Me.cbxP56Validity)
+    End Sub
 End Class

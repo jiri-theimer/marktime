@@ -4,22 +4,20 @@
 
     Private Sub mobile_p31_calendar_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
+        Master.MenuPrefix = "p31"
+        With Me.p41id.radComboBoxOrig
+            .RenderMode = Telerik.Web.UI.RenderMode.Mobile
+            .DropDownWidth = Unit.Parse("350px")
+        End With
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            Master.MenuPrefix = "p31"
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
             If Master.DataPID > 0 Then
                 Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(Master.DataPID)
                 With cRec
                     cal1.SelectedDate = .p31Date
-                    'Me.p41ID.Value = .p41ID.ToString
-                    'If .p28ID_Client > 0 Then
-                    '    Me.p41ID.Text = .ClientName & " - " & .p41Name
-                    'Else
-                    '    Me.p41ID.Text = .p41Name
-                    'End If
 
                 End With
 
@@ -106,7 +104,7 @@
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
         With CType(e.Item.FindControl("link1"), HyperLink)
-            .NavigateUrl = "mobile_p31_framework.aspx?p41id=" & cRec.PID.ToString
+            .NavigateUrl = "javascript:p31_entry(" & cRec.PID.ToString & ")"
             .Text = cRec.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
         End With
 

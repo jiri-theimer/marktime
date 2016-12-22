@@ -23,121 +23,22 @@ Partial Public Class mobile_p31_framework
     Protected WithEvents lblRecordHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxPLS control.
+    '''linkCurProject control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxPLS As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents linkCurProject As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''tabs1 control.
+    '''p41id control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents tabs1 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
-    '''<summary>
-    '''linkTabP41 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkTabP41 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''linkTabP56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkTabP56 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''panDropdownSelectP41ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panDropdownSelectP41ID As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblVybratProjekt control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblVybratProjekt As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''rpP41_cbx control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpP41_cbx As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''Client control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Client As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''Project control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Project As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''panDropdownSelectP56ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panDropdownSelectP56ID As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblVybratUkol control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblVybratUkol As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''rpP56_cbx control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpP56_cbx As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''Task control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Task As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents p41id As Global.UI.project
 
     '''<summary>
     '''imgHeader control.
@@ -408,15 +309,6 @@ Partial Public Class mobile_p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidMask As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidP41ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidP41ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidP56ID control.

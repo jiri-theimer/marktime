@@ -50,6 +50,15 @@ Partial Public Class mobile_p31_calendar
     Protected WithEvents Hours_All As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''p41id control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p41id As Global.UI.project
+
+    '''<summary>
     '''list1 control.
     '''</summary>
     '''<remarks>

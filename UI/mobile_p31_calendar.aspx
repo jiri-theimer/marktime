@@ -3,6 +3,7 @@
 <%@ MasterType VirtualPath="~/Mobile.Master" %>
 <%@ Register TagPrefix="uc" TagName="timesheet_calendar" Src="~/timesheet_calendar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="mobile_p31_list" Src="~/mobile_p31_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -42,7 +43,7 @@
                 location.replace("mobile_p31_framework.aspx?source=calendar&pid=" + value);
             }
             if (flag == "new") {
-                var d = document.getElementById("<%=me.hidCurDate.ClientID%>").value;
+                var d = document.getElementById("<%=me.hidCurDate.ClientID%>").value;                
                 location.replace("mobile_p31_framework.aspx?source=calendar&defdate=" + d);
 
             }
@@ -50,8 +51,18 @@
 
         }
 
-        function report() {
-            location.replace("mobile_report.aspx?prefix=j02&pid=<%=Master.Factory.SysUser.j02ID%>");
+        function p31_entry(p41id) {
+            
+            var d = document.getElementById("<%=me.hidCurDate.ClientID%>").value;
+
+            location.replace("mobile_p31_framework.aspx?source=calendar&p41id=" + p41id + "&defdate=" + d);
+        }
+
+        function p41id_search(sender, eventArgs) {
+            //var item = eventArgs.get_item();
+            var p41id = <%=Me.p41id.ClientID%>_get_value();            
+            p31_entry(p41id);
+            
         }
     </script>
 </asp:Content>
@@ -59,34 +70,36 @@
 
 
     <uc:timesheet_calendar ID="cal1" runat="server" />
-    <div style="margin-top: 5px; margin-left: 5px;">        
+    <div style="margin-top: 5px; margin-left: 5px;">
         <div class="btn-group">
             <button type="button" class="btn btn-primary" data-toggle="dropdown">
-                Zapsat <asp:Label ID="lblCurDate" runat="server" CssClass="badge"></asp:Label>
+                Zapsat
+                <asp:Label ID="lblCurDate" runat="server" CssClass="badge"></asp:Label>
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="javascript:hardrefresh('new','1')">Nový worksheet úkon</a></li>
+            <ul class="dropdown-menu" role="menu">                
                 <asp:Repeater ID="rp1" runat="server">
                     <ItemTemplate>
-                         <li>                             
-                             <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                         </li>
+                        <li>
+                            <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                        </li>
                     </ItemTemplate>
                 </asp:Repeater>
-               
+
             </ul>
         </div>
-        <button type="button" class="btn btn-primary" onclick="report()">
-            Sestava                    
-        </button>
+
         <img src="Images/sum.png" />
         <asp:Label ID="Hours_All" runat="server"></asp:Label>
+        <div>
+            <uc:project ID="p41id" runat="server" Width="97%" Flag="p31_entry" AutoPostBack="false" OnClientSelectedIndexChanged="p41id_search" />
+        </div>
+        
     </div>
+    
 
 
-
-    </div>
+    
 
     <a id="record_list"></a>
     <uc:mobile_p31_list ID="list1" runat="server"></uc:mobile_p31_list>

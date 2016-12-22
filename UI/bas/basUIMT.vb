@@ -158,7 +158,7 @@ Public Class basUIMT
         Next
     End Sub
 
-    Public Shared Sub p91_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional bolMobile As Boolean = False)
+    Public Shared Sub p91_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional strMobileLinkColumn As String = "")
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -185,8 +185,8 @@ Public Class basUIMT
                     'dobropis - opravný doklad
                     dataItem("systemcolumn").CssClass = "p91_creditnote"
                 End If
-                If bolMobile Then
-                    dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+                If strMobileLinkColumn <> "" Then
+                    dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
                 End If
             End With
         Else
@@ -256,8 +256,7 @@ Public Class basUIMT
                     If .Item("b02Color_Grid") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color_Grid")
                 End If
                 If strMobileLinkColumn <> "" Then
-                    dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
-                    ''    ''dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+                    dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"                    
                 End If
 
             End With
@@ -284,7 +283,7 @@ Public Class basUIMT
 
 
     End Sub
-    Public Shared Sub o23_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional bolMobile As Boolean = False)
+    Public Shared Sub o23_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolShowClueTip As Boolean, Optional strMobileLinkColumn As String = "")
         If Not TypeOf e.Item Is GridDataItem Then Return
 
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
@@ -320,13 +319,13 @@ Public Class basUIMT
             If BO.BAS.IsNullInt(.Item("b02ID")) > 0 Then
                 If .Item("b02Color") & "" <> "" Then dataItem("systemcolumn").Style.Item("background-color") = .Item("b02Color")
             End If
-            If bolMobile Then
-                dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+            If strMobileLinkColumn <> "" Then
+                dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
             End If
         End With
 
     End Sub
-    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional bolMobile As Boolean = False)
+    Public Shared Sub p41_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional strMobileLinkColumn As String = "")
         If Not TypeOf e.Item Is GridDataItem Then Return
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
@@ -334,8 +333,8 @@ Public Class basUIMT
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
             If Not cRec.Item("j13ID") Is System.DBNull.Value Then dataItem("systemcolumn").CssClass = "favourite"
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
-            If bolMobile Then
-                dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+            If strMobileLinkColumn <> "" Then
+                dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
             End If
             If Not cRec.Item("ParentID") Is System.DBNull.Value Then dataItem.ForeColor = ChildProjectColor
 
@@ -360,7 +359,7 @@ Public Class basUIMT
             dataItem.Font.Italic = True
         End If
     End Sub
-    Public Shared Sub p28_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional bolMobile As Boolean = False)
+    Public Shared Sub p28_grid_Handle_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs, bolDT As Boolean, Optional strMobileLinkColumn As String = "")
         If Not TypeOf e.Item Is GridDataItem Then Return
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         If bolDT Then
@@ -369,8 +368,8 @@ Public Class basUIMT
             If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
             If cRec.Item("IsDraft") Then dataItem("systemcolumn").CssClass = "draft"
             If cRec.Item("SupplierFlag") = 4 Then dataItem.Font.Italic = 4
-            If bolMobile Then
-                dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
+            If strMobileLinkColumn <> "" Then
+                dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
             End If
             If Not cRec.Item("ParentID") Is System.DBNull.Value Then dataItem.ForeColor = ChildProjectColor
         Else
@@ -457,6 +456,7 @@ Public Class basUIMT
             If bolMobile Then
                 dataItem("mob").Text = "<a href='javascript:re(" & cRec.Item("pid").ToString & ")'><img src='Images/fe.png'></a>"
             End If
+
         Else
 
             Dim cRec As BO.p31Worksheet = CType(e.Item.DataItem, BO.p31Worksheet)

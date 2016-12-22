@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Mobile.Master" CodeBehind="mobile_p31_framework.aspx.vb" Inherits="UI.mobile_p31_framework" %>
-<%@ Register TagPrefix="uc" TagName="mobile_p31_list" Src="~/mobile_p31_list.ascx" %>
+
 <%@ MasterType VirtualPath="~/Mobile.Master" %>
+<%@ Register TagPrefix="uc" TagName="mobile_p31_list" Src="~/mobile_p31_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -86,74 +88,18 @@
                 
             </div>
             <div class="collapse navbar-collapse" id="myNavbarOnSite">
-                <ul class="nav navbar-nav">  
-                    <span>Nabídka projektů:</span>
-                    <asp:DropDownList ID="cbxPLS" runat="server" AutoPostBack="true">
-                        <asp:ListItem Text="Klasický seznam [Klient] + [Projekt]" Value="1"></asp:ListItem>
-                        <asp:ListItem Text="2-úrovňový strom [Klient]->[Projekt]" Value="2" Selected="true"></asp:ListItem>
-                    </asp:DropDownList>
-                    
-                </ul>
+              <li><asp:HyperLink ID="linkCurProject" runat="server" NavigateUrl="mobile_p41_framework.aspx"></asp:HyperLink></li>
                
             </div>
 
     </nav>
-    <ul class="nav nav-tabs" id="tabs1" runat="server">
-        <li <%=IIf(Me.hidTab.Value = "p41", "class='active'", "")%>>
-            <asp:HyperLink ID="linkTabP41" runat="server" Text="Vybrat projekt" NavigateUrl="javascript:hardrefresh('tab','p41')"></asp:HyperLink>
-
-        </li>
-        <li <%=IIf(Me.hidTab.Value = "p56", "class='active'", "")%>>
-            <asp:HyperLink ID="linkTabP56" runat="server" Text="Vybrat úkol" NavigateUrl="javascript:hardrefresh('tab','p56')"></asp:HyperLink>
-        </li>
-    </ul>
 
 
-    <asp:Panel ID="panDropdownSelectP41ID" runat="server" CssClass="dropdown" Style="padding: 6px;">
 
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="display: <%=iif(Me.IsDirectCallP41ID = False,"inline","none")%>;">
-            <asp:Label ID="lblVybratProjekt" runat="server" Text="Nabídka projektů"></asp:Label>
-            <span class="caret"></span>
-        </button>
+    <uc:project ID="p41id" runat="server" Width="99%" Flag="p31_entry" AutoPostBack="true" />
 
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <asp:Repeater ID="rpP41_cbx" runat="server">
-                <ItemTemplate>
-                    <asp:HyperLink ID="linkClient" runat="server" CssClass="list-group-item disabled" Visible="false"></asp:HyperLink>
-                    <li id="li1" runat="server">
-                        <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                        <asp:HiddenField ID="pid" runat="server" />
-                    </li>
-                </ItemTemplate>
-            </asp:Repeater>
 
-        </ul>
 
-        <asp:HyperLink ID="Client" runat="server" CssClass="alinked"></asp:HyperLink>
-        ->
-                <asp:HyperLink ID="Project" runat="server" CssClass="alinked"></asp:HyperLink>
-
-    </asp:Panel>
-    <asp:Panel ID="panDropdownSelectP56ID" runat="server" CssClass="dropdown" Visible="false" Style="padding: 6px;">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <asp:Label ID="lblVybratUkol" runat="server" Text="Nabídka úkolů"></asp:Label>
-            <span class="caret"></span>
-        </button>
-
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <asp:Repeater ID="rpP56_cbx" runat="server">
-                <ItemTemplate>
-                    <asp:HyperLink ID="linkProject" runat="server" CssClass="list-group-item disabled" Visible="false"></asp:HyperLink>
-                    <li id="li1" runat="server">
-                        <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                        <asp:HiddenField ID="pid" runat="server" />
-                    </li>
-                </ItemTemplate>
-            </asp:Repeater>
-
-        </ul>
-        <asp:HyperLink ID="Task" runat="server" CssClass="alinked"></asp:HyperLink>
-    </asp:Panel>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -265,13 +211,13 @@
     </asp:Panel>
 
     <a id="record_list"></a>
-    <uc:mobile_p31_list id="list1" runat="server"></uc:mobile_p31_list>
-    
+    <uc:mobile_p31_list ID="list1" runat="server"></uc:mobile_p31_list>
+
     <asp:HiddenField ID="hidTab" runat="server" Value="p41" />
     <asp:HiddenField ID="HardRefreshValue" runat="server" />
     <asp:HiddenField ID="HardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidMask" runat="server" Value="1" />
-    <asp:HiddenField ID="hidP41ID" runat="server" Value="" />
+    
     <asp:HiddenField ID="hidP56ID" runat="server" />
     <asp:HiddenField ID="hidP33ID" runat="server" />
     <asp:HiddenField ID="hidP31ID" runat="server" />
@@ -281,5 +227,5 @@
     <asp:HiddenField ID="hidAllowRates" runat="server" Value="1" />
     <asp:HiddenField ID="hidVirtualCountP56" runat="server" Value="0" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
-    
+
 </asp:Content>

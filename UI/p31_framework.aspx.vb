@@ -232,7 +232,7 @@ Public Class p31_framework
         If Me.GridPrefix = "p41" Then
             'If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
             'dataItem("systemcolumn").Text = "<a title='Zapsat úkon' href='javascript:nw(" & cRec.Item("pid").ToString & ")'><img src='Images/new.png' border=0/></a>"
-            basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True, False)
+            basUIMT.p41_grid_Handle_ItemDataBound(sender, e, True)
             With dataItem("systemcolumn")
                 .Text = "<a class='reczoom' title='Detail projektu' rel='clue_p41_myworksheet.aspx?parent_url_reload=p31_framework.aspx&pid=" & cRec.Item("pid").ToString & "&j02id=" & Me.CurrentJ02ID.ToString & "' style='margin-left:-10px;'>i</a>" & .Text
             End With
