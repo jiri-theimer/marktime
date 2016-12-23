@@ -91,7 +91,12 @@
             Me.Owner.Text = .Owner : Me.Timestamp.Text = .UserInsert & "/" & .DateInsert
 
             Me.Project.Text = .p41Name & " <span style='color:gray;padding-left:10px;'>" & .p41Code & "</span>"
-            If .p41ParentID > 0 Then Me.Project.ForeColor = basUIMT.ChildProjectColor
+            Select Case .p41TreeLevel
+                Case 1 : Me.Project.ForeColor = basUIMT.TreeColorLevel1
+                Case Is > 1 : Me.Project.ForeColor = basUIMT.TreeColorLevel2
+
+            End Select
+
             If .p41NameShort <> "" Then
                 Me.Project.Text += "<div style='color:green;'>" & .p41NameShort & "</div>"
             End If
@@ -138,7 +143,7 @@
 
             Me.imgDraft.Visible = .p41IsDraft
             If .p41IsDraft Then imgRecord.ImageUrl = "Images/draft.png"
-            If cRecSum.childs_Count > 0 Or cRec.p41ParentID <> 0 Then
+            If cRec.p41ParentID <> 0 Then
                 RenderTree(cRec, cRecSum)
             End If
             ''If .p41ParentID <> 0 Then
@@ -401,23 +406,14 @@
 
     Private Sub RenderTree(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum)
         tree1.Visible = True
-        Dim strTopID As String = cRec.p41ParentID.ToString
-        If strTopID = "0" Then strTopID = ""
-        If cRec.p41ParentID <> 0 Then
-            Dim n As New Telerik.Web.UI.RadTreeNode(cRec.ParentName, cRec.p41ParentID.ToString, "p41_framework.aspx?pid=" & cRec.p41ParentID.ToString)
-            n.Target = "_top" : n.ImageUrl = "Images/tree.png"
-            tree1.AddItem(n)
-        End If
-        tree1.AddItem(cRec.PrefferedName, cRec.PID.ToString, "javascript:childs()", strTopID, "Images/tree.png")
+        Dim c As BO.p41Project = Master.Factory.p41ProjectBL.LoadTreeTop(cRec.p41TreeIndex)
+        If c Is Nothing Then Return
         Dim mq As New BO.myQueryP41
-        mq.p41ParentID = cRec.PID
-        mq.Closed = BO.BooleanQueryMode.NoQuery
-        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
+        mq.TreeIndexFrom = c.p41TreePrev
+        mq.TreeIndexUntil = c.p41TreeNext
+        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).Where(Function(p) p.p41TreeNext > p.p41TreePrev Or p.PID = cRec.PID).OrderBy(Function(p) p.p41TreeIndex)
         For Each c In lis
-            Dim n As New Telerik.Web.UI.RadTreeNode(c.PrefferedName, c.PID.ToString, "p41_framework.aspx?pid=" & c.PID.ToString)
-            n.Target = "_top"
-            If c.IsClosed Then n.Font.Strikeout = True
-            tree1.AddItem(n, cRec.PID.ToString)
+            tree1.AddItem(c.PrefferedName, c.PID.ToString, "p41_framework.aspx?pid=" & c.PID.ToString, c.p41ParentID.ToString, "Images/tree.png", , "_top")
         Next
         tree1.ExpandAll()
     End Sub

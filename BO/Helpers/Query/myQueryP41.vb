@@ -48,6 +48,9 @@ Public Class myQueryP41
     Public Property p41PlanUntil_D2 As Date?
 
     Public Property p41ParentID As Integer
+    Public Property TreeIndexFrom As Integer
+    Public Property TreeIndexUntil As Integer
+    Public Property p41TreeLevel As Integer = -1
     Public Property IsFavourite As BO.BooleanQueryMode = BooleanQueryMode.NoQuery
 
     Public Property j70ID As Integer

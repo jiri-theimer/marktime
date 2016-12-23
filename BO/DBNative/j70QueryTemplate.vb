@@ -23,4 +23,9 @@ Public Class j70QueryTemplate
             Return Trim(j70Name & " " & _Mark)
         End Get
     End Property
+    Public ReadOnly Property NameWithCreator As String
+        Get
+            Return j70Name & " (" & Me.UserInsert & ")"
+        End Get
+    End Property
 End Class

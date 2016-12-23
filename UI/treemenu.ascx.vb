@@ -89,6 +89,8 @@ Public Class TreeMenu
             Dim nParent As Telerik.Web.UI.RadTreeNode = treeMenu.FindNodeByValue(strParentNodeValue)
             If Not nParent Is Nothing Then
                 nParent.Nodes.Add(n)
+            Else
+                treeMenu.Nodes.Add(n)
             End If
         End If
 

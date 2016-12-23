@@ -169,7 +169,8 @@
     End Sub
 
     Private Sub SetupQueryAndColumns()
-        Me.j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) (p.j02ID_Owner = Master.Factory.SysUser.j02ID And p.j70IsSystem = False))
+        ''Me.j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) (p.j02ID_Owner = Master.Factory.SysUser.j02ID And p.j70IsSystem = False))
+        Me.j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) (p.j70IsSystem = False))
         Me.j70ID.DataBind()
         Me.j74ID.DataSource = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j02ID_Owner = Master.Factory.SysUser.j02ID And p.j74IsSystem = False)
         Me.j74ID.DataBind()

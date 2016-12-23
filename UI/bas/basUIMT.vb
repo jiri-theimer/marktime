@@ -1,8 +1,13 @@
 ﻿Imports Telerik.Web.UI
 Public Class basUIMT
-    Public Shared ReadOnly Property ChildProjectColor As System.Drawing.Color
+    Public Shared ReadOnly Property TreeColorLevel1 As System.Drawing.Color
         Get
             Return Drawing.Color.MediumVioletRed
+        End Get
+    End Property
+    Public Shared ReadOnly Property TreeColorLevel2 As System.Drawing.Color
+        Get
+            Return Drawing.Color.ForestGreen
         End Get
     End Property
     Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String
@@ -336,7 +341,12 @@ Public Class basUIMT
             If strMobileLinkColumn <> "" Then
                 dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
             End If
-            If Not cRec.Item("ParentID") Is System.DBNull.Value Then dataItem.ForeColor = ChildProjectColor
+            Select Case cRec.Item("TreeLevel")
+                Case 1 : dataItem.ForeColor = TreeColorLevel1
+                Case Is > 1 : dataItem.ForeColor = TreeColorLevel2
+                Case Else
+            End Select
+
 
 
         Else
@@ -371,7 +381,7 @@ Public Class basUIMT
             If strMobileLinkColumn <> "" Then
                 dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
             End If
-            If Not cRec.Item("ParentID") Is System.DBNull.Value Then dataItem.ForeColor = ChildProjectColor
+            If Not cRec.Item("ParentID") Is System.DBNull.Value Then dataItem.ForeColor = TreeColorLevel1
         Else
             Dim cRec As BO.p28Contact = CType(e.Item.DataItem, BO.p28Contact)
 

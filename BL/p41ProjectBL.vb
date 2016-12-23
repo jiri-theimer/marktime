@@ -5,6 +5,7 @@
     Function LoadMyLastCreated() As BO.p41Project
     Function LoadByImapRobotAddress(strRobotAddress) As BO.p41Project
     Function LoadByExternalPID(strExternalPID As String) As BO.p41Project
+    Function LoadTreeTop(intCurTreeIndex As Integer) As BO.p41Project
     Function LoadSumRow(intPID As Integer) As BO.p41ProjectSum
     Function Delete(intPID As Integer) As Boolean
     Function GetGridDataSource(myQuery As BO.myQueryP41) As DataTable
@@ -295,5 +296,8 @@ Class p41ProjectBL
     End Function
     Public Function GetGridFooterSums(myQuery As BO.myQueryP41, strSumFields As String) As DataTable Implements Ip41ProjectBL.GetGridFooterSums
         Return _cDL.GetGridFooterSums(myQuery, strSumFields)
+    End Function
+    Public Function LoadTreeTop(intCurTreeIndex As Integer) As BO.p41Project Implements Ip41ProjectBL.LoadTreeTop
+        Return _cDL.LoadTreeTop(intCurTreeIndex)
     End Function
 End Class

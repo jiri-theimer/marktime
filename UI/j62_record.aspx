@@ -111,7 +111,7 @@
                         <asp:Label ID="lblJ70ID" runat="server" CssClass="lbl" Text="Pojmenovaný filtr k přehledu:"></asp:Label>
                     </td>
                     <td>
-                        <uc:datacombo ID="j70ID" runat="server" DataTextField="j70Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
+                        <uc:datacombo ID="j70ID" runat="server" DataTextField="NameWithCreator" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
                     </td>
                 </tr>
                 <tr>

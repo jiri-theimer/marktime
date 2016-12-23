@@ -81,7 +81,7 @@
             If .p28Code <> "" Then
                 Me.Contact.Text += " <span style='color:gray;padding-left:10px;'>" & .p28Code & "</span>"
             End If
-            If .p28ParentID > 0 Then Me.Contact.ForeColor = basUIMT.ChildProjectColor
+            If .p28ParentID > 0 Then Me.Contact.ForeColor = basUIMT.TreeColorLevel1
 
 
             If .p28CompanyShortName > "" Then

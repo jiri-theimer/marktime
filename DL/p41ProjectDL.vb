@@ -10,6 +10,12 @@
 
         Return _cDB.GetRecord(Of BO.p41Project)(s, New With {.p41id = intPID})
     End Function
+    Public Function LoadTreeTop(intCurTreeIndex As Integer) As BO.p41Project
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
+        s += " WHERE a.p41TreeIndex<=@curindex AND a.p41TreeLevel=0 ORDER BY a.p41TreeIndex DESC"
+
+        Return _cDB.GetRecord(Of BO.p41Project)(s, New With {.curindex = intCurTreeIndex})
+    End Function
     Public Function LoadMyLastCreated() As BO.p41Project
         Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
         s += " WHERE a.p41UserInsert=@mylogin ORDER BY a.p41ID DESC"
@@ -201,7 +207,7 @@
                     End Select
                 End If
             End If
-            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft,j13.j13ID,a.p41ParentID as ParentID"
+            .MG_GridSqlColumns += ",a.p41ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.p41ValidFrom AND a.p41ValidUntil THEN 0 else 1 END) as IsClosed,a.p41IsDraft as IsDraft,j13.j13ID,a.p41TreeLevel as TreeLevel"
             .MG_AdditionalSqlFROM += " LEFT OUTER JOIN (SELECT j13ID,p41ID FROM j13FavourteProject WHERE j03ID=" & _curUser.PID.ToString & ") j13 ON a.p41ID=j13.p41ID"
         End With
 
@@ -314,6 +320,16 @@
                 pars.Add("parentpid", .p41ParentID, DbType.Int32)
                 s.Append(" AND a.p41ParentID=@parentpid")
             End If
+            If .TreeIndexFrom > 0 Or .TreeIndexUntil > 0 Then
+                pars.Add("treeprev", .TreeIndexFrom, DbType.Int32)
+                pars.Add("treenext", .TreeIndexUntil, DbType.Int32)
+                s.Append(" AND a.p41TreeIndex>=@treeprev AND a.p41TreeNext<=@treenext")
+            End If
+            If .p41TreeLevel > -1 Then
+                pars.Add("treelevel", .p41TreeLevel, DbType.Int32)
+                s.Append(" AND a.p41TreeLevel=@treelevel")
+            End If
+
             If .b02ID <> 0 Then
                 pars.Add("b02id", .b02ID, DbType.Int32)
                 s.Append(" AND a.b02ID=@b02id")
@@ -457,7 +473,7 @@
                     s.Append("a.p41Name LIKE @expr+'%' OR a.p41Code LIKE '%'+@expr+'%' OR p28client.p28Name LIKE @expr+'%' OR a.p41NameShort LIKE @expr+'%' OR p28client.p28CompanyName LIKE @expr+'%'")
                 Else
                     'něco jako fulltext
-                    s.Append("a.p41Name LIKE '%'+@expr+'%' OR a.p41Code LIKE '%'+@expr+'%' OR a.p41NameShort LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyName LIKE '%'+@expr+'%' OR p41parent.p41Name LIKE '%'+@expr+'%'")
+                    s.Append("a.p41Name LIKE '%'+@expr+'%' OR a.p41Code LIKE '%'+@expr+'%' OR a.p41NameShort LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyName LIKE '%'+@expr+'%'")
                 End If
                 s.Append(")")
                 pars.Add("expr", .SearchExpression, DbType.String)
@@ -491,7 +507,8 @@
 
     Private Function GetSF() As String
         Dim s As String = "a.p42ID,a.j02ID_Owner,a.p41Name,a.p41NameShort,a.p41Code as _p41Code,a.p41IsDraft,a.p28ID_Client,a.p28ID_Billing,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.p92ID,a.b02ID,a.j18ID,a.p61ID,a.p41InvoiceDefaultText1,a.p41InvoiceDefaultText2,a.p41InvoiceMaturityDays,a.p41WorksheetOperFlag,a.p41PlanFrom,a.p41PlanUntil,a.p41LimitHours_Notification,a.p41LimitFee_Notification"
-        s += ",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing,p41parent.p41Name as _ParentName"
+        s += ",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing"
+        s += ",a.p41TreeLevel as _p41TreeLevel,a.p41TreeIndex as _p41TreeIndex,a.p41TreePrev as _p41TreePrev,a.p41TreeNext as _p41TreeNext"
         s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID,a.p41BillingMemo," & bas.RecTail("p41", "a")
         s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41IsNoNotify,a.p41RobotAddress,p41free.*"
         Return s
@@ -509,7 +526,7 @@
         ''s += " LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"
         s += " LEFT OUTER JOIN p51PriceList p51billing ON a.p51ID_Billing=p51billing.p51ID"
         ''s += " LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"
-        s += " LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"
+        ''s += " LEFT OUTER JOIN p41Project p41parent ON a.p41ParentID=p41parent.p41ID"
         s += " LEFT OUTER JOIN p92InvoiceType p92 ON a.p92ID=p92.p92ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
         s += " LEFT OUTER JOIN p87BillingLanguage p87 ON a.p87ID=p87.p87ID"

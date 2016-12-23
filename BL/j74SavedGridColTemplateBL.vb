@@ -273,6 +273,8 @@ Class j74SavedGridColTemplateBL
         With lis
             .Add(AGC(My.Resources.common.NazevProjektu, "p41Name", , , "a.p41Name"))
             .Add(AGC(My.Resources.common.Kod, "p41Code", , , "a.p41Code"))
+            .Add(AGC("Strom cesta", "p41TreePath", , True, "a.p41TreePath"))
+            ''.Add(AGC("Strom název", "TreeName", , False, "Replicate('.',a.p41TreeLevel*4)+a.p41Name"))
             .Add(AGC("DRAFT", "p41IsDraft", BO.cfENUM.Checkbox, , "a.p41IsDraft"))
             .Add(AGC(My.Resources.common.KlientProjektu, "Client", , , "p28client.p28Name"))
             .Add(AGC(My.Resources.common.KlientPlusProjekt, "FullName", , True, "isnull(p28client.p28Name+char(32),'')+a.p41Name"))
@@ -283,9 +285,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name", , "LEFT OUTER JOIN p51PriceList p51internal ON a.p51ID_Internal=p51internal.p51ID"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
             .Add(AGC("Fakturační poznámka", "p41BillingMemo", , , "a.p41BillingMemo"))
-            .Add(AGC("Nadřízený projekt", "ParentProject", , , "p41parent.p41Name"))
-            .Add(AGC("Kód nadř.projektu", "ParentCode", , , "p41parent.p41Code"))
-            ''.Add(AGC("Nadřízený+pod-projekt", "ParentWithChild", , , "isnull(p41parent.p41Name+'->'+a.p41name,a.p41Name)"))
+
+
             
             .Add(AGC(My.Resources.common.PlanStart, "p41PlanFrom", BO.cfENUM.DateOnly, , "a.p41PlanFrom"))
             .Add(AGC(My.Resources.common.PlanEnd, "p41PlanUntil", BO.cfENUM.DateOnly, , "a.p41PlanUntil"))
@@ -295,6 +296,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Odběratel faktury", "InvoiceClient", , , "p28billing.p28Name", , "LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
+            .Add(AGC("Strom index", "p41TreeIndex", , True, "a.p41TreeIndex"))
+            .Add(AGC("Strom level", "p41TreeLevel", , True, "a.p41TreeLevel"))
             .Add(AGC(My.Resources.common.Zalozeno, "p41DateInsert", BO.cfENUM.DateTime, , "a.p41DateInsert"))
             .Add(AGC(My.Resources.common.Zalozil, "p41UserInsert", , , "a.p41UserInsert"))
             .Add(AGC(My.Resources.common.Aktualizace, "p41DateUpdate", BO.cfENUM.DateTime, , "a.p41DateUpdate"))
@@ -592,8 +595,8 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Klient", "Client", "a.p28ID_Client", "min(p28client.p28Name)"))
                 lis.Add(New BO.GridGroupByColumn("Typ projektu", "p42Name", "a.p42ID", "min(p42.p42Name)"))
                 lis.Add(New BO.GridGroupByColumn("Středisko", "j18Name", "a.j18ID", "min(j18.j18Name)"))
-                lis.Add(New BO.GridGroupByColumn("DRAFT", "p41IsDraft", "a.p41IsDraft", "a.p41IsDraft"))
-                ''lis.Add(New BO.GridGroupByColumn("Nadřízený projekt", "ParentName", "a.p41ParentID", "min(p41parent.p41Name)"))
+                ''lis.Add(New BO.GridGroupByColumn("DRAFT", "p41IsDraft", "a.p41IsDraft", "a.p41IsDraft"))
+
 
             Case BO.x29IdEnum.p28Contact
                 lis.Add(New BO.GridGroupByColumn("Typ klienta", "p29Name", "a.p29ID", "min(p29.p29Name)"))

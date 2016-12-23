@@ -35,7 +35,7 @@
                 </div>
             </asp:Panel>
             <asp:Panel ID="panNominee" runat="server" Visible="false" CssClass="div6">
-                <asp:Button ID="cmdAddNominee" runat="server" Text="Obsadit roli" CssClass="cmd" />
+                <asp:Button ID="cmdAddNominee" runat="server" Text="Přidat" CssClass="cmd" />
                 <asp:Repeater ID="rpNominee" runat="server">
                     <ItemTemplate>
                         <div>
