@@ -35,6 +35,7 @@ Public Class project_service
         Dim intJ02ID_Explicit As Integer = factory.SysUser.j02ID
         factory.j03UserBL.InhaleUserParams("handler_search_project-toprecs", "handler_search_project-bin")
 
+        If Len(filterString) > 10 Or filterString.IndexOf("-") > 0 Or Trim(filterString).IndexOf(" ") > 0 Then filterString = ""
 
         Dim mq As New BO.myQueryP41
         mq.SearchExpression = filterString

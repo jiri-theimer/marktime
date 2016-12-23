@@ -7,7 +7,7 @@ Public Class basUIMT
     End Property
     Public Shared ReadOnly Property TreeColorLevel2 As System.Drawing.Color
         Get
-            Return Drawing.Color.ForestGreen
+            Return Drawing.Color.BlueViolet
         End Get
     End Property
     Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String

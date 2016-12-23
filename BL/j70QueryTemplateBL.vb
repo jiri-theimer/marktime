@@ -86,7 +86,7 @@ Class j70QueryTemplateBL
                 lis.Add(New BO.OtherQueryItem(16, "Přiřazena minimálně jedna kontaktní osoba"))
                 lis.Add(New BO.OtherQueryItem(17, "Bez přiřazení kontaktních osob"))
                 lis.Add(New BO.OtherQueryItem(18, "Má nadřízený projekt"))
-                lis.Add(New BO.OtherQueryItem(19, "Má pod sebou podřízené projekty"))
+                lis.Add(New BO.OtherQueryItem(19, "Má pod-projekty"))
                 lis.Add(New BO.OtherQueryItem(20, "Moje oblíbené projekty"))
                 lis.Add(New BO.OtherQueryItem(21, "Vyplněna fakturační poznámka projektu"))
             Case BO.x29IdEnum.p28Contact

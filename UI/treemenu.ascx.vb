@@ -68,7 +68,7 @@ Public Class TreeMenu
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
-    Public Overloads Sub AddItem(n As RadTreeNode, Optional strParentNodeValue As String = "")
+    Public Overloads Function AddItem(n As RadTreeNode, Optional strParentNodeValue As String = "") As RadTreeNode
         If strParentNodeValue = "" Then
             treeMenu.Nodes.Add(n)
         Else
@@ -77,8 +77,9 @@ Public Class TreeMenu
                 nParent.Nodes.Add(n)
             End If
         End If
-    End Sub
-    Public Overloads Sub AddItem(ByVal strText As String, ByVal strValue As String, Optional ByVal strNavigateURL As String = "", Optional ByVal strParentNodeValue As String = "", Optional ByVal strImageURL As String = "", Optional ByVal strToolTip As String = "", Optional strTarget As String = "")
+        Return n
+    End Function
+    Public Overloads Function AddItem(ByVal strText As String, ByVal strValue As String, Optional ByVal strNavigateURL As String = "", Optional ByVal strParentNodeValue As String = "", Optional ByVal strImageURL As String = "", Optional ByVal strToolTip As String = "", Optional strTarget As String = "") As RadTreeNode
         Dim n As New Telerik.Web.UI.RadTreeNode(strText, strValue, strNavigateURL)
         n.ImageUrl = strImageURL
         n.ToolTip = strToolTip
@@ -93,8 +94,9 @@ Public Class TreeMenu
                 treeMenu.Nodes.Add(n)
             End If
         End If
+        Return n
 
-    End Sub
+    End Function
 
 
     Public Property SelectedValue() As String

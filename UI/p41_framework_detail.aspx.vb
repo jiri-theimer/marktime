@@ -411,9 +411,12 @@
         Dim mq As New BO.myQueryP41
         mq.TreeIndexFrom = c.p41TreePrev
         mq.TreeIndexUntil = c.p41TreeNext
-        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).Where(Function(p) p.p41TreeNext > p.p41TreePrev Or p.PID = cRec.PID).OrderBy(Function(p) p.p41TreeIndex)
+        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).Where(Function(p) (p.p41TreeNext > p.p41TreePrev And p.p41TreeLevel < cRec.p41TreeLevel) Or p.PID = cRec.PID).OrderBy(Function(p) p.p41TreeIndex)
         For Each c In lis
-            tree1.AddItem(c.PrefferedName, c.PID.ToString, "p41_framework.aspx?pid=" & c.PID.ToString, c.p41ParentID.ToString, "Images/tree.png", , "_top")
+            Dim n As Telerik.Web.UI.RadTreeNode = tree1.AddItem(c.PrefferedName, c.PID.ToString, "p41_framework.aspx?pid=" & c.PID.ToString, c.p41ParentID.ToString, "Images/tree.png", , "_top")
+            If c.p41TreeLevel = 1 Then n.ForeColor = basUIMT.TreeColorLevel1
+            If c.p41TreeLevel > 1 Then n.ForeColor = basUIMT.TreeColorLevel2
+            If c.IsClosed Then n.Font.Strikeout = True
         Next
         tree1.ExpandAll()
     End Sub

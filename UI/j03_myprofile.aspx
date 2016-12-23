@@ -177,7 +177,7 @@
                     <span>Maska ve vyhledávači projektu:</span>
                     <asp:DropDownList ID="j03ProjectMaskIndex" runat="server">
                         <asp:ListItem Text="Klient+název projektu+kód projektu" Value="0"></asp:ListItem>
-                        <asp:ListItem Text="Nadřízený projekt+pod-projekt" Value="5"></asp:ListItem>
+                        <asp:ListItem Text="Strom cesta" Value="5"></asp:ListItem>
                         <asp:ListItem Text="Název projektu" Value="1"></asp:ListItem>
                         <asp:ListItem Text="Název projektu+kód projektu" Value="2"></asp:ListItem>
                         <asp:ListItem Text="Název projektu+klient" Value="3"></asp:ListItem>
