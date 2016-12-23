@@ -81,7 +81,8 @@
             If .p28Code <> "" Then
                 Me.Contact.Text += " <span style='color:gray;padding-left:10px;'>" & .p28Code & "</span>"
             End If
-            If .p28ParentID > 0 Then Me.Contact.ForeColor = basUIMT.TreeColorLevel1
+            If .p28TreeLevel = 1 Then Me.Contact.ForeColor = basUIMT.TreeColorLevel1
+            If .p28TreeLevel > 1 Then Me.Contact.ForeColor = basUIMT.TreeColorLevel2
 
 
             If .p28CompanyShortName > "" Then
@@ -207,7 +208,7 @@
         If lisFF.Count > 0 Then
             ff1.FillData(lisFF, Not Me.chkFFShowFilledOnly.Checked)
         End If
-        If cRecSum.childs_Count > 0 Or cRec.p28ParentID <> 0 Then
+        If cRec.p28ParentID <> 0 Then
             RenderTree(cRec, cRecSum)
         End If
 
@@ -224,24 +225,17 @@
 
     Private Sub RenderTree(cRec As BO.p28Contact, cRecSum As BO.p28ContactSum)
         tree1.Visible = True
-        Dim strTopID As String = cRec.p28ParentID.ToString
-        If strTopID = "0" Then strTopID = ""
-        If cRec.p28ParentID <> 0 Then
-            Dim c As BO.p28Contact = Master.Factory.p28ContactBL.Load(cRec.p28ParentID)
-            Dim n As New Telerik.Web.UI.RadTreeNode(c.p28Name, c.PID.ToString, "p28_framework.aspx?pid=" & c.PID.ToString)
-            n.Target = "_top" : n.ImageUrl = "Images/tree.png"
-            tree1.AddItem(n)
-        End If
-        tree1.AddItem(cRec.p28Name, cRec.PID.ToString, "javascript:childs()", strTopID, "Images/tree.png")
+        Dim c As BO.p28Contact = Master.Factory.p28ContactBL.LoadTreeTop(cRec.p28TreeIndex)
+        If c Is Nothing Then Return
         Dim mq As New BO.myQueryP28
-        mq.p28ParentID = cRec.PID
-        mq.Closed = BO.BooleanQueryMode.NoQuery
-        Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq)
+        mq.TreeIndexFrom = c.p28TreePrev
+        mq.TreeIndexUntil = c.p28TreeNext
+        Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq).Where(Function(p) (p.p28TreeNext > p.p28TreePrev And p.p28TreeLevel < cRec.p28TreeLevel) Or p.PID = cRec.PID).OrderBy(Function(p) p.p28TreeIndex)
         For Each c In lis
-            Dim n As New Telerik.Web.UI.RadTreeNode(c.p28Name, c.PID.ToString, "p28_framework.aspx?pid=" & c.PID.ToString)
-            n.Target = "_top"
+            Dim n As Telerik.Web.UI.RadTreeNode = tree1.AddItem(c.p28Name, c.PID.ToString, "p28_framework.aspx?pid=" & c.PID.ToString, c.p28ParentID.ToString, "Images/tree.png", , "_top")
+            If c.p28TreeLevel = 1 Then n.ForeColor = basUIMT.TreeColorLevel1
+            If c.p28TreeLevel > 1 Then n.ForeColor = basUIMT.TreeColorLevel2
             If c.IsClosed Then n.Font.Strikeout = True
-            tree1.AddItem(n, cRec.PID.ToString)
         Next
         tree1.ExpandAll()
     End Sub

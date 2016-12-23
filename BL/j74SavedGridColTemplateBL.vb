@@ -333,7 +333,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.DIC, "p28VatID", , , "a.p28VatID"))
             .Add(AGC(My.Resources.common.Typ, "p29Name"))
             .Add(AGC("Fakturační poznámka", "p28BillingMemo", , , "a.p28BillingMemo"))
-            .Add(AGC("Nadřízený klient", "ParentContact", , , "p28parent.p28Name", , "LEFT OUTER JOIN p28Contact p28parent ON a.p28ParentID=p28parent.p28ID"))
+            .Add(AGC("Strom cesta", "p28TreePath", , True, "a.p28TreePath"))
+            ''.Add(AGC("Nadřízený klient", "ParentContact", , , "p28parent.p28Name", , "LEFT OUTER JOIN p28Contact p28parent ON a.p28ParentID=p28parent.p28ID"))
             .Add(AGC("Město", "Adress1_City", , , "pa.o38City", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
             .Add(AGC("Ulice", "Adress1_Street", , , "pa.o38Street", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
             .Add(AGC("PSČ", "Adress1_ZIP", , , "pa.o38ZIP", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
@@ -348,6 +349,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.LimitniHonorar, "p28LimitFee_Notification", BO.cfENUM.Numeric, , "a.p28LimitFee_Notification", True))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
+            .Add(AGC("Strom index", "p28TreeIndex", , True, "a.p28TreeIndex"))
+            .Add(AGC("Strom level", "p28TreeLevel", , True, "a.p28TreeLevel"))
             .Add(AGC(My.Resources.common.Zalozeno, "p28DateInsert", BO.cfENUM.DateTime, , "a.p28DateInsert"))
             .Add(AGC(My.Resources.common.Zalozil, "p28UserInsert", , , "a.p28UserInsert"))
             .Add(AGC(My.Resources.common.Aktualizace, "p28DateUpdate", BO.cfENUM.DateTime, , "a.p28DateUpdate"))

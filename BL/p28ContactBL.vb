@@ -8,6 +8,7 @@
     Function LoadBySupplierID(strSupplierID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
     Function LoadByExternalPID(strExternalPID As String) As BO.p28Contact
     Function LoadByImapRobotAddress(strRobotAddress) As BO.p28Contact
+    Function LoadTreeTop(intCurTreeIndex As Integer) As BO.p28Contact
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP28) As IEnumerable(Of BO.p28Contact)
     Function GetGridDataSource(myQuery As BO.myQueryP28) As DataTable
@@ -275,5 +276,8 @@ Class p28ContactBL
     End Function
     Public Function LoadO48Record(intP28ID As Integer) As BO.o48IsirMonitoring Implements Ip28ContactBL.LoadO48Record
         Return _cDL.LoadO48Record(intP28ID)
+    End Function
+    Public Function LoadTreeTop(intCurTreeIndex As Integer) As BO.p28Contact Implements Ip28ContactBL.LoadTreeTop
+        Return _cDL.LoadTreeTop(intCurTreeIndex)
     End Function
 End Class

@@ -16,6 +16,12 @@
 
         Return _cDB.GetRecord(Of BO.p28Contact)(s, New With {.mylogin = _curUser.j03Login})
     End Function
+    Public Function LoadTreeTop(intCurTreeIndex As Integer) As BO.p28Contact
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
+        s += " WHERE a.p28TreeIndex<=@curindex AND a.p28TreeLevel=0 ORDER BY a.p28TreeIndex DESC"
+
+        Return _cDB.GetRecord(Of BO.p28Contact)(s, New With {.curindex = intCurTreeIndex})
+    End Function
     Public Function LoadByRegID(strRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
         Dim s As String = GetSQLPart1(0) & " " & GetSQLPart2(Nothing), pars As New DbParameters
         pars.Add("regid", strRegID, DbType.String)
@@ -241,6 +247,15 @@
                 pars.Add("parentpid", .p28ParentID, DbType.Int32)
                 s.Append(" AND a.p28ParentID=@parentpid")
             End If
+            If .TreeIndexFrom > 0 Or .TreeIndexUntil > 0 Then
+                pars.Add("treeprev", .TreeIndexFrom, DbType.Int32)
+                pars.Add("treenext", .TreeIndexUntil, DbType.Int32)
+                s.Append(" AND a.p28TreeIndex>=@treeprev AND a.p28TreeNext<=@treenext")
+            End If
+            If .p28TreeLevel > -1 Then
+                pars.Add("treelevel", .p28TreeLevel, DbType.Int32)
+                s.Append(" AND a.p28TreeLevel=@treelevel")
+            End If
             If Not .DateInsertFrom Is Nothing Then
                 pars.Add("d1", .DateInsertFrom)
                 pars.Add("d2", .DateInsertUntil)
@@ -447,6 +462,7 @@
     Private Function GetSF() As String
         Dim s As String = "a.p29ID,a.p92ID,a.j02ID_Owner,a.p87ID,a.p51ID_Billing,a.p51ID_Internal,a.b02ID,a.p63ID,a.p28IsCompany,a.p28IsDraft,a.p28Code,a.p28FirstName,a.p28LastName,a.p28TitleBeforeName,a.p28TitleAfterName,a.p28RegID,a.p28VatID,a.p28Person_BirthRegID,a.p28CompanyName,a.p28CompanyShortName,a.p28InvoiceDefaultText1,a.p28InvoiceDefaultText2,a.p28InvoiceMaturityDays,a.p28LimitHours_Notification,a.p28LimitFee_Notification,a.p28AvatarImage"
         s += ",a.p28Name as _p28name,p29.p29Name as _p29Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,p87.p87Name as _p87Name,a.p28RobotAddress,a.p28SupplierID,a.p28SupplierFlag,a.p28ExternalPID"
+        s += ",a.p28TreeLevel as _p28TreeLevel,a.p28TreeIndex as _p28TreeIndex,a.p28TreePrev as _p28TreePrev,a.p28TreeNext as _p28TreeNext,a.p28TreePath as _p28TreePath"
         s += ",p51billing.p51Name as _p51Name_Billing,p51internal.p51Name as _p51Name_Internal,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,a.p28ParentID,a.p28BillingMemo," & bas.RecTail("p28", "a") & ",p28free.*"
         Return s
     End Function

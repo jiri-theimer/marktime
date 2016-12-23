@@ -341,11 +341,13 @@ Public Class basUIMT
             If strMobileLinkColumn <> "" Then
                 dataItem(strMobileLinkColumn).Text = "<a style='color:blue;text-decoration:underline;' href='javascript:re(" & cRec.Item("pid").ToString & ")'>" & dataItem(strMobileLinkColumn).Text & "</a>"
             End If
-            Select Case cRec.Item("TreeLevel")
-                Case 1 : dataItem.ForeColor = TreeColorLevel1
-                Case Is > 1 : dataItem.ForeColor = TreeColorLevel2
-                Case Else
-            End Select
+            If Not cRec.Item("TreeLevel") Is System.DBNull.Value Then
+                Select Case cRec.Item("TreeLevel")
+                    Case 1 : dataItem.ForeColor = TreeColorLevel1
+                    Case Is > 1 : dataItem.ForeColor = TreeColorLevel2
+                End Select
+            End If
+            
 
 
 

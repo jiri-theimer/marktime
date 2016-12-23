@@ -5870,6 +5870,11 @@ if @p51id_billing is not null	---aktualizace názvu pøípadného ceníku sazeb, kter
 
  end
 
+if exists(select p28ID FROM p28Contact WHERE p28ID=@p28id AND (p28ParentID IS NOT NULL OR p28TreePrev<p28TreeNext))
+ exec [p28_recalc_tree]	---aktualizovat stromovou strukturu klientù
+else
+ update p28Contact set p28TreePath=isnull(p28CompanyShortName,p28Name) WHERE p28ID=@p28id
+
 exec [x90_appendlog] 328,@p28id,@j03id_sys
  
  
@@ -6011,6 +6016,8 @@ if @err_ret is null and exists(select p49ID FROM p49FinancialPlan WHERE p28ID_Su
 if @err_ret is null and exists(select p31ID FROM p31Worksheet WHERE p28ID_Supplier=@pid)
  set @err_ret='Subjekt vystupuje jako dodavatel v minimálnì jednom penìžním worksheet úkonu.'
 
+if exists(select p28ID FROM p28Contact WHERE p28ParentID=@pid)
+ set @err_ret='Klient má pod sebou minimálnì jednoho podøízeného klienta.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -6195,6 +6202,63 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,@o48_exist as o48_Exist
 ,@last_invoice as Last_Invoice
 ,@last_wip_worksheet as Last_Wip_Worksheet
+
+GO
+
+----------P---------------p28_recalc_tree-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_recalc_tree') and type = 'P')
+ drop procedure p28_recalc_tree
+GO
+
+
+
+CREATE    PROCEDURE [dbo].[p28_recalc_tree]
+
+AS
+
+update a set p28TreeIndex=b.TreeIndex,p28TreeLevel=b.TreeLevel,p28TreePath=b.TreePathAlias
+FROM p28Contact a INNER JOIN dbo.view_p28_tree_recalc b ON a.p28ID=b.p28ID
+WHERE isnull(a.p28TreeIndex,0)<>b.TreeIndex or isnull(a.p28TreeLevel,0)<>b.TreeLevel or a.p28TreePath<>b.TreePathAlias
+
+update p28Contact set p28TreePrev=NULL,p28TreeNext=NULL
+
+update a set p28TreePrev=a.p28TreeIndex,p28TreeNext=a.p28TreeIndex
+FROM
+p28Contact a INNER JOIN p28Contact b ON a.p28TreeIndex=b.p28TreeIndex-1
+WHERE a.p28TreeLevel=b.p28TreeLevel OR a.p28TreeLevel>b.p28TreeLevel
+
+update p28Contact set p28TreePrev=p28TreeIndex,p28TreeNext=p28TreeIndex
+where p28TreeIndex In (select max(p28TreeIndex) from p28Contact)
+
+declare @pid int,@level int,@index int,@index_max int
+
+DECLARE curTR CURSOR FOR 
+SELECT p28ID,p28TreeLevel,p28TreeIndex from p28Contact WHERE p28TreePrev IS NULL AND p28TreeNext IS NULL ORDER BY p28TreeIndex
+
+OPEN curTR
+FETCH NEXT FROM curTR 
+INTO @pid,@level,@index
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  set @index_max=null
+  
+  select TOP 1 @index_max=p28TreeIndex FROM p28Contact WHERE p28TreeIndex>@index AND p28TreeLevel<=@level ORDER BY p28TreeIndex
+  
+  if @index_max is null
+   select @index_max=max(p28TreeIndex) from p28Contact
+  else
+   set @index_max=@index_max-1
+   
+ 
+  update p28Contact set p28TreePrev=@index,p28TreeNext=@index_max WHERE p28ID=@pid
+
+  FETCH NEXT FROM curTR 
+  INTO @pid,@level,@index
+END
+CLOSE curTR
+DEALLOCATE curTR
+
 
 GO
 
@@ -9730,6 +9794,10 @@ if @p51id_billing is not null	---aktualizace názvu pøípadného ceníku sazeb, kter
 
  end
 
+if exists(select p41ID FROM p41Project WHERE p41ID=@p41id AND (p41ParentID IS NOT NULL OR p41TreePrev<p41TreeNext))
+ exec [p41_recalc_tree]	---aktualizovat stromovou strukturu projektù
+else
+ update p41Project set p41TreePath=isnull(p41NameShort,p41name) WHERE p41ID=@p41id
 
 exec [x90_appendlog] 141,@p41id,@j03id_sys
 
@@ -9795,9 +9863,6 @@ GO
 
 
 
-
-
-
 CREATE   procedure [dbo].[p41_delete]
 @j03id_sys int				--pøihlášený uživatel
 ,@pid int					--p41id
@@ -9813,6 +9878,8 @@ SELECT TOP 1 @ref_pid=p31ID from p31Worksheet WHERE p41ID=@pid
 if @ref_pid is not null
  set @err_ret='Do projektu byl zapsán minimálnì jeden worksheet úkon.'
 
+if exists(select p41ID FROM p41Project WHERE p41ParentID=@pid)
+ set @err_ret='Projek má pod sebou minimálnì jeden pod-projekt.'
 
 set @ref_pid=null
 SELECT TOP 1 @ref_pid=p56ID from p56Task WHERE p41ID=@pid
@@ -10040,6 +10107,61 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p45_count,0) as p45_Count
 ,@last_invoice as Last_Invoice
 ,@last_wip_worksheet as Last_Wip_Worksheet
+
+GO
+
+----------P---------------p41_recalc_tree-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_recalc_tree') and type = 'P')
+ drop procedure p41_recalc_tree
+GO
+
+
+CREATE    PROCEDURE [dbo].[p41_recalc_tree]
+
+AS
+
+update a set p41TreeIndex=b.TreeIndex,p41TreeLevel=b.TreeLevel,p41TreePath=b.TreePathAlias
+FROM p41Project a INNER JOIN dbo.view_p41_tree_recalc b ON a.p41ID=b.p41ID
+WHERE isnull(a.p41TreeIndex,0)<>b.TreeIndex or isnull(a.p41TreeLevel,0)<>b.TreeLevel or a.p41TreePath<>b.TreePathAlias
+
+update p41Project set p41TreePrev=NULL,p41TreeNext=NULL
+
+update a set p41TreePrev=a.p41TreeIndex,p41TreeNext=a.p41TreeIndex
+FROM
+p41Project a INNER JOIN p41Project b ON a.p41TreeIndex=b.p41TreeIndex-1
+WHERE a.p41TreeLevel=b.p41TreeLevel OR a.p41TreeLevel>b.p41TreeLevel
+
+update p41Project set p41TreePrev=p41TreeIndex,p41TreeNext=p41TreeIndex
+where p41TreeIndex In (select max(p41TreeIndex) from p41Project)
+
+declare @pid int,@level int,@index int,@index_max int
+
+DECLARE curTR CURSOR FOR 
+SELECT p41ID,p41TreeLevel,p41TreeIndex from p41Project WHERE p41TreePrev IS NULL AND p41TreeNext IS NULL ORDER BY p41TreeIndex
+
+OPEN curTR
+FETCH NEXT FROM curTR 
+INTO @pid,@level,@index
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  set @index_max=null
+  
+  select TOP 1 @index_max=p41TreeIndex FROM p41Project WHERE p41TreeIndex>@index AND p41TreeLevel<=@level ORDER BY p41TreeIndex
+  
+  if @index_max is null
+   select @index_max=max(p41TreeIndex) from p41Project
+  else
+   set @index_max=@index_max-1
+   
+ 
+  update p41Project set p41TreePrev=@index,p41TreeNext=@index_max WHERE p41ID=@pid
+
+  FETCH NEXT FROM curTR 
+  INTO @pid,@level,@index
+END
+CLOSE curTR
+DEALLOCATE curTR
 
 GO
 
@@ -14710,6 +14832,112 @@ select a.p41ID,a.j02ID,MAX(a.p31Date) as LastDate
 from
 p31WorkSheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID
 GROUP BY a.p41ID,a.j02ID
+
+
+GO
+
+----------V---------------view_p28_tree_recalc-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p28_tree_recalc') and type = 'V')
+ drop view view_p28_tree_recalc
+GO
+
+
+
+
+CREATE VIEW [dbo].[view_p28_tree_recalc]
+as
+
+WITH rst AS (
+  SELECT p28ID
+  ,p28ParentID
+  ,p28Name
+  ,0 AS TreeLevel
+  ,CAST(p28name+convert(varchar(10),p28id) AS VARCHAR(255)) AS TreePath
+  ,CAST(isnull(p28CompanyShortName,p28Name) AS VARCHAR(255)) AS TreePathAlias
+  FROM p28Contact T1
+  WHERE p28ParentID IS NULL
+
+  UNION ALL
+
+  SELECT T2.p28ID
+  ,T2.p28ParentID
+  ,T2.p28Name
+  ,TreeLevel + 1
+  ,CAST(TreePath + '.' + CAST(T2.p28Name+convert(varchar(10),isnull(T2.p28ParentID,T2.p28ID)) AS VARCHAR(255)) AS VARCHAR(255)) AS TreePath
+  ,CAST(TreePathAlias + ' -> ' + CAST(isnull(T2.p28CompanyShortName,T2.p28Name) AS VARCHAR(255)) AS VARCHAR(255)) AS TreePathAlias
+  FROM p28Contact T2
+  INNER JOIN rst itms ON itms.p28ID = T2.p28ParentID
+)
+SELECT ROW_NUMBER() OVER (ORDER BY TreePath) as TreeIndex
+,p28ID
+,p28ParentID
+, TreeLevel
+,TreePathAlias
+FROM  rst 
+
+--, Replicate('.', TreeLevel * 4)+p28Name as Name
+
+
+
+
+
+
+
+GO
+
+----------V---------------view_p41_tree_recalc-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p41_tree_recalc') and type = 'V')
+ drop view view_p41_tree_recalc
+GO
+
+
+
+
+
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_p41_tree_recalc]
+as
+
+WITH rst AS (
+  SELECT p41ID
+  ,p41ParentID
+  ,p41Name
+  ,0 AS TreeLevel
+  ,CAST(p41name+convert(varchar(10),p41id) AS VARCHAR(255)) AS TreePath
+  ,CAST(isnull(p41NameShort,p41name) AS VARCHAR(255)) AS TreePathAlias
+  FROM p41Project T1
+  WHERE p41ParentID IS NULL
+
+  UNION ALL
+
+  SELECT T2.p41ID
+  ,T2.p41ParentID
+  ,T2.p41Name
+  ,TreeLevel + 1
+  ,CAST(TreePath + '.' + CAST(T2.p41Name+convert(varchar(10),isnull(T2.p41ParentID,T2.p41ID)) AS VARCHAR(255)) AS VARCHAR(255)) AS TreePath
+  ,CAST(TreePathAlias + ' -> ' + CAST(isnull(T2.p41NameShort,T2.p41Name) AS VARCHAR(255)) AS VARCHAR(255)) AS TreePathAlias
+  FROM p41Project T2
+  INNER JOIN rst itms ON itms.p41ID = T2.p41ParentID
+)
+SELECT ROW_NUMBER() OVER (ORDER BY TreePath) as TreeIndex
+,p41ID
+,p41ParentID
+, TreeLevel
+,TreePathAlias
+FROM  rst 
+
+--, Replicate('.', TreeLevel * 4)+p41Name as Name
+
+
+
+
 
 
 GO

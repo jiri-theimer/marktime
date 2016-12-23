@@ -97,6 +97,36 @@ Public Class p28Contact
             Return _Owner
         End Get
     End Property
+    Private Property _p28TreePath As String
+    Public ReadOnly Property p28TreePath As String
+        Get
+            Return _p28TreePath
+        End Get
+    End Property
+    Private Property _p28TreeLevel As Integer
+    Public ReadOnly Property p28TreeLevel As Integer
+        Get
+            Return _p28TreeLevel
+        End Get
+    End Property
+    Private Property _p28TreeIndex As Integer
+    Public ReadOnly Property p28TreeIndex As Integer
+        Get
+            Return _p28TreeIndex
+        End Get
+    End Property
+    Private Property _p28TreePrev As Integer
+    Public ReadOnly Property p28TreePrev As Integer
+        Get
+            Return _p28TreePrev
+        End Get
+    End Property
+    Private Property _p28TreeNext As Integer
+    Public ReadOnly Property p28TreeNext As Integer
+        Get
+            Return _p28TreeNext
+        End Get
+    End Property
 
 
     '----uživatelská pole--------------------

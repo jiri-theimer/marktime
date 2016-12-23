@@ -45,4 +45,7 @@ Public Class myQueryP28
     Public SpecificQuery As myQueryP28_SpecificQuery = myQueryP28_SpecificQuery._NotSpecified
     Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat klienty, pokud je 0, pak přihlášený uživatel
     Public Property x25ID As Integer    'štítek
+    Public Property TreeIndexFrom As Integer
+    Public Property TreeIndexUntil As Integer
+    Public Property p28TreeLevel As Integer = -1
 End Class

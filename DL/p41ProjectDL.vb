@@ -589,4 +589,16 @@
             Return False
         End If
     End Function
+
+    Public Function BatchUpdate_TreeChilds(intPID As Integer, bolIsRoles As Boolean) As Boolean
+        Dim pars As New DbParameters
+        With pars
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("pid", intPID, DbType.Int32)
+            .Add("@is_roles", bolIsRoles, DbType.Boolean)
+            pars.Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
+        End With
+        Return _cDB.RunSP("p41_batch_update_childs", pars)
+
+    End Function
 End Class
