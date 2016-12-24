@@ -11,10 +11,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            <%If ViewState("switch2user")="1" then%>
-            alert("E");
-            parent.window.open("default.aspx", "_top");
-        <%End If%>
+           
 
 
         });
@@ -120,7 +117,7 @@
 
 
     </asp:Panel>
-    <asp:Panel ID="panSwitchUser" runat="server" CssClass="content-box2" Style="margin-top: 10px;">
+    <asp:Panel ID="panSwitchUser" runat="server" CssClass="content-box2" Style="margin-top: 10px;" Visible="false">
         <div class="title">
             Přepnout se na prostředí pod identitou uživatele
         </div>

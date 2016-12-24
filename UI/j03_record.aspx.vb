@@ -53,6 +53,9 @@
             Else
                 Me.j03IsLiveChatSupport.Checked = .j03IsLiveChatSupport
                 Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
+                If Not .IsClosed And .PID <> Master.Factory.SysUser.PID Then
+                    panSwitchUser.Visible = True
+                End If
             End If
 
         End With
@@ -198,7 +201,12 @@
             Return
         End If
 
-        FormsAuthentication.RedirectFromLoginPage(cRec.j03Login, True)
-
+        If BO.ASS.GetConfigVal("super-user-pin", "werwerwer") = Me.txtPIN.Text Then
+            FormsAuthentication.SetAuthCookie(cRec.j03Login, True)
+            ClientScript.RegisterStartupScript(Me.GetType, "hash", "parent.window.open('default.aspx','_top');", True)
+        Else
+            Master.Notify("Zadaný PIN není správný.", NotifyLevel.ErrorMessage)
+        End If
+        
     End Sub
 End Class
