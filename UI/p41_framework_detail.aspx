@@ -53,6 +53,10 @@
             window.open("o23_framework.aspx?pid=" + pid,"_top");
 
         }
+        function batch_update_childs() {
+            sw_decide("p41_batch_childs.aspx?pid=<%=master.datapid%>", "Images/batch_32.png", true)
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -176,7 +180,7 @@
 
             </table>
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
-
+            <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>
         </div>
     </div>
     <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">

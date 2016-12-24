@@ -221,6 +221,33 @@ Partial Public Class j03_record
     Protected WithEvents cmdResetPasswordMessage As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''panSwitchUser control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSwitchUser As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''txtPIN control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtPIN As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''cmdSwitch2User control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSwitch2User As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''hidNewLogin control.
     '''</summary>
     '''<remarks>

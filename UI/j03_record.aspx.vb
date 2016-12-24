@@ -190,4 +190,15 @@
             Master.Notify("Nové heslo bylo pře-generováno.")
         End If
     End Sub
+
+    Private Sub cmdSwitch2User_Click(sender As Object, e As EventArgs) Handles cmdSwitch2User.Click
+        Dim cRec As BO.j03User = Master.Factory.j03UserBL.Load(Master.DataPID)
+        If cRec.IsClosed Then
+            Master.Notify("Uživatelský účet je uzavřený.")
+            Return
+        End If
+
+        FormsAuthentication.RedirectFromLoginPage(cRec.j03Login, True)
+
+    End Sub
 End Class

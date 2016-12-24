@@ -590,12 +590,19 @@
         End If
     End Function
 
-    Public Function BatchUpdate_TreeChilds(intPID As Integer, bolIsRoles As Boolean) As Boolean
+    Public Function BatchUpdate_TreeChilds(intPID As Integer, bolProjectRoles As Boolean, bolP28ID As Boolean, bolP87ID As Boolean, bolP51ID As Boolean, bolP92ID As Boolean, bolJ18ID As Boolean, bolP61ID As Boolean, bolValidity As Boolean) As Boolean
         Dim pars As New DbParameters
         With pars
             .Add("j03id_sys", _curUser.PID, DbType.Int32)
             .Add("pid", intPID, DbType.Int32)
-            .Add("@is_roles", bolIsRoles, DbType.Boolean)
+            .Add("is_roles", bolProjectRoles, DbType.Boolean)
+            .Add("is_p28id", bolP28ID, DbType.Boolean)
+            .Add("is_p87id", bolP87ID, DbType.Boolean)
+            .Add("is_p51id", bolP51ID, DbType.Boolean)
+            .Add("is_p92id", bolP92ID, DbType.Boolean)
+            .Add("is_j18id", bolJ18ID, DbType.Boolean)
+            .Add("is_p61id", bolP61ID, DbType.Boolean)
+            .Add("is_validity", bolValidity, DbType.Boolean)
             pars.Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
         End With
         Return _cDB.RunSP("p41_batch_update_childs", pars)

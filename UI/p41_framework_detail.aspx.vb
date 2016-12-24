@@ -309,9 +309,10 @@
             aP48.Visible = cP42.p42IsModule_p48
         End With
         With cDisp
-
             boxP30.Visible = .OwnerAccess
-
+            If cRec.p41TreeNext > cRec.p41TreePrev And .OwnerAccess Then
+                linkBatchUpdateChilds.Visible = True
+            End If
 
         End With
 

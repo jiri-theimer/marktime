@@ -9,6 +9,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
     <script type="text/javascript">
+        $(document).ready(function () {
+
+            <%If ViewState("switch2user")="1" then%>
+            alert("E");
+            parent.window.open("default.aspx", "_top");
+        <%End If%>
+
+
+        });
+
+        
         function passwordrecovery() {
             if (confirm("Chcete uživateli vygenerovat nové přístupové heslo?")) {
                 return (true);
@@ -75,8 +86,8 @@
     <div class="div6">
         <asp:Label ID="Label1" runat="server" Text="Heslo expiruje dne:" CssClass="lbl"></asp:Label>
         <telerik:RadDatePicker ID="j03PasswordExpiration" runat="server" Width="120px">
-                    <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
-                </telerik:RadDatePicker>
+            <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
+        </telerik:RadDatePicker>
         <span class="infoInForm">Pokud datum expirace hesla není vyplněno, heslo platí na dobu neurčitou.</span>
     </div>
 
@@ -87,7 +98,7 @@
         <div class="content">
             <asp:Button ID="cmdRecoveryPassword" runat="server" Text="Vygenerovat nové přístupové heslo" CssClass="cmd" OnClientClick="return passwordrecovery()" />
             <asp:Button ID="cmdChangeLogin" runat="server" Text="Změnit přihlašovací jméno" CssClass="cmd" OnClientClick="return changelogin()" />
-            <asp:Button ID="cmdDeleteUserParams" runat="server" text="Vyčistit paměť (cache) v uživatelském profilu" CssClass="cmd" />
+            <asp:Button ID="cmdDeleteUserParams" runat="server" Text="Vyčistit paměť (cache) v uživatelském profilu" CssClass="cmd" />
             <asp:Button ID="cmdRecoveryMembership" runat="server" Text="Opravit membership účet" CssClass="cmd" />
 
 
@@ -97,17 +108,30 @@
             <asp:Panel ID="panPasswordRecovery" runat="server" Style="background-color: orange;" Visible="false">
                 <div style="padding: 6px;">
                     <asp:Label ID="lblNewPasswordLabel" runat="server" Text="Nové přístupové heslo:" ForeColor="black"></asp:Label>
-                    
-                    <asp:TextBox ID="txtNewPassword" runat="server" style="width:150px;"></asp:TextBox>
+
+                    <asp:TextBox ID="txtNewPassword" runat="server" Style="width: 150px;"></asp:TextBox>
                     <asp:Button ID="cmdGeneratePasswordAgain" runat="server" Text="Pře-generovat heslo" CssClass="cmd" />
                     <span>Heslo můžete upravit (přepsat) a pře-generovat na tuto hodnotu.</span>
                     <asp:Button ID="cmdResetPasswordMessage" runat="server" Text="Odeslat uživateli zprávu o novém heslu" CssClass="cmd" />
                 </div>
             </asp:Panel>
+
         </div>
+
+
+    </asp:Panel>
+    <asp:Panel ID="panSwitchUser" runat="server" CssClass="content-box2" Style="margin-top: 10px;">
+        <div class="title">
+            Přepnout se na prostředí pod identitou uživatele
+        </div>
+        <div class="content">
+            <span>PIN pro super-user operace:</span>
+            <asp:TextBox ID="txtPIN" runat="server" TextMode="Password"></asp:TextBox>
+            <asp:Button ID="cmdSwitch2User" runat="server" Text="Přihlásit se pod identitu uživatele" CssClass="cmd" />
+        </div>
+        
     </asp:Panel>
 
-    
     <asp:HiddenField ID="hidNewLogin" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

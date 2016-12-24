@@ -338,6 +338,15 @@ Partial Public Class p41_framework_detail
     Protected WithEvents tree1 As Global.UI.TreeMenu
 
     '''<summary>
+    '''linkBatchUpdateChilds control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkBatchUpdateChilds As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''boxX18 control.
     '''</summary>
     '''<remarks>
