@@ -131,9 +131,10 @@ Public Class navigator
                     Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
                     For Each dbRow In dt.Rows
                         Dim c As New DTS(dbRow.item("pid"), dbRow.item("p41Name"), "p41", dbRow.item("IsClosed"))
+                        c.Level = intParentLevel
                         If Not nParent Is Nothing Then
                             c.ParentPID = intParentPID
-                            If strPrefix <> strParentPrefix Then c.Level = intParentLevel + 1
+                            If strPrefix <> strParentPrefix Then c.Level += 1
 
                         End If
                         If Not dbRow.item("p41TreeNext") Is System.DBNull.Value Then
