@@ -14,7 +14,7 @@
             $('.show_hide1').click(function () {
                 $(".slidingDiv1").slideToggle();
             });
-            
+
             if (document.getElementById("<%=hidSettingIsActive.ClientID%>").value == "1") {
                 $(".slidingDiv1").show();
             }
@@ -76,68 +76,52 @@
             var w = pane.get_width();
             SavePaneWidth(w);
         }
+
+        function rw(pid, prefix) {
+
+            var splitter = $find("<%= RadSplitter1.ClientID %>");
+            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
+
+            pane.set_contentUrl(prefix + "_framework_detail.aspx?source=navigator&pid=" + pid + "&parentWidth=" + pane.get_width());
+
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="offsetY"></div>
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight" Orientation="Vertical">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
-            <button type="button" id="cmdSetting" class="show_hide1" style="float:right;padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Nastavit si úrovně navigátora">
+            <asp:DropDownList ID="cbxPath" runat="server" AutoPostBack="true" ToolTip="Úrovně stromu navigátora">
+                <asp:ListItem Text="Klient->Projekt" Value="p28-p41"></asp:ListItem>                                
+                <asp:ListItem Text="Klient->Faktura" Value="p28-p91"></asp:ListItem>
+                <asp:ListItem Text="Klient->Projekt->Faktura" Value="p28-p41-p91"></asp:ListItem>
+                <asp:ListItem Text="Středisko->Projekt" Value="j18-p41"></asp:ListItem>
+                <asp:ListItem Text="Projekt->Úkol" Value="p41-p56"></asp:ListItem>           
+                <asp:ListItem Text="Osoba->Úkol" Value="j02-p56"></asp:ListItem>                          
+            </asp:DropDownList>
+
+            <button type="button" id="cmdSetting" class="show_hide1" style="float: right; padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Nastavit si úrovně navigátora">
                 <span>Nastavení</span>
                 <img src="Images/arrow_down.gif" />
             </button>
-            <div style="clear:both;"></div>
+            <div style="clear: both;"></div>
             <div class="slidingDiv1">
-                <table>
-                    <tr>
-                        <td>
-                            <span class="lbl">Úroveň #1:</span>
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="cbxLevel0" runat="server" AutoPostBack="true">
-                                <asp:ListItem Text="Klient" Value="p28"></asp:ListItem>
-                                <asp:ListItem Text="Projekt" Value="p41"></asp:ListItem>
-                                <asp:ListItem Text="Osoba" Value="j02"></asp:ListItem>
-                                <asp:ListItem Text="Středisko" Value="j18"></asp:ListItem>                                
-                                <asp:ListItem Text="Faktura" Value="p91"></asp:ListItem>
-                                <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
-                            </asp:DropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lbl">Úroveň #2:</span>
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="cbxLevel1" runat="server" AutoPostBack="true">
-                                <asp:ListItem Text=""></asp:ListItem>
-                                <asp:ListItem Text="Klient" Value="p28"></asp:ListItem>
-                                <asp:ListItem Text="Projekt" Value="p41" Selected="true"></asp:ListItem>
-                                <asp:ListItem Text="Osoba" Value="j02"></asp:ListItem>
-                                <asp:ListItem Text="Středisko" Value="j18"></asp:ListItem>                                
-                                <asp:ListItem Text="Faktura" Value="p91"></asp:ListItem>
-                                <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
-                            </asp:DropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="lbl">Úroveň #3:</span>
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="cbxLevel2" runat="server" AutoPostBack="true">
-                                <asp:ListItem Text=""></asp:ListItem>
-                                <asp:ListItem Text="Klient" Value="p28"></asp:ListItem>
-                                <asp:ListItem Text="Projekt" Value="p41"></asp:ListItem>
-                                <asp:ListItem Text="Osoba" Value="j02"></asp:ListItem>
-                                <asp:ListItem Text="Středisko" Value="j18"></asp:ListItem>                                
-                                <asp:ListItem Text="Faktura" Value="p91"></asp:ListItem>
-                                <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
-                            </asp:DropDownList>
-                        </td>
-                    </tr>
-                </table>
+
+                <asp:HiddenField ID="hidLevel0" runat="server" />
+                <asp:HiddenField ID="hidLevel1" runat="server" />
+                <asp:HiddenField ID="hidLevel2" runat="server" />
+                <asp:HiddenField ID="hidLevel3" runat="server" />
+
                 <asp:Button ID="cmdRefresh" runat="server" CssClass="cmd" Text="Obnovit" />
+                <div style="margin-top: 20px;">
+                    <asp:RadioButtonList ID="opgBIN" runat="server" AutoPostBack="true">
+                        <asp:ListItem Text="Pouze otevřené záznamy" Value="0" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Otevřené i v archivu" Value="-1"></asp:ListItem>
+                        <asp:ListItem Text="Pouze v archivu" Value="1"></asp:ListItem>
+                    </asp:RadioButtonList>
+                </div>
+                <hr />
             </div>
 
             <telerik:RadTreeView ID="tr1" runat="server" Skin="Default" ShowLineImages="false" SingleExpandPath="true">

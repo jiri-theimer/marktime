@@ -64,4 +64,5 @@ Public Class myQueryP41
 
     Public Property x25ID As Integer    'štítek
     Public Property x67ID_ProjectRole As Integer    'projektová role
+    Public Property j18ID As Integer    'středisko projektu
 End Class

@@ -14,6 +14,8 @@ Public Enum myQueryJ02_QuickQuery
     WaitingOnInvoice = 5
     IntraPersonsOnly = 6
     NonIntraPersonsOnly = 7
+    WithAnyTask = 8
+    WithOpenTask = 9
 End Enum
 Public Enum myQueryJ02_IntraPersons
     _NotSpecified = 0

@@ -329,10 +329,13 @@
                 pars.Add("treelevel", .p41TreeLevel, DbType.Int32)
                 s.Append(" AND a.p41TreeLevel=@treelevel")
             End If
-
             If .b02ID <> 0 Then
                 pars.Add("b02id", .b02ID, DbType.Int32)
                 s.Append(" AND a.b02ID=@b02id")
+            End If
+            If .j18ID <> 0 Then
+                pars.Add("j18id", .j18ID, DbType.Int32)
+                s.Append(" AND a.j18ID=@j18id")
             End If
             If .p28ID > 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)

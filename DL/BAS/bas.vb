@@ -612,6 +612,8 @@
                 Return "a.j02IsIntraPerson=0"
             Case BO.myQueryJ02_QuickQuery.IntraPersonsOnly
                 Return "a.j02IsIntraPerson=1"
+            Case BO.myQueryJ02_QuickQuery.WithAnyTask
+                Return "a.j02ID IN (SELECT xa.j02ID FROM x69EntityRole_Assign xa INNER JOIN p56Task xb ON xa.x69RecordPID=xb.p56ID WHERE xa.x67ID IN (select x67ID FROM x67EntityRole WHERE x29ID=356))"
             Case Else
                 Return ""
         End Select

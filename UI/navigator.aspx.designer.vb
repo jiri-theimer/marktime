@@ -32,31 +32,49 @@ Partial Public Class navigator
     Protected WithEvents navigationPane As Global.Telerik.Web.UI.RadPane
 
     '''<summary>
-    '''cbxLevel0 control.
+    '''cbxPath control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxLevel0 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents cbxPath As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cbxLevel1 control.
+    '''hidLevel0 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxLevel1 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents hidLevel0 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''cbxLevel2 control.
+    '''hidLevel1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cbxLevel2 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents hidLevel1 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidLevel2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidLevel2 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidLevel3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidLevel3 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.
@@ -66,6 +84,15 @@ Partial Public Class navigator
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''opgBIN control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgBIN As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
     '''tr1 control.
