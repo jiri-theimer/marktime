@@ -54,6 +54,7 @@
             h3 = h1 - h2;
 
             sender.set_height(h3);
+            
             <%If Me.hidSAW.Value <> "1" Then%>
             var pane = sender.getPaneById("<%=contentPane.ClientID%>");
             document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();              

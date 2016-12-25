@@ -119,12 +119,12 @@
     </asp:Panel>
     <asp:Panel ID="panSwitchUser" runat="server" CssClass="content-box2" Style="margin-top: 10px;" Visible="false">
         <div class="title">
-            Přepnout se na prostředí pod identitou uživatele
+            Přepnout si prostředí pod identitou uživatele
         </div>
         <div class="content">
             <span>PIN pro super-user operace:</span>
             <asp:TextBox ID="txtPIN" runat="server" TextMode="Password"></asp:TextBox>
-            <asp:Button ID="cmdSwitch2User" runat="server" Text="Přihlásit se pod identitu uživatele" CssClass="cmd" />
+            <asp:Button ID="cmdSwitch2User" runat="server" Text="Přepnout se na uživatele" CssClass="cmd" />
         </div>
         
     </asp:Panel>

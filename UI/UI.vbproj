@@ -232,6 +232,7 @@
     <Content Include="mobile_search.aspx" />
     <Content Include="mobile_start.aspx" />
     <Content Include="mobile_stoppage.aspx" />
+    <Content Include="navigator.aspx" />
     <Content Include="o10_framework.aspx" />
     <Content Include="o10_record.aspx" />
     <Content Include="o23_batch.aspx" />
@@ -1084,6 +1085,13 @@
     </Compile>
     <Compile Include="mobile_stoppage.aspx.vb">
       <DependentUpon>mobile_stoppage.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="navigator.aspx.designer.vb">
+      <DependentUpon>navigator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="navigator.aspx.vb">
+      <DependentUpon>navigator.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="o10_framework.aspx.designer.vb">

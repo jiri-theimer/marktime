@@ -273,7 +273,7 @@ Class j74SavedGridColTemplateBL
         With lis
             .Add(AGC(My.Resources.common.NazevProjektu, "p41Name", , , "a.p41Name"))
             .Add(AGC(My.Resources.common.Kod, "p41Code", , , "a.p41Code"))
-            .Add(AGC("Strom cesta", "p41TreePath", , True, "a.p41TreePath"))
+            .Add(AGC("Stromový název", "p41TreePath", , True, "a.p41TreePath"))
             ''.Add(AGC("Strom název", "TreeName", , False, "Replicate('.',a.p41TreeLevel*4)+a.p41Name"))
             .Add(AGC("DRAFT", "p41IsDraft", BO.cfENUM.Checkbox, , "a.p41IsDraft"))
             .Add(AGC(My.Resources.common.KlientProjektu, "Client", , , "p28client.p28Name"))
@@ -333,7 +333,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.DIC, "p28VatID", , , "a.p28VatID"))
             .Add(AGC(My.Resources.common.Typ, "p29Name"))
             .Add(AGC("Fakturační poznámka", "p28BillingMemo", , , "a.p28BillingMemo"))
-            .Add(AGC("Strom cesta", "p28TreePath", , True, "a.p28TreePath"))
+            .Add(AGC("Stromový název", "p28TreePath", , True, "a.p28TreePath"))
             ''.Add(AGC("Nadřízený klient", "ParentContact", , , "p28parent.p28Name", , "LEFT OUTER JOIN p28Contact p28parent ON a.p28ParentID=p28parent.p28ID"))
             .Add(AGC("Město", "Adress1_City", , , "pa.o38City", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
             .Add(AGC("Ulice", "Adress1_Street", , , "pa.o38Street", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))

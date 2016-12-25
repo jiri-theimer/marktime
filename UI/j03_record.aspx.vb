@@ -205,7 +205,7 @@
             FormsAuthentication.SetAuthCookie(cRec.j03Login, True)
             ClientScript.RegisterStartupScript(Me.GetType, "hash", "parent.window.open('default.aspx','_top');", True)
         Else
-            Master.Notify("Zadaný PIN není správný.", NotifyLevel.ErrorMessage)
+            Master.Notify("Zadaný PIN není správný, kontaktujte MARKTIME podporu.", NotifyLevel.ErrorMessage)
         End If
         
     End Sub
