@@ -83,7 +83,12 @@ Public Class navigator
                     mq.MG_GridSqlColumns = "p28Name,p28TreePrev,p28TreeNext"
                     If intParentPID <> 0 And strParentPrefix = "p28" Then mq.p28ParentID = intParentPID
                     If strParentPrefix <> "p28" Then mq.p28TreeLevel = 0
-                    
+                    If cbxPath.SelectedValue.IndexOf("p41") > 0 Then
+                        mq.QuickQuery = BO.myQueryP28_QuickQuery.ProjectClient
+                    End If
+                    If cbxPath.SelectedValue.IndexOf("p91") > 0 Then
+                        mq.QuickQuery = BO.myQueryP28_QuickQuery.WithAnyInvoice
+                    End If
 
                     Dim dt As DataTable = Master.Factory.p28ContactBL.GetGridDataSource(mq)
                     For Each dbRow In dt.Rows
@@ -111,8 +116,11 @@ Public Class navigator
                         Else
                             mq.QuickQuery = BO.myQueryP41_QuickQuery.WithAnyTasks
                         End If
-
                     End If
+                    If cbxPath.SelectedValue.IndexOf("p91") > 0 Then
+                        mq.QuickQuery = BO.myQueryP41_QuickQuery.Invoiced
+                    End If
+
                     If cbxPath.SelectedValue.IndexOf("p91") > 0 Then mq.QuickQuery = BO.myQueryP41_QuickQuery.Invoiced
                     If intParentPID <> 0 Then
                         If strParentPrefix = "p41" Then mq.p41ParentID = intParentPID
@@ -141,7 +149,11 @@ Public Class navigator
                     mq.Closed = CType(Me.opgBIN.SelectedValue, BO.BooleanQueryMode)
                     mq.MG_GridSqlColumns = "j02LastName+' '+j02FirstName as Person"
                     If cbxPath.SelectedValue.IndexOf("p56") > 0 Then
-                        mq.QuickQuery = BO.myQueryJ02_QuickQuery.WithAnyTask
+                        If mq.Closed = BO.BooleanQueryMode.FalseQuery Then
+                            mq.QuickQuery = BO.myQueryJ02_QuickQuery.WithOpenTask
+                        Else
+                            mq.QuickQuery = BO.myQueryJ02_QuickQuery.WithAnyTask
+                        End If
                     End If
 
                     If intParentPID <> 0 Then
@@ -170,6 +182,25 @@ Public Class navigator
                     Dim dt As DataTable = Master.Factory.p56TaskBL.GetGridDataSource(mq)
                     For Each dbRow In dt.Rows
                         Dim c As New DTS(dbRow.item("pid"), dbRow.item("p56Name") & " (" & dbRow.item("p56Code") & ")", "p56", dbRow.item("IsClosed"))
+                        If Not nParent Is Nothing Then
+                            c.ParentPID = intParentPID
+                            c.Level = intParentLevel + 1
+                        End If
+                        c.IsFinalLevel = IsLastLevel(c.Level)
+                        dtss.Add(c)
+                    Next
+                Case "p91"
+                    Dim mq As New BO.myQueryP91
+                    mq.Closed = CType(Me.opgBIN.SelectedValue, BO.BooleanQueryMode)
+                    mq.MG_GridSqlColumns = "p91Code,p91DateSupply,p91Amount_WithoutVat,j27Code"
+                    If intParentPID <> 0 Then
+                        If strParentPrefix = "p41" Then mq.p41ID = intParentPID
+                        If strParentPrefix = "j02" Then mq.j02ID = intParentPID
+                        If strParentPrefix = "p28" Then mq.p28ID = intParentPID
+                    End If
+                    Dim dt As DataTable = Master.Factory.p91InvoiceBL.GetGridDataSource(mq)
+                    For Each dbRow In dt.Rows
+                        Dim c As New DTS(dbRow.item("pid"), dbRow.item("p91Code") & "/" & Format(dbRow.item("p91DateSupply"), "dd.MM.yyyy") & ":   " & BO.BAS.FN(dbRow.item("p91Amount_WithoutVat")) & " " & dbRow.item("j27Code"), "p91", dbRow.item("IsClosed"))
                         If Not nParent Is Nothing Then
                             c.ParentPID = intParentPID
                             c.Level = intParentLevel + 1
@@ -207,8 +238,8 @@ Public Class navigator
     End Sub
     Public Function RenderTreeItem(cRec As DTS, nParent As Telerik.Web.UI.RadTreeNode) As RadTreeNode
         Dim n As New Telerik.Web.UI.RadTreeNode(cRec.ItemText, cRec.PID.ToString)
-        If Len(cRec.ItemText) > 30 Then
-            n.Text = Left(n.Text, 30) & "..."
+        If Len(cRec.ItemText) > 40 Then
+            n.Text = Left(n.Text, 40) & "..."
             n.ToolTip = cRec.ItemText
         End If
 
@@ -219,6 +250,7 @@ Public Class navigator
             Case "p41" : n.ImageUrl = "Images/project.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'p41')"
             Case "j02" : n.ImageUrl = "Images/person.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'j02')"
             Case "p56" : n.ImageUrl = "Images/task.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'p56')"
+            Case "p91" : n.ImageUrl = "Images/invoice.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'p91')"
         End Select
         If Not cRec.IsFinalLevel Then
             n.ExpandMode = TreeNodeExpandMode.ServerSideCallBack

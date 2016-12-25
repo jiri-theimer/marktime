@@ -530,6 +530,8 @@
                 Return "a.p28BillingMemo IS NOT NULL"
             Case BO.myQueryP28_QuickQuery.IsirMonitoring
                 Return "a.p28ID IN (SELECT p28ID FROM o48IsirMonitoring)"
+            Case BO.myQueryP28_QuickQuery.WithAnyInvoice
+                Return "a.p28ID IN (SELECT p28ID FROM p91Invoice WHERE p28ID IS NOT NULL)"
             Case Else
                 Return ""
         End Select
@@ -612,8 +614,12 @@
                 Return "a.j02IsIntraPerson=0"
             Case BO.myQueryJ02_QuickQuery.IntraPersonsOnly
                 Return "a.j02IsIntraPerson=1"
-            Case BO.myQueryJ02_QuickQuery.WithAnyTask
-                Return "a.j02ID IN (SELECT xa.j02ID FROM x69EntityRole_Assign xa INNER JOIN p56Task xb ON xa.x69RecordPID=xb.p56ID WHERE xa.x67ID IN (select x67ID FROM x67EntityRole WHERE x29ID=356))"
+            Case BO.myQueryJ02_QuickQuery.WithAnyTask, BO.myQueryJ02_QuickQuery.WithOpenTask
+                Dim s As String = "p56Task"
+                If quickQueryFlag = BO.myQueryJ02_QuickQuery.WithOpenTask Then
+                    s = "(SELECT * FROM p56Task WHERE getdate() BETWEEN p56ValidFrom AND p56ValidUntil)"
+                End If
+                Return "(a.j02ID IN (SELECT xa.j02ID FROM x69EntityRole_Assign xa INNER JOIN " & s & " xb ON xa.x69RecordPID=xb.p56ID WHERE xa.x67ID IN (select x67ID FROM x67EntityRole WHERE x29ID=356)) OR a.j02ID IN (SELECT xd.j02ID FROM x69EntityRole_Assign xa INNER JOIN " & s & " xb ON xa.x69RecordPID=xb.p56ID INNER JOIN j11Team xc ON xa.j11ID=xc.j11ID INNER JOIN j12Team_Person xd ON xc.j11ID=xd.j11ID WHERE xa.x67ID IN (select x67ID FROM x67EntityRole WHERE x29ID=356)))"
             Case Else
                 Return ""
         End Select

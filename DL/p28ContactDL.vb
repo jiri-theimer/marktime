@@ -252,10 +252,14 @@
                 pars.Add("treenext", .TreeIndexUntil, DbType.Int32)
                 s.Append(" AND a.p28TreeIndex>=@treeprev AND a.p28TreeNext<=@treenext")
             End If
-            If .p28TreeLevel > -1 Then
-                pars.Add("treelevel", .p28TreeLevel, DbType.Int32)
-                s.Append(" AND a.p28TreeLevel=@treelevel")
-            End If
+            Select Case .p28TreeLevel
+                Case -1
+                Case 0
+                    s.Append(" AND (a.p28TreeLevel=0 OR a.p28TreeLevel IS NULL)")
+                Case Is > 0
+                    pars.Add("treelevel", .p28TreeLevel, DbType.Int32)
+                    s.Append(" AND a.p28TreeLevel=@treelevel")
+            End Select
             If Not .DateInsertFrom Is Nothing Then
                 pars.Add("d1", .DateInsertFrom)
                 pars.Add("d2", .DateInsertUntil)

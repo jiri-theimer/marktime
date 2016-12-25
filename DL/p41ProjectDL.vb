@@ -325,10 +325,14 @@
                 pars.Add("treenext", .TreeIndexUntil, DbType.Int32)
                 s.Append(" AND a.p41TreeIndex>=@treeprev AND a.p41TreeNext<=@treenext")
             End If
-            If .p41TreeLevel > -1 Then
-                pars.Add("treelevel", .p41TreeLevel, DbType.Int32)
-                s.Append(" AND a.p41TreeLevel=@treelevel")
-            End If
+            Select Case .p41TreeLevel
+                Case -1
+                Case 0
+                    s.Append(" AND (a.p41TreeLevel=0 OR a.p41TreeLevel IS NULL)")
+                Case Is > 0
+                    pars.Add("treelevel", .p41TreeLevel, DbType.Int32)
+                    s.Append(" AND a.p41TreeLevel=@treelevel")
+            End Select
             If .b02ID <> 0 Then
                 pars.Add("b02id", .b02ID, DbType.Int32)
                 s.Append(" AND a.b02ID=@b02id")

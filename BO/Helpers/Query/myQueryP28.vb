@@ -30,6 +30,7 @@ Public Enum myQueryP28_QuickQuery
     NotClientNotSupplier = 28
     WithBillingMemo = 29
     IsirMonitoring = 30
+    WithAnyInvoice = 31
 End Enum
 Public Class myQueryP28
     Inherits myQuery
