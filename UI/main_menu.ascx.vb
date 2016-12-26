@@ -226,7 +226,9 @@ Public Class main_menu
                     Case BO.x29IdEnum.j02Person : bolGO = .j04IsMenu_People
                     Case BO.x29IdEnum.o23Notepad
                         bolGO = .j04IsMenu_Notepad
-                    Case BO.x29IdEnum.System : bolGO = .IsAdmin
+                    Case BO.x29IdEnum.System
+                        bolGO = .IsAdmin
+                        If c.j62Tag = "navigator" Then bolGO = factory.TestPermission(BO.x53PermValEnum.GR_Navigator)
                     Case BO.x29IdEnum.p51PriceList : bolGO = factory.TestPermission(BO.x53PermValEnum.GR_P51_Admin)
                     Case BO.x29IdEnum.x31Report : bolGO = .j04IsMenu_Report
 

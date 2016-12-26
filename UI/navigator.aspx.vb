@@ -10,6 +10,7 @@ Public Class navigator
         Public Property Level As Integer
         Public Property IsFinalLevel As Boolean
         Public Property IsClosed As Boolean
+        Public Property URL As String
 
         Public Sub New(pid As Integer, strText As String, strPrefix As String, bolIsClosed As Boolean)
             Me.PID = pid
@@ -21,7 +22,7 @@ Public Class navigator
 
     Private Sub navigator_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
-       
+        Master.SiteMenuValue = "navigator"
 
     End Sub
 
@@ -84,7 +85,11 @@ Public Class navigator
                     If intParentPID <> 0 And strParentPrefix = "p28" Then mq.p28ParentID = intParentPID
                     If strParentPrefix <> "p28" Then mq.p28TreeLevel = 0
                     If cbxPath.SelectedValue.IndexOf("p41") > 0 Then
-                        mq.QuickQuery = BO.myQueryP28_QuickQuery.ProjectClient
+                        If mq.Closed = BO.BooleanQueryMode.FalseQuery Then
+                            mq.QuickQuery = BO.myQueryP28_QuickQuery.WithOpenProjects
+                        Else
+                            mq.QuickQuery = BO.myQueryP28_QuickQuery.WithProjects
+                        End If
                     End If
                     If cbxPath.SelectedValue.IndexOf("p91") > 0 Then
                         mq.QuickQuery = BO.myQueryP28_QuickQuery.WithAnyInvoice
@@ -102,7 +107,7 @@ Public Class navigator
                         Else
                             c.IsFinalLevel = IsLastLevel(c.Level)
                         End If
-
+                        If Master.Factory.SysUser.j04IsMenu_Contact Then c.URL = "javascript:rw(" & c.PID.ToString & ",'p28')"
 
                         dtss.Add(c)
                     Next
@@ -142,6 +147,7 @@ Public Class navigator
                         Else
                             c.IsFinalLevel = IsLastLevel(c.Level)
                         End If
+                        If Master.Factory.SysUser.j04IsMenu_Project Then c.URL = "javascript:rw(" & c.PID.ToString & ",'p41')"
                         dtss.Add(c)
                     Next
                 Case "j02"
@@ -169,6 +175,7 @@ Public Class navigator
                             c.Level = intParentLevel + 1
                         End If
                         c.IsFinalLevel = IsLastLevel(c.Level)
+                        If Master.Factory.SysUser.IsAdmin Then c.URL = "javascript:rw(" & c.PID.ToString & ",'j02')"
                         dtss.Add(c)
                     Next
                 Case "p56"
@@ -188,6 +195,7 @@ Public Class navigator
                             c.Level = intParentLevel + 1
                         End If
                         c.IsFinalLevel = IsLastLevel(c.Level)
+                        c.URL = "javascript:rw(" & c.PID.ToString & ",'p56')"
                         dtss.Add(c)
                     Next
                 Case "p91"
@@ -207,6 +215,7 @@ Public Class navigator
                             c.Level = intParentLevel + 1
                         End If
                         c.IsFinalLevel = IsLastLevel(c.Level)
+                        If Master.Factory.SysUser.j04IsMenu_Invoice Then c.URL = "javascript:rw(" & c.PID.ToString & ",'p91')"
                         dtss.Add(c)
                     Next
                 Case "j18"
@@ -246,8 +255,9 @@ Public Class navigator
 
         n.Attributes.Add("prefix", cRec.Prefix)
         n.Attributes.Add("level", cRec.Level.ToString)
+        n.NavigateUrl = cRec.URL
         Select Case cRec.Prefix
-            Case "p28" : n.ImageUrl = "Images/contact.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'p28')"
+            Case "p28" : n.ImageUrl = "Images/contact.png"
             Case "p41" : n.ImageUrl = "Images/project.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'p41')"
             Case "j02" : n.ImageUrl = "Images/person.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'j02')"
             Case "p56" : n.ImageUrl = "Images/task.png" : n.NavigateUrl = "javascript:rw(" & n.Value & ",'p56')"
@@ -313,6 +323,5 @@ Public Class navigator
 
     Private Sub cbxPath_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPath.SelectedIndexChanged
         RestartData(True)
-        hidSettingIsActive.Value = "1"
     End Sub
 End Class

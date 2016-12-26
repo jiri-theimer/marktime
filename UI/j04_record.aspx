@@ -75,6 +75,7 @@
                     <div class="div6">
                     <asp:CheckBox ID="j04IsMenu_Notepad" runat="server" Text="[DOKUMENTY]" Checked="true" CssClass="chk" />
                     </div>
+                   
                     <div class="div6">
                     <asp:CheckBox ID="j04IsMenu_MyProfile" runat="server" Text="[MůJ PROFIL]" Checked="true" CssClass="chk" />
                     </div>

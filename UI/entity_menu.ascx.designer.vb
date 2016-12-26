@@ -50,13 +50,13 @@ Partial Public Class entity_menu
     Protected WithEvents hidIsCanApprove As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidPOS control.
+    '''hidSource control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidPOS As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidSource As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidParentWidth control.

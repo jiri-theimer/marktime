@@ -37,7 +37,7 @@
     GR_O10_Creator = 35                   'Zapisovat články na nástěnku
     GR_X31_Personal = 36                  'Přístup k osobním tiskovým sestavám
     GR_GridTools = 37                   'Pokročilé nástroje v datových přehledech (vytvářet pojmenované filtry/návrhář sloupců/export do XLS/PDF/DOC)
-    
+    GR_Navigator = 38                     'Přístup do nástroje NAVIGATOR
     'Oprávnění projektové role
     PR_P41_Owner = 1                    'Oprávnění vlastníka projektu
     PR_P41_Roles = 2                    'Obsazovat projektové role v projektu

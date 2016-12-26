@@ -35,7 +35,7 @@
 
             h2 = offset.top;
 
-            h3 = h1 - h2;
+            h3 = h1 - h2-5;
 
             sender.set_height(h3);
 

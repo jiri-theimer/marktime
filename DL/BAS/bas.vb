@@ -508,6 +508,8 @@
                 Return "a.p28ID NOT IN (SELECT p28ID FROM p30Contact_Person WHERE p28ID IS NOT NULL)"
             Case BO.myQueryP28_QuickQuery.WithProjects
                 Return "a.p28ID IN (SELECT p28ID_Client FROM p41Project WHERE p28ID_Client IS NOT NULL)"
+            Case BO.myQueryP28_QuickQuery.WithOpenProjects
+                Return "a.p28ID IN (SELECT p28ID_Client FROM p41Project WHERE p28ID_Client IS NOT NULL AND getdate() between p41ValidFrom AND p41ValidUntil)"
             Case BO.myQueryP28_QuickQuery.WithoutProjects
                 Return "a.p28ID NOT IN (SELECT p28ID_Client FROM p41Project WHERE p28ID_Client IS NOT NULL)"
             Case BO.myQueryP28_QuickQuery.SupplierSide

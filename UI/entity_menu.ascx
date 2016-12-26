@@ -22,7 +22,7 @@
 </telerik:RadTabStrip>
 
 <asp:HiddenField ID="hidIsCanApprove" runat="server" />
-<asp:HiddenField ID="hidPOS" runat="server" Value="1" />
+<asp:HiddenField ID="hidSource" runat="server" />
  <asp:HiddenField ID="hidParentWidth" runat="server" />
 <asp:HiddenField ID="hidDataPrefix" runat="server" />
 <uc:searchbox id="sb1" runat="server"></uc:searchbox>

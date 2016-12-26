@@ -166,7 +166,10 @@ Class x31ReportBL
         If _cUser.j04IsMenu_People Then
             lisX31.Add(GPPS(-5, "[LIDÉ]", "j02_framework.aspx", -14, BO.x29IdEnum.j02Person, "j02"))
         End If
-
+        If Factory.TestPermission(BO.x53PermValEnum.GR_Navigator) Then
+            lisX31.Add(GPPS(-5, "[NAVIGÁTOR]", "navigator.aspx", -14, BO.x29IdEnum.System, "navigator"))
+        End If
+        
 
         lisX31.Add(GPPS(-998, "[Dokumenty]", "o23_framework.aspx", -30, BO.x29IdEnum.o23Notepad, "o23"))
         lisX31.Add(GPPS(-998, "[Úkoly]", "p56_framework.aspx", -30, BO.x29IdEnum.p56Task, "p56"))

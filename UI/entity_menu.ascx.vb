@@ -30,6 +30,11 @@ Public Class entity_menu
             Return BO.BAS.BG(Me.hidIsCanApprove.Value)
         End Get
     End Property
+    Public ReadOnly Property PageSource As String
+        Get
+            Return Me.hidSource.Value
+        End Get
+    End Property
     Public Property TabSkin As String
         Get
             Return tabs1.Skin
@@ -40,9 +45,15 @@ Public Class entity_menu
         End Set
     End Property
 
+    Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
+        If Not Page.IsPostBack Then
+            Me.hidSource.Value = Request.Item("source")
+            Me.hidParentWidth.Value = Request.Item("parentWidth")
+        End If
+    End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             If Me.Factory.SysUser.OneProjectPage <> "" Then
                 Server.Transfer(basUI.AddQuerystring2Page(Me.Factory.SysUser.OneProjectPage, "pid=" & Me.DataPID.ToString))
             End If
@@ -262,9 +273,7 @@ Public Class entity_menu
     Private Sub p41_SetupTabs(crs As BO.p41ProjectSum, cP42 As BO.p42ProjectType, cDisp As BO.p41RecordDisposition)
         tabs1.Tabs.Clear()
         Dim s As String = ""
-        If Me.hidPOS.Value = "1" Then
-            cti("Projekt", "board")
-        End If
+        cti("Projekt", "board")
         If cP42.p42IsModule_p31 Then
             s = "Summary" : cti(s, "summary")
             s = "Worksheet" : cti(s, "p31")
@@ -348,9 +357,7 @@ Public Class entity_menu
 
     Private Sub p28_SetupTabs(crs As BO.p28ContactSum)
         tabs1.Tabs.Clear()
-        If Me.hidPOS.Value = "1" Then
-            cti("Klient", "board")
-        End If
+        cti("Klient", "board")
         Dim bolAllowRates As Boolean = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates)
         Dim lisX61 As IEnumerable(Of BO.x61PageTab) = Me.Factory.j03UserBL.GetList_PageTabs(Me.Factory.SysUser.PID, BO.x29IdEnum.p28Contact)
         For Each c In lisX61
