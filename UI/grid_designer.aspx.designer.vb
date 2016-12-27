@@ -77,6 +77,15 @@ Partial Public Class grid_designer
     Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''chkAllUsers control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkAllUsers As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''j74IsSystem control.
     '''</summary>
     '''<remarks>

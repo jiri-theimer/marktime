@@ -24,7 +24,7 @@
 
         }
         function hardrefresh(pid, flag) {
-
+            <%If menu1.PageSource<>"navigator" then%>
             if (flag == "p41-create") {
                 parent.window.location.replace("p41_framework.aspx?pid=" + pid);
                 return;
@@ -33,6 +33,7 @@
                 parent.window.location.replace("p41_framework.aspx");
                 return;
             }
+            <%end if%>
             if (flag == "draft2normal") {
                 document.getElementById('<%= cmdConvertDraft2Normal.ClientID%>').click();
                 return;
@@ -290,4 +291,5 @@
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
+    
 </asp:Content>

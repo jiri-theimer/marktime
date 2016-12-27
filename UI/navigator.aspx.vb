@@ -245,6 +245,10 @@ Public Class navigator
         For Each c In dtss
             RenderTreeItem(c, nParent)
         Next
+        If nParent Is Nothing And tr1.Nodes.Count = 0 Then
+            Master.Notify("Pro zadanou úroveň žádná data.")
+        End If
+
 
     End Sub
     Public Function RenderTreeItem(cRec As DTS, nParent As Telerik.Web.UI.RadTreeNode) As RadTreeNode

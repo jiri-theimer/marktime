@@ -279,6 +279,15 @@ Public Class j03UserDL
         End With
         Return _cDB.RunSP("x36userparam_save", pars)
     End Function
+    Public Function SYS_SetUserParam_AllUsers(strKey As String, strValue As String) As Boolean
+        Dim pars As New DbParameters
+        With pars
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
+            .Add("x36key", strKey, DbType.String)
+            .Add("x36value", strValue, DbType.String)
+        End With
+        Return _cDB.RunSP("x36userparam_save_allusers", pars)
+    End Function
     Public Function SYS_GetMyTag(intJ03ID As Integer, strKey As String, bolClearAfterRead As Boolean) As String
         Dim pars As New DbParameters
         With pars

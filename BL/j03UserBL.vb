@@ -15,6 +15,7 @@
     Sub InhaleUserParams(strKey1 As String, Optional strKey2 As String = "", Optional strKey3 As String = "")
     Function GetUserParam(strKey As String, Optional strDefaultValue As String = "") As String
     Function SetUserParam(strKey As String, strValue As String) As Boolean
+    Function SetUserParam_AllUsers(strKey As String, strValue As String) As Boolean
 
     Function DeleteAllUserParams(intJ03ID As Integer) As Boolean
     Sub SetAsVisitedUpgradeInfo(intPID As Integer)
@@ -90,6 +91,9 @@ Class j03UserBL
     End Sub
     Public Function SYS_SetUserParam(strKey As String, strValue As String) As Boolean Implements Ij03UserBL.SetUserParam
         Return _cDL.SYS_SetUserParam(_cUser.PID, strKey, strValue)
+    End Function
+    Public Function SYS_SetUserParam_AllUsers(strKey As String, strValue As String) As Boolean Implements Ij03UserBL.SetUserParam_AllUsers
+        Return _cDL.SYS_SetUserParam_AllUsers(strKey, strValue)
     End Function
     Public Sub InhaleUserParams(x36keys As List(Of String)) Implements Ij03UserBL.InhaleUserParams
         _x36params = _cDL.SYS_GetList_UserParams(_cUser.PID, x36keys).ToList

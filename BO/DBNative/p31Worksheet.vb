@@ -138,6 +138,7 @@ Public Class p31Worksheet
     Public Property p31Calc_Pieces As Double
     Public Property p31Calc_PieceAmount As Double
     Public Property p35ID As Integer
+    Public Property j19ID As Integer
     Public Property p31ApprovingSet As String
     Public Property o23ID_First As Integer
 

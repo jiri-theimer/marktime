@@ -449,14 +449,16 @@
                     <uc:datacombo ID="p35ID" Width="60px" runat="server" AllowCustomText="false" Filter="StartsWith" DataValueField="pid" DataTextField="p35Code" IsFirstEmptyRow="true"></uc:datacombo>
                 </td>
                 <td>
-                    <asp:Label ID="lblp31Calc_PieceAmount" runat="server" Text="Cena 1 ks:" CssClass="lbl" meta:resourcekey="lblp31Calc_PieceAmount"></asp:Label>
+                    <asp:Label ID="lblp31Calc_PieceAmount" runat="server" Text="Cena 1 ks:" CssClass="lbl" meta:resourcekey="lblp31Calc_PieceAmount"></asp:Label>                    
                 </td>
                 <td>
                     <telerik:RadNumericTextBox ID="p31Calc_PieceAmount" runat="server" Width="100px" NumberFormat-ZeroPattern="n">
                         <ClientEvents OnValueChanged="Calc_OnChanged" />
                     </telerik:RadNumericTextBox>
                 </td>
-                <td></td>
+                <td>
+                    <asp:DropDownList ID="j19ID" runat="server" DataValueField="pid" DataTextField="j19Name"></asp:DropDownList>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -466,8 +468,10 @@
                     <uc:contact ID="p28ID_Supplier" runat="server" Width="250px" Flag="supplier" />
                     <asp:Label ID="lblCode" runat="server" CssClass="lbl" Text="Kód dokladu:"></asp:Label>
                     <asp:TextBox ID="p31Code" runat="server" Width="100px"></asp:TextBox>
+                  
                 </td>
             </tr>
+           
         </table>
     </asp:Panel>
     <div class="div6">

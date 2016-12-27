@@ -7,7 +7,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function hardrefresh(pid, flag) {
-            
+            <%If menu1.PageSource<>"navigator" then%>
             if (flag == "<%=Me.CurrentMasterPrefix%>-create") {
                 parent.window.location.replace("<%=Me.CurrentMasterPrefix%>_framework.aspx?pid=" + pid);
                 return;
@@ -16,7 +16,7 @@
                 parent.window.location.replace("<%=Me.CurrentMasterPrefix%>_framework.aspx");
                 return;
             }
-
+            <%end If%>
             if (flag == "p31-save") {
                 document.getElementById("<%=hidHardRefreshPID.ClientID%>").value = pid;
                 document.getElementById("<%=hidHardRefreshFlag.ClientID%>").value = flag;

@@ -587,6 +587,10 @@
                 Me.p31Calc_Pieces.Value = cRec.p31Calc_Pieces
                 Me.p35ID.SelectedValue = cRec.p35ID.ToString
             End If
+            If .j19ID > 0 Then
+                If Me.j19ID.Items.Count = 0 Then SetupJ19Combo()
+                basUI.SelectDropdownlistValue(Me.j19ID, .j19ID.ToString)
+            End If
             If .p56ID > 0 Then
                 Me.chkBindToP56.Checked = True
                 SetupP56Combo(True, .p56ID)
@@ -962,6 +966,7 @@
                         .p31Calc_PieceAmount = BO.BAS.IsNullNum(Me.p31Calc_PieceAmount.Value)
                         .p31Calc_Pieces = BO.BAS.IsNullNum(Me.p31Calc_Pieces.Value)
                         .p35ID = BO.BAS.IsNullInt(Me.p35ID.SelectedValue)
+                        If Me.j19ID.Visible Then .j19ID = BO.BAS.IsNullInt(Me.j19ID.SelectedValue)
                 End Select
 
             End With
@@ -1131,7 +1136,8 @@
             Dim bolVydaj As Boolean = False
             If _Sheet.p34IncomeStatementFlag = BO.p34IncomeStatementFlagENUM.Vydaj Then bolVydaj = True
 
-            lblSupplier.Visible = bolVydaj : Me.p28ID_Supplier.Visible = bolVydaj : p31Code.Visible = bolVydaj : lblCode.Visible = bolVydaj
+            lblSupplier.Visible = bolVydaj : Me.p28ID_Supplier.Visible = bolVydaj : p31Code.Visible = bolVydaj : lblCode.Visible = bolVydaj : Me.j19ID.Visible = bolVydaj
+            If bolVydaj And Me.j19ID.Items.Count = 0 Then SetupJ19Combo()
         End If
         If _Project Is Nothing And p41ID.Value <> "" Then _Project = Master.Factory.p41ProjectBL.Load(BO.BAS.IsNullInt(Me.p41ID.Value))
         If Not _Project Is Nothing Then
@@ -1354,5 +1360,10 @@
         If strButtonValue = "saveandcopy" Then
             SaveChanges(True)
         End If
+    End Sub
+    Private Sub SetupJ19Combo()
+        Me.j19ID.DataSource = Master.Factory.ftBL.GetList_j19(New BO.myQuery)
+        Me.j19ID.DataBind()
+        Me.j19ID.Items.Insert(0, "")
     End Sub
 End Class

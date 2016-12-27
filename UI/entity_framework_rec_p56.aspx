@@ -6,7 +6,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function hardrefresh(pid, flag) {
-
+            <%If menu1.PageSource<>"navigator" then%>
             if (flag == "<%=Me.CurrentMasterPrefix%>-create") {
                 parent.window.location.replace("<%=Me.CurrentMasterPrefix%>_framework.aspx?pid=" + pid);
                 return;
@@ -15,7 +15,7 @@
                 parent.window.location.replace("<%=Me.CurrentMasterPrefix%>_framework.aspx");
                 return;
             }
-
+            <%End If%>
 
             location.replace("entity_framework_rec_p56.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=master.datapid%>");
 

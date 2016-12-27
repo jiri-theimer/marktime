@@ -457,6 +457,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Kalk/počet", "p31Calc_Pieces", BO.cfENUM.Numeric2))
             .Add(AGC("Kalk/cena 1 ks", "p31Calc_PieceAmount", BO.cfENUM.Numeric2))
 
+            .Add(AGC("Typ úhrady", "TypUhrady", , True, "j19.j19Name", , "LEFT OUTER JOIN j19PaymentType j19 ON a.j19ID=j19.j19ID"))
+
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , False, "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
             .Add(AGC(My.Resources.common.Zalozeno, "p31DateInsert", BO.cfENUM.DateTime))
             .Add(AGC(My.Resources.common.Zalozil, "p31UserInsert"))

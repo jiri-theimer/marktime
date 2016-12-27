@@ -11,6 +11,7 @@
     Function GetList_P35(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p35Unit)
     Function GetList_X24(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x24DataType)
     Function GetList_P87(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.p87BillingLanguage)
+    Function GetList_j19(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.j19PaymentType)
 
     Function SaveP87(lisP87 As List(Of BO.p87BillingLanguage)) As Boolean
     Function LoadP87(intP87ID As Integer) As BO.p87BillingLanguage
@@ -102,6 +103,9 @@ Class FtBL
 
     Public Function GetList_X21(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21
         Return _cDL.GetList_X21(mq)
+    End Function
+    Public Function GetList_j19(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.j19PaymentType) Implements IFtBL.GetList_j19
+        Return New DL.j19PaymentTypeDL(_cUser).GetList(mq)
     End Function
     Public Function GetList_X21_NonDB(bolIncludeFuture As Boolean, bolEnglish As Boolean) As List(Of BO.x21DatePeriod) Implements IFtBL.GetList_X21_NonDB
         _English = bolEnglish

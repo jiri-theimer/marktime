@@ -50,7 +50,7 @@
                 .HeaderText = "Šablony datového přehledu"
                 .AddToolbarButton(Resources.grid_designer.Vybrat, "ok", , "Images/ok.png")
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-
+                Me.chkAllUsers.Visible = .Factory.SysUser.IsAdmin
             End With
 
 
@@ -301,7 +301,12 @@
             SaveCompleteChanges()
             If ViewState("masterprefix") <> "" Then
                 Dim strKey As String = BO.BAS.GetDataPrefix(ViewState("x29id")) & "_subgrid-j74id_" & ViewState("masterprefix")
-                Master.Factory.j03UserBL.SetUserParam(strKey, Me.CurrentJ74ID.ToString)
+                If Me.chkAllUsers.Checked Then
+                    Master.Factory.j03UserBL.SetUserParam_AllUsers(strKey, Me.CurrentJ74ID.ToString)
+                Else
+                    Master.Factory.j03UserBL.SetUserParam(strKey, Me.CurrentJ74ID.ToString)
+                End If
+
             End If
             ClearUserParams()
 
