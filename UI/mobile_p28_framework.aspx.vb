@@ -156,8 +156,9 @@
         Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mqP56)
         If lisP56.Count > 0 Then
             liP56_Actual.Visible = True : liP56_Closed.Visible = True
-            Me.CountP56_Actual.Text = lisP56.Where(Function(p) p.IsClosed = False).Count.ToString
-            Me.CountP56_Closed.Text = lisP56.Where(Function(p) p.IsClosed = True).Count.ToString
+            Me.CountP56_Actual.Text = lisP56.Where(Function(p) p.IsClosed = True).Count.ToString
+            Me.CountP56_Closed.Text = lisP56.Where(Function(p) p.IsClosed = False).Count.ToString
+
         End If
 
         Handle_Permissions(cRec)
@@ -169,11 +170,7 @@
         'mq.DateFrom = period1.DateFrom
         'mq.DateUntil = period1.DateUntil
         mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
-        If opgWorksheetState.SelectedValue = "2" Then
-            mq.QuickQuery = BO.myQueryP31_QuickQuery.Invoiced
-        Else
-            mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
-        End If
+        mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
 
         Dim lis As IEnumerable(Of BO.p31WorksheetBigSummary) = Master.Factory.p31WorksheetBL.GetList_BigSummary(mq)
 
@@ -181,15 +178,13 @@
             worksheet1.Visible = False
         Else
             worksheet1.Visible = True
-            worksheet1.RefreshData(lis, Me.opgWorksheetState.SelectedIndex + 1)
+            worksheet1.RefreshData(lis, 1)
 
         End If
 
     End Sub
 
-    Private Sub opgWorksheetState_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgWorksheetState.SelectedIndexChanged
-        RefreshP31Summary()
-    End Sub
+    
 
     Private Sub Handle_Permissions(cRec As BO.p28Contact)
         Dim cDisp As BO.p28RecordDisposition = Master.Factory.p28ContactBL.InhaleRecordDisposition(cRec)

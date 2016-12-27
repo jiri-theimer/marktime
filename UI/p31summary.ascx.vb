@@ -16,15 +16,15 @@
 
     Public Sub RefreshData(lis As IEnumerable(Of BO.p31WorksheetBigSummary), intWorksheetState As Integer)
         Me.hidState.Value = intWorksheetState.ToString
-        If intWorksheetState = 1 Then
-            'Me.lblFakturovat.Text = "Fakturovat"
-            lblRozpracovano.Visible = True
-            ''lblHeader.text = "Schváleno, čeká na fakturaci"
-        Else
-            'Me.lblFakturovat.Text = "Vyfakturováno"
-            lblRozpracovano.Visible = False
-            ''lblHeader.text = "Vyfakturováno"
-        End If
+        ''If intWorksheetState = 1 Then
+        ''    'Me.lblFakturovat.Text = "Fakturovat"
+        ''    lblRozpracovano.Visible = True
+        ''    ''lblHeader.text = "Schváleno, čeká na fakturaci"
+        ''Else
+        ''    'Me.lblFakturovat.Text = "Vyfakturováno"
+        ''    lblRozpracovano.Visible = False
+        ''    ''lblHeader.text = "Vyfakturováno"
+        ''End If
         rp1.DataSource = lis
         rp1.DataBind()
 
@@ -47,11 +47,11 @@
                 If Me.hidAllowShowRates.Value = "1" Then
                     SV("honorar_fakturovat", .schvaleno_honorar, e, .j27Code)
                     SV("odmeny_fakturovat", .schvaleno_odmeny, e, .j27Code)
-                    SV("odmeny_odpis", .schvaleno_odmeny_odpis, e, .j27Code)
-                    SV("odmeny_pausal", .schvaleno_odmeny_pausal, e, .j27Code)
+                    ''SV("odmeny_odpis", .schvaleno_odmeny_odpis, e, .j27Code)
+                    ''SV("odmeny_pausal", .schvaleno_odmeny_pausal, e, .j27Code)
                     SV("vydaje_fakturovat", .schvaleno_vydaje, e, .j27Code)
-                    SV("vydaje_odpis", .schvaleno_vydaje_odpis, e, .j27Code)
-                    SV("vydaje_pausal", .schvaleno_vydaje_pausal, e, .j27Code)
+                    ''SV("vydaje_odpis", .schvaleno_vydaje_odpis, e, .j27Code)
+                    ''SV("vydaje_pausal", .schvaleno_vydaje_pausal, e, .j27Code)
                 End If
 
                 SV("hodiny_odpis", .schvaleno_hodiny_odpis, e)
@@ -67,11 +67,11 @@
                 If Me.hidAllowShowRates.Value = "1" Then
                     SV("honorar_fakturovat", .vyfakturovano_honorar, e, .j27Code)
                     SV("odmeny_fakturovat", .vyfakturovano_odmeny, e, .j27Code)
-                    SV("odmeny_odpis", .vyfakturovano_odmeny_odpis, e, .j27Code)
-                    SV("odmeny_pausal", .vyfakturovano_odmeny_pausal, e, .j27Code)
+                    ''SV("odmeny_odpis", .vyfakturovano_odmeny_odpis, e, .j27Code)
+                    ''SV("odmeny_pausal", .vyfakturovano_odmeny_pausal, e, .j27Code)
                     SV("vydaje_fakturovat", .vyfakturovano_vydaje, e, .j27Code)
-                    SV("vydaje_odpis", .vyfakturovano_vydaje_odpis, e, .j27Code)
-                    SV("vydaje_pausal", .vyfakturovano_vydaje_pausal, e, .j27Code)
+                    ''SV("vydaje_odpis", .vyfakturovano_vydaje_odpis, e, .j27Code)
+                    ''SV("vydaje_pausal", .vyfakturovano_vydaje_pausal, e, .j27Code)
                 End If
 
                 SV("hodiny_odpis", .vyfakturovano_hodiny_odpis, e)

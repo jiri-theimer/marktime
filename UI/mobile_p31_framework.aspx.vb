@@ -280,20 +280,22 @@
 
    
     Private Sub mobile_p31_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Me.CurrentP41ID <> 0 Then
-            Me.linkCurProject.Text = "<img src='Images/project.png' /> " & Me.p41id.Text
-            Me.linkCurProject.NavigateUrl = "mobile_p41_framework.aspx?pid=" & Me.CurrentP41ID.ToString
-        End If
         If Me.CurrentP31ID = 0 Then
-            ''Me.lblRecordHeader.Text = "Zápis nového úkonu"
             imgHeader.ImageUrl = "Images/new.png"
             Me.cmdDelete.Visible = False
         Else
             imgHeader.ImageUrl = "Images/fe.png"
-            ''Me.lblRecordHeader.Text = "Úprava úkonu"
             Me.cmdDelete.Visible = True
         End If
-
+        If Me.CurrentP41ID = 0 Then
+            panRecord.Visible = False
+            Me.lblRecordHeader.Text = "Vyberte projekt"
+            imgHeader.ImageUrl = "Images/project.png"
+        Else
+            panRecord.Visible = True
+            Me.linkCurProject.Text = "<img src='Images/project.png' /> " & Me.p41id.Text
+            Me.linkCurProject.NavigateUrl = "mobile_p41_framework.aspx?pid=" & Me.CurrentP41ID.ToString
+        End If
     End Sub
 
     Private Sub RefreshRecord(intP31ID As Integer)

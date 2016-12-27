@@ -42,6 +42,35 @@
             If Request.Item("w") <> "" And Request.Item("h") <> "" Then
                 basUI.Write2AccessLog(Master.Factory, True, Request, Request.Item("w"), Request.Item("h"))
             End If
+            RefreshRecord()
+            RefreshTasks()
+            
+
+        End If
+    End Sub
+    Private Sub RefreshTasks()
+        Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+        rp1.DataSource = lis
+        rp1.DataBind()
+        If lis.Count > 0 Then
+            panP56.Visible = True
+            CountP56.Text = lis.Count.ToString
+        Else
+            panP56.Visible = False
+        End If
+    End Sub
+
+    Private Sub RefreshRecord()
+        Dim c As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadMyLastCreated(False, 0)
+        If c Is Nothing Then
+            Me.LastWorksheet.Text = "Zatím jsem nezapsal WORKSHEET úkon."
+        Else
+            Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(c.p41ID)
+            With c
+                Me.LastWorksheet.Text = BO.BAS.FD(.p31Date) & "/" & .ClientName & "/" & cP41.PrefferedName & "/" & c.p32Name
+                Me.LastWorksheet.NavigateUrl = "mobile_p31_framework.aspx?source=calendar&pid=" & c.PID.ToString
+                Me.LastWorksheet.ToolTip = c.p31Text
+            End With
         End If
     End Sub
 

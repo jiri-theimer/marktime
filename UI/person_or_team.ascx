@@ -16,3 +16,4 @@
 
 <asp:HiddenField ID="hidGUID" runat="server" />
 <asp:HiddenField ID="hidInlineContent" runat="server" />
+<asp:HiddenField ID="hidIsMobile" runat="server" Value="0" />

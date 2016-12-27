@@ -9804,6 +9804,89 @@ exec [x90_appendlog] 141,@p41id,@j03id_sys
 
 GO
 
+----------P---------------p41_batch_update_childs-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_batch_update_childs') and type = 'P')
+ drop procedure p41_batch_update_childs
+GO
+
+
+
+CREATE    PROCEDURE [dbo].[p41_batch_update_childs]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p41id nadøízeného projektu
+,@is_roles bit
+,@is_p28id bit
+,@is_p87id bit
+,@is_p51id bit
+,@is_p92id bit
+,@is_j18id bit
+,@is_p61id bit
+,@is_validity bit
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+AS
+
+declare @prev int,@next int,@p28id_client int,@p28id_billing int,@p87id int,@p51id int,@p92id int,@j18id int,@p61id int,@validuntil datetime
+
+select @prev=p41TreePrev,@next=p41TreeNext
+,@p28id_client=p28ID_Client,@p28id_billing=p28ID_Billing,@p87id=p87ID,@p51id=p51ID_Billing,@p92id=p92ID,@j18id=j18ID,@p61id=p61ID
+,@validuntil=p41ValidUntil
+FROM p41Project
+WHERE p41ID=@pid
+
+
+
+if @is_p28id=1
+ update p41Project set p28ID_Client=@p28id_client,p28ID_Billing=@p28id_billing FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+if @is_p87id=1
+ update p41Project set p87ID=@p87id FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+if @is_p51id=1
+ update p41Project set p51ID_Billing=@p51id FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+if @is_p92id=1
+ update p41Project set p92ID=@p92id FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+if @is_j18id=1
+ update p41Project set j18ID=@j18id FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+if @is_p61id=1
+ update p41Project set p61ID=@p61id FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+if @is_validity=1
+ update p41Project set p41ValidUntil=@validuntil FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+if @is_roles=1
+BEGIN
+	declare @p41id int
+
+	DELETE FROM x69EntityRole_Assign WHERE x69RecordPID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid) AND x67ID IN (SELECT x67ID FROM x67EntityRole WHERE x29ID=141)
+
+	DECLARE curTR CURSOR FOR 
+	SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN @prev AND @next AND p41ID<>@pid
+
+	OPEN curTR
+	FETCH NEXT FROM curTR 
+	INTO @p41id
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	 INSERT INTO x69EntityRole_Assign(x69RecordPID,x67ID,j02ID,j11ID) SELECT @p41id,x67ID,j02ID,j11ID FROM x69EntityRole_Assign WHERE x69RecordPID=@pid AND x67ID IN (SELECT x67ID FROM x67EntityRole WHERE x29ID=141)
+
+	FETCH NEXT FROM curTR 
+	INTO @p41id
+	END
+	CLOSE curTR
+	DEALLOCATE curTR
+END
+  
+
+ 
+
+
+
+GO
+
 ----------P---------------p41_convertdraft-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p41_convertdraft') and type = 'P')

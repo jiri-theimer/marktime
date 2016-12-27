@@ -53,7 +53,7 @@
             End With
             If Me.CurrentParentID <> 0 Then
                 Dim c As BO.b07Comment = Master.Factory.b07CommentBL.Load(Me.CurrentParentID)
-                receiver1.AddReceiver(c.j02ID_Owner, 0)
+                receiver1.AddReceiver(c.j02ID_Owner, 0, False)
             End If
 
 
@@ -90,7 +90,7 @@
     End Sub
 
     Private Sub cmdAddReceiver_Click(sender As Object, e As EventArgs) Handles cmdAddReceiver.Click
-        receiver1.AddReceiver(0, 0)
+        receiver1.AddReceiver(0, 0, False)
     End Sub
 
 End Class

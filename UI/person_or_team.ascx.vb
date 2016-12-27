@@ -1,14 +1,22 @@
 ﻿Public Class person_or_team
     Inherits System.Web.UI.UserControl
     Public Property Factory As BL.Factory
+    Public Property MobileMode As Boolean
+        Get
 
+        End Get
+        Set(value As Boolean)
+
+        End Set
+    End Property
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
         If Me.hidGUID.Value = "" Then Me.hidGUID.Value = BO.BAS.GetGUID
     End Sub
 
     
 
-    Public Sub AddReceiver(intJ02ID As Integer, intJ11ID As Integer)
+    Public Sub AddReceiver(intJ02ID As Integer, intJ11ID As Integer, bolMobile As Boolean)
+        Me.hidIsMobile.Value = BO.BAS.GB(bolMobile)
         SaveTemp()
         Dim c As New BO.p85TempBox
         c.p85GUID = Me.hidGUID.Value
@@ -93,6 +101,10 @@
         With CType(e.Item.FindControl("j02id"), UI.person)
             .Value = cRec.p85OtherKey1.ToString
             .Text = cRec.p85FreeText01
+            If Me.hidIsMobile.Value = "1" Then
+                .RadCombo.RenderMode = Telerik.Web.UI.RenderMode.Mobile
+                .RadCombo.DropDownWidth = Unit.Parse("350px")
+            End If
         End With
 
     End Sub

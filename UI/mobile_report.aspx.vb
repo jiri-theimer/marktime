@@ -46,6 +46,7 @@ Public Class mobile_report
                     With Me.MasterRecord
                         .Text = Master.Factory.GetRecordCaption(Me.CurrentX29ID, Master.DataPID)
                         .NavigateUrl = "mobile_" & Me.CurrentPrefix & "_framework.aspx?pid=" & Master.DataPID.ToString
+                        If Me.CurrentPrefix = "j02" Then .NavigateUrl = "mobile_start.aspx"
                         .Visible = True
                     End With
                 End If

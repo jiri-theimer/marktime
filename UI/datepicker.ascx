@@ -12,6 +12,7 @@
             todayBtn: "linked",
             clearBtn: true,
             language: "cs",
+            todayHighlight: true,
             autoclose: true                              
         });
 

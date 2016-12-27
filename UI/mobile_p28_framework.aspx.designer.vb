@@ -239,15 +239,6 @@ Partial Public Class mobile_p28_framework
     Protected WithEvents cmdP31Grid As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''opgWorksheetState control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents opgWorksheetState As Global.System.Web.UI.WebControls.RadioButtonList
-
-    '''<summary>
     '''worksheet1 control.
     '''</summary>
     '''<remarks>

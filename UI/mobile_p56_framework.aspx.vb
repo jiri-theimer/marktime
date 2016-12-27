@@ -34,6 +34,7 @@
             End With
 
             RefreshRecord()
+            history1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
         End If
     End Sub
 
@@ -48,9 +49,11 @@
         Dim cRecSum As BO.p56TaskSum = Master.Factory.p56TaskBL.LoadSumRow(Master.DataPID)
         Dim cClient As BO.p28Contact = Nothing
         With cRec
+            Me.linkWorkflow.NavigateUrl = "mobile_workflow_dialog.aspx?prefix=p56&pid=" & .PID.ToString
             Me.p56Code.Text = .p56Code
             Me.RecordHeader.Text = BO.BAS.OM3(.p57Name & ": " & .p56Code, 30)
             Me.RecordHeader.NavigateUrl = "mobile_p56_framework.aspx?pid=" & .PID.ToString
+            If .IsClosed Then RecordHeader.Font.Strikeout = True
             Me.RecordName.Text = .p56Name
             Me.cmdP31Grid.NavigateUrl = "mobile_grid.aspx?source=task&prefix=p31&masterprefix=p56&masterpid=" & .PID.ToString
             Me.Project.NavigateUrl = "mobile_p41_framework.aspx?pid=" & .p41ID.ToString
@@ -63,7 +66,12 @@
             Else
                 trB02.Visible = False
             End If
-            Me.p56PlanFrom.Text = BO.BAS.FD(.p56PlanFrom, True, True)
+            If Not .p56PlanFrom Is Nothing Then
+                Me.p56PlanFrom.Text = BO.BAS.FD(.p56PlanFrom, True, True)
+            Else
+                trp56PlanFrom.Visible = False
+            End If
+
             Me.p56PlanUntil.Text = BO.BAS.FD(.p56PlanUntil, True, True)
             Me.Owner.Text = .Owner
             Me.Timestamp.Text = .Timestamp
@@ -106,7 +114,7 @@
                 p56Plan_Hours.Text = BO.BAS.FN(.p56Plan_Hours)
                 Select Case .p56Plan_Hours - cRecSum.Hours_Orig
                     Case Is > 0
-                        Me.PlanHoursSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Hours - cRecSum.Hours_Orig) & "h.</span>"
+                        Me.PlanHoursSummary.Text += "zbývá <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Hours - cRecSum.Hours_Orig) & "h.</span>"
                     Case Is < 0
                         Me.PlanHoursSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(cRecSum.Hours_Orig - .p56Plan_Hours) & "h.</span>"
                     Case 0
@@ -118,7 +126,7 @@
                 p56Plan_Expenses.Text = BO.BAS.FN(.p56Plan_Expenses)
                 Select Case .p56Plan_Expenses - cRecSum.Expenses_Orig
                     Case Is > 0
-                        Me.PlanExpensesSummary.Text += "zbývá vykázat <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Expenses - cRecSum.Expenses_Orig) & ",-</span>"
+                        Me.PlanExpensesSummary.Text += "zbývá <span style='color:blue;'>" & BO.BAS.FN(.p56Plan_Expenses - cRecSum.Expenses_Orig) & ",-</span>"
                     Case Is < 0
                         PlanExpensesSummary.Text += " <img src='Images/warning.png'/> vykázáno přes plán <span style='color:red;'>" & BO.BAS.FN(cRecSum.Expenses_Orig - .p56Plan_Expenses) & ",-.</span>"
                     Case 0

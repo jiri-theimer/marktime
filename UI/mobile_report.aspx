@@ -17,7 +17,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div>
+    <div class="well-sm">
         <asp:HyperLink ID="MasterRecord" runat="server" Visible="false" CssClass="alinked"></asp:HyperLink>
     </div>
     <asp:DropDownList ID="x31ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="NameWithFormat" Style="width: 100%;"></asp:DropDownList>

@@ -34,6 +34,8 @@
                 <ul class="nav navbar-nav">                   
                     <li><a href="mobile_p31_framework.aspx?source=project&p41id=<%=Master.DataPID%>">Zapsat worksheet</a></li>
                     <li role="separator" class="divider"></li>
+                    <li><a href="mobile_p56_create.aspx?source=project&p41id=<%=Master.DataPID%>">Vytvořit úkol</a></li>
+                    <li role="separator" class="divider"></li>
                     <li><a href="mobile_report.aspx?prefix=p41&pid=<%=Master.DataPID%>">Sestava</a></li>
                     <li role="separator" class="divider"></li>
                     
@@ -61,7 +63,7 @@
 
     <div class="container-fluid">
         <div id="row1" class="row">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/project.png" />
@@ -130,24 +132,23 @@
             </div>
 
 
-            <asp:Panel ID="boxP31" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxP31" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/worksheet.png" />
-                        <asp:HyperLink ID="cmdP31Grid" runat="server" Text="Worksheet přehled" CssClass="alinked"></asp:HyperLink>      
-                        <a href="mobile_p31_framework.aspx?source=project&p41id=<%=Master.DataPID%>" class="alinked" style="float:right;">Nový</a>                  
-                        <asp:RadioButtonList id="opgWorksheetState" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
-                            <asp:ListItem Text="Čeká na fakturaci" Value="1" Selected="true" class="radio-inline"></asp:ListItem>
-                            <asp:ListItem Text="Vyfakturováno" Value="2" class="radio-inline"></asp:ListItem>
-                        </asp:RadioButtonList>
+                        Nevyfakturované úkony      
+                        <a href="mobile_p31_framework.aspx?source=project&p41id=<%=Master.DataPID%>" class="btn btn-primary btn-xs" style="float:right;">Nový</a>                  
+                       <br />
+                        <asp:HyperLink ID="cmdP31Grid" runat="server" Text="Worksheet přehled" CssClass="alinked"></asp:HyperLink>
                     </div>
+                   
                   
                         <uc:p31summary ID="worksheet1" runat="server"></uc:p31summary>
                     
                 </div>
             </asp:Panel>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/projectrole.png" />
@@ -159,7 +160,7 @@
                 </div>
             </div>
 
-            <asp:Panel ID="boxP30" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxP30" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/person.png" />
@@ -173,7 +174,7 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="boxO23" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxO23" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/notepad.png" />
@@ -188,7 +189,7 @@
             </asp:Panel>
 
 
-            <asp:Panel ID="boxX18" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxX18" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/label.png" />

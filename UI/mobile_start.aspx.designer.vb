@@ -32,6 +32,15 @@ Partial Public Class mobile_start
     Protected WithEvents linkEntryWorksheet As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''linkCreateTask control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkCreateTask As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''linkPersonalReports control.
     '''</summary>
     '''<remarks>
@@ -57,6 +66,42 @@ Partial Public Class mobile_start
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents linkLastClient As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''LastWorksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LastWorksheet As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''panP56 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panP56 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''CountP56 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CountP56 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''Master property.

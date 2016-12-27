@@ -23,6 +23,15 @@ Partial Public Class mobile_p56_framework
     Protected WithEvents RecordHeader As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''history1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents history1 As Global.UI.mobile_workflow_history
+
+    '''<summary>
     '''RecordName control.
     '''</summary>
     '''<remarks>
@@ -66,6 +75,24 @@ Partial Public Class mobile_p56_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''linkWorkflow control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkWorkflow As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''trp56PlanFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trp56PlanFrom As Global.System.Web.UI.HtmlControls.HtmlTableRow
 
     '''<summary>
     '''p56PlanFrom control.

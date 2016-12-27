@@ -33,7 +33,7 @@
             If cRec.p71ID > BO.p71IdENUM.Nic Or cRec.p91ID > 0 Then
                 .Visible = False
             Else
-                .Text = "<img border='0' src='Images/fe.png' />"
+                ''.Text = "<img border='0' src='Images/fe.png' />"
                 .NavigateUrl = "javascript:hardrefresh('edit'," & cRec.PID.ToString & ")"
             End If
         End With

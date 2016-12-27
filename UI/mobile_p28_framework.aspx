@@ -49,20 +49,30 @@
     <div style="background-color:whitesmoke;margin-bottom:6px;">
     <ul class="nav nav-pills"> 
         <li role="presentation" id="liP41" runat="server" visible="false"><a href="mobile_grid.aspx?prefix=p41&masterprefix=p28&masterpid=<%=Master.DataPID%>">Projekty klienta
-            <asp:Label runat="server" ID="CountP41" CssClass="badge"></asp:Label></a></li>       
-        <li role="presentation" id="liP56_Actual" runat="server" visible="false"><a href="mobile_grid.aspx?prefix=p56&masterprefix=p28&masterpid=<%=Master.DataPID%>&closed=0">Otevřené úkoly
-            <asp:Label runat="server" ID="CountP56_Actual" CssClass="badge"></asp:Label></a></li>
-        <li role="presentation" id="liP56_Closed" runat="server" visible="false"><a href="mobile_grid.aspx?prefix=p56&masterprefix=p28&masterpid=<%=Master.DataPID%>&closed=1">Uzavřené úkoly
-            <asp:Label runat="server" ID="CountP56_Closed" CssClass="badge"></asp:Label></a></li>
+            <asp:Label runat="server" ID="CountP41" CssClass="badge"></asp:Label></a>
+
+        </li>       
+        <li role="presentation" id="liP56_Actual" runat="server" visible="false">
+            <a href="mobile_grid.aspx?prefix=p56&masterprefix=p28&masterpid=<%=Master.DataPID%>&closed=0">Otevřené úkoly
+            <asp:Label runat="server" ID="CountP56_Actual" CssClass="badge"></asp:Label></a>
+
+        </li>
+        <li role="presentation" id="liP56_Closed" runat="server" visible="false">
+            <a href="mobile_grid.aspx?prefix=p56&masterprefix=p28&masterpid=<%=Master.DataPID%>&closed=1">Uzavřené úkoly
+            <asp:Label runat="server" ID="CountP56_Closed" CssClass="badge"></asp:Label></a>
+
+        </li>
         <li role="presentation" id="lisP91" runat="server" visible="false"><a href="mobile_grid.aspx?prefix=p91&masterprefix=p28&masterpid=<%=Master.DataPID%>">Vystavené faktury
-            <asp:Label runat="server" ID="CountP91" CssClass="badge"></asp:Label></a></li>
+            <asp:Label runat="server" ID="CountP91" CssClass="badge"></asp:Label></a>
+
+        </li>
 
     </ul>
     </div>
 
     <div class="container-fluid">
         <div id="row1" class="row">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/contact.png" />
@@ -117,7 +127,7 @@
 
 
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/projectrole.png" />
@@ -129,15 +139,13 @@
                 </div>
             </div>
 
-            <asp:Panel ID="boxP31" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxP31" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/worksheet.png" />
+                        Nevyfakturované úkony
                         <asp:HyperLink ID="cmdP31Grid" runat="server" Text="Worksheet přehled" CssClass="alinked"></asp:HyperLink>                        
-                        <asp:RadioButtonList id="opgWorksheetState" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
-                            <asp:ListItem Text="Čeká na fakturaci" Value="1" Selected="true" class="radio-inline"></asp:ListItem>
-                            <asp:ListItem Text="Vyfakturováno" Value="2" class="radio-inline"></asp:ListItem>
-                        </asp:RadioButtonList>
+                       
                     </div>
                   
                         <uc:p31summary ID="worksheet1" runat="server"></uc:p31summary>
@@ -145,7 +153,7 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="boxP30" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxP30" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/person.png" />
@@ -159,7 +167,7 @@
                 </div>
             </asp:Panel>
 
-            <asp:Panel ID="boxO23" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxO23" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/notepad.png" />
@@ -174,7 +182,7 @@
             </asp:Panel>
 
 
-            <asp:Panel ID="boxX18" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxX18" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/label.png" />

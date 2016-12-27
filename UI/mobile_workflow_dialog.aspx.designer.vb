@@ -11,16 +11,25 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class mobile_myprofile
+Partial Public Class mobile_workflow_dialog
 
     '''<summary>
-    '''lblUser control.
+    '''RecordHeader control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblUser As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents RecordHeader As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkBack control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkBack As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''cmdSave control.
@@ -32,76 +41,112 @@ Partial Public Class mobile_myprofile
     Protected WithEvents cmdSave As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''j03MobileForwardFlag control.
+    '''cmdCancel control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j03MobileForwardFlag As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents cmdCancel As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''j03Login control.
+    '''opgB06ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j03Login As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents opgB06ID As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
-    '''j04Name control.
+    '''panNotify control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j04Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panNotify As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Person control.
+    '''cmdAddNotifyReceiver control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Person As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdAddNotifyReceiver As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''j02Email control.
+    '''receiver1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j02Email As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents receiver1 As Global.UI.person_or_team
 
     '''<summary>
-    '''j07Name control.
+    '''panNominee control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j07Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panNominee As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Teams control.
+    '''cmdAddNominee control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Teams As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdAddNominee As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''j18Name control.
+    '''rpNominee control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j18Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents rpNominee As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''b07Value control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b07Value As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''history1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents history1 As Global.UI.mobile_workflow_history
+
+    '''<summary>
+    '''hidPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidRecordPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidRecordPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

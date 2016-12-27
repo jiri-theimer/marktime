@@ -219,19 +219,21 @@
     <Content Include="mobile_changepassword.aspx" />
     <Content Include="mobile_grid.aspx" />
     <Content Include="mobile_j02_framework.aspx" />
-    <Content Include="mobile_myprofile.aspx" />
     <Content Include="mobile_o23_framework.aspx" />
     <Content Include="mobile_p28_framework.aspx" />
     <Content Include="mobile_p31_calendar.aspx" />
     <Content Include="mobile_p31_framework.aspx" />
     <Content Include="mobile_p31_list.ascx" />
     <Content Include="mobile_p41_framework.aspx" />
+    <Content Include="mobile_p56_create.aspx" />
     <Content Include="mobile_p56_framework.aspx" />
     <Content Include="mobile_p91_framework.aspx" />
     <Content Include="mobile_report.aspx" />
     <Content Include="mobile_search.aspx" />
     <Content Include="mobile_start.aspx" />
     <Content Include="mobile_stoppage.aspx" />
+    <Content Include="mobile_workflow_dialog.aspx" />
+    <Content Include="mobile_workflow_history.ascx" />
     <Content Include="navigator.aspx" />
     <Content Include="o10_framework.aspx" />
     <Content Include="o10_record.aspx" />
@@ -342,7 +344,6 @@
     <Content Include="p35_record.aspx" />
     <Content Include="p40_record.aspx" />
     <Content Include="p41_batch.aspx" />
-    <Content Include="p41_framework_mobile.aspx" />
     <Content Include="p47_project.aspx" />
     <Content Include="p49_bind.aspx" />
     <Content Include="p49_framework.aspx" />
@@ -996,13 +997,6 @@
       <DependentUpon>mobile_j02_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="mobile_myprofile.aspx.designer.vb">
-      <DependentUpon>mobile_myprofile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="mobile_myprofile.aspx.vb">
-      <DependentUpon>mobile_myprofile.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="mobile_o23_framework.aspx.designer.vb">
       <DependentUpon>mobile_o23_framework.aspx</DependentUpon>
     </Compile>
@@ -1043,6 +1037,13 @@
     </Compile>
     <Compile Include="mobile_p41_framework.aspx.vb">
       <DependentUpon>mobile_p41_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_p56_create.aspx.designer.vb">
+      <DependentUpon>mobile_p56_create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_p56_create.aspx.vb">
+      <DependentUpon>mobile_p56_create.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="mobile_p56_framework.aspx.designer.vb">
@@ -1086,6 +1087,20 @@
     <Compile Include="mobile_stoppage.aspx.vb">
       <DependentUpon>mobile_stoppage.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_workflow_dialog.aspx.designer.vb">
+      <DependentUpon>mobile_workflow_dialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_workflow_dialog.aspx.vb">
+      <DependentUpon>mobile_workflow_dialog.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_workflow_history.ascx.designer.vb">
+      <DependentUpon>mobile_workflow_history.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_workflow_history.ascx.vb">
+      <DependentUpon>mobile_workflow_history.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="navigator.aspx.designer.vb">
       <DependentUpon>navigator.aspx</DependentUpon>
@@ -1913,13 +1928,6 @@
     </Compile>
     <Compile Include="p41_batch.aspx.vb">
       <DependentUpon>p41_batch.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p41_framework_mobile.aspx.designer.vb">
-      <DependentUpon>p41_framework_mobile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p41_framework_mobile.aspx.vb">
-      <DependentUpon>p41_framework_mobile.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p47_project.aspx.designer.vb">

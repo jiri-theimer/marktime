@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="uc" TagName="entityrole_assign_inline" Src="~/entityrole_assign_inline.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mobile_workflow_history" Src="~/mobile_workflow_history.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -32,6 +33,8 @@
                 <ul class="nav navbar-nav">                   
                     <li><a href="mobile_p31_framework.aspx?p56id=<%=Master.DataPID%>">Zapsat worksheet</a></li>
                     <li role="separator" class="divider"></li>
+                    <li><a href="mobile_workflow_dialog.aspx?prefix=p56&pid=<%=Master.DataPID%>">Posunout/doplnit</a></li>
+                    <li role="separator" class="divider"></li>
                     <li><a href="mobile_report.aspx?prefix=p56&pid=<%=Master.DataPID%>">Sestava</a></li>
                     
                     
@@ -45,7 +48,14 @@
 
     <div class="container-fluid">
         <div id="row1" class="row">
-            <div class="col-sm-6 col-md-4">
+           
+            <button type="button" data-toggle="collapse" data-target="#history">Historie</button>
+            
+            <div id="history"  class="collapse">
+                <uc:mobile_workflow_history ID="history1" runat="server" />
+            </div>
+
+            <div class="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/task.png" />
@@ -76,9 +86,10 @@
                             </td>
                             <td>
                                 <asp:Label ID="b02Name" runat="server"></asp:Label>
+                                <asp:HyperLink ID="linkWorkflow" runat="server" CssClass="btn btn-primary btn-xs" Text="Posunout/doplnit"></asp:HyperLink>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="trp56PlanFrom" runat="server">
                             <td>Plán zahájení:
                             </td>
                             <td>
@@ -90,7 +101,7 @@
                             <td>Termín:
                             </td>
                             <td>
-                                <asp:Label ID="p56PlanUntil" runat="server" CssClass="label label-danger"></asp:Label>
+                                <asp:Label ID="p56PlanUntil" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
                             </td>
                         </tr>
                         <tr>
@@ -112,7 +123,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         Popis/zadání
@@ -122,8 +133,9 @@
             </div>
 
 
+            
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     
                     <div class="caption">
@@ -134,7 +146,7 @@
                         <uc:entityrole_assign_inline ID="roles_project" runat="server" IsShowClueTip="false" IsRenderAsTable="true" EntityX29ID="p56Task" NoDataText="V úkolu nejsou přiřazeny role!"></uc:entityrole_assign_inline>
                     </table>
                     <div>
-                        <span>Vlastník:</span>
+                        <span>Vlastník záznamu:</span>
                         <asp:Label ID="Owner" runat="server"></asp:Label>
                     </div>
                     <div>
@@ -143,12 +155,12 @@
                 </div>
             </div>
 
-            <asp:Panel ID="boxP31" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxP31" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/worksheet.png" />
                         <asp:HyperLink ID="cmdP31Grid" runat="server" Text="Worksheet přehled" CssClass="alinked"></asp:HyperLink>
-                        <a href="mobile_p31_framework.aspx?source=task&p56id=<%=Master.DataPID%>" class="alinked" style="float:right;">Nový</a>                  
+                        <a href="mobile_p31_framework.aspx?source=task&p56id=<%=Master.DataPID%>" class="btn btn-primary btn-xs" style="float:right;">Nový</a>                  
                     </div>
 
                     <table cellpadding="6" class="table table-hover">
@@ -199,7 +211,7 @@
             </asp:Panel>
 
 
-            <asp:Panel ID="boxO23" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxO23" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/notepad.png" />
@@ -215,7 +227,7 @@
             </asp:Panel>
 
 
-            <asp:Panel ID="boxX18" runat="server" CssClass="col-sm-6 col-md-4">
+            <asp:Panel ID="boxX18" runat="server" CssClass="col-sm-6 col-md-4" style="padding-left:1px;padding-right:1px;">
                 <div class="thumbnail">
                     <div class="caption">
                         <img src="Images/label.png" />
@@ -228,6 +240,8 @@
 
                 </div>
             </asp:Panel>
+
+            
 
         </div>
     </div>

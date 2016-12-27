@@ -46,9 +46,7 @@
                 End If
             End If
 
-            PersonalizeMenu()
-
-
+            
         End If
     End Sub
 
@@ -56,16 +54,7 @@
 
     End Sub
 
-    Private Sub PersonalizeMenu()
-       
-        With _Factory.SysUser
-            If .Person = "" Then
-                linkMyProfile.Text = .j03Login
-            Else
-                linkMyProfile.Text = .Person
-            End If
-        End With
-    End Sub
+    
 
     Public Property PageTitle() As String
        

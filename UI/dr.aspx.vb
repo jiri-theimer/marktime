@@ -24,8 +24,9 @@
 
             With Master.Factory.SysUser
                 If .j03MobileForwardFlag = BO.j03MobileForwardFlagENUM.Auto Then bolNeedMobileUI = basUI.DetectIfMobileDefice(Request)
-                If bolNeedMobileUI Then strPage = "mobile_" & strPrefix & "_framework"
+                If bolNeedMobileUI Then strPage = "mobile_" & strPrefix & "_framework.aspx"
                 strPage += "?board=1"
+                If bolNeedMobileUI Then strPage += "&source=start"
                 Select Case strPrefix
                     Case "p56", "p41", "p28", "p91", "o23", "j02"
                         strPage += "&pid=" & strPID

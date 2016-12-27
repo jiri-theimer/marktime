@@ -30,15 +30,16 @@ Public Class navigator
         If Not Page.IsPostBack Then
            
             With Master
+                .neededPermission = BO.x53PermValEnum.GR_Navigator
                 Dim pars As New List(Of String)
                 pars.Add("navigator-navigationPane_width")
                 pars.Add("navigator-path")
                 pars.Add("navigator-bin")
 
                 With .Factory.j03UserBL
-                    .InhaleUserParams(pars)                    
+                    .InhaleUserParams(pars)
                     Dim strDefWidth As String = "420"
-                    
+
                     Dim strW As String = .GetUserParam("navigator-navigationPane_width", strDefWidth)
                     If strW = "-1" Then
                         Me.navigationPane.Collapsed = True

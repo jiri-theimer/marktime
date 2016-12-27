@@ -39,4 +39,13 @@ Partial Public Class person_or_team
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidInlineContent As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsMobile control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsMobile As Global.System.Web.UI.WebControls.HiddenField
 End Class

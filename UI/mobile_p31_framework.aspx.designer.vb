@@ -50,6 +50,15 @@ Partial Public Class mobile_p31_framework
     Protected WithEvents p41id As Global.UI.project
 
     '''<summary>
+    '''panRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRecord As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''p31Date control.
     '''</summary>
     '''<remarks>

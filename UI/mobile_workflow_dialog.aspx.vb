@@ -1,7 +1,6 @@
-﻿Public Class workflow_dialog
+﻿Public Class mobile_workflow_dialog
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As ModalForm
-
+    Protected WithEvents _MasterPage As Mobile
     Public Property CurrentPrefix As String
         Get
             Return hidPrefix.Value
@@ -19,86 +18,69 @@
         End Set
     End Property
 
-    Private Sub workflow_dialog_Init(sender As Object, e As EventArgs) Handles Me.Init
+    Private Sub mobile_workflow_dialog_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
+        receiver1.Factory = Master.Factory
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Me.upload1.Factory = Master.Factory
-        Me.uploadlist1.Factory = Master.Factory
-        receiver1.Factory = Master.Factory
-
         If Not Page.IsPostBack Then
-            ViewState("guid") = BO.BAS.GetGUID
+            ViewState("guid") = BO.BAS.GetGUID()
             Me.CurrentPrefix = Request.Item("prefix")
             Me.CurrentRecordPID = BO.BAS.IsNullInt(Request.Item("pid"))
             If Me.CurrentRecordPID = 0 Or Me.CurrentPrefix = "" Then
                 Master.StopPage("pid or prefix is missing")
             End If
-
-            Me.upload1.GUID = BO.BAS.GetGUID
-            Me.uploadlist1.GUID = Me.upload1.GUID
-
-            With Master
-                .HeaderText = "Posunout/doplnit | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID)
-                .HeaderIcon = "Images/workflow_32.png"
-                .AddToolbarButton("Potvrdit", "save", , "Images/save.png")
-            End With
+            If Not Request.UrlReferrer Is Nothing Then linkBack.NavigateUrl = Request.UrlReferrer.PathAndQuery Else linkBack.Visible = False
 
             RefreshRecord()
 
+            history1.RefreshData(Master.Factory, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID)
         End If
-
     End Sub
 
     Private Sub RefreshRecord()
+        Me.RecordHeader.Text = BO.BAS.OM3(Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID), 30)
+        Me.RecordHeader.NavigateUrl = "mobile_" & Me.CurrentPrefix & "_framework.aspx?pid=" & Me.CurrentRecordPID.ToString
+
         Dim lisRadioItems As List(Of BO.WorkflowStepPossible4User) = Master.Factory.b06WorkflowStepBL.GetPossibleWorkflowSteps4Person(Me.CurrentPrefix, Me.CurrentRecordPID, Master.Factory.SysUser.j02ID)
         For Each c In lisRadioItems
             opgB06ID.Items.Add(New ListItem(c.RadioListText, c.b06ID.ToString))
         Next
-        opgB06ID.Items.Add(New ListItem("Doplnit pouze komentář nebo nahrát přílohu", ""))
+        opgB06ID.Items.Add(New ListItem("Zapsat pouze komentář", ""))
+
+    End Sub
+
+    Private Sub cmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
+        receiver1.SaveTemp()
+
+        If opgB06ID.SelectedItem Is Nothing Then
+            Master.Notify("Musíte zvolit krok!", 2)
+            Return
+        End If
+        If BO.BAS.IsNullInt(opgB06ID.SelectedValue) = 0 Then
+            'pouze zapsat komentář
+            If SendCommentOnly() Then
+                Redirect2Source()
+            End If
+            Return
+        End If
+        Dim cB06 As BO.b06WorkflowStep = Master.Factory.b06WorkflowStepBL.Load(BO.BAS.IsNullInt(opgB06ID.SelectedValue))
+        Dim lisNominee As List(Of BO.x69EntityRole_Assign) = Nothing
+        If cB06.b06IsNominee And rpNominee.Items.Count > 0 Then
+            lisNominee = GetNomineeList()
+        End If
 
 
-        history1.RefreshData(Master.Factory, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID)
-        If history1.RowsCount = 0 Then
-            panHistory.Visible = False
+        If Master.Factory.b06WorkflowStepBL.RunWorkflowStep(cB06, Me.CurrentRecordPID, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.b07Value.Text, "", True, lisNominee) Then
+            Redirect2Source()
+        Else
+            Master.Notify(Master.Factory.b06WorkflowStepBL.ErrorMessage, NotifyLevel.ErrorMessage)
         End If
     End Sub
 
-    Private Sub upload1_AfterUploadAll() Handles upload1.AfterUploadAll
-        Me.uploadlist1.RefreshData_TEMP()
-    End Sub
-
-    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        If strButtonValue = "save" Then
-            upload1.TryUploadhWaitingFilesOnClientSide()
-            If panNominee.Visible Then SaveTempX69()
-            receiver1.SaveTemp()
-
-            If opgB06ID.SelectedItem Is Nothing Then
-                Master.Notify("Musíte zvolit krok!", 2)
-                Return
-            End If
-            If BO.BAS.IsNullInt(opgB06ID.SelectedValue) = 0 Then
-                'pouze zapsat komentář
-                If SendCommentOnly() Then
-                    Master.CloseAndRefreshParent("workflow-dialog")
-                End If
-                Return
-            End If
-            Dim cB06 As BO.b06WorkflowStep = Master.Factory.b06WorkflowStepBL.Load(BO.BAS.IsNullInt(opgB06ID.SelectedValue))
-            Dim lisNominee As List(Of BO.x69EntityRole_Assign) = Nothing
-            If cB06.b06IsNominee And rpNominee.Items.Count > 0 Then
-                lisNominee = GetNomineeList()
-            End If
-
-
-            If Master.Factory.b06WorkflowStepBL.RunWorkflowStep(cB06, Me.CurrentRecordPID, BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.b07Value.Text, upload1.GUID, True, lisNominee) Then
-                Master.CloseAndRefreshParent("workflow-dialog")
-            Else
-                Master.Notify(Master.Factory.b06WorkflowStepBL.ErrorMessage, NotifyLevel.ErrorMessage)
-            End If
-        End If
+    Private Sub Redirect2Source()
+        Response.Redirect(linkBack.NavigateUrl)
     End Sub
 
     Private Function SendCommentOnly() As Boolean
@@ -110,7 +92,7 @@
         End With
 
         With Master.Factory.b07CommentBL
-            If .Save(cRec, upload1.GUID, Me.receiver1.GetList()) Then
+            If .Save(cRec, "", Me.receiver1.GetList()) Then
                 Return True
             Else
                 Master.Notify(Master.Factory.b07CommentBL.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -119,14 +101,15 @@
         End With
     End Function
 
-    Private Sub rpNominee_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpNominee.ItemCommand
+    Private Sub cmdAddNominee_Click(sender As Object, e As EventArgs) Handles cmdAddNominee.Click
+        InsertBlankNominee()
+    End Sub
+    Private Sub InsertBlankNominee()
         SaveTempX69()
-        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
-        If e.CommandName = "delete" Then
-            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
-                RefreshTempX69()
-            End If
-        End If
+        Dim cRec As New BO.p85TempBox()
+        cRec.p85GUID = ViewState("guid")
+        Master.Factory.p85TempBoxBL.Save(cRec)
+        RefreshTempX69()
     End Sub
     Private Sub SaveTempX69()
         Dim lisTEMP As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
@@ -147,17 +130,6 @@
     Private Sub RefreshTempX69()
         rpNominee.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
         rpNominee.DataBind()
-    End Sub
-
-    Private Sub cmdAddNominee_Click(sender As Object, e As EventArgs) Handles cmdAddNominee.Click
-        InsertBlankNominee()
-    End Sub
-    Private Sub InsertBlankNominee()
-        SaveTempX69()
-        Dim cRec As New BO.p85TempBox()
-        cRec.p85GUID = ViewState("guid")
-        Master.Factory.p85TempBoxBL.Save(cRec)
-        RefreshTempX69()
     End Sub
 
     Public Function GetNomineeList() As List(Of BO.x69EntityRole_Assign)
@@ -205,12 +177,11 @@
             CType(e.Item.FindControl("img1"), Image).ImageUrl = "Images/projectrole.png"
         End If
 
-       
+
         With cRec
             CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
         End With
     End Sub
-
     Private Sub opgB06ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgB06ID.SelectedIndexChanged
         If opgB06ID.SelectedValue = "" Then
             Me.panNotify.Visible = True
@@ -231,6 +202,10 @@
     End Sub
 
     Private Sub cmdAddNotifyReceiver_Click(sender As Object, e As EventArgs) Handles cmdAddNotifyReceiver.Click
-        receiver1.AddReceiver(0, 0, False)
+        receiver1.AddReceiver(0, 0, True)
+    End Sub
+
+    Private Sub cmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click
+        Redirect2Source()
     End Sub
 End Class

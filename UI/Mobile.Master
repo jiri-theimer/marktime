@@ -232,24 +232,12 @@
                 
                     <li <%=IIf(Me.hidMenuPrefix.Value = "search", "class='active'", "")%>><a href="mobile_search.aspx">NAJÍT</a></li>
                                        
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "p31", "class='active'", "")%>><a href="mobile_p31_calendar.aspx">WORKSHEET</a></li>
-                    <%If _Factory.SysUser.j04IsMenu_Project Then%>
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "p41", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p41">PROJEKTY</a></li>
-                    <%End If%>
-                    <%If _Factory.SysUser.j04IsMenu_Contact Then%>
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "p28", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p28">KLIENTI</a></li>
-                    <%End If%>
-                    <%If _Factory.SysUser.j04IsMenu_Invoice Then%>
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "p91", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p91">FAKTURY</a></li>
-                    <%End If%>
                     
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "p56", "class='active'", "")%>><a href="mobile_grid.aspx?prefix=p56">ÚKOLY</a></li>
+                   
                     <%If _Factory.SysUser.j04IsMenu_Report Then%>
                     <li <%=IIf(Me.hidMenuPrefix.Value = "report", "class='active'", "")%>><a href="javascript:rp('mobile_report.aspx')">SESTAVY</a></li>
                     <%End If%>
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "myprofile", "class='active'", "")%>>
-                        <asp:HyperLink ID="linkMyProfile" runat="server" NavigateUrl="mobile_myprofile.aspx"></asp:HyperLink>
-                    </li>
+                   
                     
                     <li><a href="mobile_changepassword.aspx">ZMĚNIT HESLO</a></li>
                     <li class="divider" role="separator"></li>

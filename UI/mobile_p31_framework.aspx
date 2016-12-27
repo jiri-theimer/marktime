@@ -103,7 +103,7 @@
 
 
 
-    <div class="panel panel-default">        
+    <asp:panel ID="panRecord" runat="server"  CssClass="panel panel-default">        
         <div class="panel-body">
 
             <div>
@@ -203,7 +203,7 @@
 
 
         </div>
-    </div>
+    </asp:panel>
 
     <a id="record_message"></a>
     <asp:Panel ID="panMessage" runat="server" CssClass="alert alert-danger" role="alert" Visible="false">

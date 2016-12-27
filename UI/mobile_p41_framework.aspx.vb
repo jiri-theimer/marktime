@@ -183,11 +183,7 @@
         'mq.DateFrom = period1.DateFrom
         'mq.DateUntil = period1.DateUntil
         mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
-        If opgWorksheetState.SelectedValue = "2" Then
-            mq.QuickQuery = BO.myQueryP31_QuickQuery.Invoiced
-        Else
-            mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
-        End If
+        mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
 
         Dim lis As IEnumerable(Of BO.p31WorksheetBigSummary) = Master.Factory.p31WorksheetBL.GetList_BigSummary(mq)
         
@@ -195,15 +191,13 @@
             worksheet1.Visible = False
         Else
             worksheet1.Visible = True
-            worksheet1.RefreshData(lis, Me.opgWorksheetState.SelectedIndex + 1)
+            worksheet1.RefreshData(lis, 1)
 
         End If
 
     End Sub
 
-    Private Sub opgWorksheetState_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgWorksheetState.SelectedIndexChanged
-        RefreshP31Summary()
-    End Sub
+    
 
     Private Sub Handle_Permissions(cRec As BO.p41Project)
         Dim cDisp As BO.p41RecordDisposition = Master.Factory.p41ProjectBL.InhaleRecordDisposition(cRec)
