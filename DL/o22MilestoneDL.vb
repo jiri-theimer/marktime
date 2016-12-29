@@ -43,7 +43,9 @@
             pars.Add("o22DateUntil", BO.BAS.IsNullDBDate(.o22DateUntil), DbType.DateTime)
             pars.Add("o22IsAllDay", .o22IsAllDay, DbType.Boolean)
             pars.Add("o22ReminderDate", BO.BAS.IsNullDBDate(.o22ReminderDate), DbType.DateTime)
-
+            pars.Add("o22IsNoNotify", .o22IsNoNotify, DbType.Boolean)
+            If .o22MilestoneGUID = "" Then .o22MilestoneGUID = BO.BAS.GetGUID
+            pars.Add("o22MilestoneGUID", .o22MilestoneGUID, DbType.String)
             pars.Add("o22validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("o22validuntil", .ValidUntil, DbType.DateTime)
 
@@ -131,18 +133,25 @@
             End If
             If .p41ID <> 0 Then
                 pars.Add("p41id", .p41ID, DbType.Int32)
-                strW += " AND a.p41ID=@p41id"
+                If Not .IsIncludeChildProjects Then
+                    strW += " AND a.p41ID=@p41id"
+                Else
+                    strW += " AND (a.p41ID=@p41id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID=@p41id) AND (select p41TreeNext FROM p41Project WHERE p41ID=@p41id)))"
+                End If
             End If
+
             If .p28ID <> 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)
                 strW += " AND (a.p28ID=@p28id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p28ID_Client=@p28id))"
             End If
-            If .j02ID <> 0 Then
-                pars.Add("j02id", .j02ID, DbType.Int32)
-                strW += " AND (a.j02ID=@j02id OR a.o22ID IN (SELECT o22ID FROM o20Milestone_Receiver WHERE j02ID=@j02id OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id)))"
+            If Not .j02IDs Is Nothing Then
+                If .j02IDs.Count > 0 Then
+                    strW += " AND (a.j02ID IN (" & String.Join(",", .j02IDs) & ") OR a.o22ID IN (SELECT o22ID FROM o20Milestone_Receiver WHERE j02ID IN (" & String.Join(",", .j02IDs) & ") OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID IN (" & String.Join(",", .j02IDs) & "))))"
+                End If
             End If
+
             If .p91ID <> 0 Then
-                pars.Add("p91id", .j02ID, DbType.Int32)
+                pars.Add("p91id", .p91ID, DbType.Int32)
                 strW += " AND a.p91ID=@p91id"
             End If
             

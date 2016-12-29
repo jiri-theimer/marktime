@@ -39,6 +39,10 @@
             $('.show_hide1').click(function () {
                 $(".slidingDiv1").slideToggle();
             });
+            <%If hidIsLoadingSetting.Value = "1" Then%>
+            $('.show_hide1').click();
+            document.getElementById("<%=hidIsLoadingSetting.ClientID%>").value = "";
+            <%End if%>
 
 
             var h1 = new Number;
@@ -297,9 +301,13 @@
             <asp:Panel ID="panMasterRecord" runat="server" CssClass="div6">
                 <asp:Image ID="imgMaster" runat="server" />
                 <asp:HyperLink ID="MasterRecord" runat="server" Target="_top"></asp:HyperLink>
+                <div>
+                    <asp:checkbox ID="chkIncludeChilds" runat="server" Text="Zahrnout i pod-projekty" Visible="false" CssClass="chk" AutoPostBack="true" />
+                </div>
             </asp:Panel>
             <div class="div6">
-                <asp:Label ID="Persons" runat="server" CssClass="valbold"></asp:Label>
+                <asp:CheckBox ID="chkAllPersons" runat="server" AutoPostBack="true" Text="Kalendáře všech osob" CssClass="chk" Checked="true" />
+                <div><asp:Label ID="Persons" runat="server" CssClass="valbold"></asp:Label></div>
             </div>
 
 
@@ -489,6 +497,6 @@
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-
+    <asp:HiddenField ID="hidIsLoadingSetting" runat="server" Value="" />
 </asp:Content>
 

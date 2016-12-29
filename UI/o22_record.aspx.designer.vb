@@ -257,6 +257,15 @@ Partial Public Class o22_record
     Protected WithEvents o22Description As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''o22IsNoNotify control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o22IsNoNotify As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''lblOwner control.
     '''</summary>
     '''<remarks>

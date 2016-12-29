@@ -36036,14 +36036,14 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Date</name>
+    <name>j19ID</name>
     <id>1680725040</id>
-    <xtype>61</xtype>
+    <xtype>56</xtype>
     <typestat>0</typestat>
-    <xusertype>61</xusertype>
-    <length>8</length>
-    <xprec>23</xprec>
-    <xscale>3</xscale>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
     <colid>21</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -36054,6 +36054,39 @@
     <number>0</number>
     <colorder>21</colorder>
     <offset>-17</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>p31Worksheet</TableName>
+  </Table>
+  <Table>
+    <name>p31Date</name>
+    <id>1680725040</id>
+    <xtype>61</xtype>
+    <typestat>0</typestat>
+    <xusertype>61</xusertype>
+    <length>8</length>
+    <xprec>23</xprec>
+    <xscale>3</xscale>
+    <colid>22</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>22</colorder>
+    <offset>-18</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -36077,7 +36110,7 @@
     <length>40</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>22</colid>
+    <colid>23</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -36085,8 +36118,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>22</colorder>
-    <offset>-18</offset>
+    <colorder>23</colorder>
+    <offset>-19</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -36110,7 +36143,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>23</colid>
+    <colid>24</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -36118,7 +36151,7 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>23</colorder>
+    <colorder>24</colorder>
     <offset>18</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -36143,7 +36176,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>24</colid>
+    <colid>25</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -36151,8 +36184,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>24</colorder>
-    <offset>-19</offset>
+    <colorder>25</colorder>
+    <offset>-20</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -36176,7 +36209,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>25</colid>
+    <colid>26</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -36184,7 +36217,7 @@
     <cdefault>1712725154</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>25</colorder>
+    <colorder>26</colorder>
     <offset>22</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -36208,7 +36241,7 @@
     <length>2000</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>26</colid>
+    <colid>27</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -36216,8 +36249,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>26</colorder>
-    <offset>-20</offset>
+    <colorder>27</colorder>
+    <offset>-21</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -36234,38 +36267,6 @@
   </Table>
   <Table>
     <name>p31Value_Orig</name>
-    <id>1680725040</id>
-    <xtype>62</xtype>
-    <typestat>0</typestat>
-    <xusertype>62</xusertype>
-    <length>8</length>
-    <xprec>53</xprec>
-    <xscale>0</xscale>
-    <colid>27</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>27</colorder>
-    <offset>-21</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>109</type>
-    <usertype>8</usertype>
-    <prec>53</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>float</type_name>
-    <TableName>p31Worksheet</TableName>
-  </Table>
-  <Table>
-    <name>p31Value_Trimmed</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36297,7 +36298,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Value_Approved_Billing</name>
+    <name>p31Value_Trimmed</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36329,7 +36330,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Value_Approved_Internal</name>
+    <name>p31Value_Approved_Billing</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36361,7 +36362,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Value_Invoiced</name>
+    <name>p31Value_Approved_Internal</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36393,7 +36394,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithoutVat_Orig</name>
+    <name>p31Value_Invoiced</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36425,7 +36426,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithVat_Orig</name>
+    <name>p31Amount_WithoutVat_Orig</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36457,7 +36458,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_Vat_Orig</name>
+    <name>p31Amount_WithVat_Orig</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36489,7 +36490,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31VatRate_Orig</name>
+    <name>p31Amount_Vat_Orig</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36521,7 +36522,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithoutVat_FixedCurrency</name>
+    <name>p31VatRate_Orig</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36553,7 +36554,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithoutVat_Invoiced</name>
+    <name>p31Amount_WithoutVat_FixedCurrency</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36585,7 +36586,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithVat_Invoiced</name>
+    <name>p31Amount_WithoutVat_Invoiced</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36617,7 +36618,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_Vat_Invoiced</name>
+    <name>p31Amount_WithVat_Invoiced</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36649,7 +36650,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31VatRate_Invoiced</name>
+    <name>p31Amount_Vat_Invoiced</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36681,7 +36682,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithoutVat_Invoiced_Domestic</name>
+    <name>p31VatRate_Invoiced</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36713,7 +36714,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithVat_Invoiced_Domestic</name>
+    <name>p31Amount_WithoutVat_Invoiced_Domestic</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36745,7 +36746,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_Vat_Invoiced_Domestic</name>
+    <name>p31Amount_WithVat_Invoiced_Domestic</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -36777,13 +36778,13 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Minutes_Orig</name>
+    <name>p31Amount_Vat_Invoiced_Domestic</name>
     <id>1680725040</id>
-    <xtype>56</xtype>
+    <xtype>62</xtype>
     <typestat>0</typestat>
-    <xusertype>56</xusertype>
-    <length>4</length>
-    <xprec>10</xprec>
+    <xusertype>62</xusertype>
+    <length>8</length>
+    <xprec>53</xprec>
     <xscale>0</xscale>
     <colid>44</colid>
     <xoffset>0</xoffset>
@@ -36798,19 +36799,18 @@
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
-    <type>38</type>
-    <usertype>7</usertype>
-    <prec>10</prec>
-    <scale>0</scale>
+    <type>109</type>
+    <usertype>8</usertype>
+    <prec>53</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
     <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>int</type_name>
+    <type_name>float</type_name>
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Minutes_Trimmed</name>
+    <name>p31Minutes_Orig</name>
     <id>1680725040</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -36843,7 +36843,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Minutes_Approved_Billing</name>
+    <name>p31Minutes_Trimmed</name>
     <id>1680725040</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -36876,7 +36876,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Minutes_Approved_Internal</name>
+    <name>p31Minutes_Approved_Billing</name>
     <id>1680725040</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -36909,7 +36909,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Minutes_Invoiced</name>
+    <name>p31Minutes_Approved_Internal</name>
     <id>1680725040</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -36942,13 +36942,13 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31HHMM_Orig</name>
+    <name>p31Minutes_Invoiced</name>
     <id>1680725040</id>
-    <xtype>167</xtype>
-    <typestat>2</typestat>
-    <xusertype>167</xusertype>
-    <length>10</length>
-    <xprec>0</xprec>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
     <xscale>0</xscale>
     <colid>49</colid>
     <xoffset>0</xoffset>
@@ -36960,22 +36960,22 @@
     <number>0</number>
     <colorder>49</colorder>
     <offset>-43</offset>
-    <collationid>53252</collationid>
+    <collationid>0</collationid>
     <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>2</usertype>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
     <prec>10</prec>
+    <scale>0</scale>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>varchar</type_name>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31HHMM_Trimmed</name>
+    <name>p31HHMM_Orig</name>
     <id>1680725040</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -37008,7 +37008,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31HHMM_Approved_Billing</name>
+    <name>p31HHMM_Trimmed</name>
     <id>1680725040</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -37041,7 +37041,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31HHMM_Approved_Internal</name>
+    <name>p31HHMM_Approved_Billing</name>
     <id>1680725040</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -37074,7 +37074,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31HHMM_Invoiced</name>
+    <name>p31HHMM_Approved_Internal</name>
     <id>1680725040</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -37107,13 +37107,13 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Rate_Billing_Orig</name>
+    <name>p31HHMM_Invoiced</name>
     <id>1680725040</id>
-    <xtype>62</xtype>
-    <typestat>0</typestat>
-    <xusertype>62</xusertype>
-    <length>8</length>
-    <xprec>53</xprec>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>10</length>
+    <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>54</colid>
     <xoffset>0</xoffset>
@@ -37125,21 +37125,22 @@
     <number>0</number>
     <colorder>54</colorder>
     <offset>-48</offset>
-    <collationid>0</collationid>
+    <collationid>53252</collationid>
     <language>0</language>
-    <status>8</status>
-    <type>109</type>
-    <usertype>8</usertype>
-    <prec>53</prec>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>10</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>float</type_name>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Rate_Internal_Orig</name>
+    <name>p31Rate_Billing_Orig</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37171,7 +37172,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Rate_Billing_Approved</name>
+    <name>p31Rate_Internal_Orig</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37203,7 +37204,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Rate_Internal_Approved</name>
+    <name>p31Rate_Billing_Approved</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37235,7 +37236,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Rate_Billing_Invoiced</name>
+    <name>p31Rate_Internal_Approved</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37267,7 +37268,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithoutVat_Approved</name>
+    <name>p31Rate_Billing_Invoiced</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37299,7 +37300,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_WithVat_Approved</name>
+    <name>p31Amount_WithoutVat_Approved</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37331,7 +37332,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_Vat_Approved</name>
+    <name>p31Amount_WithVat_Approved</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37363,7 +37364,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31VatRate_Approved</name>
+    <name>p31Amount_Vat_Approved</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37395,7 +37396,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_Internal</name>
+    <name>p31VatRate_Approved</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37427,7 +37428,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Amount_Internal_Approved</name>
+    <name>p31Amount_Internal</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37459,7 +37460,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31ExchangeRate_Domestic</name>
+    <name>p31Amount_Internal_Approved</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37491,7 +37492,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31ExchangeRate_Invoice</name>
+    <name>p31ExchangeRate_Domestic</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37523,7 +37524,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31ExchangeRate_Fixed</name>
+    <name>p31ExchangeRate_Invoice</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37555,14 +37556,14 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31DateTimeFrom_Orig</name>
+    <name>p31ExchangeRate_Fixed</name>
     <id>1680725040</id>
-    <xtype>61</xtype>
+    <xtype>62</xtype>
     <typestat>0</typestat>
-    <xusertype>61</xusertype>
+    <xusertype>62</xusertype>
     <length>8</length>
-    <xprec>23</xprec>
-    <xscale>3</xscale>
+    <xprec>53</xprec>
+    <xscale>0</xscale>
     <colid>68</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -37576,19 +37577,18 @@
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
-    <type>111</type>
-    <usertype>12</usertype>
-    <prec>23</prec>
-    <scale>3</scale>
+    <type>109</type>
+    <usertype>8</usertype>
+    <prec>53</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
     <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>datetime</type_name>
+    <type_name>float</type_name>
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31DateTimeUntil_Orig</name>
+    <name>p31DateTimeFrom_Orig</name>
     <id>1680725040</id>
     <xtype>61</xtype>
     <typestat>0</typestat>
@@ -37621,14 +37621,14 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Value_Orig_Entried</name>
+    <name>p31DateTimeUntil_Orig</name>
     <id>1680725040</id>
-    <xtype>167</xtype>
-    <typestat>2</typestat>
-    <xusertype>167</xusertype>
-    <length>20</length>
-    <xprec>0</xprec>
-    <xscale>0</xscale>
+    <xtype>61</xtype>
+    <typestat>0</typestat>
+    <xusertype>61</xusertype>
+    <length>8</length>
+    <xprec>23</xprec>
+    <xscale>3</xscale>
     <colid>70</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -37639,6 +37639,39 @@
     <number>0</number>
     <colorder>70</colorder>
     <offset>-64</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>111</type>
+    <usertype>12</usertype>
+    <prec>23</prec>
+    <scale>3</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>datetime</type_name>
+    <TableName>p31Worksheet</TableName>
+  </Table>
+  <Table>
+    <name>p31Value_Orig_Entried</name>
+    <id>1680725040</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>20</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>71</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>71</colorder>
+    <offset>-65</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -37655,38 +37688,6 @@
   </Table>
   <Table>
     <name>p31Hours_Orig</name>
-    <id>1680725040</id>
-    <xtype>62</xtype>
-    <typestat>0</typestat>
-    <xusertype>62</xusertype>
-    <length>8</length>
-    <xprec>53</xprec>
-    <xscale>0</xscale>
-    <colid>71</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>71</colorder>
-    <offset>-65</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>109</type>
-    <usertype>8</usertype>
-    <prec>53</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>float</type_name>
-    <TableName>p31Worksheet</TableName>
-  </Table>
-  <Table>
-    <name>p31Hours_Trimmed</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37718,7 +37719,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Hours_Approved_Billing</name>
+    <name>p31Hours_Trimmed</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37750,7 +37751,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Hours_Approved_Internal</name>
+    <name>p31Hours_Approved_Billing</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37782,7 +37783,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Hours_Invoiced</name>
+    <name>p31Hours_Approved_Internal</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -37814,6 +37815,38 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
+    <name>p31Hours_Invoiced</name>
+    <id>1680725040</id>
+    <xtype>62</xtype>
+    <typestat>0</typestat>
+    <xusertype>62</xusertype>
+    <length>8</length>
+    <xprec>53</xprec>
+    <xscale>0</xscale>
+    <colid>76</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>76</colorder>
+    <offset>-70</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>109</type>
+    <usertype>8</usertype>
+    <prec>53</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>float</type_name>
+    <TableName>p31Worksheet</TableName>
+  </Table>
+  <Table>
     <name>p31IsInvoiceManual</name>
     <id>1680725040</id>
     <xtype>104</xtype>
@@ -37822,7 +37855,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>76</colid>
+    <colid>77</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -37830,7 +37863,7 @@
     <cdefault>1728725211</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>76</colorder>
+    <colorder>77</colorder>
     <offset>22</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -37854,7 +37887,7 @@
     <length>8</length>
     <xprec>53</xprec>
     <xscale>0</xscale>
-    <colid>77</colid>
+    <colid>78</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -37862,8 +37895,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>77</colorder>
-    <offset>-70</offset>
+    <colorder>78</colorder>
+    <offset>-71</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -37886,7 +37919,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>78</colid>
+    <colid>79</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -37894,8 +37927,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>78</colorder>
-    <offset>-71</offset>
+    <colorder>79</colorder>
+    <offset>-72</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -37919,7 +37952,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>79</colid>
+    <colid>80</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -37927,8 +37960,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>79</colorder>
-    <offset>-72</offset>
+    <colorder>80</colorder>
+    <offset>-73</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -37952,7 +37985,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>80</colid>
+    <colid>81</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -37960,7 +37993,7 @@
     <cdefault>1744725268</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>80</colorder>
+    <colorder>81</colorder>
     <offset>23</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -37985,7 +38018,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>81</colid>
+    <colid>82</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -37993,8 +38026,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>81</colorder>
-    <offset>-73</offset>
+    <colorder>82</colorder>
+    <offset>-74</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>16</status>
@@ -38018,7 +38051,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>82</colid>
+    <colid>83</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -38026,7 +38059,7 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>82</colorder>
+    <colorder>83</colorder>
     <offset>31</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -38051,7 +38084,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>83</colid>
+    <colid>84</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -38059,8 +38092,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>83</colorder>
-    <offset>-74</offset>
+    <colorder>84</colorder>
+    <offset>-75</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>16</status>
@@ -38084,7 +38117,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>84</colid>
+    <colid>85</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -38092,7 +38125,7 @@
     <cdefault>1760725325</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>84</colorder>
+    <colorder>85</colorder>
     <offset>39</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -38117,7 +38150,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>85</colid>
+    <colid>86</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -38125,7 +38158,7 @@
     <cdefault>1776725382</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>85</colorder>
+    <colorder>86</colorder>
     <offset>47</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -38143,38 +38176,6 @@
   </Table>
   <Table>
     <name>p31AKDS_FPR_BODY</name>
-    <id>1680725040</id>
-    <xtype>62</xtype>
-    <typestat>0</typestat>
-    <xusertype>62</xusertype>
-    <length>8</length>
-    <xprec>53</xprec>
-    <xscale>0</xscale>
-    <colid>86</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>86</colorder>
-    <offset>-75</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>109</type>
-    <usertype>8</usertype>
-    <prec>53</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>float</type_name>
-    <TableName>p31Worksheet</TableName>
-  </Table>
-  <Table>
-    <name>p31AKDS_FPR_PODIL</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -38206,7 +38207,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31AKDS_FPR_OBRAT</name>
+    <name>p31AKDS_FPR_PODIL</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -38238,7 +38239,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31AKDS_FPR_OBRAT_FixedCurrency</name>
+    <name>p31AKDS_FPR_OBRAT</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -38270,7 +38271,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Calc_Pieces</name>
+    <name>p31AKDS_FPR_OBRAT_FixedCurrency</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -38302,7 +38303,7 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31Calc_PieceAmount</name>
+    <name>p31Calc_Pieces</name>
     <id>1680725040</id>
     <xtype>62</xtype>
     <typestat>0</typestat>
@@ -38334,13 +38335,13 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p35ID</name>
+    <name>p31Calc_PieceAmount</name>
     <id>1680725040</id>
-    <xtype>56</xtype>
+    <xtype>62</xtype>
     <typestat>0</typestat>
-    <xusertype>56</xusertype>
-    <length>4</length>
-    <xprec>10</xprec>
+    <xusertype>62</xusertype>
+    <length>8</length>
+    <xprec>53</xprec>
     <xscale>0</xscale>
     <colid>92</colid>
     <xoffset>0</xoffset>
@@ -38352,6 +38353,38 @@
     <number>0</number>
     <colorder>92</colorder>
     <offset>-81</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>109</type>
+    <usertype>8</usertype>
+    <prec>53</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>float</type_name>
+    <TableName>p31Worksheet</TableName>
+  </Table>
+  <Table>
+    <name>p35ID</name>
+    <id>1680725040</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>93</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>93</colorder>
+    <offset>-82</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -38375,7 +38408,7 @@
     <length>100</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>93</colid>
+    <colid>94</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -38383,8 +38416,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>93</colorder>
-    <offset>-82</offset>
+    <colorder>94</colorder>
+    <offset>-83</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -38401,39 +38434,6 @@
   </Table>
   <Table>
     <name>o23ID_First</name>
-    <id>1680725040</id>
-    <xtype>56</xtype>
-    <typestat>0</typestat>
-    <xusertype>56</xusertype>
-    <length>4</length>
-    <xprec>10</xprec>
-    <xscale>0</xscale>
-    <colid>94</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>94</colorder>
-    <offset>-83</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>38</type>
-    <usertype>7</usertype>
-    <prec>10</prec>
-    <scale>0</scale>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>int</type_name>
-    <TableName>p31Worksheet</TableName>
-  </Table>
-  <Table>
-    <name>j02ID_ContactPerson</name>
     <id>1680725040</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -38466,13 +38466,13 @@
     <TableName>p31Worksheet</TableName>
   </Table>
   <Table>
-    <name>p31ExternalPID</name>
+    <name>j02ID_ContactPerson</name>
     <id>1680725040</id>
-    <xtype>167</xtype>
-    <typestat>2</typestat>
-    <xusertype>167</xusertype>
-    <length>200</length>
-    <xprec>0</xprec>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
     <xscale>0</xscale>
     <colid>96</colid>
     <xoffset>0</xoffset>
@@ -38484,6 +38484,39 @@
     <number>0</number>
     <colorder>96</colorder>
     <offset>-85</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>p31Worksheet</TableName>
+  </Table>
+  <Table>
+    <name>p31ExternalPID</name>
+    <id>1680725040</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>200</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>97</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>97</colorder>
+    <offset>-86</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -45518,6 +45551,39 @@
     <number>0</number>
     <colorder>92</colorder>
     <offset>-81</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>p31Worksheet_Temp</TableName>
+  </Table>
+  <Table>
+    <name>j19ID</name>
+    <id>398624463</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>93</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>93</colorder>
+    <offset>-82</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>

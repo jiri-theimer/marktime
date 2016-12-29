@@ -91,7 +91,7 @@
                 <asp:Label ID="lblDateUntil" Text="Konec:" runat="server" AssociatedControlID="o22DateUntil" CssClass="lbl"></asp:Label>
             </td>
             <td>
-                <telerik:RadDateTimePicker ID="o22DateUntil" runat="server"  Width="190px" SharedCalendarID="SharedCalendar">
+                <telerik:RadDateTimePicker ID="o22DateUntil" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
                     <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                     <TimePopupButton Visible="true" />
                     <TimeView StartTime="06:00" EndTime="23:59" ShowHeader="false" ShowFooter="false"></TimeView>
@@ -113,7 +113,7 @@
             <td>
                 <asp:Label ID="lblo22ReminderDate" Text="Čas připomenutí:" runat="server" AssociatedControlID="o22ReminderDate" CssClass="lbl"></asp:Label></td>
             <td>
-                <telerik:RadDateTimePicker ID="o22ReminderDate" runat="server"  Width="190px" SharedCalendarID="SharedCalendar">
+                <telerik:RadDateTimePicker ID="o22ReminderDate" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
                     <DateInput ID="DateInput3" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                     <TimePopupButton Visible="true" />
                     <TimeView runat="server" StartTime="06:00" EndTime="23:59" ShowHeader="false" ShowFooter="false"></TimeView>
@@ -178,7 +178,10 @@
         <div class="content">
             <asp:TextBox ID="o22Description" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
         </div>
-        
+
+    </div>
+    <div class="div6">
+        <asp:CheckBox ID="o22IsNoNotify" runat="server" Text="V události vypnout automatické e-mail notifikace" CssClass="chk" />
     </div>
     <table cellpadding="5" cellspacing="2">
         <tr>
@@ -195,8 +198,8 @@
 
     <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
         <SpecialDays>
-                    <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
-                </SpecialDays>
+            <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
+        </SpecialDays>
     </telerik:RadCalendar>
     <asp:HiddenField ID="hidX29ID" runat="server" />
     <asp:HiddenField ID="hidMasterDataPID" runat="server" />

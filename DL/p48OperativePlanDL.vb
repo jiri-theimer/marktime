@@ -40,7 +40,11 @@
             End If
             If .p41ID > 0 Then
                 pars.Add("p41id", .p41ID, DbType.Int32)
-                strW += " AND (a.p41ID=@p41id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41ParentID=@p41id))"
+                If Not .IsIncludeChildProjects Then
+                    strW += " AND a.p41ID=@p41id"
+                Else
+                    strW += " AND (a.p41ID=@p41id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID=@p41id) AND (select p41TreeNext FROM p41Project WHERE p41ID=@p41id)))"
+                End If
             End If
             If .p28ID > 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)

@@ -25,6 +25,7 @@ Public Class myQueryP56
     Public Property p57ID As Integer
     Public Property p58ID As Integer
     Public Property p41ID As Integer
+    Public Property IsIncludeChildProjects As Boolean = False  'zda zahrnout pod-projekty
     Public Property o22ID As Integer
     Public Property b02ID As Integer
     Public Property p28ID As Integer

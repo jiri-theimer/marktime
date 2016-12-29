@@ -74,6 +74,7 @@ Public Class entity_scheduler
                 If Request.Item("masterpid") <> "" Then
                     Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
                 End If
+                ViewState("loading_setting") = "0"
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("entity_scheduler-view")
@@ -89,6 +90,8 @@ Public Class entity_scheduler
                     .Add("entity_scheduler-p56")
                     .Add("entity_scheduler-newrec_prefix")
                     .Add("entity_scheduler-agendadays")
+                    .Add("entity_scheduler-include_childs")
+                    .Add("entity_scheduler-allpersons")
                 End With
 
                 With .Factory.j03UserBL
@@ -109,7 +112,8 @@ Public Class entity_scheduler
                     Me.chkSetting_P48.Checked = .GetUserParam("entity_scheduler-p48", "1")
                     Me.chkSetting_O22.Checked = .GetUserParam("entity_scheduler-o22", "1")
                     Me.chkSetting_P56.Checked = .GetUserParam("entity_scheduler-p56", "1")
-
+                    Me.chkIncludeChilds.Checked = BO.BAS.BG(.GetUserParam("entity_scheduler-include_childs"))
+                    Me.chkAllPersons.Checked = BO.BAS.BG(.GetUserParam("entity_scheduler-allpersons", "1"))
                 End With
 
 
@@ -212,11 +216,7 @@ Public Class entity_scheduler
             .MultiDayView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_multidays.SelectedValue)
             .Localization.HeaderMultiDay = "Multi-den (" & .MultiDayView.NumberOfDays.ToString & ")"
             .AgendaView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_agendadays.SelectedValue)
-            ''If .SelectedView = SchedulerViewType.MonthView Then
-            ''    .RowHeight = Unit.Parse("40px")
-            ''Else
-            ''    .RowHeight = Nothing
-            ''End If
+           
         End With
         Dim d1 As Date = scheduler1.VisibleRangeStart.AddDays(-1), d2 As Date = scheduler1.VisibleRangeEnd.AddDays(1)
         
@@ -229,8 +229,13 @@ Public Class entity_scheduler
                     mq.p28ID = Me.CurrentMasterPID
                 Case BO.x29IdEnum.p41Project
                     mq.p41ID = Me.CurrentMasterPID
+                    mq.IsIncludeChildProjects = Me.chkIncludeChilds.Checked
                 Case BO.x29IdEnum.j02Person
-                    mq.j02ID = Me.CurrentMasterPID
+                    mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case Else
+                    If Not chkAllPersons.Checked Then
+                        mq.j02IDs = Me.CurrentJ02IDs
+                    End If
             End Select
             mq.DateFrom = d1 : mq.DateUntil = d2
             Dim lis As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList(mq)
@@ -280,8 +285,13 @@ Public Class entity_scheduler
                     mq.p28ID = Me.CurrentMasterPID
                 Case BO.x29IdEnum.p41Project
                     mq.p41ID = Me.CurrentMasterPID
+                    mq.IsIncludeChildProjects = Me.chkIncludeChilds.Checked
                 Case BO.x29IdEnum.j02Person
                     mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+                Case Else
+                    If Not chkAllPersons.Checked Then
+                        mq.j02IDs = Me.CurrentJ02IDs
+                    End If
             End Select
             mq.DateFrom = d1 : mq.DateUntil = d2
             Dim lis As IEnumerable(Of BO.p48OperativePlan) = Master.Factory.p48OperativePlanBL.GetList(mq)
@@ -347,8 +357,11 @@ Public Class entity_scheduler
                     mq.p28ID = Me.CurrentMasterPID
                 Case BO.x29IdEnum.p41Project
                     mq.p41ID = Me.CurrentMasterPID
+                    mq.IsIncludeChildProjects = Me.chkIncludeChilds.Checked
                 Case BO.x29IdEnum.j02Person
                     mq.j02ID = Me.CurrentMasterPID
+                Case Else
+                    
             End Select
             mq.p56PlanUntil_D1 = d1 : mq.p56PlanUntil_D2 = d2
             Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq)
@@ -383,27 +396,33 @@ Public Class entity_scheduler
                 .Text = Master.Factory.GetRecordCaption(Me.CurrentMasterX29ID, Me.CurrentMasterPID)
                 If .Text.Length > 37 Then .Text = Left(.Text, 35) & "..."
             End With
+            chkAllPersons.Visible = False
+            panPersonScope.Visible = False
+            Me.Persons.Text = ""
             Select Case Me.CurrentMasterPrefix
                 Case "p41"
                     imgMaster.ImageUrl = "Images/project.png"
+                    chkIncludeChilds.Visible = True
                 Case "p28"
                     imgMaster.ImageUrl = "Images/contact.png"
                 Case "j02"
                     imgMaster.ImageUrl = "Images/person.png"
-                    panPersonScope.Visible = False
-                    Me.Persons.Text = ""
             End Select
         Else
+            chkAllPersons.Visible = True
+            panPersonScope.Visible = True
             panMasterRecord.Visible = False
         End If
 
     End Sub
     Private Sub cmdAppendJ02IDs_Click(sender As Object, e As EventArgs) Handles cmdAppendJ02IDs.Click
         Handle_ChangeJ02IDs(True)
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub cmdReplaceJ02IDs_Click(sender As Object, e As EventArgs) Handles cmdReplaceJ02IDs.Click
         Handle_ChangeJ02IDs(False)
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub scheduler1_NavigationComplete(sender As Object, e As SchedulerNavigationCompleteEventArgs) Handles scheduler1.NavigationComplete
@@ -432,18 +451,20 @@ Public Class entity_scheduler
     Private Sub entity_scheduler_dayendtime_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_dayendtime.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-dayendtime", Me.entity_scheduler_dayendtime.SelectedValue)
         RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub entity_scheduler_daystarttime_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_daystarttime.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-daystarttime", Me.entity_scheduler_daystarttime.SelectedValue)
         RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub p31_scheduler_multidays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_multidays.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-multidays", Me.entity_scheduler_multidays.SelectedValue)
         Me.CurrentView = SchedulerViewType.MultiDayView
         RefreshData(False)
-
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub cmdExportICalendar_Click(sender As Object, e As EventArgs) Handles cmdExportICalendar.Click
@@ -464,16 +485,19 @@ Public Class entity_scheduler
     Private Sub chkSetting_P48_CheckedChanged(sender As Object, e As EventArgs) Handles chkSetting_P48.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-p48", BO.BAS.GB(Me.chkSetting_P48.Checked))
         RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub chkSetting_O22_CheckedChanged(sender As Object, e As EventArgs) Handles chkSetting_O22.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-o22", BO.BAS.GB(Me.chkSetting_O22.Checked))
         RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub chkSetting_P56_CheckedChanged(sender As Object, e As EventArgs) Handles chkSetting_P56.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-p56", BO.BAS.GB(Me.chkSetting_P56.Checked))
         RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
     End Sub
 
     Private Sub cbxNewRecType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxNewRecType.SelectedIndexChanged
@@ -484,6 +508,25 @@ Public Class entity_scheduler
     Private Sub entity_scheduler_agendadays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_agendadays.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-agendadays", Me.entity_scheduler_agendadays.SelectedValue)
         RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
+    End Sub
 
+    Private Sub chkIncludeChilds_CheckedChanged(sender As Object, e As EventArgs) Handles chkIncludeChilds.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-include_childs", BO.BAS.GB(Me.chkIncludeChilds.Checked))
+        RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
+    End Sub
+
+    Private Sub chkAllPersons_CheckedChanged(sender As Object, e As EventArgs) Handles chkAllPersons.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-allpersons", BO.BAS.GB(Me.chkAllPersons.Checked))
+        RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
+    End Sub
+
+    Private Sub entity_scheduler_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Me.CurrentMasterPrefix = "" Then
+            Me.panPersonScope.Visible = Not Me.chkAllPersons.Checked
+            Me.Persons.Visible = Me.panPersonScope.Visible
+        End If
     End Sub
 End Class

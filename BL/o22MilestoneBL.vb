@@ -8,6 +8,7 @@
     Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o22Milestone)
     Function GetList_o20(intPID As Integer) As IEnumerable(Of BO.o20Milestone_Receiver)
     Function GetList_o19(intPID As Integer) As IEnumerable(Of BO.o19Milestone_NonPerson)
+    Function CreateICalendarTempFullPath(intO22ID As Integer) As String
     Sub Handle_Reminder()
 End Interface
 Class o22MilestoneBL
@@ -83,9 +84,9 @@ Class o22MilestoneBL
 
         If _cDL.Save(cRec, lisO20, lisO19) Then
             If cRec.PID = 0 Then
-                Me.RaiseAppEvent(BO.x45IDEnum.o22_new, _LastSavedPID)
+                Me.RaiseAppEvent(BO.x45IDEnum.o22_new, _LastSavedPID, , , cRec.o22IsNoNotify)
             Else
-                Me.RaiseAppEvent(BO.x45IDEnum.o22_update, _LastSavedPID)
+                Me.RaiseAppEvent(BO.x45IDEnum.o22_update, _LastSavedPID, , , cRec.o22IsNoNotify)
             End If
             Return True
         Else
@@ -129,5 +130,41 @@ Class o22MilestoneBL
     End Sub
     Public Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o22Milestone) Implements Io22MilestoneBL.GetList_forMessagesDashboard
         Return _cDL.GetList_forMessagesDashboard(intJ02ID)
+    End Function
+
+    Public Function CreateICalendarTempFullPath(intO22ID As Integer) As String Implements Io22MilestoneBL.CreateICalendarTempFullPath
+        Dim c As BO.o22Milestone = Load(intO22ID)
+        Dim s As New System.Text.StringBuilder
+        s.AppendLine("BEGIN:VCALENDAR")
+        s.AppendLine("VERSION:2.0")
+        s.AppendLine("PRODID:-//MARKTIME//MARKTIME Scheduler//EN")
+        s.AppendLine("METHOD:PUBLISH")
+        s.AppendLine("BEGIN:VEVENT")
+        s.AppendLine("UID:" & c.o22MilestoneGUID)
+        s.AppendLine("DTSTART:" & CDate(c.o22DateFrom).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
+        s.AppendLine("DTEND:" & CDate(c.o22DateUntil).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
+        If c.o22Name <> "" Then
+            s.AppendLine("SUMMARY:" & c.o22Name)
+            If c.o22Description <> "" Then
+                s.AppendLine("DESCRIPTION:" & c.o22Description)
+            End If
+        Else
+            s.AppendLine("SUMMARY:" & c.o22Description)
+        End If
+        If c.o22Location <> "" Then
+            s.AppendLine("LOCATION:" & c.o22Location)
+        End If
+        s.AppendLine("URL:" & Factory.GetRecordLinkUrl("o22", intO22ID.ToString))
+        s.AppendLine("END:VEVENT")
+        s.AppendLine("END:VCALENDAR")
+
+        Dim strPath As String = Factory.x35GlobalParam.TempFolder & "\" & c.PID.ToString & ".ics"
+        Dim cF As New BO.clsFile
+
+        If cF.SaveText2File(strPath, s.ToString, , , False) Then
+            Return strPath
+        Else
+            Return ""
+        End If
     End Function
 End Class

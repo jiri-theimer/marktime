@@ -14278,6 +14278,94 @@ else
 
 GO
 
+----------P---------------x36userparam_save_allusers-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x36userparam_save_allusers') and type = 'P')
+ drop procedure x36userparam_save_allusers
+GO
+
+
+
+
+CREATE   procedure [dbo].[x36userparam_save_allusers]
+@j03id_sys int				--id pøihlášeného uživatele
+,@x36key varchar(50)		--název klíèe
+,@x36value nvarchar(500)	--hodnota klíèe
+
+AS
+
+--Uložení záznamu uživatelského parametru do tabulky x36UserParam všem uživatelùm
+
+if isnull(@x36key,'')=''
+  return
+
+declare @pid int,@login nvarchar(50),@x36validuntil datetime,@j03id int
+
+set @login=dbo.j03_getlogin(@j03id_sys)
+set @x36validuntil=convert(datetime,'01.01.3000',104)
+
+
+
+DECLARE curCR CURSOR FOR 
+SELECT j03ID FROM j03User WHERE getdate() between j03ValidFrom AND j03ValidUntil
+
+OPEN curCR
+FETCH NEXT FROM curCR 
+INTO @j03id
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  set @pid=null
+
+  select top 1 @pid=x36id from x36UserParam where j03id=@j03id and x36key like @x36key
+
+  if @pid is not null
+   update x36UserParam set x36value=@x36value,x36dateupdate=getdate(),x36validuntil=@x36validuntil,x36userupdate=@login where x36id=@pid
+  else
+   insert into x36UserParam(j03id,x36value,x36key,x36dateinsert,x36dateupdate,x36userinsert,x36userupdate,x36validfrom,x36validuntil) values(@j03id,@x36value,@x36key,getdate(),getdate(),@login,@login,getdate(),@x36validuntil)
+
+
+  FETCH NEXT FROM curCR 
+  INTO @j03id
+END
+CLOSE curCR
+DEALLOCATE curCR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------x37_save-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('x37_save') and type = 'P')

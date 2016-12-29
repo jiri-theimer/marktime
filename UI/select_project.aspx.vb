@@ -10,11 +10,14 @@
         If Not Page.IsPostBack Then
             ViewState("masterprefix") = Request.Item("masterprefix")
             ViewState("oper") = Request.Item("oper")
+            ViewState("ocas") = basUI.GetCompleteQuerystring(Request)
             Select Case ViewState("oper")
                 Case "createtask"
                     Me.p41ID.Flag = "createtask"
                 Case "createp49"
                     Me.p41ID.Flag = "createp49"
+                Case "createo22"
+                    Me.p41ID.Flag = ""
                 Case Else
 
             End Select
@@ -32,14 +35,22 @@
                 Master.Notify("Musíte vybrat projekt!", NotifyLevel.WarningMessage)
                 Return
             End If
+            Dim strURL As String = ""
             Select Case ViewState("oper")
                 Case "createtask"
-                    Server.Transfer("p56_record.aspx?p41id=" & intP41ID.ToString, False)
+                    strURL = "p56_record.aspx?p41id=" & intP41ID.ToString
                 Case "createp49"
-                    Server.Transfer("p49_record.aspx?p41id=" & intP41ID.ToString, False)
+                    strURL = "p49_record.aspx?p41id=" & intP41ID.ToString
+                Case "createo22"
+                    strURL = "o22_record.aspx?masterprefix=p41&masterpid=" & intP41ID.ToString
                 Case Else
                     Master.Notify("Neznámá operace: " & ViewState("oper"), NotifyLevel.ErrorMessage)
+                    Return
             End Select
+            If ViewState("ocas") <> "" Then
+                strURL += "&" & ViewState("ocas")
+            End If
+            Server.Transfer(strURL, False)
         End If
     End Sub
 End Class

@@ -220,7 +220,13 @@ Class x46EventNotificationBL
                     Dim cMerge As New BO.clsMergeContent
                     mes.Body = cMerge.MergeContent(objects, strMergedBody, strLinkUrl)
                     mes.Subject = strMergedSubject
-
+                    If cX45.x29ID = BO.x29IdEnum.o22Milestone Then
+                        'přiložit ICS soubor
+                        Dim strICS As String = Factory.o22MilestoneBL.CreateICalendarTempFullPath(cX47.x47RecordPID)
+                        If strICS <> "" Then
+                            mes.AddOneFile2FullPath(strICS)
+                        End If
+                    End If
 
                     CompleteMessages(cX47, mes, lisReceivers)
                 End If

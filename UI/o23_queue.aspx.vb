@@ -65,7 +65,7 @@ Public Class o23_queue
                 Select Case Me.CurrentMasterX29ID
                     Case BO.x29IdEnum.p41Project : s = "Přiřadit vybrané dokumenty k projektu"
                     Case BO.x29IdEnum.p41Project : s = "Přiřadit vybrané dokumenty ke klientovi"
-                    Case BO.x29IdEnum.p31Worksheet : s = "Přiřadit vybrané dokumenty k úkonu"
+                    Case BO.x29IdEnum.p31Worksheet : s = "Přiřadit vybrané dokumenty k worksheet úkonu"
                 End Select
                 .AddToolbarButton(s, "save", , "Images/save.png")
                 With lisPars

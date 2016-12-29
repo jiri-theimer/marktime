@@ -98,6 +98,10 @@
                     .neededPermissionIfSecond = BO.x53PermValEnum.GR_O23_Draft_Creator
                 End If
             End With
+            If Me.CurrentMasterPrefix = "" Then
+                opgQueue.SelectedIndex = 0
+                opgQueue.Visible = False    'možnost spárovat dokument ve frontě skrýt
+            End If
 
             If Master.DataPID = 0 Then  ''And (Me.CurrentMasterPID = 0 Or Me.CurrentMasterPrefix = "") 
                 'na vstupu pro nový záznam není volající záznam
@@ -211,6 +215,7 @@
         SetupO24List()
 
         If Master.DataPID = 0 Then
+            If Me.CurrentMode = RecordModeEnum.WaitingOnDocType And Me.CurrentMasterPrefix = "" Then Return
             Me.o23IsDraft.Visible = True
             If Me.CurrentMasterPID <> 0 And Me.CurrentMasterPrefix <> "" Then
                 Select Case Me.CurrentMasterX29ID

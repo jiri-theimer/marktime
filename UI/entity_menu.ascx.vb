@@ -205,10 +205,15 @@ Public Class entity_menu
         End If
         If Not cRec.IsClosed Then
             If cP42.p42IsModule_p56 Then ami("Vytvořit úkol", "cmdP56", "javascript:menu_p56_record(0);", "Images/person.png", mi, , True)
-            If cP42.p42IsModule_o22 Then ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
+
         End If
+        If cP42.p42IsModule_o22 Then
+            ami("Vytvořit kalendářovou událost/lhůtu", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
+            ami("Kalendář projektu", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
+        End If
+
         If cP42.p42IsModule_o23 Then
-            ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi)
+            ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If
         If cP42.p42IsModule_p48 Then
             ami("Operativní plán projektu", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)

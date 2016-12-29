@@ -50,8 +50,9 @@
                     Me.CurrentX29ID = cRec.x29ID
                 End If
                 If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified And .DataPID = 0 Then
-                    Me.CurrentX29ID = BO.x29IdEnum.j02Person
-                    Me.CurrentMasterDataPID = .Factory.SysUser.j02ID
+                    Server.Transfer("select_project.aspx?oper=createo22&" & basUI.GetCompleteQuerystring(Request))
+                    ''Me.CurrentX29ID = BO.x29IdEnum.j02Person
+                    ''Me.CurrentMasterDataPID = .Factory.SysUser.j02ID
                 End If
                 If Me.CurrentX29ID = BO.x29IdEnum._NotSpecified Then
                     .StopPage("masterprefix missing.")
@@ -139,6 +140,7 @@
             Me.o21ID.SelectedValue = .o21ID.ToString
             Me.j02ID_Owner.Value = .j02ID_Owner.ToString
             Me.j02ID_Owner.Text = .Owner
+            Me.o22IsNoNotify.Checked = .o22IsNoNotify
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -207,6 +209,7 @@
 
                 .o22Location = Me.o22Location.Text
                 .o22Description = Me.o22Description.Text
+                .o22IsNoNotify = Me.o22IsNoNotify.Checked
 
                 .j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
 

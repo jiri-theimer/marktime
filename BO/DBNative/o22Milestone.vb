@@ -20,6 +20,8 @@
     Public Property o22DateUntil As Date?
     Public Property o22IsAllDay As Boolean
     Public Property o22ReminderDate As Date?
+    Public Property o22IsNoNotify As Boolean
+    Public Property o22MilestoneGUID As String
 
     Private Property _Owner As String
     Public ReadOnly Property Owner As String

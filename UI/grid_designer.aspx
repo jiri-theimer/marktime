@@ -52,7 +52,7 @@
 
             </tr>
         </table>
-        <asp:CheckBox ID="chkAllUsers" runat="server" Text="Nastavit pro všechny uživatele" Visible="false" />
+        
     </div>
 
 

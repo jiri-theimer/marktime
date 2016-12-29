@@ -41,6 +41,24 @@ Partial Public Class entity_scheduler
     Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''chkIncludeChilds control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkAllPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkAllPersons As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''Persons control.
     '''</summary>
     '''<remarks>
@@ -300,6 +318,15 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsLoadingSetting control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsLoadingSetting As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.
