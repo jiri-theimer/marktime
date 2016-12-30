@@ -141,9 +141,10 @@ Class o22MilestoneBL
         s.AppendLine("METHOD:PUBLISH")
         s.AppendLine("BEGIN:VEVENT")
         s.AppendLine("UID:" & c.o22MilestoneGUID)
-        If Not c.o22DateFrom Is Nothing Then
-            s.AppendLine("DTSTART:" & CDate(c.o22DateFrom).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
+        If c.o22DateFrom Is Nothing Then
+            c.o22DateFrom = c.o22DateUntil
         End If
+        s.AppendLine("DTSTART:" & CDate(c.o22DateFrom).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
         s.AppendLine("DTEND:" & CDate(c.o22DateUntil).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
         If c.o22Name <> "" Then
             s.AppendLine("SUMMARY:" & c.o22Name)
