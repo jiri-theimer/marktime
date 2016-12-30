@@ -10,7 +10,11 @@
             window.parent.sw_local("o22_record.aspx?masterprefix=<%=ViewState("masterprefix")%>&masterpid=<%=ViewState("masterpid")%>&pid=<%=Master.DataPID%>", "Images/calendar_32.png", true);
 
         }
+        function o22_sendmail() {
 
+            window.parent.sw_local("sendmail.aspx?prefix=o22&pid=<%=Master.DataPID%>", "Images/email_32.png", true);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -26,6 +30,7 @@
                 Záznam kalendářové události  
                 
                 <asp:HyperLink ID="cmDetail" runat="server" NavigateUrl="javascript:detail()" Text="Upravit"></asp:HyperLink>
+                <asp:HyperLink ID="cmdSendMail" runat="server" NavigateUrl="javascript:o22_sendmail()" Text="Odeslat e-mail" style="margin-left:20px;"></asp:HyperLink>
             </div>
             <div class="content">
 

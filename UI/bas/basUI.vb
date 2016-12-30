@@ -25,10 +25,12 @@ Public Class basUI
         Dim s As String = ""
         With p.QueryString
             For i As Integer = 0 To .Count - 1
-                If i = 0 Then
-                    s = .GetKey(i) & "=" & .Item(i)
-                Else
-                    s += "&" & .GetKey(i) & "=" & .Item(i)
+                If Trim(.Item(i)) <> "" Then
+                    If s = "" Then
+                        s = .GetKey(i) & "=" & .Item(i)
+                    Else
+                        s += "&" & .GetKey(i) & "=" & .Item(i)
+                    End If
                 End If
             Next
         End With

@@ -72,12 +72,14 @@
             Select Case _o21Flag
                 Case o21FlagEnum.EventFromUntil
                     If Me.o22IsAllDay Then
+                        If o22DateFrom Is Nothing Then Return "??"
                         If o22DateFrom.Value.Day = o22DateUntil.Value.Day And o22DateFrom.Value.Month = o22DateUntil.Value.Month Then
                             Return "Celý den " & BO.BAS.FD(o22DateFrom.Value)
                         Else
                             Return "Celý den " & BO.BAS.FD(o22DateFrom.Value) & " - " & BO.BAS.FD(o22DateUntil.Value)
                         End If
                     Else
+                        If o22DateFrom Is Nothing Then Return "??"
                         Return BO.BAS.FD_TimePeriod(o22DateFrom.Value, o22DateUntil.Value)
 
                     End If

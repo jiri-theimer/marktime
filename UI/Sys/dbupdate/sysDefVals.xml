@@ -29,8 +29,8 @@
   </Table>
   <Table>
     <id>13243102</id>
-    <name>o23DateInsert</name>
-    <text>(getdate())</text>
+    <name>o23LockedFlag</name>
+    <text>((0))</text>
   </Table>
   <Table>
     <id>14623095</id>
@@ -54,7 +54,7 @@
   </Table>
   <Table>
     <id>29243159</id>
-    <name>o23ValidFrom</name>
+    <name>o23DateInsert</name>
     <text>(getdate())</text>
   </Table>
   <Table>
@@ -79,8 +79,8 @@
   </Table>
   <Table>
     <id>45243216</id>
-    <name>o23ValidUntil</name>
-    <text>(CONVERT([datetime],'01.01.3000',(104)))</text>
+    <name>o23ValidFrom</name>
+    <text>(getdate())</text>
   </Table>
   <Table>
     <id>46623209</id>
@@ -106,6 +106,11 @@
     <id>59147256</id>
     <name>p61ValidFrom</name>
     <text>(getdate())</text>
+  </Table>
+  <Table>
+    <id>61243273</id>
+    <name>o23ValidUntil</name>
+    <text>(CONVERT([datetime],'01.01.3000',(104)))</text>
   </Table>
   <Table>
     <id>64719283</id>
@@ -153,11 +158,6 @@
     <text>((0))</text>
   </Table>
   <Table>
-    <id>93243387</id>
-    <name>p31FreeBoolean01</name>
-    <text>((0))</text>
-  </Table>
-  <Table>
     <id>96719397</id>
     <name>j05ValidUntil</name>
     <text>(CONVERT([datetime],'01.01.3000',(104)))</text>
@@ -179,7 +179,7 @@
   </Table>
   <Table>
     <id>109243444</id>
-    <name>p31FreeBoolean02</name>
+    <name>p31FreeBoolean01</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -204,7 +204,7 @@
   </Table>
   <Table>
     <id>125243501</id>
-    <name>p31FreeBoolean03</name>
+    <name>p31FreeBoolean02</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -234,7 +234,7 @@
   </Table>
   <Table>
     <id>141243558</id>
-    <name>p31FreeBoolean04</name>
+    <name>p31FreeBoolean03</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -264,7 +264,7 @@
   </Table>
   <Table>
     <id>157243615</id>
-    <name>p31FreeBoolean05</name>
+    <name>p31FreeBoolean04</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -289,7 +289,7 @@
   </Table>
   <Table>
     <id>173243672</id>
-    <name>p31FreeBoolean06</name>
+    <name>p31FreeBoolean05</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -309,7 +309,7 @@
   </Table>
   <Table>
     <id>189243729</id>
-    <name>p31FreeBoolean07</name>
+    <name>p31FreeBoolean06</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -329,7 +329,7 @@
   </Table>
   <Table>
     <id>205243786</id>
-    <name>p31FreeBoolean08</name>
+    <name>p31FreeBoolean07</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -344,7 +344,7 @@
   </Table>
   <Table>
     <id>221243843</id>
-    <name>p31FreeBoolean09</name>
+    <name>p31FreeBoolean08</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -364,7 +364,7 @@
   </Table>
   <Table>
     <id>237243900</id>
-    <name>p31FreeBoolean10</name>
+    <name>p31FreeBoolean09</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -396,6 +396,11 @@
     <id>251147940</id>
     <name>p84DateInsert</name>
     <text>(getdate())</text>
+  </Table>
+  <Table>
+    <id>253243957</id>
+    <name>p31FreeBoolean10</name>
+    <text>((0))</text>
   </Table>
   <Table>
     <id>254623950</id>
@@ -443,11 +448,6 @@
     <text>(CONVERT([datetime],'01.01.3000',(104)))</text>
   </Table>
   <Table>
-    <id>285244071</id>
-    <name>p56FreeBoolean01</name>
-    <text>((0))</text>
-  </Table>
-  <Table>
     <id>288720081</id>
     <name>o42DateInsert</name>
     <text>(getdate())</text>
@@ -464,7 +464,7 @@
   </Table>
   <Table>
     <id>301244128</id>
-    <name>p56FreeBoolean02</name>
+    <name>p56FreeBoolean01</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -494,7 +494,7 @@
   </Table>
   <Table>
     <id>317244185</id>
-    <name>p56FreeBoolean03</name>
+    <name>p56FreeBoolean02</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -534,7 +534,7 @@
   </Table>
   <Table>
     <id>333244242</id>
-    <name>p56FreeBoolean04</name>
+    <name>p56FreeBoolean03</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -564,7 +564,7 @@
   </Table>
   <Table>
     <id>349244299</id>
-    <name>p56FreeBoolean05</name>
+    <name>p56FreeBoolean04</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -589,7 +589,7 @@
   </Table>
   <Table>
     <id>365244356</id>
-    <name>p56FreeBoolean06</name>
+    <name>p56FreeBoolean05</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -619,7 +619,7 @@
   </Table>
   <Table>
     <id>381244413</id>
-    <name>p56FreeBoolean07</name>
+    <name>p56FreeBoolean06</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -654,7 +654,7 @@
   </Table>
   <Table>
     <id>397244470</id>
-    <name>p56FreeBoolean08</name>
+    <name>p56FreeBoolean07</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -689,7 +689,7 @@
   </Table>
   <Table>
     <id>413244527</id>
-    <name>p56FreeBoolean09</name>
+    <name>p56FreeBoolean08</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -714,7 +714,7 @@
   </Table>
   <Table>
     <id>429244584</id>
-    <name>p56FreeBoolean10</name>
+    <name>p56FreeBoolean09</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -730,6 +730,11 @@
   <Table>
     <id>439672614</id>
     <name>x31IsRunInDay4</name>
+    <text>((0))</text>
+  </Table>
+  <Table>
+    <id>445244641</id>
+    <name>p56FreeBoolean10</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -863,11 +868,6 @@
     <text>((0))</text>
   </Table>
   <Table>
-    <id>541244983</id>
-    <name>p48DateInsert</name>
-    <text>(getdate())</text>
-  </Table>
-  <Table>
     <id>542624976</id>
     <name>x55ValidUntil</name>
     <text>(CONVERT([datetime],'01.01.3000',(104)))</text>
@@ -879,7 +879,7 @@
   </Table>
   <Table>
     <id>557245040</id>
-    <name>p48DateUpdate</name>
+    <name>p48DateInsert</name>
     <text>(getdate())</text>
   </Table>
   <Table>
@@ -899,7 +899,7 @@
   </Table>
   <Table>
     <id>573245097</id>
-    <name>p48ValidFrom</name>
+    <name>p48DateUpdate</name>
     <text>(getdate())</text>
   </Table>
   <Table>
@@ -929,8 +929,8 @@
   </Table>
   <Table>
     <id>589245154</id>
-    <name>p48ValidUntil</name>
-    <text>(CONVERT([datetime],'01.01.3000',(104)))</text>
+    <name>p48ValidFrom</name>
+    <text>(getdate())</text>
   </Table>
   <Table>
     <id>590625147</id>
@@ -956,6 +956,11 @@
     <id>603149194</id>
     <name>p31FreeBoolean06</name>
     <text>((0))</text>
+  </Table>
+  <Table>
+    <id>605245211</id>
+    <name>p48ValidUntil</name>
+    <text>(CONVERT([datetime],'01.01.3000',(104)))</text>
   </Table>
   <Table>
     <id>606625204</id>
@@ -3088,6 +3093,11 @@
     <text>((0))</text>
   </Table>
   <Table>
+    <id>2048726351</id>
+    <name>o22IsNoNotify</name>
+    <text>((0))</text>
+  </Table>
+  <Table>
     <id>2050106344</id>
     <name>j17Code</name>
     <text>('0')</text>
@@ -3148,11 +3158,6 @@
     <text>(getdate())</text>
   </Table>
   <Table>
-    <id>2080726465</id>
-    <name>o23IsDraft</name>
-    <text>((0))</text>
-  </Table>
-  <Table>
     <id>2082106458</id>
     <name>j17DateInsert</name>
     <text>(getdate())</text>
@@ -3179,7 +3184,7 @@
   </Table>
   <Table>
     <id>2096726522</id>
-    <name>o23IsEncrypted</name>
+    <name>o23IsDraft</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -3199,7 +3204,7 @@
   </Table>
   <Table>
     <id>2112726579</id>
-    <name>o23SizeHtml</name>
+    <name>o23IsEncrypted</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -3219,7 +3224,7 @@
   </Table>
   <Table>
     <id>2128726636</id>
-    <name>o23SizePlainText</name>
+    <name>o23SizeHtml</name>
     <text>((0))</text>
   </Table>
   <Table>
@@ -3234,7 +3239,7 @@
   </Table>
   <Table>
     <id>2144726693</id>
-    <name>o23LockedFlag</name>
+    <name>o23SizePlainText</name>
     <text>((0))</text>
   </Table>
 </sysobjects>

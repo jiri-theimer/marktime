@@ -137,11 +137,13 @@ Class o22MilestoneBL
         Dim s As New System.Text.StringBuilder
         s.AppendLine("BEGIN:VCALENDAR")
         s.AppendLine("VERSION:2.0")
-        s.AppendLine("PRODID:-//MARKTIME//MARKTIME Scheduler//EN")
+        s.AppendLine("PRODID:-//MARKTIME//MARKTIME Scheduler//CZ")
         s.AppendLine("METHOD:PUBLISH")
         s.AppendLine("BEGIN:VEVENT")
         s.AppendLine("UID:" & c.o22MilestoneGUID)
-        s.AppendLine("DTSTART:" & CDate(c.o22DateFrom).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
+        If Not c.o22DateFrom Is Nothing Then
+            s.AppendLine("DTSTART:" & CDate(c.o22DateFrom).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
+        End If
         s.AppendLine("DTEND:" & CDate(c.o22DateUntil).ToUniversalTime.ToString("yyyyMMddTHHmmssZ"))
         If c.o22Name <> "" Then
             s.AppendLine("SUMMARY:" & c.o22Name)
@@ -156,15 +158,22 @@ Class o22MilestoneBL
         End If
         s.AppendLine("URL:" & Factory.GetRecordLinkUrl("o22", intO22ID.ToString))
         s.AppendLine("END:VEVENT")
-        s.AppendLine("END:VCALENDAR")
+        s.Append("END:VCALENDAR")
 
         Dim strPath As String = Factory.x35GlobalParam.TempFolder & "\" & c.PID.ToString & ".ics"
         Dim cF As New BO.clsFile
 
-        If cF.SaveText2File(strPath, s.ToString, , , False) Then
-            Return strPath
-        Else
-            Return ""
-        End If
+
+        ''Dim objWriter As New System.IO.StreamWriter(strPath, False, System.Text.Encoding.GetEncoding(1250))
+        Dim objWriter As New System.IO.StreamWriter(strPath, False)
+        objWriter.Write(s.ToString)
+        objWriter.Close()
+        Return strPath
+
+        ''If cF.SaveText2File(strPath, s.ToString, , , False) Then
+        ''    Return strPath
+        ''Else
+        ''    Return ""
+        ''End If
     End Function
 End Class

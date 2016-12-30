@@ -42,6 +42,8 @@
             End If
             
             Me.EntityContext.Text = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False) & ": " & Master.Factory.GetRecordCaption(Me.CurrentX29ID, Master.DataPID, True)
+            Me.upload1.GUID = BO.BAS.GetGUID
+            Me.uploadlist1.GUID = Me.upload1.GUID
 
             Select Case Me.CurrentPrefix
                 Case "p28"
@@ -53,12 +55,12 @@
                 Case "p91"
                     hidMasterPID_p30.Value = Master.Factory.p91InvoiceBL.Load(Master.DataPID).p28ID.ToString
                     hidMasterPrefix_p30.Value = "p28"
+                
             End Select
             If Me.hidMasterPrefix_p30.Value <> "" Then
                 linkNewPerson.Text = BO.BAS.OM2(Me.linkNewPerson.Text, Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix_p30.Value), BO.BAS.IsNullInt(hidMasterPID_p30.Value), False))
             End If
-            Me.upload1.GUID = BO.BAS.GetGUID
-            Me.uploadlist1.GUID = Me.upload1.GUID
+            
             With Master
                 .HeaderText = "Odeslat poštovní zprávu"
                 .HeaderIcon = "Images/email_32.png"
@@ -199,10 +201,15 @@
                     recipients.Add(cX43)
                 Next
             End If
+            If Me.CurrentX29ID = BO.x29IdEnum.o22Milestone Then
+                Dim strPath As String = Master.Factory.o22MilestoneBL.CreateICalendarTempFullPath(Master.DataPID)
+                If strPath <> "" Then message.AddOneFile2FullPath(strPath)
+            End If
 
             Dim messageStatus As BO.x40StateENUM = BO.x40StateENUM.InQueque
             If strButtonValue = "queue" Then messageStatus = BO.x40StateENUM.WaitOnConfirm
             With Master.Factory.x40MailQueueBL
+
                 Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, Me.CurrentX29ID, Master.DataPID, messageStatus)
                 If intMessageID > 0 Then
                     If messageStatus = BO.x40StateENUM.InQueque Then
@@ -219,7 +226,7 @@
                 Else
                     Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
                 End If
-                
+
 
 
 

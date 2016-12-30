@@ -256,8 +256,13 @@ Public Class entity_scheduler
 
                         Case BO.o21FlagEnum.EventFromUntil
                             c.BackColor = Drawing.Color.AntiqueWhite
-                            c.Start = .o22DateFrom
+                            If Not .o22DateFrom Is Nothing Then
+                                c.Start = .o22DateFrom
+                            Else
+                                c.Start = .o22DateUntil
+                            End If
                             c.End = .o22DateUntil
+
                             If .o22IsAllDay Then
                                 c.Start = DateSerial(Year(c.Start), Month(c.Start), Day(c.Start))
                                 c.End = c.Start.AddDays(1)

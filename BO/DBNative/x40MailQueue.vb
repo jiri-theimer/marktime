@@ -35,6 +35,8 @@ Public Class x40MailQueue
 
     Public Property x40IsAutoNotification As Boolean
 
+
+
     Public ReadOnly Property StatusAlias As String
         Get
             Select Case Me.x40State

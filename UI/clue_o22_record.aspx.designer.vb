@@ -59,6 +59,15 @@ Partial Public Class clue_o22_record
     Protected WithEvents cmDetail As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''cmdSendMail control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSendMail As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''o21Name control.
     '''</summary>
     '''<remarks>

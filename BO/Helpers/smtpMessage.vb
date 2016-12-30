@@ -10,6 +10,7 @@
 
     Public Property o27Attachments As List(Of BO.o27Attachment)
 
+
     Public Sub AddOneFile2FullPath(strFileFullPath As String)
         If AttachmentFiles_FullPath Is Nothing Then AttachmentFiles_FullPath = New List(Of String)
         AttachmentFiles_FullPath.Add(strFileFullPath)

@@ -141,6 +141,7 @@
             Me.j02ID_Owner.Value = .j02ID_Owner.ToString
             Me.j02ID_Owner.Text = .Owner
             Me.o22IsNoNotify.Checked = .o22IsNoNotify
+            Me.o22Location.Text = .o22Location
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)

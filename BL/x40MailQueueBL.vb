@@ -67,7 +67,6 @@ Class x40MailQueueBL
             .x40SenderName = mes.SenderName
             .x40SenderAddress = mes.SenderAddress
             .j03ID_Sys = _cUser.PID
-
         End With
         'nejdříve uložit x40 záznam do databáze
         If _cDL.Save(cX40, recipients) Then
@@ -182,6 +181,7 @@ Class x40MailQueueBL
 
         Dim mail As MailMessage = New MailMessage()
         With mail
+
             If strSenderIsUser = "1" Then
                 .From = New MailAddress(cRec.x40SenderAddress, cRec.x40SenderName)
             Else
@@ -218,9 +218,16 @@ Class x40MailQueueBL
         If lisO27.Count > 0 Then
             Dim strRootFolder As String = Me.Factory.x35GlobalParam.UploadFolder
             For Each cO27 In lisO27
-                Dim att As New Attachment(cO27.GetFullPath(strRootFolder))
+                Dim strPath As String = cO27.GetFullPath(strRootFolder)
+                Dim att As New Attachment(strPath)
                 att.ContentDisposition.FileName = cO27.o27OriginalFileName
                 mail.Attachments.Add(att)
+                If cO27.o27OriginalFileName.IndexOf(".ics") > 0 Then
+                    Dim mimeType As System.Net.Mime.ContentType = New System.Net.Mime.ContentType("text/calendar; method=REQUEST")
+                    Dim icalView As New AlternateView(strPath, mimeType)
+                    icalView.TransferEncoding = Net.Mime.TransferEncoding.SevenBit
+                    mail.AlternateViews.Add(icalView)
+                End If
             Next
         End If
         
