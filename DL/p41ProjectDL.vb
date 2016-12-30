@@ -395,7 +395,7 @@
             End If
 
             Dim strJ11IDs As String = ""
-            If .j02ID_ExplicitQueryFor = _curUser.j02ID Then
+            If .j02ID_ExplicitQueryFor = _curUser.j02ID Or .j02ID_ExplicitQueryFor = 0 Then
                 If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
             Else
                 strJ11IDs = "OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=" & .j02ID_ExplicitQueryFor.ToString & ")"

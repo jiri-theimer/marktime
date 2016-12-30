@@ -104,6 +104,7 @@
         If Master.DataPID = 0 Then
             InhaleObject()
             InhaleMyDefault()
+            Handle_Change_o21ID()
             Return
         End If
 
@@ -317,9 +318,13 @@
     End Sub
 
     Private Sub o21ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles o21ID.SelectedIndexChanged
+        Handle_Change_o21ID()
+
+    End Sub
+    Private Sub Handle_Change_o21ID()
+        If Me.o21ID.SelectedValue = "" Then Return
         Dim cRec As BO.o21MilestoneType = Master.Factory.o21MilestoneTypeBL.Load(BO.BAS.IsNullInt(Me.o21ID.SelectedValue))
         Me.CurrentO21Flag = cRec.o21Flag
-
     End Sub
 
     Private Sub InhaleMyDefault()
