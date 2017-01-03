@@ -8972,10 +8972,10 @@ and (isnull(x69.j02ID,0)=@j02id_rec OR isnull(x69.j07ID,0)=@j07id_rec OR isnull(
 AND (a.o28entryflag>0)
 ORDER BY a.o28entryflag
 
-declare @j18id int
-select @j18id=j18ID FROM p41Project WHERE p41ID=@p41id
+declare @j18id int,@p41IsEntryP31ByStranger bit
+select @j18id=j18ID,@p41IsEntryP31ByStranger=isnull(p41IsEntryP31ByStranger,0) FROM p41Project WHERE p41ID=@p41id
 
-if @o28id is null and @j18id is not null
+if @o28id is null and @j18id is not null and @p41IsEntryP31ByStranger=0
  begin ----------oprávnìní k projektu podle projektové skupiny (regionu)
   select @o28id=a.o28id,@o28entryflag=a.o28entryflag
   from o28ProjectRole_Workload a inner join x67EntityRole x67 on a.x67ID=x67.x67ID
@@ -8986,9 +8986,9 @@ if @o28id is null and @j18id is not null
   
  end
 
-if @o28id is null
+if @o28id is null and @p41IsEntryP31ByStranger=0
  begin  
-  set @err='Osoba ['+@person+'] nemá v tomto projektu nebo v pøíslušné projektové skupinì pøiøazenou roli k zapisování worksheet úkonù do sešitu ['+dbo.GetObjectAlias('p34',@p34id)+']'
+  set @err='Osoba ['+@person+'] nemá v tomto projektu nebo v pøíslušném støedisku pøiøazenou roli k zapisování worksheet úkonù do sešitu ['+dbo.GetObjectAlias('p34',@p34id)+']'
 
  end
    
@@ -8998,10 +8998,10 @@ if @err<>''
 declare @test_todo bit
 set @test_todo=1
  
-if @o28entryflag=1
+if @o28entryflag=1 or @p41IsEntryP31ByStranger=1
  set @test_todo=0	--OK - právo zapisovat do projektu i všech úkolù 
  
-if isnull(@o28entryflag,0)=0
+if isnull(@o28entryflag,0)=0 and @p41IsEntryP31ByStranger=0
  begin
    set @err='Projektová role osoby ['+@person+'] nemá povoleno zapisovat worksheet do zvoleného sešitu'
    return

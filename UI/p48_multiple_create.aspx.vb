@@ -30,7 +30,10 @@
                         If .p85OtherKey2 = 0 And Request.Item("p41id") <> "" Then
                             .p85OtherKey2 = BO.BAS.IsNullInt(Request.Item("p41id"))
                         End If
-                        .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
+                        If .p85OtherKey1 <> 0 Then
+                            .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
+                        End If
+
                         If intLastP41ID <> .p85OtherKey2 And .p85OtherKey2 > 0 Then
                             strLastProject = Master.Factory.p41ProjectBL.Load(.p85OtherKey2).ProjectWithMask(intProjectMask)
                         End If
@@ -55,7 +58,10 @@
                         .p85GUID = ViewState("guid")
                         .p85FreeDate01 = d
                         .p85OtherKey1 = intJ02ID
-                        .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
+                        If .p85OtherKey1 <> 0 Then
+                            .p85FreeText01 = Master.Factory.j02PersonBL.Load(.p85OtherKey1).FullNameDesc
+                        End If
+
                         .p85OtherKey2 = intLastP41ID
                         .p85FreeText02 = strLastProject
                         If dt1.TimeOnly <> dt2.TimeOnly Then
@@ -129,6 +135,7 @@
     End Sub
 
     Private Sub rp1_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rp1.ItemCommand
+        Save2Temp()
         Dim intP85ID As Integer = BO.BAS.IsNullInt(CType(e.Item.FindControl("p85id"), HiddenField).Value)
         Dim c As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(intP85ID)
         Master.Factory.p85TempBoxBL.Delete(c)
@@ -141,7 +148,11 @@
         CType(e.Item.FindControl("p85id"), HiddenField).Value = cRec.PID.ToString
         CType(e.Item.FindControl("p41id"), HiddenField).Value = cRec.p85OtherKey2.ToString
         CType(e.Item.FindControl("p48Date"), Label).Text = BO.BAS.FD(cRec.p85FreeDate01)
-        CType(e.Item.FindControl("Person"), Label).Text = cRec.p85FreeText01
+        With CType(e.Item.FindControl("j02ID_Input"), UI.person)
+            .Text = cRec.p85FreeText01
+            .Value = cRec.p85OtherKey1.ToString
+        End With
+        ''CType(e.Item.FindControl("Person"), Label).Text = cRec.p85FreeText01
         ''CType(e.Item.FindControl("Project"), Label).Text = cRec.p85FreeText02
         With CType(e.Item.FindControl("p41ID_Input"), UI.project)
             .Text = cRec.p85FreeText02
@@ -194,6 +205,8 @@
             c.p85OtherKey2 = BO.BAS.IsNullInt(CType(ri.FindControl("p41ID_Input"), UI.project).Value)
             c.p85FreeText02 = CType(ri.FindControl("p41ID_Input"), UI.project).Text
 
+            c.p85OtherKey1 = BO.BAS.IsNullInt(CType(ri.FindControl("j02ID_Input"), UI.person).Value)
+            c.p85FreeText01 = CType(ri.FindControl("j02ID_Input"), UI.person).Text
 
             Master.Factory.p85TempBoxBL.Save(c)
         Next

@@ -5,7 +5,8 @@
     Function Load(intPID As Integer) As BO.p48OperativePlan
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP48) As IEnumerable(Of BO.p48OperativePlan)
-    Function GetList_SumPerPerson(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPerson)
+    Function GetList_SumPerPerson(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject)
+    Function GetList_SumPerProject(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject)
     Function TestBeforeSave(lis As List(Of BO.p48OperativePlan)) As Boolean
 
 End Interface
@@ -173,7 +174,10 @@ Class p48OperativePlanBL
     Public Function GetList(mq As BO.myQueryP48) As IEnumerable(Of BO.p48OperativePlan) Implements Ip48OperativePlanBL.GetList
         Return _cDL.GetList(mq)
     End Function
-    Public Function GetList_SumPerPerson(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPerson) Implements Ip48OperativePlanBL.GetList_SumPerPerson
+    Public Function GetList_SumPerPerson(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject) Implements Ip48OperativePlanBL.GetList_SumPerPerson
         Return _cDL.GetList_SumPerPerson(mq)
+    End Function
+    Public Function GetList_SumPerProject(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject) Implements Ip48OperativePlanBL.GetList_SumPerProject
+        Return _cDL.GetList_SumPerProject(mq)
     End Function
 End Class

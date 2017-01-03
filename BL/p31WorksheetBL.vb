@@ -31,7 +31,7 @@
     Function RemoveFromInvoice(intP91ID As Integer, pids As List(Of Integer)) As Boolean
     Function UpdateInvoice(intP91ID As Integer, lis As List(Of BO.p31WorksheetInvoiceChange)) As Boolean
     Function GetSumHoursPerMonth(intJ02ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.HoursInMonth)
-    Function GetSumHoursPerPersonAndDate(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerPersonAndDay)
+    Function GetSumHoursPerEntityAndDate(strPrefix As String, pids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerEntityAndDay)
     Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31DataSourceForTimeline)
     Sub UpdateDeleteApprovingSet(strApprovingSet As String, p31ids As List(Of Integer), bolClear As Boolean, strTempGUID As String)
     Function GetList_ApprovingSet(strTempGUID As String, p41ids As List(Of Integer), p28ids As List(Of Integer)) As List(Of String)
@@ -397,8 +397,8 @@ Class p31WorksheetBL
     Public Function GetSumHoursPerMonth(intJ02ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.HoursInMonth) Implements Ip31WorksheetBL.GetSumHoursPerMonth
         Return _cDL.GetSumHoursPerMonth(intJ02ID, d1, d2)
     End Function
-    Public Function GetSumHoursPerPersonAndDate(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerPersonAndDay) Implements Ip31WorksheetBL.GetSumHoursPerPersonAndDate
-        Return _cDL.GetSumHoursPerPersonAndDate(j02ids, d1, d2)
+    Public Function GetSumHoursPerEntityAndDate(strPrefix As String, pids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerEntityAndDay) Implements Ip31WorksheetBL.GetSumHoursPerEntityAndDate
+        Return _cDL.GetSumHoursPerEntityAndDate(strPrefix, pids, d1, d2)
     End Function
     Public Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31DataSourceForTimeline) Implements Ip31WorksheetBL.GetDataSourceForTimeline
         Return _cDL.GetDataSourceForTimeline(j02ids, d1, d2)

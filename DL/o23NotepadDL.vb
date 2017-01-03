@@ -381,7 +381,7 @@
         Dim s As String = "FROM o23Notepad a INNER JOIN o24NotepadType o24 ON a.o24ID=o24.o24ID LEFT OUTER JOIN p41Project p41 ON a.p41ID=p41.p41ID LEFT OUTER JOIN p28Contact p28_client ON p41.p28ID_Client=p28_client.p28ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID LEFT OUTER JOIN p28Contact p28 ON a.p28ID=p28.p28ID LEFT OUTER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
-        s += " LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID"
+        s += " LEFT OUTER JOIN p56Task p56 ON a.p56ID=p56.p56ID LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID"
         s += " LEFT OUTER JOIN o23Notepad_FreeField o23free ON a.o23ID=o23free.o23ID"
         s += " LEFT OUTER JOIN (select distinct o23ID,1 as o27ExistInt FROM o27Attachment WHERE o23ID IS NOT NULL) o27 ON a.o23ID=o27.o23ID"
         If Not mq Is Nothing Then

@@ -279,7 +279,7 @@ Public Class main_menu
                     If .Level = 0 Then
                         .ImageUrl = "~/Images/menuarrow.png"
                         If menu1.ClickToOpen Then .NavigateUrl = ""
-                        If .Items.Count > 6 Then
+                        If .Items.Count > 7 Then
                             .GroupSettings.RepeatColumns = 2
                             .GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
                         End If

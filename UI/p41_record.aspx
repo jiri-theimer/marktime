@@ -316,6 +316,11 @@
                 </tr>
                 <tr>
                     <td colspan="2">
+                        <asp:CheckBox ID="p41IsEntryP31ByStranger" runat="server" Text="Možnost vykazovat worksheet za osoby bez projektové role v projektu" CssClass="chk" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
                         <asp:CheckBox ID="p41IsNoNotify" runat="server" Text="V projektu vypnout automatické e-mail notifikace" CssClass="chk" />
                     </td>
                 </tr>

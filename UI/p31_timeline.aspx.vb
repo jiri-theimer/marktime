@@ -5,7 +5,7 @@
     Private _lastC21ID As Integer
     Private _lastJ17ID As Integer
 
-    Private _lisP48 As IEnumerable(Of BO.OperativePlanSumPerPerson)
+    Private _lisP48 As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject)
     Private _lisC22 As IEnumerable(Of BO.c22FondCalendar_Date)
     Private _lisP31 As IEnumerable(Of BO.p31DataSourceForTimeline)
 

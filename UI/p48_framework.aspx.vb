@@ -1,19 +1,22 @@
 ﻿Public Class p48_framework
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
-    Private _lastJ02ID As Integer
+    Private Property _lastJ02ID As Integer
+    Private Property _lastP41ID As Integer
     Private _lastC21ID As Integer
     Private _lastJ17ID As Integer
     Private _lisP48 As IEnumerable(Of BO.p48OperativePlan)
-    Private _lisSum As IEnumerable(Of BO.OperativePlanSumPerPerson)
+    Private _lisSum As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject)
     Private _lisC22 As IEnumerable(Of BO.c22FondCalendar_Date)
-    Private _lisP31 As IEnumerable(Of BO.p31HoursPerPersonAndDay)
+    Private _lisP31 As IEnumerable(Of BO.p31HoursPerEntityAndDay)
     Private _lisP47 As IEnumerable(Of BO.p47CapacityPlan)
 
 
     Public Enum RozkladENUM
-        p41 = 1
-        j02 = 2
+        j02_p41 = 1
+        j02_only = 2
+        p41_j02 = 3
+        p41_only = 4
     End Enum
     Public Class PlanRow
         Public Property j02ID As Integer
@@ -110,6 +113,7 @@
                     .Add("p48_framework_j02ids")
                     .Add("p48_framework_rozklad")
                     .Add("p48_framework_worksheet")
+                    .Add("p48_framework_allpersons")
                 End With
                 .InhaleUserParams(lisPars)
                 With query_year
@@ -129,9 +133,11 @@
                 Me.chkIncludeWeekend.Checked = BO.BAS.BG(.GetUserParam("p48_framework_weekend", "0"))
                 basUI.SelectDropdownlistValue(Me.cbxRozklad, .GetUserParam("p48_framework_rozklad", "1"))
                 Me.chkShowWorksheet.Checked = BO.BAS.BG(.GetUserParam("p48_framework_worksheet", "1"))
+                Me.chkAllPersons.Checked = BO.BAS.BG(.GetUserParam("p48_framework_allpersons", "1"))
             End With
             If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P48_Reader) Then
                 'čtenář všech plánů v db
+                Me.chkAllPersons.Visible = True
                 Me.j11ID_Add.DataSource = Master.Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = False)
                 Me.j11ID_Add.DataBind()
                 Me.j07ID_Add.DataSource = Master.Factory.j07PersonPositionBL.GetList(New BO.myQuery)
@@ -140,6 +146,7 @@
             Else
                 Me.j11ID_Add.Enabled = False
                 Me.j07ID_Add.Enabled = False
+                Me.chkAllPersons.Visible = Master.Factory.SysUser.IsMasterPerson
                 Me.panPersonScope.Visible = Master.Factory.SysUser.IsMasterPerson   'filtrovat osoby
             End If
 
@@ -245,7 +252,10 @@
         Select Case Me.CurrentMasterPrefix
             Case "p41", "p28"
             Case Else
-                mqP48.j02IDs = Me.CurrentJ02IDs
+                If Not Me.chkAllPersons.Checked Then
+                    mqP48.j02IDs = Me.CurrentJ02IDs
+                End If
+
         End Select
 
         mqP48.DateFrom = Me.CurrentD1
@@ -257,12 +267,22 @@
         End Select
         _lisP48 = Master.Factory.p48OperativePlanBL.GetList(mqP48)
 
-        _lisSum = Master.Factory.p48OperativePlanBL.GetList_SumPerPerson(mqP48)
+        Select Case Me.CurrentRozklad
+            Case RozkladENUM.j02_only, RozkladENUM.j02_p41
+                _lisSum = Master.Factory.p48OperativePlanBL.GetList_SumPerPerson(mqP48)
+            Case RozkladENUM.p41_j02, RozkladENUM.p41_only
+                _lisSum = Master.Factory.p48OperativePlanBL.GetList_SumPerProject(mqP48)
+        End Select
+
 
         'okruh osob
         Dim mqJ02 As New BO.myQueryJ02
-        mqJ02.PIDs = Me.CurrentJ02IDs
-        mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+        mqJ02.Closed = BO.BooleanQueryMode.NoQuery
+        If Not Me.chkAllPersons.Checked Then
+            mqJ02.PIDs = Me.CurrentJ02IDs
+        End If
+
+        mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
         Select Case Me.CurrentMasterPrefix
             Case "p41", "p28"  'přidat všechny osoby, které v daném projektu/klientu mají operativní plán
                 Dim j02ids As List(Of Integer) = _lisP48.Select(Function(p) p.j02ID).Distinct.ToList
@@ -274,14 +294,26 @@
 
 
         Dim lisPlan As New List(Of PlanRow)
-        For Each cJ02 In lisJ02
-            Dim c As New PlanRow(cJ02.PID)
-            c.Person = cJ02.FullNameDesc
-            c.c21ID = cJ02.c21ID
-            c.j17ID = cJ02.j17ID
-            lisPlan.Add(c)
-        Next
-        If Me.CurrentRozklad = RozkladENUM.p41 Then
+        If Me.CurrentRozklad = RozkladENUM.j02_only Or Me.CurrentRozklad = RozkladENUM.j02_p41 Then
+            For Each cJ02 In lisJ02
+                Dim c As New PlanRow(cJ02.PID)
+                c.Person = cJ02.FullNameDesc
+                c.c21ID = cJ02.c21ID
+                c.j17ID = cJ02.j17ID
+                lisPlan.Add(c)
+            Next
+        End If
+        If Me.CurrentRozklad = RozkladENUM.p41_j02 Then
+            Dim qry = From p In _lisP48 Select p.p41ID, p.Project Distinct
+            For Each row In qry
+                Dim c As New PlanRow(0)
+                c.p41ID = row.p41ID
+                c.Project = row.Project
+                lisPlan.Add(c)
+            Next
+        End If
+
+        If Me.CurrentRozklad = RozkladENUM.p41_j02 Or Me.CurrentRozklad = RozkladENUM.j02_p41 Then
             Dim qry = From p In _lisP48 Select p.j02ID, p.Person, p.p41ID, p.Project Distinct
             For Each row In qry
                 Dim c As New PlanRow(row.j02ID)
@@ -295,8 +327,16 @@
         Dim c21ids As List(Of Integer) = lisJ02.Select(Function(p) p.c21ID).Distinct.ToList
         _lisC22 = Master.Factory.c21FondCalendarBL.GetList_c22(c21ids, Me.CurrentD1, Me.CurrentD2, True)
 
+        Dim pids As New List(Of Integer), strPrefix As String = "j02"
+        If Me.CurrentRozklad = RozkladENUM.j02_only Or Me.CurrentRozklad = RozkladENUM.j02_p41 Then
+            If Not Me.chkAllPersons.Checked Then
+                pids = lisJ02.Select(Function(p) p.PID).ToList
+            End If
+        Else
+            strPrefix = "p41"
+        End If
         If Me.chkShowWorksheet.Checked Then
-            _lisP31 = Master.Factory.p31WorksheetBL.GetSumHoursPerPersonAndDate(lisJ02.Select(Function(p) p.PID).ToList, Me.CurrentD1, Me.CurrentD2)
+            _lisP31 = Master.Factory.p31WorksheetBL.GetSumHoursPerEntityAndDate(strPrefix, pids, Me.CurrentD1, Me.CurrentD2)
         End If
         Dim mqP47 As New BO.myQueryP47
         mqP47.DateFrom = Me.CurrentD1
@@ -308,8 +348,13 @@
         End Select
         _lisP47 = Master.Factory.p47CapacityPlanBL.GetList(mqP47)
 
-        
-        rp1.DataSource = lisPlan.OrderBy(Function(p) p.Person).ThenBy(Function(p) p.Project)
+        Select Case Me.CurrentRozklad
+            Case RozkladENUM.j02_only, RozkladENUM.j02_p41
+                rp1.DataSource = lisPlan.OrderBy(Function(p) p.Person).ThenBy(Function(p) p.Project)
+            Case RozkladENUM.p41_j02, RozkladENUM.p41_only
+                rp1.DataSource = lisPlan.OrderBy(Function(p) p.Project).ThenBy(Function(p) p.Person)
+        End Select
+
         rp1.DataBind()
     End Sub
 
@@ -388,6 +433,16 @@
     End Sub
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
+        Select Case Me.CurrentRozklad
+            Case RozkladENUM.j02_p41, RozkladENUM.j02_only
+                handle_dataBound_By_Person(sender, e)
+            Case RozkladENUM.p41_j02, RozkladENUM.p41_only
+                handle_dataBound_By_Project(sender, e)
+        End Select
+
+    End Sub
+
+    Private Sub handle_dataBound_By_Person(sender As Object, e As RepeaterItemEventArgs)
         Dim cRec As PlanRow = CType(e.Item.DataItem, PlanRow)
 
         If cRec.j02ID <> _lastJ02ID Then
@@ -410,7 +465,7 @@
                 End If
             End With
             If Me.chkShowWorksheet.Checked Then
-                CType(e.Item.FindControl("worksheet"), Label).Text = FN(_lisP31.Where(Function(p) p.j02ID = cRec.j02ID).Sum(Function(p) p.Hours_Orig))
+                CType(e.Item.FindControl("worksheet"), Label).Text = FN(_lisP31.Where(Function(p) p.EntityPID = cRec.j02ID).Sum(Function(p) p.Hours_Orig))
             End If
             CType(e.Item.FindControl("capaplan"), Label).Text = FN(_lisP47.Where(Function(p) p.j02ID = cRec.j02ID).Sum(Function(p) p.p47HoursTotal))
         Else
@@ -447,8 +502,9 @@
 
 
             If cRec.p41ID = 0 Then
-                If Me.CurrentRozklad = RozkladENUM.p41 Then
-                    Dim lis As IEnumerable(Of BO.OperativePlanSumPerPerson) = _lisSum.Where(Function(p) p.j02ID = cRec.j02ID And p.p48Date = d)
+                'první/součtový řádek
+                If Me.CurrentRozklad = RozkladENUM.j02_p41 Then
+                    Dim lis As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject) = _lisSum.Where(Function(p) p.j02ID = cRec.j02ID And p.p48Date = d)
                     If lis.Count > 0 Then
                         Dim s As String = "<div class='sum'>" & lis(0).Hours.ToString & "</div>"
                         If lisFond.Count > 0 Then
@@ -460,7 +516,7 @@
                         CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).InnerHtml = s
                     End If
                 End If
-                If Me.CurrentRozklad = RozkladENUM.j02 Then
+                If Me.CurrentRozklad = RozkladENUM.j02_only Then
                     Dim lis As IEnumerable(Of BO.p48OperativePlan) = _lisP48.Where(Function(p) p.j02ID = cRec.j02ID And p.p48Date = d)
                     If lis.Count > 0 Then
                         Dim plans As New List(Of String)
@@ -514,6 +570,139 @@
         Next
 
         _lastJ02ID = cRec.j02ID
+
+    End Sub
+    Private Sub handle_dataBound_By_Project(sender As Object, e As RepeaterItemEventArgs)
+        Dim cRec As PlanRow = CType(e.Item.DataItem, PlanRow)
+        e.Item.FindControl("cmdRemove").Visible = False
+        e.Item.FindControl("clue_person").Visible = False
+
+        If cRec.p41ID <> _lastP41ID Then
+            'součtový řádek
+            CType(e.Item.FindControl("person"), Label).Text = cRec.Project
+            ' ''CType(e.Item.FindControl("clue_person"), HyperLink).Attributes("rel") = "clue_j02_oplan.aspx?pid=" & cRec.j02ID.ToString & "&month=" & Me.CurrentMonth.ToString & "&year=" & Me.CurrentYear.ToString
+
+            '_lastC21ID = cRec.c21ID
+            '_lastJ17ID = cRec.j17ID
+            'Dim dblFond As Double = _lisC22.Where(Function(p) p.c21ID = _lastC21ID And p.j17ID = _lastJ17ID).Sum(Function(p) p.c22Hours_Work)
+
+            Dim dblPlan As Double = _lisSum.Where(Function(p) p.p41ID = cRec.p41ID).Sum(Function(p) p.Hours)
+            ''If dblFond = 0 Then dblFond = dblPlan
+            ''CType(e.Item.FindControl("fond"), Label).Text = dblPlan.ToString & "/" & dblFond.ToString
+            ''With CType(e.Item.FindControl("util"), Label)
+            ''    If dblPlan = 0 Then
+            ''        .Text = "0%"
+            ''    Else
+            ''        .Text = CInt(100 * dblPlan / dblFond).ToString & "%"
+            ''        If dblPlan > dblFond Then .ForeColor = Drawing.Color.Red
+            ''    End If
+            ''End With
+            If Me.chkShowWorksheet.Checked Then
+                CType(e.Item.FindControl("worksheet"), Label).Text = FN(_lisP31.Where(Function(p) p.EntityPID = cRec.p41ID).Sum(Function(p) p.Hours_Orig))
+            End If
+            CType(e.Item.FindControl("capaplan"), Label).Text = FN(_lisP47.Where(Function(p) p.p41ID = cRec.p41ID).Sum(Function(p) p.p47HoursTotal))
+        Else
+            ''e.Item.FindControl("clue_person").Visible = False
+            ''e.Item.FindControl("cmdRemove").Visible = False
+        End If
+
+        CType(e.Item.FindControl("project"), Label).Text = cRec.Person
+        CType(e.Item.FindControl("j02id"), HiddenField).Value = cRec.j02ID.ToString
+        CType(e.Item.FindControl("p41id"), HiddenField).Value = cRec.p41ID.ToString
+
+        Dim intDaysInMonth As Integer = GetDaysInCurrentMonth()
+        For i As Integer = 1 To intDaysInMonth
+
+            Dim d As Date = DateSerial(Me.CurrentYear, Me.CurrentMonth, i)
+            Dim intWeekDay As Integer = Weekday(d, Microsoft.VisualBasic.FirstDayOfWeek.Monday)
+            Dim strCssClass As String = ""
+
+            ''Dim lisFond As IEnumerable(Of BO.c22FondCalendar_Date) = _lisC22.Where(Function(p) p.c21ID = _lastC21ID And p.j17ID = _lastJ17ID And p.c22Date = d)
+            If intWeekDay >= 6 Then
+                strCssClass = "weekend"
+            Else
+                strCssClass = "workday"
+
+                ''If lisFond.Count > 0 Then
+                ''    If lisFond(0).c22Hours_Work = 0 Then strCssClass = "outfond" 'den je mimo rámec pracovního fondu dané osoby
+                ''End If
+            End If
+
+            CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).Attributes.Item("class") = strCssClass
+            CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).Attributes.Item("width") = "25px"
+            CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).Attributes.Item("val") = i.ToString & "-" & cRec.j02ID.ToString & "-" & cRec.p41ID.ToString
+            CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).Attributes.Item("isl") = "1"
+
+
+            If cRec.j02ID = 0 Then
+                If Me.CurrentRozklad = RozkladENUM.p41_j02 Then
+                    Dim lis As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject) = _lisSum.Where(Function(p) p.p41ID = cRec.p41ID And p.p48Date = d)
+                    If lis.Count > 0 Then
+                        Dim s As String = "<div class='sum'>" & lis(0).Hours.ToString & "</div>"
+                        ''If lisFond.Count > 0 Then
+                        ''    If lisFond(0).c22Hours_Work < lis(0).Hours Then
+                        ''        'naplánované hodiny jsou větší než fond hodin
+                        ''        s = "<div class='sumoverfond' title='Plán přes fond hodin dne!'>" & lis(0).Hours.ToString & "</div>"
+                        ''    End If
+                        ''End If
+                        CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).InnerHtml = s
+                    End If
+                End If
+                If Me.CurrentRozklad = RozkladENUM.p41_only Then
+                    Dim lis As IEnumerable(Of BO.p48OperativePlan) = _lisP48.Where(Function(p) p.p41ID = cRec.p41ID And p.p48Date = d)
+                    If lis.Count > 0 Then
+                        Dim plans As New List(Of String)
+                        Dim p48ids As New List(Of Integer)
+                        For Each c In lis
+                            Dim strTooltip As String = c.Project & vbCrLf & c.p34Name, strCss As String = "plan"
+                            If c.p31ID > 0 Then strCss = "reality"
+                            If c.p32ID > 0 Then strTooltip += " - " & c.p32Name
+                            If Len(c.p48Text) > 0 Then strTooltip += vbCrLf & c.p48Text
+                            Dim strStyle As String = ""
+                            If c.p34Color <> "" Then strStyle = "style='background-color:" & c.p34Color & ";'"
+                            If c.p32Color <> "" Then strStyle = "style='background-color:" & c.p32Color & ";'"
+                            'plans.Add("<div class='" & strCss & "' " & strStyle & " title='" & strTooltip & "'>" & c.p48Hours.ToString & "</div>")
+                            plans.Add("<div class='" & strCss & "' " & strStyle & " title='" & strTooltip & "'><a class='reczoom' rel='clue_p48_record.aspx?pid=" & c.PID.ToString & "'>" & c.p48Hours.ToString & "</a></div>")
+
+                            p48ids.Add(c.PID)
+                        Next
+                        CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).InnerHtml = String.Join(" ", plans)
+                        CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).Attributes.Item("p48ids") = String.Join(",", p48ids)
+
+                    End If
+                End If
+
+            Else
+                'řádek s rozkladem za osobu
+                Dim lis As IEnumerable(Of BO.p48OperativePlan) = _lisP48.Where(Function(p) p.j02ID = cRec.j02ID And p.p41ID = cRec.p41ID And p.p48Date = d)
+                If lis.Count > 0 Then
+                    Dim plans As New List(Of String)
+                    Dim p48ids As New List(Of Integer)
+                    For Each c In lis
+                        Dim strTooltip As String = c.p34Name, strCss As String = "plan"
+                        If c.p31ID > 0 Then strCss = "reality"
+                        If c.p32ID > 0 Then strTooltip += " - " & c.p32Name
+                        If Len(c.p48Text) > 0 Then strTooltip += vbCrLf & c.p48Text
+                        Dim strStyle As String = ""
+                        If c.p34Color <> "" Then strStyle = "style='background-color:" & c.p34Color & ";'"
+                        If c.p32Color <> "" Then strStyle = "style='background-color:" & c.p32Color & ";'"
+                        'plans.Add("<div class='" & strCss & "' " & strStyle & " title='" & strTooltip & "'>" & c.p48Hours.ToString & "</div>")
+                        plans.Add("<div class='" & strCss & "' " & strStyle & "><a class='reczoom' rel='clue_p48_record.aspx?pid=" & c.PID.ToString & "'>" & c.p48Hours.ToString & "</a></div>")
+                        p48ids.Add(c.PID)
+                    Next
+                    CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).InnerHtml = String.Join(" ", plans)
+                    CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).Attributes.Item("p48ids") = String.Join(",", p48ids)
+
+                End If
+            End If
+
+        Next
+        For i = intDaysInMonth + 1 To 31
+            CType(e.Item.FindControl("tdd" & i.ToString), HtmlTableCell).Style.Item("display") = "none"
+        Next
+
+        _lastP41ID = cRec.p41ID
+
     End Sub
 
     Private Sub cmdHardRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdHardRefreshOnBehind.Click
@@ -549,5 +738,14 @@
 
     Private Sub p48_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.lblHeader.Text = BO.BAS.OM2(Me.lblHeader.Text, Me.CurrentMonth.ToString & "/" & Me.CurrentYear.ToString)
+        If Me.chkAllPersons.Visible Then
+            Me.panPersonScope.Visible = Not chkAllPersons.Checked
+        End If
+
+    End Sub
+
+    Private Sub chkAllPersons_CheckedChanged(sender As Object, e As EventArgs) Handles chkAllPersons.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p48_framework_allpersons", BO.BAS.GB(Me.chkAllPersons.Checked))
+        RefreshData()
     End Sub
 End Class

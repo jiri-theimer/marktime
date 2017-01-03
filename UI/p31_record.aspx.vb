@@ -293,6 +293,9 @@
             'uživatel  požaduje zapisovat napřímo do konkrétního sešitu
             Me.MyDefault_p34ID = BO.BAS.IsNullInt(Request.Item("p34id"))
         End If
+        If Request.Item("p32id") <> "" Then
+            Me.MyDefault_p32ID = BO.BAS.IsNullInt(Request.Item("p32id"))
+        End If
         
         If Request.Item("p31date") <> "" Then
             Me.MyDefault_p31Date = BO.BAS.ConvertString2Date(Request.Item("p31date"))
@@ -658,8 +661,9 @@
                     imgFlag.Visible = True : imgFlag.ImageUrl = "Images/flags/czechrepublic.gif"
                 End If
             End If
-
-            Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(_Project.PID, _Project.p42ID, _Project.j18ID, Me.CurrentJ02ID)
+            Dim intJ02ID As Integer = Me.CurrentJ02ID
+            If _Project.p41IsEntryP31ByStranger Then intJ02ID = Master.Factory.SysUser.j02ID 'v projektu povoleno zapisovat worksheet za osoby, které nemají roli v projektu
+            Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(_Project.PID, _Project.p42ID, _Project.j18ID, intJ02ID)
             Me.p34ID.DataSource = lisP34
             Me.p34ID.DataBind()
             If Master.DataPID = 0 And bolTryRun_Handle_P34 Then

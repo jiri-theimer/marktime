@@ -68,6 +68,15 @@ Partial Public Class p48_framework
     Protected WithEvents cbxRozklad As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''chkAllPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkAllPersons As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''chkIncludeWeekend control.
     '''</summary>
     '''<remarks>

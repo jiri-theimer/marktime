@@ -983,13 +983,29 @@
 
         Return _cDB.GetList(Of BO.HoursInMonth)(s, pars)
     End Function
-    Public Function GetSumHoursPerPersonAndDate(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerPersonAndDay)
-        Dim s As String = "SELECT j02ID,p31Date,sum(p31Hours_Orig) as Hours_Orig FROM p31Worksheet WHERE j02ID IN (" & String.Join(",", j02ids) & ") AND p31Date BETWEEN @d1 AND @d2 GROUP BY j02ID,p31Date"
+    Public Function GetSumHoursPerEntityAndDate(strPrefix As String, pids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerEntityAndDay)
+        If pids Is Nothing Then pids = New List(Of Integer)
+        Dim s As String = ""
+        Select Case strPrefix
+            Case "j02"
+                s = "SELECT 'j02' as EntityPrefix, j02ID as EntityPID,p31Date,sum(p31Hours_Orig) as Hours_Orig FROM p31Worksheet WHERE p31Date BETWEEN @d1 AND @d2"
+                If pids.Count > 0 Then
+                    s += " AND j02ID IN (" & String.Join(",", pids) & ")"
+                End If
+                s += " GROUP BY j02ID,p31Date"
+            Case "p41"
+                s = "SELECT 'p41' as EntityPrefix, p41ID as EntityPID,p31Date,sum(p31Hours_Orig) as Hours_Orig FROM p31Worksheet WHERE p31Date BETWEEN @d1 AND @d2"
+                If pids.Count > 0 Then
+                    s += " AND p41ID IN (" & String.Join(",", pids) & ")"
+                End If
+                s += " GROUP BY p41ID,p31Date"
+        End Select
+
         Dim pars As New DbParameters
         pars.Add("d1", d1, DbType.DateTime)
         pars.Add("d2", d2, DbType.DateTime)
 
-        Return _cDB.GetList(Of BO.p31HoursPerPersonAndDay)(s, pars)
+        Return _cDB.GetList(Of BO.p31HoursPerEntityAndDay)(s, pars)
     End Function
     Public Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31DataSourceForTimeline)
         Dim s As String = "SELECT a.j02ID,a.p41ID,min(p41.p28ID_Client) as p28ID,a.p31Date,sum(a.p31Hours_Orig) as Hours_Orig,a.p32ID,min(p32.p32Name) as p32Name,min(p34.p34Name) as p34Name"

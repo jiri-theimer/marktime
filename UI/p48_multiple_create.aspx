@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
+<%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -140,8 +141,8 @@
                 <tr class="trHover">
 
                     <td>
-
-                        <asp:Label ID="Person" runat="server"></asp:Label>
+                        <uc:person ID="j02ID_Input" runat="server" Width="160px" AutoPostBack="false" Flag="all" />
+                        
                     </td>
                     <td>
                         <asp:Label ID="p48Date" runat="server" ForeColor="blue"></asp:Label>
@@ -153,7 +154,7 @@
                     </td>
 
                     <td>
-                        <asp:Label ID="Project" runat="server" ForeColor="DarkOrange"></asp:Label>
+                        
                         <uc:project ID="p41ID_Input" runat="server" Width="250px" AutoPostBack="false" flag="p48" />
                     </td>
 
@@ -168,7 +169,7 @@
                         <asp:TextBox ID="p48TimeUntil" runat="server" CssClass="presnycas" style="width:40px;text-align:center;"></asp:TextBox>
                     </td>
                     <td>
-                        <asp:TextBox ID="p48Text" runat="server" Style="width: 250px;"></asp:TextBox>
+                        <asp:TextBox ID="p48Text" runat="server" Style="width: 200px;"></asp:TextBox>
                     </td>
                     <td style="padding-left: 5px;">
                         <asp:ImageButton ID="cmdDelete" runat="server" ImageUrl="Images/delete.png" CommandName="delete" ToolTip="Odstranit položku" CssClass="button-link" />

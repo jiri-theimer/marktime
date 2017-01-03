@@ -10,7 +10,7 @@
         Return _cDB.GetRecord(Of BO.p48OperativePlan)(s, New With {.p48id = intPID})
     End Function
 
-    Public Function GetList_SumPerPerson(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPerson)
+    Public Function GetList_SumPerPerson(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject)
         Dim pars As New DbParameters
         Dim strW As String = GetSqlWhere(mq, pars)
         Dim s As String = "SELECT a.j02ID,sum(p48Hours) as Hours,a.p48Date"
@@ -18,7 +18,17 @@
         s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
         s += " WHERE " & strW
         s += " GROUP BY a.j02ID,a.p48Date"
-        Return _cDB.GetList(Of BO.OperativePlanSumPerPerson)(s, pars)
+        Return _cDB.GetList(Of BO.OperativePlanSumPerPersonOrProject)(s, pars)
+    End Function
+    Public Function GetList_SumPerProject(mq As BO.myQueryP48) As IEnumerable(Of BO.OperativePlanSumPerPersonOrProject)
+        Dim pars As New DbParameters
+        Dim strW As String = GetSqlWhere(mq, pars)
+        Dim s As String = "SELECT a.p41ID,sum(p48Hours) as Hours,a.p48Date"
+        s += " FROM p48OperativePlan a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID"
+        s += " INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p34ActivityGroup p34 ON a.p34ID=p34.p34ID"
+        s += " WHERE " & strW
+        s += " GROUP BY a.p41ID,a.p48Date"
+        Return _cDB.GetList(Of BO.OperativePlanSumPerPersonOrProject)(s, pars)
     End Function
     Public Function GetList(mq As BO.myQueryP48) As IEnumerable(Of BO.p48OperativePlan)
         Dim pars As New DbParameters

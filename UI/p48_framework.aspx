@@ -190,6 +190,7 @@
                 alert("Musíte označit alespoň jednu buňku (den).")
                 return
             }
+            
             var url = "p48_multiple_create.aspx?year=<%=Me.CurrentYear%>&month=<%=Me.CurrentMonth%>&input=" + s
             <%If Me.CurrentMasterPrefix="p41" then%>
             url = url + "&p41id=<%=Me.CurrentMasterPID%>";
@@ -256,6 +257,7 @@
             <asp:DropDownList ID="cbxRozklad" runat="server" AutoPostBack="true">
                 <asp:ListItem Text="Podle osob a projektů" Value="1" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="Podle osob" Value="2"></asp:ListItem>
+                <asp:ListItem Text="Podle projektů a osob" Value="3"></asp:ListItem>
             </asp:DropDownList>
         </div>
 
@@ -278,8 +280,10 @@
 
         <div class="slidingDiv1">
             <div class="div6">
-                <asp:CheckBox ID="chkIncludeWeekend" runat="server" Text="Možnost plánovat i do dnů víkendů a svátků" AutoPostBack="true" />
-                <asp:CheckBox ID="chkShowWorksheet" runat="server" Text="Zobrazovat i sumy skutečné vykázaných hodin" AutoPostBack="true" />
+                <asp:CheckBox ID="chkAllPersons" runat="server" Text="Automaticky zobrazovat všechny osoby" AutoPostBack="true" CssClass="chk" Checked="true" />
+                <asp:CheckBox ID="chkIncludeWeekend" runat="server" Text="Možnost plánovat i do dnů víkendů a svátků" AutoPostBack="true" CssClass="chk" />
+                <asp:CheckBox ID="chkShowWorksheet" runat="server" Text="Zobrazovat i sumy skutečné vykázaných hodin" AutoPostBack="true" CssClass="chk" />
+                
             </div>
 
             <asp:Panel ID="panPersonScope" runat="server" CssClass="content-box2">
