@@ -26,6 +26,9 @@
                 $(".slidingDiv1").slideToggle();
             });
 
+             <%If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then%>
+            document.getElementById("search2").value = "";
+            <%End If%>
         });
 
         function sw_decide(url, iconUrl, is_maximize) {
@@ -285,7 +288,7 @@
                 <telerik:RadMenuItem Value="searchbox">
                     <ItemTemplate>
 
-                        <input id="search2" style="width: 100px; margin-top: 7px; height: 19px;" value="Najít fakturu..." onfocus="search2Focus()" onblur="search2Blur()" />
+                        <input id="search2" style="width: 100px; margin-top: 7px; height: 19px;" value="Najít fakturu..." title="Najít fakturu" onfocus="search2Focus()" onblur="search2Blur()" />
                         <div id="search2_result" style="position: relative; left: -150px;"></div>
                     </ItemTemplate>
                 </telerik:RadMenuItem>

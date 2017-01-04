@@ -619,4 +619,7 @@
         Return _cDB.RunSP("p41_batch_update_childs", pars)
 
     End Function
+    Public Function GetRolesInline(intPID As Integer) As String
+        Return _cDB.GetValueFromSQL("SELECT dbo.p41_getroles_inline(" & intPID.ToString & ") as Value")
+    End Function
 End Class

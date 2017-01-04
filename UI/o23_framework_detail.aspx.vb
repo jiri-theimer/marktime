@@ -107,6 +107,7 @@
             menu1.Visible = False
             panEntryPassword.Visible = True
             panBody.Visible = False
+            comments1.Visible = False
             Return
         Else
             tableRecord.Visible = True
@@ -237,8 +238,8 @@
                 If .o23BodyPlainText <> "" Then
                     If .o23IsEncrypted Then
                         If ViewState("verified") = "1" Then
-                            .o23BodyPlainText = BO.Crypto.Decrypt(.o23BodyPlainText, _key)
-                            If .o23BodyPlainText <> "" Then panBody.Visible = True
+                            Me.o23BodyPlainText.Text = BO.Crypto.Decrypt(.o23BodyPlainText, _key)
+                            If Me.o23BodyPlainText.Text <> "" Then panBody.Visible = True
                         End If
                     Else
                         Me.o23BodyPlainText.Text = BO.BAS.CrLfText2Html(.o23BodyPlainText) : panBody.Visible = True

@@ -6,6 +6,7 @@
         $("#search2").autocomplete({
             source: "Handler/<%=Me.ashx%>",
             minLength: 1,
+            delay:0,
             select: function (event, ui) {
                 if (ui.item) {
                     if (ui.item.PID != null)

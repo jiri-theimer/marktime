@@ -362,12 +362,36 @@
     End Sub
 
     Private Sub Handle_ChangeJ61ID()
-        Dim intJ61ID As Integer = BO.BAS.IsNullInt(Me.j61ID.SelectedValue)
+        Dim intJ61ID As Integer = BO.BAS.IsNullInt(Me.j61ID.SelectedValue), strLINK As String = Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
         If intJ61ID <> 0 Then
             _isChangeJ61ID = True
             Dim c As BO.j61TextTemplate = Master.Factory.j61TextTemplateBL.Load(intJ61ID)
+            If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And c.j61PlainTextBody.IndexOf("]") > 0 Then
+                Dim cM As New BO.clsMergeContent(), objects As New List(Of Object)
+                Select Case Me.CurrentX29ID
+                    Case BO.x29IdEnum.p41Project
+                        objects.Add(Master.Factory.p41ProjectBL.Load(Master.DataPID))
+                        If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
+                            c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", Master.Factory.p41ProjectBL.GetRolesInline(Master.DataPID))
+                        End If
+                    Case BO.x29IdEnum.p28Contact
+                        objects.Add(Master.Factory.p28ContactBL.Load(Master.DataPID))
+                    Case BO.x29IdEnum.p91Invoice
+                        objects.Add(Master.Factory.p91InvoiceBL.Load(Master.DataPID))
+                    Case BO.x29IdEnum.j02Person
+                        objects.Add(Master.Factory.j02PersonBL.Load(Master.DataPID))
+                    Case BO.x29IdEnum.p56Task
+                        objects.Add(Master.Factory.j02PersonBL.Load(Master.DataPID))
+                        If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
+                            c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", Master.Factory.p56TaskBL.GetRolesInline(Master.DataPID))
+                        End If
+                End Select
+                c.j61PlainTextBody = cM.MergeContent(objects, c.j61PlainTextBody, strLINK)
+                c.j61MailSubject = cM.MergeContent(objects, c.j61MailSubject, strLINK)
+            End If
             If c.j61PlainTextBody <> "" Then
                 Me.txtBody.Text = c.j61PlainTextBody : Me.txtBody.BackColor = _color
+
             End If
             If c.j61MailSubject <> "" Then
                 Me.txtSubject.Text = c.j61MailSubject : Me.txtSubject.BackColor = _color

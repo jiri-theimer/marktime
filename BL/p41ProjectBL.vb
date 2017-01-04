@@ -22,6 +22,7 @@
     Function IsMyFavouriteProject(intPID As Integer) As Boolean
     Function GetGridFooterSums(myQuery As BO.myQueryP41, strSumFields As String) As DataTable
     Function BatchUpdate_TreeChilds(intPID As Integer, bolProjectRoles As Boolean, bolP28ID As Boolean, bolP87ID As Boolean, bolP51ID As Boolean, bolP92ID As Boolean, bolJ18ID As Boolean, bolP61ID As Boolean, bolValidity As Boolean) As Boolean
+    Function GetRolesInline(intPID As Integer) As String
 End Interface
 Class p41ProjectBL
     Inherits BLMother
@@ -304,5 +305,8 @@ Class p41ProjectBL
     Public Function BatchUpdate_TreeChilds(intPID As Integer, bolProjectRoles As Boolean, bolP28ID As Boolean, bolP87ID As Boolean, bolP51ID As Boolean, bolP92ID As Boolean, bolJ18ID As Boolean, bolP61ID As Boolean, bolValidity As Boolean) As Boolean Implements Ip41ProjectBL.BatchUpdate_TreeChilds
         Return _cDL.BatchUpdate_TreeChilds(intPID, bolProjectRoles, bolP28ID, bolP87ID, bolP51ID, bolP92ID, bolJ18ID, bolP61ID, bolValidity)
 
+    End Function
+    Public Function GetRolesInline(intPID As Integer) As String Implements Ip41ProjectBL.GetRolesInline
+        Return _cDL.GetRolesInline(intPID)
     End Function
 End Class

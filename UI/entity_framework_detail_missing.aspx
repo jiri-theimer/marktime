@@ -6,6 +6,19 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
+        $(document).ready(function () {
+
+          
+            <%If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then%>
+            document.getElementById("search2").value = "";
+            <%End If%>
+
+
+
+        });
+
+        
+
         function p28_create() {
 
             sw_local("p28_record.aspx?pid=0", "Images/contact_32.png", true);
@@ -114,6 +127,7 @@
 
     <div style="clear:both;"></div>
     <asp:Panel ID="panSearch" runat="server" CssClass="div6" >
+        <span>Najít:</span>
         <input id="search2" style="width: 200px; margin-top: 7px;" value="Najít..." onfocus="search2Focus()" onblur="search2Blur()" />
                         <div id="search2_result" style="position: relative;"></div>
     </asp:Panel>

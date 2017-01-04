@@ -8,7 +8,6 @@
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="imap_record" Src="~/imap_record.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
-<%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 

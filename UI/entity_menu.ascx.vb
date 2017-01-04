@@ -93,13 +93,16 @@ Public Class entity_menu
                 s = "<img src='Images/project_32.png'/>"
                 sb1.Visible = False
         End Select
+
         menu1.FindItemByValue("begin").Controls.Add(New LiteralControl(s))
 
         If sb1.ashx = "" Then
             If Not menu1.FindItemByValue("searchbox") Is Nothing Then menu1.Items.Remove(menu1.FindItemByValue("searchbox")) 'searchbox není
         Else
+            Dim strToolTip As String = sb1.TextboxLabel
+            If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then sb1.TextboxLabel = "" 'pro IE 7 - 11 nefunguje výchozí search text
             With menu1.FindItemByValue("searchbox")
-                s = "<input id='search2' style='width: 100px; margin-top: 7px;' value='" & sb1.TextboxLabel & "' onfocus='search2Focus()' onblur='search2Blur()' />"
+                s = "<input id='search2' style='width: 100px; margin-top: 7px;' value='" & sb1.TextboxLabel & "' onfocus='search2Focus()' onblur='search2Blur()' title='" & strToolTip & "' />"
                 s += "<div id='search2_result' style='position: relative;left:-150px;'></div>"
                 .Controls.Add(New LiteralControl(s))
             End With
