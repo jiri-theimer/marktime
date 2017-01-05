@@ -290,17 +290,10 @@
                     Dim c As BO.p41Project = Master.Factory.p41ProjectBL.Load(intPID)
                     intP28ID = c.p28ID_Billing
                     If intP28ID = 0 Then intP28ID = c.p28ID_Client
-                    strP91Text1 = c.p41InvoiceDefaultText1
-                    If strP91Text1 = "" And c.p28ID_Client <> 0 Then
-                        Dim cc As BO.p28Contact = Master.Factory.p28ContactBL.Load(c.p28ID_Client)
-                        strP91Text1 = cc.p28InvoiceDefaultText1
-                    End If
                 End If
                 If Me.CurrentX29ID = BO.x29IdEnum.p28Contact Then
                     mqP31.p28ID_Client = intPID
                     intP28ID = intPID
-                    Dim c As BO.p28Contact = Master.Factory.p28ContactBL.Load(intPID)
-                    strP91Text1 = c.p28InvoiceDefaultText1
                 End If
                 Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mqP31)
                 Dim strGUID As String = BO.BAS.GetGUID
