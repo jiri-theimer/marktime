@@ -77,6 +77,7 @@
                 If Not lisFF Is Nothing Then    'volná pole
                     bas.SaveFreeFields(_cDB, lisFF, "o23Notepad_FreeField", intLastSavedO23ID, _curUser)
                 End If
+
                 pars = New DbParameters
                 With pars
                     .Add("o23id", intLastSavedO23ID, DbType.Int32)
@@ -92,7 +93,7 @@
                 Return False
             End If
         End Using
-        
+
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean

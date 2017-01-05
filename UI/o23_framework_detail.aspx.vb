@@ -238,7 +238,7 @@
                 If .o23BodyPlainText <> "" Then
                     If .o23IsEncrypted Then
                         If ViewState("verified") = "1" Then
-                            Me.o23BodyPlainText.Text = BO.Crypto.Decrypt(.o23BodyPlainText, _key)
+                            Me.o23BodyPlainText.Text = BO.BAS.CrLfText2Html(BO.Crypto.Decrypt(.o23BodyPlainText, _key))
                             If Me.o23BodyPlainText.Text <> "" Then panBody.Visible = True
                         End If
                     Else
