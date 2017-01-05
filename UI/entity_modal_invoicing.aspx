@@ -26,15 +26,7 @@
         <div class="title">Výchozí nastavení dokladu faktury</div>
         <div class="content">
             <table cellpadding="5" cellspacing="2">
-                <tr>
-                    <td style="width: 120px;">
-                        <asp:Label ID="lblp92ID" Text="Výchozí typ faktury:" runat="server" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:DropDownList ID="p92ID" runat="server" AutoPostBack="true" DataTextField="p92Name" DataValueField="pid"></asp:DropDownList>                        
-                    </td>
-                   
-                </tr>
+                
                 <tr valign="top">
                     <td>
                         <asp:Label ID="lblp91DateSupply" Text="Datum plnění:" runat="server" CssClass="lbl"></asp:Label>
@@ -99,24 +91,28 @@
             </div>
         </div>
        
-        <div class="div6">
-            Výchozí text faktury      <asp:CheckBox ID="chkUseBillingSetting" runat="server" Text="Pokud je nastaveno, pak text faktury načítat z fakturačního nastavení klienta/projektu" Checked="true" />
-            <br />                 
-            <asp:TextBox ID="p91text1" runat="server" TextMode="MultiLine" Style="height: 50px; width: 90%;"></asp:TextBox>
-        </div>
+       
     </div>
     <asp:Label ID="Errors" runat="server" CssClass="infoNotificationRed"></asp:Label>
 
     <table cellpadding="6">
+        <tr>
+            <th>Typ faktury</th>
+            <th>Klient</th>
+            <th>Text faktury</th>
+        </tr>
         <asp:Repeater ID="rp1" runat="server">
             <ItemTemplate>
-                <tr>
+                <tr valign="top">
                     <td>
                         <asp:DropDownList ID="p92ID" runat="server" DataTextField="p92Name" DataValueField="pid"></asp:DropDownList>
                     </td>
                     <td>
-                        <asp:Label ID="Entity" runat="server" CssClass="valbold"></asp:Label>
+                        <asp:Label ID="Entity" runat="server" CssClass="valboldblue"></asp:Label>
                         <asp:HiddenField ID="pid" runat="server" />
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p91text1" runat="server" TextMode="MultiLine" Style="height: 50px; width: 600px;"></asp:TextBox>
                     </td>
                     <td>
                         <asp:Label ID="Amount" runat="server" CssClass="valboldblue"></asp:Label>

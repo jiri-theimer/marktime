@@ -5,6 +5,7 @@
     Function LoadByCode(strCode As String) As BO.p91Invoice
     Function LoadCreditNote(intPID As Integer) As BO.p91Invoice
     Function LoadMyLastCreated() As BO.p91Invoice
+    Function LoadLastCreatedByClient(intP28ID As Integer) As BO.p91Invoice
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice)
     Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
@@ -103,6 +104,9 @@ Class p91InvoiceBL
     End Function
     Public Function LoadMyLastCreated() As BO.p91Invoice Implements Ip91InvoiceBL.LoadMyLastCreated
         Return _cDL.LoadMyLastCreated()
+    End Function
+    Public Function LoadLastCreatedByClient(intP28ID As Integer) As BO.p91Invoice Implements Ip91InvoiceBL.LoadLastCreatedByClient
+        Return _cDL.LoadLastCreatedByClient(intP28ID)
     End Function
     Public Function LoadCreditNote(intPID As Integer) As BO.p91Invoice Implements Ip91InvoiceBL.LoadCreditNote
         Return _cDL.LoadCreditNote(intPID)

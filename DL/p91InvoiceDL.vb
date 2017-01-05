@@ -29,6 +29,12 @@
 
         Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.j02id_owner = _curUser.j02ID})
     End Function
+    Public Function LoadLastCreatedByClient(intP28ID As Integer) As BO.p91Invoice
+        Dim s As String = GetSQLPart1(1) & " " & GetSQLPart2(Nothing)
+        s += " WHERE a.p28ID=@p28id AND a.p91Amount_WithoutVat>0 ORDER BY a.p91ID DESC"
+
+        Return _cDB.GetRecord(Of BO.p91Invoice)(s, New With {.p28id = intP28ID})
+    End Function
     
 
     Public Function SaveP94(cRec As BO.p94Invoice_Payment) As Boolean

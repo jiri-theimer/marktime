@@ -6,10 +6,12 @@
         Public Property PID As Integer
         Public Property p92ID As Integer
         Public Property Name As String
-        Public Sub New(intPID As Integer, strName As String, intP92ID As Integer)
+        Public Property InvoiceText As String
+        Public Sub New(intPID As Integer, strName As String, intP92ID As Integer, strInvoiceText As String)
             Me.PID = intPID
             Me.Name = strName
             Me.p92ID = intP92ID
+            Me.InvoiceText = strInvoiceText
         End Sub
     End Class
     Public Property CurrentInputPIDs As String
@@ -105,9 +107,8 @@
                     End If
                 End With
 
-                _lisP92 = .Factory.p92InvoiceTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice).OrderBy(Function(p) p.j27ID)
-                Me.p92ID.DataSource = _lisP92
-                Me.p92ID.DataBind()
+                _lisP92 = Master.Factory.p92InvoiceTypeBL.GetList(New BO.myQuery).OrderBy(Function(p) p.p92Ordinary).Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice)
+               
             End With
 
             If Not TestIfAnyInputData() Then
@@ -175,18 +176,28 @@
                 mq.PIDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
                 Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
                 For Each c In lis
+                    Dim intP28ID As Integer = c.p28ID_Billing
+                    If intP28ID = 0 Then intP28ID = c.p28ID_Client
+                    If intP28ID = 0 Then
+                        Master.StopPage("Na vstupu je minimálně jeden projekt bez vazby na klienta.")
+                    End If
                     Dim intP92ID As Integer = c.p92ID
                     If intP92ID = 0 Then
-                        Dim intP28ID As Integer = c.p28ID_Billing
-                        If intP28ID = 0 Then intP28ID = c.p28ID_Client
-                        If intP28ID = 0 Then
-                            Master.StopPage("Na vstupu je minimálně jeden projekt bez vazby na klienta.")
-                        End If
-
                         Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(intP28ID)
                         intP92ID = cP28.p92ID
                     End If
-                    lis1.Add(New InvoiceEntity(c.PID, c.Client & " - " & c.PrefferedName, intP92ID))
+                    If intP28ID <> 0 Then
+                        Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadLastCreatedByClient(intP28ID)
+                        If Not cP91 Is Nothing Then
+                            intP92ID = cP91.p92ID
+                            If c.p41InvoiceDefaultText1 = "" Then c.p41InvoiceDefaultText1 = cP91.p91Text1
+                        Else
+                            If intP92ID <> 0 Then
+                                c.p41InvoiceDefaultText1 = Master.Factory.p92InvoiceTypeBL.Load(intP92ID).p92InvoiceDefaultText1
+                            End If
+                        End If
+                    End If
+                    lis1.Add(New InvoiceEntity(c.PID, c.Client & " - " & c.PrefferedName, intP92ID, c.p41InvoiceDefaultText1))
                 Next
 
             Case BO.x29IdEnum.p28Contact
@@ -194,7 +205,16 @@
                 mq.PIDs = BO.BAS.ConvertPIDs2List(Me.CurrentInputPIDs)
                 Dim lis As IEnumerable(Of BO.p28Contact) = Master.Factory.p28ContactBL.GetList(mq)
                 For Each c In lis
-                    lis1.Add(New InvoiceEntity(c.PID, c.p28Name, c.p92ID))
+                    Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadLastCreatedByClient(c.PID)
+                    If Not cP91 Is Nothing Then
+                        c.p92ID = cP91.p92ID
+                        If c.p28InvoiceDefaultText1 = "" Then c.p28InvoiceDefaultText1 = cP91.p91Text1
+                    Else
+                        If c.p92ID <> 0 Then
+                            c.p28InvoiceDefaultText1 = Master.Factory.p92InvoiceTypeBL.Load(c.p92ID).p92InvoiceDefaultText1
+                        End If
+                    End If
+                    lis1.Add(New InvoiceEntity(c.PID, c.p28Name, c.p92ID, c.p28InvoiceDefaultText1))
                 Next
             Case Else
                 Return
@@ -256,7 +276,7 @@
                 Dim intPID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("pid"), HiddenField).Value)
                 Dim intP92ID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("p92ID"), DropDownList).SelectedValue)
                 Dim strRecord As String = CType(ri.FindControl("Entity"), Label).Text
-                Dim strP91Text1 As String = ""
+                Dim strP91Text1 As String = CType(ri.FindControl("p91Text1"), TextBox).Text
 
                 Dim intP28ID As Integer
                 Dim mqP31 As New BO.myQueryP31
@@ -325,13 +345,12 @@
                     cTMP.p85Prefix = "p31"
                     Master.Factory.p85TempBoxBL.Save(cTMP)
                 Next
-                If strP91Text1 = "" Or chkUseBillingSetting.Checked = False Then strP91Text1 = Me.p91text1.Text
                 Dim cRec As New BO.p91Create
                 With cRec
                     .p28ID = intP28ID
                     .IsDraft = True
                     .TempGUID = strGUID
-                    .p92ID = BO.BAS.IsNullInt(Me.p92ID.SelectedValue)
+                    .p92ID = intP92ID
 
                     .InvoiceText1 = strP91Text1
                     .DateIssue = Me.p91Date.SelectedDate
@@ -380,14 +399,16 @@
             Try
                 If cRec.p92ID <> 0 Then
                     .SelectedValue = cRec.p92ID.ToString
-                Else
-                    .SelectedValue = Me.p92ID.SelectedValue
                 End If
 
             Catch ex As Exception
 
             End Try
         End With
+        CType(e.Item.FindControl("p91text1"), TextBox).Text = cRec.InvoiceText
+
 
     End Sub
+
+
 End Class

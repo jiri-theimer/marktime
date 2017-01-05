@@ -55,7 +55,7 @@ Public Class p91_create_step2
                 Me.chkRememberDates.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-rememberdates", "0"))
                 Me.chkRememberMaturiy.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-remembermaturity", "0"))
                 Dim lisP92 As IEnumerable(Of BO.p92InvoiceType) = .Factory.p92InvoiceTypeBL.GetList(New BO.myQuery)
-                Me.p92ID.DataSource = lisP92.Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice).OrderBy(Function(p) p.j27ID)
+                Me.p92ID.DataSource = lisP92.Where(Function(p) p.p92InvoiceType = BO.p92InvoiceTypeENUM.ClientInvoice).OrderBy(Function(p) p.p92Ordinary)
                 Me.p92ID.DataBind()
             End With
 
@@ -141,24 +141,29 @@ Public Class p91_create_step2
 
             End Select
         End If
+        Dim cLastP91 As BO.p91Invoice = Nothing
         If Not cP28 Is Nothing Then
             Me.p28id.Value = cP28.PID.ToString
             Me.p28id.Text = cP28.p28Name
+            cLastP91 = Master.Factory.p91InvoiceBL.LoadLastCreatedByClient(cP28.PID)
+            If intP92ID = 0 Then intP92ID = cLastP91.p92ID
+            If Me.p91text1.Text = "" Then Me.p91text1.Text = cLastP91.p91Text1
         End If
+        If Me.p91text1.Text <> "" Then Me.hidIsDefTextFixed.Value = "1"
         If Not Me.p91Date.IsEmpty Then
             Me.p91DateMaturity.SelectedDate = Me.p91Date.SelectedDate.Value.AddDays(intMaturityDays)
         End If
-        If Me.p91text1.Text <> "" Then Me.hidIsDefTextFixed.Value = "1"
         If intP92ID > 0 Then
             basUI.SelectDropdownlistValue(Me.p92ID, intP92ID.ToString)
         End If
         If intP92ID = 0 Then intP92ID = BO.BAS.IsNullInt(Me.p92ID.SelectedValue)
-        If intP92ID > 0 Then
+        If intP92ID > 0 And Me.p91text1.Text = "" Then
             If Me.hidIsDefTextFixed.Value <> "1" Then
                 Dim cP92 As BO.p92InvoiceType = Master.Factory.p92InvoiceTypeBL.Load(intP92ID)
                 Me.p91text1.Text = cP92.p92InvoiceDefaultText1
             End If
         End If
+        
         If Me.chkRememberDates.Checked Or Me.chkRememberMaturiy.Checked Then
             Dim cLastRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadMyLastCreated()
             If Not cLastRec Is Nothing Then

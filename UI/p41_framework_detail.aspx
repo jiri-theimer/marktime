@@ -58,6 +58,9 @@
             sw_decide("p41_batch_childs.aspx?pid=<%=master.datapid%>", "Images/batch_32.png", true)
 
         }
+        function p40_record(p40id) {
+            sw_decide("p40_record.aspx?p41id=<%=master.datapid%>&pid=" + p40id, "Images/worksheet_recurrence.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

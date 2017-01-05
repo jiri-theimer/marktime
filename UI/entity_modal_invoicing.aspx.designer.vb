@@ -23,24 +23,6 @@ Partial Public Class entity_modal_invoicing
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''lblp92ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblp92ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p92ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p92ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''lblp91DateSupply control.
     '''</summary>
     '''<remarks>
@@ -147,24 +129,6 @@ Partial Public Class entity_modal_invoicing
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkRememberMaturiy As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''chkUseBillingSetting control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkUseBillingSetting As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''p91text1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p91text1 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Errors control.

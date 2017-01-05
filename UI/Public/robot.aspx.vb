@@ -92,7 +92,7 @@
 
                         .Amount_WithoutVat_Orig = cRec.p40Value
                         If cP34.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu Then
-                            .Amount_Vat_Orig = .VatRate_Orig / 100 + cRec.p40Value
+                            .Amount_Vat_Orig = .VatRate_Orig / 100 * cRec.p40Value
                             .Amount_WithVat_Orig = .Amount_Vat_Orig + .Amount_WithoutVat_Orig
                         End If
 

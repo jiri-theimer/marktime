@@ -67,7 +67,7 @@
                     if (ui.item) {
                         //alert(ui.item.PID);
 
-                        document.getElementById("<%=p91text1.clientid%>").value = ui.item.p91Text1;
+                        document.getElementById("<%=p91text1.clientid%>").value = ui.item.ItemComment;
                         return false;
                     }
                 }
@@ -81,7 +81,7 @@
                 else
                     s = s + "<a>";
 
-                s = s + __highlight(item.Invoice + "<br>" + item.p91Text1, item.FilterString);
+                s = s + __highlight(item.ItemText + "<br>" + item.ItemComment, item.FilterString);
 
 
                 s = s + "</a>";
