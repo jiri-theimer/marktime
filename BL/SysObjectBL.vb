@@ -189,7 +189,7 @@
         Select Case cRec.xType
             Case "P"
                 s += " drop procedure " & cRec.Name
-            Case "FN"
+            Case "FN", "IF"
                 s += " drop function " & cRec.Name
             Case "V"
                 s += " drop view " & cRec.Name
