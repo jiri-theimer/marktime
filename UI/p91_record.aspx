@@ -246,7 +246,7 @@
                                 <asp:Label ID="Label9" runat="server" Text="Ulice:" CssClass="lbl"></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="p91ClientAddress1_Street" runat="server" Style="width: 400px;"></asp:TextBox>
+                                <asp:TextBox ID="p91ClientAddress1_Street" runat="server" TextMode="MultiLine" Style="width: 400px;height:40px;"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>

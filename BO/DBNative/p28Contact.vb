@@ -129,59 +129,59 @@ Public Class p28Contact
     End Property
 
 
-    '----uživatelská pole--------------------
-    Public Property p28FreeText01 As String
-    Public Property p28FreeText02 As String
-    Public Property p28FreeText03 As String
-    Public Property p28FreeText04 As String
-    Public Property p28FreeText05 As String
-    Public Property p28FreeText06 As String
-    Public Property p28FreeText07 As String
-    Public Property p28FreeText08 As String
-    Public Property p28FreeText09 As String
-    Public Property p28FreeText10 As String
+    ' ''----uživatelská pole--------------------
+    ''Public Property p28FreeText01 As String
+    ''Public Property p28FreeText02 As String
+    ''Public Property p28FreeText03 As String
+    ''Public Property p28FreeText04 As String
+    ''Public Property p28FreeText05 As String
+    ''Public Property p28FreeText06 As String
+    ''Public Property p28FreeText07 As String
+    ''Public Property p28FreeText08 As String
+    ''Public Property p28FreeText09 As String
+    ''Public Property p28FreeText10 As String
 
-    Public Property p28FreeBoolean01 As Boolean
-    Public Property p28FreeBoolean02 As Boolean
-    Public Property p28FreeBoolean03 As Boolean
-    Public Property p28FreeBoolean04 As Boolean
-    Public Property p28FreeBoolean05 As Boolean
-    Public Property p28FreeBoolean06 As Boolean
-    Public Property p28FreeBoolean07 As Boolean
-    Public Property p28FreeBoolean08 As Boolean
-    Public Property p28FreeBoolean09 As Boolean
-    Public Property p28FreeBoolean10 As Boolean
+    ''Public Property p28FreeBoolean01 As Boolean
+    ''Public Property p28FreeBoolean02 As Boolean
+    ''Public Property p28FreeBoolean03 As Boolean
+    ''Public Property p28FreeBoolean04 As Boolean
+    ''Public Property p28FreeBoolean05 As Boolean
+    ''Public Property p28FreeBoolean06 As Boolean
+    ''Public Property p28FreeBoolean07 As Boolean
+    ''Public Property p28FreeBoolean08 As Boolean
+    ''Public Property p28FreeBoolean09 As Boolean
+    ''Public Property p28FreeBoolean10 As Boolean
 
-    Public Property p28FreeDate01 As DateTime?
-    Public Property p28FreeDate02 As DateTime?
-    Public Property p28FreeDate03 As DateTime?
-    Public Property p28FreeDate04 As DateTime?
-    Public Property p28FreeDate05 As DateTime?
-    Public Property p28FreeDate06 As DateTime?
-    Public Property p28FreeDate07 As DateTime?
-    Public Property p28FreeDate08 As DateTime?
-    Public Property p28FreeDate09 As DateTime?
-    Public Property p28FreeDate10 As DateTime?
+    ''Public Property p28FreeDate01 As DateTime?
+    ''Public Property p28FreeDate02 As DateTime?
+    ''Public Property p28FreeDate03 As DateTime?
+    ''Public Property p28FreeDate04 As DateTime?
+    ''Public Property p28FreeDate05 As DateTime?
+    ''Public Property p28FreeDate06 As DateTime?
+    ''Public Property p28FreeDate07 As DateTime?
+    ''Public Property p28FreeDate08 As DateTime?
+    ''Public Property p28FreeDate09 As DateTime?
+    ''Public Property p28FreeDate10 As DateTime?
 
-    Public Property p28FreeNumber01 As Double
-    Public Property p28FreeNumber02 As Double
-    Public Property p28FreeNumber03 As Double
-    Public Property p28FreeNumber04 As Double
-    Public Property p28FreeNumber05 As Double
-    Public Property p28FreeNumber06 As Double
-    Public Property p28FreeNumber07 As Double
-    Public Property p28FreeNumber08 As Double
-    Public Property p28FreeNumber09 As Double
-    Public Property p28FreeNumber10 As Double
+    ''Public Property p28FreeNumber01 As Double
+    ''Public Property p28FreeNumber02 As Double
+    ''Public Property p28FreeNumber03 As Double
+    ''Public Property p28FreeNumber04 As Double
+    ''Public Property p28FreeNumber05 As Double
+    ''Public Property p28FreeNumber06 As Double
+    ''Public Property p28FreeNumber07 As Double
+    ''Public Property p28FreeNumber08 As Double
+    ''Public Property p28FreeNumber09 As Double
+    ''Public Property p28FreeNumber10 As Double
 
-    Public Property p28FreeCombo01 As Integer?
-    Public Property p28FreeCombo02 As Integer?
-    Public Property p28FreeCombo03 As Integer?
-    Public Property p28FreeCombo04 As Integer?
-    Public Property p28FreeCombo05 As Integer?
-    Public Property p28FreeCombo06 As Integer?
-    Public Property p28FreeCombo07 As Integer?
-    Public Property p28FreeCombo08 As Integer?
-    Public Property p28FreeCombo09 As Integer?
-    Public Property p28FreeCombo10 As Integer?
+    ''Public Property p28FreeCombo01 As Integer?
+    ''Public Property p28FreeCombo02 As Integer?
+    ''Public Property p28FreeCombo03 As Integer?
+    ''Public Property p28FreeCombo04 As Integer?
+    ''Public Property p28FreeCombo05 As Integer?
+    ''Public Property p28FreeCombo06 As Integer?
+    ''Public Property p28FreeCombo07 As Integer?
+    ''Public Property p28FreeCombo08 As Integer?
+    ''Public Property p28FreeCombo09 As Integer?
+    ''Public Property p28FreeCombo10 As Integer?
 End Class

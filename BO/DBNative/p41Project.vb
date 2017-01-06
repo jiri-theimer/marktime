@@ -192,70 +192,70 @@ Public Class p41Project
 
 
 
-    '----uživatelská pole--------------------
-    Public Property p41FreeText01 As String = Nothing
-    Public Property p41FreeText02 As String = Nothing
-    Public Property p41FreeText03 As String = Nothing
-    Public Property p41FreeText04 As String = Nothing
-    Public Property p41FreeText05 As String = Nothing
-    Public Property p41FreeText06 As String = Nothing
-    Public Property p41FreeText07 As String = Nothing
-    Public Property p41FreeText08 As String = Nothing
-    Public Property p41FreeText09 As String = Nothing
-    Public Property p41FreeText10 As String = Nothing
+    ' ''----uživatelská pole--------------------
+    ''Public Property p41FreeText01 As String = Nothing
+    ''Public Property p41FreeText02 As String = Nothing
+    ''Public Property p41FreeText03 As String = Nothing
+    ''Public Property p41FreeText04 As String = Nothing
+    ''Public Property p41FreeText05 As String = Nothing
+    ''Public Property p41FreeText06 As String = Nothing
+    ''Public Property p41FreeText07 As String = Nothing
+    ''Public Property p41FreeText08 As String = Nothing
+    ''Public Property p41FreeText09 As String = Nothing
+    ''Public Property p41FreeText10 As String = Nothing
 
-    Public Property p41FreeBoolean01 As Boolean
-    Public Property p41FreeBoolean02 As Boolean
-    Public Property p41FreeBoolean03 As Boolean
-    Public Property p41FreeBoolean04 As Boolean
-    Public Property p41FreeBoolean05 As Boolean
-    Public Property p41FreeBoolean06 As Boolean
-    Public Property p41FreeBoolean07 As Boolean
-    Public Property p41FreeBoolean08 As Boolean
-    Public Property p41FreeBoolean09 As Boolean
-    Public Property p41FreeBoolean10 As Boolean
+    ''Public Property p41FreeBoolean01 As Boolean
+    ''Public Property p41FreeBoolean02 As Boolean
+    ''Public Property p41FreeBoolean03 As Boolean
+    ''Public Property p41FreeBoolean04 As Boolean
+    ''Public Property p41FreeBoolean05 As Boolean
+    ''Public Property p41FreeBoolean06 As Boolean
+    ''Public Property p41FreeBoolean07 As Boolean
+    ''Public Property p41FreeBoolean08 As Boolean
+    ''Public Property p41FreeBoolean09 As Boolean
+    ''Public Property p41FreeBoolean10 As Boolean
 
-    Public Property p41FreeDate01 As DateTime?
-    Public Property p41FreeDate02 As DateTime?
-    Public Property p41FreeDate03 As DateTime?
-    Public Property p41FreeDate04 As DateTime?
-    Public Property p41FreeDate05 As DateTime?
-    Public Property p41FreeDate06 As DateTime?
-    Public Property p41FreeDate07 As DateTime?
-    Public Property p41FreeDate08 As DateTime?
-    Public Property p41FreeDate09 As DateTime?
-    Public Property p41FreeDate10 As DateTime?
+    ''Public Property p41FreeDate01 As DateTime?
+    ''Public Property p41FreeDate02 As DateTime?
+    ''Public Property p41FreeDate03 As DateTime?
+    ''Public Property p41FreeDate04 As DateTime?
+    ''Public Property p41FreeDate05 As DateTime?
+    ''Public Property p41FreeDate06 As DateTime?
+    ''Public Property p41FreeDate07 As DateTime?
+    ''Public Property p41FreeDate08 As DateTime?
+    ''Public Property p41FreeDate09 As DateTime?
+    ''Public Property p41FreeDate10 As DateTime?
 
-    Public Property p41FreeNumber01 As Double
-    Public Property p41FreeNumber02 As Double
-    Public Property p41FreeNumber03 As Double
-    Public Property p41FreeNumber04 As Double
-    Public Property p41FreeNumber05 As Double
-    Public Property p41FreeNumber06 As Double
-    Public Property p41FreeNumber07 As Double
-    Public Property p41FreeNumber08 As Double
-    Public Property p41FreeNumber09 As Double
-    Public Property p41FreeNumber10 As Double
+    ''Public Property p41FreeNumber01 As Double
+    ''Public Property p41FreeNumber02 As Double
+    ''Public Property p41FreeNumber03 As Double
+    ''Public Property p41FreeNumber04 As Double
+    ''Public Property p41FreeNumber05 As Double
+    ''Public Property p41FreeNumber06 As Double
+    ''Public Property p41FreeNumber07 As Double
+    ''Public Property p41FreeNumber08 As Double
+    ''Public Property p41FreeNumber09 As Double
+    ''Public Property p41FreeNumber10 As Double
 
-    Public Property p41FreeCombo01 As Integer?
-    Public Property p41FreeCombo02 As Integer?
-    Public Property p41FreeCombo03 As Integer?
-    Public Property p41FreeCombo04 As Integer?
-    Public Property p41FreeCombo05 As Integer?
-    Public Property p41FreeCombo06 As Integer?
-    Public Property p41FreeCombo07 As Integer?
-    Public Property p41FreeCombo08 As Integer?
-    Public Property p41FreeCombo09 As Integer?
-    Public Property p41FreeCombo10 As Integer?
+    ''Public Property p41FreeCombo01 As Integer?
+    ''Public Property p41FreeCombo02 As Integer?
+    ''Public Property p41FreeCombo03 As Integer?
+    ''Public Property p41FreeCombo04 As Integer?
+    ''Public Property p41FreeCombo05 As Integer?
+    ''Public Property p41FreeCombo06 As Integer?
+    ''Public Property p41FreeCombo07 As Integer?
+    ''Public Property p41FreeCombo08 As Integer?
+    ''Public Property p41FreeCombo09 As Integer?
+    ''Public Property p41FreeCombo10 As Integer?
 
-    Public Property p41FreeCombo01Text As String = Nothing
-    Public Property p41FreeCombo02Text As String = Nothing
-    Public Property p41FreeCombo03Text As String = Nothing
-    Public Property p41FreeCombo04Text As String = Nothing
-    Public Property p41FreeCombo05Text As String = Nothing
-    Public Property p41FreeCombo06Text As String = Nothing
-    Public Property p41FreeCombo07Text As String = Nothing
-    Public Property p41FreeCombo08Text As String = Nothing
-    Public Property p41FreeCombo09Text As String = Nothing
-    Public Property p41FreeCombo10Text As String = Nothing
+    ''Public Property p41FreeCombo01Text As String = Nothing
+    ''Public Property p41FreeCombo02Text As String = Nothing
+    ''Public Property p41FreeCombo03Text As String = Nothing
+    ''Public Property p41FreeCombo04Text As String = Nothing
+    ''Public Property p41FreeCombo05Text As String = Nothing
+    ''Public Property p41FreeCombo06Text As String = Nothing
+    ''Public Property p41FreeCombo07Text As String = Nothing
+    ''Public Property p41FreeCombo08Text As String = Nothing
+    ''Public Property p41FreeCombo09Text As String = Nothing
+    ''Public Property p41FreeCombo10Text As String = Nothing
 End Class

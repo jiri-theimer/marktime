@@ -7,6 +7,7 @@ Public Class p31_subgrid
     Public Property ExplicitMyQuery As BO.myQueryP31    'proměnná nedrží stav!
     Private Property _curJ74 As BO.j74SavedGridColTemplate
     Private Property _curIsExport As Boolean
+    Private Property _needFilterIsChanged As Boolean = False
 
     Public Property MasterDataPID As Integer
         Get
@@ -290,6 +291,10 @@ Public Class p31_subgrid
         Return cSum.RowsCount
     End Function
 
+    Private Sub grid2_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid2.FilterCommand
+        _needFilterIsChanged = True
+    End Sub
+
     Private Sub grid2_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid2.ItemDataBound
         basUIMT.p31_grid_Handle_ItemDataBound(sender, e, True)
         If _curIsExport Then
@@ -358,6 +363,9 @@ Public Class p31_subgrid
                     End If
                 Next
             End If
+        End If
+        If _needFilterIsChanged Then
+            RecalcVirtualRowCount()
         End If
         ''Dim lis As IEnumerable(Of BO.p31Worksheet) = Me.Factory.p31WorksheetBL.GetList(mq)
         ''If Me.DefaultSelectedPID <> 0 Then
@@ -491,6 +499,7 @@ Public Class p31_subgrid
             ''.SearchExpression = Trim(Me.txtSearch.Text)
             .TabAutoQuery = Me.MasterTabAutoQueryFlag
 
+            .ColumnFilteringExpression = grid2.GetFilterExpressionCompleteSql()
             .MG_SortString = grid2.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidFrom.Value

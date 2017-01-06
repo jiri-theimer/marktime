@@ -75,7 +75,9 @@
                     bas.SaveX69(_cDB, BO.x29IdEnum.o23Notepad, intLastSavedO23ID, lisX69, bolINSERT)
                 End If
                 If Not lisFF Is Nothing Then    'volná pole
-                    bas.SaveFreeFields(_cDB, lisFF, "o23Notepad_FreeField", intLastSavedO23ID, _curUser)
+                    If Not bas.SaveFreeFields(_cDB, lisFF, "o23Notepad_FreeField", intLastSavedO23ID, _curUser) Then
+                        Return False
+                    End If
                 End If
 
                 pars = New DbParameters
@@ -369,12 +371,12 @@
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
         s += " a.o24ID,a.p28ID,a.p41ID,a.p91ID,a.j02ID,a.p56ID,a.p31ID,a.b02ID,a.o43ID as _o43ID,a.o23Name,a.o23Code,o24.o24Name as _o24Name,a.j02ID_Owner,a.o23Date,a.o23ReminderDate,a.o23IsEncrypted,o24.x29ID as _x29ID"
-        s += ",o23free.*," & bas.RecTail("o23", "a") & ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,b02.b02Name as _b02Name,b02.b02Color as _b02Color,o24.o24IsBillingMemo as _o24IsBillingMemo"
+        s += "," & bas.RecTail("o23", "a") & ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,b02.b02Name as _b02Name,b02.b02Color as _b02Color,o24.o24IsBillingMemo as _o24IsBillingMemo"
         s += ",a.o23BodyPlainText,a.o23SizePlainText,a.o23Password,a.o23IsDraft,a.o23LockedFlag as _o23LockedFlag,a.o23LastLockedWhen as _o23LastLockedWhen,a.o23LastLockedBy as _o23LastLockedBy,a.o23GUID"
         s += " FROM o23Notepad a LEFT OUTER JOIN o24NotepadType o24 ON a.o24ID=o24.o24ID LEFT OUTER JOIN (SELECT o23ID,COUNT(*) as FilesCount FROM o27Attachment WHERE o23ID IS NOT NULL GROUP BY o23ID) o27 ON a.o23ID=o27.o23ID"
         s += " LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         s += " LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
-        s += " LEFT OUTER JOIN o23Notepad_FreeField o23free ON a.o23ID=o23free.o23ID"
+        ''s += " LEFT OUTER JOIN o23Notepad_FreeField o23free ON a.o23ID=o23free.o23ID"
         Return s
     End Function
 

@@ -163,61 +163,61 @@ Public Class p31Worksheet
 
 
 
-    '----uživatelská pole--------------------
-    Public Property p31FreeText01 As String
-    Public Property p31FreeText02 As String
-    Public Property p31FreeText03 As String
-    Public Property p31FreeText04 As String
-    Public Property p31FreeText05 As String
-    Public Property p31FreeText06 As String
-    Public Property p31FreeText07 As String
-    Public Property p31FreeText08 As String
-    Public Property p31FreeText09 As String
-    Public Property p31FreeText10 As String
+    ' ''----uživatelská pole--------------------
+    ''Public Property p31FreeText01 As String
+    ''Public Property p31FreeText02 As String
+    ''Public Property p31FreeText03 As String
+    ''Public Property p31FreeText04 As String
+    ''Public Property p31FreeText05 As String
+    ''Public Property p31FreeText06 As String
+    ''Public Property p31FreeText07 As String
+    ''Public Property p31FreeText08 As String
+    ''Public Property p31FreeText09 As String
+    ''Public Property p31FreeText10 As String
 
-    Public Property p31FreeBoolean01 As Boolean
-    Public Property p31FreeBoolean02 As Boolean
-    Public Property p31FreeBoolean03 As Boolean
-    Public Property p31FreeBoolean04 As Boolean
-    Public Property p31FreeBoolean05 As Boolean
-    Public Property p31FreeBoolean06 As Boolean
-    Public Property p31FreeBoolean07 As Boolean
-    Public Property p31FreeBoolean08 As Boolean
-    Public Property p31FreeBoolean09 As Boolean
-    Public Property p31FreeBoolean10 As Boolean
+    ''Public Property p31FreeBoolean01 As Boolean
+    ''Public Property p31FreeBoolean02 As Boolean
+    ''Public Property p31FreeBoolean03 As Boolean
+    ''Public Property p31FreeBoolean04 As Boolean
+    ''Public Property p31FreeBoolean05 As Boolean
+    ''Public Property p31FreeBoolean06 As Boolean
+    ''Public Property p31FreeBoolean07 As Boolean
+    ''Public Property p31FreeBoolean08 As Boolean
+    ''Public Property p31FreeBoolean09 As Boolean
+    ''Public Property p31FreeBoolean10 As Boolean
 
-    Public Property p31FreeDate01 As DateTime?
-    Public Property p31FreeDate02 As DateTime?
-    Public Property p31FreeDate03 As DateTime?
-    Public Property p31FreeDate04 As DateTime?
-    Public Property p31FreeDate05 As DateTime?
-    Public Property p31FreeDate06 As DateTime?
-    Public Property p31FreeDate07 As DateTime?
-    Public Property p31FreeDate08 As DateTime?
-    Public Property p31FreeDate09 As DateTime?
-    Public Property p31FreeDate10 As DateTime?
+    ''Public Property p31FreeDate01 As DateTime?
+    ''Public Property p31FreeDate02 As DateTime?
+    ''Public Property p31FreeDate03 As DateTime?
+    ''Public Property p31FreeDate04 As DateTime?
+    ''Public Property p31FreeDate05 As DateTime?
+    ''Public Property p31FreeDate06 As DateTime?
+    ''Public Property p31FreeDate07 As DateTime?
+    ''Public Property p31FreeDate08 As DateTime?
+    ''Public Property p31FreeDate09 As DateTime?
+    ''Public Property p31FreeDate10 As DateTime?
 
-    Public Property p31FreeNumber01 As Double
-    Public Property p31FreeNumber02 As Double
-    Public Property p31FreeNumber03 As Double
-    Public Property p31FreeNumber04 As Double
-    Public Property p31FreeNumber05 As Double
-    Public Property p31FreeNumber06 As Double
-    Public Property p31FreeNumber07 As Double
-    Public Property p31FreeNumber08 As Double
-    Public Property p31FreeNumber09 As Double
-    Public Property p31FreeNumber10 As Double
+    ''Public Property p31FreeNumber01 As Double
+    ''Public Property p31FreeNumber02 As Double
+    ''Public Property p31FreeNumber03 As Double
+    ''Public Property p31FreeNumber04 As Double
+    ''Public Property p31FreeNumber05 As Double
+    ''Public Property p31FreeNumber06 As Double
+    ''Public Property p31FreeNumber07 As Double
+    ''Public Property p31FreeNumber08 As Double
+    ''Public Property p31FreeNumber09 As Double
+    ''Public Property p31FreeNumber10 As Double
 
-    Public Property p31FreeCombo01 As Integer?
-    Public Property p31FreeCombo02 As Integer?
-    Public Property p31FreeCombo03 As Integer?
-    Public Property p31FreeCombo04 As Integer?
-    Public Property p31FreeCombo05 As Integer?
-    Public Property p31FreeCombo06 As Integer?
-    Public Property p31FreeCombo07 As Integer?
-    Public Property p31FreeCombo08 As Integer?
-    Public Property p31FreeCombo09 As Integer?
-    Public Property p31FreeCombo10 As Integer?
+    ''Public Property p31FreeCombo01 As Integer?
+    ''Public Property p31FreeCombo02 As Integer?
+    ''Public Property p31FreeCombo03 As Integer?
+    ''Public Property p31FreeCombo04 As Integer?
+    ''Public Property p31FreeCombo05 As Integer?
+    ''Public Property p31FreeCombo06 As Integer?
+    ''Public Property p31FreeCombo07 As Integer?
+    ''Public Property p31FreeCombo08 As Integer?
+    ''Public Property p31FreeCombo09 As Integer?
+    ''Public Property p31FreeCombo10 As Integer?
 
     Public Function IsRecommendedHHMM() As Boolean
         If Me.p33ID = p33IdENUM.Cas Then

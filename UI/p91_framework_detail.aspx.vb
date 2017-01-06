@@ -163,7 +163,7 @@ Public Class p91_framework_detail
             Me.WorksheetRange.Text = BO.BAS.FD(.p91Datep31_From) & " - " & BO.BAS.FD(.p91Datep31_Until)
             ''Me.BillingAddress.Text = ParseAddress(.o38ID_Primary)
             ''Me.PostAddress.Text = ParseAddress(.o38ID_Delivery)
-            Me.BillingAddress.Text = .PrimaryAddress
+            Me.BillingAddress.Text = BO.BAS.CrLfText2Html(.PrimaryAddress)
             Me.PostAddress.Text = Replace(.p91ClientAddress2, vbCrLf, ",")
             HandleBankAccount(.p93ID, .j27ID)
 

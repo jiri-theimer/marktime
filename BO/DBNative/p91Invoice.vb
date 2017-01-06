@@ -195,59 +195,59 @@
         End Get
     End Property
 
-    '----uživatelská pole--------------------
-    Public Property p91FreeText01 As String
-    Public Property p91FreeText02 As String
-    Public Property p91FreeText03 As String
-    Public Property p91FreeText04 As String
-    Public Property p91FreeText05 As String
-    Public Property p91FreeText06 As String
-    Public Property p91FreeText07 As String
-    Public Property p91FreeText08 As String
-    Public Property p91FreeText09 As String
-    Public Property p91FreeText10 As String
+    ' ''----uživatelská pole--------------------
+    ''Public Property p91FreeText01 As String
+    ''Public Property p91FreeText02 As String
+    ''Public Property p91FreeText03 As String
+    ''Public Property p91FreeText04 As String
+    ''Public Property p91FreeText05 As String
+    ''Public Property p91FreeText06 As String
+    ''Public Property p91FreeText07 As String
+    ''Public Property p91FreeText08 As String
+    ''Public Property p91FreeText09 As String
+    ''Public Property p91FreeText10 As String
 
-    Public Property p91FreeBoolean01 As Boolean
-    Public Property p91FreeBoolean02 As Boolean
-    Public Property p91FreeBoolean03 As Boolean
-    Public Property p91FreeBoolean04 As Boolean
-    Public Property p91FreeBoolean05 As Boolean
-    Public Property p91FreeBoolean06 As Boolean
-    Public Property p91FreeBoolean07 As Boolean
-    Public Property p91FreeBoolean08 As Boolean
-    Public Property p91FreeBoolean09 As Boolean
-    Public Property p91FreeBoolean10 As Boolean
+    ''Public Property p91FreeBoolean01 As Boolean
+    ''Public Property p91FreeBoolean02 As Boolean
+    ''Public Property p91FreeBoolean03 As Boolean
+    ''Public Property p91FreeBoolean04 As Boolean
+    ''Public Property p91FreeBoolean05 As Boolean
+    ''Public Property p91FreeBoolean06 As Boolean
+    ''Public Property p91FreeBoolean07 As Boolean
+    ''Public Property p91FreeBoolean08 As Boolean
+    ''Public Property p91FreeBoolean09 As Boolean
+    ''Public Property p91FreeBoolean10 As Boolean
 
-    Public Property p91FreeDate01 As DateTime?
-    Public Property p91FreeDate02 As DateTime?
-    Public Property p91FreeDate03 As DateTime?
-    Public Property p91FreeDate04 As DateTime?
-    Public Property p91FreeDate05 As DateTime?
-    Public Property p91FreeDate06 As DateTime?
-    Public Property p91FreeDate07 As DateTime?
-    Public Property p91FreeDate08 As DateTime?
-    Public Property p91FreeDate09 As DateTime?
-    Public Property p91FreeDate10 As DateTime?
+    ''Public Property p91FreeDate01 As DateTime?
+    ''Public Property p91FreeDate02 As DateTime?
+    ''Public Property p91FreeDate03 As DateTime?
+    ''Public Property p91FreeDate04 As DateTime?
+    ''Public Property p91FreeDate05 As DateTime?
+    ''Public Property p91FreeDate06 As DateTime?
+    ''Public Property p91FreeDate07 As DateTime?
+    ''Public Property p91FreeDate08 As DateTime?
+    ''Public Property p91FreeDate09 As DateTime?
+    ''Public Property p91FreeDate10 As DateTime?
 
-    Public Property p91FreeNumber01 As Double
-    Public Property p91FreeNumber02 As Double
-    Public Property p91FreeNumber03 As Double
-    Public Property p91FreeNumber04 As Double
-    Public Property p91FreeNumber05 As Double
-    Public Property p91FreeNumber06 As Double
-    Public Property p91FreeNumber07 As Double
-    Public Property p91FreeNumber08 As Double
-    Public Property p91FreeNumber09 As Double
-    Public Property p91FreeNumber10 As Double
+    ''Public Property p91FreeNumber01 As Double
+    ''Public Property p91FreeNumber02 As Double
+    ''Public Property p91FreeNumber03 As Double
+    ''Public Property p91FreeNumber04 As Double
+    ''Public Property p91FreeNumber05 As Double
+    ''Public Property p91FreeNumber06 As Double
+    ''Public Property p91FreeNumber07 As Double
+    ''Public Property p91FreeNumber08 As Double
+    ''Public Property p91FreeNumber09 As Double
+    ''Public Property p91FreeNumber10 As Double
 
-    Public Property p91FreeCombo01 As Integer?
-    Public Property p91FreeCombo02 As Integer?
-    Public Property p91FreeCombo03 As Integer?
-    Public Property p91FreeCombo04 As Integer?
-    Public Property p91FreeCombo05 As Integer?
-    Public Property p91FreeCombo06 As Integer?
-    Public Property p91FreeCombo07 As Integer?
-    Public Property p91FreeCombo08 As Integer?
-    Public Property p91FreeCombo09 As Integer?
-    Public Property p91FreeCombo10 As Integer?
+    ''Public Property p91FreeCombo01 As Integer?
+    ''Public Property p91FreeCombo02 As Integer?
+    ''Public Property p91FreeCombo03 As Integer?
+    ''Public Property p91FreeCombo04 As Integer?
+    ''Public Property p91FreeCombo05 As Integer?
+    ''Public Property p91FreeCombo06 As Integer?
+    ''Public Property p91FreeCombo07 As Integer?
+    ''Public Property p91FreeCombo08 As Integer?
+    ''Public Property p91FreeCombo09 As Integer?
+    ''Public Property p91FreeCombo10 As Integer?
 End Class
