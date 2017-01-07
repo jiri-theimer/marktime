@@ -131,6 +131,33 @@ Partial Public Class x31_record
     Protected WithEvents j25ID As Global.UI.datacombo
 
     '''<summary>
+    '''lblx31PluginFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx31PluginFlag As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x31PluginFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31PluginFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''x31PluginHeight control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31PluginHeight As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
     '''x31IsPeriodRequired control.
     '''</summary>
     '''<remarks>

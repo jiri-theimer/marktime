@@ -74,6 +74,10 @@
             basUI.SelectDropdownlistValue(Me.x29ID, CInt(.x29ID).ToString)
 
             Me.CurrentFormat = .x31FormatFlag
+            If Me.CurrentFormat = BO.x31FormatFlagENUM.ASPX Then
+                basUI.SelectDropdownlistValue(Me.x31PluginFlag, BO.BAS.IsNullInt(.x31PluginFlag).ToString)
+                Me.x31PluginHeight.Value = .x31PluginHeight
+            End If
             Me.x31IsPeriodRequired.Checked = .x31IsPeriodRequired
             Me.x31IsUsableAsPersonalPage.Checked = .x31IsUsableAsPersonalPage
             Me.x31DocSqlSource.Text = .x31DocSqlSource
@@ -122,6 +126,10 @@
 
             With cRec
                 .x31FormatFlag = Me.CurrentFormat
+                If .x31FormatFlag = BO.x31FormatFlagENUM.ASPX Then
+                    .x31PluginFlag = BO.BAS.IsNullInt(Me.x31PluginFlag.SelectedValue)
+                    .x31PluginHeight = BO.BAS.IsNullInt(Me.x31PluginHeight.Value)
+                End If
                 .x29ID = DirectCast(BO.BAS.IsNullInt(Me.x29ID.SelectedValue), BO.x29IdEnum)
                 .j25ID = BO.BAS.IsNullInt(Me.j25ID.SelectedValue)
                 .x31Name = Me.x31Name.Text
@@ -224,12 +232,22 @@
         Me.x31FormatFlag.SelectedItem.Attributes.Item("style") = "font-weight:bold;color:blue;"
         x31IsPeriodRequired.Visible = True : x31IsUsableAsPersonalPage.Visible = True : panDocFormat.Visible = False : Me.x31QueryFlag.Visible = True
         Me.panScheduling.Visible = False
+        x31PluginFlag.Visible = False : x31PluginHeight.Visible = False
+        If Me.x29ID.SelectedValue = "" Then
+            x31IsUsableAsPersonalPage.Visible = True
+        Else
+            x31IsUsableAsPersonalPage.Visible = False
+        End If
 
         Select Case Me.CurrentFormat
             Case BO.x31FormatFlagENUM.DOCX
                 x31IsPeriodRequired.Visible = False : x31IsUsableAsPersonalPage.Visible = False : panDocFormat.Visible = True : Me.x31QueryFlag.Visible = False
             Case BO.x31FormatFlagENUM.ASPX
                 Me.x31QueryFlag.Visible = False
+                x31PluginFlag.Visible = True
+                If Me.x31PluginFlag.SelectedValue = "1" Then
+                    x31PluginHeight.Visible = True            
+                End If
             Case BO.x31FormatFlagENUM.Telerik
                 If Me.x29ID.SelectedValue = "" Then
                     Me.panScheduling.Visible = True

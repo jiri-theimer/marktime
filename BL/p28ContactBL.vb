@@ -28,6 +28,7 @@
     Function GetGridFooterSums(myQuery As BO.myQueryP28, strSumFields As String) As DataTable
     Function AppendOrRemove_IsirMoniting(intP28ID As Integer, bolRemove As Boolean) As Boolean
     Function LoadO48Record(intP28ID As Integer) As BO.o48IsirMonitoring
+    Function GetRolesInline(intPID As Integer) As String
 End Interface
 Class p28ContactBL
     Inherits BLMother
@@ -279,5 +280,8 @@ Class p28ContactBL
     End Function
     Public Function LoadTreeTop(intCurTreeIndex As Integer) As BO.p28Contact Implements Ip28ContactBL.LoadTreeTop
         Return _cDL.LoadTreeTop(intCurTreeIndex)
+    End Function
+    Public Function GetRolesInline(intPID As Integer) As String Implements Ip28ContactBL.GetRolesInline
+        Return _cDL.GetRolesInline(intPID)
     End Function
 End Class

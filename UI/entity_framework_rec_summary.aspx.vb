@@ -37,10 +37,12 @@
                     .Add("p31_drilldown-j70id")
                     .Add("p31_grid-period")
                     .Add("periodcombo-custom_query")
+                    .Add(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     menu1.TabSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-tabskin")
+                    menu1.x31ID_Plugin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
                     summary1.FirstSetup(.GetUserParam("p31_drilldown-pagesize", "20"), .GetUserParam("p31_grid-period"), .GetUserParam("periodcombo-custom_query"), .GetUserParam(Me.CurrentMasterPrefix & "-j75id"), .GetUserParam("p31_drilldown-j70id"))
                 End With
             End With

@@ -8,7 +8,16 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    
+
+    <asp:panel ID="panPlugin" runat="server"  CssClass="content-box2" style="margin-top:20px;">
+        <div class="title">
+            Plugin umístěný nad záložkami
+            
+        </div>
+        <div class="content">
+            <asp:DropDownList ID="x31ID_Plugin" runat="server" DataValueField="pid" DataTextField="NameWithFormat"></asp:DropDownList>
+        </div>
+    </asp:panel>
 
     <div class="content-box2" style="margin-top:20px;">
         <div class="title">

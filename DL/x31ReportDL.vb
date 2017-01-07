@@ -54,7 +54,8 @@
             pars.Add("x31DocSqlSourceTabs", .x31DocSqlSourceTabs, DbType.String)
             pars.Add("x31ExportFileNameMask", .x31ExportFileNameMask, DbType.String)
             pars.Add("x31QueryFlag", .x31QueryFlag, DbType.Int32)
-
+            pars.Add("x31PluginFlag", .x31PluginFlag, DbType.Int32)
+            pars.Add("x31PluginHeight", .x31PluginHeight, DbType.Int32)
 
             pars.Add("x31validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("x31validuntil", .ValidUntil, DbType.DateTime)

@@ -28,6 +28,7 @@
                     .Add("p28_menu-tabskin")
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail_pos")
+                    .Add("p28_menu-x31id-plugin")
                 End With
                 
                 Dim intPID As Integer = Master.DataPID
@@ -54,6 +55,7 @@
                         End Select
                     End If
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
+                    menu1.x31ID_Plugin = .GetUserParam("p28_menu-x31id-plugin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
                 Master.DataPID = intPID

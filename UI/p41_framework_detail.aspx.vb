@@ -30,6 +30,7 @@
                     .Add("p41_menu-tabskin-tabskin")
                     .Add("p41_framework_detail-chkFFShowFilledOnly")
                     .Add("p41_framework_detail_pos")
+                    .Add("p41_menu-x31id-plugin")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -61,6 +62,7 @@
                     Master.DataPID = intPID
 
                     menu1.TabSkin = .GetUserParam("p41_menu-tabskin-tabskin")
+                    menu1.x31ID_Plugin = .GetUserParam("p41_menu-x31id-plugin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With

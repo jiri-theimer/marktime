@@ -32,6 +32,15 @@ Partial Public Class entity_menu
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
+    '''place1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents place1 As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
     '''tabs1 control.
     '''</summary>
     '''<remarks>
@@ -75,6 +84,33 @@ Partial Public Class entity_menu
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidDataPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidPlugin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPlugin As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidPlugin_FileName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPlugin_FileName As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidPlugin_Height control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPlugin_Height As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''sb1 control.

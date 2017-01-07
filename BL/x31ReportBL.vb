@@ -59,6 +59,11 @@ Class x31ReportBL
             End If
         End If
         With cRec
+            If .x31FormatFlag = BO.x31FormatFlagENUM.ASPX Then
+                If .x31PluginFlag = BO.x31PluginFlagENUM._AfterEntityMenu And .x29ID = BO.x29IdEnum._NotSpecified Then
+                    _Error = "U tohoto typu pluginu musí být nastaven kontext sestavy." : Return False
+                End If
+            End If
             If .x31IsUsableAsPersonalPage Then
                 If .x31FormatFlag <> BO.x31FormatFlagENUM.ASPX Then
                     _Error = "Jako osobní (výchozí) stránka uživatele může fungovat pouze ASPX plugin." : Return False

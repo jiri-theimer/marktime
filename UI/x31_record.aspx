@@ -81,7 +81,20 @@
             <td>
                 <uc:datacombo ID="j25ID" runat="server" DataTextField="j25Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
             </td>
-        </tr>        
+        </tr>   
+        <tr>
+            <td>
+                <asp:Label ID="lblx31PluginFlag" Text="Typ pluginu:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <asp:DropDownList ID="x31PluginFlag" runat="server" AutoPostBack="true">
+                    <asp:ListItem Text="Plugin použitelný podobně jako tisková sestava"></asp:ListItem>
+                    <asp:ListItem Text="Plugin pod menu na stránce projektu/klienta/osoby" Value="1"></asp:ListItem>
+                    
+                </asp:DropDownList>
+                <telerik:RadNumericTextBox ID="x31PluginHeight" ToolTip="Výška v px." runat="server" IncrementSettings-Step="10" NumberFormat-DecimalDigits="0" Value="30" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+            </td>
+        </tr>     
         <tr>
             <td colspan="2">
                 <asp:CheckBox ID="x31IsPeriodRequired" runat="server" Text="Sestava podporuje filtrování podle období" />

@@ -28,11 +28,12 @@ Public Class p41_framework_rec_budget
                     .Add("p41_framework_detail_budget-chkP49GroupByP34")
                     .Add("p41_framework_detail_budget-chkP49GroupByP32")
                     .Add("p41_framework_detail_budget-chkVysledovka")
+                    .Add("p41_menu-x31id-plugin")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     menu1.TabSkin = .GetUserParam("p41_menu-tabskin-tabskin")
-
+                    menu1.x31ID_Plugin = .GetUserParam("p41_menu-x31id-plugin")
                     If .GetUserParam("p41_framework_detail_budget-prefix", "p46") = "p46" Then
                         cmdBudgetP46.Checked = True : cmdBudgetP46.Font.Bold = True
                         panP49Setting.Visible = False

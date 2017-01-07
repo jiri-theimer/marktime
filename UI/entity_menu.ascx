@@ -17,6 +17,7 @@
     </telerik:RadMenu>
 
 </asp:Panel>
+<asp:PlaceHolder ID="place1" runat="server" Visible="true"></asp:PlaceHolder>
 
 <telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true">              
 </telerik:RadTabStrip>
@@ -25,6 +26,9 @@
 <asp:HiddenField ID="hidSource" runat="server" />
  <asp:HiddenField ID="hidParentWidth" runat="server" />
 <asp:HiddenField ID="hidDataPrefix" runat="server" />
+<asp:HiddenField ID="hidPlugin" runat="server" />
+<asp:HiddenField ID="hidPlugin_FileName" runat="server" />
+<asp:HiddenField ID="hidPlugin_Height" runat="server" />
 <uc:searchbox id="sb1" runat="server"></uc:searchbox>
 
 <script type="text/javascript">

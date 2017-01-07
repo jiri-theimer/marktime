@@ -44,6 +44,14 @@ Public Class entity_menu
             tabs1.Skin = value
         End Set
     End Property
+    Public Property x31ID_Plugin As String
+        Get
+            Return Me.hidPlugin.Value
+        End Get
+        Set(value As String)
+            Me.hidPlugin.Value = value
+        End Set
+    End Property
 
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
         If Not Page.IsPostBack Then
@@ -107,8 +115,22 @@ Public Class entity_menu
                 .Controls.Add(New LiteralControl(s))
             End With
         End If
+        Handle_PluginBellowMenu()
     End Sub
+    Private Sub Handle_PluginBellowMenu()
+        If Me.x31ID_Plugin = "" Then Return
+        If Me.hidPlugin_FileName.Value = "" Then
+            Dim cX31 As BO.x31Report = Factory.x31ReportBL.Load(CInt(Me.x31ID_Plugin))
+            If Not cX31 Is Nothing Then
+                Me.hidPlugin_FileName.Value = cX31.ReportFileName
+                Me.hidPlugin_Height.Value = cX31.x31PluginHeight.ToString
+                If Me.hidPlugin_Height.Value = "0" Then Me.hidPlugin_Height.Value = "30"
+            End If
+        End If
+        If Me.hidPlugin_FileName.Value = "" Then Return
 
+        place1.Controls.Add(New LiteralControl("<iframe id='fraPlugin' width='100%' height='" & Me.hidPlugin_Height.Value & "px' frameborder='0' src='Plugins/" & Me.hidPlugin_FileName.Value & "?pid=" & Me.DataPID.ToString & "'></iframe>"))
+    End Sub
     Public Sub p41_RefreshRecord(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum, strTabValue As String, Optional cDisp As BO.p41RecordDisposition = Nothing)
         If cRec Is Nothing Then Return
         Me.DataPID = cRec.PID

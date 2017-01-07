@@ -537,4 +537,7 @@
     Public Function LoadO48Record(intP28ID As Integer) As BO.o48IsirMonitoring
         Return _cDB.GetRecord(Of BO.o48IsirMonitoring)("select *," & bas.RecTail("o48", "") & " from o48IsirMonitoring where p28ID=@p28id", New With {.p28id = intP28ID})
     End Function
+    Public Function GetRolesInline(intPID As Integer) As String
+        Return _cDB.GetValueFromSQL("SELECT dbo.p28_getroles_inline(" & intPID.ToString & ") as Value")
+    End Function
 End Class

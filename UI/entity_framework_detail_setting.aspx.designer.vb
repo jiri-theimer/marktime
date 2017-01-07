@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class entity_framework_detail_setting
 
     '''<summary>
+    '''panPlugin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPlugin As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x31ID_Plugin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x31ID_Plugin As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''skin1 control.
     '''</summary>
     '''<remarks>

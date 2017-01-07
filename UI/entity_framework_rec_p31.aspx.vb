@@ -29,10 +29,12 @@
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add(Me.CurrentMasterPrefix & "_menu-tabskin")
+                    .Add(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     menu1.TabSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-tabskin")
+                    menu1.x31ID_Plugin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
                 End With
             End With
             gridP31.MasterTabAutoQueryFlag = Request.Item("p31tabautoquery")

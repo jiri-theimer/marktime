@@ -24,16 +24,24 @@
             Dim lisPars As New List(Of String)
             With lisPars
                 .Add(Me.CurrentPrefix + "_menu-tabskin")
+                .Add(Me.CurrentPrefix + "_menu-x31id-plugin")
                 ''.Add(Me.CurrentPrefix + "_menu-searchbox")
             End With
+            Me.x31ID_Plugin.DataSource = Master.Factory.x31ReportBL.GetList().Where(Function(p) p.x31FormatFlag = BO.x31FormatFlagENUM.ASPX And p.x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentPrefix) And p.x31PluginFlag = BO.x31PluginFlagENUM._AfterEntityMenu)
+            Me.x31ID_Plugin.DataBind()
+            Me.x31ID_Plugin.Items.Insert(0, "")
 
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
 
                 basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_menu-tabskin", "Default"))
+                basUI.SelectDropdownlistValue(Me.x31ID_Plugin, .GetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin"))
 
             End With
             With Master.Factory
+                
+
+
                 colsSource.DataSource = .ftBL.GetList_X61(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix))
                 colsSource.DataBind()
 
@@ -50,6 +58,12 @@
             Select Case Me.CurrentPrefix
                 Case "p41", "p56", "p91"
                     panTabs.Visible = False 
+            End Select
+            Select Case Me.CurrentPrefix
+                Case "p41", "p28", "j02"
+                    panPlugin.Visible = True
+                Case Else
+                    panPlugin.Visible = False
             End Select
         End If
     End Sub
@@ -69,9 +83,8 @@
                 End With
             End If
             With Master.Factory.j03UserBL
-
                 .SetUserParam(Me.CurrentPrefix + "_menu-tabskin", Me.skin1.SelectedValue)
-
+                .SetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin", Me.x31ID_Plugin.SelectedValue)
             End With
             Master.CloseAndRefreshParent("setting")
         End If

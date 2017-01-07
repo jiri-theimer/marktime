@@ -12,6 +12,10 @@ Public Enum x31QueryFlagENUM
     p91 = 391
     p56 = 356
 End Enum
+Public Enum x31PluginFlagENUM
+    _None = 0
+    _AfterEntityMenu = 1
+End Enum
 Public Class x31Report
     Inherits BOMother
     Public Property x29ID As BO.x29IdEnum
@@ -43,6 +47,8 @@ Public Class x31Report
     Public Property x31DocSqlSourceTabs As String
     Public Property x31ExportFileNameMask As String
     Public Property x31QueryFlag As x31QueryFlagENUM = x31QueryFlagENUM._None
+    Public Property x31PluginFlag As x31PluginFlagENUM = x31PluginFlagENUM._None
+    Public Property x31PluginHeight As Integer
 
     Private Property _x29Name As String
     Private Property _j25Name As String
