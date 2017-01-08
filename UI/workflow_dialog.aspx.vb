@@ -214,6 +214,12 @@
     Private Sub opgB06ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgB06ID.SelectedIndexChanged
         If opgB06ID.SelectedValue = "" Then
             Me.panNotify.Visible = True
+            If receiver1.RowsCount = 0 And Me.CurrentPrefix = "p56" Then
+                Dim cP56 As BO.p56Task = Master.Factory.p56TaskBL.Load(Me.CurrentRecordPID)
+                If cP56.j02ID_Owner <> Master.Factory.SysUser.j02ID Then
+                    receiver1.AddReceiver(cP56.j02ID_Owner, 0, False)
+                End If
+            End If
             Return
         Else
             Me.panNotify.Visible = False

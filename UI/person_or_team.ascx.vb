@@ -13,7 +13,11 @@
         If Me.hidGUID.Value = "" Then Me.hidGUID.Value = BO.BAS.GetGUID
     End Sub
 
-    
+    Public ReadOnly Property RowsCount As Integer
+        Get
+            Return rp1.Items.Count
+        End Get
+    End Property
 
     Public Sub AddReceiver(intJ02ID As Integer, intJ11ID As Integer, bolMobile As Boolean)
         Me.hidIsMobile.Value = BO.BAS.GB(bolMobile)

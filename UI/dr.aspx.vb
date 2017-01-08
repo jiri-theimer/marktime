@@ -31,6 +31,12 @@
                     Case "p56", "p41", "p28", "p91", "o23", "j02"
                         strPage += "&pid=" & strPID
                         Response.Redirect(strPage)
+                    Case "x31"
+                        Dim c As BO.x31Report = Master.Factory.x31ReportBL.Load(CInt(strPID))
+                        If c.x29ID = BO.x29IdEnum._NotSpecified Then
+                            Response.Redirect("report_framework.aspx?x31id=" & strPID)
+                        End If
+
                     Case Else
                         'pokud se nenajde jiná stránka, pak zobrazit přes cluetip zobrazení
                         Dim strURL As String = "clue_" & strPrefix & "_record.aspx?pid=" & strPID & "&dr=1"
