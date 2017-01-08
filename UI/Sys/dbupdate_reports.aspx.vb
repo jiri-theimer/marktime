@@ -11,6 +11,7 @@ Public Class dbupdate_reports
         Public personalpage As Boolean
         Public j25id As Integer
         Public x29id As Integer
+        Public x31PluginFlag As Integer
     End Class
 
     Private Sub dbupdate_reports_Init(sender As Object, e As EventArgs) Handles Me.Init
@@ -71,6 +72,10 @@ Public Class dbupdate_reports
                     .x31FormatFlag = CType(cRI.x31FormatFlag, BO.x31FormatFlagENUM)
                     .x31IsUsableAsPersonalPage = cRI.personalpage
                     .x31Name = cRI.x31name
+                    If .x31FormatFlag = BO.x31FormatFlagENUM.ASPX Then
+                        .x31PluginFlag = CType(cRI.x31PluginFlag, BO.x31PluginFlagENUM)
+                        If .x31PluginFlag = BO.x31PluginFlagENUM._AfterEntityMenu Then .x31PluginHeight = 30
+                    End If
                 End With
                 If cF.FileExist(strDIR & "\" & strFileName) Then
                     Dim s As String = cF.GetFileContents(strDIR & "\" & strFileName, , False)
@@ -109,6 +114,9 @@ Public Class dbupdate_reports
             Dim c As New RecordINI
             c.x31FileName = strFileName
             c.x31FormatFlag = BO.BAS.IsNullInt(cINI.read(_dir & "\reports.ini", LCase(strFileName), "x31FormatFlag"))
+            If c.x31FormatFlag = 3 Then
+                c.x31PluginFlag = BO.BAS.IsNullInt(cINI.read(_dir & "\reports.ini", LCase(strFileName), "x31PluginFlag"))
+            End If
             c.x31name = strFind
             c.j25id = BO.BAS.IsNullInt(cINI.read(_dir & "\reports.ini", LCase(strFileName), "j25id"))
             c.personalpage = BO.BAS.BG((cINI.read(_dir & "\reports.ini", LCase(strFileName), "personalpage")))

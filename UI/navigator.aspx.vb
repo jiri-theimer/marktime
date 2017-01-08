@@ -83,6 +83,7 @@ Public Class navigator
                     Dim mq As New BO.myQueryP28
                     mq.Closed = CType(Me.opgBIN.SelectedValue, BO.BooleanQueryMode)
                     mq.MG_GridSqlColumns = "p28Name,p28TreePrev,p28TreeNext"
+                    mq.SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
                     If intParentPID <> 0 And strParentPrefix = "p28" Then mq.p28ParentID = intParentPID
                     If strParentPrefix <> "p28" Then mq.p28TreeLevel = 0
                     If cbxPath.SelectedValue.IndexOf("p41") > 0 Then
@@ -116,6 +117,7 @@ Public Class navigator
                     Dim mq As New BO.myQueryP41
                     mq.Closed = CType(Me.opgBIN.SelectedValue, BO.BooleanQueryMode)
                     mq.MG_GridSqlColumns = "p41Name,p41TreePrev,p41TreeNext"
+                    mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
                     If cbxPath.SelectedValue.IndexOf("p56") > 0 Then
                         If mq.Closed = BO.BooleanQueryMode.FalseQuery Then
                             mq.QuickQuery = BO.myQueryP41_QuickQuery.WithOpenTasks
@@ -182,6 +184,7 @@ Public Class navigator
                 Case "p56"
                     Dim mq As New BO.myQueryP56
                     mq.Closed = CType(Me.opgBIN.SelectedValue, BO.BooleanQueryMode)
+                    mq.SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
                     mq.MG_GridSqlColumns = "p56Name,p56Code,dbo.p56_getroles_inline(a.p56ID) as Resitel"
                     If intParentPID <> 0 Then
                         If strParentPrefix = "p41" Then mq.p41ID = intParentPID
@@ -202,6 +205,7 @@ Public Class navigator
                 Case "p91"
                     Dim mq As New BO.myQueryP91
                     mq.Closed = CType(Me.opgBIN.SelectedValue, BO.BooleanQueryMode)
+                    mq.SpecificQuery = BO.myQueryP91_SpecificQuery.AllowedForRead
                     mq.MG_GridSqlColumns = "p91Code,p91DateSupply,p91Amount_WithoutVat,j27Code"
                     If intParentPID <> 0 Then
                         If strParentPrefix = "p41" Then mq.p41ID = intParentPID
