@@ -111,8 +111,10 @@ Public Class p91_framework_detail
                 Me.clue_client.Visible = False
                 Me.Client.NavigateUrl = ""
                 Me.Client.Text = .p91Client
+                linkClientInvoices.Visible = False
             Else
                 Me.clue_client.Attributes("rel") = "clue_p28_record.aspx?pid=" & .p28ID.ToString
+                linkClientInvoices.NavigateUrl = "p91_framework.aspx?masterprefix=p28&masterpid=" & .p28ID.ToString
             End If
             Me.p91ClientPerson.Text = .p91ClientPerson
 

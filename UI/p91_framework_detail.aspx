@@ -357,14 +357,16 @@
                         </td>
                         <td id="rlbl">
 
-                            <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>
-
+                            <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>                                                        
                         </td>
                         <td>
 
                             <asp:HyperLink ID="Client" runat="server" NavigateUrl="#" Target="_parent"></asp:HyperLink>
                             <asp:HyperLink ID="clue_client" runat="server" CssClass="reczoom" Text="i" title="Detail klienta"></asp:HyperLink>
                             <asp:Label ID="p91ClientPerson" runat="server" ToolTip="Kontaktní osoba klienta"></asp:Label>
+                            <div>
+                                <asp:HyperLink ID="linkClientInvoices" runat="server" Text="Faktury klienta" Target="_top"></asp:HyperLink>
+                            </div>
                         </td>
 
 

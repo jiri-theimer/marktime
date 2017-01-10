@@ -75,6 +75,10 @@ Public Class dbupdate_reports
                     If .x31FormatFlag = BO.x31FormatFlagENUM.ASPX Then
                         .x31PluginFlag = CType(cRI.x31PluginFlag, BO.x31PluginFlagENUM)
                         If .x31PluginFlag = BO.x31PluginFlagENUM._AfterEntityMenu Then .x31PluginHeight = 30
+
+                        If .x31PluginFlag = BO.x31PluginFlagENUM._AfterEntityMenu Then
+                            cF.CopyFile(strDIR & "\" & strFileName, BO.ASS.GetApplicationRootFolder & "\Plugins\" & strFileName)
+                        End If
                     End If
                 End With
                 If cF.FileExist(strDIR & "\" & strFileName) Then
@@ -93,6 +97,7 @@ Public Class dbupdate_reports
                 If Not Master.Factory.o27AttachmentBL.UploadAndSaveOnFile2Temp(strUploadGUID, strDIR & "\" & strFileName, intO13ID) Then
                     WE(strFileName & " | " & Master.Factory.o27AttachmentBL.ErrorMessage)
                 End If
+
 
                 If Not Master.Factory.x31ReportBL.Save(cRec, strUploadGUID, lisX69) Then
                     WE(strFileName & " | " & Master.Factory.x31ReportBL.ErrorMessage)

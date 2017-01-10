@@ -194,6 +194,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents p91ClientPerson As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''linkClientInvoices control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkClientInvoices As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''trSourceCode control.
     '''</summary>
     '''<remarks>

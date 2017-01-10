@@ -12805,6 +12805,7 @@ select case when a.p31ID IS NULL THEN case when @langindex=1 then isnull(p95.p95
 ,a.p81Amount_WithVat as VcDPH
 ,j27.j27Code as j27Code
 ,p95.p95Ordinary as Poradi
+,a.p81ID as RowPID
 from
 p81InvoiceAmount a
 INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
@@ -12819,6 +12820,7 @@ SELECT @zaokrouhleni as Oddil
 ,0 as DPH
 ,p91RoundFitAmount as VcDPH
 ,j27.j27Code,1000 as Poradi
+,0 as RowPID
 FROM p91Invoice a INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID WHERE a.p91ID=@pid AND isnull(p91RoundFitAmount,0)<>0 AND @include_rounding=1
 UNION
 SELECT @zalohy as Oddil
@@ -12827,6 +12829,7 @@ SELECT @zalohy as Oddil
 ,-1*(p91ProformaAmount_Vat_Low+p91ProformaAmount_Vat_Standard) as DPH
 ,-1*p91ProformaAmount as VcDPH
 ,j27.j27Code,1000 as Poradi
+,0 as RowPID
 FROM p91Invoice a INNER JOIN j27Currency j27 ON a.j27ID=j27.j27ID
 WHERE a.p91ID=@pid AND isnull(p91ProformaAmount,0)<>0 AND @include_proforma=1
 ORDER BY DPHSazba DESC,Poradi

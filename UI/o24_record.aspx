@@ -97,6 +97,7 @@
                 <asp:ListItem Text="5 MB" Value="5242880"></asp:ListItem>
                 <asp:ListItem Text="6 MB" Value="6291456"></asp:ListItem>
                 <asp:ListItem Text="7 MB" Value="7340032"></asp:ListItem>
+                <asp:ListItem Text="10 MB" Value="10485760"></asp:ListItem>
             </asp:DropDownList>
             </div>
             <div class="div6">

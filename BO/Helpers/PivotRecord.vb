@@ -15,6 +15,7 @@
     p72Name = 7201
     Year = 9901
     Month = 9902
+    Week = 9906
     Day = 9905
     YearInvoice = 9903
     MonthInvoice = 9904
@@ -112,6 +113,10 @@ Public Class PivotRowColumnField
                 _SelectField = "convert(varchar(7), a.p31Date, 126)"
                 _GroupByField = _SelectField
                 s = "Měsíc"
+            Case PivotRowColumnFieldType.Week
+                _SelectField = "convert(varchar(4),year(a.p31Date))+'-'+convert(varchar(10),DATEPART(week,a.p31Date))"
+                _GroupByField = _SelectField
+                s = "Týden"
             Case PivotRowColumnFieldType.Year
                 _SelectField = "Year(a.p31date)"
                 _GroupByField = _SelectField

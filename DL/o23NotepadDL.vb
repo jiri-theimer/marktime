@@ -76,7 +76,7 @@
                 End If
                 If Not lisFF Is Nothing Then    'volná pole
                     If Not bas.SaveFreeFields(_cDB, lisFF, "o23Notepad_FreeField", intLastSavedO23ID, _curUser) Then
-                        Return False
+                        If lisFF.Count > 0 Then Return False
                     End If
                 End If
 
