@@ -68,6 +68,15 @@ Partial Public Class p31summary_drilldown
     Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''chkIncludeChilds control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''cmdXLS control.
     '''</summary>
     '''<remarks>

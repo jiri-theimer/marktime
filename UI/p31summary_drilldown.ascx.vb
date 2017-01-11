@@ -43,6 +43,22 @@ Public Class p31summary_drilldown
             hidMasterPrefix.Value = value
         End Set
     End Property
+    Public Property EnableEntityChilds As Boolean
+        Get
+            Return Me.chkIncludeChilds.Visible
+        End Get
+        Set(value As Boolean)
+            Me.chkIncludeChilds.Visible = value
+        End Set
+    End Property
+    Public Property IncludeEntityChilds As Boolean
+        Get
+            Return Me.chkIncludeChilds.Checked
+        End Get
+        Set(value As Boolean)
+            Me.chkIncludeChilds.Checked = value
+        End Set
+    End Property
     Private ReadOnly Property CurrentX29ID As BO.x29IdEnum
         Get
             If Me.CurrentMasterPrefix = "" Then
@@ -268,6 +284,7 @@ Public Class p31summary_drilldown
             Select Case Me.CurrentMasterPrefix
                 Case "p41"
                     .p41ID = Me.CurrentMasterPID
+                    If Me.chkIncludeChilds.Visible Then .IncludeChildProjects = Me.chkIncludeChilds.Checked
                 Case "j02"
                     .j02ID = Me.CurrentMasterPID
                 Case "p28"
@@ -590,4 +607,8 @@ Public Class p31summary_drilldown
     End Sub
 
     
+    Private Sub chkIncludeChilds_CheckedChanged(sender As Object, e As EventArgs) Handles chkIncludeChilds.CheckedChanged
+        Me.Factory.j03UserBL.SetUserParam("p31_drilldown-includechilds", BO.BAS.GB(Me.chkIncludeChilds.Checked))
+        ReloadPage()
+    End Sub
 End Class

@@ -662,7 +662,7 @@
                 End If
             End If
             Dim intJ02ID As Integer = Me.CurrentJ02ID
-            If _Project.p41IsEntryP31ByStranger Then intJ02ID = Master.Factory.SysUser.j02ID 'v projektu povoleno zapisovat worksheet za osoby, které nemají roli v projektu
+            ''If _Project.p41IsEntryP31ByStranger Then intJ02ID = Master.Factory.SysUser.j02ID 'v projektu povoleno zapisovat worksheet za osoby, které nemají roli v projektu
             Dim lisP34 As IEnumerable(Of BO.p34ActivityGroup) = Master.Factory.p34ActivityGroupBL.GetList_WorksheetEntryInProject(_Project.PID, _Project.p42ID, _Project.j18ID, intJ02ID)
             Me.p34ID.DataSource = lisP34
             Me.p34ID.DataBind()

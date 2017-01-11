@@ -94,21 +94,24 @@
     End Function
 
     Public Function GetList_WorksheetEntryInProject(intP41ID As Integer, intP42ID As Integer, intJ18ID As Integer, intJ02ID As Integer) As IEnumerable(Of BO.p34ActivityGroup)
-        Dim s As String = GetSQLPart1(), pars As New DbParameters
+        Dim s As String = GetSQLPart1(), pars As New DbParameters, strEntryFlags As String = "1,2"
+        If intJ02ID <> _curUser.j02ID Then
+            strEntryFlags = "1,2,4"
+        End If
         s += " INNER JOIN p43ProjectType_Workload p43 ON a.p34ID=p43.p34ID"
         s += " WHERE p43.p42ID=@p42id AND a.p34ValidFrom<=getdate() AND a.p34ValidUntil>=getdate() AND (a.p34ID IN ("
 
         s += "SELECT a1.p34ID FROM o28ProjectRole_Workload a1 INNER JOIN x69EntityRole_Assign a2 ON a1.x67ID=a2.x67ID INNER JOIN x67EntityRole a3 ON a2.x67ID=a3.x67ID"
-        s += " WHERE a3.x29ID=141 AND a2.x69RecordPID=@p41id AND a1.o28EntryFlag IN (1,2) AND (a2.j02ID=@j02id OR a2.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))"
+        s += " WHERE a3.x29ID=141 AND a2.x69RecordPID=@p41id AND a1.o28EntryFlag IN (" & strEntryFlags & ") AND (a2.j02ID=@j02id OR a2.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))"
         s += ") "
 
         If intJ18ID > 0 Then
             s += " OR a.p34ID IN (SELECT a1.p34ID FROM o28ProjectRole_Workload a1 INNER JOIN x69EntityRole_Assign a2 ON a1.x67ID=a2.x67ID INNER JOIN x67EntityRole a3 ON a2.x67ID=a3.x67ID"
-            s += " WHERE a3.x29ID=118 AND a2.x69RecordPID=@j18id AND a1.o28EntryFlag IN (1,2) AND (a2.j02ID=@j02id OR a2.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))"
+            s += " WHERE a3.x29ID=118 AND a2.x69RecordPID=@j18id AND a1.o28EntryFlag IN (" & strEntryFlags & ") AND (a2.j02ID=@j02id OR a2.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id))"
             s += ") "
         End If
         s += ")"
-        
+
 
         pars.Add("p41id", intP41ID, DbType.Int32)
         pars.Add("p42id", intP42ID, DbType.Int32)

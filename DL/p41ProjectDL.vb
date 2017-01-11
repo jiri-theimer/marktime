@@ -88,7 +88,7 @@
                 pars.Add("p41PlanFrom", BO.BAS.IsNullDBDate(.p41PlanFrom), DbType.DateTime)
                 pars.Add("p41PlanUntil", BO.BAS.IsNullDBDate(.p41PlanUntil), DbType.DateTime)
                 pars.Add("p41IsNoNotify", .p41IsNoNotify, DbType.Boolean)
-                pars.Add("p41IsEntryP31ByStranger", .p41IsEntryP31ByStranger, DbType.Boolean)
+                ''pars.Add("p41IsEntryP31ByStranger", .p41IsEntryP31ByStranger, DbType.Boolean)
 
                 pars.Add("p41validfrom", .ValidFrom, DbType.DateTime)
                 pars.Add("p41validuntil", .ValidUntil, DbType.DateTime)
@@ -414,10 +414,10 @@
                     s.Append(" AND (a.p41ID IN (")
 
                     s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
-                    s.Append(" WHERE x67.x29ID=141 AND o28.o28EntryFlag IN (1,2) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
+                    s.Append(" WHERE x67.x29ID=141 AND o28.o28EntryFlag IN (1,2,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
                     s.Append(") OR a.j18ID IN (")
                     s.Append("SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN o28ProjectRole_Workload o28 ON x69.x67ID=o28.x67ID INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID")
-                    s.Append(" WHERE x67.x29ID=118 AND o28.o28EntryFlag IN (1,2) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
+                    s.Append(" WHERE x67.x29ID=118 AND o28.o28EntryFlag IN (1,2,4) AND (x69.j02ID=@j02id_query " & strJ11IDs & ")")
                     s.Append("))")
                 Case BO.myQueryP41_SpecificQuery.AllowedForRead
                     If BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P41_Owner) Then
@@ -527,7 +527,7 @@
         s += ",p28client.p28Name as _Client,p51billing.p51Name as _p51Name_Billing"
         s += ",a.p41TreeLevel as _p41TreeLevel,a.p41TreeIndex as _p41TreeIndex,a.p41TreePrev as _p41TreePrev,a.p41TreeNext as _p41TreeNext,a.p41TreePath as _p41TreePath"
         s += ",p42.p42Name as _p42Name,p92.p92Name as _p92Name,b02.b02Name as _b02Name,j18.j18Name as _j18Name,a.p41ExternalPID,a.p41ParentID,a.p41BillingMemo," & bas.RecTail("p41", "a")
-        s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41IsEntryP31ByStranger,a.p41IsNoNotify,a.p41RobotAddress"
+        s += ",j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,p28client.p87ID as _p87ID_Client,p42.b01ID as _b01ID,a.p41IsNoNotify,a.p41RobotAddress"
         Return s
     End Function
     Private Function GetSQLPart1(intTOP As Integer) As String

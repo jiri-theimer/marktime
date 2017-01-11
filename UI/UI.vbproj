@@ -248,6 +248,7 @@
     <Content Include="o48_record.aspx" />
     <Content Include="p28_framework.aspx" />
     <Content Include="p28_framework_detail.aspx" />
+    <Content Include="p28_framework_detail_p90.aspx" />
     <Content Include="p31summary.ascx" />
     <Content Include="p31summary_drilldown.ascx" />
     <Content Include="p31_framework_timer.aspx" />
@@ -1198,6 +1199,13 @@
     </Compile>
     <Compile Include="p28_framework_detail.aspx.vb">
       <DependentUpon>p28_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p28_framework_detail_p90.aspx.designer.vb">
+      <DependentUpon>p28_framework_detail_p90.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p28_framework_detail_p90.aspx.vb">
+      <DependentUpon>p28_framework_detail_p90.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31summary.ascx.designer.vb">

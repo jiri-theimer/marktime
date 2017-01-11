@@ -270,7 +270,12 @@
                 pars.Add("guid", strGUID_TempData, DbType.String) : s.Append(" AND a.p31GUID=@guid")
             End If
             If .p41ID <> 0 Then
-                pars.Add("p41id", .p41ID, DbType.Int32) : s.Append(" AND a.p41ID=@p41id")
+                pars.Add("p41id", .p41ID, DbType.Int32)
+                If Not .IncludeChildProjects Then
+                    s.Append(" AND a.p41ID=@p41id")
+                Else
+                    s.Append(" AND a.p41ID IN (select p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID=@p41id) AND (select p41TreeNext FROM p41Project WHERE p41ID=@p41id))")
+                End If
             End If
             If Not .p41IDs Is Nothing Then
                 s.Append(" AND a.p41ID IN (" & String.Join(",", .p41IDs) & ")")

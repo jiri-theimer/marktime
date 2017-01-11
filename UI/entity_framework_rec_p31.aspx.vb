@@ -67,6 +67,9 @@
                 Dim cP42 As BO.p42ProjectType = Master.Factory.p42ProjectTypeBL.Load(cRec.p42ID)
                 Dim cRecSum As BO.p41ProjectSum = Master.Factory.p41ProjectBL.LoadSumRow(cRec.PID)
                 menu1.p41_RefreshRecord(cRec, cRecSum, strTab)
+                If cRec.p41TreePrev < cRec.p41TreeNext Then
+                    gridP31.EnableEntityChilds = True
+                End If
             Case "p28"
                 Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
                 If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p28")

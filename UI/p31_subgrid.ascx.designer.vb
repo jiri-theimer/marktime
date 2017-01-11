@@ -194,6 +194,15 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''chkIncludeChilds control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''grid2 control.
     '''</summary>
     '''<remarks>

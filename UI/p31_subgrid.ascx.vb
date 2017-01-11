@@ -103,6 +103,15 @@ Public Class p31_subgrid
         End Get
         Set(value As Boolean)
             recmenu1.FindItemByValue("cmdApprove").Visible = value
+            
+        End Set
+    End Property
+    Public Property EnableEntityChilds As Boolean
+        Get
+            Return Me.chkIncludeChilds.Visible
+        End Get
+        Set(value As Boolean)
+            Me.chkIncludeChilds.Visible = value
         End Set
     End Property
 
@@ -142,6 +151,7 @@ Public Class p31_subgrid
                     .Add("p31_subgrid-j70id")
                     .Add("p31_subgrid-pagesize")
                     .Add("p31_subgrid-groupby-" & Me.MasterPrefixWithQueryFlag)
+                    .Add("p31_subgrid-includechilds-" & Me.MasterPrefixWithQueryFlag)
                     ''.Add("p31_subgrid-search")
                     .Add("p31_subgrid-groups-autoexpanded")
                     .Add("p31_subgrid-sort")
@@ -168,6 +178,9 @@ Public Class p31_subgrid
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_subgrid-groupby-" & Me.MasterPrefixWithQueryFlag))
                 ''Me.txtSearch.Text = .GetUserParam("p31_subgrid-search")
                 Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-groups-autoexpanded", "1"))
+                If Me.EntityX29ID = BO.x29IdEnum.p41Project Then
+                    Me.chkIncludeChilds.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-includechilds-" & Me.MasterPrefixWithQueryFlag))
+                End If
             End With
             panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
             linkGridDesigner.Visible = panExport.Visible
@@ -477,6 +490,7 @@ Public Class p31_subgrid
             Select Case Me.EntityX29ID
                 Case BO.x29IdEnum.p41Project
                     .p41ID = Me.MasterDataPID
+                    If Me.chkIncludeChilds.Visible Then .IncludeChildProjects = Me.chkIncludeChilds.Checked
                 Case BO.x29IdEnum.p28Contact
                     .p28ID_Client = Me.MasterDataPID
                 Case BO.x29IdEnum.j02Person
@@ -720,5 +734,10 @@ Public Class p31_subgrid
         Me.ExplicitDateUntil = DateSerial(3000, 1, 1)
         RecalcVirtualRowCount()
         grid2.Rebind(False)
+    End Sub
+
+    Private Sub chkIncludeChilds_CheckedChanged(sender As Object, e As EventArgs) Handles chkIncludeChilds.CheckedChanged
+        Factory.j03UserBL.SetUserParam("p31_subgrid-includechilds-" & Me.MasterPrefixWithQueryFlag, BO.BAS.GB(Me.chkIncludeChilds.Checked))
+        ReloadPage()
     End Sub
 End Class

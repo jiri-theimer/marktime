@@ -1,8 +1,9 @@
 ﻿Public Enum o28EntryFlagENUM
     NemaPravoZapisovatWorksheet = 0
     ZapisovatDoProjektuIDoUloh = 1
-    ZapisovatDoProjektuADoUlohKdeJeResitelem = 2
-    ZapisovatPouzeDoUlohKdeJeResitelem = 3
+    'ZapisovatDoProjektuADoUlohKdeJeResitelem = 2
+    'ZapisovatPouzeDoUlohKdeJeResitelem = 3
+    ZapisovatDoProjektuNadrizenym = 4
 End Enum
 Public Enum o28PermFlagENUM
     PouzeVlastniWorksheet = 0

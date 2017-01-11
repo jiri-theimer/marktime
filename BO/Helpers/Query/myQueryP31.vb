@@ -28,6 +28,7 @@ Public Class myQueryP31
     Public Property j70ID As Integer
     Public Property p41ID As Integer
     Public Property p41IDs As List(Of Integer)
+    Public Property IncludeChildProjects As Boolean
     Public Property p28ID_Client As Integer
     Public Property p28IDs_Client As List(Of Integer)
     Public Property p28ID_Supplier As Integer?

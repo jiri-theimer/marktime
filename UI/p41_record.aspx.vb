@@ -128,7 +128,7 @@
             Me.p41ExternalPID.Text = .p41ExternalPID
             basUI.SelectDropdownlistValue(Me.p41WorksheetOperFlag, CInt(.p41WorksheetOperFlag).ToString)
             Me.p41IsNoNotify.Checked = .p41IsNoNotify
-            Me.p41IsEntryP31ByStranger.Checked = .p41IsEntryP31ByStranger
+            ''Me.p41IsEntryP31ByStranger.Checked = .p41IsEntryP31ByStranger
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -301,7 +301,7 @@
             .p41ExternalPID = Me.p41ExternalPID.Text
             .p41WorksheetOperFlag = CType(p41WorksheetOperFlag.SelectedValue, BO.p41WorksheetOperFlagEnum)
             .p41IsNoNotify = Me.p41IsNoNotify.Checked
-            .p41IsEntryP31ByStranger = Me.p41IsEntryP31ByStranger.Checked
+            ''.p41IsEntryP31ByStranger = Me.p41IsEntryP31ByStranger.Checked
 
             .ValidFrom = Master.RecordValidFrom
             .ValidUntil = Master.RecordValidUntil

@@ -23,6 +23,7 @@
                 <span>Další</span>
                 <img src="Images/arrow_down.gif" alt="Nastavení" />
             </button>
+            <asp:CheckBox ID="chkIncludeChilds" runat="server" AutoPostBack="true" text="Zahrnout i pod-projekty" CssClass="chk" Visible="false" />
         </div>
 
 

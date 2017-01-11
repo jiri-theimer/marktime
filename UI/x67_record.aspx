@@ -62,7 +62,7 @@
                                 <asp:DropDownList ID="_o28entryflag" runat="server" Style="width: 300px;">
                                     <asp:ListItem Text="Nemá oprávnění zapisovat úkony do projektu" Value="0"></asp:ListItem>
                                     <asp:ListItem Text="Má oprávnění zapisovat úkony do projektu" Value="1" Selected="true"></asp:ListItem>
-
+                                    <asp:ListItem Text="Za osobu zapisuje úkony jeho nadřízený" Value="4"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                             <td>

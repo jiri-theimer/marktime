@@ -310,7 +310,7 @@
     <asp:HiddenField ID="hidFrom" runat="server" />
 
 
-    <telerik:RadWindow ID="okno1" runat="server" Modal="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png" KeepInScreenBounds="true" Style="z-index: 9900;">
+    <telerik:RadWindow ID="okno1" runat="server" Modal="true" KeepInScreenBounds="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png" Style="z-index: 9900;">
         <Shortcuts>
             <telerik:WindowShortcut CommandName="Close" Shortcut="Esc" />
         </Shortcuts>

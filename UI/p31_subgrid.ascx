@@ -108,6 +108,7 @@
                 </telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
+        <asp:CheckBox ID="chkIncludeChilds" runat="server" AutoPostBack="true" text="Zahrnout i pod-projekty" CssClass="chk" Visible="false" />
     </div>
 
 
@@ -132,6 +133,7 @@
 <asp:HiddenField ID="hidFrom" runat="server" />
 <asp:HiddenField ID="hidAllowFullScreen" runat="server" Value="1" />
 <asp:HiddenField ID="hidMasterTabAutoQueryFlag" runat="server" />
+
 <script type="text/javascript">
 
     $(document).ready(function () {
