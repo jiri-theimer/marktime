@@ -41,31 +41,13 @@ Partial Public Class p28_framework_detail_p90
     Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''hidDefaultSorting control.
+    '''hiddatapid_p90 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidCols control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidFrom control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hiddatapid_p90 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''grid1 control.

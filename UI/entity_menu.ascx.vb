@@ -415,6 +415,9 @@ Public Class entity_menu
                     If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
                 Case "p41"
                     s += "<span class='badge1'>" & crs.p41_Actual_Count.ToString & "+" & crs.p41_Closed_Count.ToString & "</span>"
+                Case "p90"
+                    If crs.p90_Count > 0 Then s += "<span class='badge1'>" & crs.p90_Count.ToString & "</span>"
+                    bolGo = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P90_Reader)
             End Select
 
             If bolGo Then cti(s, c.x61Code)

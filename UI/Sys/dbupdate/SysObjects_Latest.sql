@@ -6221,7 +6221,7 @@ AS
 declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_count int,@p30_exist bit,@childs_count int
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
-declare @o23_count int,@p41_actual_count int,@p41_closed_count int, @o48_exist bit
+declare @o23_count int,@p41_actual_count int,@p41_closed_count int, @o48_exist bit,@p90_count int
 declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100)
 
 SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56ValidUntil then 1 end)
@@ -6281,6 +6281,11 @@ if exists(select o23ID FROM o23Notepad WHERE p28ID=@pid)
 else
  set @o23_count=0
 
+if exists(select p90ID FROM p90Proforma where p28ID=@pid)
+ select @p90_count=count(p90ID) FROM p90Proforma WHERE p28ID=@pid
+else
+ set @p90_count=0
+
 SELECT @p41_actual_count=sum(case when getdate() BETWEEN p41ValidFrom AND p41ValidUntil then 1 end)
 ,@p41_closed_count=sum(case when getdate() NOT BETWEEN p41ValidFrom AND p41ValidUntil then 1 end)
 FROM p41Project
@@ -6319,6 +6324,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,@o48_exist as o48_Exist
 ,@last_invoice as Last_Invoice
 ,@last_wip_worksheet as Last_Wip_Worksheet
+,@p90_count as p90_Count
 
 GO
 

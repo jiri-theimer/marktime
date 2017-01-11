@@ -22,6 +22,6 @@
     Public Property Last_Invoice As String
     Public Property Last_Wip_Worksheet As String
 
-
+    Public Property p90_Count As Integer
 
 End Class

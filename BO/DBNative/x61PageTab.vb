@@ -19,6 +19,8 @@
                 Return "entity_framework_rec_p56.aspx?" & s
             Case "p91"
                 Return "entity_framework_rec_p91.aspx?" & s
+            Case "p90"
+                Return "p28_framework_detail_p90.aspx?" & s
             Case "budget"
                 Return "p41_framework_rec_budget.aspx?pid=" & intMasterPID.ToString
             Case "o23"

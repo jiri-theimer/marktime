@@ -50,6 +50,10 @@
             Me.p90DateMaturity.SelectedDate = Today.AddDays(10)
             Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
             Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
+            If Request.Item("p28id") <> "" Then
+                Me.p28ID.Value = Request.Item("p28id")
+                Me.p28ID.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, CInt(Request.Item("p28id")), True)
+            End If
             Return
         End If
 
