@@ -387,6 +387,7 @@
     Private Sub Handle_Add(n As Telerik.Web.UI.RadTreeNode)
         If n Is Nothing Then Return
         If n.ImageUrl = "Images/folder.png" Then Return
+        If n.Value = "" Then Return
 
         If Not lt1.FindItemByValue(n.Value) Is Nothing Then
             Return

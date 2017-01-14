@@ -273,8 +273,7 @@ Class j74SavedGridColTemplateBL
         With lis
             .Add(AGC(My.Resources.common.NazevProjektu, "p41Name", , , "a.p41Name"))
             .Add(AGC(My.Resources.common.Kod, "p41Code", , , "a.p41Code"))
-            .Add(AGC("Stromový název", "p41TreePath", , True, "a.p41TreePath"))
-            ''.Add(AGC("Strom název", "TreeName", , False, "Replicate('.',a.p41TreeLevel*4)+a.p41Name"))
+
             .Add(AGC("DRAFT", "p41IsDraft", BO.cfENUM.Checkbox, , "a.p41IsDraft"))
             .Add(AGC(My.Resources.common.KlientProjektu, "Client", , , "p28client.p28Name"))
             .Add(AGC(My.Resources.common.KlientPlusProjekt, "FullName", , True, "isnull(p28client.p28Name+char(32),'')+a.p41Name"))
@@ -295,30 +294,31 @@ Class j74SavedGridColTemplateBL
 
             .Add(AGC("Odběratel faktury", "InvoiceClient", , , "p28billing.p28Name", , "LEFT OUTER JOIN p28Contact p28billing ON a.p28ID_Billing=p28billing.p28ID"))
 
-            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
-            .Add(AGC("Strom index", "p41TreeIndex", , True, "a.p41TreeIndex"))
-            .Add(AGC("Strom level", "p41TreeLevel", , True, "a.p41TreeLevel"))
-            .Add(AGC(My.Resources.common.Zalozeno, "p41DateInsert", BO.cfENUM.DateTime, , "a.p41DateInsert"))
-            .Add(AGC(My.Resources.common.Zalozil, "p41UserInsert", , , "a.p41UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "p41DateUpdate", BO.cfENUM.DateTime, , "a.p41DateUpdate"))
-            .Add(AGC(My.Resources.common.Aktualizoval, "p41UserUpdate", , , "a.p41UserUpdate"))
+            .Add(AGC("Stromový název", "p41TreePath", , True, "a.p41TreePath", , , "Strom"))
+            .Add(AGC("Strom index", "p41TreeIndex", , True, "a.p41TreeIndex", , , "Strom"))
+            .Add(AGC("Strom level", "p41TreeLevel", , True, "a.p41TreeLevel", , , "Strom"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p41DateInsert", BO.cfENUM.DateTime, , "a.p41DateInsert", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Zalozil, "p41UserInsert", , , "a.p41UserInsert", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p41DateUpdate", BO.cfENUM.DateTime, , "a.p41DateUpdate", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p41UserUpdate", , , "a.p41UserUpdate", , , "Záznam"))
             .Add(AGC(My.Resources.common.ExterniKod, "p41ExternalPID", , , "a.p41ExternalPID"))
             If Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
-                .Add(AGC("Vykázané hodiny", "Vykazano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vykazano_Hodiny", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID"))
-                .Add(AGC("Vykázané výdaje", "Vykazano_Vydaje", BO.cfENUM.Numeric2, , "alfa.Vykazano_Vydaje", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID"))
-                .Add(AGC("FAKTURA/hodiny", "Vyfakturovano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Hodiny", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID"))
-                .Add(AGC("FAKTURA/částka", "Vyfakturovano_Castka", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Celkem_Domestic", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID"))
-                .Add(AGC("WIP/Hodiny", "WIP_Hodiny", BO.cfENUM.Numeric2, , "beta.Hodiny", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Částka", "WIP_Castka", BO.cfENUM.Numeric2, , "beta.Castka_Celkem", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Honorář", "WIP_Honorar", BO.cfENUM.Numeric2, , "beta.Honorar", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Honorář CZK", "WIP_Honorar_CZK", BO.cfENUM.Numeric2, , "beta.Honorar_CZK", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Honorář EUR", "WIP_Honorar_EUR", BO.cfENUM.Numeric2, , "beta.Honorar_EUR", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Výdaje", "WIP_Vydaje", BO.cfENUM.Numeric2, , "beta.Vydaje", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Výdaje CZK", "WIP_Vydaje_CZK", BO.cfENUM.Numeric2, , "beta.Vydaje_CZK", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Výdaje EUR", "WIP_Vydaje_EUR", BO.cfENUM.Numeric2, , "beta.Vydaje_EUR", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Odměny", "WIP_Odmeny", BO.cfENUM.Numeric2, , "beta.Odmeny", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Odměny CZK", "WIP_Odmeny_CZK", BO.cfENUM.Numeric2, , "beta.Odmeny_CZK", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
-                .Add(AGC("WIP/Odměny EUR", "WIP_Odmeny_EUR", BO.cfENUM.Numeric2, , "beta.Odmeny_EUR", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID"))
+                .Add(AGC("Vykázané hodiny", "Vykazano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vykazano_Hodiny", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vykázáno"))
+                .Add(AGC("Vykázané výdaje", "Vykazano_Vydaje", BO.cfENUM.Numeric2, , "alfa.Vykazano_Vydaje", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vykázáno"))
+                .Add(AGC("Vyfakturované hodiny", "Vyfakturovano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Hodiny", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vyfakturováno"))
+                .Add(AGC("Vyfakturovaná částka", "Vyfakturovano_Castka", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Celkem_Domestic", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vyfakturováno"))
+                .Add(AGC("WIP/Hodiny", "WIP_Hodiny", BO.cfENUM.Numeric2, , "beta.Hodiny", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Částka", "WIP_Castka", BO.cfENUM.Numeric2, , "beta.Castka_Celkem", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Honorář", "WIP_Honorar", BO.cfENUM.Numeric2, , "beta.Honorar", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Honorář CZK", "WIP_Honorar_CZK", BO.cfENUM.Numeric2, , "beta.Honorar_CZK", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Honorář EUR", "WIP_Honorar_EUR", BO.cfENUM.Numeric2, , "beta.Honorar_EUR", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Výdaje", "WIP_Vydaje", BO.cfENUM.Numeric2, , "beta.Vydaje", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Výdaje CZK", "WIP_Vydaje_CZK", BO.cfENUM.Numeric2, , "beta.Vydaje_CZK", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Výdaje EUR", "WIP_Vydaje_EUR", BO.cfENUM.Numeric2, , "beta.Vydaje_EUR", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Odměny", "WIP_Odmeny", BO.cfENUM.Numeric2, , "beta.Odmeny", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Odměny CZK", "WIP_Odmeny_CZK", BO.cfENUM.Numeric2, , "beta.Odmeny_CZK", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
+                .Add(AGC("WIP/Odměny EUR", "WIP_Odmeny_EUR", BO.cfENUM.Numeric2, , "beta.Odmeny_EUR", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
             End If
         End With
         AppendFreeFields(BO.x29IdEnum.p41Project, lis)
@@ -334,7 +334,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.DIC, "p28VatID", , , "a.p28VatID"))
             .Add(AGC(My.Resources.common.Typ, "p29Name"))
             .Add(AGC("Fakturační poznámka", "p28BillingMemo", , , "a.p28BillingMemo"))
-            .Add(AGC("Stromový název", "p28TreePath", , True, "a.p28TreePath"))
+
             ''.Add(AGC("Nadřízený klient", "ParentContact", , , "p28parent.p28Name", , "LEFT OUTER JOIN p28Contact p28parent ON a.p28ParentID=p28parent.p28ID"))
             .Add(AGC("Město", "Adress1_City", , , "pa.o38City", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
             .Add(AGC("Ulice", "Adress1_Street", , , "pa.o38Street", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
@@ -349,13 +349,14 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.LimitHodin, "p28LimitHours_Notification", BO.cfENUM.Numeric, , "a.p28LimitHours_Notification", True))
             .Add(AGC(My.Resources.common.LimitniHonorar, "p28LimitFee_Notification", BO.cfENUM.Numeric, , "a.p28LimitFee_Notification", True))
 
-            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
-            .Add(AGC("Strom index", "p28TreeIndex", , True, "a.p28TreeIndex"))
-            .Add(AGC("Strom level", "p28TreeLevel", , True, "a.p28TreeLevel"))
-            .Add(AGC(My.Resources.common.Zalozeno, "p28DateInsert", BO.cfENUM.DateTime, , "a.p28DateInsert"))
-            .Add(AGC(My.Resources.common.Zalozil, "p28UserInsert", , , "a.p28UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "p28DateUpdate", BO.cfENUM.DateTime, , "a.p28DateUpdate"))
-            .Add(AGC(My.Resources.common.Aktualizoval, "p28UserUpdate", , , "a.p28UserUpdate"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
+            .Add(AGC("Stromový název", "p28TreePath", , True, "a.p28TreePath", , , "Strom"))
+            .Add(AGC("Strom index", "p28TreeIndex", , True, "a.p28TreeIndex", , , "Strom"))
+            .Add(AGC("Strom level", "p28TreeLevel", , True, "a.p28TreeLevel", , , "Strom"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p28DateInsert", BO.cfENUM.DateTime, , "a.p28DateInsert", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Zalozil, "p28UserInsert", , , "a.p28UserInsert", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p28DateUpdate", BO.cfENUM.DateTime, , "a.p28DateUpdate", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p28UserUpdate", , , "a.p28UserUpdate", , , "Záznam"))
             .Add(AGC("Externí kód", "p28ExternalPID", , , "a.p28ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p28Contact, lis)
@@ -375,10 +376,10 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Oslovení", "j02Salutation"))
 
             .Add(AGC("Interní osoba", "j02IsIntraPerson", BO.cfENUM.Checkbox))
-            .Add(AGC("Založeno", "j02DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC("Založil", "j02UserInsert"))
-            .Add(AGC("Aktualizace", "j02DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC("Aktualizoval", "j02UserUpdate"))
+            .Add(AGC("Založeno", "j02DateInsert", BO.cfENUM.DateTime, , , , , "Záznam"))
+            .Add(AGC("Založil", "j02UserInsert", , , , , , "Záznam"))
+            .Add(AGC("Aktualizace", "j02DateUpdate", BO.cfENUM.DateTime, , , , , "Záznam"))
+            .Add(AGC("Aktualizoval", "j02UserUpdate", , , , , , "Záznam"))
             .Add(AGC("Externí kód", "j02ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.j02Person, lis)
@@ -392,14 +393,23 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.TimeFrom, "TimeFrom", , False, "p31DateTimeFrom_Orig"))
             .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False, "p31DateTimeUntil_Orig"))
 
-            .Add(AGC(My.Resources.common.Osoba, "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName"))
+            .Add(AGC(My.Resources.common.Osoba, "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName", , , "Osoba"))
+            .Add(AGC("Pozice", "PoziceOsoby", , True, "j07.j07Name", , "LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID", "Osoba"))
+            .Add(AGC("Středisko osoby", "StrediskoOsoby", , True, "j18_j02.j18Name", , "LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID", "Osoba"))
+
             .Add(AGC(My.Resources.common.p32Name, "p32Name", , , , , , "Aktivita"))
             .Add(AGC(My.Resources.common.FA, "p32IsBillable", BO.cfENUM.Checkbox, , , , , "Aktivita"))
             .Add(AGC(My.Resources.common.Sesit, "p34Name", , , , , , "Aktivita"))
+            .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name", , , , , , "Aktivita"))
 
             .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt"))
+            .Add(AGC("Stromový název", "p41TreePath", , , "isnull(p41TreePath,p41Name)", , , "Projekt"))
+
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt"))
             .Add(AGC(My.Resources.common.KlientProjektu, "ClientName", , , "p28Client.p28Name", , , "Projekt"))
+            .Add(AGC("Středisko projektu", "StrediskoProjektu", , True, "j18_p41.j18Name", , "LEFT OUTER JOIN j18Region j18_p41 ON p41.j18ID=j18_p41.j18ID", "Projekt"))
+            .Add(AGC("Typ projektu", "TypProjektu", , True, "p42.p42Name", , "LEFT OUTER JOIN p42ProjectType p42 ON p41.p42ID=p42.p42ID", "Projekt"))
+
             .Add(AGC(My.Resources.common.NazevUkolu, "p56Name", , , , , , "Úkol"))
             .Add(AGC(My.Resources.common.KodUkolu, "p56Code", , , , , , "Úkol"))
 
@@ -408,22 +418,29 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.KodDokladu, "p31Code"))
             .Add(AGC(My.Resources.common.KontaktniOsoba, "ContactPerson", , , "cp.j02LastName+char(32)+cp.j02FirstName"))
 
-            .Add(AGC(My.Resources.common.Schvaleno, "p71Name", , , , , , "Schváleno"))
 
-            .Add(AGC(My.Resources.common.VykazanaHodnota, "p31Value_Orig", BO.cfENUM.Numeric2, , , True))
-            .Add(AGC(My.Resources.common.VykazaneHodiny, "p31Hours_Orig", BO.cfENUM.Numeric2, , , True))
-            .Add(AGC(My.Resources.common.VykazaneHodinyHHMM, "p31HHMM_Orig", , , "p31Hours_Orig"))
+
+            .Add(AGC(My.Resources.common.VykazanaHodnota, "p31Value_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
+            .Add(AGC(My.Resources.common.VykazaneHodiny, "p31Hours_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
+            .Add(AGC(My.Resources.common.VykazaneHodinyHHMM, "p31HHMM_Orig", , , "p31Hours_Orig", , , "Vykázáno"))
             If Not bolHideRatesColumns Then
-                .Add(AGC(My.Resources.common.VychoziSazba, "p31Rate_Billing_Orig", BO.cfENUM.Numeric2))
-                .Add(AGC(My.Resources.common.CastkaBezDPH, "p31Amount_WithoutVat_Orig", BO.cfENUM.Numeric2, , , True))
-                .Add(AGC("Částka vč. DPH", "p31Amount_WithVat_Orig", BO.cfENUM.Numeric2, , , True))
+                .Add(AGC(My.Resources.common.VychoziSazba, "p31Rate_Billing_Orig", BO.cfENUM.Numeric2, , , , , "Vykázáno"))
+                .Add(AGC(My.Resources.common.CastkaBezDPH, "p31Amount_WithoutVat_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
+                .Add(AGC("Částka vč. DPH", "p31Amount_WithVat_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
                 .Add(AGC(My.Resources.common.NakladovaSazba, "p31Rate_Internal_Orig", BO.cfENUM.Numeric2, , , , , "Nákladová cena"))
                 .Add(AGC(My.Resources.common.NakladovaCastka, "p31Amount_Internal", BO.cfENUM.Numeric2, , , True, , "Nákladová cena"))
             End If
 
-            .Add(AGC(My.Resources.common.SazbaDPH, "p31VatRate_Orig", BO.cfENUM.Numeric0))
-            .Add(AGC(My.Resources.common.Mena, "j27Code_Billing_Orig", , , "j27billing_orig.j27Code"))
+            .Add(AGC("Číslo faktury", "p91Code", , , , , , "Vyfakturováno"))
+            .Add(AGC("Vyfakt.status", "p70Name", , , , , , "Vyfakturováno"))
 
+            .Add(AGC("Kalk/počet", "p31Calc_Pieces", BO.cfENUM.Numeric2, , , , , "Vykázáno"))
+            .Add(AGC("Kalk/cena 1 ks", "p31Calc_PieceAmount", BO.cfENUM.Numeric2, , , , , "Vykázáno"))
+
+            .Add(AGC(My.Resources.common.SazbaDPH, "p31VatRate_Orig", BO.cfENUM.Numeric0, , , , , "Vykázáno"))
+            .Add(AGC(My.Resources.common.Mena, "j27Code_Billing_Orig", , , "j27billing_orig.j27Code", , , "Vykázáno"))
+
+            .Add(AGC(My.Resources.common.Schvaleno, "p71Name", , , , , , "Schváleno"))
             .Add(AGC(My.Resources.common.NavrhFakturacnihoStatusu, "approve_p72Name", , , "p72approve.p72Name", , , "Schváleno"))
             .Add(AGC(My.Resources.common.SchvalenaHodnota, "p31Value_Approved_Billing", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
             .Add(AGC(My.Resources.common.SchvaleneHodiny, "p31Hours_Approved_Billing", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
@@ -433,6 +450,7 @@ Class j74SavedGridColTemplateBL
             If Not bolHideRatesColumns Then .Add(AGC(My.Resources.common.SchvalenoBezDPH, "p31Amount_WithoutVat_Approved", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
             If Not bolHideRatesColumns Then .Add(AGC(My.Resources.common.SchvalenoVcDPH, "p31Amount_WithVat_Approved", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
             .Add(AGC(My.Resources.common.SchvalenoKdy, "p31Approved_When", BO.cfENUM.DateTime, , , , , "Schváleno"))
+            .Add(AGC(My.Resources.common.BillingDavka, "p31ApprovingSet", , , , , , "Schváleno"))
 
 
             .Add(AGC(My.Resources.common.VyfakturovanaHodnota, "p31Value_Invoiced", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
@@ -442,23 +460,13 @@ Class j74SavedGridColTemplateBL
                 .Add(AGC(My.Resources.common.VyfakturovanaSazba, "p31Rate_Billing_Invoiced", BO.cfENUM.Numeric2, , , , , "Vyfakturováno"))
                 .Add(AGC(My.Resources.common.VyfakturovanoBezDPH, "p31Amount_WithoutVat_Invoiced", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
                 .Add(AGC(My.Resources.common.VyfakturovanoVcDPH, "p31Amount_WithVat_Invoiced", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
+                .Add(AGC("Vyfakt.sazba DPH", "p31VatRate_Invoiced", BO.cfENUM.Numeric0, , , , , "Vyfakturováno"))
+                .Add(AGC("Vyfakt.bez DPH x Kurz", "p31Amount_WithoutVat_Invoiced_Domestic", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
             End If
-
-
-            .Add(AGC("Vyfakt.sazba DPH", "p31VatRate_Invoiced", BO.cfENUM.Numeric0, , , , , "Vyfakturováno"))
-
-            If Not bolHideRatesColumns Then .Add(AGC("Vyfakt.bez DPH x Kurz", "p31Amount_WithoutVat_Invoiced_Domestic", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
-            .Add(AGC(My.Resources.common.Faktura, "p91Code", , , , , , "Vyfakturováno"))
-            .Add(AGC("Vyfakt.status", "p70Name", , , , , , "Vyfakturováno"))
-            .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name", , , , , , "Aktivita"))
-            .Add(AGC(My.Resources.common.BillingDavka, "p31ApprovingSet", , , , , , "Schváleno"))
-
-            ''.Add(AGC("Je plán", "p31IsPlanRecord", BO.cfENUM.Checkbox))
-
-            .Add(AGC("Kalk/počet", "p31Calc_Pieces", BO.cfENUM.Numeric2))
-            .Add(AGC("Kalk/cena 1 ks", "p31Calc_PieceAmount", BO.cfENUM.Numeric2))
+            
 
             .Add(AGC("Typ úhrady", "TypUhrady", , True, "j19.j19Name", , "LEFT OUTER JOIN j19PaymentType j19 ON a.j19ID=j19.j19ID"))
+
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , False, "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
             .Add(AGC(My.Resources.common.Zalozeno, "p31DateInsert", BO.cfENUM.DateTime, , , , , "Záznam"))
@@ -529,13 +537,13 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Typ, "p57Name"))
             .Add(AGC(My.Resources.common.Nazev, "p56Name"))
             .Add(AGC("Aktuální stav", "b02Name"))            
-            .Add(AGC(My.Resources.common.Klient, "Client", , , "p28client.p28Name"))
-            .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)"))
-            .Add(AGC(My.Resources.common.KodProjektu, "p41Code"))
+            .Add(AGC(My.Resources.common.Klient, "Client", , , "p28client.p28Name", , , "Projekt"))
+            .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt"))
+            .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt"))
             .Add(AGC(My.Resources.common.Prijemce, "ReceiversInLine", , , "dbo.p56_getroles_inline(a.p56ID)"))
-            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
-            .Add(AGC(My.Resources.common.Termin, "p56PlanUntil", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.PlanStart, "p56PlanFrom", BO.cfENUM.DateTime))
+
+            .Add(AGC(My.Resources.common.Termin, "p56PlanUntil", BO.cfENUM.DateTime, , , , , "Plán úkolu"))
+            .Add(AGC(My.Resources.common.PlanStart, "p56PlanFrom", BO.cfENUM.DateTime, , , , , "Plán úkolu"))
             .Add(AGC("Hotovo%", "p56CompletePercent", BO.cfENUM.Numeric0))
             .Add(AGC("Produkt", "p58Name"))
             .Add(AGC(My.Resources.common.PrioritaZadavatele, "p59NameSubmitter", , , "p59submitter.p59Name"))
@@ -543,16 +551,16 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Hodnocení", "p56RatingValue", BO.cfENUM.Numeric0))
             .Add(AGC("Připomenutí", "p56ReminderDate", BO.cfENUM.DateTime))
 
-            .Add(AGC(My.Resources.common.PlanHodin, "p56Plan_Hours", BO.cfENUM.Numeric2, , , True))
-            .Add(AGC(My.Resources.common.PlanVydaju, "p56Plan_Expenses", BO.cfENUM.Numeric2, , , True))
-            .Add(AGC(My.Resources.common.VykazaneHodiny, "Hours_Orig", BO.cfENUM.Numeric2, , "p31.Hours_Orig", True))
-            .Add(AGC(My.Resources.common.VykazaneVydaje, "Expenses_Orig", BO.cfENUM.Numeric2, , "p31.Expenses_Orig", True))
+            .Add(AGC(My.Resources.common.PlanHodin, "p56Plan_Hours", BO.cfENUM.Numeric2, , , True, , "Plán úkolu"))
+            .Add(AGC(My.Resources.common.PlanVydaju, "p56Plan_Expenses", BO.cfENUM.Numeric2, , , True, , "Plán úkolu"))
+            .Add(AGC(My.Resources.common.VykazaneHodiny, "Hours_Orig", BO.cfENUM.Numeric2, , "p31.Hours_Orig", True, , "Vykázáno"))
+            .Add(AGC(My.Resources.common.VykazaneVydaje, "Expenses_Orig", BO.cfENUM.Numeric2, , "p31.Expenses_Orig", True, , "Vykázáno"))
 
-            
-            .Add(AGC(My.Resources.common.Zalozeno, "p56DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Zalozil, "p56UserInsert"))
-            .Add(AGC(My.Resources.common.Aktualizace, "p56DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC(My.Resources.common.Aktualizoval, "p56UserUpdate"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Zalozeno, "p56DateInsert", BO.cfENUM.DateTime, , , , , "Záznam"))
+            .Add(AGC(My.Resources.common.Zalozil, "p56UserInsert", , , , , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizace, "p56DateUpdate", BO.cfENUM.DateTime, , , , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizoval, "p56UserUpdate", , , , , , "Záznam"))
             .Add(AGC(My.Resources.common.ExterniKod, "p56ExternalPID"))
         End With
         AppendFreeFields(BO.x29IdEnum.p56Task, lis)
@@ -569,14 +577,15 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Faktura", "p91Code"))
             .Add(AGC("Úkol", "p56Code"))
             .Add(AGC("Příjemci", "ReceiversInLine", , , "dbo.o23_getroles_inline(a.o23ID)"))
-            .Add(AGC("Vlastník", "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
+
             .Add(AGC("Datum", "o23Date", BO.cfENUM.DateTime))
             .Add(AGC("Připomenutí", "o23ReminderDate", BO.cfENUM.DateTime))
 
-            .Add(AGC("Založeno", "o23DateInsert", BO.cfENUM.DateTime))
-            .Add(AGC("Založil", "o23UserInsert"))
-            .Add(AGC("Aktualizace", "o23DateUpdate", BO.cfENUM.DateTime))
-            .Add(AGC("Aktualizoval", "o23UserUpdate"))
+            .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
+            .Add(AGC(My.Resources.common.Zalozeno, "o23DateInsert", BO.cfENUM.DateTime, , , , , "Záznam"))
+            .Add(AGC(My.Resources.common.Zalozil, "o23UserInsert", , , , , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizace, "o23DateUpdate", BO.cfENUM.DateTime, , , , , "Záznam"))
+            .Add(AGC(My.Resources.common.Aktualizoval, "o23UserUpdate", , , , , , "Záznam"))
         End With
         AppendFreeFields(BO.x29IdEnum.o23Notepad, lis)
     End Sub
