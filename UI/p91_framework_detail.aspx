@@ -232,7 +232,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel ID="panMenuContainer" runat="server" Style="height:43px;border-bottom: solid 1px gray;background-color:#E8E8E8;">
+    <asp:Panel ID="panMenuContainer" runat="server" Style="height: 43px; border-bottom: solid 1px gray; background-color: #E8E8E8;">
 
         <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
             <Items>
@@ -270,7 +270,7 @@
                     <Items>
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                         </telerik:RadMenuItem>
-                        
+
                         <telerik:RadMenuItem Value="cmdPivot" Text="PIVOT faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
@@ -357,7 +357,7 @@
                         </td>
                         <td id="rlbl">
 
-                            <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>                                                        
+                            <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
 
@@ -401,7 +401,9 @@
                         <td colspan="3">
                             <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
                             <br />
-                            <button type="button" onclick="workflow()" class="cmd" title="Změnit stav faktury, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona..."><img src="Images/workflow.png" /> Posunout/doplnit</button>
+                            <button type="button" onclick="workflow()" class="cmd" title="Změnit stav faktury, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona...">
+                                <img src="Images/workflow.png" />
+                                Posunout/doplnit</button>
                         </td>
                     </tr>
                     <tr>
@@ -538,7 +540,7 @@
 
                 <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p91Invoice"></uc:o23_list>
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
-                <uc:alertbox id="alert1" runat="server"></uc:alertbox>
+                <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
             </telerik:RadPageView>
             <telerik:RadPageView ID="p31" runat="server">
 
@@ -568,7 +570,7 @@
                         <img src="Images/griddesigner.png" class="button-link" /></a>
                 </div>
                 <div class="commandcell">
-                    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" style="z-index:100;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
+                    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 100;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
                         <Items>
                             <telerik:RadMenuItem Text="Položka faktury" ImageUrl="Images/menuarrow.png">
                                 <Items>
@@ -576,7 +578,7 @@
                                     <telerik:RadMenuItem Text="Upravit vybranou položku" Value="edit" NavigateUrl="javascript:record_p31_edit()"></telerik:RadMenuItem>
                                 </Items>
                             </telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Akce" value="akce" ImageUrl="Images/menuarrow.png">
+                            <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
                                 <Items>
                                     <telerik:RadMenuItem Text="Označené vyjmout z faktury" Value="remove" NavigateUrl="javascript:p31_batch('cut')"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
@@ -641,6 +643,15 @@
                 </div>
 
 
+                <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
+                    <div class="title">
+                        <img src="Images/projectrole.png" style="margin-right: 10px;" />
+                        Obsazení fakturačních rolí
+                    </div>
+                    <div class="content">
+                        <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="p91Invoice" NoDataText=""></uc:entityrole_assign_inline>
+                    </div>
+                </asp:Panel>
 
 
             </telerik:RadPageView>
@@ -660,7 +671,7 @@
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
-    <uc:searchbox id="sb1" runat="server"></uc:searchbox>
-   
-    
+    <uc:searchbox ID="sb1" runat="server"></uc:searchbox>
+
+
 </asp:Content>

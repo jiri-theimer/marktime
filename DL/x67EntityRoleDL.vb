@@ -99,8 +99,16 @@
         pars.Add("x29id", x29id, DbType.Int32)
         pars.Add("recordpid", intRecordPID, DbType.Int32)
         pars.Add("j02id", intJ02ID, DbType.Int32)
-        Dim s As String = "select a.*," & bas.RecTail("x67", "a") & " FROM x67EntityRole a INNER JOIN x69EntityRole_Assign b ON a.x67ID=b.x67ID WHERE a.x29ID=@x29id AND b.x69RecordPID=@recordpid AND (b.j02ID=@j02id OR b.j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=@j02id))"
-
+        Dim strX29IDs As String = "@x29id"
+        Dim s As String = "select a.*," & bas.RecTail("x67", "a") & " FROM x67EntityRole a INNER JOIN x69EntityRole_Assign b ON a.x67ID=b.x67ID WHERE (a.x29ID=@x29id AND b.x69RecordPID=@recordpid AND (b.j02ID=@j02id OR b.j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=@j02id)))"
+        If x29id = BO.x29IdEnum.p41Project Then
+            'u projektu navíc testovat výchozí oprávnění definované u střediska projektu
+            Dim intJ18ID As Integer = _cDB.GetIntegerValueFROMSQL("select j18ID FROM p41Project WHERE p41ID=" & intRecordPID.ToString)
+            If intJ18ID <> 0 Then
+                pars.Add("j18id", intJ18ID, DbType.Int32)
+                s += " OR (a.x29ID=118 AND b.x69RecordPID=@j18id AND (b.j02ID=@j02id OR b.j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=@j02id)))"
+            End If
+        End If
 
         Return _cDB.GetList(Of BO.x67EntityRole)(s, pars)
 

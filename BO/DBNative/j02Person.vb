@@ -28,6 +28,7 @@
     Public Property j02TimesheetEntryDaysBackLimit As Integer
     Public Property j02TimesheetEntryDaysBackLimit_p34IDs As String
     Public Property j02Salutation As String
+    Public Property j02WorksheetAccessFlag As Integer   '1= nemá přístup k již vyfakturovaným úkonům
 
 
 

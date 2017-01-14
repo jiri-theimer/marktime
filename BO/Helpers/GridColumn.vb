@@ -22,6 +22,7 @@ Public Class GridColumn
     Public Property IsAllowFiltering As Boolean = True
     Public Property DrillDownDBName As String
     Public Property SqlSyntax_FROM As String
+    Public Property TreeGroup As String
 
     Public Sub New(colX29ID As BO.x29IdEnum, strHeader As String, strName As String, Optional colType As cfENUM = cfENUM.AnyString, Optional bolSortable As Boolean = True)
         Me.x29ID = colX29ID

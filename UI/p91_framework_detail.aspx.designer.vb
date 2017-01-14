@@ -824,6 +824,24 @@ Partial Public Class p91_framework_detail
     Protected WithEvents p91Text2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''panRoles control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRoles As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''roles1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents roles1 As Global.UI.entityrole_assign_inline
+
+    '''<summary>
     '''hidHardRefreshFlag control.
     '''</summary>
     '''<remarks>

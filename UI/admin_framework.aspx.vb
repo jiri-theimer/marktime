@@ -172,6 +172,7 @@ Public Class admin_framework
             .AddItem("Zaokrouhlovací pravidla", "p98", NU("p98"), "p91")
             .AddItem("Struktury rozpisu částky faktury", "p80", NU("p80"), "p91")
             .AddItem("Režijní přirážky k fakturaci", "p63", NU("p63"), "p91")
+            .AddItem("Role ve faktuře", "p91_x67", NU("p91_x67"), "p91")
 
             .AddItem("Typy záloh", "p89", NU("p89"), "p91")
 
@@ -191,11 +192,7 @@ Public Class admin_framework
             '.AddItem("Úkoly", "p56", , , "Images/task.png")
             '.AddItem("Ostatní", "other", , , "Images/settings.png")
             '.AddItem("SMTP server", "smtp", , "other")
-            If BO.ASS.GetConfigVal("Guru") = "1" Then
-                .AddItem("Role k sestavě", "x31_x67", NU("x31_x67"), "reporting", "Images/guru.png")
-
-                .AddItem("Role ve faktuře", "p91_x67", NU("p91_x67"), "p91", "Images/guru.png")
-            End If
+           
 
             .AddItem("Odeslaná pošta", "smtp", , , "Images/email.png")
             .AddItem("Notifikační pravidla", "x46", NU("x46"), "smtp")

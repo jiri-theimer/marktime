@@ -451,6 +451,7 @@
                         s.Append(" AND p34.p33ID=3")
                 End Select
             End If
+            If _curUser.j02WorksheetAccessFlag = 1 Then s.Append(" AND a.p91ID IS NULL") 'absolutně bez práva vidět vyfakturované úkony
         End With
 
         Return bas.TrimWHERE(s.ToString)

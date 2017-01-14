@@ -29,6 +29,7 @@ Public Class j03User
     Protected Property _j02FirstName As String
     Protected Property _j02TitleBeforeName As String
     Protected Property _j02Email As String
+    Protected Property _j02WorksheetAccessFlag As Integer
 
     Public ReadOnly Property j04Name As String
         Get
@@ -52,5 +53,9 @@ Public Class j03User
             Return _j02Email
         End Get
     End Property
-
+    Public ReadOnly Property j02WorksheetAccessFlag As Integer
+        Get
+            Return _j02WorksheetAccessFlag
+        End Get
+    End Property
 End Class

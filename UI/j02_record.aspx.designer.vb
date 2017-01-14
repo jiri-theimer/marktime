@@ -500,6 +500,15 @@ Partial Public Class j02_record
     Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''j02WorksheetAccessFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02WorksheetAccessFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblj02TimesheetEntryDaysBackLimit control.
     '''</summary>
     '''<remarks>

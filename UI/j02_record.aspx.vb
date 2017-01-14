@@ -87,6 +87,7 @@
                 Me.j02TimesheetEntryDaysBackLimit_p34IDs.SelectCheckboxItems(lis)
 
             End If
+            basUI.SelectDropdownlistValue(Me.j02WorksheetAccessFlag, CInt(.j02WorksheetAccessFlag).ToString)
 
             Master.Timestamp = .Timestamp
 
@@ -152,6 +153,7 @@
                 .j02ExternalPID = Me.j02ExternalPID.Text
                 .j02TimesheetEntryDaysBackLimit = BO.BAS.IsNullInt(Me.j02TimesheetEntryDaysBackLimit.SelectedValue)
                 .j02TimesheetEntryDaysBackLimit_p34IDs = String.Join(",", Me.j02TimesheetEntryDaysBackLimit_p34IDs.GetAllCheckedValues)
+                .j02WorksheetAccessFlag = BO.BAS.IsNullInt(Me.j02WorksheetAccessFlag.SelectedValue)
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
                 If chkIsSmtp.Checked Then

@@ -209,6 +209,13 @@
         </telerik:RadPageView>
         <telerik:RadPageView ID="other" runat="server">
             <fieldset>
+                <legend>Omezení přístupu k úkonům, které prošli fakturací</legend>
+                <asp:DropDownList ID="j02WorksheetAccessFlag" runat="server">
+                    <asp:ListItem Text="" Value=""></asp:ListItem>
+                    <asp:ListItem Text="Nemá přístup k úkonům, které prošli fakturací (vč. vlastních úkonů)" Value="1"></asp:ListItem>
+                </asp:DropDownList>
+            </fieldset>
+            <fieldset>
                 <legend>Omezení zpětně zapisovat hodiny</legend>
 
                 <asp:Label ID="lblj02TimesheetEntryDaysBackLimit" runat="server" Text="Omezení zpětně zapisovat hodiny:" CssClass="lbl"></asp:Label>

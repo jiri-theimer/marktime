@@ -254,8 +254,6 @@ Class p41ProjectBL
 
             End If
 
-
-
             c.p91_DraftCreate = .TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.PID, BO.x53PermValEnum.PR_P91_Creator, True)
             If Not c.ReadAccess Then
                 c.ReadAccess = .HasPersonEntityRole(BO.x29IdEnum.p41Project, cRec.PID)
@@ -271,6 +269,7 @@ Class p41ProjectBL
 
             End If
             c.x67IDs = .TestedX67IDs()
+            If Not c.ReadAccess And c.x67IDs.Count > 0 Then c.ReadAccess = True 'pokud má alespoň jednu projektovou roli, pak má přístup na čtení karty projektu
         End With
 
         Return c

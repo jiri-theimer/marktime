@@ -86,22 +86,40 @@ Partial Public Class grid_designer
     Protected WithEvents j74IsSystem As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''colsSource control.
+    '''tr1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents colsSource As Global.Telerik.Web.UI.RadListBox
+    Protected WithEvents tr1 As Global.Telerik.Web.UI.RadTreeView
 
     '''<summary>
-    '''colsDest control.
+    '''cmdAdd control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
+    Protected WithEvents cmdAdd As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdRemove control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRemove As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lt1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lt1 As Global.Telerik.Web.UI.RadListBox
 
     '''<summary>
     '''j74ScrollingFlag control.

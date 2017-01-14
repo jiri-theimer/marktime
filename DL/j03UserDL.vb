@@ -85,7 +85,7 @@ Public Class j03UserDL
     Private Function GetSQLPart1(Optional intTOP As Integer = 0) As String
         Dim s As String = "SELECT"
         If intTOP > 0 Then s += " TOP " & intTOP.ToString
-        s += " a.*," & bas.RecTail("j03", "a") & ",j04.j04name as _j04Name,j02.j02LastName as _j02LastName,j02.j02FirstName as _j02FirstName,j02.j02TitleBeforeName as _j02TitleBeforeName,j02.j02Email as _j02Email"
+        s += " a.*," & bas.RecTail("j03", "a") & ",j04.j04name as _j04Name,j02.j02LastName as _j02LastName,j02.j02FirstName as _j02FirstName,j02.j02TitleBeforeName as _j02TitleBeforeName,j02.j02Email as _j02Email,j02.j02WorksheetAccessFlag as _j02WorksheetAccessFlag"
         s += " FROM j03user a INNER JOIN j04userrole j04 on a.j04id=j04.j04id LEFT OUTER JOIN j02Person j02 ON a.j02id=j02.j02id"
         Return s
     End Function

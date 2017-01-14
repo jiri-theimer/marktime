@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
+<%@ Register TagPrefix="uc" TagName="entityrole_assign" Src="~/entityrole_assign.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -158,6 +159,16 @@
                     </td>
                 </tr>
             </table>
+            <asp:panel ID="panRoles" runat="server" cssclass="content-box2">
+                <div class="title">
+                    <img src="Images/projectrole.png" width="16px" height="16px" />
+                    <asp:Label ID="ph1" runat="server" Text="Obsazení klientských rolí"></asp:Label>
+                    <asp:Button ID="cmdAddX69" runat="server" CssClass="cmd" Text="Přidat" />
+                </div>
+                <div class="content">
+                    <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="p91Invoice"></uc:entityrole_assign>
+                </div>
+            </asp:panel>
         </telerik:RadPageView>
         <telerik:RadPageView ID="tab2" runat="server">
             <table cellpadding="6" cellspacing="2">

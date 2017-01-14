@@ -85,26 +85,33 @@
 
     Private Sub SetupCols()
         Dim lisAllCols As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(Me.CurrentX29ID)
-
-        colsSource.Items.Clear()
-        colsDest.Items.Clear()
+        For Each c In lisAllCols.Where(Function(p) p.TreeGroup <> "").Select(Function(p) p.TreeGroup).Distinct
+            Dim n As New Telerik.Web.UI.RadTreeNode(c, c)
+            n.ImageUrl = "Images/folder.png"
+            tr1.Nodes.Add(n)
+        Next
         For Each c In lisAllCols
-            Dim it As New Telerik.Web.UI.RadListBoxItem(c.ColumnHeader, c.ColumnName)
+            Dim n As New Telerik.Web.UI.RadTreeNode(c.ColumnHeader, c.ColumnName)
+
             Select Case c.ColumnType
                 Case BO.cfENUM.DateTime, BO.cfENUM.DateTime
-                    it.ImageUrl = "Images/type_datetime.png"
+                    n.ImageUrl = "Images/type_datetime.png"
                 Case BO.cfENUM.DateOnly
-                    it.ImageUrl = "Images/type_date.png"
+                    n.ImageUrl = "Images/type_date.png"
                 Case BO.cfENUM.Numeric, BO.cfENUM.Numeric2, BO.cfENUM.Numeric0
-                    it.ImageUrl = "Images/type_number.png"
+                    n.ImageUrl = "Images/type_number.png"
                 Case BO.cfENUM.AnyString
-                    it.ImageUrl = "Images/type_text.png"
+                    n.ImageUrl = "Images/type_text.png"
                 Case BO.cfENUM.Checkbox
-                    it.ImageUrl = "Images/type_checkbox.png"
+                    n.ImageUrl = "Images/type_checkbox.png"
             End Select
-            If c.ColumnName.IndexOf("Free") > 0 Then it.ForeColor = Drawing.Color.Green
+            If c.ColumnName.IndexOf("Free") > 0 Then n.ForeColor = Drawing.Color.Green
+            If c.TreeGroup = "" Then
+                tr1.Nodes.Add(n)
+            Else
+                tr1.FindNodeByValue(c.TreeGroup).Nodes.Add(n)
+            End If
 
-            colsSource.Items.Add(it)
         Next
 
         Me.cbxOrderBy1.DataSource = lisAllCols.Where(Function(p) p.IsSortable = True)
@@ -142,12 +149,8 @@
             For Each s In Split(.j74ColumnNames, ",")
                 If s <> "" Then
                     Dim strField As String = Trim(s)
-                    Dim it As Telerik.Web.UI.RadListBoxItem = colsSource.FindItem(Function(p) LCase(p.Value) = LCase(strField))
-                    If Not it Is Nothing Then
-                        colsSource.Transfer(it, colsSource, colsDest)
-                        colsSource.ClearSelection()
-                        colsDest.ClearSelection()
-                    End If
+                    Dim n As Telerik.Web.UI.RadTreeNode = tr1.FindNodeByValue(strField)
+                    Handle_Add(n)
                 End If
             Next
             If .j74OrderBy <> "" Then
@@ -173,9 +176,9 @@
             basUI.SelectDropdownlistValue(Me.j74DrillDownField1, .j74DrillDownField1)
             panRoles.Visible = Not .j74IsSystem
         End With
-        colsSource.ClearSelection()
-
+        
         roles1.InhaleInitialData(cRec.PID)
+        RefreshTreeState()
     End Sub
 
 
@@ -189,7 +192,7 @@
             .x29ID = Me.CurrentX29ID
             .j74Name = j74Name.Text
             Dim s As String = ""
-            For Each it As Telerik.Web.UI.RadListBoxItem In colsDest.Items
+            For Each it As Telerik.Web.UI.RadListBoxItem In lt1.Items
                 s += "," & it.Value
             Next
             .j74ColumnNames = BO.BAS.OM1(s)
@@ -214,7 +217,7 @@
     End Function
 
     Private Sub TestAndSaveChanges(bolShowConfirmMessage As Boolean)
-        If Me.colsDest.ClientChanges.Count > 0 Then
+        If lt1.Items.Count > 0 > 0 Then
 
             Dim cRec As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(Master.DataPID)
             If SaveRecord(cRec) Then
@@ -291,9 +294,7 @@
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
             roles1.SaveCurrentTempData()
-            'If Me.colsDest.ClientChanges.Count > 0 Then
-            '    SaveCompleteChanges()
-            'End If
+           
             If Me.cbxOrderBy1.SelectedValue = Me.cbxOrderBy2.SelectedValue And Me.cbxOrderBy1.SelectedValue <> "" Then
                 Master.Notify("Třídění není korektně nastaveno.", NotifyLevel.ErrorMessage)
                 Return
@@ -365,5 +366,72 @@
 
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
         roles1.AddNewRow()
+    End Sub
+
+   
+    Private Sub cmdAdd_Click(sender As Object, e As EventArgs) Handles cmdAdd.Click
+        Handle_Add(tr1.SelectedNode)
+
+        RefreshTreeState()
+        With lt1.Items
+            For i As Integer = 0 To .Count - 1
+                .Item(i).Selected = False
+            Next
+            If .Count > 0 Then
+                lt1.Items(.Count - 1).Selected = True
+            End If
+        End With
+        
+    End Sub
+
+    Private Sub Handle_Add(n As Telerik.Web.UI.RadTreeNode)
+        If n Is Nothing Then Return
+        If n.ImageUrl = "Images/folder.png" Then Return
+
+        If Not lt1.FindItemByValue(n.Value) Is Nothing Then
+            Return
+        End If
+        Dim it As New Telerik.Web.UI.RadListBoxItem(n.Text, n.Value)
+        it.ToolTip = n.ToolTip
+        it.ForeColor = n.ForeColor
+        it.ImageUrl = n.ImageUrl
+
+        lt1.Items.Add(it)
+
+    End Sub
+
+    Private Sub RefreshTreeState(Optional strSelectValue As String = "")
+        For Each n In tr1.GetAllNodes()
+            n.Enabled = True
+        Next
+        For i As Integer = 0 To lt1.Items.Count - 1
+            Dim n As Telerik.Web.UI.RadTreeNode = tr1.FindNodeByValue(lt1.Items(i).Value)
+            If Not n Is Nothing Then
+                n.Enabled = False
+
+            End If
+        Next
+        If strSelectValue <> "" Then
+            If Not tr1.FindNodeByValue(strSelectValue) Is Nothing Then
+                tr1.FindNodeByValue(strSelectValue).Selected = True
+            End If
+        End If
+        If lt1.Items.Count > 0 Then
+            cmdRemove.Enabled = True
+        Else
+            cmdRemove.Enabled = False
+        End If
+    End Sub
+
+    Private Sub cmdRemove_Click(sender As Object, e As EventArgs) Handles cmdRemove.Click
+        If lt1.SelectedItem Is Nothing Then Return
+        Dim strVal As String = lt1.SelectedItem.Value, x As Integer = lt1.SelectedIndex
+        lt1.Items.Remove(lt1.SelectedItem)
+        RefreshTreeState(strVal)
+        If lt1.Items.Count > x Then
+            lt1.SelectedIndex = x
+        Else
+            lt1.SelectedIndex = 0
+        End If
     End Sub
 End Class

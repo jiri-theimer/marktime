@@ -266,6 +266,42 @@ Partial Public Class p91_record
     Protected WithEvents p91Datep31_Until As Global.Telerik.Web.UI.RadDatePicker
 
     '''<summary>
+    '''panRoles control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panRoles As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''ph1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdAddX69 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddX69 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''roles1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents roles1 As Global.UI.entityrole_assign
+
+    '''<summary>
     '''tab2 control.
     '''</summary>
     '''<remarks>

@@ -9,6 +9,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
+        roles1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
 
@@ -92,6 +93,7 @@
             Master.Timestamp = .Timestamp
 
         End With
+        roles1.InhaleInitialData(cRec.PID)
 
         Handle_FF()
         
@@ -131,6 +133,8 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        roles1.SaveCurrentTempData()
+
         With Master.Factory.p91InvoiceBL
             Dim cRec As BO.p91Invoice = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.p91Invoice)
             With cRec
@@ -169,8 +173,13 @@
             End With
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
+            Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
+            If roles1.ErrorMessage <> "" Then
+                Master.Notify(roles1.ErrorMessage, 2)
+                Return
+            End If
 
-            If .Update(cRec, Nothing, lisFF) Then
+            If .Update(cRec, lisX69, lisFF) Then
                 Master.DataPID = .LastSavedPID
                 Master.CloseAndRefreshParent("p91-save")
             Else
@@ -236,5 +245,8 @@
     Private Sub p80ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p80ID.NeedMissingItem
         Dim cRec As BO.p80InvoiceAmountStructure = Master.Factory.p80InvoiceAmountStructureBL.Load(CInt(strFoundedMissingItemValue))
         If Not cRec Is Nothing Then strAddMissingItemText = cRec.p80Name
+    End Sub
+    Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
+        roles1.AddNewRow()
     End Sub
 End Class

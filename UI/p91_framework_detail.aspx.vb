@@ -219,6 +219,9 @@ Public Class p91_framework_detail
         Else
             boxX18.Visible = False
         End If
+        Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p91Invoice, cRec.PID)
+        Me.roles1.RefreshData(lisX69, cRec.PID)
+        If Me.roles1.RowsCount = 0 Then panRoles.Visible = False
 
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p91Invoice, Master.DataPID, cRec.p92ID)
         If lisFF.Count > 0 Then
