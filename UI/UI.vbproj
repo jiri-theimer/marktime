@@ -252,6 +252,7 @@
     <Content Include="p31summary.ascx" />
     <Content Include="p31summary_drilldown.ascx" />
     <Content Include="p31_framework_timer.aspx" />
+    <Content Include="select_field.aspx" />
     <Content Include="p31_record_split.aspx" />
     <Content Include="p31_scheduler.aspx" />
     <Content Include="p41_batch_childs.aspx" />
@@ -1227,6 +1228,13 @@
     </Compile>
     <Compile Include="p31_framework_timer.aspx.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="select_field.aspx.designer.vb">
+      <DependentUpon>select_field.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="select_field.aspx.vb">
+      <DependentUpon>select_field.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31_record_split.aspx.designer.vb">

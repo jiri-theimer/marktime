@@ -122,31 +122,76 @@ Partial Public Class p31_pivot
     Protected WithEvents lblEntity As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''row1 control.
+    '''linkRow1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents row1 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents linkRow1 As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''row2 control.
+    '''hidRow1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents row2 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents hidRow1 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''row3 control.
+    '''linkRow2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents row3 As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents linkRow2 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''hidRow2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidRow2 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''cmdClear2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClear2 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''linkRow3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkRow3 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''hidRow3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidRow3 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''cmdClear3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClear3 As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
     '''col1 control.

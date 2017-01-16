@@ -20,7 +20,7 @@
     Function Validate_Before_Save_Approving(cApproveInput As BO.p31WorksheetApproveInput, bolTempData As Boolean) As Boolean
     
     Function GetList_CalendarHours(intJ02ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.p31WorksheetCalendarHours)
-    Function GetList_Pivot(rows As List(Of BO.PivotRowColumnField), cols As List(Of BO.PivotRowColumnField), sums As List(Of BO.PivotSumField), mq As BO.myQueryP31) As IEnumerable(Of BO.PivotRecord)
+    Function GetList_Pivot(rows As List(Of BO.GridColumn), cols As List(Of BO.PivotRowColumnField), sums As List(Of BO.PivotSumField), mq As BO.myQueryP31) As IEnumerable(Of BO.PivotRecord)
     Function MoveToBin(pids As List(Of Integer)) As Boolean
     Function MoveFromBin(pids As List(Of Integer)) As Boolean
     Function Move2Project(intDestP41ID As Integer, pids As List(Of Integer)) As Boolean
@@ -321,7 +321,7 @@ Class p31WorksheetBL
         Return _cDL.GetList_CalendarHours(intJ02ID, d1, d2)
     End Function
 
-    Public Function GetList_Pivot(rows As List(Of BO.PivotRowColumnField), cols As List(Of BO.PivotRowColumnField), sums As List(Of BO.PivotSumField), mq As BO.myQueryP31) As IEnumerable(Of BO.PivotRecord) Implements Ip31WorksheetBL.GetList_Pivot
+    Public Function GetList_Pivot(rows As List(Of BO.GridColumn), cols As List(Of BO.PivotRowColumnField), sums As List(Of BO.PivotSumField), mq As BO.myQueryP31) As IEnumerable(Of BO.PivotRecord) Implements Ip31WorksheetBL.GetList_Pivot
         Return _cDL.GetList_Pivot(rows, cols, sums, mq)
     End Function
     Public Function MoveToBin(pids As List(Of Integer)) As Boolean Implements Ip31WorksheetBL.MoveToBin

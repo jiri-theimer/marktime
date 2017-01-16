@@ -63,16 +63,19 @@ Public Class p31_pivot
                 Dim lisSumFields As List(Of BO.PivotSumField) = .Factory.j75DrillDownTemplateBL.ColumnsPallete()
                 If Not .Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
                     RemoveItems(Me.col1, "3101,3102,3103")
-                    RemoveItems(Me.row1, "3101,3102,3103")
-                    RemoveItems(Me.row2, "3101,3102,3103")
-                    RemoveItems(Me.row3, "3101,3102,3103")
+                    ''RemoveItems(Me.row1, "3101,3102,3103")
+                    ''RemoveItems(Me.row2, "3101,3102,3103")
+                    ''RemoveItems(Me.row3, "3101,3102,3103")
                 End If
+
+                Dim lisFields As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_pivot-pagesize", "20"))
-                    basUI.SelectDropdownlistValue(Me.row1, .GetUserParam("p31_pivot-row1", "201"))
-                    basUI.SelectDropdownlistValue(Me.row2, .GetUserParam("p31_pivot-row2"))
-                    basUI.SelectDropdownlistValue(Me.row3, .GetUserParam("p31_pivot-row3"))
+                    InhaleField(1, .GetUserParam("p31_pivot-row1", "Person"), lisFields)
+                    InhaleField(2, .GetUserParam("p31_pivot-row2"), lisFields)
+                    InhaleField(3, .GetUserParam("p31_pivot-row3"), lisFields)
+
                     basUI.SelectDropdownlistValue(Me.col1, .GetUserParam("p31_pivot-col1"))
 
                     SetupSumCombo(Me.sum1, lisSumFields, .GetUserParam("p31_pivot-sum1", "1"))
@@ -182,16 +185,18 @@ Public Class p31_pivot
         End If
     End Sub
 
-    Private Function GetRows() As List(Of BO.PivotRowColumnField)
-        Dim rows As New List(Of BO.PivotRowColumnField)
-        If Me.row1.SelectedValue <> "" Then
-            rows.Add(New BO.PivotRowColumnField(CInt(row1.SelectedValue)))
+    Private Function GetRows() As List(Of BO.GridColumn)
+        Dim lis As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
+
+        Dim rows As New List(Of BO.GridColumn)
+        If Me.hidRow1.Value <> "" Then
+            rows.Add(InhaleField(1, Me.hidRow1.Value, lis))
         End If
-        If Me.row2.SelectedValue <> "" Then
-            rows.Add(New BO.PivotRowColumnField(CInt(row2.SelectedValue)))
+        If Me.hidRow2.Value <> "" Then
+            rows.Add(InhaleField(2, Me.hidRow2.Value, lis))
         End If
-        If Me.row3.SelectedValue <> "" Then
-            rows.Add(New BO.PivotRowColumnField(CInt(row3.SelectedValue)))
+        If Me.hidRow3.Value <> "" Then
+            rows.Add(InhaleField(3, Me.hidRow3.Value, lis))
         End If
         Return rows
     End Function
@@ -239,7 +244,7 @@ Public Class p31_pivot
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
-        Dim rows As List(Of BO.PivotRowColumnField) = GetRows(), sums As List(Of BO.PivotSumField) = GetSums()
+        Dim rows As List(Of BO.GridColumn) = GetRows(), sums As List(Of BO.PivotSumField) = GetSums()
         Dim cols As List(Of BO.PivotRowColumnField) = GetCols()
         If (rows.Count = 0 And cols.Count = 0) Or sums.Count = 0 Then Return
 
@@ -262,7 +267,7 @@ Public Class p31_pivot
                 .Fields.Add(item)
                 item.DataField = "Row" & x.ToString
                 item.UniqueName = "Row" & x.ToString
-                item.Caption = row.Caption
+                item.Caption = row.ColumnHeader
 
                 x += 1
             Next
@@ -297,20 +302,9 @@ Public Class p31_pivot
         pivot1.Rebind()
     End Sub
 
-    Private Sub row1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles row1.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_pivot-row1", Me.row1.SelectedValue)
-        RefreshData()
-    End Sub
+    
 
-    Private Sub row2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles row2.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_pivot-row2", Me.row2.SelectedValue)
-        RefreshData()
-    End Sub
-
-    Private Sub row3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles row3.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_pivot-row3", Me.row3.SelectedValue)
-        RefreshData()
-    End Sub
+    
 
     Private Sub sum1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles sum1.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_pivot-sum1", Me.sum1.SelectedValue)
@@ -344,6 +338,9 @@ Public Class p31_pivot
                 .BackColor = Nothing
             End If
         End With
+
+        If Me.hidRow2.Value = "" Then cmdClear2.Visible = False : linkRow2.Text = "Vybrat pole 2" Else cmdClear2.Visible = True
+        If Me.hidRow3.Value = "" Then cmdClear3.Visible = False : linkRow3.Text = "Vybrat pole 3" Else cmdClear3.Visible = True
     End Sub
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
@@ -412,4 +409,49 @@ Public Class p31_pivot
     End Sub
 
    
+    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
+        Dim lis As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
+        Select Case hidHardRefreshFlag.Value
+            Case "field1"
+                InhaleField(1, hidHardRefreshPID.Value, lis)
+                Master.Factory.j03UserBL.SetUserParam("p31_pivot-row1", Me.hidRow1.Value)
+            Case "field2"
+                InhaleField(2, hidHardRefreshPID.Value, lis)
+                Master.Factory.j03UserBL.SetUserParam("p31_pivot-row2", Me.hidRow2.Value)
+            Case "field3"
+                InhaleField(3, hidHardRefreshPID.Value, lis)
+                Master.Factory.j03UserBL.SetUserParam("p31_pivot-row3", Me.hidRow3.Value)
+        End Select
+        hidHardRefreshFlag.Value = ""
+        hidHardRefreshPID.Value = ""
+        RefreshData()
+    End Sub
+    Private Function InhaleField(intRowIndex As Integer, strColumnName As String, lisAllFields As List(Of BO.GridColumn)) As BO.GridColumn
+        Dim c As BO.GridColumn = lisAllFields.Where(Function(p) p.ColumnName = strColumnName)
+        Select Case intRowIndex
+            Case 1 : Me.hidRow1.Value = "" : Me.linkRow1.Text = "Vybrat pole 1"
+            Case 2 : Me.hidRow2.Value = "" : Me.linkRow2.Text = "Vybrat pole 2"
+            Case 3 : Me.hidRow3.Value = "" : Me.linkRow3.Text = "Vybrat pole 3"
+        End Select
+        If c Is Nothing Then
+            Return Nothing
+        End If
+        Select Case intRowIndex
+            Case 1 : Me.hidRow1.Value = strColumnName : Me.linkRow1.Text = c.ColumnHeader
+            Case 2 : Me.hidRow2.Value = strColumnName : Me.linkRow2.Text = c.ColumnHeader
+            Case 3 : Me.hidRow3.Value = strColumnName : Me.linkRow3.Text = c.ColumnHeader
+        End Select
+        Return c
+    End Function
+
+    
+    Private Sub cmdClear2_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClear2.Click
+        hidRow2.Value = ""
+        RefreshData()
+    End Sub
+
+    Private Sub cmdClear3_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClear3.Click
+        hidRow3.Value = ""
+        RefreshData()
+    End Sub
 End Class

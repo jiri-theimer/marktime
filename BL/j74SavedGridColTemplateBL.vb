@@ -389,29 +389,33 @@ Class j74SavedGridColTemplateBL
 
 
         With lis
-            .Add(AGC(My.Resources.common.Datum, "p31Date", BO.cfENUM.DateOnly))
-            .Add(AGC(My.Resources.common.TimeFrom, "TimeFrom", , False, "p31DateTimeFrom_Orig"))
-            .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False, "p31DateTimeUntil_Orig"))
+            .Add(AGC(My.Resources.common.Datum, "p31Date", BO.cfENUM.DateOnly, , , , , "Datum a čas", "convert(varchar(10), a.p31Date, 126)", "convert(varchar(10), a.p31Date, 126)"))
+            .Add(AGC("Rok", "Rok", BO.cfENUM.Numeric0, , "Year(a.p31date)", , , "Datum a čas", "Year(a.p31date)", "Year(a.p31date)"))
+            .Add(AGC("Měsíc", "Mesic", , , "convert(varchar(7),a.p31Date,126)", , , "Datum a čas", "convert(varchar(7),a.p31Date,126)", "convert(varchar(7),a.p31Date,126)"))
+            .Add(AGC("Týden", "Tyden", , , "convert(varchar(4),year(a.p31Date))+'-'+convert(varchar(10),DATEPART(week,a.p31Date))", , , "Datum a čas", "convert(varchar(4),year(a.p31Date))+'-'+convert(varchar(10),DATEPART(week,a.p31Date))", "convert(varchar(4),year(a.p31Date))+'-'+convert(varchar(10),DATEPART(week,a.p31Date))"))
 
-            .Add(AGC(My.Resources.common.Osoba, "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName", , , "Osoba"))
+            .Add(AGC(My.Resources.common.TimeFrom, "TimeFrom", , False, "p31DateTimeFrom_Orig", , , "Datum a čas"))
+            .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False, "p31DateTimeUntil_Orig", , , "Datum a čas"))
+
+            .Add(AGC(My.Resources.common.Osoba, "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName", , , "Osoba", "min(j02.j02LastName+char(32)+j02.j02FirstName)", "a.j02ID"))
             .Add(AGC("Pozice", "PoziceOsoby", , True, "j07.j07Name", , "LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID", "Osoba"))
-            .Add(AGC("Středisko osoby", "StrediskoOsoby", , True, "j18_j02.j18Name", , "LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID", "Osoba"))
+            .Add(AGC("Středisko osoby", "StrediskoOsoby", , True, "j18_j02.j18Name", , "LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID", "Osoba", "min(j18_j02.j18Name)", "j02.j18ID"))
 
-            .Add(AGC(My.Resources.common.p32Name, "p32Name", , , , , , "Aktivita"))
-            .Add(AGC(My.Resources.common.FA, "p32IsBillable", BO.cfENUM.Checkbox, , , , , "Aktivita"))
-            .Add(AGC(My.Resources.common.Sesit, "p34Name", , , , , , "Aktivita"))
-            .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name", , , , , , "Aktivita"))
+            .Add(AGC(My.Resources.common.p32Name, "p32Name", , , , , , "Aktivita", "min(p32Name)", "a.p32ID"))
+            .Add(AGC(My.Resources.common.FA, "p32IsBillable", BO.cfENUM.Checkbox, , , , , "Aktivita", "min(convert(int,p32.p32IsBillable))", "p32.p32IsBillable"))
+            .Add(AGC(My.Resources.common.Sesit, "p34Name", , , , , , "Aktivita", "min(p34Name)", "p32.p34ID"))
+            .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name", , , , , , "Aktivita", "min(p95.p95Name)", "p32.p95ID"))
 
-            .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt"))
+            .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt", "min(p41Name)", "a.p41ID"))
             .Add(AGC("Stromový název", "p41TreePath", , , "isnull(p41TreePath,p41Name)", , , "Projekt"))
 
-            .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt"))
-            .Add(AGC(My.Resources.common.KlientProjektu, "ClientName", , , "p28Client.p28Name", , , "Projekt"))
-            .Add(AGC("Středisko projektu", "StrediskoProjektu", , True, "j18_p41.j18Name", , "LEFT OUTER JOIN j18Region j18_p41 ON p41.j18ID=j18_p41.j18ID", "Projekt"))
-            .Add(AGC("Typ projektu", "TypProjektu", , True, "p42.p42Name", , "LEFT OUTER JOIN p42ProjectType p42 ON p41.p42ID=p42.p42ID", "Projekt"))
+            .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt", "min(p41Code)", "a.p41ID"))
+            .Add(AGC(My.Resources.common.KlientProjektu, "ClientName", , , "p28Client.p28Name", , , "Projekt", "min(p28Client.p28Name)", "p41.p28ID_Client"))
+            .Add(AGC("Středisko projektu", "StrediskoProjektu", , True, "j18_p41.j18Name", , "LEFT OUTER JOIN j18Region j18_p41 ON p41.j18ID=j18_p41.j18ID", "Projekt", "min(j18_p41.j18Name)", "p41.j18ID"))
+            .Add(AGC("Typ projektu", "TypProjektu", , True, "p42.p42Name", , "LEFT OUTER JOIN p42ProjectType p42 ON p41.p42ID=p42.p42ID", "Projekt", "min(p42Name)", "p41.p42ID"))
 
-            .Add(AGC(My.Resources.common.NazevUkolu, "p56Name", , , , , , "Úkol"))
-            .Add(AGC(My.Resources.common.KodUkolu, "p56Code", , , , , , "Úkol"))
+            .Add(AGC(My.Resources.common.NazevUkolu, "p56Name", , , , , , "Úkol", "min(p56Name)", "a.p56ID"))
+            .Add(AGC(My.Resources.common.KodUkolu, "p56Code", , , , , , "Úkol", "min(p56Code)", "a.p56ID"))
 
             .Add(AGC("Text", "p31Text"))
             .Add(AGC(My.Resources.common.Dodavatel, "SupplierName", , , "supplier.p28Name"))
@@ -592,16 +596,21 @@ Class j74SavedGridColTemplateBL
 
 
 
-    Private Function AGC(strHeader As String, strName As String, Optional colType As BO.cfENUM = BO.cfENUM.AnyString, Optional bolSortable As Boolean = True, Optional strDBName As String = "", Optional bolShowTotals As Boolean = False, Optional strSqlSyntax_FROM As String = "", Optional strTreeGroup As String = "")
+    Private Function AGC(strHeader As String, strName As String, Optional colType As BO.cfENUM = BO.cfENUM.AnyString, Optional bolSortable As Boolean = True, Optional strDBName As String = "", Optional bolShowTotals As Boolean = False, Optional strSqlSyntax_FROM As String = "", Optional strTreeGroup As String = "", Optional strPivotSelectSql As String = "", Optional strPivotGroupBySql As String = "")
         Dim col As BO.GridColumn
         col = New BO.GridColumn(_x29id, strHeader, strName, colType)
-        col.IsSortable = bolSortable
-        col.ColumnDBName = strDBName
-        col.IsShowTotals = bolShowTotals
-        col.SqlSyntax_FROM = strSqlSyntax_FROM
-        col.TreeGroup = strTreeGroup
+        With col
+            .IsSortable = bolSortable
+            .ColumnDBName = strDBName
+            .IsShowTotals = bolShowTotals
+            .SqlSyntax_FROM = strSqlSyntax_FROM
+            .TreeGroup = strTreeGroup
+            .Pivot_SelectSql = strPivotSelectSql
+            .Pivot_GroupBySql = strPivotGroupBySql
+        End With
         Return col
     End Function
+    
 
     Public Function GroupByPallet(x29id As BO.x29IdEnum) As List(Of BO.GridGroupByColumn) Implements Ij74SavedGridColTemplateBL.GroupByPallet
         Dim lis As New List(Of BO.GridGroupByColumn)

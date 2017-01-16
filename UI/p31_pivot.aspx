@@ -25,13 +25,14 @@
 
 
 
-        function hardrefresh(pid, flag) {
+        function hardrefresh(pid, flag,field) {
             if (flag == "j70-run") {
                 location.replace("p31_pivot.aspx");
                 return;
             }
-
-            document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
+            alert(field)
+            
+            document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = field;
             document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
 
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
@@ -41,6 +42,18 @@
             var j70id = "<%=Me.CurrentJ70ID%>";
             sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query_32.png");
             return (false);
+        }
+
+        function select_field(index) {
+            if (index == 1) {
+                sw_master("select_field.aspx?prefix=p31&flag=field1&pivot=1&value="+document.getElementById("<%=Me.hidRow1.ClientID%>").value);
+            }
+            if (index == 2) {
+                sw_master("select_field.aspx?prefix=p31&flag=field2&pivot=1&value=" + document.getElementById("<%=Me.hidRow2.ClientID%>").value);
+            }
+            if (index == 3) {
+                sw_master("select_field.aspx?prefix=p31&flag=field3&pivot=1&value=" + document.getElementById("<%=Me.hidRow3.ClientID%>").value);
+            }
         }
     </script>
 
@@ -109,103 +122,20 @@
                 <b>Řádky souhrnů</b>
             </div>
             <div class="content">
-                <asp:DropDownList ID="row1" runat="server" AutoPostBack="true">
-                    <asp:ListItem Text="Osoba" Value="201" Selected="true"></asp:ListItem>
-                    <asp:ListItem Text="Klient projektu" Value="2801"></asp:ListItem>
-                    <asp:ListItem Text="Projekt" Value="4101"></asp:ListItem>
-                    <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
-                    <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
-                    <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
-                    <asp:ListItem Text="Pozice osoby" Value="107"></asp:ListItem>
-                    <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
-                    <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
-                    <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
-                    <asp:ListItem Text="Fakturační oddíl" Value="9501"></asp:ListItem>
-                    <asp:ListItem Text="Fakturovatelné" Value="9801"></asp:ListItem>
-                    <asp:ListItem Text="Schváleno" Value="7101"></asp:ListItem>
-                    <asp:ListItem Text="Schvalovací status" Value="7201"></asp:ListItem>
-                    <asp:ListItem Text="Status ve faktuře" Value="7001"></asp:ListItem>
-                    <asp:ListItem Text="ID faktury" Value="9101"></asp:ListItem>
-                    <asp:ListItem Text="Klient faktury" Value="9102"></asp:ListItem>
-                    <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
-                    <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>
-                    <asp:ListItem Text="Týden" Value="9906"></asp:ListItem>
-                    <asp:ListItem Text="Den" Value="9905"></asp:ListItem>
-                    <asp:ListItem Text="Rok fakturace" Value="9903"></asp:ListItem>
-                    <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>
-                    <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>
-                    <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>
-                    <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>
-                    <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
-                    <asp:ListItem Text="Nákladová sazba" Value="3104"></asp:ListItem>                    
-                </asp:DropDownList>
+                <asp:HyperLink ID="linkRow1" runat="server" Text="Pole 1" NavigateUrl="javascript:select_field(1)"></asp:HyperLink>
+                <asp:HiddenField ID="hidRow1" runat="server" />                
+                                           
+               
                 <span>-></span>
-                <asp:DropDownList ID="row2" runat="server" AutoPostBack="true">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Osoba" Value="201"></asp:ListItem>
-                    <asp:ListItem Text="Klient projektu" Value="2801"></asp:ListItem>
-                    <asp:ListItem Text="Projekt" Value="4101"></asp:ListItem>
-                    <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
-                    <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
-                    <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
-                    <asp:ListItem Text="Pozice osoby" Value="107"></asp:ListItem>
-                    <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
-                    <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
-                    <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
-                    <asp:ListItem Text="Fakturační oddíl" Value="9501"></asp:ListItem>
-                    <asp:ListItem Text="Fakturovatelné" Value="9801"></asp:ListItem>
-                    <asp:ListItem Text="Schváleno" Value="7101"></asp:ListItem>
-                    <asp:ListItem Text="Schvalovací status" Value="7201"></asp:ListItem>
-                    <asp:ListItem Text="Status ve faktuře" Value="7001"></asp:ListItem>
-                    <asp:ListItem Text="ID faktury" Value="9101"></asp:ListItem>
-                    <asp:ListItem Text="Klient faktury" Value="9102"></asp:ListItem>
-                    <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
-                    <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>
-                    <asp:ListItem Text="Týden" Value="9906"></asp:ListItem>
-                    <asp:ListItem Text="Den" Value="9905"></asp:ListItem>
-                    <asp:ListItem Text="Rok fakturace" Value="9903"></asp:ListItem>
-                    <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>
-                    <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>
-                    <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>
-                    <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>
-                    <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
-                    <asp:ListItem Text="Nákladová sazba" Value="3104"></asp:ListItem>   
-                </asp:DropDownList>
+                <asp:HyperLink ID="linkRow2" runat="server" Text="Pole 2" NavigateUrl="javascript:select_field(2)"></asp:HyperLink>
+                <asp:HiddenField ID="hidRow2" runat="server" />
+                <asp:ImageButton ID="cmdClear2" runat="server" ImageUrl="Images/delete.png" CssClass="cmd" />
+                
                 <span>-></span>
-                <asp:DropDownList ID="row3" runat="server" AutoPostBack="true">
-                    <asp:ListItem Text="" Value=""></asp:ListItem>
-                    <asp:ListItem Text="Osoba" Value="201"></asp:ListItem>
-                    <asp:ListItem Text="Klient projektu" Value="2801"></asp:ListItem>
-                    <asp:ListItem Text="Projekt" Value="4101"></asp:ListItem>
-                    <asp:ListItem Text="Typ projektu" Value="4201"></asp:ListItem>
-                    <asp:ListItem Text="Středisko projektu" Value="1801"></asp:ListItem>
-                    <asp:ListItem Text="Středisko osoby" Value="1802"></asp:ListItem>
-                    <asp:ListItem Text="Pozice osoby" Value="107"></asp:ListItem>
-                    <asp:ListItem Text="Úkol" Value="5601"></asp:ListItem>
-                    <asp:ListItem Text="Sešit" Value="3401"></asp:ListItem>
-                    <asp:ListItem Text="Aktivita" Value="3201"></asp:ListItem>
-                    <asp:ListItem Text="Fakturační oddíl" Value="9501"></asp:ListItem>
-                    <asp:ListItem Text="Fakturovatelné" Value="9801"></asp:ListItem>
-                    <asp:ListItem Text="Schváleno" Value="7101"></asp:ListItem>
-                    <asp:ListItem Text="Schvalovací status" Value="7201"></asp:ListItem>
-                    <asp:ListItem Text="Status ve faktuře" Value="7001"></asp:ListItem>
-                    <asp:ListItem Text="ID faktury" Value="9101"></asp:ListItem>
-                    <asp:ListItem Text="Klient faktury" Value="9102"></asp:ListItem>
-                    <asp:ListItem Text="Rok" Value="9901"></asp:ListItem>
-                    <asp:ListItem Text="Měsíc" Value="9902"></asp:ListItem>
-                    <asp:ListItem Text="Týden" Value="9906"></asp:ListItem>
-                    <asp:ListItem Text="Den" Value="9905"></asp:ListItem>
-                    <asp:ListItem Text="Rok fakturace" Value="9903"></asp:ListItem>
-                    <asp:ListItem Text="Měsíc fakturace" Value="9904"></asp:ListItem>
-                    <asp:ListItem Text="Měna úkonu" Value="2701"></asp:ListItem>
-                    <asp:ListItem Text="Měna faktury" Value="2702"></asp:ListItem>
-                    <asp:ListItem Text="Výchozí sazba" Value="3101"></asp:ListItem>
-                    <asp:ListItem Text="Schválená sazba" Value="3102"></asp:ListItem>
-                    <asp:ListItem Text="Vyfakturovaná sazba" Value="3103"></asp:ListItem>
-                    <asp:ListItem Text="Nákladová sazba" Value="3104"></asp:ListItem>   
-                </asp:DropDownList>
+                <asp:HyperLink ID="linkRow3" runat="server" Text="Pole 3" NavigateUrl="javascript:select_field(3)"></asp:HyperLink>
+                <asp:HiddenField ID="hidRow3" runat="server" />
+                <asp:ImageButton ID="cmdClear3" runat="server" ImageUrl="Images/delete.png" CssClass="cmd" />
+                
             </div>
         </div>
         <div class="content-box1">
