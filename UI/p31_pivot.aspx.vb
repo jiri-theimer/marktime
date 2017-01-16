@@ -427,15 +427,17 @@ Public Class p31_pivot
         RefreshData()
     End Sub
     Private Function InhaleField(intRowIndex As Integer, strColumnName As String, lisAllFields As List(Of BO.GridColumn)) As BO.GridColumn
-        Dim c As BO.GridColumn = lisAllFields.Where(Function(p) p.ColumnName = strColumnName)
         Select Case intRowIndex
             Case 1 : Me.hidRow1.Value = "" : Me.linkRow1.Text = "Vybrat pole 1"
             Case 2 : Me.hidRow2.Value = "" : Me.linkRow2.Text = "Vybrat pole 2"
             Case 3 : Me.hidRow3.Value = "" : Me.linkRow3.Text = "Vybrat pole 3"
         End Select
-        If c Is Nothing Then
+        Dim c As BO.GridColumn = Nothing
+        Try
+            c = lisAllFields.Where(Function(p) p.ColumnName = strColumnName)(0)
+        Catch ex As Exception
             Return Nothing
-        End If
+        End Try
         Select Case intRowIndex
             Case 1 : Me.hidRow1.Value = strColumnName : Me.linkRow1.Text = c.ColumnHeader
             Case 2 : Me.hidRow2.Value = strColumnName : Me.linkRow2.Text = c.ColumnHeader
