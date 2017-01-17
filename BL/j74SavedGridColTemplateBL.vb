@@ -236,21 +236,21 @@ Class j74SavedGridColTemplateBL
                 If c.x23ID = 0 Then
                     Select Case c.x24ID
                         Case BO.x24IdENUM.tString
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.AnyString))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.AnyString, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tDate
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateOnly))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateOnly, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tDateTime
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateTime))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateTime, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tDecimal
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tInteger
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric0))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric0, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tBoolean
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Checkbox))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Checkbox, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                     End Select
                 Else
                     'text combo položky
-                    lis.Add(AGC(c.x28Name, c.x28Field & "Text", BO.cfENUM.AnyString))
+                    lis.Add(AGC(c.x28Name, c.x28Field & "Text", BO.cfENUM.AnyString, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                 End If
             End If
             If c.x28Flag = BO.x28FlagENUM.GridField Then
@@ -264,6 +264,8 @@ Class j74SavedGridColTemplateBL
                     Case BO.x24IdENUM.tInteger : col.ColumnType = BO.cfENUM.Numeric0
                     Case BO.x24IdENUM.tBoolean : col.ColumnType = BO.cfENUM.Checkbox
                 End Select
+                col.Pivot_SelectSql = c.x28Pivot_SelectSql
+                col.Pivot_GroupBySql = c.x28Pivot_GroupBySql
                 lis.Add(col)
             End If
         Next
@@ -393,6 +395,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Rok", "Rok", BO.cfENUM.Numeric0, , "Year(a.p31date)", , , "Datum a čas", "Year(a.p31date)", "Year(a.p31date)"))
             .Add(AGC("Měsíc", "Mesic", , , "convert(varchar(7),a.p31Date,126)", , , "Datum a čas", "convert(varchar(7),a.p31Date,126)", "convert(varchar(7),a.p31Date,126)"))
             .Add(AGC("Týden", "Tyden", , , "convert(varchar(4),year(a.p31Date))+'-'+convert(varchar(10),DATEPART(week,a.p31Date))", , , "Datum a čas", "convert(varchar(4),year(a.p31Date))+'-'+convert(varchar(10),DATEPART(week,a.p31Date))", "convert(varchar(4),year(a.p31Date))+'-'+convert(varchar(10),DATEPART(week,a.p31Date))"))
+            .Add(AGC("Rok faktury", "RokFaktury", BO.cfENUM.Numeric0, , "Year(p91.p91DateSupply)", , , "Datum a čas", "Year(p91.p91DateSupply)", "Year(p91.p91DateSupply)"))
+            .Add(AGC("Měsíc faktury", "MesicFaktury", , , "convert(varchar(7),p91.p91DateSupply,126)", , , "Datum a čas", "convert(varchar(7),p91.p91DateSupply,126)", "convert(varchar(7),p91.p91DateSupply,126)"))
 
             .Add(AGC(My.Resources.common.TimeFrom, "TimeFrom", , False, "p31DateTimeFrom_Orig", , , "Datum a čas"))
             .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False, "p31DateTimeUntil_Orig", , , "Datum a čas"))
@@ -407,7 +411,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name", , , , , , "Aktivita", "min(p95.p95Name)", "p32.p95ID"))
 
             .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt", "min(p41Name)", "a.p41ID"))
-            .Add(AGC("Stromový název", "p41TreePath", , , "isnull(p41TreePath,p41Name)", , , "Projekt"))
+            .Add(AGC("Stromový název", "p41TreePath", , , "isnull(p41TreePath,p41Name)", , , "Projekt", "min(p41TreePath)", "a.p41ID"))
 
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt", "min(p41Code)", "a.p41ID"))
             .Add(AGC(My.Resources.common.KlientProjektu, "ClientName", , , "p28Client.p28Name", , , "Projekt", "min(p28Client.p28Name)", "p41.p28ID_Client"))
@@ -418,7 +422,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.KodUkolu, "p56Code", , , , , , "Úkol", "min(p56Code)", "a.p56ID"))
 
             .Add(AGC("Text", "p31Text"))
-            .Add(AGC(My.Resources.common.Dodavatel, "SupplierName", , , "supplier.p28Name"))
+            .Add(AGC(My.Resources.common.Dodavatel, "SupplierName", , , "supplier.p28Name", , , , "min(supplier.p28Name)", "a.p28ID_Supplier"))
             .Add(AGC(My.Resources.common.KodDokladu, "p31Code"))
             .Add(AGC(My.Resources.common.KontaktniOsoba, "ContactPerson", , , "cp.j02LastName+char(32)+cp.j02FirstName"))
 
@@ -428,23 +432,23 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.VykazaneHodiny, "p31Hours_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
             .Add(AGC(My.Resources.common.VykazaneHodinyHHMM, "p31HHMM_Orig", , , "p31Hours_Orig", , , "Vykázáno"))
             If Not bolHideRatesColumns Then
-                .Add(AGC(My.Resources.common.VychoziSazba, "p31Rate_Billing_Orig", BO.cfENUM.Numeric2, , , , , "Vykázáno"))
+                .Add(AGC(My.Resources.common.VychoziSazba, "p31Rate_Billing_Orig", BO.cfENUM.Numeric2, , , , , "Vykázáno", "p31Rate_Billing_Orig", "p31Rate_Billing_Orig"))
                 .Add(AGC(My.Resources.common.CastkaBezDPH, "p31Amount_WithoutVat_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
                 .Add(AGC("Částka vč. DPH", "p31Amount_WithVat_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
-                .Add(AGC(My.Resources.common.NakladovaSazba, "p31Rate_Internal_Orig", BO.cfENUM.Numeric2, , , , , "Nákladová cena"))
+                .Add(AGC(My.Resources.common.NakladovaSazba, "p31Rate_Internal_Orig", BO.cfENUM.Numeric2, , , , , "Nákladová cena", "p31Rate_Internal_Orig", "p31Rate_Internal_Orig"))
                 .Add(AGC(My.Resources.common.NakladovaCastka, "p31Amount_Internal", BO.cfENUM.Numeric2, , , True, , "Nákladová cena"))
             End If
 
-            .Add(AGC("Číslo faktury", "p91Code", , , , , , "Vyfakturováno"))
-            .Add(AGC("Vyfakt.status", "p70Name", , , , , , "Vyfakturováno"))
+            .Add(AGC("Číslo faktury", "p91Code", , , , , , "Vyfakturováno", "min(p91Code)", "a.p91ID"))
+            .Add(AGC("Vyfakt.status", "p70Name", , , , , , "Vyfakturováno", "min(p70Name)", "a.p70ID"))
 
             .Add(AGC("Kalk/počet", "p31Calc_Pieces", BO.cfENUM.Numeric2, , , , , "Vykázáno"))
             .Add(AGC("Kalk/cena 1 ks", "p31Calc_PieceAmount", BO.cfENUM.Numeric2, , , , , "Vykázáno"))
 
-            .Add(AGC(My.Resources.common.SazbaDPH, "p31VatRate_Orig", BO.cfENUM.Numeric0, , , , , "Vykázáno"))
-            .Add(AGC(My.Resources.common.Mena, "j27Code_Billing_Orig", , , "j27billing_orig.j27Code", , , "Vykázáno"))
+            .Add(AGC(My.Resources.common.SazbaDPH, "p31VatRate_Orig", BO.cfENUM.Numeric0, , , , , "Vykázáno", "p31VatRate_Orig", "p31VatRate_Orig"))
+            .Add(AGC(My.Resources.common.Mena, "j27Code_Billing_Orig", , , "j27billing_orig.j27Code", , , "Vykázáno", "min(j27billing_orig.j27Code)", "a.j27ID_Billing_Orig"))
 
-            .Add(AGC(My.Resources.common.Schvaleno, "p71Name", , , , , , "Schváleno"))
+            .Add(AGC(My.Resources.common.Schvaleno, "p71Name", , , , , , "Schváleno", "min(p71Name)", "a.p71ID"))
             .Add(AGC(My.Resources.common.NavrhFakturacnihoStatusu, "approve_p72Name", , , "p72approve.p72Name", , , "Schváleno"))
             .Add(AGC(My.Resources.common.SchvalenaHodnota, "p31Value_Approved_Billing", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
             .Add(AGC(My.Resources.common.SchvaleneHodiny, "p31Hours_Approved_Billing", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
@@ -466,6 +470,7 @@ Class j74SavedGridColTemplateBL
                 .Add(AGC(My.Resources.common.VyfakturovanoVcDPH, "p31Amount_WithVat_Invoiced", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
                 .Add(AGC("Vyfakt.sazba DPH", "p31VatRate_Invoiced", BO.cfENUM.Numeric0, , , , , "Vyfakturováno"))
                 .Add(AGC("Vyfakt.bez DPH x Kurz", "p31Amount_WithoutVat_Invoiced_Domestic", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
+                .Add(AGC("Měna faktury", "j27Code_Billing_Invoice", , , "j27billing_invoice.j27Code", , "LEFT OUTER JOIN j27Currency j27billing_invoice ON a.j27ID_Billing_Invoiced=j27billing_invoice.j27ID", "Vyfakturováno", "min(j27billing_invoice.j27Code)", "a.j27ID_Billing_Invoiced"))
             End If
             
 

@@ -9,7 +9,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
-    <telerik:RadTreeView ID="tree1" runat="server" Skin="Default" ShowLineImages="false" SingleExpandPath="false" Height="500px">
+    <telerik:RadTreeView ID="tree1" runat="server" Skin="Default" ShowLineImages="false" SingleExpandPath="false" Height="80%">
         </telerik:RadTreeView>
 
 

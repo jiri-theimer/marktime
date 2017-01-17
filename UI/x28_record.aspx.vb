@@ -77,6 +77,8 @@
             Me.x28Grid_Field.Text = .x28Grid_Field
             Me.x28Grid_SqlFrom.Text = .x28Grid_SqlFrom
             Me.x28Grid_SqlSyntax.Text = .x28Grid_SqlSyntax
+            Me.x28Pivot_SelectSql.Text = .x28Pivot_SelectSql
+            Me.x28Pivot_GroupBySql.Text = .x28Pivot_GroupBySql
         End With
 
 
@@ -108,13 +110,17 @@
         Me.panEntityTypes.Visible = Not Me.x28IsAllEntityTypes.Checked
         Me.x28IsRequired.Visible = Me.x28IsAllEntityTypes.Checked
 
+        Me.tabPivot.Visible = False
+
         Select Case CType(Me.x29ID.SelectedValue, BO.x29IdEnum)
             Case BO.x29IdEnum.p41Project : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy projektů"
             Case BO.x29IdEnum.p28Contact : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy klientů"
             Case BO.x29IdEnum.j02Person : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny pozice osob"
             Case BO.x29IdEnum.p91Invoice : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy faktur"
             Case BO.x29IdEnum.o23Notepad : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy dokumentů"
-            Case BO.x29IdEnum.p31Worksheet : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny worksheet sešity"
+            Case BO.x29IdEnum.p31Worksheet
+                Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny worksheet sešity"
+                tabPivot.Visible = True
             Case BO.x29IdEnum.p56Task : Me.x28IsAllEntityTypes.Text = "Pole je použitelné pro všechny typy úkolů"
         End Select
         panPublic.Visible = Not Me.x28IsPublic.Checked
@@ -175,6 +181,9 @@
                 .x28Grid_Field = Me.x28Grid_Field.Text
                 .x28Grid_SqlFrom = Me.x28Grid_SqlFrom.Text
                 .x28Grid_SqlSyntax = Me.x28Grid_SqlSyntax.Text
+                .x28Pivot_SelectSql = Me.x28Pivot_SelectSql.Text
+                .x28Pivot_GroupBySql = Me.x28Pivot_GroupBySql.Text
+
             End With
 
             Dim lisX26 As New List(Of BO.x26EntityField_Binding)

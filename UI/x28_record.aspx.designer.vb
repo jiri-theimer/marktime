@@ -302,6 +302,51 @@ Partial Public Class x28_record
     Protected WithEvents x28Grid_SqlFrom As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''tabPivot control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabPivot As Global.System.Web.UI.HtmlControls.HtmlTable
+
+    '''<summary>
+    '''Label9 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label9 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x28Pivot_SelectSql control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Pivot_SelectSql As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Label8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label8 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x28Pivot_GroupBySql control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Pivot_GroupBySql As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''x28IsPublic control.
     '''</summary>
     '''<remarks>

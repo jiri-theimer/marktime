@@ -27,7 +27,7 @@
                 <span>Druh pole:</span>
                 <asp:DropDownList ID="x28Flag" runat="server" AutoPostBack="true">
                     <asp:ListItem Value="1" Text="Formulářové pole" Selected="true"></asp:ListItem>
-                    <asp:ListItem Value="2" Text="Pouze přehledové/Grid pole"></asp:ListItem>
+                    <asp:ListItem Value="2" Text="Přehledové a Pivot pole"></asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>
@@ -137,6 +137,23 @@
                 <asp:Label ID="Label7" Text="SQL FROM klauzule:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x28Grid_SqlFrom" runat="server" style="width:600px;height:80px;" TextMode="MultiLine"></asp:TextBox>
+            </td>
+        </tr>        
+        
+    </table>
+    <table cellpadding="3" cellspacing="2" id="tabPivot" runat="server">
+        <tr>
+            <td style="width:140px;">
+                <asp:Label ID="Label9" Text="PIVOT SELECT Sql:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x28Pivot_SelectSql" runat="server" style="width:600px;" TextMode="SingleLine"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="Label8" Text="PIVOT GroupBy Sql:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x28Pivot_GroupBySql" runat="server" style="width:600px;" TextMode="SingleLine"></asp:TextBox>
             </td>
         </tr>
     </table>

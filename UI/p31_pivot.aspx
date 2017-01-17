@@ -30,8 +30,7 @@
                 location.replace("p31_pivot.aspx");
                 return;
             }
-            alert(field)
-            
+                        
             document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = field;
             document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
 
@@ -119,7 +118,7 @@
 
         <div class="content-box1">
             <div class="title">
-                <b>Řádky souhrnů</b>
+                <b>Sloupce/Souhrny</b>
             </div>
             <div class="content">
                 <asp:HyperLink ID="linkRow1" runat="server" Text="Pole 1" NavigateUrl="javascript:select_field(1)"></asp:HyperLink>

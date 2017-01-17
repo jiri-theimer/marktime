@@ -424,7 +424,7 @@ Public Class p31_pivot
         End Select
         hidHardRefreshFlag.Value = ""
         hidHardRefreshPID.Value = ""
-        RefreshData()
+        ReloadPage()
     End Sub
     Private Function InhaleField(intRowIndex As Integer, strColumnName As String, lisAllFields As List(Of BO.GridColumn)) As BO.GridColumn
         Select Case intRowIndex
@@ -432,6 +432,7 @@ Public Class p31_pivot
             Case 2 : Me.hidRow2.Value = "" : Me.linkRow2.Text = "Vybrat pole 2"
             Case 3 : Me.hidRow3.Value = "" : Me.linkRow3.Text = "Vybrat pole 3"
         End Select
+        If strColumnName = "" Then Return Nothing
         Dim c As BO.GridColumn = Nothing
         Try
             c = lisAllFields.Where(Function(p) p.ColumnName = strColumnName)(0)
@@ -448,12 +449,12 @@ Public Class p31_pivot
 
     
     Private Sub cmdClear2_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClear2.Click
-        hidRow2.Value = ""
-        RefreshData()
+        Master.Factory.j03UserBL.SetUserParam("p31_pivot-row2", "")
+        ReloadPage()
     End Sub
 
     Private Sub cmdClear3_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClear3.Click
-        hidRow3.Value = ""
-        RefreshData()
+        Master.Factory.j03UserBL.SetUserParam("p31_pivot-row3", "")
+        ReloadPage()
     End Sub
 End Class

@@ -782,11 +782,13 @@
 
     Public Function GetList_Pivot(rows As List(Of BO.GridColumn), cols As List(Of BO.PivotRowColumnField), sums As List(Of BO.PivotSumField), mq As BO.myQueryP31) As IEnumerable(Of BO.PivotRecord)
         Dim s As New System.Text.StringBuilder, x As Integer = 0
+        Dim lisSqlFROM As New List(Of String)
         s.Append("SELECT ")
 
         For Each c In rows
             If x > 0 Then s.Append(",")
             s.Append(c.Pivot_SelectSql & " AS Row" & (x + 1).ToString)
+            If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
             x += 1
         Next
         Dim y As Integer = 0
@@ -801,7 +803,12 @@
             s.Append(c.SelectField & " AS Sum" & (x + 1).ToString)
             x += 1
         Next
-        AppendSqlFROM_Pivot_Or_Drilldown(s)
+
+        If lisSqlFROM.Count > 0 Then mq.MG_AdditionalSqlFROM = String.Join(" ", lisSqlFROM.Distinct)
+
+
+        s.Append(" " & GetSQLPart2("", mq))
+        ''AppendSqlFROM_Pivot_Or_Drilldown(s)
 
 
         Dim pars As New DL.DbParameters
