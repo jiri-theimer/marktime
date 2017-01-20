@@ -211,6 +211,7 @@ Public Class p31_approving_step3
                                     End If
                             End Select
                         Else
+                            .Value_Approved_Internal = cRec.p31Value_Orig
                             If cRec.p72ID_AfterTrimming = BO.p72IdENUM._NotSpecified Or cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat Then
                                 .p72id = BO.p72IdENUM.SkrytyOdpis
                             Else

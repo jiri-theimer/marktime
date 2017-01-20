@@ -85,6 +85,7 @@
                 <asp:ListItem Text="10"></asp:ListItem>
                 <asp:ListItem Text="20" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="50"></asp:ListItem>
+                <asp:ListItem Text="100"></asp:ListItem>
             </asp:DropDownList>
         </div>
         <div class="commandcell">

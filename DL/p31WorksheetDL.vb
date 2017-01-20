@@ -848,7 +848,8 @@
             Dim pars As New DbParameters
             pars.Add("p41id", intDestP41ID, DbType.Int32)
             pars.Add("pid", intP31ID, DbType.Int32)
-            If _cDB.RunSQL("UPDATE p31Worksheet SET p41ID=@p41id WHERE p31ID=@pid", pars) Then
+            pars.Add("login", _curUser.j03Login, DbType.String)
+            If _cDB.RunSQL("UPDATE p31Worksheet SET p41ID=@p41id,p31DateUpdate=getdate(),p31UserUpdate=@login WHERE p31ID=@pid", pars) Then
                 pars = New DbParameters
                 With pars
                     .Add("p31id", intP31ID, DbType.Int32)

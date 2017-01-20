@@ -226,7 +226,12 @@
                             <telerik:RadMenuItem Value="cmdSplit" Text="<%$Resources:p31_grid,Rozdelit %>" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
                         </Items>                       
                     </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Akce" Value="action" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
+                        <Items>
+                            <telerik:RadMenuItem Value="cmdApprove" Text="<%$Resources:p31_grid,Schvalovat_Preschvalovat %>" NavigateUrl="javascript:approving();" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
 
+                        </Items>
+                    </telerik:RadMenuItem>
 
 
                     <telerik:RadMenuItem Text="<%$Resources:common,Dalsi %>" ImageUrl="Images/menuarrow.png" Value="columns" PostBack="false">
@@ -247,10 +252,7 @@
                                     </div>
                                 </asp:Panel>
 
-                                <div class="div6">
-                                    <img src="Images/approve.png" />
-                                    <asp:HyperLink ID="cmdApprove" runat="server" Text="<%$Resources:p31_grid,Schvalovat_Preschvalovat%>" NavigateUrl="javascript:approving();"></asp:HyperLink>
-                                </div>
+                                
                                 <asp:panel ID="panExport" runat="server" CssClass="div6">
                                     <img src="Images/export.png" alt="export" />
                                     <asp:LinkButton ID="cmdExport" runat="server" Text="Export" />

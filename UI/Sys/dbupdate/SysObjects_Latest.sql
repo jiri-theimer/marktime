@@ -4088,6 +4088,7 @@ select a.*,a.j03id as _pid
 ,j04.j04IsMenu_Worksheet,j04.j04IsMenu_Report,j04.j04IsMenu_Project,j04.j04IsMenu_People,j04.j04IsMenu_Contact,j04.j04IsMenu_Invoice,j04.j04IsMenu_Proforma,j04.j04IsMenu_Notepad,j04IsMenu_MyProfile
 ,j04.j04Aspx_OneProjectPage as OneProjectPage,j04.j04Aspx_OneContactPage as OneContactPage,j04.j04Aspx_OneInvoicePage as OneInvoicePage,j04.j04Aspx_OnePersonPage as OnePersonPage
 ,j02.j07ID,@j60id as j60ID
+,j02.j02WorksheetAccessFlag as _j02WorksheetAccessFlag
 FROM j03user a INNER JOIN j04userrole j04 on a.j04id=j04.j04id LEFT OUTER JOIN j02Person j02 ON a.j02id=j02.j02id
 INNER JOIN x67EntityRole x67 ON j04.x67ID=x67.x67ID
 WHERE a.j03ID=@j03id

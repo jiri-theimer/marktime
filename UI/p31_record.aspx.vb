@@ -272,8 +272,8 @@
                     If .p33ID = BO.p33IdENUM.Cas Then
                         If .p31HoursEntryFlag = BO.p31HoursEntryFlagENUM.NeniCas Then
                             Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.Hodiny
-                        Else
-                            Me.CurrentHoursEntryFlag = .p31HoursEntryFlag
+                            ''Else
+                            ''    Me.CurrentHoursEntryFlag = .p31HoursEntryFlag
                         End If
                     Else
                         Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.NeniCas

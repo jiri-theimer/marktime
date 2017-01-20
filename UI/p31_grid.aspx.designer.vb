@@ -131,15 +131,6 @@ Partial Public Class p31_grid
     Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''cmdApprove control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdApprove As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''panExport control.
     '''</summary>
     '''<remarks>
