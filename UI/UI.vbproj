@@ -492,7 +492,7 @@
     <Content Include="select_project.aspx" />
     <Content Include="sendmail.aspx" />
     <Content Include="Services\contact_service.asmx" />
-    <Content Include="Services\project_service.asmx" />
+    <Content Include="Styles\project_service.asmx" />
     <Content Include="Services\person_service.asmx" />
     <Content Include="stoppage.aspx" />
     <Content Include="stoppage_site.aspx" />
@@ -2862,7 +2862,7 @@
       <DependentUpon>contact_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\project_service.asmx.vb">
+    <Compile Include="Styles\project_service.asmx.vb">
       <DependentUpon>project_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>

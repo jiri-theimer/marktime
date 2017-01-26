@@ -338,15 +338,6 @@ Partial Public Class admin_framework
     Protected WithEvents robot_cache_lastrequest As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdRunRobot control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdRunRobot As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
     '''AppName control.
     '''</summary>
     '''<remarks>
@@ -399,6 +390,15 @@ Partial Public Class admin_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidGo2Pid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidGo2Pid As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

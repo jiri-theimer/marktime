@@ -6,6 +6,7 @@
     j07PersonPosition = 107
     j11Team = 111
     j18Region = 118
+    j19PaymentType = 119
     j23NonPerson = 123
     j24NonPersonType = 124
     j27Currency = 127

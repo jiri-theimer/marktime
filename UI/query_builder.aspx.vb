@@ -153,6 +153,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.j27Currency, "j27ID_Billing_Orig", "Měna úkonu"))
                 lis.Add(New myItem(BO.x29IdEnum.p95InvoiceRow, "p32.p95id", "Fakturační oddíl"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení projektové role"))
+                lis.Add(New myItem(BO.x29IdEnum.j19PaymentType, "j19id", "Typ úhrady"))
         End Select
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
@@ -275,6 +276,9 @@
             Case BO.x29IdEnum.p95InvoiceRow
                 Me.cbxItems.DataTextField = "p95Name"
                 Me.cbxItems.DataSource = Master.Factory.p95InvoiceRowBL.GetList(mq)
+            Case BO.x29IdEnum.j19PaymentType
+                Me.cbxItems.DataTextField = "j19Name"
+                Me.cbxItems.DataSource = Master.Factory.ftBL.GetList_j19(mq)
             Case BO.x29IdEnum.p71ApproveStatus
                 Me.cbxItems.DataTextField = "p71Name"
                 Me.cbxItems.DataSource = Master.Factory.ftBL.GetList_P71()

@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/pageheader.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
@@ -282,10 +283,20 @@
         </tr>
     </table>
     <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/notepad.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty"></asp:Label>
+        </div>
+        <div class="content" style="overflow: auto; max-height: 200px;">
+            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p31Worksheet"></uc:o23_list>
+            
+
+        </div>
+    </asp:Panel>
 
 
-
-    <div style="padding-top: 30px;"></div>
+    <div style="padding-top: 30px;clear:both;"></div>
     <uc:b07_list ID="comments1" runat="server" JS_Create="p31_comment_create()" JS_Reaction="p31_comment_reaction" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

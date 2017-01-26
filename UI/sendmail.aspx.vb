@@ -36,6 +36,7 @@
                 If Me.CurrentX29ID = BO.x29IdEnum.j02Person And Master.DataPID <> Master.Factory.SysUser.j02ID Then
                     If Master.DataPID <> 0 Then Me.txtTo.Text = Master.Factory.j02PersonBL.Load(Master.DataPID).j02Email
                 End If
+                
             Else
                 Me.CurrentX29ID = BO.x29IdEnum.j02Person
                 Master.DataPID = Master.Factory.SysUser.j02ID
@@ -53,9 +54,13 @@
                     hidMasterPrefix_p30.Value = "p41"
                     hidMasterPID_p30.Value = Master.DataPID.ToString
                 Case "p91"
-                    hidMasterPID_p30.Value = Master.Factory.p91InvoiceBL.Load(Master.DataPID).p28ID.ToString
+                    Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
+                    hidMasterPID_p30.Value = cP91.p28ID.ToString
                     hidMasterPrefix_p30.Value = "p28"
-                
+                    Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(cP91.p28ID, cP91.p41ID_First, False).OrderByDescending(Function(p) p.p30IsDefaultInInvoice)
+                    If lisP30.Count > 0 Then
+                        Me.txtTo.Text = lisP30(0).j02Email
+                    End If
             End Select
             If Me.hidMasterPrefix_p30.Value <> "" Then
                 linkNewPerson.Text = BO.BAS.OM2(Me.linkNewPerson.Text, Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix_p30.Value), BO.BAS.IsNullInt(hidMasterPID_p30.Value), False))
@@ -68,6 +73,15 @@
                 .AddToolbarButton("Odeslat zprávu", "ok", , "Images/email.png", , , , True)
             End With
             SetupCombos()
+            If Me.CurrentX29ID = BO.x29IdEnum.p91Invoice And Me.txtTo.Text = "" And Me.cbxAddContactPerson.Items.Count > 1 Then
+                Dim s As String = Me.cbxAddContactPerson.Items(1).Value
+                If Not IsNumeric(s) Then
+                    Me.txtTo.Text = s
+                Else
+                    Me.txtTo.Text = Master.Factory.j02PersonBL.Load(CInt(s)).j02Email
+                End If
+            End If
+            
             If Me.CurrentX29ID > BO.x29IdEnum._NotSpecified And Me.CurrentX29ID <> BO.x29IdEnum.j02Person Then
                 Me.txtBody.Text = vbCrLf & vbCrLf & "Přímý odkaz: " & Master.Factory.GetRecordLinkUrl(Me.CurrentPrefix, Master.DataPID)
             End If
@@ -124,6 +138,7 @@
                 .DataSource = lisJ02
                 .DataBind()
                 .Items.Insert(0, "--Kontaktní osoba--")
+                
             End If
             Dim intP28ID As Integer = 0
             Select Case Me.CurrentX29ID
@@ -137,9 +152,9 @@
                 For Each c In lisO32
                     Me.cbxAddContactPerson.Items.Add(New ListItem(c.o32Value & " " & c.o32Description, c.o32Value))
                 Next
-            End If
-
+            End If        
         End With
+
         With Me.cbxAddPosition
             .DataSource = Master.Factory.j07PersonPositionBL.GetList(New BO.myQuery)
             .DataBind()

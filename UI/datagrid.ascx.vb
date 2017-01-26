@@ -227,6 +227,7 @@ Public Class datagrid
         For Each it As GridDataItem In grid1.MasterTableView.Items
             If it.GetDataKeyValue("pid") = intOnePID Then
                 it.Selected = True : Exit For
+
             End If
         Next
     End Sub

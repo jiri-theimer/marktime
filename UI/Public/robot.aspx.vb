@@ -5,6 +5,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         If Not Page.IsPostBack Then
+            If Request.Item("blank") = "1" Then panModal.Visible = True
             log4net.LogManager.GetLogger("robotlog").Info("Start")
             _Factory = New BL.Factory(, BO.ASS.GetConfigVal("robot_account", "admin"))
             If _Factory.SysUser Is Nothing Then
@@ -34,7 +35,12 @@
 
             log4net.LogManager.GetLogger("robotlog").Info("End")
 
-            Me.lblMessage.Text = Format(Now, "dd.MM.yyyy HH:mm:ss") & " - robot spuštěn."
+            If Request.Item("now") = "" Then
+                Me.lblMessage.Text = Format(Now, "dd.MM.yyyy HH:mm:ss") & " - robot spuštěn."
+            Else
+                Me.lblMessage.Text = String.Format("Robot spuštěn pro den {0}.", Request.Item("now"))
+            End If
+
         End If
 
     End Sub
@@ -183,5 +189,9 @@
             End If
         Next
 
+    End Sub
+
+    Private Sub cmdRunNow_Click(sender As Object, e As EventArgs) Handles cmdRunNow.Click
+        Response.Redirect("robot.aspx?blank=1&now=" & Format(Me.datNow.SelectedDate, "dd.MM.yyyy"))
     End Sub
 End Class

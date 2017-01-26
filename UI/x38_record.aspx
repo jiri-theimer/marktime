@@ -78,7 +78,7 @@
        
         <tr>
             <td>
-                <asp:Label ID="Label1" Text="Pořadové číslo nesmí být nižší nebo rovno než hodnota:" runat="server" CssClass="lbl"></asp:Label>
+                <asp:Label ID="Label1" Text="Pořadové číslo musí začínat od hodnoty:" runat="server" CssClass="lbl"></asp:Label>
 
             </td>
             <td>

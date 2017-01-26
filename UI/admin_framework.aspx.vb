@@ -14,6 +14,7 @@ Public Class admin_framework
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             ViewState("prefix") = Request.Item("prefix")
+            hidGo2Pid.Value = Request.Item("go2pid")
             With Master
                 .PageTitle = "Nastavení systému"
                 .SiteMenuValue = "admin_framework"
@@ -111,6 +112,22 @@ Public Class admin_framework
             query_validity.BackColor = Drawing.Color.Red
         Else
             query_validity.BackColor = Nothing
+        End If
+
+        If Me.hidGo2Pid.Value <> "" Then
+            Dim intPID As Integer = CInt(hidGo2Pid.Value) : hidGo2Pid.Value = ""
+            grid1.SelectRecords(intPID)
+            If grid1.radGridOrig.SelectedItems.Count = 0 Then
+                While grid1.radGridOrig.MasterTableView.PageCount > grid1.radGridOrig.CurrentPageIndex
+                    grid1.radGridOrig.CurrentPageIndex += 1
+                    grid1.Rebind(True, intPID)
+                    If grid1.radGridOrig.SelectedItems.Count > 0 Then
+                        Exit While
+                    End If
+                End While
+                
+            End If
+            If grid1.radGridOrig.SelectedItems.Count > 0 Then hiddatapid.Value = intPID.ToString
         End If
     End Sub
 
@@ -251,10 +268,9 @@ Public Class admin_framework
             If Me.Upload_Folder.Text <> "" Then Me.Upload_Folder.Text = "*******************" & Right(Me.Upload_Folder.Text, 5)
             Me.robot_host.Text = .GetValueString("robot_host")
             If Me.robot_host.Text = "" Then
-                Me.robot_host.Text = "Robot není nastaven."
-                Me.cmdRunRobot.Visible = False
-            Else
-                Me.cmdRunRobot.Visible = True
+                Me.robot_host.Text = "Robot není nastaven!"
+
+     
             End If
             Me.robot_cache_lastrequest.Text = .GetValueString("robot_cache_lastrequest")
 
@@ -830,7 +846,9 @@ Public Class admin_framework
             Else
                 Response.Redirect("binaryfile.aspx?tempfile=" & strFileName)
             End If
+        
         End If
+        
     End Sub
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cbxPaging.SelectedIndexChanged
@@ -842,9 +860,7 @@ Public Class admin_framework
 
     End Sub
 
-    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
-        Response.Redirect(menu1.FindItemByValue("refresh").NavigateUrl)
-    End Sub
+    
 
     Private Sub menu1_ItemClick(sender As Object, e As RadMenuEventArgs) Handles menu1.ItemClick
         If e.Item.Value = "export" Then
@@ -861,13 +877,7 @@ Public Class admin_framework
     End Sub
 
    
-    Private Sub cmdRunRobot_Click(sender As Object, e As EventArgs) Handles cmdRunRobot.Click
-        Dim client As New System.Net.WebClient
-        client.DownloadString(Context.Request.Url.GetLeftPart(UriPartial.Authority) & "/Public/robot.aspx")
-        client.Dispose()
-        Master.Notify("Robot byl spuštěn.", NotifyLevel.InfoMessage)
-        Me.robot_cache_lastrequest.Text = Master.Factory.x35GlobalParam.GetValueString("robot_cache_lastrequest")
-    End Sub
+    
 
    
     Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click

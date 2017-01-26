@@ -62,9 +62,17 @@
 
         function hardrefresh(pid, flag) {
 
+            
+            var s="<%=menu1.FindItemByValue("refresh").NavigateUrl%>";
+            location.replace(s + "&go2pid=" + pid);
+            
 
-            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
+            
 
+        }
+
+        function run_robot() {
+            sw_master("/Public/robot.aspx?blank=1");
         }
     </script>
 </asp:Content>
@@ -290,7 +298,12 @@
                     <div>
                         Čas posledního spuštění robota:
                                     <asp:Label ID="robot_cache_lastrequest" runat="server" CssClass="valbold"></asp:Label>
-                        <asp:LinkButton ID="cmdRunRobot" runat="server" Text="Spustit robota ručně" />
+                        
+
+                    </div>
+                    <div>
+                        <button type="button" onclick="run_robot()">Spusit robota ručně</button>
+                        
                     </div>
                 </div>
             </div>
@@ -336,5 +349,6 @@
     </div>
 
     <asp:HiddenField ID="hiddatapid" runat="server" />
+   <asp:HiddenField ID="hidGo2Pid" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

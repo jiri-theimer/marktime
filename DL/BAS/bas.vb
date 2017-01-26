@@ -185,6 +185,7 @@
             Case BO.x29IdEnum.p56Task : strFK = "a.p56ID"
             Case BO.x29IdEnum.o23Notepad : strFK = "a.o23ID"
             Case BO.x29IdEnum.j02Person : strFK = "a.j02ID"
+            Case BO.x29IdEnum.j19PaymentType : strFK = "a.j19ID"
         End Select
         Select Case cRec.j70BinFlag
             Case 1  'otevřené záznamy
