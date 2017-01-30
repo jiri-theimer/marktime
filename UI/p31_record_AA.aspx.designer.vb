@@ -365,6 +365,15 @@ Partial Public Class p31_record_AA
     Protected WithEvents lblTimestamp_Approve As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''p31ApprovingLevel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31ApprovingLevel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''panInvoiced control.
     '''</summary>
     '''<remarks>

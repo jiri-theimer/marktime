@@ -175,6 +175,7 @@
                                 <asp:Label ID="j07Code_Approved" runat="server" />
                             </td>
                         </tr>
+                       
                         <tr>
                             <td>
                                 <asp:Label ID="Datalabel3" runat="server" Text="Hodnota pro interní schvalování:" CssClass="lbl"></asp:Label>
@@ -187,6 +188,7 @@
                         <tr>
                             <td colspan="2">
                                 <asp:Label ID="lblTimestamp_Approve" runat="server" Style="color: gray;"></asp:Label>
+                                , úroveň schvalování: <asp:Label ID="p31ApprovingLevel" runat="server"></asp:Label>
                             </td>
                         </tr>
                     </table>

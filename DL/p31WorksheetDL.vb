@@ -116,7 +116,7 @@
         pars.Add("val", dbValue)
         Return _cDB.RunSQL("UPDATE p31Worksheet_Temp SET " & strField & "=@val WHERE p31GUID=@guid AND p31ID=@pid", pars)
     End Function
-    Public Function Save_Approving(strGUID_TempData As String, intPID As Integer, p71id As BO.p71IdENUM, p72id As BO.p72IdENUM, dblValue_Approved_Billing As Double, dblRate_Billing_Approved As Double, dblValue_Approved_Internal As Double, dblRate_Internal_Approved As Double, strP31Text As String, dblVatRate_Approved As Double, strApprovingSet As String, datDate As Date?) As Boolean
+    Public Function Save_Approving(strGUID_TempData As String, intPID As Integer, p71id As BO.p71IdENUM, p72id As BO.p72IdENUM, dblValue_Approved_Billing As Double, dblRate_Billing_Approved As Double, dblValue_Approved_Internal As Double, dblRate_Internal_Approved As Double, strP31Text As String, dblVatRate_Approved As Double, strApprovingSet As String, datDate As Date?, intApprovingLevel As Integer) As Boolean
         Dim pars As New DbParameters
         With pars
             If strGUID_TempData <> "" Then
@@ -134,6 +134,7 @@
             .Add("p31Text", strP31Text, DbType.String)
             .Add("vatrate_approved", dblVatRate_Approved, DbType.Double)
             .Add("dat_p31date", datDate, DbType.DateTime)
+            .Add("approving_level", intApprovingLevel, DbType.Int32)
             .Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
         End With
         If strGUID_TempData <> "" Then
@@ -321,6 +322,10 @@
                 Else
                     s.Append(" AND a.p28ID_Supplier IS NULL")
                 End If
+            End If
+            If Not .p31ApprovingLevel Is Nothing Then
+                pars.Add("approvinglevel", .p31ApprovingLevel, DbType.Int32)
+                s.Append(" AND a.p31ApprovingLevel=@approvinglevel")
             End If
             If .p91ID <> 0 Then
                 pars.Add("p91id", .p91ID, DbType.Int32) : s.Append(" AND a.p91ID=@p91id")
@@ -658,7 +663,7 @@
         s.Append(",a.p31DateTimeFrom_Orig,a.p31DateTimeUntil_Orig,a.p31Value_Orig_Entried,a.p31Calc_Pieces,a.p31Calc_PieceAmount,a.p35ID,a.j19ID")
         ''s.Append(",p31free.*")
         s.Append(",j02.j02LastName+' '+j02.j02FirstName as Person,p32.p32Name,p32.p34ID,p32.p32IsBillable,p34.p33ID,p34.p34Name,p34.p34IncomeStatementFlag,isnull(p41.p41NameShort,p41.p41Name) as p41Name,p41.p28ID_Client,p28Client.p28Name as ClientName,p28Client.p28CompanyShortName,p56.p56Name,p56.p56Code,j02owner.j02LastName+' '+j02owner.j02FirstName as Owner")
-        s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.o23ID_First,a.p28ID_Supplier,supplier.p28Name as SupplierName,a.p49ID,a.j02ID_ContactPerson,cp.j02LastName+' '+cp.j02FirstName as ContactPerson," & bas.RecTail("p31", "a"))
+        s.Append(",p91.p91Code,p70.p70Name,p71.p71Name,p72trim.p72Name as trim_p72Name,p72approve.p72Name as approve_p72Name,j27billing_orig.j27Code as j27Code_Billing_Orig,p32.p95ID,p95.p95Name,a.p31ApprovingSet,a.p31ApprovingLevel,a.o23ID_First,a.p28ID_Supplier,supplier.p28Name as SupplierName,a.p49ID,a.j02ID_ContactPerson,cp.j02LastName+' '+cp.j02FirstName as ContactPerson," & bas.RecTail("p31", "a"))
         Return s.ToString
     End Function
     Private Function GetSF_SUM(bolIncludeWaiting4Approval As Boolean, bolIncludeWaiting4Invoice As Boolean) As String

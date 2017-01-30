@@ -66,15 +66,16 @@
         'ShowAsHHMM = Left(strHHMM, 5)
     End Function
 
-    Function GetTimeFromSeconds(ByVal tim As Double, Optional ByVal bolIncludeSeconds As Boolean = False) As String
+    Function GetTimeFromSeconds(ByVal tim As Double, Optional bolIncludeSeconds As Boolean = False) As String
         'tim... časový úsek vyjádřený v sekundách
-        Dim fra As Double, hod As Double, cmin As String, chod As String, znam As String, Min As Integer, sec As Double, csec As String
+        Dim hod As Double, cmin As String, chod As String, znam As String, Min As Integer
 
         If tim = 0 Then
             If Not bolIncludeSeconds Then Return "00:00" Else Return "00:00:00"
         End If
+        tim = Int(tim)
 
-        tim = CInt(tim * 25)      'převod na framy
+        ''tim = CInt(tim * 25)      'převod na framy
 
         If tim < 0 Then
             znam = "-"
@@ -83,22 +84,24 @@
             znam = ""
         End If
 
-        hod = Int(tim / 90000)
+        ''hod = Int(tim / 90000)
+        hod = Int(tim / 3600)
 
-        If hod > 0 Then tim = tim - (hod * 90000)
+        ''If hod > 0 Then tim = tim - (hod * 90000)
+        If hod > 0 Then tim = tim - (hod * 3600)
 
-        Min = Int(tim / 1500)
-        If Min > 0 Then tim = tim - (Min * 1500)
+        Min = Int(tim / 60)
+        If Min > 0 Then tim = tim - (Min * 60)
 
 
-        sec = Int(tim / 25)
-        If sec > 0 Then tim = tim - (sec * 25)
+        ''sec = Int(tim / 25)
+        ''If sec > 0 Then tim = tim - (sec * 25)
 
-        If tim = 0 Then
-            fra = 0
-        Else
-            fra = tim
-        End If
+        ''If tim = 0 Then
+        ''    fra = 0
+        ''Else
+        ''    fra = tim
+        ''End If
 
 
         If hod < 10 Then
@@ -113,17 +116,21 @@
             cmin = Trim(Min & "")
         End If
 
-        If sec < 10 Then
-            csec = "0" + Trim(sec & "")
-        Else
-            csec = Trim(sec & "")
-        End If
+        
 
         If bolIncludeSeconds Then
-            GetTimeFromSeconds = znam + chod + ":" + cmin & ":" & csec
+            Dim csec As String = ""
+            If tim < 10 Then
+                csec = "0" + Trim(tim & "")
+            Else
+                csec = Trim(tim & "")
+            End If
+
+            Return znam + chod + ":" + cmin & ":" & csec
         Else
-            GetTimeFromSeconds = znam + chod + ":" + cmin
+            Return znam + chod + ":" + cmin
         End If
+
 
     End Function
 

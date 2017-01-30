@@ -164,7 +164,8 @@
 
                 lblTimestamp_Approve.Text = "<img src='Images/approve.png'> " & "Schválil" & ": " & Master.Factory.j02PersonBL.Load(.j02ID_ApprovedBy).FullNameDesc & "/" & BO.BAS.FD(.p31Approved_When, True, True)
 
-
+                Me.p31ApprovingLevel.Text = "#" & .p31ApprovingLevel.ToString
+                If .p31ApprovingLevel > 0 Then Me.p31ApprovingLevel.CssClass = "valboldblue"
             Else
                 panApproved.Visible = False
             End If

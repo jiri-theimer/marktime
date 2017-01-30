@@ -588,6 +588,7 @@ Public Class p31_approving_step3
                 End Select
                 .p31Text = cRec.p31Text
                 .p31Date = cRec.p31Date
+                .p31ApprovingLevel = cRec.p31ApprovingLevel
             End With
 
             With Master.Factory.p31WorksheetBL

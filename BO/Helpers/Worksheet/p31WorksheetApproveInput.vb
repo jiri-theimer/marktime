@@ -11,6 +11,7 @@
     Public Property Rate_Internal_Approved As Double
     Public Property p31Text As String
     Public Property p31Date As Date?
+    Public Property p31ApprovingLevel As Integer
 
     Public Property VatRate_Approved As Double
 

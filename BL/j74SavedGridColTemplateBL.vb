@@ -457,7 +457,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Schváleno interně", "p31Value_Approved_Internal", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
             If Not bolHideRatesColumns Then .Add(AGC(My.Resources.common.SchvalenoBezDPH, "p31Amount_WithoutVat_Approved", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
             If Not bolHideRatesColumns Then .Add(AGC(My.Resources.common.SchvalenoVcDPH, "p31Amount_WithVat_Approved", BO.cfENUM.Numeric2, , , True, , "Schváleno"))
-            .Add(AGC(My.Resources.common.SchvalenoKdy, "p31Approved_When", BO.cfENUM.DateTime, , , , , "Schváleno"))
+            .Add(AGC("Úroveň schvalování", "p31ApprovingLevel", BO.cfENUM.Numeric0, , , , , "Schváleno"))
+            .Add(AGC(My.Resources.common.SchvalenoKdy, "p31Approved_When", BO.cfENUM.DateTime, , , , , "Schváleno"))            
             .Add(AGC(My.Resources.common.BillingDavka, "p31ApprovingSet", , , , , , "Schváleno"))
 
 

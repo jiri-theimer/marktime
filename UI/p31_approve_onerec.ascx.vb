@@ -180,6 +180,8 @@
             SetValue(.p31Value_Approved_Internal, True)
 
             Me.j27Code.Text = .j27Code_Billing_Orig
+            basUI.SelectRadiolistValue(Me.p31ApprovingLevel, .p31ApprovingLevel.ToString)
+
 
             If .p72ID_AfterApprove > BO.p72IdENUM._NotSpecified Then
                 p72id.SelectedValue = CInt(.p72ID_AfterApprove).ToString
@@ -239,7 +241,7 @@
         Me.p31Text.Visible = b
         Me.lblP31Text.Visible = b
         Me.j27Code.Visible = b
-
+        Me.p31ApprovingLevel.Visible = b
 
         Select Case Me.CurrentP33ID
             Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
@@ -326,6 +328,7 @@
             .p31Text = Me.p31Text.Text
             .p31Date = Me.p31Date.SelectedDate
             .p31ApprovingSet = Me.p31ApprovingSet.Text
+            .p31ApprovingLevel = CInt(Me.p31ApprovingLevel.SelectedValue)
         End With
         With Me.Factory.p31WorksheetBL
             If .Save_Approving(cApproveInput, Me.IsTempRecord) Then

@@ -147,7 +147,7 @@
             <div class="div6">
                 <asp:Button ID="cmdBatch_4" Text="Vybrané záznamy [Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
                 <span style="padding-left: 50px;"></span>
-                <asp:Button ID="cmdBatch_Clear" Text="Vybraným záznamům vyčistit schvalování" runat="server" CssClass="cmd" Width="280px" />
+                <asp:Button ID="cmdBatch_Clear" Text="Vybrané záznamy vrátit na [Nerozhodnuto]" runat="server" CssClass="cmd" Width="280px" />
             </div>
             <div class="div6">
                 <asp:Button ID="cmdBatch_6" Text="Vybrané záznamy [Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
@@ -158,7 +158,7 @@
             <div class="div6">
                 <asp:Button ID="cmdBatch_3" Text="Vybrané záznamy [Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
                 <span style="padding-left: 50px;"></span>
-                <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" />
+                <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="false" />
             </div>
             <div class="div6">
                 <asp:Button ID="cmdBatch_2" Text="Vybrané záznamy [Viditelný odpis]" runat="server" CssClass="cmd" Width="280px" />

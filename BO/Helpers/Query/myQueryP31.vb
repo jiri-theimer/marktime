@@ -32,6 +32,7 @@ Public Class myQueryP31
     Public Property p28ID_Client As Integer
     Public Property p28IDs_Client As List(Of Integer)
     Public Property p28ID_Supplier As Integer?
+    Public Property p31ApprovingLevel As Integer?
 
     Public Property p56IDs As List(Of Integer)
     Public Property o22ID As Integer

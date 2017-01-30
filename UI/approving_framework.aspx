@@ -168,8 +168,12 @@
         <div class="commandcell" style="padding-left: 20px;">
             <asp:DropDownList ID="cbxScope" runat="server" AutoPostBack="true" BackColor="Yellow">
                 <asp:ListItem Text="Rozpracované (čeká na schvalování)" Value="1"></asp:ListItem>
-                <asp:ListItem Text="Schválené (čeká na fakturaci)" Value="2"></asp:ListItem>
+                <asp:ListItem Text="Schválené (čeká na fakturaci)" Value="2"></asp:ListItem>               
+                <asp:ListItem Text="Schválené (čeká na fakturaci), #0" Value="20"></asp:ListItem>
+                <asp:ListItem Text="Schválené (čeká na fakturaci), #1" Value="21"></asp:ListItem>
+                <asp:ListItem Text="Schválené (čeká na fakturaci), #2" Value="22"></asp:ListItem>
             </asp:DropDownList>
+            
         </div>
 
         <div class="commandcell">

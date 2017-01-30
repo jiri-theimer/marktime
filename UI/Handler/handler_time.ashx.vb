@@ -68,7 +68,7 @@ Public Class handler_time
                     Return
                 End If
                 If strT.IndexOf(":") <= 0 Then
-                    strRetMsg = cT.ShowAsDec(CDbl(seconds) / 60 / 60).ToString & "h. (dekadicky) -> " & cT.GetTimeFromSeconds(seconds) & " (HH:mm)"
+                    strRetMsg = cT.ShowAsDec(CDbl(seconds) / 60 / 60).ToString & "h. (dekadicky) -> " & cT.GetTimeFromSeconds(seconds, True) & " (HH:mm:ss)"
                 Else
                     strRetMsg = cT.GetTimeFromSeconds(seconds) & " (HH:mm) -> " & cT.ShowAsDec(CDbl(seconds) / 60 / 60).ToString & "h. (dekadicky)"
                 End If

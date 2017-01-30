@@ -303,11 +303,11 @@ Class p31WorksheetBL
         With cApproveInput            
             Select Case .p33ID
                 Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
-                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, .Rate_Billing_Approved, .Value_Approved_Internal, .Rate_Internal_Approved, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date)
+                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, .Rate_Billing_Approved, .Value_Approved_Internal, .Rate_Internal_Approved, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date, .p31ApprovingLevel)
                 Case BO.p33IdENUM.PenizeBezDPH
-                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, Nothing, .p31ApprovingSet, .p31Date)
+                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, Nothing, .p31ApprovingSet, .p31Date, .p31ApprovingLevel)
                 Case BO.p33IdENUM.PenizeVcDPHRozpisu
-                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date)
+                    Return _cDL.Save_Approving(.GUID_TempData, .p31ID, .p71id, .p72id, .Value_Approved_Billing, Nothing, .Value_Approved_Internal, Nothing, .p31Text, .VatRate_Approved, .p31ApprovingSet, .p31Date, .p31ApprovingLevel)
                 Case Else
                     _Error = "unknown p33id input"
                     Return False

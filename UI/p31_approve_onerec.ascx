@@ -6,6 +6,8 @@
         <asp:Label ID="lblHeader" runat="server"></asp:Label>
         <asp:Button ID="cmdUlozitSchvalovani" runat="server" Text="Uložit změny" CssClass="cmd" />
         <asp:Button ID="cmdZrusitSchvalovani" runat="server" Text="Zrušit" CssClass="cmd" />
+        
+
         <img src="Images/approve.png" style="float: right;" />
     </div>
     <div class="content">
@@ -105,10 +107,17 @@
         </div>
         <asp:TextBox ID="p31Text" runat="server" TextMode="MultiLine" Style="width: 97%; height: 50px;"></asp:TextBox>
         <div>
+             <asp:RadioButtonList ID="p31ApprovingLevel" runat="server" RepeatDirection="Horizontal" ToolTip="Úroveň schvalování">
+                <asp:ListItem value="0" Text="#0" Selected="true"></asp:ListItem>
+                <asp:ListItem value="1" Text="#1"></asp:ListItem>
+                <asp:ListItem value="2" Text="#2"></asp:ListItem>
+            </asp:RadioButtonList>
             <span>Datum úkonu:</span>
             <telerik:RadDatePicker ID="p31Date" runat="server" Width="120px">
                 <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server" EmptyMessage="Povinné pole"></DateInput>
             </telerik:RadDatePicker>
+           
+            
             <span style="display:none;">Zařadit do billing dávky:</span>
             <telerik:RadComboBox ID="p31ApprovingSet" Visible="false" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="150px" AllowCustomText="true"></telerik:RadComboBox>
         </div>

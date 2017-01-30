@@ -59,6 +59,7 @@ Public Class approving_framework
                     .Add("approving_framework-j70id-j02")
                     .Add("approving_framework-chkFirstLastCount")
                     .Add("approving_framework-cbxScrollingFlag")
+
                 End With
 
                 With .Factory.j03UserBL
@@ -78,6 +79,7 @@ Public Class approving_framework
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("approving_framework-groupby-" & Me.CurrentPrefix, ""))
                     Me.chkKusovnik.Checked = BO.BAS.BG(.GetUserParam("approving_framework-kusovnik", "0"))
                     basUI.SelectRadiolistValue(Me.cbxScrollingFlag, .GetUserParam("approving_framework-cbxScrollingFlag", "2"))
+
                 End With
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
@@ -161,7 +163,7 @@ Public Class approving_framework
                 End If
                 .AddColumn("rozpracovano_pocet", "Počet", BO.cfENUM.Numeric0, , , , , True)
             End If
-            If Me.cbxScope.SelectedValue = "2" Then
+            If Left(Me.cbxScope.SelectedValue, 1) = "2" Then
                 .AddColumn("schvaleno_hodiny_fakturovat", "Hodiny k fakturaci", BO.cfENUM.Numeric2, , , , , True)
                 .AddColumn("schvaleno_honorar_fakturovat", "Honorář", BO.cfENUM.Numeric2, , , , , True)
                 .AddColumn("schvaleno_vydaje_fakturovat", "Výdaje", BO.cfENUM.Numeric2, , , , , True)
@@ -232,7 +234,7 @@ Public Class approving_framework
                 dataItem("rozpracovano_vydaje").ForeColor = Drawing.Color.Brown
             End If
         End If
-        If cbxScope.SelectedValue = "2" Then
+        If Left(cbxScope.SelectedValue, 1) = "2" Then
             If Not cRec.schvaleno_odmeny_fakturovat Is Nothing Then
                 dataItem("schvaleno_odmeny_fakturovat").ForeColor = Drawing.Color.Blue
             End If
@@ -262,8 +264,14 @@ Public Class approving_framework
         If Me.cbxScope.SelectedValue = "1" Then
             mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForDoApprove
         End If
-        If Me.cbxScope.SelectedValue = "2" Then
+        If Left(Me.cbxScope.SelectedValue, 1) = "2" Then
             mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForReApprove
+            Select Case Me.cbxScope.SelectedValue
+                Case "20" : mq.p31ApprovingLevel = 0
+                Case "21" : mq.p31ApprovingLevel = 1
+                Case "22" : mq.p31ApprovingLevel = 2
+            End Select
+
         End If
         mq.DateFrom = period1.DateFrom
         mq.DateUntil = period1.DateUntil
@@ -286,6 +294,7 @@ Public Class approving_framework
         End With
         If Me.cbxScope.SelectedValue = "1" Then
             lblHeader.Text = "Schvalovat"
+
         Else
             lblHeader.Text = "Fakturovat"
         End If
@@ -354,4 +363,6 @@ Public Class approving_framework
         Master.Factory.j03UserBL.SetUserParam("approving_framework-cbxScrollingFlag", Me.cbxScrollingFlag.SelectedValue)
         ReloadPage()
     End Sub
+
+    
 End Class

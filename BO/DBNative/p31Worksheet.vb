@@ -140,6 +140,7 @@ Public Class p31Worksheet
     Public Property p35ID As Integer
     Public Property j19ID As Integer
     Public Property p31ApprovingSet As String
+    Public Property p31ApprovingLevel As Integer
     Public Property o23ID_First As Integer
 
     Public ReadOnly Property TimeFrom As String
