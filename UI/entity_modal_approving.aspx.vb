@@ -105,6 +105,7 @@
                     .Add("entity_framework_detail_approving-chkCommandsJ02")
                     .Add("entity_framework_detail_approving-chkCommandsP34")
                     .Add("entity_framework_detail_approving-chkCommandsP41")
+                    .Add("entity_framework_detail_approving-approving-level")
                 End With
 
                 With .Factory.j03UserBL
@@ -148,6 +149,8 @@
                 Case "20" : cbxApprovingLevel.SelectedValue = "0"
                 Case "21" : cbxApprovingLevel.SelectedValue = "1"
                 Case "22" : cbxApprovingLevel.SelectedValue = "2"
+                Case Else
+                    basUI.SelectDropdownlistValue(Me.cbxApprovingLevel, Master.Factory.j03UserBL.GetUserParam("entity_framework_detail_approving-approving-level"))
             End Select
 
             RefreshRecord()
@@ -680,5 +683,9 @@
   
     Private Sub cmdQuickInvoice_Click(sender As Object, e As EventArgs) Handles cmdQuickInvoice.Click
         Response.Redirect("p91_create_step1.aspx?quick=1&prefix=" & Me.CurrentPrefix & "&pid=" & Master.DataPID.ToString)
+    End Sub
+
+    Private Sub cbxApprovingLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxApprovingLevel.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_framework_detail_approving-approving-level", Me.cbxApprovingLevel.SelectedValue)
     End Sub
 End Class
