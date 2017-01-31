@@ -182,7 +182,8 @@
             </div>
             <div class="div6">
                 <asp:CheckBox ID="chkAutoFilter" runat="server" Text="Nabízet nad sloupci filtrování dat" AutoPostBack="true" CssClass="chk" />
-                <asp:CheckBox ID="chkUseInternalApproving" runat="server" Text="Využívat i interní (vnitropodnikové) schvalování" AutoPostBack="true" CssClass="chk" />                
+                <asp:CheckBox ID="chkUseInternalApproving" runat="server" Text="Využívat i interní (vnitropodnikové) schvalování" AutoPostBack="true" CssClass="chk" />
+                <asp:CheckBox ID="chkDefaultApproveSetup" runat="server" Text="U rozpracovaných úkonů nahazovat výchozí fakturační status" AutoPostBack="true" CssClass="chk" />
             </div>
             <fieldset>
                 <legend>Souhrny</legend>

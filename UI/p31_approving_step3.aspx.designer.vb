@@ -122,6 +122,15 @@ Partial Public Class p31_approving_step3
     Protected WithEvents chkUseInternalApproving As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkDefaultApproveSetup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkDefaultApproveSetup As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''opgGroupBy control.
     '''</summary>
     '''<remarks>

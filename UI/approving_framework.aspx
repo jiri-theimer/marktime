@@ -51,8 +51,9 @@
                 alert("Není vybrán řádek.");
                 return
             }
+            var scope = document.getElementById("<%=Me.cbxScope.ClientID%>").value;
 
-            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pid=" + pid, "Images/approve_32.png", true);
+            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pid=" + pid + "&scope=" + scope, "Images/approve_32.png", true);
 
         }
 
@@ -62,8 +63,9 @@
                 alert("Není vybrán řádek.");
                 return
             }
+            var scope = document.getElementById("<%=Me.cbxScope.ClientID%>").value;
 
-            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pids=" + pids, "", true);
+            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pids=" + pids+"&scope="+scope, "", true);
 
         }
 

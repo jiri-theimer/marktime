@@ -54,6 +54,7 @@ Public Class p31_approving_step3
                     .Add("p31_approving-use_internal_approving")
                     .Add("p31_approving-group")
                     .Add("p31_approving-autofilter")
+                    .Add("p31_approving-defapprovesetup")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
                 If .Factory.j03UserBL.GetUserParam("p31_approving-group") <> "" Then
@@ -61,9 +62,8 @@ Public Class p31_approving_step3
                 End If
                 Me.chkUseInternalApproving.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-use_internal_approving", "0"))
                 Me.chkAutoFilter.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-autofilter", "0"))
-
-
-                .AddToolbarButton("Uložit změny", "save", , "Images/save.png")
+                Me.chkDefaultApproveSetup.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p31_approving-defapprovesetup", "1"))
+                .AddToolbarButton("Uložit a zavřít", "save_close", , "Images/save.png")
 
                 .AddToolbarButton("Sestava", "report", 1, "Images/report.png", False, "javascript:report()")
 
@@ -74,6 +74,9 @@ Public Class p31_approving_step3
 
                 .AddToolbarButton("Hromadné operace", "batch", 1, "Images/arrow_down.gif", False)
 
+                If Me.CurrentMasterPrefix <> "" Then
+                    .AddToolbarButton("Uložit", "save_gate", 1, "Images/save.png")
+                End If
 
                 .RadToolbar.FindItemByValue("batch").CssClass = "show_hide1"
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide2"
@@ -177,48 +180,51 @@ Public Class p31_approving_step3
 
                     If cRec.p71ID = BO.p71IdENUM.Nic Then
                         'dosud neprošlo schvalováním
-                        .p71id = BO.p71IdENUM.Schvaleno
-                        If cRec.p32IsBillable Then
-                            .p72id = BO.p72IdENUM.Fakturovat
-                            .Value_Approved_Billing = cRec.p31Value_Orig
-                            .Value_Approved_Internal = cRec.p31Value_Orig
+                        If Me.chkDefaultApproveSetup.Checked Then   'pokud je nastaveno, že se má nahodit výchozí fakturační status
+                            .p71id = BO.p71IdENUM.Schvaleno
+                            If cRec.p32IsBillable Then
+                                .p72id = BO.p72IdENUM.Fakturovat
+                                .Value_Approved_Billing = cRec.p31Value_Orig
+                                .Value_Approved_Internal = cRec.p31Value_Orig
 
-                            Select Case .p33ID
-                                Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
-                                    .Rate_Billing_Approved = cRec.p31Rate_Billing_Orig
-                                    .VatRate_Approved = cRec.p31VatRate_Orig
-                                    If cRec.p31Rate_Billing_Orig = 0 Then
-                                        .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
-                                    End If
-                                    If cRec.p72ID_AfterTrimming > BO.p72IdENUM._NotSpecified Then
-                                        'uživatel zadal v úkonu výchozí korekci pro schvalování
-                                        .p72id = cRec.p72ID_AfterTrimming
-                                        If .p72id = BO.p72IdENUM.Fakturovat Then
-                                            .Value_Approved_Billing = cRec.p31Value_Trimmed
-                                        Else
-                                            .Rate_Billing_Approved = 0
-                                            .Value_Approved_Billing = 0
+                                Select Case .p33ID
+                                    Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
+                                        .Rate_Billing_Approved = cRec.p31Rate_Billing_Orig
+                                        .VatRate_Approved = cRec.p31VatRate_Orig
+                                        If cRec.p31Rate_Billing_Orig = 0 Then
+                                            .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
                                         End If
-                                    End If
-                                Case BO.p33IdENUM.PenizeBezDPH
-                                    If cRec.p31Value_Orig = 0 Then
-                                        .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
-                                    End If
-                                Case BO.p33IdENUM.PenizeVcDPHRozpisu
-                                    .VatRate_Approved = cRec.p31VatRate_Orig
-                                    If cRec.p31Value_Orig = 0 Then
-                                        .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
-                                    End If
-                            End Select
-                        Else
-                            .Value_Approved_Internal = cRec.p31Value_Orig
-                            If cRec.p72ID_AfterTrimming = BO.p72IdENUM._NotSpecified Or cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat Then
-                                .p72id = BO.p72IdENUM.SkrytyOdpis
+                                        If cRec.p72ID_AfterTrimming > BO.p72IdENUM._NotSpecified Then
+                                            'uživatel zadal v úkonu výchozí korekci pro schvalování
+                                            .p72id = cRec.p72ID_AfterTrimming
+                                            If .p72id = BO.p72IdENUM.Fakturovat Then
+                                                .Value_Approved_Billing = cRec.p31Value_Trimmed
+                                            Else
+                                                .Rate_Billing_Approved = 0
+                                                .Value_Approved_Billing = 0
+                                            End If
+                                        End If
+                                    Case BO.p33IdENUM.PenizeBezDPH
+                                        If cRec.p31Value_Orig = 0 Then
+                                            .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
+                                        End If
+                                    Case BO.p33IdENUM.PenizeVcDPHRozpisu
+                                        .VatRate_Approved = cRec.p31VatRate_Orig
+                                        If cRec.p31Value_Orig = 0 Then
+                                            .p72id = BO.p72IdENUM.ZahrnoutDoPausalu
+                                        End If
+                                End Select
                             Else
-                                .p72id = cRec.p72ID_AfterTrimming
-                            End If
+                                .Value_Approved_Internal = cRec.p31Value_Orig
+                                If cRec.p72ID_AfterTrimming = BO.p72IdENUM._NotSpecified Or cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat Then
+                                    .p72id = BO.p72IdENUM.SkrytyOdpis
+                                Else
+                                    .p72id = cRec.p72ID_AfterTrimming
+                                End If
 
+                            End If
                         End If
+                        
                     Else
                         'již dříve schválený záznam
                         .p71id = cRec.p71ID
@@ -555,10 +561,16 @@ Public Class p31_approving_step3
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
-        If strButtonValue = "save" Then
-            If Not SaveChanges() Then Return
-            Master.CloseAndRefreshParent("approving")
-        End If
+        Select Case strButtonValue
+            Case "save_close"
+                If Not SaveChanges() Then Return
+                Master.CloseAndRefreshParent("approving")
+            Case "save_gate"
+                If Not SaveChanges() Then Return
+                Dim cTEMP As BO.p85TempBox = Master.Factory.p85TempBoxBL.LoadByGUID(ViewState("guid") & "-00")
+                Response.Redirect("entity_modal_approving.aspx?" & cTEMP.p85Message)
+        End Select
+       
     End Sub
 
     Private Function SaveChanges() As Boolean
@@ -633,6 +645,10 @@ Public Class p31_approving_step3
         SetupGrid()
         grid1.Rebind(True, BO.BAS.IsNullInt(Me.hiddatapid.Value))
     End Sub
+    Private Sub chkDefaultApproveSetup_CheckedChanged(sender As Object, e As EventArgs) Handles chkDefaultApproveSetup.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_approving-defapprovesetup", BO.BAS.GB(Me.chkDefaultApproveSetup.Checked))
+        Master.Notify("Nastavení se projeví až v příštím schvalování.", NotifyLevel.InfoMessage)
+    End Sub
 
     
     Private Sub cmdBatch_ApprovingSet_Click(sender As Object, e As EventArgs) Handles cmdBatch_ApprovingSet.Click
@@ -653,5 +669,6 @@ Public Class p31_approving_step3
         grid1.Rebind(True)
     End Sub
 
+    
     
 End Class

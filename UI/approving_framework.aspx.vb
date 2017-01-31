@@ -297,6 +297,15 @@ Public Class approving_framework
 
         Else
             lblHeader.Text = "Fakturovat"
+            With Me.cbxScope
+                Select Case .SelectedValue
+                    Case "20" : .ToolTip = "Schváleno na úrovni #0"
+                    Case "21" : .ToolTip = "Schváleno na úrovni #1"
+                    Case "22" : .ToolTip = "Schváleno na úrovni #2"
+                    Case Else : .ToolTip = ""
+                End Select
+            End With
+            
         End If
     End Sub
 

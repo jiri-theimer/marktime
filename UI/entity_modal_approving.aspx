@@ -247,7 +247,15 @@
                         </asp:DropDownList>
 
                     </td>
-
+                    <td>
+                        Úroveň schvalování:
+                        <asp:DropDownList ID="cbxApprovingLevel" runat="server" AutoPostBack="true">
+                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                            <asp:ListItem Text="#0" Value="0"></asp:ListItem>
+                            <asp:ListItem Text="#1" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="#2" Value="2"></asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
                 </tr>
             </table>
 

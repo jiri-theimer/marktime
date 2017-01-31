@@ -167,6 +167,15 @@ Partial Public Class entity_modal_approving
     Protected WithEvents col3x As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cbxApprovingLevel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxApprovingLevel As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''plugin2 control.
     '''</summary>
     '''<remarks>

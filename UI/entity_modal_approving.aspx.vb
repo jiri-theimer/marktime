@@ -144,6 +144,11 @@
 
 
             End With
+            Select Case Request.Item("scope")
+                Case "20" : cbxApprovingLevel.SelectedValue = "0"
+                Case "21" : cbxApprovingLevel.SelectedValue = "1"
+                Case "22" : cbxApprovingLevel.SelectedValue = "2"
+            End Select
 
             RefreshRecord()
 
@@ -435,6 +440,7 @@
             s = "a.p71ID IS NULL AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"   'rozpracovanost
         Else
             s = "a.p71ID=1 AND a.p91ID IS NULL AND getdate() BETWEEN a.p31ValidFrom AND a.p31ValidUntil"         'už schválené
+            If Me.cbxApprovingLevel.SelectedValue <> "" Then s += " AND a.p31ApprovingLevel=" & Me.cbxApprovingLevel.SelectedValue
         End If
         If Me.hidMasterAW.Value <> "" Then s += " AND " & Me.hidMasterAW.Value
         Select Case Me.CurrentX29ID

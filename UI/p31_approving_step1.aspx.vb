@@ -81,6 +81,11 @@
                 Return
             End If
             Dim strGUID As String = BO.BAS.GetGUID
+            Dim cTemp00 As New BO.p85TempBox
+            cTemp00.p85GUID = strGUID & "-00"
+            cTemp00.p85Message = "pids=" & String.Join(",", masterpids) & "&prefix=" & Request.Item("masterprefix")
+            Master.Factory.p85TempBoxBL.Save(cTemp00)
+
             For Each c In lis
                 Dim cTemp As New BO.p85TempBox
                 cTemp.p85GUID = strGUID
