@@ -30,6 +30,7 @@ Public Class p31_approving_step3
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
+                Me.hidApprovingLevel.Value = Request.Item("approving_level")
                 Me.hidMasterPrefix.Value = Request.Item("masterprefix")
                 Me.hidMasterPID.Value = Request.Item("masterpid")
                 ViewState("guid") = Request.Item("guid")
@@ -70,17 +71,17 @@ Public Class p31_approving_step3
                 .AddToolbarButton("Zapsat nový úkon", "p31_create", 1, "Images/worksheet.png", False, "javascript:p31_create('" & Me.CurrentMasterPrefix & "id'," & Me.CurrentMasterPID.ToString & ")")
 
                 .AddToolbarButton("Nastavení", "setting", 1, "Images/arrow_down.gif", False)
-                .AddToolbarButton("Fakturační poznámka", "o23", 1, "Images/arrow_down.gif", False)
+                ''.AddToolbarButton("Fakturační poznámka", "o23", 1, "Images/arrow_down.gif", False)
 
-                .AddToolbarButton("Hromadné operace", "batch", 1, "Images/arrow_down.gif", False)
+                .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
 
                 If Me.CurrentMasterPrefix <> "" Then
                     .AddToolbarButton("Uložit", "save_gate", 1, "Images/save.png")
                 End If
 
-                .RadToolbar.FindItemByValue("batch").CssClass = "show_hide1"
+
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide2"
-                .RadToolbar.FindItemByValue("o23").CssClass = "show_hide3"
+                ''.RadToolbar.FindItemByValue("o23").CssClass = "show_hide3"
 
 
 
@@ -102,13 +103,13 @@ Public Class p31_approving_step3
     Private Sub RefreshRecord()
         bm1.RefreshData(Master.Factory, Me.CurrentMasterPrefix, BO.BAS.IsNullInt(Me.CurrentMasterPID))
         bm1.HideTogleButton()
-        If bm1.IsEmpty Then
-            Master.HideShowToolbarButton("o23", False)
-        Else
-            Master.RenameToolbarButton("o23", "<strong style='color:blue;'>Fakturační poznámka</strong>")
-            If bm1.o23Rows() > 0 Then
-                Master.RenameToolbarButton("o23", String.Format("Fakturační poznámky ({0})", bm1.o23Rows().ToString))
-            End If
+        If Not bm1.IsEmpty Then
+            RadTabStrip1.FindTabByValue("memo").ForeColor = Drawing.Color.Blue
+            RadTabStrip1.FindTabByValue("memo").Font.Bold = True
+            ''Master.RenameToolbarButton("o23", "<strong style='color:blue;'>Fakturační poznámka</strong>")
+            ''If bm1.o23Rows() > 0 Then
+            ''    Master.RenameToolbarButton("o23", String.Format("Fakturační poznámky ({0})", bm1.o23Rows().ToString))
+            ''End If
         End If
     End Sub
 
@@ -132,6 +133,7 @@ Public Class p31_approving_step3
                 .p71id = p71id
                 .p72id = explicit_p72id
                 .p31ApprovingSet = cRec.p31ApprovingSet
+                .p31ApprovingLevel = BO.BAS.IsNullInt(Me.hidApprovingLevel.Value)
                 If explicit_p72id = BO.p72IdENUM.Fakturovat Or explicit_p72id = BO.p72IdENUM.FakturovatPozdeji Then
                     Select Case cRec.p33ID
                         Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
@@ -157,7 +159,18 @@ Public Class p31_approving_step3
             Master.Factory.p85TempBoxBL.Save(cErr)
         Next
 
-        grid1.Rebind(True, lisPIDs(0))
+        grid1.Rebind(False)
+        With grid1.radGridOrig
+            For Each intPID In lisPIDs
+                For Each it As GridDataItem In .MasterTableView.Items
+                    If it.GetDataKeyValue("pid") = intPID Then
+                        it.Selected = True : Exit For
+                    End If
+                Next
+            Next
+        End With
+        hiddatapid.Value = lisPIDs(lisPIDs.Count - 1).ToString
+        RefreshSubform(hiddatapid.Value)
 
         If sx.ToString <> "" Then
             Master.Notify(sx.ToString, NotifyLevel.ErrorMessage)
@@ -174,12 +187,14 @@ Public Class p31_approving_step3
                 With cApprove
                     .GUID_TempData = ViewState("guid")
                     .p31ApprovingSet = cRec.p31ApprovingSet
+                    .p31ApprovingLevel = cRec.p31ApprovingLevel
                     If ViewState("approvingset") <> "" And .p31ApprovingSet = "" Then
                         .p31ApprovingSet = ViewState("approvingset")    'dosud nezařazený záznam zařadit do dávky
                     End If
 
                     If cRec.p71ID = BO.p71IdENUM.Nic Then
                         'dosud neprošlo schvalováním
+                        .p31ApprovingLevel = BO.BAS.IsNullInt(Me.hidApprovingLevel.Value)
                         If Me.chkDefaultApproveSetup.Checked Then   'pokud je nastaveno, že se má nahodit výchozí fakturační status
                             .p71id = BO.p71IdENUM.Schvaleno
                             If cRec.p32IsBillable Then
@@ -279,6 +294,7 @@ Public Class p31_approving_step3
             End If
 
             fraSubform.Attributes.Item("height") = strFraheight
+            RadMultiPage1.PageViews(0).Height = Unit.Parse(strFraheight)
         End If
 
 

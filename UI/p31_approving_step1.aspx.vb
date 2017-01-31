@@ -16,6 +16,9 @@
             mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForDoApprove  'schválit rozpracovanost
             If Request.Item("reapprove") = "1" Or Request.Item("clearapprove") = "1" Then
                 mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForReApprove  'pře-schválit nebo vyčistit již schválený worksheet
+                If Request.Item("approving_level") <> "" Then
+                    mq.p31ApprovingLevel = BO.BAS.IsNullInt(Request.Item("approving_level"))
+                End If
             End If
             If Request.Item("aw") <> "" Then
                 mq.MG_AdditionalSqlWHERE = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
@@ -83,6 +86,7 @@
             Dim strGUID As String = BO.BAS.GetGUID
             Dim cTemp00 As New BO.p85TempBox
             cTemp00.p85GUID = strGUID & "-00"
+            cTemp00.p85FreeText01 = Request.Item("approving_level")
             cTemp00.p85Message = "pids=" & String.Join(",", masterpids) & "&prefix=" & Request.Item("masterprefix")
             Master.Factory.p85TempBoxBL.Save(cTemp00)
 
@@ -98,6 +102,9 @@
             End If
             If Request.Item("approvingset") <> "" Then
                 strURL += "&approvingset=" & Request.Item("approvingset")
+            End If
+            If Request.Item("approving_level") <> "" Then
+                strURL += "&approving_level=" & Request.Item("approving_level")
             End If
             Response.Redirect(strURL)
 

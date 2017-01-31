@@ -242,6 +242,8 @@
         Me.lblP31Text.Visible = b
         Me.j27Code.Visible = b
         Me.p31ApprovingLevel.Visible = b
+        Me.p31Date.Visible = b
+
 
         Select Case Me.CurrentP33ID
             Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
@@ -293,6 +295,11 @@
    
 
     Protected Sub p71id_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles p71id.SelectedIndexChanged
+        If Me.CurrentP72ID = BO.p72IdENUM._NotSpecified Then
+            Dim cRec As BO.p31Worksheet = Me.Factory.p31WorksheetBL.Load(Me.CurrentP31ID)
+            DraftStatus(Me.CurrentP71ID, cRec)
+        End If
+
         RefreshState()
     End Sub
 

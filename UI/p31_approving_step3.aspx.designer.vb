@@ -14,87 +14,6 @@ Option Explicit On
 Partial Public Class p31_approving_step3
 
     '''<summary>
-    '''cmdBatch_4 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_4 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdBatch_Clear control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_Clear As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdBatch_6 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_6 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdBatch_ApprovingSet control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_ApprovingSet As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''p31ApprovingSet control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31ApprovingSet As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
-    '''cmdBatch_3 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_3 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdBatch_ApprovingSet_Clear control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_ApprovingSet_Clear As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdBatch_2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_2 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdBatch_7 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdBatch_7 As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''j74id control.
     '''</summary>
     '''<remarks>
@@ -138,15 +57,6 @@ Partial Public Class p31_approving_step3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents opgGroupBy As Global.System.Web.UI.WebControls.RadioButtonList
-
-    '''<summary>
-    '''bm1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
     '''RowCount control.
@@ -293,6 +203,33 @@ Partial Public Class p31_approving_step3
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''RadTabStrip1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''one control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents one As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''fraSubform control.
     '''</summary>
     '''<remarks>
@@ -300,6 +237,114 @@ Partial Public Class p31_approving_step3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents fraSubform As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''selected control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents selected As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''cmdBatch_4 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_4 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_Clear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_Clear As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_6 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_6 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_ApprovingSet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_ApprovingSet As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''p31ApprovingSet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31ApprovingSet As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''cmdBatch_ApprovingSet_Clear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_ApprovingSet_Clear As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_3 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_2 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_7 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_7 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''memo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents memo As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''bm1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents bm1 As Global.UI.billingmemo
 
     '''<summary>
     '''grid1 control.
@@ -372,6 +417,15 @@ Partial Public Class p31_approving_step3
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidApprovingLevel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidApprovingLevel As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''okno1 control.

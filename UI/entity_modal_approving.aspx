@@ -46,6 +46,7 @@
 
         function get_ocas() {
             var s = "masterprefix=<%=Me.CurrentPrefix%>&masterpid=<%=master.DataPID%>&masterpids=<%=Me.CurrentInputPIDs%>&datefrom=<%=Format(period1.DateFrom, "dd.MM.yyyy")%>&dateuntil=<%=Format(period1.DateUntil,"dd.MM.yyyy")%>";
+            s = s + "&approving_level=" + document.getElementById("<%=cbxApprovingLevel.ClientID%>").value;
             var aw = document.getElementById("<%=Me.hidMasterAW.ClientID%>").value;
             if (aw == "")
                 return (s);
@@ -121,7 +122,15 @@
             <td>
                 <uc:periodcombo ID="period1" runat="server" Width="220px"></uc:periodcombo>
             </td>
-
+            <td>
+                Úroveň schvalování:
+                        <asp:DropDownList ID="cbxApprovingLevel" runat="server" AutoPostBack="true">
+                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                            <asp:ListItem Text="#0" Value="0"></asp:ListItem>
+                            <asp:ListItem Text="#1" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="#2" Value="2"></asp:ListItem>
+                        </asp:DropDownList>
+            </td>
         </tr>
     </table>
     <telerik:RadTabStrip ID="tabs1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
@@ -188,6 +197,7 @@
                 <uc:plugin_datatable ID="plugin1" TableID="gridData" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Worksheet rozpracovanost" NoDataMessage="Ani jeden rozpracovaný úkon." />
             </div>
             <div style="float: left;">
+                
                 <telerik:RadToolBar ID="tlb1" runat="server" Skin="Bootstrap" Orientation="Vertical">
                     <Items>
                         <telerik:RadToolBarButton Value="all" Text="Schvalovat [vše]" NavigateUrl="javascript:approve_all()" ImageUrl="Images/approve.png"></telerik:RadToolBarButton>
@@ -247,15 +257,7 @@
                         </asp:DropDownList>
 
                     </td>
-                    <td>
-                        Úroveň schvalování:
-                        <asp:DropDownList ID="cbxApprovingLevel" runat="server" AutoPostBack="true">
-                            <asp:ListItem Text="" Value=""></asp:ListItem>
-                            <asp:ListItem Text="#0" Value="0"></asp:ListItem>
-                            <asp:ListItem Text="#1" Value="1"></asp:ListItem>
-                            <asp:ListItem Text="#2" Value="2"></asp:ListItem>
-                        </asp:DropDownList>
-                    </td>
+                    
                 </tr>
             </table>
 

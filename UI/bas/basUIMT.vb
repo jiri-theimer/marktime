@@ -419,11 +419,13 @@ Public Class basUIMT
                 If p71ID = BO.p71IdENUM.Neschvaleno Then dataItem("systemcolumn").CssClass = "a20"
 
         End Select
+
         Select Case p70ID
             Case BO.p70IdENUM.Vyfakturovano : dataItem("systemcolumn").CssClass = "a4"
             Case BO.p70IdENUM.ZahrnutoDoPausalu : dataItem("systemcolumn").CssClass = "a6"
             Case BO.p70IdENUM.ViditelnyOdpis : dataItem("systemcolumn").CssClass = "a2"
             Case BO.p70IdENUM.SkrytyOdpis : dataItem("systemcolumn").CssClass = "a3"
+            
         End Select
         If intO23ID_First > 0 And intP49ID = 0 Then dataItem("systemcolumn").Text += "<img src='Images/attachment.png' width='12px' height='12px'/>"
         If bolIsClosed Then dataItem.Font.Strikeout = True

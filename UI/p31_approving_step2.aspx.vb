@@ -15,6 +15,7 @@
                 ViewState("masterpid") = Request.Item("masterpid")
                 ViewState("pids") = Request.Item("pids")
                 ViewState("approvingset") = Server.UrlDecode(Request.Item("approvingset"))
+                ViewState("approving_level") = Request.Item("approving_level")
 
                 If ViewState("pids") = "" Then
                     ViewState("guid") = Request.Item("guid")
@@ -186,7 +187,9 @@
         If Me.p31ApprovingSet.Text <> "" Then
             strURL += "&approvingset=" & Server.UrlEncode(Me.p31ApprovingSet.Text)
         End If
-
+        If ViewState("approving_level") <> "" Then
+            strURL += "&approving_level=" & ViewState("approving_level")
+        End If
 
         Response.Redirect(strURL)
 

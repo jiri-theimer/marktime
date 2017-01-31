@@ -10,38 +10,23 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".slidingDiv1").hide();
-            $(".show_hide1").show();
-            $(".slidingDiv2").hide();
-            $(".slidingDiv3").hide();
 
-            $('.show_hide1').click(function () {
-                $(".slidingDiv2").hide();
-                $(".slidingDiv3").hide();
-                $(".slidingDiv4").hide();
-                $(".slidingDiv1").slideToggle();
-            });
-
+           
             $(".slidingDiv2").hide();
-            $(".slidingDiv3").hide();
+           
             
-            $(".show_hide2").show();
+
+            
 
             $('.show_hide2').click(function () {
-                $(".slidingDiv1").hide();
-                $(".slidingDiv3").hide();
-                
+
+               
+
                 $(".slidingDiv2").slideToggle();
             });
 
-            $('.show_hide3').click(function () {
-                $(".slidingDiv1").hide();
-                $(".slidingDiv2").hide();
-                
-                $(".slidingDiv3").slideToggle();
-            });
+           
 
-          
 
         });
 
@@ -103,11 +88,11 @@
 
             //dialog_master("p31_approving_batch_p31text.aspx?guid=<%=viewstate("guid")%>", true);
             location.replace("p31_approving_batch_p31text.aspx?guid=<%=viewstate("guid")%>");
-            
+
         }
 
-        function p31_create(field,pid) {            
-            dialog_master("p31_record.aspx?"+field+"="+pid+"&pid=0&guid_approve=<%=viewstate("guid")%>",false,800,600);
+        function p31_create(field, pid) {
+            dialog_master("p31_record.aspx?" + field + "=" + pid + "&pid=0&guid_approve=<%=viewstate("guid")%>", false, 800, 600);
         }
 
 
@@ -128,7 +113,7 @@
         }
 
         function o23_record(pid) {
-           
+
             dialog_master("o23_record.aspx?billing=1&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=Me.CurrentMasterPID%>&pid=" + pid, true);
 
         }
@@ -142,40 +127,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="slidingDiv1" style="padding: 10px;">
-        <div class="innerform_light">
-            <div class="div6">
-                <asp:Button ID="cmdBatch_4" Text="Vybrané záznamy [Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
-                <span style="padding-left: 50px;"></span>
-                <asp:Button ID="cmdBatch_Clear" Text="Vybrané záznamy vrátit na [Nerozhodnuto]" runat="server" CssClass="cmd" Width="280px" />
-            </div>
-            <div class="div6">
-                <asp:Button ID="cmdBatch_6" Text="Vybrané záznamy [Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
-                <span style="padding-left: 50px;"></span>
-                <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané záznamy zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="false" />
-                <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky" Visible="false"></telerik:RadComboBox>
-            </div>
-            <div class="div6">
-                <asp:Button ID="cmdBatch_3" Text="Vybrané záznamy [Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
-                <span style="padding-left: 50px;"></span>
-                <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="false" />
-            </div>
-            <div class="div6">
-                <asp:Button ID="cmdBatch_2" Text="Vybrané záznamy [Viditelný odpis]" runat="server" CssClass="cmd" Width="280px" />
-                <span style="padding-left: 50px;"></span>
-                <button type="button" onclick="batch_p31text()" style="width: 280px;">Hromadná úprava popisu, hodnoty a sazby úkonu (všechny úkony)</button>
-            </div>
-            <div class="div6">
-                <asp:Button ID="cmdBatch_7" Text="Vybrané záznamy [Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
-                
-            </div>
 
-        </div>
-    </div>
     <div class="slidingDiv2" style="padding: 10px;">
         <div class="innerform_light">
             <div class="div6">
-              
                 Šablona datového přehledu (sloupce):
                 <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
                 <button type="button" onclick="griddesigner()">Návrhář sloupců</button>
@@ -187,7 +142,7 @@
             </div>
             <fieldset>
                 <legend>Souhrny</legend>
-            <div class="div6">
+                <div class="div6">
                     <asp:RadioButtonList ID="opgGroupBy" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
                         <asp:ListItem Text="Bez souhrnů" Value="" Selected="true"></asp:ListItem>
                         <asp:ListItem Text="Fakturační oddíl" Value="p95Name"></asp:ListItem>
@@ -204,10 +159,7 @@
             </fieldset>
         </div>
     </div>
-    <div class="slidingDiv3">
-        <uc:billingmemo ID="bm1" runat="server" />
-    </div>
-    
+   
 
     <div style="height: 60px; width: 100%;">
         <table cellpadding="5" cellspacing="2">
@@ -281,35 +233,85 @@
             </tr>
         </table>
     </div>
+
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
-    <div style="clear:both;"></div>
+    <div style="clear: both;"></div>
+
+
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr valign="top">
             <td style="min-width: 400px; min-height: 450px;">
-                <iframe id="fraSubform" runat="server" width="100%" height="460px" frameborder="0" src=""></iframe>
-               
+                <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
+                    <Tabs>
+                        <telerik:RadTab Text="Aktuální záznam" Selected="true" Value="one"></telerik:RadTab>
+                        <telerik:RadTab Text="Vybrané záznamy" Value="selected"></telerik:RadTab>
+                        <telerik:RadTab Text="Fakt.poznámka" Value="memo"></telerik:RadTab>
+                    </Tabs>
+                </telerik:RadTabStrip>
+                <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
+                    <telerik:RadPageView ID="one" runat="server" Selected="true">
+
+
+                        <iframe id="fraSubform" runat="server" width="100%" height="460px" frameborder="0" src=""></iframe>
+                    </telerik:RadPageView>
+                    <telerik:RadPageView ID="selected" runat="server">
+                        <p></p>
+                        <div class="div6">
+                            <asp:Button ID="cmdBatch_4" Text="Vybrané záznamy [Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
+                        </div>
+                        <div class="div6">
+                            <asp:Button ID="cmdBatch_Clear" Text="Vybrané záznamy vrátit na [Nerozhodnuto]" runat="server" CssClass="cmd" Width="280px" />
+                        </div>
+                        <div class="div6">
+                            <asp:Button ID="cmdBatch_6" Text="Vybrané záznamy [Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
+
+                        </div>
+                        <div style="display: none;">
+                            <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané záznamy zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="false" />
+                            <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky" Visible="false"></telerik:RadComboBox>
+                            <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="false" />
+                        </div>
+                        <div class="div6">
+                            <asp:Button ID="cmdBatch_3" Text="Vybrané záznamy [Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
+
+
+                        </div>
+                        <div class="div6">
+                            <asp:Button ID="cmdBatch_2" Text="Vybrané záznamy [Viditelný odpis]" runat="server" CssClass="cmd" Width="280px" />
+
+
+                        </div>
+                        <div class="div6">
+                            <asp:Button ID="cmdBatch_7" Text="Vybrané záznamy [Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
+
+                        </div>
+                    </telerik:RadPageView>
+                    <telerik:RadPageView ID="memo" runat="server">
+                        <uc:billingmemo ID="bm1" runat="server" />
+                    </telerik:RadPageView>
+                </telerik:RadMultiPage>
 
             </td>
             <td>
                 <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
-                
+
 
             </td>
 
         </tr>
     </table>
-    
+
 
 
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-    
+
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
-
+    <asp:HiddenField ID="hidApprovingLevel" runat="server" />
 
     <telerik:RadWindow ID="okno1" runat="server" Modal="true" KeepInScreenBounds="true" VisibleTitlebar="true" VisibleStatusbar="false" Skin="WebBlue" ShowContentDuringLoad="false" Width="800px" Height="600px" Behaviors="Close,Move,Maximize" IconUrl="Images/window.png" Style="z-index: 9900;">
         <Shortcuts>
