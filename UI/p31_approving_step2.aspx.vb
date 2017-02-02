@@ -50,6 +50,10 @@
                 .AddToolbarButton("Pokračovat", "continue", , "Images/continue.png")
             End With
 
+            If Me.chkSkipThisStep.Checked Then
+                Me.panContainer.Style.Item("display") = "none"
+                Master.RadToolbar.Visible = False
+            End If
             
             SetupGrid()
 

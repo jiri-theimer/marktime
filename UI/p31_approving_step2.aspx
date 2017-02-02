@@ -9,13 +9,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-           
+
 
             InhaleGridHeight();
 
             <%If ViewState("can_continue") = "1" And Me.chkSkipThisStep.Checked Then%>
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdAutoContinue, "", False)%>;
-            <%end If%>
+            <%End If%>
         });
 
         function InhaleGridHeight() {
@@ -31,9 +31,9 @@
             h2 = offset.top;
 
             h3 = h1 - h2 - 150;
-           
+
             document.getElementById("<%=hidGridHeight.clientid%>").value = h3;
-     
+
 
         }
 
@@ -43,7 +43,7 @@
 
         }
         function hardrefresh(pid, flag) {
-            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;                       
+            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
 
         }
     </script>
@@ -51,41 +51,42 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div>
-        <table cellpadding="5" cellspacing="2">
-            <tr valign="top">
-                <td>
-                    <asp:Label ID="lblCount" runat="server" CssClass="lbl" Text="Počet úkonů pro schvalovací proces:"></asp:Label>
-                    
-                    <div>
-                        <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="z toho zamítnuté pro schvalování:"></asp:Label>
-                    </div>
-                </td>
-                <td style="text-align:right;">
-                    <asp:Label ID="CountAll" runat="server" CssClass="valbold"></asp:Label>
-                    <div>
-                        <asp:Label ID="CountRefused" runat="server" CssClass="valbold" ForeColor="red"></asp:Label>
-                    </div>
-                </td>
-               <td>
-                   <uc:billingmemo ID="bm1" runat="server" />
-               </td>
-               
-                <td>
-                    <asp:CheckBox ID="chkSkipThisStep" runat="server" Text="Tento krok příště automaticky přeskakovat" Font-Bold="true" />
-                </td>
-            </tr>
-        </table>
-    </div>
-   
-    <div id="offsetY"></div>
-    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
-    <div class="div6" style="display:none;">
-        <span>Nezařazené zařadit do billing dávky:</span>
-        <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="250px" AllowCustomText="true"></telerik:RadComboBox>
-        
-    </div>
+    <asp:Panel ID="panContainer" runat="server">
+        <div>
+            <table cellpadding="5" cellspacing="2">
+                <tr valign="top">
+                    <td>
+                        <asp:Label ID="lblCount" runat="server" CssClass="lbl" Text="Počet úkonů pro schvalovací proces:"></asp:Label>
 
+                        <div>
+                            <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="z toho zamítnuté pro schvalování:"></asp:Label>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <asp:Label ID="CountAll" runat="server" CssClass="valbold"></asp:Label>
+                        <div>
+                            <asp:Label ID="CountRefused" runat="server" CssClass="valbold" ForeColor="red"></asp:Label>
+                        </div>
+                    </td>
+                    <td>
+                        <uc:billingmemo ID="bm1" runat="server" />
+                    </td>
+
+                    <td>
+                        <asp:CheckBox ID="chkSkipThisStep" runat="server" Text="Tento krok příště automaticky přeskakovat" Font-Bold="true" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="offsetY"></div>
+        <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
+        <div class="div6" style="display: none;">
+            <span>Nezařazené zařadit do billing dávky:</span>
+            <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="250px" AllowCustomText="true"></telerik:RadComboBox>
+
+        </div>
+    </asp:Panel>
     <asp:HiddenField ID="hidGridHeight" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
     <asp:Button ID="cmdAutoContinue" runat="server" Style="display: none;" />

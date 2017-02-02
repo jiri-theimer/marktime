@@ -28,7 +28,10 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
-           
+
+           <%If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then%>
+            document.getElementById("search2").value = "";
+            <%End If%>
 
         });
 

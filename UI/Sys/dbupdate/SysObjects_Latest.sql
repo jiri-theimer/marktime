@@ -7699,6 +7699,7 @@ CREATE  procedure [dbo].[p31_save_approving]
 ,@p31text nvarchar(2000)
 ,@vatrate_approved float
 ,@dat_p31date datetime
+,@approving_level int
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -7711,6 +7712,7 @@ if @err_ret<>''
 
 
 set @vatrate_approved=isnull(@vatrate_approved,0)
+set @approving_level=isnull(@approving_level,0)
 
 ----validace sazby dph------------------
 declare @vatisok bit,@p31date datetime,@p33code varchar(10),@p41id int,@j27id_orig int,@j02id_sys int,@p32id int
@@ -7779,7 +7781,7 @@ if @p33code='T'
 if ltrim(rtrim(@approvingset))=''
  set @approvingset=null
 
-update p31worksheet set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@p31date
+update p31worksheet set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@p31date,p31ApprovingLevel=@approving_level
 where p31id=@p31id
 
 if @p71id=2 or @p71id=3
@@ -7927,6 +7929,7 @@ CREATE  procedure [dbo].[p31_save_approving_temp]
 ,@p31text nvarchar(2000)
 ,@vatrate_approved float
 ,@dat_p31date datetime
+,@approving_level int
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -7942,6 +7945,7 @@ if @err_ret<>''
 exec [p31_setup_temp] @p31id,@guid
 
 set @vatrate_approved=isnull(@vatrate_approved,0)
+set @approving_level=isnull(@approving_level,0)
 
 ----validace sazby dph------------------
 declare @vatisok bit,@p31date datetime,@p33code varchar(10),@p41id int,@j27id_orig int,@j02id_sys int,@p32id int
@@ -8009,7 +8013,7 @@ if @p33code='T'
 if ltrim(rtrim(@approvingset))=''
  set @approvingset=null
 
-update p31worksheet_temp set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@dat_p31date
+update p31worksheet_temp set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@dat_p31date,p31ApprovingLevel=@approving_level
 where p31GUID=@guid AND p31id=@p31id
 
 if @p71id=2 or @p71id=3
@@ -12539,7 +12543,7 @@ BEGIN
   insert into p85TempBox(p85GUID,p85DataPID,p85Prefix) values(@guid,@p31id,'p31')
 
   ---exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
-  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@p31date,@err_ret OUTPUT
+  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@p31date,0,@err_ret OUTPUT
 
   print 'p31_save_approving, p31id: '+convert(varchar(10),@p31id)+', error: '+@err_ret
   

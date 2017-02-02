@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class p31_approving_step2
 
     '''<summary>
+    '''panContainer control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panContainer As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''lblCount control.
     '''</summary>
     '''<remarks>
