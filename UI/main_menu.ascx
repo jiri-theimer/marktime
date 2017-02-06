@@ -17,6 +17,10 @@
     <%If panContainer.Visible Then%>    
    
     <%If Me.hidAllowSearch1.Value = "1" Then%>
+    <%If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then%>
+    document.getElementById("<%=hidSearch1.Value%>").value = "";
+    <%End If%>
+
     $(function () {        
         $("#<%=hidSearch1.Value%>").autocomplete({
             source: "Handler/handler_search_project.ashx",

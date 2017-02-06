@@ -75,10 +75,13 @@ Public Class p31_approving_step3
 
                 .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
 
+                If .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator) Or .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator) Then
+                    .AddToolbarButton("Pokračovat fakturací", "save_invoice", 1, "Images/save.png")
+                End If
+
                 If Me.CurrentMasterPrefix <> "" Then
                     .AddToolbarButton("Uložit", "save_gate", 1, "Images/save.png")
                 End If
-
 
                 .RadToolbar.FindItemByValue("setting").CssClass = "show_hide2"
                 ''.RadToolbar.FindItemByValue("o23").CssClass = "show_hide3"
@@ -585,6 +588,23 @@ Public Class p31_approving_step3
                 If Not SaveChanges() Then Return
                 Dim cTEMP As BO.p85TempBox = Master.Factory.p85TempBoxBL.LoadByGUID(ViewState("guid") & "-00")
                 Response.Redirect("entity_modal_approving.aspx?" & cTEMP.p85Message)
+            Case "save_invoice"
+                If Not SaveChanges() Then Return
+                Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")), strGUID As String = BO.BAS.GetGUID(), x As Integer = 0
+                For Each cTemp In lis
+                    Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(cTemp.p85DataPID)
+                    If cRec.p71ID = BO.p71IdENUM.Schvaleno And cRec.p72ID_AfterApprove <> BO.p72IdENUM.FakturovatPozdeji And cRec.p72ID_AfterApprove <> BO.p72IdENUM._NotSpecified And cRec.p91ID = 0 Then
+                        Dim c As New BO.p85TempBox
+                        c.p85GUID = strGUID
+                        c.p85Prefix = "p31"
+                        c.p85DataPID = cRec.PID
+                        Master.Factory.p85TempBoxBL.Save(c)
+                        x += 1
+                    End If
+                Next
+                If x = 0 Then Master.Notify("Pro fakturaci není vhodný ani jeden úkon!", NotifyLevel.WarningMessage) : Return
+                Dim s As String = "p91_create_step2.aspx?guid=" & strGUID & "&prefix=" & Me.CurrentMasterPrefix & "&pid=" & Me.CurrentMasterPID
+                Response.Redirect(s)
         End Select
        
     End Sub

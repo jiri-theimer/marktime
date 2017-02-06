@@ -2,11 +2,13 @@
 
 Public Class main_menu
     Inherits System.Web.UI.UserControl
+
     Class TextBoxTemplate
         Public Sub InstantiateIn(ByVal container As Control)
             Dim txt1 As New TextBox()
             txt1.ID = "search1"
             txt1.Text = Resources.Site.NajitProjekt
+            txt1.ToolTip = Resources.Site.NajitProjekt
             txt1.Style.Item("width") = "110px"
             txt1.Attributes.Item("onfocus") = "search1Focus()"
             txt1.Attributes.Item("onblur") = "search1Blur()"
@@ -65,8 +67,10 @@ Public Class main_menu
             Return menu1.Items.Count
         End Get
     End Property
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+   
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        
     End Sub
 
     Public Sub ClearAll()
