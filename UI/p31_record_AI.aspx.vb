@@ -7,6 +7,7 @@
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ff1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -143,7 +144,7 @@
                 Dim cJ27I As BO.j27Currency = Master.Factory.ftBL.LoadJ27(.j27ID_Billing_Invoiced)
                 j27ident_invoiced.Text = cJ27I.j27Code
 
-
+                Handle_FF(cRec.p34ID)
             Else
                 panInvoiced.Visible = False
 
@@ -273,11 +274,21 @@
             lis.Add(c)
             With Master.Factory.p31WorksheetBL
                 If .UpdateInvoice(cRec.p91ID, lis) Then
+                    Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False, "")
+
                     Master.CloseAndRefreshParent("p31-save")
                 Else
                     Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
                 End If
             End With
         End If
+    End Sub
+
+    Private Sub Handle_FF(intP34ID As Integer)
+        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID)
+        If fields.Count > 0 Then
+            ff1.FillData(fields)
+        End If
+
     End Sub
 End Class

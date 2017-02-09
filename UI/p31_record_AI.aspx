@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/pageheader.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
@@ -104,9 +105,11 @@
                 <asp:Label ID="lblP31Text" runat="server" Text="Text:" CssClass="lbl"></asp:Label>
             </div>
             <asp:TextBox ID="Edit_p31Text" runat="server" TextMode="MultiLine" Style="width: 100%; height: 50px;"></asp:TextBox>
+            <uc:freefields ID="ff1" runat="server" />
         </div>
+        
     </div>
-
+    
 
 
     <table>

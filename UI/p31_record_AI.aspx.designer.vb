@@ -122,6 +122,15 @@ Partial Public Class p31_record_AI
     Protected WithEvents Edit_p31Text As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''ff1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ff1 As Global.UI.freefields
+
+    '''<summary>
     '''lblPerson control.
     '''</summary>
     '''<remarks>
