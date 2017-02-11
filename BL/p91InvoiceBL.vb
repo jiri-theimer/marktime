@@ -20,7 +20,7 @@
     Function LoadP94ByCode(strP94Code As String) As BO.p94Invoice_Payment
     Function GetVirtualCount(myQuery As BO.myQueryP91) As Integer
     Function GetSumRow(myQuery As BO.myQueryP91) As BO.p91InvoiceSum
-    Function SaveP99(intP91ID As Integer, intP90ID As Integer) As Boolean
+    Function SaveP99(intP91ID As Integer, intP90ID As Integer, dblAmount As Double) As Boolean
     Function DeleteP99(intP91ID As Integer, intP90ID As Integer) As Boolean
     Function CreateCreditNote(intP91ID As Integer, intP92ID_CreditNote As Integer) As Integer
     Function RecalcFPR(d1 As Date, d2 As Date, Optional intP51ID As Integer = 0) As Boolean
@@ -161,8 +161,8 @@ Class p91InvoiceBL
     Public Function GetSumRow(myQuery As BO.myQueryP91) As BO.p91InvoiceSum Implements Ip91InvoiceBL.GetSumRow
         Return _cDL.GetSumRow(myQuery)
     End Function
-    Public Function SaveP99(intP91ID As Integer, intP90ID As Integer) As Boolean Implements Ip91InvoiceBL.SaveP99
-        Return _cDL.SaveP99(intP91ID, intP90ID)
+    Public Function SaveP99(intP91ID As Integer, intP90ID As Integer, dblAmount As Double) As Boolean Implements Ip91InvoiceBL.SaveP99
+        Return _cDL.SaveP99(intP91ID, intP90ID, dblAmount)
     End Function
     Public Function DeleteP99(intP91ID As Integer, intP90ID As Integer) As Boolean Implements Ip91InvoiceBL.DeleteP99
         Return _cDL.DeleteP99(intP91ID, intP90ID)

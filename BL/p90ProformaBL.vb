@@ -7,7 +7,7 @@
     Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma)
-    
+    Function GetList_p99(intP91ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma)
 End Interface
 Class p90ProformaBL
     Inherits BLMother
@@ -89,5 +89,8 @@ Class p90ProformaBL
     End Function
     Public Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean Implements Ip90ProformaBL.UpdateP82Code
         Return _cDL.UpdateP82Code(intP90ID, strP82Code)
+    End Function
+    Public Function GetList_p99(intP91ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma) Implements Ip90ProformaBL.GetList_p99
+        Return _cDL.GetList_p99(intP91ID)
     End Function
 End Class

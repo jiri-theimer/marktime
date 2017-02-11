@@ -21,10 +21,40 @@
             <td>
                 <uc:datacombo ID="p90ID" runat="server" DataTextField="p90Code" DataValueField="pid" IsFirstEmptyRow="true" Filter="Contains" Width="100px" AutoPostBack="true"></uc:datacombo>
             </td>
-
+            
 
         </tr>
     </table>
+    <asp:Panel ID="panAmount" runat="server">
+    <table cellpadding="10">
+        <tr>
+            <td>
+                <asp:Label ID="lblPercentage" runat="server" CssClass="lbl" Text="Kolik % z částky zálohy (vč.DPH) spárovat:"></asp:Label>
+            </td>
+            <td>
+                <telerik:RadNumericTextBox ID="Percentage" runat="server" NumberFormat-DecimalDigits="4" Width="80px" MaxValue="100" MinValue="0" Value="100" IncrementSettings-Step="10" ShowSpinButtons="true" AutoPostBack="true"></telerik:RadNumericTextBox>%
+            </td>
+            <td>
+                nebo kolik z částky zálohy (vč. DPH):
+            </td>
+            <td>
+                <telerik:RadNumericTextBox ID="dblAmount" runat="server" Width="100px" AutoPostBack="true"></telerik:RadNumericTextBox>
+            </td>
+            <td>
+                Bez DPH:
+            </td>
+            <td>
+                <asp:Label ID="dblAmountWithoutVat" runat="server" CssClass="valbold"></asp:Label>
+            </td>
+            <td>
+                DPH:
+            </td>
+            <td>
+                <asp:Label ID="dblAmountVAT" runat="server" CssClass="valbold"></asp:Label>
+            </td>
+        </tr>
+    </table>
+    </asp:Panel>
 
     <fieldset>
         <legend>Spárované zálohy s fakturou</legend>
@@ -36,7 +66,7 @@
                             <%#Eval("p90Code")%>
                         </td>
                         <td style="font-weight: bold; text-align: right;">
-                            <%#BO.BAS.FN(Eval("p90Amount_Billed"))%>
+                            <%#BO.BAS.FN(Eval("p99Amount"))%>
                         </td>
                         <td>
                             <asp:Button ID="cmdDelete" runat="server" CssClass="cmd" Text="Odstranit vazbu" />

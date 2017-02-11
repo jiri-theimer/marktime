@@ -98,7 +98,15 @@
         Return _cDB.RunSP("p90_delete", pars)
     End Function
 
+    Public Function GetList_p99(intP91ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma)
+        Dim pars As New DbParameters
+        pars.Add("p91id", intP91ID, DbType.Int32)
+        Dim s As String = "SELECT a.*,p90.p90Code as _p90Code"
+        s += " FROM p99Invoice_Proforma a INNER JOIN p90Proforma p90 ON a.p90ID=p90.p90ID"
+        s += " WHERE a.p91ID=@p91id"
 
+        Return _cDB.GetList(Of BO.p99Invoice_Proforma)(s, pars)
+    End Function
     Public Function GetList(myQuery As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma)
         Dim s As String = GetSQLPart1(0), pars As New DbParameters
         Dim strW As String = bas.ParseWhereMultiPIDs("a.p90ID", myQuery)

@@ -41,6 +41,60 @@ Partial Public Class p91_proforma
     Protected WithEvents p90ID As Global.UI.datacombo
 
     '''<summary>
+    '''panAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panAmount As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''lblPercentage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblPercentage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Percentage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Percentage As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''dblAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents dblAmount As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''dblAmountWithoutVat control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents dblAmountWithoutVat As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''dblAmountVAT control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents dblAmountVAT As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''rpP99 control.
     '''</summary>
     '''<remarks>
