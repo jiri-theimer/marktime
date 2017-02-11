@@ -127,7 +127,7 @@
                 strW += " AND a.p90ID IN (SELECT p90ID FROM p99Invoice_Proforma)"
             End If
             If .IsP99Bounded = BO.BooleanQueryMode.FalseQuery Then
-                strW += " AND a.p90ID NOT IN (SELECT p90ID FROM p99Invoice_Proforma)"
+                strW += " AND a.p90ID NOT IN (SELECT p90ID FROM p99Invoice_Proforma)"   'zálohy ještě nesvázané s fakturami
             End If
             If .SearchExpression <> "" Then
                 strW += " AND (a.p90Code like '%'+@expr+'%' OR a.p90Text1 LIKE '%'+@expr+'%' OR p28.p28Name like '%'+@expr+'%')"
