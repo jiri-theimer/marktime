@@ -29,8 +29,9 @@ Public Class pokus
     
     
     Private Sub cmdPokus_Click(sender As Object, e As EventArgs) Handles cmdPokus.Click
-        Dim c As New UI.mtService()
-        Me.txtResult.Text = c.LoadMsOfficeBinding("ahoj", "lama", "123456").o23ID
+        Dim dblHours As Double = BO.BAS.IsNullNum(Me.txtHours.Text)
+        Dim cT As New BO.clsTime
+        Me.txtResult.Text = cT.GetTimeFromSeconds(CInt(dblHours * 60 * 60))
 
 
 

@@ -3,7 +3,7 @@
         If dblHours Is Nothing Then Return ""
 
         Dim cT As New BO.clsTime
-        Return cT.GetTimeFromSeconds(dblHours * 60 * 60)
+        Return cT.GetTimeFromSeconds(CInt(dblHours * 60 * 60))
 
     End Function
 End Class

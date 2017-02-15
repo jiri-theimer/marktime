@@ -13,6 +13,8 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+    Hodiny: <asp:TextBox ID="txtHours" runat="server" Text="2,58333"></asp:TextBox>
     
     <asp:Button ID="cmdPokus" runat="server" Text="test" />
 
