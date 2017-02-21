@@ -60,4 +60,10 @@
             Return _Owner
         End Get
     End Property
+
+    Public ReadOnly Property CodeWithClient As String
+        Get
+            Return Me.p90Code & " - " & _p28Name
+        End Get
+    End Property
 End Class

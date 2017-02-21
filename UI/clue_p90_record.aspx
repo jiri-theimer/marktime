@@ -57,8 +57,24 @@
         <div class="bigtext" style="width: 99%;">
             <asp:Label ID="p90Text1" runat="server"></asp:Label>
         </div>
-
-
+        <div><b>Spárované faktury:</b></div>
+        <table cellpadding="10">
+        <asp:Repeater ID="rp1" runat="server">
+            <ItemTemplate>
+                <tr>
+                    <td>
+                        <%# Eval("p91Code")%>
+                    </td>
+                    <td align="right">
+                        <%# Eval("p99Amount")%>
+                    </td>
+                    <td align="right">
+                        <%# Eval("p99Amount_WithoutVat")%>
+                    </td>
+                </tr>
+            </ItemTemplate>
+        </asp:Repeater>
+        </table>
 
     </asp:panel>
 </asp:Content>

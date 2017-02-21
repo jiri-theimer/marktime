@@ -1,13 +1,14 @@
 ﻿Public Interface Ip90ProformaBL
     Inherits IFMother
-    Function Save(cRec As BO.p90Proforma, lisFF As List(Of BO.FreeField)) As Boolean
+    Function Save(cRec As BO.p90Proforma, lisFF As List(Of BO.FreeField), lisP82 As List(Of BO.p82Proforma_Payment)) As Boolean
     Function Load(intPID As Integer) As BO.p90Proforma
     Function LoadMyLastCreated() As BO.p90Proforma
-    Function LoadByP82ID(intP82ID As Integer) As BO.p90Proforma
-    Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean
+    Function LoadP82(intP82ID As Integer) As BO.p82Proforma_Payment
+    Function UpdateP82Code(intP82ID As Integer, strP82Code As String) As Boolean
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma)
-    Function GetList_p99(intP91ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma)
+    Function GetList_p99(intP91ID As Integer, intP90ID As Integer, intP82ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma)
+    Function GetList_p82(intP90ID As Integer) As IEnumerable(Of BO.p82Proforma_Payment)
 End Interface
 Class p90ProformaBL
     Inherits BLMother
@@ -26,7 +27,7 @@ Class p90ProformaBL
         _cDL = New DL.p90ProformaDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.p90Proforma, lisFF As List(Of BO.FreeField)) As Boolean Implements Ip90ProformaBL.Save
+    Public Function Save(cRec As BO.p90Proforma, lisFF As List(Of BO.FreeField), lisP82 As List(Of BO.p82Proforma_Payment)) As Boolean Implements Ip90ProformaBL.Save
         With cRec
             If .p28ID = 0 Then _Error = "Chybí klient." : Return False
             If .j27ID = 0 Then _Error = "Chybí měna." : Return False
@@ -36,26 +37,20 @@ Class p90ProformaBL
                     _Error = "Částka bez DPH + částka DPH musí souhlasit s celkovou částkou." : Return False
                 End If
             End If
-            If .p90Amount_Billed < 0 Then
-                _Error = "Částka úhrady musí být kladné číslo." : Return False
-            End If
-            If .p90Amount_Billed > 0 Then
-                If .p90DateBilled Is Nothing Then
-                    _Error = "Pokud je zapsaná úhrada, musí být vyplněno i datum úhrady." : Return False
+            If Not lisP82 Is Nothing Then
+                Dim dbl As Double = lisP82.Where(Function(p) p.IsSetAsDeleted = False).Sum(Function(p) p.p82Amount)
+                If dbl > .p90Amount Then
+                    _Error = "Celková částka úhrady je vyšší než částka zálohy." : Return False
                 End If
             End If
-            If Not .p90DateBilled Is Nothing Then
-                If .p90Amount_Billed = 0 Then
-                    _Error = "Pokud je uvedeno datum úhrady, musí být vyplněna i částka úhrady." : Return False
-                End If
-            End If
+           
             If .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
 
             .p90Amount_Debt = .p90Amount - .p90Amount_Billed
 
         End With
 
-        If _cDL.Save(cRec, lisFF) Then
+        If _cDL.Save(cRec, lisFF, lisP82) Then
             If cRec.PID = 0 Then
                 Me.RaiseAppEvent(BO.x45IDEnum.p90_new, _LastSavedPID)
             Else
@@ -72,8 +67,8 @@ Class p90ProformaBL
     Public Function LoadMyLastCreated() As BO.p90Proforma Implements Ip90ProformaBL.LoadMyLastCreated
         Return _cDL.LoadMyLastCreated()
     End Function
-    Public Function LoadByP82ID(intP82ID As Integer) As BO.p90Proforma Implements Ip90ProformaBL.LoadByP82ID
-        Return _cDL.LoadByP82ID(intP82ID)
+    Public Function LoadP82(intP82ID As Integer) As BO.p82Proforma_Payment Implements Ip90ProformaBL.LoadP82
+        Return _cDL.LoadP82(intP82ID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ip90ProformaBL.Delete
         Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.p90Proforma, intPID)
@@ -87,10 +82,13 @@ Class p90ProformaBL
     Public Function GetList(mq As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma) Implements Ip90ProformaBL.GetList
         Return _cDL.GetList(mq)
     End Function
-    Public Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean Implements Ip90ProformaBL.UpdateP82Code
-        Return _cDL.UpdateP82Code(intP90ID, strP82Code)
+    Public Function UpdateP82Code(intP82ID As Integer, strP82Code As String) As Boolean Implements Ip90ProformaBL.UpdateP82Code
+        Return _cDL.UpdateP82Code(intP82ID, strP82Code)
     End Function
-    Public Function GetList_p99(intP91ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma) Implements Ip90ProformaBL.GetList_p99
-        Return _cDL.GetList_p99(intP91ID)
+    Public Function GetList_p99(intP91ID As Integer, intP90ID As Integer, intP82ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma) Implements Ip90ProformaBL.GetList_p99
+        Return _cDL.GetList_p99(intP91ID, intP90ID, intP82ID)
+    End Function
+    Public Function GetList_p82(intP90ID As Integer) As IEnumerable(Of BO.p82Proforma_Payment) Implements Ip90ProformaBL.GetList_p82
+        Return _cDL.GetList_p82(intP90ID)
     End Function
 End Class

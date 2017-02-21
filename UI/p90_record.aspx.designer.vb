@@ -248,67 +248,22 @@ Partial Public Class p90_record
     Protected WithEvents p90text2 As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label4 control.
+    '''cmdAddP82 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label4 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cmdAddP82 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''p90Amount_Billed control.
+    '''rpP82 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p90Amount_Billed As Global.Telerik.Web.UI.RadNumericTextBox
-
-    '''<summary>
-    '''Label5 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p90DateBilled control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p90DateBilled As Global.Telerik.Web.UI.RadDatePicker
-
-    '''<summary>
-    '''p82Code control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p82Code As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''link_x31_dpp control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents link_x31_dpp As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''p90TextDPP control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p90TextDPP As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents rpP82 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''lblOwner control.

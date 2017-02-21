@@ -34,6 +34,11 @@
             dialog_master("report_modal.aspx?prefix=p90&pid=<%=master.datapid%>&x31id="+x31id, true);
 
         }
+        function report_dpp(x31id,p82id) {
+
+            dialog_master("report_modal.aspx?prefix=p82&pid="+p82id+"&x31id=" + x31id, true);
+
+        }
 
     </script>
 </asp:Content>
@@ -142,20 +147,42 @@
                 </div>
                 <div class="content">
 
-                    <asp:Label ID="Label4" Text="Již uhrazeno:" runat="server" CssClass="lbl"></asp:Label>
-                        <telerik:RadNumericTextBox ID="p90Amount_Billed" runat="server" Width="100px"></telerik:RadNumericTextBox>
-                        <asp:Label ID="Label5" Text="Datum úhrady:" runat="server" CssClass="lbl"></asp:Label>
-                        <telerik:RadDatePicker ID="p90DateBilled" runat="server"  Width="120px" SharedCalendarID="SharedCalendar">
-                            <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
-                        </telerik:RadDatePicker>
-                    <asp:HyperLink ID="p82Code" runat="server" ToolTip="Číslo dokladu o přijaté platbě"></asp:HyperLink>
-                    <span style="padding-left: 30px;"></span>
-                        <asp:HyperLink ID="link_x31_dpp" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report_dpp()"></asp:HyperLink>
-
-                    <div>Text k dokladu o přijaté platbě</div>
-                    <div>
-                        <asp:TextBox ID="p90TextDPP" runat="server" TextMode="MultiLine" Style="height: 30px; width: 100%;"></asp:TextBox>
-                    </div>
+                    <asp:Button ID="cmdAddP82" runat="server" CssClass="cmd" Text="Přidat úhradu" />
+                    <table cellpadding="8" cellspacing="2">
+                        <tr>
+                            <th>Datum úhrady</th>
+                            <th>Částka úhrady</th>
+                            <th>Text k dokladu o přijaté platbě</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    <asp:Repeater ID="rpP82" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td>
+                                    <telerik:RadDatePicker ID="p82Date" runat="server" Width="120px" >
+                                        <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
+                                    </telerik:RadDatePicker>
+                                </td>
+                                <td>
+                                    <telerik:RadNumericTextBox ID="p82Amount" runat="server" Width="100px"></telerik:RadNumericTextBox>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="p82Text" runat="server" style="width:300px;height:50px;" TextMode="MultiLine"></asp:TextBox>
+                                </td>
+                                <td>
+                                    <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
+                                    <asp:HiddenField ID="p85id" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="p82Code" runat="server" ToolTip="Číslo dokladu o přijaté platbě"></asp:HyperLink>
+                    
+                                    <asp:HyperLink ID="link_x31_dpp" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report_dpp()"></asp:HyperLink>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                    </table>
                 </div>
             </div>
 

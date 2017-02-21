@@ -49,6 +49,7 @@
                     <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
                     <asp:ListItem Text="Daňová faktura" Value="391"></asp:ListItem>
                     <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
+                    <asp:ListItem Text="Úhrada zálohové faktury" Value="382"></asp:ListItem>
                     <asp:ListItem Text="Rozpočet projektu" Value="345"></asp:ListItem>
                     <asp:ListItem Text="Úhrada faktury" Value="394"></asp:ListItem>
                     <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>

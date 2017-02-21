@@ -11,50 +11,31 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
     <table cellpadding="10">
-        <tr>
+        <tr valign="top">
             <td>
                 <asp:HyperLink ID="clue_p90" runat="server" CssClass="reczoom" Text="i" title="Detail zálohové faktury" Visible="false"></asp:HyperLink>
             </td>
             <td>
-                <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Uhrazená zálohová faktura:"></asp:Label>
+                <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Zálohová faktura:"></asp:Label>
             </td>
             <td>
-                <uc:datacombo ID="p90ID" runat="server" DataTextField="p90Code" DataValueField="pid" IsFirstEmptyRow="true" Filter="Contains" Width="100px" AutoPostBack="true"></uc:datacombo>
-            </td>
-            
-
-        </tr>
-    </table>
-    <asp:Panel ID="panAmount" runat="server">
-    <table cellpadding="10">
-        <tr>
-            <td>
-                <asp:Label ID="lblPercentage" runat="server" CssClass="lbl" Text="Kolik % z částky zálohy (vč.DPH) spárovat:"></asp:Label>
+                <uc:datacombo ID="p90ID" runat="server" DataTextField="CodeWithClient" DataValueField="pid" IsFirstEmptyRow="true" Filter="Contains" Width="250px" AutoPostBack="true"></uc:datacombo>
+                <div>
+                    <asp:CheckBox ID="chkClientOnly" runat="server" AutoPostBack="true" CssClass="chk" Text="Pouze zálohy klienta" Checked="true" />
+                </div>
             </td>
             <td>
-                <telerik:RadNumericTextBox ID="Percentage" runat="server" NumberFormat-DecimalDigits="4" Width="80px" MaxValue="100" MinValue="0" Value="100" IncrementSettings-Step="10" ShowSpinButtons="true" AutoPostBack="true"></telerik:RadNumericTextBox>%
+               <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Úhrada zálohy:"></asp:Label>
             </td>
             <td>
-                nebo kolik z částky zálohy (vč. DPH):
+                <asp:DropDownList ID="p82ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="DateWithAmount"></asp:DropDownList>
             </td>
             <td>
-                <telerik:RadNumericTextBox ID="dblAmount" runat="server" Width="100px" AutoPostBack="true"></telerik:RadNumericTextBox>
-            </td>
-            <td>
-                Bez DPH:
-            </td>
-            <td>
-                <asp:Label ID="dblAmountWithoutVat" runat="server" CssClass="valbold"></asp:Label>
-            </td>
-            <td>
-                DPH:
-            </td>
-            <td>
-                <asp:Label ID="dblAmountVAT" runat="server" CssClass="valbold"></asp:Label>
+                
             </td>
         </tr>
     </table>
-    </asp:Panel>
+    
 
     <fieldset>
         <legend>Spárované zálohy s fakturou</legend>

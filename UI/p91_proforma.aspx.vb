@@ -16,18 +16,27 @@
                 .AddToolbarButton("Uložit vazbu na zálohu", "save", , "Images/save.png")
 
             End With
-            Dim mq As New BO.myQueryP90
-            mq.IsP99Bounded = BO.BooleanQueryMode.FalseQuery
-            Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
-            mq.j27ID = cRec.j27ID
-            Me.p90ID.DataSource = Master.Factory.p90ProformaBL.GetList(mq).Where(Function(p) p.p90Amount_Debt < 20)
-            Me.p90ID.DataBind()
+            Handle_p90_Combo()
 
             
-            rpP99.DataSource = Master.Factory.p90ProformaBL.GetList_p99(Master.DataPID)
+            rpP99.DataSource = Master.Factory.p90ProformaBL.GetList_p99(Master.DataPID, 0, 0)
             rpP99.DataBind()
 
         End If
+    End Sub
+
+    Private Sub Handle_p90_Combo()
+        Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
+
+        Dim mq As New BO.myQueryP90
+        mq.j27ID = cRec.j27ID
+        
+        If Me.chkClientOnly.Checked Then
+            mq.p28ID = cRec.p28ID
+        End If
+
+        Me.p90ID.DataSource = Master.Factory.p90ProformaBL.GetList(mq).Where(Function(p) p.p90Amount_Debt < 20)
+        Me.p90ID.DataBind()
     End Sub
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
@@ -38,14 +47,14 @@
                 Master.Notify("Musíte vybrat zálohovou fakturu.", NotifyLevel.WarningMessage)
                 Return
             End If
-            If BO.BAS.IsNullNum(dblAmount.Value) <= 0 Then
-                Master.Notify("Částka musí být větší než NULA.", NotifyLevel.ErrorMessage)
+            If BO.BAS.IsNullInt(Me.p82ID.SelectedValue) = 0 Then
+                Master.Notify("Chybí úhrada zálohové faktury.", NotifyLevel.ErrorMessage)
                 Return
             End If
-            dblAmount.Value = Math.Round(BO.BAS.IsNullNum(dblAmount.Value), 2)
+
 
             With Master.Factory.p91InvoiceBL
-                If .SaveP99(Master.DataPID, intP90ID, BO.BAS.IsNullNum(Me.dblAmount.Value)) Then
+                If .SaveP99(Master.DataPID, intP90ID, BO.BAS.IsNullInt(Me.p82ID.SelectedValue)) Then
                     Master.CloseAndRefreshParent("p91-save")
                 Else
                     Master.Notify(.ErrorMessage, NotifyLevel.ErrorMessage)
@@ -57,38 +66,16 @@
     Private Sub p90ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles p90ID.SelectedIndexChanged
         Dim intPID As Integer = BO.BAS.IsNullInt(Me.p90ID.SelectedValue)
         If intPID > 0 Then
-            Me.clue_p90.Visible = True
+
             Me.clue_p90.Attributes("rel") = "clue_p90_record.aspx?pid=" & intPID.ToString
-            Handle_Amount(intPID, True)
+            Me.p82ID.DataSource = Master.Factory.p90ProformaBL.GetList_p82(intPID)
+            Me.p82ID.DataBind()
 
-        Else
-            Me.clue_p90.Visible = False
         End If
 
     End Sub
 
-    Private Sub Handle_Amount(intP90ID As Integer, bolFromPerc As Boolean)
-        If intP90ID = 0 Then Return
-        Dim cRec As BO.p90Proforma = Master.Factory.p90ProformaBL.Load(intP90ID)
-        Dim cInvoice As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
-        Dim dblBasis As Double = cRec.p90Amount_Billed
-        If cRec.p90Amount_Billed > cInvoice.p91Amount_TotalDue Then
-            dblBasis = cInvoice.p91Amount_TotalDue
-        End If
-        If Not bolFromPerc Then
-            Try
-                Me.Percentage.Value = 100 * BO.BAS.IsNullNum(dblAmount.Value) / dblBasis
-            Catch ex As Exception
-
-            End Try
-        Else
-            dblAmount.Value = dblBasis * BO.BAS.IsNullNum(Me.Percentage.Value) / 100
-        End If
-
-        Dim dbl As Double = dblAmount.Value / (1 + cRec.p90VatRate / 100)
-        dblAmountWithoutVat.Text = BO.BAS.FN(dbl)
-        dblAmountVAT.Text = BO.BAS.FN(dblAmount.Value - dbl)
-    End Sub
+    
 
     Private Sub rpP99_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpP99.ItemCommand
         Dim intP90ID As Integer = CInt(e.CommandArgument)
@@ -102,21 +89,20 @@
         CType(e.Item.FindControl("cmdDelete"), Button).CommandArgument = cRec.p90ID.ToString
     End Sub
 
-    Private Sub Percentage_TextChanged(sender As Object, e As EventArgs) Handles Percentage.TextChanged
-        Handle_Amount(BO.BAS.IsNullInt(Me.p90ID.SelectedValue), True)
-    End Sub
-
+    
     Private Sub p91_proforma_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If BO.BAS.IsNullInt(Me.p90ID.SelectedValue) = 0 Then
-            panAmount.Visible = False
+            Me.p82ID.Visible = False
+            Me.clue_p90.Visible = False
         Else
-            panAmount.Visible = True
+            Me.clue_p90.Visible = True
+            Me.p82ID.Visible = True
         End If
     End Sub
 
-    Private Sub dblAmount_TextChanged(sender As Object, e As EventArgs) Handles dblAmount.TextChanged
-        Handle_Amount(BO.BAS.IsNullInt(Me.p90ID.SelectedValue), False)
+    
 
-
+    Private Sub chkClientOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkClientOnly.CheckedChanged
+        Handle_p90_Combo()
     End Sub
 End Class

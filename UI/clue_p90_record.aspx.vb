@@ -27,6 +27,8 @@
         End With
 
        
+        rp1.DataSource = Master.Factory.p90ProformaBL.GetList_p99(0, Master.DataPID, 0)
+        rp1.DataBind()
 
     End Sub
 End Class

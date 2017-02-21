@@ -86,6 +86,15 @@ Partial Public Class clue_p90_record
     Protected WithEvents p90Text1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

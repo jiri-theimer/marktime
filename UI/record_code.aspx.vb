@@ -75,11 +75,12 @@
                     End If
                     ShowLast10("select top 10 p90Code,p89Name FROM p90Proforma a LEFT OUTER JOIN p89ProformaType b ON a.p89ID=b.p89ID WHERE a.p90IsDraft=0 ORDER BY p90ID DESC")
                 Case BO.x29IdEnum.p82Proforma_Payment
-                    Dim cRec As BO.p90Proforma = .p90ProformaBL.LoadByP82ID(Master.DataPID)
-                    Me.txtCode.Text = cRec.p82Code : Me.Owner.Text = cRec.Owner
-                    Dim cTR As BO.p89ProformaType = .p89ProformaTypeBL.Load(cRec.p89ID)
+                    Dim cRec As BO.p82Proforma_Payment = .p90ProformaBL.LoadP82(Master.DataPID)
+                    Dim cP90 As BO.p90Proforma = .p90ProformaBL.Load(cRec.p90ID)
+                    Me.txtCode.Text = cRec.p82Code : Me.Owner.Text = cP90.Owner
+                    Dim cTR As BO.p89ProformaType = .p89ProformaTypeBL.Load(cP90.p89ID)
                     intX38ID = cTR.x38ID_Payment
-                    If cRec.j02ID_Owner = .SysUser.j02ID Or .TestPermission(BO.x53PermValEnum.GR_P90_Owner) Then
+                    If cP90.j02ID_Owner = .SysUser.j02ID Or .TestPermission(BO.x53PermValEnum.GR_P90_Owner) Then
                         bolIamOwner = True
                     End If
                     ShowLast10("select top 10 p82Code,NULL as p89Name FROM p82Proforma_Payment ORDER BY p82ID DESC")
@@ -153,13 +154,13 @@
                     Case BO.x29IdEnum.p90Proforma
                         Dim cRec As BO.p90Proforma = .p90ProformaBL.Load(Master.DataPID)
                         cRec.p90Code = strCode
-                        If .p90ProformaBL.Save(cRec, Nothing) Then
+                        If .p90ProformaBL.Save(cRec, Nothing, Nothing) Then
                             bolOK = True
                         Else
                             strErr = .p90ProformaBL.ErrorMessage
                         End If
                     Case BO.x29IdEnum.p82Proforma_Payment
-                        Dim cRec As BO.p90Proforma = .p90ProformaBL.LoadByP82ID(Master.DataPID)
+                        Dim cRec As BO.p82Proforma_Payment = .p90ProformaBL.LoadP82(Master.DataPID)
                         If .p90ProformaBL.UpdateP82Code(cRec.PID, strCode) Then
                             bolOK = True
                         Else

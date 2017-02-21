@@ -10,11 +10,11 @@
 
         Return _cDB.GetRecord(Of BO.p90Proforma)(s, New With {.p90id = intPID})
     End Function
-    Public Function LoadByP82ID(intP82ID As Integer) As BO.p90Proforma
-        Dim s As String = GetSQLPart1(0)
-        s += " WHERE p82.p82ID=@p82id"
+    Public Function LoadP82(intP82ID As Integer) As BO.p82Proforma_Payment
+        Dim s As String = "SELECT a.*," & bas.RecTail("p82", "a", False)
+        s += " FROM p82Proforma_Payment a WHERE a.p82ID=@p82id"
 
-        Return _cDB.GetRecord(Of BO.p90Proforma)(s, New With {.p82id = intP82ID})
+        Return _cDB.GetRecord(Of BO.p82Proforma_Payment)(s, New With {.p82id = intP82ID})
     End Function
     Public Function LoadMyLastCreated() As BO.p90Proforma
         Dim s As String = GetSQLPart1(1)
@@ -23,7 +23,7 @@
         Return _cDB.GetRecord(Of BO.p90Proforma)(s, New With {.j02id_owner = _curUser.j02ID})
     End Function
 
-    Public Function Save(cRec As BO.p90Proforma, lisFF As List(Of BO.FreeField)) As Boolean
+    Public Function Save(cRec As BO.p90Proforma, lisFF As List(Of BO.FreeField), lisP82 As List(Of BO.p82Proforma_Payment)) As Boolean
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
         If cRec.PID <> 0 Then
             bolINSERT = False
@@ -41,10 +41,8 @@
 
             pars.Add("p90Amount_WithoutVat", .p90Amount_WithoutVat, DbType.Double)
             pars.Add("p90Amount_Vat", .p90Amount_Vat, DbType.Double)
-            pars.Add("p90Amount_Billed", .p90Amount_Billed, DbType.Double)
             pars.Add("p90VatRate", .p90VatRate, DbType.Double)
             pars.Add("p90Amount", .p90Amount, DbType.Double)
-            pars.Add("p90Amount_Debt", .p90Amount_Debt, DbType.Double)
 
             pars.Add("p90Code", .p90Code, DbType.String, , , True, "Číslo zálohy")
 
@@ -54,7 +52,6 @@
 
 
             pars.Add("p90Date", BO.BAS.IsNullDBDate(.p90Date), DbType.DateTime)
-            pars.Add("p90DateBilled", BO.BAS.IsNullDBDate(.p90DateBilled), DbType.DateTime)
             pars.Add("p90DateMaturity", BO.BAS.IsNullDBDate(.p90DateMaturity), DbType.DateTime)
 
             pars.Add("p90IsDraft", .p90IsDraft, DbType.Boolean)
@@ -70,6 +67,36 @@
 
             If Not lisFF Is Nothing Then    'volná pole
                 bas.SaveFreeFields(_cDB, lisFF, "p90Proforma_FreeField", intLastSavedPID)
+            End If
+            If Not lisP82 Is Nothing Then   'úhrady
+                For Each c In lisP82
+                    pars = New DbParameters
+                    pars.Add("p90ID", intLastSavedPID, DbType.Int32)
+                    pars.Add("p82Date", c.p82Date, DbType.DateTime)
+                    pars.Add("p82Amount", c.p82Amount, DbType.Double)
+                    If c.p82Amount <> (c.p82Amount_WithoutVat + c.p82Amount_Vat) Then
+                        If cRec.p90VatRate > 0 Then
+                            c.p82Amount_WithoutVat = Math.Round(c.p82Amount / cRec.p90VatRate, 1)
+                            c.p82Amount_Vat = c.p82Amount - c.p82Amount_WithoutVat
+                        Else
+                            c.p82Amount_WithoutVat = c.p82Amount
+                            c.p82Amount_Vat = 0
+                        End If
+                        
+                    End If
+                    pars.Add("p82Amount_WithoutVat", c.p82Amount_WithoutVat, DbType.Double)
+                    pars.Add("p82Amount_Vat", c.p82Amount_Vat, DbType.Double)
+                    pars.Add("p82Text", c.p82Text, DbType.String)
+                    If c.PID = 0 And c.IsSetAsDeleted = False Then
+                        _cDB.SaveRecord("p82Proforma_Payment", pars, True, , True, _curUser.j03Login, False)
+                    Else
+                        If c.IsSetAsDeleted = False Then
+                            _cDB.SaveRecord("p82Proforma_Payment", pars, False, "p82ID=" & c.PID.ToString, True, _curUser.j03Login, False)
+                        Else
+                            _cDB.RunSQL("DELETE FROM p82Proforma_Payment WHERE p82ID=" & c.PID.ToString)
+                        End If
+                    End If
+                Next
             End If
 
             pars = New DbParameters
@@ -98,14 +125,33 @@
         Return _cDB.RunSP("p90_delete", pars)
     End Function
 
-    Public Function GetList_p99(intP91ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma)
+    Public Function GetList_p99(intP91ID As Integer, intP90ID As Integer, intP82ID As Integer) As IEnumerable(Of BO.p99Invoice_Proforma)
         Dim pars As New DbParameters
-        pars.Add("p91id", intP91ID, DbType.Int32)
-        Dim s As String = "SELECT a.*,p90.p90Code as _p90Code"
-        s += " FROM p99Invoice_Proforma a INNER JOIN p90Proforma p90 ON a.p90ID=p90.p90ID"
-        s += " WHERE a.p91ID=@p91id"
-
+        Dim s As String = "SELECT a.*,p90.p90Code as _p90Code,p91.p91Code as _p91Code"
+        s += " FROM p99Invoice_Proforma a INNER JOIN p90Proforma p90 ON a.p90ID=p90.p90ID INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID"
+        If intP91ID <> 0 Then
+            pars.Add("p91id", intP91ID, DbType.Int32)
+            s += " WHERE a.p91ID=@p91id"
+        End If
+        If intP90ID <> 0 Then
+            pars.Add("p90id", intP90ID, DbType.Int32)
+            s += " WHERE a.p90ID=@p90id"
+        End If
+        If intP82ID <> 0 Then
+            pars.Add("p82id", intP82ID, DbType.Int32)
+            s += " WHERE a.p82ID=@p82id"
+        End If
         Return _cDB.GetList(Of BO.p99Invoice_Proforma)(s, pars)
+    End Function
+    Public Function GetList_p82(intP90ID As Integer) As IEnumerable(Of BO.p82Proforma_Payment)
+        Dim pars As New DbParameters
+
+        Dim s As String = "SELECT a.*," & bas.RecTail("p82", "a", False)
+        s += " FROM p82Proforma_Payment a"
+        pars.Add("p90id", intP90ID, DbType.Int32)
+        s += " WHERE a.p90ID=@p90id"
+
+        Return _cDB.GetList(Of BO.p82Proforma_Payment)(s, pars)
     End Function
     Public Function GetList(myQuery As BO.myQueryP90) As IEnumerable(Of BO.p90Proforma)
         Dim s As String = GetSQLPart1(0), pars As New DbParameters
@@ -172,11 +218,11 @@
         Return s
     End Function
 
-    Public Function UpdateP82Code(intP90ID As Integer, strP82Code As String) As Boolean
+    Public Function UpdateP82Code(intP82ID As Integer, strP82Code As String) As Boolean
         Dim pars As New DbParameters()
         pars.Add("p82code", strP82Code, DbType.String)
-        pars.Add("p90id", intP90ID, DbType.Int32)
-        If _cDB.RunSQL("UPDATE p82Proforma_Payment SET p82Code=@p82code WHERE p90ID=@p90id", pars) Then
+        pars.Add("p82id", intP82ID, DbType.Int32)
+        If _cDB.RunSQL("UPDATE p82Proforma_Payment SET p82Code=@p82code WHERE p82ID=@p82id", pars) Then
             Return True
         Else
             Return False

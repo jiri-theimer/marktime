@@ -41,58 +41,31 @@ Partial Public Class p91_proforma
     Protected WithEvents p90ID As Global.UI.datacombo
 
     '''<summary>
-    '''panAmount control.
+    '''chkClientOnly control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panAmount As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents chkClientOnly As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''lblPercentage control.
+    '''Label2 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblPercentage As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Percentage control.
+    '''p82ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Percentage As Global.Telerik.Web.UI.RadNumericTextBox
-
-    '''<summary>
-    '''dblAmount control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents dblAmount As Global.Telerik.Web.UI.RadNumericTextBox
-
-    '''<summary>
-    '''dblAmountWithoutVat control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents dblAmountWithoutVat As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''dblAmountVAT control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents dblAmountVAT As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents p82ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''rpP99 control.

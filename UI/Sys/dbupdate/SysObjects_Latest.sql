@@ -11719,56 +11719,62 @@ AS
 if exists(select p90ID FROM p90Proforma WHERE p90ID=@p90id AND (p90Code LIKE 'TEMP%' OR p90Code IS NULL))
  exec p90_update_code @p90id,@j03id_sys
 
-declare @p90Amount_Billed float,@p90DateBilled datetime,@login varchar(50),@p90Code varchar(50),@p89id int
+declare @p90Amount_Billed float,@p90DateBilled datetime,@login varchar(50),@p90Code varchar(50),@p89id int,@p82code varchar(50),@p82id int,@x38id int
 
-select @p90Amount_Billed=p90Amount_Billed,@p90DateBilled=p90DateBilled,@login=p90UserUpdate,@p90Code=p90Code,@p89id=p89ID FROM p90Proforma WHERE p90ID=@p90id
+select @p90Amount_Billed=sum(p82Amount),@p90DateBilled=max(p82Date) FROM p82Proforma_Payment where p90ID=@p90id
 
-if isnull(@p90Amount_Billed,0)>0 and @p90DateBilled is not null AND not exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@p90id)
- begin
-  insert into p82Proforma_Payment(p90ID,p82Amount,p82Date,p82Code,p82DateInsert,p82UserInsert) values(@p90id,@p90Amount_Billed,@p90DateBilled,'TEMP'+convert(varchar(10),@p90id),getdate(),@login)
+select @login=p90UserUpdate,@p90Code=p90Code,@p89id=p89ID FROM p90Proforma WHERE p90ID=@p90id
 
- end
+update p90Proforma set p90Amount_Billed=@p90Amount_Billed,p90DateBilled=@p90DateBilled WHERE p90ID=@p90id
 
-if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@p90id) and isnull(@p90Amount_Billed,0)=0
- DELETE FROM p82Proforma_Payment WHERE p90ID=@p90id
+update p90Proforma set p90Amount_Debt=p90Amount-p90Amount_Billed WHERE p90ID=@p90id
 
-if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@p90id)
- begin
-   declare @p82Code varchar(50),@x38id int,@p82id int
-   select @p82id=p82ID,@p82Code=p82Code FROM p82Proforma_Payment WHERE p90ID=@p90id
-  
+DECLARE curTR CURSOR FOR 
+SELECT p82ID,p82Code from p82Proforma_Payment WHERE p90ID=@p90id AND (p82Code is null OR left(@p82Code,4)='TEMP')
 
-   if @p82Code is null or left(@p82Code,4)='TEMP'
-    begin
-	 select @x38id=x38ID_Payment FROM p89ProformaType WHERE p89ID=@p89id
+OPEN curTR
+FETCH NEXT FROM curTR 
+INTO @p82id,@p82code
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  select @x38id=x38ID_Payment FROM p89ProformaType WHERE p89ID=@p89id
 
-	 if @x38id is null
-	  select @x38id=x38ID FROM x38CodeLogic WHERE x29ID=382
+  if @x38id is null
+   select @x38id=x38ID FROM x38CodeLogic WHERE x29ID=382
 
-	 if @x38id is not null
-      set @p82Code=dbo.x38_get_freecode(@x38id,382,@p82id,0,1)
+  if @x38id is not null
+   set @p82Code=dbo.x38_get_freecode(@x38id,382,@p82id,0,1)
 
-	 if @p82Code=''
-	  set @p82Code='DPP-'+@p90Code
+  if @p82Code=''
+   set @p82Code='DPP-'+@p90Code
 
-	 UPDATE p82Proforma_Payment SET p82Code=@p82Code WHERE p90ID=@p90id 
-	end
- 
-   
- end
- update p82Proforma_Payment set p82Amount=@p90Amount_Billed,p82Date=@p90DateBilled,p82DateUpdate=getdate(),p82UserUpdate=@login WHERE p90ID=@p90id
+  UPDATE p82Proforma_Payment SET p82Code=@p82Code WHERE p82ID=@p82id
+
+ FETCH NEXT FROM curTR 
+ INTO @p82id,@p82code
+END
+CLOSE curTR
+DEALLOCATE curTR
 
 
 ---automaticky se spouští po uložení záznamu faktury
-if exists(select p99ID FROM p99Invoice_Proforma WHERE p90ID=@p90id)
- begin
-  declare @p91id int
+declare @p91id int
 
-  select @p91id=p91ID FROM p99Invoice_Proforma WHERE p90ID=@p90id
+DECLARE curTRX CURSOR FOR 
+SELECT p91ID from p99Invoice_Proforma WHERE p90ID=@p90id
 
-  exec p91_recalc_amount @p91id
- end
+OPEN curTRX
+FETCH NEXT FROM curTRX 
+INTO @p91id
+WHILE @@FETCH_STATUS = 0
+BEGIN
+ exec p91_recalc_amount @p91id
 
+ FETCH NEXT FROM curTRX
+ INTO @p91id
+END
+CLOSE curTRX
+DEALLOCATE curTRX
 
 
 
@@ -11819,6 +11825,9 @@ if exists(select p99ID FROM p99Invoice_Proforma WHERE p91ID=@pid)
 
 if exists(SELECT o27ID FROM o27Attachment WHERE p90ID=@pid)
   DELETE FROM o27Attachment WHERE p90ID=@pid
+
+if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@pid)
+ DELETE FROM p82Proforma_Payment WHERE p90ID=@pid
 
 if exists(select p90ID FROM p90Proforma_FreeField WHERE p90ID=@pid)
   delete from p90Proforma_FreeField where p90id=@pid
@@ -12737,7 +12746,7 @@ GO
 
 
 CREATE procedure [dbo].[p91_fpr_recalc_invoice]
-@p51id int
+@p51id int	----srovnávací ceník pro výpoèet efektivní sazby
 ,@p91id INT
 
 AS
@@ -12745,7 +12754,11 @@ AS
 if isnull(@p51id,0)=0 or isnull(@p91id,0)=0
  return
 
-declare @vynosy float,@hodiny float,@body float,@vynosy_fixedcurrency float
+declare @vynosy float
+declare @hodiny float	---hodiny se statusem [Zahrnout do paušálu]
+declare @body float		---honoráø z paušálních hodin podle srovnávacího ceníku
+declare @vynosy_fixedcurrency float	---pevná neboli paušální odmìna
+---p31AKDS_FPR_PODIL = procentuální podíl 
 
 select @vynosy=sum(p31Amount_WithoutVat_Invoiced)
 ,@vynosy_fixedcurrency=sum(case when a.j27ID_Billing_Invoiced=2 THEN p31Amount_WithoutVat_Invoiced else p31Amount_WithoutVat_Invoiced_Domestic END)
@@ -12761,17 +12774,23 @@ FROM
 p52PriceList_Item a 
 INNER JOIN j02Person j02 on a.j02ID=j02.j02ID
 INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
-WHERE a.p51id=@p51id AND p31.p91ID=@p91id and p31.p70ID=6
+INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p51id=@p51id AND p31.p91ID=@p91id and p31.p70ID=6 AND p34.p33ID=1
 
 update p31WorkSheet set p31AKDS_FPR_BODY=p31Hours_Orig*p52rate
 FROM
 p52PriceList_Item a
 INNER JOIN j02Person j02 on a.j02ID=j02.j02ID
 INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
-WHERE a.p51id=@p51id AND p31.p91ID=@p91id AND p31.p70ID=6
+INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p51id=@p51id AND p31.p91ID=@p91id AND p31.p70ID=6 AND p34.p33ID=1
 
-update p31WorkSheet set p31AKDS_FPR_PODIL=p31AKDS_FPR_BODY/@body
-WHERE p91ID=@p91id AND p70ID=6
+update a set p31AKDS_FPR_PODIL=p31AKDS_FPR_BODY/@body
+FROM p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE a.p91ID=@p91id AND a.p70ID=6 AND p34.p33ID=1
 
 update p31WorkSheet set p31AKDS_FPR_OBRAT=p31AKDS_FPR_PODIL*@vynosy
 ,p31AKDS_FPR_OBRAT_FixedCurrency=p31AKDS_FPR_PODIL*@vynosy_fixedcurrency
@@ -13119,6 +13138,7 @@ GO
 CREATE     procedure [dbo].[p91_proforma_save]
 @p91id int
 ,@p90id int
+,@p82id int
 ,@j03id_sys int
 ,@err_ret varchar(1000) OUTPUT
 
@@ -13140,20 +13160,34 @@ if @p91id=0
 if @p90id=0
  set @err_ret='@p90id is missing!'
 
+if isnull(@p82id,0)=0
+ set @err_ret='@p82id is missing!'
+
 if @j03id_sys=0
  set @err_ret='@j03id_sys is missing!'
-
-if exists(select p99ID from p99Invoice_Proforma WHERE p90ID=@p90id)
- set @err_ret='Zálohová faktura je již svázaná s daòovou fakturou!'
 
 if @err_ret<>''
   return
 
-if not exists(select p99ID from p99Invoice_Proforma WHERE p91ID=@p91id AND p90ID=@p90id)
- INSERT INTO p99Invoice_Proforma(p91ID,p90ID,p99UserInsert,p99UserUpdate,p99DateUpdate) values(@p91id,@p90id,@login,@login,getdate())
+declare @amount float
+
+select @amount=p82Amount FROM p82Proforma_Payment WHERE p82ID=@p82id
+
+
+declare @amount_withoutvat float,@amount_vat float,@vatrate float
+
+select @vatrate=p90VatRate FROM p90Proforma WHERE p90ID=@p90id
+
+set @amount_withoutvat=round(@amount/(1+@vatrate/100),2)
+set @amount_vat=@amount-@amount_withoutvat
+
+
+if not exists(select p99ID from p99Invoice_Proforma WHERE p91ID=@p91id AND p90ID=@p90id AND p82ID=@p82id)
+ INSERT INTO p99Invoice_Proforma(p91ID,p90ID,p99UserInsert,p99UserUpdate,p99DateUpdate,p99Amount) values(@p91id,@p90id,@login,@login,getdate(),@amount)
 
 
 
+update p99Invoice_Proforma set p99Amount=@amount,p99Amount_WithoutVat=@amount_withoutvat,p99Amount_Vat=@amount_vat WHERE p91ID=@p91id AND p90ID=@p90id AND p82ID=@p82id
 
 
 exec p91_recalc_amount @p91id
@@ -13365,12 +13399,12 @@ if @p91amount_withVat<>(@p91amount_withoutVat+@p91amount_Vat)
 declare @p91amount_billed float,@p91amount_debt float,@datLastBilled datetime,@p91proformaamount_withoutvat_low float,@p91proformaamount_withoutvat_standard float
 declare @p91proformaamount float,@p91proformabilledamount float,@p91proformaamount_vat_low float,@p91proformaamount_vat_standard float,@p91proformaamount_withoutvat_none float
 declare @p91proformaamount_vatrate float
-select @p91proformaamount=sum(a.p90amount),@p91proformabilledamount=sum(a.p90Amount_Billed)
-,@p91proformaamount_vat_low=sum(case when a.p90VatRate=@p91vatrate_low then p90Amount_Vat end)
-,@p91proformaamount_vat_standard=sum(case when a.p90VatRate=@p91vatrate_standard then p90Amount_Vat end)
-,@p91proformaamount_withoutvat_low=sum(case when a.p90VatRate=@p91vatrate_low then p90Amount_WithoutVat end)
-,@p91proformaamount_withoutvat_standard=sum(case when a.p90VatRate=@p91vatrate_standard then p90Amount_WithoutVat end)
-,@p91proformaamount_withoutvat_none=sum(case when a.p90VatRate=0 then p90Amount_WithoutVat end)
+select @p91proformaamount=sum(b.p99Amount),@p91proformabilledamount=sum(b.p99Amount)
+,@p91proformaamount_vat_low=sum(case when a.p90VatRate=@p91vatrate_low then p99Amount_Vat end)
+,@p91proformaamount_vat_standard=sum(case when a.p90VatRate=@p91vatrate_standard then p99Amount_Vat end)
+,@p91proformaamount_withoutvat_low=sum(case when a.p90VatRate=@p91vatrate_low then p99Amount_WithoutVat end)
+,@p91proformaamount_withoutvat_standard=sum(case when a.p90VatRate=@p91vatrate_standard then p99Amount_WithoutVat end)
+,@p91proformaamount_withoutvat_none=sum(case when a.p90VatRate=0 then p99Amount_WithoutVat end)
 FROM p90Proforma a inner join p99Invoice_Proforma b on a.p90id=b.p90id
 where b.p91id=@p91id
 
