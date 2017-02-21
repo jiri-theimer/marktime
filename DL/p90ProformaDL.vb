@@ -76,7 +76,7 @@
                     pars.Add("p82Amount", c.p82Amount, DbType.Double)
                     If c.p82Amount <> (c.p82Amount_WithoutVat + c.p82Amount_Vat) Then
                         If cRec.p90VatRate > 0 Then
-                            c.p82Amount_WithoutVat = Math.Round(c.p82Amount / cRec.p90VatRate, 1)
+                            c.p82Amount_WithoutVat = Math.Round(c.p82Amount / (1 + cRec.p90VatRate / 100), 1)
                             c.p82Amount_Vat = c.p82Amount - c.p82Amount_WithoutVat
                         Else
                             c.p82Amount_WithoutVat = c.p82Amount

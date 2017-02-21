@@ -162,6 +162,9 @@ Class p91InvoiceBL
         Return _cDL.GetSumRow(myQuery)
     End Function
     Public Function SaveP99(intP91ID As Integer, intP90ID As Integer, intP82ID As Integer) As Boolean Implements Ip91InvoiceBL.SaveP99
+        If intP82ID = 0 Then
+            _Error = "Na vstupu chybí ID úhrady (p82ID)." : Return False
+        End If
         If Factory.p90ProformaBL.GetList_p99(0, 0, intP82ID).Count > 0 Then
             _Error = "Tato úhrada již byla dříve spárována s daňovou fakturou" : Return False
         End If
