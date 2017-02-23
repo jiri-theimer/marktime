@@ -224,6 +224,7 @@ Public Class datagrid
 
     End Sub
     Public Overloads Sub SelectRecords(intOnePID As Integer)
+        If intOnePID = 0 Then Return
         For Each it As GridDataItem In grid1.MasterTableView.Items
             If it.GetDataKeyValue("pid") = intOnePID Then
                 it.Selected = True : Exit For

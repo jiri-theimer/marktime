@@ -13169,25 +13169,27 @@ if @j03id_sys=0
 if @err_ret<>''
   return
 
-declare @amount float
-
-select @amount=p82Amount FROM p82Proforma_Payment WHERE p82ID=@p82id
-
-
-declare @amount_withoutvat float,@amount_vat float,@vatrate float
+declare @amount float,@amount_withoutvat float,@amount_vat float,@vatrate float
 
 select @vatrate=p90VatRate FROM p90Proforma WHERE p90ID=@p90id
 
-set @amount_withoutvat=round(@amount/(1+@vatrate/100),2)
-set @amount_vat=@amount-@amount_withoutvat
+select @amount=p82Amount,@amount_withoutvat=p82Amount_WithoutVat,@amount_vat=p82Amount_Vat FROM p82Proforma_Payment WHERE p82ID=@p82id
 
+
+
+if @amount<>(@amount_withoutvat+@amount_vat)
+ begin
+  set @amount_withoutvat=round(@amount/(1+@vatrate/100),2)
+  set @amount_vat=@amount-@amount_withoutvat
+ end
 
 if not exists(select p99ID from p99Invoice_Proforma WHERE p91ID=@p91id AND p90ID=@p90id AND p82ID=@p82id)
- INSERT INTO p99Invoice_Proforma(p91ID,p90ID,p99UserInsert,p99UserUpdate,p99DateUpdate,p99Amount) values(@p91id,@p90id,@login,@login,getdate(),@amount)
+ INSERT INTO p99Invoice_Proforma(p82ID,p91ID,p90ID,p99UserInsert,p99UserUpdate,p99DateUpdate,p99Amount) values(@p82id,@p91id,@p90id,@login,@login,getdate(),@amount)
 
 
 
-update p99Invoice_Proforma set p99Amount=@amount,p99Amount_WithoutVat=@amount_withoutvat,p99Amount_Vat=@amount_vat WHERE p91ID=@p91id AND p90ID=@p90id AND p82ID=@p82id
+update p99Invoice_Proforma set p99Amount=@amount,p99Amount_WithoutVat=@amount_withoutvat,p99Amount_Vat=@amount_vat
+WHERE p91ID=@p91id AND p90ID=@p90id AND p82ID=@p82id
 
 
 exec p91_recalc_amount @p91id

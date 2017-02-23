@@ -272,8 +272,6 @@
                     If .p33ID = BO.p33IdENUM.Cas Then
                         If .p31HoursEntryFlag = BO.p31HoursEntryFlagENUM.NeniCas Then
                             Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.Hodiny
-                            ''Else
-                            ''    Me.CurrentHoursEntryFlag = .p31HoursEntryFlag
                         End If
                     Else
                         Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.NeniCas
@@ -1222,6 +1220,7 @@
         With Master.Factory.j03UserBL
             .InhaleUserParams(lisPars)
             Me.p31_default_HoursEntryFlag.Value = .GetUserParam("p31_default_HoursEntryFlag", "1")
+            Me.hidHoursEntryFlag.Value = Me.p31_default_HoursEntryFlag.Value
             Dim intStart As Integer = CInt(.GetUserParam("p31_HoursInputInterval", "30"))
             Dim s As String = "", cT As New BO.clsTime, strFormat As String = .GetUserParam("p31_HoursInputFormat", "dec")
             Dim intKratHodin As Integer = 4

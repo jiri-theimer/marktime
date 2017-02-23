@@ -114,7 +114,7 @@ Public Class admin_framework
             query_validity.BackColor = Nothing
         End If
 
-        If Me.hidGo2Pid.Value <> "" Then
+        If BO.BAS.IsNullInt(Me.hidGo2Pid.Value) > 0 Then
             Dim intPID As Integer = CInt(hidGo2Pid.Value) : hidGo2Pid.Value = ""
             grid1.SelectRecords(intPID)
             If grid1.radGridOrig.SelectedItems.Count = 0 Then
@@ -125,7 +125,7 @@ Public Class admin_framework
                         Exit While
                     End If
                 End While
-                
+
             End If
             If grid1.radGridOrig.SelectedItems.Count > 0 Then hiddatapid.Value = intPID.ToString
         End If

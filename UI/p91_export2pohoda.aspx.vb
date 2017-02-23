@@ -50,8 +50,8 @@ Public Class p91_export2pohoda
 
 
         Dim strSQL As String = "select p91.*,p93.*,'' as stredisko,p41.projekt as contract,j27.j27Code,p28.*,o38prim.*,p86.*"
-        If chkText90.Checked Then
-            strSQL += ",left(p91text1,90) as text90"
+        If BO.BAS.IsNullInt(Me.txtMaxTextSize.Text) > 0 Then
+            strSQL += ",left(p91text1," & Me.txtMaxTextSize.Text & ") as text90"
         Else
             strSQL += ",left(p91text1,1000) as text90"
         End If

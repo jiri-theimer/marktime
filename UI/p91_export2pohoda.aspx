@@ -17,8 +17,11 @@
         <asp:textbox ID="txtIC" runat="server"></asp:textbox>
     </div>
     <div class="div6">
-        <asp:CheckBox ID="chkText90" runat="server" Text="Text faktury omezovat pouze na prvních 90 znaků." />
+        <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Text faktury omezovat na maximálně:"></asp:Label>
+        <asp:TextBox ID="txtMaxTextSize" runat="server" Text="240"></asp:TextBox>
+        <span>znaků</span>
     </div>
+    
     <fieldset>
         <legend>Hromadné generování faktur podle období zdanitelného plnění</legend>
 
