@@ -376,6 +376,10 @@
                     s.Append(" AND a.p41PlanUntil BETWEEN @dpu1 AND @dpu2")
                 End If
             End If
+            If .p41ExternalPID <> "" Then
+                pars.Add("p41ExternalPID", .p41ExternalPID, DbType.String)
+                s.Append(" AND a.p41ExternalPID LIKE @p41ExternalPID")
+            End If
             Dim bolQD As Boolean = False
             If Not .p31Date_D1 Is Nothing Then
                 If Year(.p31Date_D1) > 1900 Then

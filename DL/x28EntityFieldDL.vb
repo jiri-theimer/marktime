@@ -53,7 +53,7 @@
 
             pars.Add("x28textboxheight", cRec.x28TextboxHeight, DbType.Int32)
             pars.Add("x28textboxwidth", cRec.x28TextboxWidth, DbType.Int32)
-
+            pars.Add("x28HelpText", .x28HelpText, DbType.String)
 
         End With
 

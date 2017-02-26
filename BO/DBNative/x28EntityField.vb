@@ -39,6 +39,7 @@ Public Class x28EntityField
     Public Property x28IsGridTotals As Boolean
     Public Property x28Pivot_SelectSql As String
     Public Property x28Pivot_GroupBySql As String
+    Public Property x28HelpText As String
 
     Protected Property _x29Name As String
     Public ReadOnly Property x29Name As String

@@ -119,6 +119,14 @@ Class p41ProjectBL
             If Len(.p41BillingMemo) > 1000 Then
                 _Error = "Obsah fakturační poznámky je příliš dlouhý (nad 1.000 znaků). Pro tak dlouhé fakturační poznámky nebo souborové přílohy v projektu využívejte modul DOKUMENTY." : Return False
             End If
+            If .p41ExternalPID <> "" Then
+                'externí kód musí být jedinečný
+                Dim mq As New BO.myQueryP41
+                mq.p41ExternalPID = .p41ExternalPID
+                If GetList(mq).Where(Function(p) p.PID <> .PID).Count > 0 Then
+                    _Error = "Externí kód projektu musí být jedinečný!" : Return False
+                End If
+            End If
         End With
         If Not lisFF Is Nothing Then
             If Not BL.BAS.ValidateFF(lisFF) Then

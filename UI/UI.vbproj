@@ -185,6 +185,7 @@
     <Content Include="b65_record.aspx" />
     <Content Include="billingmemo.ascx" />
     <Content Include="blank.aspx" />
+    <Content Include="clue_help.aspx" />
     <Content Include="clue_o24_record.aspx" />
     <Content Include="clue_p41_myworksheet.aspx" />
     <Content Include="clue_p48_record.aspx" />
@@ -748,6 +749,13 @@
     <Compile Include="Clue.Master.vb">
       <DependentUpon>Clue.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="clue_help.aspx.designer.vb">
+      <DependentUpon>clue_help.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_help.aspx.vb">
+      <DependentUpon>clue_help.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="clue_o24_record.aspx.designer.vb">
       <DependentUpon>clue_o24_record.aspx</DependentUpon>

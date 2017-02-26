@@ -15,7 +15,7 @@
                     <td style="width: 140px;">
                         <asp:HiddenField ID="x28IsRequired" runat="server" />
                         <asp:Label ID="lblFF" runat="server" CssClass="lbl"></asp:Label>
-
+                        <asp:HyperLink ID="clue_help" runat="server" CssClass="reczoom" Text="?" Visible="false" title="Nápověda"></asp:HyperLink>
                     </td>
                     <td>
 

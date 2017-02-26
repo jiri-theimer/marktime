@@ -197,7 +197,14 @@
             </table>
         </div>
     </asp:panel>
-
+    <asp:panel ID="panHelp" runat="server" CssClass="content-box2">
+        <div class="title">
+            Nápověda k poli
+        </div>
+        <div class="content">
+            <asp:TextBox ID="x28HelpText" runat="server" Width="98%" TextMode="MultiLine" Height="70px"></asp:TextBox>
+        </div>
+    </asp:panel>
      
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

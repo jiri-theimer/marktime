@@ -80,6 +80,13 @@ Public Class freefields
         CType(e.Item.FindControl("hidType"), HiddenField).Value = cRec.TypeName
         CType(e.Item.FindControl("hidX28ID"), HiddenField).Value = cRec.PID.ToString
         CType(e.Item.FindControl("hidX23ID"), HiddenField).Value = cRec.x23ID.ToString
+
+        If cRec.x28HelpText = "" Then
+            e.Item.FindControl("clue_help").Visible = False
+        Else
+            e.Item.FindControl("clue_help").Visible = True
+            CType(e.Item.FindControl("clue_help"), HyperLink).Attributes.Item("rel") = "clue_help.aspx?prefix=x28&pid=" & cRec.PID.ToString
+        End If
        
         Select Case cRec.TypeName
             Case "string"

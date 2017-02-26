@@ -79,6 +79,7 @@
             Me.x28Grid_SqlSyntax.Text = .x28Grid_SqlSyntax
             Me.x28Pivot_SelectSql.Text = .x28Pivot_SelectSql
             Me.x28Pivot_GroupBySql.Text = .x28Pivot_GroupBySql
+            Me.x28HelpText.Text = .x28HelpText
         End With
 
 
@@ -127,8 +128,10 @@
 
         If Me.x28Flag.SelectedValue = "1" Then
             tabFlag1.Visible = True
+            panHelp.Visible = True
         Else
             tabFlag1.Visible = False
+            panHelp.Visible = False
         End If
         tabFlag2.Visible = Not tabFlag1.Visible
         If Master.DataPID <> 0 Then
@@ -183,7 +186,7 @@
                 .x28Grid_SqlSyntax = Me.x28Grid_SqlSyntax.Text
                 .x28Pivot_SelectSql = Me.x28Pivot_SelectSql.Text
                 .x28Pivot_GroupBySql = Me.x28Pivot_GroupBySql.Text
-
+                .x28HelpText = Me.x28HelpText.Text
             End With
 
             Dim lisX26 As New List(Of BO.x26EntityField_Binding)
