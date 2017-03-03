@@ -148,6 +148,8 @@
                             If Not bolClear Then c.p51ID_Internal = intVal Else c.p51ID_Internal = 0
                         Case "p42id"
                             c.p42ID = intVal
+                        Case "p92id"
+                            c.p92ID = intVal
                         Case Else
                     End Select
                 End If
@@ -222,6 +224,9 @@
                 Case "p42id"
                     .DataTextField = "p42name"
                     .DataSource = Master.Factory.p42ProjectTypeBL.GetList(New BO.myQuery)
+                Case "p92id"
+                    .DataTextField = "p92name"
+                    .DataSource = Master.Factory.p92InvoiceTypeBL.GetList(New BO.myQuery)
             End Select
 
             .DataBind()

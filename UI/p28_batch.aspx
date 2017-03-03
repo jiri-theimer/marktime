@@ -24,6 +24,7 @@
                 <asp:ListItem Text="Aktualizovat ceník nákladových sazeb" Value="p51ID_Internal"></asp:ListItem>
                 <asp:ListItem Text="Aktualizovat fakturační jazyk" Value="p87ID"></asp:ListItem>                
                 <asp:ListItem Text="Aktualizovat typ klienta" Value="p29ID"></asp:ListItem>
+                <asp:ListItem Text="Aktualizovat výchozí typ faktury" Value="p92ID"></asp:ListItem>
             </asp:RadioButtonList>
 
         </div>

@@ -170,6 +170,7 @@
                 .p85OtherKey1 = c.o33ID
                 .p85FreeText01 = c.o32Value
                 .p85FreeText02 = c.o32Description
+                .p85FreeBoolean01 = c.o32IsDefaultInInvoice
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
@@ -353,7 +354,7 @@
                 .p85OtherKey1 = BO.BAS.IsNullInt(CType(ri.FindControl("o33id"), DropDownList).SelectedValue)
                 .p85FreeText01 = CType(ri.FindControl("o32Value"), TextBox).Text
                 .p85FreeText02 = CType(ri.FindControl("o32Description"), TextBox).Text
-                
+                .p85FreeBoolean01 = CType(ri.FindControl("o32IsDefaultInInvoice"), CheckBox).Checked
             End With
             Master.Factory.p85TempBoxBL.Save(cRec)
         Next
@@ -446,6 +447,7 @@
                     c.o33ID = .p85OtherKey1
                     c.o32Value = .p85FreeText01
                     c.o32Description = .p85FreeText02
+                    c.o32IsDefaultInInvoice = .p85FreeBoolean01
                 End With
                 lisO32.Add(c)
             Next
@@ -533,8 +535,21 @@
         Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
         If e.CommandName = "delete" Then
             If Master.Factory.p85TempBoxBL.Delete(cRec) Then
-                RefreshTempO32()
+
             End If
+        End If
+        RefreshTempO32()
+    End Sub
+
+    Private Sub rpO32_ItemCreated(sender As Object, e As RepeaterItemEventArgs) Handles rpO32.ItemCreated
+        AddHandler CType(e.Item.FindControl("o33id"), DropDownList).SelectedIndexChanged, AddressOf Me.o33id_OnChange
+    End Sub
+    Private Sub o33id_OnChange(sender As Object, e As EventArgs)
+        Dim cbx As DropDownList = DirectCast(sender, DropDownList)
+        If cbx.SelectedValue = "2" Then
+            cbx.FindControl("o32IsDefaultInInvoice").Visible = True
+        Else
+            cbx.FindControl("o32IsDefaultInInvoice").Visible = False
         End If
     End Sub
 
@@ -551,6 +566,13 @@
             basUI.SelectDropdownlistValue(CType(e.Item.FindControl("o33id"), DropDownList), .p85OtherKey1.ToString)
             CType(e.Item.FindControl("o32Value"), TextBox).Text = .p85FreeText01
             CType(e.Item.FindControl("o32Description"), TextBox).Text = .p85FreeText02
+            CType(e.Item.FindControl("o32IsDefaultInInvoice"), CheckBox).Checked = .p85FreeBoolean01
+            If .p85OtherKey1 = 2 Then
+                e.Item.FindControl("o32IsDefaultInInvoice").Visible = True
+            Else
+                e.Item.FindControl("o32IsDefaultInInvoice").Visible = False
+            End If
+
         End With
     End Sub
 

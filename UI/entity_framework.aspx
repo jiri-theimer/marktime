@@ -184,6 +184,25 @@
             return;
 
         }
+        function sendmail_batch() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Není vybrán ani jeden záznam.");
+                return;
+            }
+
+            $.post("Handler/handler_tempbox.ashx", { guid: "<%=Me.CurrentPrefix%>_batch_sendmail-pids-<%=Master.Factory.SysUser.PID%>", value: pids, field: "p85Message", oper: "save" }, function (data) {
+
+                if (data == " " || data == "0" || data == "") {
+                    return;
+                }
+
+
+            });
+
+            sw_master("<%=Me.CurrentPrefix%>_batch_sendmail.aspx", "Images/email.png");
+            return;
+        }
 
         function report() {
             var pids = GetAllSelectedPIDs();
@@ -251,7 +270,9 @@
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
                         <%end if %>
                         <button type="button" onclick="report()" title="Tisková sestava">Sestava (hromadně)</button>
-                        
+                        <%If Me.CurrentPrefix = "p91" Then%>
+                        <button type="button" onclick="sendmail_batch()">Hromadný e-mail</button>
+                        <%End If%>
                     </div>
                     <div class="content">
                         <div>

@@ -23,6 +23,7 @@
             pars.Add("p28ID", BO.BAS.IsNullDBKey(.p28ID), DbType.Int32)
             pars.Add("o32Value", .o32Value, DbType.String)
             pars.Add("o32Description", .o32Description, DbType.String)
+            pars.Add("o32IsDefaultInInvoice", .o32IsDefaultInInvoice, DbType.Boolean)
         End With
 
         If _cDB.SaveRecord("o32Contact_Medium", pars, bolINSERT, strW, True, _curUser.j03Login) Then

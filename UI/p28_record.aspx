@@ -286,7 +286,7 @@
                             <ItemTemplate>
                                 <tr valign="top">
                                     <td>
-                                        <asp:DropDownList ID="o33id" runat="server">
+                                        <asp:DropDownList ID="o33id" runat="server" AutoPostBack="true">
                                             <asp:ListItem Text="TEL" Value="1" Selected="true"></asp:ListItem>
                                             <asp:ListItem Text="E-MAIL" Value="2"></asp:ListItem>
                                             <asp:ListItem Text="URL" Value="3"></asp:ListItem>
@@ -300,9 +300,11 @@
                                         <asp:TextBox ID="o32Value" runat="server" Style="width: 250px;"></asp:TextBox>
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="o32Description" runat="server" Style="width: 350px;"></asp:TextBox>
+                                        <asp:TextBox ID="o32Description" runat="server" Style="width: 250px;"></asp:TextBox>
                                     </td>
-
+                                    <td>
+                                        <asp:CheckBox ID="o32IsDefaultInInvoice" runat="server" Text="Fakturační e-mail" />
+                                    </td>
                                     <td>
                                         <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
                                         <asp:HiddenField ID="p85id" runat="server" />
@@ -314,7 +316,7 @@
                 </asp:Panel>
             </div>
             
-            <div style="margin-top:10px;">
+            <div style="margin-top:30px;">
                 <asp:Label ID="lblParentID" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
                 <uc:contact ID="p28ParentID" runat="server" Width="400px" Flag="client" />
                         

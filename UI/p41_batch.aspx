@@ -25,6 +25,7 @@
                 <asp:ListItem Text="Aktualizovat fakturační jazyk" Value="p87ID"></asp:ListItem>
                 <asp:ListItem Text="Aktualizovat středisko" Value="j18id"></asp:ListItem>
                 <asp:ListItem Text="Aktualizovat typ projektu" Value="p42id"></asp:ListItem>
+                <asp:ListItem Text="Aktualizovat výchozí typ faktury" Value="p92ID"></asp:ListItem>
             </asp:RadioButtonList>
 
         </div>

@@ -57,10 +57,16 @@
                     Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
                     hidMasterPID_p30.Value = cP91.p28ID.ToString
                     hidMasterPrefix_p30.Value = "p28"
-                    Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(cP91.p28ID, cP91.p41ID_First, False).OrderByDescending(Function(p) p.p30IsDefaultInInvoice)
-                    If lisP30.Count > 0 Then
-                        Me.txtTo.Text = lisP30(0).j02Email
+                    Dim lisO32 As IEnumerable(Of BO.o32Contact_Medium) = Master.Factory.p28ContactBL.GetList_o32(cP91.p28ID).Where(Function(p) p.o33ID = BO.o33FlagEnum.Email And p.o32IsDefaultInInvoice = True)
+                    If lisO32.Count > 0 Then
+                        Me.txtTo.Text = lisO32(0).o32Value
+                    Else
+                        Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(cP91.p28ID, cP91.p41ID_First, False).OrderByDescending(Function(p) p.p30IsDefaultInInvoice)
+                        If lisP30.Count > 0 Then
+                            Me.txtTo.Text = lisP30(0).j02Email
+                        End If
                     End If
+                    
             End Select
             If Me.hidMasterPrefix_p30.Value <> "" Then
                 linkNewPerson.Text = BO.BAS.OM2(Me.linkNewPerson.Text, Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix_p30.Value), BO.BAS.IsNullInt(hidMasterPID_p30.Value), False))

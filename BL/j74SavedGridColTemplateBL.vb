@@ -402,8 +402,9 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False, "p31DateTimeUntil_Orig", , , "Datum a čas"))
 
             .Add(AGC(My.Resources.common.Osoba, "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName", , , "Osoba", "min(j02.j02LastName+char(32)+j02.j02FirstName)", "a.j02ID"))
-            .Add(AGC("Pozice", "PoziceOsoby", , True, "j07.j07Name", , "LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID", "Osoba"))
+            .Add(AGC("Pozice osoby", "PoziceOsoby", , True, "j07.j07Name", , "LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID", "Osoba", "min(j07.j07Name)", "j02.j07ID"))
             .Add(AGC("Středisko osoby", "StrediskoOsoby", , True, "j18_j02.j18Name", , "LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID", "Osoba", "min(j18_j02.j18Name)", "j02.j18ID"))
+
 
             .Add(AGC(My.Resources.common.p32Name, "p32Name", , , , , , "Aktivita", "min(p32Name)", "a.p32ID"))
             .Add(AGC(My.Resources.common.FA, "p32IsBillable", BO.cfENUM.Checkbox, , , , , "Aktivita", "min(convert(int,p32.p32IsBillable))", "p32.p32IsBillable"))

@@ -104,14 +104,14 @@
                                     <asp:LinkButton ID="cmdDelete" runat="server" Text="Odstranit vazbu" CommandName="delete"></asp:LinkButton>
                                 </td>
                                 <td>
-                                    <asp:LinkButton ID="cmdDefaultInWorksheet" runat="server" Text="Přednastavit v zapisování výkazů" CommandName="default_add" Visible="false"></asp:LinkButton>
-                                    <asp:Label ID="lblDefaultInWorksheet" runat="server" Text="Přednastaveno v zapisování výkazů" CssClass="valboldred" Visible="false"></asp:Label>
+                                    <asp:LinkButton ID="cmdDefaultInWorksheet" runat="server" Text="Výchozí v zapisování výkazů" CommandName="default_add" Visible="false"></asp:LinkButton>
+                                    <asp:Label ID="lblDefaultInWorksheet" runat="server" Text="Výchozí v zapisování výkazů" CssClass="valboldred" Visible="false"></asp:Label>
                                     <asp:ImageButton ID="cmdDeleteDefault" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit přednastavení v zapisování výkazů" CommandName="default_delete" Visible="false" />
                                 </td>
                                 <td>
-                                    <asp:LinkButton ID="cmdDefaultInInvoice" runat="server" Text="Přednastavit ve fakturaci" CommandName="default_invoice_add" Visible="false"></asp:LinkButton>
+                                    <asp:LinkButton ID="cmdDefaultInInvoice" runat="server" Text="Nastavit jako fakturační osobu" CommandName="default_invoice_add" Visible="false"></asp:LinkButton>
                                     <asp:Label ID="lblDefaultInInvoice" runat="server" Text="Přednastaveno ve fakturaci" CssClass="valboldred" Visible="false"></asp:Label>
-                                    <asp:ImageButton ID="cmdDeleteDefaultInInvoice" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit přednastavení ve fakturaci" CommandName="default_invoice_delete" Visible="false" />
+                                    <asp:ImageButton ID="cmdDeleteDefaultInInvoice" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit jako fakturační osobu" CommandName="default_invoice_delete" Visible="false" />
                                 </td>
                             </tr>
                             <tr>

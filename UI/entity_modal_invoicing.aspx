@@ -23,7 +23,10 @@
     </table>
 
     <div class="content-box2">
-        <div class="title">Výchozí nastavení dokladu faktury</div>
+        <div class="title">
+            Výchozí nastavení dokladu faktury
+            <asp:CheckBox ID="chkNonDraft" runat="server" AutoPostBack="true" Text="Rovnou generovat oficiální čísla faktur a nikoliv draft" />
+        </div>
         <div class="content">
             <table cellpadding="5" cellspacing="2">
                 

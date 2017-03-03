@@ -4,6 +4,8 @@
     Public Property o33ID As o33FlagEnum = o33FlagEnum._NotSpecified
     Public Property o32Value As String
     Public Property o32Description As String
+    Public Property o32IsDefaultInInvoice As Boolean
+
 
     Public Property IsSetAsDeleted As Boolean
 

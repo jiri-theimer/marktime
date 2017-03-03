@@ -50,8 +50,7 @@
             If Request.Item("pids") = "" Then
                 Master.StopPage("Na vstupu chybí záznamy.")
             End If
-            Handle_Permissions()
-            
+
             With Master
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p41Project
@@ -77,6 +76,7 @@
                     .Add("p91_create-rememberdates")
                     .Add("p91_create-remembermaturity")
                     .Add("p91_create-rememberdates-values")
+                    .Add("entity_modal_invoicing_nondraft")
                 End With
 
                 With .Factory.j03UserBL
@@ -89,6 +89,7 @@
 
                     Me.chkRememberDates.Checked = BO.BAS.BG(.GetUserParam("p91_create-rememberdates", "0"))
                     Me.chkRememberMaturiy.Checked = BO.BAS.BG(.GetUserParam("p91_create-remembermaturity", "0"))
+                    Me.chkNonDraft.Checked = BO.BAS.BG(.GetUserParam("entity_modal_invoicing_nondraft", "0"))
 
                     Dim a() As String = Split(.GetUserParam("p91_create-rememberdates-values"), "|")
 
@@ -111,6 +112,8 @@
                
             End With
 
+            Handle_Permissions()
+
             If Not TestIfAnyInputData() Then
                 Master.StopPage("Na vstupu nejsou schválené nebo rozpracované úkony, které lze vyfakturovat.")
             End If
@@ -123,6 +126,9 @@
     Private Sub Handle_Permissions()
         If Not Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator) Then
             Master.StopPage("Nemáte oprávnění k vystavování DRAFT faktur.")
+        End If
+        If Not Master.Factory.TestPermission(BO.x53PermValEnum.PR_P91_Creator) Then
+            Me.chkNonDraft.Checked = False : Me.chkNonDraft.Visible = False
         End If
     End Sub
     Private Sub opgDate_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgDate.SelectedIndexChanged
@@ -249,7 +255,11 @@
                 .BackColor = Nothing
             End If
         End With
-
+        If Not Me.chkNonDraft.Checked Then
+            Master.RenameToolbarButton("save", "Vystavit DRAFT faktury pro vybrané projekty")
+        Else
+            Master.RenameToolbarButton("save", "Vystavit faktury pro vybrané projekty")
+        End If
     End Sub
 
     Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
@@ -341,7 +351,7 @@
                 Dim cRec As New BO.p91Create
                 With cRec
                     .p28ID = intP28ID
-                    .IsDraft = True
+                    .IsDraft = Not Me.chkNonDraft.Checked
                     .TempGUID = strGUID
                     .p92ID = intP92ID
 
@@ -404,4 +414,7 @@
     End Sub
 
 
+    Private Sub chkNonDraft_CheckedChanged(sender As Object, e As EventArgs) Handles chkNonDraft.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_modal_invoicing_nondraft", BO.BAS.GB(Me.chkNonDraft.Checked))
+    End Sub
 End Class
