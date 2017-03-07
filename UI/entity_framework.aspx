@@ -271,7 +271,7 @@
                         <%end if %>
                         <button type="button" onclick="report()" title="Tisková sestava">Sestava (hromadně)</button>
                         <%If Me.CurrentPrefix = "p91" Then%>
-                        <button type="button" onclick="sendmail_batch()">Hromadný e-mail</button>
+                        <button type="button" onclick="sendmail_batch()">Hromadně odeslat faktury (e-mail)</button>
                         <%End If%>
                     </div>
                     <div class="content">

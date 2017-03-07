@@ -22,8 +22,8 @@
         <tr>
             <th></th>
             <th>Příjemce</th>
-            <th>Doklad</th>
-            <th>Příloha</th>
+            <th>Sestava faktury</th>
+            <th>Sestava přílohy</th>
             <th>Předmět zprávy</th>
         </tr>
         <asp:Repeater ID="rp1" runat="server">
