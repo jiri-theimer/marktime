@@ -144,7 +144,7 @@ Class p28ContactBL
             End If
         End If
         If Not lisO32 Is Nothing Then
-            If lisO32.Where(Function(p) Trim(p.o32Value) = "" And Trim(p.o32Description) = "").Count > 0 Then
+            If lisO32.Where(Function(p) p.IsSetAsDeleted = False And Trim(p.o32Value) = "" And Trim(p.o32Description) = "").Count > 0 Then
                 _Error = "Kontaktní média klienta obsahují položku s nevyplněnou adresou (číslem) i poznámkou!" : Return False
             End If
         End If

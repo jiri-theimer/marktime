@@ -11723,6 +11723,8 @@ declare @p90Amount_Billed float,@p90DateBilled datetime,@login varchar(50),@p90C
 
 select @p90Amount_Billed=sum(p82Amount),@p90DateBilled=max(p82Date) FROM p82Proforma_Payment where p90ID=@p90id
 
+set @p90Amount_Billed=isnull(@p90Amount_Billed,0)
+
 select @login=p90UserUpdate,@p90Code=p90Code,@p89id=p89ID FROM p90Proforma WHERE p90ID=@p90id
 
 update p90Proforma set p90Amount_Billed=@p90Amount_Billed,p90DateBilled=@p90DateBilled WHERE p90ID=@p90id
@@ -12798,6 +12800,9 @@ WHERE p91ID=@p91id AND p70ID=6
 
 update p31Worksheet set p31AKDS_FPR_OBRAT_FixedCurrency=p31Amount_WithoutVat_Invoiced_Domestic,p31AKDS_FPR_OBRAT=p31Amount_WithVat_Invoiced
 WHERE p91ID=@p91id AND p70ID=4 AND p32ID IN (SELECT p32ID FROM p32Activity a INNER JOIN p34ActivityGroup b on a.p34ID=b.p34ID WHERE b.p33ID=1)
+
+update p31Worksheet set p31AKDS_FPR_PODIL=0,p31AKDS_FPR_OBRAT=0,p31AKDS_FPR_OBRAT_FixedCurrency=0
+WHERE p91ID=@p91id AND p70ID IN (2,3)	---odpisy
 
 GO
 

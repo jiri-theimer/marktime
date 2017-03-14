@@ -11,21 +11,21 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-           
-            $(".slidingDiv2").hide();
-           
-            
 
-            
+            $(".slidingDiv2").hide();
+
+
+
+
 
             $('.show_hide2').click(function () {
 
-               
+
 
                 $(".slidingDiv2").slideToggle();
             });
 
-           
+
 
 
         });
@@ -159,7 +159,7 @@
             </fieldset>
         </div>
     </div>
-   
+
 
     <div style="height: 60px; width: 100%;">
         <table cellpadding="5" cellspacing="2">
@@ -256,35 +256,50 @@
                     </telerik:RadPageView>
                     <telerik:RadPageView ID="selected" runat="server">
                         <p></p>
-                        <div class="div6">
-                            <asp:Button ID="cmdBatch_4" Text="Vybrané záznamy [Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
-                        </div>
-                        <div class="div6">
-                            <asp:Button ID="cmdBatch_Clear" Text="Vybrané záznamy vrátit na [Nerozhodnuto]" runat="server" CssClass="cmd" Width="280px" />
-                        </div>
-                        <div class="div6">
-                            <asp:Button ID="cmdBatch_6" Text="Vybrané záznamy [Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
+                        <div class="content-box1">
+                            <div class="title">Operace nad vybranými záznamy</div>
+                            <div class="content">
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_4" Text="[Fakturovat]" runat="server" CssClass="cmd" Width="280px" />
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_Clear" Text="Vyčistit schvalování - vrátit na [Nerozhodnuto]" runat="server" CssClass="cmd" Width="280px" />
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_6" Text="[Zahrnout do paušálu]" runat="server" CssClass="cmd" Width="280px" />
 
-                        </div>
-                        <div style="display: none;">
-                            <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané záznamy zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="false" />
-                            <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky" Visible="false"></telerik:RadComboBox>
-                            <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="false" />
-                        </div>
-                        <div class="div6">
-                            <asp:Button ID="cmdBatch_3" Text="Vybrané záznamy [Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
-
-
-                        </div>
-                        <div class="div6">
-                            <asp:Button ID="cmdBatch_2" Text="Vybrané záznamy [Viditelný odpis]" runat="server" CssClass="cmd" Width="280px" />
+                                </div>
+                                <div style="display: none;">
+                                    <asp:Button ID="cmdBatch_ApprovingSet" Text="Vybrané záznamy zařadit do billing dávky:" runat="server" CssClass="cmd" Width="280px" Visible="false" />
+                                    <telerik:RadComboBox ID="p31ApprovingSet" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="200px" AllowCustomText="true" ToolTip="Název billing dávky" Visible="false"></telerik:RadComboBox>
+                                    <asp:Button ID="cmdBatch_ApprovingSet_Clear" Text="Vybraným vyčistit přiřazení billing dávky" runat="server" CssClass="cmd" Width="280px" Visible="false" />
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_3" Text="[Skrytý odpis]" runat="server" CssClass="cmd" Width="280px" />
 
 
-                        </div>
-                        <div class="div6">
-                            <asp:Button ID="cmdBatch_7" Text="Vybrané záznamy [Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_2" Text="[Viditelný odpis]" runat="server" CssClass="cmd" Width="280px" />
 
+
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_7" Text="[Fakturovat později]" runat="server" CssClass="cmd" Width="280px" />
+
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_8" Text="Nahodit úroveň schvalování #0" runat="server" CssClass="cmd" Width="280px" />
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_9" Text="Nahodit úroveň schvalování #1" runat="server" CssClass="cmd" Width="280px" />
+                                </div>
+                                <div class="div6">
+                                    <asp:Button ID="cmdBatch_10" Text="Nahodit úroveň schvalování #2" runat="server" CssClass="cmd" Width="280px" />
+                                </div>
+                            </div>
                         </div>
+
                     </telerik:RadPageView>
                     <telerik:RadPageView ID="memo" runat="server">
                         <uc:billingmemo ID="bm1" runat="server" />

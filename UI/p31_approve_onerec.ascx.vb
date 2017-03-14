@@ -197,7 +197,15 @@
                 End If
             End If
             Me.p31Text.Text = .p31Text
-
+            If p72id.SelectedValue = "6" Then
+                If .p31Value_FixPrice = 0 Then .p31Value_FixPrice = .p31Value_Orig
+                If Me.Factory.SysUser.TimeFormat4Read = BO.TimeFormat_ReadENUM.HHmm Or Len(.p31Value_FixPrice.ToString) > 5 Then
+                    Dim cTime As New COM.clsTime
+                    Me.value_fixprice.Text = cTime.ShowAsHHMM(.p31Value_FixPrice.ToString)
+                Else
+                    Me.value_fixprice.Text = .p31Value_FixPrice.ToString
+                End If
+            End If
         End With
         Dim p41ids As List(Of Integer) = Nothing, p28ids As List(Of Integer) = Nothing, strGUID As String = ""
         If Not Me.IsTempRecord Then
@@ -244,7 +252,6 @@
         Me.p31ApprovingLevel.Visible = b
         Me.p31Date.Visible = b
 
-
         Select Case Me.CurrentP33ID
             Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                 lblRate_Billing_Approved.Visible = b
@@ -279,6 +286,12 @@
             lblRate_Billing_Approved.Visible = False
             Rate_Billing_Approved.Visible = False
             Me.j27Code.Visible = False
+        End If
+        If Me.CurrentP71ID = BO.p71IdENUM.Schvaleno And Me.CurrentP72ID = BO.p72IdENUM.ZahrnoutDoPausalu Then
+            lblValue_FixPrice.Visible = True : Me.value_fixprice.Visible = True
+            If Me.CurrentP33ID = BO.p33IdENUM.Cas Then lblValue_FixPrice.Text = "Hodiny zahrnuté v paušálu:"
+        Else
+            lblValue_FixPrice.Visible = False : Me.value_fixprice.Visible = False
         End If
     End Sub
 
@@ -316,8 +329,17 @@
                         SetValue(cRec.p31Value_Orig, False)
                     End If
                 End If
-                
+                If Me.CurrentP72ID = BO.p72IdENUM.ZahrnoutDoPausalu And Me.value_fixprice.Text = "" Then
+                    Dim cRec As BO.p31Worksheet = Me.Factory.p31WorksheetBL.Load(Me.CurrentP31ID)
+                    If Me.Factory.SysUser.TimeFormat4Read = BO.TimeFormat_ReadENUM.HHmm Or cRec.IsRecommendedHHMM() Then
+                        Dim cTime As New COM.clsTime
+                        Me.value_fixprice.Text = cTime.ShowAsHHMM(cRec.p31Value_Orig.ToString)
+                    Else
+                        Me.value_fixprice.Text = cRec.p31Value_Orig.ToString
+                    End If
+                End If
         End Select
+        
         RefreshState()
     End Sub
 

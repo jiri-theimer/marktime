@@ -329,6 +329,33 @@ Partial Public Class p31_approving_step3
     Protected WithEvents cmdBatch_7 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdBatch_8 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_8 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_9 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_9 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdBatch_10 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdBatch_10 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''memo control.
     '''</summary>
     '''<remarks>

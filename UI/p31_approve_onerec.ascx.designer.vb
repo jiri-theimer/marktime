@@ -131,6 +131,24 @@ Partial Public Class p31_approve_onerec
     Protected WithEvents VatRate_Approved As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''lblValue_FixPrice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblValue_FixPrice As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''value_fixprice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents value_fixprice As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''panInternalContainer control.
     '''</summary>
     '''<remarks>

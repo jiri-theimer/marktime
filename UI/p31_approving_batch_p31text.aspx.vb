@@ -14,8 +14,7 @@
                 ViewState("guid") = Request.Item("guid")
                 If ViewState("guid") = "" Then .StopPage("guid is missing")
                 ViewState("backurl") = Request.UrlReferrer.PathAndQuery
-
-
+                
                 .HeaderText = "Hromadná úprava popisu, hodnoty a sazby schvalovaných úkonů"
                 .HeaderIcon = "Images/approve_32.png"
 
@@ -23,14 +22,52 @@
                 .AddToolbarButton("Potvrdit změny a zpět", "save", , "Images/ok.png")
 
                 .HideShowToolbarButton("close", False)
+
+                Dim lisPars As New List(Of String)
+                With lisPars
+                    .Add("p31_approving_batch_p31text-sort1")
+                    .Add("p31_approving_batch_p31text-sort2")
+                End With
+                With .Factory.j03UserBL
+                    .InhaleUserParams(lisPars)
+                    basUI.SelectDropdownlistValue(Me.cbxSort1, .GetUserParam("p31_approving_batch_p31text-sort1", "1"))
+                    basUI.SelectDropdownlistValue(Me.cbxSort2, .GetUserParam("p31_approving_batch_p31text-sort2", ""))
+                End With
+
             End With
 
 
-            Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(New BO.myQueryP31, ViewState("guid"))
-            rp1.DataSource = lis
-            rp1.DataBind()
+            RefreshData()
 
         End If
+    End Sub
+
+    Private Sub RefreshData()
+        Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(New BO.myQueryP31, ViewState("guid"))
+        Select Case cbxSort1.SelectedValue
+            Case "1"
+                lis = lis.OrderByDescending(Function(p) p.p31Date).ThenByDescending(Function(p) p.PID)
+            Case "2"
+                lis = lis.OrderBy(Function(p) p.p31Date).ThenByDescending(Function(p) p.PID)
+            Case "3"
+                lis = lis.OrderBy(Function(p) p.Person)
+            Case "4"
+                lis = lis.OrderBy(Function(p) p.ClientName).ThenBy(Function(p) p.p41Name)
+            Case Else
+        End Select
+        Select Case cbxSort1.SelectedValue
+            Case "1"
+                lis = lis.OrderByDescending(Function(p) p.p31Date).ThenByDescending(Function(p) p.PID)
+            Case "2"
+                lis = lis.OrderBy(Function(p) p.p31Date).ThenByDescending(Function(p) p.PID)
+            Case "3"
+                lis = lis.OrderBy(Function(p) p.Person)
+            Case "4"
+                lis = lis.OrderBy(Function(p) p.ClientName).ThenBy(Function(p) p.p41Name)
+            Case Else
+        End Select
+        rp1.DataSource = lis
+        rp1.DataBind()
     End Sub
 
    
@@ -204,5 +241,15 @@
 
     Private Sub ReloadPage()
         Response.Redirect(ViewState("backurl") & "&reloadonly=1", True)
+    End Sub
+
+    Private Sub cbxSort1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxSort1.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_approving_batch_p31text-sort1", Me.cbxSort1.SelectedValue)
+        RefreshData()
+    End Sub
+
+    Private Sub cbxSort2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxSort2.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_approving_batch_p31text-sort2", Me.cbxSort2.SelectedValue)
+        RefreshData()
     End Sub
 End Class

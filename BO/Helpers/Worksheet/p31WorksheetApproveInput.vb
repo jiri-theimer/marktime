@@ -12,7 +12,7 @@
     Public Property p31Text As String
     Public Property p31Date As Date?
     Public Property p31ApprovingLevel As Integer
-
+    Public Property p31Value_FixPrice As Double
     Public Property VatRate_Approved As Double
 
     Public Sub New(intP31ID As Integer, _p33id As BO.p33IdENUM)

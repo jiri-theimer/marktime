@@ -179,6 +179,31 @@ Public Class p31_approving_step3
             Master.Notify(sx.ToString, NotifyLevel.ErrorMessage)
         End If
     End Sub
+    Private Sub BatchOper_Levels(intLevel As Integer)
+        Dim lisPIDs As List(Of Integer) = grid1.GetSelectedPIDs()
+        If lisPIDs.Count = 0 Then
+            Master.Notify("Musíte vybrat (označit) alespoň jeden záznam (úkon).", NotifyLevel.WarningMessage)
+            Return
+        End If
+        For Each intP31ID As Integer In lisPIDs
+            Master.Factory.p31WorksheetBL.UpdateTempField("p31ApprovingLevel", intLevel, ViewState("guid"), intP31ID)
+        Next
+
+        grid1.Rebind(False)
+        With grid1.radGridOrig
+            For Each intPID In lisPIDs
+                For Each it As GridDataItem In .MasterTableView.Items
+                    If it.GetDataKeyValue("pid") = intPID Then
+                        it.Selected = True : Exit For
+                    End If
+                Next
+            Next
+        End With
+        hiddatapid.Value = lisPIDs(lisPIDs.Count - 1).ToString
+        RefreshSubform(hiddatapid.Value)
+
+        
+    End Sub
     Private Sub SetupTempData()
         Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
         For Each cTemp In lis
@@ -707,4 +732,15 @@ Public Class p31_approving_step3
 
     
     
+    Private Sub cmdBatch_10_Click(sender As Object, e As EventArgs) Handles cmdBatch_10.Click
+        BatchOper_Levels(2)
+    End Sub
+
+    Private Sub cmdBatch_9_Click(sender As Object, e As EventArgs) Handles cmdBatch_9.Click
+        BatchOper_Levels(1)
+    End Sub
+
+    Private Sub cmdBatch_8_Click(sender As Object, e As EventArgs) Handles cmdBatch_8.Click
+        BatchOper_Levels(0)
+    End Sub
 End Class

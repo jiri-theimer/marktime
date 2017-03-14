@@ -66,7 +66,16 @@
                                 </telerik:RadNumericTextBox>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblValue_FixPrice" runat="server" Text="Zahrnuto v paušálu:" CssClass="lbl"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="value_fixprice" runat="server" Style="width: 80px;"></asp:TextBox>
+                            </td>
+                        </tr>
                     </table>
+
 
                     <asp:Panel ID="panInternalContainer" runat="server" Visible="false">
                         <asp:Panel ID="panInternal" runat="server">

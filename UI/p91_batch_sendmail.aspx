@@ -17,6 +17,9 @@
             <asp:textbox ID="txtBody" runat="server" TextMode="MultiLine" Width="99%" Height="100px"></asp:textbox>
         </div>
     </div>
+    <div>
+        <asp:CheckBox ID="chkAtt" runat="server" Text="Posílat i přílohu faktury" Checked="true" AutoPostBack="true" CssClass="chk" />
+    </div>
 
     <table cellpadding="6">
         <tr>

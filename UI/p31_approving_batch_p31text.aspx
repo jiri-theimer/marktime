@@ -7,7 +7,23 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <div>
+        <span>Třidit podle:</span>
+        <asp:DropDownList ID="cbxSort1" runat="server" AutoPostBack="true">
+            <asp:ListItem Text="Datum sestupně" Value="1"></asp:ListItem>
+            <asp:ListItem Text="Datum vzestupně" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Osoba" Value="3"></asp:ListItem>
+            <asp:ListItem Text="Projekt" Value="4"></asp:ListItem>
+        </asp:DropDownList>
+        <asp:DropDownList ID="cbxSort2" runat="server" AutoPostBack="true">
+            <asp:ListItem Text="" Value=""></asp:ListItem>
+            <asp:ListItem Text="Datum sestupně" Value="1"></asp:ListItem>
+            <asp:ListItem Text="Datum vzestupně" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Osoba" Value="3"></asp:ListItem>
+            <asp:ListItem Text="Projekt" Value="4"></asp:ListItem>
+        </asp:DropDownList>
+        <i>Změnou třídění se ztratí dosavadní ručně provedené změny!</i>
+    </div>
     <table cellpadding="5" cellspacing="2">
         <tr>
             <th></th>
