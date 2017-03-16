@@ -207,6 +207,7 @@
         ''    Me.Edit_p31VatRate_Invoiced.Value = cRec.p31VatRate_Invoiced
         ''End If
 
+
         Me.Edit_p31VatRate_Invoiced.Value = cRec.p31VatRate_Invoiced
         Edit_p31Value_Invoiced.Text = cRec.p31Value_Invoiced.ToString
         If cRec.p33ID = BO.p33IdENUM.Cas And cRec.IsRecommendedHHMM_Invoiced() Then
@@ -215,18 +216,30 @@
         End If
         Me.Edit_p31Text.Text = cRec.p31Text
 
+        If cRec.p33ID = BO.p33IdENUM.Cas Then
+            lblValue_FixPrice.Text = "Hodiny v paušálu:"
+            Dim cT As New BO.clsTime
+            Me.Edit_p31Value_FixPrice.Text = cT.ShowAsHHMM(cRec.p31Value_FixPrice.ToString)
+        Else
+            lblValue_FixPrice.Text = "Hodnota úkonu v paušálu:"
+            Me.Edit_p31Value_FixPrice.Text = cRec.p31Value_FixPrice.ToString
+        End If
 
     End Sub
 
     Private Sub p31_record_AI_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        panEdit.Visible = False : panEdit6.Visible = False
 
         Select Case Me.Edit_p70ID.SelectedValue
             Case "4"
                 panEdit.Visible = True
-            Case Else
-                panEdit.Visible = False
-        End Select
+            Case "6"
+                panEdit6.Visible = True
 
+            Case Else
+
+        End Select
+        
     End Sub
    
     
@@ -260,12 +273,14 @@
 
                 End Select
                 .InvoiceVatRate = BO.BAS.IsNullNum(Me.Edit_p31VatRate_Invoiced.Value)
+                .FixPriceValue = 0
                 If cRec.p33ID = BO.p33IdENUM.Cas Then
                     Dim cT As New BO.clsTime
                     .InvoiceValue = cT.ShowAsDec(Me.Edit_p31Value_Invoiced.Text)
-
+                    If .p70ID = BO.p70IdENUM.ZahrnutoDoPausalu Then .FixPriceValue = cT.ShowAsDec(Me.Edit_p31Value_FixPrice.Text)
                 Else
                     .InvoiceValue = BO.BAS.IsNullNum(Me.Edit_p31Value_Invoiced.Text)
+                    If .p70ID = BO.p70IdENUM.ZahrnutoDoPausalu Then .FixPriceValue = BO.BAS.IsNullNum(Me.Edit_p31Value_FixPrice.Text)
                 End If
 
 

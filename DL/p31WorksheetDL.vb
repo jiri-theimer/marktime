@@ -961,6 +961,7 @@
                 .p85FreeFloat01 = c.InvoiceValue
                 .p85FreeFloat02 = c.InvoiceRate
                 .p85FreeFloat03 = c.InvoiceVatRate
+                .p85FreeNumber01 = c.FixPriceValue * 10000000
             End With
             Dim _cDLTemp As New DL.p85TempBoxDL(_curUser)
             _cDLTemp.Save(cTemp)

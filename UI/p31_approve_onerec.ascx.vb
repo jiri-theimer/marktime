@@ -358,6 +358,14 @@
             .p31Date = Me.p31Date.SelectedDate
             .p31ApprovingSet = Me.p31ApprovingSet.Text
             .p31ApprovingLevel = CInt(Me.p31ApprovingLevel.SelectedValue)
+            If .p72id = BO.p72IdENUM.ZahrnoutDoPausalu Then
+                If Me.CurrentP33ID = BO.p33IdENUM.Cas Then
+                    .p31Value_FixPrice = BO.BAS.ConvertTimeToHours(Me.value_fixprice.Text)
+                Else
+                    .p31Value_FixPrice = BO.BAS.IsNullNum(Me.value_fixprice.Text)
+                End If
+            End If
+
         End With
         With Me.Factory.p31WorksheetBL
             If .Save_Approving(cApproveInput, Me.IsTempRecord) Then

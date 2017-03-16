@@ -6,5 +6,5 @@
     Public Property InvoiceRate As Double
     Public Property InvoiceVatRate As Double
     Public Property TextUpdate As String
-
+    Public Property FixPriceValue As Double
 End Class

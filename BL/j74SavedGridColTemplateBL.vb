@@ -474,7 +474,8 @@ Class j74SavedGridColTemplateBL
                 .Add(AGC("Vyfakt.bez DPH x Kurz", "p31Amount_WithoutVat_Invoiced_Domestic", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
                 .Add(AGC("Měna faktury", "j27Code_Billing_Invoice", , , "j27billing_invoice.j27Code", , "LEFT OUTER JOIN j27Currency j27billing_invoice ON a.j27ID_Billing_Invoiced=j27billing_invoice.j27ID", "Vyfakturováno", "min(j27billing_invoice.j27Code)", "a.j27ID_Billing_Invoiced"))
             End If
-            
+            .Add(AGC("Hodiny v paušálu", "p31Value_FixPrice", BO.cfENUM.Numeric2, , , True, , "Vyfakturováno"))
+
 
             .Add(AGC("Typ úhrady", "TypUhrady", , True, "j19.j19Name", , "LEFT OUTER JOIN j19PaymentType j19 ON a.j19ID=j19.j19ID"))
 

@@ -101,6 +101,10 @@
                 </tr>
 
             </table>
+            <asp:panel ID="panEdit6" runat="server" cssclass="div6" Visible="false">
+                <asp:Label ID="lblValue_FixPrice" runat="server" Text="Hodiny v paušálu:" CssClass="lbl"></asp:Label>
+                <asp:TextBox ID="Edit_p31Value_FixPrice" runat="server" style="width:100px;"></asp:TextBox>
+            </asp:panel>
             <div>
                 <asp:Label ID="lblP31Text" runat="server" Text="Text:" CssClass="lbl"></asp:Label>
             </div>

@@ -7700,6 +7700,7 @@ CREATE  procedure [dbo].[p31_save_approving]
 ,@vatrate_approved float
 ,@dat_p31date datetime
 ,@approving_level int
+,@value_fixprice float
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -7758,6 +7759,8 @@ if @p72id=6		--zahrnout do paušálu - schválená hodnota je pùvodní hodnota
  begin
   select @value_approved_billing=p31value_approved_billing from p31WorkSheet where p31ID=@p31id
  end 
+else
+ set @value_fixprice=null
  
 if @p72id=2 or @p72id=3		--odpis nuluje schválené hodnoty
  begin
@@ -7781,7 +7784,7 @@ if @p33code='T'
 if ltrim(rtrim(@approvingset))=''
  set @approvingset=null
 
-update p31worksheet set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@p31date,p31ApprovingLevel=@approving_level
+update p31worksheet set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@p31date,p31ApprovingLevel=@approving_level,p31Value_FixPrice=@value_fixprice
 where p31id=@p31id
 
 if @p71id=2 or @p71id=3
@@ -7837,7 +7840,7 @@ else
 	,p31Minutes_Approved_Billing=null,p31HHMM_Approved_Billing=null,p31Hours_Approved_Billing=null,p31Hours_Approved_Internal=null
 	,p31Rate_Billing_Approved=null,p31Rate_Internal_Approved=null
  	,p31Amount_WithoutVat_Approved=null,p31Amount_WithVat_Approved=null,p31Amount_Vat_Approved=null,p31VatRate_Approved=null
- 	,j02ID_ApprovedBy=null,p31approved_when=null
+ 	,j02ID_ApprovedBy=null,p31approved_when=null,p31Value_FixPrice=null
  	where p31id=@p31id
  end
 
@@ -7930,6 +7933,7 @@ CREATE  procedure [dbo].[p31_save_approving_temp]
 ,@vatrate_approved float
 ,@dat_p31date datetime
 ,@approving_level int
+,@value_fixprice float
 ,@err_ret varchar(1000) OUTPUT
 
 AS
@@ -7985,6 +7989,9 @@ if @p72id=2 or @p72id=6 or @p72id=3
 
    set @value_approved_billing=0
  end
+
+if @p72id<>6
+ set @value_fixprice=null
  
 ------if @p72id=6		--zahrnout do paušálu - schválená hodnota je pùvodní hodnota
 ------ begin
@@ -8013,7 +8020,7 @@ if @p33code='T'
 if ltrim(rtrim(@approvingset))=''
  set @approvingset=null
 
-update p31worksheet_temp set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@dat_p31date,p31ApprovingLevel=@approving_level
+update p31worksheet_temp set p71id=@p71id,p72ID_AfterApprove=@p72id,j02ID_ApprovedBy=@j02id_sys,p31Approved_When=getdate(),p31ApprovingSet=@approvingset,p31Date=@dat_p31date,p31ApprovingLevel=@approving_level,p31Value_FixPrice=@value_fixprice
 where p31GUID=@guid AND p31id=@p31id
 
 if @p71id=2 or @p71id=3
