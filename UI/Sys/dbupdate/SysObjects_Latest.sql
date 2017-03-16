@@ -7100,6 +7100,7 @@ AS
 ---p31Value_Invoiced - p85FreeFloat01  (èástka bez DPH u penìz nebo hodiny u èasu)
 ---p31Rate_Billing_Invoiced - p85FreeFloat02 (hodinová nebo úkonová sazba)
 ---p31VatRate_Invoiced - p85FreeFloat03  (explicitní sazba DPH)
+---p85FreeText01 - do stringu pøevedeno FixPriceValue
 
 set @err_ret=''
 set @j03id_sys=isnull(@j03id_sys,0)
@@ -7128,7 +7129,7 @@ declare @login nvarchar(50),@j02id_sys int
 select @j02id_sys=j02ID,@login=j03Login FROM j03User WHERE j03ID=@j03id_sys
 
 
-declare @j27id int,@x15id int,@p91fixedvatrate float,@is_creditnote bit
+declare @j27id int,@x15id int,@p91fixedvatrate float,@is_creditnote bit,@p31value_fixprice float
 
 
 select @j27id=j27ID,@x15id=x15ID,@p91fixedvatrate=p91FixedVatRate,@is_creditnote=convert(bit,case when p91ID_CreditNoteBind IS NOT NULL THEN 1 else 0 end)
@@ -7140,9 +7141,9 @@ declare @p33id int
 declare @p31amount_withoutvat_invoiced float,@p31amount_vat_invoiced float,@p31amount_withvat_invoiced float
 
 DECLARE curP31 CURSOR FOR 
-select p85DataPID,p85OtherKey1,p85Message,p85FreeFloat01,p85FreeFloat02,p85FreeFloat03 from p85TempBox WHERE p85GUID=@guid AND p85Prefix='p31'
+select p85DataPID,p85OtherKey1,p85Message,p85FreeFloat01,p85FreeFloat02,p85FreeFloat03,convert(float,p85FreeNumber01)/10000000 from p85TempBox WHERE p85GUID=@guid AND p85Prefix='p31'
 OPEN curP31
-FETCH NEXT FROM curP31  INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit
+FETCH NEXT FROM curP31  INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
@@ -7159,6 +7160,9 @@ if @x15id is not null and @vatrate_edit is null
    set @value_edit=0
    set @rate_edit=0
   end
+ 
+ if @p70id_edit<>6
+  set @p31value_fixprice=null
 
  if @p33id=1	---èas
   begin
@@ -7198,12 +7202,13 @@ if @x15id is not null and @vatrate_edit is null
   UPDATE p31Worksheet set p70ID=@p70id_edit,p31IsInvoiceManual=1,j02ID_InvoiceManual=@j02id_sys,p31DateUpdate_InvoiceManual=getdate()
   ,p31Amount_WithoutVat_Invoiced=@p31amount_withoutvat_invoiced,p31Amount_WithVat_Invoiced=@p31amount_withvat_invoiced
   ,p31Amount_Vat_Invoiced=@p31amount_vat_invoiced,p31VatRate_Invoiced=@vatrate_edit,j27ID_Billing_Invoiced=@j27id
+  ,p31Value_FixPrice=@p31value_fixprice
   WHERE p31ID=@p31id
 
   if @text_edit is not null
    UPDATE p31Worksheet set p31Text=@text_edit WHERE p31ID=@p31id
 
-FETCH NEXT FROM curP31 INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit
+FETCH NEXT FROM curP31 INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice
 END
 
 CLOSE curP31
@@ -12537,7 +12542,7 @@ where a.p91id=@ret_p91id
 exec p91_update_code @ret_p91id,@j03id_sys
 
 ---worksheet
-declare @c11id int,@p31date datetime,@p31id int,@p31text nvarchar(300)
+declare @c11id int,@p31date datetime,@p31id int,@p31text nvarchar(300),@p31value_fixprice float
 set @p31text='Dobropisovaná èástka'
 select top 1 @c11id=c11id,@p31date=c11datefrom from c11statperiod where c11level=5 and c11datefrom<=getdate() order by c11id desc
 
@@ -12561,7 +12566,7 @@ BEGIN
   insert into p85TempBox(p85GUID,p85DataPID,p85Prefix) values(@guid,@p31id,'p31')
 
   ---exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,null,null,@p31text,@vatrate,@err_ret OUTPUT
-  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@p31date,0,@err_ret OUTPUT
+  exec p31_save_approving @p31id,@j03id_sys,1,4,null,@amount_withoutvat,@amount_withoutvat,null,null,@p31text,@vatrate,@p31date,0,null,@err_ret OUTPUT
 
   print 'p31_save_approving, p31id: '+convert(varchar(10),@p31id)+', error: '+@err_ret
   

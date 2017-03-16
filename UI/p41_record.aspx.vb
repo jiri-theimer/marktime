@@ -197,7 +197,7 @@
         End If
         Me.panLimits.Visible = Me.chkDefineLimits.Checked
 
-
+        RefreshState_Pricelist()
     End Sub
 
     Private Sub RefreshState_Pricelist()
@@ -349,7 +349,7 @@
                     hidP51ID_Tailor.Value = ""
                     Me.opgPriceList.SelectedValue = "2"
                 End If
-                RefreshState_Pricelist()
+
             Case "p51-delete"
                 SetupPricelistCombo()
             
@@ -359,9 +359,7 @@
         Me.HardRefreshFlag.Value = ""
     End Sub
 
-    Private Sub p51ID_Billing_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles p51ID_Billing.SelectedIndexChanged
-        RefreshState_Pricelist()
-    End Sub
+    
 
     Private Sub p51ID_Internal_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p51ID_Internal.NeedMissingItem
         Dim cRec As BO.p51PriceList = Master.Factory.p51PriceListBL.Load(CInt(strFoundedMissingItemValue))
