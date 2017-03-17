@@ -352,6 +352,8 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.LimitniHonorar, "p28LimitFee_Notification", BO.cfENUM.Numeric, , "a.p28LimitFee_Notification", True))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
+            .Add(AGC("Kontaktní osoba", "KontaktniOsoba", , , "ko.Person", , "LEFT OUTER JOIN view_p28_contactpersons ko ON a.p28ID=ko.p28ID"))
+            .Add(AGC("Fakt.kontaktní osoba", "FakturacniKontaktniOsoba", , , "fko.Person", , "LEFT OUTER JOIN view_p28_contactpersons_invoice fko ON a.p28ID=fko.p28ID"))
             .Add(AGC("Stromový název", "p28TreePath", , True, "a.p28TreePath", , , "Strom"))
             .Add(AGC("Strom index", "p28TreeIndex", , True, "a.p28TreeIndex", , , "Strom"))
             .Add(AGC("Strom level", "p28TreeLevel", , True, "a.p28TreeLevel", , , "Strom"))

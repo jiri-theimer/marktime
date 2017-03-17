@@ -4,6 +4,7 @@
     Public Property Project As String
     Public Property Client As String
     Public Property Person As String
+    Public Property Task As String
     Public Property Code As String
 
     Public Property j27Code As String

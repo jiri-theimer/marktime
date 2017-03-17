@@ -1126,6 +1126,8 @@
                 s += "select min(p28.p28ID) as PID,min(p28.p28Code) as Code,min(p28.p28Name) as Client"
             Case BO.x29IdEnum.j02Person
                 s += "select min(j02.j02ID) as PID,min(j02.j02Code) as Code,min(j02.j02LastName+' '+j02.j02FirstName) as Person"
+            Case BO.x29IdEnum.p56Task
+                s += "select min(a.p56ID) as PID,min(p56.p56Name+' ('+p56.p56Code+')') as Task, min(p56.p56Code) as Code,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client"
         End Select
         s += ",min(j27.j27Code) as j27Code,SUM(case when a.p71ID IS NULL and a.p31hours_orig<>0 THEN a.p31hours_orig END) as rozpracovano_hodiny"
         s += ",MIN(case when a.p71ID IS NULL THEN p31Date END) as rozpracovano_prvni"
@@ -1150,6 +1152,9 @@
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID=3 THEN p31Amount_WithoutVat_Approved END) as schvaleno_kusovnik_honorar"
         s += " from p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID"
         s += " INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
+        If x29id = BO.x29IdEnum.p56Task Then
+            s += " INNER JOIN p56Task p56 ON a.p56ID=p56.p56ID"
+        End If
         s += " LEFT OUTER JOIN j27Currency j27 ON a.j27ID_Billing_Orig=j27.j27ID"
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
             ''Dim strJ11IDs As String = ""
@@ -1176,6 +1181,8 @@
                     s += " AND p41.p28ID_Client IN (SELECT a.p28ID FROM p28Contact a LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID WHERE " & strInW & ")"
                 Case BO.x29IdEnum.j02Person And strInW <> ""
                     s += " AND a.j02ID IN (SELECT a.j02ID FROM j02Person a LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID WHERE " & strInW & ")"
+                Case BO.x29IdEnum.p56Task And strInW <> ""
+                    s += " AND a.p56ID IN (SELECT a.p56ID FROM p56Task a LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID WHERE " & strInW & ")"
                 Case Else
             End Select
         End If
@@ -1190,6 +1197,9 @@
             Case BO.x29IdEnum.j02Person
                 s += " GROUP BY a.j02ID,a.j27ID_Billing_Orig"
                 s += " ORDER BY min(j02.j02LastName+' '+j02.j02FirstName),a.j27ID_Billing_Orig"
+            Case BO.x29IdEnum.p56Task
+                s += " GROUP BY a.p56ID,a.j27ID_Billing_Orig"
+                s += " ORDER BY min(p28.p28Name),min(p41.p41Name),min(p56.p56Name),a.j27ID_Billing_Orig"
         End Select
 
 

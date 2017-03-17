@@ -159,6 +159,7 @@
             <telerik:RadTab Text="Projekty" Value="p41" Selected="true"></telerik:RadTab>
             <telerik:RadTab Text="Klienti" Value="p28"></telerik:RadTab>
             <telerik:RadTab Text="Osoby" Value="j02"></telerik:RadTab>
+            <telerik:RadTab Text="Úkoly" Value="p56"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
     <div style="background-color: white;">

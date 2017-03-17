@@ -21,9 +21,12 @@
             If Request.Item("iscontact") = "1" Then
                 'režim zakládání kontaktní osoby
                 Me.j02IsIntraPerson.SelectedValue = "0"
+                Me.j02IsIntraPerson.Enabled = False
+
+            Else
+                Master.neededPermission = BO.x53PermValEnum.GR_Admin
             End If
             With Master
-                .neededPermission = BO.x53PermValEnum.GR_Admin
                 .HeaderIcon = "Images/person_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Osobní profil"

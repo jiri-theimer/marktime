@@ -144,6 +144,10 @@ Public Class approving_framework
                     .AddColumn("Client", "Klient")
                 Case BO.x29IdEnum.j02Person
                     .AddColumn("Person", "Osoba")
+                Case BO.x29IdEnum.p56Task
+                    .AddColumn("Client", "Klient")
+                    .AddColumn("Project", "Projekt")
+                    .AddColumn("Task", "Úkol")
             End Select
             If Me.cbxGroupBy.SelectedValue <> "j27Code" Then
                 .AddColumn("j27Code", "")
