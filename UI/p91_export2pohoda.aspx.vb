@@ -49,7 +49,7 @@ Public Class p91_export2pohoda
         Dim dbRow As DataRow
 
 
-        Dim strSQL As String = "select p91.*,p93.*,'' as stredisko,p41.projekt as contract,j27.j27Code,p28.*,o38prim.*,p86.*"
+        Dim strSQL As String = "select p91.*,p93.*,'' as stredisko,p41.projekt as contract,j27.j27Code,p28.*,o38prim.*,p86.*,left(p91Text2,90) as note90"
         If BO.BAS.IsNullInt(Me.txtMaxTextSize.Text) > 0 Then
             strSQL += ",left(p91text1," & Me.txtMaxTextSize.Text & ") as text90"
         Else
@@ -127,6 +127,7 @@ Public Class p91_export2pohoda
             ChangeChild(ndHeader, "inv:dateDue", Format(dbRow.Item("p91DateMaturity"), "yyyy-MM-dd"))
             ChangeChild(ndHeader, "inv:dateAccounting", Format(dbRow.Item("p91DateSupply"), "yyyy-MM-dd"))
             ChangeChild(ndHeader, "inv:text", dbRow.Item("text90").ToString)
+            ChangeChild(ndHeader, "inv:note", dbRow.Item("note90").ToString)
 
             nd = GetChild(ndHeader, "inv:number")
             ChangeChild(nd, "typ:numberRequested", dbRow.Item("p91Code").ToString)
@@ -165,25 +166,26 @@ Public Class p91_export2pohoda
         dt.Clear()
 
      
-        strSQL = "select left(p95name,90) as polozka"
-        strSQL += ",p81Amount_WithoutVat as bezdph"
-        strSQL += ",p81VatRate as dph_sazba"
-        strSQL += ",p81Amount_Vat as dph_castka"
-        strSQL += ",p81Amount_WithVat as vcdph,1 as Poradi"
-        strSQL += " FROM p81InvoiceAmount a LEFT OUTER JOIN p95InvoiceRow p95 ON a.p95ID=p95.p95ID"
-        strSQL += " WHERE a.p91id=" & strP91ID & " and a.p81Amount_WithoutVat<>0"
-        strSQL += " UNION"
-        strSQL += " SELECT 'Uhrazená záloha' as polozka,-1*(p91ProformaAmount_WithoutVat_None+p91ProformaAmount_WithoutVat_Low+p91ProformaAmount_WithoutVat_Standard) as bezdph"
-        strSQL += ",p91ProformaAmount_VatRate as dph_sazba"
-        strSQL += ",-1*(p91ProformaAmount_Vat_Low+p91ProformaAmount_Vat_Standard) as dph_castka"
-        strSQL += ",-1*p91ProformaAmount as vcdph,1000 as Poradi"
-        strSQL += " FROM p91Invoice WHERE p91ID=" & strP91ID & " AND isnull(p91ProformaAmount,0)<>0"
-        strSQL += " UNION SELECT 'Zaokrouhlení' as Polozka,p91RoundFitAmount as bezdph,0 as dph_sazba,0 as dph_castka,p91RoundFitAmount as vcdph,2000 as Poradi FROM p91Invoice WHERE p91ID=9 AND isnull(p91RoundFitAmount,0)<>0"
-        strSQL += " ORDER BY Poradi,dph_sazba"
+        ''strSQL = "select left(p95name,90) as polozka"
+        ''strSQL += ",p81Amount_WithoutVat as bezdph"
+        ''strSQL += ",p81VatRate as dph_sazba"
+        ''strSQL += ",p81Amount_Vat as dph_castka"
+        ''strSQL += ",p81Amount_WithVat as vcdph,1 as Poradi"
+        ''strSQL += " FROM p81InvoiceAmount a LEFT OUTER JOIN p95InvoiceRow p95 ON a.p95ID=p95.p95ID"
+        ''strSQL += " WHERE a.p91id=" & strP91ID & " and a.p81Amount_WithoutVat<>0"
+        ''strSQL += " UNION"
+        ''strSQL += " SELECT 'Uhrazená záloha' as polozka,-1*(p91ProformaAmount_WithoutVat_None+p91ProformaAmount_WithoutVat_Low+p91ProformaAmount_WithoutVat_Standard) as bezdph"
+        ''strSQL += ",p91ProformaAmount_VatRate as dph_sazba"
+        ''strSQL += ",-1*(p91ProformaAmount_Vat_Low+p91ProformaAmount_Vat_Standard) as dph_castka"
+        ''strSQL += ",-1*p91ProformaAmount as vcdph,1000 as Poradi"
+        ''strSQL += " FROM p91Invoice WHERE p91ID=" & strP91ID & " AND isnull(p91ProformaAmount,0)<>0"
+        ''strSQL += " UNION SELECT 'Zaokrouhlení' as Polozka,p91RoundFitAmount as bezdph,0 as dph_sazba,0 as dph_castka,p91RoundFitAmount as vcdph,2000 as Poradi FROM p91Invoice WHERE p91ID=9 AND isnull(p91RoundFitAmount,0)<>0"
+        ''strSQL += " ORDER BY Poradi,dph_sazba"
         Dim x As Integer
         Dim ndDetail As XmlNode = ndHeader.NextSibling
 
-        dt = Master.Factory.pluginBL.GetDataTable(strSQL, Nothing)
+        ''dt = Master.Factory.pluginBL.GetDataTable(strSQL, Nothing)
+        dt = Master.Factory.pluginBL.GetDataTable("exec dbo.p91_get_cenovy_rozpis " & strP91ID & ",1,1,0", Nothing)
         Dim intColumns As Integer = dt.Columns.Count
 
         If intColumns > 1 Then
@@ -197,10 +199,10 @@ Public Class p91_export2pohoda
                     ndInvoiceItem = GetChild(ndDetail, "inv:invoiceItem")
                 End If
                 Dim strVatType As String = "high"
-                If dbRow.Item("dph_sazba") < 20 Then strVatType = "low"
-                If dbRow.Item("dph_sazba") = 0 Then strVatType = "none"
+                If dbRow.Item("DPHSazba") < 20 Then strVatType = "low"
+                If dbRow.Item("DPHSazba") = 0 Then strVatType = "none"
 
-                ChangeChild(ndInvoiceItem, "inv:text", dbRow.Item("polozka") & "")
+                ChangeChild(ndInvoiceItem, "inv:text", dbRow.Item("Oddil") & "")
                 ChangeChild(ndInvoiceItem, "inv:quantity", "1")
                 ChangeChild(ndInvoiceItem, "inv:rateVAT", strVatType)
 
@@ -211,8 +213,12 @@ Public Class p91_export2pohoda
                 End If
                 ChangeChild(nd, "typ:unitPrice", FormatNumber(dbRow.Item("bezdph")))
                 ChangeChild(nd, "typ:price", FormatNumber(dbRow.Item("bezdph")))
-                ChangeChild(nd, "typ:priceVAT", FormatNumber(dbRow.Item("dph_castka")))
+                ChangeChild(nd, "typ:priceVAT", FormatNumber(dbRow.Item("DPH")))
                 ChangeChild(nd, "typ:priceSum", FormatNumber(dbRow.Item("vcdph")))
+
+                nd = GetChild(ndInvoiceItem, "inv:accounting")
+                ChangeChild(nd, "typ:ids", Trim(txtPredkontace.Text))
+                
                 x += 1
             Next
         End If

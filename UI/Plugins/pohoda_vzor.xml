@@ -20,7 +20,7 @@
 				<inv:classificationVAT>
 					<typ:classificationVATType>inland</typ:classificationVATType>
 				</inv:classificationVAT>
-				<inv:text>Faktura za zboží</inv:text>
+				<inv:text>Faktura za zboží</inv:text>				
 				<inv:partnerIdentity>
 
 					<typ:address>
@@ -52,6 +52,7 @@
 				<inv:contract>
 					<typ:ids>23Zak00002</typ:ids>
 				</inv:contract>
+				<inv:note></inv:note>
 			</inv:invoiceHeader>			
 			<inv:invoiceDetail>
 

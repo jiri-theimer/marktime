@@ -44,12 +44,12 @@
                 Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(intPID)
                 With cRec
                     cal1.SelectedDate = .p31Date
-                    Me.p41ID.Value = .p41ID.ToString
-                    If .p28ID_Client > 0 Then
-                        Me.p41ID.Text = .ClientName & " - " & .p41Name
-                    Else
-                        Me.p41ID.Text = .p41Name
-                    End If
+                    ''Me.p41ID.Value = .p41ID.ToString
+                    ''If .p28ID_Client > 0 Then
+                    ''    Me.p41ID.Text = .ClientName & " - " & .p41Name
+                    ''Else
+                    ''    Me.p41ID.Text = .p41Name
+                    ''End If
 
                 End With
 

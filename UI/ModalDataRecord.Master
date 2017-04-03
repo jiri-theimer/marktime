@@ -93,7 +93,15 @@
                 oWnd.close();
             }
             catch (err) {
-                window.opener.hardrefresh(pid, flag);
+                try {                    
+                    window.opener.hardrefresh(pid, flag);
+                    
+                }
+                catch (err) {                    
+                    //window.parent.hardrefresh(pid, flag);
+                    window.parent.window.postMessage({ 'func': 'hardrefresh', 'params': [pid, flag] }, '*');
+                    
+                }
                 window.close();
             }
 

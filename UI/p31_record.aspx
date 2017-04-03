@@ -279,9 +279,13 @@
 
                 document.getElementById("<%=me.hidHoursEntryFlag.ClientID%>").value = par1;
             }
+            
 
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdHardRefresh, "", False)%>
-
+            
+            
+          
+            
         }
 
         function sw_local(url, img, is_maximize)  //je to zde kvůli zapisování komentářů přes info-bublinu
@@ -580,7 +584,7 @@
     <asp:HiddenField ID="hidDefaultJ27ID" runat="server" />
     <asp:HiddenField ID="hidDefaultVatRate" runat="server" />
     <asp:HiddenField ID="hidGuidApprove" runat="server" />
-
+    
 
     <script type="text/javascript">
         $(function () {

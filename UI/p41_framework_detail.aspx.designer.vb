@@ -131,6 +131,24 @@ Partial Public Class p41_framework_detail
     Protected WithEvents imgFlag_Client As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
+    '''lblClientBilling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblClientBilling As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ClientBilling control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ClientBilling As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''trWorkflow control.
     '''</summary>
     '''<remarks>

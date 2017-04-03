@@ -1035,7 +1035,7 @@
         s.Append(",SUM(case when a.p71ID IS NULL THEN 1 END) as rozpracovano_pocet")
         s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove=4 THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny")
         s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND p34.p33ID=1 THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_honorar")
-        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove=6 THEN a.p31hours_orig END) as schvaleno_hodiny_pausal")
+        s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove=6 THEN (case when a.p31Value_FixPrice is null or a.p31Value_FixPrice=0 then a.p31hours_orig else a.p31Value_FixPrice end) END) as schvaleno_hodiny_pausal")
         s.Append(",SUM(case when a.p71ID=1 AND a.p91ID IS NULL AND a.p72ID_AfterApprove IN (2,3) THEN a.p31hours_orig END) as schvaleno_hodiny_odpis")
         s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=1 and a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Approved END) as schvaleno_vydaje")
         s.Append(",SUM(case when a.p71ID=1 AND p34.p34IncomeStatementFlag=1 and a.p72ID_AfterApprove=6 AND p34.p33ID IN (2,5) THEN p31Amount_WithoutVat_Orig END) as schvaleno_vydaje_pausal")
@@ -1143,7 +1143,7 @@
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 THEN p31Amount_WithoutVat_Approved END) as schvaleno_vydaje_fakturovat"
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN p31Amount_WithoutVat_Approved END) as schvaleno_odmeny_fakturovat"
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=4 AND a.p91ID IS NULL THEN a.p31Amount_WithoutVat_Approved END) as schvaleno_celkem_fakturovat"
-        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=6 AND a.p91ID IS NULL THEN a.p31Hours_Orig END) as schvaleno_hodiny_pausal"
+        s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=6 AND a.p91ID IS NULL THEN (case when a.p31Value_FixPrice is null or a.p31Value_FixPrice=0 then a.p31hours_orig else a.p31Value_FixPrice end) END) as schvaleno_hodiny_pausal"
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove IN (2,3) AND a.p91ID IS NULL THEN a.p31Hours_Orig END) as schvaleno_hodiny_odpis"
         s += ",SUM(case when a.p71ID=1 AND a.p72ID_AfterApprove=7 AND a.p91ID IS NULL THEN a.p31Hours_Approved_Billing END) as schvaleno_hodiny_pozdeji"
         s += ",SUM(case when a.p71ID=1 AND a.p91ID IS NULL THEN 1 END) as schvaleno_pocet"

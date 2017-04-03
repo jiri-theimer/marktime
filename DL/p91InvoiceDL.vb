@@ -231,6 +231,7 @@
                 pars.Add("p41id", .p41ID, DbType.Int32)
                 strW += " AND a.p91ID IN (select p91ID FROM p31Worksheet WHERE p41ID=@p41id)"
             End If
+
             If .p28ID <> 0 Then
                 pars.Add("p28id", .p28ID, DbType.Int32)
                 strW += " AND a.p91ID IN (select x1.p91ID FROM p31Worksheet x1 INNER JOIN p41Project x2 ON x1.p41ID=x2.p41ID WHERE x2.p28ID_Client=@p28id)"

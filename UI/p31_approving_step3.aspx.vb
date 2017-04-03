@@ -277,6 +277,10 @@ Public Class p31_approving_step3
                         .VatRate_Approved = cRec.p31VatRate_Approved
                         .Rate_Billing_Approved = cRec.p31Rate_Billing_Approved
                         .Rate_Internal_Approved = cRec.p31Rate_Internal_Approved
+                        If .p72id = BO.p72IdENUM.ZahrnoutDoPausalu Then
+                            .p31Value_FixPrice = cRec.p31Value_FixPrice
+                        End If
+
                     End If
                     .p31Date = cRec.p31Date
                 End With
@@ -656,6 +660,11 @@ Public Class p31_approving_step3
                         .Rate_Billing_Approved = cRec.p31Rate_Billing_Approved
                         .Rate_Internal_Approved = cRec.p31Rate_Internal_Approved
                         .VatRate_Approved = cRec.p31VatRate_Approved
+                        If .p72id = BO.p72IdENUM.ZahrnoutDoPausalu Then
+                            .p31Value_FixPrice = cRec.p31Value_FixPrice
+                        Else
+                            .p31Value_FixPrice = 0
+                        End If
                     Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
                         .VatRate_Approved = cRec.p31VatRate_Approved
                 End Select

@@ -21,6 +21,10 @@
         <asp:TextBox ID="txtMaxTextSize" runat="server" Text="240"></asp:TextBox>
         <span>znaků</span>
     </div>
+    <div class="div6">
+        U položek faktury doplňovat předkontaci:
+        <asp:TextBox ID="txtPredkontace" runat="server" Text="1Fv"></asp:TextBox>
+    </div>
     
     <fieldset>
         <legend>Hromadné generování faktur podle období zdanitelného plnění</legend>

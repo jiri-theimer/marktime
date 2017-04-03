@@ -130,6 +130,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID", "Klient faktury"))
                 lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p28client.p29id", "Typ klienta faktury"))
+                lis.Add(New myItem(BO.x29IdEnum.j18Region, "p41.j18id", "Středisko projektu"))
             Case BO.x29IdEnum.j02Person
                 ph1.Text = "Návrhář filtrů nad přehledem osob"
 

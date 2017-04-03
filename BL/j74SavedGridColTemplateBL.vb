@@ -494,9 +494,10 @@ Class j74SavedGridColTemplateBL
         With lis
             .Add(AGC("Číslo", "p91Code"))
 
-            .Add(AGC("Název klienta (vazba)", "p28Name"))
-            .Add(AGC("Firma klienta (vazba)", "p28CompanyName"))
+            .Add(AGC("Název klienta (vazba)", "p28Name", , , "p28client.p28Name"))
+            .Add(AGC("Firma klienta (vazba)", "p28CompanyName", , , "p28client.p28CompanyName"))
             .Add(AGC("Klient ve faktuře", "p91Client"))
+            .Add(AGC("Klient projektu", "PClient", , , "projectclient.p28Name", , "LEFT OUTER JOIN p28Contact projectclient ON p41.p28ID_Client=projectclient.p28ID"))
 
             .Add(AGC("Měna", "j27Code"))
             .Add(AGC("Typ faktury", "p92Name"))

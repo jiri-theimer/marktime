@@ -37,7 +37,7 @@
             </td>
             <td>
                 <uc:datacombo ID="j07ID" runat="server" DataTextField="j07Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
-                <uc:person ID="j02ID" runat="server" Width="300px" />
+                <uc:person ID="j02ID" runat="server" Width="300px" Flag="all" />
 
             </td>
         </tr>

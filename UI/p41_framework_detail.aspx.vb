@@ -113,6 +113,12 @@
             Else
                 Me.clue_client.Visible = False : Me.Client.Visible = False
             End If
+            If .p28ID_Billing > 0 Then
+                lblClientBilling.Visible = True : Me.ClientBilling.Visible = True
+                Dim cClientBilling As BO.p28Contact = Master.Factory.p28ContactBL.Load(.p28ID_Billing)
+                Me.ClientBilling.Text = cClientBilling.p28Name
+                Me.ClientBilling.NavigateUrl = "p28_framework.aspx?pid=" & .p28ID_Billing.ToString
+            End If
             If .j18ID > 0 Then
                 Me.clue_j18name.Attributes("rel") = "clue_j18_record.aspx?pid=" & .j18ID.ToString
             Else

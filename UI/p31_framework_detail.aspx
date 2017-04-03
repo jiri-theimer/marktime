@@ -36,10 +36,11 @@
 
         function p31_entry() {
             var p41id = <%=me.p41ID.ClientID%>_get_value();
-
+            
             sw_decide("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id=" + p41id, "Images/worksheet.png");
             
         }
+    
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
@@ -60,6 +61,7 @@
 
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
 
+            
         }
 
 
