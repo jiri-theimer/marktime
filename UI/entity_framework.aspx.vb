@@ -111,7 +111,7 @@ Public Class entity_framework
                     basUI.SelectRadiolistValue(Me.opgLayout, .GetUserParam(Me.CurrentPrefix + "_framework-layout", "1"))
 
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_framework-pagesize", "20"))
-                    Dim strDefWidth As String = "420"
+                    Dim strDefWidth As String = "435"
                     Select Case Me.CurrentPrefix
                         Case "o23", "p56", "p91" : strDefWidth = "500"
                         Case Else

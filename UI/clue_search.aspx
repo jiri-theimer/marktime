@@ -37,7 +37,7 @@
             <td>Projekt:
             </td>
             <td>
-                <uc:project ID="p41id_search" runat="server" Width="600px" Flag="searchbox" AutoPostBack="false" OnClientSelectedIndexChanged="p41id_search" />
+                <uc:project ID="p41id_search" runat="server" Width="590px" Flag="searchbox" AutoPostBack="false" OnClientSelectedIndexChanged="p41id_search" />
             </td>
 
 
@@ -49,7 +49,7 @@
             <td>Klient:
             </td>
             <td>
-                <uc:contact ID="p28id_search" runat="server" Width="600px" Flag="searchbox" AutoPostBack="false" />
+                <uc:contact ID="p28id_search" runat="server" Width="590px" Flag="searchbox" AutoPostBack="false" />
             </td>
 
 
@@ -61,7 +61,7 @@
             <td>Faktura:
             </td>
             <td>
-                <uc:invoice ID="p91id_search" runat="server" Width="600px" Flag="searchbox" />
+                <uc:invoice ID="p91id_search" runat="server" Width="590px" Flag="searchbox" />
 
             </td>
 
@@ -74,7 +74,7 @@
             </td>
 
             <td>
-                <uc:person ID="j02id_search" runat="server" Width="600px" Flag="searchbox" AutoPostBack="false" />
+                <uc:person ID="j02id_search" runat="server" Width="590px" Flag="searchbox" AutoPostBack="false" />
 
             </td>
 

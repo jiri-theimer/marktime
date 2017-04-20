@@ -178,7 +178,7 @@ Public Class main_menu
             Case "begin"
                 e.Item.Controls.Add(New LiteralControl("<a href='default.aspx' title='ÚVOD'><img src='Images/logo_transparent.png' style='border:0px;' /></a>"))
             Case "searchbox"
-                e.Item.Controls.Add(New LiteralControl("<a class='button-reczoom' rel='clue_search.aspx' dialogheight='600' style='cursor:pointer;cursor:hand;padding-bottom:2px;padding-top:2px;border:0px;background-color:transparent;'><img src='Images/search_silver.png' style='border:0px;' title='Najít projekt/klienta/fakturu/osobu'/></a>"))
+                e.Item.Controls.Add(New LiteralControl("<a class='button-reczoom' rel='clue_search.aspx' dialogheight='600' title='Hledat' style='cursor:pointer;cursor:hand;padding-bottom:2px;padding-top:2px;border:0px;background-color:transparent;'><img src='Images/search_silver.png' style='border:0px;' title='Najít projekt/klienta/fakturu/osobu'/></a>"))
         End Select
         
 
