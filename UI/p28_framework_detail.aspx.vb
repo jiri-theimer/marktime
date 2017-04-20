@@ -17,8 +17,11 @@
             With Master
                 .SiteMenuValue = "p28"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                If Request.Item("tab") <> "" Then
-                    .Factory.j03UserBL.SetUserParam("p28_framework_detail-tab", Request.Item("tab"))
+                If Me.menu1.PageSource = "2" Then
+                    .IsHideAllRecZooms = True
+                    ''If Request.Item("tab") <> "" Then
+                    ''    .Factory.j03UserBL.SetUserParam("p41_framework_detail-tab", Request.Item("tab"))
+                    ''End If
                 End If
 
                 Dim lisPars As New List(Of String)
@@ -43,19 +46,18 @@
                             .SetUserParam("p28_framework_detail-pid", intPID.ToString)
                         End If
                     End If
-                    If Request.Item("board") = "" Then
-                        Dim strTab As String = .GetUserParam("p28_framework_detail-tab", "board")
-                        Select Case strTab
-                            Case "p31", "time", "expense", "fee", "kusovnik"
-                                Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p28&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab, False)
-                            Case "o23", "p91", "p56", "summary", "p41"
-                                Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p28&masterpid=" & intPID.ToString, False)
-                            Case "p90"
-                                Server.Transfer("p28_framework_detail_p90.aspx?masterpid=" & intPID.ToString, False)
-                            Case Else
-                                'zůstat zde na BOARD stránce
-                        End Select
-                    End If
+                    Dim strTab As String = Request.Item("tab")
+                    If strTab = "" Then strTab = .GetUserParam("p28_framework_detail-tab", "board")
+                    Select Case strTab
+                        Case "p31", "time", "expense", "fee", "kusovnik"
+                            Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p28&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
+                        Case "o23", "p91", "p56", "summary", "p41"
+                            Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p28&masterpid=" & intPID.ToString & "&source=" & menu1.PageSource, False)
+                        Case "p90"
+                            Server.Transfer("p28_framework_detail_p90.aspx?masterpid=" & intPID.ToString & "&source=" & menu1.PageSource, False)
+                        Case Else
+                            'zůstat zde na BOARD stránce
+                    End Select
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
                     menu1.x31ID_Plugin = .GetUserParam("p28_menu-x31id-plugin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
@@ -225,6 +227,13 @@
         Else
             comments1.Visible = False
         End If
+
+        If cRecSum.p41_Actual_Count > 0 And Master.Factory.SysUser.j04IsMenu_Project Then
+            boxP41.Visible = True
+            RefreshProjectList(cRec, cRecSum.p41_Actual_Count)
+        Else
+            boxP41.Visible = False
+        End If
     End Sub
 
     Private Sub RenderTree(cRec As BO.p28Contact, cRecSum As BO.p28ContactSum)
@@ -325,4 +334,63 @@
             End If
         End With
     End Sub
+
+    Private Sub RefreshProjectList(cRec As BO.p28Contact, intAllOpenProjects As Integer)
+        Dim mq As New BO.myQueryP41
+        mq.p28ID = cRec.PID
+        mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
+        mq.Closed = BO.BooleanQueryMode.FalseQuery
+
+
+        Dim lis As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq).OrderBy(Function(p) p.IsClosed).ThenByDescending(Function(p) p.PID)
+        If lis.Count = 0 Then
+            boxP41.Visible = False : Return
+        Else
+            boxP41.Visible = True
+            Dim intClosed As Integer = lis.Where(Function(p) p.IsClosed = True).Count
+            Dim intOpened As Integer = lis.Count - intClosed
+            Dim s As String = ""
+            With boxP41Title
+                If intClosed > 0 Then
+                    ''.Text = .Text & " (" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & ")"
+                    s = "<span class='badge1'>" & intOpened.ToString & IIf(intClosed > 0, "+" & intClosed.ToString, "") & "</span>"
+                Else
+                    ''.Text = .Text & " (" & intOpened.ToString & ")"
+                    s = "<span class='badge1'>" & intOpened.ToString & "</span>"
+                End If
+
+                ''.Text = "<a href='javascript:projects()'>" & .Text & s & "</a>"
+            End With
+
+        End If
+        ''If Not Me.chkShowBoxP41.Checked Then Return
+
+        If lis.Count > 25 Then lis = lis.Take(25) 'omezit na maximálně 25+1
+        rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
+        rpP41.DataBind()
+
+    End Sub
+    Private Sub rpP41_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP41.ItemDataBound
+
+        Dim cRec As BO.p41Project = CType(e.Item.DataItem, BO.p41Project)
+        With CType(e.Item.FindControl("aProject"), HyperLink)
+            If cRec.p41NameShort > "" Then
+                .Text = cRec.p41NameShort
+            Else
+                .Text = cRec.p41Name
+            End If
+            .Text += " (" & cRec.p41Code & ")"
+            If cRec.IsClosed Then .Font.Strikeout = True : .ForeColor = Drawing.Color.Gray
+            If Master.Factory.SysUser.j04IsMenu_Project Then
+                .NavigateUrl = "p41_framework.aspx?pid=" & cRec.PID.ToString
+
+
+                
+            End If
+        End With
+        If e.Item.FindControl("clue_project").Visible Then CType(e.Item.FindControl("clue_project"), HyperLink).Attributes.Item("rel") = "clue_p41_record.aspx?pid=" & cRec.PID.ToString
+
+
+    End Sub
+
 End Class

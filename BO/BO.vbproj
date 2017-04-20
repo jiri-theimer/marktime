@@ -131,6 +131,7 @@
     <Compile Include="DBNative\x45Event.vb" />
     <Compile Include="DBNative\x46EventNotification.vb" />
     <Compile Include="DBNative\x47EventLog.vb" />
+    <Compile Include="DBNative\x48SqlTask.vb" />
     <Compile Include="DBNative\x50Help.vb" />
     <Compile Include="DBNative\x55HtmlSnippet.vb" />
     <Compile Include="DBNative\x56SnippetProperty.vb" />

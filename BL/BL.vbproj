@@ -203,6 +203,7 @@
     <Compile Include="x40MailQueueBL.vb" />
     <Compile Include="x46EventNotificationBL.vb" />
     <Compile Include="x47EventLogBL.vb" />
+    <Compile Include="x48SqlTaskBL.vb" />
     <Compile Include="x50HelpBL.vb" />
     <Compile Include="x55HtmlSnippetBL.vb" />
     <Compile Include="x58UserPageBL.vb" />

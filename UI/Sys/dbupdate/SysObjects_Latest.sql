@@ -2029,6 +2029,39 @@ END
 
 GO
 
+----------FN---------------p82_get_p86id-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p82_get_p86id') and type = 'FN')
+ drop function p82_get_p86id
+GO
+
+
+
+
+
+CREATE  FUNCTION [dbo].[p82_get_p86id](@p82id int)
+RETURNS int
+AS
+BEGIN
+  ---vrací ID bankovního úètu pro úhradu zálohové faktury @p82id
+
+  declare @p86id int,@j27id int,@p93id int
+
+  select @j27id=p90.j27ID,@p93id=p89.p93ID
+  FROM p82Proforma_Payment a INNER JOIN p90Proforma p90 ON a.p90ID=p90.p90ID INNER JOIN p89ProformaType p89 ON p90.p89ID=p89.p89ID
+  WHERE a.p82ID=@p82id
+
+  RETURN(select p86ID FROM p88InvoiceHeader_BankAccount WHERE j27ID=@j27id AND p93ID=@p93id)
+
+ 
+   
+END
+
+
+
+
+GO
+
 ----------FN---------------p84_translate-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p84_translate') and type = 'FN')
@@ -2145,13 +2178,13 @@ if exists (select 1 from sysobjects where  id = object_id('p91_get_vatrate') and
 GO
 
 
-
-
 CREATE  FUNCTION [dbo].[p91_get_vatrate](@x15id int,@j27id int,@j17id int,@dat datetime)
 RETURNS float
 AS
 BEGIN
   ---2: snížená, 3: standardní, 4: special
+  if isnull(@x15id,1)=1
+   RETURN(0)
 
   declare @ret float,@p53id int
 
@@ -2168,7 +2201,7 @@ BEGIN
     RETURN(@ret)
     
   
-  RETURN(0)
+  RETURN(-1)
    
 END
 
@@ -12727,7 +12760,7 @@ declare @p91id int
 
 if isnull(@p51id,0)=0
  begin
-  select @p51id=p51ID FROM p50OfficePriceList WHERE p50RatesFlag=1 AND getdate() BETWEEN p50ValidFrom AND p50ValidUntil
+  select @p51id=p51ID FROM p50OfficePriceList WHERE p50RatesFlag=2 AND getdate() BETWEEN p50ValidFrom AND p50ValidUntil
 
   if @p51id is null
    return
@@ -12783,23 +12816,49 @@ select @hodiny=isnull(sum(p31Hours_Orig),0)
 FROM p31worksheet a INNER JOIN p32Activity b ON a.p32ID=b.p32ID
 where p91id=@p91id AND p70ID=6 and p32IsBillable=1
 
-select @body=SUM(p52rate*p31Hours_Orig)
-FROM 
-p52PriceList_Item a 
-INNER JOIN j02Person j02 on a.j02ID=j02.j02ID
-INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
-INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
-INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
-WHERE a.p51id=@p51id AND p31.p91ID=@p91id and p31.p70ID=6 AND p34.p33ID=1
+if exists(select p52ID FROM p52PriceList_Item WHERE p51ID=@p51id AND j02ID IS NOT NULL)
+ begin
+  select @body=SUM(p52rate*p31Hours_Orig)
+  FROM 
+  p52PriceList_Item a 
+  INNER JOIN j02Person j02 on a.j02ID=j02.j02ID
+  INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
+  INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
+  INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+  WHERE a.p51id=@p51id AND p31.p91ID=@p91id and p31.p70ID=6 AND p34.p33ID=1
+  
+  update p31WorkSheet set p31AKDS_FPR_BODY=p31Hours_Orig*p52rate
+  FROM
+  p52PriceList_Item a
+  INNER JOIN j02Person j02 on a.j02ID=j02.j02ID
+  INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
+  INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
+  INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+  WHERE a.p51id=@p51id AND p31.p91ID=@p91id AND p31.p70ID=6 AND p34.p33ID=1
+end
 
-update p31WorkSheet set p31AKDS_FPR_BODY=p31Hours_Orig*p52rate
-FROM
-p52PriceList_Item a
-INNER JOIN j02Person j02 on a.j02ID=j02.j02ID
-INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
-INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
-INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
-WHERE a.p51id=@p51id AND p31.p91ID=@p91id AND p31.p70ID=6 AND p34.p33ID=1
+if exists(select p52ID FROM p52PriceList_Item WHERE p51ID=@p51id AND j07ID IS NOT NULL)
+ begin
+ select @body=SUM(p52rate*p31Hours_Orig)
+ FROM 
+ p52PriceList_Item a 
+ INNER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID
+ INNER JOIN j02Person j02 on j07.j07ID=j02.j07ID
+ INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
+ INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
+ INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+ WHERE a.p51id=@p51id AND p31.p91ID=@p91id and p31.p70ID=6 AND p34.p33ID=1
+ 
+ update p31WorkSheet set p31AKDS_FPR_BODY=p31Hours_Orig*p52rate
+  FROM
+  p52PriceList_Item a
+  INNER JOIN j07PersonPosition j07 ON a.j07ID=j07.j07ID
+ INNER JOIN j02Person j02 on j07.j07ID=j02.j07ID
+  INNER JOIN p31WorkSheet p31 ON j02.j02ID=p31.j02ID
+  INNER JOIN p32Activity p32 ON p31.p32ID=p32.p32ID
+  INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+  WHERE a.p51id=@p51id AND p31.p91ID=@p91id AND p31.p70ID=6 AND p34.p33ID=1
+ end
 
 update a set p31AKDS_FPR_PODIL=p31AKDS_FPR_BODY/@body
 FROM p31WorkSheet a INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
@@ -12856,7 +12915,7 @@ select case when a.p31ID IS NULL THEN case when @langindex=1 then isnull(p95.p95
  when @langindex=2 then isnull(p95.p95Name_BillingLang2,p95.p95Name)
  when @langindex=10 then p95.p95Name+' / '+p95.p95Name_BillingLang1
  when @langindex=20 then p95.p95Name+' / '+p95.p95Name_BillingLang2
-  else p95.p95Name end else p31.p31Text END as Oddil
+  else p95.p95Name end else (case when CHARINDEX('##', p31.p31Text)>0 then LEFT(p31.p31Text,CHARINDEX('##', p31.p31Text)-1) else p31.p31Text end) END as Oddil
 ,a.p81Amount_WithoutVat as BezDPH
 ,a.p81VatRate as DPHSazba
 ,a.p81Amount_Vat as DPH
@@ -14880,6 +14939,63 @@ END CATCH
 
 GO
 
+----------P---------------x48_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x48_delete') and type = 'P')
+ drop procedure x48_delete
+GO
+
+
+
+
+
+
+
+
+CREATE   procedure [dbo].[x48_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--x48id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu SQL úlohy z tabulky x48SqlTask
+
+
+BEGIN TRANSACTION
+
+BEGIN TRY
+	
+	
+
+	delete from x48SqlTask WHERE x48ID=@pid
+
+	
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
+  ROLLBACK TRANSACTION
+  
+END CATCH  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------x50_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('x50_delete') and type = 'P')
@@ -15198,6 +15314,44 @@ select a.p41ID,a.j02ID,MAX(a.p31Date) as LastDate
 from
 p31WorkSheet a INNER JOIN p41Project b ON a.p41ID=b.p41ID
 GROUP BY a.p41ID,a.j02ID
+
+
+GO
+
+----------V---------------view_p28_contactpersons-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p28_contactpersons') and type = 'V')
+ drop view view_p28_contactpersons
+GO
+
+
+
+
+
+
+CREATE VIEW [dbo].[view_p28_contactpersons]
+as
+SELECT a.p28ID,min(j02.j02LastName+' '+j02.j02FirstName) as Person
+FROM p30Contact_Person a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID
+GROUP BY a.p28ID
+
+
+GO
+
+----------V---------------view_p28_contactpersons_invoice-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p28_contactpersons_invoice') and type = 'V')
+ drop view view_p28_contactpersons_invoice
+GO
+
+
+
+CREATE VIEW [dbo].[view_p28_contactpersons_invoice]
+as
+SELECT a.p28ID,min(j02.j02LastName+' '+j02.j02FirstName) as Person
+FROM p30Contact_Person a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID
+WHERE a.p30IsDefaultInInvoice=1
+GROUP BY a.p28ID
 
 
 GO

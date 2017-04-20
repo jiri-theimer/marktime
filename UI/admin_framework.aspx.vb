@@ -118,12 +118,15 @@ Public Class admin_framework
             Dim intPID As Integer = CInt(hidGo2Pid.Value) : hidGo2Pid.Value = ""
             grid1.SelectRecords(intPID)
             If grid1.radGridOrig.SelectedItems.Count = 0 Then
+                Dim x As Integer = 0
                 While grid1.radGridOrig.MasterTableView.PageCount > grid1.radGridOrig.CurrentPageIndex
                     grid1.radGridOrig.CurrentPageIndex += 1
                     grid1.Rebind(True, intPID)
                     If grid1.radGridOrig.SelectedItems.Count > 0 Then
                         Exit While
                     End If
+                    x += 1
+                    If x > 10000 Then Exit While
                 End While
 
             End If
@@ -231,6 +234,7 @@ Public Class admin_framework
             .AddItem("Střediska", "j18", NU("j18"), "other")
             .AddItem("Regiony", "j17", NU("j17"), "other")
             .AddItem("Textové šablony", "j61", NU("j61"), "other")
+            .AddItem("Plánovač úloh", "x48", NU("x48"), "other")
             .AddItem("Struktura aplikačního menu", "menu", "admin_menu.aspx", "other")
             .AddItem("Návrhář workflow šablon", "workflow", "admin_workflow.aspx", "other")
 
@@ -544,6 +548,8 @@ Public Class admin_framework
                 Case "p41_x67", "p56_x67", "x31_x67", "p28_x67", "p91_x67", "p90_x67", "o23_x67"
                     .AddColumn("x67Name", "Název role")
                     .AddColumn("x67Ordinary", "#", BO.cfENUM.Numeric0)
+                Case "x48"
+                    .AddColumn("x48Name", "Název úlohy")
             End Select
             Select Case ViewState("prefix")
                 Case "p35"
@@ -821,6 +827,9 @@ Public Class admin_framework
                     grid1.DataSource = lis
                 Case "rep_x31"
                     Dim lis As IEnumerable(Of BO.x31Report) = .x31ReportBL.GetList(mqDef).Where(Function(p) p.x31FormatFlag = BO.x31FormatFlagENUM.Telerik Or p.x31FormatFlag = BO.x31FormatFlagENUM.DOCX Or p.x31FormatFlag = BO.x31FormatFlagENUM.XLSX)
+                    grid1.DataSource = lis
+                Case "x48"
+                    Dim lis As IEnumerable(Of BO.x48SqlTask) = .x48SqlTaskBL.GetList(mqDef)
                     grid1.DataSource = lis
             End Select
         End With

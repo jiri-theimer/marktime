@@ -15,19 +15,19 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p90_record.aspx?pid=" + pid, "Images/proforma_32.png",true);
+            sw_master("p90_record.aspx?pid=" + pid, "Images/proforma.png",true);
 
         }
 
         function record_new() {
-            sw_master("p90_record.aspx?pid=0", "Images/proforma_32.png",true);
+            sw_master("p90_record.aspx?pid=0", "Images/proforma.png",true);
 
 
         }
 
         function periodcombo_setting() {
 
-            sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+            sw_master("periodcombo_setting.aspx", "Images/settings.png");
         }
 
 
@@ -63,7 +63,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p90_record.aspx?clone=1&pid=" + pid, "Images/billing_32.png",true);
+            sw_master("p90_record.aspx?clone=1&pid=" + pid, "Images/billing.png",true);
 
         }
 
@@ -85,7 +85,7 @@
                 return
             }
 
-            sw_master("report_modal.aspx?prefix=p90&pid=" + pid, "Images/reporting_32.png");
+            sw_master("report_modal.aspx?prefix=p90&pid=" + pid, "Images/reporting.png");
 
         }
     </script>

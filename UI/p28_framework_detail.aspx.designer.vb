@@ -437,6 +437,42 @@ Partial Public Class p28_framework_detail
     Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''boxP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxP41 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''boxP41Title control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxP41Title As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''panProjects control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panProjects As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''rpP41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpP41 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''alert1 control.
     '''</summary>
     '''<remarks>

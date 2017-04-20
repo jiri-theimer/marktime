@@ -24,7 +24,6 @@ Public Class report_framework_detail4
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .IsMenuNever = True
                 Me.CurrentX31ID = BO.BAS.IsNullInt(Request.Item("x31id"))
                 If Me.CurrentX31ID = 0 Then
                     .StopPage("x31id missing.")

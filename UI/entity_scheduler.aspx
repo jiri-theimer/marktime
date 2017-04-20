@@ -80,25 +80,25 @@
 
         function o22_record(pid) {
            
-            sw_master("o22_record.aspx?pid=" + pid+"&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>", "Images/calendar_32.png")
+            sw_master("o22_record.aspx?pid=" + pid+"&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>", "Images/calendar.png")
         }
 
         function o22_clone(pid) {
 
-            sw_master("o22_record.aspx?clone=1&pid=" + pid, "Images/milestone_32.png")
+            sw_master("o22_record.aspx?clone=1&pid=" + pid, "Images/milestone.png")
         }
 
         function p48_record(pid) {
 
-            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + pid, "Images/oplan_32.png")
+            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + pid, "Images/oplan.png")
         }
         function p48_convert(pid) {
 
-            sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet_32.png")
+            sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet.png")
         }
         function p31_record(pid) {
 
-            sw_master("p31_record.aspx?pid=" + pid, "Images/worksheet_32.png")
+            sw_master("p31_record.aspx?pid=" + pid, "Images/worksheet.png")
         }
         
         function p56_record(pid) {
@@ -106,7 +106,7 @@
             <%If Me.CurrentMasterPrefix="p41" then%>
             masterpid = "<%=me.CurrentMasterPID%>";
             <%End If%>
-            sw_master("p56_record.aspx?masterprefix=p41&masterpid="+masterpid+"&pid=" + pid, "Images/task_32.png")
+            sw_master("p56_record.aspx?masterprefix=p41&masterpid="+masterpid+"&pid=" + pid, "Images/task.png")
         }
 
         function re(pid,prefix) {
@@ -147,7 +147,7 @@
                 url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id + "&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>";
                 
             }
-            sw_master(url, "Images/calendar_32.png")
+            sw_master(url, "Images/calendar.png")
         }
 
         function record_create(sender, eventArgs) {
@@ -172,7 +172,7 @@
             var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id+"&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>";
             <%End If%>
 
-            sw_master(url, "Images/calendar_32.png")
+            sw_master(url, "Images/calendar.png")
 
         }
 
@@ -256,7 +256,7 @@
                 var url = "o22_record.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
                 <%End If%>
 
-                sw_master(url, "Images/oplan_32.png");
+                sw_master(url, "Images/oplan.png");
 
             }
             else {
@@ -295,20 +295,20 @@
                     Nastavení
 
                 </button>
+                <asp:CheckBox ID="chkAllPersons" runat="server" AutoPostBack="true" Text="Kalendáře všech osob" CssClass="chk" Checked="true" />
+                <asp:Label ID="Persons" runat="server" CssClass="valbold"></asp:Label>
             </div>
             <div style="clear: both;"></div>
 
             <asp:Panel ID="panMasterRecord" runat="server" CssClass="div6">
                 <asp:Image ID="imgMaster" runat="server" />
-                <asp:HyperLink ID="MasterRecord" runat="server" Target="_top"></asp:HyperLink>
+                     
+                <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
                 <div>
                     <asp:checkbox ID="chkIncludeChilds" runat="server" Text="Zahrnout i pod-projekty" Visible="false" CssClass="chk" AutoPostBack="true" />
                 </div>
             </asp:Panel>
-            <div class="div6">
-                <asp:CheckBox ID="chkAllPersons" runat="server" AutoPostBack="true" Text="Kalendáře všech osob" CssClass="chk" Checked="true" />
-                <div><asp:Label ID="Persons" runat="server" CssClass="valbold"></asp:Label></div>
-            </div>
+            
 
 
 

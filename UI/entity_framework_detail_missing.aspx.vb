@@ -29,7 +29,7 @@
                     End If
 
                 Case BO.x29IdEnum.p41Project
-                    panSearch.Visible = False
+                    panSearch.Visible = Master.Factory.SysUser.j04IsMenu_Project
                     img1.ImageUrl = "Images/project_32.png"
                     Dim mq As New BO.myQueryP41
                     mq.SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
@@ -78,7 +78,6 @@
                         cmdNew.NavigateUrl = "javascript:j02_create()"
                     End If
                 Case BO.x29IdEnum.x31Report
-                    Master.IsMenuNever = True
                     panSearch.Visible = False
                     img1.ImageUrl = "Images/reporting_32.png"
 
@@ -119,25 +118,15 @@
         If Me.panSearch.Visible Then
             Select Case ViewState("prefix")
                 Case "p28"
-                    sb1.ashx = "handler_search_contact.ashx"
-                    sb1.aspx = "p28_framework.aspx"
-                    sb1.TextboxLabel = "Najít klienta..."
+                    cbx1.WebServiceSettings.Path = "~/Services/contact_service.asmx"
                 Case "p91"
-                    sb1.ashx = "handler_search_invoice.ashx"
-                    sb1.aspx = "p91_framework.aspx"
-                    sb1.TextboxLabel = "Najít fakturu..."
+                    cbx1.WebServiceSettings.Path = "~/Services/invoice_service.asmx"
                 Case "p56"
-                    sb1.ashx = "handler_search_task.ashx"
-                    sb1.aspx = "p56_framework.aspx"
-                    sb1.TextboxLabel = "Najít úkol..."
+                    cbx1.WebServiceSettings.Path = "~/Services/task_service.asmx"
                 Case "j02"
-                    sb1.ashx = "handler_search_person.ashx"
-                    sb1.aspx = "j02_framework.aspx"
-                    sb1.TextboxLabel = "Najít osobu..."
+                    cbx1.WebServiceSettings.Path = "~/Services/person_service.asmx"
                 Case "o23"
-                    sb1.ashx = "handler_search_notepad.ashx"
-                    sb1.aspx = "o23_framework.aspx"
-                    sb1.TextboxLabel = "Najít dokument..."
+                    cbx1.WebServiceSettings.Path = "~/Services/notepad_service.asmx"
             End Select
         End If
         

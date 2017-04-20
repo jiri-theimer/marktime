@@ -28,7 +28,9 @@ Public Class entity_framework_rec_p41
 
                 .SiteMenuValue = Me.CurrentMasterPrefix
                 menu1.DataPrefix = Me.CurrentMasterPrefix
-
+                If Me.menu1.PageSource = "2" Then
+                    .IsHideAllRecZooms = True
+                End If
                 ViewState("j74id") = ""
                 Dim mq As New BO.myQuery
                 mq.Closed = BO.BooleanQueryMode.FalseQuery

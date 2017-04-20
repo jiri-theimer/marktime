@@ -16,11 +16,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function b07_reaction(b07id) {
-            sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p41&masterpid=<%=Master.datapid%>", "Images/comment_32.png", true)
+            sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p41&masterpid=<%=Master.datapid%>", "Images/comment.png", true)
 
         }
         function b07_delete(b07id, flag) {
-            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete.png", true)
 
         }
         function hardrefresh(pid, flag) {
@@ -55,11 +55,14 @@
 
         }
         function batch_update_childs() {
-            sw_decide("p41_batch_childs.aspx?pid=<%=master.datapid%>", "Images/batch_32.png", true)
+            sw_decide("p41_batch_childs.aspx?pid=<%=master.datapid%>", "Images/batch.png", true)
 
         }
         function p40_record(p40id) {
             sw_decide("p40_record.aspx?p41id=<%=master.datapid%>&pid=" + p40id, "Images/worksheet_recurrence.png", true);
+        }
+        function p40_chrono(p40id) {
+            sw_decide("p40_chrono.aspx?pid=" + p40id, "Images/worksheet_recurrence.png", true);
         }
     </script>
 </asp:Content>
@@ -211,6 +214,8 @@
                     <div class="div6">
                         <asp:HyperLink ID="p40Name" runat="server"></asp:HyperLink>
                         <asp:HyperLink ID="clue_p40" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
+
+                        &nbsp;&nbsp;<asp:HyperLink ID="linkChrono" runat="server" Text="Plán generování"></asp:HyperLink>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>

@@ -29,7 +29,8 @@ Public Class p31_pivot
                 ViewState("masterpid") = Request.Item("masterpid")
                 If ViewState("masterprefix") <> "" Then
                     panQueryByEntity.Visible = True
-                    Me.lblEntity.Text = .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(ViewState("masterprefix")), BO.BAS.IsNullInt(ViewState("masterpid")))
+                    Me.MasterRecord.Text = .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(ViewState("masterprefix")), BO.BAS.IsNullInt(ViewState("masterpid")))
+                    Me.MasterRecord.NavigateUrl = ViewState("masterprefix") & "_framework.aspx?pid=" & ViewState("masterpid")
                     Select Case ViewState("masterprefix")
                         Case "p41" : imgEntity.ImageUrl = "Images/project_32.png"
                         Case "j02" : imgEntity.ImageUrl = "Images/person_32.png"

@@ -181,6 +181,7 @@
     <Compile Include="x40MailQueueDL.vb" />
     <Compile Include="x46EventNotificationDL.vb" />
     <Compile Include="x47EventLogDL.vb" />
+    <Compile Include="x48SqlTaskDL.vb" />
     <Compile Include="x50HelpDL.vb" />
     <Compile Include="x55HtmlSnippetDL.vb" />
     <Compile Include="x58UserPageDL.vb" />

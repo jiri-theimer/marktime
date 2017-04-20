@@ -14,11 +14,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function b07_reaction(b07id) {
-            sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p56&masterpid=<%=Master.datapid%>", "Images/comment_32.png", true)
+            sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p56&masterpid=<%=Master.datapid%>", "Images/comment.png", true)
 
         }
         function b07_delete(b07id, flag) {
-            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete.png", true)
 
         }
         function hardrefresh(pid, flag) {
@@ -39,7 +39,7 @@
 
         function p56_record_new(p41id) {
 
-            sw_decide("p56_record.aspx?pid=0&p41id="+p41id, "Images/task_32.png", true);
+            sw_decide("p56_record.aspx?pid=0&p41id="+p41id, "Images/task.png", true);
 
         }
         function o23_record(pid) {

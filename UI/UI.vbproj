@@ -172,7 +172,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
+    <Content Include="about.aspx" />
     <Content Include="admin_logofile.aspx" />
     <Content Include="admin_menu.aspx" />
     <Content Include="admin_workflow.aspx" />
@@ -254,6 +254,7 @@
     <Content Include="p31summary.ascx" />
     <Content Include="p31summary_drilldown.ascx" />
     <Content Include="p31_framework_timer.aspx" />
+    <Content Include="p40_chrono.aspx" />
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="select_field.aspx" />
     <Content Include="p31_record_split.aspx" />
@@ -400,6 +401,8 @@
     </None>
     <Content Include="Services\combo_external_datasource.asmx" />
     <Content Include="Services\invoice_service.asmx" />
+    <Content Include="Services\notepad_service.asmx" />
+    <Content Include="Services\task_service.asmx" />
     <Content Include="Styles\SiteMobile_v2.css" />
     <Content Include="Sys\dbupdate.aspx" />
     <Content Include="Sys\dbupdate_reports.aspx" />
@@ -535,6 +538,7 @@
     <Content Include="x40_framework.aspx" />
     <Content Include="x40_record.aspx" />
     <Content Include="x46_record.aspx" />
+    <Content Include="x48_record.aspx" />
     <Content Include="x50_record.aspx" />
     <Content Include="x55_record.aspx" />
     <Content Include="x67_record.aspx" />
@@ -543,11 +547,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.aspx.designer.vb">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="about.aspx.designer.vb">
+      <DependentUpon>about.aspx</DependentUpon>
     </Compile>
-    <Compile Include="About.aspx.vb">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="about.aspx.vb">
+      <DependentUpon>about.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="admin_logofile.aspx.designer.vb">
@@ -1246,6 +1250,13 @@
     <Compile Include="p31_framework_timer.aspx.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p40_chrono.aspx.designer.vb">
+      <DependentUpon>p40_chrono.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p40_chrono.aspx.vb">
+      <DependentUpon>p40_chrono.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p91_batch_sendmail.aspx.designer.vb">
       <DependentUpon>p91_batch_sendmail.aspx</DependentUpon>
@@ -2198,6 +2209,14 @@
       <DependentUpon>invoice_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\notepad_service.asmx.vb">
+      <DependentUpon>notepad_service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\task_service.asmx.vb">
+      <DependentUpon>task_service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Sys\dbupdate.aspx.designer.vb">
       <DependentUpon>dbupdate.aspx</DependentUpon>
     </Compile>
@@ -3089,6 +3108,13 @@
     <Compile Include="x46_record.aspx.vb">
       <DependentUpon>x46_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x48_record.aspx.designer.vb">
+      <DependentUpon>x48_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x48_record.aspx.vb">
+      <DependentUpon>x48_record.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="x50_record.aspx.designer.vb">
       <DependentUpon>x50_record.aspx</DependentUpon>

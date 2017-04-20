@@ -11,12 +11,12 @@
         }
 
         function edit(pid) {
-            sw_master("o10_record.aspx?pid=" + pid, "Images/article_32.png", true);
+            sw_master("o10_record.aspx?pid=" + pid, "Images/article.png", true);
 
         }
 
         function create() {
-            sw_master("o10_record.aspx?pid=0", "Images/billing_32.png", true);
+            sw_master("o10_record.aspx?pid=0", "Images/billing.png", true);
 
         }
 

@@ -14,14 +14,27 @@
             $(".show_hide1").show();
 
             $('.show_hide1').click(function () {
+                $(".slidingDiv2").hide();
+                $(".slidingDiv3").hide();
                 $(".slidingDiv1").slideToggle();
             });
 
             $(".slidingDiv2").hide();
             $(".show_hide2").show();
 
+            $(".slidingDiv3").hide();
+            $(".show_hide3").show();
+
             $('.show_hide2').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv3").hide();
                 $(".slidingDiv2").slideToggle();
+            });
+
+            $('.show_hide3').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv2").hide();
+                $(".slidingDiv3").slideToggle();
             });
 
 
@@ -30,11 +43,10 @@
 
 
             document.getElementById("<%=Me.hidUIFlag.ClientID%>").value = "";
-
-            <%If hidSAW.Value = "1" then%>
-            $("#divPeriodAndSettings").css("float", "left");
-            $("#divPeriodAndSettings").css("margin-left", "100px");
+            <%If _curIsExport = False Then%>
+            _initResizing = "0";
             <%End If%>
+           
         });
 
 
@@ -51,19 +63,20 @@
 
             h2 = offset.top;
 
-            h3 = h1 - h2;
+            h3 = h1 - h2-1;
 
             sender.set_height(h3);
             
-            <%If Me.hidSAW.Value <> "1" Then%>
             var pane = sender.getPaneById("<%=contentPane.ClientID%>");
-            document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();              
-            pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value + "&parentWidth=" + pane.get_width());
-            <%Else%>
-            var pane = sender.getPaneById("<%=navigationPane.ClientID%>");
-            pane.set_width(screen.availWidth-20);
-            <%end If%>
+            document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();
+            pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value);
 
+            
+            <%If grid1.radGridOrig.ClientSettings.Scrolling.UseStaticHeaders Then%>
+            pane = sender.getPaneById("<%=navigationPane.ClientID%>");
+            <%=Me.grid1.ClientID%>_SetScrollingHeight_Explicit(pane.get_height() - 25);
+            <%End If%>
+            <%=me.grid1.ClientID%>_Scroll2SelectedRow(pane.get_height());
             
         }
 
@@ -71,24 +84,25 @@
 
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
-            document.getElementById("<%=hiddatapid.clientid%>").value = pid;
-            <%If Me.hidSAW.Value = "1" Then%>
+            document.getElementById("<%=hiddatapid.clientid%>").value = pid;            
+            <%If opgLayout.SelectedValue = "3" Then%>
             return;
-            <%end If%>
+            <%End If%>
 
             var splitter = $find("<%= RadSplitter1.ClientID %>");
-            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");            
-
-            pane.set_contentUrl("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&parentWidth=" + pane.get_width());
+            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");       
+            
+            var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid+"&source=<%=opgLayout.SelectedValue%>";            
+            pane.set_contentUrl(url);
             
 
         }
 
         function RowDoubleClick(sender, args) {
-            <%If Me.hidSAW.Value = "1" Then%>
-            var pid = args.getDataKeyValue("pid");
-            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
-            <%end If%>
+            
+            //var pid = args.getDataKeyValue("pid");
+            //location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
+            
             
         }
 
@@ -109,7 +123,18 @@
         }
 
         function SavePaneWidth(w) {
-            $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: "<%=Me.CurrentPrefix%>_framework-navigationPane_width", oper: "set" }, function (data) {
+            if (_initResizing == "1") {
+                return;
+            }
+
+            
+            <%If Me.opgLayout.SelectedValue = "1" Then%>
+            var keyname = "<%=Me.CurrentPrefix%>_framework-navigationPane_width";
+            <%else%>
+            var keyname = "<%=Me.CurrentPrefix%>_framework-contentPane_height";
+            <%end if%>
+
+            $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: keyname, oper: "set" }, function (data) {
                 if (data == ' ') {
                     return;
                 }
@@ -119,15 +144,16 @@
         }
 
         function AfterPaneResized(sender, args) {
-            if (_initResizing == "1") {
-                _initResizing = "0";
-                return;
-            }
-
+            <%If Me.opgLayout.SelectedValue="1" then%>
             var w = sender.get_width();
+            <%End If%>
+            <%If Me.opgLayout.SelectedValue = "2" Then%>
+            var w = sender.get_height();
+            <%End If%>
             SavePaneWidth(w);
            
         }
+
 
         function AfterPaneCollapsed(pane) {
             var w = "-1";
@@ -145,7 +171,15 @@
                 location.replace("p91_framework.aspx?pid=" + pid);
                 return;
             }
-            <%End If%>
+            <%End If%>            
+            if (flag == "p31-save" || flag == "p31-delete") {
+                var splitter = $find("<%= RadSplitter1.ClientID %>");
+                var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
+                var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+                var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid="+pid+"&source=<%=opgLayout.SelectedValue%>";
+                pane.set_contentUrl(url);
+                return;
+            }
 
             location.replace("entity_framework.aspx?prefix=<%=Me.CurrentPrefix%>");
 
@@ -154,12 +188,12 @@
 
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=Me.CurrentPrefix%>&pid=" + j74id, "Images/griddesigner_32.png");
+            sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=Me.CurrentPrefix%>&pid=" + j74id, "Images/griddesigner.png");
         }
 
         function querybuilder() {
             var j70id = "<%=Me.CurrentJ70ID%>";
-            sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query_32.png");
+            sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query.png");
             return (false);
         }
         function batch() {
@@ -180,7 +214,7 @@
 
 
 
-            sw_master("<%=Me.CurrentPrefix%>_batch.aspx", "Images/batch_32.png");
+            sw_master("<%=Me.CurrentPrefix%>_batch.aspx", "Images/batch.png");
             return;
 
         }
@@ -211,7 +245,7 @@
                 return;
             }
             
-            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pids=" + pids, "Images/report_32.png", true);            
+            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pids=" + pids, "Images/report.png", true);            
 
         }
 
@@ -223,14 +257,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="offsetY"></div>
-    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight" Orientation="Vertical">
+    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Default" RenderMode="Auto" Orientation="Vertical">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
             
             <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;background:#f7f7f7;">
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
                 </div>
-                <div class="commandcell" style="padding-left: 10px; width: 10px;">
+                <div class="commandcell" style="padding-left: 7px; width: 10px;">
                     <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
                 </div>
                 <div class="commandcell">
@@ -239,9 +273,16 @@
                     <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
                     <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
                 </div>
-                <div id="divPeriodAndSettings" style="float: right; margin-top: 10px;">
+                <div class="commandcell" style="padding-left:3px;">
+                    <button type="button" id="cmdGUI" class="show_hide3" style="padding: 1px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Rozvržení panelů">
+                        <img src="Images/grid.png" />
+                        
+                        <img src="Images/arrow_down.gif" />
+                    </button>
+                </div>
+                <div id="divPeriodAndSettings" class="commandcell" style="padding-left:4px;">
                     <button type="button" id="cmdPeriodQuery" class="show_hide2" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Filtr podle období">
-                        <asp:Label ID="CurrentPeriodQuery" runat="server" Text="Filtr období"></asp:Label>
+                        <asp:Label ID="CurrentPeriodQuery" runat="server" Text="Období"></asp:Label>
                         <img src="Images/arrow_down.gif" />
 
                     </button>
@@ -256,8 +297,14 @@
 
             </asp:Panel>
             <div style="clear: both; width: 100%;"></div>
+            <div class="slidingDiv3" style="display:none;">
+                <asp:RadioButtonList ID="opgLayout" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
+                    <asp:ListItem Text="Levý panel = přehled, pravý panel = detail" Value="1" Selected="True"></asp:ListItem>
+                    <asp:ListItem Text="Horní panel = přehled, spodní panel = detail" Value="2"></asp:ListItem>                    
+                </asp:RadioButtonList>
+            </div>
             <asp:Panel ID="panPeriod" runat="server" CssClass="slidingDiv2">
-                <span style="padding-left: 52px;"></span>
+                <span>Filtr:</span>
                 <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
                 </asp:DropDownList>
                 <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
@@ -322,7 +369,7 @@
             
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
             
-           <asp:HiddenField ID="hidSAW" runat="server" />
+           
             <asp:HiddenField ID="hiddatapid" runat="server" />
             <asp:HiddenField ID="hidDefaultSorting" runat="server" />
             <asp:HiddenField ID="hidJ62ID" runat="server" />

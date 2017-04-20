@@ -68,15 +68,6 @@ Partial Public Class SubForm
     Protected WithEvents notify1 As Global.Telerik.Web.UI.RadNotification
 
     '''<summary>
-    '''mm1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents mm1 As Global.UI.main_menu
-
-    '''<summary>
     '''MainContent control.
     '''</summary>
     '''<remarks>
@@ -113,13 +104,13 @@ Partial Public Class SubForm
     Protected WithEvents hidSiteMenuValue As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidMenuNever control.
+    '''hidIsHideAllRecZooms control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidMenuNever As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidIsHideAllRecZooms As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''okno1 control.

@@ -27,6 +27,7 @@
                 .Add("j03_mypage_greeting-chkP56")
                 .Add("j03_mypage_greeting-chkShowCharts")
                 .Add("j03_mypage_greeting-chkSearch")
+                .Add("j03_mypage_greeting-cbxP56Types")
             End With
 
             With Master.Factory
@@ -40,6 +41,7 @@
                 chkP56.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP56", "0"))
                 chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "0"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
+                basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "1"))
 
                 menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 menu1.FindItemByValue("p31_create_one").Visible = .SysUser.j04IsMenu_Worksheet
@@ -71,17 +73,18 @@
                 panSearch_j02.Visible = .SysUser.j04IsMenu_People
                 panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
                 panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
+                panSearch_P41.Visible = .SysUser.j04IsMenu_Project
 
                 If menu1.FindItemByValue("p56_create").Visible Then
                     If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
                         panSearch_p56.Visible = True
                     End If
                 End If
-                panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible)
+                panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible Or panSearch_P41.Visible)
 
                 If panSearch.Visible Then
                     If Not Me.chkSearch.Checked Then
-                        panSearch_j02.Visible = False : panSearch_p28.Visible = False : panSearch_p91.Visible = False : panSearch_p56.Visible = False
+                        panSearch_j02.Visible = False : panSearch_p28.Visible = False : panSearch_p91.Visible = False : panSearch_p56.Visible = False : panSearch_P41.Visible = False
                     End If
 
                 End If
@@ -185,16 +188,31 @@
     End Sub
 
     Private Sub RefreshBoxes()
-
-        Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
-        If lisP56.Count > 0 Then
-            If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
-            Me.panP56.Visible = True
-            Me.p56Count.Text = lisP56.Count.ToString
-            rpP56.DataSource = lisP56
-            rpP56.DataBind()
+        panP56.Visible = False
+        Dim lisP56 As IEnumerable(Of BO.p56Task) = Nothing, mq As New BO.myQueryP56
+        mq.Closed = BO.BooleanQueryMode.FalseQuery
+        Select Case cbxP56Types.SelectedValue
+            Case "1"
+                lisP56 = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
+            Case "2"
+                mq.j02ID = Master.Factory.SysUser.j02ID
+                lisP56 = Master.Factory.p56TaskBL.GetList(mq)
+            Case "3"
+                mq.j02ID_Owner = Master.Factory.SysUser.j02ID
+                lisP56 = Master.Factory.p56TaskBL.GetList(mq)
+        End Select
+        If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
+        Me.p56Count.Text = lisP56.Count.ToString
+        rpP56.DataSource = lisP56
+        rpP56.DataBind()
+        If lisP56.Count = 0 Then
+            mq.Closed = BO.BooleanQueryMode.NoQuery
+            mq.j02ID = Master.Factory.SysUser.j02ID
+            If Master.Factory.p56TaskBL.GetList(mq).Count > 0 Then
+                Me.panP56.Visible = True
+            End If
         Else
-            Me.panP56.Visible = False
+            Me.panP56.Visible = True
         End If
         Dim lisO22 As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
         If lisO22.Count > 0 Then
@@ -552,6 +570,10 @@
 
     Private Sub chkSearch_CheckedChanged(sender As Object, e As EventArgs) Handles chkSearch.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkSearch", BO.BAS.GB(Me.chkSearch.Checked))
+        ReloadPage()
+    End Sub
+    Private Sub cbxP56Types_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxP56Types.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-cbxP56Types", Me.cbxP56Types.SelectedValue)
         ReloadPage()
     End Sub
 End Class

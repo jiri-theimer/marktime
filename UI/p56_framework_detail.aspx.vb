@@ -16,8 +16,11 @@
             With Master
                 .SiteMenuValue = "p56"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                If Request.Item("tab") <> "" Then
-                    .Factory.j03UserBL.SetUserParam("p56_framework_detail-tab", Request.Item("tab"))
+                If Me.menu1.PageSource = "2" Then
+                    .IsHideAllRecZooms = True
+                    ''If Request.Item("tab") <> "" Then
+                    ''    .Factory.j03UserBL.SetUserParam("p41_framework_detail-tab", Request.Item("tab"))
+                    ''End If
                 End If
                 Dim lisPars As New List(Of String)
                 With lisPars
@@ -39,17 +42,16 @@
                             .SetUserParam("p56_framework_detail-pid", intPID.ToString)
                         End If
                     End If
-                    If Request.Item("board") = "" Then
-                        Dim strTab As String = .GetUserParam("p56_framework_detail-tab", "board")
-                        Select Case strTab
-                            Case "p31", "time", "expense", "fee", "kusovnik"
-                                Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p56&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab, False)
-                            Case "o23", "p91", "p56", "summary", "p41"
-                                Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p56&masterpid=" & intPID.ToString, False)
-                            Case Else
-                                'zůstat zde na BOARD stránce
-                        End Select
-                    End If
+                    Dim strTab As String = Request.Item("tab")
+                    If strTab = "" Then strTab = .GetUserParam("p56_framework_detail-tab", "board")
+                    Select Case strTab
+                        Case "p31", "time", "expense", "fee", "kusovnik"
+                            Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p56&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
+                        Case "o23", "p91", "p56", "summary", "p41"
+                            Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p56&masterpid=" & intPID.ToString & "&source=" & menu1.PageSource, False)
+                        Case Else
+                            'zůstat zde na BOARD stránce
+                    End Select
                     menu1.TabSkin = .GetUserParam("p56_menu-tabskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
 

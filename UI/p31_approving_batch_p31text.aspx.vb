@@ -99,6 +99,13 @@
                     DirectCast(cbx.FindControl("Value_Edit"), TextBox).Text = "0"
                     DirectCast(cbx.FindControl("Rate_Edit"), Telerik.Web.UI.RadNumericTextBox).Value = 0
             End Select
+            If cP72.p72ID = BO.p72IdENUM.ZahrnoutDoPausalu Then
+                cbx.FindControl("Value_Edit_FixPrice").Visible = True
+                cbx.FindControl("lblValue_Edit_FixPrice").Visible = True
+            Else
+                cbx.FindControl("Value_Edit_FixPrice").Visible = False
+                cbx.FindControl("lblValue_Edit_FixPrice").Visible = False
+            End If
 
         End If
         ClientScript.RegisterStartupScript(Me.GetType, "hash", "go2id(" & intP31ID.ToString & ");", True)
@@ -126,8 +133,6 @@
 
             basUI.SelectDropdownlistValue(CType(e.Item.FindControl("p72ID"), DropDownList), CInt(.p72ID_AfterApprove).ToString)
 
-
-
             CType(e.Item.FindControl("p31Text"), TextBox).Text = .p31Text
             CType(e.Item.FindControl("p32Name"), Label).Text = .p32Name
             CType(e.Item.FindControl("p34Name"), Label).Text = .p34Name
@@ -154,6 +159,19 @@
                     .Text = BO.BAS.FN(cRec.p31Value_Orig)
                 End If
             End With
+            If cRec.p72ID_AfterApprove = BO.p72IdENUM.ZahrnoutDoPausalu Then
+                If cRec.p33ID = BO.p33IdENUM.Cas And (cRec.IsRecommendedHHMM() Or Len(cRec.p31Value_FixPrice.ToString) > 5) Then
+                    CType(e.Item.FindControl("Value_Edit_FixPrice"), TextBox).Text = _cTime.ShowAsHHMM(cRec.p31Value_FixPrice.ToString)
+                Else
+                    CType(e.Item.FindControl("Value_Edit_FixPrice"), TextBox).Text = cRec.p31Value_FixPrice.ToString
+                End If
+
+                e.Item.FindControl("Value_Edit_FixPrice").Visible = True
+                e.Item.FindControl("lblValue_Edit_FixPrice").Visible = True
+            Else
+                e.Item.FindControl("Value_Edit_FixPrice").Visible = False
+                e.Item.FindControl("lblValue_Edit_FixPrice").Visible = False
+            End If
 
 
             With CType(e.Item.FindControl("Rate_Edit"), Telerik.Web.UI.RadNumericTextBox)
@@ -206,6 +224,16 @@
             .VatRate_Approved = cRec.p31VatRate_Approved
             .Value_Approved_Internal = cRec.p31Value_Approved_Internal
             .Rate_Internal_Approved = cRec.p31Rate_Internal_Approved
+            If .p72id = BO.p72IdENUM.ZahrnoutDoPausalu Then
+                If cRec.p33ID = BO.p33IdENUM.Cas Then
+                    Dim cT As New BO.clsTime
+                    .p31Value_FixPrice = cT.ShowAsDec(CType(ri.FindControl("Value_Edit_FixPrice"), TextBox).Text)
+                Else
+                    .p31Value_FixPrice = BO.BAS.IsNullNum(CType(ri.FindControl("Value_Edit_FixPrice"), TextBox).Text)
+                End If
+            Else
+                .p31Value_FixPrice = 0
+            End If
         End With
         Return cApprove
     End Function

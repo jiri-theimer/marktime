@@ -85,6 +85,7 @@
     Private Property _j62 As Ij62MenuHomeBL
     Private Property _p63 As Ip63OverheadBL
     Private Property _p80 As Ip80InvoiceAmountStructureBL
+    Private Property _x48 As Ix48SqlTaskBL
     Private Property _ft As IFtBL
     Private Property _plugin As IPluginSupportBL
     Private Property _copymanager As IDataCopyManagerBL
@@ -622,6 +623,12 @@
         Get
             If _j62 Is Nothing Then _j62 = New j62MenuHomeBL(_cUser)
             Return _j62
+        End Get
+    End Property
+    Public ReadOnly Property x48SqlTaskBL As Ix48SqlTaskBL
+        Get
+            If _x48 Is Nothing Then _x48 = New x48SqlTaskBL(_cUser)
+            Return _x48
         End Get
     End Property
     Public ReadOnly Property ftBL As IFtBL

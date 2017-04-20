@@ -24,6 +24,7 @@
                 .Add("p31_framework_detail-calendarcolumns")
                 .Add("p31_framework_detail-j02id")
                 .Add("p31_framework-timer")
+                .Add("p31_framework-grid")
             End With
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
@@ -34,7 +35,7 @@
                 Else
                     Me.chkTimer.Checked = BO.BAS.BG(.GetUserParam("p31_framework-timer", "1"))
                 End If
-
+                Me.chkGrid.Checked = BO.BAS.BG(.GetUserParam("p31_framework-grid", "1"))
             End With
 
 

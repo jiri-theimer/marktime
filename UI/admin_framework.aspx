@@ -26,12 +26,12 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("<%=ViewState("page")%>?pid=" + pid, "Images/setting_32.png");
+            sw_master("<%=ViewState("page")%>?pid=" + pid, "Images/setting.png");
 
         }
 
         function NewRecord(bolContextMenu) {
-            sw_master("<%=ViewState("page")%>?pid=0&prefix=<%=ViewState("prefix")%>", "Images/setting_32.png");
+            sw_master("<%=ViewState("page")%>?pid=0&prefix=<%=ViewState("prefix")%>", "Images/setting.png");
 
         if (bolContextMenu == true)
             return
@@ -56,7 +56,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("<%=ViewState("page")%>?clone=1&pid=" + pid, "Images/setting_32.png");
+            sw_master("<%=ViewState("page")%>?clone=1&pid=" + pid, "Images/setting.png");
             
         }
 

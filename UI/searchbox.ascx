@@ -79,12 +79,12 @@
         return s.replace(matcher, "<strong>$1</strong>");
     }
 
-    function search2Focus() {
+    function search2Focus() {        
         document.getElementById("search2").value = "";
         document.getElementById("search2").style.background = "yellow";
     }
     function search2Blur() {
-
+        
         document.getElementById("search2").style.background = "";
         document.getElementById("search2").value = "<%=me.TextboxLabel%>";
 

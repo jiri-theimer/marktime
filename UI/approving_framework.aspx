@@ -32,7 +32,7 @@
 
         function periodcombo_setting() {
 
-            sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+            sw_master("periodcombo_setting.aspx", "Images/settings.png");
         }
 
         function RowSelected(sender, args) {
@@ -53,7 +53,7 @@
             }
             var scope = document.getElementById("<%=Me.cbxScope.ClientID%>").value;
 
-            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pid=" + pid + "&scope=" + scope, "Images/approve_32.png", true);
+            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pid=" + pid + "&scope=" + scope, "Images/approve.png", true);
 
         }
 
@@ -124,7 +124,7 @@
 
         function querybuilder() {
             var j70id = "<%=Me.CurrentJ70ID%>";
-            sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query_32.png");
+            sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query.png");
             return (false);
         }
 
@@ -135,7 +135,7 @@
                 return;
             }
 
-            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids, "Images/report_32.png", true);
+            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids, "Images/report.png", true);
 
         }
         function p31_move2bin() {

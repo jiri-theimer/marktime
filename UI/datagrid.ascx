@@ -56,46 +56,93 @@
 
     function GridCreated(sender, eventArgs) {        
         
-        <%If grid1.ClientSettings.Scrolling.AllowScroll Then%>
-        
-        var hx1 = new Number;
-       
-        hx1 = $(window).height();
-        var scrollArea = sender.GridDataDiv;                
         var ss = self.document.getElementById("gridContainer");
-        offset = $(ss).offset();
+        var offset = $(ss).offset();
+
+        <%If grid1.ClientSettings.Scrolling.AllowScroll Then%>
+
+        var hx1 = new Number;
+
+        hx1 = $(window).height();
+        var scrollArea = sender.GridDataDiv;
+
+
         hx1 = hx1 - offset.top;
         hx1 = hx1 - 5;
-        ss.style.height = hx1 + "px";       
-        
+        ss.style.height = hx1 + "px";
+
         var scrollArea = sender.GridDataDiv;
         var parent = $get("gridContainer");
         var gridHeader = sender.GridHeaderDiv;
-                
-        scrollArea.style.height = hx1 + "px";                       
-        <%end if%>
-        <%If grid1.ClientSettings.Scrolling.UseStaticHeaders Then%>
-        hx1 = parent.clientHeight - gridHeader.clientHeight-20;
-        <%if grid1.ShowFooter then%>
-        hx1 = hx1 - 40;
-        <%End If%>
+
         scrollArea.style.height = hx1 + "px";
         <%end if%>
-       
+        <%If grid1.ClientSettings.Scrolling.UseStaticHeaders Then%>
+        hx1 = parent.clientHeight - gridHeader.clientHeight - 20;
+        <%if grid1.ShowFooter then%>
+        hx1 = hx1 - 40;
 
-        var row = sender.get_masterTableView().get_selectedItems()[0];
-          
+        <%End If%>
+        scrollArea.style.height = hx1 + "px";
+        <%end if%>        
+
+    }
+
+    function <%=Me.ClientID%>_SetScrollingHeight_Explicit(h) {
+        var grid = $find("<%=grid1.ClientID%>");
+
+
+
+        <%If grid1.ClientSettings.Scrolling.UseStaticHeaders = True Then%>
+        var gridHeader = grid.GridHeaderDiv;
+        var scrollArea = grid.GridDataDiv;
+
+        h = h - gridHeader.clientHeight - 50;
+        <%if grid1.ShowFooter then%>
+        h = h - 40;
+        <%End If%>
+
+        scrollArea.style.height = h + "px";
+        <%end if%>
+
+
+
+    }
+
+    function <%=Me.ClientID%>_Scroll2SelectedRow(containerHeight) {
+        if (containerHeight == null)
+            containerHeight = $(window).height();
+
+        var grid = $find("<%=grid1.ClientID%>");
+
+        var row = grid.get_masterTableView().get_selectedItems()[0];
+
+        //if the position of the selected row is below the viewable grid area  
         if (row) {
+            <%If grid1.ClientSettings.Scrolling.UseStaticHeaders = False Then%>
             var rowPos1 = row.get_element().offsetTop + row.get_element().offsetHeight + 20;
-            //alert("top: " + xx + ", height: " + $(window).height());
-            if (rowPos1 > $(window).height()) {
-                //alert(row.get_element().getAttribute("id"));
+
+            if (rowPos1 > containerHeight) {
 
                 window.location.hash = row.get_element().getAttribute("id");
 
             }
 
 
+
+            <%else%>
+            var scrollArea = grid.GridDataDiv;
+            if ((row.get_element().offsetTop - scrollArea.scrollTop) + row.get_element().offsetHeight + 20 > scrollArea.offsetHeight) {
+                //scroll down to selected row  
+                scrollArea.scrollTop = scrollArea.scrollTop + ((row.get_element().offsetTop - scrollArea.scrollTop) +
+                row.get_element().offsetHeight - scrollArea.offsetHeight) + row.get_element().offsetHeight;
+            }
+                //if the position of the the selected row is above the viewable grid area  
+            else if ((row.get_element().offsetTop - scrollArea.scrollTop) < 0) {
+                //scroll the selected row to the top  
+                scrollArea.scrollTop = row.get_element().offsetTop;
+            }
+            <%end if%>
         }
 
     }

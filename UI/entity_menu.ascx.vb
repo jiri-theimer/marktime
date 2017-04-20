@@ -30,11 +30,7 @@ Public Class entity_menu
             Return BO.BAS.BG(Me.hidIsCanApprove.Value)
         End Get
     End Property
-    Public ReadOnly Property PageSource As String
-        Get
-            Return Me.hidSource.Value
-        End Get
-    End Property
+   
     Public Property TabSkin As String
         Get
             Return tabs1.Skin
@@ -52,11 +48,17 @@ Public Class entity_menu
             Me.hidPlugin.Value = value
         End Set
     End Property
+    Public ReadOnly Property PageSource As String
+        Get
+            Return Me.hidSource.Value
+        End Get
+    End Property
 
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
         If Not Page.IsPostBack Then
             Me.hidSource.Value = Request.Item("source")
-            Me.hidParentWidth.Value = Request.Item("parentWidth")
+            ''Me.hidParentWidth.Value = Request.Item("parentWidth")
+            
         End If
     End Sub
 
@@ -65,56 +67,87 @@ Public Class entity_menu
             If Me.Factory.SysUser.OneProjectPage <> "" Then
                 Server.Transfer(basUI.AddQuerystring2Page(Me.Factory.SysUser.OneProjectPage, "pid=" & Me.DataPID.ToString))
             End If
-            If Request.Item("tab") <> "" Then
+            If Request.Item("savetab") = "1" Then
                 Me.Factory.j03UserBL.SetUserParam(Me.DataPrefix & "_framework_detail-tab", Request.Item("tab"))
             End If
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), Me.DataPrefix)
-            Else
-                menu1.FindItemByValue("saw").NavigateUrl = Me.DataPrefix & "_framework_detail.aspx?saw=1"
-            End If
+
+            ''menu1.FindItemByValue("saw").NavigateUrl = Me.DataPrefix & "_framework_detail.aspx?saw=1"
         End If
+        ''Dim cbx As RadComboBox = CType(menu1.FindItemByValue("search").FindControl("cbxSearch"), RadComboBox)
+        Dim cbx As New RadComboBox()
+        With cbx
+            .DropDownWidth = Unit.Parse("400px")
+            .RenderMode = RenderMode.Auto
+            .EnableTextSelection = True
+            .MarkFirstMatch = True
+            .EnableLoadOnDemand = True
+            .Width = Unit.Parse("100px")
+            .Style.Item("margin-top") = "5px"
+            .OnClientItemsRequesting = "cbxSearch_OnClientItemsRequesting"
+            .OnClientSelectedIndexChanged = "cbxSearch_OnClientSelectedIndexChanged"
+            .WebServiceSettings.Method = "LoadComboData"
+        End With
 
         Dim s As String = ""
         Select Case Me.DataPrefix
             Case "p28"
                 s = "<img src='Images/contact_32.png'/>"
-                sb1.ashx = "handler_search_contact.ashx"
-                sb1.aspx = "p28_framework.aspx"
-                sb1.TextboxLabel = "Najít klienta..."
+                'sb1.ashx = "handler_search_contact.ashx"
+                'sb1.aspx = "p28_framework.aspx"
+                'sb1.TextboxLabel = "Najít klienta..."
+                cbx.WebServiceSettings.Path = "~/Services/contact_service.asmx"
+                cbx.ToolTip = "Hledat klienta"
             Case "j02"
                 s = "<img src='Images/person_32.png'/>"
-                sb1.ashx = "handler_search_person.ashx"
-                sb1.aspx = "j02_framework.aspx"
-                sb1.TextboxLabel = "Najít osobu..."
+                'sb1.ashx = "handler_search_person.ashx"
+                'sb1.aspx = "j02_framework.aspx"
+                'sb1.TextboxLabel = "Najít osobu..."
+                cbx.WebServiceSettings.Path = "~/Services/person_service.asmx"
+                cbx.ToolTip = "Hledat osobu"
             Case "p56"
                 s = "<img src='Images/task_32.png'/>"
-                sb1.ashx = "handler_search_task.ashx"
-                sb1.aspx = "p56_framework.aspx"
-                sb1.TextboxLabel = "Najít úkol..."
+                cbx.WebServiceSettings.Path = "~/Services/task_service.asmx"
+                cbx.ToolTip = "Hledat úkol"
+                'sb1.ashx = "handler_search_task.ashx"
+                'sb1.aspx = "p56_framework.aspx"
+                'sb1.TextboxLabel = "Najít úkol..."
+
             Case "o23"
                 s = "<img src='Images/notepad_32.png'/>"
-                sb1.ashx = "handler_search_notepad.ashx"
-                sb1.aspx = "o23_framework.aspx"
-                sb1.TextboxLabel = "Najít dokument..."
+                cbx.WebServiceSettings.Path = "~/Services/notepad_service.asmx"
+                cbx.ToolTip = "Hledat dokument"
+                'sb1.ashx = "handler_search_notepad.ashx"
+                'sb1.aspx = "o23_framework.aspx"
+                'sb1.TextboxLabel = "Najít dokument..."
             Case "p41"
                 s = "<img src='Images/project_32.png'/>"
-                sb1.Visible = False
+                cbx.WebServiceSettings.Path = "~/Services/project_service.asmx"
+                cbx.ToolTip = "Hledat projekt"
+                'sb1.Visible = False
         End Select
+        If hidSource.Value = "2" Then
+            s = s.Replace("_32", "")
+            'sb1.Visible = False
+            'sb1.ashx = ""
+            menu1.FindItemByValue("searchbox").Visible = False
+        Else
+            menu1.FindItemByValue("searchbox").Controls.Add(cbx)
+        End If
+
 
         menu1.FindItemByValue("begin").Controls.Add(New LiteralControl(s))
 
-        If sb1.ashx = "" Then
-            If Not menu1.FindItemByValue("searchbox") Is Nothing Then menu1.Items.Remove(menu1.FindItemByValue("searchbox")) 'searchbox není
-        Else
-            Dim strToolTip As String = sb1.TextboxLabel
-            If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then sb1.TextboxLabel = "" 'pro IE 7 - 11 nefunguje výchozí search text
-            With menu1.FindItemByValue("searchbox")
-                s = "<input id='search2' style='width: 100px; margin-top: 7px;' value='" & sb1.TextboxLabel & "' onfocus='search2Focus()' onblur='search2Blur()' title='" & strToolTip & "' />"
-                s += "<div id='search2_result' style='position: relative;left:-150px;'></div>"
-                .Controls.Add(New LiteralControl(s))
-            End With
-        End If
+        ''If sb1.ashx = "" Then
+        ''    If Not menu1.FindItemByValue("searchbox") Is Nothing Then menu1.Items.Remove(menu1.FindItemByValue("searchbox")) 'searchbox není
+        ''Else
+        ''    Dim strToolTip As String = sb1.TextboxLabel
+        ''    If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then sb1.TextboxLabel = "" 'pro IE 7 - 11 nefunguje výchozí search text
+        ''    With menu1.FindItemByValue("searchbox")
+        ''        s = "<input id='search2' style='width: 100px; margin-top: 7px;' value='" & sb1.TextboxLabel & "' onfocus='search2Focus()' onblur='search2Blur()' title='" & strToolTip & "' />"
+        ''        s += "<div id='search2_result' style='position: relative;left:-150px;'></div>"
+        ''        .Controls.Add(New LiteralControl(s))
+        ''    End With
+        ''End If
         Handle_PluginBellowMenu()
     End Sub
     Private Sub Handle_PluginBellowMenu()
@@ -151,17 +184,19 @@ Public Class entity_menu
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k projektu.")
         End If
        
+        If Me.hidSource.Value <> "2" Then
+            With cRec
+                basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
+                Dim strLevel1 As String = .FullName
+                If Len(cRec.Client) > 30 Then
+                    strLevel1 = Left(.Client, 30) & "..."
+                    strLevel1 += "->" & .PrefferedName
+                End If
 
-        With cRec
-            basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
-            Dim strLevel1 As String = .FullName
-            If Len(cRec.Client) > 30 Then
-                strLevel1 = Left(.Client, 30) & "..."
-                strLevel1 += "->" & .PrefferedName
-            End If
-
-            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), strLevel1, "p41_framework_detail.aspx?pid=" & .PID.ToString, .IsClosed)
-        End With
+                basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), strLevel1, "p41_framework_detail.aspx?pid=" & .PID.ToString, .IsClosed)
+            End With
+        End If
+        
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
         If mi.Items.Count > 0 Then Return 'menu už bylo dříve zpracované
@@ -221,7 +256,7 @@ Public Class entity_menu
         End If
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
-        ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
+        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("PIVOT projektu", "cmdPivot", "p31_pivot.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
@@ -296,7 +331,7 @@ Public Class entity_menu
         Dim tab As New RadTab(strName, strX61Code)
         tabs1.Tabs.Add(tab)
       
-        tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code
+        tab.NavigateUrl = cX61.GetPageUrl(Me.DataPrefix, Me.DataPID, Me.hidIsCanApprove.Value) & "&tab=" & strX61Code & "&savetab=1&source=" & Me.hidSource.Value
 
         If tabs1.Tabs.Count = 0 Then tab.Selected = True
     End Sub
@@ -366,7 +401,7 @@ Public Class entity_menu
             'pokud není označená záložka, pak skočit na první
             Dim c As New BO.x61PageTab
             c.x61Code = "board"
-            Server.Transfer(c.GetPageUrl(Me.DataPrefix, Me.DataPID, "") & "&board=1", False)
+            Server.Transfer(c.GetPageUrl(Me.DataPrefix, Me.DataPID, "") & "&tab=board&source=" & Me.hidSource.Value, False)
         End If
         If Not tabs1.SelectedTab Is Nothing Then
             tabs1.SelectedTab.NavigateUrl = ""
@@ -438,8 +473,10 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
-        
-        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        If hidSource.Value <> "2" Then
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        End If
+
 
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
@@ -473,7 +510,7 @@ Public Class entity_menu
         ami("Odeslat e-mail", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
-        ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
+        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("PIVOT klienta", "cmdPivot", "p31_pivot.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
@@ -519,7 +556,10 @@ Public Class entity_menu
         If Not Me.Factory.SysUser.j04IsMenu_People Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k prohlížení osobních profilů.")
         End If
-        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.FullNameAsc, "j02_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        If hidSource.Value <> "2" Then
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.FullNameAsc, "j02_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        End If
+
 
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
@@ -538,7 +578,7 @@ Public Class entity_menu
         ami("Odeslat e-mail", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
-        ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
+        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If cRec.j02IsIntraPerson Then
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
                 ami("PIVOT osoby", "cmdPivot", "p31_pivot.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
@@ -644,7 +684,10 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete oprávněním číst tento úkol.")
         End If
-        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        If hidSource.Value <> "2" Then
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        End If
+
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
         If mi.Items.Count > 0 Then Return 'menu už bylo dříve zpracované
@@ -705,7 +748,7 @@ Public Class entity_menu
 
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
-        ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
+        If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("PIVOT úkolu", "cmdPivot", "p31_pivot.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
@@ -744,7 +787,9 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete oprávněním přistupovat k dokumentu.")
         End If
-        basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        If hidSource.Value <> "2" Then
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+        End If
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
         If mi.Items.Count > 0 Then Return 'menu už bylo dříve zpracované
@@ -777,4 +822,41 @@ Public Class entity_menu
 
     End Sub
 
+    Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        Select Case hidSource.Value
+            Case "1"
+
+            Case "2"
+
+                If menu1.Skin <> "Black" Then
+                    menu1.Skin = "Metro"
+                End If
+
+                panMenuContainer.Style.Item("height") = ""
+                menu1.FindItemByValue("level1").Visible = False
+                ''menu1.FindItemByValue("saw").Visible = False
+
+                For Each it As RadMenuItem In Me.menu1.Items
+                    If it.Items.Where(Function(p) p.IsSeparator = False).Count > 3 Then
+                        it.GroupSettings.RepeatDirection = MenuRepeatDirection.Vertical
+                        Select Case it.Items.Where(Function(p) p.IsSeparator = False).Count
+                            Case 4 To 6
+                                it.GroupSettings.RepeatColumns = 2
+                            Case 7 To 9
+                                it.GroupSettings.RepeatColumns = 3
+                            Case Is > 9
+                                it.GroupSettings.RepeatColumns = 4
+                        End Select
+
+                    End If
+                Next
+            Case "3"
+                With menu1.FindItemByValue("fs")
+                    .NavigateUrl = "entity_framework.aspx?prefix=" & Me.DataPrefix
+                    '.ImageUrl = "Images/grid.png"
+                End With
+            
+        End Select
+       
+    End Sub
 End Class

@@ -186,7 +186,7 @@
 
     function p31_subgrid_columns() {
         p31_subgrid_setting(document.getElementById("<%=Me.j74id.ClientID%>").value);
-        return (false);
+        //return (false);
     }
 
     function p31_RowDoubleClick_first(sender, args) {

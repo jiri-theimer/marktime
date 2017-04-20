@@ -22,10 +22,11 @@
                 Me.x38ID_Draft.DataBind()
                 Me.x38ID_Payment.DataSource = Master.Factory.x38CodeLogicBL.GetList(BO.x29IdEnum.p82Proforma_Payment)
                 Me.x38ID_Payment.DataBind()
-                Dim lisX31 As IEnumerable(Of BO.x31Report) = .Factory.x31ReportBL.GetList(New BO.myQuery).Where(Function(p) p.x29ID = BO.x29IdEnum.p90Proforma)
-                Me.x31ID.DataSource = lisX31
+                Dim lisX31 As IEnumerable(Of BO.x31Report) = .Factory.x31ReportBL.GetList(New BO.myQuery)
+                Me.x31ID.DataSource = lisX31.Where(Function(p) p.x29ID = BO.x29IdEnum.p90Proforma)
                 Me.x31ID.DataBind()
-                Me.x31ID_Payment.DataSource = lisX31
+
+                Me.x31ID_Payment.DataSource = lisX31.Where(Function(p) p.x29ID = BO.x29IdEnum.p82Proforma_Payment)
                 Me.x31ID_Payment.DataBind()
                 
                 Me.p93ID.DataSource = .Factory.p93InvoiceHeaderBL.GetList(New BO.myQuery)

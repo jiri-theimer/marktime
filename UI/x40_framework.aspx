@@ -14,12 +14,12 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("x40_record.aspx?pid=" + pid, "Images/email_32.png");
+            sw_master("x40_record.aspx?pid=" + pid, "Images/email.png");
 
         }
 
         function sendmail() {
-            sw_master("sendmail.aspx?prefix=<%=me.CurrentMasterPrefix%>&pid=<%=me.CurrentMasterPID%>", "Images/email_32.png")
+            sw_master("sendmail.aspx?prefix=<%=me.CurrentMasterPrefix%>&pid=<%=me.CurrentMasterPID%>", "Images/email.png")
 
 
         }
@@ -70,7 +70,7 @@
         }
         function periodcombo_setting() {
 
-            sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+            sw_master("periodcombo_setting.aspx", "Images/settings.png");
         }
     </script>
 </asp:Content>
@@ -151,7 +151,7 @@
         </div>
     </div>
     <div style="clear:both;"></div>
-    <asp:HyperLink ID="linkEntity" runat="server" Visible="false" Font-Bold="true"></asp:HyperLink>
+    <asp:HyperLink ID="linkEntity" runat="server" Visible="false"></asp:HyperLink>
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" AllowFilteringByColumn="true"></uc:datagrid>
 
 

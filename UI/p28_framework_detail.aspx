@@ -18,16 +18,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function b07_reaction(b07id) {
-            sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p28&masterpid=<%=Master.datapid%>", "Images/comment_32.png", true)
+            sw_decide("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p28&masterpid=<%=Master.datapid%>", "Images/comment.png", true)
 
         }
         function b07_delete(b07id, flag) {
-            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete.png", true)
 
         }
-       
-        function hardrefresh(pid, flag) {            
-            if (flag == "p28-save" || flag=="p28-create") {
+
+        function hardrefresh(pid, flag) {
+            if (flag == "p28-save" || flag == "p28-create") {
                 parent.window.location.replace("p28_framework.aspx?pid=" + pid);
                 return;
             }
@@ -47,7 +47,7 @@
 
         }
         function vat_info(vat) {
-            sw_decide("vat_registration.aspx?vat=" + vat, "Images/help_32.png", false);
+            sw_decide("vat_registration.aspx?vat=" + vat, "Images/help.png", false);
 
         }
         function o48_edit() {
@@ -62,17 +62,17 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <uc:entity_menu ID="menu1" runat="server"></uc:entity_menu>
-    <div style="height:10px;clear:both;"></div>
+    <div style="height: 10px; clear: both;"></div>
     <div class="content-box1">
         <div class="title">
-            <asp:Image ID="imgRecord" runat="server" style="margin-right: 10px;" ImageUrl="Images/properties.png" />            
+            <asp:Image ID="imgRecord" runat="server" Style="margin-right: 10px;" ImageUrl="Images/properties.png" />
             <asp:Label ID="boxCoreTitle" Text="Záznam klienta" runat="server"></asp:Label>
             <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Pouze vyplněná uživatelská pole" Style="float: right;" />
         </div>
         <div class="content">
             <div style="float: left;">
                 <table cellpadding="10" cellspacing="2" id="responsive">
-                    
+
                     <tr valign="top">
                         <td>
                             <asp:Label ID="lblContact" runat="server" Text="Název:" CssClass="lbl"></asp:Label>
@@ -145,7 +145,7 @@
             <div style="clear: both;"></div>
         </div>
 
-        
+
     </div>
     <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
         <div class="title">
@@ -165,15 +165,15 @@
         </div>
         <div class="content">
             <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
-           
-            <div style="width:100%;">
+
+            <div style="width: 100%;">
                 <span class="val">Poslední vystavená faktura:</span>
-                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
-            <div style="width:100%;">
+            <div style="width: 100%;">
                 <span class="val">Poslední nevyfakturovaný úkon:</span>
-                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
         </div>
@@ -222,13 +222,37 @@
         </div>
     </asp:Panel>
 
+    <asp:Panel ID="boxP41" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/project.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxP41Title" runat="server" Text="Otevřené projekty klienta"></asp:Label>
+            
+        </div>
+        <asp:Panel ID="panProjects" runat="server" CssClass="content" Style="overflow: auto; max-height: 200px;">
+
+            <asp:Repeater ID="rpP41" runat="server">
+                <ItemTemplate>
+                    <div style="padding: 5px; float: left;">
+                        <asp:HyperLink ID="clue_project" runat="server" CssClass="reczoom" Text="i" title="Detail projektu"></asp:HyperLink>
+
+                        <asp:HyperLink ID="aProject" runat="server" Target="_top"></asp:HyperLink>
+
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+
+
+        </asp:Panel>
+
+    </asp:Panel>
+
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
     <div style="clear: both;"></div>
-    
-    
+
+
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
-   
+
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
 </asp:Content>

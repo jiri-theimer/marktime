@@ -41,6 +41,24 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents chkSearch As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''panSearch_P41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSearch_P41 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''search_p41 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search_p41 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
     '''panSearch_p28 control.
     '''</summary>
     '''<remarks>
@@ -48,6 +66,15 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panSearch_p28 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''search_p28 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search_p28 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''panSearch_p91 control.
@@ -59,6 +86,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents panSearch_p91 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''search_p91 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search_p91 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
     '''panSearch_p56 control.
     '''</summary>
     '''<remarks>
@@ -68,6 +104,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents panSearch_p56 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
+    '''search_p56 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search_p56 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
     '''panSearch_j02 control.
     '''</summary>
     '''<remarks>
@@ -75,6 +120,15 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panSearch_j02 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''search_j02 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search_j02 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''menu1 control.
@@ -102,6 +156,15 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p56Count As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cbxP56Types control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxP56Types As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''rpP56 control.

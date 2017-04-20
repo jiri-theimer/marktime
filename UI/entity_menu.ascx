@@ -1,18 +1,16 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="entity_menu.ascx.vb" Inherits="UI.entity_menu" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
 <asp:Panel ID="panMenuContainer" runat="server" Style="height:43px;border-bottom: solid 1px gray;background-color:#E8E8E8;">
 
     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
         <Items>
             <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text=" "></telerik:RadMenuItem>
             <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px"></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="saw" Text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p41_framework_detail.aspx?saw=1" ToolTip="Otevřít aktuální záznam v nové záložce prohlížeče"></telerik:RadMenuItem>
-                       
+               
             <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record"></telerik:RadMenuItem>      
             
-            <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>                 
-
+            <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>
         </Items>
     </telerik:RadMenu>
 
@@ -29,9 +27,30 @@
 <asp:HiddenField ID="hidPlugin" runat="server" />
 <asp:HiddenField ID="hidPlugin_FileName" runat="server" />
 <asp:HiddenField ID="hidPlugin_Height" runat="server" />
-<uc:searchbox id="sb1" runat="server"></uc:searchbox>
+
 
 <script type="text/javascript">
+    function cbxSearch_OnClientSelectedIndexChanged(sender, eventArgs){
+        var combo = sender;
+        var pid = combo.get_value();
+        location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?pid=" + pid);
+    }
+    function cbxSearch_OnClientItemsRequesting(sender, eventArgs){
+        var context = eventArgs.get_context();
+        var combo = sender;
+
+        if (combo.get_value() == "")
+            context["filterstring"] = eventArgs.get_text();
+        else
+            context["filterstring"] = "";
+
+        
+        context["j03id"] = "<%=Factory.SysUser.PID%>";
+        context["flag"] = "searchbox";
+        <%if Me.DataPrefix="p41" then%>
+        context["j02id_explicit"]="<%=Factory.SysUser.j02ID%>";
+        <%end If%>
+    }
     function report() {
             
         sw_decide("report_modal.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/reporting.png",true);
@@ -39,21 +58,12 @@
     }
 
     function sw_decide(url, iconUrl, is_maximize) {
-        var isInIFrame = (window.location != window.parent.location);
-        if (isInIFrame==true){
-
-            var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
-            var h = screen.availHeight;
-
-            if ((w < 901 || h < 800) && w>0) {
-                window.parent.sw_master(url, iconUrl);
-                return;
-            }                
-
-            if (w < 910)
-                is_maximize = true;
-        }
+        <%If Me.hidSource.Value = "2" Then%>
+        window.parent.sw_master(url, iconUrl, is_maximize);
+        <%else%>
         sw_local(url, iconUrl, is_maximize);
+        <%end if%>
+        
     }
         
         
@@ -115,7 +125,7 @@
     }
     function p28_p41_new() {
             
-        sw_decide("p41_create.aspx?p28id=<%=Me.DataPID%>","Images/project_32.png",true);
+        sw_decide("p41_create.aspx?p28id=<%=Me.DataPID%>","Images/project.png",true);
 
     }
     function p31_recurrence_record(pid) {
@@ -183,10 +193,10 @@
     function approve(){             
         var isInIFrame = (window.location != window.parent.location);
         if (isInIFrame==true){
-            window.parent.sw_master("entity_modal_approving.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/approve_32.png",true);
+            window.parent.sw_master("entity_modal_approving.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/approve.png",true);
         }
         else{
-            sw_decide("entity_modal_approving.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/approve_32.png",true);
+            sw_decide("entity_modal_approving.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/approve.png",true);
         }
             
     }
@@ -195,7 +205,7 @@
         sw_decide("entity_timeline.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/timeline.png",true);
     }
     function menu_sendmail() {
-        sw_decide("sendmail.aspx?prefix=<%=me.DataPrefix%>&pid=<%=me.DataPID%>", "Images/email_32.png")
+        sw_decide("sendmail.aspx?prefix=<%=me.DataPrefix%>&pid=<%=me.DataPID%>", "Images/email.png")
 
 
     }
@@ -225,4 +235,8 @@
 
     }
     <%end if%>
+    function menu_fullscreen(){
+        
+        window.open("<%=Me.DataPrefix%>_framework_detail.aspx?pid=<%=me.DataPID%>&tab=<%=Me.tabs1.SelectedTab.Value%>&saw=1","_blank");
+    }
 </script>

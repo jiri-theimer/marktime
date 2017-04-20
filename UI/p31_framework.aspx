@@ -40,7 +40,7 @@
 
             h2 = offset.top;
 
-            h3 = h1 - h2;
+            h3 = h1 - h2-1;
 
             sender.set_height(h3);
             
@@ -74,9 +74,9 @@
         function nw(p41id) {
             //vyvolat dialog pro zápis úkonu
             <%If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then%>
-            sw_master("p31_record.aspx?pid=0&j02id=<%=Me.CurrentJ02ID%>&p41id=" + p41id, "worksheet_32.png");
+            sw_master("p31_record.aspx?pid=0&j02id=<%=Me.CurrentJ02ID%>&p41id=" + p41id, "worksheet.png");
             <%Else%>
-            sw_master("p31_record.aspx?pid=0&p41id=" + p41id, "worksheet_32.png");
+            sw_master("p31_record.aspx?pid=0&p41id=" + p41id, "worksheet.png");
             <%End If%>
 
 
@@ -85,18 +85,18 @@
         function nw_p56(p56id) {
             //vyvolat dialog pro zápis úkonu
             <%If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then%>
-            sw_master("p31_record.aspx?pid=0&j02id=<%=Me.CurrentJ02ID%>&p56id=" + p56id, "worksheet_32.png");
+            sw_master("p31_record.aspx?pid=0&j02id=<%=Me.CurrentJ02ID%>&p56id=" + p56id, "worksheet.png");
             <%Else%>
-            sw_master("p31_record.aspx?pid=0&p56id=" + p56id, "worksheet_32.png");
+            sw_master("p31_record.aspx?pid=0&p56id=" + p56id, "worksheet.png");
             <%End If%>
 
         }
 
         function p56_edit(pid) {
-            sw_master("p56_record.aspx?pid=" + pid, "task_32.png");
+            sw_master("p56_record.aspx?pid=" + pid, "task.png");
         }
         function p56_create() {
-            sw_master("p56_record.aspx?pid=0&masterprefix=p41&masterpid=0", "task_32.png");
+            sw_master("p56_record.aspx?pid=0&masterprefix=p41&masterpid=0", "task.png");
         }
 
         function sw_local(url, img, is_maximize) {
@@ -153,12 +153,12 @@
 
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=me.gridprefix%>&masterprefix=p31_framework&pid=" + j74id, "Images/griddesigner_32.png");
+            sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=me.gridprefix%>&masterprefix=p31_framework&pid=" + j74id, "Images/griddesigner.png");
         }
 
         function querybuilder() {
             var j70id = "<%=Me.CurrentJ70ID%>";
-            sw_master("query_builder.aspx?prefix=p41&pid=" + j70id, "Images/query_32.png");
+            sw_master("query_builder.aspx?prefix=p41&pid=" + j70id, "Images/query.png");
             return (false);
         }
 
@@ -168,7 +168,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
     <div id="offsetY"></div>
-    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Metro" RenderMode="Lightweight">
+    <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Default" RenderMode="Auto">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" MaxWidth="1000" BackColor="white">
 
             <telerik:RadTabStrip ID="tabs1" runat="server" ShowBaseLine="true" Width="100%" Skin="Default" AutoPostBack="true">

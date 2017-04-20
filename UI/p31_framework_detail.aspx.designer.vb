@@ -41,6 +41,15 @@ Partial Public Class p31_framework_detail
     Protected WithEvents j02ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''chkGrid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkGrid As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''chkTimer control.
     '''</summary>
     '''<remarks>

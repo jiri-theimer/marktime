@@ -119,9 +119,15 @@
             else
                 window.open("p31_framework.aspx?showtimer=0", "_top");
         }
+        function grid_change(ctl) {
+            if (ctl.checked == true)
+                window.open("p31_framework.aspx?showgrid=1", "_top");
+            else
+                window.open("p31_framework.aspx?showgrid=0", "_top");
+        }
 
         function p31_subgrid_querybuilder(j70id) {
-           sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query_32.png", true);
+           sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query.png", true);
 
         }
         function p31_split() {
@@ -150,8 +156,11 @@
     <div class="commandcell" style="padding-left:5px;padding-bottom:1px;">
         
     </div>
+    <div class="commandcell" style="padding-left:5px;padding-top:5px;">
+        <asp:CheckBox ID="chkGrid" runat="server" Text="Přehled projektů/úkolů v levém panelu" AutoPostBack="false" Checked="true" onClick="grid_change(this)" meta:resourcekey="chkGrid" />
+    </div>
     <div class="commandcell" style="padding-left:5px;padding-top:5px;" id="timer_panel">
-        <asp:CheckBox ID="chkTimer" runat="server" Text="Zapisovat přes STOPKY" AutoPostBack="false" Checked="true" onClick="timer_change(this)" meta:resourcekey="chkTimer" />
+        <asp:CheckBox ID="chkTimer" runat="server" Text="STOPKY v pravém panelu" AutoPostBack="false" Checked="true" onClick="timer_change(this)" meta:resourcekey="chkTimer" />
     </div>
 
     <div style="height:10px;clear:both;"></div>

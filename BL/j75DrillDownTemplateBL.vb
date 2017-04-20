@@ -226,6 +226,8 @@ Class j75DrillDownTemplateBL
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Value_Approved_Billing))
         lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Value_Invoiced))
 
+        lis.Add(New BO.PivotSumField(BO.PivotSumFieldType.p31Value_FixPrice))
+
         Return lis
 
     End Function

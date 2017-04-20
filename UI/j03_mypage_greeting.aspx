@@ -1,8 +1,7 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="j03_mypage_greeting.aspx.vb" Inherits="UI.j03_mypage_greeting" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
-<%@ Register TagPrefix="uc" TagName="project" Src="~/project.ascx" %>
+
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -13,7 +12,7 @@
         }
 
         function personalpage() {
-            sw_master("j03_myprofile_defaultpage.aspx", "Images/plugin_32.png");
+            sw_master("j03_myprofile_defaultpage.aspx", "Images/plugin.png");
 
 
         }
@@ -22,20 +21,20 @@
 
         }
         function sendmail() {
-            sw_master("sendmail.aspx", "Images/email_32.png")
+            sw_master("sendmail.aspx", "Images/email.png")
 
 
         }
-       
+
 
 
         function p48_record(pid) {
 
-            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + pid, "Images/oplan_32.png")
+            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + pid, "Images/oplan.png")
         }
         function p48_convert(pid) {
 
-            sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet_32.png")
+            sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet.png")
         }
 
         function hardrefresh(pid, flag) {
@@ -44,7 +43,6 @@
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-
     <div style="padding: 10px; background-color: white;">
         <div style="float: left;">
             <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
@@ -57,30 +55,44 @@
 
         <div style="min-height: 430px;">
             <div style="float: left;">
-                <asp:panel ID="panSearch" runat="server" CssClass="content-box2">
-                <div class="title">
-                    <img src="Images/search.png" />
-                    <asp:CheckBox ID="chkSearch" runat="server" Text="Nabízet na stránce vyhledávání" AutoPostBack="true" Checked="false" />
-                </div>
-                <div class="content">
-                    <asp:panel ID="panSearch_p28" runat="server" Visible="false">
-                    <img src="Images/contact.png" />
-                    <input id="search_p28" style="width: 200px; margin-top: 7px;" value="Najít klienta..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít klienta...')" />
-                    </asp:panel>
-                    <asp:panel ID="panSearch_p91" runat="server" style="margin-top:6px;" Visible="false">
-                    <img src="Images/invoice.png"" />
-                    <input id="search_p91" style="width: 200px; margin-top: 7px;" value="Najít fakturu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít fakturu...')" />
-                    </asp:panel>
-                    <asp:panel ID="panSearch_p56" runat="server" style="margin-top:6px;" Visible="false">
-                    <img src="Images/task.png" />
-                    <input id="search_p56" style="width: 200px; margin-top: 7px;" value="Najít úkol..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít úkol...')" />
-                    </asp:panel>
-                    <asp:panel ID="panSearch_j02" runat="server" style="margin-top:6px;" Visible="false">
-                    <img src="Images/person.png" />
-                    <input id="search_j02" style="width: 200px; margin-top: 7px;" value="Najít osobu..." onfocus="search2Focus(this)" onblur="search2Blur(this,'Najít osobu...')" />
-                    </asp:panel>
-                </div>
-				</asp:panel>
+                <asp:Panel ID="panSearch" runat="server" CssClass="content-box2">
+                    <div class="title">
+                        <img src="Images/search.png" />
+                        <asp:CheckBox ID="chkSearch" runat="server" Text="Nabízet na stránce vyhledávání" AutoPostBack="true" Checked="false" />
+                    </div>
+                    <div class="content">
+                        <asp:Panel ID="panSearch_P41" runat="server" Visible="false">
+                            <img src="Images/project.png" />
+                            <telerik:RadComboBox ID="search_p41" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat projekt" Width="250px" OnClientSelectedIndexChanged="project_OnClientSelectedIndexChanged" OnClientItemsRequesting="project_OnClientItemsRequesting">
+                                <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
+                            </telerik:RadComboBox>
+                        </asp:Panel>
+                        <asp:Panel ID="panSearch_p28" runat="server" Visible="false">
+                            <img src="Images/contact.png" />
+                            <telerik:RadComboBox ID="search_p28" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat klienta" Width="250px" OnClientSelectedIndexChanged="contact_OnClientSelectedIndexChanged" OnClientItemsRequesting="contact_OnClientItemsRequesting">
+                                <WebServiceSettings Method="LoadComboData" Path="~/Services/contact_service.asmx" UseHttpGet="false" />
+                            </telerik:RadComboBox>
+                        </asp:Panel>
+                        <asp:Panel ID="panSearch_p91" runat="server" Style="margin-top: 6px;" Visible="false">
+                            <img src="Images/invoice.png" />
+                            <telerik:RadComboBox ID="search_p91" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat fakturu" Width="250px" OnClientSelectedIndexChanged="invoice_OnClientSelectedIndexChanged" OnClientItemsRequesting="invoice_OnClientItemsRequesting">
+                                <WebServiceSettings Method="LoadComboData" Path="~/Services/invoice_service.asmx" UseHttpGet="false" />
+                            </telerik:RadComboBox>
+                        </asp:Panel>
+                        <asp:Panel ID="panSearch_p56" runat="server" Style="margin-top: 6px;" Visible="false">
+                            <img src="Images/task.png" />
+                            <telerik:RadComboBox ID="search_p56" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat úkol" Width="250px" OnClientSelectedIndexChanged="task_OnClientSelectedIndexChanged" OnClientItemsRequesting="task_OnClientItemsRequesting">
+                                <WebServiceSettings Method="LoadComboData" Path="~/Services/task_service.asmx" UseHttpGet="false" />
+                            </telerik:RadComboBox>
+                        </asp:Panel>
+                        <asp:Panel ID="panSearch_j02" runat="server" Style="margin-top: 6px;" Visible="false">
+                            <img src="Images/person.png" />
+                            <telerik:RadComboBox ID="search_j02" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat osobu" Width="250px" OnClientSelectedIndexChanged="person_OnClientSelectedIndexChanged" OnClientItemsRequesting="person_OnClientItemsRequesting">
+                                <WebServiceSettings Method="LoadComboData" Path="~/Services/person_service.asmx" UseHttpGet="false" />
+                            </telerik:RadComboBox>
+                        </asp:Panel>
+                    </div>
+                </asp:Panel>
 
                 <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px">
                     <Items>
@@ -116,7 +128,7 @@
                         <telerik:RadPanelItem Text="Osobní nastavení">
                             <Items>
                                 <telerik:RadPanelItem Text="Zvolit si jinou startovací (výchozí) stránku" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>                                
+                                <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
 
                             </Items>
@@ -131,38 +143,43 @@
             <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/task.png" alt="Úkol" />
-                    Otevřené úkoly s definovaným termínem
+                    Moje otevřené úkoly
                     <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
+                    <asp:DropDownList ID="cbxP56Types" runat="server" AutoPostBack="true">
+                        <asp:ListItem Text="S blízkým termínem (+-2dny)" Value="1" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Bez ohledu na termín" Value="2"></asp:ListItem>
+                        <asp:ListItem Text="Kde jsem vlastníkem" Value="3"></asp:ListItem>
+                    </asp:DropDownList>
                 </div>
                 <div class="content">
-                    <table>  
+                    <table>
                         <tr>
                             <th>Projekt</th>
                             <th>Název úkolu</th>
                             <th>Termín</th>
                             <th></th>
-                        </tr>                      
-                    <asp:Repeater ID="rpP56" runat="server">
-                        <ItemTemplate>
-                            <tr class="trHover">
-                                <td>
-                                    <asp:Label ID="Project" runat="server"></asp:Label>
-                                </td>
-                                <td style="max-width:300px;">
-                                    <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
-                                    <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
+                        </tr>
+                        <asp:Repeater ID="rpP56" runat="server">
+                            <ItemTemplate>
+                                <tr class="trHover">
+                                    <td>
+                                        <asp:Label ID="Project" runat="server"></asp:Label>
+                                    </td>
+                                    <td style="max-width: 300px;">
+                                        <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
+                                        <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
 
-                                </td>
-                                <td>
-                                    <asp:Label ID="p56PlanUntil" runat="server"></asp:Label>
-                                    <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
-                                </td>
-                                <td>
-                                    <asp:Label ID="b02Name" runat="server"></asp:Label>
-                                </td>
-                            </tr>
-                        </ItemTemplate>
-                    </asp:Repeater>
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="p56PlanUntil" runat="server"></asp:Label>
+                                        <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="b02Name" runat="server"></asp:Label>
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </table>
                 </div>
             </asp:Panel>
@@ -405,15 +422,6 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                //pokud je rozlišení displeje menší než 1280px, automaticky  nahodit režim SAW
-                if (screen.availWidth < 1280) {
-                    if (readCookie("MT50-SAW") == "1") {
-                        return;
-                    }
-                    else {
-                        createCookie('MT50-SAW', "1", 30);
-                    }
-                }
 
 
 
@@ -421,189 +429,88 @@
             });
 
 
-            <%If panSearch_p28.Visible Then%>
-            $(function () {
 
-                $("#search_p28").autocomplete({
-                    source: "Handler/handler_search_contact.ashx",
-                    minLength: 1,
-                    select: function (event, ui) {
-                        if (ui.item) {
-                            if (ui.item.PID != null)
-                                window.open("p28_framework.aspx?pid=" + ui.item.PID, "_top");
-
-                            return false;
-                        }
-                    }
-
-                }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                    var s = "<div>";
-                    if (item.Closed == "1")
-                        s = s + "<a style='text-decoration:line-through;'>";
-                    else
-                        s = s + "<a>";
-
-                    s = s + __highlight(item.ItemText, item.FilterString);
-
-
-                    s = s + "</a>";
-
-                    if (item.Draft == "1")
-                        s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
-
-                    s = s + "</div>";
-
-
-                    return $(s).appendTo(ul);
-
-
-                };
-            });
-            <%End If%>
-            <%If panSearch_p91.Visible Then%>
-            $(function () {
-
-                $("#search_p91").autocomplete({
-                    source: "Handler/handler_search_invoice.ashx",
-                    minLength: 1,
-                    select: function (event, ui) {
-                        if (ui.item) {
-                            if (ui.item.PID != null)
-                                window.open("p91_framework.aspx?pid=" + ui.item.PID, "_top");
-
-                            return false;
-                        }
-                    }
-
-
-
-                }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                    var s = "<div>";
-                    if (item.Closed == "1")
-                        s = s + "<a style='text-decoration:line-through;'>";
-                    else
-                        s = s + "<a>";
-
-                    s = s + __highlight(item.ItemText, item.FilterString);
-
-                    if (item.ItemComment != null)
-                        s = s + "<br><i style='color:gray;font-size:11px;'>" + item.ItemComment + "</i>";
-
-                    s = s + "</a>";
-
-                    if (item.Draft == "1")
-                        s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
-
-                    s = s + "</div>";
-
-
-                    return $(s).appendTo(ul);
-
-
-                };
-            });
-            <%End If%>
-            <%If panSearch_p56.Visible Then%>
-            $(function () {
-
-                $("#search_p56").autocomplete({
-                    source: "Handler/handler_search_task.ashx",
-                    minLength: 1,
-                    select: function (event, ui) {
-                        if (ui.item) {
-                            if (ui.item.PID != null)
-                                window.open("p56_framework.aspx?pid=" + ui.item.PID, "_top");
-
-                            return false;
-                        }
-                    }
-
-
-
-                }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                    var s = "<div>";
-                    if (item.Closed == "1")
-                        s = s + "<a style='text-decoration:line-through;'>";
-                    else
-                        s = s + "<a>";
-
-                    s = s + __highlight(item.ItemText, item.FilterString);
-
-                    if (item.ItemComment != null)
-                        s = s + "<br><i style='color:gray;font-size:11px;'>" + item.ItemComment + "</i>";
-
-                    s = s + "</a>";
-
-
-
-                    s = s + "</div>";
-
-
-                    return $(s).appendTo(ul);
-
-
-                };
-            });
-            <%End If%>
-            <%If panSearch_j02.Visible Then%>
-            $(function () {
-
-                $("#search_j02").autocomplete({
-                    source: "Handler/handler_search_person.ashx",
-                    minLength: 1,
-                    select: function (event, ui) {
-                        if (ui.item) {
-                            if (ui.item.PID != null)
-                                window.open("j02_framework.aspx?pid=" + ui.item.PID, "_top");
-
-                            return false;
-                        }
-                    }
-
-
-
-                }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                    var s = "<div>";
-                    if (item.Closed == "1")
-                        s = s + "<a style='text-decoration:line-through;'>";
-                    else
-                        s = s + "<a>";
-                    
-
-                    s = s + __highlight(item.ItemText, item.FilterString);
-
-
-                    s = s + "</a>";
-
-
-
-                    s = s + "</div>";
-
-
-                    return $(s).appendTo(ul);
-
-
-                };
-            });
-            <%End If%>
-
-
-            function __highlight(s, t) {
-                var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
-                return s.replace(matcher, "<strong>$1</strong>");
+            function contact_OnClientSelectedIndexChanged(sender, eventArgs) {
+                var combo = sender;                
+                location.replace("p28_framework.aspx?pid=" + combo.get_value());
             }
+            function contact_OnClientItemsRequesting(sender, eventArgs) {
+                var context = eventArgs.get_context();
+                var combo = sender;
 
-            function search2Focus(ctl) {
-                ctl.value = "";
-                ctl.style.background = "yellow";
+                if (combo.get_value() == "")
+                    context["filterstring"] = eventArgs.get_text();
+                else
+                    context["filterstring"] = "";
+
+                context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+                context["flag"] = "searchbox";               
             }
-            function search2Blur(ctl, defaultMessage) {
-
-                ctl.style.background = "";
-                ctl.value = defaultMessage;
+            function invoice_OnClientSelectedIndexChanged(sender, eventArgs) {
+                var combo = sender;
+                location.replace("p91_framework.aspx?pid=" + combo.get_value());
             }
+            function invoice_OnClientItemsRequesting(sender, eventArgs) {
+                var context = eventArgs.get_context();
+                var combo = sender;
 
-    </script>
+                if (combo.get_value() == "")
+                    context["filterstring"] = eventArgs.get_text();
+                else
+                    context["filterstring"] = "";
 
+                context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+                context["flag"] = "searchbox";
+            }
+            function task_OnClientSelectedIndexChanged(sender, eventArgs) {
+                var combo = sender;
+                location.replace("p56_framework.aspx?pid=" + combo.get_value());
+            }
+            function task_OnClientItemsRequesting(sender, eventArgs) {
+                var context = eventArgs.get_context();
+                var combo = sender;
+
+                if (combo.get_value() == "")
+                    context["filterstring"] = eventArgs.get_text();
+                else
+                    context["filterstring"] = "";
+
+                context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+                context["flag"] = "searchbox";
+            }
+            function person_OnClientSelectedIndexChanged(sender, eventArgs) {
+                var combo = sender;
+                location.replace("j02_framework.aspx?pid=" + combo.get_value());
+            }
+            function person_OnClientItemsRequesting(sender, eventArgs) {
+                var context = eventArgs.get_context();
+                var combo = sender;
+
+                if (combo.get_value() == "")
+                    context["filterstring"] = eventArgs.get_text();
+                else
+                    context["filterstring"] = "";
+
+                context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+                context["flag"] = "searchbox";
+            }
+            function project_OnClientSelectedIndexChanged(sender, eventArgs) {
+                var combo = sender;
+                location.replace("p41_framework.aspx?pid=" + combo.get_value());
+            }
+            function project_OnClientItemsRequesting(sender, eventArgs) {
+                var context = eventArgs.get_context();
+                var combo = sender;
+
+                if (combo.get_value() == "")
+                    context["filterstring"] = eventArgs.get_text();
+                else
+                    context["filterstring"] = "";
+
+                context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+                context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
+                context["flag"] = "searchbox";
+            }
+        </script>
 </asp:Content>
 

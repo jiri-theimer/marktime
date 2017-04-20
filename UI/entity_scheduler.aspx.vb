@@ -401,9 +401,9 @@ Public Class entity_scheduler
                 .Text = Master.Factory.GetRecordCaption(Me.CurrentMasterX29ID, Me.CurrentMasterPID)
                 If .Text.Length > 37 Then .Text = Left(.Text, 35) & "..."
             End With
-            chkAllPersons.Visible = False
+
             panPersonScope.Visible = False
-            Me.Persons.Text = ""
+
             Select Case Me.CurrentMasterPrefix
                 Case "p41"
                     imgMaster.ImageUrl = "Images/project.png"
@@ -414,7 +414,7 @@ Public Class entity_scheduler
                     imgMaster.ImageUrl = "Images/person.png"
             End Select
         Else
-            chkAllPersons.Visible = True
+
             panPersonScope.Visible = True
             panMasterRecord.Visible = False
         End If

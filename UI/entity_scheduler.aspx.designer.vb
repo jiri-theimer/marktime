@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class entity_scheduler
 
     '''<summary>
+    '''chkAllPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkAllPersons As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''Persons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Persons As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''panMasterRecord control.
     '''</summary>
     '''<remarks>
@@ -48,24 +66,6 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''chkAllPersons control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkAllPersons As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''Persons control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Persons As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''panPersonScope control.

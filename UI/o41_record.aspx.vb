@@ -18,7 +18,7 @@
 
 
             End With
-            
+
 
             RefreshRecord()
 
@@ -28,13 +28,14 @@
 
             End If
 
-          
+
         End If
     End Sub
 
     Private Sub RefreshRecord()
         If Master.DataPID = 0 Then
             o41Password.Visible = True
+            cmdTest.Visible = False
             Return
         Else
             o41Password.Visible = False
@@ -50,13 +51,13 @@
             Me.o41Folder.Text = .o41Folder
             Me.o41Server.Text = .o41Server
             Me.o41Port.Text = .o41Port
-            
+
             Master.Timestamp = .Timestamp
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
 
 
         End With
-        
+
 
     End Sub
 
@@ -109,7 +110,7 @@
         Me.o41Password.Visible = True
     End Sub
 
-    
+
     Private Sub o41_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         lblo41Password.Visible = Me.o41Password.Visible
         If Master.DataPID = 0 Then
@@ -118,4 +119,16 @@
             cmdChangePWD.Visible = True
         End If
     End Sub
+
+    Private Sub cmdTest_Click(sender As Object, e As EventArgs) Handles cmdTest.Click
+        Dim c As BO.o41InboxAccount = Master.Factory.o41InboxAccountBL.Load(Master.DataPID)
+
+        If Master.Factory.o42ImapRuleBL.Connect(c) Then
+            Master.Notify("Připojení se podařilo.", NotifyLevel.InfoMessage)
+        Else
+            Master.Notify(Master.Factory.o42ImapRuleBL.ErrorMessage, NotifyLevel.ErrorMessage)
+        End If
+    End Sub
+
+
 End Class

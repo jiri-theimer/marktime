@@ -14,12 +14,12 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p51_record.aspx?pid=" + pid, "Images/billing_32.png");
+            sw_master("p51_record.aspx?pid=" + pid, "Images/billing.png");
 
         }
 
         function record_new() {
-            sw_master("p51_record.aspx?pid=0", "Images/billing_32.png");
+            sw_master("p51_record.aspx?pid=0", "Images/billing.png");
 
 
         }
@@ -56,7 +56,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p51_record.aspx?clone=1&pid=" + pid, "Images/billing_32.png");
+            sw_master("p51_record.aspx?clone=1&pid=" + pid, "Images/billing.png");
 
         }
 

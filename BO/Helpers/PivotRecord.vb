@@ -69,6 +69,7 @@ Public Enum PivotSumFieldType
     p31Amount_HoursFee_Internal = 30
     p31Amount_HoursFee_Internal_Approved = 31
 
+    p31Value_FixPrice = 14
 End Enum
 Public Class PivotRowColumnField
     Public FieldType As PivotRowColumnFieldType
@@ -328,6 +329,9 @@ Public Class PivotSumField
             Case PivotSumFieldType.p31Amount_HoursFee_Internal_Approved
                 _SelectField = "sum(a.p31Amount_Internal_Approved)"
                 s = "Nákladový honorář schválený"
+            Case PivotSumFieldType.p31Value_FixPrice
+                _SelectField = "sum(p31Value_FixPrice)"
+                s = "Hodnota v paušálu"
         End Select
         If Me.Caption = "" Then Me.Caption = s
     End Sub

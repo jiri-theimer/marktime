@@ -20,7 +20,7 @@
 
         function periodcombo_setting() {
 
-            sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+            sw_master("periodcombo_setting.aspx", "Images/settings.png");
         }
 
 
@@ -39,7 +39,7 @@
 
         function querybuilder() {
             var j70id = "<%=Me.CurrentJ70ID%>";
-            sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query_32.png");
+            sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query.png");
             return (false);
         }
 
@@ -107,8 +107,10 @@
                     <td>
                         <asp:Image ID="imgEntity" runat="server" />
                     </td>
-                    <td>
-                        <asp:Label ID="lblEntity" runat="server" CssClass="framework_header_span" Style="padding-left: 10px;"></asp:Label>
+                    <td style="padding-left:10px;">
+                              
+                        <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
+                        
                     </td>
                 </tr>
             </table>

@@ -113,13 +113,13 @@ Partial Public Class entity_framework_detail_missing
     Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''sb1 control.
+    '''cbx1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents sb1 As Global.UI.searchbox
+    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''Master property.

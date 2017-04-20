@@ -195,7 +195,7 @@
             <%If Me.CurrentMasterPrefix="p41" then%>
             url = url + "&p41id=<%=Me.CurrentMasterPID%>";
             <%End If%>            
-            sw_master(url, "Images/oplan_32.png")
+            sw_master(url, "Images/oplan.png")
 
         }
 
@@ -208,7 +208,7 @@
                 return
             }
 
-            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + s, "Images/oplan_32.png")
+            sw_master("p48_multiple_edit_delete.aspx?p48ids=" + s, "Images/oplan.png")
 
         }
 

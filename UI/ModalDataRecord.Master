@@ -65,6 +65,10 @@
             });
 
 
+            $("#form1").submit(function () {
+
+                document.getElementById("loading1").style.display = "block";
+            });
 
 
         });
@@ -172,6 +176,7 @@
             </telerik:RadToolBar>
 
             <asp:Image runat="server" ID="icon1" Style="position: absolute; left: 93%; top: 40px; z-index: 5000;" Visible="false" />
+            <img id="loading1" src="Images/loading.gif" style="display:none;z-index:9000;position:absolute;left:700px;top:10px;" />
             <div style="padding: 6px;">
                 <asp:ContentPlaceHolder ID="MainContent" runat="server">
                 </asp:ContentPlaceHolder>

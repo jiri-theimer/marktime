@@ -18,10 +18,13 @@
             With Master
                 .SiteMenuValue = "p41"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-
-                If Request.Item("tab") <> "" Then
-                    .Factory.j03UserBL.SetUserParam("p41_framework_detail-tab", Request.Item("tab"))
+                If Me.menu1.PageSource = "2" Then
+                    .IsHideAllRecZooms = True
+                    ''If Request.Item("tab") <> "" Then
+                    ''    .Factory.j03UserBL.SetUserParam("p41_framework_detail-tab", Request.Item("tab"))
+                    ''End If
                 End If
+
 
                 Dim lisPars As New List(Of String)
                 With lisPars
@@ -45,20 +48,19 @@
                             .SetUserParam("p41_framework_detail-pid", intPID.ToString)
                         End If
                     End If
-                    If Request.Item("board") = "" Then
-                        Dim strTab As String = .GetUserParam("p41_framework_detail-tab", "board")   'logika přesměrování
-                        Select Case strTab
-                            Case "p31", "time", "expense", "fee", "kusovnik"
-                                Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p41&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab, False)
-                            Case "o23", "p91", "p56", "summary", "p41"
-                                Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p41&masterpid=" & intPID.ToString, False)
-                            Case "budget"
-                                Server.Transfer("p41_framework_rec_budget.aspx?pid=" & intPID.ToString, False)
-                            Case Else
-                                'zůstat na BOARD stránce
-                        End Select
-                    End If
-                    
+                    Dim strTab As String = Request.Item("tab")
+                    If strTab = "" Then strTab = .GetUserParam("p41_framework_detail-tab") 'logika přesměrování
+                    Select Case strTab
+                        Case "p31", "time", "expense", "fee", "kusovnik"
+                            Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p41&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
+                        Case "o23", "p91", "p56", "summary", "p41"
+                            Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p41&masterpid=" & intPID.ToString & "&source=" & menu1.PageSource, False)
+                        Case "budget"
+                            Server.Transfer("p41_framework_rec_budget.aspx?pid=" & intPID.ToString & "&source=" & menu1.PageSource, False)
+                        Case Else
+                            'zůstat na BOARD stránce
+                    End Select
+
                     Master.DataPID = intPID
 
                     menu1.TabSkin = .GetUserParam("p41_menu-tabskin-tabskin")
@@ -400,17 +402,20 @@
         With CType(e.Item.FindControl("clue_p40"), HyperLink)
             .Attributes("rel") = "clue_p40_record.aspx?pid=" & cRec.PID.ToString
         End With
-
+        With CType(e.Item.FindControl("linkChrono"), HyperLink)
+            .NavigateUrl = "javascript:p40_chrono(" & cRec.PID.ToString & ")"
+        End With
     End Sub
 
 
     Private Sub cmdFavourite_Click(sender As Object, e As ImageClickEventArgs) Handles cmdFavourite.Click
         Master.Factory.j03UserBL.AppendOrRemoveFavouriteProject(Master.Factory.SysUser.PID, BO.BAS.ConvertPIDs2List(Master.DataPID), Master.Factory.p41ProjectBL.IsMyFavouriteProject(Master.DataPID))
-        ClientScript.RegisterStartupScript(Me.GetType, "hash", "window.open('p41_framework.aspx','_top');", True)
+        ReloadPage()
+        ''ClientScript.RegisterStartupScript(Me.GetType, "hash", "window.open('p41_framework.aspx','_top');", True)
     End Sub
 
     Private Sub ReloadPage()
-        Response.Redirect("p41_framework_detail.aspx?pid=" & Master.DataPID.ToString)
+        Response.Redirect("p41_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & menu1.PageSource)
     End Sub
 
     Private Sub RenderTree(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum)

@@ -286,7 +286,7 @@
         Select Case Me.CurrentMasterPrefix
             Case "p41", "p28"  'přidat všechny osoby, které v daném projektu/klientu mají operativní plán
                 Dim j02ids As List(Of Integer) = _lisP48.Select(Function(p) p.j02ID).Distinct.ToList
-                mqJ02.PIDs.AddRange(j02ids)
+                If j02ids.Count > 0 Then mqJ02.PIDs.AddRange(j02ids)
             Case "j02"
                 mqJ02.PIDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
         End Select

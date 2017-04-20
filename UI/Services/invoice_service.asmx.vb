@@ -51,9 +51,19 @@ Public Class invoice_service
 
         Dim lis As IEnumerable(Of BO.p91Invoice) = factory.p91InvoiceBL.GetList(mq)
         result = New List(Of RadComboBoxItemData)(lis.Count)
-
+        Dim itemData As New RadComboBoxItemData()
+        itemData.Enabled = False
+        Select Case lis.Count
+            Case 0
+                If Len(filterString) > 0 And Len(filterString) < 15 Then itemData.Text = "Ani jeden projekt pro zadanou podmínku."
+            Case Is >= mq.TopRecordsOnly
+                itemData.Text = String.Format("Nalezeno více než {0} faktur. Je třeba zpřesnit hledání nebo si zvýšit počet vypisovaných faktur.", mq.TopRecordsOnly.ToString)
+            Case Else
+                If filterString <> "" Then itemData.Text = String.Format("Počet nalezených faktur: {0}.", lis.Count.ToString)
+        End Select
+        If itemData.Text <> "" Then result.Add(itemData)
         For Each cRec As BO.p91Invoice In lis
-            Dim itemData As New RadComboBoxItemData()
+            itemData = New RadComboBoxItemData()
             With cRec
                 itemData.Text = .p91Code
                 If .p91Client = "" Then

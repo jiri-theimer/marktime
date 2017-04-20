@@ -13,6 +13,7 @@ Public Interface Io42ImapRuleBL
     Function LoadHistoryByRecordGUID(strGUID As String) As BO.o43ImapRobotHistory
     Function InsertImport2History(cHistory As BO.o43ImapRobotHistory) As Boolean
     Sub ChangeRecordGuidInHistory(intO43ID As Integer, strNewGUID As String)
+    Function Connect(cInbox As BO.o41InboxAccount) As Boolean
 End Interface
 Class o42ImapRuleBL
     Inherits BLMother
@@ -67,7 +68,7 @@ Class o42ImapRuleBL
         Return _cDL.LoadHistoryByRecordGUID(strGUID)
     End Function
     'dále už je funkcionalita pro práci s IMAPem
-    Private Function Connect(cInbox As BO.o41InboxAccount) As Boolean
+    Public Function Connect(cInbox As BO.o41InboxAccount) As Boolean Implements Io42ImapRuleBL.Connect
         If cInbox Is Nothing Then Return False
         If _client Is Nothing Then _client = New Imap
 
@@ -76,6 +77,7 @@ Class o42ImapRuleBL
                 If .o41IsUseSSL Then
                     Dim par As TlsParameters = New TlsParameters
                     par.CommonName = .o41Server
+
                     par.CertificateVerifier = CertificateVerifier.AcceptAll
                     _client.Connect(.o41Server, .o41Port, par, ImapSecurity.Implicit)
                 Else
@@ -128,7 +130,7 @@ Class o42ImapRuleBL
         If Not Connect(cInbox) Then Return
         W2L("Inbox account: " & cInbox.o41Name & ": " & cInbox.o41Login)
         Dim colINFO As ImapMessageCollection
-        colINFO = _client.Search(ImapSearchParameter.HasFlagsNoneOf(ImapMessageFlags.Deleted))  'seznam všechn nesmazaných zpráv
+        colINFO = _client.Search(ImapSearchParameter.HasFlagsNoneOf(ImapMessageFlags.Deleted Or ImapMessageFlags.Seen))  'seznam všech nových zpráv (nepřečtených)
 
 
         If colINFO.Count > 2000 Then
@@ -260,7 +262,7 @@ Class o42ImapRuleBL
             End If
         Next
 
-        
+
         Dim strUploadFolder As String = Factory.x35GlobalParam.UploadFolder & "\IMAP\" & Year(Now).ToString & "\" & Month(Now).ToString
         If Not System.IO.Directory.Exists(strUploadFolder) Then
             System.IO.Directory.CreateDirectory(strUploadFolder)
@@ -278,7 +280,7 @@ Class o42ImapRuleBL
             .o43Length = imi.Length
 
         End With
-        
+
 
         W2L("Message GUID: " & imi.UniqueId & " is new to load, record GUID: " & strGUID)
         If imi.From.Count > 0 Then
@@ -298,7 +300,7 @@ Class o42ImapRuleBL
                     cO43.o43Body_PlainText = Trim(.BodyText).Replace("<", "[").Replace(">", "]")
                 End If
             End With
-            
+
         Catch ex As Exception
             W2L("message ID " & imi.UniqueId, ex)
             Return False

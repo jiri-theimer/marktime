@@ -9,7 +9,6 @@
 <%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
-<%@ Register TagPrefix="uc" TagName="searchbox" Src="~/searchbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -26,27 +25,16 @@
                 $(".slidingDiv1").slideToggle();
             });
 
-             <%If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then%>
-            document.getElementById("search2").value = "";
-            <%End If%>
+            
         });
 
         function sw_decide(url, iconUrl, is_maximize) {
-            var isInIFrame = (window.location != window.parent.location);
-            if (isInIFrame==true){
-
-                var w = parseInt(document.getElementById("<%=hidParentWidth.ClientID%>").value);
-                var h = screen.availHeight;
-
-                if ((w < 901 || h < 800) && w>0) {
-                    window.parent.sw_master(url, iconUrl);
-                    return;
-                }                
-
-                if (w < 910)
-                    is_maximize = true;
-            }
+            <%If hidSource.Value="2" then%>
+            window.parent.sw_master(url, iconUrl, is_maximize);
+            <%else%>
             sw_local(url, iconUrl, is_maximize);
+            <%End If%>
+            
         }
 
         function report(x31id) {
@@ -193,7 +181,7 @@
            
         }
         function b07_delete(b07id, flag) {
-            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete.png", true)
 
         }
         function griddesigner() {
@@ -220,14 +208,37 @@
             window.open("p31_grid.aspx?masterprefix=p91&masterpid=<%=Master.DataPID%>","_top")
         }
         function page_setting(){
-            sw_decide("entity_framework_detail_setting.aspx?prefix=p91", "Images/setting_32.png",false);
+            sw_decide("entity_framework_detail_setting.aspx?prefix=p91", "Images/setting.png",false);
         }
         function sendmail() {
-            sw_decide("sendmail.aspx?prefix=p91&pid=<%=Master.DataPID%>", "Images/email_32.png")
+            sw_decide("sendmail.aspx?prefix=p91&pid=<%=Master.DataPID%>", "Images/email.png")
 
 
         }
 
+        function cbxSearch_OnClientSelectedIndexChanged(sender, eventArgs){
+            var combo = sender;
+            var pid = combo.get_value();
+            location.replace("p91_framework_detail.aspx?pid=" + pid);
+        }
+        function cbxSearch_OnClientItemsRequesting(sender, eventArgs){
+            var context = eventArgs.get_context();
+            var combo = sender;
+
+            if (combo.get_value() == "")
+                context["filterstring"] = eventArgs.get_text();
+            else
+                context["filterstring"] = "";
+
+        
+            context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+            context["flag"] = "searchbox";
+           
+        }
+        function menu_fullscreen(){
+        
+            window.open("p91_framework_detail.aspx?pid=<%=Master.DataPID%>&saw=1","_blank");
+        }
     </script>
 
 </asp:Content>
@@ -236,14 +247,11 @@
 
         <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
             <Items>
-                <telerik:RadMenuItem Value="begin">
-                    <ItemTemplate>
-                        <img src="Images/invoice_32.png" alt="Faktura" />
-                    </ItemTemplate>
-                </telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text=" "></telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="saw" Text="<img src='Images/open_in_new_window.png'/>" Target="_blank" NavigateUrl="p91_framework_detail.aspx?saw=1" ToolTip="Otevřít fakturu v nové záložce prohlížeče"></telerik:RadMenuItem>
+                
                 <telerik:RadMenuItem Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
@@ -285,13 +293,8 @@
 
 
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="searchbox">
-                    <ItemTemplate>
-
-                        <input id="search2" style="width: 100px; margin-top: 7px; height: 19px;" value="Najít fakturu..." title="Najít fakturu" onfocus="search2Focus()" onblur="search2Blur()" />
-                        <div id="search2_result" style="position: relative; left: -150px;"></div>
-                    </ItemTemplate>
-                </telerik:RadMenuItem>
+                       
+                <telerik:RadMenuItem value="searchbox"></telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
 
@@ -670,8 +673,8 @@
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidParentWidth" runat="server" />
+    <asp:HiddenField ID="hidSource" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
-    <uc:searchbox ID="sb1" runat="server"></uc:searchbox>
-
+    
 
 </asp:Content>

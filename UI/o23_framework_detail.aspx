@@ -34,17 +34,17 @@
 
        
         function b07_reaction(b07id) {
-            sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=o23&masterpid=<%=master.datapid%>","Images/comment_32.png", true)
+            sw_local("b07_create.aspx?parentpid="+b07id+"&masterprefix=o23&masterpid=<%=master.datapid%>","Images/comment.png", true)
            
         }
         function b07_delete(b07id, flag) {
-            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete_32.png", true)
+            sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete.png", true)
 
         }
 
         
         function dropbox_folder(o25id) {
-            sw_local("dropbox_folder.aspx?x29id=223&pid=<%=Master.DataPID%>&o25id=" + o25id, "Images/dropbox_32.png", false);
+            sw_local("dropbox_folder.aspx?x29id=223&pid=<%=Master.DataPID%>&o25id=" + o25id, "Images/dropbox.png", false);
         }
 
         
@@ -257,7 +257,7 @@
         function file_preview(prefix,pid) {
             ///náhled na soubor
             //window.parent.sw_master("fileupload_preview.aspx?prefix="+prefix+"&pid="+pid,"Images/attachment_32.png",true);
-            sw_local("fileupload_preview.aspx?prefix="+prefix+"&pid="+pid,"Images/attachment_32.png",true);
+            sw_local("fileupload_preview.aspx?prefix="+prefix+"&pid="+pid,"Images/attachment.png",true);
             
         }
     </script>

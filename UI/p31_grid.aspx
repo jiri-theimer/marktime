@@ -46,12 +46,12 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p31_record.aspx?pid=" + pid, "Images/worksheet_32.png");
+            sw_master("p31_record.aspx?pid=" + pid, "Images/worksheet.png");
 
         }
 
         function record_new() {
-            sw_master("p31_record.aspx?pid=0", "Images/worksheet_32.png");
+            sw_master("p31_record.aspx?pid=0", "Images/worksheet.png");
 
 
         }
@@ -111,7 +111,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet_32.png");
+            sw_master("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png");
 
         }
 
@@ -121,7 +121,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("p31_record_split.aspx?pid=" + pid, "Images/worksheet_32.png");
+            sw_master("p31_record_split.aspx?pid=" + pid, "Images/worksheet.png");
 
         }
 
@@ -152,13 +152,13 @@
 
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_master("grid_designer.aspx?prefix=p31&masterprefix=p31_grid&pid=" + j74id, "Images/griddesigner_32.png");
+            sw_master("grid_designer.aspx?prefix=p31&masterprefix=p31_grid&pid=" + j74id, "Images/griddesigner.png");
             return (false);
         }
 
         function periodcombo_setting() {
 
-            sw_master("periodcombo_setting.aspx", "Images/settings_32.png");
+            sw_master("periodcombo_setting.aspx", "Images/settings.png");
         }
 
 
@@ -170,14 +170,14 @@
                 //return (false);
             }
 
-            sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
+            sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve.png", true);
 
 
         }
 
         function querybuilder() {
             var j70id = "<%=Me.CurrentJ70ID%>";
-            sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query_32.png");
+            sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query.png");
             return (false);
         }
 

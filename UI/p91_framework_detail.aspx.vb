@@ -12,11 +12,15 @@ Public Class p91_framework_detail
         ff1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
+            hidSource.Value = Request.Item("source")
             With Master
                 .SiteMenuValue = "p91"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .Factory.SysUser.OneInvoicePage <> "" Then
                     Server.Transfer(basUI.AddQuerystring2Page(.Factory.SysUser.OneInvoicePage, "pid=" & .DataPID.ToString))
+                End If
+                If Request.Item("source") = "2" Then
+                    .IsHideAllRecZooms = True
                 End If
                 Dim lisPars As New List(Of String)
                 With lisPars
@@ -62,12 +66,42 @@ Public Class p91_framework_detail
                 End Select
             End With
 
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                basUIMT.RenderSawMenuItemAsGrid(menu1.FindItemByValue("saw"), "p91")
-            End If
+            
             tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-tabskin", "Default")
         End If
+        
+        AdaptMenu()
+    End Sub
 
+    Private Sub AdaptMenu()
+        Dim cbx As New RadComboBox()
+        With cbx
+            .DropDownWidth = Unit.Parse("400px")
+            .RenderMode = RenderMode.Auto
+            .EnableTextSelection = True
+            .MarkFirstMatch = True
+            .EnableLoadOnDemand = True
+            .Width = Unit.Parse("100px")
+            .Style.Item("margin-top") = "5px"
+            .OnClientItemsRequesting = "cbxSearch_OnClientItemsRequesting"
+            .OnClientSelectedIndexChanged = "cbxSearch_OnClientSelectedIndexChanged"
+            .WebServiceSettings.Method = "LoadComboData"
+            .WebServiceSettings.Path = "~/Services/invoice_service.asmx"
+            .ToolTip = "Hledat fakturu"
+        End With
+        If hidSource.Value = "2" Then
+            panMenuContainer.Style.Item("height") = ""
+            menu1.Skin = "Metro"
+            menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/invoice.png'/>"))
+            menu1.FindItemByValue("searchbox").Visible = False
+            menu1.FindItemByValue("record").GroupSettings.RepeatColumns = 4
+            menu1.FindItemByValue("more").GroupSettings.RepeatColumns = 3
+            menu1.FindItemByValue("level1").Visible = False
+
+        Else
+            menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/invoice_32.png'/>"))
+            menu1.FindItemByValue("searchbox").Controls.Add(cbx)
+        End If
     End Sub
 
     Public Property CurrentJ74ID As Integer
@@ -542,11 +576,6 @@ Public Class p91_framework_detail
     End Sub
 
     Private Sub p91_framework_detail_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If menu1.FindItemByValue("searchbox").Visible Then
-            sb1.ashx = "handler_search_invoice.ashx"
-            sb1.aspx = "p91_framework.aspx"
-            sb1.TextboxLabel = "Najít fakturu..."
-        End If
         Dim s As String = ""
         With plug1
             .AddDbParameter("pid", Master.DataPID)

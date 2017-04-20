@@ -4,36 +4,36 @@ Public Class main_menu
     Inherits System.Web.UI.UserControl
 
     Class TextBoxTemplate
-        Public Sub InstantiateIn(ByVal container As Control)
-            Dim txt1 As New TextBox()
-            txt1.ID = "search1"
-            txt1.Text = Resources.Site.NajitProjekt
-            txt1.ToolTip = Resources.Site.NajitProjekt
-            txt1.Style.Item("width") = "110px"
-            txt1.Attributes.Item("onfocus") = "search1Focus()"
-            txt1.Attributes.Item("onblur") = "search1Blur()"
+        ''Public Sub InstantiateIn(ByVal container As Control)
+        ''    Dim txt1 As New TextBox()
+        ''    txt1.ID = "search1"
+        ''    txt1.Text = Resources.Site.NajitProjekt
+        ''    txt1.ToolTip = Resources.Site.NajitProjekt
+        ''    txt1.Style.Item("width") = "110px"
+        ''    txt1.Attributes.Item("onfocus") = "search1Focus()"
+        ''    txt1.Attributes.Item("onblur") = "search1Blur()"
 
-            AddHandler txt1.DataBinding, AddressOf txt1_DataBinding
-            container.Controls.Add(txt1)
+        ''    AddHandler txt1.DataBinding, AddressOf txt1_DataBinding
+        ''    container.Controls.Add(txt1)
 
-            Dim link1 As New HyperLink()
-            With link1
-                .CssClass = "button-reczoom"
-                .Attributes.Item("rel") = "clue_search.aspx"
-                .Attributes.Item("dialogheight") = "600"
-                .Attributes.Item("title") = "Více hledání"
-                ''.Style.Item("background-color") = "#25a0da"
-                .Style.Item("padding-left") = "2px"
-                .Style.Item("padding-bottom") = "0px"
-                .Style.Item("padding-top") = "2px"
-                .ImageUrl = "Images/menuarrow.png"
+        ''    Dim link1 As New HyperLink()
+        ''    With link1
+        ''        .CssClass = "button-reczoom"
+        ''        .Attributes.Item("rel") = "clue_search.aspx"
+        ''        .Attributes.Item("dialogheight") = "600"
+        ''        .Attributes.Item("title") = "Více hledání"
+        ''        ''.Style.Item("background-color") = "#25a0da"
+        ''        .Style.Item("padding-left") = "2px"
+        ''        .Style.Item("padding-bottom") = "0px"
+        ''        .Style.Item("padding-top") = "2px"
+        ''        .ImageUrl = "Images/menuarrow.png"
 
-                .ToolTip = "Více hledání"
+        ''        .ToolTip = "Více hledání"
 
-            End With
-            
-            container.Controls.Add(link1)
-        End Sub
+        ''    End With
+
+        ''    container.Controls.Add(link1)
+        ''End Sub
 
         Private Sub txt1_DataBinding(ByVal sender As Object, ByVal e As EventArgs)
             ''Dim target As TextBox = DirectCast(sender, TextBox)
@@ -78,9 +78,8 @@ Public Class main_menu
         panContainer.Visible = False
     End Sub
     Public Sub RefreshData(factory As BL.Factory, strCurrentHelpID As String, strCurrentSiteMenuValue As String)
-        Dim bolCurSAW As Boolean = False, strLang As String = basUI.GetCookieValue(Request, "MT50-CultureInfo")
-        If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then bolCurSAW = True
-
+        Dim strLang As String = basUI.GetCookieValue(Request, "MT50-CultureInfo")
+        
         Me.panContainer.Visible = True
         Dim bolAdmin As Boolean = factory.TestPermission(BO.x53PermValEnum.GR_Admin), n As RadMenuItem
         With factory.SysUser
@@ -89,9 +88,9 @@ Public Class main_menu
             If menu1.Items.Count > 0 Then menu1.Items.Clear()
 
             ai("", "begin", "", "")
-            If .j04IsMenu_Project Then
+            If .j04IsMenu_Project Or .j04IsMenu_Contact Or .j04IsMenu_Invoice Or .j04IsMenu_People Then
                 Me.hidAllowSearch1.Value = "1"
-                ai("", "searchbox1", "", "")
+                ai("", "searchbox", "", "")
             End If
 
             n = ai("", "new", "", "Images/new_menu.png", )
@@ -133,14 +132,7 @@ Public Class main_menu
                 n = ai("<img src='Images/globe.png'/>" + .MessagesCount.ToString, "messages", "javascript:messages()", "")
                 n.ToolTip = "Zprávy a upozornění ze systému"
             End If
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                n = ai("<img src='Images/saw_turn_off.png'/>", "saw", "javascript:setsaw('0')", "")
-                n.ToolTip = "Přepnout do módu 1: zobrazovat levý navigační panel"
-            Else
-                n = ai("<img src='Images/saw_turn_on.png'/>", "saw", "javascript:setsaw('1')", "")
-                n.ToolTip = "Přepnout do módu 2: skrývat levý navigační panel"
-            End If
-            ''End If
+           
 
             Select Case strLang
                 Case "en-US"
@@ -164,15 +156,7 @@ Public Class main_menu
 
         
     End Sub
-    Private Function Is_SAW_Switcher() As Boolean
-        If Request.Url.ToString.IndexOf("entity_framework") > 0 Or Request.Url.ToString.IndexOf("p31_framework") > 0 Then Return True
-        If Request.Url.ToString.IndexOf("p28_framework") > 0 Or Request.Url.ToString.IndexOf("p41_framework") > 0 Then Return True
-        If Request.Url.ToString.IndexOf("p91_framework") > 0 Or Request.Url.ToString.IndexOf("j02_framework") > 0 Then Return True
-        If Request.Url.ToString.IndexOf("o23_framework") > 0 Or Request.Url.ToString.IndexOf("p56_framework") > 0 Then Return True
-
-        Return False
-
-    End Function
+    
 
     Private Function ai(strText As String, strValue As String, strURL As String, strImg As String, Optional nParent As RadMenuItem = Nothing) As RadMenuItem
 
@@ -190,21 +174,26 @@ Public Class main_menu
 
     Private Sub menu1_ItemCreated(sender As Object, e As RadMenuEventArgs) Handles menu1.ItemCreated
         If Not TypeOf (e.Item) Is RadMenuItem Then Return
-        If e.Item.Value = "begin" Then
-            e.Item.Controls.Add(New LiteralControl("<a href='default.aspx' title='ÚVOD'><img src='Images/logo_transparent.png' style='border:0px;' /></a>"))
-        End If
+        Select Case e.Item.Value
+            Case "begin"
+                e.Item.Controls.Add(New LiteralControl("<a href='default.aspx' title='ÚVOD'><img src='Images/logo_transparent.png' style='border:0px;' /></a>"))
+            Case "searchbox"
+                e.Item.Controls.Add(New LiteralControl("<a class='button-reczoom' rel='clue_search.aspx' dialogheight='600' style='cursor:pointer;cursor:hand;padding-bottom:2px;padding-top:2px;border:0px;background-color:transparent;'><img src='Images/search_silver.png' style='border:0px;' title='Najít projekt/klienta/fakturu/osobu'/></a>"))
+        End Select
+        
+
     End Sub
 
-    Private Sub SetupSearchbox()
-        Dim c As Control = menu1.FindItemByValue("searchbox1")
-        If c Is Nothing Then Return
-        Dim template As New TextBoxTemplate()
-        template.InstantiateIn(c)
-        menu1.DataBind()
+    ''Private Sub SetupSearchbox()
+    ''    Dim c As Control = menu1.FindItemByValue("searchbox1")
+    ''    If c Is Nothing Then Return
+    ''    Dim template As New TextBoxTemplate()
+    ''    template.InstantiateIn(c)
+    ''    menu1.DataBind()
 
-        Dim mi As RadMenuItem = CType(c, RadMenuItem)
-        hidSearch1.Value = DirectCast(mi.FindControl("search1"), TextBox).ClientID
-    End Sub
+    ''    Dim mi As RadMenuItem = CType(c, RadMenuItem)
+    ''    hidSearch1.Value = DirectCast(mi.FindControl("search1"), TextBox).ClientID
+    ''End Sub
 
 
     Private Sub RenderDbMenu(factory As BL.Factory, strLang As String)
@@ -296,7 +285,7 @@ Public Class main_menu
 
     End Sub
 
-    Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
-        If panContainer.Visible Then SetupSearchbox()
-    End Sub
+    ''Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+    ''    If panContainer.Visible Then SetupSearchbox()
+    ''End Sub
 End Class

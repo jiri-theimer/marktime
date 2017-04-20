@@ -896,6 +896,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents hidParentWidth As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSource As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdRefresh control.
     '''</summary>
     '''<remarks>
@@ -903,15 +912,6 @@ Partial Public Class p91_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''sb1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents sb1 As Global.UI.searchbox
 
     '''<summary>
     '''Master property.

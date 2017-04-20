@@ -9,7 +9,10 @@
 
 
     <script type="text/javascript">
-      
+        function gogo(par) {
+            window.history.pushState({}, "Ahoj-titulek", "/pokus.aspx?gogo="+par);
+            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -25,8 +28,11 @@
     <asp:HiddenField ID="hiddatapid" runat="server" />
 
 
+    <button type="button" onclick="gogo('1')">Změnit URL 1</button>
+    <button type="button" onclick="gogo('2')">Změnit URL 2</button>
 
     
 </asp:Content>
+
 
 

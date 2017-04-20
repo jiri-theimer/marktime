@@ -85,6 +85,11 @@
                             <asp:TextBox ID="Value_Edit" runat="server" style="width:40px;text-align:right;"></asp:TextBox>
                         </div>
                         <asp:Label ID="p31Value_Orig" runat="server" CssClass="val"></asp:Label>
+                        <div>
+                            <asp:Label ID="lblValue_Edit_FixPrice" runat="server" Text="Hodnota v paušálu:"></asp:Label>
+                            <asp:TextBox ID="Value_Edit_FixPrice" runat="server" style="width:40px;text-align:right;"></asp:TextBox>
+                            
+                        </div>
                     </td>
                     <td align="right">
                         <div>

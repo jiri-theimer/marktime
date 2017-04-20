@@ -26,7 +26,9 @@
 
                 .SiteMenuValue = Me.CurrentMasterPrefix
                 menu1.DataPrefix = Me.CurrentMasterPrefix
-
+                If Me.menu1.PageSource = "2" Then
+                    .IsHideAllRecZooms = True
+                End If
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add(Me.CurrentMasterPrefix & "_menu-tabskin")

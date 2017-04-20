@@ -313,7 +313,7 @@ A.reczoom {
     border-bottom: solid 1px #D3D3D3;
     border-right: solid 1px #D3D3D3;
     text-decoration: none;
-    cursor: help;
+    cursor: zoom-in;
 }
 
     A.reczoom:hover {

@@ -16,68 +16,7 @@
 <script type="text/javascript">
     <%If panContainer.Visible Then%>    
    
-    <%If Me.hidAllowSearch1.Value = "1" Then%>
-    <%If Request.Browser.Browser = "IE" Or Request.Browser.Browser = "InternetExplorer" Then%>
-    document.getElementById("<%=hidSearch1.Value%>").value = "";
-    <%End If%>
-
-    $(function () {        
-        $("#<%=hidSearch1.Value%>").autocomplete({
-            source: "Handler/handler_search_project.ashx",
-            minLength: 1,
-            select: function (event, ui) {
-                if (ui.item) {
-                    if (ui.item.PID != null)
-                     location.replace("p41_framework.aspx?pid=" + ui.item.PID);
-                    
-                    return false;
-                }
-            }
-            <%If Me.hidMasterPageName.Value="Site" then%>
-            ,
-            open: function (event, ui) {
-                $('ul.ui-autocomplete')                   
-                    .removeAttr('style').hide()
-                   .appendTo('#search1_result').show();
-            },
-            close: function (event, ui) {
-                $('ul.ui-autocomplete')
-                .hide();                   
-            }   
-            <%end If%>
-
-
-        }).data("ui-autocomplete")._renderItem = function (ul, item) {
-            var s = "<div>";
-
-            if (item.Closed == "1")
-                s = s + "<a style='text-decoration:line-through;'>";
-            else
-                s = s + "<a>";
-
-            if (item.PID == null)
-                s="<div><span style='color:silver;'>"
-
-            s = s + __highlight1(item.Project, item.FilterString);
-
-            if (item.PID == null)
-                s = s + "</span>"
-            else
-                s = s + "</a>";
-
-            if (item.Draft == "1")
-                s = s + "<img src='Images/draft.png' alt='DRAFT'/>"
-
-
-            s = s + "</div>";
-
-
-            return $(s).appendTo(ul);
-
-
-        };
-    });
-    <%End If%>
+    
 
     function help(page) {
         window.open("help.aspx?page=" + page, "_blank");
@@ -129,42 +68,7 @@
 
     }
 
-    function setsaw(value) {
-        createCookie('MT50-SAW', value, 30);
-        var s = window.location.href;
-        
-        if (s.indexOf("p31_framework") > -1) {
-            location.replace("p31_framework.aspx");
-            return;
-        }
-            
-
-        if (s.indexOf("p41_framework") > -1 || s.indexOf("prefix=p41")>-1) {
-            location.replace("p41_framework.aspx");
-            return;
-        }
-        if (s.indexOf("j02_framework") > -1 || s.indexOf("prefix=j02") > -1) {
-            location.replace("j02_framework.aspx");
-            return;
-        }
-        if (s.indexOf("p28_framework") > -1 || s.indexOf("prefix=p28") > -1) {
-            location.replace("p28_framework.aspx");
-            return;
-        }
-        if (s.indexOf("p91_framework") > -1 || s.indexOf("prefix=p91") > -1) {
-            location.replace("p91_framework.aspx");
-            return;
-        }
-        if (s.indexOf("p56_framework") > -1 || s.indexOf("prefix=p56") > -1) {
-            location.replace("p56_framework.aspx");
-            return;
-        }
-        if (s.indexOf("o23_framework") > -1 || s.indexOf("prefix=o23") > -1) {
-            location.replace("o23_framework.aspx");
-            return;
-        }
-        location.replace(window.location.href);
-    }
+    
 
     function setlang(value) {
 
@@ -193,20 +97,7 @@
         return null;
     }
 
-    function __highlight1(s, t) {
-        var matcher = new RegExp("(" + $.ui.autocomplete.escapeRegex(t) + ")", "ig");
-        return s.replace(matcher, "<strong>$1</strong>");
-    }
-
-    function search1Focus() {
-        document.getElementById("<%=hidSearch1.Value%>").value = "";
-        document.getElementById("<%=hidSearch1.Value%>").style.background = "yellow";
-    }
-    function search1Blur() {
-
-        document.getElementById("<%=hidSearch1.Value%>").style.background = "";
-        document.getElementById("<%=hidSearch1.Value%>").value = "<%=Resources.Site.NajitProjekt%>";
-    }
+    
 
 
     function hardrefresh_menu(pid, flag) {        

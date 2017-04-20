@@ -61,6 +61,7 @@
     j75DrillDownTemplate = 175
     x18EntityCategory = 918
     x25EntityField_ComboValue = 925
+    x48SqlTask = 948
     Approving = 999
     _NotSpecified = 0
 End Enum

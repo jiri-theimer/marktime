@@ -37,20 +37,15 @@
             Me.hidSiteMenuValue.Value = value
         End Set
     End Property
-    Public Property IsMenuNever As Boolean
+    Public Property IsHideAllRecZooms As Boolean
         Get
-            Return BO.BAS.BG(Me.hidMenuNever.Value)
+            Return BO.BAS.BG(Me.hidIsHideAllRecZooms.Value)
         End Get
         Set(value As Boolean)
-            Me.hidMenuNever.Value = BO.BAS.GB(value)
+            Me.hidIsHideAllRecZooms.Value = BO.BAS.GB(value)
         End Set
     End Property
-    Public ReadOnly Property IsTopWindow As Boolean
-        Get
-            If mm1.ItemsCount > 0 Then Return True Else Return False
-
-        End Get
-    End Property
+   
 
     Public Sub StopPage(ByVal strMessage As String, Optional ByVal bolErrorInfo As Boolean = True, Optional ByVal strNeededPerms As String = "", Optional bolModalPage As Boolean = False)
         Server.Transfer("~/stoppage.aspx?err=" & BO.BAS.GB(bolErrorInfo) & "&message=" & Server.UrlEncode(strMessage) & "&neededperms=" & strNeededPerms & "&modal=" & BO.BAS.GB(bolModalPage), False)
@@ -77,15 +72,9 @@
     
     Private Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            If Me.IsMenuNever Then mm1.ClearAll() : Return
-
-            If Request.Item("saw") = "1" Or basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                mm1.RefreshData(_Factory, Me.HelpTopicID, Me.SiteMenuValue)
-            Else
-                mm1.ClearAll()
-            End If
+            
         End If
 
-        If mm1.ItemsCount > 0 Then placeFavicon.Controls.Add(New LiteralControl("<link href='Images/favicon.ico' rel='shortcut icon' type='image/x-icon' />"))
+
     End Sub
 End Class

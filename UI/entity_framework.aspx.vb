@@ -7,7 +7,7 @@ Public Class entity_framework
     Private Property _x29id As BO.x29IdEnum
     Private Property _needFilterIsChanged As Boolean = False
     Private Property _CurFilterDbField As String = ""
-    Private Property _curIsExport As Boolean
+    Public Property _curIsExport As Boolean
 
     Public Property CurrentX29ID As BO.x29IdEnum
         Get
@@ -89,6 +89,7 @@ Public Class entity_framework
                     .Add(Me.CurrentPrefix + "_framework-pagesize")
                     .Add(Me.CurrentPrefix + "-j70id")
                     .Add(Me.CurrentPrefix + "_framework-navigationPane_width")
+                    .Add(Me.CurrentPrefix + "_framework-contentPane_height")
                     .Add(Me.CurrentPrefix + "_framework_detail-pid")
                     .Add(Me.CurrentPrefix + "_framework-j74id")
                     .Add(Me.CurrentPrefix + "_framework-groupby")
@@ -101,12 +102,13 @@ Public Class entity_framework
                     .Add(Me.CurrentPrefix + "_framework-queryflag")
                     .Add(Me.CurrentPrefix + "_framework-filter_setting")
                     .Add(Me.CurrentPrefix + "_framework-filter_sql")
+                    .Add(Me.CurrentPrefix + "_framework-layout")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
                 cbxGroupBy.DataBind()
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-
+                    basUI.SelectRadiolistValue(Me.opgLayout, .GetUserParam(Me.CurrentPrefix + "_framework-layout", "1"))
 
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_framework-pagesize", "20"))
                     Dim strDefWidth As String = "420"
@@ -114,12 +116,24 @@ Public Class entity_framework
                         Case "o23", "p56", "p91" : strDefWidth = "500"
                         Case Else
                     End Select
-                    Dim strW As String = .GetUserParam(Me.CurrentPrefix + "_framework-navigationPane_width", strDefWidth)
-                    If strW = "-1" Then
-                        Me.navigationPane.Collapsed = True
-                    Else
-                        Me.navigationPane.Width = Unit.Parse(strW & "px")
-                    End If
+                    Select Case Me.opgLayout.SelectedValue
+                        Case "1"
+                            Dim strW As String = .GetUserParam(Me.CurrentPrefix + "_framework-navigationPane_width", strDefWidth)
+                            If strW = "-1" Then
+                                Me.navigationPane.Collapsed = True
+                            Else
+                                Me.navigationPane.Width = Unit.Parse(strW & "px")
+                            End If
+                        Case "2"
+                            Dim strH As String = .GetUserParam(Me.CurrentPrefix + "_framework-contentPane_height", "300")
+                            If strH = "-1" Then
+                                Me.contentPane.Collapsed = True
+                            Else
+                                Me.contentPane.Height = Unit.Parse(strH & "px")
+                            End If
+
+                    End Select
+                   
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam(Me.CurrentPrefix + "_framework-groupby"))
                     Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-groups-autoexpanded", "1"))
@@ -160,29 +174,49 @@ Public Class entity_framework
             If Me.CurrentMasterPID = 0 Then
                 Handle_DefaultSelectedRecord()
             Else
-                Me.hidContentPaneDefUrl.Value = "entity_framework_detail_missing.aspx?prefix=" & Me.CurrentPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString & "&masterprefix=" & Me.CurrentMasterPrefix
+                Me.hidContentPaneDefUrl.Value = "entity_framework_detail_missing.aspx?prefix=" & Me.CurrentPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString & "&masterprefix=" & Me.CurrentMasterPrefix & "&source=" & opgLayout.SelectedValue
             End If
 
-            If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                hidSAW.Value = "1"
-                AdaptSplitter4SAW()
-            End If
+            AdaptSplitterLayout()
         End If
     End Sub
-    Private Sub AdaptSplitter4SAW()
-        Me.contentPane.Visible = False
-        Me.RadSplitbar1.Visible = False
+    Private Sub AdaptSplitterLayout()
+        Select Case Me.opgLayout.SelectedValue
+            Case "1"
+                RadSplitter1.Orientation = Orientation.Vertical
+               
+            Case "2"
+                RadSplitter1.Orientation = Orientation.Horizontal
+                With navigationPane
+                    .OnClientResized = ""
+                    .OnClientCollapsed = ""
+                    .OnClientExpanded = ""
+                End With
+                With contentPane
+                    .OnClientResized = "AfterPaneResized"
+                    .OnClientCollapsed = "AfterPaneCollapsed"
+                    .OnClientExpanded = "AfterPaneExpanded"
+                End With
 
-        With navigationPane
-            .Collapsed = False
-            .MaxWidth = 0
-            .Width = Nothing
-            .OnClientResized = ""
-            .OnClientExpanded = ""
-        End With
+            Case "3"
+                RadSplitter1.Orientation = Orientation.Horizontal
+                With navigationPane
+                    .Collapsed = False
+                    .MaxWidth = 0
+                    .Width = Nothing
+                    .OnClientResized = ""
+                    .OnClientExpanded = ""
+                End With
+                Me.contentPane.Collapsed = True
+                grid1.OnRowDblClick = "RowDoubleClick"
+                Me.contentPane.Visible = False
+                Me.RadSplitbar1.Visible = False
+        End Select
+        
 
-        Me.contentPane.Collapsed = True
-        grid1.OnRowDblClick = "RowDoubleClick"
+        
+
+        
     End Sub
 
     Private Sub SetupPeriodQuery()
@@ -723,7 +757,7 @@ Public Class entity_framework
     
 
     Private Sub Handle_DefaultSelectedRecord()
-        Me.hidContentPaneDefUrl.Value = Me.CurrentPrefix + "_framework_detail.aspx?nic=1"
+        Me.hidContentPaneDefUrl.Value = Me.CurrentPrefix + "_framework_detail.aspx?source=" & opgLayout.SelectedValue
 
         Dim intSelPID As Integer = 0
         If Not Page.IsPostBack Then
@@ -839,7 +873,7 @@ Public Class entity_framework
                 Next
             End If
             
-            Me.hidContentPaneDefUrl.Value = Me.CurrentPrefix + "_framework_detail.aspx?pid=" & intSelPID.ToString   'v detailu ho vybereme nezávisle na tom, zda byl nalezen v gridu
+            Me.hidContentPaneDefUrl.Value = Me.CurrentPrefix + "_framework_detail.aspx?pid=" & intSelPID.ToString & "&source=" & opgLayout.SelectedValue  'v detailu ho vybereme nezávisle na tom, zda byl nalezen v gridu
         End If
         If Request.Item("force") <> "" Then
             Me.hidContentPaneDefUrl.Value += "&force=" & Request.Item("force")
@@ -1080,7 +1114,7 @@ Public Class entity_framework
                 Me.CurrentPeriodQuery.ForeColor = Drawing.Color.Red
             Else
                 .BackColor = Nothing
-                Me.CurrentPeriodQuery.Text = "Filtr období"
+                Me.CurrentPeriodQuery.Text = "Období"
                 Me.CurrentPeriodQuery.ToolTip = ""
                 Me.CurrentPeriodQuery.ForeColor = Nothing
             End If
@@ -1135,4 +1169,8 @@ Public Class entity_framework
     
    
   
+    Private Sub opgLayout_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgLayout.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-layout", Me.opgLayout.SelectedValue)
+        ReloadPage()
+    End Sub
 End Class

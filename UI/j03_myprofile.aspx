@@ -7,12 +7,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function personalpage() {
-            sw_master("j03_myprofile_defaultpage.aspx", "Images/plugin_32.png")
+            sw_master("j03_myprofile_defaultpage.aspx", "Images/plugin.png")
 
 
         }
         function sendmail() {
-            sw_master("sendmail.aspx", "Images/email_32.png")
+            sw_master("sendmail.aspx", "Images/email.png")
 
 
         }
@@ -37,7 +37,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("x40_record.aspx?pid=" + pid, "Images/email_32.png");
+            sw_master("x40_record.aspx?pid=" + pid, "Images/email.png");
 
         }
         function report() {
@@ -166,10 +166,10 @@
                     </asp:DropDownList>
 
                 </div>
-                <div class="div6">
+                <div class="div6" style="display:none;">
                     <asp:DropDownList ID="j03ModalWindowsFlag" runat="server">
                         <asp:ListItem Text="Velikost modálních dialogových oken 900 x 700" Value="0"></asp:ListItem>
-                        <asp:ListItem Text="Modální dialogová okna automaticky maximalizovat na plnou velikost" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="Modální dialogová okna automaticky maximalizovat na plnou velikost" Value="1" Selected="true"></asp:ListItem>
                     </asp:DropDownList>
 
                 </div>

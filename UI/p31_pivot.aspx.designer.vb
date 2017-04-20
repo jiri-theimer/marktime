@@ -113,13 +113,13 @@ Partial Public Class p31_pivot
     Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''lblEntity control.
+    '''MasterRecord control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblEntity As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''linkRow1 control.

@@ -68,6 +68,9 @@ Public Class p31_framework
                 If Request.Item("showtimer") <> "" Then
                     .Factory.j03UserBL.SetUserParam("p31_framework-timer", Request.Item("showtimer"))
                 End If
+                If Request.Item("showgrid") <> "" Then
+                    .Factory.j03UserBL.SetUserParam("p31_framework-grid", Request.Item("showgrid"))
+                End If
                 If Request.Item("tab") = "" Then
                     .Factory.j03UserBL.InhaleUserParams("p31_framework-tabindex")
                     tabs1.SelectedIndex = CInt(.Factory.j03UserBL.GetUserParam("p31_framework-tabindex", "0"))
@@ -87,6 +90,7 @@ Public Class p31_framework
                     .Add("p31_framework-sort-" & Me.GridPrefix)
                     .Add("p31_framework-groups-autoexpanded")
                     .Add("p31_framework-timer")
+                    .Add("p31_framework-grid")
                     .Add("p31_framework-j70id")
                     If tabs1.SelectedIndex <> 1 Then    'v top10 se nefiltruje
                         .Add("p31_framework-filter_setting_p41")
@@ -126,6 +130,11 @@ Public Class p31_framework
                         rightPane.Visible = False
                         RadSplitter1.Items.Remove(rightPane)
                     End If
+                    If .GetUserParam("p31_framework-grid", "1") <> "1" Then
+                        navigationPane.Visible = False
+                        RadSplitbar1.Visible = False
+                        RadSplitter1.Items.Remove(navigationPane)
+                    End If
                 End With
             End With
 
@@ -133,35 +142,35 @@ Public Class p31_framework
                 txtSearch.Text = Request.Item("search")   'externě předaná podmínka
                 txtSearch.Focus()
             End If
+            If navigationPane.Visible Then
+                If tabs1.SelectedIndex > 0 Then
+                    txtSearch.Visible = False : txtSearch.Text = "" : cmdSearch.Visible = False
+                End If
 
-            If tabs1.SelectedIndex > 0 Then
-                txtSearch.Visible = False : txtSearch.Text = "" : cmdSearch.Visible = False
+                grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p41")
+                RecalcVirtualRowCount()
+
+                grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p56")
+                RecalcTasksCount()
+
+                SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31_framework-j74id-" & Me.GridPrefix)))
+                With Master.Factory.j03UserBL
+                    SetupGrid(.GetUserParam("p31_framework-filter_setting_" & Me.GridPrefix), .GetUserParam("p31_framework-filter_sql_" & Me.GridPrefix))
+                End With
+
+
+
+                Handle_DefaultSelectedRecord()
+
+
+                If tabs1.SelectedIndex = 2 Then
+                    'úkoly
+                    cmdNewTask.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
+                Else
+                    cmdNewTask.Visible = False
+                End If
             End If
 
-            grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p41")
-            RecalcVirtualRowCount()
-
-            grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p56")
-            RecalcTasksCount()
-
-            SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31_framework-j74id-" & Me.GridPrefix)))
-            With Master.Factory.j03UserBL
-                SetupGrid(.GetUserParam("p31_framework-filter_setting_" & Me.GridPrefix), .GetUserParam("p31_framework-filter_sql_" & Me.GridPrefix))
-            End With
-
-
-
-            Handle_DefaultSelectedRecord()
-
-
-            If tabs1.SelectedIndex = 2 Then
-                'úkoly
-                cmdNewTask.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
-            Else
-                cmdNewTask.Visible = False
-            End If
-            
-            
         End If
     End Sub
 
@@ -250,6 +259,7 @@ Public Class p31_framework
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If Not navigationPane.Visible Then Return
         If _needFilterIsChanged Then
             With Master.Factory.j03UserBL
                 .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, grid1.GetFilterSetting())
