@@ -48,7 +48,14 @@
             margin-top: 8px;
         }
 
+         html .RadMenu_Windows7 .rmRootGroup {
+            background-image: none;
+            color: white;
+        }
 
+        html .RadMenu_Windows7 ul.rmRootGroup {
+            background-color: #25a0da;
+        }
      
     </style>
     <script type="text/javascript">
