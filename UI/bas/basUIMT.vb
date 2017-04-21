@@ -11,6 +11,8 @@ Public Class basUIMT
         End Get
     End Property
     Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String
+        If cJ74.j74ScrollingFlag = BO.j74ScrollingFlagENUM.Scrolling Then cJ74.j74ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders
+
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlSumCols As New List(Of String)
         Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
