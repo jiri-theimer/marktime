@@ -196,11 +196,12 @@
                         Dim cP91 As BO.p91Invoice = Master.Factory.p91InvoiceBL.LoadLastCreatedByClient(intP28ID)
                         If Not cP91 Is Nothing Then
                             intP92ID = cP91.p92ID
-                            If c.p41InvoiceDefaultText1 = "" Then c.p41InvoiceDefaultText1 = cP91.p91Text1
-                        Else
-                            If intP92ID <> 0 Then
-                                c.p41InvoiceDefaultText1 = Master.Factory.p92InvoiceTypeBL.Load(intP92ID).p92InvoiceDefaultText1
-                            End If
+                        End If
+                        If intP92ID <> 0 And c.p41InvoiceDefaultText1 = "" Then
+                            c.p41InvoiceDefaultText1 = Master.Factory.p92InvoiceTypeBL.Load(intP92ID).p92InvoiceDefaultText1
+                        End If
+                        If Not cP91 Is Nothing And c.p41InvoiceDefaultText1 = "" Then
+                            c.p41InvoiceDefaultText1 = cP91.p91Text1
                         End If
                     End If
                     lis1.Add(New InvoiceEntity(c.PID, c.Client & " - " & c.PrefferedName, intP92ID, c.p41InvoiceDefaultText1))

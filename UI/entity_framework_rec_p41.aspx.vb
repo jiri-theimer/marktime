@@ -296,5 +296,6 @@ Public Class entity_framework_rec_p41
         Else
             Me.x67ID.Visible = False
         End If
+     
     End Sub
 End Class

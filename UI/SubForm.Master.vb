@@ -2,7 +2,6 @@
     Inherits System.Web.UI.MasterPage
     Private Property _Factory As BL.Factory = Nothing
     Private _quickDataPID As Integer = 0
-
     Public ReadOnly Property Factory As BL.Factory
         Get
             Return _Factory
@@ -59,7 +58,10 @@
             If _Factory.SysUser Is Nothing Then DoLogOut()
             basUI.PingAccessLog(_Factory, Request)
         End If
-
+        If Not Page.IsPostBack Then
+            hidSource.Value = Request.Item("source")
+        End If
+        
     End Sub
     Private Sub DoLogOut()
         Response.Redirect("~/Account/Login.aspx?autologout=1") 'automatické odhlášení
@@ -71,10 +73,13 @@
 
     
     Private Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Not Page.IsPostBack Then
-            
+        If hidSource.Value = "3" Then
+            Dim newControl As UserControl = LoadControl("~/main_menu.ascx")
+            newControl.EnableViewState = False
+            place1.Controls.Add(newControl)
+            CType(newControl, UI.main_menu).RefreshData(_Factory, Me.HelpTopicID, Me.SiteMenuValue)
         End If
-
-
     End Sub
+
+    
 End Class

@@ -193,7 +193,7 @@ Public Class entity_menu
                     strLevel1 += "->" & .PrefferedName
                 End If
 
-                basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), strLevel1, "p41_framework_detail.aspx?pid=" & .PID.ToString, .IsClosed)
+                basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), strLevel1, "p41_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
             End With
         End If
         
@@ -474,7 +474,7 @@ Public Class entity_menu
             Handle_NoAccess("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
         If hidSource.Value <> "2" Then
-            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
         End If
 
 
@@ -557,7 +557,7 @@ Public Class entity_menu
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k prohlížení osobních profilů.")
         End If
         If hidSource.Value <> "2" Then
-            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.FullNameAsc, "j02_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.FullNameAsc, "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
         End If
 
 
@@ -685,7 +685,7 @@ Public Class entity_menu
             Handle_NoAccess("Nedisponujete oprávněním číst tento úkol.")
         End If
         If hidSource.Value <> "2" Then
-            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
         End If
 
 
@@ -788,7 +788,7 @@ Public Class entity_menu
             Handle_NoAccess("Nedisponujete oprávněním přistupovat k dokumentu.")
         End If
         If hidSource.Value <> "2" Then
-            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & cRec.PID.ToString, cRec.IsClosed)
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
         End If
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")

@@ -33,7 +33,8 @@
     function cbxSearch_OnClientSelectedIndexChanged(sender, eventArgs){
         var combo = sender;
         var pid = combo.get_value();
-        location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?pid=" + pid);
+        var source=document.getElementById("<%=hidSource.ClientID%>").value;
+        location.replace("<%=Me.DataPrefix%>_framework_detail.aspx?pid=" + pid+"&source="+source);
     }
     function cbxSearch_OnClientItemsRequesting(sender, eventArgs){
         var context = eventArgs.get_context();

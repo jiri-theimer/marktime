@@ -247,5 +247,6 @@ Public Class p41_framework_rec_budget
             stat1.RefreshData(Master.Factory, BO.BAS.IsNullInt(Me.p45ID.SelectedValue))
         End If
         stat1.Visible = Me.chkVysledovka.Checked
+      
     End Sub
 End Class

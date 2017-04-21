@@ -140,6 +140,15 @@ Partial Public Class entity_framework
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''cmdApprove control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdApprove As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''cbxQueryFlag control.
     '''</summary>
     '''<remarks>

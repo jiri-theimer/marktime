@@ -40,7 +40,7 @@
                 return;
             }
 
-            location.replace("p28_framework_detail.aspx?pid=<%=master.datapid%>");
+            location.replace("p28_framework_detail.aspx?pid=<%=master.datapid%>&source=<%=menu1.PageSource%>");
         }
         function childs() {
             window.open("p28_framework.aspx?masterprefix=p28&masterpid=<%=master.DataPID%>", "_top")

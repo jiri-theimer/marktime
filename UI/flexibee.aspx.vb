@@ -55,4 +55,14 @@ Public Class flexibee
 
         ''doc.Save(strExportDir & "\" & strFileName)
     End Sub
+
+    Private Function GetChild(ByVal ndMaster As XmlNode, ByVal strName As String) As XmlNode
+        Dim i As Integer
+        For i = 0 To ndMaster.ChildNodes.Count - 1
+            If LCase(ndMaster.ChildNodes(i).Name) = LCase(strName) Then
+                Return ndMaster.ChildNodes(i)
+            End If
+        Next
+        Return Nothing
+    End Function
 End Class

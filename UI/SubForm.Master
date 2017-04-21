@@ -67,7 +67,7 @@
     <form id="form1" runat="server" style="height: 100%; margin: 0px;">
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
-
+        <asp:PlaceHolder ID="place1" runat="server"></asp:PlaceHolder>
         <div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
@@ -77,6 +77,7 @@
         <asp:HiddenField ID="hidPageTitle" runat="server" />
         <asp:HiddenField ID="hidSiteMenuValue" runat="server" />        
         <asp:HiddenField ID="hidIsHideAllRecZooms" runat="server" />
+        <asp:HiddenField ID="hidSource" runat="server" />
 
 
         <telerik:RadWindow ID="okno1" runat="server" RenderMode="Native" ShowOnTopWhenMaximized="true" Modal="false" KeepInScreenBounds="true" VisibleStatusbar="false" Skin="MetroTouch" IconUrl="Images/setting.png" ShowContentDuringLoad="false" InitialBehaviors="None" Behaviors="Close,Move,Resize,Maximize" Style="z-index: 9000;">

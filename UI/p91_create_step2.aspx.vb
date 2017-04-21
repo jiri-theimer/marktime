@@ -148,7 +148,7 @@ Public Class p91_create_step2
             cLastP91 = Master.Factory.p91InvoiceBL.LoadLastCreatedByClient(cP28.PID)
             If Not cLastP91 Is Nothing Then
                 If intP92ID = 0 Then intP92ID = cLastP91.p92ID
-                If Me.p91text1.Text = "" Then Me.p91text1.Text = cLastP91.p91Text1
+                ''If Me.p91text1.Text = "" Then Me.p91text1.Text = cLastP91.p91Text1
             End If
         End If
         If Me.p91text1.Text <> "" Then Me.hidIsDefTextFixed.Value = "1"

@@ -18,7 +18,7 @@
             }
 
 
-            location.replace("entity_framework_rec_p41.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=master.datapid%>");
+            location.replace("entity_framework_rec_p41.aspx?masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=master.datapid%>&source=<%=menu1.PageSource%>");
 
         }
 

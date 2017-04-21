@@ -101,4 +101,6 @@
         End Select
         Me.hidHardRefreshFlag.Value = "" : Me.hidHardRefreshPID.Value = ""
     End Sub
+
+    
 End Class

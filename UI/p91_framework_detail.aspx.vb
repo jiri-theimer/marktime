@@ -129,7 +129,7 @@ Public Class p91_framework_detail
         With cRec
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Me.p91Code.Text = .p91Code
-            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString, .IsClosed)
+            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
             If .IsClosed Then menu1.Skin = "Black"
 
             Me.p92Name.Text = .p92Name

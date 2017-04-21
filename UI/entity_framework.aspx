@@ -100,8 +100,8 @@
 
         function RowDoubleClick(sender, args) {
             
-            //var pid = args.getDataKeyValue("pid");
-            //location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid);
+            var pid = args.getDataKeyValue("pid");
+            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid+"&source=<%=opgLayout.SelectedValue%>");
             
             
         }
@@ -253,6 +253,14 @@
 
             sw_master("periodcombo_setting.aspx");
         }
+        function approve() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Není vybrán ani jeden záznam.");
+                return;
+            }
+            sw_master("p31_approving_step1.aspx?masterprefix=<%=me.CurrentPrefix%>&masterpids=" + pids, "Images/approve.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -300,7 +308,8 @@
             <div class="slidingDiv3" style="display:none;">
                 <asp:RadioButtonList ID="opgLayout" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
                     <asp:ListItem Text="Levý panel = přehled, pravý panel = detail" Value="1" Selected="True"></asp:ListItem>
-                    <asp:ListItem Text="Horní panel = přehled, spodní panel = detail" Value="2"></asp:ListItem>                    
+                    <asp:ListItem Text="Horní panel = přehled, spodní panel = detail" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Pouze přehled, dvojklikem přechod na detail" Value="3"></asp:ListItem>
                 </asp:RadioButtonList>
             </div>
             <asp:Panel ID="panPeriod" runat="server" CssClass="slidingDiv2">
@@ -320,6 +329,7 @@
                         <%If Me.CurrentPrefix = "p91" Then%>
                         <button type="button" onclick="sendmail_batch()">Hromadně odeslat faktury (e-mail)</button>
                         <%End If%>
+                        <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()">Schválit/připravit k fakturaci</button>
                     </div>
                     <div class="content">
                         <div>

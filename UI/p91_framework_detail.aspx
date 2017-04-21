@@ -219,7 +219,7 @@
         function cbxSearch_OnClientSelectedIndexChanged(sender, eventArgs){
             var combo = sender;
             var pid = combo.get_value();
-            location.replace("p91_framework_detail.aspx?pid=" + pid);
+            location.replace("p91_framework_detail.aspx?pid=" + pid+"&source=<%=Me.hidSource.Value%>");
         }
         function cbxSearch_OnClientItemsRequesting(sender, eventArgs){
             var context = eventArgs.get_context();
@@ -236,8 +236,12 @@
            
         }
         function menu_fullscreen(){
-        
+            <%If hidSource.Value="3" then%>
+            location.replace("p91_framework.aspx?pid=<%=Master.DataPID%>");
+            <%else%>
             window.open("p91_framework_detail.aspx?pid=<%=Master.DataPID%>&saw=1","_blank");
+            <%End If%>
+            
         }
     </script>
 

@@ -337,7 +337,7 @@
     
 
     Private Sub ReloadPage(strPID As String)
-        Response.Redirect("o23_framework_detail.aspx?pid=" & strPID)
+        Response.Redirect("o23_framework_detail.aspx?pid=" & strPID & "&source=" & menu1.PageSource)
     End Sub
 
    

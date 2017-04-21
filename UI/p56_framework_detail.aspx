@@ -33,7 +33,7 @@
             }
 
 
-            location.replace("p56_framework_detail.aspx?pid=<%=master.datapid%>");
+            location.replace("p56_framework_detail.aspx?pid=<%=master.datapid%>&source=<%=menu1.PageSource%>");
 
         }
 

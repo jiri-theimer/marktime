@@ -205,6 +205,7 @@ Public Class entity_framework
                     .MaxWidth = 0
                     .Width = Nothing
                     .OnClientResized = ""
+                    .OnClientCollapsed = ""
                     .OnClientExpanded = ""
                 End With
                 Me.contentPane.Collapsed = True
@@ -257,20 +258,23 @@ Public Class entity_framework
     End Sub
 
     Private Sub Handle_Permissions_And_More()
+        Dim bolCanApprove As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
         With Master
             .PageTitle = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, True)
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
                     img1.ImageUrl = "Images/project_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Projekty].")
-
+                    cmdApprove.Visible = bolCanApprove
                 Case BO.x29IdEnum.p28Contact
                     img1.ImageUrl = "Images/contact_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Klienti].")
+                    cmdApprove.Visible = bolCanApprove
                 Case BO.x29IdEnum.o23Notepad
                     img1.ImageUrl = "Images/notepad_32.png"
                 Case BO.x29IdEnum.p56Task
                     img1.ImageUrl = "Images/task_32.png"
+                    cmdApprove.Visible = bolCanApprove
                 Case BO.x29IdEnum.j02Person
                     img1.ImageUrl = "Images/person_32.png"
                     If Not .Factory.SysUser.j04IsMenu_People Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Lidé].")

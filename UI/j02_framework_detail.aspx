@@ -31,7 +31,7 @@
             }
 
 
-            location.replace("j02_framework_detail.aspx?pid=<%=master.datapid%>");
+            location.replace("j02_framework_detail.aspx?pid=<%=master.datapid%>&source=<%=menu1.PageSource%>");
         }
 
         function j03_create() {

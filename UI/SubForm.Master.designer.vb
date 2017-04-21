@@ -68,6 +68,15 @@ Partial Public Class SubForm
     Protected WithEvents notify1 As Global.Telerik.Web.UI.RadNotification
 
     '''<summary>
+    '''place1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents place1 As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
     '''MainContent control.
     '''</summary>
     '''<remarks>
@@ -111,6 +120,15 @@ Partial Public Class SubForm
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidIsHideAllRecZooms As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSource As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''okno1 control.
