@@ -5,7 +5,7 @@
     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" EnableViewState="false" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
         <Items>
             <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text=" "></telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/open_in_new_window.png" Text=" "></telerik:RadMenuItem>
             <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px"></telerik:RadMenuItem>
                
             <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record"></telerik:RadMenuItem>      

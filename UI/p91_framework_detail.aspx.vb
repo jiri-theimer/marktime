@@ -581,5 +581,15 @@ Public Class p91_framework_detail
             .AddDbParameter("pid", Master.DataPID)
             .GenerateTable(Master.Factory, "exec dbo.p91_get_cenovy_rozpis @pid,1,1,0")
         End With
+        With menu1.FindItemByValue("fs")
+            If hidSource.Value = "3" Then
+                .ImageUrl = "Images/fullscreen.png"
+                .ToolTip = "Přepnout do datového přehledu"
+            Else
+                .ImageUrl = "Images/open_in_new_window.png"
+                .ToolTip = "Detail záznam v nové záložce"
+            End If
+           
+        End With
     End Sub
 End Class

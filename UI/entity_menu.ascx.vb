@@ -861,7 +861,7 @@ Public Class entity_menu
                 With menu1.FindItemByValue("fs")
                     .NavigateUrl = "entity_framework.aspx?prefix=" & Me.DataPrefix
                     .ToolTip = "Přepnout do datového přehledu"
-                    '.ImageUrl = "Images/grid.png"
+                    .ImageUrl = "Images/fullscreen.png"
                 End With
             
         End Select

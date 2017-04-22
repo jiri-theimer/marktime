@@ -75,6 +75,7 @@
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server" />
         <telerik:RadNotification ID="notify1" runat="server" ShowCloseButton="true" Position="Center" Title="Info" EnableRoundedCorners="true" EnableShadow="true" Animation="Fade" Skin="BlackMetroTouch"></telerik:RadNotification>
         <asp:PlaceHolder ID="place1" runat="server"></asp:PlaceHolder>
+        
         <div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>

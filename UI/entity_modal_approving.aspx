@@ -198,7 +198,7 @@
             </div>
             <div style="float: left;">
                 
-                <telerik:RadToolBar ID="tlb1" runat="server" Skin="Bootstrap" Orientation="Vertical">
+                <telerik:RadToolBar ID="tlb1" runat="server" Skin="Default" Orientation="Vertical">
                     <Items>
                         <telerik:RadToolBarButton Value="all" Text="Schvalovat [vše]" NavigateUrl="javascript:approve_all()" ImageUrl="Images/approve.png"></telerik:RadToolBarButton>
                     </Items>
@@ -265,7 +265,7 @@
                 <uc:plugin_datatable ID="plugin2" TableID="gridApproved" runat="server" ColHeaders="" ColHideRepeatedValues="1" ColTypes="" ColFlexSubtotals="" TableCaption="Prošlo schvalováním, čeká na fakturaci" NoDataMessage="Žádný schválený worksheet čekající na fakturaci." />
             </div>
             <div style="float: left;">
-                <telerik:RadToolBar ID="tlb2" runat="server" Skin="Bootstrap" Orientation="Vertical">
+                <telerik:RadToolBar ID="tlb2" runat="server" Skin="Default" Orientation="Vertical" Width="200px">
                     <Items>
                         <telerik:RadToolBarButton Value="cmdCreateP91" Text="Vystavit fakturu" NavigateUrl="javascript:invoice()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>
                         <telerik:RadToolBarButton Value="cmdAppendP91" Text="Přidat do existující faktury" NavigateUrl="javascript:invoice_append()" ImageUrl="Images/invoice.png"></telerik:RadToolBarButton>

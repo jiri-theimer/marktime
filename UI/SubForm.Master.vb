@@ -78,6 +78,7 @@
             newControl.EnableViewState = False
             place1.Controls.Add(newControl)
             CType(newControl, UI.main_menu).RefreshData(_Factory, Me.HelpTopicID, Me.SiteMenuValue)
+
         End If
     End Sub
 
