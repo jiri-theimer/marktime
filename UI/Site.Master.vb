@@ -71,11 +71,11 @@ Public Class Site
 
     Private Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         title1.Text = hidPageTitle.Value
-        If Not Page.IsPostBack Then
-            If Me.SiteMenuValue = "dashboard" Then mm1.MasterPageName = "" 'kvůli searchboxu
-            If Me.NoMenu Then Return
+        If Me.SiteMenuValue = "dashboard" Then mm1.MasterPageName = "" 'kvůli searchboxu
+        If Not Me.NoMenu Then
             mm1.RefreshData(_Factory, Me.HelpTopicID, Me.SiteMenuValue)
         End If
+
         ''If _Factory.SysUser.j03IsLiveChatSupport Then
         ''    Dim s As New StringBuilder
         ''    s.AppendLine("<!-- Start of SmartSupp Live Chat script -->")

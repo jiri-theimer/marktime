@@ -31,11 +31,13 @@ Public Class p28_framework_detail_p90
             End With
             SetupGrid()
 
-            Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
-            Dim cRecSum As BO.p28ContactSum = Master.Factory.p28ContactBL.LoadSumRow(cRec.PID)
-            menu1.p28_RefreshRecord(cRec, cRecSum, "p90")
+            
 
         End If
+        Dim cRec As BO.p28Contact = Master.Factory.p28ContactBL.Load(Master.DataPID)
+        Dim cRecSum As BO.p28ContactSum = Master.Factory.p28ContactBL.LoadSumRow(cRec.PID)
+        menu1.p28_RefreshRecord(cRec, cRecSum, "p90")
+
         menu1.DataPID = Master.DataPID
     End Sub
     Private Sub SetupGrid()

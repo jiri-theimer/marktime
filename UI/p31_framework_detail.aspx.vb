@@ -30,12 +30,17 @@
                 .InhaleUserParams(lisPars)
                 cal1.CalendarColumns = BO.BAS.IsNullInt(.GetUserParam("p31_framework_detail-calendarcolumns", "1"))
                 SetupComboPersons(.GetUserParam("p31_framework_detail-j02id"))
+                Dim strDefIsGrid As String = "1", strDefIsTimer As String = "1"
                 If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-                    chkTimer.Visible = False
-                Else
-                    Me.chkTimer.Checked = BO.BAS.BG(.GetUserParam("p31_framework-timer", "1"))
+                    strDefIsGrid = "0" : strDefIsTimer = "0"
                 End If
-                Me.chkGrid.Checked = BO.BAS.BG(.GetUserParam("p31_framework-grid", "1"))
+                Me.chkTimer.Checked = BO.BAS.BG(.GetUserParam("p31_framework-timer", strDefIsTimer))
+                If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                    chkTimer.Checked = False
+                    chkTimer.Visible = False
+                End If
+
+                Me.chkGrid.Checked = BO.BAS.BG(.GetUserParam("p31_framework-grid", strDefIsGrid))
             End With
 
 

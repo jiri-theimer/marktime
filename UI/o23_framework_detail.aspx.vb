@@ -55,11 +55,9 @@
             End With
 
 
-            RefreshRecord()
-
         End If
 
-
+        RefreshRecord()
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.o23Notepad, cDisp As BO.o23RecordDisposition)

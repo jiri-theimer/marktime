@@ -74,8 +74,9 @@ Public Class entity_framework_rec_p41
 
             SetupGrid()
 
-            RefreshRecord()
+
         End If
+        RefreshRecord()
     End Sub
 
     Private Sub RefreshRecord()

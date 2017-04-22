@@ -46,7 +46,7 @@
             <%If _curIsExport = False Then%>
             _initResizing = "0";
             <%End If%>
-           
+
         });
 
 
@@ -63,10 +63,10 @@
 
             h2 = offset.top;
 
-            h3 = h1 - h2-1;
+            h3 = h1 - h2 - 1;
 
             sender.set_height(h3);
-            
+
             var pane = sender.getPaneById("<%=contentPane.ClientID%>");
             document.getElementById("<%=Me.hidContentPaneWidth.ClientID%>").value = pane.get_width();
             pane.set_contentUrl(document.getElementById("<%=Me.hidContentPaneDefUrl.ClientID%>").value);
@@ -77,10 +77,10 @@
             <%=Me.grid1.ClientID%>_SetScrollingHeight_Explicit(pane.get_height() - 25);
             <%End If%>
             <%=me.grid1.ClientID%>_Scroll2SelectedRow(pane.get_height());
-            
+
         }
 
-      
+
 
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
@@ -90,20 +90,20 @@
             <%End If%>
 
             var splitter = $find("<%= RadSplitter1.ClientID %>");
-            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");       
-            
-            var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid+"&source=<%=opgLayout.SelectedValue%>";            
+            var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
+
+            var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";
             pane.set_contentUrl(url);
-            
+
 
         }
 
         function RowDoubleClick(sender, args) {
-            
+
             var pid = args.getDataKeyValue("pid");
-            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid+"&source=<%=opgLayout.SelectedValue%>");
-            
-            
+            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>");
+
+
         }
 
         function GetAllSelectedPIDs() {
@@ -127,12 +127,12 @@
                 return;
             }
 
-            
+
             <%If Me.opgLayout.SelectedValue = "1" Then%>
             var keyname = "<%=Me.CurrentPrefix%>_framework-navigationPane_width";
-            <%else%>
+            <%Else%>
             var keyname = "<%=Me.CurrentPrefix%>_framework-contentPane_height";
-            <%end if%>
+            <%End If%>
 
             $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: keyname, oper: "set" }, function (data) {
                 if (data == ' ') {
@@ -144,14 +144,14 @@
         }
 
         function AfterPaneResized(sender, args) {
-            <%If Me.opgLayout.SelectedValue="1" then%>
+            <%If Me.opgLayout.SelectedValue = "1" Then%>
             var w = sender.get_width();
             <%End If%>
             <%If Me.opgLayout.SelectedValue = "2" Then%>
             var w = sender.get_height();
             <%End If%>
             SavePaneWidth(w);
-           
+
         }
 
 
@@ -171,12 +171,12 @@
                 location.replace("p91_framework.aspx?pid=" + pid);
                 return;
             }
-            <%End If%>            
+            <%End If%>
             if (flag == "p31-save" || flag == "p31-delete") {
                 var splitter = $find("<%= RadSplitter1.ClientID %>");
                 var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
                 var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-                var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid="+pid+"&source=<%=opgLayout.SelectedValue%>";
+                var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";
                 pane.set_contentUrl(url);
                 return;
             }
@@ -244,8 +244,8 @@
                 alert("Není vybrán ani jeden záznam.");
                 return;
             }
-            
-            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pids=" + pids, "Images/report.png", true);            
+
+            sw_master("report_modal.aspx?prefix=<%=Me.CurrentPrefix%>&pids=" + pids, "Images/report.png", true);
 
         }
 
@@ -261,14 +261,39 @@
             }
             sw_master("p31_approving_step1.aspx?masterprefix=<%=me.CurrentPrefix%>&masterpids=" + pids, "Images/approve.png", true);
         }
+        function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
+            var combo = sender;
+            var pid = combo.get_value();
+            <%If opgLayout.SelectedValue="2" then%>
+            location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
+            <%end if%>
+            <%If opgLayout.SelectedValue = "3" Then%>
+            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?source=3&pid=" + pid);
+            <%end if%>
+        }
+        function cbx1_OnClientItemsRequesting(sender, eventArgs) {
+            var context = eventArgs.get_context();
+            var combo = sender;
+            
+            if (combo.get_value() == "")
+                context["filterstring"] = eventArgs.get_text();
+            else
+                context["filterstring"] = "";
+            
+            context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+            context["flag"] = "searchbox";
+            <%If Me.CurrentPrefix = "p41" Then%>
+            context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
+            <%End If%>           
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div id="offsetY"></div>
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Default" RenderMode="Auto" Orientation="Vertical">
         <telerik:RadPane ID="navigationPane" runat="server" Width="353px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
-            
-            <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px;background:#f7f7f7;">
+
+            <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px; background: #f7f7f7;">
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
                 </div>
@@ -281,14 +306,14 @@
                     <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
                     <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
                 </div>
-                <div class="commandcell" style="padding-left:3px;">
+                <div class="commandcell" style="padding-left: 3px;">
                     <button type="button" id="cmdGUI" class="show_hide3" style="padding: 1px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Rozvržení panelů">
                         <img src="Images/grid.png" />
-                        
+
                         <img src="Images/arrow_down.gif" />
                     </button>
                 </div>
-                <div id="divPeriodAndSettings" class="commandcell" style="padding-left:4px;">
+                <div id="divPeriodAndSettings" class="commandcell" style="padding-left: 4px;">
                     <button type="button" id="cmdPeriodQuery" class="show_hide2" style="padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Filtr podle období">
                         <asp:Label ID="CurrentPeriodQuery" runat="server" Text="Období"></asp:Label>
                         <img src="Images/arrow_down.gif" />
@@ -300,17 +325,22 @@
                         <img src="Images/arrow_down.gif" />
                     </button>
                 </div>
-
+                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" style="padding-left:10px">
+                    <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat" Width="120px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting">                        
+                        <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
+                    </telerik:RadComboBox>
+                </asp:Panel>
 
 
             </asp:Panel>
             <div style="clear: both; width: 100%;"></div>
-            <div class="slidingDiv3" style="display:none;">
+            <div class="slidingDiv3" style="display: none;">
                 <asp:RadioButtonList ID="opgLayout" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
                     <asp:ListItem Text="Levý panel = přehled, pravý panel = detail" Value="1" Selected="True"></asp:ListItem>
                     <asp:ListItem Text="Horní panel = přehled, spodní panel = detail" Value="2"></asp:ListItem>
                     <asp:ListItem Text="Pouze přehled, dvojklikem přechod na detail" Value="3"></asp:ListItem>
                 </asp:RadioButtonList>
+                <asp:Label ID="lblLayoutMessage" runat="server" CssClass="infoNotification" Text="Z důvodu malého rozlišení displeje (pod 1280px) se automaticky zapnul režim jediného panelu s datovým přehledem." Visible="false"></asp:Label>
             </div>
             <asp:Panel ID="panPeriod" runat="server" CssClass="slidingDiv2">
                 <span>Filtr:</span>
@@ -324,7 +354,7 @@
                         Datový přehled
                         <%If Me.CurrentPrefix <> "p91" Then%>
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
-                        <%end if %>
+                        <%End If%>
                         <button type="button" onclick="report()" title="Tisková sestava">Sestava (hromadně)</button>
                         <%If Me.CurrentPrefix = "p91" Then%>
                         <button type="button" onclick="sendmail_batch()">Hromadně odeslat faktury (e-mail)</button>
@@ -334,7 +364,7 @@
                     <div class="content">
                         <div>
                             <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
-                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                                <asp:ListItem Text="" Value=""></asp:ListItem>
                             </asp:DropDownList>
                         </div>
                         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
@@ -353,8 +383,8 @@
                                 <asp:ListItem Text="200"></asp:ListItem>
                                 <asp:ListItem Text="500"></asp:ListItem>
                             </asp:DropDownList>
-                         </div>
-                         <asp:Panel ID="panExport" runat="server">
+                        </div>
+                        <asp:Panel ID="panExport" runat="server">
                             <img src="Images/export.png" alt="export" />
                             <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
@@ -366,7 +396,7 @@
 
                             <img src="Images/doc.png" alt="doc" />
                             <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-                            
+
                         </asp:Panel>
                         <div class="div6">
                             <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="false" />
@@ -376,10 +406,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
-            
-           
+
+
             <asp:HiddenField ID="hiddatapid" runat="server" />
             <asp:HiddenField ID="hidDefaultSorting" runat="server" />
             <asp:HiddenField ID="hidJ62ID" runat="server" />
@@ -394,8 +424,8 @@
             <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
-                        
-            
+
+
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

@@ -52,9 +52,9 @@
                 End With
             End With
 
-            RefreshRecord()
-        End If
 
+        End If
+        RefreshRecord()
         menu1.DataPID = Master.DataPID
         
     End Sub

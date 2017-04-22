@@ -108,7 +108,14 @@ Public Class entity_framework
                 cbxGroupBy.DataBind()
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-                    basUI.SelectRadiolistValue(Me.opgLayout, .GetUserParam(Me.CurrentPrefix + "_framework-layout", "1"))
+                    If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                        Me.opgLayout.SelectedValue = "3" : lblLayoutMessage.Visible = True
+                        Me.opgLayout.Enabled = False
+                    Else
+                        lblLayoutMessage.Visible = False : lblLayoutMessage.Text = ""
+                        basUI.SelectRadiolistValue(Me.opgLayout, .GetUserParam(Me.CurrentPrefix + "_framework-layout", "1"))
+                    End If
+
 
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam(Me.CurrentPrefix + "_framework-pagesize", "20"))
                     Dim strDefWidth As String = "435"
@@ -178,6 +185,11 @@ Public Class entity_framework
             End If
 
             AdaptSplitterLayout()
+        End If
+        If opgLayout.SelectedValue = "1" Then
+            cbx1.Visible = False
+            panSearchbox.Controls.Remove(Me.cbx1)
+            panSearchbox.Visible = False
         End If
     End Sub
     Private Sub AdaptSplitterLayout()
@@ -1132,6 +1144,22 @@ Public Class entity_framework
             cmdCĺearFilter.Visible = True
         Else
             cmdCĺearFilter.Visible = False
+        End If
+        If panSearchbox.Visible Then
+            Select Case Me.CurrentPrefix
+                Case "p41"
+                    cbx1.WebServiceSettings.Path = "~/Services/project_service.asmx"
+                Case "p28"
+                    cbx1.WebServiceSettings.Path = "~/Services/contact_service.asmx"
+                Case "p91"
+                    cbx1.WebServiceSettings.Path = "~/Services/invoice_service.asmx"
+                Case "p56"
+                    cbx1.WebServiceSettings.Path = "~/Services/task_service.asmx"
+                Case "j02"
+                    cbx1.WebServiceSettings.Path = "~/Services/person_service.asmx"
+                Case "o23"
+                    cbx1.WebServiceSettings.Path = "~/Services/notepad_service.asmx"
+            End Select
         End If
     End Sub
 

@@ -25,7 +25,7 @@
             });
 
             
-
+            handleSAW();
         });
 
         function loadSplitter(sender) {

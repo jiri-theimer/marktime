@@ -104,6 +104,24 @@ Partial Public Class entity_framework
     Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''panSearchbox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSearchbox As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbx1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
     '''opgLayout control.
     '''</summary>
     '''<remarks>
@@ -111,6 +129,15 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents opgLayout As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''lblLayoutMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblLayoutMessage As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''panPeriod control.

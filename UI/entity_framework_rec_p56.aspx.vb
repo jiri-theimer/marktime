@@ -40,9 +40,9 @@
                 End With
             End With
 
-            RefreshRecord()
-        End If
 
+        End If
+        RefreshRecord()
         menu1.DataPID = Master.DataPID
         gridP56.x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix)
         gridP56.MasterDataPID = Master.DataPID

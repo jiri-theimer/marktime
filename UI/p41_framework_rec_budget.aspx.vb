@@ -49,11 +49,12 @@ Public Class p41_framework_rec_budget
             End With
 
 
-            RefreshRecord()
+
 
             SetupGrid()
 
         End If
+        RefreshRecord()
     End Sub
 
     Private Sub RefreshRecord()

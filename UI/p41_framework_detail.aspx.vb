@@ -71,11 +71,9 @@
             End With
 
 
-            RefreshRecord()
-
         End If
 
-
+        RefreshRecord()
     End Sub
 
     Private Sub RefreshRecord()
@@ -419,6 +417,7 @@
     End Sub
 
     Private Sub RenderTree(cRec As BO.p41Project, cRecSum As BO.p41ProjectSum)
+        If Not tree1.IsEmpty Then Return
         tree1.Visible = True
         Dim c As BO.p41Project = Master.Factory.p41ProjectBL.LoadTreeTop(cRec.p41TreeIndex)
         If c Is Nothing Then Return

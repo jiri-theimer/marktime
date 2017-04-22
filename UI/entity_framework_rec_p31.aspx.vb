@@ -42,11 +42,12 @@
             End With
             gridP31.MasterTabAutoQueryFlag = Request.Item("p31tabautoquery")
 
-            RefreshRecord()
+
             If Request.Item("pid") <> "" Then
                 gridP31.DefaultSelectedPID = BO.BAS.IsNullInt(Request.Item("pid"))
             End If
         End If
+        RefreshRecord()
 
         menu1.DataPID = Master.DataPID
         gridP31.EntityX29ID = BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix)

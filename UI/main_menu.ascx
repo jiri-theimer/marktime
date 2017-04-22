@@ -4,7 +4,7 @@
 
         <asp:panel runat="server" ID="panContainer" style="background-color: #25a0da;height:32px;" Visible="false">
 
-            <telerik:RadMenu ID="menu1" runat="server" Width="100%" RenderMode="Auto" ShowToggleHandle="false" Skin="Windows7" ClickToOpen="true" EnableRoundedCorners="true" EnableShadows="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2901;background-color:blue !important;">                            
+            <telerik:RadMenu ID="menu1" runat="server" Width="100%" EnableViewState="false" RenderMode="Auto" ShowToggleHandle="false" Skin="Windows7" ClickToOpen="true" EnableRoundedCorners="true" EnableShadows="true" ExpandDelay="0" ExpandAnimation-Duration="0" ExpandAnimation-Type="None" CollapseDelay="0" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" Style="z-index: 2901;background-color:blue !important;">                            
             </telerik:RadMenu>
 
         </asp:panel>

@@ -60,9 +60,8 @@
             End With
 
 
-            RefreshRecord()
-
         End If
+        RefreshRecord()
     End Sub
 
     Private Sub RefreshRecord()

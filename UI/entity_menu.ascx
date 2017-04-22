@@ -2,7 +2,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Panel ID="panMenuContainer" runat="server" Style="height:43px;border-bottom: solid 1px gray;background-color:#E8E8E8;">
 
-    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
+    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" EnableViewState="false" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
         <Items>
             <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
             <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text=" "></telerik:RadMenuItem>
@@ -17,7 +17,7 @@
 </asp:Panel>
 <asp:PlaceHolder ID="place1" runat="server" Visible="true"></asp:PlaceHolder>
 
-<telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true">              
+<telerik:RadTabStrip ID="tabs1" runat="server" Skin="Default" Width="100%" AutoPostBack="false" ShowBaseLine="true" EnableViewState="false">              
 </telerik:RadTabStrip>
 
 <asp:HiddenField ID="hidIsCanApprove" runat="server" />

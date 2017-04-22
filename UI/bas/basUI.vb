@@ -201,7 +201,7 @@ Public Class basUI
         If GetCookieValue(r, "MT50-SAW") = "1" Then
             Dim s As String = GetCompleteQuerystring(r, True)
             If s.IndexOf("pid=") > 0 And s.IndexOf("masterprefix") = -1 Then
-                Return strDataPrefix & "_framework_detail.aspx" & s
+                Return strDataPrefix & "_framework_detail.aspx" & s & "&source=3"
             Else
                 Return "entity_framework.aspx?prefix=" & strDataPrefix & "&" & GetCompleteQuerystring(r)
             End If

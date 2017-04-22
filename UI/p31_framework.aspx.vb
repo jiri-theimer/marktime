@@ -54,9 +54,6 @@ Public Class p31_framework
     
 
     Private Sub p31_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
-        If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
-            Response.Redirect("p31_framework_detail.aspx", True)
-        End If
         _MasterPage = Me.Master
         Master.HelpTopicID = "p31_framework"
     End Sub
@@ -101,7 +98,10 @@ Public Class p31_framework
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-
+                    Dim strDefIsGrid As String = "1", strDefIsTimer As String = "1"
+                    If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
+                        strDefIsGrid = "0" : strDefIsTimer = "0"
+                    End If
                     hidCurrentJ02ID.Value = .GetUserParam("p31_framework_detail-j02id", Master.Factory.SysUser.j02ID.ToString)
                     Me.txtSearch.Text = .GetUserParam("p31_framework-search")
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_framework-pagesize-" & Me.GridPrefix, "20"))
@@ -112,7 +112,7 @@ Public Class p31_framework
                         Me.navigationPane.Width = Unit.Parse(.GetUserParam("p31_framework-navigationPane_width", "350") & "px")
                     End If
                     SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31_framework-j70id")))
-                    
+
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_framework-groupby-" & Me.GridPrefix, IIf(Me.GridPrefix = "p56", "Client", "")))
                     If tabs1.SelectedIndex = 0 Then
                         Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_framework-groups-autoexpanded", "0"))
@@ -123,14 +123,14 @@ Public Class p31_framework
                     If .GetUserParam("p31_framework-sort-" & Me.GridPrefix) <> "" Then
                         grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam("p31_framework-sort-" & Me.GridPrefix))
                     End If
-                    If .GetUserParam("p31_framework-timer", "1") = "1" Then
+                    If .GetUserParam("p31_framework-timer", strDefIsTimer) Then
                         rightPane.ContentUrl = "p31_framework_timer.aspx"
                     Else
                         rightPane.ContentUrl = ""
                         rightPane.Visible = False
                         RadSplitter1.Items.Remove(rightPane)
                     End If
-                    If .GetUserParam("p31_framework-grid", "1") <> "1" Then
+                    If .GetUserParam("p31_framework-grid", strDefIsGrid) <> "1" Then
                         navigationPane.Visible = False
                         RadSplitbar1.Visible = False
                         RadSplitter1.Items.Remove(navigationPane)

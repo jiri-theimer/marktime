@@ -39,9 +39,9 @@
                 End With
             End With
 
-            RefreshRecord()
-        End If
 
+        End If
+        RefreshRecord()
         gridO23.x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix)
         gridO23.MasterDataPID = Master.DataPID
 

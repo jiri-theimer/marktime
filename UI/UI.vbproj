@@ -524,8 +524,6 @@
     <Content Include="WebForm2.aspx" />
     <Content Include="workflow_dialog.aspx" />
     <Content Include="x18_binding.aspx" />
-    <Content Include="x18_framework.aspx" />
-    <Content Include="x18_framework_detail.aspx" />
     <Content Include="x18_readonly.ascx" />
     <Content Include="x18_record.aspx" />
     <Content Include="x23_record.aspx" />
@@ -3009,20 +3007,6 @@
     </Compile>
     <Compile Include="x18_binding.aspx.vb">
       <DependentUpon>x18_binding.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="x18_framework.aspx.designer.vb">
-      <DependentUpon>x18_framework.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="x18_framework.aspx.vb">
-      <DependentUpon>x18_framework.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="x18_framework_detail.aspx.designer.vb">
-      <DependentUpon>x18_framework_detail.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="x18_framework_detail.aspx.vb">
-      <DependentUpon>x18_framework_detail.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="x18_readonly.ascx.designer.vb">

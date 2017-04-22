@@ -825,8 +825,15 @@ Public Class entity_menu
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         Select Case hidSource.Value
             Case "1"
-
+                With menu1.FindItemByValue("fs")
+                    .ImageUrl = "Images/open_in_new_window.png"
+                    .ToolTip = "Detail záznam v nové záložce"
+                End With
             Case "2"
+                With menu1.FindItemByValue("fs")
+                    .ImageUrl = "Images/open_in_new_window.png"
+                    .ToolTip = "Detail záznamu na celou stránku"
+                End With
 
                 If menu1.Skin <> "Black" Then
                     menu1.Skin = "Metro"
@@ -853,6 +860,7 @@ Public Class entity_menu
             Case "3"
                 With menu1.FindItemByValue("fs")
                     .NavigateUrl = "entity_framework.aspx?prefix=" & Me.DataPrefix
+                    .ToolTip = "Přepnout do datového přehledu"
                     '.ImageUrl = "Images/grid.png"
                 End With
             

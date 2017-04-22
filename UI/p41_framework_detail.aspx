@@ -78,7 +78,7 @@
 
             <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" Style="float: right;" />
 
-
+            
         </div>
         <div class="content">
 
