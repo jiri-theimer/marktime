@@ -254,6 +254,7 @@
     <Content Include="p31summary.ascx" />
     <Content Include="p31summary_drilldown.ascx" />
     <Content Include="p31_framework_timer.aspx" />
+    <Content Include="p31_drilldown.aspx" />
     <Content Include="p40_chrono.aspx" />
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="select_field.aspx" />
@@ -1247,6 +1248,13 @@
     </Compile>
     <Compile Include="p31_framework_timer.aspx.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_drilldown.aspx.designer.vb">
+      <DependentUpon>p31_drilldown.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_drilldown.aspx.vb">
+      <DependentUpon>p31_drilldown.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p40_chrono.aspx.designer.vb">

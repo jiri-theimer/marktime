@@ -23,6 +23,15 @@ Partial Public Class p31_grid
     Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cmdSummary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSummary As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''j74id control.
     '''</summary>
     '''<remarks>

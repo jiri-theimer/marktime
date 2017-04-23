@@ -174,7 +174,7 @@
 
                 var mytitle = $this.attr('title');
                 if (mytitle == null)
-                    mytitle = 'Modal dialog';
+                    mytitle = 'MARKTIME dialog';
 
                 var dialogheight = $this.attr('dialogheight');
                 if (dialogheight == "" || dialogheight == null) {
@@ -182,7 +182,7 @@
                 }
                 iframeHeight = dialogheight - 30;
 
-
+                
                 $this.qtip({
                     content: {
                         text: '<iframe src="' + myurl + '"' + ' width=' + iframeWidth + '"' + ' height=' + '"' + iframeHeight + '"  frameborder="0"><p>Your browser does not support iframes.</p></iframe>',
@@ -233,6 +233,20 @@
 
         }
 
+        function sw_master_more(url,iconUrl, window_width, window_height,is_modal) {
+            var wnd = $find("<%=okno1.ClientID%>");
+            wnd.setUrl(url);
+            if (window_width != null)
+                wnd.setSize(window_width, window_height);
+
+            if (is_modal == true) {
+                wnd.set_modal(true);
+            }
+            
+            wnd.show();
+            wnd.center();
+
+        }
 
 
 
