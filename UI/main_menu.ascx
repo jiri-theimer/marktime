@@ -32,39 +32,39 @@
     }
 
     function messages() {
-        sw_menu_decide("j03_messages.aspx","Images/globe_32.png",false);       
+        sw_menu_decide("j03_messages.aspx","Images/globe.png",false);       
     }
 
     function p28_create() {
         
-        sw_menu_decide("p28_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/contact_32.png", false);
+        sw_menu_decide("p28_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/contact.png", false);
     }
     function p41_create() {
-        sw_menu_decide("p41_create.aspx?hrjs=hardrefresh_menu", "Images/project_32.png", false);
+        sw_menu_decide("p41_create.aspx?hrjs=hardrefresh_menu", "Images/project.png", false);
     }
 
     function p56_create() {
-        sw_menu_decide("p56_record.aspx?masterprefix=p41&masterpid=0&hrjs=hardrefresh_menu", "Images/task_32.png");
+        sw_menu_decide("p56_record.aspx?masterprefix=p41&masterpid=0&hrjs=hardrefresh_menu", "Images/task.png");
 
     }
     function p91_create() {
-        sw_menu_decide("p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", "Images/invoice_32.png", true);
+        sw_menu_decide("p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", "Images/invoice.png", true);
 
     }
     function p31_create() {
-        sw_menu_decide("p31_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/worksheet_32.png")
+        sw_menu_decide("p31_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/worksheet.png")
 
     }
     function o23_create() {
-        sw_menu_decide("o23_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/notepad_32.png")
+        sw_menu_decide("o23_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/notepad.png")
 
     }
     function o10_create() {
-        sw_menu_decide("o10_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/article_32.png", true)
+        sw_menu_decide("o10_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/article.png", true)
 
     }
     function p90_create() {
-        sw_menu_decide("p90_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/proforma_32.png")
+        sw_menu_decide("p90_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/proforma.png")
 
     }
 
