@@ -194,6 +194,15 @@ Partial Public Class p31_drilldown
     Protected WithEvents hidFrom As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidTabQueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidTabQueryFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidMasterAW control.
     '''</summary>
     '''<remarks>

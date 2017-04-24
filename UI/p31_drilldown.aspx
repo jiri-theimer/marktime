@@ -96,6 +96,7 @@
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
+    <asp:HiddenField ID="hidTabQueryFlag" runat="server" />
   
     <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:HiddenField ID="hidGridColumnSql" runat="server" />

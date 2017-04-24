@@ -17,6 +17,7 @@ Public Class p31_drilldown
             hidJ74ID.Value = Request.Item("j74id")
             hidMasterPID.Value = Request.Item("masterpid")
             hidMasterPrefix.Value = Request.Item("masterprefix")
+            hidTabQueryFlag.Value = Request.Item("tabqueryflag")
 
             Dim lisPars As New List(Of String)
             With lisPars
@@ -39,9 +40,11 @@ Public Class p31_drilldown
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
                 Me.chkSpecificSumCols.Checked = BO.BAS.BG(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-is-sumcols", "0"))
-                Dim strDefDD1 As String = "Person"
+                Dim strDefDD1 As String = ""
                 Select Case Me.hidMasterPrefix.Value
                     Case "j02" : strDefDD1 = "ClientName"
+                    Case Else
+                        strDefDD1 = "Person"
                 End Select
                 SetupGroupByCombo(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd1", strDefDD1), .GetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd2"))
 
@@ -138,7 +141,7 @@ Public Class p31_drilldown
             .DateUntil = period1.DateUntil
             .ColumnFilteringExpression = hidGridColumnSql.Value
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
-
+            .TabAutoQuery = Me.hidTabQueryFlag.Value
 
         End With
     End Sub
@@ -348,8 +351,19 @@ Public Class p31_drilldown
     End Sub
 
     Private Sub RenderQueryInfo()
+        If hidMasterPrefix.Value <> "" Then
+            lblQuery.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value), True)
+        End If
+        Select Case Me.hidTabQueryFlag.Value
+            Case "expense"
+                lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze výdaje]", "; ")
+            Case "fee"
+                lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze paušální odměny]", "; ")
+            Case "time"
+                lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze hodiny]", "; ")
+        End Select
         If period1.SelectedValue <> "" Then
-            lblQuery.Text = BO.BAS.FD(period1.DateFrom) & " - " & BO.BAS.FD(period1.DateUntil)
+            lblQuery.Text = BO.BAS.OM4(Me.lblQuery.Text, BO.BAS.FD(period1.DateFrom) & " - " & BO.BAS.FD(period1.DateUntil), "; ")
         End If
         If BO.BAS.IsNullInt(hidJ70ID.Value) <> 0 Then
             Dim c As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(CInt(hidJ70ID.Value))
@@ -358,10 +372,7 @@ Public Class p31_drilldown
         If hidGridColumnSql.Value <> "" Then
             lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Sloupcový filtr]", "; ")
         End If
-        If hidMasterPrefix.Value <> "" Then
-            Dim s As String = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value), True)
-            lblQuery.Text = BO.BAS.OM4(Me.lblQuery.Text, s, "; ")
-        End If
+
     End Sub
 
     Private Sub dd1_SelectedIndexChanged(sender As Object, e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles dd1.SelectedIndexChanged
