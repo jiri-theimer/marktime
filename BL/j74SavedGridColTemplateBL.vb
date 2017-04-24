@@ -83,7 +83,7 @@ Class j74SavedGridColTemplateBL
         Select Case x29id
             Case BO.x29IdEnum.p31Worksheet
                 Select Case strMasterPrefix
-                    Case "j02"
+                    Case "j02", "j02-p31"
                         c.j74Name = String.Format(BL.My.Resources.common.VychoziPrehledOsoby, "osoby")
                         Select Case c.j74RecordState
                             Case BO.p31RecordState.Approved
@@ -92,8 +92,16 @@ Class j74SavedGridColTemplateBL
                             Case Else
                                 c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                         End Select
-
-                    Case "p28"
+                    Case "j02-time"
+                        c.j74Name = "Hodiny osoby"
+                        c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "j02-expense", "j02-fee"
+                        c.j74Name = "Peněžní úkony osoby"
+                        c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "j02-kusovnik"
+                        c.j74Name = "Kusovníkové úkony osoby"
+                        c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p28", "p28-p31"
                         c.j74Name = My.Resources.common.VychoziPrehledKlienta
                         Select Case c.j74RecordState
                             Case BO.p31RecordState.Approved
@@ -102,8 +110,16 @@ Class j74SavedGridColTemplateBL
                             Case Else
                                 c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                         End Select
-
-                    Case "p41"
+                    Case "p28-time"
+                        c.j74Name = "Hodiny klienta"
+                        c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p28-expense", "p28-fee"
+                        c.j74Name = "Peněžní úkony klienta"
+                        c.j74ColumnNames = "p31Date,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "p28-kusovnik"
+                        c.j74Name = "Kusovníkové úkony klienta"
+                        c.j74ColumnNames = "p31Date,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p41", "p41-p31"
                         c.j74Name = My.Resources.common.VychoziPrehledProjektu
                         Select Case c.j74RecordState
                             Case BO.p31RecordState.Approved
@@ -113,14 +129,33 @@ Class j74SavedGridColTemplateBL
                                 c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                         End Select
                     Case "p41-time"
-                        c.j74Name = "Hodiny v projektu"
+                        c.j74Name = "Hodiny projektu"
                         c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                     Case "p41-expense", "p41-fee"
-                        c.j74Name = "Peněžní výdaje nebo paušály v projektu"
+                        c.j74Name = "Peněžní úkonu projektu"
                         c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
                     Case "p41-kusovnik"
-                        c.j74Name = "Kusovník v projektu"
+                        c.j74Name = "Kusovníkové úkony projektu"
                         c.j74ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p56", "p56-p31"
+                        c.j74Name = "Přehled úkonů v úkolu"
+                        Select Case c.j74RecordState
+                            Case BO.p31RecordState.Approved
+                                c.j74Name = "Přehled schválených úkonů v úkolu"
+                                c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
+                            Case Else
+                                c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                        End Select
+                    Case "p56-time"
+                        c.j74Name = "Hodiny v úkolu"
+                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p56-expense", "p56-fee"
+                        c.j74Name = "Peněžní úkony v úkolu"
+                        c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "p56-kusovnik"
+                        c.j74Name = "Kusovníkové úkony v úkolu"
+                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+
                     Case "p91"
                         c.j74Name = My.Resources.common.VychoziPrehledFaktury
                         c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Invoiced,p31Rate_Billing_Invoiced,p31Amount_WithoutVat_Invoiced,p31VatRate_Invoiced,p31Amount_WithVat_Invoiced,p31Text"

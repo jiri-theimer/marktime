@@ -11,34 +11,34 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class entity_framework_rec_summary
+Partial Public Class p91_batch_sendmail
 
     '''<summary>
-    '''menu1 control.
+    '''txtBody control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.UI.entity_menu
+    Protected WithEvents txtBody As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''summary1 control.
+    '''chkAtt control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents summary1 As Global.UI.p31summary_drilldown
+    Protected WithEvents chkAtt As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''hidMasterPrefix control.
+    '''rp1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''Master property.
@@ -46,9 +46,9 @@ Partial Public Class entity_framework_rec_summary
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.SubForm
+    Public Shadows ReadOnly Property Master() As UI.ModalForm
         Get
-            Return CType(MyBase.Master, UI.SubForm)
+            Return CType(MyBase.Master, UI.ModalForm)
         End Get
     End Property
 End Class

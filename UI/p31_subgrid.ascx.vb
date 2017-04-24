@@ -165,6 +165,7 @@ Public Class p31_subgrid
                     Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Factory.SysUser.PID, Me.MasterPrefixWithQueryFlag, Me.j74RecordState)
                     _curJ74 = cJ74
                     .SetUserParam(strKey, cJ74.PID.ToString)
+
                     Me.hidDrillDownField.Value = _curJ74.j74DrillDownField1
                 End If
                 SetupJ74Combo()
@@ -231,7 +232,7 @@ Public Class p31_subgrid
         If _curJ74.j74IsFilteringByColumn Then
             ''Me.txtSearch.Visible = False : cmdSearch.Visible = False : txtSearch.Text = ""
         End If
-        If _curJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
+        ''If _curJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
        
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -412,12 +413,14 @@ Public Class p31_subgrid
 
     Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
         Me.Factory.j03UserBL.SetUserParam("p31_grid-period", Me.period1.SelectedValue)
-        If Me.hidDrillDownField.Value = "" Then
-            RecalcVirtualRowCount()
-            grid2.Rebind(False)
-        Else
-            ReloadPage()
-        End If
+        RecalcVirtualRowCount()
+        grid2.Rebind(False)
+        ''If Me.hidDrillDownField.Value = "" Then
+        ''    RecalcVirtualRowCount()
+        ''    grid2.Rebind(False)
+        ''Else
+        ''    ReloadPage()
+        ''End If
         
     End Sub
 
@@ -545,12 +548,14 @@ Public Class p31_subgrid
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Me.Factory.j03UserBL.SetUserParam("p31_subgrid-pagesize", Me.cbxPaging.SelectedValue)
-        If Me.hidDrillDownField.Value = "" Then
-            SetupP31Grid()
-            grid2.Rebind(True)
-        Else
-            ReloadPage()
-        End If
+        SetupP31Grid()
+        grid2.Rebind(True)
+        ''If Me.hidDrillDownField.Value = "" Then
+        ''    SetupP31Grid()
+        ''    grid2.Rebind(True)
+        ''Else
+        ''    ReloadPage()
+        ''End If
     End Sub
 
 
@@ -664,12 +669,14 @@ Public Class p31_subgrid
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-j70id", Me.CurrentJ70ID.ToString)
-        If Me.hidDrillDownField.Value = "" Then
-            RecalcVirtualRowCount()
-            grid2.Rebind(False)
-        Else
-            ReloadPage()
-        End If
+        RecalcVirtualRowCount()
+        grid2.Rebind(False)
+        'If Me.hidDrillDownField.Value = "" Then
+        '    RecalcVirtualRowCount()
+        '    grid2.Rebind(False)
+        'Else
+        '    ReloadPage()
+        'End If
 
     End Sub
 

@@ -625,29 +625,29 @@
         Return _cDB.GetRecord(Of BO.p31WorksheetSum)(s, pars)
     End Function
 
-    Public Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31, strSumFieldsList As String) As DataTable
-        Dim s As String = "select " & colDrill.FieldSqlGroupBy & " as pid," & colDrill.AggregateSQL & " as " & colDrill.ColumnField
-        s += ",count(*) as RowsCount"
-        If strSumFieldsList <> "" Then
-            Dim a() As String = Split(strSumFieldsList, "|")
-            For Each strF In a
-                s += ",sum(" & strF & ") as " & strF
-            Next
-        End If
+    ''Public Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31, strSumFieldsList As String) As DataTable
+    ''    Dim s As String = "select " & colDrill.FieldSqlGroupBy & " as pid," & colDrill.AggregateSQL & " as " & colDrill.ColumnField
+    ''    s += ",count(*) as RowsCount"
+    ''    If strSumFieldsList <> "" Then
+    ''        Dim a() As String = Split(strSumFieldsList, "|")
+    ''        For Each strF In a
+    ''            s += ",sum(" & strF & ") as " & strF
+    ''        Next
+    ''    End If
 
-        s += " " & GetSQLPart2(, myQuery)
+    ''    s += " " & GetSQLPart2(, myQuery)
 
-        Dim pars As New DbParameters
-        Dim strW As String = GetSQLWHERE(myQuery, pars)
-        Dim prs As List(Of BO.PluginDbParameter) = pars.Convert2PluginDbParameters()
-        If strW <> "" Then s += " WHERE " & strW
-        s += " GROUP BY " & colDrill.FieldSqlGroupBy
-        s += " ORDER BY " & colDrill.AggregateSQL
+    ''    Dim pars As New DbParameters
+    ''    Dim strW As String = GetSQLWHERE(myQuery, pars)
+    ''    Dim prs As List(Of BO.PluginDbParameter) = pars.Convert2PluginDbParameters()
+    ''    If strW <> "" Then s += " WHERE " & strW
+    ''    s += " GROUP BY " & colDrill.FieldSqlGroupBy
+    ''    s += " ORDER BY " & colDrill.AggregateSQL
 
-        Return _cDB.GetDataSet(s, , prs).Tables(0)
+    ''    Return _cDB.GetDataSet(s, , prs).Tables(0)
 
 
-    End Function
+    ''End Function
     
 
     Private Function GetSQLPart1(intTOP As Integer) As String
@@ -1232,54 +1232,54 @@
         End If
     End Function
 
-    Public Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
-        Dim s As New System.Text.StringBuilder, x As Integer = 0
-        s.Append("SELECT isnull(" & groupCol.GroupByField & ",0) AS pid")
-        s.Append("," & groupCol.SelectField & "as group" & groupCol.FieldTypeID.ToString)
+    ''Public Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
+    ''    Dim s As New System.Text.StringBuilder, x As Integer = 0
+    ''    s.Append("SELECT isnull(" & groupCol.GroupByField & ",0) AS pid")
+    ''    s.Append("," & groupCol.SelectField & "as group" & groupCol.FieldTypeID.ToString)
 
-        For Each c In sumCols
-            s.Append("," & c.SelectField & " AS col" & c.FieldTypeID.ToString)
-        Next
-        Select Case groupCol.FieldType
-            Case BO.PivotRowColumnFieldType.Person
-                s.Append(",'j02' as prefix")
-            Case BO.PivotRowColumnFieldType.p41Name
-                s.Append(",'p41' as prefix")
-            Case BO.PivotRowColumnFieldType.p28Name
-                s.Append(",'p28' as prefix")
-            Case BO.PivotRowColumnFieldType.p56Name
-                s.Append(",'p56' as prefix")
-            Case Else
-                s.Append(",null as prefix")
-        End Select
-        AppendSqlFROM_Pivot_Or_Drilldown(s)
-        
-        
-        Dim pars As New DL.DbParameters
-        Dim strW As String = GetSQLWHERE(mq, pars)
-        If strParentSqlWhere <> "" Then
-            If strW = "" Then
-                strW = strParentSqlWhere
-            Else
-                strW = "(" & strW & ") AND " & strParentSqlWhere
-            End If
-        End If
-        If strW <> "" Then
-            s.Append(" WHERE " & strW)
-        End If
-        
+    ''    For Each c In sumCols
+    ''        s.Append("," & c.SelectField & " AS col" & c.FieldTypeID.ToString)
+    ''    Next
+    ''    Select Case groupCol.FieldType
+    ''        Case BO.PivotRowColumnFieldType.Person
+    ''            s.Append(",'j02' as prefix")
+    ''        Case BO.PivotRowColumnFieldType.p41Name
+    ''            s.Append(",'p41' as prefix")
+    ''        Case BO.PivotRowColumnFieldType.p28Name
+    ''            s.Append(",'p28' as prefix")
+    ''        Case BO.PivotRowColumnFieldType.p56Name
+    ''            s.Append(",'p56' as prefix")
+    ''        Case Else
+    ''            s.Append(",null as prefix")
+    ''    End Select
+    ''    AppendSqlFROM_Pivot_Or_Drilldown(s)
 
-        s.Append(" GROUP BY " & groupCol.GroupByField)
 
-        If mq.MG_SortString = "" Then
-            s.Append(" ORDER BY " & groupCol.SelectField)
-        Else
-            s.Append(" ORDER BY " & mq.MG_SortString)
-        End If
+    ''    Dim pars As New DL.DbParameters
+    ''    Dim strW As String = GetSQLWHERE(mq, pars)
+    ''    If strParentSqlWhere <> "" Then
+    ''        If strW = "" Then
+    ''            strW = strParentSqlWhere
+    ''        Else
+    ''            strW = "(" & strW & ") AND " & strParentSqlWhere
+    ''        End If
+    ''    End If
+    ''    If strW <> "" Then
+    ''        s.Append(" WHERE " & strW)
+    ''    End If
 
-        Dim ds As DataSet = _cDB.GetDataSet(s.ToString, , pars.Convert2PluginDbParameters())
-        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
-    End Function
+
+    ''    s.Append(" GROUP BY " & groupCol.GroupByField)
+
+    ''    If mq.MG_SortString = "" Then
+    ''        s.Append(" ORDER BY " & groupCol.SelectField)
+    ''    Else
+    ''        s.Append(" ORDER BY " & mq.MG_SortString)
+    ''    End If
+
+    ''    Dim ds As DataSet = _cDB.GetDataSet(s.ToString, , pars.Convert2PluginDbParameters())
+    ''    If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
+    ''End Function
 
     Private Sub AppendSqlFROM_Pivot_Or_Drilldown(ByRef s As Text.StringBuilder)
         s.Append(" FROM p31Worksheet a")

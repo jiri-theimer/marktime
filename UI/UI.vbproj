@@ -190,7 +190,6 @@
     <Content Include="clue_p41_myworksheet.aspx" />
     <Content Include="clue_p48_record.aspx" />
     <Content Include="clue_search.aspx" />
-    <Content Include="drilldown_designer.aspx" />
     <Content Include="email_receiver.ascx" />
     <Content Include="entity_framework.aspx" />
     <Content Include="entity_framework_detail_setting.aspx" />
@@ -199,7 +198,6 @@
     <Content Include="entity_framework_rec_p41.aspx" />
     <Content Include="entity_framework_rec_p56.aspx" />
     <Content Include="entity_framework_rec_p91.aspx" />
-    <Content Include="entity_framework_rec_summary.aspx" />
     <Content Include="entity_menu.ascx" />
     <Content Include="entity_modal_invoicing.aspx" />
     <Content Include="entity_scheduler.aspx" />
@@ -252,7 +250,6 @@
     <Content Include="p28_framework_detail.aspx" />
     <Content Include="p28_framework_detail_p90.aspx" />
     <Content Include="p31summary.ascx" />
-    <Content Include="p31summary_drilldown.ascx" />
     <Content Include="p31_framework_timer.aspx" />
     <Content Include="p31_drilldown.aspx" />
     <Content Include="p40_chrono.aspx" />
@@ -790,13 +787,6 @@
       <DependentUpon>clue_search.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="drilldown_designer.aspx.designer.vb">
-      <DependentUpon>drilldown_designer.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="drilldown_designer.aspx.vb">
-      <DependentUpon>drilldown_designer.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="email_receiver.ascx.designer.vb">
       <DependentUpon>email_receiver.ascx</DependentUpon>
     </Compile>
@@ -851,13 +841,6 @@
     </Compile>
     <Compile Include="entity_framework_rec_p91.aspx.vb">
       <DependentUpon>entity_framework_rec_p91.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="entity_framework_rec_summary.aspx.designer.vb">
-      <DependentUpon>entity_framework_rec_summary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="entity_framework_rec_summary.aspx.vb">
-      <DependentUpon>entity_framework_rec_summary.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="entity_menu.ascx.designer.vb">
@@ -1234,13 +1217,6 @@
     </Compile>
     <Compile Include="p31summary.ascx.vb">
       <DependentUpon>p31summary.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="p31summary_drilldown.ascx.designer.vb">
-      <DependentUpon>p31summary_drilldown.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="p31summary_drilldown.ascx.vb">
-      <DependentUpon>p31summary_drilldown.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="p31_framework_timer.aspx.designer.vb">

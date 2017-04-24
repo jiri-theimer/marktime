@@ -23,10 +23,10 @@ Public Class p31_drilldown
                 .Add("p31_grid-period")
                 .Add("periodcombo-custom_query")
                 .Add("p31_grid-filter_completesql")
-                .Add("p31_drilldown-dd1")
-                .Add("p31_drilldown-dd2")
-                .Add("p31_drilldown-is-sumcols")
-                .Add("p31_drilldown-sumcols")
+                .Add(hidMasterPrefix.Value & "p31_drilldown-dd1")
+                .Add(hidMasterPrefix.Value & "p31_drilldown-dd2")
+                .Add(hidMasterPrefix.Value & "p31_drilldown-is-sumcols")
+                .Add(hidMasterPrefix.Value & "p31_drilldown-sumcols")
             End With
             With Master
                 .AddToolbarButton("Nastavení", "setting", 0, "Images/arrow_down.gif", False)
@@ -38,10 +38,14 @@ Public Class p31_drilldown
                 .InhaleUserParams(lisPars)
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
-                Me.chkSpecificSumCols.Checked = BO.BAS.BG(.GetUserParam("p31_drilldown-is-sumcols", "0"))
-                SetupGroupByCombo(.GetUserParam("p31_drilldown-dd1", "Person"), .GetUserParam("p31_drilldown-dd2"))
+                Me.chkSpecificSumCols.Checked = BO.BAS.BG(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-is-sumcols", "0"))
+                Dim strDefDD1 As String = "Person"
+                Select Case Me.hidMasterPrefix.Value
+                    Case "j02" : strDefDD1 = "ClientName"
+                End Select
+                SetupGroupByCombo(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd1", strDefDD1), .GetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd2"))
 
-                SetupSumColsSetting(.GetUserParam("p31_drilldown-sumcols", "1"))
+                SetupSumColsSetting(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-sumcols", "1"))
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
             End With
 
@@ -281,10 +285,10 @@ Public Class p31_drilldown
 
     Private Sub SaveCurrentSettings()
         With Master.Factory.j03UserBL
-            .SetUserParam("p31_drilldown-is-sumcols", BO.BAS.GB(Me.chkSpecificSumCols.Checked))
-            .SetUserParam("p31_drilldown-dd1", Me.dd1.SelectedValue)
-            .SetUserParam("p31_drilldown-dd2", Me.dd2.SelectedValue)
-            .SetUserParam("p31_drilldown-sumcols", GetSumPIDsInLine())
+            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-is-sumcols", BO.BAS.GB(Me.chkSpecificSumCols.Checked))
+            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd1", Me.dd1.SelectedValue)
+            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd2", Me.dd2.SelectedValue)
+            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-sumcols", GetSumPIDsInLine())
         End With
 
     End Sub

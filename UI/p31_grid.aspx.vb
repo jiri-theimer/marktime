@@ -254,7 +254,7 @@ Public Class p31_grid
             Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
             cmdSearch.Visible = Me.txtSearch.Visible
             If Not Me.txtSearch.Visible Then Me.txtSearch.Text = ""
-            If cJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
+            ''If cJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
         End With
         
 
@@ -371,15 +371,15 @@ Public Class p31_grid
         End With
         InhaleMyQuery(mq)
 
-        If Me.hidDrillDownField.Value <> "" Then
-            'drill down úroveň
-            Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
+        ''If Me.hidDrillDownField.Value <> "" Then
+        ''    'drill down úroveň
+        ''    Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
 
-            Dim dtDD As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid1.radGridOrig.MasterTableView.Attributes("sumfields"))
-            grid1.VirtualRowCount = dtDD.Rows.Count
-            grid1.DataSourceDataTable = dtDD
-            Return
-        End If
+        ''    Dim dtDD As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid1.radGridOrig.MasterTableView.Attributes("sumfields"))
+        ''    grid1.VirtualRowCount = dtDD.Rows.Count
+        ''    grid1.DataSourceDataTable = dtDD
+        ''    Return
+        ''End If
 
         If _needFilterIsChanged Then
             With Master.Factory.j03UserBL
@@ -439,7 +439,7 @@ Public Class p31_grid
 
     
     Private Sub RecalcVirtualRowCount()
-        If Me.hidDrillDownField.Value <> "" Then Return 'pro drill-down nepočítat
+        ''If Me.hidDrillDownField.Value <> "" Then Return 'pro drill-down nepočítat
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
@@ -588,7 +588,7 @@ Public Class p31_grid
     End Sub
 
     Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
-        If strOwnerTableName = "drilldown" Then Return 'neukládat třídění z drill-down
+        ''If strOwnerTableName = "drilldown" Then Return 'neukládat třídění z drill-down
         Master.Factory.j03UserBL.SetUserParam("p31_grid-sort", SortExpression)
     End Sub
 

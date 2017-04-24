@@ -119,7 +119,7 @@
 </asp:Panel>
 <div style="clear: both; width: 100%;"></div>
 
-<uc:datagrid ID="grid2" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first" HeaderText="Projektový worksheet"></uc:datagrid>
+<uc:datagrid ID="grid2" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first"></uc:datagrid>
 
 <asp:HiddenField ID="hidMasterDataPID" runat="server" />
 <asp:HiddenField ID="hidX29ID" runat="server" />
@@ -216,7 +216,8 @@
 
     function drilldown() {
         var j70id = "<%=Me.CurrentJ70ID%>";
-        var j74id = "<%=Me.CurrentJ74ID%>";
+        
+        var j74id = document.getElementById("<%=Me.hidJ74ID.ClientID%>").value;
         var w = screen.availWidth - 100;
         var masterprefix = "<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>";
         var masterpid = document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value;
