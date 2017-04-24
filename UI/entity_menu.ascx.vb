@@ -340,7 +340,7 @@ Public Class entity_menu
         Dim s As String = ""
         cti("Projekt", "board")
         If cP42.p42IsModule_p31 Then
-            s = "Summary" : cti(s, "summary")
+            ''s = "Summary" : cti(s, "summary")
             s = "Worksheet" : cti(s, "p31")
             s = "Hodiny"
             If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"

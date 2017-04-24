@@ -32,6 +32,15 @@ Partial Public Class p31_subgrid
     Protected WithEvents lblHeaderP31 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cmdSummary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSummary As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>

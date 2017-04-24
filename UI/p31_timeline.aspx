@@ -6,7 +6,8 @@
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-
+    <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
+    <script src="Scripts/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
 
     <style type="text/css">
         #selectable .ui-selecting {

@@ -1297,6 +1297,7 @@
         s.Append(" LEFT OUTER JOIN p28Contact p91Receiver ON p91.p28ID=p91Receiver.p28ID")
         s.Append(" LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID")
 
+
         If Not (BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Reader) Or BO.BAS.TestPermission(_curUser, BO.x53PermValEnum.GR_P31_Owner)) Then
             ''Dim strJ11IDs As String = ""
             ''If _curUser.j11IDs <> "" Then strJ11IDs = "OR x69.j11ID IN (" & _curUser.j11IDs & ")"
@@ -1316,5 +1317,73 @@
         End With
         Return _cDB.RunSP("p31_update_temp_after_edit_orig", pars)
 
+    End Function
+
+    Public Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), sumCols_Grid As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
+        Dim s As New System.Text.StringBuilder, x As Integer = 0, lisSqlFROM As New List(Of String)
+
+        s.Append("SELECT " & colDD1.Pivot_SelectSql & " AS " & colDD1.ColumnName)
+        If colDD1.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(colDD1.SqlSyntax_FROM)
+        If Not colDD2 Is Nothing Then
+            s.Append("," & colDD2.Pivot_SelectSql & " AS " & colDD2.ColumnName)
+            s.Append(",isnull(convert(varchar(50)," & colDD1.Pivot_GroupBySql & "),'')+'|'+isnull(convert(varchar(50)," & colDD2.Pivot_GroupBySql & "),'') as pid")
+
+            If colDD2.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(colDD2.SqlSyntax_FROM)
+        Else
+            s.Append(",isnull(convert(varchar(50)," & colDD1.Pivot_GroupBySql & "),'') as pid")
+        End If
+        s.Append(",COUNT(*) as RecsCount")
+        s.Append("," & colDD1.Pivot_GroupBySql & " as dd1")
+        If Not colDD2 Is Nothing Then s.Append("," & colDD2.Pivot_GroupBySql & " as dd2")
+
+        If Not sumCols_Pivot Is Nothing Then
+            For Each c In sumCols_Pivot
+                s.Append("," & c.SelectField & " AS sum" & c.FieldTypeID.ToString)
+            Next
+        End If
+        If Not sumCols_Grid Is Nothing Then
+            For Each c In sumCols_Grid
+                If c.ColumnDBName <> "" Then
+                    s.Append(",sum(" & c.ColumnDBName & ") AS sum" & c.ColumnDBName)
+                Else
+                    s.Append(",sum(" & c.ColumnName & ") AS sum" & c.ColumnName)
+                End If
+            Next
+        End If
+
+        If lisSqlFROM.Count > 0 Then mq.MG_AdditionalSqlFROM = String.Join(" ", lisSqlFROM.Distinct)
+        s.Append(" " & GetSQLPart2("", mq))
+
+
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(mq, pars)
+        If strParentSqlWhere <> "" Then
+            If strW = "" Then
+                strW = strParentSqlWhere
+            Else
+                strW = "(" & strW & ") AND " & strParentSqlWhere
+            End If
+        End If
+        If strW <> "" Then
+            s.Append(" WHERE " & strW)
+        End If
+
+
+        s.Append(" GROUP BY " & colDD1.Pivot_GroupBySql)
+        If Not colDD2 Is Nothing Then
+            s.Append("," & colDD2.Pivot_GroupBySql)
+        End If
+
+        If mq.MG_SortString = "" Then
+            s.Append(" ORDER BY " & colDD1.Pivot_SelectSql)
+            If Not colDD2 Is Nothing Then
+                s.Append("," & colDD2.Pivot_SelectSql)
+            End If
+        Else
+            s.Append(" ORDER BY " & mq.MG_SortString)
+        End If
+
+        Dim ds As DataSet = _cDB.GetDataSet(s.ToString, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
 End Class

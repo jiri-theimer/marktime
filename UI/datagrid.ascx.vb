@@ -381,7 +381,7 @@ Public Class datagrid
                     col.Aggregate = GridAggregateFunction.Sum
 
                 End If
-
+                col.HeaderStyle.HorizontalAlign = HorizontalAlign.Right
             Case BO.cfENUM.Numeric3
                 col.DataFormatString = "{0:###,##0.000}"
                 col.DataType = System.Type.GetType("System.Double")
@@ -390,6 +390,7 @@ Public Class datagrid
                     'col.DefaultInsertValue = "sum"
                     col.Aggregate = GridAggregateFunction.Sum
                 End If
+                col.HeaderStyle.HorizontalAlign = HorizontalAlign.Right
             Case BO.cfENUM.Numeric0
                 col.DataType = System.Type.GetType("System.Int32")
                 col.DataFormatString = "{0:F0}"
@@ -397,10 +398,12 @@ Public Class datagrid
                 If bolShowTotals Then
                     col.Aggregate = GridAggregateFunction.Sum
                 End If
+                col.HeaderStyle.HorizontalAlign = HorizontalAlign.Right
             Case BO.cfENUM.TimeOnly
                 col.DataFormatString = "{0:HH:mm}"
 
         End Select
+
     End Sub
     Private Sub AddCheckboxColumn(ByVal strField As String, ByVal strHeader As String, Optional ByVal bolAllowSorting As Boolean = True, Optional ByVal bolVisible As Boolean = True)
         Dim col As GridCheckBoxColumn

@@ -137,7 +137,7 @@ Public Class FtDL
         Return _cDB.GetList(Of BO.x45Event)(s)
     End Function
     Public Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
-        Dim s As String = "SELECT x61ID,x61Name FROM x61PageTab WHERE x29ID=@x29id ORDER BY x61Ordinary"
+        Dim s As String = "SELECT x61ID,x61Name FROM x61PageTab WHERE x29ID=@x29id and x61Code not like 'summary' ORDER BY x61Ordinary"
         Return _cDB.GetList(Of BO.x61PageTab)(s, New With {.x29id = CInt(x29id)})
     End Function
 End Class

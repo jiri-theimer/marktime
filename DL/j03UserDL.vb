@@ -346,7 +346,7 @@ Public Class j03UserDL
         pars.Add("j03id", intJ03ID, DbType.Int32)
         pars.Add("x29id", CInt(x29id), DbType.Int32)
 
-        Dim lis As IEnumerable(Of BO.x61PageTab) = _cDB.GetList(Of BO.x61PageTab)(s, pars)
+        Dim lis As IEnumerable(Of BO.x61PageTab) = _cDB.GetList(Of BO.x61PageTab)(s, pars).Where(Function(p) p.x61Code <> "summary") ''summary se již nepoužívá!
         If lis.Count = 0 Then
             Dim strDefCodes As String = "'summary','p31','time','expense','fee','p56','p91'"
             Select Case x29id
@@ -354,7 +354,7 @@ Public Class j03UserDL
             End Select
 
             _cDB.RunSQL("INSERT INTO j63PageTab_User(x61ID,j03ID) SELECT x61ID,@j03id FROM x61PageTab WHERE x29ID=@x29id AND x61Code IN (" & strDefCodes & ") ORDER BY x61Ordinary", pars)
-            lis = _cDB.GetList(Of BO.x61PageTab)(s, pars)
+            lis = _cDB.GetList(Of BO.x61PageTab)(s, pars).Where(Function(p) p.x61Code <> "summary") ''summary se již nepoužívá!
         End If
         Return lis
     End Function

@@ -7,8 +7,11 @@
     <div class="commandcell">
         <img src="Images/worksheet.png" alt="Worksheet" />
         <asp:Label ID="lblHeaderP31" CssClass="framework_header_span" runat="server" Text=""></asp:Label>
+        
     </div>
-
+    <div class="commandcell">
+        <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/pivot.png" ToolTip="Summary datového přehledu" CssClass="button-link" />
+    </div>
     <div class="commandcell" style="margin-left:10px;">
         <uc:periodcombo ID="period1" runat="server" Width="150px"></uc:periodcombo>
         <asp:Label ID="ExplicitPeriod" runat="server" CssClass="valboldblue"></asp:Label>
@@ -208,6 +211,17 @@
 
     function p31_fullscreen() {
         window.open("p31_grid.aspx?masterpid=" + document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value + "&masterprefix=<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>&p31tabautoquery=<%=me.MasterTabAutoQueryFlag%>", "_top");
+        return (false);
+    }
+
+    function drilldown() {
+        var j70id = "<%=Me.CurrentJ70ID%>";
+        var j74id = "<%=Me.CurrentJ74ID%>";
+        var w = screen.availWidth - 100;
+        var masterprefix = "<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>";
+        var masterpid = document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value;
+        
+        sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/pivot.png",true);
         return (false);
     }
 </script>

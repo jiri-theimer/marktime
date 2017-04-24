@@ -24,6 +24,8 @@
 
             Handle_ScheduledReports()
 
+            Handle_SqlTasks()
+
             If Now > Today.AddHours(15) And Now < Today.AddHours(17) And Now.DayOfWeek <> DayOfWeek.Sunday And Now.DayOfWeek <> DayOfWeek.Saturday Then
                 Handle_CnbKurzy()
             End If
@@ -193,5 +195,98 @@
 
     Private Sub cmdRunNow_Click(sender As Object, e As EventArgs) Handles cmdRunNow.Click
         Response.Redirect("robot.aspx?blank=1&now=" & Format(Me.datNow.SelectedDate, "dd.MM.yyyy"))
+    End Sub
+
+    Public Sub Handle_SqlTasks()
+        Dim lis As IEnumerable(Of BO.x48SqlTask) = _Factory.x48SqlTaskBL.GetList(New BO.myQuery)
+        For Each c In lis
+            If _Factory.x48SqlTaskBL.IsWaiting4AutoGenerate(c) Then
+                log4net.LogManager.GetLogger("robotlog").Info("SqlTask: " & c.x48Name)
+                Dim dt As DataTable = _Factory.pluginBL.GetDataTable(c.x48Sql, Nothing)
+                If _Factory.pluginBL.ErrorMessage <> "" Then
+                    log4net.LogManager.GetLogger("robotlog").Error(_Factory.pluginBL.ErrorMessage)
+                    Continue For 'Chyba v SQL -> jít na další úlohu nebo končit
+                End If
+                If c.x48MailBody = "" And c.x48MailSubject = "" Then
+                    log4net.LogManager.GetLogger("robotlog").Info("Sql result: " & dt.Rows.Count.ToString & " rows.")
+                    Continue For 'Nemá se posílat mail zpráva ->jít na další úlohu nebo končit
+
+
+                End If
+
+                Dim strRepFullPath As String = _Factory.x35GlobalParam.UploadFolder, cX31 As BO.x31Report = Nothing
+
+                If c.x31ID <> 0 Then
+                    cX31 = _Factory.x31ReportBL.Load(c.x31ID)
+                    If cX31.ReportFolder <> "" Then
+                        strRepFullPath += "\" & cX31.ReportFolder
+                    End If
+                    strRepFullPath += "\" & cX31.ReportFileName
+                End If
+                For Each dr As DataRow In dt.Rows   'kolik řádků sql výstupu, tolik mail zpráv
+                    Dim strOutputPdfFileName As String = ""
+                    If Not cX31 Is Nothing Then
+                        Dim cRep As New clsReportOnBehind()
+                        If c.x48TaskOutputFlag = BO.x48TaskOutputFlagENUM.PIDsTable Then
+                            cRep.Query_RecordPID = dr(0)
+                        End If
+                        strOutputPdfFileName = cRep.GenerateReport2Temp(_Factory, strRepFullPath)
+
+                    End If
+
+
+                    'odeslat mail zprávu:
+                    Dim message As New BO.smtpMessage()
+                    With message
+                        .SenderAddress = _Factory.x35GlobalParam.GetValueString("SMTP_SenderAddress")
+                        .SenderName = "MARKTIME robot"
+                        .Subject = c.x48MailSubject
+                        .Body = c.x48MailBody
+                        If strOutputPdfFileName <> "" Then .AddOneFile2FullPath(_Factory.x35GlobalParam.TempFolder & "\" & strOutputPdfFileName)
+                    End With
+                    c.x48MailTo = Replace(c.x48MailTo, ",", ";")
+
+                    Dim a() As String = Split(c.x48MailTo, ";")
+                    Dim recipients As New List(Of BO.x43MailQueue_Recipient)
+                    For i = 0 To UBound(a)
+                        Dim cc As New BO.x43MailQueue_Recipient()
+                        cc.x43Email = a(i)
+                        If c.x48TaskOutputFlag = BO.x48TaskOutputFlagENUM.RunSql Then
+                            cc.x43RecipientFlag = BO.x43RecipientIdEnum.recTO
+                        Else
+                            cc.x43RecipientFlag = BO.x43RecipientIdEnum.recBCC
+                        End If
+                        recipients.Add(cc)
+                    Next
+                    If c.x29ID = BO.x29IdEnum.j02Person Then
+                        Dim cJ02 As BO.j02Person = _Factory.j02PersonBL.Load(dr(0))
+                        Dim cc As New BO.x43MailQueue_Recipient()
+                        cc.x43Email = cJ02.j02Email
+                        cc.x43RecipientFlag = BO.x43RecipientIdEnum.recTO
+                        recipients.Add(cc)
+                    End If
+                    If recipients.Count > 0 Then
+                        With _Factory.x40MailQueueBL
+                            Dim intMessageID As Integer = .SaveMessageToQueque(message, recipients, c.x29ID, c.PID, BO.x40StateENUM.InQueque)
+                            If intMessageID > 0 Then
+
+                                If Not .SendMessageFromQueque(intMessageID) Then
+                                    log4net.LogManager.GetLogger("robotlog").Error(.ErrorMessage)
+                                End If
+                            Else
+                                log4net.LogManager.GetLogger("robotlog").Error(.ErrorMessage)
+                            End If
+                        End With
+                    End If
+
+                Next
+
+
+                _Factory.x48SqlTaskBL.UpdateLastScheduledRun(c.PID, Now)
+
+
+            End If
+        Next
+
     End Sub
 End Class

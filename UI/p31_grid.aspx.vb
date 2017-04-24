@@ -385,6 +385,7 @@ Public Class p31_grid
             With Master.Factory.j03UserBL
                 .SetUserParam("p31_grid-filter_setting", grid1.GetFilterSetting())
                 .SetUserParam("p31_grid-filter_sql", grid1.GetFilterExpression())
+                .SetUserParam("p31_grid-filter_completesql", grid1.GetFilterExpressionCompleteSql())
             End With
             RecalcVirtualRowCount()
         End If
@@ -422,6 +423,7 @@ Public Class p31_grid
             .j70ID = Me.CurrentJ70ID
             .SearchExpression = Trim(Me.txtSearch.Text)
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
+
             .MG_AdditionalSqlFROM = Me.hidFrom.Value
             .MG_GridSqlColumns = Me.hidCols.Value
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
@@ -576,6 +578,7 @@ Public Class p31_grid
         With Master.Factory.j03UserBL
             .SetUserParam("p31_grid-filter_setting", "")
             .SetUserParam("p31_grid-filter_sql", "")
+            .SetUserParam("p31_grid-filter_completesql", "")
         End With
         ReloadPage()
     End Sub
