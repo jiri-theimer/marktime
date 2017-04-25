@@ -252,6 +252,7 @@
     <Content Include="p31summary.ascx" />
     <Content Include="p31_framework_timer.aspx" />
     <Content Include="p31_drilldown.aspx" />
+    <Content Include="p31_sumgrid.aspx" />
     <Content Include="p40_chrono.aspx" />
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="select_field.aspx" />
@@ -1231,6 +1232,13 @@
     </Compile>
     <Compile Include="p31_drilldown.aspx.vb">
       <DependentUpon>p31_drilldown.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p31_sumgrid.aspx.designer.vb">
+      <DependentUpon>p31_sumgrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_sumgrid.aspx.vb">
+      <DependentUpon>p31_sumgrid.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p40_chrono.aspx.designer.vb">

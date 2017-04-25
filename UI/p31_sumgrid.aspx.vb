@@ -1,13 +1,12 @@
 ﻿Imports Telerik.Web.UI
-
-Public Class p31_drilldown
+Public Class p31_sumgrid
     Inherits System.Web.UI.Page
-    Protected WithEvents _MasterPage As ModalForm
+    Protected WithEvents _MasterPage As Site
     Private _lisDD As List(Of BO.GridColumn) = Nothing
     Private Property _curIsExport As Boolean
-    Private Property _curIsShowChart As Boolean
 
-    Private Sub p31_summary_Init(sender As Object, e As EventArgs) Handles Me.Init
+
+    Private Sub p31_sumgrid_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
 
@@ -15,34 +14,33 @@ Public Class p31_drilldown
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             hidJ70ID.Value = Request.Item("j70id")
-            hidJ74ID.Value = Request.Item("j74id")
+
             hidMasterPID.Value = Request.Item("masterpid")
             hidMasterPrefix.Value = Request.Item("masterprefix")
             hidTabQueryFlag.Value = Request.Item("tabqueryflag")
 
             Dim lisPars As New List(Of String)
             With lisPars
+                .Add("p31-j70id")
                 .Add("p31_grid-period")
                 .Add("periodcombo-custom_query")
                 .Add("p31_grid-filter_completesql")
                 .Add(hidMasterPrefix.Value & "p31_drilldown-dd1")
                 .Add(hidMasterPrefix.Value & "p31_drilldown-dd2")
-                .Add(hidMasterPrefix.Value & "p31_drilldown-is-sumcols")
                 .Add(hidMasterPrefix.Value & "p31_drilldown-sumcols")
-                .Add("p31_drilldown-chartwidth")
-                .Add("p31_drilldown-charttype")
+                .Add("p31_drilldown-pagesize")
+                .Add("p31_drilldown-chkFirstLastCount")
             End With
-            With Master
-                .AddToolbarButton("Nastavení", "setting", 0, "Images/arrow_down.gif", False)
-                .RadToolbar.FindItemByValue("setting").CssClass = "show_hide1"
-            End With
-
+           
 
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
+                basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_drilldown-pagesize", "100"))
+                Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("p31_drilldown-chkFirstLastCount", "1"))
+                SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
-                Me.chkSpecificSumCols.Checked = BO.BAS.BG(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-is-sumcols", "0"))
+
                 Dim strDefDD1 As String = ""
                 Select Case Me.hidMasterPrefix.Value
                     Case "j02" : strDefDD1 = "ClientName"
@@ -53,8 +51,7 @@ Public Class p31_drilldown
 
                 SetupSumColsSetting(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-sumcols", "1"))
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
-                basUI.SelectDropdownlistValue(Me.cbxChartWidth, .GetUserParam("p31_drilldown-chartwidth", "1000"))
-                basUI.SelectDropdownlistValue(Me.cbxChartType, .GetUserParam("p31_drilldown-charttype", "1"))
+                
             End With
 
 
@@ -205,18 +202,18 @@ Public Class p31_drilldown
             Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
             ''Dim cRec As DataRowView = CType(e.Item.DataItem, DataRowView)
             With dataItem("systemcolumn")
-                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + ")'><img src='Images/fullscreen.png' title='Zdrojový datový přehled'></a>"
+                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + ")'><img src='Images/grid.png' title='Přejít na přehled worksheet záznamů'></a>"
             End With
         End If
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-        panChart1.Visible = False : cmdRefreshChart.Visible = False
+
         If Me.dd1.SelectedValue = "" Then Return
 
         Dim mq As New BO.myQueryP31
         With mq
-            .MG_PageSize = 200
+            .MG_PageSize = cbxPaging.SelectedValue
             If _curIsExport Then .MG_PageSize = 2000
             .MG_CurrentPageIndex = grid1.radGridOrig.MasterTableView.CurrentPageIndex
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
@@ -226,18 +223,14 @@ Public Class p31_drilldown
         Dim colDD2 As BO.GridColumn = Me.CurrentDD2
         If Not colDD2 Is Nothing Then
             If Me.CurrentDD1.ColumnName = colDD2.ColumnName Then colDD2 = Nothing
-        Else
-            cmdRefreshChart.Visible = True
+       
         End If
 
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownGridSource(Me.CurrentDD1, colDD2, Me.CurrentSumFields_PIVOT, Me.CurrentSumFields_GRID, "", mq)
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownGridSource(Me.CurrentDD1, colDD2, Me.CurrentSumFields_PIVOT, Nothing, "", mq)
         grid1.VirtualRowCount = dt.Rows.Count
         grid1.DataSourceDataTable = dt
 
-        If _curIsShowChart Then
-            panChart1.Visible = True
-            RenderChart(dt)
-        End If
+       
     End Sub
     Private ReadOnly Property lisDD As List(Of BO.GridColumn)
         Get
@@ -259,7 +252,6 @@ Public Class p31_drilldown
     End Property
     Private ReadOnly Property CurrentSumFields_PIVOT As List(Of BO.PivotSumField)
         Get
-            If Not chkSpecificSumCols.Checked Then Return Nothing
             Dim lis As New List(Of BO.PivotSumField), a() As String = Split(GetSumPIDsInLine(), ",")
             If GetSumPIDsInLine() = "" Then Return lis
             For i As Integer = 0 To UBound(a)
@@ -268,25 +260,7 @@ Public Class p31_drilldown
             Return lis
         End Get
     End Property
-    Private ReadOnly Property CurrentSumFields_GRID As List(Of BO.GridColumn)
-        Get
-            If Me.chkSpecificSumCols.Checked Then Return Nothing
-            Dim lis As New List(Of BO.GridColumn)
-            Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(BO.BAS.IsNullInt(hidJ74ID.Value))
-            For Each s As String In Split(cJ74.j74ColumnNames, ",")
-                Dim strField As String = Trim(s)
-
-                Dim c As BO.GridColumn = Me.lisDD.Find(Function(p) p.ColumnName = strField)
-                If Not c Is Nothing Then
-                    If c.IsShowTotals Then
-                        lis.Add(c)
-                    End If
-
-                End If
-            Next
-            Return lis
-        End Get
-    End Property
+    
     Private Function GetSumPIDsInLine() As String
         Dim s As String = ""
         For Each it As RadListBoxItem In colsDest.Items
@@ -301,7 +275,7 @@ Public Class p31_drilldown
 
     Private Sub SaveCurrentSettings()
         With Master.Factory.j03UserBL
-            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-is-sumcols", BO.BAS.GB(Me.chkSpecificSumCols.Checked))
+
             .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd1", Me.dd1.SelectedValue)
             .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd2", Me.dd2.SelectedValue)
             .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-sumcols", GetSumPIDsInLine())
@@ -323,7 +297,7 @@ Public Class p31_drilldown
 
         With grid1
             .ClearColumns()
-            .PageSize = 200
+            .PageSize = cbxPaging.SelectedValue
             .radGridOrig.ShowFooter = True
             .DataKeyNames = "pid"
             .AllowMultiSelect = False
@@ -333,21 +307,19 @@ Public Class p31_drilldown
             If Not Me.CurrentDD2 Is Nothing Then
                 .AddColumn(Me.CurrentDD2.ColumnName, Me.CurrentDD2.ColumnHeader)
             End If
-
-            If Me.chkSpecificSumCols.Checked Then
+            If Not Me.CurrentSumFields_PIVOT Is Nothing Then
                 For Each c In Me.CurrentSumFields_PIVOT
 
                     .AddColumn("sum" & c.FieldTypeID.ToString, c.Caption, BO.cfENUM.Numeric2, , , , , True, False)
                 Next
-            Else
-                For Each c In Me.CurrentSumFields_GRID
-                    .AddColumn(IIf(c.ColumnDBName = "", "sum" & c.ColumnName, "sum" & c.ColumnDBName), c.ColumnHeader, BO.cfENUM.Numeric2, , , , , c.IsShowTotals, False)
-
-                Next
-
             End If
             
+
             .AddColumn("RecsCount", "Počet", BO.cfENUM.Numeric0, True, , , , True)
+            If chkFirstLastCount.Checked Then
+                .AddColumn("RecFirst", "První", BO.cfENUM.DateOnly, True)
+                .AddColumn("RecLast", "Poslední", BO.cfENUM.DateOnly, True)
+            End If
         End With
         If Not Me.CurrentDD2 Is Nothing Then
             SetupGrouping(Me.CurrentDD1.ColumnName, Me.CurrentDD1.ColumnHeader)
@@ -359,9 +331,7 @@ Public Class p31_drilldown
 
 
     Private Sub p31_drilldown_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        panSumCols.Visible = chkSpecificSumCols.Checked
-        cbxChartWidth.Visible = cmdRefreshChart.Visible
-        cbxChartType.Visible = cmdRefreshChart.Visible
+        
     End Sub
 
     Private Sub RenderQueryInfo()
@@ -376,15 +346,10 @@ Public Class p31_drilldown
             Case "time"
                 lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze hodiny]", "; ")
         End Select
-        If period1.SelectedValue <> "" Then
-            lblQuery.Text = BO.BAS.OM4(Me.lblQuery.Text, BO.BAS.FD(period1.DateFrom) & " - " & BO.BAS.FD(period1.DateUntil), "; ")
-        End If
-        If BO.BAS.IsNullInt(hidJ70ID.Value) <> 0 Then
-            Dim c As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(CInt(hidJ70ID.Value))
-            lblQuery.Text = BO.BAS.OM4(lblQuery.Text, c.j70Name, "; ")
-        End If
+        
+       
         If hidGridColumnSql.Value <> "" Then
-            lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Sloupcový filtr]", "; ")
+            lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Sloupcový filtr zdrojového přehledu]", "; ")
         End If
 
     End Sub
@@ -425,109 +390,84 @@ Public Class p31_drilldown
 
     End Sub
 
-    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
-        GridExport("pdf")
+  
+
+   
+
+    
+
+    
+
+   
+
+    Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-period", Me.period1.SelectedValue)
+        grid1.Rebind(False)
     End Sub
 
-    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
-        GridExport("xls")
+    Private Sub SetupJ70Combo(intDef As Integer)
+        Dim mq As New BO.myQuery
+        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p31Worksheet)
+        j70ID.DataBind()
+        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
+        
+        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+        
     End Sub
 
-    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
-        GridExport("doc")
+    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        hidJ70ID.Value = Me.j70ID.SelectedValue
+        Master.Factory.j03UserBL.SetUserParam("p31-j70id", Me.j70ID.SelectedValue)
+        grid1.Rebind(False)
     End Sub
 
-    Private Sub chkSpecificSumCols_CheckedChanged(sender As Object, e As EventArgs) Handles chkSpecificSumCols.CheckedChanged
-        SaveCurrentSettings()
+    Private Sub p31_sumgrid_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        With Me.j70ID
+            If .SelectedIndex > 0 Then
+                hidJ70ID.Value = .SelectedValue
+                .ToolTip = .SelectedItem.Text
+                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+            Else
+                Me.clue_query.Visible = False
+                hidJ70ID.Value = ""
+            End If
+        End With
+
+        With Me.period1
+            If .SelectedValue <> "" Then
+                .BackColor = Drawing.Color.Red
+            Else
+                .BackColor = Nothing
+            End If
+        End With
+        basUIMT.RenderQueryCombo(Me.j70ID)
+
+        
+    End Sub
+
+    Private Sub cmdHardRefresh_Click(sender As Object, e As EventArgs) Handles cmdHardRefresh.Click
+        Select Case hidHardRefreshFlag.Value
+            Case "pdf"
+                GridExport("pdf")
+            Case "xls"
+                GridExport("xls")
+            Case "doc"
+                GridExport("doc")
+            Case Else
+                grid1.Rebind(False)
+        End Select
+
+        hidHardRefreshFlag.Value = ""
+        hidHardRefreshPID.Value = ""
+    End Sub
+
+    Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-pagesize", Me.cbxPaging.SelectedValue)
         RefreshData()
     End Sub
 
-    Private Sub RenderChart(dt As DataTable)
-        Dim names As New List(Of String), fields As New List(Of String)
-        If Me.chkSpecificSumCols.Checked Then
-            For Each c In Me.CurrentSumFields_PIVOT
-                names.Add(c.Caption)
-                fields.Add("sum" & c.FieldTypeID.ToString)
-            Next
-        Else
-            For Each c In Me.CurrentSumFields_GRID
-                names.Add(c.ColumnHeader)
-                fields.Add(IIf(c.ColumnDBName = "", "sum" & c.ColumnName, "sum" & c.ColumnDBName))
-            Next
-        End If
-
-        With chart1
-            .Width = Unit.Parse(cbxChartWidth.SelectedValue & "px")
-            With .PlotArea.XAxis
-                If cbxChartType.SelectedValue = "2" Then
-                    .LabelsAppearance.RotationAngle = 0
-                Else
-                    .LabelsAppearance.RotationAngle = 90
-                End If
-                'If cbxChartType.SelectedValue = "2" Then
-                '    .LabelsAppearance.RotationAngle = 0
-                'Else
-                '    If fields.Count > 7 Then .LabelsAppearance.RotationAngle = 90 Else .LabelsAppearance.RotationAngle = 0
-                'End If
-                .DataLabelsField = Me.CurrentDD1.ColumnName
-                .Name = Me.CurrentDD1.ColumnHeader
-            End With
-            
-
-            With .PlotArea.Series()
-                .Clear()
-                For i As Integer = 0 To fields.Count - 1
-                    Select Case cbxChartType.SelectedValue
-                        Case "1"
-                            Dim ss As New ColumnSeries
-                            ss.Name = names(i)
-                            ss.DataFieldY = fields(i)
-                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
-                            .Add(ss)
-                        Case "2"
-                            Dim ss As New BarSeries
-                            ss.Name = names(i)
-                            ss.DataFieldY = fields(i)
-                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
-                            .Add(ss)
-                        Case "3"
-                            Dim ss As New LineSeries
-                            ss.Name = names(i)
-                            ss.DataFieldY = fields(i)
-                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
-                            .Add(ss)
-                        Case "4"
-                            Dim ss As New AreaSeries
-                            ss.Name = names(i)
-                            ss.DataFieldY = fields(i)
-                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
-                            .Add(ss)
-                    End Select
-                Next
-
-            End With
-
-            ''.PlotArea.Series.Item(0).Name = GetSums(0).Caption
-            .DataSource = dt
-            .DataBind()
-        End With
-    End Sub
-
-    Private Sub cmdRefreshChart_Click(sender As Object, e As EventArgs) Handles cmdRefreshChart.Click
-        _curIsShowChart = True
-        grid1.Rebind(False)
-
-    End Sub
-
-    Private Sub cbxChartWidth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxChartWidth.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-chartwidth", cbxChartWidth.SelectedValue)
-        _curIsShowChart = True
-        grid1.Rebind(False)
-    End Sub
-
-    Private Sub cbxChartType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxChartType.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-charttype", cbxChartType.SelectedValue)
-        _curIsShowChart = True
-        grid1.Rebind(False)
+    Private Sub chkFirstLastCount_CheckedChanged(sender As Object, e As EventArgs) Handles chkFirstLastCount.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-chkFirstLastCount", BO.BAS.GB(Me.chkFirstLastCount.Checked))
+        RefreshData()
     End Sub
 End Class

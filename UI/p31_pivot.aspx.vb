@@ -279,7 +279,7 @@ Public Class p31_pivot
             If cbxChartType.SelectedValue = "2" Then
                 .PlotArea.XAxis.LabelsAppearance.RotationAngle = 0
             Else
-                If GetSums.Count > 7 Then .PlotArea.XAxis.LabelsAppearance.RotationAngle = 90
+                .PlotArea.XAxis.LabelsAppearance.RotationAngle = 90
             End If
 
 

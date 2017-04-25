@@ -1332,7 +1332,7 @@
         Else
             s.Append(",isnull(convert(varchar(50)," & colDD1.Pivot_GroupBySql & "),'') as pid")
         End If
-        s.Append(",COUNT(*) as RecsCount")
+        s.Append(",COUNT(*) as RecsCount,MIN(a.p31Date) as RecFirst,MAX(a.p31Date) as RecLast")
         s.Append("," & colDD1.Pivot_GroupBySql & " as dd1")
         If Not colDD2 Is Nothing Then s.Append("," & colDD2.Pivot_GroupBySql & " as dd2")
 

@@ -112,7 +112,7 @@
             </ChartTitle>            
             <PlotArea>                                
                 <XAxis DataLabelsField="Row1" Name="Klient">
-                    <LabelsAppearance RotationAngle="0"></LabelsAppearance>
+                    <LabelsAppearance RotationAngle="90"></LabelsAppearance>
                     <MinorGridLines Visible="false" />
                     <MajorGridLines Visible="false" />
                 </XAxis>
