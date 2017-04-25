@@ -25,10 +25,10 @@ Public Class p31_sumgrid
                 Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value))
                 Me.MasterRecord.NavigateUrl = hidMasterPrefix.Value & "_framework.aspx?pid=" & hidMasterPID.Value
                 Select Case hidMasterPrefix.Value
-                    Case "p41" : imgEntity.ImageUrl = "Images/project_32.png"
-                    Case "j02" : imgEntity.ImageUrl = "Images/person_32.png"
-                    Case "p28" : imgEntity.ImageUrl = "Images/contact_32.png"
-                    Case "p91" : imgEntity.ImageUrl = "Images/invoice_32.png"
+                    Case "p41" : imgEntity.ImageUrl = "Images/project.png"
+                    Case "j02" : imgEntity.ImageUrl = "Images/person.png"
+                    Case "p28" : imgEntity.ImageUrl = "Images/contact.png"
+                    Case "p91" : imgEntity.ImageUrl = "Images/invoice.png"
                 End Select
             Else
                 panQueryByEntity.Visible = False
@@ -362,7 +362,7 @@ Public Class p31_sumgrid
         If hidGridColumnSql.Value <> "" Then
             lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Sloupcový filtr zdrojového přehledu]", "; ")
         End If
-
+        If lblQuery.Text <> "" Then panQueryByEntity.Visible = True
     End Sub
 
     Private Sub dd1_SelectedIndexChanged(sender As Object, e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles dd1.SelectedIndexChanged

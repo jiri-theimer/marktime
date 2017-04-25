@@ -217,13 +217,12 @@
     function drilldown() {
         var j70id = "<%=Me.CurrentJ70ID%>";
         
-        var j74id = document.getElementById("<%=Me.j74id.ClientID%>").value;
         var w = screen.availWidth - 100;
         var masterprefix = "<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>";
         var masterpid = document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value;
         var queryflag = document.getElementById("<%=hidMasterTabAutoQueryFlag.ClientID%>").value;
         
-        window.open("p31_sumgrid.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "_top");
+        window.open("p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "_top");
         //sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "Images/pivot.png", true);
         //return (false);
     }
