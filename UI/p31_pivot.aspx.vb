@@ -3,6 +3,7 @@
 Public Class p31_pivot
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
+    Private Property _IsShowChart As Boolean = False
 
     Public Property CurrentJ70ID As Integer
         Get
@@ -60,6 +61,8 @@ Public Class p31_pivot
                     .Add("p31_pivot-sum2")
                     .Add("p31_pivot-sum3")
                     .Add("p31_pivot-sum4")
+                    .Add("p31_pivot-chartwidth")
+                    .Add("p31_pivot-charttype")
                 End With
                 Dim lisSumFields As List(Of BO.PivotSumField) = .Factory.j75DrillDownTemplateBL.ColumnsPallete()
                 If Not .Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
@@ -86,7 +89,8 @@ Public Class p31_pivot
 
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam("p31_grid-period")
-                  
+                    basUI.SelectDropdownlistValue(Me.cbxChartWidth, .GetUserParam("p31_pivot-chartwidth", "1000"))
+                    basUI.SelectDropdownlistValue(Me.cbxChartType, .GetUserParam("p31_pivot-charttype", "1"))
                 End With
 
                 cmdQuery.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
@@ -242,6 +246,8 @@ Public Class p31_pivot
 
     
     Private Sub pivot1_NeedDataSource(sender As Object, e As Telerik.Web.UI.PivotGridNeedDataSourceEventArgs) Handles pivot1.NeedDataSource
+        panChart1.Visible = False : cmdRefreshChart.Visible = False
+
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
@@ -250,13 +256,76 @@ Public Class p31_pivot
         If (rows.Count = 0 And cols.Count = 0) Or sums.Count = 0 Then Return
 
         Dim lis As IEnumerable(Of BO.PivotRecord) = Master.Factory.p31WorksheetBL.GetList_Pivot(rows, cols, sums, mq)
-       
+
+
         If Not lis Is Nothing Then
+            If rows.Count = 1 And cols.Count = 0 Then cmdRefreshChart.Visible = True
+
             pivot1.DataSource = lis
+
+            If _IsShowChart Then
+                panChart1.Visible = True
+                RenderChart(lis)
+            End If
         Else
             Master.Notify(Master.Factory.p31WorksheetBL.ErrorMessage, NotifyLevel.ErrorMessage)
         End If
+        
+    End Sub
+    Private Sub RenderChart(lis As IEnumerable(Of BO.PivotRecord))
+        With chart1
+            .Width = Unit.Parse(cbxChartWidth.SelectedValue & "px")
+            If cbxChartType.SelectedValue = "2" Then
+                .PlotArea.XAxis.LabelsAppearance.RotationAngle = 0
+            End If
 
+
+            With .PlotArea.Series()
+                .Clear()
+                For i As Integer = 0 To GetSums.Count - 1
+                    Select Case cbxChartType.SelectedValue
+                        Case "1"
+                            Dim ss As New ColumnSeries
+                            ss.Name = GetSums(i).Caption
+                            ss.DataFieldY = "Sum" & (i + 1).ToString
+                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            .Add(ss)
+                        Case "2"
+                            Dim ss As New BarSeries
+                            ss.Name = GetSums(i).Caption
+                            ss.DataFieldY = "Sum" & (i + 1).ToString
+                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            .Add(ss)
+                        Case "3"
+                            Dim ss As New LineSeries
+                            ss.Name = GetSums(i).Caption
+                            ss.DataFieldY = "Sum" & (i + 1).ToString
+                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            .Add(ss)
+                        Case "4"
+                            Dim ss As New AreaSeries
+                            ss.Name = GetSums(i).Caption
+                            ss.DataFieldY = "Sum" & (i + 1).ToString
+                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            .Add(ss)
+                        Case "5"
+                            Dim ss As New PieSeries
+                            ss.Name = GetSums(i).Caption
+                            ss.DataFieldY = "Sum" & (i + 1).ToString
+                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            .Add(ss)
+                    End Select
+                    
+
+
+                Next
+
+            End With
+
+            ''.PlotArea.Series.Item(0).Name = GetSums(0).Caption
+            .DataSource = lis
+            .DataBind()
+        End With
     End Sub
 
     Private Sub SetupGridFields()
@@ -303,9 +372,9 @@ Public Class p31_pivot
         pivot1.Rebind()
     End Sub
 
-    
 
-    
+
+
 
     Private Sub sum1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles sum1.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_pivot-sum1", Me.sum1.SelectedValue)
@@ -342,6 +411,9 @@ Public Class p31_pivot
 
         If Me.hidRow2.Value = "" Then cmdClear2.Visible = False : linkRow2.Text = "Vybrat pole 2" Else cmdClear2.Visible = True
         If Me.hidRow3.Value = "" Then cmdClear3.Visible = False : linkRow3.Text = "Vybrat pole 3" Else cmdClear3.Visible = True
+
+        cbxChartWidth.Visible = cmdRefreshChart.Visible
+        cbxChartType.Visible = cmdRefreshChart.Visible
     End Sub
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
@@ -349,18 +421,18 @@ Public Class p31_pivot
         ReloadPage()
     End Sub
     Private Sub ReloadPage()
-        Response.Redirect("p31_pivot.aspx" & basUI.GetCompleteQuerystring(Request,true))
+        Response.Redirect("p31_pivot.aspx" & basUI.GetCompleteQuerystring(Request, True))
     End Sub
-   
 
-    
+
+
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
         GridExport("xls")
-       
+
 
     End Sub
 
-   
+
     Private Sub cmdRebind_Click(sender As Object, e As EventArgs) Handles cmdRebind.Click
         pivot1.Rebind()
     End Sub
@@ -377,7 +449,7 @@ Public Class p31_pivot
             Case "doc"
                 pivot1.ExportToWord()
         End Select
-       
+
     End Sub
 
     Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
@@ -385,7 +457,7 @@ Public Class p31_pivot
     End Sub
 
     Private Sub pivot1_PivotGridCellExporting(sender As Object, e As PivotGridCellExportingArgs) Handles pivot1.PivotGridCellExporting
-     
+
         If TypeOf e.PivotGridCell Is PivotGridColumnHeaderCell Then
 
             e.ExportedCell.Style.Font.Bold = True
@@ -409,7 +481,7 @@ Public Class p31_pivot
 
     End Sub
 
-   
+
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         Dim lis As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
         Select Case hidHardRefreshFlag.Value
@@ -448,7 +520,7 @@ Public Class p31_pivot
         Return c
     End Function
 
-    
+
     Private Sub cmdClear2_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClear2.Click
         Master.Factory.j03UserBL.SetUserParam("p31_pivot-row2", "")
         ReloadPage()
@@ -457,5 +529,23 @@ Public Class p31_pivot
     Private Sub cmdClear3_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClear3.Click
         Master.Factory.j03UserBL.SetUserParam("p31_pivot-row3", "")
         ReloadPage()
+    End Sub
+
+    Private Sub cmdRefreshChart_Click(sender As Object, e As EventArgs) Handles cmdRefreshChart.Click
+        _IsShowChart = True
+        pivot1.Rebind()
+
+    End Sub
+
+    Private Sub cbxChartWidth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxChartWidth.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_pivot-chartwidth", cbxChartWidth.SelectedValue)
+        _IsShowChart = True
+        pivot1.Rebind()
+    End Sub
+
+    Private Sub cbxChartType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxChartType.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_pivot-charttype", cbxChartType.SelectedValue)
+        _IsShowChart = True
+        pivot1.Rebind()
     End Sub
 End Class

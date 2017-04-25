@@ -25,12 +25,12 @@
 
 
 
-        function hardrefresh(pid, flag,field) {
+        function hardrefresh(pid, flag, field) {
             if (flag == "j70-run") {
                 location.replace("p31_pivot.aspx");
                 return;
             }
-                        
+
             document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = field;
             document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
 
@@ -45,7 +45,7 @@
 
         function select_field(index) {
             if (index == 1) {
-                sw_master("select_field.aspx?prefix=p31&flag=field1&pivot=1&value="+document.getElementById("<%=Me.hidRow1.ClientID%>").value);
+                sw_master("select_field.aspx?prefix=p31&flag=field1&pivot=1&value=" + document.getElementById("<%=Me.hidRow1.ClientID%>").value);
             }
             if (index == 2) {
                 sw_master("select_field.aspx?prefix=p31&flag=field2&pivot=1&value=" + document.getElementById("<%=Me.hidRow2.ClientID%>").value);
@@ -107,10 +107,10 @@
                     <td>
                         <asp:Image ID="imgEntity" runat="server" />
                     </td>
-                    <td style="padding-left:10px;">
-                              
+                    <td style="padding-left: 10px;">
+
                         <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
-                        
+
                     </td>
                 </tr>
             </table>
@@ -125,19 +125,19 @@
             </div>
             <div class="content">
                 <asp:HyperLink ID="linkRow1" runat="server" Text="Pole 1" NavigateUrl="javascript:select_field(1)"></asp:HyperLink>
-                <asp:HiddenField ID="hidRow1" runat="server" />                
-                                           
-               
+                <asp:HiddenField ID="hidRow1" runat="server" />
+
+
                 <span>-></span>
                 <asp:HyperLink ID="linkRow2" runat="server" Text="Pole 2" NavigateUrl="javascript:select_field(2)"></asp:HyperLink>
                 <asp:HiddenField ID="hidRow2" runat="server" />
                 <asp:ImageButton ID="cmdClear2" runat="server" ImageUrl="Images/delete.png" CssClass="cmd" />
-                
+
                 <span>-></span>
                 <asp:HyperLink ID="linkRow3" runat="server" Text="Pole 3" NavigateUrl="javascript:select_field(3)"></asp:HyperLink>
                 <asp:HiddenField ID="hidRow3" runat="server" />
                 <asp:ImageButton ID="cmdClear3" runat="server" ImageUrl="Images/delete.png" CssClass="cmd" />
-                
+
             </div>
         </div>
         <div class="content-box1">
@@ -181,12 +181,12 @@
                 <asp:DropDownList ID="sum1" runat="server" AutoPostBack="true" Width="200px" DataTextField="Caption" DataValueField="FieldTypeID">
                 </asp:DropDownList>
 
-                <asp:DropDownList ID="sum2" runat="server" AutoPostBack="true" Width="200px"  DataTextField="Caption" DataValueField="FieldTypeID">                  
+                <asp:DropDownList ID="sum2" runat="server" AutoPostBack="true" Width="200px" DataTextField="Caption" DataValueField="FieldTypeID">
                 </asp:DropDownList>
 
-                <asp:DropDownList ID="sum3" runat="server" AutoPostBack="true" Width="200px"  DataTextField="Caption" DataValueField="FieldTypeID">                   
+                <asp:DropDownList ID="sum3" runat="server" AutoPostBack="true" Width="200px" DataTextField="Caption" DataValueField="FieldTypeID">
                 </asp:DropDownList>
-                <asp:DropDownList ID="sum4" runat="server" AutoPostBack="true" Width="200px"  DataTextField="Caption" DataValueField="FieldTypeID">                   
+                <asp:DropDownList ID="sum4" runat="server" AutoPostBack="true" Width="200px" DataTextField="Caption" DataValueField="FieldTypeID">
                 </asp:DropDownList>
             </div>
         </div>
@@ -208,11 +208,55 @@
             </telerik:PivotGridAggregateField>
 
         </Fields>
-      
+
         <ConfigurationPanelSettings EnableDragDrop="false" />
         <ClientSettings EnableFieldsDragDrop="false" ClientMessages-DragToReorder=""></ClientSettings>
     </telerik:RadPivotGrid>
 
+    <div class="div6">
+        <asp:Button ID="cmdRefreshChart" runat="server" CssClass="cmd" Text="Zobrazit graf"  Visible="false"/>
+        <asp:DropDownList ID="cbxChartType" runat="server" AutoPostBack="true" ToolTip="Typ grafu" Visible="false">
+            <asp:ListItem Text="Sloupcový" Value="1"></asp:ListItem>
+            <asp:ListItem Text="Pruhový" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Čárový" Value="3"></asp:ListItem>
+            <asp:ListItem Text="Plošný" Value="4"></asp:ListItem>
+            
+        </asp:DropDownList>
+        <asp:DropDownList ID="cbxChartWidth" runat="server" AutoPostBack="true" ToolTip="Šířka grafu v pixelech" Visible="false">
+            <asp:ListItem Text="800" Value="800"></asp:ListItem>
+            <asp:ListItem Text="1000" Value="1000" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="1500" Value="1500"></asp:ListItem>
+            <asp:ListItem Text="1900" Value="1900"></asp:ListItem>
+        </asp:DropDownList>
+    </div>
+    
+    <asp:Panel ID="panChart1" runat="server" Visible="false">
+        <telerik:RadHtmlChart runat="server" ID="chart1" Width="1000px" Font-Size="Small">
+            <ChartTitle Text="">
+            </ChartTitle>            
+            <PlotArea>                
+                <Series>
+                    <telerik:ColumnSeries Name="Hodiny Fa" DataFieldY="Sum1" >
+                        <Appearance FillStyle-BackgroundColor="LightGreen"></Appearance>
+                        <LabelsAppearance DataFormatString="{0:F2}"></LabelsAppearance>
+                    </telerik:ColumnSeries>
+                    <telerik:ColumnSeries Name="Hodiny NeFa" DataFieldY="Sum2">
+                        <Appearance FillStyle-BackgroundColor="#ff9999"></Appearance>
+                        <LabelsAppearance DataFormatString="{0:F2}"></LabelsAppearance>
+                    </telerik:ColumnSeries>
+                </Series>
+                <XAxis DataLabelsField="Row1" Name="Klient">
+                    <LabelsAppearance RotationAngle="90"></LabelsAppearance>
+                    <MinorGridLines Visible="false" />
+                    <MajorGridLines Visible="false" />
+                </XAxis>
+                <YAxis>
+                    <MinorGridLines Visible="false" />
+                    <MajorGridLines Visible="false" />
+                </YAxis>
+            </PlotArea>
+        </telerik:RadHtmlChart>
+    </asp:Panel>
 
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
