@@ -208,7 +208,7 @@ Public Class main_menu
                 Select Case c.x29ID
                     Case BO.x29IdEnum.p31Worksheet
                         bolGO = .j04IsMenu_Worksheet
-                        If c.j62Tag = "p31_pivot" Then bolGO = factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
+                        If c.j62Tag = "p31_pivot" Or c.j62Tag = "p31_sumgrid" Then bolGO = factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
                         If c.j62Tag = "p31_approving" Then bolGO = .IsApprovingPerson
                     Case BO.x29IdEnum.p41Project
                         bolGO = .j04IsMenu_Project

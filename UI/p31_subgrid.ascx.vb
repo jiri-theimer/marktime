@@ -184,6 +184,7 @@ Public Class p31_subgrid
                 End If
             End With
             panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
+            cmdSummary.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
             linkGridDesigner.Visible = panExport.Visible
             Me.j74id.Visible = panExport.Visible
             cmdQuery.Visible = panExport.Visible
