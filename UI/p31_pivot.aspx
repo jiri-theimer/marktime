@@ -246,7 +246,7 @@
                     </telerik:ColumnSeries>
                 </Series>
                 <XAxis DataLabelsField="Row1" Name="Klient">
-                    <LabelsAppearance RotationAngle="90"></LabelsAppearance>
+                    <LabelsAppearance RotationAngle="0"></LabelsAppearance>
                     <MinorGridLines Visible="false" />
                     <MajorGridLines Visible="false" />
                 </XAxis>

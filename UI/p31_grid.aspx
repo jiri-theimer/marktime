@@ -181,8 +181,9 @@
             var w = screen.availWidth - 100;
             var masterprefix = document.getElementById("<%=Me.hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=Me.hidMasterPID.ClientID%>").value;
-        
-            sw_master_more("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix+"&masterpid="+masterpid, "Images/pivot.png", w, 600, true);
+            
+            sw_master("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/pivot.png",true);
+            //sw_master_more("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix+"&masterpid="+masterpid, "Images/pivot.png", w, 600, true);
             return (false);
         }
         
@@ -197,7 +198,7 @@
             <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Worksheet" Style="vertical-align: top;"></asp:Label>
         </div>
         <div class="commandcell">                       
-            <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/pivot.png" ToolTip="Summary datového přehledu" CssClass="button-link" />
+            <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/pivot.png" ToolTip="Statistiky worksheet přehledu" CssClass="button-link" />
         </div>
         <div class="commandcell" style="padding-left:10px;">
             <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
