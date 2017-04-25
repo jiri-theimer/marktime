@@ -5,6 +5,7 @@ Public Class p31_drilldown
     Protected WithEvents _MasterPage As ModalForm
     Private _lisDD As List(Of BO.GridColumn) = Nothing
     Private Property _curIsExport As Boolean
+    Private Property _curIsShowChart As Boolean
 
     Private Sub p31_summary_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -28,6 +29,8 @@ Public Class p31_drilldown
                 .Add(hidMasterPrefix.Value & "p31_drilldown-dd2")
                 .Add(hidMasterPrefix.Value & "p31_drilldown-is-sumcols")
                 .Add(hidMasterPrefix.Value & "p31_drilldown-sumcols")
+                .Add("p31_drilldown-chartwidth")
+                .Add("p31_drilldown-charttype")
             End With
             With Master
                 .AddToolbarButton("Nastavení", "setting", 0, "Images/arrow_down.gif", False)
@@ -50,6 +53,8 @@ Public Class p31_drilldown
 
                 SetupSumColsSetting(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-sumcols", "1"))
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
+                basUI.SelectDropdownlistValue(Me.cbxChartWidth, .GetUserParam("p31_drilldown-chartwidth", "1000"))
+                basUI.SelectDropdownlistValue(Me.cbxChartType, .GetUserParam("p31_drilldown-charttype", "1"))
             End With
 
 
@@ -206,6 +211,7 @@ Public Class p31_drilldown
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        panChart1.Visible = False : cmdRefreshChart.Visible = False
         If Me.dd1.SelectedValue = "" Then Return
 
         Dim mq As New BO.myQueryP31
@@ -220,11 +226,18 @@ Public Class p31_drilldown
         Dim colDD2 As BO.GridColumn = Me.CurrentDD2
         If Not colDD2 Is Nothing Then
             If Me.CurrentDD1.ColumnName = colDD2.ColumnName Then colDD2 = Nothing
+        Else
+            cmdRefreshChart.Visible = True
         End If
 
         Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownGridSource(Me.CurrentDD1, colDD2, Me.CurrentSumFields_PIVOT, Me.CurrentSumFields_GRID, "", mq)
         grid1.VirtualRowCount = dt.Rows.Count
         grid1.DataSourceDataTable = dt
+
+        If _curIsShowChart Then
+            panChart1.Visible = True
+            RenderChart(dt)
+        End If
     End Sub
     Private ReadOnly Property lisDD As List(Of BO.GridColumn)
         Get
@@ -347,7 +360,8 @@ Public Class p31_drilldown
 
     Private Sub p31_drilldown_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         panSumCols.Visible = chkSpecificSumCols.Checked
-        
+        cbxChartWidth.Visible = cmdRefreshChart.Visible
+        cbxChartType.Visible = cmdRefreshChart.Visible
     End Sub
 
     Private Sub RenderQueryInfo()
@@ -426,5 +440,86 @@ Public Class p31_drilldown
     Private Sub chkSpecificSumCols_CheckedChanged(sender As Object, e As EventArgs) Handles chkSpecificSumCols.CheckedChanged
         SaveCurrentSettings()
         RefreshData()
+    End Sub
+
+    Private Sub RenderChart(dt As DataTable)
+        Dim names As New List(Of String), fields As New List(Of String)
+        If Me.chkSpecificSumCols.Checked Then
+            For Each c In Me.CurrentSumFields_PIVOT
+                names.Add(c.Caption)
+                fields.Add("sum" & c.FieldTypeID.ToString)
+            Next
+        Else
+            For Each c In Me.CurrentSumFields_GRID
+                names.Add(c.ColumnHeader)
+                fields.Add(IIf(c.ColumnDBName = "", "sum" & c.ColumnName, "sum" & c.ColumnDBName))
+            Next
+        End If
+
+        With chart1
+            .Width = Unit.Parse(cbxChartWidth.SelectedValue & "px")
+            If cbxChartType.SelectedValue = "2" Then
+                .PlotArea.XAxis.LabelsAppearance.RotationAngle = 0
+            Else
+                If fields.Count > 7 Then .PlotArea.XAxis.LabelsAppearance.RotationAngle = 90
+            End If
+            .PlotArea.XAxis.DataLabelsField = Me.CurrentDD1.ColumnName
+            .PlotArea.XAxis.Name = Me.CurrentDD1.ColumnHeader
+
+            With .PlotArea.Series()
+                .Clear()
+                For i As Integer = 0 To fields.Count - 1
+                    Select Case cbxChartType.SelectedValue
+                        Case "1"
+                            Dim ss As New ColumnSeries
+                            ss.Name = names(i)
+                            ss.DataFieldY = fields(i)
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
+                            .Add(ss)
+                        Case "2"
+                            Dim ss As New BarSeries
+                            ss.Name = names(i)
+                            ss.DataFieldY = fields(i)
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
+                            .Add(ss)
+                        Case "3"
+                            Dim ss As New LineSeries
+                            ss.Name = names(i)
+                            ss.DataFieldY = fields(i)
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
+                            .Add(ss)
+                        Case "4"
+                            Dim ss As New AreaSeries
+                            ss.Name = names(i)
+                            ss.DataFieldY = fields(i)
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
+                            .Add(ss)
+                    End Select
+                Next
+
+            End With
+
+            ''.PlotArea.Series.Item(0).Name = GetSums(0).Caption
+            .DataSource = dt
+            .DataBind()
+        End With
+    End Sub
+
+    Private Sub cmdRefreshChart_Click(sender As Object, e As EventArgs) Handles cmdRefreshChart.Click
+        _curIsShowChart = True
+        grid1.Rebind(False)
+
+    End Sub
+
+    Private Sub cbxChartWidth_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxChartWidth.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-chartwidth", cbxChartWidth.SelectedValue)
+        _curIsShowChart = True
+        grid1.Rebind(False)
+    End Sub
+
+    Private Sub cbxChartType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxChartType.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-charttype", cbxChartType.SelectedValue)
+        _curIsShowChart = True
+        grid1.Rebind(False)
     End Sub
 End Class

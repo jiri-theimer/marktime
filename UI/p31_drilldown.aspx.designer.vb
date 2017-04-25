@@ -140,6 +140,51 @@ Partial Public Class p31_drilldown
     Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
+    '''cmdRefreshChart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRefreshChart As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cbxChartType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxChartType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxChartWidth control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxChartWidth As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''panChart1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panChart1 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''chart1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chart1 As Global.Telerik.Web.UI.RadHtmlChart
+
+    '''<summary>
     '''hiddatapid control.
     '''</summary>
     '''<remarks>

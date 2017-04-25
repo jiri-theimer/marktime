@@ -275,8 +275,11 @@ Public Class p31_pivot
     Private Sub RenderChart(lis As IEnumerable(Of BO.PivotRecord))
         With chart1
             .Width = Unit.Parse(cbxChartWidth.SelectedValue & "px")
+            
             If cbxChartType.SelectedValue = "2" Then
                 .PlotArea.XAxis.LabelsAppearance.RotationAngle = 0
+            Else
+                If GetSums.Count > 7 Then .PlotArea.XAxis.LabelsAppearance.RotationAngle = 90
             End If
 
 
@@ -288,31 +291,31 @@ Public Class p31_pivot
                             Dim ss As New ColumnSeries
                             ss.Name = GetSums(i).Caption
                             ss.DataFieldY = "Sum" & (i + 1).ToString
-                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
                             .Add(ss)
                         Case "2"
                             Dim ss As New BarSeries
                             ss.Name = GetSums(i).Caption
                             ss.DataFieldY = "Sum" & (i + 1).ToString
-                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
                             .Add(ss)
                         Case "3"
                             Dim ss As New LineSeries
                             ss.Name = GetSums(i).Caption
                             ss.DataFieldY = "Sum" & (i + 1).ToString
-                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
                             .Add(ss)
                         Case "4"
                             Dim ss As New AreaSeries
                             ss.Name = GetSums(i).Caption
                             ss.DataFieldY = "Sum" & (i + 1).ToString
-                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
                             .Add(ss)
                         Case "5"
                             Dim ss As New PieSeries
                             ss.Name = GetSums(i).Caption
                             ss.DataFieldY = "Sum" & (i + 1).ToString
-                            ss.LabelsAppearance.DataFormatString = "{N}"
+                            ss.LabelsAppearance.DataFormatString = "{0:N0}"
                             .Add(ss)
                     End Select
                     

@@ -89,6 +89,41 @@
 
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
+    <div class="div6">
+        <asp:Button ID="cmdRefreshChart" runat="server" CssClass="cmd" Text="Zobrazit graf"  Visible="false"/>
+        <asp:DropDownList ID="cbxChartType" runat="server" AutoPostBack="true" ToolTip="Typ grafu" Visible="false">
+            <asp:ListItem Text="Sloupcový" Value="1"></asp:ListItem>
+            <asp:ListItem Text="Pruhový" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Čárový" Value="3"></asp:ListItem>
+            <asp:ListItem Text="Plošný" Value="4"></asp:ListItem>
+            
+        </asp:DropDownList>
+        <asp:DropDownList ID="cbxChartWidth" runat="server" AutoPostBack="true" ToolTip="Šířka grafu v pixelech" Visible="false">
+            <asp:ListItem Text="800" Value="800"></asp:ListItem>
+            <asp:ListItem Text="1000" Value="1000" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="1500" Value="1500"></asp:ListItem>
+            <asp:ListItem Text="1900" Value="1900"></asp:ListItem>
+        </asp:DropDownList>
+    </div>
+    
+    <asp:Panel ID="panChart1" runat="server" Visible="false">
+        <telerik:RadHtmlChart runat="server" ID="chart1" Width="1000px" Font-Size="Small">
+            <ChartTitle Text="">
+            </ChartTitle>            
+            <PlotArea>                                
+                <XAxis DataLabelsField="Row1" Name="Klient">
+                    <LabelsAppearance RotationAngle="90"></LabelsAppearance>
+                    <MinorGridLines Visible="false" />
+                    <MajorGridLines Visible="false" />
+                </XAxis>
+                <YAxis>
+                    <MinorGridLines Visible="false" />
+                    <MajorGridLines Visible="false" />
+                </YAxis>
+            </PlotArea>
+        </telerik:RadHtmlChart>
+    </asp:Panel>
+
 
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidJ74ID" runat="server" />
