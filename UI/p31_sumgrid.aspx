@@ -30,7 +30,7 @@
         </div>
         <div class="commandcell" style="padding-left: 10px;">
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
-            <asp:Label ID="lblQuery" runat="server" CssClass="valboldred"></asp:Label>
+            
         </div>
         <div class="commandcell">
             <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
@@ -118,6 +118,24 @@
                 </div>
             </asp:Panel>
         </div>
+
+        <div style="clear: both;"></div>
+
+        <asp:Panel ID="panQueryByEntity" runat="server" CssClass="div6" Visible="false">
+            <table cellpadding="0">
+                <tr>
+                    <td>
+                        <asp:Image ID="imgEntity" runat="server" />
+                    </td>
+                    <td style="padding-left: 10px;">
+
+                        <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
+
+                    </td>
+                </tr>
+            </table>
+            <asp:Label ID="lblQuery" runat="server" CssClass="valboldred"></asp:Label>
+        </asp:Panel>
 
 
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>

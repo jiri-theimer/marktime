@@ -10,7 +10,7 @@
         
     </div>
     <div class="commandcell">
-        <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/pivot.png" ToolTip="Statistiky worksheet přehledu" CssClass="button-link" />
+        <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="drilldown()" ImageUrl="Images/drilldown.png" ToolTip="Statistika worksheet přehledu" CssClass="button-link" />
     </div>
     <div class="commandcell" style="margin-left:10px;">
         <uc:periodcombo ID="period1" runat="server" Width="150px"></uc:periodcombo>
@@ -222,8 +222,9 @@
         var masterprefix = "<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>";
         var masterpid = document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value;
         var queryflag = document.getElementById("<%=hidMasterTabAutoQueryFlag.ClientID%>").value;
-                
-        sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "Images/pivot.png", true);
-        return (false);
+        
+        window.open("p31_sumgrid.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "_top");
+        //sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "Images/pivot.png", true);
+        //return (false);
     }
 </script>

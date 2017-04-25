@@ -13,11 +13,26 @@ Public Class p31_sumgrid
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
+            Master.SiteMenuValue = "p31_sumgrid"
             hidJ70ID.Value = Request.Item("j70id")
 
             hidMasterPID.Value = Request.Item("masterpid")
             hidMasterPrefix.Value = Request.Item("masterprefix")
             hidTabQueryFlag.Value = Request.Item("tabqueryflag")
+
+            If hidMasterPrefix.Value <> "" Then
+                panQueryByEntity.Visible = True
+                Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value))
+                Me.MasterRecord.NavigateUrl = hidMasterPrefix.Value & "_framework.aspx?pid=" & hidMasterPID.Value
+                Select Case hidMasterPrefix.Value
+                    Case "p41" : imgEntity.ImageUrl = "Images/project_32.png"
+                    Case "j02" : imgEntity.ImageUrl = "Images/person_32.png"
+                    Case "p28" : imgEntity.ImageUrl = "Images/contact_32.png"
+                    Case "p91" : imgEntity.ImageUrl = "Images/invoice_32.png"
+                End Select
+            Else
+                panQueryByEntity.Visible = False
+            End If
 
             Dim lisPars As New List(Of String)
             With lisPars
@@ -25,18 +40,18 @@ Public Class p31_sumgrid
                 .Add("p31_grid-period")
                 .Add("periodcombo-custom_query")
                 .Add("p31_grid-filter_completesql")
-                .Add(hidMasterPrefix.Value & "p31_drilldown-dd1")
-                .Add(hidMasterPrefix.Value & "p31_drilldown-dd2")
-                .Add(hidMasterPrefix.Value & "p31_drilldown-sumcols")
-                .Add("p31_drilldown-pagesize")
-                .Add("p31_drilldown-chkFirstLastCount")
+                .Add(hidMasterPrefix.Value & "p31_sumgrid-dd1")
+                .Add(hidMasterPrefix.Value & "p31_sumgrid-dd2")
+                .Add(hidMasterPrefix.Value & "p31_sumgrid-sumcols")
+                .Add("p31_sumgrid-pagesize")
+                .Add("p31_sumgrid-chkFirstLastCount")
             End With
-           
+
 
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
-                basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_drilldown-pagesize", "100"))
-                Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("p31_drilldown-chkFirstLastCount", "1"))
+                basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_sumgrid-pagesize", "100"))
+                Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("p31_sumgrid-chkFirstLastCount", "1"))
                 SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
@@ -47,11 +62,11 @@ Public Class p31_sumgrid
                     Case Else
                         strDefDD1 = "Person"
                 End Select
-                SetupGroupByCombo(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd1", strDefDD1), .GetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd2"))
+                SetupGroupByCombo(.GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd1", strDefDD1), .GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd2"))
 
-                SetupSumColsSetting(.GetUserParam(hidMasterPrefix.Value & "p31_drilldown-sumcols", "1"))
+                SetupSumColsSetting(.GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-sumcols", "1"))
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
-                
+
             End With
 
 
@@ -276,9 +291,9 @@ Public Class p31_sumgrid
     Private Sub SaveCurrentSettings()
         With Master.Factory.j03UserBL
 
-            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd1", Me.dd1.SelectedValue)
-            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-dd2", Me.dd2.SelectedValue)
-            .SetUserParam(hidMasterPrefix.Value & "p31_drilldown-sumcols", GetSumPIDsInLine())
+            .SetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd1", Me.dd1.SelectedValue)
+            .SetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd2", Me.dd2.SelectedValue)
+            .SetUserParam(hidMasterPrefix.Value & "p31_sumgrid-sumcols", GetSumPIDsInLine())
         End With
 
     End Sub
@@ -330,14 +345,10 @@ Public Class p31_sumgrid
 
 
 
-    Private Sub p31_drilldown_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        
-    End Sub
+  
 
     Private Sub RenderQueryInfo()
-        If hidMasterPrefix.Value <> "" Then
-            lblQuery.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value), True)
-        End If
+       
         Select Case Me.hidTabQueryFlag.Value
             Case "expense"
                 lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze výdaje]", "; ")
@@ -427,6 +438,7 @@ Public Class p31_sumgrid
                 hidJ70ID.Value = .SelectedValue
                 .ToolTip = .SelectedItem.Text
                 Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+                Me.clue_query.Visible = True
             Else
                 Me.clue_query.Visible = False
                 hidJ70ID.Value = ""
@@ -462,12 +474,12 @@ Public Class p31_sumgrid
     End Sub
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-pagesize", Me.cbxPaging.SelectedValue)
+        Master.Factory.j03UserBL.SetUserParam("p31_sumgrid-pagesize", Me.cbxPaging.SelectedValue)
         RefreshData()
     End Sub
 
     Private Sub chkFirstLastCount_CheckedChanged(sender As Object, e As EventArgs) Handles chkFirstLastCount.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_drilldown-chkFirstLastCount", BO.BAS.GB(Me.chkFirstLastCount.Checked))
+        Master.Factory.j03UserBL.SetUserParam("p31_sumgrid-chkFirstLastCount", BO.BAS.GB(Me.chkFirstLastCount.Checked))
         RefreshData()
     End Sub
 End Class

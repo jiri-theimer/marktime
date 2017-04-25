@@ -41,15 +41,6 @@ Partial Public Class p31_sumgrid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''lblQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblQuery As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''clue_query control.
     '''</summary>
     '''<remarks>
@@ -147,6 +138,42 @@ Partial Public Class p31_sumgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
+
+    '''<summary>
+    '''panQueryByEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panQueryByEntity As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''imgEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''MasterRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''lblQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''grid1 control.
