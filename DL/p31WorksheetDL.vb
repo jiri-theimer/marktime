@@ -1319,7 +1319,7 @@
 
     End Function
 
-    Public Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), sumCols_Grid As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
+    Public Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), addCols As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
         Dim s As New System.Text.StringBuilder, x As Integer = 0, lisSqlFROM As New List(Of String)
 
         s.Append("SELECT " & colDD1.Pivot_SelectSql & " AS " & colDD1.ColumnName)
@@ -1341,13 +1341,20 @@
                 s.Append("," & c.SelectField & " AS sum" & c.FieldTypeID.ToString)
             Next
         End If
-        If Not sumCols_Grid Is Nothing Then
-            For Each c In sumCols_Grid
-                If c.ColumnDBName <> "" Then
-                    s.Append(",sum(" & c.ColumnDBName & ") AS sum" & c.ColumnDBName)
-                Else
-                    s.Append(",sum(" & c.ColumnName & ") AS sum" & c.ColumnName)
-                End If
+        If Not addCols Is Nothing Then
+            For Each c In addCols
+                Dim strField As String = c.ColumnDBName
+                If strField = "" Then strField = c.ColumnName
+                Select Case c.MyTag
+                    Case "all"
+                        s.Append(",max(" & strField & ") AS col" & c.ColumnName)
+                    Case "min"
+                        s.Append(",min(" & strField & ") AS col" & c.ColumnName)
+                    Case "max"
+                        s.Append(",max(" & strField & ") AS col" & c.ColumnName)
+                End Select
+                If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
+                
             Next
         End If
 
@@ -1368,10 +1375,18 @@
             s.Append(" WHERE " & strW)
         End If
 
-
         s.Append(" GROUP BY " & colDD1.Pivot_GroupBySql)
         If Not colDD2 Is Nothing Then
             s.Append("," & colDD2.Pivot_GroupBySql)
+        End If
+        If Not addCols Is Nothing Then
+            For Each c In addCols.Where(Function(p) p.MyTag = "all")
+                If c.Pivot_GroupBySql <> "" Then
+                    s.Append("," & c.Pivot_GroupBySql)
+                Else
+                    s.Append("," & c.ColumnName)
+                End If
+            Next
         End If
 
         If mq.MG_SortString = "" Then

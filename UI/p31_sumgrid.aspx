@@ -81,11 +81,11 @@
             <asp:Panel ID="panSumCols" runat="server" CssClass="content-box2">
                 <div class="title">
                     Nastavení sledovaných veličin
-                <asp:Button ID="cmdRefresh" runat="server" CssClass="cmd" Text="Obnovit statistiku" />
+                <asp:Button ID="cmdRefresh" runat="server" CssClass="cmd" Text="Obnovit výstup statistiky" />
                 </div>
                 <div class="content">
                     <div class="div6">
-                        <span>Druhá úroveň souhrnů:</span><telerik:RadComboBox ID="dd2" runat="server" AutoPostBack="true"></telerik:RadComboBox>
+                        <span>Druhá úroveň seskupení:</span> <telerik:RadComboBox ID="dd2" runat="server" AutoPostBack="true"></telerik:RadComboBox>
                     </div>
                     <table cellpadding="8">
                         <tr valign="top">

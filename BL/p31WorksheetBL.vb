@@ -42,7 +42,7 @@
 
     Function SplitRecord(intP31ID As Integer, dblRec1Hours As Double, strRec1Text As String, dblRec2Hours As Double, strRec2Text As String) As Integer
     ''Function GetDrillDownDatasource(groupCol As BO.PivotRowColumnField, sumCols As List(Of BO.PivotSumField), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
-    Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), sumCols_Grid As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
+    Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), addCols As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable
 
     Function UpdateTempField(strField As String, dbValue As Object, strGUID As String, intP31ID As Integer) As Boolean
     Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean, strP31Guid As String) As Boolean
@@ -450,8 +450,8 @@ Class p31WorksheetBL
     Public Function UpdateTemp_After_EditOrig(intP31ID As Integer, strGUID As String) As Boolean Implements Ip31WorksheetBL.UpdateTemp_After_EditOrig
         Return _cDL.UpdateTemp_After_EditOrig(intP31ID, strGUID)
     End Function
-    Public Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), sumCols_Grid As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable Implements Ip31WorksheetBL.GetDrillDownGridSource
-        Return _cDL.GetDrillDownGridSource(colDD1, colDD2, sumCols_Pivot, sumCols_Grid, strParentSqlWhere, mq)
+    Public Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), addCols As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable Implements Ip31WorksheetBL.GetDrillDownGridSource
+        Return _cDL.GetDrillDownGridSource(colDD1, colDD2, sumCols_Pivot, addCols, strParentSqlWhere, mq)
     End Function
 
 End Class

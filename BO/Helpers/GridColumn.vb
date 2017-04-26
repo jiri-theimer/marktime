@@ -25,6 +25,7 @@ Public Class GridColumn
     Public Property TreeGroup As String
     Public Property Pivot_SelectSql As String
     Public Property Pivot_GroupBySql As String
+    Public Property MyTag As String
 
 
     Public Sub New(colX29ID As BO.x29IdEnum, strHeader As String, strName As String, Optional colType As cfENUM = cfENUM.AnyString, Optional bolSortable As Boolean = True)

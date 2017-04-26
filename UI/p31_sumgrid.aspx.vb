@@ -274,7 +274,7 @@ Public Class p31_sumgrid
             hidSGF.Value += "|" & colDD2.ColumnName
         End If
 
-        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownGridSource(Me.CurrentDD1, colDD2, Me.CurrentSumFields_PIVOT, Nothing, "", mq)
+        Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownGridSource(Me.CurrentDD1, colDD2, Me.CurrentSumFields_PIVOT, Me.CurrentColFields_PIVOT, "", mq)
         grid1.VirtualRowCount = dt.Rows.Count
         grid1.DataSourceDataTable = dt
 
@@ -314,8 +314,15 @@ Public Class p31_sumgrid
             If GetColPIDsInLine() = "" Then Return lis
             Dim a() As String = Split(GetColPIDsInLine(), ",")
             For i As Integer = 0 To UBound(a)
-                Dim strF As String = a(i)
-                lis.Add(Me.lisDD.Where(Function(p) p.ColumnName = strF).First)
+                Dim b() As String = Split(a(i), "-")
+                Dim c As BO.GridColumn = Me.lisDD.Where(Function(p) p.ColumnName = b(0)).First
+                If UBound(b) > 0 Then
+                    c.MyTag = b(1)
+                Else
+                    c.MyTag = "all"
+                End If
+
+                lis.Add(c)
             Next
             Return lis
         End Get
@@ -389,13 +396,16 @@ Public Class p31_sumgrid
             If Not Me.CurrentDD2 Is Nothing Then
                 .AddColumn(Me.CurrentDD2.ColumnName, Me.CurrentDD2.ColumnHeader)
             End If
+            If Not Me.CurrentColFields_PIVOT Is Nothing Then
+                For Each c In Me.CurrentColFields_PIVOT
+                    .AddColumn("col" & c.ColumnName, c.ColumnHeader, c.ColumnType, , , , , , False)
+                Next
+            End If
             If Not Me.CurrentSumFields_PIVOT Is Nothing Then
                 For Each c In Me.CurrentSumFields_PIVOT
-
                     .AddColumn("sum" & c.FieldTypeID.ToString, c.Caption, BO.cfENUM.Numeric2, , , , , True, False)
                 Next
             End If
-            
 
             .AddColumn("RecsCount", "Počet", BO.cfENUM.Numeric0, True, , , , True)
             If chkFirstLastCount.Checked Then
