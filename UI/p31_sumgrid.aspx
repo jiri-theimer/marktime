@@ -191,19 +191,20 @@
         function go2grid(pid) {
             var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;
             var j70id = "<%=hidJ70ID.Value%>";
+            var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
+            var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
             
-            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid);
+            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid+"&masterprefix="+masterprefix+"&masterpid="+masterpid);
         }
 
-        function querybuilder() {
+        function querybuilder() {            
             var j70id = "<%=hidJ70ID.Value%>";
             sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query.png");
             return (false);
         }
 
         function hardrefresh(pid, flag) {
-            
-
+                        
             document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
             document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
 
