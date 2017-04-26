@@ -15,14 +15,10 @@
         </div>
         <div class="commandcell">
 
-            <span>#1:</span>
+            <span>Seskupit podle:</span>
             <telerik:RadComboBox ID="dd1" runat="server" AutoPostBack="true"></telerik:RadComboBox>
         </div>
-        <div class="commandcell" style="padding-left: 10px;">
-
-            <span>#2:</span>
-            <telerik:RadComboBox ID="dd2" runat="server" AutoPostBack="true"></telerik:RadComboBox>
-        </div>
+        
         <div class="commandcell" style="padding-left: 3px;">
             <button type="button" id="cmdGUI" class="show_hide1" style="padding: 1px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Rozvržení panelů">
                 Sledované veličiny<img src="Images/arrow_down.gif" />
@@ -88,20 +84,57 @@
                 <asp:Button ID="cmdRefresh" runat="server" CssClass="cmd" Text="Obnovit statistiku" />
                 </div>
                 <div class="content">
-
+                    <div class="div6">
+                        <span>Druhá úroveň souhrnů:</span><telerik:RadComboBox ID="dd2" runat="server" AutoPostBack="true"></telerik:RadComboBox>
+                    </div>
                     <table cellpadding="8">
                         <tr valign="top">
                             <td>
                                 <div><%=Resources.grid_designer.DostupneSloupce %></div>
-                                <telerik:RadListBox ID="colsSource" Height="200px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
+                                <telerik:RadListBox ID="colsSource" Height="100px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">                                  
+                                    <ButtonSettings TransferButtons="All" ShowTransferAll="false" />
+
+                                    <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
+                                </telerik:RadListBox>
+                            </td>
+                            
+                            <td>
+                                <div><%=Resources.grid_designer.VybraneSloupce %></div>
+                                <telerik:RadListBox ID="colsDest" runat="server" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
+
+                                    <EmptyMessageTemplate>
+                                        <div style="padding-top: 50px;">
+                                            <%=Resources.grid_designer.ZadneVybraneSloupce %>
+                                        </div>
+                                    </EmptyMessageTemplate>
+                                </telerik:RadListBox>
+                                <div>
+                                    
+                                    <asp:DropDownList ID="cbxMaxMinAll" runat="server" ToolTip="Okruh zobrazovaných hodnot pole ve statistice" AutoPostBack="true">
+                                    <asp:ListItem Text="Změnit u pole typ agregace hodnot na:" Value=""></asp:ListItem>
+                                    <asp:ListItem Text="Všechny hodnoty pole (ALL)" Value="all"></asp:ListItem>
+                                    <asp:ListItem Text="Maximální hodnota pole (MAX)" Value="max"></asp:ListItem>
+                                    <asp:ListItem Text="Minimální hodnota pole (MIN)" Value="min"></asp:ListItem>
+                                </asp:DropDownList>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                    <table cellpadding="8">
+                        <tr valign="top">
+                            <td>
+                                <div>Dostupné SUM veličiny</div>
+                                <telerik:RadListBox ID="sumsSource" Height="200px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="sumsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
                                     <ButtonSettings TransferButtons="All" ShowTransferAll="false" />
 
                                     <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
                                 </telerik:RadListBox>
                             </td>
                             <td>
-                                <div><%=Resources.grid_designer.VybraneSloupce %></div>
-                                <telerik:RadListBox ID="colsDest" runat="server" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
+                                <div>Vybrané SUM veličiny</div>
+                                <telerik:RadListBox ID="sumsDest" runat="server" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
 
                                     <EmptyMessageTemplate>
                                         <div style="padding-top: 50px;">
@@ -153,6 +186,7 @@
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidTabQueryFlag" runat="server" />
     <asp:HiddenField ID="hidSGF" runat="server" />
+    <asp:HiddenField ID="hidToggle" runat="server" />
 
     <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:HiddenField ID="hidGridColumnSql" runat="server" />
@@ -167,9 +201,10 @@
                 $(".slidingDiv1").slideToggle();
             });
 
-
-
-
+            <%if me.hidToggle.value="1" then%>
+            $(".slidingDiv1").slideToggle();
+            document.getElementById("<%=Me.hidToggle.ClientID%>").value="";
+            <%end If%>
 
         });
 

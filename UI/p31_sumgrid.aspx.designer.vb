@@ -23,15 +23,6 @@ Partial Public Class p31_sumgrid
     Protected WithEvents dd1 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''dd2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents dd2 As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
@@ -122,6 +113,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents cmdRefresh As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''dd2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents dd2 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
     '''colsSource control.
     '''</summary>
     '''<remarks>
@@ -138,6 +138,33 @@ Partial Public Class p31_sumgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents colsDest As Global.Telerik.Web.UI.RadListBox
+
+    '''<summary>
+    '''cbxMaxMinAll control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxMaxMinAll As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''sumsSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sumsSource As Global.Telerik.Web.UI.RadListBox
+
+    '''<summary>
+    '''sumsDest control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sumsDest As Global.Telerik.Web.UI.RadListBox
 
     '''<summary>
     '''panQueryByEntity control.
@@ -273,6 +300,15 @@ Partial Public Class p31_sumgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidSGF As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidToggle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidToggle As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidMasterAW control.
