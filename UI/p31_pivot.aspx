@@ -62,7 +62,7 @@
         <div style="float: left;">
             <img src="Images/pivot_32.png" alt="PIVOT" />
 
-            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Worksheet PIVOT"></asp:Label>
+            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="PIVOT"></asp:Label>
         </div>
         <div class="commandcell" style="padding-left: 6px;">
             <uc:periodcombo ID="period1" runat="server" Width="250px"></uc:periodcombo>

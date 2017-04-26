@@ -240,6 +240,10 @@ Public Class p31_sumgrid
             If Me.CurrentDD1.ColumnName = colDD2.ColumnName Then colDD2 = Nothing
        
         End If
+        hidSGF.Value = Me.CurrentDD1.ColumnName
+        If Not colDD2 Is Nothing Then
+            hidSGF.Value += "|" & colDD2.ColumnName
+        End If
 
         Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownGridSource(Me.CurrentDD1, colDD2, Me.CurrentSumFields_PIVOT, Nothing, "", mq)
         grid1.VirtualRowCount = dt.Rows.Count
@@ -454,7 +458,7 @@ Public Class p31_sumgrid
         End With
         basUIMT.RenderQueryCombo(Me.j70ID)
 
-        
+
     End Sub
 
     Private Sub cmdHardRefresh_Click(sender As Object, e As EventArgs) Handles cmdHardRefresh.Click

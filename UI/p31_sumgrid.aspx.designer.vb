@@ -266,6 +266,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents hidTabQueryFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidSGF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSGF As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidMasterAW control.
     '''</summary>
     '''<remarks>

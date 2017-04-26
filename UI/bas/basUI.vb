@@ -15,7 +15,7 @@ Public Class basUI
     End Function
     Public Shared Function AddQuerystring2Page(strPage As String, strAddQuerystring As String) As String
         'do aspx stránky strPage přidat parametr strAddQuerystring
-        If strPage.IndexOf("?") > 0 Then
+        If strPage.IndexOf("?") >= 0 Then
             Return strPage & "&" & strAddQuerystring
         Else
             Return strPage & "?" & strAddQuerystring

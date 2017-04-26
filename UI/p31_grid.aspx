@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-           
+
 
             $('#<%=Me.txtSearch.ClientID%>').keydown(function (event) {
                 var keypressed = event.keyCode || event.which;
@@ -27,7 +27,7 @@
             $("#<%=Me.txtSearch.ClientID%>").focus(function () { $(this).select(); });
 
 
-            
+
 
         });
 
@@ -77,13 +77,13 @@
 
             var masterTable = $find("<%=grid1.radGridOrig.ClientID%>").get_masterTableView();
             <%If Me.hidDrillDownField.Value = "" Then%>
-            var sel = masterTable.get_selectedItems();            
+            var sel = masterTable.get_selectedItems();
             <%Else%>
 
             var dataItems = masterTable.get_dataItems();
             for (var i = 0; i < dataItems.length; i++) {
                 if (dataItems[i].get_nestedViews().length > 0) {
-                    var sel = dataItems[i].get_nestedViews()[0].get_selectedItems();                    
+                    var sel = dataItems[i].get_nestedViews()[0].get_selectedItems();
                 }
             }
 
@@ -176,36 +176,35 @@
             return (false);
         }
         function drilldown() {
-            var j70id = "<%=Me.CurrentJ70ID%>";
-            var w = screen.availWidth - 100;
+            
             var masterprefix = document.getElementById("<%=Me.hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=Me.hidMasterPID.ClientID%>").value;
-            
-            location.replace("p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid);
-            //sw_master("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/pivot.png",true);
-            
+            var tabqueryflag = document.getElementById("<%=Me.hidMasterTabAutoQueryFlag.ClientID%>").value;
+
+            location.replace("p31_sumgrid.aspx??&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + tabqueryflag);
+           
             return (false);
         }
-        
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="height: 44px; background-color: white; border-bottom: solid 1px silver;">
+    <div style="min-height: 44px; background-color: white; border-bottom: solid 1px silver;">
         <div style="float: left; padding-top: 3px;">
             <img src="Images/worksheet_32.png" alt="Worksheet přehled" />
         </div>
-        <div class="commandcell" style="min-width: 150px; padding-left: 10px;">
-            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Worksheet" Style="vertical-align: top;"></asp:Label>
+        <div class="commandcell" style="padding-left: 10px; padding-right: 6px;">
+            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Style="vertical-align: top;"></asp:Label>
         </div>
-        <div class="commandcell">                       
+        <div class="commandcell">
             <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/drilldown.png" ToolTip="Statistika worksheet přehledu" CssClass="button-link" />
         </div>
-        <div class="commandcell" style="padding-left:10px;">
+        <div class="commandcell" style="padding-left: 10px;">
             <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
-            
+
             <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return griddesigner()" ImageUrl="Images/griddesigner.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
         </div>
-        <div class="commandcell" style="padding-left:10px;">
+        <div class="commandcell" style="padding-left: 10px;">
             <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
         </div>
 
@@ -215,13 +214,13 @@
 
         </div>
 
-        <div class="commandcell">            
+        <div class="commandcell">
             <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-            <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />            
+            <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
         </div>
 
-        <div class="commandcell" style="padding-left:20px;">
+        <div class="commandcell" style="padding-left: 20px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
 
@@ -231,7 +230,7 @@
                             <telerik:RadMenuItem Value="cmdEdit" Text="<%$Resources:common,Upravit %>" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdClone" Text="<%$Resources:common,Kopirovat %>" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdSplit" Text="<%$Resources:p31_grid,Rozdelit %>" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
-                        </Items>                       
+                        </Items>
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Akce" Value="action" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
                         <Items>
@@ -245,10 +244,6 @@
                         <ContentTemplate>
                             <div style="padding: 20px;">
                                 <div class="div6">
-
-                                    
-
-
                                 </div>
                                 <asp:Panel ID="panGroupBy" runat="server" CssClass="div6">
                                     <span><%=Resources.p31_grid.DatoveSouhrny%></span>
@@ -259,8 +254,8 @@
                                     </div>
                                 </asp:Panel>
 
-                                
-                                <asp:panel ID="panExport" runat="server" CssClass="div6">
+
+                                <asp:Panel ID="panExport" runat="server" CssClass="div6">
                                     <img src="Images/export.png" alt="export" />
                                     <asp:LinkButton ID="cmdExport" runat="server" Text="Export" />
 
@@ -272,8 +267,8 @@
 
                                     <img src="Images/doc.png" alt="doc" />
                                     <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-                                    
-                                </asp:panel>
+
+                                </asp:Panel>
                                 <div class="div6">
                                     <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="<%$Resources:common,PocetZaznamuNaStranku %>"></asp:Label>
                                     <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
@@ -299,12 +294,28 @@
         <div class="commandcell">
             <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="margin-left: 10px; font-weight: bold; color: red;"></asp:LinkButton>
         </div>
+        <div style="clear: both;"></div>
+        <asp:Panel ID="panAdditionalQuery" runat="server" CssClass="div6" Visible="false">
+            <table cellpadding="0">
+                <tr>
+                    <td>
+                        <asp:Image ID="imgEntity" runat="server" />
+                    </td>
+                    <td style="padding-left: 10px;">
+
+                        <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
+
+                    </td>
+                </tr>
+            </table>
+            <asp:Label ID="lblDrillDown" runat="server" CssClass="valboldred"></asp:Label>
+        </asp:Panel>
     </div>
 
-    
+
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
-    
-    
+
+
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
@@ -319,6 +330,9 @@
     <asp:HiddenField ID="hidMasterTabAutoQueryFlag" runat="server" />
     <asp:HiddenField ID="hidFooterString" runat="server" />
     <asp:HiddenField ID="hidJ62ID" runat="server" />
+    <asp:HiddenField ID="hidSGF" runat="server" />
+    <asp:HiddenField ID="hidSGA" runat="server" />
+    <asp:HiddenField ID="hidSGV" runat="server" />
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

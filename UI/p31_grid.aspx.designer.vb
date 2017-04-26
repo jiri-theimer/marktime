@@ -212,6 +212,42 @@ Partial Public Class p31_grid
     Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''panAdditionalQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panAdditionalQuery As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''imgEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''MasterRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''lblDrillDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDrillDown As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''grid1 control.
     '''</summary>
     '''<remarks>
@@ -345,6 +381,33 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidJ62ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidSGF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSGF As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidSGA control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSGA As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidSGV control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSGV As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

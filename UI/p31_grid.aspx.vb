@@ -51,6 +51,11 @@ Public Class p31_grid
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
             End If
+            If Request.Item("sgf") <> "" Then
+                hidSGF.Value = Request.Item("sgf")
+                hidSGV.Value = Request.Item("sgv")
+                hidSGA.Value = Request.Item("sga")
+            End If
             If Request.Item("aw") <> "" Then
                 Me.hidMasterAW.Value = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
             End If
@@ -112,17 +117,58 @@ Public Class p31_grid
             End With
             
 
+            If CurrentMasterPrefix <> "" Then
+                panAdditionalQuery.Visible = True
+                Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value))
+                Me.MasterRecord.NavigateUrl = hidMasterPrefix.Value & "_framework.aspx?pid=" & hidMasterPID.Value
+                Select Case hidMasterPrefix.Value
+                    Case "p41" : imgEntity.ImageUrl = "Images/project.png"
+                    Case "j02" : imgEntity.ImageUrl = "Images/person.png"
+                    Case "p28" : imgEntity.ImageUrl = "Images/contact.png"
+                    Case "p91" : imgEntity.ImageUrl = "Images/invoice.png"
+                End Select
+            Else
+                panAdditionalQuery.Visible = False
+            End If
+            If hidSGF.Value <> "" Then
+                SetupSG()
+            End If
+
             RecalcVirtualRowCount()
             Handle_Permissions()
-            If Me.CurrentMasterPrefix <> "" Then
-                With Me.lblFormHeader
-                    .CssClass = ""
-                    .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
-                    If .Text.Length > 30 Then .Text = Left(.Text, 28) & "..."
-                    .Text = "<a href='" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString & "'>" & .Text & "</a>"
-                End With
-            End If
         End If
+    End Sub
+    Private Sub SetupSG()
+        panAdditionalQuery.Visible = True
+        Dim a() As String = Split(hidSGF.Value, "|"), b() As String = Split(hidSGV.Value, "|"), lis As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet), strW As String = ""
+        For i As Integer = 0 To UBound(a)
+            Dim strF As String = a(i)
+            Dim c As BO.GridColumn = lis.Where(Function(p) p.ColumnName = strF).First
+            Dim strLW As String = c.Pivot_GroupBySql
+            If b(i) = "" Then
+                strLW += " IS NULL"
+            Else
+                If strLW.IndexOf("convert") >= 0 Then
+                    strLW += "='" & b(i) & "'"
+                Else
+                    strLW += "=" & b(i)
+                End If
+            End If
+
+            If i = 0 Then
+                lblDrillDown.Text = c.ColumnHeader
+                strW = strLW
+            Else
+                lblDrillDown.Text += " -> " & c.ColumnHeader
+                strW += " AND " & strLW
+            End If
+        Next
+        If hidMasterAW.Value = "" Then
+            hidMasterAW.Value = strW
+        Else
+            hidMasterAW.Value += " AND (" & strW & ")"
+        End If
+        lblDrillDown.Text = "<img src='Images/drilldown.png' style='padding-right:6px;'/>" & lblDrillDown.Text
     End Sub
     Private Sub SetupJ70Combo(intDef As Integer)
         Dim mq As New BO.myQuery
@@ -433,9 +479,11 @@ Public Class p31_grid
                 .DateUntil = period1.DateUntil
             End If
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
+            
             .TabAutoQuery = Me.hidMasterTabAutoQueryFlag.Value
         End With
     End Sub
+
 
     
     Private Sub RecalcVirtualRowCount()
@@ -449,11 +497,12 @@ Public Class p31_grid
 
       
         grid1.radGridOrig.CurrentPageIndex = 0
-        If grid1.VirtualRowCount > 100000 Then
-            Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
-        Else
-            Me.lblFormHeader.Text = "Worksheet (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
-        End If
+        Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
+        ''If grid1.VirtualRowCount > 100000 Then
+        ''    Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
+        ''Else
+        ''    Me.lblFormHeader.Text = "Worksheet (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
+        ''End If
 
     End Sub
 
@@ -462,16 +511,15 @@ Public Class p31_grid
     Private Sub ReloadPage()
         Dim s As String = ""
         If Me.CurrentMasterPID <> 0 Then
-            s += "masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString
+            s = basUI.AddQuerystring2Page(s, "masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString)
         End If
         If Me.CurrentJ62ID > 0 Then
-            If s = "" Then
-                s = "j62id=" & Me.CurrentJ62ID.ToString
-            Else
-                s += "&j62id=" & Me.CurrentJ62ID.ToString
-            End If
+            s = basUI.AddQuerystring2Page(s, "j62id=" & Me.CurrentJ62ID.ToString)
         End If
-        Response.Redirect(basUI.AddQuerystring2Page("p31_grid.aspx", s))
+        If hidSGF.Value <> "" Then
+            s = basUI.AddQuerystring2Page(s, "sgf=" & hidSGF.Value & "&sgv=" & hidSGV.Value & "&sga=" & hidSGA.Value)
+        End If
+        Response.Redirect("p31_grid.aspx" & s)
     End Sub
 
     Private Sub p31_grid_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
@@ -611,4 +659,6 @@ Public Class p31_grid
     Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
         GridExport("doc")
     End Sub
+
+   
 End Class

@@ -152,6 +152,7 @@
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidTabQueryFlag" runat="server" />
+    <asp:HiddenField ID="hidSGF" runat="server" />
 
     <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:HiddenField ID="hidGridColumnSql" runat="server" />
@@ -188,7 +189,10 @@
         }
 
         function go2grid(pid) {
-            alert(pid);
+            var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;
+            var j70id = "<%=hidJ70ID.Value%>";
+            
+            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid);
         }
 
         function querybuilder() {

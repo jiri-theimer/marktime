@@ -407,15 +407,17 @@
             <div style="clear: both;"></div>
 
             <div style="margin-top: 20px;">
-                <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
+            <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
 
-                <span style="padding-left: 30px;">&nbsp</span>
-                <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
+            <span style="padding-left: 30px;">&nbsp</span>
+            <a href="javascript:personalpage()">Nastavit si startovací stránku</a>
+            <span style="padding-left: 30px;">&nbsp</span>
+            <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
 
-                <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
+            <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
 
-                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin a obrázek" Checked="true" Style="float: right;" />
-            </div>
+            <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin a obrázek" Checked="true" Style="float: right;" />
+        </div>
         </div>
 
 
