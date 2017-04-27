@@ -37,7 +37,7 @@
         <div class="commandcell" style="margin-left: 12px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
-                   
+                   <telerik:RadMenuItem text="Pivot" Value="pivot" NavigateUrl="javascript:pivot()"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')"></telerik:RadMenuItem>
@@ -79,26 +79,26 @@
         <div class="slidingDiv1">
           
             <asp:Panel ID="panSumCols" runat="server" CssClass="content-box2">
-                <div class="title">
-                    Nastavení sledovaných veličin
-                <asp:Button ID="cmdRefresh" runat="server" CssClass="cmd" Text="Obnovit výstup statistiky" />
+                <div class="title">                    
+                    Nastavení sledovaných veličin                
                 </div>
                 <div class="content">
                     <div class="div6">
                         <span>Druhá úroveň seskupení:</span> <telerik:RadComboBox ID="dd2" runat="server" AutoPostBack="true"></telerik:RadComboBox>
                     </div>
+                    <div class="div6">
+                        <asp:Button ID="cmdRefresh" runat="server" CssClass="cmd" Text="Obnovit výstup statistiky" />
+                    </div>
                     <table cellpadding="8">
                         <tr valign="top">
-                            <td>
+                            <td style="border-right:solid 2px skyblue;">
                                 <div><%=Resources.grid_designer.DostupneSloupce %></div>
-                                <telerik:RadListBox ID="colsSource" Height="100px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">                                  
-                                    <ButtonSettings TransferButtons="All" ShowTransferAll="false" />
+                                <telerik:RadListBox ID="colsSource" Height="200px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">                                  
+                                    <ButtonSettings TransferButtons="All" ShowTransferAll="false" Position="Bottom" />
 
                                     <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
                                 </telerik:RadListBox>
-                            </td>
-                            
-                            <td>
+                           
                                 <div><%=Resources.grid_designer.VybraneSloupce %></div>
                                 <telerik:RadListBox ID="colsDest" runat="server" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
 
@@ -119,20 +119,15 @@
                                 </div>
                             </td>
 
-                        </tr>
-                    </table>
-
-                    <table cellpadding="8">
-                        <tr valign="top">
+                       
                             <td>
                                 <div>Dostupné SUM veličiny</div>
                                 <telerik:RadListBox ID="sumsSource" Height="200px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="sumsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
-                                    <ButtonSettings TransferButtons="All" ShowTransferAll="false" />
+                                    <ButtonSettings TransferButtons="All" ShowTransferAll="false" Position="Bottom" />
 
                                     <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
                                 </telerik:RadListBox>
-                            </td>
-                            <td>
+                           
                                 <div>Vybrané SUM veličiny</div>
                                 <telerik:RadListBox ID="sumsDest" runat="server" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
 
@@ -226,19 +221,22 @@
             var MasterTable = grid.get_masterTableView()
             var row = MasterTable.get_dataItems()[args.get_itemIndexHierarchical()];
             var cell = MasterTable.getCellByColumnUniqueName(row, "<%=Me.dd1.SelectedValue%>");
-            alert(cell.innerHTML);
+            var sga = cell.innerHTML;
+            <%If Me.dd2.SelectedIndex>0 then%>
+            cell = MasterTable.getCellByColumnUniqueName(row, "<%=Me.dd2.SelectedValue%>");
+            sga = sga + "->" + cell.innerHTML;
+            <%End If%>
             
-            go2grid(pid);
+            go2grid(pid,sga);
         }
 
-        function go2grid(pid) {
-            var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;
-            var sga = "";
+        function go2grid(pid,sga) {
+            var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;            
             var j70id = "<%=hidJ70ID.Value%>";
             var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
             
-            window.open("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid+"&masterprefix="+masterprefix+"&masterpid="+masterpid+"&sga="+encodeURI(sga),"_self");
+            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid+"&masterprefix="+masterprefix+"&masterpid="+masterpid+"&sga="+encodeURI(sga));
         }
 
         function querybuilder() {            
@@ -254,6 +252,10 @@
 
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdHardRefresh, "", False)%>;
 
+        }
+
+        function pivot() {
+            sw_master("p31_sumgrid_pivot.aspx", "Images/pivot.png", true);
         }
     </script>
 </asp:Content>

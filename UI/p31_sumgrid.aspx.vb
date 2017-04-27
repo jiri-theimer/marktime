@@ -280,6 +280,8 @@ Public Class p31_sumgrid
         grid1.VirtualRowCount = dt.Rows.Count
         grid1.DataSourceDataTable = dt
 
+        dt.WriteXmlSchema(Master.Factory.x35GlobalParam.TempFolder & "\xx_schema.xml", True)
+        dt.WriteXml(Master.Factory.x35GlobalParam.TempFolder & "\xx_data.xml", True)
 
     End Sub
     Private ReadOnly Property lisDD As List(Of BO.GridColumn)
@@ -375,12 +377,18 @@ Public Class p31_sumgrid
     End Sub
     Private Sub RefreshData()
         SetupGrid()
-        If Request.Item("pid") = "" Then
-            grid1.Rebind(False)
-        Else
-            grid1.Rebind(False, BO.BAS.IsNullInt(Request.Item("pid")))
+        grid1.Rebind(False)
+        Dim strDefPID As String = Request.Item("pid")
+        If strDefPID <> "" Then
+            With grid1.radGridOrig
+                For Each it As GridDataItem In .MasterTableView.Items
+                    If it.GetDataKeyValue("pid") = strDefPID Then
+                        it.Selected = True
+                        Return
+                    End If
+                Next
+            End With
         End If
-
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click

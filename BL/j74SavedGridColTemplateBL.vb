@@ -571,6 +571,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC("Stát klienta", "p91ClientAddress1_Country"))
             .Add(AGC("Kontaktní osoba", "p91ClientPerson"))
             .Add(AGC("IČ klienta", "p91Client_RegID"))
+            .Add(AGC("DIČ klienta", "p91Client_VatID"))
 
             .Add(AGC("Vlastník záznamu", "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName"))
             .Add(AGC("Založeno", "p91DateInsert", BO.cfENUM.DateTime))
