@@ -246,7 +246,7 @@ Public Class p31_sumgrid
             Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
             ''Dim cRec As DataRowView = CType(e.Item.DataItem, DataRowView)
             With dataItem("systemcolumn")
-                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + ")'><img src='Images/grid.png' title='Přejít na přehled worksheet záznamů'></a>"
+                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + ")'><img src='Images/worksheet.png' title='Přejít na přehled worksheet záznamů'></a>"
             End With
         End If
     End Sub
@@ -270,8 +270,10 @@ Public Class p31_sumgrid
 
         End If
         hidSGF.Value = Me.CurrentDD1.ColumnName
+
         If Not colDD2 Is Nothing Then
             hidSGF.Value += "|" & colDD2.ColumnName
+
         End If
 
         Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownGridSource(Me.CurrentDD1, colDD2, Me.CurrentSumFields_PIVOT, Me.CurrentColFields_PIVOT, "", mq)
@@ -373,7 +375,12 @@ Public Class p31_sumgrid
     End Sub
     Private Sub RefreshData()
         SetupGrid()
-        grid1.Rebind(False)
+        If Request.Item("pid") = "" Then
+            grid1.Rebind(False)
+        Else
+            grid1.Rebind(False, BO.BAS.IsNullInt(Request.Item("pid")))
+        End If
+
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click

@@ -309,6 +309,7 @@
                 </tr>
             </table>
             <asp:Label ID="lblDrillDown" runat="server" CssClass="valboldred"></asp:Label>
+            <asp:HyperLink ID="linkDrillDown" runat="server"></asp:HyperLink>
         </asp:Panel>
     </div>
 

@@ -20,7 +20,7 @@
         </div>
         
         <div class="commandcell" style="padding-left: 3px;">
-            <button type="button" id="cmdGUI" class="show_hide1" style="padding: 1px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Rozvržení panelů">
+            <button type="button" id="cmdGUI" class="show_hide1" style="padding: 2px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Rozvržení panelů">
                 Sledované veličiny<img src="Images/arrow_down.gif" />
             </button>
         </div>
@@ -186,6 +186,8 @@
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidTabQueryFlag" runat="server" />
     <asp:HiddenField ID="hidSGF" runat="server" />
+    
+    
     <asp:HiddenField ID="hidToggle" runat="server" />
 
     <asp:HiddenField ID="hidMasterAW" runat="server" />
@@ -220,16 +222,23 @@
                 alert("Není vybrán záznam.");
                 return
             }
+            var grid = sender;
+            var MasterTable = grid.get_masterTableView()
+            var row = MasterTable.get_dataItems()[args.get_itemIndexHierarchical()];
+            var cell = MasterTable.getCellByColumnUniqueName(row, "<%=Me.dd1.SelectedValue%>");
+            alert(cell.innerHTML);
+            
             go2grid(pid);
         }
 
         function go2grid(pid) {
             var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;
+            var sga = "";
             var j70id = "<%=hidJ70ID.Value%>";
             var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
             
-            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid+"&masterprefix="+masterprefix+"&masterpid="+masterpid);
+            window.open("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid+"&masterprefix="+masterprefix+"&masterpid="+masterpid+"&sga="+encodeURI(sga),"_self");
         }
 
         function querybuilder() {            

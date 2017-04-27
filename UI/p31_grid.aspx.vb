@@ -54,7 +54,7 @@ Public Class p31_grid
             If Request.Item("sgf") <> "" Then
                 hidSGF.Value = Request.Item("sgf")
                 hidSGV.Value = Request.Item("sgv")
-                hidSGA.Value = Request.Item("sga")
+                hidSGA.Value = Server.UrlDecode(Request.Item("sga"))
             End If
             If Request.Item("aw") <> "" Then
                 Me.hidMasterAW.Value = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
@@ -169,6 +169,8 @@ Public Class p31_grid
             hidMasterAW.Value += " AND (" & strW & ")"
         End If
         lblDrillDown.Text = "<img src='Images/drilldown.png' style='padding-right:6px;'/>" & lblDrillDown.Text
+        linkDrillDown.Text = hidSGA.Value
+        linkDrillDown.NavigateUrl = "p31_sumgrid.aspx??&masterprefix=" + Me.CurrentMasterPrefix + "&masterpid=" + Me.CurrentMasterPID.ToString & "&tabqueryflag=" + Me.hidMasterTabAutoQueryFlag.Value & "&pid=" & hidSGV.Value
     End Sub
     Private Sub SetupJ70Combo(intDef As Integer)
         Dim mq As New BO.myQuery
