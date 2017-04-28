@@ -10,7 +10,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div style="background-color: white;">
         <div style="float: left;">
-            <img src="Images/drilldown_32.png" title="Summary worksheet přehledy" />
+            <img src="Images/pivot_32.png" title="Summary worksheet přehledy" />
 
         </div>
         <div class="commandcell">
@@ -203,6 +203,9 @@
             document.getElementById("<%=Me.hidToggle.ClientID%>").value="";
             <%end If%>
 
+            
+           
+            
         });
 
 
@@ -255,7 +258,11 @@
         }
 
         function pivot() {
-            sw_master("p31_sumgrid_pivot.aspx", "Images/pivot.png", true);
+            
+            sw_master("p31_sumgrid.aspx?pivot=1", "Images/pivot.png", true);
+            
         }
+
+        
     </script>
 </asp:Content>

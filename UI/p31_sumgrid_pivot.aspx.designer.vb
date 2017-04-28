@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class p31_sumgrid_pivot
 
     '''<summary>
+    '''RadClientExportManager1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadClientExportManager1 As Global.Telerik.Web.UI.RadClientExportManager
+
+    '''<summary>
     '''pivot1 control.
     '''</summary>
     '''<remarks>

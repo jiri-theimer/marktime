@@ -280,8 +280,12 @@ Public Class p31_sumgrid
         grid1.VirtualRowCount = dt.Rows.Count
         grid1.DataSourceDataTable = dt
 
-        dt.WriteXmlSchema(Master.Factory.x35GlobalParam.TempFolder & "\xx_schema.xml", True)
-        dt.WriteXml(Master.Factory.x35GlobalParam.TempFolder & "\xx_data.xml", True)
+        If Request.Item("pivot") = "1" Then
+            dt.WriteXmlSchema(Master.Factory.x35GlobalParam.TempFolder & "\" & Master.Factory.SysUser.PID.ToString & "_pivot_schema.xml", True)
+            dt.WriteXml(Master.Factory.x35GlobalParam.TempFolder & "\" & Master.Factory.SysUser.PID.ToString & "_pivot_data.xml", True)
+            Server.Transfer("p31_sumgrid_pivot.aspx")
+        End If
+        
 
     End Sub
     Private ReadOnly Property lisDD As List(Of BO.GridColumn)
@@ -558,7 +562,7 @@ Public Class p31_sumgrid
             Case "xls"
                 GridExport("xls")
             Case "doc"
-                GridExport("doc")
+                GridExport("doc")            
             Case Else
                 grid1.Rebind(False)
         End Select
