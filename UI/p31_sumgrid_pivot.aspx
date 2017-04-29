@@ -23,7 +23,9 @@
         <TotalsSettings GrandTotalText="Celkem" TotalValueFormat="{0:F2}" ValueTotalFormat="{0:F2}" />
 
         <Fields>
-            
+            <telerik:PivotGridRowField UniqueName="row1" TotalFormatString="{0:F2}" ></telerik:PivotGridRowField>
+            <telerik:PivotGridRowField UniqueName="row2" TotalFormatString="{0:F2}" ></telerik:PivotGridRowField>
+
             <telerik:PivotGridReportFilterField UniqueName="c1"></telerik:PivotGridReportFilterField>
             <telerik:PivotGridReportFilterField UniqueName="c2"></telerik:PivotGridReportFilterField>
             <telerik:PivotGridReportFilterField UniqueName="c3"></telerik:PivotGridReportFilterField>
