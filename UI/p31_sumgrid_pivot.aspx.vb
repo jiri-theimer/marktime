@@ -243,8 +243,20 @@ Public Class p31_sumgrid_pivot
 
             End With
 
-            .DataSource = dt
-            .DataBind()
+
+            Dim qry = From p In dt.AsEnumerable.GroupBy(Function(p) p(0)) Select p.*
+
+
+
+
+            dd.Columns.Add("row1")
+            For Each c In pivot1.Items.Where(Function(p) p.ItemType = PivotGridItemType.Row)
+                c.Cells(0).Text
+            Next
+            Master.Notify(xx.Count & "|" & pivot1.Items.Count)
+
+            '.DataSource = xx
+            '.DataBind()
         End With
     End Sub
 
