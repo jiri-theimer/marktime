@@ -63,6 +63,52 @@
         <ClientSettings EnableFieldsDragDrop="true" ClientMessages-DragToReorder="Drag to reorder"></ClientSettings>
     </telerik:RadPivotGrid>
     </div>
+
+    <div class="div6">
+        <asp:Button ID="cmdRefreshChart" runat="server" CssClass="cmd" Text="Zobrazit graf"  Visible="false"/>
+        <asp:DropDownList ID="cbxChartType" runat="server" AutoPostBack="true" ToolTip="Typ grafu" Visible="false">
+            <asp:ListItem Text="Sloupcový" Value="1"></asp:ListItem>
+            <asp:ListItem Text="Pruhový" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Čárový" Value="3"></asp:ListItem>
+            <asp:ListItem Text="Plošný" Value="4"></asp:ListItem>
+            
+        </asp:DropDownList>
+        <asp:DropDownList ID="cbxChartWidth" runat="server" AutoPostBack="true" ToolTip="Šířka grafu v pixelech" Visible="false">
+            <asp:ListItem Text="800" Value="800"></asp:ListItem>
+            <asp:ListItem Text="1000" Value="1000" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="1500" Value="1500"></asp:ListItem>
+            <asp:ListItem Text="1900" Value="1900"></asp:ListItem>
+        </asp:DropDownList>
+    </div>
+    
+    <asp:Panel ID="panChart1" runat="server" Visible="false">
+        <telerik:RadHtmlChart runat="server" ID="chart1" Width="1000px" Font-Size="Small">
+            <ChartTitle Text="">
+            </ChartTitle>            
+            <PlotArea>                
+                <Series>
+                    <telerik:ColumnSeries Name="Hodiny Fa" DataFieldY="Sum1" >
+                        <Appearance FillStyle-BackgroundColor="LightGreen"></Appearance>
+                        <LabelsAppearance DataFormatString="{0:F2}"></LabelsAppearance>
+                    </telerik:ColumnSeries>
+                    <telerik:ColumnSeries Name="Hodiny NeFa" DataFieldY="Sum2">
+                        <Appearance FillStyle-BackgroundColor="#ff9999"></Appearance>
+                        <LabelsAppearance DataFormatString="{0:F2}"></LabelsAppearance>
+                    </telerik:ColumnSeries>
+                </Series>
+                <XAxis DataLabelsField="Row1" Name="Klient">
+                    <LabelsAppearance RotationAngle="0"></LabelsAppearance>
+                    <MinorGridLines Visible="false" />
+                    <MajorGridLines Visible="false" />
+                </XAxis>
+                <YAxis>
+                    <MinorGridLines Visible="false" />
+                    <MajorGridLines Visible="false" />
+                </YAxis>
+            </PlotArea>
+        </telerik:RadHtmlChart>
+    </asp:Panel>
+
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 
