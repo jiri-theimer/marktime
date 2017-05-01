@@ -13,12 +13,17 @@
             <img src="Images/pivot_32.png" title="Summary worksheet přehledy" />
 
         </div>
-        <div class="commandcell">
+        <div class="commandcell" style="padding-left:6px;">
 
-            <span>Seskupit podle:</span>
-            <telerik:RadComboBox ID="dd1" runat="server" AutoPostBack="true"></telerik:RadComboBox>
+          
+            <asp:DropDownList ID="j77ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="j77Name" Style="width: 250px;"></asp:DropDownList>
+            <button type="button" onclick="templatebuilder()" style="padding: 2px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;">
+                <img src="Images/setting.png" />
+                Nastavení statistiky                
+            </button>
+            
         </div>
-        
+
         <div class="commandcell" style="padding-left: 3px;">
             <button type="button" id="cmdGUI" class="show_hide1" style="padding: 2px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Rozvržení panelů">
                 Sledované veličiny<img src="Images/arrow_down.gif" />
@@ -26,18 +31,18 @@
         </div>
         <div class="commandcell" style="padding-left: 10px;">
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
-            
+
         </div>
         <div class="commandcell">
             <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
             <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
         </div>
-       
+
         <div class="commandcell" style="margin-left: 12px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
-                   <telerik:RadMenuItem text="Pivot" Value="pivot" NavigateUrl="javascript:pivot()"></telerik:RadMenuItem>
+                    <telerik:RadMenuItem Text="Pivot" Value="pivot" NavigateUrl="javascript:pivot()"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/menuarrow.png">
                         <Items>
                             <telerik:RadMenuItem Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')"></telerik:RadMenuItem>
@@ -48,7 +53,7 @@
                     <telerik:RadMenuItem Text="Nastavení" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
 
                         <ContentTemplate>
-                           
+
                             <div class="div6">
                                 <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
                                 <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
@@ -60,8 +65,8 @@
                                 </asp:DropDownList>
 
                             </div>
-                           
-                           
+
+
                             <div class="div6">
                                 <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
                             </div>
@@ -76,79 +81,7 @@
 
 
 
-        <div class="slidingDiv1">
-          
-            <asp:Panel ID="panSumCols" runat="server" CssClass="content-box2">
-                <div class="title">                    
-                    Nastavení sledovaných veličin                
-                </div>
-                <div class="content">
-                    <div class="div6">
-                        <span>Druhá úroveň seskupení:</span> <telerik:RadComboBox ID="dd2" runat="server" AutoPostBack="true"></telerik:RadComboBox>
-                    </div>
-                    <div class="div6">
-                        <asp:Button ID="cmdRefresh" runat="server" CssClass="cmd" Text="Obnovit výstup statistiky" />
-                    </div>
-                    <table cellpadding="8">
-                        <tr valign="top">
-                            <td style="border-right:solid 2px skyblue;">
-                                <div><%=Resources.grid_designer.DostupneSloupce %></div>
-                                <telerik:RadListBox ID="colsSource" Height="200px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">                                  
-                                    <ButtonSettings TransferButtons="All" ShowTransferAll="false" Position="Bottom" />
-
-                                    <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
-                                </telerik:RadListBox>
-                           
-                                <div><%=Resources.grid_designer.VybraneSloupce %></div>
-                                <telerik:RadListBox ID="colsDest" runat="server" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
-
-                                    <EmptyMessageTemplate>
-                                        <div style="padding-top: 50px;">
-                                            <%=Resources.grid_designer.ZadneVybraneSloupce %>
-                                        </div>
-                                    </EmptyMessageTemplate>
-                                </telerik:RadListBox>
-                                <div>
-                                    
-                                    <asp:DropDownList ID="cbxMaxMinAll" runat="server" ToolTip="Okruh zobrazovaných hodnot pole ve statistice" AutoPostBack="true">
-                                    <asp:ListItem Text="Změnit u pole typ agregace hodnot na:" Value=""></asp:ListItem>
-                                    <asp:ListItem Text="Všechny hodnoty pole (ALL)" Value="all"></asp:ListItem>
-                                    <asp:ListItem Text="Maximální hodnota pole (MAX)" Value="max"></asp:ListItem>
-                                    <asp:ListItem Text="Minimální hodnota pole (MIN)" Value="min"></asp:ListItem>
-                                </asp:DropDownList>
-                                </div>
-                            </td>
-
-                       
-                            <td>
-                                <div>Dostupné SUM veličiny</div>
-                                <telerik:RadListBox ID="sumsSource" Height="200px" runat="server" AllowTransfer="true" TransferMode="Move" TransferToID="sumsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
-                                    <ButtonSettings TransferButtons="All" ShowTransferAll="false" Position="Bottom" />
-
-                                    <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
-                                </telerik:RadListBox>
-                           
-                                <div>Vybrané SUM veličiny</div>
-                                <telerik:RadListBox ID="sumsDest" runat="server" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
-
-                                    <EmptyMessageTemplate>
-                                        <div style="padding-top: 50px;">
-                                            <%=Resources.grid_designer.ZadneVybraneSloupce %>
-                                        </div>
-                                    </EmptyMessageTemplate>
-                                </telerik:RadListBox>
-
-                            </td>
-
-                        </tr>
-                    </table>
-
-                </div>
-            </asp:Panel>
-        </div>
-
-        <div style="clear: both;"></div>
-
+      
         <asp:Panel ID="panQueryByEntity" runat="server" CssClass="div6" Visible="false">
             <table cellpadding="0">
                 <tr>
@@ -181,9 +114,12 @@
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidTabQueryFlag" runat="server" />
     <asp:HiddenField ID="hidSGF" runat="server" />
+    <asp:HiddenField ID="hidDD1" runat="server" />
+    <asp:HiddenField ID="hidDD2" runat="server" />
+    <asp:HiddenField ID="hidSumCols" runat="server" />
+    <asp:HiddenField ID="hidAddCols" runat="server" />
+
     
-    
-    <asp:HiddenField ID="hidToggle" runat="server" />
 
     <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:HiddenField ID="hidGridColumnSql" runat="server" />
@@ -191,21 +127,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".slidingDiv1").hide();
-            $(".show_hide1").show();
-
-            $('.show_hide1').click(function () {
-                $(".slidingDiv1").slideToggle();
-            });
-
-            <%if me.hidToggle.value="1" then%>
-            $(".slidingDiv1").slideToggle();
-            document.getElementById("<%=Me.hidToggle.ClientID%>").value="";
-            <%end If%>
-
-            
            
-            
+
         });
 
 
@@ -223,33 +146,33 @@
             var grid = sender;
             var MasterTable = grid.get_masterTableView()
             var row = MasterTable.get_dataItems()[args.get_itemIndexHierarchical()];
-            var cell = MasterTable.getCellByColumnUniqueName(row, "<%=Me.dd1.SelectedValue%>");
+            var cell = MasterTable.getCellByColumnUniqueName(row, "<%=Me.hidDD1.Value%>");
             var sga = cell.innerHTML;
-            <%If Me.dd2.SelectedIndex>0 then%>
-            cell = MasterTable.getCellByColumnUniqueName(row, "<%=Me.dd2.SelectedValue%>");
+            <%If Me.hidDD2.Value <> "" Then%>
+            cell = MasterTable.getCellByColumnUniqueName(row, "<%=Me.hidDD2.Value%>");
             sga = sga + "->" + cell.innerHTML;
             <%End If%>
-            
-            go2grid(pid,sga);
+
+            go2grid(pid, sga);
         }
 
-        function go2grid(pid,sga) {
-            var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;            
+        function go2grid(pid, sga) {
+            var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;
             var j70id = "<%=hidJ70ID.Value%>";
             var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
-            
-            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid+"&masterprefix="+masterprefix+"&masterpid="+masterpid+"&sga="+encodeURI(sga));
+
+            location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&sga=" + encodeURI(sga));
         }
 
-        function querybuilder() {            
+        function querybuilder() {
             var j70id = "<%=hidJ70ID.Value%>";
             sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query.png");
             return (false);
         }
 
         function hardrefresh(pid, flag) {
-                        
+            
             document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
             document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
 
@@ -258,11 +181,18 @@
         }
 
         function pivot() {
-            
+
             sw_master("p31_sumgrid.aspx?pivot=1", "Images/pivot.png", true);
+
+        }
+        function templatebuilder() {
+            var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
+            var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
+            var pid = document.getElementById("<%=me.j77ID.clientid%>").value;
+            
+            sw_master("sumgrid_designer.aspx?pid="+pid+"&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/setting.png");
             
         }
 
-        
     </script>
 </asp:Content>

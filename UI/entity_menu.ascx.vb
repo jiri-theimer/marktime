@@ -258,7 +258,7 @@ Public Class entity_menu
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-            ami("PIVOT projektu", "cmdPivot", "p31_pivot.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+            ami("WORKSHEET statistika projektu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         If cDisp.OwnerAccess Then
             ami("Přiřadit k projektu kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
@@ -512,7 +512,7 @@ Public Class entity_menu
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-            ami("PIVOT klienta", "cmdPivot", "p31_pivot.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+            ami("WORKSHEET statistika klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         If cDisp.OwnerAccess And Not cRec.IsClosed Then
             ami("Přiřadit ke klientovi kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
@@ -581,7 +581,7 @@ Public Class entity_menu
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If cRec.j02IsIntraPerson Then
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-                ami("PIVOT osoby", "cmdPivot", "p31_pivot.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+                ami("WORKSHEET statistika osoby", "cmdPivot", "p31_sumgrid.aspx?masterprefix=j02&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
             End If
 
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
@@ -750,7 +750,7 @@ Public Class entity_menu
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
-            ami("PIVOT úkolu", "cmdPivot", "p31_pivot.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
+            ami("WORKSHEET statistika úkolu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
 
         ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)

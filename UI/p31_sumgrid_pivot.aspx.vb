@@ -8,7 +8,7 @@ Public Class p31_sumgrid_pivot
     Private ReadOnly Property lisAllSums As List(Of BO.PivotSumField)
         Get
             If _lisAllSums Is Nothing Then
-                _lisAllSums = Master.Factory.j75DrillDownTemplateBL.ColumnsPallete()
+                _lisAllSums = Master.Factory.j77WorksheetStatTemplateBL.ColumnsPallete()
             End If
             Return _lisAllSums
         End Get
@@ -32,6 +32,8 @@ Public Class p31_sumgrid_pivot
             End With
 
             With Master
+                .neededPermission = BO.x53PermValEnum.GR_P31_Pivot
+
                 If Not System.IO.File.Exists(Master.Factory.x35GlobalParam.TempFolder & "\" & Master.Factory.SysUser.PID.ToString & "_pivot_schema.xml") Then
                     .StopPage(Master.Factory.SysUser.PID.ToString & "_pivot_schema.xml not found.")
                 End If
@@ -129,7 +131,7 @@ Public Class p31_sumgrid_pivot
         dt.ReadXml(Master.Factory.x35GlobalParam.TempFolder & "\" & Master.Factory.SysUser.PID.ToString & "_pivot_data.xml")
 
         If pivot1.Fields.GetFieldByUniqueName("row2") Is Nothing Then
-            cmdRefreshChart.Visible = True
+            ''cmdRefreshChart.Visible = True
         End If
 
 
@@ -244,16 +246,7 @@ Public Class p31_sumgrid_pivot
             End With
 
 
-            Dim qry = From p In dt.AsEnumerable.GroupBy(Function(p) p(0)) Select p.*
-
-
-
-
-            dd.Columns.Add("row1")
-            For Each c In pivot1.Items.Where(Function(p) p.ItemType = PivotGridItemType.Row)
-                c.Cells(0).Text
-            Next
-            Master.Notify(xx.Count & "|" & pivot1.Items.Count)
+          
 
             '.DataSource = xx
             '.DataBind()

@@ -87,7 +87,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="j75DrillDownTemplateBL.vb" />
+    <Compile Include="j77WorksheetStatTemplateBL.vb" />
     <Compile Include="Mother\b01WorkflowTemplateBL.vb" />
     <Compile Include="b02WorkflowStatusBL.vb" />
     <Compile Include="b05Workflow_HistoryBL.vb" />

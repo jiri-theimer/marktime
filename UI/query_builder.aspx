@@ -150,4 +150,15 @@
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
+    <script type="text/javascript">
+        function trydel() {
+
+            if (confirm("Opravdu odstranit záznam?")) {                
+                return (true);
+            }
+            else {
+                return (false);
+            }
+        }
+    </script>
 </asp:Content>

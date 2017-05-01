@@ -403,6 +403,7 @@
     <Content Include="Services\notepad_service.asmx" />
     <Content Include="Services\task_service.asmx" />
     <Content Include="Styles\SiteMobile_v2.css" />
+    <Content Include="sumgrid_designer.aspx" />
     <Content Include="Sys\dbupdate.aspx" />
     <Content Include="Sys\dbupdate_reports.aspx" />
     <Content Include="Sys\membership_framework.aspx" />
@@ -423,7 +424,6 @@
     <Content Include="p31_grid.aspx" />
     <Content Include="p31_move2bin.aspx" />
     <Content Include="p31_move2project.aspx" />
-    <Content Include="p31_pivot.aspx" />
     <Content Include="p31_recalc.aspx" />
     <Content Include="p31_record.aspx" />
     <Content Include="p31_record_AA.aspx" />
@@ -2207,6 +2207,13 @@
       <DependentUpon>task_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="sumgrid_designer.aspx.designer.vb">
+      <DependentUpon>sumgrid_designer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sumgrid_designer.aspx.vb">
+      <DependentUpon>sumgrid_designer.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Sys\dbupdate.aspx.designer.vb">
       <DependentUpon>dbupdate.aspx</DependentUpon>
     </Compile>
@@ -2345,13 +2352,6 @@
     </Compile>
     <Compile Include="p31_move2project.aspx.vb">
       <DependentUpon>p31_move2project.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p31_pivot.aspx.designer.vb">
-      <DependentUpon>p31_pivot.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p31_pivot.aspx.vb">
-      <DependentUpon>p31_pivot.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31_recalc.aspx.designer.vb">

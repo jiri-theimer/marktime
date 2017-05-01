@@ -5,7 +5,11 @@ Public Class p31_sumgrid
     Private _lisDD As List(Of BO.GridColumn) = Nothing
     Private Property _curIsExport As Boolean
 
-
+    Public ReadOnly Property CurrentJ77ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.j77ID.SelectedValue)
+        End Get
+    End Property
     Private Sub p31_sumgrid_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
@@ -13,7 +17,8 @@ Public Class p31_sumgrid
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            Master.SiteMenuValue = "p31_sumgrid"
+            Master.SiteMenuValue = "p31_pivot"
+            Master.neededPermission = BO.x53PermValEnum.GR_P31_Pivot
             hidJ70ID.Value = Request.Item("j70id")
 
             hidMasterPID.Value = Request.Item("masterpid")
@@ -36,14 +41,11 @@ Public Class p31_sumgrid
 
             Dim lisPars As New List(Of String)
             With lisPars
+                .Add("p31_sumgrid-j77id")
                 .Add("p31-j70id")
                 .Add("p31_grid-period")
                 .Add("periodcombo-custom_query")
                 .Add("p31_grid-filter_completesql")
-                .Add(hidMasterPrefix.Value & "p31_sumgrid-dd1")
-                .Add(hidMasterPrefix.Value & "p31_sumgrid-dd2")
-                .Add(hidMasterPrefix.Value & "p31_sumgrid-sumcols")
-                .Add(hidMasterPrefix.Value & "p31_sumgrid-addcols")
                 .Add("p31_sumgrid-pagesize")
                 .Add("p31_sumgrid-chkFirstLastCount")
             End With
@@ -57,78 +59,20 @@ Public Class p31_sumgrid
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
 
-                Dim strDefDD1 As String = ""
-                Select Case Me.hidMasterPrefix.Value
-                    Case "j02" : strDefDD1 = "ClientName"
-                    Case Else
-                        strDefDD1 = "Person"
-                End Select
-                SetupGroupByCombo(.GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd1", strDefDD1), .GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd2"))
+                SetupJ77Combo(.GetUserParam("p31_sumgrid-j77id"))
 
-                SetupSumColsSetting(.GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-sumcols", "1"), .GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-addcols"))
+                
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
 
             End With
 
 
-            RefreshData()
+            RefreshRecord()
             RenderQueryInfo()
-            hidToggle.Value = ""
+
         End If
     End Sub
 
-    Private Sub SetupGroupByCombo(strDD1 As String, strDD2 As String)
-        Dim lisAllCols As List(Of BO.GridColumn) = Me.lisDD.Where(Function(p) p.Pivot_SelectSql <> "").ToList
-        Me.dd1.Items.Clear() : Me.dd2.Items.Clear()
-
-        For Each c In lisAllCols.Where(Function(p) p.TreeGroup <> "").Select(Function(p) p.TreeGroup).Distinct
-            Dim n As New RadComboBoxItem(c, "group" & c)
-            n.Enabled = False
-            Me.dd1.Items.Add(n)
-        Next
-
-        For i = lisAllCols.Count - 1 To 0 Step -1
-            Dim c As BO.GridColumn = lisAllCols(i)
-            Dim n As New RadComboBoxItem(c.ColumnHeader, c.ColumnName)
-            Select Case c.ColumnType
-                Case BO.cfENUM.DateTime, BO.cfENUM.DateTime
-                    n.ImageUrl = "Images/type_datetime.png"
-                Case BO.cfENUM.DateOnly
-                    n.ImageUrl = "Images/type_date.png"
-                Case BO.cfENUM.Numeric, BO.cfENUM.Numeric2, BO.cfENUM.Numeric0
-                    n.ImageUrl = "Images/type_number.png"
-                Case BO.cfENUM.AnyString
-                    n.ImageUrl = "Images/type_text.png"
-                Case BO.cfENUM.Checkbox
-                    n.ImageUrl = "Images/type_checkbox.png"
-            End Select
-
-            If c.TreeGroup = "" Then
-                Me.dd1.Items.Add(n)
-            Else
-                Dim y As Integer = Me.dd1.FindItemIndexByValue("group" & c.TreeGroup)
-                If y > -1 Then
-                    Me.dd1.Items.Insert(y + 1, n)
-                End If
-
-
-
-            End If
-        Next
-        For i As Integer = 0 To Me.dd1.Items.Count - 1 - 1
-            Dim n As New RadComboBoxItem()
-            With Me.dd1.Items(i)
-                n.ImageUrl = .ImageUrl
-                n.Text = .Text
-                n.Value = .Value
-                n.Enabled = .Enabled
-            End With
-            Me.dd2.Items.Add(n)
-        Next
-        Me.dd2.Items.Insert(0, "")
-        If strDD1 <> "" Then Me.dd1.SelectedValue = strDD1
-        If strDD2 <> "" Then Me.dd2.SelectedValue = strDD2
-    End Sub
 
 
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
@@ -148,7 +92,7 @@ Public Class p31_sumgrid
                 Case Else
 
             End Select
-            .j70ID = BO.BAS.IsNullInt(hidJ70ID.Value)
+            .j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
 
             '.ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             .MG_AdditionalSqlFROM = Me.hidFrom.Value
@@ -164,70 +108,7 @@ Public Class p31_sumgrid
 
         End With
     End Sub
-    Private Sub SetupSumColsSetting(strDefSumCols As String, strDefAddCols As String)
-        Dim lisAllSums As List(Of BO.PivotSumField) = Master.Factory.j75DrillDownTemplateBL.ColumnsPallete()
-
-        sumsSource.Items.Clear()
-        sumsDest.Items.Clear()
-        For Each c In lisAllSums
-            Dim it As New RadListBoxItem(c.Caption, c.FieldTypeID.ToString)
-            Select Case c.ColumnType
-                Case BO.cfENUM.DateTime, BO.cfENUM.DateTime
-                    it.ImageUrl = "Images/type_datetime.png"
-                Case BO.cfENUM.DateOnly
-                    it.ImageUrl = "Images/type_date.png"
-                Case BO.cfENUM.Numeric, BO.cfENUM.Numeric2, BO.cfENUM.Numeric0
-                    it.ImageUrl = "Images/type_number.png"
-                Case BO.cfENUM.AnyString
-                    it.ImageUrl = "Images/type_text.png"
-                Case BO.cfENUM.Checkbox
-                    it.ImageUrl = "Images/type_checkbox.png"
-            End Select
-
-            sumsSource.Items.Add(it)
-        Next
-
-        If strDefSumCols <> "" Then
-            Dim a() As String = Split(strDefSumCols, ",")
-            For Each s In a
-                Dim it As RadListBoxItem = sumsSource.FindItem(Function(p) p.Value = s)
-                If Not it Is Nothing Then
-                    sumsSource.Transfer(it, sumsSource, sumsDest)
-                    sumsSource.ClearSelection()
-                    sumsDest.ClearSelection()
-                End If
-            Next
-            sumsSource.ClearSelection()
-        End If
-
-        colsSource.Items.Clear()
-        colsDest.Items.Clear()
-        For Each c As RadComboBoxItem In Me.dd1.Items
-            Dim it As New RadListBoxItem(c.Text, c.Value)
-            it.ImageUrl = c.ImageUrl
-            it.Enabled = c.Enabled
-            colsSource.Items.Add(it)
-        Next
-
-        If strDefAddCols <> "" Then
-            Dim a() As String = Split(strDefAddCols, ",")
-            For Each s In a
-                Dim b() As String = Split(s, "-")
-                Dim it As RadListBoxItem = colsSource.FindItem(Function(p) p.Value = b(0))
-                If Not it Is Nothing Then
-                    If UBound(b) > 0 Then
-                        it.Text += " (" & UCase(b(1)) & ")"
-                    Else
-                        it.Text += " (ALL)"
-                    End If
-                    colsSource.Transfer(it, colsSource, colsDest)
-                    colsSource.ClearSelection()
-                    colsDest.ClearSelection()
-                End If
-            Next
-            colsSource.ClearSelection()
-        End If
-    End Sub
+    
 
     Private Sub grid1_ItemDataBound(sender As Object, e As GridItemEventArgs) Handles grid1.ItemDataBound
 
@@ -252,8 +133,7 @@ Public Class p31_sumgrid
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
-
-        If Me.dd1.SelectedValue = "" Then Return
+        If Me.CurrentDD1 Is Nothing Then Return
 
         Dim mq As New BO.myQueryP31
         With mq
@@ -296,20 +176,20 @@ Public Class p31_sumgrid
     End Property
     Private ReadOnly Property CurrentDD1 As BO.GridColumn
         Get
-            If Me.dd1.SelectedValue = "" Then Return Nothing
-            Return Me.lisDD.Where(Function(p) p.ColumnName = Me.dd1.SelectedValue).First()
+            If hidDD1.Value = "" Then Return Nothing
+            Return Me.lisDD.Where(Function(p) p.ColumnName = hidDD1.Value).First()
         End Get
     End Property
     Private ReadOnly Property CurrentDD2 As BO.GridColumn
         Get
-            If Me.dd2.SelectedValue = "" Then Return Nothing
-            Return lisDD.Where(Function(p) p.ColumnName = Me.dd2.SelectedValue).First()
+            If hidDD2.Value = "" Then Return Nothing
+            Return lisDD.Where(Function(p) p.ColumnName = Me.hidDD2.Value).First()
         End Get
     End Property
     Private ReadOnly Property CurrentSumFields_PIVOT As List(Of BO.PivotSumField)
         Get
-            Dim lis As New List(Of BO.PivotSumField), a() As String = Split(GetSumPIDsInLine(), ",")
-            If GetSumPIDsInLine() = "" Then Return lis
+            Dim lis As New List(Of BO.PivotSumField), a() As String = Split(hidSumCols.Value, ",")
+            If hidSumCols.Value = "" Then Return lis
             For i As Integer = 0 To UBound(a)
                 lis.Add(New BO.PivotSumField(CType(a(i), BO.PivotSumFieldType)))
             Next
@@ -319,8 +199,8 @@ Public Class p31_sumgrid
     Private ReadOnly Property CurrentColFields_PIVOT As List(Of BO.GridColumn)
         Get
             Dim lis As New List(Of BO.GridColumn)
-            If GetColPIDsInLine() = "" Then Return lis
-            Dim a() As String = Split(GetColPIDsInLine(), ",")
+            If hidAddCols.Value = "" Then Return lis
+            Dim a() As String = Split(hidAddCols.Value, ",")
             For i As Integer = 0 To UBound(a)
                 Dim b() As String = Split(a(i), "-")
                 Dim c As BO.GridColumn = Me.lisDD.Where(Function(p) p.ColumnName = b(0)).First
@@ -337,71 +217,67 @@ Public Class p31_sumgrid
     End Property
 
 
-    Private Function GetSumPIDsInLine() As String
-        Dim s As String = ""
-        For Each it As RadListBoxItem In sumsDest.Items
-            If s = "" Then
-                s = it.Value
-            Else
-                s += "," & it.Value
-            End If
-        Next
-        Return s
-    End Function
-    Private Function GetColPIDsInLine() As String
-        Dim s As String = ""
-        For Each it As RadListBoxItem In colsDest.Items
-            If s = "" Then
-                s = it.Value
-            Else
-                s += "," & it.Value
-            End If
-            If it.Text.IndexOf("(ALL)") > 0 Then
-                s += "-all"
-            End If
-            If it.Text.IndexOf("(MAX)") > 0 Then
-                s += "-max"
-            End If
-            If it.Text.IndexOf("(MIN)") > 0 Then
-                s += "-min"
-            End If
-        Next
-        Return s
-    End Function
+    
 
-    Private Sub SaveCurrentSettings()
-        With Master.Factory.j03UserBL
+    
+    Private Sub RefreshRecord()
+        If Me.CurrentJ77ID = 0 Then
+            Dim lisPars As New List(Of String)
+            With lisPars
+                .Add(hidMasterPrefix.Value & "p31_sumgrid-dd1")
+                .Add(hidMasterPrefix.Value & "p31_sumgrid-dd2")
+                .Add(hidMasterPrefix.Value & "p31_sumgrid-sumcols")
+                .Add(hidMasterPrefix.Value & "p31_sumgrid-addcols")
+            End With
+            With Master.Factory.j03UserBL
+                .InhaleUserParams(lisPars)
 
-            .SetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd1", Me.dd1.SelectedValue)
-            .SetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd2", Me.dd2.SelectedValue)
-            .SetUserParam(hidMasterPrefix.Value & "p31_sumgrid-sumcols", GetSumPIDsInLine())
-            .SetUserParam(hidMasterPrefix.Value & "p31_sumgrid-addcols", GetColPIDsInLine())
-        End With
+                Dim strDefDD1 As String = ""
+                Select Case Me.hidMasterPrefix.Value
+                    Case "j02" : strDefDD1 = "ClientName"
+                    Case Else
+                        strDefDD1 = "Person"
+                End Select
+                hidDD1.Value = .GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd1", strDefDD1)
+                hidDD2.Value = .GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-dd2")
+                hidSumCols.Value = .GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-sumcols", "1")
+                hidAddCols.Value = .GetUserParam(hidMasterPrefix.Value & "p31_sumgrid-addcols")
+                
+            End With
 
-    End Sub
-    Private Sub RefreshData()
-        SetupGrid()
-        grid1.Rebind(False)
-        Dim strDefPID As String = Request.Item("pid")
-        If strDefPID <> "" Then
-            With grid1.radGridOrig
-                For Each it As GridDataItem In .MasterTableView.Items
-                    If it.GetDataKeyValue("pid") = strDefPID Then
-                        it.Selected = True
-                        Return
-                    End If
-                Next
+        Else
+            Dim cRec As BO.j77WorksheetStatTemplate = Master.Factory.j77WorksheetStatTemplateBL.Load(Me.CurrentJ77ID)
+            With cRec
+                hidDD1.Value = .j77DD1
+                hidDD2.Value = .j77DD2
+                hidSumCols.Value = .j77SumFields
+                hidAddCols.Value = .j77ColFields
             End With
         End If
+        SetupGrid()
+        grid1.Rebind(False)
+        If Request.Item("pid") <> "" Then
+            SelectGridRow(Request.Item("pid"))
+        End If
+    End Sub
+    Private Sub SelectGridRow(strStatPID As String)
+        Dim x As Integer = 0
+        With grid1.radGridOrig
+            For Each it As GridDataItem In .MasterTableView.Items
+                If it.GetDataKeyValue("pid") = strStatPID Then
+                    it.Selected = True
+                    Return
+                End If
+                x += 1
+                If x > 1000 Then Return
+            Next
+        End With
     End Sub
 
-    Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
-        SaveCurrentSettings()
-        RefreshData()
-    End Sub
+    
 
     Private Sub SetupGrid()
-        If Me.dd1.SelectedValue = "" Then Return
+        If Me.CurrentDD1 Is Nothing Then Return
 
         With grid1
             .ClearColumns()
@@ -461,18 +337,7 @@ Public Class p31_sumgrid
         If lblQuery.Text <> "" Then panQueryByEntity.Visible = True
     End Sub
 
-    Private Sub dd1_SelectedIndexChanged(sender As Object, e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles dd1.SelectedIndexChanged
-        SaveCurrentSettings()
-        RefreshData()
-    End Sub
-
-    Private Sub dd2_SelectedIndexChanged(sender As Object, e As Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs) Handles dd2.SelectedIndexChanged
-        SaveCurrentSettings()
-        RefreshData()
-
-        hidToggle.Value = "1"
-    End Sub
-
+    
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
         grid1.radGridOrig.GroupingSettings.RetainGroupFootersVisibility = True
         With grid1.radGridOrig.MasterTableView
@@ -562,7 +427,9 @@ Public Class p31_sumgrid
             Case "xls"
                 GridExport("xls")
             Case "doc"
-                GridExport("doc")            
+                GridExport("doc")
+            Case "sumgrid_designer"
+                ReloadPage()
             Case Else
                 grid1.Rebind(False)
         End Select
@@ -573,25 +440,34 @@ Public Class p31_sumgrid
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_sumgrid-pagesize", Me.cbxPaging.SelectedValue)
-        RefreshData()
+        ReloadPage()
     End Sub
 
     Private Sub chkFirstLastCount_CheckedChanged(sender As Object, e As EventArgs) Handles chkFirstLastCount.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p31_sumgrid-chkFirstLastCount", BO.BAS.GB(Me.chkFirstLastCount.Checked))
-        RefreshData()
+        ReloadPage()
     End Sub
 
     
-    Private Sub cbxMaxMinAll_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxMaxMinAll.SelectedIndexChanged
-        hidToggle.Value = "1"
-        If colsDest.SelectedItem Is Nothing Then
-            Master.Notify("Není vybrán sloupec.", NotifyLevel.WarningMessage)
-        Else
-            Dim s As String = lisDD.Where(Function(p) p.ColumnName = colsDest.SelectedValue).First.ColumnHeader
-            colsDest.SelectedItem.Text = s & " (" & UCase(cbxMaxMinAll.SelectedValue) & ")"
-            cbxMaxMinAll.SelectedIndex = 0
-            SaveCurrentSettings()
+    
+    Private Sub SetupJ77Combo(strDef As String)
+        Dim mq As BO.myQuery = Nothing
+        Dim lisJ77 As IEnumerable(Of BO.j77WorksheetStatTemplate) = Master.Factory.j77WorksheetStatTemplateBL.GetList(mq)
+        j77ID.DataSource = lisJ77
+        j77ID.DataBind()
+        Me.j77ID.Items.Insert(0, "--Výchozí WORKSHEET statistika--")
+        basUI.SelectDropdownlistValue(Me.j77ID, strDef)
+    End Sub
+
+    Private Sub j77ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j77ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_sumgrid-j77id", Me.j77ID.SelectedValue)
+        ReloadPage()
+    End Sub
+    Private Sub ReloadPage()
+        Dim s As String = "p31_sumgrid.aspx"
+        If Me.hidMasterPrefix.Value <> "" Or hidTabQueryFlag.Value <> "" Then
+            s += "?masterprefix=" & hidMasterPrefix.Value & "&masterpid=" & Me.hidMasterPID.Value & "&tabqueryflag=" & Me.hidTabQueryFlag.Value
         End If
-        hidToggle.Value = "1"
+        Response.Redirect(s)
     End Sub
 End Class

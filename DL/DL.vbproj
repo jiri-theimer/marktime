@@ -94,7 +94,7 @@
     <Compile Include="j61TextTemplateDL.vb" />
     <Compile Include="j62MenuHomeDL.vb" />
     <Compile Include="j70QueryTemplateDL.vb" />
-    <Compile Include="j75DrillDownTemplateDL.vb" />
+    <Compile Include="j77WorksheetStatTemplateDL.vb" />
     <Compile Include="m62ExchangeRateDL.vb" />
     <Compile Include="o10NoticeBoardDL.vb" />
     <Compile Include="o21MilestoneTypeDL.vb" />

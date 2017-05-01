@@ -283,7 +283,7 @@
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                         </telerik:RadMenuItem>
 
-                        <telerik:RadMenuItem Value="cmdPivot" Text="PIVOT faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdPivot" Text="WORKSHEET statistika faktury" NavigateUrl="javascript:report('');" Target="_top" ImageUrl="Images/pivot.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdX40" Text="Historie odeslané pošty" Target="_top" ImageUrl="Images/email.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>

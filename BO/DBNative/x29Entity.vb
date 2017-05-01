@@ -59,6 +59,7 @@
     j70QueryTemplate = 170
     j74SavedGridColTemplate = 174
     j75DrillDownTemplate = 175
+    j77WorksheetStatTemplate = 177
     x18EntityCategory = 918
     x25EntityField_ComboValue = 925
     x48SqlTask = 948
