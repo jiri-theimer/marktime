@@ -132,7 +132,11 @@ Public Class p31_sumgrid
             Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
             ''Dim cRec As DataRowView = CType(e.Item.DataItem, DataRowView)
             With dataItem("systemcolumn")
-                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + ")'><img src='Images/worksheet.png' title='Přejít na přehled worksheet záznamů'></a>"
+                Dim strSGA As String = dataItem.Item(hidDD1.Value).Text
+                If hidDD2.Value <> "" Then
+                    strSGA += "->" & dataItem.Item(hidDD2.Value).Text
+                End If
+                .Text = "<a href='javascript:go2grid(" + Chr(34) + dataItem.GetDataKeyValue("pid").ToString + Chr(34) + "," + Chr(34) + strSGA + Chr(34) + ")'><img src='Images/worksheet.png' title='Přejít na přehled worksheet záznamů'></a>"
             End With
         End If
     End Sub
