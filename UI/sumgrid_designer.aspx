@@ -109,6 +109,10 @@
         </div>
     </asp:Panel>
 
+    <asp:Panel ID="panJ70ID" runat="server" CssClass="div6">
+        <span>Svázat šablonu s pojmenovaným filtrem:</span>
+        <asp:DropDownList ID="j70ID" runat="server" DataTextField="NameWithMark" DataValueField="pid"></asp:DropDownList>
+    </asp:Panel>
     <div style="padding: 6px; margin-top: 30px;">
         <i>
             <asp:Label ID="lblTimeStamp" runat="server"></asp:Label>

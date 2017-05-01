@@ -185,6 +185,24 @@ Partial Public Class sumgrid_designer
     Protected WithEvents roles1 As Global.UI.entityrole_assign
 
     '''<summary>
+    '''panJ70ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panJ70ID As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''j70ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblTimeStamp control.
     '''</summary>
     '''<remarks>

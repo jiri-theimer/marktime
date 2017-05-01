@@ -197,7 +197,7 @@
             <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Style="vertical-align: top;"></asp:Label>
         </div>
         <div class="commandcell">
-            <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/drilldown.png" ToolTip="Statistika worksheet přehledu" CssClass="button-link" />
+            <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/pivot.png" ToolTip="Statistika WORKSHEET přehledu" CssClass="button-link" />
         </div>
         <div class="commandcell" style="padding-left: 10px;">
             <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>

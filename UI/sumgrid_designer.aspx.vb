@@ -23,7 +23,9 @@ Public Class sumgrid_designer
 
 
             End With
-
+            Me.j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet)
+            Me.j70ID.DataBind()
+            Me.j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
             SetupJ77Combo()
 
             RefreshRecord()
@@ -299,6 +301,7 @@ Public Class sumgrid_designer
                     strDefSumCols = .j77SumFields
                     strDefAddCols = .j77ColFields
                     Me.lblTimeStamp.Text = .Timestamp
+                    basUI.SelectDropdownlistValue(Me.j70ID, .j70ID.ToString)
                     If .j02ID_Owner = Master.Factory.SysUser.j02ID Or Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin) Then
                         hidIsOwner.Value = "1"
                     Else
@@ -323,6 +326,7 @@ Public Class sumgrid_designer
         Me.j77Name.Text = ""
         Me.j77Name.Focus()
         Me.hidIsOwner.Value = "1"
+        Me.j70ID.SelectedIndex = 0
         If Me.j77ID.Items.FindByValue("-1") Is Nothing Then
             Me.j77ID.Items.Insert(0, New ListItem("--Založit novou pojmenovanou šablonu--", "-1"))
         End If
@@ -354,7 +358,7 @@ Public Class sumgrid_designer
                 .j77DD2 = Me.dd2.SelectedValue
                 .j77SumFields = GetSumPIDsInLine()
                 .j77ColFields = GetColPIDsInLine()
-
+                .j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
             End With
             Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
             If roles1.ErrorMessage <> "" Then
@@ -383,6 +387,7 @@ Public Class sumgrid_designer
         End If
         lblName.Visible = Me.j77Name.Visible
         panRoles.Visible = Me.j77Name.Visible
+        panJ70ID.Visible = Me.j77Name.Visible
 
         cmdDelete.Visible = False
         Me.j77Name.Enabled = False
@@ -391,6 +396,7 @@ Public Class sumgrid_designer
         sumsDest.Enabled = False
         Me.dd1.Enabled = False
         Me.dd2.Enabled = False
+        panJ70ID.Enabled = False
 
         If Me.hidIsOwner.Value = "1" Then
             Me.j77Name.Enabled = True
@@ -399,6 +405,7 @@ Public Class sumgrid_designer
             sumsDest.Enabled = True
             Me.dd1.Enabled = True
             Me.dd2.Enabled = True
+            panJ70ID.Enabled = True
             Master.RenameToolbarButton("ok", "Uložit a spustit statistiku")
             If Master.DataPID > 0 Then
                 cmdDelete.Visible = True

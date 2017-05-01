@@ -5125,6 +5125,48 @@ delete from j75DrillDownTemplate where j75ID=@pid
 
 GO
 
+----------P---------------j77_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j77_delete') and type = 'P')
+ drop procedure j77_delete
+GO
+
+
+
+
+
+CREATE   procedure [dbo].[j77_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--j77id
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu  z tabulky j77WorksheetStatTemplate
+
+
+
+DELETE FROM x69EntityRole_Assign WHERE x69RecordPID=@pid AND x67ID IN (SELECT x67ID FROM x67EntityRole WHERE x29ID=177)
+
+delete from j77WorksheetStatTemplate where j77ID=@pid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------m62_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('m62_delete') and type = 'P')

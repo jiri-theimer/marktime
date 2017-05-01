@@ -252,6 +252,7 @@ Public Class p31_sumgrid
                 hidDD2.Value = .j77DD2
                 hidSumCols.Value = .j77SumFields
                 hidAddCols.Value = .j77ColFields
+                basUI.SelectDropdownlistValue(Me.j70ID, .j70ID.ToString)
             End With
         End If
         SetupGrid()
