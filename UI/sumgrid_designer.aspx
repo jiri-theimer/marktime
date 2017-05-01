@@ -112,6 +112,10 @@
     <asp:Panel ID="panJ70ID" runat="server" CssClass="div6">
         <span>Svázat šablonu s pojmenovaným filtrem:</span>
         <asp:DropDownList ID="j70ID" runat="server" DataTextField="NameWithMark" DataValueField="pid"></asp:DropDownList>
+        <div>
+            <asp:Label runat="server" ID="Label2" Text="Index pořadí:"></asp:Label>
+                <telerik:RadNumericTextBox ID="j77Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+        </div>
     </asp:Panel>
     <div style="padding: 6px; margin-top: 30px;">
         <i>

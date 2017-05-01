@@ -203,6 +203,24 @@ Partial Public Class sumgrid_designer
     Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j77Ordinary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j77Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
     '''lblTimeStamp control.
     '''</summary>
     '''<remarks>

@@ -28,7 +28,7 @@
             pars.Add("j77SumFields", .j77SumFields, DbType.String)
             pars.Add("j77ColFields", .j77ColFields, DbType.String)
             pars.Add("j77TabQueryFlag", .j77TabQueryFlag, DbType.String)
-
+            pars.Add("j77Ordinary", .j77Ordinary, DbType.Int32)
 
             pars.Add("j70ID", BO.BAS.IsNullDBKey(.j70ID), DbType.Int32)
 
@@ -65,7 +65,7 @@
 
             If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
         End If
-        s += " ORDER BY a.j77ID DESC"
+        s += " ORDER BY a.j77Ordinary ASC,a.j77ID DESC"
 
         Return _cDB.GetList(Of BO.j77WorksheetStatTemplate)(s, pars)
 

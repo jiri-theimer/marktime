@@ -168,7 +168,7 @@ Public Class p31_grid
         Else
             hidMasterAW.Value += " AND (" & strW & ")"
         End If
-        lblDrillDown.Text = "<img src='Images/drilldown.png' style='padding-right:6px;'/>" & lblDrillDown.Text
+        lblDrillDown.Text = "<img src='Images/pivot.png' style='padding-right:6px;'/>" & lblDrillDown.Text
         linkDrillDown.Text = hidSGA.Value
         linkDrillDown.NavigateUrl = "p31_sumgrid.aspx??&masterprefix=" + Me.CurrentMasterPrefix + "&masterpid=" + Me.CurrentMasterPID.ToString & "&tabqueryflag=" + Me.hidMasterTabAutoQueryFlag.Value & "&pid=" & hidSGV.Value
     End Sub

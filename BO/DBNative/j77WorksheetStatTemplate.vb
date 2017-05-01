@@ -10,6 +10,7 @@
     Public Property j77SumFields As String
     Public Property j77ColFields As String
     Public Property j77TabQueryFlag As String
+    Public Property j77Ordinary As Integer
 
    
 End Class
