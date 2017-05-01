@@ -38,7 +38,7 @@ Public Class p31_sumgrid_pivot
                     .StopPage(Master.Factory.SysUser.PID.ToString & "_pivot_schema.xml not found.")
                 End If
                 .AddToolbarButton("XLS", "xls", , "Images/xls.png")
-                .AddToolbarButton("PDF", "pdf", , "Images/pdf.png", False, "javascript:exportRadPivotGrid()")
+                ''.AddToolbarButton("PDF", "pdf", , "Images/pdf.png", False, "javascript:exportRadPivotGrid()")
             End With
 
 

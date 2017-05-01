@@ -254,8 +254,8 @@ Public Class sumgrid_designer
     Private Sub cmdDelete_Click(sender As Object, e As ImageClickEventArgs) Handles cmdDelete.Click
         
         If Master.Factory.j77WorksheetStatTemplateBL.Delete(Master.DataPID) Then
-            SetupJ77Combo()
-            RefreshRecord()
+            Master.DataPID = 0
+            Master.CloseAndRefreshParent("sumgrid_designer")
         Else
             Master.Notify(Master.Factory.j77WorksheetStatTemplateBL.ErrorMessage, 2)
         End If
