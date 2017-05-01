@@ -258,7 +258,7 @@ Public Class p31_sumgrid
                 hidSumCols.Value = .j77SumFields
                 hidAddCols.Value = .j77ColFields
                 basUI.SelectDropdownlistValue(Me.j70ID, .j70ID.ToString)
-                If Request.Item("tabqueryflag") = "" Then
+                If Request.Item("p31tabautoquery") = "" Then
                     basUI.SelectDropdownlistValue(Me.cbxTabQueryFlag, .j77TabQueryFlag)
                 End If
 

@@ -222,7 +222,7 @@
         var masterpid = document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value;
         var queryflag = document.getElementById("<%=hidMasterTabAutoQueryFlag.ClientID%>").value;
         
-        window.open("p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "_top");
+        window.open("p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&p31tabautoquery=" + queryflag, "_top");
         //sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "Images/pivot.png", true);
         //return (false);
     }
