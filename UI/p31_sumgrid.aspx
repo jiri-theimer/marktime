@@ -34,6 +34,15 @@
 
         </div>
         <div class="commandcell">
+            <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">
+                <asp:ListItem Text="--Druh úkonů--" Value="p31" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
+                <asp:ListItem Text="Pouze výdaje" Value="expense"></asp:ListItem>
+                <asp:ListItem Text="Paušální odměny" Value="fee"></asp:ListItem>
+                <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <div class="commandcell">
             <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
             <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
@@ -111,8 +120,7 @@
     <asp:HiddenField ID="hidJ70ID" runat="server" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
-    <asp:HiddenField ID="hidFrom" runat="server" />
-    <asp:HiddenField ID="hidTabQueryFlag" runat="server" />
+    <asp:HiddenField ID="hidFrom" runat="server" />    
     <asp:HiddenField ID="hidSGF" runat="server" />
     <asp:HiddenField ID="hidDD1" runat="server" />
     <asp:HiddenField ID="hidDD2" runat="server" />

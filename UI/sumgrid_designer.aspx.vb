@@ -309,6 +309,7 @@ Public Class sumgrid_designer
                         hidIsOwner.Value = "0"
                     End If
                     Me.j77Ordinary.Value = .j77Ordinary
+                    basUI.SelectDropdownlistValue(Me.j77TabQueryFlag, .j77TabQueryFlag)
                 End With
                 roles1.InhaleInitialData(cRec.PID)
             End If
@@ -362,6 +363,7 @@ Public Class sumgrid_designer
                 .j77ColFields = GetColPIDsInLine()
                 .j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
                 .j77Ordinary = BO.BAS.IsNullInt(Me.j77Ordinary.Value)
+                .j77TabQueryFlag = Me.j77TabQueryFlag.SelectedValue
             End With
             Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
             If roles1.ErrorMessage <> "" Then

@@ -38,7 +38,7 @@
         <span>Druhá úroveň seskupení:</span>
         <telerik:RadComboBox ID="dd2" runat="server" AutoPostBack="true"></telerik:RadComboBox>
     </div>
-    
+
     <table cellpadding="8">
         <tr valign="top">
             <td>
@@ -110,11 +110,23 @@
     </asp:Panel>
 
     <asp:Panel ID="panJ70ID" runat="server" CssClass="div6">
-        <span>Svázat šablonu s pojmenovaným filtrem:</span>
-        <asp:DropDownList ID="j70ID" runat="server" DataTextField="NameWithMark" DataValueField="pid"></asp:DropDownList>
+        <div>
+            <span>Svázat šablonu s pojmenovaným filtrem:</span>
+            <asp:DropDownList ID="j70ID" runat="server" DataTextField="NameWithMark" DataValueField="pid"></asp:DropDownList>
+        </div>
+        <div>
+            <span>Druh úkonů</span>
+            <asp:DropDownList ID="j77TabQueryFlag" runat="server">
+                <asp:ListItem Text="Bez filtrování" Value="p31" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
+                <asp:ListItem Text="Pouze výdaje" Value="expense"></asp:ListItem>
+                <asp:ListItem Text="Paušální odměny" Value="fee"></asp:ListItem>
+                <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
+            </asp:DropDownList>
+        </div>
         <div>
             <asp:Label runat="server" ID="Label2" Text="Index pořadí:"></asp:Label>
-                <telerik:RadNumericTextBox ID="j77Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+            <telerik:RadNumericTextBox ID="j77Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
         </div>
     </asp:Panel>
     <div style="padding: 6px; margin-top: 30px;">
@@ -131,7 +143,7 @@
         function trydel() {
 
             if (confirm("Opravdu odstranit záznam?")) {
-                
+
                 return (true);
             }
             else {

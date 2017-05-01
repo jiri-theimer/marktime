@@ -77,6 +77,15 @@ Partial Public Class p31_grid
     Protected WithEvents cmdSearch As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''cbxTabQueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxTabQueryFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''clue_query control.
     '''</summary>
     '''<remarks>
@@ -363,15 +372,6 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidMasterAW As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidMasterTabAutoQueryFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidMasterTabAutoQueryFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidFooterString control.

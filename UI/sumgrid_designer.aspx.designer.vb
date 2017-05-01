@@ -203,6 +203,15 @@ Partial Public Class sumgrid_designer
     Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''j77TabQueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j77TabQueryFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''Label2 control.
     '''</summary>
     '''<remarks>

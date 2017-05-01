@@ -23,7 +23,6 @@ Public Class p31_sumgrid
 
             hidMasterPID.Value = Request.Item("masterpid")
             hidMasterPrefix.Value = Request.Item("masterprefix")
-            hidTabQueryFlag.Value = Request.Item("tabqueryflag")
 
             If hidMasterPrefix.Value <> "" Then
                 panQueryByEntity.Visible = True
@@ -48,11 +47,17 @@ Public Class p31_sumgrid
                 .Add("p31_grid-filter_completesql")
                 .Add("p31_sumgrid-pagesize")
                 .Add("p31_sumgrid-chkFirstLastCount")
+                .Add("p31_grid-tabqueryflag")
             End With
 
 
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
+                Dim strDefTabQueryFlag As String = Request.Item("p31tabautoquery")
+                If strDefTabQueryFlag = "" Then strDefTabQueryFlag = Request.Item("tab")
+                If strDefTabQueryFlag = "" Then strDefTabQueryFlag = .GetUserParam("p31_grid-tabqueryflag", "p31")
+                basUI.SelectDropdownlistValue(Me.cbxTabQueryFlag, strDefTabQueryFlag)
+
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_sumgrid-pagesize", "100"))
                 Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("p31_sumgrid-chkFirstLastCount", "1"))
                 SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
@@ -104,7 +109,7 @@ Public Class p31_sumgrid
             .DateUntil = period1.DateUntil
             .ColumnFilteringExpression = hidGridColumnSql.Value
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
-            .TabAutoQuery = Me.hidTabQueryFlag.Value
+            .TabAutoQuery = Me.cbxTabQueryFlag.SelectedValue
 
         End With
     End Sub
@@ -253,6 +258,10 @@ Public Class p31_sumgrid
                 hidSumCols.Value = .j77SumFields
                 hidAddCols.Value = .j77ColFields
                 basUI.SelectDropdownlistValue(Me.j70ID, .j70ID.ToString)
+                If Request.Item("tabqueryflag") = "" Then
+                    basUI.SelectDropdownlistValue(Me.cbxTabQueryFlag, .j77TabQueryFlag)
+                End If
+
             End With
         End If
         SetupGrid()
@@ -321,16 +330,6 @@ Public Class p31_sumgrid
   
 
     Private Sub RenderQueryInfo()
-       
-        Select Case Me.hidTabQueryFlag.Value
-            Case "expense"
-                lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze výdaje]", "; ")
-            Case "fee"
-                lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze paušální odměny]", "; ")
-            Case "time"
-                lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Pouze hodiny]", "; ")
-        End Select
-        
        
         If hidGridColumnSql.Value <> "" Then
             lblQuery.Text = BO.BAS.OM4(lblQuery.Text, "[Sloupcový filtr zdrojového přehledu]", "; ")
@@ -417,7 +416,13 @@ Public Class p31_sumgrid
             End If
         End With
         basUIMT.RenderQueryCombo(Me.j70ID)
-
+        With Me.cbxTabQueryFlag
+            If .SelectedIndex > 0 Then
+                .BackColor = Drawing.Color.Red
+            Else
+                .BackColor = Nothing
+            End If
+        End With
 
     End Sub
 
@@ -466,9 +471,14 @@ Public Class p31_sumgrid
     End Sub
     Private Sub ReloadPage()
         Dim s As String = "p31_sumgrid.aspx"
-        If Me.hidMasterPrefix.Value <> "" Or hidTabQueryFlag.Value <> "" Then
-            s += "?masterprefix=" & hidMasterPrefix.Value & "&masterpid=" & Me.hidMasterPID.Value & "&tabqueryflag=" & Me.hidTabQueryFlag.Value
+        If Me.hidMasterPrefix.Value <> "" Then
+            s += "?masterprefix=" & hidMasterPrefix.Value & "&masterpid=" & Me.hidMasterPID.Value
         End If
         Response.Redirect(s)
+    End Sub
+
+    Private Sub cbxTabQueryFlag_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTabQueryFlag.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-tabqueryflag", Me.cbxTabQueryFlag.SelectedValue)
+        grid1.Rebind(False)
     End Sub
 End Class

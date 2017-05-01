@@ -179,7 +179,7 @@
             
             var masterprefix = document.getElementById("<%=Me.hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=Me.hidMasterPID.ClientID%>").value;
-            var tabqueryflag = document.getElementById("<%=Me.hidMasterTabAutoQueryFlag.ClientID%>").value;
+            var tabqueryflag = document.getElementById("<%=Me.cbxTabQueryFlag.ClientID%>").value;
 
             location.replace("p31_sumgrid.aspx??&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + tabqueryflag);
            
@@ -213,7 +213,15 @@
             <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" CssClass="button-link" ToolTip="Hledat" />
 
         </div>
-
+        <div class="commandcell">
+            <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">
+                <asp:ListItem Text="--Druh úkonů--" Value="p31" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
+                <asp:ListItem Text="Pouze výdaje" Value="expense"></asp:ListItem>
+                <asp:ListItem Text="Paušální odměny" Value="fee"></asp:ListItem>
+                <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
+            </asp:DropDownList>
+        </div>
         <div class="commandcell">
             <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
@@ -328,7 +336,7 @@
     <asp:HiddenField ID="hidSumCols" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidMasterAW" runat="server" />
-    <asp:HiddenField ID="hidMasterTabAutoQueryFlag" runat="server" />
+    
     <asp:HiddenField ID="hidFooterString" runat="server" />
     <asp:HiddenField ID="hidJ62ID" runat="server" />
     <asp:HiddenField ID="hidSGF" runat="server" />

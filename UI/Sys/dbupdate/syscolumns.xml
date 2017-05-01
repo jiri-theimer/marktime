@@ -18891,14 +18891,14 @@
     <TableName>j77WorksheetStatTemplate</TableName>
   </Table>
   <Table>
-    <name>j77DateInsert</name>
+    <name>j77Ordinary</name>
     <id>1003150619</id>
-    <xtype>61</xtype>
+    <xtype>56</xtype>
     <typestat>0</typestat>
-    <xusertype>61</xusertype>
-    <length>8</length>
-    <xprec>23</xprec>
-    <xscale>3</xscale>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
     <colid>11</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -18912,19 +18912,19 @@
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
-    <type>111</type>
-    <usertype>12</usertype>
-    <prec>23</prec>
-    <scale>3</scale>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
     <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>datetime</type_name>
+    <type_name>int</type_name>
     <TableName>j77WorksheetStatTemplate</TableName>
   </Table>
   <Table>
-    <name>j77DateUpdate</name>
+    <name>j77DateInsert</name>
     <id>1003150619</id>
     <xtype>61</xtype>
     <typestat>0</typestat>
@@ -18957,14 +18957,14 @@
     <TableName>j77WorksheetStatTemplate</TableName>
   </Table>
   <Table>
-    <name>j77UserInsert</name>
+    <name>j77DateUpdate</name>
     <id>1003150619</id>
-    <xtype>231</xtype>
-    <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>50</length>
-    <xprec>0</xprec>
-    <xscale>0</xscale>
+    <xtype>61</xtype>
+    <typestat>0</typestat>
+    <xusertype>61</xusertype>
+    <length>8</length>
+    <xprec>23</xprec>
+    <xscale>3</xscale>
     <colid>13</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -18975,22 +18975,22 @@
     <number>0</number>
     <colorder>13</colorder>
     <offset>-12</offset>
-    <collationid>53252</collationid>
+    <collationid>0</collationid>
     <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>0</usertype>
-    <prec>50</prec>
+    <status>8</status>
+    <type>111</type>
+    <usertype>12</usertype>
+    <prec>23</prec>
+    <scale>3</scale>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>nvarchar</type_name>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>datetime</type_name>
     <TableName>j77WorksheetStatTemplate</TableName>
   </Table>
   <Table>
-    <name>j77UserUpdate</name>
+    <name>j77UserInsert</name>
     <id>1003150619</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
@@ -19023,6 +19023,39 @@
     <TableName>j77WorksheetStatTemplate</TableName>
   </Table>
   <Table>
+    <name>j77UserUpdate</name>
+    <id>1003150619</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>15</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>15</colorder>
+    <offset>-14</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>j77WorksheetStatTemplate</TableName>
+  </Table>
+  <Table>
     <name>j77ValidFrom</name>
     <id>1003150619</id>
     <xtype>61</xtype>
@@ -19031,7 +19064,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>15</colid>
+    <colid>16</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -19039,8 +19072,8 @@
     <cdefault>1035150733</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>15</colorder>
-    <offset>-14</offset>
+    <colorder>16</colorder>
+    <offset>-15</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -19064,7 +19097,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>16</colid>
+    <colid>17</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -19072,8 +19105,8 @@
     <cdefault>1051150790</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>16</colorder>
-    <offset>-15</offset>
+    <colorder>17</colorder>
+    <offset>-16</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>

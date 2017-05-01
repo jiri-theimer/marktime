@@ -59,7 +59,7 @@ Public Class p31_grid
             If Request.Item("aw") <> "" Then
                 Me.hidMasterAW.Value = Replace(Server.UrlDecode(Request.Item("aw")), "xxx", "=")
             End If
-            Me.hidMasterTabAutoQueryFlag.Value = Request.Item("p31tabautoquery")
+
             With Master
                 .PageTitle = "WORKSHEET datový přehled"
 
@@ -77,20 +77,25 @@ Public Class p31_grid
                     .Add("p31_grid-sort")
                     .Add("p31_grid-filter_setting")
                     .Add("p31_grid-filter_sql")
+                    .Add("p31_grid-tabqueryflag")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
                 cbxGroupBy.DataBind()
+                With .Factory.j03UserBL
+                    .InhaleUserParams(lisPars)
+                    Dim strDefTabQueryFlag As String = Request.Item("p31tabautoquery")
+                    If strDefTabQueryFlag = "" Then strDefTabQueryFlag = Request.Item("tab")
+                    If strDefTabQueryFlag = "" Then strDefTabQueryFlag = .GetUserParam("p31_grid-tabqueryflag", "p31")
+                    basUI.SelectDropdownlistValue(Me.cbxTabQueryFlag, strDefTabQueryFlag)
 
-                .Factory.j03UserBL.InhaleUserParams(lisPars)
-
-                basUI.SelectDropdownlistValue(cbxPaging, .Factory.j03UserBL.GetUserParam("p31_grid-pagesize", "20"))
-                period1.SetupData(Master.Factory, .Factory.j03UserBL.GetUserParam("periodcombo-custom_query"))
-                period1.SelectedValue = .Factory.j03UserBL.GetUserParam("p31_grid-period")
-                Me.txtSearch.Text = .Factory.j03UserBL.GetUserParam("p31_grid-search")
-                basUI.SelectDropdownlistValue(Me.cbxGroupBy, .Factory.j03UserBL.GetUserParam("p31_grid-groupby"))
-                ''If .Factory.j03UserBL.GetUserParam("p31_grid-sort") <> "" Then
-                ''    grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.Factory.j03UserBL.GetUserParam("p31_grid-sort"))
-                ''End If
+                    basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_grid-pagesize", "20"))
+                    period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
+                    period1.SelectedValue = .GetUserParam("p31_grid-period")
+                    Me.txtSearch.Text = .GetUserParam("p31_grid-search")
+                    basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
+                End With
+                
+               
             End With
 
             Me.CurrentJ62ID = BO.BAS.IsNullInt(Request.Item("j62id"))
@@ -170,7 +175,7 @@ Public Class p31_grid
         End If
         lblDrillDown.Text = "<img src='Images/pivot.png' style='padding-right:6px;'/>" & lblDrillDown.Text
         linkDrillDown.Text = hidSGA.Value
-        linkDrillDown.NavigateUrl = "p31_sumgrid.aspx??&masterprefix=" + Me.CurrentMasterPrefix + "&masterpid=" + Me.CurrentMasterPID.ToString & "&tabqueryflag=" + Me.hidMasterTabAutoQueryFlag.Value & "&pid=" & hidSGV.Value
+        linkDrillDown.NavigateUrl = "p31_sumgrid.aspx??&masterprefix=" + Me.CurrentMasterPrefix + "&masterpid=" + Me.CurrentMasterPID.ToString & "&tabqueryflag=" + Me.cbxTabQueryFlag.SelectedValue & "&pid=" & hidSGV.Value
     End Sub
     Private Sub SetupJ70Combo(intDef As Integer)
         Dim mq As New BO.myQuery
@@ -482,7 +487,7 @@ Public Class p31_grid
             End If
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
             
-            .TabAutoQuery = Me.hidMasterTabAutoQueryFlag.Value
+            .TabAutoQuery = cbxTabQueryFlag.SelectedValue
         End With
     End Sub
 
@@ -543,6 +548,14 @@ Public Class p31_grid
         Else
             cmdCĺearFilter.Visible = False
         End If
+        With Me.cbxTabQueryFlag
+            If .SelectedIndex > 0 Then
+                .BackColor = Drawing.Color.Red
+            Else
+                .BackColor = Nothing
+            End If
+        End With
+        
 
         basUIMT.RenderQueryCombo(Me.j70ID)
 
@@ -663,4 +676,8 @@ Public Class p31_grid
     End Sub
 
    
+    Private Sub cbxTabQueryFlag_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTabQueryFlag.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-tabqueryflag", Me.cbxTabQueryFlag.SelectedValue)
+        ReloadPage()
+    End Sub
 End Class

@@ -10,7 +10,7 @@
         
     </div>
     <div class="commandcell">
-        <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="drilldown()" ImageUrl="Images/drilldown.png" ToolTip="Statistika worksheet přehledu" CssClass="button-link" />
+        <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="drilldown()" ImageUrl="Images/pivot.png" ToolTip="Statistika WORKSHEET přehledu" CssClass="button-link" />
     </div>
     <div class="commandcell" style="margin-left:10px;">
         <uc:periodcombo ID="period1" runat="server" Width="150px"></uc:periodcombo>
