@@ -181,7 +181,7 @@
             var masterpid = document.getElementById("<%=Me.hidMasterPID.ClientID%>").value;
             var tabqueryflag = document.getElementById("<%=Me.cbxTabQueryFlag.ClientID%>").value;
 
-            location.replace("p31_sumgrid.aspx??&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + tabqueryflag);
+            location.replace("p31_sumgrid.aspx?masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + tabqueryflag);
            
             return (false);
         }
