@@ -90,6 +90,7 @@
                 <asp:ListItem Text="20" Value="20"></asp:ListItem>
                 <asp:ListItem Text="50" Value="50" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="100" Value="100"></asp:ListItem>
+                <asp:ListItem Text="200" Value="200"></asp:ListItem>
             </asp:DropDownList>
             <asp:CheckBox ID="chkP41Bin" runat="server" Text="Hledat i v archivu" AutoPostBack="true" CssClass="chk" />
         </div>
@@ -104,6 +105,7 @@
                 <asp:ListItem Text="20" Value="20"></asp:ListItem>
                 <asp:ListItem Text="50" Value="50" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="100" Value="100"></asp:ListItem>
+                <asp:ListItem Text="200" Value="200"></asp:ListItem>
             </asp:DropDownList>
             <asp:CheckBox ID="chkP28Bin" runat="server" Text="Hledat i v archivu" AutoPostBack="true" CssClass="chk" />
         </div>
@@ -117,6 +119,7 @@
                 <asp:ListItem Text="20" Value="20"></asp:ListItem>
                 <asp:ListItem Text="50" Value="50" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="100" Value="100"></asp:ListItem>
+                <asp:ListItem Text="200" Value="200"></asp:ListItem>
             </asp:DropDownList>
             
         </div>

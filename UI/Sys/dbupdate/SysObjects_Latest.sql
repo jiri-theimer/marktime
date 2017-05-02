@@ -7532,6 +7532,64 @@ if @is_access_edit=1 and @is_access_approve=1
 
 GO
 
+----------P---------------p31_inhale_p72id_nonbillable-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_inhale_p72id_nonbillable') and type = 'P')
+ drop procedure p31_inhale_p72id_nonbillable
+GO
+
+
+
+
+
+
+
+CREATE procedure [dbo].[p31_inhale_p72id_nonbillable]
+@p31id int
+,@ret_p72id int OUTPUT
+
+
+AS
+  set @ret_p72id=3
+  
+
+  if isnull(@p31id,0)=0
+   return	---skrytý odpis
+
+  declare @p41id int,@j02id int
+
+  select @p41id=p41ID,@j02id=j02ID from p31Worksheet where p31ID=@p31id
+
+  select @ret_p72id=p72ID_NonBillable FROM p41Project WHERE p41ID=@p41id
+
+
+  if @ret_p72id is not null
+   return	---fakturaèní status definován v projektu
+  
+
+  select @ret_p72id=p72ID_NonBillable FROM j02Person WHERE j02ID=@j02id
+
+  if @ret_p72id is null
+   set @ret_p72id=3	---fakturaèní status definován v osobì
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------P---------------p31_recalc_internal_rates-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_recalc_internal_rates') and type = 'P')

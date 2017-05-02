@@ -88,10 +88,13 @@ Public Class clsMergeDOC
 
         Dim dstDoc As Document = doc.Clone()
         dstDoc.Sections.Clear()
-        Dim dbRow As DataRow, strErr As String = ""
+        Dim dbRow As DataRow, strErr As String = "", bolSignatureImage As Boolean = False, strImageFullPath As String = ""
         If Not dt Is Nothing Then
+            bolSignatureImage = dt.Columns.Contains("image1_fullpath")
             For Each dbRow In dt.Rows
-
+                If bolSignatureImage Then
+                    strImageFullPath = dbRow.Item("image1_fullpath") & ""
+                End If
                 Dim rowDoc As Document = doc.Clone()
                 rowDoc.MailMerge.Execute(dbRow)
 
@@ -100,6 +103,12 @@ Public Class clsMergeDOC
                 AppendDoc(dstDoc, rowDoc)
 
             Next
+            If strImageFullPath <> "" Then
+                Dim bd As New DocumentBuilder(dstDoc)
+                If bd.MoveToMergeField("image1") Then
+                    bd.InsertImage(strImageFullPath)
+                End If
+            End If
         End If
 
 

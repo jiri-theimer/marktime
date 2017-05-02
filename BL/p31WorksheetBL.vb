@@ -48,6 +48,7 @@
     Function SaveFreeFields(intP31ID As Integer, lisFF As List(Of BO.FreeField), bolIsTempRecord As Boolean, strP31Guid As String) As Boolean
     Function SaveFreeFields_Batch_AfterApproving(strP31Guid As String) As Boolean
     Function UpdateTemp_After_EditOrig(intP31ID As Integer, strGUID As String) As Boolean
+    Function Get_p72ID_NonBillableWork(intP31ID As Integer) As BO.p72IdENUM
     ''Function GetList_ExpenseSummary(myQuery As BO.myQueryP31) As IEnumerable(Of BO.WorksheetExpenseSummary)
 End Interface
 Class p31WorksheetBL
@@ -453,5 +454,7 @@ Class p31WorksheetBL
     Public Function GetDrillDownGridSource(colDD1 As BO.GridColumn, colDD2 As BO.GridColumn, sumCols_Pivot As List(Of BO.PivotSumField), addCols As List(Of BO.GridColumn), strParentSqlWhere As String, mq As BO.myQueryP31) As DataTable Implements Ip31WorksheetBL.GetDrillDownGridSource
         Return _cDL.GetDrillDownGridSource(colDD1, colDD2, sumCols_Pivot, addCols, strParentSqlWhere, mq)
     End Function
-
+    Public Function Get_p72ID_NonBillableWork(intP31ID As Integer) As BO.p72IdENUM Implements Ip31WorksheetBL.Get_p72ID_NonBillableWork
+        Return _cDL.Get_p72ID_NonBillableWork(intP31ID)
+    End Function
 End Class

@@ -277,7 +277,7 @@
                     Else
                         Me.CurrentHoursEntryFlag = BO.p31HoursEntryFlagENUM.NeniCas
                     End If
-                    Me.MyDefault_j27ID = .j27ID_Billing_Orig
+
                     Me.MyDefault_VatRate = .p31VatRate_Orig
                 End With
             Else

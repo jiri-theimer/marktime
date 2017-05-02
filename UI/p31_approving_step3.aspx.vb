@@ -260,7 +260,8 @@ Public Class p31_approving_step3
                             Else
                                 .Value_Approved_Internal = cRec.p31Value_Orig
                                 If cRec.p72ID_AfterTrimming = BO.p72IdENUM._NotSpecified Or cRec.p72ID_AfterTrimming = BO.p72IdENUM.Fakturovat Then
-                                    .p72id = BO.p72IdENUM.SkrytyOdpis
+                                    ''.p72id = BO.p72IdENUM.SkrytyOdpis
+                                    .p72id = Master.Factory.p31WorksheetBL.Get_p72ID_NonBillableWork(cApprove.p31ID)
                                 Else
                                     .p72id = cRec.p72ID_AfterTrimming
                                 End If

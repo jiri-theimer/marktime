@@ -51,7 +51,7 @@
                     Select Case strTab
                         Case "p31", "time", "expense", "fee", "kusovnik"
                             Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p28&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
-                        Case "o23", "p91", "p56", "summary", "p41"
+                        Case "o23", "p91", "p56", "p41"
                             Server.Transfer("entity_framework_rec_" & strTab & ".aspx?masterprefix=p28&masterpid=" & intPID.ToString & "&source=" & menu1.PageSource, False)
                         Case "p90"
                             Server.Transfer("p28_framework_detail_p90.aspx?masterpid=" & intPID.ToString & "&source=" & menu1.PageSource, False)

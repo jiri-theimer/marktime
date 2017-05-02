@@ -259,7 +259,18 @@
         End With
         Return _cDB.RunSP("p31_delete", pars)
     End Function
-
+    Public Function Get_p72ID_NonBillableWork(intP31ID As Integer) As BO.p72IdENUM
+        Dim pars As New DbParameters()
+        With pars
+            .Add("p31id", intP31ID, DbType.Int32)
+            .Add("ret_p72id", , DbType.Int32, ParameterDirection.Output)
+        End With
+        If _cDB.RunSP("p31_inhale_p72id_nonbillable", pars) Then
+            Return pars.Get(Of Int32)("ret_p72id")
+        Else
+            Return BO.p72IdENUM.SkrytyOdpis
+        End If
+    End Function
 
 
     Private Function GetSQLWHERE(myQuery As BO.myQueryP31, ByRef pars As DL.DbParameters, Optional strGUID_TempData As String = "") As String

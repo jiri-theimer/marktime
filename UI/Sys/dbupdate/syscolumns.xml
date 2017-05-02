@@ -5865,13 +5865,13 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02FirstName</name>
+    <name>p72ID_NonBillable</name>
     <id>1719677174</id>
-    <xtype>231</xtype>
-    <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>100</length>
-    <xprec>0</xprec>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
     <xscale>0</xscale>
     <colid>6</colid>
     <xoffset>0</xoffset>
@@ -5883,22 +5883,22 @@
     <number>0</number>
     <colorder>6</colorder>
     <offset>-5</offset>
-    <collationid>53252</collationid>
+    <collationid>0</collationid>
     <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>0</usertype>
-    <prec>100</prec>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>nvarchar</type_name>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02LastName</name>
+    <name>j02FirstName</name>
     <id>1719677174</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
@@ -5931,12 +5931,12 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02TitleBeforeName</name>
+    <name>j02LastName</name>
     <id>1719677174</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
     <xusertype>231</xusertype>
-    <length>20</length>
+    <length>100</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>8</colid>
@@ -5954,7 +5954,7 @@
     <status>24</status>
     <type>39</type>
     <usertype>0</usertype>
-    <prec>20</prec>
+    <prec>100</prec>
     <iscomputed>0</iscomputed>
     <isoutparam>0</isoutparam>
     <isnullable>1</isnullable>
@@ -5964,7 +5964,7 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02TitleAfterName</name>
+    <name>j02TitleBeforeName</name>
     <id>1719677174</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
@@ -5997,12 +5997,12 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02Code</name>
+    <name>j02TitleAfterName</name>
     <id>1719677174</id>
-    <xtype>167</xtype>
+    <xtype>231</xtype>
     <typestat>2</typestat>
-    <xusertype>167</xusertype>
-    <length>50</length>
+    <xusertype>231</xusertype>
+    <length>20</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>10</colid>
@@ -6015,6 +6015,39 @@
     <number>0</number>
     <colorder>10</colorder>
     <offset>-9</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>20</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>j02Person</TableName>
+  </Table>
+  <Table>
+    <name>j02Code</name>
+    <id>1719677174</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>11</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>11</colorder>
+    <offset>-10</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6038,7 +6071,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>11</colid>
+    <colid>12</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6046,8 +6079,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>11</colorder>
-    <offset>-10</offset>
+    <colorder>12</colorder>
+    <offset>-11</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6064,39 +6097,6 @@
   </Table>
   <Table>
     <name>j02Email</name>
-    <id>1719677174</id>
-    <xtype>167</xtype>
-    <typestat>2</typestat>
-    <xusertype>167</xusertype>
-    <length>50</length>
-    <xprec>0</xprec>
-    <xscale>0</xscale>
-    <colid>12</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>12</colorder>
-    <offset>-11</offset>
-    <collationid>53252</collationid>
-    <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>2</usertype>
-    <prec>50</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>varchar</type_name>
-    <TableName>j02Person</TableName>
-  </Table>
-  <Table>
-    <name>j02Mobile</name>
     <id>1719677174</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -6129,7 +6129,7 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02Phone</name>
+    <name>j02Mobile</name>
     <id>1719677174</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -6162,12 +6162,12 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02Office</name>
+    <name>j02Phone</name>
     <id>1719677174</id>
-    <xtype>231</xtype>
+    <xtype>167</xtype>
     <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>255</length>
+    <xusertype>167</xusertype>
+    <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>15</colid>
@@ -6180,6 +6180,39 @@
     <number>0</number>
     <colorder>15</colorder>
     <offset>-14</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>j02Person</TableName>
+  </Table>
+  <Table>
+    <name>j02Office</name>
+    <id>1719677174</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>255</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>16</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>16</colorder>
+    <offset>-15</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6203,7 +6236,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>16</colid>
+    <colid>17</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6211,7 +6244,7 @@
     <cdefault>1751677288</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>16</colorder>
+    <colorder>17</colorder>
     <offset>6</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -6235,7 +6268,7 @@
     <length>1000</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>17</colid>
+    <colid>18</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6243,8 +6276,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>17</colorder>
-    <offset>-15</offset>
+    <colorder>18</colorder>
+    <offset>-16</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6268,7 +6301,7 @@
     <length>100</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>18</colid>
+    <colid>19</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6276,8 +6309,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>18</colorder>
-    <offset>-16</offset>
+    <colorder>19</colorder>
+    <offset>-17</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6301,7 +6334,7 @@
     <length>200</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>19</colid>
+    <colid>20</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6309,8 +6342,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>19</colorder>
-    <offset>-17</offset>
+    <colorder>20</colorder>
+    <offset>-18</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6334,7 +6367,7 @@
     <length>40</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>20</colid>
+    <colid>21</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6342,8 +6375,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>20</colorder>
-    <offset>-18</offset>
+    <colorder>21</colorder>
+    <offset>-19</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6367,7 +6400,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>21</colid>
+    <colid>22</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6375,8 +6408,8 @@
     <cdefault>1767677345</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>21</colorder>
-    <offset>-19</offset>
+    <colorder>22</colorder>
+    <offset>-20</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -6400,7 +6433,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>22</colid>
+    <colid>23</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6408,8 +6441,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>22</colorder>
-    <offset>-20</offset>
+    <colorder>23</colorder>
+    <offset>-21</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6433,7 +6466,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>23</colid>
+    <colid>24</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6441,8 +6474,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>23</colorder>
-    <offset>-21</offset>
+    <colorder>24</colorder>
+    <offset>-22</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -6466,7 +6499,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>24</colid>
+    <colid>25</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6474,8 +6507,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>24</colorder>
-    <offset>-22</offset>
+    <colorder>25</colorder>
+    <offset>-23</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6499,7 +6532,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>25</colid>
+    <colid>26</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6507,8 +6540,8 @@
     <cdefault>1783677402</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>25</colorder>
-    <offset>-23</offset>
+    <colorder>26</colorder>
+    <offset>-24</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -6532,7 +6565,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>26</colid>
+    <colid>27</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6540,8 +6573,8 @@
     <cdefault>1799677459</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>26</colorder>
-    <offset>-24</offset>
+    <colorder>27</colorder>
+    <offset>-25</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -6565,7 +6598,7 @@
     <length>40</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>27</colid>
+    <colid>28</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6573,8 +6606,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>27</colorder>
-    <offset>-25</offset>
+    <colorder>28</colorder>
+    <offset>-26</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6591,39 +6624,6 @@
   </Table>
   <Table>
     <name>j02SmtpServer</name>
-    <id>1719677174</id>
-    <xtype>167</xtype>
-    <typestat>2</typestat>
-    <xusertype>167</xusertype>
-    <length>50</length>
-    <xprec>0</xprec>
-    <xscale>0</xscale>
-    <colid>28</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>28</colorder>
-    <offset>-26</offset>
-    <collationid>53252</collationid>
-    <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>2</usertype>
-    <prec>50</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>varchar</type_name>
-    <TableName>j02Person</TableName>
-  </Table>
-  <Table>
-    <name>j02SmtpLogin</name>
     <id>1719677174</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -6656,7 +6656,7 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02SmtpPassword</name>
+    <name>j02SmtpLogin</name>
     <id>1719677174</id>
     <xtype>167</xtype>
     <typestat>2</typestat>
@@ -6689,13 +6689,13 @@
     <TableName>j02Person</TableName>
   </Table>
   <Table>
-    <name>j02IsSmtpVerify</name>
+    <name>j02SmtpPassword</name>
     <id>1719677174</id>
-    <xtype>104</xtype>
-    <typestat>0</typestat>
-    <xusertype>104</xusertype>
-    <length>1</length>
-    <xprec>1</xprec>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>31</colid>
     <xoffset>0</xoffset>
@@ -6706,6 +6706,39 @@
     <domain>0</domain>
     <number>0</number>
     <colorder>31</colorder>
+    <offset>-29</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>j02Person</TableName>
+  </Table>
+  <Table>
+    <name>j02IsSmtpVerify</name>
+    <id>1719677174</id>
+    <xtype>104</xtype>
+    <typestat>0</typestat>
+    <xusertype>104</xusertype>
+    <length>1</length>
+    <xprec>1</xprec>
+    <xscale>0</xscale>
+    <colid>32</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>32</colorder>
     <offset>6</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -6729,7 +6762,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>32</colid>
+    <colid>33</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6737,8 +6770,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>32</colorder>
-    <offset>-29</offset>
+    <colorder>33</colorder>
+    <offset>-30</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -6762,7 +6795,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>33</colid>
+    <colid>34</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6770,8 +6803,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>33</colorder>
-    <offset>-30</offset>
+    <colorder>34</colorder>
+    <offset>-31</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6795,7 +6828,7 @@
     <length>150</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>34</colid>
+    <colid>35</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6803,8 +6836,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>34</colorder>
-    <offset>-31</offset>
+    <colorder>35</colorder>
+    <offset>-32</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -6828,7 +6861,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>35</colid>
+    <colid>36</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -6836,8 +6869,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>35</colorder>
-    <offset>-32</offset>
+    <colorder>36</colorder>
+    <offset>-33</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -33209,6 +33242,39 @@
     <TableName>p28Contact</TableName>
   </Table>
   <Table>
+    <name>p28Pohoda_VatCode</name>
+    <id>100195407</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>46</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>46</colorder>
+    <offset>-43</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>p28Contact</TableName>
+  </Table>
+  <Table>
     <name>p28ID</name>
     <id>1428200138</id>
     <xtype>56</xtype>
@@ -50796,6 +50862,39 @@
     <TableName>p41Project</TableName>
   </Table>
   <Table>
+    <name>p72ID_NonBillable</name>
+    <id>340196262</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>16</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>16</colorder>
+    <offset>-14</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>p41Project</TableName>
+  </Table>
+  <Table>
     <name>p41IsDraft</name>
     <id>340196262</id>
     <xtype>104</xtype>
@@ -50804,7 +50903,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>16</colid>
+    <colid>17</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -50812,7 +50911,7 @@
     <cdefault>372196376</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>16</colorder>
+    <colorder>17</colorder>
     <offset>10</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -50829,39 +50928,6 @@
   </Table>
   <Table>
     <name>p41InvoiceDefaultText1</name>
-    <id>340196262</id>
-    <xtype>231</xtype>
-    <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>1000</length>
-    <xprec>0</xprec>
-    <xscale>0</xscale>
-    <colid>17</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>17</colorder>
-    <offset>-14</offset>
-    <collationid>53252</collationid>
-    <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>0</usertype>
-    <prec>1000</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>nvarchar</type_name>
-    <TableName>p41Project</TableName>
-  </Table>
-  <Table>
-    <name>p41InvoiceDefaultText2</name>
     <id>340196262</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
@@ -50894,13 +50960,13 @@
     <TableName>p41Project</TableName>
   </Table>
   <Table>
-    <name>p41InvoiceMaturityDays</name>
+    <name>p41InvoiceDefaultText2</name>
     <id>340196262</id>
-    <xtype>56</xtype>
-    <typestat>0</typestat>
-    <xusertype>56</xusertype>
-    <length>4</length>
-    <xprec>10</xprec>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>1000</length>
+    <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>19</colid>
     <xoffset>0</xoffset>
@@ -50912,6 +50978,39 @@
     <number>0</number>
     <colorder>19</colorder>
     <offset>-16</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>1000</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>p41Project</TableName>
+  </Table>
+  <Table>
+    <name>p41InvoiceMaturityDays</name>
+    <id>340196262</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>20</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>20</colorder>
+    <offset>-17</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -50935,7 +51034,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>20</colid>
+    <colid>21</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -50943,8 +51042,8 @@
     <cdefault>388196433</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>20</colorder>
-    <offset>-17</offset>
+    <colorder>21</colorder>
+    <offset>-18</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -50961,39 +51060,6 @@
   </Table>
   <Table>
     <name>p41PlanFrom</name>
-    <id>340196262</id>
-    <xtype>61</xtype>
-    <typestat>0</typestat>
-    <xusertype>61</xusertype>
-    <length>8</length>
-    <xprec>23</xprec>
-    <xscale>3</xscale>
-    <colid>21</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>21</colorder>
-    <offset>-18</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>111</type>
-    <usertype>12</usertype>
-    <prec>23</prec>
-    <scale>3</scale>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>datetime</type_name>
-    <TableName>p41Project</TableName>
-  </Table>
-  <Table>
-    <name>p41PlanUntil</name>
     <id>340196262</id>
     <xtype>61</xtype>
     <typestat>0</typestat>
@@ -51026,14 +51092,14 @@
     <TableName>p41Project</TableName>
   </Table>
   <Table>
-    <name>p41LimitHours_Notification</name>
+    <name>p41PlanUntil</name>
     <id>340196262</id>
-    <xtype>106</xtype>
+    <xtype>61</xtype>
     <typestat>0</typestat>
-    <xusertype>106</xusertype>
-    <length>5</length>
-    <xprec>6</xprec>
-    <xscale>2</xscale>
+    <xusertype>61</xusertype>
+    <length>8</length>
+    <xprec>23</xprec>
+    <xscale>3</xscale>
     <colid>23</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
@@ -51044,6 +51110,39 @@
     <number>0</number>
     <colorder>23</colorder>
     <offset>-20</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>111</type>
+    <usertype>12</usertype>
+    <prec>23</prec>
+    <scale>3</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>datetime</type_name>
+    <TableName>p41Project</TableName>
+  </Table>
+  <Table>
+    <name>p41LimitHours_Notification</name>
+    <id>340196262</id>
+    <xtype>106</xtype>
+    <typestat>0</typestat>
+    <xusertype>106</xusertype>
+    <length>5</length>
+    <xprec>6</xprec>
+    <xscale>2</xscale>
+    <colid>24</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>24</colorder>
+    <offset>-21</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -51067,7 +51166,7 @@
     <length>5</length>
     <xprec>8</xprec>
     <xscale>2</xscale>
-    <colid>24</colid>
+    <colid>25</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51075,8 +51174,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>24</colorder>
-    <offset>-21</offset>
+    <colorder>25</colorder>
+    <offset>-22</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -51100,7 +51199,7 @@
     <length>40</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>25</colid>
+    <colid>26</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51108,8 +51207,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>25</colorder>
-    <offset>-22</offset>
+    <colorder>26</colorder>
+    <offset>-23</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -51133,7 +51232,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>26</colid>
+    <colid>27</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51141,8 +51240,8 @@
     <cdefault>404196490</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>26</colorder>
-    <offset>-23</offset>
+    <colorder>27</colorder>
+    <offset>-24</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -51166,7 +51265,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>27</colid>
+    <colid>28</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51174,8 +51273,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>27</colorder>
-    <offset>-24</offset>
+    <colorder>28</colorder>
+    <offset>-25</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -51199,7 +51298,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>28</colid>
+    <colid>29</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51207,8 +51306,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>28</colorder>
-    <offset>-25</offset>
+    <colorder>29</colorder>
+    <offset>-26</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -51232,7 +51331,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>29</colid>
+    <colid>30</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51240,8 +51339,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>29</colorder>
-    <offset>-26</offset>
+    <colorder>30</colorder>
+    <offset>-27</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -51265,7 +51364,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>30</colid>
+    <colid>31</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51273,8 +51372,8 @@
     <cdefault>420196547</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>30</colorder>
-    <offset>-27</offset>
+    <colorder>31</colorder>
+    <offset>-28</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -51298,7 +51397,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>31</colid>
+    <colid>32</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51306,8 +51405,8 @@
     <cdefault>436196604</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>31</colorder>
-    <offset>-28</offset>
+    <colorder>32</colorder>
+    <offset>-29</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -51331,7 +51430,7 @@
     <length>200</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>32</colid>
+    <colid>33</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51339,8 +51438,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>32</colorder>
-    <offset>-29</offset>
+    <colorder>33</colorder>
+    <offset>-30</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -51364,7 +51463,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>33</colid>
+    <colid>34</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51372,8 +51471,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>33</colorder>
-    <offset>-30</offset>
+    <colorder>34</colorder>
+    <offset>-31</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -51397,7 +51496,7 @@
     <length>1000</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>34</colid>
+    <colid>35</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51405,8 +51504,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>34</colorder>
-    <offset>-31</offset>
+    <colorder>35</colorder>
+    <offset>-32</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -51430,7 +51529,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>35</colid>
+    <colid>36</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -51438,7 +51537,7 @@
     <cdefault>452196661</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>35</colorder>
+    <colorder>36</colorder>
     <offset>10</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -51455,39 +51554,6 @@
   </Table>
   <Table>
     <name>p41TreeLevel</name>
-    <id>340196262</id>
-    <xtype>56</xtype>
-    <typestat>0</typestat>
-    <xusertype>56</xusertype>
-    <length>4</length>
-    <xprec>10</xprec>
-    <xscale>0</xscale>
-    <colid>36</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>36</colorder>
-    <offset>-32</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>38</type>
-    <usertype>7</usertype>
-    <prec>10</prec>
-    <scale>0</scale>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>int</type_name>
-    <TableName>p41Project</TableName>
-  </Table>
-  <Table>
-    <name>p41TreeIndex</name>
     <id>340196262</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -51520,7 +51586,7 @@
     <TableName>p41Project</TableName>
   </Table>
   <Table>
-    <name>p41TreePrev</name>
+    <name>p41TreeIndex</name>
     <id>340196262</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -51553,7 +51619,7 @@
     <TableName>p41Project</TableName>
   </Table>
   <Table>
-    <name>p41TreeNext</name>
+    <name>p41TreePrev</name>
     <id>340196262</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -51586,13 +51652,13 @@
     <TableName>p41Project</TableName>
   </Table>
   <Table>
-    <name>p41TreePath</name>
+    <name>p41TreeNext</name>
     <id>340196262</id>
-    <xtype>231</xtype>
-    <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>255</length>
-    <xprec>0</xprec>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
     <xscale>0</xscale>
     <colid>40</colid>
     <xoffset>0</xoffset>
@@ -51604,6 +51670,39 @@
     <number>0</number>
     <colorder>40</colorder>
     <offset>-36</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>p41Project</TableName>
+  </Table>
+  <Table>
+    <name>p41TreePath</name>
+    <id>340196262</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>255</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>41</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>41</colorder>
+    <offset>-37</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
