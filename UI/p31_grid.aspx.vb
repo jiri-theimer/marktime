@@ -150,6 +150,15 @@ Public Class p31_grid
             Dim strF As String = a(i)
             Dim c As BO.GridColumn = lis.Where(Function(p) p.ColumnName = strF).First
             Dim strLW As String = c.Pivot_GroupBySql
+            If Trim(c.SqlSyntax_FROM) <> "" Then
+                If hidFrom.Value = "" Then
+                    hidFrom.Value = c.SqlSyntax_FROM
+                Else
+                    If hidFrom.Value.IndexOf(c.SqlSyntax_FROM) < 0 Then
+                        hidFrom.Value += " " & c.SqlSyntax_FROM
+                    End If
+                End If
+            End If
             If b(i) = "" Then
                 strLW += " IS NULL"
             Else
@@ -494,7 +503,6 @@ Public Class p31_grid
 
     
     Private Sub RecalcVirtualRowCount()
-        ''If Me.hidDrillDownField.Value <> "" Then Return 'pro drill-down nepočítat
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
 
@@ -505,11 +513,7 @@ Public Class p31_grid
       
         grid1.radGridOrig.CurrentPageIndex = 0
         Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
-        ''If grid1.VirtualRowCount > 100000 Then
-        ''    Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
-        ''Else
-        ''    Me.lblFormHeader.Text = "Worksheet (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
-        ''End If
+        
 
     End Sub
 

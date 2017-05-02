@@ -330,6 +330,8 @@ Public Class sumgrid_designer
         Me.j77Name.Focus()
         Me.hidIsOwner.Value = "1"
         Me.j70ID.SelectedIndex = 0
+        j77Ordinary.Value = 0
+
         If Me.j77ID.Items.FindByValue("-1") Is Nothing Then
             Me.j77ID.Items.Insert(0, New ListItem("--Založit novou pojmenovanou šablonu--", "-1"))
         End If

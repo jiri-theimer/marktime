@@ -27,7 +27,7 @@
                 <span>Druh pole:</span>
                 <asp:DropDownList ID="x28Flag" runat="server" AutoPostBack="true">
                     <asp:ListItem Value="1" Text="Formulářové pole" Selected="true"></asp:ListItem>
-                    <asp:ListItem Value="2" Text="Přehledové a Pivot pole"></asp:ListItem>
+                    <asp:ListItem Value="2" Text="Pole pro přehledy a statistiky"></asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>

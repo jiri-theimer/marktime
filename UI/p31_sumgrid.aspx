@@ -16,7 +16,7 @@
         <div class="commandcell" style="padding-left:6px;">
 
           
-            <asp:DropDownList ID="j77ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="j77Name" Style="width: 250px;"></asp:DropDownList>
+            <asp:DropDownList ID="j77ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="j77Name" Style="width: 250px;" ToolTip="Pojmenovaná šablona statistiky"></asp:DropDownList>
             <button type="button" onclick="templatebuilder()" style="padding: 2px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;">
                 <img src="Images/setting.png" />
                 Nastavení statistiky                
