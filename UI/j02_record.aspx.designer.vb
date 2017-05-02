@@ -536,6 +536,24 @@ Partial Public Class j02_record
     Protected WithEvents j02TimesheetEntryDaysBackLimit_p34IDs As Global.UI.datacombo
 
     '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p72ID_NonBillable control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p72ID_NonBillable As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''lblj02RobotAddress control.
     '''</summary>
     '''<remarks>

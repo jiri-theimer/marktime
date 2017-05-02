@@ -235,6 +235,13 @@
             context["flag"] = "searchbox";
            
         }
+        function cbxSearch_OnClientFocus(sender, args) {
+            var combo = sender;
+            var s = combo.get_text();
+            if (s.indexOf("...")>0)
+                combo.set_text("");
+        }
+
         function menu_fullscreen(){
             <%If hidSource.Value="3" then%>
             location.replace("p91_framework.aspx?pid=<%=Master.DataPID%>");

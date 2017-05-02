@@ -286,6 +286,12 @@
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>           
         }
+        function cbx1_OnClientFocus(sender, args) {
+            var combo = sender;
+            var s = combo.get_text();
+            if (s.indexOf("...") > 0)
+                combo.set_text("");
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -326,7 +332,7 @@
                     </button>
                 </div>
                 <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" style="padding-left:10px">
-                    <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat" Width="120px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting">                        
+                    <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientFocus="cbx1_OnClientFocus" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting">                        
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                     </telerik:RadComboBox>
                 </asp:Panel>

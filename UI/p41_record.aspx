@@ -186,7 +186,7 @@
 
 
                 <tr>
-                    <td style="width: 150px;">
+                    <td style="width: 225px;">
                         <asp:Label ID="lblP87ID" runat="server" Text="Fakturační jazyk projektu:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
@@ -220,13 +220,13 @@
                     </tr>
 
                     <tr>
-                        <td colspan="2">
+                        <td>
                             <asp:Label ID="lblMaturity" runat="server" Text="Výchozí počet dní splatnosti faktury:" CssClass="lbl"></asp:Label>
 
-
+                        </td>
+                        <td>
                             <telerik:RadNumericTextBox ID="p41InvoiceMaturityDays" runat="server" MinValue="0" MaxValue="200" NumberFormat-DecimalDigits="0" Value="10" Width="50px" ShowSpinButtons="true">
                             </telerik:RadNumericTextBox>
-
                         </td>
                     </tr>
 
@@ -251,6 +251,19 @@
                     </tr>
                     <tr>
                         <td>
+                            <asp:Label ID="Label1" runat="server" Text="Fakt. status pro nefakturovatelné úkony:" CssClass="lbl"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="p72ID_NonBillable" runat="server">
+                                <asp:ListItem Text="--Rozhodne systém--" Value=""></asp:ListItem>
+                                <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
+                                <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <asp:Label ID="lblp51ID_Internal" runat="server" Text="Ceník nákladových sazeb projektu:" CssClass="lbl"></asp:Label>
 
                         </td>
@@ -260,7 +273,7 @@
                     </tr>
                 </table>
                 <div>Fakturační poznámka projektu:</div>
-                <asp:TextBox ID="p41BillingMemo" runat="server" style="width:99%;height:60px;" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="p41BillingMemo" runat="server" Style="width: 99%; height: 60px;" TextMode="MultiLine"></asp:TextBox>
             </asp:Panel>
         </telerik:RadPageView>
         <telerik:RadPageView ID="ff" runat="server">
@@ -314,7 +327,7 @@
                         </asp:DropDownList>
                     </td>
                 </tr>
-               
+
                 <tr>
                     <td colspan="2">
                         <asp:CheckBox ID="p41IsNoNotify" runat="server" Text="V projektu vypnout automatické e-mail notifikace" CssClass="chk" />

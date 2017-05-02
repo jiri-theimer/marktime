@@ -761,6 +761,24 @@ Partial Public Class p28_record
     Protected WithEvents p28ExternalPID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p28Pohoda_VatCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28Pohoda_VatCode As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''ph1 control.
     '''</summary>
     '''<remarks>

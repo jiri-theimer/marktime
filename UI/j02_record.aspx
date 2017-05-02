@@ -244,7 +244,19 @@
                 <span class="infoInForm">Počet dní, za které osoba může zpětně zapisovat časové úkony. Omezení se vztahuje na osobu zapisovače úkonu, nikoliv na osobu záznamu úkonu.</span>
             </fieldset>
             <table cellpadding="5" cellspacing="2">
-
+                <tr>
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="Fakt. status pro nefakturovatelné úkony:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="p72ID_NonBillable" runat="server">
+                            <asp:ListItem Text="--Rozhodne systém--" Value=""></asp:ListItem>
+                            <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
+                            <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Label ID="lblj02RobotAddress" runat="server" Text="Adresa pro IMAP robota:" CssClass="lbl" meta:resourcekey="lblj02RobotAddress"></asp:Label>

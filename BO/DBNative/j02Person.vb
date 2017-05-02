@@ -29,7 +29,7 @@
     Public Property j02TimesheetEntryDaysBackLimit_p34IDs As String
     Public Property j02Salutation As String
     Public Property j02WorksheetAccessFlag As Integer   '1= nemá přístup k již vyfakturovaným úkonům
-
+    Public Property p72ID_NonBillable As BO.p72IdENUM
 
 
     Public ReadOnly Property FullNameAsc As String

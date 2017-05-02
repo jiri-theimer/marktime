@@ -114,6 +114,7 @@
                 pars.Add("p28RobotAddress", .p28RobotAddress, DbType.String)
                 pars.Add("p28ExternalPID", .p28ExternalPID, DbType.String)
                 pars.Add("p28BillingMemo", .p28BillingMemo, DbType.String, , , True, "Fakturační poznámka klienta")
+                pars.Add("p28Pohoda_VatCode", .p28Pohoda_VatCode, DbType.String)
 
                 pars.Add("p28InvoiceDefaultText1", .p28InvoiceDefaultText1, DbType.String, , , True, "Výchozí fakturační text")
                 pars.Add("p28InvoiceDefaultText2", .p28InvoiceDefaultText2, DbType.String, , , True, "Výchozí doplňkový text faktury")

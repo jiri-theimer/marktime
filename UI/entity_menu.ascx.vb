@@ -86,6 +86,8 @@ Public Class entity_menu
             .OnClientItemsRequesting = "cbxSearch_OnClientItemsRequesting"
             .OnClientSelectedIndexChanged = "cbxSearch_OnClientSelectedIndexChanged"
             .WebServiceSettings.Method = "LoadComboData"
+            .Text = "Hledat..."
+            .OnClientFocus = "cbxSearch_OnClientFocus"
         End With
 
         Dim s As String = ""

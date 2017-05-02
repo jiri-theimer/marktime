@@ -91,6 +91,7 @@
 
             End If
             basUI.SelectDropdownlistValue(Me.j02WorksheetAccessFlag, CInt(.j02WorksheetAccessFlag).ToString)
+            basUI.SelectDropdownlistValue(Me.p72ID_NonBillable, CInt(.p72ID_NonBillable).ToString)
 
             Master.Timestamp = .Timestamp
 
@@ -157,6 +158,7 @@
                 .j02TimesheetEntryDaysBackLimit = BO.BAS.IsNullInt(Me.j02TimesheetEntryDaysBackLimit.SelectedValue)
                 .j02TimesheetEntryDaysBackLimit_p34IDs = String.Join(",", Me.j02TimesheetEntryDaysBackLimit_p34IDs.GetAllCheckedValues)
                 .j02WorksheetAccessFlag = BO.BAS.IsNullInt(Me.j02WorksheetAccessFlag.SelectedValue)
+                .p72ID_NonBillable = BO.BAS.IsNullInt(Me.p72ID_NonBillable.SelectedValue)
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
                 If chkIsSmtp.Checked Then

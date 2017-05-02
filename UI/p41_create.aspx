@@ -191,7 +191,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="width:225px;">
                         <asp:Label ID="lblP87ID" runat="server" Text="Fakturační jazyk projektu:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
@@ -207,7 +207,7 @@
             <asp:Panel ID="panInvoiceSetting" runat="server">
                 <table cellpadding="5" cellspacing="2">
                     <tr valign="top">
-                        <td style="width: 150px;">
+                        <td style="width: 225px;">
                             <asp:Label ID="lblp28ID_Billing" runat="server" Text="Odběratel faktury:" CssClass="lbl"></asp:Label>
 
                         </td>
@@ -237,10 +237,11 @@
                             <span class="infoInForm">Definujte v případě, že se typ faktury projektu liší od nastavení klienta.</span>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="2">
+                    <tr valign="top">
+                        <td>
                             <asp:Label ID="lblMaturity" runat="server" Text="Výchozí počet dní splatnosti faktury:" CssClass="lbl"></asp:Label>
-
+                        </td>
+                        <td>
 
                             <telerik:RadNumericTextBox ID="p41InvoiceMaturityDays" runat="server" MinValue="0" MaxValue="200" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true">
                             </telerik:RadNumericTextBox>
@@ -267,7 +268,19 @@
                             <asp:TextBox ID="p41InvoiceDefaultText2" runat="server" TextMode="MultiLine" Style="width: 600px; height: 30px;"></asp:TextBox>
                         </td>
                     </tr>
-
+                    <tr>
+                    <td>
+                        <asp:Label ID="Label4" runat="server" Text="Fakt. status pro nefakturovatelné úkony:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="p72ID_NonBillable" runat="server">
+                            <asp:ListItem Text="--Rozhodne systém--" Value=""></asp:ListItem>
+                            <asp:ListItem Text="Zahrnout do paušálu" Value="6"></asp:ListItem>
+                            <asp:ListItem Text="Viditelný odpis" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="Skrytý odpis" Value="3"></asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                </tr>
                 </table>
                 <div>Fakturační poznámka projektu:</div>
                 <asp:TextBox ID="p41BillingMemo" runat="server" style="width:99%;height:60px;" TextMode="MultiLine"></asp:TextBox>

@@ -88,6 +88,8 @@ Public Class p91_framework_detail
             .WebServiceSettings.Method = "LoadComboData"
             .WebServiceSettings.Path = "~/Services/invoice_service.asmx"
             .ToolTip = "Hledat fakturu"
+            .OnClientFocus = "cbxSearch_OnClientFocus"
+            .Text = "Hledat..."
         End With
         If hidSource.Value = "2" Then
             panMenuContainer.Style.Item("height") = ""

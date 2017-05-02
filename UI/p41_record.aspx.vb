@@ -120,6 +120,7 @@
             Me.p41InvoiceMaturityDays.Value = .p41InvoiceMaturityDays
             Me.p41InvoiceDefaultText1.Text = .p41InvoiceDefaultText1
             Me.p41InvoiceDefaultText2.Text = .p41InvoiceDefaultText2
+            basUI.SelectDropdownlistValue(Me.p72ID_NonBillable, CInt(.p72ID_NonBillable).ToString)
 
             Me.p41LimitHours_Notification.Value = .p41LimitHours_Notification
             Me.p41LimitFee_Notification.Value = .p41LimitFee_Notification
@@ -287,6 +288,7 @@
             .p28ID_Billing = BO.BAS.IsNullInt(Me.p28ID_Billing.Value)
             .p92ID = BO.BAS.IsNullInt(Me.p92id.SelectedValue)
             .p41InvoiceMaturityDays = BO.BAS.IsNullInt(Me.p41InvoiceMaturityDays.Value)
+            .p72ID_NonBillable = BO.BAS.IsNullInt(Me.p72ID_NonBillable.SelectedValue)
 
             .p41InvoiceDefaultText1 = Me.p41InvoiceDefaultText1.Text
             .p41InvoiceDefaultText2 = Me.p41InvoiceDefaultText2.Text

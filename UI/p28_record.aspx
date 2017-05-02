@@ -474,6 +474,16 @@
                         <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>                   
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label3" runat="server" Text="Kód DPH pro export faktur:" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="p28Pohoda_VatCode" runat="server" Style="width: 200px;"></asp:TextBox>
+                       
+                                           
+                    </td>
+                </tr>
             </table>
             <div class="content-box2">
                 <div class="title">

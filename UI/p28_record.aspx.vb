@@ -152,6 +152,7 @@
                 Me.p28ParentID.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .p28ParentID, True)
             End If
             Me.p28BillingMemo.Text = .p28BillingMemo
+            Me.p28Pohoda_VatCode.Text = .p28Pohoda_VatCode
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
         Dim lisO32 As IEnumerable(Of BO.o32Contact_Medium) = Master.Factory.p28ContactBL.GetList_o32(Master.DataPID)
@@ -416,6 +417,7 @@
                     .p28LimitHours_Notification = 0 : .p28LimitFee_Notification = 0
                 End If
                 .p28BillingMemo = Trim(Me.p28BillingMemo.Text)
+                .p28Pohoda_VatCode = Me.p28Pohoda_VatCode.Text
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
             End With
