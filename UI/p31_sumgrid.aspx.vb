@@ -271,12 +271,17 @@ Public Class p31_sumgrid
         SetupGrid()
         grid1.Rebind(False)
         If Request.Item("pid") <> "" Then
-            SelectGridRow(Request.Item("pid"))
+            SelectGridRow(Request.Item("pid"), grid1.radGridOrig.CurrentPageIndex)
         End If
     End Sub
-    Private Sub SelectGridRow(strStatPID As String)
+    Private Sub SelectGridRow(strStatPID As String, intPageIndex As Integer)
+        If strStatPID = "" Then Return
         Dim x As Integer = 0
         With grid1.radGridOrig
+            If intPageIndex <> .CurrentPageIndex Then
+                .CurrentPageIndex = intPageIndex
+                .Rebind()
+            End If
             For Each it As GridDataItem In .MasterTableView.Items
                 If it.GetDataKeyValue("pid") = strStatPID Then
                     it.Selected = True
@@ -286,6 +291,8 @@ Public Class p31_sumgrid
                 If x > 1000 Then Return
             Next
         End With
+        If intPageIndex > 5 Then Return 'po páté stránce se už nehledá
+        SelectGridRow(strStatPID, intPageIndex + 1) 'záznam se nenašel, tak hledat na další stránce
     End Sub
 
     
