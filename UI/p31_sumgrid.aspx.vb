@@ -285,6 +285,7 @@ Public Class p31_sumgrid
             For Each it As GridDataItem In .MasterTableView.Items
                 If it.GetDataKeyValue("pid") = strStatPID Then
                     it.Selected = True
+                    hiddatapid.Value = strStatPID
                     Return
                 End If
                 x += 1
@@ -304,9 +305,13 @@ Public Class p31_sumgrid
             .ClearColumns()
             .PageSize = cbxPaging.SelectedValue
             .radGridOrig.ShowFooter = True
+            .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+            .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+            ''.radGridOrig.ClientSettings.ClientEvents.OnTableCreated = "grid1_TableCreated"
+
             .DataKeyNames = "pid"
             .AllowMultiSelect = False
-            .AddSystemColumn(16)
+            .AddSystemColumn(22)
 
             .AddColumn(Me.CurrentDD1.ColumnName, Me.CurrentDD1.ColumnHeader)
             If Not Me.CurrentDD2 Is Nothing Then

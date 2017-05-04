@@ -106,7 +106,7 @@
             </table>
             <asp:Label ID="lblQuery" runat="server" CssClass="valboldred"></asp:Label>
         </asp:Panel>
-
+        
 
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
@@ -135,10 +135,16 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-           
-
+            
         });
 
+        $(window).load(function () {
+            
+            <%=me.grid1.ClientID%>_Scroll2SelectedRow();
+         
+        });
+
+      
 
         function RowSelected(sender, args) {
             document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");

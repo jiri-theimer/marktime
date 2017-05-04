@@ -78,14 +78,14 @@
         scrollArea.style.height = hx1 + "px";
         <%end if%>
         <%If grid1.ClientSettings.Scrolling.UseStaticHeaders Then%>
-        hx1 = parent.clientHeight - gridHeader.clientHeight - 20;
+        hx1 = parent.clientHeight - gridHeader.clientHeight - 20;        
         <%if grid1.ShowFooter then%>
         hx1 = hx1 - 40;
-
+        
         <%End If%>
         scrollArea.style.height = hx1 + "px";
         <%end if%>        
-
+        
     }
 
     function <%=Me.ClientID%>_SetScrollingHeight_Explicit(h) {
@@ -109,16 +109,16 @@
 
     }
 
-    function <%=Me.ClientID%>_Scroll2SelectedRow(containerHeight) {
+    function <%=Me.ClientID%>_Scroll2SelectedRow(containerHeight) {        
         if (containerHeight == null)
             containerHeight = $(window).height();
 
         var grid = $find("<%=grid1.ClientID%>");
-
+        
         var row = grid.get_masterTableView().get_selectedItems()[0];
-
+        
         //if the position of the selected row is below the viewable grid area  
-        if (row) {
+        if (row) {            
             <%If grid1.ClientSettings.Scrolling.UseStaticHeaders = False Then%>
             var rowPos1 = row.get_element().offsetTop + row.get_element().offsetHeight + 20;
 
