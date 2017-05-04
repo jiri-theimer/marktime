@@ -19,9 +19,11 @@
 
     Hodiny: <asp:TextBox ID="txtHours" runat="server" Text="2,58333"></asp:TextBox>
     
+   
+    
     <asp:Button ID="cmdPokus" runat="server" Text="test" />
 
-
+     
    
     <asp:TextBox ID="txtResult" runat="server"></asp:TextBox>
 

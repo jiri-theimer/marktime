@@ -412,6 +412,93 @@ END
 
 GO
 
+----------FN---------------get_parsed_text_with_period-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('get_parsed_text_with_period') and type = 'FN')
+ drop function get_parsed_text_with_period
+GO
+
+
+
+
+
+CREATE    FUNCTION [dbo].[get_parsed_text_with_period](@expr nvarchar(4000),@d datetime,@period_index int)
+RETURNS nvarchar(4000)
+AS
+BEGIN
+  ---podle masky [MM], [YYYY], [QQ]
+
+if @d is null
+ RETURN(@expr)
+
+set @period_index=isnull(@period_index,0)
+
+
+if @period_index=0
+begin
+set @expr=replace(@expr,'[MM]',right('0'+convert(varchar(10),month(@d)),2))
+set @expr=replace(@expr,'[DD]',right('0'+convert(varchar(10),day(@d)),2))
+set @expr=replace(@expr,'[YYYY]',convert(varchar(10),year(@d)))
+set @expr=replace(@expr,'[WW]',right('0'+convert(varchar(10),datepart(week,@d)),2))
+set @expr=replace(@expr,'[QQ]',right('0'+convert(varchar(10),datepart(quarter,@d)),2))
+set @expr=replace(@expr,'[Q]',convert(varchar(10),datepart(quarter,@d)))
+set @expr=replace(@expr,'[M]',convert(varchar(10),month(@d)))
+end
+if @period_index=1
+begin
+set @expr=replace(@expr,'[MM1]',right('0'+convert(varchar(10),month(@d)),2))
+set @expr=replace(@expr,'[DD1]',right('0'+convert(varchar(10),day(@d)),2))
+set @expr=replace(@expr,'[YYYY1]',convert(varchar(10),year(@d)))
+set @expr=replace(@expr,'[WW1]',right('0'+convert(varchar(10),datepart(week,@d)),2))
+set @expr=replace(@expr,'[QQ1]',right('0'+convert(varchar(10),datepart(quarter,@d)),2))
+set @expr=replace(@expr,'[Q1]',convert(varchar(10),datepart(quarter,@d)))
+set @expr=replace(@expr,'[M1]',convert(varchar(10),month(@d)))
+end
+if @period_index=2
+begin
+set @expr=replace(@expr,'[MM2]',right('0'+convert(varchar(10),month(@d)),2))
+set @expr=replace(@expr,'[DD2]',right('0'+convert(varchar(10),day(@d)),2))
+set @expr=replace(@expr,'[YYYY2]',convert(varchar(10),year(@d)))
+set @expr=replace(@expr,'[WW2]',right('0'+convert(varchar(10),datepart(week,@d)),2))
+set @expr=replace(@expr,'[QQ2]',right('0'+convert(varchar(10),datepart(quarter,@d)),2))
+set @expr=replace(@expr,'[Q2]',convert(varchar(10),datepart(quarter,@d)))
+set @expr=replace(@expr,'[M2]',convert(varchar(10),month(@d)))
+end
+
+
+
+RETURN(@expr)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------get_today-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('get_today') and type = 'FN')
@@ -9861,15 +9948,15 @@ WHILE @dat<=@recurrence_end
 BEGIN
   --if @dat>getdate()
     BEGIN
-	  set @p39text=@p40text
+	  set @p39text=dbo.get_parsed_text_with_period(@p40text,@p39date,0)
 	
-	  set @p39text=replace(@p39text,'[MM]',right('0'+convert(varchar(10),month(@p39date)),2))
-	  set @p39text=replace(@p39text,'[DD]',right('0'+convert(varchar(10),day(@p39date)),2))
-	  set @p39text=replace(@p39text,'[YYYY]',convert(varchar(10),year(@p39date)))
-	  set @p39text=replace(@p39text,'[WW]',right('0'+convert(varchar(10),datepart(week,@p39date)),2))
-	  set @p39text=replace(@p39text,'[QQ]',right('0'+convert(varchar(10),datepart(quarter,@p39date)),2))
-	  set @p39text=replace(@p39text,'[Q]',convert(varchar(10),datepart(quarter,@p39date)))
-	  set @p39text=replace(@p39text,'[M]',convert(varchar(10),month(@p39date)))
+	  --set @p39text=replace(@p39text,'[MM]',right('0'+convert(varchar(10),month(@p39date)),2))
+	  --set @p39text=replace(@p39text,'[DD]',right('0'+convert(varchar(10),day(@p39date)),2))
+	  --set @p39text=replace(@p39text,'[YYYY]',convert(varchar(10),year(@p39date)))
+	  --set @p39text=replace(@p39text,'[WW]',right('0'+convert(varchar(10),datepart(week,@p39date)),2))
+	  --set @p39text=replace(@p39text,'[QQ]',right('0'+convert(varchar(10),datepart(quarter,@p39date)),2))
+	  --set @p39text=replace(@p39text,'[Q]',convert(varchar(10),datepart(quarter,@p39date)))
+	  --set @p39text=replace(@p39text,'[M]',convert(varchar(10),month(@p39date)))
 
 	  set @p39text=replace(@p39text,'[','')
 	  set @p39text=replace(@p39text,']','')
@@ -12455,6 +12542,13 @@ select top 1 @o38id_delivery=o38ID from o37Contact_Address WHERE o36ID=2 AND p28
 
 if @o38id_delivery is null
  set @o38id_delivery=@o38id_primary
+
+if CHARINDEX(']',@p91text1)>1
+begin
+ set @p91text1=dbo.get_parsed_text_with_period(@p91text1,@p91datesupply,0)
+ set @p91text1=dbo.get_parsed_text_with_period(@p91text1,@p91datep31_from,1)
+ set @p91text1=dbo.get_parsed_text_with_period(@p91text1,@p91datep31_until,2)
+end
 
 update p91Invoice set o38ID_Primary=@o38id_primary,@o38id_delivery=o38id_delivery,p41ID_First=@p41id_first,p80ID=@p80id,p98ID=@p98id
 where p91ID=@ret_p91id

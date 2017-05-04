@@ -231,8 +231,7 @@ Public Class sumgrid_designer
     End Function
 
     Private Sub SetupJ77Combo()
-        Dim mq As BO.myQuery = Nothing
-        Dim lisJ77 As IEnumerable(Of BO.j77WorksheetStatTemplate) = Master.Factory.j77WorksheetStatTemplateBL.GetList(mq)
+        Dim lisJ77 As IEnumerable(Of BO.j77WorksheetStatTemplate) = Master.Factory.j77WorksheetStatTemplateBL.GetList(New BO.myQuery)
         j77ID.DataSource = lisJ77
         j77ID.DataBind()
         Me.j77ID.Items.Insert(0, "--Výchozí WORKSHEET statistika--")

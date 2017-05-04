@@ -94,9 +94,9 @@
                     </div>
                 </asp:Panel>
 
-                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px">
+                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px" ExpandMode="SingleExpandedItem">
                     <Items>
-                        <telerik:RadPanelItem Text="Pracuji v MARKTIME..." Expanded="true">
+                        <telerik:RadPanelItem Text="Pracuji v MARKTIME...">
                             <Items>
 
                                 <telerik:RadPanelItem Text="Zapisovat úkony" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
@@ -105,7 +105,7 @@
 
 
                                 <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
-
+                                <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Osobní tiskové sestavy" Value="myreport" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
                                 <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
@@ -116,23 +116,15 @@
 
                         <telerik:RadPanelItem Text="Oblíbené projekty" Value="favourites" ImageUrl="Images/favourite.png" Visible="false">
                         </telerik:RadPanelItem>
-                        <telerik:RadPanelItem Text="Další" Expanded="true">
+                        <telerik:RadPanelItem Text="Další">
                             <Items>
-                                <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Napsat článek na nástěnku" Value="o10_create" NavigateUrl="javascript:o10_create()" ImageUrl="Images/article.png"></telerik:RadPanelItem>
+
 
 
                                 <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
                             </Items>
                         </telerik:RadPanelItem>
-                        <telerik:RadPanelItem Text="Osobní nastavení">
-                            <Items>
-                                <telerik:RadPanelItem Text="Zvolit si jinou startovací (výchozí) stránku" NavigateUrl="javascript:personalpage()" ImageUrl="Images/plugin.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Můj profil" NavigateUrl="j03_myprofile.aspx" ImageUrl="Images/user.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Změnit si heslo" NavigateUrl="changepassword.aspx" ImageUrl="Images/password.png"></telerik:RadPanelItem>
 
-                            </Items>
-                        </telerik:RadPanelItem>
 
                     </Items>
 
@@ -407,17 +399,18 @@
             <div style="clear: both;"></div>
 
             <div style="margin-top: 20px;">
-            <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
+                <asp:Label ID="lblBuild" runat="server" Style="color: gray;" />
+                <a href="about.aspx" style="margin-left: 20px;">O aplikaci</a>
 
-            <span style="padding-left: 30px;">&nbsp</span>
-            <a href="javascript:personalpage()">Nastavit si startovací stránku</a>
-            <span style="padding-left: 30px;">&nbsp</span>
-            <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
+                <span style="padding-left: 30px;">&nbsp</span>
+                <a href="javascript:personalpage()">Nastavit si startovací stránku</a>
+                <span style="padding-left: 30px;">&nbsp</span>
+                <asp:HyperLink ID="cmdReadUpgradeInfo" runat="server" NavigateUrl="log_app_update.aspx" ImageUrl="Images/upgraded_32.png" ToolTip="Nedávno proběhla aktualizace MARKTIME. Přečti si informace o novinkách a změnách v systému."></asp:HyperLink>
 
-            <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
+                <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
 
-            <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin a obrázek" Checked="true" Style="float: right;" />
-        </div>
+                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin a obrázek" Checked="true" Style="float: right;" />
+            </div>
         </div>
 
 
@@ -437,7 +430,7 @@
             }
 
             function contact_OnClientSelectedIndexChanged(sender, eventArgs) {
-                var combo = sender;                
+                var combo = sender;
                 location.replace("p28_framework.aspx?pid=" + combo.get_value());
             }
             function contact_OnClientItemsRequesting(sender, eventArgs) {
@@ -450,7 +443,7 @@
                     context["filterstring"] = "";
 
                 context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
-                context["flag"] = "searchbox";               
+                context["flag"] = "searchbox";
             }
             function invoice_OnClientSelectedIndexChanged(sender, eventArgs) {
                 var combo = sender;

@@ -199,7 +199,7 @@ Public Class admin_framework
 
 
             .AddItem("Kalendáře", "o22", , , "Images/calendar.png")
-            .AddItem("Projektové události", "p41_o21", NU("p41_o21"), "o22")
+            .AddItem("Typy událostí", "p41_o21", NU("p41_o21"), "o22")
             .AddItem("Klientské události", "p28_o21", NU("p28_o21"), "o22")
             .AddItem("Osobní události", "j02_o21", NU("j02_o21"), "o22")
             .AddItem("Nepersonální zdroje", "j23", NU("j23"), "o22")

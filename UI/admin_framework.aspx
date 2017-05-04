@@ -285,6 +285,8 @@
 
                     <div>
                         <a href="log_app_update.aspx">Histoire změn a novinek v systému</a>
+                    
+                        <a href="about.aspx" style="margin-left:20px;">O aplikaci</a>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-           
+
 
         });
 
@@ -36,16 +36,16 @@
 
         function p31_entry() {
             var p41id = <%=me.p41ID.ClientID%>_get_value();
-            
+
             sw_decide("p31_record.aspx?pid=0&p31date=<%=Format(Me.cal1.SelectedDate, "dd.MM.yyyy")%>&j02id=<%=Me.CurrentJ02ID%>&p41id=" + p41id, "Images/worksheet.png");
-            
+
         }
-    
+
         function p31_clone() {
             ///volá se z p31_subgrid
             var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
             sw_decide("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png");
-            
+
         }
 
 
@@ -61,7 +61,7 @@
 
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdRefresh, "", False)%>;
 
-            
+
         }
 
 
@@ -127,7 +127,7 @@
         }
 
         function p31_subgrid_querybuilder(j70id) {
-           sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query.png", true);
+            sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query.png", true);
 
         }
         function p31_split() {
@@ -136,10 +136,10 @@
             if (pid == "") {
                 alert("Musíte vybrat záznam")
                 return;
-            }            
+            }
             sw_decide("p31_record_split.aspx?pid=" + pid, "Images/split.png", false);
-            
-            
+
+
         }
 
     </script>
@@ -149,30 +149,29 @@
     <div class="commandcell">
         <asp:Image ID="img1" runat="server" ImageUrl="Images/worksheet_32.png" />
     </div>
-    <div class="commandcell" style="padding-left:5px;">
+    <div class="commandcell" style="padding-left: 5px;">
         <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Zapisovat úkony" meta:resourcekey="lblHeader"></asp:Label>
         <asp:DropDownList ID="j02ID" runat="server" onChange="j02id_onchange()"></asp:DropDownList>
     </div>
-    <div class="commandcell" style="padding-left:5px;padding-bottom:1px;">
-        
+    <div class="commandcell" style="padding-left: 5px; padding-bottom: 1px;">
     </div>
-    <div class="commandcell" style="padding-left:5px;padding-top:5px;">
+    <div class="commandcell" style="padding-left: 5px; padding-top: 5px;">
         <asp:CheckBox ID="chkGrid" runat="server" Text="Přehled projektů/úkolů v levém panelu" AutoPostBack="false" Checked="true" onClick="grid_change(this)" meta:resourcekey="chkGrid" />
     </div>
-    <div class="commandcell" style="padding-left:5px;padding-top:5px;" id="timer_panel">
+    <div class="commandcell" style="padding-left: 5px; padding-top: 5px;" id="timer_panel">
         <asp:CheckBox ID="chkTimer" runat="server" Text="STOPKY v pravém panelu" AutoPostBack="false" Checked="true" onClick="timer_change(this)" meta:resourcekey="chkTimer" />
     </div>
 
-    <div style="height:10px;clear:both;"></div>
+    <div style="height: 10px; clear: both;"></div>
 
-    <div style="float:left;padding-left:6px;">        
-        <div class="content" style="border:none;">
+    <div style="float: left; padding-left: 6px;">
+        <div>
             <uc:timesheet_calendar ID="cal1" runat="server" />
         </div>
     </div>
 
 
-    <div style="float:left;padding-left:6px;">
+    <div style="float: left; padding-left: 6px;">
         <div class="content-box2">
             <div class="title">
                 <asp:HyperLink ID="clue_timesheet" runat="server" CssClass="reczoom" Text="i" ToolTip="Statistika vykázaných hodin v měsíci"></asp:HyperLink>
@@ -195,7 +194,7 @@
                 </div>
                 <div class="div6">
                     <asp:Label ID="lblUtil_Total" Text="Utilizace za všechny hodiny:" runat="server" meta:resourcekey="lblUtil_Total"></asp:Label>
-                    <asp:Label ID="Util_Total" runat="server" CssClass="valboldred"></asp:Label>                    
+                    <asp:Label ID="Util_Total" runat="server" CssClass="valboldred"></asp:Label>
                 </div>
                 <div class="div6">
                     <asp:Label ID="lblUtil_Billable" runat="server" Text="Utilizace za fakturovatelné hodiny:" meta:resourcekey="lblUtil_Billable"></asp:Label>
@@ -208,7 +207,8 @@
 
         <div class="content-box2" style="margin-top: 10px;">
             <div class="title">
-                <asp:Label ID="lblSearchProject" runat="server" Text="Vyhledat projekt pro nový úkon..." meta:resourcekey="lblSearchProject"></asp:Label></div>
+                <asp:Label ID="lblSearchProject" runat="server" Text="Vyhledat projekt pro nový úkon..." meta:resourcekey="lblSearchProject"></asp:Label>
+            </div>
             <div class="content">
                 <uc:project ID="p41ID" runat="server" Width="99%" AutoPostBack="false" Flag="p31_entry" OnClientSelectedIndexChanged="p41id_onchange" />
             </div>
@@ -218,13 +218,14 @@
             <button type="button" onclick="p31_entry()" id="cmdNew" runat="server">
                 Nový úkon
             </button>
-            
+
         </div>
     </div>
 
-    
+
 
     <div style="clear: both; width: 100%;"></div>
+    
     <uc:p31_subgrid ID="gridP31" runat="server" EntityX29ID="j02Person" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick" AllowFullScreen="false"></uc:p31_subgrid>
 
 
