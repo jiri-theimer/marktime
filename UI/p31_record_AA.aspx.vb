@@ -18,6 +18,13 @@
                 End If
                 .HeaderText = "Worksheet úkon"
                 .HeaderIcon = "Images/worksheet_32.png"
+                With .Factory.j03UserBL
+                    .InhaleUserParams("p31_approving-use_internal_approving")
+                    If .GetUserParam("p31_approving-use_internal_approving", "0") = "1" Then
+                        approve1.AllowInternalApproving = True
+                    End If
+                End With
+
 
             End With
 

@@ -146,6 +146,14 @@ Public Class p31_approving_step3
                     .Value_Approved_Billing = cRec.p31Value_Orig
 
                 End If
+                If Me.chkUseInternalApproving.Checked And (cRec.p33ID = BO.p33IdENUM.Cas Or cRec.p33ID = BO.p33IdENUM.Kusovnik) Then
+                    'interní schvalování
+                    If .Value_Approved_Internal = 0 And .Rate_Internal_Approved = 0 Then
+
+                        .Value_Approved_Internal = cRec.p31Value_Orig
+                        .Rate_Internal_Approved = cRec.p31Rate_Internal_Orig
+                    End If
+                End If
             End With
 
             Dim cErr As New BO.p85TempBox
