@@ -114,6 +114,7 @@
                     <asp:ListItem Text="Filtr nad klienty" Value="328"></asp:ListItem>
                     <asp:ListItem Text="Filtr nad fakturami" Value="391"></asp:ListItem>
                     <asp:ListItem Text="Filtr nad úkoly" Value="356"></asp:ListItem>
+                    <asp:ListItem Text="Filtr nad osobami" Value="102"></asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>

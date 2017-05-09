@@ -120,6 +120,8 @@ Public Class report_framework_detail1
                     xmlRepSource.Xml = Replace(xmlRepSource.Xml, "331=331", strW)
                 Case BO.x29IdEnum.p56Task
                     xmlRepSource.Xml = Replace(xmlRepSource.Xml, "356=356", strW)
+                Case BO.x29IdEnum.j02Person
+                    xmlRepSource.Xml = Replace(xmlRepSource.Xml, "102=102", strW)
             End Select
 
         End If

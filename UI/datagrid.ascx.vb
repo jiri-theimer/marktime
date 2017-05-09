@@ -527,13 +527,21 @@ Public Class datagrid
 
     Private Sub grid1_ItemCreated(sender As Object, e As GridItemEventArgs) Handles grid1.ItemCreated
         If TypeOf e.Item Is GridFilteringItem Then
-            If Not String.IsNullOrEmpty(grid1.MasterTableView.FilterExpression) Then
-                For Each col As GridColumn In grid1.MasterTableView.Columns
+            For Each col As GridColumn In grid1.MasterTableView.Columns
+                DirectCast(e.Item, GridFilteringItem)(col.UniqueName).HorizontalAlign = col.HeaderStyle.HorizontalAlign
+                If Not String.IsNullOrEmpty(grid1.MasterTableView.FilterExpression) Then
                     If Not String.IsNullOrEmpty(col.CurrentFilterValue) Or col.CurrentFilterFunction = GridKnownFunction.IsNull Or col.CurrentFilterFunction = GridKnownFunction.NotIsNull Then
                         DirectCast(e.Item, GridFilteringItem)(col.UniqueName).BackColor = Drawing.Color.Red
                     End If
-                Next
-            End If
+                End If
+            Next
+            ''If Not String.IsNullOrEmpty(grid1.MasterTableView.FilterExpression) Then
+            ''    For Each col As GridColumn In grid1.MasterTableView.Columns
+            ''        If Not String.IsNullOrEmpty(col.CurrentFilterValue) Or col.CurrentFilterFunction = GridKnownFunction.IsNull Or col.CurrentFilterFunction = GridKnownFunction.NotIsNull Then
+            ''            DirectCast(e.Item, GridFilteringItem)(col.UniqueName).BackColor = Drawing.Color.Red
+            ''        End If
+            ''    Next
+            ''End If
         End If
         If grid1.IsExporting Then
             If TypeOf e.Item Is GridDataItem OrElse TypeOf e.Item Is GridHeaderItem Then

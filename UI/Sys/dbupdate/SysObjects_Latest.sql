@@ -1562,6 +1562,164 @@ END
 
 GO
 
+----------FN---------------p31_getrate_from_p51id-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p31_getrate_from_p51id') and type = 'FN')
+ drop function p31_getrate_from_p51id
+GO
+
+
+
+
+
+
+
+CREATE function [dbo].[p31_getrate_from_p51id](@p51id int,@p31id int)
+RETURNS FLOAT
+AS
+BEGIN
+
+
+ declare @j02id int,@j07id int,@p32id int,@p34id int,@isbillable bit
+
+ if @p51id=-1
+  RETURN(select p31Rate_Billing_Orig from p31Worksheet WHERE p31ID=@p31id)
+
+  select @j02id=a.j02ID,@j07id=isnull(j02.j07ID,0),@p32id=a.p32ID,@p34id=p32.p34ID,@isbillable=p32.p32IsBillable
+  FROM p31Worksheet a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+  where a.p31ID=@p31id
+  
+   
+  declare @p52id int,@rate_default_amount float,@p51id_master int,@ret_rate float
+
+  select @p51id_master=isnull(p51id_master,0)
+  FROM p51PriceList where p51id=@p51id
+
+
+  --------sazba podle aktivita+uživatel napøímo--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id=@p32id
+  and j02ID=@j02id
+  ORDER BY p52IsMaster
+  
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+
+
+
+  --------sazba podle aktivita+pozice osoby napøímo--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id=@p32id
+  and j07ID=@j07id
+  ORDER BY p52IsMaster
+  
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+
+  --------sazba podle pouze aktivita--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id=@p32id
+  AND j02ID IS NULL AND j07ID IS NULL
+  ORDER BY p52IsMaster
+  
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+    
+    
+--------sazba podle uživatel bez aktivity--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id is null
+  and j02ID=@j02id
+  ORDER BY p52IsMaster
+
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+
+
+--------sazba podle pozice osoby bez aktivity--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id is null
+  and j07ID=@j07id
+  ORDER BY p52IsMaster
+
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+
+--------sazba podle sheet bez aktivity i personálního zdroje--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p34id=@p34id and p32id is null and j02ID is null AND j07id is null
+  ORDER BY p52IsMaster
+  
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+
+declare @p33id int
+
+select @p33id=b.p33ID FROM p32Activity a INNER JOIN p34ActivityGroup b ON a.p34ID=b.p34ID WHERE a.p32ID=@p32id
+
+if @p33id=1
+ begin
+-------ještì možnost, že sazba je definována pro všechny èasové sešity pøes volbu p52IsPlusAllTimeSheets=1
+--------sazba podle osoby bez aktivity--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p52IsPlusAllTimeSheets=1 and p32id is null and j02ID=@j02id
+  ORDER BY p52IsMaster
+
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+
+--------sazba podle pozice bez aktivity--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p52IsPlusAllTimeSheets=1 and p32id is null and j07ID=@j07id
+  ORDER BY p52IsMaster
+
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+
+  --------sazba podle sheet bez aktivity i personálního zdroje--------------
+  select top 1 @p52id=p52id,@ret_rate=p52Rate
+  FROM p52PriceList_Item
+  where p51id IN (@p51id,@p51id_master) and p52IsPlusAllTimeSheets=1 and p32id is null and j02ID is null AND j07id is null
+  ORDER BY p52IsMaster
+  
+  if isnull(@p52id,0)<>0
+    return(@ret_rate)
+ end
+
+----zde už se vrací výchozí sazba ceníku-----------
+select @ret_rate=isnull(p51DefaultRateT,0) FROM p51PriceList WHERE p51ID=@p51id
+
+return(@ret_rate)
+
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------p31_testvat-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p31_testvat') and type = 'FN')
@@ -10424,6 +10582,124 @@ END CATCH
 
 GO
 
+----------P---------------p41_get_efektivni_sazby_podle_faktur_vypis-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_efektivni_sazby_podle_faktur_vypis') and type = 'P')
+ drop procedure p41_get_efektivni_sazby_podle_faktur_vypis
+GO
+
+
+
+
+CREATE   procedure [dbo].[p41_get_efektivni_sazby_podle_faktur_vypis]
+@pid int,@p51id int,@datfrom datetime,@datuntil datetime
+
+---@pid=p41ID,@p51id=ceník seniority podílu na paušální odmìnì
+
+AS
+
+select j02LastName+' '+j02FirstName as Person
+,p91.p91Code
+,p91.p91Code+' ('+convert(varchar(10),p91.p91DateSupply,104)+')' as Faktura
+,p70Name
+,case a.p70ID WHEN 4 THEN 'FAK' WHEN 6 THEN 'PAU' WHEN 2 THEN 'ODP' WHEN 3 THEN 'ODP' END as StatusKod
+,p31Date
+,p32Name
+,a.p31Hours_Orig
+,case when a.p70ID=4 THEN p31Hours_Invoiced END as hodiny_fakturovat
+,case when a.p70ID=6 THEN p31Hours_Orig END as hodiny_pausal
+,case when a.p70ID IN (2,3) THEN p31Hours_Orig END as hodiny_odpis
+,dbo.p31_getrate_from_p51id(@p51id,a.p31ID) as vzorova_sazba
+,case when a.p70ID=6 then pausal.Castka*(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)/honorar_cenik.Castka end as podil_na_pausalu
+,case when a.p70ID=6 then pausal.Castka*(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)/honorar_cenik.Castka/a.p31Hours_Orig else a.p31Rate_Billing_Invoiced*isnull(a.p31ExchangeRate_Invoice,1) end as efektivni_sazba
+,p31Text
+,a.p91ID
+,a.p70ID
+from
+p31Worksheet a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID
+INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
+LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID
+LEFT OUTER JOIN
+(
+select xa.p91ID,sum(case when xa.j27ID_Billing_Invoiced=2 THEN xa.p31Amount_WithoutVat_Invoiced else xa.p31Amount_WithoutVat_Invoiced_Domestic END) as Castka
+from p31worksheet xa inner join p32activity b on xa.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id INNER JOIN p91Invoice p91 ON xa.p91ID=p91.p91ID
+where xa.p70ID=4 AND c.p34IncomeStatementFlag=2 AND c.p33id IN (2,5)
+and p91.p91DateSupply between @datfrom and @datuntil and xa.p91ID IN (select p91ID from p31Worksheet where p41ID=@pid AND p91ID IS NOT NULL)
+GROUP BY xa.p91ID
+) pausal ON a.p91ID=pausal.p91ID
+LEFT OUTER JOIN
+(
+select xa.p91ID,sum(case when xa.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,xa.p31ID) end*p31Hours_Orig) as Castka
+from p31worksheet xa inner join p32activity b on xa.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id INNER JOIN p91Invoice p91 ON xa.p91ID=p91.p91ID
+where xa.p70ID=6 AND c.p33id=1
+and p91.p91DateSupply between @datfrom and @datuntil and xa.p91ID IN (select p91ID from p31Worksheet where p41ID=@pid AND p91ID IS NOT NULL)
+GROUP BY xa.p91ID
+) honorar_cenik ON a.p91ID=honorar_cenik.p91ID
+WHERE p34.p33ID=1 AND a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil AND a.p70ID=6
+ORDER BY p91.p91Code,a.p31Date
+
+
+GO
+
+----------P---------------p41_get_efektivni_sazby_podle_obdobi_vypis-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p41_get_efektivni_sazby_podle_obdobi_vypis') and type = 'P')
+ drop procedure p41_get_efektivni_sazby_podle_obdobi_vypis
+GO
+
+
+CREATE   procedure [dbo].[p41_get_efektivni_sazby_podle_obdobi_vypis]
+@pid int,@p51id int,@datfrom datetime,@datuntil datetime
+
+---@pid=p41ID,@p51id=ceník seniority podílu na paušální odmìnì
+
+AS
+
+declare @pausaly float,@honorar_cenik float
+
+select @pausaly=sum(case when a.j27ID_Billing_Invoiced=2 THEN p31Amount_WithoutVat_Invoiced else p31Amount_WithoutVat_Invoiced_Domestic END)
+from p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
+where a.p70ID=4 AND c.p34IncomeStatementFlag=2 AND c.p33id IN (2,5)
+and a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil
+
+select @honorar_cenik=sum(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)
+from p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
+where a.p70ID=6 AND c.p33id=1
+and a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil
+
+select j02LastName+' '+j02FirstName as Person
+,p91.p91Code
+,p91.p91Code+' ('+convert(varchar(10),p91.p91DateSupply,104)+')' as Faktura
+,p70Name
+,case a.p70ID WHEN 4 THEN 'FAK' WHEN 6 THEN 'PAU' WHEN 2 THEN 'ODP' WHEN 3 THEN 'ODP' END as StatusKod
+,p31Date
+,p32Name
+,a.p31Hours_Orig
+,case when a.p70ID=4 THEN p31Hours_Invoiced END as hodiny_fakturovat
+,case when a.p70ID=6 THEN p31Hours_Orig END as hodiny_pausal
+,case when a.p70ID IN (2,3) THEN p31Hours_Orig END as hodiny_odpis
+,dbo.p31_getrate_from_p51id(@p51id,a.p31ID) as vzorova_sazba
+,case when a.p70ID=6 then @pausaly*(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)/@honorar_cenik end as podil_na_pausalu
+,case when a.p70ID=6 then @pausaly*(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)/@honorar_cenik/a.p31Hours_Orig else a.p31Rate_Billing_Invoiced*isnull(a.p31ExchangeRate_Invoice,1) end as efektivni_sazba
+,p31Text
+,a.p91ID
+,a.p70ID
+from
+p31Worksheet a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID
+INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
+LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID
+WHERE p34.p33ID=1 AND a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil AND a.p70ID=6
+ORDER BY p91.p91Code,a.p31Date
+
+
+GO
+
 ----------P---------------p41_inhale_sumrow-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('p41_inhale_sumrow') and type = 'P')
@@ -13146,6 +13422,61 @@ WHERE a.p91ID=@pid AND isnull(p91ProformaAmount,0)<>0 AND @include_proforma=1
 ORDER BY DPHSazba DESC,Poradi
 
 
+
+GO
+
+----------P---------------p91_get_efektivni_sazby_vypis-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p91_get_efektivni_sazby_vypis') and type = 'P')
+ drop procedure p91_get_efektivni_sazby_vypis
+GO
+
+
+
+
+
+CREATE   procedure [dbo].[p91_get_efektivni_sazby_vypis]
+@pid int,@p51id int
+
+---@pid=p91ID,@p51id=ceník seniority podílu na paušální odmìnì
+
+AS
+
+declare @pausaly float,@honorar_cenik float
+
+select @pausaly=sum(case when a.j27ID_Billing_Invoiced=2 THEN p31Amount_WithoutVat_Invoiced else p31Amount_WithoutVat_Invoiced_Domestic END)
+from p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id
+where a.p70ID=4 AND c.p34IncomeStatementFlag=2 AND c.p33id IN (2,5)
+and a.p91ID=@pid
+
+select @honorar_cenik=sum(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)
+from p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id
+where a.p70ID=6 AND c.p33id=1
+and a.p91ID=@pid
+
+select j02LastName+' '+j02FirstName as Person
+,p41Name
+,p70Name
+,case a.p70ID WHEN 4 THEN 'FAK' WHEN 6 THEN 'PAU' WHEN 2 THEN 'ODP' WHEN 3 THEN 'ODP' END as StatusKod
+,p31Date
+,p32Name
+,a.p31Hours_Orig
+,case when a.p70ID=4 THEN p31Hours_Invoiced END as hodiny_fakturovat
+,case when a.p70ID=6 THEN p31Hours_Orig END as hodiny_pausal
+,case when a.p70ID IN (2,3) THEN p31Hours_Orig END as hodiny_odpis
+,dbo.p31_getrate_from_p51id(@p51id,a.p31ID) as vzorova_sazba
+,case when a.p70ID=6 then @pausaly*(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)/@honorar_cenik end as podil_na_pausalu
+,case when a.p70ID=6 then @pausaly*(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)/@honorar_cenik/a.p31Hours_Orig else a.p31Rate_Billing_Invoiced*isnull(a.p31ExchangeRate_Invoice,1) end as efektivni_sazba
+,p31Text
+,a.p41ID
+from
+p31Worksheet a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID
+INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+LEFT OUTER JOIN p70BillingStatus p70 ON a.p70ID=p70.p70ID
+WHERE p34.p33ID=1 AND a.p91ID=@pid
+ORDER BY p41.p41Name,a.p31Date
 
 GO
 

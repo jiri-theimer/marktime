@@ -473,6 +473,33 @@ Partial Public Class p28_framework_detail
     Protected WithEvents rpP41 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''boxO23 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxO23 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''boxO23Title control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxO23Title As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''notepad1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents notepad1 As Global.UI.o23_list
+
+    '''<summary>
     '''alert1 control.
     '''</summary>
     '''<remarks>

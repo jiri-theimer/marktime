@@ -195,6 +195,7 @@
                 If s.IndexOf("328=328") > 0 Then Me.x31QueryFlag.SelectedValue = "328"
                 If s.IndexOf("391=391") > 0 Then Me.x31QueryFlag.SelectedValue = "391"
                 If s.IndexOf("356=356") > 0 Then Me.x31QueryFlag.SelectedValue = "356"
+                If s.IndexOf("102=102") > 0 Then Me.x31QueryFlag.SelectedValue = "102"
                 If s.IndexOf("@datfrom") > 0 Or s.IndexOf("@datuntil") > 0 Then Me.x31IsPeriodRequired.Checked = True
             Case ".docx"
                 Me.CurrentFormat = BO.x31FormatFlagENUM.DOCX

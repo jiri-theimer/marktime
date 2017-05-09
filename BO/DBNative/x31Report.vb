@@ -11,6 +11,7 @@ Public Enum x31QueryFlagENUM
     p28 = 328
     p91 = 391
     p56 = 356
+    j02 = 102
 End Enum
 Public Enum x31PluginFlagENUM
     _None = 0
@@ -143,6 +144,8 @@ Public Class x31Report
                     Return x29IdEnum.p56Task
                 Case x31QueryFlagENUM.p91
                     Return x29IdEnum.p91Invoice
+                Case x31QueryFlagENUM.j02
+                    Return x29IdEnum.j02Person
                 Case Else
                     Return x29IdEnum._NotSpecified
             End Select

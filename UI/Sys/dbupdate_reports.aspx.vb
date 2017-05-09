@@ -88,6 +88,7 @@ Public Class dbupdate_reports
                     If s.IndexOf("328=328") > 0 Then cRec.x31QueryFlag = BO.x31QueryFlagENUM.p28
                     If s.IndexOf("391=391") > 0 Then cRec.x31QueryFlag = BO.x31QueryFlagENUM.p91
                     If s.IndexOf("356=356") > 0 Then cRec.x31QueryFlag = BO.x31QueryFlagENUM.p56
+                    If s.IndexOf("102=102") > 0 Then cRec.x31QueryFlag = BO.x31QueryFlagENUM.j02
                     If s.IndexOf("@datfrom") > 0 Or s.IndexOf("@datuntil") > 0 Then cRec.x31IsPeriodRequired = True
                 End If
                 

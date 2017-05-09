@@ -270,7 +270,12 @@ Public Class entity_framework
     End Sub
 
     Private Sub Handle_Permissions_And_More()
-        Dim bolCanApprove As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
+        Dim bolCanApprove As Boolean = False
+        If opgLayout.SelectedValue = "1" Then
+            bolCanApprove = False
+        Else
+            bolCanApprove = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
+        End If
         With Master
             .PageTitle = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, True)
             Select Case Me.CurrentX29ID
@@ -298,7 +303,9 @@ Public Class entity_framework
             cmdGridDesiger.Visible = panExport.Visible
             cmdQuery.Visible = panExport.Visible
         End With
-
+        If opgLayout.SelectedValue = "3" Then
+            cmdApprove.Visible = False
+        End If
 
     End Sub
 

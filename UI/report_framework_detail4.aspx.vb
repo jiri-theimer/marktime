@@ -136,6 +136,8 @@ Public Class report_framework_detail4
                                 strSQL = Replace(strSQL, "331=331", strW)
                             Case "p56"
                                 strSQL = Replace(strSQL, "356=356", strW)
+                            Case "j02"
+                                strSQL = Replace(strSQL, "102=102", strW)
                         End Select
                     End If
 

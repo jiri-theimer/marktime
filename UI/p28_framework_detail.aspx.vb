@@ -233,6 +233,25 @@
         Else
             boxP41.Visible = False
         End If
+
+
+        If cRecSum.o23_Count > 0 Then
+            Dim mqO23 As New BO.myQueryO23
+            mqO23.p28ID = Master.DataPID
+            mqO23.SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
+            Dim lisO23 As IEnumerable(Of BO.o23Notepad) = Master.Factory.o23NotepadBL.GetList(mqO23)
+            If lisO23.Count > 0 Then
+                Me.boxO23.Visible = True
+                With Me.boxO23Title
+                    .Text = BO.BAS.OM2(.Text, lisO23.Count.ToString)
+                End With
+                notepad1.RefreshData(lisO23, Master.DataPID)
+            Else
+                boxO23.Visible = False
+            End If
+        Else
+            Me.boxO23.Visible = False
+        End If
     End Sub
 
     Private Sub RenderTree(cRec As BO.p28Contact, cRecSum As BO.p28ContactSum)
