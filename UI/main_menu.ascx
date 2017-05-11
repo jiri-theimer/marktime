@@ -131,5 +131,14 @@
 
     }
 
-<%end if %>
+    
+
+    <%end if %>
+
+    function MainMenuClose() {
+        <%If panContainer.Visible Then%>    
+        var menu = $find("<%= menu1.ClientID%>");
+        menu.close();
+        <%end if%>
+    }
 </script>

@@ -99,7 +99,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
+            document.addEventListener("click", clickDocument);
+           
             var iframeWidth = '100%';
             var iframeHeight = '270';
 
@@ -210,6 +211,16 @@
             wnd.show();
             wnd.maximize();
 
+        }
+
+        function clickDocument() {
+            
+            try {
+                window.parent.MainMenuClose();
+            }
+            catch (err) {
+                //nic
+            }
         }
     </script>
 </body>

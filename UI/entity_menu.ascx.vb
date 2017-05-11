@@ -343,7 +343,16 @@ Public Class entity_menu
         cti("Projekt", "board")
         If cP42.p42IsModule_p31 Then
             ''s = "Summary" : cti(s, "summary")
-            s = "Worksheet" : cti(s, "p31")
+            s = "Worksheet"
+            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                With crs
+                    If .p31_Wip_Time_Count > 0 Or .p31_Wip_Expense_Count > 0 Or .p31_Wip_Fee_Count > 0 Then
+                        s += "<span class='badge1wip'>" & .p31_Wip_Time_Count.ToString & "+" & .p31_Wip_Expense_Count.ToString & "+" & .p31_Wip_Fee_Count.ToString & "</span>"
+                    End If
+                End With
+            End If
+            cti(s, "p31")
+
             s = "Hodiny"
             If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
             If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
@@ -360,30 +369,30 @@ Public Class entity_menu
                 cti(s, "fee")
                 If cDisp.p91_Read Then
                     s = "Faktury"
-                    If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+                    If crs.p91_Count > 0 Then s += "<span class='badge1tab'>" & crs.p91_Count.ToString & "</span>"
                     cti(s, "p91")
                 End If
             End If
         End If
         If crs.childs_Count > 0 Then
-            s = "Pod-projekty<span class='badge1'>" & crs.childs_Count.ToString & "</span>"
+            s = "Pod-projekty<span class='badge1tab'>" & crs.childs_Count.ToString & "</span>"
             cti(s, "p41")
         End If
         If cP42.p42IsModule_p56 Then
             s = "Úkoly"
-            If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+            If crs.p56_Actual_Count > 0 Then s += "<span class='badge1tab'>" & crs.p56_Actual_Count.ToString & "</span>"
             cti(s, "p56")
         End If
         If cP42.p42IsModule_p45 Then
             If cDisp.p45_Read Then
                 s = "Rozpočet"
-                If crs.p45_Count > 0 Then s += "<span class='badge1'>" & crs.p45_Count.ToString & "</span>"
+                If crs.p45_Count > 0 Then s += "<span class='badge1tab'>" & crs.p45_Count.ToString & "</span>"
                 cti(s, "budget")
             End If
         End If
         If cP42.p42IsModule_o23 Then
             s = "Dokumenty"
-            If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
+            If crs.o23_Count > 0 Then s += "<span class='badge1tab'>" & crs.o23_Count.ToString & "</span>"
             cti(s, "o23")
         End If
 
@@ -430,6 +439,14 @@ Public Class entity_menu
         For Each c In lisX61
             Dim s As String = c.x61Name, bolGo As Boolean = True
             Select Case c.x61Code
+                Case "p31"
+                    If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                        With crs
+                            If .p31_Wip_Time_Count > 0 Or .p31_Wip_Expense_Count > 0 Or .p31_Wip_Fee_Count > 0 Then
+                                s += "<span class='badge1wip'>" & .p31_Wip_Time_Count.ToString & "+" & .p31_Wip_Expense_Count.ToString & "+" & .p31_Wip_Fee_Count.ToString & "</span>"
+                            End If
+                        End With
+                    End If
                 Case "time"
                     If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
                     If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
@@ -444,16 +461,16 @@ Public Class entity_menu
                     If crs.p31_Approved_Fee_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Fee_Count.ToString & "</span>"
                     bolGo = bolAllowRates
                 Case "p91"
-                    If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+                    If crs.p91_Count > 0 Then s += "<span class='badge1tab'>" & crs.p91_Count.ToString & "</span>"
                     bolGo = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Reader)
                 Case "p56"
-                    If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+                    If crs.p56_Actual_Count > 0 Then s += "<span class='badge1tab'>" & crs.p56_Actual_Count.ToString & "</span>"
                 Case "o23"
-                    If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
+                    If crs.o23_Count > 0 Then s += "<span class='badge1tab'>" & crs.o23_Count.ToString & "</span>"
                 Case "p41"
-                    s += "<span class='badge1'>" & crs.p41_Actual_Count.ToString & "+" & crs.p41_Closed_Count.ToString & "</span>"
+                    s += "<span class='badge1tab'>" & crs.p41_Actual_Count.ToString & "+" & crs.p41_Closed_Count.ToString & "</span>"
                 Case "p90"
-                    If crs.p90_Count > 0 Then s += "<span class='badge1'>" & crs.p90_Count.ToString & "</span>"
+                    If crs.p90_Count > 0 Then s += "<span class='badge1tab'>" & crs.p90_Count.ToString & "</span>"
                     bolGo = Me.Factory.TestPermission(BO.x53PermValEnum.GR_P90_Reader)
             End Select
 
@@ -613,6 +630,14 @@ Public Class entity_menu
         For Each c In lisX61
             Dim s As String = c.x61Name
             Select Case c.x61Code
+                Case "p31"
+                    If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                        With crs
+                            If .p31_Wip_Time_Count > 0 Or .p31_Wip_Expense_Count > 0 Or .p31_Wip_Fee_Count > 0 Then
+                                s += "<span class='badge1wip'>" & .p31_Wip_Time_Count.ToString & "+" & .p31_Wip_Expense_Count.ToString & "+" & .p31_Wip_Fee_Count.ToString & "</span>"
+                            End If
+                        End With
+                    End If
                 Case "time"
                     If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
                     If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
@@ -626,11 +651,11 @@ Public Class entity_menu
                     If crs.p31_Wip_Kusovnik_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Kusovnik_Count.ToString & "</span>"
                     If crs.p31_Approved_Kusovnik_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Kusovnik_Count.ToString & "</span>"
                 Case "p91"
-                    If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+                    If crs.p91_Count > 0 Then s += "<span class='badge1tab'>" & crs.p91_Count.ToString & "</span>"
                 Case "p56"
-                    If crs.p56_Actual_Count > 0 Then s += "<span class='badge1'>" & crs.p56_Actual_Count.ToString & "</span>"
+                    If crs.p56_Actual_Count > 0 Then s += "<span class='badge1tab'>" & crs.p56_Actual_Count.ToString & "</span>"
                 Case "o23"
-                    If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
+                    If crs.o23_Count > 0 Then s += "<span class='badge1tab'>" & crs.o23_Count.ToString & "</span>"
             End Select
 
             cti(s, c.x61Code)
@@ -647,7 +672,15 @@ Public Class entity_menu
         cti("Úkol", "board")
         Dim s As String = ""
         If cP42.p42IsModule_p31 Then
-            s = "Worksheet" : cti(s, "p31")
+            s = "Worksheet"
+            If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                With crs
+                    If .p31_Wip_Time_Count > 0 Or .p31_Wip_Expense_Count > 0 Or .p31_Wip_Fee_Count > 0 Then
+                        s += "<span class='badge1wip'>" & .p31_Wip_Time_Count.ToString & "+" & .p31_Wip_Expense_Count.ToString & "+" & .p31_Wip_Fee_Count.ToString & "</span>"
+                    End If
+                End With
+            End If
+            cti(s, "p31")
             s = "Hodiny"
             If crs.p31_Wip_Time_Count > 0 Then s += "<span class='badge1wip'>" & crs.p31_Wip_Time_Count.ToString & "</span>"
             If crs.p31_Approved_Time_Count > 0 Then s += "<span class='badge1approved'>" & crs.p31_Approved_Time_Count.ToString & "</span>"
@@ -664,12 +697,12 @@ Public Class entity_menu
             End If
             If Me.Factory.SysUser.j04IsMenu_Invoice Then
                 s = "Faktury"
-                If crs.p91_Count > 0 Then s += "<span class='badge1'>" & crs.p91_Count.ToString & "</span>"
+                If crs.p91_Count > 0 Then s += "<span class='badge1tab'>" & crs.p91_Count.ToString & "</span>"
                 cti(s, "p91")
             End If
         End If
         s = "Dokumenty"
-        If crs.o23_Count > 0 Then s += "<span class='badge1'>" & crs.o23_Count.ToString & "</span>"
+        If crs.o23_Count > 0 Then s += "<span class='badge1tab'>" & crs.o23_Count.ToString & "</span>"
         cti(s, "o23")
 
         p56_SetupMenu(cRec, cP41, cP42, cDisp)
