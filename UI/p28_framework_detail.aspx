@@ -222,6 +222,21 @@
         </div>
     </asp:Panel>
 
+    
+
+    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/notepad.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
+        </div>
+        <div class="content" style="overflow: auto; max-height: 200px;">
+
+            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project"></uc:o23_list>
+
+
+        </div>
+    </asp:Panel>
+    <div style="clear: both;"></div>
     <asp:Panel ID="boxP41" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/project.png" style="margin-right: 10px;" />
@@ -244,19 +259,6 @@
 
         </asp:Panel>
 
-    </asp:Panel>
-
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/notepad.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
-        </div>
-        <div class="content" style="overflow: auto; max-height: 200px;">
-
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project"></uc:o23_list>
-
-
-        </div>
     </asp:Panel>
 
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
