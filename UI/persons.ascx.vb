@@ -181,7 +181,7 @@
             Next
             If j02ids_all.Count = 0 Then j02ids_all.Add(-1) 'umělá položka, by tam něco bylo
 
-            ali.Add("Filtr: " & Me.j70ID.SelectedItem.Text)
+            ali.Add("Filtr osob: " & Me.j70ID.SelectedItem.Text)
         End If
         If ali.Count = 0 Then
             ali.Add("Všechny osoby")

@@ -34,6 +34,12 @@
             $(".slidingDiv2").hide();
             $(".show_hide2").show();
             $(".show_hide3").show();
+            $(".slidingDiv3").hide();
+
+            <%if Me.CurrentMasterPrefix<>"" then%>
+            $(".show_hide2").hide();
+            $(".show_hide3").hide();
+            <%End if%>
 
             $('.show_hide2').click(function () {
                 $(".slidingDiv1").hide();
@@ -327,6 +333,16 @@
             </div>
 
             <div style="clear: both;"></div>
+            <asp:Panel ID="panMasterRecord" runat="server" CssClass="div6">
+                <asp:Image ID="imgMaster" runat="server" />
+                     
+                <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
+                <div>
+                    <asp:checkbox ID="chkIncludeChilds" runat="server" Text="Zahrnout i pod-projekty" Visible="false" CssClass="chk" AutoPostBack="true" />
+                </div>
+            </asp:Panel>
+
+            <div style="clear: both;"></div>
             <div class="show_hide2" style="float: left; margin-top: 8px;">
                 <button type="button">
                     <img src="Images/arrow_down.gif" alt="Výběr osob" />
@@ -336,7 +352,7 @@
                 
             </div>
             <div style="clear: both;"></div>
-            <div class="slidingDiv2">
+            <div class="slidingDiv2" style="background-color:khaki;padding-bottom:20px;">
             <uc:persons id="persons1" runat="server"></uc:persons>
             </div>
 
@@ -350,7 +366,7 @@
                 
             </div>
             <div style="clear: both;"></div>
-            <div class="slidingDiv3">
+            <div class="slidingDiv3" style="background-color:khaki;padding-bottom:20px;">
             <uc:projects id="projects1" runat="server"></uc:projects>
             </div>
 
@@ -365,19 +381,12 @@
             </div>
             
 
-            <asp:Panel ID="panMasterRecord" runat="server" CssClass="div6">
-                <asp:Image ID="imgMaster" runat="server" />
-                     
-                <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
-                <div>
-                    <asp:checkbox ID="chkIncludeChilds" runat="server" Text="Zahrnout i pod-projekty" Visible="false" CssClass="chk" AutoPostBack="true" />
-                </div>
-            </asp:Panel>
+            
             
 
 
             <div style="clear: both;"></div>
-            <div class="slidingDiv1">
+            <div class="slidingDiv1" style="background-color:khaki;">
                 
                 <div>
                     Na click v kalendáři provést:

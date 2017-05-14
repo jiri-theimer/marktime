@@ -154,7 +154,7 @@
             Next
             If p41ids_all.Count = 0 Then p41ids_all.Add(-1) 'umělá položka, by tam něco bylo
 
-            ali.Add("Filtr: " & Me.j70ID.SelectedItem.Text)
+            ali.Add("Filtr projektů: " & Me.j70ID.SelectedItem.Text)
         End If
         If ali.Count = 0 Then
             ali.Add("Všechny projekty")

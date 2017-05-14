@@ -72,10 +72,13 @@ Public Class entity_scheduler
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     Me.CurrentView = .GetUserParam("entity_scheduler-view", "1")
-                    Me.persons1.CurrentScope = .GetUserParam("entity_scheduler-persons1-scope", "2")
-                    Me.persons1.CurrentValue = .GetUserParam("entity_scheduler-persons1-value", Master.Factory.SysUser.j02ID.ToString & "||")
-                    Me.projects1.CurrentScope = .GetUserParam("entity_scheduler-projects1-scope", "1")
-                    Me.projects1.CurrentValue = .GetUserParam("entity_scheduler-projects1-value")
+                    If Me.CurrentMasterPrefix = "" Then
+                        Me.persons1.CurrentScope = .GetUserParam("entity_scheduler-persons1-scope", "2")
+                        Me.persons1.CurrentValue = .GetUserParam("entity_scheduler-persons1-value", Master.Factory.SysUser.j02ID.ToString & "||")
+                        Me.projects1.CurrentScope = .GetUserParam("entity_scheduler-projects1-scope", "1")
+                        Me.projects1.CurrentValue = .GetUserParam("entity_scheduler-projects1-value")
+                    End If
+                    
 
                     SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("entity_scheduler-j70id")))
 
@@ -143,13 +146,13 @@ Public Class entity_scheduler
                 Case BO.x29IdEnum.j02Person
                     mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
                 Case Else
-                    Select Case persons1.CurrentScope
-                        Case 2
-                            mq.j02IDs = persons1.CurrentJ02IDs
-                        
-                    End Select
+                    If persons1.CurrentValue <> "1" Then
+                        mq.j02IDs = persons1.CurrentJ02IDs
 
-                   
+                    End If
+
+
+
             End Select
             mq.DateFrom = d1 : mq.DateUntil = d2
             Dim lis As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList(mq)
@@ -271,6 +274,7 @@ Public Class entity_scheduler
             Dim mq As New BO.myQueryP56
             mq.j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
             mq.j02IDs = persons1.CurrentJ02IDs
+
             Select Case Me.CurrentMasterX29ID
                 Case BO.x29IdEnum.p28Contact
                     mq.p28ID = Me.CurrentMasterPID
@@ -316,7 +320,7 @@ Public Class entity_scheduler
                 If .Text.Length > 37 Then .Text = Left(.Text, 35) & "..."
             End With
 
-            persons1.Visible = False
+
 
             Select Case Me.CurrentMasterPrefix
                 Case "p41"
@@ -326,10 +330,11 @@ Public Class entity_scheduler
                     imgMaster.ImageUrl = "Images/contact.png"
                 Case "j02"
                     imgMaster.ImageUrl = "Images/person.png"
+
             End Select
+
         Else
 
-            persons1.Visible = True
             panMasterRecord.Visible = False
         End If
 

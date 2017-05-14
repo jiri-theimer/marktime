@@ -41,42 +41,6 @@ Partial Public Class entity_scheduler
     Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''PersonsHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents PersonsHeader As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''persons1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents persons1 As Global.UI.persons
-
-    '''<summary>
-    '''ProjectsHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ProjectsHeader As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''projects1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents projects1 As Global.UI.projects
-
-    '''<summary>
     '''panMasterRecord control.
     '''</summary>
     '''<remarks>
@@ -111,6 +75,42 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''PersonsHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PersonsHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''persons1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents persons1 As Global.UI.persons
+
+    '''<summary>
+    '''ProjectsHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ProjectsHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''projects1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents projects1 As Global.UI.projects
 
     '''<summary>
     '''cbxNewRecType control.
