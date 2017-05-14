@@ -205,7 +205,7 @@
         Me.p56Count.Text = lisP56.Count.ToString
         rpP56.DataSource = lisP56
         rpP56.DataBind()
-        If lisP56.Count = 0 Then
+        If lisP56.Count = 0 And Me.cbxP56Types.SelectedValue <> "3" Then
             mq.Closed = BO.BooleanQueryMode.NoQuery
             mq.j02ID = Master.Factory.SysUser.j02ID
             If Master.Factory.p56TaskBL.GetList(mq).Count > 0 Then
@@ -214,6 +214,7 @@
         Else
             Me.panP56.Visible = True
         End If
+        
         Dim lisO22 As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
         If lisO22.Count > 0 Then
             Me.panO22.Visible = True
@@ -281,11 +282,19 @@
         End If
         With CType(e.Item.FindControl("Project"), Label)
             .Text = BO.BAS.OM3(cRec.p41Name, 20)
+            If cRec.Client <> "" Then
+                .Text = BO.BAS.OM3(cRec.Client, 20) & "<br>" & .Text
+            End If
         End With
-        With CType(e.Item.FindControl("b02Name"), Label)
+        With CType(e.Item.FindControl("linkWorkflow"), HyperLink)
             .Text = cRec.b02Name
             If cRec.b02Color <> "" Then .Style.Item("background-color") = cRec.b02Color
+            .NavigateUrl = "javascript:wd(" & cRec.PID.ToString & ")"
         End With
+        With CType(e.Item.FindControl("linkWorksheet"), HyperLink)
+            .NavigateUrl = "javascript:ew(" & cRec.PID.ToString & ")"
+        End With
+
         If Not BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
             With CType(e.Item.FindControl("p56PlanUntil"), Label)
                 .Text = BO.BAS.FD(cRec.p56PlanUntil, True, True)

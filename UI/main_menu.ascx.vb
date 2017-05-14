@@ -97,15 +97,16 @@ Public Class main_menu
             n.SelectedCssClass = ""
             n.ToolTip = Resources.common.Novy
             Dim b As Boolean = False
+            If .j04IsMenu_Worksheet Then
+                ai("Worksheet úkon", "", "javascript:p31_create()", "", n) : b = True
+            End If
             If .j04IsMenu_Contact Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P28_Creator, BO.x53PermValEnum.GR_P28_Draft_Creator) Then ai(Resources.common.Klient, "", "javascript:p28_create()", "", n) : b = True
             End If
             If .j04IsMenu_Project Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "", "javascript:p41_create()", "", n) : b = True
             End If
-            If .j04IsMenu_Worksheet Then
-                ai("Worksheet úkon", "", "javascript:p31_create()", "", n) : b = True
-            End If
+            
             If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
                 ai(Resources.common.Ukol, "", "javascript:p56_create()", "", n)
             End If

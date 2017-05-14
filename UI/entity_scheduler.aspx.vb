@@ -14,38 +14,7 @@ Public Class entity_scheduler
             Me.scheduler1.SelectedView = value
         End Set
     End Property
-    Public Property CurrentJ02IDs As List(Of Integer)
-        Get
-            Return BO.BAS.ConvertPIDs2List(Me.hidJ02IDs_All.Value, ",")
-        End Get
-        Set(value As List(Of Integer))
-            Me.hidJ02IDs_All.Value = String.Join(",", value)
-            If value.Count = 1 Then
-                If value(0) = Master.Factory.SysUser.j02ID Then
-                    Me.Persons.Text = Master.Factory.SysUser.Person
-                    Return
-                End If
-            End If
-            Me.Persons.Text = ""
-            If Me.hidJ07IDs.Value <> "" Then
-                Dim mq As New BO.myQuery
-                mq.PIDs = BO.BAS.ConvertPIDs2List(Me.hidJ07IDs.Value)
-                Me.Persons.Text += " ,<span style='color:red;'>" & String.Join(", ", Master.Factory.j07PersonPositionBL.GetList(mq).Select(Function(p) p.j07Name)) & "</span>"
-            End If
-            If Me.hidJ11IDs.Value <> "" Then
-                Dim mq As New BO.myQuery
-                mq.PIDs = BO.BAS.ConvertPIDs2List(Me.hidJ11IDs.Value)
-                Me.Persons.Text += " ,<span style='color:green;'>" & String.Join(", ", Master.Factory.j11TeamBL.GetList(mq).Select(Function(p) p.j11Name)) & "</span>"
-            End If
-            If Me.hidJ02IDs.Value <> "" Then
-                Dim mq As New BO.myQueryJ02
-                mq.PIDs = BO.BAS.ConvertPIDs2List(Me.hidJ02IDs.Value)
-                Me.Persons.Text += " ," & String.Join(", ", Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.FullNameDesc))
-            End If
-            Me.Persons.Text = BO.BAS.OM1(Trim(Me.Persons.Text), True)
-
-        End Set
-    End Property
+    
     Public Property CurrentMasterPrefix As String
         Get
             Return hidMasterPrefix.Value
@@ -67,6 +36,11 @@ Public Class entity_scheduler
             hidMasterPID.Value = value.ToString
         End Set
     End Property
+
+    Private Sub entity_scheduler_Init(sender As Object, e As EventArgs) Handles Me.Init
+        persons1.Factory = Master.Factory
+
+    End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
@@ -81,27 +55,23 @@ Public Class entity_scheduler
                     .Add("entity_scheduler-daystarttime")
                     .Add("entity_scheduler-dayendtime")
                     .Add("entity_scheduler-multidays")
-                    .Add("entity_scheduler-j02ids")
-                    .Add("entity_scheduler-j11ids")
-                    .Add("entity_scheduler-j07ids")
-                    .Add("entity_scheduler-j02ids_all")
+                    .Add("entity_scheduler-persons1-scope")
+                    .Add("entity_scheduler-persons1-value")
                     .Add("entity_scheduler-o22")
                     .Add("entity_scheduler-p48")
                     .Add("entity_scheduler-p56")
                     .Add("entity_scheduler-newrec_prefix")
                     .Add("entity_scheduler-agendadays")
                     .Add("entity_scheduler-include_childs")
-                    .Add("entity_scheduler-allpersons")
+
                 End With
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     Me.CurrentView = .GetUserParam("entity_scheduler-view", "1")
-                    Me.hidJ02IDs.Value = .GetUserParam("entity_scheduler-j02ids", Master.Factory.SysUser.j02ID.ToString)
-                    Me.hidJ11IDs.Value = .GetUserParam("entity_scheduler-j11ids")
-                    Me.hidJ07IDs.Value = .GetUserParam("entity_scheduler-j07ids")
-                    Dim strJ02IDs As String = .GetUserParam("entity_scheduler-j02ids_all", Master.Factory.SysUser.j02ID.ToString)
-                    Me.CurrentJ02IDs = BO.BAS.ConvertPIDs2List(strJ02IDs, ",")
+                    Me.persons1.CurrentScope = .GetUserParam("entity_scheduler-persons1-scope", "2")
+                    Me.persons1.CurrentValue = .GetUserParam("entity_scheduler-persons1-value", Master.Factory.SysUser.j02ID.ToString & "||")
+                    
 
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_daystarttime, .GetUserParam("entity_scheduler-daystarttime", "8"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_dayendtime, .GetUserParam("entity_scheduler-dayendtime", "20"))
@@ -113,18 +83,13 @@ Public Class entity_scheduler
                     Me.chkSetting_O22.Checked = .GetUserParam("entity_scheduler-o22", "1")
                     Me.chkSetting_P56.Checked = .GetUserParam("entity_scheduler-p56", "1")
                     Me.chkIncludeChilds.Checked = BO.BAS.BG(.GetUserParam("entity_scheduler-include_childs"))
-                    Me.chkAllPersons.Checked = BO.BAS.BG(.GetUserParam("entity_scheduler-allpersons", "1"))
+
                 End With
 
 
 
             End With
-            Me.j11ID_Add.DataSource = Master.Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = False)
-            Me.j11ID_Add.DataBind()
-            Me.j07ID_Add.DataSource = Master.Factory.j07PersonPositionBL.GetList(New BO.myQuery)
-            Me.j07ID_Add.DataBind()
-            Me.j02ID_Add.Flag = "all"
-
+          
 
             RefreshRecord()
             RefreshData(False)
@@ -132,78 +97,7 @@ Public Class entity_scheduler
     End Sub
 
 
-    Private Sub Handle_ChangeJ02IDs(bolAppend As Boolean)
-        Dim intJ11ID As Integer = BO.BAS.IsNullInt(Me.j11ID_Add.SelectedValue)
-        Dim intJ07ID As Integer = BO.BAS.IsNullInt(Me.j07ID_Add.SelectedValue)
-        Dim intJ02ID As Integer = BO.BAS.IsNullInt(Me.j02ID_Add.Value)
-        If intJ02ID = 0 And intJ07ID = 0 And intJ11ID = 0 Then
-            Master.Notify("Musíte vybrat osobu, tým nebo pozici.", NotifyLevel.WarningMessage)
-            Return
-        End If
-        If Not bolAppend Then
-            Me.hidJ02IDs.Value = "" : Me.hidJ07IDs.Value = "" : Me.hidJ11IDs.Value = ""
-        End If
-        Dim j02ids_all As New List(Of Integer)
-        If intJ02ID > 0 Then
-            j02ids_all.Add(intJ02ID)
-            Me.hidJ02IDs.Value += "," & intJ02ID.ToString
-            
-        End If
-        If intJ07ID > 0 Then
-            Dim mq As New BO.myQueryJ02
-            mq.j07ID = intJ07ID
-            mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead
-            For Each x In Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.PID).ToList
-                j02ids_all.Add(x)
-            Next
-            Me.hidJ07IDs.Value += "," & intJ07ID.ToString
-        End If
-        If intJ11ID <> 0 Then
-            Dim mq As New BO.myQueryJ02
-            mq.j11ID = intJ11ID
-            mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead
-            For Each x In Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.PID).ToList
-                j02ids_all.Add(x)
-            Next
-            Me.hidJ11IDs.Value += "," & intJ11ID.ToString
-        End If
-        If j02ids_all.Count = 0 Then
-            Master.Notify("Vstupní podmínce neodpovídá ani jeden osobní profil.", NotifyLevel.WarningMessage)
-            Return
-        End If
-        Me.hidJ02IDs.Value = BO.BAS.OM1(Me.hidJ02IDs.Value, True)
-        Me.hidJ07IDs.Value = BO.BAS.OM1(Me.hidJ07IDs.Value, True)
-        Me.hidJ11IDs.Value = BO.BAS.OM1(Me.hidJ11IDs.Value, True)
-        If bolAppend Then
-            AppendCurrentJ02IDs(j02ids_all)
-        Else
-            Me.CurrentJ02IDs = j02ids_all
-        End If
-        Me.SaveCurrentPersonsScope()
-        RefreshData(False)
-
-    End Sub
-
-    Private Sub AppendCurrentJ02IDs(j02ids As List(Of Integer))
-        Dim cj As List(Of Integer) = Me.CurrentJ02IDs
-        For Each x In j02ids
-            If cj.Where(Function(p) p = x).Count = 0 Then
-                cj.Add(x)
-            End If
-        Next
-        Me.CurrentJ02IDs = cj
-
-    End Sub
-    Private Sub SaveCurrentPersonsScope()
-        With Master.Factory.j03UserBL
-            .SetUserParam("entity_scheduler-j02ids_all", Me.hidJ02IDs_All.Value)
-            .SetUserParam("entity_scheduler-j02ids", Me.hidJ02IDs.Value)
-            .SetUserParam("entity_scheduler-j07ids", Me.hidJ07IDs.Value)
-            .SetUserParam("entity_scheduler-j11ids", Me.hidJ11IDs.Value)
-        End With
-
-    End Sub
-
+    
     Private Sub RefreshData(bolData4Export As Boolean)
         With Me.scheduler1
             .Appointments.Clear()
@@ -233,9 +127,13 @@ Public Class entity_scheduler
                 Case BO.x29IdEnum.j02Person
                     mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
                 Case Else
-                    If Not chkAllPersons.Checked Then
-                        mq.j02IDs = Me.CurrentJ02IDs
-                    End If
+                    Select Case persons1.CurrentScope
+                        Case 2
+                            mq.j02IDs = persons1.CurrentJ02IDs
+                        
+                    End Select
+
+                   
             End Select
             mq.DateFrom = d1 : mq.DateUntil = d2
             Dim lis As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList(mq)
@@ -294,9 +192,7 @@ Public Class entity_scheduler
                 Case BO.x29IdEnum.j02Person
                     mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
                 Case Else
-                    If Not chkAllPersons.Checked Then
-                        mq.j02IDs = Me.CurrentJ02IDs
-                    End If
+                    mq.j02IDs = persons1.CurrentJ02IDs
             End Select
             mq.DateFrom = d1 : mq.DateUntil = d2
             Dim lis As IEnumerable(Of BO.p48OperativePlan) = Master.Factory.p48OperativePlanBL.GetList(mq)
@@ -333,7 +229,7 @@ Public Class entity_scheduler
                         Case BO.x29IdEnum.j02Person
                             c.Subject += " " & .ClientAndProject
                         Case Else
-                            If Me.CurrentJ02IDs.Count = 1 Then
+                            If persons1.CurrentJ02IDs.Count = 1 Then
                                 c.Subject += " " & .ClientAndProject
                             Else
                                 c.Subject += " " & .Person & ": " & .ClientAndProject
@@ -357,6 +253,7 @@ Public Class entity_scheduler
         End If
         If chkSetting_P56.Checked Then  'termíny úkolů
             Dim mq As New BO.myQueryP56
+            mq.j02IDs = persons1.CurrentJ02IDs
             Select Case Me.CurrentMasterX29ID
                 Case BO.x29IdEnum.p28Contact
                     mq.p28ID = Me.CurrentMasterPID
@@ -366,7 +263,7 @@ Public Class entity_scheduler
                 Case BO.x29IdEnum.j02Person
                     mq.j02ID = Me.CurrentMasterPID
                 Case Else
-                    
+
             End Select
             mq.p56PlanUntil_D1 = d1 : mq.p56PlanUntil_D2 = d2
             Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq)
@@ -402,7 +299,7 @@ Public Class entity_scheduler
                 If .Text.Length > 37 Then .Text = Left(.Text, 35) & "..."
             End With
 
-            panPersonScope.Visible = False
+            persons1.Visible = False
 
             Select Case Me.CurrentMasterPrefix
                 Case "p41"
@@ -415,20 +312,12 @@ Public Class entity_scheduler
             End Select
         Else
 
-            panPersonScope.Visible = True
+            persons1.Visible = True
             panMasterRecord.Visible = False
         End If
 
     End Sub
-    Private Sub cmdAppendJ02IDs_Click(sender As Object, e As EventArgs) Handles cmdAppendJ02IDs.Click
-        Handle_ChangeJ02IDs(True)
-        hidIsLoadingSetting.Value = "1"
-    End Sub
-
-    Private Sub cmdReplaceJ02IDs_Click(sender As Object, e As EventArgs) Handles cmdReplaceJ02IDs.Click
-        Handle_ChangeJ02IDs(False)
-        hidIsLoadingSetting.Value = "1"
-    End Sub
+    
 
     Private Sub scheduler1_NavigationComplete(sender As Object, e As SchedulerNavigationCompleteEventArgs) Handles scheduler1.NavigationComplete
         Dim bolChangeView As Boolean = False
@@ -522,16 +411,21 @@ Public Class entity_scheduler
         hidIsLoadingSetting.Value = "1"
     End Sub
 
-    Private Sub chkAllPersons_CheckedChanged(sender As Object, e As EventArgs) Handles chkAllPersons.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-allpersons", BO.BAS.GB(Me.chkAllPersons.Checked))
-        RefreshData(False)
-        hidIsLoadingSetting.Value = "1"
-    End Sub
+    
 
     Private Sub entity_scheduler_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Me.CurrentMasterPrefix = "" Then
-            Me.panPersonScope.Visible = Not Me.chkAllPersons.Checked
-            Me.Persons.Visible = Me.panPersonScope.Visible
+            
         End If
+
+        PersonsHeader.Text = persons1.CurrentHeader
+        'Master.Notify(String.Join(",", persons1.CurrentJ02IDs))
+    End Sub
+
+    Private Sub persons1_OnChange() Handles persons1.OnChange
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-scope", persons1.CurrentScope.ToString)
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-value", persons1.CurrentValue)
+        RefreshData(False)
+        hidIsPersonsChange.Value = "1"
     End Sub
 End Class

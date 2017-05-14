@@ -36,6 +36,14 @@
 
             sw_master("p31_record.aspx?pid=0&p48id=" + pid, "Images/worksheet.png")
         }
+        function wd(pid) {
+
+            sw_master("workflow_dialog.aspx?pid="+pid+"&prefix=p56", "Images/workflow.png")
+        }
+        function ew(p56id) {
+
+            sw_master("p31_record.aspx?pid=0&p56id=" + p56id, "Images/worksheet.png")
+        }
 
         function hardrefresh(pid, flag) {
             location.replace("default.aspx");
@@ -135,40 +143,45 @@
             <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/task.png" alt="Úkol" />
-                    Moje otevřené úkoly
+                    Otevřené úkoly, ke kterým mám vztah
                     <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
                     <asp:DropDownList ID="cbxP56Types" runat="server" AutoPostBack="true">
-                        <asp:ListItem Text="S blízkým termínem (+-2dny)" Value="1" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="S termínem" Value="1" Selected="true"></asp:ListItem>
                         <asp:ListItem Text="Bez ohledu na termín" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="Kde jsem vlastníkem" Value="3"></asp:ListItem>
+                        <asp:ListItem Text="Jsem zakladatelem úkolu" Value="3"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
                 <div class="content">
                     <table>
                         <tr>
                             <th>Projekt</th>
-                            <th>Název úkolu</th>
-                            <th>Termín</th>
                             <th></th>
+                            <th></th>
+                            <th>Stav</th>
+                            
                         </tr>
                         <asp:Repeater ID="rpP56" runat="server">
                             <ItemTemplate>
-                                <tr class="trHover">
+                                <tr class="trHover" valign="top">
                                     <td>
-                                        <asp:Label ID="Project" runat="server"></asp:Label>
+                                        <asp:Label ID="Project" runat="server" CssClass="timestamp"></asp:Label>
                                     </td>
                                     <td style="max-width: 300px;">
                                         <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
                                         <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-
+                                        <div>
+                                            <asp:Label ID="p56PlanUntil" runat="server" ToolTip="Termín úkolu"></asp:Label>
+                                            <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
+                                        </div>
                                     </td>
-                                    <td>
-                                        <asp:Label ID="p56PlanUntil" runat="server"></asp:Label>
-                                        <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
+                                    <td style="width:30px;">
+                                        <asp:HyperLink ID="linkWorksheet" ImageUrl="Images/worksheet.png" runat="server" ToolTip="Vykázat úkon do úkolu"></asp:HyperLink>
                                     </td>
-                                    <td>
-                                        <asp:Label ID="b02Name" runat="server"></asp:Label>
+                                    <td style="text-align:center;">
+                                        <asp:HyperLink ID="linkWorkflow" runat="server" Text="Posunout/doplnit"></asp:HyperLink>
+                                        
                                     </td>
+                                   
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>

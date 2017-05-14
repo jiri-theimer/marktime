@@ -117,7 +117,7 @@ Public Class admin_framework
         If BO.BAS.IsNullInt(Me.hidGo2Pid.Value) > 0 Then
             Dim intPID As Integer = CInt(hidGo2Pid.Value) : hidGo2Pid.Value = ""
             grid1.SelectRecords(intPID)
-            If grid1.radGridOrig.SelectedItems.Count = 0 Then
+            If grid1.radGridOrig.SelectedItems.Count = 0 And grid1.radGridOrig.MasterTableView.PageCount > 1 Then
                 Dim x As Integer = 0
                 While grid1.radGridOrig.MasterTableView.PageCount > grid1.radGridOrig.CurrentPageIndex
                     grid1.radGridOrig.CurrentPageIndex += 1
@@ -126,7 +126,7 @@ Public Class admin_framework
                         Exit While
                     End If
                     x += 1
-                    If x > 10000 Then Exit While
+                    If x > 1000 Then Exit While
                 End While
 
             End If

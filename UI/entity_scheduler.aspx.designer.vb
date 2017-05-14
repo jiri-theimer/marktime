@@ -14,22 +14,22 @@ Option Explicit On
 Partial Public Class entity_scheduler
 
     '''<summary>
-    '''chkAllPersons control.
+    '''PersonsHeader control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkAllPersons As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents PersonsHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''Persons control.
+    '''persons1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Persons As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents persons1 As Global.UI.persons
 
     '''<summary>
     '''panMasterRecord control.
@@ -66,60 +66,6 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''panPersonScope control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panPersonScope As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cmdAppendJ02IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdAppendJ02IDs As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''cmdReplaceJ02IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdReplaceJ02IDs As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''j02ID_Add control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j02ID_Add As Global.UI.person
-
-    '''<summary>
-    '''j11ID_Add control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j11ID_Add As Global.UI.datacombo
-
-    '''<summary>
-    '''j07ID_Add control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j07ID_Add As Global.UI.datacombo
 
     '''<summary>
     '''cbxNewRecType control.
@@ -230,42 +176,6 @@ Partial Public Class entity_scheduler
     Protected WithEvents cmdHardRefreshOnBehind As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''hidJ02IDs_All control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ02IDs_All As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidJ02IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ02IDs As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidJ07IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ07IDs As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidJ11IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ11IDs As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
     '''hidCurResource control.
     '''</summary>
     '''<remarks>
@@ -327,6 +237,15 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidIsLoadingSetting As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsPersonsChange control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsPersonsChange As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

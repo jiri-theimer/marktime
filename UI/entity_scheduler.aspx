@@ -2,9 +2,7 @@
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
-<%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="persons" Src="~/persons.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style type="text/css">
@@ -32,18 +30,30 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $(".slidingDiv2").hide();
+            $(".show_hide2").show();
+
+            $('.show_hide2').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv2").slideToggle();
+            });
+
 
             $(".slidingDiv1").hide();
             $(".show_hide1").show();
 
             $('.show_hide1').click(function () {
+                $(".slidingDiv2").hide();
                 $(".slidingDiv1").slideToggle();
             });
             <%If hidIsLoadingSetting.Value = "1" Then%>
             $('.show_hide1').click();
             document.getElementById("<%=hidIsLoadingSetting.ClientID%>").value = "";
             <%End if%>
-
+            <%If hidIsPersonsChange.Value = "1" Then%>
+            $('.show_hide2').click();
+            document.getElementById("<%=hidIsPersonsChange.ClientID%>").value = "";
+            <%End if%>
 
             var h1 = new Number;
             var h2 = new Number;
@@ -289,16 +299,31 @@
 
                 <span class="page_header_span">Kalendář</span>
             </div>
+
+            <div style="clear: both;"></div>
+            <div class="show_hide2" style="float: left; margin-top: 8px;">
+                <button type="button">
+                    <img src="Images/arrow_down.gif" alt="Výběr osob" />
+                    <asp:Label ID="PersonsHeader" runat="server"></asp:Label>
+
+                </button>
+                
+            </div>
+            <div style="clear: both;"></div>
+            <div class="slidingDiv2">
+            <uc:persons id="persons1" runat="server"></uc:persons>
+            </div>
+
+            <div style="clear: both;"></div>
             <div class="show_hide1" style="float: left; margin-top: 8px;">
                 <button type="button">
                     <img src="Images/arrow_down.gif" alt="Nastavení" />
                     Nastavení
 
                 </button>
-                <asp:CheckBox ID="chkAllPersons" runat="server" AutoPostBack="true" Text="Kalendáře všech osob" CssClass="chk" Checked="true" />
-                <asp:Label ID="Persons" runat="server" CssClass="valbold"></asp:Label>
+                
             </div>
-            <div style="clear: both;"></div>
+            
 
             <asp:Panel ID="panMasterRecord" runat="server" CssClass="div6">
                 <asp:Image ID="imgMaster" runat="server" />
@@ -311,38 +336,11 @@
             
 
 
-
+            <div style="clear: both;"></div>
             <div class="slidingDiv1">
-                <asp:Panel ID="panPersonScope" runat="server">
-                    <div style="text-align: center;">
-                        <b>Osoby v kalendáři</b>
-
-                        <asp:LinkButton ID="cmdAppendJ02IDs" runat="server" CssClass="cmd" Text="Přidat" />
-                        <asp:LinkButton ID="cmdReplaceJ02IDs" runat="server" CssClass="cmd" Text="Nahradit" />
-                    </div>
-                    <div>
-                        Vybrat osobu (jednotlivce):
-                    </div>
-                    <div>
-                        <uc:person ID="j02ID_Add" runat="server" Width="100%" />
-                    </div>
-                    <div>
-                        Vybrat tým:
-                    
-                    </div>
-                    <div>
-                        <uc:datacombo ID="j11ID_Add" runat="server" DataTextField="j11Name" DataValueField="pid" IsFirstEmptyRow="true" Width="100%"></uc:datacombo>
-                    </div>
-                    <div>
-                        Vybrat pozici:
-                    </div>
-                    <div>
-                        <uc:datacombo ID="j07ID_Add" runat="server" DataTextField="j07Name" DataValueField="pid" IsFirstEmptyRow="true" Width="100%"></uc:datacombo>
-                    </div>
-
-                </asp:Panel>
+                
                 <div>
-                    Na click v kalendáři založit:
+                    Na click v kalendáři provést:
                     
                 </div>
                 <div class="div6">
@@ -483,10 +481,7 @@
 
 
     <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
-    <asp:HiddenField ID="hidJ02IDs_All" runat="server" />
-    <asp:HiddenField ID="hidJ02IDs" runat="server" />
-    <asp:HiddenField ID="hidJ07IDs" runat="server" />
-    <asp:HiddenField ID="hidJ11IDs" runat="server" />
+    
 
     <asp:HiddenField ID="hidCurResource" runat="server" />
     <asp:HiddenField ID="hidCurTime" runat="server" />
@@ -498,5 +493,6 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidIsLoadingSetting" runat="server" Value="" />
+    <asp:HiddenField ID="hidIsPersonsChange" runat="server" Value="" />
 </asp:Content>
 
