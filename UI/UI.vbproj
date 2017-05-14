@@ -256,6 +256,7 @@
     <Content Include="p40_chrono.aspx" />
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="persons.ascx" />
+    <Content Include="projects.ascx" />
     <Content Include="select_field.aspx" />
     <Content Include="p31_record_split.aspx" />
     <Content Include="p31_scheduler.aspx" />
@@ -1261,6 +1262,13 @@
     </Compile>
     <Compile Include="persons.ascx.vb">
       <DependentUpon>persons.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="projects.ascx.designer.vb">
+      <DependentUpon>projects.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="projects.ascx.vb">
+      <DependentUpon>projects.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="select_field.aspx.designer.vb">

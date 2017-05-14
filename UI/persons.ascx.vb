@@ -83,8 +83,6 @@
         j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
 
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-
-
     End Sub
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender

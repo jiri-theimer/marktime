@@ -3,6 +3,7 @@
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="persons" Src="~/persons.ascx" %>
+<%@ Register TagPrefix="uc" TagName="projects" Src="~/projects.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style type="text/css">
@@ -32,9 +33,11 @@
 
             $(".slidingDiv2").hide();
             $(".show_hide2").show();
+            $(".show_hide3").show();
 
             $('.show_hide2').click(function () {
                 $(".slidingDiv1").hide();
+                $(".slidingDiv3").hide();
                 $(".slidingDiv2").slideToggle();
             });
 
@@ -44,8 +47,16 @@
 
             $('.show_hide1').click(function () {
                 $(".slidingDiv2").hide();
+                $(".slidingDiv3").hide();
                 $(".slidingDiv1").slideToggle();
             });
+
+            $('.show_hide3').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv2").hide();
+                $(".slidingDiv3").slideToggle();
+            });
+
             <%If hidIsLoadingSetting.Value = "1" Then%>
             $('.show_hide1').click();
             document.getElementById("<%=hidIsLoadingSetting.ClientID%>").value = "";
@@ -53,6 +64,10 @@
             <%If hidIsPersonsChange.Value = "1" Then%>
             $('.show_hide2').click();
             document.getElementById("<%=hidIsPersonsChange.ClientID%>").value = "";
+            <%End if%>
+            <%If hidIsProjectsChange.Value = "1" Then%>
+            $('.show_hide3').click();
+            document.getElementById("<%=hidIsProjectsChange.ClientID%>").value = "";
             <%End if%>
 
             var h1 = new Number;
@@ -84,7 +99,7 @@
 
         function hardrefresh(pid, flag) {
 
-            <%=Me.ClientScript.GetPostBackEventReference(Me.cmdHardRefreshOnBehind, "", False)%>
+            location.replace("entity_scheduler.aspx");
 
         }
 
@@ -281,7 +296,11 @@
 
         }
 
-
+        function querybuilder() {
+            var j70id = document.getElementById("<%=Me.j70ID.ClientID%>").value;
+            sw_master("query_builder.aspx?prefix=p56&x36key=entity_scheduler-j70id&pid=" + j70id, "Images/query.png");
+            return (false);
+        }
     </script>
 
 </asp:Content>
@@ -300,6 +319,13 @@
                 <span class="page_header_span">Kalendář</span>
             </div>
 
+            <div style="clear:both;"></div>
+            <div>
+                    <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr úkolů"></asp:DropDownList>
+                    <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
+            </div>
+
             <div style="clear: both;"></div>
             <div class="show_hide2" style="float: left; margin-top: 8px;">
                 <button type="button">
@@ -315,7 +341,21 @@
             </div>
 
             <div style="clear: both;"></div>
-            <div class="show_hide1" style="float: left; margin-top: 8px;">
+            <div class="show_hide3" style="float: left; margin-top: 8px;">
+                <button type="button">
+                    <img src="Images/arrow_down.gif" alt="Výběr projektů" />
+                    <asp:Label ID="ProjectsHeader" runat="server"></asp:Label>
+
+                </button>
+                
+            </div>
+            <div style="clear: both;"></div>
+            <div class="slidingDiv3">
+            <uc:projects id="projects1" runat="server"></uc:projects>
+            </div>
+
+            <div style="clear: both;"></div>
+            <div class="show_hide1" style="float: left; margin-top: 50px;">
                 <button type="button">
                     <img src="Images/arrow_down.gif" alt="Nastavení" />
                     Nastavení
@@ -349,15 +389,15 @@
                         <asp:ListItem Text="Kalendářová událost" Value="o22"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div class="div6">
+                <asp:panel ID="panSettingOPlan" runat="server" CssClass="div6">
                     <img src="Images/oplan.png" />
-                    <asp:CheckBox ID="chkSetting_P48" runat="server" Checked="true" Text="Zobrazovat operatavní plán" AutoPostBack="true" CssClass="chk" />
-                </div>
-                <div class="div6">
+                    <asp:CheckBox ID="chkSetting_P48" runat="server" Text="Zobrazovat i operatavní plán" AutoPostBack="true" CssClass="chk" />
+                </asp:panel>
+                <div class="div6" style="display:none;">
                     <img src="Images/calendar.png" />
                     <asp:CheckBox ID="chkSetting_O22" runat="server" Checked="true" Text="Zobrazovat kalendářové události" AutoPostBack="true" CssClass="chk" />
                 </div>
-                <div class="div6">
+                <div class="div6" style="display:none;">
                     <img src="Images/task.png" />
                     <asp:CheckBox ID="chkSetting_P56" runat="server" Checked="true" Text="Zobrazovat úkoly s termínem" AutoPostBack="true" CssClass="chk" />
                 </div>
@@ -480,7 +520,7 @@
     </div>
 
 
-    <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
+    
     
 
     <asp:HiddenField ID="hidCurResource" runat="server" />
@@ -494,5 +534,6 @@
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidIsLoadingSetting" runat="server" Value="" />
     <asp:HiddenField ID="hidIsPersonsChange" runat="server" Value="" />
+    <asp:HiddenField ID="hidIsProjectsChange" runat="server" Value="" />
 </asp:Content>
 

@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class persons
+Partial Public Class projects
 
     '''<summary>
     '''lblMessage control.
@@ -68,31 +68,22 @@ Partial Public Class persons
     Protected WithEvents panManual As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''rpJ11 control.
+    '''rpP28 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpJ11 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents rpP28 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''rpJ07 control.
+    '''rpP41 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpJ07 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''rpJ02 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpJ02 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents rpP41 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''linkClearAll control.
@@ -104,31 +95,22 @@ Partial Public Class persons
     Protected WithEvents linkClearAll As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''j02ID_Add control.
+    '''p41ID_Add control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j02ID_Add As Global.UI.person
+    Protected WithEvents p41ID_Add As Global.UI.project
 
     '''<summary>
-    '''j11ID_Add control.
+    '''p28ID_Add control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j11ID_Add As Global.UI.datacombo
-
-    '''<summary>
-    '''j07ID_Add control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j07ID_Add As Global.UI.datacombo
+    Protected WithEvents p28ID_Add As Global.UI.contact
 
     '''<summary>
     '''hidHeader control.
@@ -140,38 +122,29 @@ Partial Public Class persons
     Protected WithEvents hidHeader As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidJ02IDs_All control.
+    '''hidP41IDs_All control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidJ02IDs_All As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidP41IDs_All As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidJ02IDs control.
+    '''hidP41IDs control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidJ02IDs As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidP41IDs As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidJ07IDs control.
+    '''hidP28IDs control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidJ07IDs As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidJ11IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ11IDs As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidP28IDs As Global.System.Web.UI.WebControls.HiddenField
 End Class

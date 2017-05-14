@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class entity_scheduler
 
     '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''j70ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''PersonsHeader control.
     '''</summary>
     '''<remarks>
@@ -30,6 +57,24 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents persons1 As Global.UI.persons
+
+    '''<summary>
+    '''ProjectsHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ProjectsHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''projects1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents projects1 As Global.UI.projects
 
     '''<summary>
     '''panMasterRecord control.
@@ -75,6 +120,15 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxNewRecType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''panSettingOPlan control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSettingOPlan As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''chkSetting_P48 control.
@@ -167,15 +221,6 @@ Partial Public Class entity_scheduler
     Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
 
     '''<summary>
-    '''cmdHardRefreshOnBehind control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdHardRefreshOnBehind As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''hidCurResource control.
     '''</summary>
     '''<remarks>
@@ -246,6 +291,15 @@ Partial Public Class entity_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidIsPersonsChange As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsProjectsChange control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsProjectsChange As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

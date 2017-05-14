@@ -39,7 +39,7 @@ Public Class entity_scheduler
 
     Private Sub entity_scheduler_Init(sender As Object, e As EventArgs) Handles Me.Init
         persons1.Factory = Master.Factory
-
+        projects1.Factory = Master.Factory
     End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
@@ -55,8 +55,11 @@ Public Class entity_scheduler
                     .Add("entity_scheduler-daystarttime")
                     .Add("entity_scheduler-dayendtime")
                     .Add("entity_scheduler-multidays")
+                    .Add("entity_scheduler-j70id")
                     .Add("entity_scheduler-persons1-scope")
                     .Add("entity_scheduler-persons1-value")
+                    .Add("entity_scheduler-projects1-scope")
+                    .Add("entity_scheduler-projects1-value")
                     .Add("entity_scheduler-o22")
                     .Add("entity_scheduler-p48")
                     .Add("entity_scheduler-p56")
@@ -71,7 +74,10 @@ Public Class entity_scheduler
                     Me.CurrentView = .GetUserParam("entity_scheduler-view", "1")
                     Me.persons1.CurrentScope = .GetUserParam("entity_scheduler-persons1-scope", "2")
                     Me.persons1.CurrentValue = .GetUserParam("entity_scheduler-persons1-value", Master.Factory.SysUser.j02ID.ToString & "||")
-                    
+                    Me.projects1.CurrentScope = .GetUserParam("entity_scheduler-projects1-scope", "1")
+                    Me.projects1.CurrentValue = .GetUserParam("entity_scheduler-projects1-value")
+
+                    SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("entity_scheduler-j70id")))
 
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_daystarttime, .GetUserParam("entity_scheduler-daystarttime", "8"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_dayendtime, .GetUserParam("entity_scheduler-dayendtime", "20"))
@@ -79,15 +85,25 @@ Public Class entity_scheduler
                     basUI.SelectDropdownlistValue(Me.cbxNewRecType, .GetUserParam("entity_scheduler-newrec_prefix", "o22"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_agendadays, .GetUserParam("entity_scheduler-agendadays", "20"))
 
-                    Me.chkSetting_P48.Checked = .GetUserParam("entity_scheduler-p48", "1")
-                    Me.chkSetting_O22.Checked = .GetUserParam("entity_scheduler-o22", "1")
-                    Me.chkSetting_P56.Checked = .GetUserParam("entity_scheduler-p56", "1")
+                    Select Case Request.Item("scope")
+                        Case "scheduler", ""
+                            chkSetting_O22.Checked = True : chkSetting_P56.Checked = True
+                            panSettingOPlan.Visible = True
+                            Me.chkSetting_P48.Checked = .GetUserParam("entity_scheduler-p48", "0")
+                        Case "oplan"
+                            chkSetting_P48.Checked = True
+                            panSettingOPlan.Visible = False
+                            Me.j70ID.Visible = False
+                            Me.j70ID.SelectedIndex = 0
+                            Me.clue_query.Visible = False
+                            Me.cmdQuery.Visible = False
+                        Case Else
+
+                    End Select
+                    
                     Me.chkIncludeChilds.Checked = BO.BAS.BG(.GetUserParam("entity_scheduler-include_childs"))
 
                 End With
-
-
-
             End With
           
 
@@ -253,6 +269,7 @@ Public Class entity_scheduler
         End If
         If chkSetting_P56.Checked Then  'termíny úkolů
             Dim mq As New BO.myQueryP56
+            mq.j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
             mq.j02IDs = persons1.CurrentJ02IDs
             Select Case Me.CurrentMasterX29ID
                 Case BO.x29IdEnum.p28Contact
@@ -336,11 +353,7 @@ Public Class entity_scheduler
 
     End Sub
 
-    Private Sub cmdHardRefreshOnBehind_Click(sender As Object, e As EventArgs) Handles cmdHardRefreshOnBehind.Click
-
-        RefreshData(False)
-
-    End Sub
+    
 
     Private Sub entity_scheduler_dayendtime_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_dayendtime.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-dayendtime", Me.entity_scheduler_dayendtime.SelectedValue)
@@ -417,8 +430,18 @@ Public Class entity_scheduler
         If Me.CurrentMasterPrefix = "" Then
             
         End If
-
+        basUIMT.RenderQueryCombo(Me.j70ID)
+        With Me.j70ID
+            If .SelectedIndex > 0 Then
+                Me.clue_query.Visible = True
+                .ToolTip = .SelectedItem.Text
+                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+            Else
+                Me.clue_query.Visible = False
+            End If
+        End With
         PersonsHeader.Text = persons1.CurrentHeader
+        ProjectsHeader.Text = projects1.CurrentHeader
         'Master.Notify(String.Join(",", persons1.CurrentJ02IDs))
     End Sub
 
@@ -427,5 +450,26 @@ Public Class entity_scheduler
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-value", persons1.CurrentValue)
         RefreshData(False)
         hidIsPersonsChange.Value = "1"
+    End Sub
+
+    Private Sub SetupJ70Combo(intDef As Integer)
+        Dim mq As New BO.myQuery
+        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p56Task)
+        j70ID.DataBind()
+        j70ID.Items.Insert(0, "--Pojmenovaný filtr úkolů--")
+
+        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+    End Sub
+
+    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-j70id", Me.j70ID.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub projects1_OnChange() Handles projects1.OnChange
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-projects1-scope", projects1.CurrentScope.ToString)
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-projects1-value", projects1.CurrentValue)
+        RefreshData(False)
+        hidIsProjectsChange.Value = "1"
     End Sub
 End Class
