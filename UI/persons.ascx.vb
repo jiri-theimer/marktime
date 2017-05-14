@@ -52,12 +52,12 @@
                     hidJ02IDs.Value = a(0)
                     If UBound(a) > 0 Then hidJ11IDs.Value = a(1)
                     If UBound(a) > 1 Then hidJ07IDs.Value = a(2)
-                    RenderListAndCalculAllJ02IDs()
+
                 Case "3"
                     If Me.j70ID.Items.Count = 0 Then SetupJ70Combo(BO.BAS.IsNullInt(value))
                     basUI.SelectDropdownlistValue(Me.j70ID, value)
             End Select
-
+            RenderListAndCalculAllJ02IDs()
         End Set
     End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
