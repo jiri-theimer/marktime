@@ -31,7 +31,7 @@
 
                 If Me.CurrentP41ID = 0 And .DataPID = 0 Then
                     If Request.Item("masterprefix") <> "" And Request.Item("masterpid") <> "" Then
-                        Server.Transfer("select_project.aspx?oper=createtask&masterprefix=" & Request.Item("masterprefix") & "&masterpid=" & Request.Item("masterpid"))
+                        Server.Transfer("select_project.aspx?oper=createtask&" & basUI.GetCompleteQuerystring(Request))
                     Else
                         .StopPage("Na vstupu chybí ID projektu.")
                     End If
@@ -69,7 +69,7 @@
             Dim dt1 As New BO.DateTimeByQuerystring(Request.Item("t1")), dt2 As New BO.DateTimeByQuerystring(Request.Item("t2")), intJ02ID As Integer = BO.BAS.IsNullInt(Request.Item("j02id"))
             If dt2.DateWithTime > Today Then
                 Me.p56PlanUntil.SelectedDate = dt2.DateWithTime
-                If dt2.DateWithTime > dt1.DateWithTime Then
+                If DateDiff(DateInterval.Hour, dt1.DateWithTime, dt2.DateWithTime, Microsoft.VisualBasic.FirstDayOfWeek.Monday) > 2 Then
                     Me.p56PlanFrom.SelectedDate = dt1.DateWithTime
                 End If
             End If
