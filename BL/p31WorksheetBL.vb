@@ -32,7 +32,7 @@
     Function UpdateInvoice(intP91ID As Integer, lis As List(Of BO.p31WorksheetInvoiceChange)) As Boolean
     Function GetSumHoursPerMonth(intJ02ID As Integer, d1 As Date, d2 As Date) As IEnumerable(Of BO.HoursInMonth)
     Function GetSumHoursPerEntityAndDate(strPrefix As String, pids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerEntityAndDay)
-    Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31DataSourceForTimeline)
+    Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date, p41ids As List(Of Integer)) As IEnumerable(Of BO.p31DataSourceForTimeline)
     Sub UpdateDeleteApprovingSet(strApprovingSet As String, p31ids As List(Of Integer), bolClear As Boolean, strTempGUID As String)
     Function GetList_ApprovingSet(strTempGUID As String, p41ids As List(Of Integer), p28ids As List(Of Integer)) As List(Of String)
     Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, intJ70ID As Integer) As IEnumerable(Of BO.ApprovingFramework)
@@ -402,8 +402,8 @@ Class p31WorksheetBL
     Public Function GetSumHoursPerEntityAndDate(strPrefix As String, pids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31HoursPerEntityAndDay) Implements Ip31WorksheetBL.GetSumHoursPerEntityAndDate
         Return _cDL.GetSumHoursPerEntityAndDate(strPrefix, pids, d1, d2)
     End Function
-    Public Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31DataSourceForTimeline) Implements Ip31WorksheetBL.GetDataSourceForTimeline
-        Return _cDL.GetDataSourceForTimeline(j02ids, d1, d2)
+    Public Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date, p41ids As List(Of Integer)) As IEnumerable(Of BO.p31DataSourceForTimeline) Implements Ip31WorksheetBL.GetDataSourceForTimeline
+        Return _cDL.GetDataSourceForTimeline(j02ids, d1, d2, p41ids)
     End Function
     Public Sub UpdateDeleteApprovingSet(strApprovingSet As String, p31ids As List(Of Integer), bolClear As Boolean, strTempGUID As String) Implements Ip31WorksheetBL.UpdateDeleteApprovingSet
         _cDL.UpdateDeleteApprovingSet(strApprovingSet, p31ids, bolClear, strTempGUID)

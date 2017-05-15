@@ -225,6 +225,7 @@ Public Class main_menu
                         If c.j62Tag = "navigator" Then bolGO = factory.TestPermission(BO.x53PermValEnum.GR_Navigator)
                     Case BO.x29IdEnum.p51PriceList : bolGO = factory.TestPermission(BO.x53PermValEnum.GR_P51_Admin)
                     Case BO.x29IdEnum.x31Report : bolGO = .j04IsMenu_Report
+                    Case BO.x29IdEnum.p56Task : bolGO = .j04IsMenu_Task
 
                 End Select
             End With

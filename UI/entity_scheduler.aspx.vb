@@ -85,7 +85,7 @@ Public Class entity_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_daystarttime, .GetUserParam("entity_scheduler-daystarttime", "8"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_dayendtime, .GetUserParam("entity_scheduler-dayendtime", "20"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_multidays, .GetUserParam("entity_scheduler-multidays", "2"))
-                    basUI.SelectDropdownlistValue(Me.cbxNewRecType, .GetUserParam("entity_scheduler-newrec_prefix", "o22"))
+                    basUI.SelectDropdownlistValue(Me.cbxNewRecType, .GetUserParam("entity_scheduler-newrec_prefix", "p56"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_agendadays, .GetUserParam("entity_scheduler-agendadays", "20"))
 
                     Select Case Request.Item("scope")

@@ -64,6 +64,10 @@
                     <asp:CheckBox ID="j04IsMenu_People" runat="server" Text="[LIDÉ]" Checked="false" CssClass="chk" />
                     </div>
                     <div class="div6">
+                    <asp:CheckBox ID="j04IsMenu_Task" runat="server" Text="[ÚKOLY]" Checked="true" CssClass="chk" />
+                    </div>
+                   
+                    <div class="div6">
                     <asp:CheckBox ID="j04IsMenu_Report" runat="server" Text="[TISKOVÉ SESTAVY | PLUGINY]" Checked="true" CssClass="chk" />
                     </div>
                     <div class="div6">

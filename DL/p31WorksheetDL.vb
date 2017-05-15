@@ -1024,7 +1024,7 @@
 
         Return _cDB.GetList(Of BO.p31HoursPerEntityAndDay)(s, pars)
     End Function
-    Public Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date) As IEnumerable(Of BO.p31DataSourceForTimeline)
+    Public Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date, p41ids As List(Of Integer)) As IEnumerable(Of BO.p31DataSourceForTimeline)
         Dim s As String = "SELECT a.j02ID,a.p41ID,min(p41.p28ID_Client) as p28ID,a.p31Date,sum(a.p31Hours_Orig) as Hours_Orig,a.p32ID,min(p32.p32Name) as p32Name,min(p34.p34Name) as p34Name"
         s += ",min(p34.p34Color) as p34Color,min(p32.p32Color) as p32Color,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client,min(a.p31ID) as p31ID_min,max(a.p31ID) as p31ID_max"
         s += " FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID"
@@ -1032,6 +1032,9 @@
         s += " WHERE p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2"
         If j02ids.Count > 0 Then
             s += " AND a.j02ID IN (" & String.Join(",", j02ids) & ")"
+        End If
+        If p41ids.count > 0 Then
+            s += " AND a.p41ID IN (" & String.Join(",", p41ids) & ")"
         End If
         s += " GROUP BY a.j02ID,a.p41ID,a.p32ID,a.p31Date"
         Dim pars As New DbParameters

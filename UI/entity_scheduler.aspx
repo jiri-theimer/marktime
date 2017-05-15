@@ -202,7 +202,15 @@
             <%If cbxNewRecType.SelectedValue = "o22" Then%>
             var url = "o22_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id+"&masterprefix=<%=Me.CurrentMasterPrefix%>&masterpid=<%=me.CurrentMasterPID%>";
             <%End If%>
-
+            <%If cbxNewRecType.SelectedValue = "p56" Then%>
+            var url = "p56_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&j02id=" + j02id+"&masterprefix=p41";
+            <%If Me.CurrentMasterPrefix="p41" then%>
+            url = url + "&masterpid=<%=me.CurrentMasterPID%>";
+            <%else%>
+            url = url + "&masterpid=0";
+            <%end if%>
+            <%End If%>
+            
             sw_master(url, "Images/calendar.png")
 
         }
@@ -389,13 +397,15 @@
             <div class="slidingDiv1" style="background-color:khaki;">
                 
                 <div>
-                    Na click v kalendáři provést:
+                    Na klik v kalendáři založit:
                     
                 </div>
                 <div class="div6">
                     <asp:DropDownList ID="cbxNewRecType" runat="server" AutoPostBack="true">
-                        <asp:ListItem Text="Operativní plán" Value="p48"></asp:ListItem>
+                        <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
                         <asp:ListItem Text="Kalendářová událost" Value="o22"></asp:ListItem>
+                        <asp:ListItem Text="Operativní plán" Value="p48"></asp:ListItem>
+                        
                     </asp:DropDownList>
                 </div>
                 <asp:panel ID="panSettingOPlan" runat="server" CssClass="div6">                    

@@ -199,7 +199,7 @@
         mq.Closed = BO.BooleanQueryMode.NoQuery
         Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.j02PersonBL.GetList(mq)
 
-        _lisP31 = Master.Factory.p31WorksheetBL.GetDataSourceForTimeline(persons1.CurrentJ02IDs, Me.CurrentD1, Me.CurrentD2)
+        _lisP31 = Master.Factory.p31WorksheetBL.GetDataSourceForTimeline(persons1.CurrentJ02IDs, Me.CurrentD1, Me.CurrentD2, projects1.CurrentP41IDs)
 
         If Me.chkShowP48.Checked Then
             Dim mqP48 As New BO.myQueryP48

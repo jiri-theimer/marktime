@@ -3956,6 +3956,9 @@ BEGIN TRY
 	if exists(SELECT j05ID FROM j05MasterSlave WHERE j02ID_Master=@pid OR j02ID_Slave=@pid)
 	 DELETE FROM j05MasterSlave WHERE j02ID_Master=@pid OR j02ID_Slave=@pid
 
+	if exists(select j74ID FROM j74SavedGridColTemplate where j02ID_Owner=@pid)
+	 DELETE FROM j74SavedGridColTemplate WHERE j02ID_Owner=@pid
+
 
 	DELETE FROM x90EntityLog WHERE x29ID=102 AND x90RecordPID=@pid
 
@@ -4363,7 +4366,7 @@ select a.*,a.j03id as _pid
 ,j02.j02Email as _j02Email,@j03Cache_IsApprovingPerson as _IsApprovingPerson,@is_master as _IsMasterPerson,@j03Cache_MessagesCount as j03Cache_MessagesCount
 ,@j03Cache_MessagesCount as _MessagesCount,@j03Cache_j11IDs as _j11IDs
 ,case when a.j03Aspx_PersonalPage IS NULL THEN @personal_page ELSE a.j03Aspx_PersonalPage END as _PersonalPage
-,j04.j04IsMenu_Worksheet,j04.j04IsMenu_Report,j04.j04IsMenu_Project,j04.j04IsMenu_People,j04.j04IsMenu_Contact,j04.j04IsMenu_Invoice,j04.j04IsMenu_Proforma,j04.j04IsMenu_Notepad,j04IsMenu_MyProfile
+,j04.j04IsMenu_Worksheet,j04.j04IsMenu_Report,j04.j04IsMenu_Project,j04.j04IsMenu_People,j04.j04IsMenu_Contact,j04.j04IsMenu_Invoice,j04.j04IsMenu_Proforma,j04.j04IsMenu_Notepad,j04.j04IsMenu_MyProfile,j04.j04IsMenu_Task
 ,j04.j04Aspx_OneProjectPage as OneProjectPage,j04.j04Aspx_OneContactPage as OneContactPage,j04.j04Aspx_OneInvoicePage as OneInvoicePage,j04.j04Aspx_OnePersonPage as OnePersonPage
 ,j02.j07ID,@j60id as j60ID
 ,j02.j02WorksheetAccessFlag as _j02WorksheetAccessFlag
@@ -10663,12 +10666,12 @@ declare @pausaly float,@honorar_cenik float
 select @pausaly=sum(case when a.j27ID_Billing_Invoiced=2 THEN p31Amount_WithoutVat_Invoiced else p31Amount_WithoutVat_Invoiced_Domestic END)
 from p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
 where a.p70ID=4 AND c.p34IncomeStatementFlag=2 AND c.p33id IN (2,5)
-and a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil
+and a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil AND p91.p91ID_CreditNoteBind IS NULL
 
 select @honorar_cenik=sum(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)
 from p31worksheet a inner join p32activity b on a.p32id=b.p32id inner join p34ActivityGroup c on b.p34id=c.p34id INNER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
 where a.p70ID=6 AND c.p33id=1
-and a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil
+and a.p41ID=@pid AND p91.p91DateSupply between @datfrom and @datuntil AND p91.p91ID_CreditNoteBind IS NULL
 
 select j02LastName+' '+j02FirstName as Person
 ,p91.p91Code
@@ -13469,6 +13472,7 @@ select j02LastName+' '+j02FirstName as Person
 ,case when a.p70ID=6 then @pausaly*(case when a.p70ID=6 THEN dbo.p31_getrate_from_p51id(@p51id,a.p31ID) end*p31Hours_Orig)/@honorar_cenik/a.p31Hours_Orig else a.p31Rate_Billing_Invoiced*isnull(a.p31ExchangeRate_Invoice,1) end as efektivni_sazba
 ,p31Text
 ,a.p41ID
+,a.j02ID
 from
 p31Worksheet a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID
 INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID

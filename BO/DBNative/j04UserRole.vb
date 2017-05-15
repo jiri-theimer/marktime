@@ -19,6 +19,7 @@ Public Class j04UserRole
     Public Property j04IsMenu_Invoice As Boolean
     Public Property j04IsMenu_Proforma As Boolean
     Public Property j04IsMenu_MyProfile As Boolean = True
+    Public Property j04IsMenu_Task As Boolean
     Public Property j04IsMenu_More As Boolean = True
     Public Property j04IsMenu_Notepad As Boolean
     Private Property _x67RoleValue As String

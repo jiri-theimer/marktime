@@ -65,6 +65,17 @@
         Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
         Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
 
+        If Request.Item("t1") <> "" And Request.Item("t2") <> "" Then
+            Dim dt1 As New BO.DateTimeByQuerystring(Request.Item("t1")), dt2 As New BO.DateTimeByQuerystring(Request.Item("t2")), intJ02ID As Integer = BO.BAS.IsNullInt(Request.Item("j02id"))
+            If dt2.DateWithTime > Today Then
+                Me.p56PlanUntil.SelectedDate = dt2.DateWithTime
+                If dt2.DateWithTime > dt1.DateWithTime Then
+                    Me.p56PlanFrom.SelectedDate = dt1.DateWithTime
+                End If
+            End If
+            'Me.o22DateUntil.SelectedDate = dt2.DateWithTime
+        End If
+
         Dim cRecLast As BO.p56Task = Master.Factory.p56TaskBL.LoadMyLastCreated()
         If cRecLast Is Nothing Then Return
         With cRecLast

@@ -8,7 +8,6 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
-            ViewState("masterprefix") = Request.Item("masterprefix")
             ViewState("oper") = Request.Item("oper")
             ViewState("ocas") = basUI.GetCompleteQuerystring(Request)
             Select Case ViewState("oper")
@@ -21,6 +20,12 @@
                 Case Else
 
             End Select
+            If Request.Item("masterprefix") = "p41" Then
+                If BO.BAS.IsNullInt(Request.Item("masterpid")) > 0 Then
+                    p41ID.Value = Request.Item("masterpid")
+                    p41ID.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, BO.BAS.IsNullInt(Request.Item("masterpid")))
+                End If
+            End If
             With Master
                 .DataPID = BO.BAS.IsNullInt(Request.Item("masterpid"))
                 .AddToolbarButton("Pokračovat", "continue", 0, "Images/continue.png")
