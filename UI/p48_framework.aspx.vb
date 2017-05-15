@@ -32,6 +32,8 @@
     Private Sub p48_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
         Master.HelpTopicID = "p48_framework"
+        persons1.Factory = Master.Factory
+        projects1.Factory = Master.Factory
     End Sub
     Public ReadOnly Property CurrentMonth As Integer
         Get
@@ -43,21 +45,7 @@
             Return CInt(query_year.SelectedValue)
         End Get
     End Property
-    Public Property CurrentJ02IDs As List(Of Integer)
-        Get
-            If Me.hidJ02IDs.Value = "" Or Me.hidJ02IDs.Value = "0" Then
-                Me.hidJ02IDs.Value = Master.Factory.SysUser.j02ID.ToString
-            End If
-            Dim j02ids As New List(Of Integer)
-            For Each s As String In Split(Me.hidJ02IDs.Value, ",")
-                j02ids.Add(CInt(s))
-            Next
-            Return j02ids
-        End Get
-        Set(value As List(Of Integer))
-            Me.hidJ02IDs.Value = String.Join(",", value)
-        End Set
-    End Property
+    
     Public ReadOnly Property CurrentRozklad As RozkladENUM
         Get
             Return CType(CInt(cbxRozklad.SelectedValue), RozkladENUM)
@@ -110,10 +98,12 @@
                     .Add("p48_framework-query-year")
                     .Add("p48_framework-query-month")
                     .Add("p48_framework_weekend")
-                    .Add("p48_framework_j02ids")
                     .Add("p48_framework_rozklad")
                     .Add("p48_framework_worksheet")
-                    .Add("p48_framework_allpersons")
+                    .Add("p48_framework-persons1-scope")
+                    .Add("p48_framework-persons1-value")
+                    .Add("p48_framework-projects1-scope")
+                    .Add("p48_framework-projects1-value")
                 End With
                 .InhaleUserParams(lisPars)
                 With query_year
@@ -126,28 +116,23 @@
                 End With
                 basUI.SelectDropdownlistValue(Me.query_year, .GetUserParam("p48_framework-query-year", Year(Now).ToString))
                 basUI.SelectDropdownlistValue(Me.query_month, .GetUserParam("p48_framework-query-month", Month(Now).ToString))
-                Me.hidJ02IDs.Value = .GetUserParam("p48_framework_j02ids")
-                If Me.CurrentMasterPrefix = "j02" Then
-                    Me.hidJ02IDs.Value = Master.Factory.SysUser.j02ID.ToString
-                End If
+
+                
                 Me.chkIncludeWeekend.Checked = BO.BAS.BG(.GetUserParam("p48_framework_weekend", "0"))
                 basUI.SelectDropdownlistValue(Me.cbxRozklad, .GetUserParam("p48_framework_rozklad", "1"))
                 Me.chkShowWorksheet.Checked = BO.BAS.BG(.GetUserParam("p48_framework_worksheet", "1"))
-                Me.chkAllPersons.Checked = BO.BAS.BG(.GetUserParam("p48_framework_allpersons", "1"))
+                Me.persons1.CurrentScope = .GetUserParam("p48_framework-persons1-scope", "2")
+                Me.persons1.CurrentValue = .GetUserParam("p48_framework-persons1-value", Master.Factory.SysUser.j02ID.ToString & "||")
+                Me.projects1.CurrentScope = .GetUserParam("p48_framework-projects1-scope", "1")
+                Me.projects1.CurrentValue = .GetUserParam("p48_framework-projects1-value")
             End With
             If Master.Factory.TestPermission(BO.x53PermValEnum.GR_P48_Reader) Then
                 'čtenář všech plánů v db
-                Me.chkAllPersons.Visible = True
-                Me.j11ID_Add.DataSource = Master.Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = False)
-                Me.j11ID_Add.DataBind()
-                Me.j07ID_Add.DataSource = Master.Factory.j07PersonPositionBL.GetList(New BO.myQuery)
-                Me.j07ID_Add.DataBind()
-                Me.j02ID_Add.Flag = "all"
+                
             Else
-                Me.j11ID_Add.Enabled = False
-                Me.j07ID_Add.Enabled = False
-                Me.chkAllPersons.Visible = Master.Factory.SysUser.IsMasterPerson
-                Me.panPersonScope.Visible = Master.Factory.SysUser.IsMasterPerson   'filtrovat osoby
+                persons1.Visible = False
+                persons1.CurrentScope = 2
+                persons1.CurrentValue = Master.Factory.SysUser.j02ID.ToString & "||"
             End If
 
             If Me.CurrentMasterPID > 0 Then
@@ -249,14 +234,6 @@
         RenderGridHeader()
 
         Dim mqP48 As New BO.myQueryP48
-        Select Case Me.CurrentMasterPrefix
-            Case "p41", "p28"
-            Case Else
-                If Not Me.chkAllPersons.Checked Then
-                    mqP48.j02IDs = Me.CurrentJ02IDs
-                End If
-
-        End Select
 
         mqP48.DateFrom = Me.CurrentD1
         mqP48.DateUntil = Me.CurrentD2
@@ -264,6 +241,9 @@
             Case "p41" : mqP48.p41ID = Me.CurrentMasterPID
             Case "p28" : mqP48.p28ID = Me.CurrentMasterPID
             Case "j02" : mqP48.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
+            Case Else
+                If persons1.CurrentScope > 1 Then mqP48.j02IDs = persons1.CurrentJ02IDs
+                If projects1.CurrentScope > 1 Then mqP48.p41IDs = projects1.CurrentP41IDs
         End Select
         _lisP48 = Master.Factory.p48OperativePlanBL.GetList(mqP48)
 
@@ -278,9 +258,7 @@
         'okruh osob
         Dim mqJ02 As New BO.myQueryJ02
         mqJ02.Closed = BO.BooleanQueryMode.NoQuery
-        If Not Me.chkAllPersons.Checked Then
-            mqJ02.PIDs = Me.CurrentJ02IDs
-        End If
+        If persons1.CurrentScope > 1 Then mqJ02.PIDs = persons1.CurrentJ02IDs
 
         mqJ02.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
         Select Case Me.CurrentMasterPrefix
@@ -329,8 +307,8 @@
 
         Dim pids As New List(Of Integer), strPrefix As String = "j02"
         If Me.CurrentRozklad = RozkladENUM.j02_only Or Me.CurrentRozklad = RozkladENUM.j02_p41 Then
-            If Not Me.chkAllPersons.Checked Then
-                pids = lisJ02.Select(Function(p) p.PID).ToList
+            If persons1.CurrentScope > 1 Then
+                pids = persons1.CurrentJ02IDs.Select(Function(p) p).ToList
             End If
         Else
             strPrefix = "p41"
@@ -360,75 +338,19 @@
 
     
 
-    Private Sub Handle_ChangeJ02IDs(bolAppend As Boolean)
-        Dim intJ11ID As Integer = BO.BAS.IsNullInt(Me.j11ID_Add.SelectedValue)
-        Dim intJ07ID As Integer = BO.BAS.IsNullInt(Me.j07ID_Add.SelectedValue)
-        Dim intJ02ID As Integer = BO.BAS.IsNullInt(Me.j02ID_Add.Value)
-        If intJ02ID = 0 And intJ07ID = 0 And intJ11ID = 0 Then
-            Master.Notify("Musíte vybrat osobu, tým nebo pozici.", NotifyLevel.WarningMessage)
-            Return
-        End If
-        Dim j02ids As New List(Of Integer)
-        If intJ02ID > 0 Then
-            j02ids.Add(intJ02ID)
-        End If
-        If intJ07ID > 0 Then
-            Dim mq As New BO.myQueryJ02
-            mq.j07ID = intJ07ID
-            mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead
-            For Each x In Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.PID).ToList
-                j02ids.Add(x)
-            Next
-        End If
-        If intJ11ID <> 0 Then
-            Dim mq As New BO.myQueryJ02
-            mq.j11ID = intJ11ID
-            mq.SpecificQuery = BO.myQueryJ02_SpecificQuery.AllowedForRead
-            For Each x In Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.PID).ToList
-                j02ids.Add(x)
-            Next
-        End If
-        If j02ids.Count = 0 Then
-            Master.Notify("Vstupní podmínce neodpovídá ani jeden osobní profil.", NotifyLevel.WarningMessage)
-            Return
-        End If
-        If bolAppend Then
-            AppendCurrentJ02IDs(j02ids)
-        Else
-            Me.CurrentJ02IDs = j02ids
-        End If
-        Me.SaveCurrentPersonsScope()
-        RefreshData()
-
-    End Sub
-
-    Private Sub AppendCurrentJ02IDs(j02ids As List(Of Integer))
-        Dim cj As List(Of Integer) = Me.CurrentJ02IDs
-        For Each x In j02ids
-            If cj.Where(Function(p) p = x).Count = 0 Then
-                cj.Add(x)
-            End If
-        Next
-        Me.CurrentJ02IDs = cj
-
-    End Sub
-    Private Sub SaveCurrentPersonsScope()
-        Master.Factory.j03UserBL.SetUserParam("p48_framework_j02ids", Me.hidJ02IDs.Value)
-    End Sub
-
-   
+    
 
 
     Private Sub rp1_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rp1.ItemCommand
         If e.CommandName = "remove" Then
-            Dim j02ids As List(Of Integer) = Me.CurrentJ02IDs
-            j02ids.Remove(CInt(CType(e.Item.FindControl("j02id"), HiddenField).Value))
-            Me.CurrentJ02IDs = j02ids
-            If j02ids.Count = 0 Then
-                Master.Notify("Minimálně jedna osoba musí být zobrazena - bude to váš profil.", NotifyLevel.InfoMessage)
-            End If
-            SaveCurrentPersonsScope()
-            RefreshData()
+            ''Dim j02ids As List(Of Integer) = Me.CurrentJ02IDs
+            ''j02ids.Remove(CInt(CType(e.Item.FindControl("j02id"), HiddenField).Value))
+            ''Me.CurrentJ02IDs = j02ids
+            ''If j02ids.Count = 0 Then
+            ''    Master.Notify("Minimálně jedna osoba musí být zobrazena - bude to váš profil.", NotifyLevel.InfoMessage)
+            ''End If
+
+            ''RefreshData()
         End If
     End Sub
 
@@ -470,7 +392,7 @@
             CType(e.Item.FindControl("capaplan"), Label).Text = FN(_lisP47.Where(Function(p) p.j02ID = cRec.j02ID).Sum(Function(p) p.p47HoursTotal))
         Else
             e.Item.FindControl("clue_person").Visible = False
-            e.Item.FindControl("cmdRemove").Visible = False
+            ''e.Item.FindControl("cmdRemove").Visible = False
         End If
 
         CType(e.Item.FindControl("project"), Label).Text = cRec.Project
@@ -574,7 +496,7 @@
     End Sub
     Private Sub handle_dataBound_By_Project(sender As Object, e As RepeaterItemEventArgs)
         Dim cRec As PlanRow = CType(e.Item.DataItem, PlanRow)
-        e.Item.FindControl("cmdRemove").Visible = False
+        ''e.Item.FindControl("cmdRemove").Visible = False
         e.Item.FindControl("clue_person").Visible = False
 
         If cRec.p41ID <> _lastP41ID Then
@@ -728,24 +650,27 @@
         Return BO.BAS.FN3(dbl)
     End Function
 
-    Private Sub cmdAppendJ02IDs_Click(sender As Object, e As EventArgs) Handles cmdAppendJ02IDs.Click
-        Handle_ChangeJ02IDs(True)
-    End Sub
-
-    Private Sub cmdReplaceJ02IDs_Click(sender As Object, e As EventArgs) Handles cmdReplaceJ02IDs.Click
-        Handle_ChangeJ02IDs(False)
-    End Sub
+   
 
     Private Sub p48_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         Me.lblHeader.Text = BO.BAS.OM2(Me.lblHeader.Text, Me.CurrentMonth.ToString & "/" & Me.CurrentYear.ToString)
-        If Me.chkAllPersons.Visible Then
-            Me.panPersonScope.Visible = Not chkAllPersons.Checked
-        End If
-
+      
+        PersonsHeader.Text = persons1.CurrentHeader
+        ProjectsHeader.Text = projects1.CurrentHeader
     End Sub
 
-    Private Sub chkAllPersons_CheckedChanged(sender As Object, e As EventArgs) Handles chkAllPersons.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("p48_framework_allpersons", BO.BAS.GB(Me.chkAllPersons.Checked))
+    
+    Private Sub persons1_OnChange() Handles persons1.OnChange
+        Master.Factory.j03UserBL.SetUserParam("p48_framework-persons1-scope", persons1.CurrentScope.ToString)
+        Master.Factory.j03UserBL.SetUserParam("p48_framework-persons1-value", persons1.CurrentValue)
         RefreshData()
+        hidIsPersonsChange.Value = "1"
+    End Sub
+
+    Private Sub projects1_OnChange() Handles projects1.OnChange
+        Master.Factory.j03UserBL.SetUserParam("p48_framework-projects1-scope", projects1.CurrentScope.ToString)
+        Master.Factory.j03UserBL.SetUserParam("p48_framework-projects1-value", projects1.CurrentValue)
+        RefreshData()
+        hidIsProjectsChange.Value = "1"
     End Sub
 End Class

@@ -398,8 +398,7 @@
                         <asp:ListItem Text="Kalendářová událost" Value="o22"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <asp:panel ID="panSettingOPlan" runat="server" CssClass="div6">
-                    <img src="Images/oplan.png" />
+                <asp:panel ID="panSettingOPlan" runat="server" CssClass="div6">                    
                     <asp:CheckBox ID="chkSetting_P48" runat="server" Text="Zobrazovat i operatavní plán" AutoPostBack="true" CssClass="chk" />
                 </asp:panel>
                 <div class="div6" style="display:none;">

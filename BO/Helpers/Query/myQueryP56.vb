@@ -25,6 +25,7 @@ Public Class myQueryP56
     Public Property p57ID As Integer
     Public Property p58ID As Integer
     Public Property p41ID As Integer
+    Public Property p41IDs As List(Of Integer)
     Public Property IsIncludeChildProjects As Boolean = False  'zda zahrnout pod-projekty
     Public Property o22ID As Integer
     Public Property b02ID As Integer
@@ -32,6 +33,7 @@ Public Class myQueryP56
     Public Property j70ID As Integer
     Public Property j02ID As Integer    'bráno z pohledu, kde je daná osoba příjemcem úkolu - nic víc
     Public Property j02IDs As List(Of Integer)  'bráno z pohledu, kde je daná osoba příjemcem úkolu - nic víc
+
     Public Property p56PlanFrom_D1 As Date?
     Public Property p56PlanFrom_D2 As Date?
     Public Property p56PlanUntil_D1 As Date?

@@ -291,13 +291,17 @@
                 End If
             End If
             If Not .p41IDs Is Nothing Then
-                s.Append(" AND a.p41ID IN (" & String.Join(",", .p41IDs) & ")")
+                If .p41IDs.Count > 0 Then
+                    s.Append(" AND a.p41ID IN (" & String.Join(",", .p41IDs) & ")")
+                End If
             End If
             If .j02ID <> 0 Then
                 pars.Add("j02id", .j02ID, DbType.Int32) : s.Append(" AND a.j02ID=@j02id")
             End If
             If Not .j02IDs Is Nothing Then
-                s.Append(" AND a.j02ID IN (" & String.Join(",", .j02IDs) & ")")
+                If .j02IDs.Count > 0 Then
+                    s.Append(" AND a.j02ID IN (" & String.Join(",", .j02IDs) & ")")
+                End If
             End If
             If .p34ID <> 0 Then
                 pars.Add("p34id", .p34ID, DbType.Int32) : s.Append(" AND p32.p34ID=@p34id")
@@ -1025,7 +1029,11 @@
         s += ",min(p34.p34Color) as p34Color,min(p32.p32Color) as p32Color,min(isnull(p41.p41NameShort,p41.p41Name)) as Project,min(p28.p28Name) as Client,min(a.p31ID) as p31ID_min,max(a.p31ID) as p31ID_max"
         s += " FROM p31Worksheet a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID"
         s += " LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
-        s += " WHERE p34.p33ID=1 AND a.j02ID IN (" & String.Join(",", j02ids) & ") AND a.p31Date BETWEEN @d1 AND @d2 GROUP BY a.j02ID,a.p41ID,a.p32ID,a.p31Date"
+        s += " WHERE p34.p33ID=1 AND a.p31Date BETWEEN @d1 AND @d2"
+        If j02ids.Count > 0 Then
+            s += " AND a.j02ID IN (" & String.Join(",", j02ids) & ")"
+        End If
+        s += " GROUP BY a.j02ID,a.p41ID,a.p32ID,a.p31Date"
         Dim pars As New DbParameters
         pars.Add("d1", d1, DbType.DateTime)
         pars.Add("d2", d2, DbType.DateTime)

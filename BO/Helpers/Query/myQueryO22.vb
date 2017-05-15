@@ -10,6 +10,7 @@ Public Class myQueryO22
     Public Property IsIncludeChildProjects As Boolean = False
     Public Property p28ID As Integer
     Public Property j02IDs As List(Of Integer)
+    Public Property p41IDs As List(Of Integer)
     Public Property p91ID As Integer
     Public Property o21ID As Integer
 

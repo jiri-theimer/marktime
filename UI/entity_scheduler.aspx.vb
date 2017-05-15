@@ -146,11 +146,8 @@ Public Class entity_scheduler
                 Case BO.x29IdEnum.j02Person
                     mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
                 Case Else
-                    If persons1.CurrentValue <> "1" Then
-                        mq.j02IDs = persons1.CurrentJ02IDs
-
-                    End If
-
+                    mq.j02IDs = persons1.CurrentJ02IDs
+                    mq.p41IDs = projects1.CurrentP41IDs
 
 
             End Select
@@ -212,6 +209,7 @@ Public Class entity_scheduler
                     mq.j02IDs = BO.BAS.ConvertInt2List(Me.CurrentMasterPID)
                 Case Else
                     mq.j02IDs = persons1.CurrentJ02IDs
+                    mq.p41IDs = projects1.CurrentP41IDs
             End Select
             mq.DateFrom = d1 : mq.DateUntil = d2
             Dim lis As IEnumerable(Of BO.p48OperativePlan) = Master.Factory.p48OperativePlanBL.GetList(mq)
@@ -272,8 +270,6 @@ Public Class entity_scheduler
         End If
         If chkSetting_P56.Checked Then  'termíny úkolů
             Dim mq As New BO.myQueryP56
-            mq.j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
-            mq.j02IDs = persons1.CurrentJ02IDs
 
             Select Case Me.CurrentMasterX29ID
                 Case BO.x29IdEnum.p28Contact
@@ -284,7 +280,9 @@ Public Class entity_scheduler
                 Case BO.x29IdEnum.j02Person
                     mq.j02ID = Me.CurrentMasterPID
                 Case Else
-
+                    mq.j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
+                    mq.j02IDs = persons1.CurrentJ02IDs
+                    mq.p41IDs = projects1.CurrentP41IDs
             End Select
             mq.p56PlanUntil_D1 = d1 : mq.p56PlanUntil_D2 = d2
             Dim lis As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq)

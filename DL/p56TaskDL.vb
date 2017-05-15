@@ -129,6 +129,15 @@
                     strW += " AND (a.p41ID=@p41id OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID=@p41id) AND (select p41TreeNext FROM p41Project WHERE p41ID=@p41id)))"
                 End If
             End If
+            If Not .p41IDs Is Nothing Then
+                If .p41IDs.Count > 0 Then
+                    If Not .IsIncludeChildProjects Then
+                        strW += " AND a.p41ID IN (" & String.Join(",", .p41IDs) & ")"
+                    Else
+                        strW += " AND (a.p41ID IN (" & String.Join(",", .p41IDs) & ") OR a.p41ID IN (SELECT p41ID FROM p41Project WHERE p41TreeIndex BETWEEN (select p41TreePrev FROM p41Project WHERE p41ID IN (" & String.Join(",", .p41IDs) & ")) AND (select p41TreeNext FROM p41Project WHERE p41ID IN (" & String.Join(",", .p41IDs) & "))))"
+                    End If
+                End If
+            End If
 
             If .j02ID_Owner <> 0 Then
                 pars.Add("ownerid", .j02ID_Owner, DbType.Int32)

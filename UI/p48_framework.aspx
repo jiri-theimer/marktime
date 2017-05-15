@@ -2,8 +2,8 @@
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-<%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
-<%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="persons" Src="~/persons.ascx" %>
+<%@ Register TagPrefix="uc" TagName="projects" Src="~/projects.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="Scripts/jqueryui/jquery-ui.min.css" />
@@ -48,6 +48,7 @@
             font-family: Calibri;
             font-size: 100%;
         }
+
         div.reality {
             background-color: #E0FFFF;
             width: 20px;
@@ -58,7 +59,7 @@
             text-align: center;
             font-family: Calibri;
             font-size: 100%;
-            text-decoration:line-through;
+            text-decoration: line-through;
         }
 
         div.sum {
@@ -97,15 +98,19 @@
         }
 
         a.reczoom {
-            border:none !important;
+            border: none !important;
             font-family: Calibri !important;
-            font-size:100% !important;
-            padding:0px !important;
+            font-size: 100% !important;
+            padding: 0px !important;
         }
     </style>
 
     <script type="text/javascript">
         $(document).ready(function () {
+            $(".slidingDiv2").hide();
+            $(".show_hide2").show();
+            $(".show_hide3").show();
+            $(".slidingDiv3").hide();
 
             <%If chkIncludeWeekend.Checked Then%>
             $("#selectable").selectable({ filter: "td:not(.nondate)" });
@@ -116,8 +121,31 @@
             $(".show_hide1").show();
 
             $('.show_hide1').click(function () {
+                $(".slidingDiv2").hide();
+                $(".slidingDiv3").hide();
                 $(".slidingDiv1").slideToggle();
             });
+
+            $('.show_hide2').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv3").hide();
+                $(".slidingDiv2").slideToggle();
+            });
+
+            $('.show_hide3').click(function () {
+                $(".slidingDiv1").hide();
+                $(".slidingDiv2").hide();
+                $(".slidingDiv3").slideToggle();
+            });
+
+            <%If hidIsPersonsChange.Value = "1" Then%>
+            $('.show_hide2').click();
+            document.getElementById("<%=hidIsPersonsChange.ClientID%>").value = "";
+            <%End if%>
+            <%If hidIsProjectsChange.Value = "1" Then%>
+            $('.show_hide3').click();
+            document.getElementById("<%=hidIsProjectsChange.ClientID%>").value = "";
+            <%End if%>
 
 
             var h1 = new Number;
@@ -191,11 +219,11 @@
                 alert("Musíte označit alespoň jednu buňku (den).")
                 return
             }
-            
+
             var url = "p48_multiple_create.aspx?year=<%=Me.CurrentYear%>&month=<%=Me.CurrentMonth%>&input=" + s
-            <%If Me.CurrentMasterPrefix="p41" then%>
+            <%If Me.CurrentMasterPrefix = "p41" Then%>
             url = url + "&p41id=<%=Me.CurrentMasterPID%>";
-            <%End If%>            
+            <%End If%>
             sw_master(url, "Images/oplan.png")
 
         }
@@ -230,8 +258,8 @@
         </div>
 
 
-       
-        <div class="commandcell" style="padding-left:20px;">
+
+        <div class="commandcell" style="padding-left: 20px;">
             <asp:DropDownList ID="query_year" runat="server" AutoPostBack="true"></asp:DropDownList>
 
             <asp:DropDownList ID="query_month" runat="server" AutoPostBack="true">
@@ -254,7 +282,7 @@
 
             <asp:ImageButton ID="cmdNextMonth" runat="server" ImageUrl="Images/nextpage.png" ToolTip="Další měsíc" />
         </div>
-        <div class="commandcell" style="padding-left:10px;">
+        <div class="commandcell" style="padding-left: 10px;">
             <asp:DropDownList ID="cbxRozklad" runat="server" AutoPostBack="true">
                 <asp:ListItem Text="Podle osob a projektů" Value="1" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="Podle osob" Value="2"></asp:ListItem>
@@ -262,7 +290,7 @@
             </asp:DropDownList>
         </div>
 
-        <div class="commandcell" style="padding-left:10px;">
+        <div class="commandcell" style="padding-left: 10px;">
             <button type="button" onclick="entry()">
                 <img src="Images/new.png" />Vytvořit plány do označených dnů</button>
 
@@ -277,62 +305,53 @@
                 <img src="Images/arrow_down_menu.png" />Nastavení</button>
         </div>
 
-        <div style="clear:both; width: 100%;"></div>
+        <div style="clear: both; width: 100%;"></div>
 
         <div class="slidingDiv1">
             <div class="div6">
-                <asp:CheckBox ID="chkAllPersons" runat="server" Text="Automaticky zobrazovat všechny osoby" AutoPostBack="true" CssClass="chk" Checked="true" />
                 <asp:CheckBox ID="chkIncludeWeekend" runat="server" Text="Možnost plánovat i do dnů víkendů a svátků" AutoPostBack="true" CssClass="chk" />
+            </div>
+            <div class="div6">
                 <asp:CheckBox ID="chkShowWorksheet" runat="server" Text="Zobrazovat i sumy skutečné vykázaných hodin" AutoPostBack="true" CssClass="chk" />
-                
             </div>
 
-            <asp:Panel ID="panPersonScope" runat="server" CssClass="content-box2">
-                <div class="title">
-                    Rozsah sledovaných osob v operativním plánu
-                </div>
-                <div class="content">
-                    <table>
-                        <tr>
-                            <td>Osoba:
-                            </td>
-                            <td>
-                                <uc:person ID="j02ID_Add" runat="server" Width="300px" />
+        </div>
 
-                            </td>
-                            <td rowspan="3" style="padding-left: 30px; text-align: center;">
-                                <asp:LinkButton ID="cmdAppendJ02IDs" runat="server" CssClass="cmd" Text="Přidat" />
-                                <p>nebo</p>
-                                <asp:LinkButton ID="cmdReplaceJ02IDs" runat="server" CssClass="cmd" Text="Nahradit" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tým osob:
-                            </td>
-                            <td>
-                                <uc:datacombo ID="j11ID_Add" runat="server" DataTextField="j11Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
+        <div style="clear: both; width: 100%;"></div>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Pozice:
-                            </td>
-                            <td>
-                                <uc:datacombo ID="j07ID_Add" runat="server" DataTextField="j07Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
+        <div class="show_hide2" style="float: left; margin-top: 8px;">
+            <button type="button">
+                <img src="Images/arrow_down.gif" alt="Výběr osob" />
+                <asp:Label ID="PersonsHeader" runat="server"></asp:Label>
 
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </asp:Panel>
+            </button>
 
+        </div>
+        <div class="show_hide3" style="float: left; margin-top: 8px;">
+            <button type="button">
+                <img src="Images/arrow_down.gif" alt="Výběr projektů" />               
+                <asp:Label ID="ProjectsHeader" runat="server"></asp:Label>
+
+            </button>
+
+        </div>
+
+        <div style="clear: both;"></div>
+        <div class="slidingDiv2" style="background-color: khaki; padding-bottom: 20px;">
+            <uc:persons ID="persons1" runat="server"></uc:persons>
+        </div>
+
+        
+        <div style="clear: both;"></div>
+        <div class="slidingDiv3" style="background-color: khaki; padding-bottom: 20px;">
+            <uc:projects ID="projects1" runat="server"></uc:projects>
         </div>
 
         <asp:Panel ID="panLayout" runat="server">
             <table cellpadding="3">
                 <tr>
                     <td class="nondate" style="width: 270px;">
-                        <asp:hyperlink ID="MasterRecord" runat="server" Font-Bold="true" Target="_top"></asp:hyperlink>
+                        <asp:HyperLink ID="MasterRecord" runat="server" Font-Bold="true" Target="_top"></asp:HyperLink>
                     </td>
                     <td class="nondate" style="width: 30px; text-align: right;" title="Kapacitní plán celkem">
                         <img src="Images/plan.png" />
@@ -420,7 +439,7 @@
                             <tr style="border-top: dotted silver 1px; vertical-align: top;">
                                 <td style="width: 270px;" class="nondate">
                                     <div>
-                                        <asp:ImageButton ID="cmdRemove" runat="server" CommandName="remove" ImageUrl="Images/cut.png" ToolTip="Nezobrazovat" />
+                                        
                                         <asp:Label ID="person" runat="server" CssClass="valbold"></asp:Label>
                                         <asp:HyperLink ID="clue_person" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
                                     </div>
@@ -493,7 +512,8 @@
     </div>
 
     <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
-    <asp:HiddenField ID="hidJ02IDs" runat="server" />
+    <asp:HiddenField ID="hidIsPersonsChange" runat="server" Value="" />
+    <asp:HiddenField ID="hidIsProjectsChange" runat="server" Value="" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
 </asp:Content>

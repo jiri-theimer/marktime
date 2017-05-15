@@ -68,15 +68,6 @@ Partial Public Class p48_framework
     Protected WithEvents cbxRozklad As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''chkAllPersons control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkAllPersons As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''chkIncludeWeekend control.
     '''</summary>
     '''<remarks>
@@ -95,58 +86,40 @@ Partial Public Class p48_framework
     Protected WithEvents chkShowWorksheet As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''panPersonScope control.
+    '''PersonsHeader control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panPersonScope As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents PersonsHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''j02ID_Add control.
+    '''ProjectsHeader control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j02ID_Add As Global.UI.person
+    Protected WithEvents ProjectsHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdAppendJ02IDs control.
+    '''persons1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdAppendJ02IDs As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents persons1 As Global.UI.persons
 
     '''<summary>
-    '''cmdReplaceJ02IDs control.
+    '''projects1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdReplaceJ02IDs As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''j11ID_Add control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j11ID_Add As Global.UI.datacombo
-
-    '''<summary>
-    '''j07ID_Add control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j07ID_Add As Global.UI.datacombo
+    Protected WithEvents projects1 As Global.UI.projects
 
     '''<summary>
     '''panLayout control.
@@ -743,13 +716,22 @@ Partial Public Class p48_framework
     Protected WithEvents cmdHardRefreshOnBehind As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''hidJ02IDs control.
+    '''hidIsPersonsChange control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidJ02IDs As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidIsPersonsChange As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsProjectsChange control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsProjectsChange As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidMasterPrefix control.
