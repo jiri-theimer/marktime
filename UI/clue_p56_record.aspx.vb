@@ -44,7 +44,7 @@
             Me.Hours_Orig.Text = BO.BAS.FN(cRecSum.Hours_Orig)
             Me.b02Name.Text = .b02Name
             Me.Timestamp.Text = .Timestamp
-
+            Me.Owner.Text = .Owner
         End With
         Me.RolesInLine.Text = Master.Factory.p56TaskBL.GetRolesInline(Master.DataPID)
         If Not BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
@@ -94,7 +94,15 @@
             End Select
             
         End If
-
+        Dim cP57 As BO.p57TaskType = Master.Factory.p57TaskTypeBL.Load(cRec.p57ID)
+        With cP57
+            If .p57Caption_PlanFrom <> "" Then
+                lblp56PlanFrom.Text = .p57Caption_PlanFrom & ":"
+            End If
+            If .p57Caption_PlanUntil <> "" Then
+                lblp56PlanUntil.Text = .p57Caption_PlanUntil & ":"
+            End If
+        End With
 
         If cRec.IsClosed Then
             img1.ImageUrl = "Images/bin_32.png"

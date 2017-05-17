@@ -476,6 +476,9 @@ Class j74SavedGridColTemplateBL
                 .Add(AGC("Částka vč. DPH", "p31Amount_WithVat_Orig", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
                 .Add(AGC(My.Resources.common.NakladovaSazba, "p31Rate_Internal_Orig", BO.cfENUM.Numeric2, , , , , "Nákladová cena", "p31Rate_Internal_Orig", "p31Rate_Internal_Orig"))
                 .Add(AGC(My.Resources.common.NakladovaCastka, "p31Amount_Internal", BO.cfENUM.Numeric2, , , True, , "Nákladová cena"))
+
+                .Add(AGC("Bez DPH dle fixního kurzu", "p31Amount_WithoutVat_FixedCurrency", BO.cfENUM.Numeric2, , , True, , "Vykázáno"))
+
             End If
 
             .Add(AGC("Číslo faktury", "p91Code", , , , , , "Vyfakturováno", "min(p91Code)", "a.p91ID"))

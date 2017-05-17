@@ -81,6 +81,12 @@
             Return _p57IsHelpdesk
         End Get
     End Property
+    Friend Property _p57PlanDatesEntryFlag As Integer
+    Public ReadOnly Property p57PlanDatesEntryFlag As Integer
+        Get
+            Return _p57PlanDatesEntryFlag
+        End Get
+    End Property
     Friend Property _b01ID As Integer
     Public ReadOnly Property b01ID As Integer
         Get

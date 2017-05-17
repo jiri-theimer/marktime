@@ -484,6 +484,9 @@
                     <asp:Button ID="cmdExportICalendar" runat="server" CssClass="cmd" Text="Export do ICalendar" />
                 </div>
                 <div class="div6">
+                    <asp:Button ID="cmdExportPDF" runat="server" CssClass="cmd" Text="PDF export" />
+                </div>
+                <div class="div6">
                     <img src="Images/help.png" /><i>Zápis do kalendáře provedete přes pravé tlačítko myši nad označenými buňkami nebo přes click do kalendáře.</i>
                 </div>
             </div>
@@ -509,7 +512,7 @@
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
 
-
+                    
                 </AppointmentTemplate>
 
                 <TimeSlotContextMenus>
@@ -523,8 +526,8 @@
                         </Items>
                     </telerik:RadSchedulerContextMenu>
                 </TimeSlotContextMenus>
-                <ExportSettings OpenInNewWindow="true" FileName="SchedulerExport">
-                    <Pdf PageTitle="Schedule" Author="Telerik" Creator="Telerik" Title="Schedule" />
+                <ExportSettings OpenInNewWindow="true" FileName="MARKTIME_EXPORT">
+                    <Pdf  Author="MARKTIME" Creator="MARKITME" PaperSize="A4" />
                 </ExportSettings>
             </telerik:RadScheduler>
             <telerik:RadAjaxLoadingPanel runat="server" ID="RadAjaxLoadingPanel1" RenderMode="Lightweight" Transparency="30" BackColor="#E0E0E0">

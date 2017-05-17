@@ -77,6 +77,96 @@ Partial Public Class p57_record
     Protected WithEvents p57IsHelpdesk As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p57PlanDatesEntryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57PlanDatesEntryFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''p57IsEntry_Receiver control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57IsEntry_Receiver As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p57IsEntry_Budget control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57IsEntry_Budget As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p57IsEntry_Priority control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57IsEntry_Priority As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''p57IsEntry_CompletePercent control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57IsEntry_CompletePercent As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''lblp57Caption_PlanUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp57Caption_PlanUntil As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p57Caption_PlanUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57Caption_PlanUntil As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblp57Caption_PlanFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp57Caption_PlanFrom As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p57Caption_PlanFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p57Caption_PlanFrom As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lblOrdinary control.
     '''</summary>
     '''<remarks>

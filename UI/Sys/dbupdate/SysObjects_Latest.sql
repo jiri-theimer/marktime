@@ -6964,22 +6964,29 @@ if @guid is not null
     update p31Worksheet SET o23ID_First=@o23id_first WHERE p31ID=@p31id
  end
 
-if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'IsCalc_FixedExchangeRate' and x35Value='1')
- begin
-  declare @p31exchangerate_fixed float,@j27id_domestic int
 
-  if exists(select x35ID FROM x35GlobalParam WHERE x35Key like 'j27ID_Domestic')
-	select @j27id_domestic=convert(int,x35Value) from x35GlobalParam WHERE x35Key like 'j27ID_Domestic'
-  else
-	set @j27id_domestic=2
+if exists(select m62ID FROM m62ExchangeRate WHERE m62RateType=2)
+begin
+ declare @m62id_fixed_rate int
+ select TOP 1 @m62id_fixed_rate=m62ID FROM m62ExchangeRate WHERE m62RateType=2 AND m62Date<=@p31date ORDER BY m62Date DESC
 
-  
-  select @p31exchangerate_fixed=dbo.get_exchange_rate(2,@p31date,@j27id_billing_orig,@j27id_domestic)
+ if @m62id_fixed_rate is not null
+  begin
+   declare @p31exchangerate_fixed float,@j27id_domestic int
 
-  update p31WorkSheet set p31ExchangeRate_Fixed=@p31exchangerate_fixed,p31Amount_WithoutVat_FixedCurrency=@p31exchangerate_fixed*p31Amount_WithoutVat_Orig
-  WHERE p31ID=@p31id
+   select @j27id_domestic=j27ID_Master FROM m62ExchangeRate WHERE m62ID=@m62id_fixed_rate
+   select @j27id_billing_orig=j27id_billing_orig FROM p31Worksheet WHERE p31ID=@p31id
+
+   if @j27id_domestic<>@j27id_billing_orig
+    select @p31exchangerate_fixed=dbo.get_exchange_rate(2,@p31date,@j27id_billing_orig,@j27id_domestic)
+   else
+    set @p31exchangerate_fixed=1
+
+   update p31WorkSheet set p31ExchangeRate_Fixed=@p31exchangerate_fixed,p31Amount_WithoutVat_FixedCurrency=@p31exchangerate_fixed*p31Amount_WithoutVat_Orig
+   WHERE p31ID=@p31id
+
  end
-
+end
 
 
 

@@ -83,7 +83,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="Label1" Text="Hotovo (%):" runat="server" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="lblCompletePercent" Text="Hotovo (%):" runat="server" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <telerik:RadNumericTextBox ID="p56CompletePercent" runat="server" NumberFormat-DecimalDigits="0" MaxValue="100" MinValue="0" IncrementSettings-Step="10" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
@@ -130,7 +130,7 @@
                 </tr>
             </table>
 
-            <div class="content-box2">
+            <asp:panel ID="panRoles" runat="server" CssClass="content-box2">
                 <div class="title">
                     <img src="Images/projectrole.png" width="16px" height="16px" />
                     <asp:Label ID="ph1" runat="server" Text="Příjemci (řešitelé) úkolu"></asp:Label>
@@ -139,7 +139,7 @@
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="p56Task"></uc:entityrole_assign>
                 </div>
-            </div>
+            </asp:panel>
 
             <div class="content-box2">
                 <div class="title">Podrobný popis (zadání úkolu)</div>

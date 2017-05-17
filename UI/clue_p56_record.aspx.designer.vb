@@ -77,6 +77,15 @@ Partial Public Class clue_p56_record
     Protected WithEvents p59name_submitter As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblp56PlanUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp56PlanUntil As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''p56PlanUntil control.
     '''</summary>
     '''<remarks>
@@ -138,6 +147,15 @@ Partial Public Class clue_p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents RolesInLine As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Owner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Owner As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Hours_Orig control.

@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblRate" runat="server" CssClass="lblReq" Text="Hodnota kurzu:"></asp:Label></td>
+                <asp:Label ID="lblRate" runat="server" CssClass="lblReq" Text="Kurz ve zdrojové měně:"></asp:Label></td>
             <td>
                 <telerik:RadNumericTextBox ID="m62Rate" runat="server" Width="90px" NumberFormat-DecimalDigits="3" MinValue="0"></telerik:RadNumericTextBox>
 
@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Množství:"></asp:Label></td>
+                <asp:Label ID="Label2" runat="server" CssClass="lbl" Text="Množství cílové měny:"></asp:Label></td>
             <td>
                 <telerik:RadNumericTextBox ID="m62Units" runat="server" Width="90px" NumberFormat-DecimalDigits="0" MinValue="1"></telerik:RadNumericTextBox>
 

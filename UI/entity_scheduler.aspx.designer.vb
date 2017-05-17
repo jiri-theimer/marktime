@@ -203,6 +203,15 @@ Partial Public Class entity_scheduler
     Protected WithEvents cmdExportICalendar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''cmdExportPDF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdExportPDF As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''scheduler1 control.
     '''</summary>
     '''<remarks>

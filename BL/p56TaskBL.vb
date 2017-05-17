@@ -74,9 +74,10 @@ Class p56TaskBL
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt!" : Return False
             If Not (BO.BAS.IsNullDBDate(.p56PlanFrom) Is Nothing Or BO.BAS.IsNullDBDate(.p56PlanUntil) Is Nothing) Then
                 If .p56PlanFrom > .p56PlanUntil Then
-                    _Error = "Plánované zahájení úkolu nesmí být větší plánované dokončení!" : Return False
+                    _Error = "Plánované zahájení úkolu nesmí být větší než plánované dokončení!" : Return False
                 End If
             End If
+
             If .p56IsPlan_Expenses_Ceiling And .p56Plan_Expenses = 0 Then _Error = "Chybí zadání plánu peněžních výdajů." : Return False
             If .p56IsPlan_Hours_Ceiling And .p56Plan_Hours = 0 Then _Error = "Chybí zadání plánu hodin." : Return False
 
@@ -86,6 +87,15 @@ Class p56TaskBL
         If cP57 Is Nothing Then _Error = "Chybí typ úkolu" : Return False
         If cP57.p57IsHelpdesk And Len(Trim(cRec.p56Description)) < 3 Then
             _Error = "Musíte vyplnit podrobný popis požadavku." : Return False
+        End If
+        Select Case cP57.p57PlanDatesEntryFlag
+            Case 1, 3, 4
+                If BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
+                    _Error = "Chybí zadání termínu." : Return False
+                End If
+        End Select
+        If (cP57.p57PlanDatesEntryFlag = 3 Or cP57.p57PlanDatesEntryFlag = 4) And BO.BAS.IsNullDBDate(cRec.p56PlanFrom) Is Nothing Then
+            _Error = "Chybí zadání plánovaného zahájení." : Return False
         End If
         If Not lisFF Is Nothing Then
             If Not BL.BAS.ValidateFF(lisFF) Then

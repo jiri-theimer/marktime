@@ -26,7 +26,13 @@
             pars.Add("p57Ordinary", .p57Ordinary, DbType.Int32)
             pars.Add("p57IsDefault", .p57IsDefault, DbType.Boolean)
             pars.Add("p57IsHelpdesk", .p57IsHelpdesk, DbType.Boolean)
-
+            pars.Add("p57IsEntry_Receiver", .p57IsEntry_Receiver, DbType.Boolean)
+            pars.Add("p57IsEntry_Budget", .p57IsEntry_Budget, DbType.Boolean)
+            pars.Add("p57IsEntry_Priority", .p57IsEntry_Priority, DbType.Boolean)
+            pars.Add("p57IsEntry_CompletePercent", .p57IsEntry_CompletePercent, DbType.Boolean)
+            pars.Add("p57PlanDatesEntryFlag", BO.BAS.IsNullDBKey(.p57PlanDatesEntryFlag), DbType.Int32)
+            pars.Add("p57Caption_PlanFrom", .p57Caption_PlanFrom, DbType.String)
+            pars.Add("p57Caption_PlanUntil", .p57Caption_PlanUntil, DbType.String)
             pars.Add("p57validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("p57validuntil", .ValidUntil, DbType.DateTime)
 

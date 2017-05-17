@@ -37,6 +37,58 @@
         </tr>
         <tr>
             <td>
+                <asp:Label ID="Label1" Text="Datumy v úkolu:" runat="server" CssClass="lbl"></asp:Label>
+            </td>
+            <td>
+                <asp:DropDownList ID="p57PlanDatesEntryFlag" runat="server">
+                    <asp:ListItem Text="Termín nepovinný, plánované zahájení nepovinné" Value="" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Termín povinný, plánované zahájení nepovinné" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Termín nepovinný, plánované zahájení skryté" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Termín povinný, plánované zahájení povinné" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Termín povinný, plánované zahájení povinné, v kalendáři zobrazovat úkol jako událost od-do" Value="4"></asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:CheckBox ID="p57IsEntry_Receiver" runat="server" Text="Ve formuláři úkolu zadávat okruh příjemců (řešitelů) úkolu" CssClass="chk" Checked="true"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:CheckBox ID="p57IsEntry_Budget" runat="server" Text="Ve formuláři úkolu možnost zadat plán/limit hodin a výdajů" CssClass="chk" Checked="true"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:CheckBox ID="p57IsEntry_Priority" runat="server" Text="Ve formuláři úkolu možnost zadat [Priorita zadavatele]" CssClass="chk" Checked="true"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <asp:CheckBox ID="p57IsEntry_CompletePercent" runat="server" Text="Ve formuláři úkolu možnost zadat [Hotovo %]" CssClass="chk" Checked="true"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblp57Caption_PlanUntil" runat="server" CssClass="lbl" Text="Přejmenovat [Termín splnění] na:"></asp:Label>
+
+            </td>
+            <td>
+                <asp:TextBox ID="p57Caption_PlanUntil" runat="server" Style="width: 400px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblp57Caption_PlanFrom" runat="server" CssClass="lbl" Text="Přejmenovat [Plánované zahájení] na:"></asp:Label>
+
+            </td>
+            <td>
+                <asp:TextBox ID="p57Caption_PlanFrom" runat="server" Style="width: 400px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <asp:Label ID="lblOrdinary" Text="Index pořadí:" runat="server" CssClass="lbl" AssociatedControlID="p57Ordinary"></asp:Label></td>
             <td>
 

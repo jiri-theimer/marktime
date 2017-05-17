@@ -45,7 +45,13 @@
             Me.b01ID.SelectedValue = .b01ID.ToString
             Me.x38ID.SelectedValue = .x38ID.ToString
             Me.p57IsHelpdesk.Checked = .p57IsHelpdesk
-
+            Me.p57IsEntry_Receiver.Checked = .p57IsEntry_Receiver
+            Me.p57IsEntry_Budget.Checked = .p57IsEntry_Budget
+            Me.p57IsEntry_Priority.Checked = .p57IsEntry_Priority
+            Me.p57IsEntry_CompletePercent.Checked = .p57IsEntry_CompletePercent
+            basUI.SelectDropdownlistValue(Me.p57PlanDatesEntryFlag, .p57PlanDatesEntryFlag.ToString)
+            Me.p57Caption_PlanUntil.Text = .p57Caption_PlanUntil
+            Me.p57Caption_PlanFrom.Text = .p57Caption_PlanFrom
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
             Master.Timestamp = .Timestamp
 
@@ -77,6 +83,14 @@
 
                 .b01ID = BO.BAS.IsNullInt(Me.b01ID.SelectedValue)
                 .p57IsHelpdesk = Me.p57IsHelpdesk.Checked
+
+                .p57IsEntry_Receiver = Me.p57IsEntry_Receiver.Checked
+                .p57IsEntry_Budget = Me.p57IsEntry_Budget.Checked
+                .p57IsEntry_Priority = Me.p57IsEntry_Priority.Checked
+                .p57IsEntry_CompletePercent = Me.p57IsEntry_CompletePercent.Checked
+                .p57PlanDatesEntryFlag = BO.BAS.IsNullInt(Me.p57PlanDatesEntryFlag.SelectedValue)
+                .p57Caption_PlanFrom = Me.p57Caption_PlanFrom.Text
+                .p57Caption_PlanUntil = Me.p57Caption_PlanUntil.Text
 
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil

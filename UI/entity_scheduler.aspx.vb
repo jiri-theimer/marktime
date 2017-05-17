@@ -292,7 +292,12 @@ Public Class entity_scheduler
                     c.ID = .PID.ToString & ",'p56'"
                     c.Description = "clue_p56_record.aspx?pid=" & .PID.ToString
                     c.Subject = .p56Name
-                    c.Start = .p56PlanUntil
+
+                    If .p57PlanDatesEntryFlag = 4 And Not .p56PlanFrom Is Nothing Then
+                        c.Start = .p56PlanFrom
+                    Else
+                        c.Start = .p56PlanUntil
+                    End If
                     c.End = .p56PlanUntil
 
                     c.BackColor = Drawing.Color.FromName("#3CB371")
@@ -462,6 +467,8 @@ Public Class entity_scheduler
         j70ID.Items.Insert(0, "--Pojmenovaný filtr úkolů--")
 
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+
+        cmdQuery.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
     End Sub
 
     Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
@@ -474,5 +481,10 @@ Public Class entity_scheduler
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-projects1-value", projects1.CurrentValue)
         RefreshData(False)
         hidIsProjectsChange.Value = "1"
+    End Sub
+
+    Private Sub cmdExportPDF_Click(sender As Object, e As EventArgs) Handles cmdExportPDF.Click
+
+        scheduler1.ExportToPdf()
     End Sub
 End Class

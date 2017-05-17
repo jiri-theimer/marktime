@@ -52,7 +52,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Termín dokončení:</td>
+                        <td><asp:Label ID="lblp56PlanUntil" runat="server" Text="Termín:"></asp:Label></td>
                         <td>
                             <asp:Label ID="p56PlanUntil" runat="server" CssClass="valboldred"></asp:Label>
                             <asp:Label ID="lblp56PlanFrom" runat="server" Text="Plánované zahájení:"></asp:Label>
@@ -71,9 +71,15 @@
                   
                   
                     <tr>
-                        <td>Příjemci úkolu:</td>
+                        <td>Příjemci (řešitelé):</td>
                         <td>
                             <asp:Label ID="RolesInLine" runat="server" CssClass="valbold"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Vlastník záznamu:</td>
+                        <td>
+                            <asp:Label ID="Owner" runat="server" CssClass="valbold"></asp:Label>
                         </td>
                     </tr>
                     <tr>

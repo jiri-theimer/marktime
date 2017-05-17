@@ -149,14 +149,59 @@
     End Sub
 
     Private Sub p56_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        lblDateUntil.CssClass = "lbl" : lblDateFrom.CssClass = "lbl"
+        lblDateFrom.Visible = True : p56PlanFrom.Visible = True
+        lblDateFrom.Text = "Plánované zahájení:" : lblDateUntil.Text = "Termín splnění úkolu:"
+
         If Me.p57ID.SelectedIndex > 0 Then
             Master.HeaderText = Me.p57ID.Text & " | " & Me.Project.Text
+
+            Dim cRec As BO.p57TaskType = Master.Factory.p57TaskTypeBL.Load(BO.BAS.IsNullInt(Me.p57ID.SelectedValue))
+            With cRec
+                lblP59ID_Submitter.Visible = .p57IsEntry_Priority
+                p59ID_Submitter.Visible = .p57IsEntry_Priority
+                Select Case .p57PlanDatesEntryFlag
+                    Case 1, 3, 4
+                        lblDateUntil.CssClass = "lblReq"
+                    Case 2
+                        lblDateFrom.Visible = False
+                        p56PlanFrom.Visible = False
+                End Select
+                Select Case .p57PlanDatesEntryFlag
+                    Case 3, 4
+                        lblDateFrom.CssClass = "lblReq"
+                End Select
+                If .p57PlanDatesEntryFlag = 4 Then
+                    If Me.p56PlanUntil.IsEmpty Then
+                        Me.p56PlanUntil.SelectedDate = Today
+                    End If
+                    If Me.p56PlanFrom.IsEmpty Then
+                        Me.p56PlanFrom.SelectedDate = Me.p56PlanUntil.SelectedDate
+                    End If
+                End If
+                lblp56Plan_Expenses.Visible = .p57IsEntry_Budget
+                p56Plan_Expenses.Visible = .p57IsEntry_Budget
+                p56IsPlan_Expenses_Ceiling.Visible = .p57IsEntry_Budget
+                lblp56Plan_Hours.Visible = .p57IsEntry_Budget
+                p56Plan_Hours.Visible = .p57IsEntry_Budget
+                p56IsPlan_Hours_Ceiling.Visible = .p57IsEntry_Budget
+                panRoles.Visible = .p57IsEntry_Receiver
+                lblCompletePercent.Visible = .p57IsEntry_CompletePercent
+                p56CompletePercent.Visible = .p57IsEntry_CompletePercent
+                If .p57Caption_PlanFrom <> "" Then
+                    lblDateFrom.Text = .p57Caption_PlanFrom & ":"
+                End If
+                If .p57Caption_PlanUntil <> "" Then
+                    lblDateUntil.Text = .p57Caption_PlanUntil & ":"
+                End If
+            End With
         Else
             Master.HeaderText = "Úkol | " & Me.Project.Text
         End If
         Dim b As Boolean = False
         If Me.o22ID.Rows > 1 Then b = True
         Me.lblO22ID.Visible = b : Me.o22ID.Visible = b
+
 
     End Sub
 
@@ -227,11 +272,15 @@
                 .ValidUntil = Master.RecordValidUntil
             End With
 
-            Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
-            If roles1.ErrorMessage <> "" Then
-                Master.Notify(roles1.ErrorMessage, 2)
-                Return
+            Dim lisX69 As List(Of BO.x69EntityRole_Assign) = Nothing
+            If panRoles.Visible Then
+                lisX69 = roles1.GetData4Save()
+                If roles1.ErrorMessage <> "" Then
+                    Master.Notify(roles1.ErrorMessage, 2)
+                    Return
+                End If
             End If
+
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
 
             If .Save(cRec, lisX69, lisFF, "") Then

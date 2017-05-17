@@ -169,8 +169,8 @@ Public Class admin_framework
             .AddItem("Role v klientovi", "p28_x67", NU("p28_x67"), "p28")
 
             .AddItem("Úkoly", "p56", , , "Images/task.png")
-            .AddItem("Typy úkolů/požadavků", "p57", NU("p57"), "p56")
-            .AddItem("Role v úkolu/požadavku", "p56_x67", NU("p56_x67"), "p56")
+            .AddItem("Typy úkolů", "p57", NU("p57"), "p56")
+            .AddItem("Role v úkolu", "p56_x67", NU("p56_x67"), "p56")
             .AddItem("Priority úkolu", "p59", NU("p59"), "p56")
             .AddItem("Produkty", "p58", NU("p58"), "p56")
 
@@ -481,7 +481,6 @@ Public Class admin_framework
                     .AddColumn("p35Code", "Kód")
                 Case "p57"
                     .AddColumn("p57Name", "Název")
-                    .AddColumn("p57IsHelpdesk", "Pro helpdesk", BO.cfENUM.Checkbox)
                     .AddColumn("b01Name", "Workflow šablona")
                     .AddColumn("p57Ordinary", "#", BO.cfENUM.Numeric0)
                 Case "p58"
