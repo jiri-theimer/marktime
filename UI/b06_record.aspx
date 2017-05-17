@@ -95,6 +95,8 @@
                     <asp:DropDownList ID="x67ID_Direct" runat="server" DataTextField="x67Name" DataValueField="pid"></asp:DropDownList>
                     <span>Obsazení přes tým osob:</span>
                     <asp:DropDownList ID="j11ID_Direct" runat="server" DataTextField="j11Name" DataValueField="pid"></asp:DropDownList>
+                    <span style="padding-left:20px;">nebo změnit na řešitele posledního statusu:</span>
+                    <asp:DropDownList ID="b02ID_LastReceiver_ReturnTo" runat="server" DataTextField="b02Name" DataValueField="pid"></asp:DropDownList>
                 </fieldset>
             </asp:Panel>
 

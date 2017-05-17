@@ -28,6 +28,7 @@
                 pars.Add("x67ID_Nominee", BO.BAS.IsNullDBKey(.x67ID_Nominee), DbType.Int32)
                 pars.Add("x67ID_Direct", BO.BAS.IsNullDBKey(.x67ID_Direct), DbType.Int32)
                 pars.Add("j11ID_Direct", BO.BAS.IsNullDBKey(.j11ID_Direct), DbType.Int32)
+                pars.Add("b02ID_LastReceiver_ReturnTo", BO.BAS.IsNullDBKey(.b02ID_LastReceiver_ReturnTo), DbType.Int32)
                 pars.Add("b06Name", .b06Name, DbType.String, , , True, "Název")
                 pars.Add("b06Code", .b06Code, DbType.String)
                 pars.Add("b06RunSQL", .b06RunSQL, DbType.String, , , True, "Spouštět SQL dotaz")

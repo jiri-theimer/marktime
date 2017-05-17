@@ -191,6 +191,7 @@
         panP56.Visible = False
         Dim lisP56 As IEnumerable(Of BO.p56Task) = Nothing, mq As New BO.myQueryP56
         mq.Closed = BO.BooleanQueryMode.FalseQuery
+        mq.TopRecordsOnly = 100
         Select Case cbxP56Types.SelectedValue
             Case "1"
                 lisP56 = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
@@ -203,6 +204,9 @@
         End Select
         If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
         Me.p56Count.Text = lisP56.Count.ToString
+        If lisP56.Count = 100 Then
+            Me.p56Count.Text = "Podmínce vyhovuje více než 100 úkolů!"
+        End If
         rpP56.DataSource = lisP56
         rpP56.DataBind()
         If lisP56.Count = 0 And Me.cbxP56Types.SelectedValue <> "3" Then

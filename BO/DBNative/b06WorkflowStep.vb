@@ -13,6 +13,7 @@
     Public Property x67ID_Nominee As Integer
     Public Property x67ID_Direct As Integer
     Public Property j11ID_Direct As Integer
+    Public Property b02ID_LastReceiver_ReturnTo As Integer
     Public Property b06RunSQL As String
     Public Property b06ValidateBeforeRunSQL As String
     Public Property b06ValidateAutoMoveSQL As String

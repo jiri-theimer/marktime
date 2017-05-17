@@ -66,11 +66,11 @@ Class b06WorkflowStepBL
         Else
             cRec.b06IsNomineeRequired = False : cRec.x67ID_Nominee = 0
         End If
-        If cRec.j11ID_Direct <> 0 And cRec.x67ID_Direct = 0 Then
+        If (cRec.j11ID_Direct <> 0 Or cRec.b02ID_LastReceiver_ReturnTo <> 0) And cRec.x67ID_Direct = 0 Then
             _Error = "Musíte specifikovat roli automatického řešitele."
         End If
-        If cRec.j11ID_Direct = 0 And cRec.x67ID_Direct <> 0 Then
-            _Error = "Musíte specifikovat tým osob v automatické změně řešitele."
+        If (cRec.j11ID_Direct = 0 And cRec.b02ID_LastReceiver_ReturnTo = 0) And cRec.x67ID_Direct <> 0 Then
+            _Error = "Musíte specifikovat příjemce pro automatickou změnu řešitele."
         End If
        
         If _Error <> "" Then
@@ -164,12 +164,18 @@ Class b06WorkflowStepBL
                 End If
             Next
         End If
-        If cB06.x67ID_Direct <> 0 And cB06.j11ID_Direct <> 0 Then
+        If cB06.x67ID_Direct <> 0 And (cB06.j11ID_Direct <> 0 Or cB06.b02ID_LastReceiver_ReturnTo <> 0) Then
             'automatická změna řešitele
             lisNominee = New List(Of BO.x69EntityRole_Assign)
             Dim cX69 As New BO.x69EntityRole_Assign
-            cX69.j11ID = cB06.j11ID_Direct
             cX69.x67ID = cB06.x67ID_Direct
+            If cB06.j11ID_Direct <> 0 Then
+                cX69.j11ID = cB06.j11ID_Direct
+            End If
+            If cB06.b02ID_LastReceiver_ReturnTo <> 0 Then
+
+            End If
+
             lisNominee.Add(cX69)
         End If
         If Not lisNominee Is Nothing Then

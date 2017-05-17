@@ -90,6 +90,17 @@
         If Not bolAfterInsert Or intOnlyX67ID_Update <> 0 Then
             cDB.RunSQL(strSQLDel)
         End If
+        Dim intB02ID As Integer = 0, strB02ID_SQL As String = "NULL"
+        Select Case x29id
+            Case BO.x29IdEnum.p56Task
+                intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p56Task WHERE p56ID=" & intDataRecord.ToString)
+            Case BO.x29IdEnum.p41Project
+                intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p41Project WHERE p41ID=" & intDataRecord.ToString)
+            Case BO.x29IdEnum.p28Contact
+                intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p28Contact WHERE p28ID=" & intDataRecord.ToString)
+            Case BO.x29IdEnum.o23Notepad
+                intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM o23Notepad WHERE o23ID=" & intDataRecord.ToString)
+        End Select
         For Each c In lisX69
             If Not c.IsSetAsDeleted Then
                 Dim strJ02ID As String = "NULL"
@@ -100,8 +111,13 @@
                 If c.j07ID <> 0 Then strJ07ID = c.j07ID.ToString
 
                 cDB.RunSQL("INSERT INTO x69EntityRole_Assign(x69RecordPID,x67ID,j02ID,j11ID,j07ID,x69IsWelcomeNotification) VALUES(" & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & "," & BO.BAS.GB(c.x69IsWelcomeNotification) & ")")
+                If intB02ID <> 0 Then
+                    strB02ID_SQL = intB02ID.ToString
+                End If
+                cDB.RunSQL("INSERT INTO x70EntityRole_Assign_History(b02ID,x70RecordPID,x67ID,j02ID,j11ID,j07ID,x70Date) VALUES(" & strB02ID_SQL & "," & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & ",getdate())")
             End If
         Next
+
     End Sub
 
     

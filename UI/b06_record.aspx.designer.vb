@@ -203,6 +203,15 @@ Partial Public Class b06_record
     Protected WithEvents j11ID_Direct As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''b02ID_LastReceiver_ReturnTo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b02ID_LastReceiver_ReturnTo As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''RadPageView2 control.
     '''</summary>
     '''<remarks>

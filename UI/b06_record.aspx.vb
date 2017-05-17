@@ -64,6 +64,9 @@
         b02ID_Target.DataBind()
         b02ID_Target.ChangeItemText("", "--Krok bez změny stavu--")
 
+        b02ID_LastReceiver_ReturnTo.DataSource = Master.Factory.b02WorkflowStatusBL.GetList(cB02.b01ID)
+        b02ID_LastReceiver_ReturnTo.DataBind()
+        b02ID_LastReceiver_ReturnTo.Items.Insert(0, "")
         
         cbxAddB09ID.DataSource = Master.Factory.b06WorkflowStepBL.GetList_Allb09IDs().Where(Function(p) p.x29ID = Me.CurrentX29ID)
         cbxAddB09ID.DataBind()
@@ -113,6 +116,7 @@
             basUI.SelectDropdownlistValue(Me.x67ID_Nominee, .x67ID_Nominee.ToString)
             basUI.SelectDropdownlistValue(Me.x67ID_Direct, .x67ID_Direct.ToString)
             basUI.SelectDropdownlistValue(Me.j11ID_Direct, .j11ID_Direct.ToString)
+            basUI.SelectDropdownlistValue(Me.b02ID_LastReceiver_ReturnTo, .b02ID_LastReceiver_ReturnTo.ToString)
             If Me.x67ID_Direct.SelectedIndex > 0 Or Me.j11ID_Direct.SelectedIndex > 0 Then
                 Me.chkDirectNominee.Checked = True
             Else
@@ -199,7 +203,7 @@
                 Else
                     .x67ID_Direct = 0 : .j11ID_Direct = 0
                 End If
-               
+                .b02ID_LastReceiver_ReturnTo = BO.BAS.IsNullInt(Me.b02ID_LastReceiver_ReturnTo.SelectedValue)
 
                 .b06RunSQL = b06RunSQL.Text
                 .b06ValidateAutoMoveSQL = b06ValidateAutoMoveSQL.Text
