@@ -13,6 +13,7 @@
     Function GetPossibleWorkflowSteps4Person(strRecordPrefix As String, intRecordPID As Integer, intJ02ID As Integer) As List(Of BO.WorkflowStepPossible4User)
 
     Function RunWorkflowStep(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, strComment As String, strUploadGUID As String, bolManualStep As Boolean, lisNominee As List(Of BO.x69EntityRole_Assign)) As Boolean
+
 End Interface
 Class b06WorkflowStepBL
     Inherits BLMother
@@ -165,20 +166,23 @@ Class b06WorkflowStepBL
             Next
         End If
         If cB06.x67ID_Direct <> 0 And (cB06.j11ID_Direct <> 0 Or cB06.b02ID_LastReceiver_ReturnTo <> 0) Then
+            cB06.x67ID_Nominee = cB06.x67ID_Direct
             'automatická změna řešitele
-            lisNominee = New List(Of BO.x69EntityRole_Assign)
-            Dim cX69 As New BO.x69EntityRole_Assign
-            cX69.x67ID = cB06.x67ID_Direct
             If cB06.j11ID_Direct <> 0 Then
+                'řešitelem bude explicitně určený tým
+                lisNominee = New List(Of BO.x69EntityRole_Assign)
+                Dim cX69 As New BO.x69EntityRole_Assign
+                cX69.x67ID = cB06.x67ID_Direct
                 cX69.j11ID = cB06.j11ID_Direct
+                lisNominee.Add(cX69)
             End If
             If cB06.b02ID_LastReceiver_ReturnTo <> 0 Then
+                'vrátit řešiteli, který byl poslední ve statusu b02ID_LastReceiver_ReturnTo
+                lisNominee = _cDL.GetListOfLastWorkflowX69(cB06.x67ID_Direct, intRecordPID, cB06.b02ID_LastReceiver_ReturnTo)
 
             End If
-
-            lisNominee.Add(cX69)
         End If
-        If Not lisNominee Is Nothing Then
+        If Not lisNominee Is Nothing And cB06.x67ID_Nominee <> 0 Then
             Dim lisAll As List(Of BO.x69EntityRole_Assign) = Me.Factory.x67EntityRoleBL.GetList_x69(x29id, intRecordPID).Where(Function(p) p.x67ID <> cB06.x67ID_Nominee).ToList
             For Each cX69 In lisNominee
                 lisAll.Add(cX69)
@@ -349,6 +353,7 @@ Class b06WorkflowStepBL
                             .x43RecipientFlag = BO.x43RecipientIdEnum.recTO
                         End With
                         recipients.Add(recipient)
+
                         Factory.x40MailQueueBL.SaveMessageToQueque(mes, recipients, x29id, intRecordPID, BO.x40StateENUM.InQueque)
                     Next
 
@@ -437,4 +442,5 @@ Class b06WorkflowStepBL
         Next
         Return ret
     End Function
+    
 End Class

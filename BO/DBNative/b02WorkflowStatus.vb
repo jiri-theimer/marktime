@@ -4,6 +4,7 @@
     Public Property b02Name As String
     Public Property b02Code As String
     Public Property b02Color As String
+    Public Property b02IsRecordReadOnly4Owner As Boolean
 
     Public Property b02Ordinary As Integer
 

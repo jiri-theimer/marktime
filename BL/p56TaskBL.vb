@@ -197,8 +197,19 @@ Class p56TaskBL
 
         If cRec.j02ID_Owner = Factory.SysUser.j02ID And cRec.p57IsHelpdesk = False Then
             'vlasník záznamu má plná práva, pokud to není helpdesk zadavatel
-            c.ReadAccess = True : c.OwnerAccess = True : c.CanMove2Bin = True : c.P31_Create = True
-            Return c
+            Dim bolTested As Boolean = False
+            If cRec.b02ID <> 0 Then
+                Dim cB02 As BO.b02WorkflowStatus = Factory.b02WorkflowStatusBL.Load(cRec.b02ID)
+                If cB02.b02IsRecordReadOnly4Owner Then  'aktuální workflow status má nastaveno, že vlastník záznam má pouze readonly přístup
+                    c.ReadAccess = True
+                    bolTested = True
+                End If
+            End If
+            If Not bolTested Then
+                c.ReadAccess = True : c.OwnerAccess = True : c.CanMove2Bin = True : c.P31_Create = True 'vlastník má plná práva
+                Return c
+            End If
+            
         End If
 
         If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.p41Project, cRec.p41ID, BO.x53PermValEnum.PR_P56_Owner, True) Then

@@ -58,6 +58,7 @@ Public Class entity_scheduler
                     .Add("entity_scheduler-j70id")
                     .Add("entity_scheduler-persons1-scope")
                     .Add("entity_scheduler-persons1-value")
+                    .Add("entity_scheduler-persons1-personsrole")
                     .Add("entity_scheduler-projects1-scope")
                     .Add("entity_scheduler-projects1-value")
                     .Add("entity_scheduler-o22")
@@ -73,8 +74,12 @@ Public Class entity_scheduler
                     .InhaleUserParams(lisPars)
                     Me.CurrentView = .GetUserParam("entity_scheduler-view", "1")
                     If Me.CurrentMasterPrefix = "" Then
-                        Me.persons1.CurrentScope = .GetUserParam("entity_scheduler-persons1-scope", "2")
-                        Me.persons1.CurrentValue = .GetUserParam("entity_scheduler-persons1-value", Master.Factory.SysUser.j02ID.ToString & "||")
+                        Me.persons1.CurrentScope = .GetUserParam("entity_scheduler-persons1-scope", "4")
+                        Me.persons1.CurrentValue = .GetUserParam("entity_scheduler-persons1-value")
+
+                        SetupPersonRolesCombo(.GetUserParam("entity_scheduler-persons1-personsrole"))
+                        Me.persons1.CurrentPersonsRole = .GetUserParam("entity_scheduler-persons1-personsrole", "1")
+
                         Me.projects1.CurrentScope = .GetUserParam("entity_scheduler-projects1-scope", "1")
                         Me.projects1.CurrentValue = .GetUserParam("entity_scheduler-projects1-value")
                     End If
@@ -115,7 +120,18 @@ Public Class entity_scheduler
         End If
     End Sub
 
-
+    Private Sub SetupPersonRolesCombo(strDef As String)
+        Dim lis As New List(Of BO.ComboSource)
+        Dim c As New BO.ComboSource
+        c.pid = -1 : c.ItemText = "Zadavatel úkolu"
+        lis.Add(c)
+        c = New BO.ComboSource
+        c.pid = 1
+        c.ItemText = "Řešitel (příjemce) úkolu"
+        lis.Add(c)
+        persons1.SetupQueryPersonsRoles(lis)
+        persons1.CurrentPersonsRole = strDef
+    End Sub
     
     Private Sub RefreshData(bolData4Export As Boolean)
         With Me.scheduler1
@@ -281,7 +297,11 @@ Public Class entity_scheduler
                     mq.j02ID = Me.CurrentMasterPID
                 Case Else
                     mq.j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
-                    mq.j02IDs = persons1.CurrentJ02IDs
+                    If persons1.CurrentPersonsRole = "-1" Then
+                        mq.Owners = persons1.CurrentJ02IDs
+                    Else
+                        mq.j02IDs = persons1.CurrentJ02IDs
+                    End If
                     mq.p41IDs = projects1.CurrentP41IDs
             End Select
             mq.p56PlanUntil_D1 = d1 : mq.p56PlanUntil_D2 = d2
@@ -456,6 +476,8 @@ Public Class entity_scheduler
     Private Sub persons1_OnChange() Handles persons1.OnChange
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-scope", persons1.CurrentScope.ToString)
         Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-value", persons1.CurrentValue)
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-personsrole", persons1.CurrentPersonsRole)
+
         RefreshData(False)
         hidIsPersonsChange.Value = "1"
     End Sub

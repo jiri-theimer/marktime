@@ -67,6 +67,11 @@
         </telerik:RadColorPicker>
         </td>
     </tr>
+        <tr>
+            <td colspan="2">
+                <asp:CheckBox ID="b02IsRecordReadOnly4Owner" runat="server" Text="Zakladatel (vlastník) záznamu ztrácí v tomto stavu editační práva k záznamu" />
+            </td>
+        </tr>
     </table>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

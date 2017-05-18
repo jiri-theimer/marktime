@@ -100,7 +100,11 @@
                 intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p28Contact WHERE p28ID=" & intDataRecord.ToString)
             Case BO.x29IdEnum.o23Notepad
                 intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM o23Notepad WHERE o23ID=" & intDataRecord.ToString)
+            Case BO.x29IdEnum.p91Invoice
+                intB02ID = cDB.GetIntegerValueFROMSQL("select b02ID FROM p91Invoice WHERE p91ID=" & intDataRecord.ToString)
         End Select
+        Dim pars As New DbParameters
+        pars.Add("now", Now, DbType.DateTime)
         For Each c In lisX69
             If Not c.IsSetAsDeleted Then
                 Dim strJ02ID As String = "NULL"
@@ -110,17 +114,21 @@
                 Dim strJ07ID As String = "NULL"
                 If c.j07ID <> 0 Then strJ07ID = c.j07ID.ToString
 
-                cDB.RunSQL("INSERT INTO x69EntityRole_Assign(x69RecordPID,x67ID,j02ID,j11ID,j07ID,x69IsWelcomeNotification) VALUES(" & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & "," & BO.BAS.GB(c.x69IsWelcomeNotification) & ")")
+                strSQLDel = "INSERT INTO x69EntityRole_Assign(x69RecordPID,x67ID,j02ID,j11ID,j07ID,x69IsWelcomeNotification) VALUES(" & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & "," & BO.BAS.GB(c.x69IsWelcomeNotification) & ")"
+                ''cDB.RunSQL("INSERT INTO x69EntityRole_Assign(x69RecordPID,x67ID,j02ID,j11ID,j07ID,x69IsWelcomeNotification) VALUES(" & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & "," & BO.BAS.GB(c.x69IsWelcomeNotification) & ")")
                 If intB02ID <> 0 Then
                     strB02ID_SQL = intB02ID.ToString
                 End If
-                cDB.RunSQL("INSERT INTO x70EntityRole_Assign_History(b02ID,x70RecordPID,x67ID,j02ID,j11ID,j07ID,x70Date) VALUES(" & strB02ID_SQL & "," & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & ",getdate())")
+                strSQLDel += "; INSERT INTO x70EntityRole_Assign_History(b02ID,x70RecordPID,x67ID,j02ID,j11ID,j07ID,x70Date) VALUES(" & strB02ID_SQL & "," & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & ",@now)"
+                ''cDB.RunSQL("INSERT INTO x70EntityRole_Assign_History(b02ID,x70RecordPID,x67ID,j02ID,j11ID,j07ID,x70Date) VALUES(" & strB02ID_SQL & "," & intDataRecord.ToString & "," & c.x67ID.ToString & "," & strJ02ID & "," & strJ11ID & "," & strJ07ID & ",getdate())")
+
+                cDB.RunSQL(strSQLDel, pars)
             End If
         Next
-
     End Sub
-
     
+
+
     Shared Function SaveFreeFields(cDB As DbHandler, lisFF As List(Of BO.FreeField), strTableFF As String, intPID As Integer, Optional cCurUser As BO.j03UserSYS = Nothing, Optional strTempGUID As String = "") As Boolean
         If lisFF.Count = 0 Then Return False
         Dim bolInsert As Boolean = True, strW As String = "", strFieldPID As String = Left(strTableFF, 3) & "ID"
@@ -133,7 +141,7 @@
                 bolInsert = False : strW = strFieldPID & "=@pid AND " & Left(strTableFF, 3) & "guid = '" & strTempGUID & "'"
             End If
         End If
-        
+
         Dim pars As New DbParameters
         If bolInsert Then
             pars.Add(strFieldPID, intPID, DbType.Int32)

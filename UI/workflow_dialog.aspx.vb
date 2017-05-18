@@ -229,7 +229,7 @@
         panNominee.Visible = cRec.b06IsNominee
         If cRec.b06IsNominee Then
             Dim cX67 As BO.x67EntityRole = Master.Factory.x67EntityRoleBL.Load(cRec.x67ID_Nominee)
-            cmdAddNominee.Text = "Obsadit roli (" & cX67.x67Name & ")"
+            cmdAddNominee.Text = String.Format("Přidat ({0})", cX67.x67Name)
         End If
         If cRec.b06IsNomineeRequired Then
             If rpNominee.Items.Count = 0 Then InsertBlankNominee()

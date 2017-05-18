@@ -218,5 +218,24 @@
         End Select
 
     End Function
-    
+
+    Public Function GetListOfLastWorkflowX69(intX67ID As Integer, intRecordPID As Integer, intB02ID As Integer) As List(Of BO.x69EntityRole_Assign)
+        Dim pars As New List(Of BO.PluginDbParameter), lis As New List(Of BO.x69EntityRole_Assign)
+        pars.Add(New BO.PluginDbParameter("pid", intRecordPID))
+        pars.Add(New BO.PluginDbParameter("b02id", intB02ID))
+        pars.Add(New BO.PluginDbParameter("x67id", intX67ID))
+        Dim dr As SqlClient.SqlDataReader = _cDB.GetDataReader("SELECT * FROM x70EntityRole_Assign_History WHERE x70RecordPID=@pid AND x67ID=@x67id AND b02ID=@b02id AND x70Date IN (SELECT TOP 1 x70Date FROM x70EntityRole_Assign_History WHERE x70RecordPID=@pid AND x67ID=@x67id AND b02ID=@b02id ORDER BY x70ID DESC)", , pars)
+        While dr.Read
+            Dim c As New BO.x69EntityRole_Assign
+            c.x67ID = intX67ID
+            c.x69RecordPID = intRecordPID
+            If Not dr("j02ID") Is System.DBNull.Value Then c.j02ID = dr("j02ID")
+            If Not dr("j07ID") Is System.DBNull.Value Then c.j07ID = dr("j07ID")
+            If Not dr("j11ID") Is System.DBNull.Value Then c.j11ID = dr("j11ID")
+            lis.Add(c)
+        End While
+        dr.Close()
+
+        Return lis
+    End Function
 End Class

@@ -173,6 +173,11 @@
                     strW += " AND a.p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID IN (" & String.Join(",", .j02IDs) & ") OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID IN (" & String.Join(",", .j02IDs) & "))))"   'obdržel nějakou (jakoukoliv) roli v úkolu
                 End If
             End If
+            If Not .Owners Is Nothing Then
+                If .Owners.Count > 0 Then
+                    strW += " AND a.j02ID_Owner IN (" & String.Join(",", .Owners) & ")"
+                End If
+            End If
             If Not .DateInsertFrom Is Nothing Then
                 If Year(.DateInsertFrom) > 1900 Then
                     pars.Add("d1", .DateInsertFrom)

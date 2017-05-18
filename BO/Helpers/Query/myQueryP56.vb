@@ -33,6 +33,7 @@ Public Class myQueryP56
     Public Property j70ID As Integer
     Public Property j02ID As Integer    'bráno z pohledu, kde je daná osoba příjemcem úkolu - nic víc
     Public Property j02IDs As List(Of Integer)  'bráno z pohledu, kde je daná osoba příjemcem úkolu - nic víc
+    Public Property Owners As List(Of Integer)  'vlastníci úkolů
 
     Public Property p56PlanFrom_D1 As Date?
     Public Property p56PlanFrom_D2 As Date?

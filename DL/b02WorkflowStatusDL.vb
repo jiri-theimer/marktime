@@ -23,6 +23,7 @@
                 pars.Add("b02Code", .b02Code, DbType.String, , , True, "Kód stavu")
                 pars.Add("b02color", .b02Color, DbType.String, , , True, "Barva")
                 pars.Add("b02Ordinary", .b02Ordinary, DbType.Int32)
+                pars.Add("b02IsRecordReadOnly4Owner", .b02IsRecordReadOnly4Owner, DbType.Boolean)
                 pars.Add("b02IsDurationSLA", .b02IsDurationSLA, DbType.Boolean)
                 pars.Add("b02TimeOut_Total", .b02TimeOut_Total, DbType.Int32)
                 pars.Add("b02TimeOut_SLA", .b02TimeOut_SLA, DbType.Int32)

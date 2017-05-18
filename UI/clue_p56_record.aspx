@@ -15,6 +15,11 @@
             window.open("p56_framework.aspx?pid=<%=Master.DataPID%>", "_top");
 
         }
+        function go2workflow() {
+
+            window.parent.sw_local("workflow_dialog.aspx?prefix=p56&pid=<%=Master.DataPID%>", "Images/task_32.png", true);
+
+        }
 
     </script>
 </asp:Content>
@@ -28,8 +33,9 @@
 
         <div class="content-box2">
             <div class="title">
-                Záznam úkolu
-                <a style="margin-left: 20px;" href="javascript:go2module()">Skočit na detail úkolu</a>
+                
+                <a  href="javascript:go2module()">Skočit na detail úkolu</a>
+                <a style="margin-left: 50px;" href="javascript:go2workflow()">Posunout/doplnit</a>
             </div>
             <div class="content">
                 <table cellpadding="5" cellspacing="2" id="responsive">

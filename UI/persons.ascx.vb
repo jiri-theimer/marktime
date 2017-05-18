@@ -9,6 +9,15 @@
             Return hidHeader.Value
         End Get
     End Property
+    
+    Public Property CurrentPersonsRole As String
+        Get
+            Return Me.cbxPersonsRole.SelectedValue
+        End Get
+        Set(value As String)
+            basUI.SelectDropdownlistValue(Me.cbxPersonsRole, value)
+        End Set
+    End Property
     Public Property CurrentScope As Integer
         Get
             Return CInt(Me.opgScope.SelectedValue)
@@ -41,6 +50,8 @@
                     Return Me.hidJ02IDs.Value & "|" & hidJ11IDs.Value & "|" & hidJ07IDs.Value
                 Case "3"
                     Return Me.j70ID.SelectedValue
+                Case "4"
+                    Return Me.Factory.SysUser.j02ID.ToString & "||"
                 Case Else
                     Return ""
             End Select
@@ -64,6 +75,17 @@
 
     End Sub
 
+    Public Sub SetupQueryPersonsRoles(lis As List(Of BO.ComboSource))
+        With Me.cbxPersonsRole
+            .DataSource = lis
+            .DataBind()
+            If lis.Count > 0 Then
+                .Visible = True
+            Else
+                .Visible = False
+            End If
+        End With
+    End Sub
 
     Private Sub SetupData()
         Me.j11ID_Add.DataSource = Me.Factory.j11TeamBL.GetList(New BO.myQuery).Where(Function(p) p.j11IsAllPersons = False)
@@ -108,6 +130,9 @@
         Else
             linkClearAll.Visible = False
         End If
+        With Me.cbxPersonsRole
+            If .Items.Count = 0 Then .Visible = False Else .Visible = True
+        End With
     End Sub
     
 
@@ -182,6 +207,10 @@
             If j02ids_all.Count = 0 Then j02ids_all.Add(-1) 'umělá položka, by tam něco bylo
 
             ali.Add("Filtr osob: " & Me.j70ID.SelectedItem.Text)
+        End If
+        If opgScope.SelectedValue = "4" Then
+            ali.Add(Me.Factory.SysUser.Person)
+            j02ids_all.Add(Me.Factory.SysUser.j02ID)
         End If
         If ali.Count = 0 Then
             ali.Add("Všechny osoby")
@@ -325,6 +354,10 @@
         Me.hidJ02IDs.Value = "" : Me.hidJ07IDs.Value = "" : Me.hidJ11IDs.Value = ""
         Me.hidJ02IDs_All.Value = ""
         RenderListAndCalculAllJ02IDs()
+        RaiseEvent OnChange()
+    End Sub
+
+    Private Sub cbxPersonsRole_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPersonsRole.SelectedIndexChanged
         RaiseEvent OnChange()
     End Sub
 End Class

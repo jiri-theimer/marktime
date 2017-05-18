@@ -3,15 +3,20 @@
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <asp:Label ID="lblMessage" runat="server" ForeColor="red"></asp:Label>
 <div style="clear: both;">
+    <div>
+        <asp:DropDownList ID="cbxPersonsRole" runat="server" AutoPostBack="true" Style="width: 100%;" Visible="false" DataValueField="pid" DataTextField="ItemText">           
+        </asp:DropDownList>
+    </div>
     <asp:RadioButtonList ID="opgScope" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
         <asp:ListItem Text="Všechny osoby" Value="1" Selected="True"></asp:ListItem>
         <asp:ListItem Text="Jedna nebo více osob" Value="2"></asp:ListItem>
+        <asp:ListItem Text="Pouze já" Value="4"></asp:ListItem>
         <asp:ListItem Text="Pojmenovaný filtr osob" Value="3"></asp:ListItem>
     </asp:RadioButtonList>
 </div>
 <asp:Panel ID="panQuery" runat="server">
     <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
-    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;"></asp:DropDownList>    
+    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;"></asp:DropDownList>
 </asp:Panel>
 <asp:Panel ID="panManual" runat="server">
     <asp:Repeater ID="rpJ11" runat="server">
@@ -38,7 +43,7 @@
             </div>
         </ItemTemplate>
     </asp:Repeater>
-    <div style="text-align: center;">        
+    <div style="text-align: center;">
         <asp:LinkButton ID="linkClearAll" runat="server" Text="Vyčistit výběr osob"></asp:LinkButton>
     </div>
 
@@ -57,7 +62,7 @@
 
 
 
-    
+
 </asp:Panel>
 
 <asp:HiddenField ID="hidHeader" runat="server" />
@@ -65,3 +70,4 @@
 <asp:HiddenField ID="hidJ02IDs" runat="server" />
 <asp:HiddenField ID="hidJ07IDs" runat="server" />
 <asp:HiddenField ID="hidJ11IDs" runat="server" />
+

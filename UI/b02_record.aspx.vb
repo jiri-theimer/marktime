@@ -40,7 +40,7 @@
         If cRec Is Nothing Then Master.StopPage("record is missing.")
 
         With cRec
-
+            Me.b02IsRecordReadOnly4Owner.Checked = .b02IsRecordReadOnly4Owner
             Me.b02Name.Text = .b02Name
             Me.b02Code.Text = .b02Code
             Me.b01ID.SelectedValue = .b01ID.ToString
@@ -78,7 +78,7 @@
                 .ValidUntil = Master.RecordValidUntil
                 .b02Code = Me.b02Code.Text
                 .b02Color = basUI.GetColorFromPicker(Me.b02Color)
-               
+                .b02IsRecordReadOnly4Owner = Me.b02IsRecordReadOnly4Owner.Checked
             End With
 
 

@@ -104,6 +104,15 @@ Partial Public Class b02_record
     Protected WithEvents b02Color As Global.Telerik.Web.UI.RadColorPicker
 
     '''<summary>
+    '''b02IsRecordReadOnly4Owner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b02IsRecordReadOnly4Owner As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
