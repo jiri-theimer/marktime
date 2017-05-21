@@ -58,11 +58,15 @@
 
     
 
-    Public Sub AddNewRow()
+    Public Sub AddNewRow(Optional intJ02ID As Integer = 0)
         SaveTempX69()
         Dim cRec As New BO.p85TempBox()
         cRec.p85GUID = Me.GUID
         cRec.p85FreeText01 = "j02"
+        If intJ02ID > 0 Then
+            cRec.p85OtherKey2 = intJ02ID
+            cRec.p85FreeText02 = Me.Factory.j02PersonBL.Load(intJ02ID).FullNameDesc
+        End If
         _Factory.p85TempBoxBL.Save(cRec)
         RefreshTempX69()
     End Sub

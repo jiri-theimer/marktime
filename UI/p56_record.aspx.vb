@@ -24,6 +24,7 @@
                 .HeaderIcon = "Images/task_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Úkol"
+
                 Me.CurrentP41ID = BO.BAS.IsNullInt(Request.Item("p41id"))
                 If Me.CurrentP41ID = 0 And Request.Item("masterprefix") = "p41" And BO.BAS.IsNullInt(Request.Item("masterpid")) <> 0 Then
                     Me.CurrentP41ID = BO.BAS.IsNullInt(Request.Item("masterpid"))
@@ -37,7 +38,13 @@
                     End If
 
                 End If
+                With .Factory.j03UserBL
+                    .InhaleUserParams("p56_record-more")
+                    Me.chkMore.Checked = BO.BAS.BG(.GetUserParam("p56_record-more", "0"))
 
+                End With
+
+                
                 Me.p57ID.DataSource = .Factory.p57TaskTypeBL.GetList(New BO.myQuery)
                 Me.p57ID.DataBind()
                 Me.p58ID.DataSource = .Factory.p58ProductBL.GetList(New BO.myQuery)
@@ -77,7 +84,9 @@
         End If
 
         Dim cRecLast As BO.p56Task = Master.Factory.p56TaskBL.LoadMyLastCreated()
-        If cRecLast Is Nothing Then Return
+        If cRecLast Is Nothing Then
+            Return
+        End If
         With cRecLast
             Me.p56IsNoNotify.Checked = .p56IsNoNotify
             Me.p57ID.SelectedValue = .p57ID.ToString
@@ -94,6 +103,10 @@
                 Me.p57ID.SelectedIndex = 1
             End If
             Handle_FF()
+            If roles1.RowsCount = 0 Then
+                roles1.AddNewRow(Master.Factory.SysUser.j02ID)
+
+            End If
             Return
         End If
 
@@ -150,14 +163,26 @@
 
     Private Sub p56_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         lblDateUntil.CssClass = "lbl" : lblDateFrom.CssClass = "lbl"
-        lblDateFrom.Visible = True : p56PlanFrom.Visible = True
+
         lblDateFrom.Text = "Plánované zahájení:" : lblDateUntil.Text = "Termín splnění úkolu:"
+
+        
 
         If Me.p57ID.SelectedIndex > 0 Then
             Master.HeaderText = Me.p57ID.Text & " | " & Me.Project.Text
+            If Me.p57ID.Rows = 2 Then
+                Me.p57ID.Visible = False : lblP57ID.Visible = False
+            Else
+                Me.chkMore.Visible = False
+            End If
 
             Dim cRec As BO.p57TaskType = Master.Factory.p57TaskTypeBL.Load(BO.BAS.IsNullInt(Me.p57ID.SelectedValue))
             With cRec
+                If .p57IsEntry_Budget And .p57IsEntry_CompletePercent And .p57IsEntry_Priority And .p57IsEntry_Receiver And Me.p57ID.Rows = 2 Then
+                    Me.chkMore.Visible = True
+                Else
+                    Me.chkMore.Visible = False
+                End If
                 lblP59ID_Submitter.Visible = .p57IsEntry_Priority
                 p59ID_Submitter.Visible = .p57IsEntry_Priority
                 Select Case .p57PlanDatesEntryFlag
@@ -179,12 +204,8 @@
                         Me.p56PlanFrom.SelectedDate = Me.p56PlanUntil.SelectedDate
                     End If
                 End If
-                lblp56Plan_Expenses.Visible = .p57IsEntry_Budget
-                p56Plan_Expenses.Visible = .p57IsEntry_Budget
-                p56IsPlan_Expenses_Ceiling.Visible = .p57IsEntry_Budget
-                lblp56Plan_Hours.Visible = .p57IsEntry_Budget
-                p56Plan_Hours.Visible = .p57IsEntry_Budget
-                p56IsPlan_Hours_Ceiling.Visible = .p57IsEntry_Budget
+                panBudget.Visible = .p57IsEntry_Budget
+
                 panRoles.Visible = .p57IsEntry_Receiver
                 lblCompletePercent.Visible = .p57IsEntry_CompletePercent
                 p56CompletePercent.Visible = .p57IsEntry_CompletePercent
@@ -198,9 +219,33 @@
         Else
             Master.HeaderText = "Úkol | " & Me.Project.Text
         End If
-        Dim b As Boolean = False
-        If Me.o22ID.Rows > 1 Then b = True
-        Me.lblO22ID.Visible = b : Me.o22ID.Visible = b
+
+        If Me.chkMore.Visible Then
+            Dim b As Boolean = Me.chkMore.Checked
+            lblDateFrom.Visible = b : p56PlanFrom.Visible = b
+            panDescription.Visible = b
+            Me.lblOwner.Visible = b : Me.j02ID_Owner.Visible = b
+            Me.p56IsNoNotify.Visible = b
+            lblP59ID_Submitter.Visible = b : p59ID_Submitter.Visible = b
+            lblCompletePercent.Visible = b : p56CompletePercent.Visible = b
+            panBudget.Visible = b
+
+            If ff1.FieldsCount > 0 Or b Then
+                RadTabStrip1.FindTabByValue("core").Style.Item("display") = "block"
+                RadTabStrip1.FindTabByValue("ff").Style.Item("display") = "block"
+            Else
+                RadTabStrip1.FindTabByValue("ff").Style.Item("display") = "none"
+                RadTabStrip1.FindTabByValue("core").Style.Item("display") = "none"
+            End If
+            RadTabStrip1.FindTabByValue("other").Style.Item("display") = BO.BAS.GB_Display(b)
+        End If
+
+        If Me.o22ID.Rows > 1 Then
+            Me.lblO22ID.Visible = True : Me.o22ID.Visible = True
+        Else
+            Me.lblO22ID.Visible = False : Me.o22ID.Visible = False
+        End If
+
 
 
     End Sub
@@ -302,6 +347,7 @@
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, BO.BAS.IsNullInt(Me.p57ID.SelectedValue))
                 ff1.FillData(fields)
                 .Text = BO.BAS.OM2(.Text, ff1.FieldsCount.ToString)
+                
             End If
         End With
     End Sub
@@ -313,5 +359,9 @@
     Private Sub p58ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p58ID.NeedMissingItem
         Dim cRec As BO.p58Product = Master.Factory.p58ProductBL.Load(CInt(strFoundedMissingItemValue))
         strAddMissingItemText = cRec.TreeMenuItem
+    End Sub
+
+    Private Sub chkMore_CheckedChanged(sender As Object, e As EventArgs) Handles chkMore.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p56_record-more", BO.BAS.GB(chkMore.Checked))
     End Sub
 End Class

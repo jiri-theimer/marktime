@@ -17,9 +17,9 @@
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
-            <telerik:RadTab Text="Vlastnosti" Selected="true"></telerik:RadTab>
+            <telerik:RadTab Text="Vlastnosti" Value="core" Selected="true"></telerik:RadTab>
             <telerik:RadTab Text="Uživatelská pole" Value="ff"></telerik:RadTab>
-            <telerik:RadTab Text="Ostatní" value="other"></telerik:RadTab>
+            <telerik:RadTab Text="Ostatní" Value="other"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
 
@@ -32,8 +32,7 @@
                     </td>
                     <td>
                         <uc:datacombo ID="p57ID" runat="server" DataTextField="p57Name" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" Width="300px"></uc:datacombo>
-                        <asp:Label ID="lblP59ID_Submitter" runat="server" CssClass="lbl" Text="Priorita zadavatele:"></asp:Label>
-                        <uc:datacombo ID="p59ID_Submitter" runat="server" DataTextField="p59Name" DataValueField="pid" IsFirstEmptyRow="true" Width="150px"></uc:datacombo>
+
                     </td>
                 </tr>
                 <tr>
@@ -44,7 +43,7 @@
                         <uc:datacombo ID="p58ID" runat="server" DataTextField="TreeMenuItem" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td>
                         <asp:Label ID="lblProject" runat="server" CssClass="lbl" Text="Projekt:"></asp:Label>
@@ -59,7 +58,7 @@
                     </td>
                     <td>
                         <asp:TextBox ID="p56Name" runat="server" Style="width: 540px;"></asp:TextBox>
-                        
+
                     </td>
                 </tr>
 
@@ -68,27 +67,24 @@
                         <asp:Label ID="lblDateUntil" Text="Termín splnění úkolu:" runat="server" AssociatedControlID="p56PlanUntil" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
-                        <telerik:RadDateTimePicker ID="p56PlanUntil" runat="server"  Width="190px" SharedCalendarID="SharedCalendar">
+                        <telerik:RadDateTimePicker ID="p56PlanUntil" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
                             <DateInput ID="DateInput2" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
                             <TimePopupButton Visible="true" />
                             <TimeView StartTime="06:00" EndTime="22:00" ShowHeader="false" ShowFooter="false"></TimeView>
 
                         </telerik:RadDateTimePicker>
 
-                        <asp:Label ID="lblp56Plan_Hours" runat="server" Text="Plán pracnosti v hodinách:"></asp:Label>
-                        <telerik:RadNumericTextBox ID="p56Plan_Hours" runat="server" NumberFormat-DecimalDigits="2" Width="70px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
 
-                        <asp:CheckBox ID="p56IsPlan_Hours_Ceiling" runat="server" Text="Zákaz překročit plán" />
+
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <asp:Label ID="lblCompletePercent" Text="Hotovo (%):" runat="server" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
-                        <telerik:RadNumericTextBox ID="p56CompletePercent" runat="server" NumberFormat-DecimalDigits="0" MaxValue="100" MinValue="0" IncrementSettings-Step="10" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                    <td colspan="2">
+                        <asp:CheckBox ID="chkMore" runat="server" Text="Více nastavení úkolu" AutoPostBack="true" ForeColor="blue" />
                     </td>
                 </tr>
+
+
                 <tr>
                     <td>
                         <asp:Label ID="lblDateFrom" Text="Plánované zahájení:" runat="server" AssociatedControlID="p56PlanFrom" CssClass="lbl"></asp:Label></td>
@@ -100,14 +96,22 @@
 
                         </telerik:RadDateTimePicker>
 
-                        <asp:Label ID="lblp56Plan_Expenses" runat="server" Text="Plán (limit) peněžních výdajů:"></asp:Label>
-                        <telerik:RadNumericTextBox ID="p56Plan_Expenses" runat="server" NumberFormat-DecimalDigits="2" Width="90px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
-                        <asp:CheckBox ID="p56IsPlan_Expenses_Ceiling" runat="server" Text="Zákaz překročit plán" />
+
+
                     </td>
                 </tr>
-           
 
-                
+
+                <tr>
+                    <td>
+                        <asp:Label ID="lblCompletePercent" Text="Hotovo (%):" runat="server" CssClass="lbl"></asp:Label>
+                    </td>
+                    <td>
+                        <telerik:RadNumericTextBox ID="p56CompletePercent" runat="server" NumberFormat-DecimalDigits="0" MaxValue="100" MinValue="0" IncrementSettings-Step="10" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+
+
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <asp:Label ID="lblO22ID" Text="Milník úkolu:" runat="server" CssClass="lbl"></asp:Label>
@@ -119,18 +123,18 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq"></asp:Label>
+                        <asp:Label ID="lblP59ID_Submitter" runat="server" CssClass="lbl" Text="Priorita zadavatele:"></asp:Label>
 
                     </td>
                     <td>
+                        <uc:datacombo ID="p59ID_Submitter" runat="server" DataTextField="p59Name" DataValueField="pid" IsFirstEmptyRow="true" Width="150px"></uc:datacombo>
+                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq"></asp:Label>
                         <uc:person ID="j02ID_Owner" runat="server" Width="150px" />
-                        
-                        
                     </td>
                 </tr>
             </table>
 
-            <asp:panel ID="panRoles" runat="server" CssClass="content-box2">
+            <asp:Panel ID="panRoles" runat="server" CssClass="content-box2">
                 <div class="title">
                     <img src="Images/projectrole.png" width="16px" height="16px" />
                     <asp:Label ID="ph1" runat="server" Text="Příjemci (řešitelé) úkolu"></asp:Label>
@@ -139,17 +143,51 @@
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="p56Task"></uc:entityrole_assign>
                 </div>
-            </asp:panel>
+            </asp:Panel>
 
-            <div class="content-box2">
-                <div class="title">Podrobný popis (zadání úkolu)</div>
+            <asp:Panel ID="panBudget" runat="server" CssClass="content-box2" style="margin-top:6px;">
+                <div class="title"><img src="Images/plan.png" width="16px" height="16px" />Plán/limity úkolu</div>
+                 
+                <div class="content">
+                    <table>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblp56Plan_Hours" runat="server" Text="Plán pracnosti v hodinách:"></asp:Label>
+                            </td>
+                            <td>
+                                <telerik:RadNumericTextBox ID="p56Plan_Hours" runat="server" NumberFormat-DecimalDigits="2" Width="70px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+
+                                
+                            </td>
+                            <td>
+                                <asp:CheckBox ID="p56IsPlan_Hours_Ceiling" runat="server" Text="Zákaz překročit plán" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblp56Plan_Expenses" runat="server" Text="Plán (limit) peněžních výdajů:"></asp:Label>
+                            </td>
+                            <td>
+                                <telerik:RadNumericTextBox ID="p56Plan_Expenses" runat="server" NumberFormat-DecimalDigits="2" Width="90px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                                
+                            </td>
+                            <td>
+                                <asp:CheckBox ID="p56IsPlan_Expenses_Ceiling" runat="server" Text="Zákaz překročit plán" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </asp:Panel>
+            <asp:Panel ID="panDescription" runat="server" CssClass="content-box2" style="margin-top:6px;">
+                <div class="title">Podrobný popis/zadání úkolu</div>
                 <div class="content">
                     <asp:TextBox ID="p56Description" runat="server" Style="height: 90px; width: 99%;" TextMode="MultiLine"></asp:TextBox>
                 </div>
 
-            </div>
+            </asp:Panel>
             <div class="div6">
-            <asp:CheckBox ID="p56IsNoNotify" runat="server" Text="V úkolu vypnout automatické e-mail notifikace" CssClass="chk" />
+                <asp:CheckBox ID="p56IsNoNotify" runat="server" Text="V úkolu vypnout automatické e-mail notifikace" CssClass="chk" />
             </div>
 
             <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
@@ -168,10 +206,10 @@
 
         </telerik:RadPageView>
         <telerik:RadPageView ID="other" runat="server">
-           
+
             <table cellpadding="5" cellspacing="2" id="responsive">
 
-                
+
                 <tr>
                     <td>
                         <asp:Label ID="lblp56ReminderDate" Text="Čas připomenutí:" runat="server" AssociatedControlID="p56ReminderDate" CssClass="lbl"></asp:Label></td>
@@ -198,8 +236,8 @@
                     </td>
                     <td>
                         <asp:TextBox ID="p56ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
-                       
-                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>                   
+
+                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>
                     </td>
                 </tr>
             </table>
