@@ -63,6 +63,9 @@
 
             If .b02ID > 0 Then
                 Me.b02Name.Text = .b02Name
+                If .b02Color <> "" Then
+                    Me.b02Name.Style.Item("background-color") = .b02Color
+                End If
             Else
                 trB02.Visible = False
             End If

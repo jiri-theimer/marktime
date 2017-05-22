@@ -40,9 +40,13 @@
             <div class="collapse navbar-collapse" id="myNavbarOnSite">
                 <ul class="nav navbar-nav">    
                     <li>
-                        <span style="padding-left:20px;">Displej:</span>
+                        <span>Displej:</span>
                         <span id="resolution"></span>
-                    </li>    
+                    </li>  
+                    <li>
+                        <span><%=Master.Factory.SysUser.Person%></span>
+                        
+                    </li>  
                     <li>
                         <asp:DropDownList ID="cbxScope" runat="server" AutoPostBack="true">
                             <asp:ListItem Text="Jsem řešitelem úkolů" Value="1"></asp:ListItem>

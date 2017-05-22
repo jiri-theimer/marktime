@@ -86,14 +86,12 @@
                     <li><asp:HyperLink ID="linkNew" runat="server" NavigateUrl="javascript:p31_entry()" Text="<img src='Images/new.png' /> Zapsat nový"></asp:HyperLink></li>
                     
                     <li>
-                    <span>Naposledy:</span>
+                    <span style="padding-left:20px;">Naposledy:</span>
                     <asp:HyperLink ID="LastWorksheet" runat="server" CssClass="alinked"></asp:HyperLink>
                     </li>
                            
                     
-                    <li role="separator" class="divider"></li>
-                    <li><asp:HyperLink ID="linkLastProject" runat="server" NavigateUrl="mobile_p41_framework.aspx"></asp:HyperLink></li>                    
-                    <li><asp:HyperLink ID="linkLastClient" runat="server" NavigateUrl="mobile_p28_framework.aspx"></asp:HyperLink></li>
+                   
                     
                     
                 </ul>

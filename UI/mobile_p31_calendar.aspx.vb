@@ -33,18 +33,7 @@
             End If
             With Master.Factory
                 .j03UserBL.InhaleUserParams(lisPars)
-                Dim intPID As Integer = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("p41_framework_detail-pid", "O"))
-                If intPID <> 0 Then
-                    linkLastProject.Text = "<img src='Images/project.png' /> " & .GetRecordCaption(BO.x29IdEnum.p41Project, intPID)
-                Else
-                    linkLastProject.Visible = False
-                End If
-                intPID = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("p28_framework_detail-pid", "O"))
-                If intPID <> 0 Then
-                    linkLastClient.Text = "<img src='Images/contact.png' /> " & .GetRecordCaption(BO.x29IdEnum.p28Contact, intPID)
-                Else
-                    linkLastClient.Visible = False
-                End If
+                
             End With
             RefreshRecord()
             SetupProjectList()
