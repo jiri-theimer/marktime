@@ -55,8 +55,10 @@
         End If
 
         basMemberShip.RecoveryAccount(cRec.j03Login, strEmail, strPWD)
-        CType(e.Item.FindControl("lblNewPassword"), Label).Text = "Nové heslo: " & basMemberShip.RecoveryPassword(cRec.j03Login)
+        Dim xx As String = basMemberShip.RecoveryPassword(cRec.j03Login)
+        CType(e.Item.FindControl("lblNewPassword"), Label).Text = "Nové heslo: " & xx
 
+        txtReport.Text += vbCrLf & cRec.j03Login & ": " & xx
     End Sub
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound

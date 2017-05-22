@@ -41,14 +41,19 @@ Public Class mobile_report
 
             With Master
                 .MenuPrefix = "report"
+                If Request.Item("prefix") = "j02" Then
+                    .MenuPrefix = "report_personal"
+                End If
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 If .DataPID <> 0 Then
-                    With Me.MasterRecord
+                    nav1.Visible = True
+                    With Me.RecordHeader
                         .Text = Master.Factory.GetRecordCaption(Me.CurrentX29ID, Master.DataPID)
                         .NavigateUrl = "mobile_" & Me.CurrentPrefix & "_framework.aspx?pid=" & Master.DataPID.ToString
                         If Me.CurrentPrefix = "j02" Then .NavigateUrl = "mobile_start.aspx"
-                        .Visible = True
                     End With
+                Else
+                    nav1.Visible = False
                 End If
                 Dim lisPars As New List(Of String)
                 With lisPars

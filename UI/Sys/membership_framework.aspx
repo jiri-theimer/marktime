@@ -23,6 +23,9 @@
                 <ItemTemplate>
                     <tr>
                         <td>
+                            <%#Eval("IsClosed") %>
+                        </td>
+                        <td>
                             <%#Eval("j03Login")%>
                         </td>
                         <td>
@@ -38,5 +41,6 @@
                 </ItemTemplate>
             </asp:Repeater>
         </table>
+        <asp:TextBox ID="txtReport" runat="server" Width="99%" Height="200px" TextMode="MultiLine"></asp:TextBox>
     </asp:Panel>
 </asp:Content>

@@ -17,9 +17,22 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="well-sm">
-        <asp:HyperLink ID="MasterRecord" runat="server" Visible="false" CssClass="alinked"></asp:HyperLink>
-    </div>
+    
+    <nav class="navbar navbar-default" style="margin-bottom: 0px !important;" id="nav1" runat="server" visible="false">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbarOnSite">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                <asp:HyperLink ID="RecordHeader" runat="server" CssClass="navbar-brand" Font-Underline="true"></asp:HyperLink>
+               
+                
+            </div>
+           
+    </nav>
+   
     <asp:DropDownList ID="x31ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="NameWithFormat" Style="width: 100%;"></asp:DropDownList>
     <div style="padding:6px;">
         <asp:LinkButton ID="cmdRunDefaultReport" CssClass="btn btn-primary btn-xs" runat="server" Text="Zobrazit náhled vybrané sestavy" Visible="false"></asp:LinkButton>

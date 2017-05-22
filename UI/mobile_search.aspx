@@ -30,8 +30,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="well">
-        <button type="button" data-toggle="collapse" data-target="#divSetting">Nastavení</button>
-        <button type="button" data-toggle="collapse" data-target="#divLast">Naposledy hledané záznamy</button>
+        <button type="button" data-toggle="collapse" data-target="#divSetting"><img src='Images/arrow_down.gif' />Nastavení</button>
+        <button type="button" data-toggle="collapse" data-target="#divLast"><img src='Images/arrow_down.gif' />Naposledy hledané</button>
 
         <div id="divSetting" class="collapse">
             Počet maximálně zobrazených položek a zda prohledávat i archivované záznamy si nastavte v základním rozhraní aplikace MARKTIME. Zde, v mobilním rozhraní se nastavení zohlední.

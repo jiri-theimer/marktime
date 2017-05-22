@@ -43,10 +43,10 @@
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
                 basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "1"))
 
-                menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
-                menu1.FindItemByValue("p31_create_one").Visible = .SysUser.j04IsMenu_Worksheet
-                menu1.FindItemByValue("p31_scheduler").Visible = .SysUser.j04IsMenu_Worksheet
-                menu1.FindItemByValue("myreport").Visible = .TestPermission(BO.x53PermValEnum.GR_X31_Personal)
+                ''menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
+                ''menu1.FindItemByValue("p31_create_one").Visible = .SysUser.j04IsMenu_Worksheet
+                ''menu1.FindItemByValue("p31_scheduler").Visible = .SysUser.j04IsMenu_Worksheet
+                ''menu1.FindItemByValue("myreport").Visible = .TestPermission(BO.x53PermValEnum.GR_X31_Personal)
                 ''If .SysUser.j04IsMenu_Invoice Then
                 ''    menu1.FindItemByValue("p91_create").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)
                 ''End If
@@ -55,27 +55,30 @@
                 ''menu1.FindItemByValue("o23_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator)
                 'menu1.FindItemByValue("o10_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O10_Creator)
 
-                menu1.FindItemByValue("p56_create").Visible = False
+                ''menu1.FindItemByValue("p56_create").Visible = False
+                linkCreateTask.Visible = False
                 If .TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
-                    menu1.FindItemByValue("p56_create").Visible = True
+                    linkCreateTask.Visible = True
+                    ''menu1.FindItemByValue("p56_create").Visible = True
                 Else
                     Dim lis As IEnumerable(Of BO.x67EntityRole) = .j02PersonBL.GetList_AllAssignedEntityRoles(.SysUser.j02ID, BO.x29IdEnum.p41Project)
                     For Each c In lis
                         If .x67EntityRoleBL.GetList_BoundX53(c.PID).Where(Function(p) p.x53Value = BO.x53PermValEnum.PR_P56_Creator).Count > 0 Then
-                            menu1.FindItemByValue("p56_create").Visible = True : Exit For
+                            ''menu1.FindItemByValue("p56_create").Visible = True : Exit For
+                            linkCreateTask.Visible = True : Exit For
                         End If
                     Next
                 End If
-                menu1.FindItemByValue("admin").Visible = .SysUser.IsAdmin
-                menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
-                menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
+                ''menu1.FindItemByValue("admin").Visible = .SysUser.IsAdmin
+                ''menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
+                ''menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
 
                 panSearch_j02.Visible = .SysUser.j04IsMenu_People
                 panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
                 panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
                 panSearch_P41.Visible = .SysUser.j04IsMenu_Project
 
-                If menu1.FindItemByValue("p56_create").Visible Then
+                If linkCreateTask.Visible Then
                     If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
                         panSearch_p56.Visible = True
                     End If
@@ -184,6 +187,8 @@
                 Next
             End With
             menu1.FindItemByValue("favourites").Text += " (" & lisP41.Count.ToString & ")"
+        Else
+            menu1.Visible = False
         End If
     End Sub
 

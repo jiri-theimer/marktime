@@ -14,6 +14,13 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+            Dim lisPars As New List(Of String)
+            With lisPars
+                .Add("p41_framework_detail-pid")
+                .Add("p28_framework_detail-pid")
+                .Add("p91_framework_detail-pid")
+            End With
+
             If Master.DataPID > 0 Then
                 Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(Master.DataPID)
                 With cRec
@@ -24,6 +31,22 @@
             Else
                 cal1.SelectedDate = Today
             End If
+            With Master.Factory
+                .j03UserBL.InhaleUserParams(lisPars)
+                Dim intPID As Integer = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("p41_framework_detail-pid", "O"))
+                If intPID <> 0 Then
+                    linkLastProject.Text = "<img src='Images/project.png' /> " & .GetRecordCaption(BO.x29IdEnum.p41Project, intPID)
+                Else
+                    linkLastProject.Visible = False
+                End If
+                intPID = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("p28_framework_detail-pid", "O"))
+                If intPID <> 0 Then
+                    linkLastClient.Text = "<img src='Images/contact.png' /> " & .GetRecordCaption(BO.x29IdEnum.p28Contact, intPID)
+                Else
+                    linkLastClient.Visible = False
+                End If
+            End With
+            RefreshRecord()
             SetupProjectList()
             RefreshP31List()
             RefreshStatistic()
@@ -108,5 +131,19 @@
             .Text = cRec.ProjectWithMask(Master.Factory.SysUser.j03ProjectMaskIndex)
         End With
 
+    End Sub
+
+    Private Sub RefreshRecord()
+        Dim c As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadMyLastCreated(False, 0)
+        If c Is Nothing Then
+            Me.LastWorksheet.Text = "Zatím jsem nezapsal WORKSHEET úkon."
+        Else
+            Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(c.p41ID)
+            With c
+                Me.LastWorksheet.Text = BO.BAS.FD(.p31Date) & "/" & .ClientName & "/" & cP41.PrefferedName & "/" & c.p32Name
+                Me.LastWorksheet.NavigateUrl = "mobile_p31_framework.aspx?source=calendar&pid=" & c.PID.ToString
+                Me.LastWorksheet.ToolTip = c.p31Text
+            End With
+        End If
     End Sub
 End Class

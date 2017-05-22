@@ -419,13 +419,18 @@
     End Sub
     Private Sub TypyUkolu()
         CP57("Úkol")
-        CP57("Servisní výjezd")
-        CP57("Ostatní", 100)
+        ''CP57("Servisní výjezd")
+        ''CP57("Ostatní", 100)
     End Sub
     Private Sub CP57(strName As String, Optional intOrdinary As Integer = 0)
         Dim c As New BO.p57TaskType
         c.p57Name = strName
         c.p57Ordinary = intOrdinary
+        c.p57IsEntry_Budget = True
+        c.p57IsEntry_CompletePercent = True
+        c.p57IsEntry_Priority = True
+        c.p57IsEntry_Receiver = True
+
         If _Factory.x38CodeLogicBL.GetList(BO.x29IdEnum.p56Task).Count > 0 Then
             c.x38ID = _Factory.x38CodeLogicBL.GetList(BO.x29IdEnum.p56Task)(0).PID
         End If

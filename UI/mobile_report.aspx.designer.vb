@@ -14,13 +14,22 @@ Option Explicit On
 Partial Public Class mobile_report
 
     '''<summary>
-    '''MasterRecord control.
+    '''nav1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents nav1 As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''RecordHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RecordHeader As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''x31ID control.

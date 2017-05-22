@@ -49,7 +49,7 @@
     <div class="container-fluid">
         <div id="row1" class="row">
            
-            <button type="button" data-toggle="collapse" data-target="#history">Historie</button>
+            <button type="button" data-toggle="collapse" data-target="#history"><img src='Images/arrow_down.gif' />Historie</button>
             
             <div id="history"  class="collapse">
                 <uc:mobile_workflow_history ID="history1" runat="server" />

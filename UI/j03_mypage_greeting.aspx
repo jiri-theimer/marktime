@@ -102,36 +102,13 @@
                     </div>
                 </asp:Panel>
 
-                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px" ExpandMode="SingleExpandedItem">
+                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px" ExpandMode="SingleExpandedItem" EnableViewState="false">
                     <Items>
-                        <telerik:RadPanelItem Text="Pracuji v MARKTIME...">
-                            <Items>
-
-                                <telerik:RadPanelItem Text="Zapisovat úkony" Value="p31_create" NavigateUrl="p31_framework.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Zapsat jeden úkon" Value="p31_create_one" NavigateUrl="javascript:p31_create()" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Worksheet KALENDÁŘ" Value="p31_scheduler" NavigateUrl="p31_scheduler.aspx" ImageUrl="Images/worksheet.png"></telerik:RadPanelItem>
-
-
-                                <telerik:RadPanelItem Text="Schvalovat | Připravit podklady k fakturaci" Value="approve" NavigateUrl="approving_framework.aspx" ImageUrl="Images/approve.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Vytvořit úkol" Value="p56_create" NavigateUrl="javascript:p56_create()" ImageUrl="Images/task.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Osobní tiskové sestavy" Value="myreport" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Tiskové sestavy" Value="report" NavigateUrl="report_framework.aspx" ImageUrl="Images/report.png"></telerik:RadPanelItem>
-                                <telerik:RadPanelItem Text="Administrace systému" Value="admin" NavigateUrl="admin_framework.aspx" ImageUrl="Images/setting.png"></telerik:RadPanelItem>
-
-
-                            </Items>
-                        </telerik:RadPanelItem>
+                        
 
                         <telerik:RadPanelItem Text="Oblíbené projekty" Value="favourites" ImageUrl="Images/favourite.png" Visible="false">
                         </telerik:RadPanelItem>
-                        <telerik:RadPanelItem Text="Další">
-                            <Items>
-
-
-
-                                <telerik:RadPanelItem Text="Rozhraní pro mobilní zařízení" Value="mobile" NavigateUrl="Mobile/default.aspx" ImageUrl="Images/mobile.png"></telerik:RadPanelItem>
-                            </Items>
-                        </telerik:RadPanelItem>
+                     
 
 
                     </Items>
@@ -149,9 +126,10 @@
                         <asp:ListItem Text="S termínem" Value="1" Selected="true"></asp:ListItem>
                         <asp:ListItem Text="Bez ohledu na termín" Value="2"></asp:ListItem>
                         <asp:ListItem Text="Jsem zakladatelem úkolu" Value="3"></asp:ListItem>
-                    </asp:DropDownList>
+                    </asp:DropDownList>                    
                 </div>
                 <div class="content">
+                    
                     <table>
                         <tr>
                             <th>Projekt</th>
@@ -186,6 +164,9 @@
                             </ItemTemplate>
                         </asp:Repeater>
                     </table>
+                    <div>
+                        <asp:HyperLink ID="linkCreateTask" runat="server" Text="Vytvořit úkol" NavigateUrl="javascript:p56_create();"></asp:HyperLink>
+                    </div>
                 </div>
             </asp:Panel>
             <asp:Panel ID="panO22" runat="server" CssClass="content-box1">

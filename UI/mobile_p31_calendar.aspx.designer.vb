@@ -14,6 +14,51 @@ Option Explicit On
 Partial Public Class mobile_p31_calendar
 
     '''<summary>
+    '''lblRecordHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblRecordHeader As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''linkNew control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkNew As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''LastWorksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LastWorksheet As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkLastProject control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkLastProject As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''linkLastClient control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkLastClient As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''cal1 control.
     '''</summary>
     '''<remarks>

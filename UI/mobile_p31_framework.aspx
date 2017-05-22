@@ -82,7 +82,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <img src="Images/worksheet.png" class="navbar-brand" />                
-                <asp:Image ID="imgHeader" runat="server" ImageUrl="Images/new.png" Style="margin-right: 6px;" />
+                <asp:Image ID="imgHeader" runat="server" ImageUrl="Images/new.png" CssClass="navbar-brand"/>
                 <asp:label ID="lblRecordHeader" runat="server" CssClass="navbar-brand" Text="Zapsat úkon"></asp:label>
 
                

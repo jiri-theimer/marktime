@@ -226,8 +226,12 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 
                 <ul class="nav navbar-nav"> 
+
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "p31", "class='active'", "")%>><a href="mobile_p31_calendar.aspx">WORKSHEET</a></li>
                     
-                    <li <%=IIf(Me.hidMenuPrefix.Value = "home", "class='active'", "")%>><a href="mobile_start.aspx">ÚVOD</a></li>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "home", "class='active'", "")%>><a href="mobile_start.aspx">ÚKOLY</a></li>
+
+                    
                 
                 
                     <li <%=IIf(Me.hidMenuPrefix.Value = "search", "class='active'", "")%>><a href="mobile_search.aspx">NAJÍT</a></li>
@@ -237,7 +241,9 @@
                     <%If _Factory.SysUser.j04IsMenu_Report Then%>
                     <li <%=IIf(Me.hidMenuPrefix.Value = "report", "class='active'", "")%>><a href="javascript:rp('mobile_report.aspx')">SESTAVY</a></li>
                     <%End If%>
-                   
+                    <%If _Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal) Then%>
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "report_personal", "class='active'", "")%>><a href="javascript:rp('mobile_report.aspx?prefix=j02&pid=<%=_Factory.SysUser.j02ID%>')">OSOBNÍ SESTAVY</a></li>
+                    <%End If%>
                     
                     <li><a href="mobile_changepassword.aspx">ZMĚNIT HESLO</a></li>
                     <li class="divider" role="separator"></li>
