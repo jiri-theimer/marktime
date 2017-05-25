@@ -77,6 +77,15 @@ Partial Public Class p64_record
     Protected WithEvents p64Description As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''hidP41ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP41ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

@@ -38,6 +38,7 @@
     </table>
     <div>Podrobný popis:</div>
     <asp:TextBox ID="p64Description" runat="server" Style="width: 99%; height: 60px;" TextMode="MultiLine"></asp:TextBox>
+    <asp:HiddenField ID="hidP41ID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

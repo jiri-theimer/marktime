@@ -5,15 +5,22 @@
     Private Sub p64_record_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
+    Public ReadOnly Property CurrentP41ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(Me.hidP41ID.Value)
+        End Get
+    End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
+            hidP41ID.Value = Request.Item("p41id")
             With Master
+                If Me.CurrentP41ID = 0 Then .StopPage("p41id is missing.")
                 .HeaderIcon = "Images/binder_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Šanon projektu"
             End With
-           
+
             RefreshRecord()
 
 
@@ -57,6 +64,7 @@
         With Master.Factory.p64BinderBL
             Dim cRec As New BO.p64Binder
             If Master.DataPID <> 0 Then cRec = .Load(Master.DataPID)
+            cRec.p41ID = Me.CurrentP41ID
             cRec.p64Name = Me.p64Name.Text
             cRec.p64Ordinary = BO.BAS.IsNullInt(Me.p64Ordinary.Value)
             cRec.p64Code = Me.p64Code.Text

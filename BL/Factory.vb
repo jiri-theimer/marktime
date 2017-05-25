@@ -617,6 +617,7 @@
     Public ReadOnly Property p64BinderBL As Ip64BinderBL
         Get
             If _p64 Is Nothing Then _p64 = New p64BinderBL(_cUser)
+            Return _p64
         End Get
     End Property
     Public ReadOnly Property p80InvoiceAmountStructureBL As Ip80InvoiceAmountStructureBL

@@ -35,7 +35,6 @@
 
             If _cDB.SaveRecord("p64Binder", pars, bolINSERT, strW, True, _curUser.j03Login) Then
                 Dim intP64ID As Integer = _cDB.LastSavedRecordPID
-                sc.Complete()
                 If bolINSERT Then
                     Dim x As Integer = cRec.p64Ordinary
                     If x = 0 Then x = _cDB.GetIntegerValueFROMSQL("select count(*) from p64Binder WHERE p41ID=" & cRec.p41ID.ToString)
@@ -45,6 +44,7 @@
                     pars.Add("p64Ordinary", x, DbType.Int32)
                     _cDB.SaveRecord("p64Binder", pars, False, "p64ID=" & intP64ID.ToString, False)
                 End If
+                sc.Complete()
                 Return True
             Else
                 Return False
