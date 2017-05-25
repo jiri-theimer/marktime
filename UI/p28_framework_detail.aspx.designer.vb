@@ -41,6 +41,15 @@ Partial Public Class p28_framework_detail
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''linkBarCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkBarCode As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''chkFFShowFilledOnly control.
     '''</summary>
     '''<remarks>

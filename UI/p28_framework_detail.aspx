@@ -58,6 +58,9 @@
             window.open("o23_framework.aspx?pid=" + pid, "_top");
 
         }
+        function barcode() {
+            sw_decide("barcode.aspx?prefix=p28&pid=<%=master.datapid%>", "Images/barcode.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -67,7 +70,9 @@
         <div class="title">
             <asp:Image ID="imgRecord" runat="server" Style="margin-right: 10px;" ImageUrl="Images/properties.png" />
             <asp:Label ID="boxCoreTitle" Text="Záznam klienta" runat="server"></asp:Label>
+            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" style="float:right;"></asp:HyperLink>
             <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Pouze vyplněná uživatelská pole" Style="float: right;" />
+            
         </div>
         <div class="content">
             <div style="float: left;">

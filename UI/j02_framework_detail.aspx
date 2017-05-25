@@ -52,7 +52,9 @@
             window.open("o23_framework.aspx?pid=" + pid, "_top");
 
         }
-
+        function barcode() {
+            sw_decide("barcode.aspx?prefix=j02&pid=<%=master.datapid%>", "Images/barcode.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -62,7 +64,7 @@
     <div class="content-box1">
         <div class="title">
             <img src="Images/properties.png" style="margin-right: 10px;" />Záznam osobního profilu
-                        
+            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" style="float:right;"></asp:HyperLink>            
         </div>
         <div class="content">
             <table cellpadding="10" cellspacing="2" id="responsive">

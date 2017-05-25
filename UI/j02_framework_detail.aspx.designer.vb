@@ -23,6 +23,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
+    '''linkBarCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkBarCode As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''lblPerson control.
     '''</summary>
     '''<remarks>

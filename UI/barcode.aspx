@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <asp:CheckBox ID="chkShowTextBellow" runat="server" Text="Zobrazovat pod kódem text" Checked="true" AutoPostBack="true" />
+                <asp:CheckBox ID="chkShowTextBellow" runat="server" Text="Zobrazovat pod kódem text" Checked="false" AutoPostBack="true" />
             </td>
         </tr>
         <tr>

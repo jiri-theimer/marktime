@@ -250,6 +250,9 @@
             <%End If%>
             
         }
+        function barcode() {
+            sw_decide("barcode.aspx?prefix=p91&pid=<%=master.datapid%>", "Images/barcode.png", true);
+        }
     </script>
 
 </asp:Content>
@@ -338,7 +341,7 @@
                             <asp:Image ID="imgRecord" runat="server" Visible="false" />
                             <asp:Label ID="p91Code" runat="server" CssClass="valbold"></asp:Label>
                             <asp:Button ID="cmdConvertDraft" runat="server" CssClass="cmd" Text="Převést Draft na oficiální číslo" />
-
+                            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" style="float:right;"></asp:HyperLink>            
                         </td>
                         <td id="rlbl">
                             <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>

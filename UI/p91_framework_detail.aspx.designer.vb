@@ -104,6 +104,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents cmdConvertDraft As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''linkBarCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkBarCode As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''lblProject control.
     '''</summary>
     '''<remarks>
