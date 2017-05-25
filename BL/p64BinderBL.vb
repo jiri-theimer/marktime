@@ -4,7 +4,7 @@ Public Interface Ip64BinderBL
     Function Save(cRec As BO.p64Binder) As Boolean
     Function Load(intPID As Integer) As BO.p64Binder
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(mq As BO.myQuery) As IEnumerable(Of BO.p64Binder)
+    Function GetList(intP41ID As Integer, mq As BO.myQuery) As IEnumerable(Of BO.p64Binder)
 
 End Interface
 Public Class p64BinderBL
@@ -40,7 +40,7 @@ Public Class p64BinderBL
     Public Function Delete(intPID As Integer) As Boolean Implements Ip64BinderBL.Delete
         Return _cDL.Delete(intPID)
     End Function
-    Public Function GetList(mq As BO.myQuery) As IEnumerable(Of BO.p64Binder) Implements Ip64BinderBL.GetList
-        Return _cDL.GetList(mq)
+    Public Function GetList(intP41ID As Integer, mq As BO.myQuery) As IEnumerable(Of BO.p64Binder) Implements Ip64BinderBL.GetList
+        Return _cDL.GetList(intP41ID, mq)
     End Function
 End Class

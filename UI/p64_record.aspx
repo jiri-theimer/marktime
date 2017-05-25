@@ -13,9 +13,31 @@
                 <asp:TextBox ID="p64Name" runat="server" Style="width: 400px;"></asp:TextBox>
             </td>
         </tr>
+        
         <tr>
             <td>
-                <asp:Label ID="lblCode" Text="Kód:" runat="server" CssClass="lbl" AssociatedControlID="p64Code"></asp:Label>
+                <asp:Label ID="lblLocation" Text="Lokalita:" runat="server" CssClass="lbl" AssociatedControlID="p64Location"></asp:Label>
+
+            </td>
+            <td>
+                <asp:TextBox ID="p64Location" runat="server" Style="width: 400px;"></asp:TextBox>
+
+
+
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblOrdinary" Text="Index šanonu:" runat="server" CssClass="lbl" AssociatedControlID="p64Ordinary"></asp:Label></td>
+            <td>
+
+                <telerik:RadNumericTextBox ID="p64Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblCode" Text="Jiný kód:" runat="server" CssClass="lbl" AssociatedControlID="p64Code"></asp:Label>
 
             </td>
             <td>
@@ -24,15 +46,6 @@
 
 
 
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <asp:Label ID="lblOrdinary" Text="Index šanonu:" runat="server" CssClass="lbl" AssociatedControlID="p64Ordinary"></asp:Label></td>
-            <td>
-
-                <telerik:RadNumericTextBox ID="p64Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
     </table>

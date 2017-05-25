@@ -32,22 +32,22 @@ Partial Public Class p64_record
     Protected WithEvents p64Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lblCode control.
+    '''lblLocation control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblCode As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblLocation As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''p64Code control.
+    '''p64Location control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents p64Code As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents p64Location As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lblOrdinary control.
@@ -66,6 +66,24 @@ Partial Public Class p64_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p64Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''lblCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCode As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p64Code control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p64Code As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''p64Description control.

@@ -24,7 +24,7 @@
 
         }
         function hardrefresh(pid, flag) {
-            <%If menu1.PageSource<>"navigator" then%>
+            <%If menu1.PageSource <> "navigator" Then%>
             if (flag == "p41-create") {
                 parent.window.location.replace("p41_framework.aspx?pid=" + pid);
                 return;
@@ -33,13 +33,13 @@
                 parent.window.location.replace("p41_framework.aspx");
                 return;
             }
-            <%end if%>
+            <%End If%>
             if (flag == "draft2normal") {
                 document.getElementById('<%= cmdConvertDraft2Normal.ClientID%>').click();
                 return;
             }
 
-            
+
 
 
             location.replace("p41_framework_detail.aspx?pid=<%=master.datapid%>&source=<%=menu1.PageSource%>");
@@ -51,7 +51,7 @@
         }
         function o23_record(pid) {
 
-            window.open("o23_framework.aspx?pid=" + pid,"_top");
+            window.open("o23_framework.aspx?pid=" + pid, "_top");
 
         }
         function batch_update_childs() {
@@ -70,25 +70,25 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <uc:entity_menu id="menu1" runat="server"></uc:entity_menu>
+    <uc:entity_menu ID="menu1" runat="server"></uc:entity_menu>
 
-    <div style="height:10px;clear:both;"></div>
+    <div style="height: 10px; clear: both;"></div>
     <div class="content-box1">
         <div class="title">
-            <asp:Image ID="imgRecord" runat="server" style="margin-right: 10px;" ImageUrl="Images/properties.png" />            
+            <asp:Image ID="imgRecord" runat="server" Style="margin-right: 10px;" ImageUrl="Images/properties.png" />
 
             <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
 
             <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" Style="float: right;" />
-            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" style="float:right;"></asp:HyperLink>
-            
+            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" Style="float: right;"></asp:HyperLink>
+
         </div>
         <div class="content">
 
 
 
             <table cellpadding="10" cellspacing="2" id="responsive">
-                
+
                 <tr valign="baseline">
                     <td style="min-width: 120px;">
                         <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl" meta:resourcekey="lblProject"></asp:Label>
@@ -103,7 +103,7 @@
                                 Převést z režimu DRAFT na oficiální záznam
                             </button>
                         </asp:Panel>
-                        
+
                     </td>
 
                 </tr>
@@ -193,7 +193,7 @@
 
             </table>
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
-            <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>
+            <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" Text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>
         </div>
     </div>
     <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
@@ -234,14 +234,14 @@
         <div class="content">
             <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
 
-            <div style="width:100%;">
+            <div style="width: 100%;">
                 <span class="val">Poslední vystavená faktura:</span>
-                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
-            <div style="width:100%;">
+            <div style="width: 100%;">
                 <span class="val">Poslední nevyfakturovaný úkon:</span>
-                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
         </div>
@@ -299,11 +299,28 @@
 
         </div>
     </asp:Panel>
+    <asp:Panel ID="boxP64" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/binder.png" style="margin-right: 10px;" />
+            <asp:Label ID="Label2" runat="server" Text="Šanony"></asp:Label>
+        </div>
+        <div class="content">
+            <asp:Repeater ID="rpP64" runat="server">
+                <ItemTemplate>
+                    <div class="div6">
+                        <asp:HyperLink ID="p64Name" runat="server"></asp:HyperLink>
+
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+
+        </div>
+    </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    <div style="clear:both;"></div>
+    <div style="clear: both;"></div>
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
-    
+
 </asp:Content>

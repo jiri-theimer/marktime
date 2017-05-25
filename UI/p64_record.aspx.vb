@@ -31,8 +31,15 @@
         End If
     End Sub
     Private Sub RefreshRecord()
-
-        If Master.DataPID = 0 Then Return
+        If Master.DataPID = 0 Then
+            Dim mq As New BO.myQuery
+            mq.Closed = BO.BooleanQueryMode.NoQuery
+            Dim lis As IEnumerable(Of BO.p64Binder) = Master.Factory.p64BinderBL.GetList(Me.CurrentP41ID, mq)
+            If lis.Count > 0 Then
+                Me.p64Ordinary.Value = lis.Max(Function(p) p.p64Ordinary) + 1
+            End If
+            Return
+        End If
 
         Dim cRec As BO.p64Binder = Master.Factory.p64BinderBL.Load(Master.DataPID)
         With cRec
@@ -40,6 +47,7 @@
             Me.p64Ordinary.Value = .p64Ordinary
             Me.p64Code.Text = .p64Code
             Me.p64Description.Text = .p64Description
+            Me.p64Location.Text = .p64Location
             Master.Timestamp = .Timestamp
 
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -69,6 +77,7 @@
             cRec.p64Ordinary = BO.BAS.IsNullInt(Me.p64Ordinary.Value)
             cRec.p64Code = Me.p64Code.Text
             cRec.p64Description = Me.p64Description.Text
+            cRec.p64Location = Me.p64Location.Text
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
 

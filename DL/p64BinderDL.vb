@@ -12,44 +12,44 @@
     End Function
 
     Public Function Save(cRec As BO.p64Binder) As Boolean
-        Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
-            Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
-            If cRec.PID <> 0 Then
-                bolINSERT = False
-                strW = "p64ID=@pid"
-                pars.Add("pid", cRec.PID)
+        ''Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
+        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
+        If cRec.PID <> 0 Then
+            bolINSERT = False
+            strW = "p64ID=@pid"
+            pars.Add("pid", cRec.PID, DbType.Int32)
+        End If
+        With cRec
+            pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
+            pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
+            pars.Add("p64Name", .p64Name, DbType.String, , , True, "Název")
+            pars.Add("p64Code", .p64Code, DbType.String)
+
+            pars.Add("p64Location", .p64Location, DbType.String)
+            pars.Add("p64Description", .p64Description, DbType.String)
+
+            pars.Add("p64validfrom", .ValidFrom, DbType.DateTime)
+            pars.Add("p64validuntil", .ValidUntil, DbType.DateTime)
+
+        End With
+
+        If _cDB.SaveRecord("p64Binder", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+            Dim intP64ID As Integer = _cDB.LastSavedRecordPID
+            If bolINSERT Then
+                Dim x As Integer = cRec.p64Ordinary
+                If x = 0 Then x = _cDB.GetIntegerValueFROMSQL("select count(*) from p64Binder WHERE p41ID=" & cRec.p41ID.ToString)
+                Dim c As New BO.clsArabicNumber
+                pars = New DbParameters
+                pars.Add("p64ArabicCode", c.NumberToRoman(x), DbType.String)
+                pars.Add("p64Ordinary", x, DbType.Int32)
+                _cDB.SaveRecord("p64Binder", pars, False, "p64ID=" & intP64ID.ToString, False, , False)
             End If
-            With cRec
-                pars.Add("p41ID", BO.BAS.IsNullDBKey(.p41ID), DbType.Int32)
-                pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
-                pars.Add("p64Name", .p64Name, DbType.String, , , True, "Název")
-                pars.Add("p64Code", .p64Code, DbType.String)
-
-                pars.Add("p64Location", .p64Location, DbType.String)
-                pars.Add("p64Description", .p64Description, DbType.String)
-
-                pars.Add("p64validfrom", .ValidFrom, DbType.DateTime)
-                pars.Add("p64validuntil", .ValidUntil, DbType.DateTime)
-
-            End With
-
-            If _cDB.SaveRecord("p64Binder", pars, bolINSERT, strW, True, _curUser.j03Login) Then
-                Dim intP64ID As Integer = _cDB.LastSavedRecordPID
-                If bolINSERT Then
-                    Dim x As Integer = cRec.p64Ordinary
-                    If x = 0 Then x = _cDB.GetIntegerValueFROMSQL("select count(*) from p64Binder WHERE p41ID=" & cRec.p41ID.ToString)
-                    Dim c As New BO.clsArabicNumber
-                    pars = New DbParameters
-                    pars.Add("p64ArabicCode", c.NumberToRoman(x), DbType.String)
-                    pars.Add("p64Ordinary", x, DbType.Int32)
-                    _cDB.SaveRecord("p64Binder", pars, False, "p64ID=" & intP64ID.ToString, False)
-                End If
-                sc.Complete()
-                Return True
-            Else
-                Return False
-            End If
-        End Using
+            ''sc.Complete()
+            Return True
+        Else
+            Return False
+        End If
+        ''End Using
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean
@@ -63,13 +63,14 @@
     End Function
 
 
-    Public Function GetList(Optional myQuery As BO.myQuery = Nothing) As IEnumerable(Of BO.p64Binder)
+    Public Function GetList(intP41ID As Integer, Optional myQuery As BO.myQuery = Nothing) As IEnumerable(Of BO.p64Binder)
         Dim s As String = GetSQLPart1()
         Dim strW As String = bas.ParseWhereMultiPIDs("a.p64ID", myQuery)
         strW += bas.ParseWhereValidity("p64", "a", myQuery)
-        If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
+        s += " WHERE a.p41ID=" & intP41ID.ToString
+        If strW <> "" Then s += " AND " & bas.TrimWHERE(strW)
 
-
+        s += " ORDER BY a.p64Ordinary"
 
         Return _cDB.GetList(Of BO.p64Binder)(s)
 

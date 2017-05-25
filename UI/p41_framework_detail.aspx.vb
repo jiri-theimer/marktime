@@ -284,7 +284,13 @@
         Else
             comments1.Visible = False
         End If
-
+        If cRecSum.p64_Exist Then
+            boxP64.Visible = True
+            rpP64.DataSource = Master.Factory.p64BinderBL.GetList(cRec.PID, New BO.myQuery)
+            rpP64.DataBind()
+        Else
+            boxP64.Visible = False
+        End If
 
     End Sub
 

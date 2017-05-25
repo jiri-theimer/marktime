@@ -626,6 +626,33 @@ Partial Public Class p41_framework_detail
     Protected WithEvents notepad1 As Global.UI.o23_list
 
     '''<summary>
+    '''boxP64 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxP64 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''rpP64 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpP64 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''alert1 control.
     '''</summary>
     '''<remarks>
