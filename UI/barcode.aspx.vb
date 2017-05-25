@@ -111,6 +111,6 @@
         RenderBC()
         Dim s As String = Master.Factory.SysUser.j03Login & "_mt_bc1.png"
         bc1.GetImage().Save(Master.Factory.x35GlobalParam.TempFolder & "\" & s, System.Drawing.Imaging.ImageFormat.Png)
-        Server.TransferRequest("binaryfile.aspx?tempfile=" & s)
+        Response.rediret("binaryfile.aspx?tempfile=" & s)
     End Sub
 End Class
