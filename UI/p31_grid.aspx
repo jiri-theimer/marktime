@@ -100,13 +100,13 @@
             return (pids);
         }
 
-        function record_clone() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "" || pid == null) {
+        function record_clone() {            
+            var pids = GetAllSelectedPIDs();            
+            if (pids == "" || pids == null) {
                 alert("Není vybrán záznam.");
                 return
-            }
-            sw_master("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png");
+            }            
+            sw_master("p31_record.aspx?clone=1&pid=" + pids, "Images/worksheet.png");
 
         }
 
@@ -236,7 +236,7 @@
                         <Items>
                             <telerik:RadMenuItem Value="cmdNew" Text="<%$Resources:common,Novy %>" NavigateUrl="javascript:record_new();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdEdit" Text="<%$Resources:common,Upravit %>" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Value="cmdClone" Text="<%$Resources:common,Kopirovat %>" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat (i hromadně)" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdSplit" Text="<%$Resources:p31_grid,Rozdelit %>" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>

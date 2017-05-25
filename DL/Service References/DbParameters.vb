@@ -31,7 +31,12 @@ Public Class DbParameters
         If Not value Is Nothing Then
             Select Case dbType
                 Case Data.DbType.String, Data.DbType.StringFixedLength
-                    If value = "" Then value = Nothing
+                    If value Is System.DBNull.Value Then
+                        value = Nothing
+                    Else
+                        If value = "" Then value = Nothing
+                    End If
+
             End Select
         End If
 

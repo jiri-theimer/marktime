@@ -43,12 +43,13 @@
         }
         function p31_clone() {
             ///volá se z p31_subgrid
-            var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
-            if (pid == "") {
+            //var pid = document.getElementById("<%=hiddatapid_p31.clientid%>").value;
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
                 alert("Musíte vybrat záznam")
                 return;
             }
-            sw_decide("p31_record.aspx?clone=1&pid=" + pid, "Images/worksheet.png", false);
+            sw_decide("p31_record.aspx?clone=1&pid=" + pids, "Images/worksheet.png", false);
 
         }
         function p31_split() {

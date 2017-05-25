@@ -61,6 +61,7 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BAS\clsArabicNumber.vb" />
     <Compile Include="BAS\clsHandleHtml.vb" />
     <Compile Include="BAS\clsMergeContent.vb" />
     <Compile Include="BAS\Crypto.vb" />
@@ -112,6 +113,7 @@
     <Compile Include="DBNative\p59Priority.vb" />
     <Compile Include="DBNative\p61ActivityCluster.vb" />
     <Compile Include="DBNative\p63Overhead.vb" />
+    <Compile Include="DBNative\p64Binder.vb" />
     <Compile Include="DBNative\p80InvoiceAmountStructure.vb" />
     <Compile Include="DBNative\p82Proforma_Payment.vb" />
     <Compile Include="DBNative\p98Invoice_Round_Setting_Template.vb" />

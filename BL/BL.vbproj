@@ -162,6 +162,7 @@
     <Compile Include="p59PriorityBL.vb" />
     <Compile Include="p61ActivityClusterBL.vb" />
     <Compile Include="p63OverheadBL.vb" />
+    <Compile Include="p64BinderBL.vb" />
     <Compile Include="p80InvoiceAmountStructureBL.vb" />
     <Compile Include="p98Invoice_Round_Setting_TemplateBL.vb" />
     <Compile Include="Resources\common.Designer.vb">

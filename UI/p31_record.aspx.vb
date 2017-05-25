@@ -161,6 +161,9 @@
         ff1.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
+            If Request.Item("clone") = "1" Then
+                If Request.Item("pid").IndexOf(",") > 0 Then Server.Transfer("p31_clone.aspx?pids=" & Request.Item("pid")) 'hromadné kopírování záznamů
+            End If
             With Master
                 .HeaderIcon = "Images/worksheet_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -1225,8 +1228,8 @@
             Dim intStart As Integer = CInt(.GetUserParam("p31_HoursInputInterval", "30"))
             Dim s As String = "", cT As New BO.clsTime, strFormat As String = .GetUserParam("p31_HoursInputFormat", "dec")
             Dim intKratHodin As Integer = 4
-            If intStart = 60 Then intKratHodin = 8
-            If intStart = 30 Then intKratHodin = 6
+            If intStart = 60 Then intKratHodin = 10
+            If intStart = 30 Then intKratHodin = 8
             If intStart = 5 Or intStart = 10 Then intKratHodin = 3
             For i As Integer = intStart To intKratHodin * 60 Step intStart
                 If i > intStart Then

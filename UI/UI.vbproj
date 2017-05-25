@@ -183,6 +183,7 @@
     <Content Include="b06_record.aspx" />
     <Content Include="b07_delete.aspx" />
     <Content Include="b65_record.aspx" />
+    <Content Include="barcode.aspx" />
     <Content Include="billingmemo.ascx" />
     <Content Include="blank.aspx" />
     <Content Include="clue_help.aspx" />
@@ -251,6 +252,7 @@
     <Content Include="p28_framework_detail.aspx" />
     <Content Include="p28_framework_detail_p90.aspx" />
     <Content Include="p31summary.ascx" />
+    <Content Include="p31_clone.aspx" />
     <Content Include="p31_framework_timer.aspx" />
     <Content Include="p31_sumgrid.aspx" />
     <Content Include="p31_sumgrid_pivot.aspx" />
@@ -733,6 +735,13 @@
     <Compile Include="b65_record.aspx.vb">
       <DependentUpon>b65_record.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="barcode.aspx.designer.vb">
+      <DependentUpon>barcode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="barcode.aspx.vb">
+      <DependentUpon>barcode.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="bas\clsMergeDOC.vb" />
     <Compile Include="billingmemo.ascx.designer.vb">
@@ -1229,6 +1238,13 @@
     <Compile Include="p31summary.ascx.vb">
       <DependentUpon>p31summary.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p31_clone.aspx.designer.vb">
+      <DependentUpon>p31_clone.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p31_clone.aspx.vb">
+      <DependentUpon>p31_clone.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31_framework_timer.aspx.designer.vb">
       <DependentUpon>p31_framework_timer.aspx</DependentUpon>

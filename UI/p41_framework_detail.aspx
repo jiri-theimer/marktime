@@ -64,6 +64,9 @@
         function p40_chrono(p40id) {
             sw_decide("p40_chrono.aspx?pid=" + p40id, "Images/worksheet_recurrence.png", true);
         }
+        function barcode() {
+            sw_decide("barcode.aspx?prefix=p41&pid=<%=master.datapid%>", "Images/barcode.png", true);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -77,7 +80,7 @@
             <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
 
             <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" Style="float: right;" />
-
+            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" style="float:right;"></asp:HyperLink>
             
         </div>
         <div class="content">
