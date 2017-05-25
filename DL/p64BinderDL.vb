@@ -37,7 +37,8 @@
                 Dim intP64ID As Integer = _cDB.LastSavedRecordPID
                 sc.Complete()
                 If bolINSERT Then
-                    Dim x As Integer = _cDB.GetIntegerValueFROMSQL("select count(*) from p64Binder WHERE p41ID=" & cRec.p41ID.ToString)
+                    Dim x As Integer = cRec.p64Ordinary
+                    If x = 0 Then x = _cDB.GetIntegerValueFROMSQL("select count(*) from p64Binder WHERE p41ID=" & cRec.p41ID.ToString)
                     Dim c As New BO.clsArabicNumber
                     pars = New DbParameters
                     pars.Add("p64ArabicCode", c.NumberToRoman(x), DbType.String)

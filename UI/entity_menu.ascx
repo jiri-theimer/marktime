@@ -236,6 +236,9 @@
     function p30_record(pid) {            
         sw_decide("p30_binding.aspx?masterprefix=<%=Me.DataPrefix%>&masterpid=<%=Me.DataPID%>&pid="+pid,"Images/person.png",true);
     }
+    function p64_record(pid) {            
+        sw_decide("p64_record.aspx?pid="+pid,"Images/binder.png",true);
+    }
     function menu_<%=me.DataPrefix%>_invoice_draft() {        
 
         sw_decide("entity_modal_invoicing.aspx?prefix=<%=Me.DataPrefix%>&pids=<%=me.DataPID%>", "Images/invoice.png", true);

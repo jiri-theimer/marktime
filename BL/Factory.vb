@@ -84,6 +84,7 @@
     Private Property _j61 As Ij61TextTemplateBL
     Private Property _j62 As Ij62MenuHomeBL
     Private Property _p63 As Ip63OverheadBL
+    Private Property _p64 As Ip64BinderBL
     Private Property _p80 As Ip80InvoiceAmountStructureBL
     Private Property _x48 As Ix48SqlTaskBL
     Private Property _ft As IFtBL
@@ -611,6 +612,11 @@
         Get
             If _p63 Is Nothing Then _p63 = New p63OverheadBL(_cUser)
             Return _p63
+        End Get
+    End Property
+    Public ReadOnly Property p64BinderBL As Ip64BinderBL
+        Get
+            If _p64 Is Nothing Then _p64 = New p64BinderBL(_cUser)
         End Get
     End Property
     Public ReadOnly Property p80InvoiceAmountStructureBL As Ip80InvoiceAmountStructureBL
