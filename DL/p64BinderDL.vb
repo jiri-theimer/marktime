@@ -13,7 +13,7 @@
 
     Public Function Save(cRec As BO.p64Binder) As Boolean
         ''Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
-        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
+        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = "", c As New BO.clsArabicNumber
         If cRec.PID <> 0 Then
             bolINSERT = False
             strW = "p64ID=@pid"
@@ -24,7 +24,8 @@
             pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
             pars.Add("p64Name", .p64Name, DbType.String, , , True, "Název")
             pars.Add("p64Code", .p64Code, DbType.String)
-
+            pars.Add("p64Ordinary", .p64Ordinary, DbType.Int32)
+            pars.Add("p64ArabicCode", c.NumberToRoman(.p64Ordinary), DbType.String)
             pars.Add("p64Location", .p64Location, DbType.String)
             pars.Add("p64Description", .p64Description, DbType.String)
 
@@ -38,7 +39,6 @@
             If bolINSERT Then
                 Dim x As Integer = cRec.p64Ordinary
                 If x = 0 Then x = _cDB.GetIntegerValueFROMSQL("select count(*) from p64Binder WHERE p41ID=" & cRec.p41ID.ToString)
-                Dim c As New BO.clsArabicNumber
                 pars = New DbParameters
                 pars.Add("p64ArabicCode", c.NumberToRoman(x), DbType.String)
                 pars.Add("p64Ordinary", x, DbType.Int32)

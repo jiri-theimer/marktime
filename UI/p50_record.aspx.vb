@@ -31,6 +31,8 @@
 
     Private Sub RefreshRecord()
         If Master.DataPID = 0 Then
+            Me.p50ValidFrom.SelectedDate = Today
+            Me.p50ValidUntil.SelectedDate = DateSerial(3000, 1, 1)
             Return
         End If
         Dim cRec As BO.p50OfficePriceList = Master.Factory.p50OfficePriceListBL.Load(Master.DataPID)
@@ -63,7 +65,8 @@
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
         With Master.Factory.p50OfficePriceListBL
-            Dim cRec As BO.p50OfficePriceList = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.p50OfficePriceList)
+            Dim cRec As New BO.p50OfficePriceList
+            If Master.DataPID <> 0 Then cRec = .Load(Master.DataPID)
             With cRec
                 .p51ID = BO.BAS.IsNullInt(Me.p51ID.SelectedValue)
                 .p50RatesFlag = BO.BAS.IsNullInt(Me.p50RatesFlag.SelectedValue)

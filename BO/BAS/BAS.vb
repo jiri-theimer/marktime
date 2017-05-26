@@ -59,6 +59,7 @@
             Case "p49" : Return x29IdEnum.p49FinancialPlan
             Case "p48" : Return x29IdEnum.p48OperativePlan
             Case "p47" : Return x29IdEnum.p47CapacityPlan
+            Case "p64" : Return x29IdEnum.p64Binder
             Case Else
                 Return x29IdEnum._NotSpecified
         End Select

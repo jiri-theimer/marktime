@@ -3,6 +3,13 @@
 <%@ MasterType VirtualPath="~/ModalDataRecord.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script type="text/javascript">
+        function report() {
+
+            dialog_master("report_modal.aspx?prefix=p64&pid=<%=master.datapid%>", true);
+
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <table cellpadding="5" cellspacing="2">
@@ -11,6 +18,7 @@
                 <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název:"></asp:Label></td>
             <td>
                 <asp:TextBox ID="p64Name" runat="server" Style="width: 400px;"></asp:TextBox>
+                <asp:HyperLink ID="linkX31" runat="server" Text="Tisková sestava" NavigateUrl="javascript:report()" style="margin-left:30px;"></asp:HyperLink>
             </td>
         </tr>
         

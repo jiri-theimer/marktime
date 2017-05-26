@@ -222,6 +222,7 @@
             If _p50 Is Nothing Then _p50 = New p50OfficePriceListBL(_cUser)
             Return _p50
         End Get
+
     End Property
     Public ReadOnly Property j07PersonPositionBL As Ij07PersonPositionBL
         Get

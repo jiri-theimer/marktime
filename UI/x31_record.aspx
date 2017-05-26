@@ -53,6 +53,7 @@
                     <asp:ListItem Text="Rozpočet projektu" Value="345"></asp:ListItem>
                     <asp:ListItem Text="Úhrada faktury" Value="394"></asp:ListItem>
                     <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
+                    <asp:ListItem Text="Šanon" Value="364"></asp:ListItem>
                     <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
                     <asp:ListItem Text="Schvalování" Value="999"></asp:ListItem>
                 </asp:DropDownList>

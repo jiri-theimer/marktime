@@ -10728,8 +10728,7 @@ declare @p56_actual_count int,@p56_closed_count int,@o22_actual_count int,@p91_c
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p45_count int
-declare @last_invoice varchar(100),@last_wip_worksheet as varchar(100)
-
+declare @last_invoice varchar(100),@last_wip_worksheet varchar(100),@p64_exist bit
 declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit
 
 select @p42IsModule_p31=a.p42IsModule_p31,@p42IsModule_p56=a.p42IsModule_p56,@p42IsModule_o23=a.p42IsModule_o23,@p42IsModule_p45=p42IsModule_p45
@@ -10808,6 +10807,11 @@ end
 if exists(select b07ID from b07Comment WHERE x29ID=141 AND b07RecordPID=@pid)
  select @b07_count=count(b07ID) FROM b07Comment WHERE x29ID=141 AND b07RecordPID=@pid
 
+if exists(select p64ID FROM p64Binder WHERE p41ID=@pid)
+ set @p64_exist=1
+else
+ set @p64_exist=0
+
 if @p42IsModule_o23=1
 begin
 if exists(select o23ID FROM o23Notepad WHERE p41ID=@pid)
@@ -10847,6 +10851,7 @@ select isnull(@p56_actual_count,0) as p56_Actual_Count
 ,isnull(@p45_count,0) as p45_Count
 ,@last_invoice as Last_Invoice
 ,@last_wip_worksheet as Last_Wip_Worksheet
+,@p64_exist as p64_Exist
 
 GO
 
@@ -12023,6 +12028,55 @@ if isnull(@err_ret,'')<>''
  return 
 
 DELETE FROM p63Overhead WHERE p63ID=@pid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------P---------------p64_delete-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p64_delete') and type = 'P')
+ drop procedure p64_delete
+GO
+
+
+
+
+
+
+
+CREATE   procedure [dbo].[p64_delete]
+@j03id_sys int				--pøihlášený uživatel
+,@pid int					--p64ID
+,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
+
+AS
+--odstranìní záznamu  z tabulky p64Binder
+
+
+
+
+if isnull(@err_ret,'')<>''
+ return 
+
+DELETE FROM p64Binder WHERE p64ID=@pid
+
 
 
 

@@ -16,6 +16,11 @@
             hidP41ID.Value = Request.Item("p41id")
             With Master
                 If Me.CurrentP41ID = 0 Then .StopPage("p41id is missing.")
+                Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
+                If Not Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41).OwnerAccess Then
+                    .StopPage("Pro založení šanonu musíte k projektu disponovat vlastnickým oprávněním.")
+                End If
+
                 .HeaderIcon = "Images/binder_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Šanon projektu"
@@ -38,6 +43,7 @@
             If lis.Count > 0 Then
                 Me.p64Ordinary.Value = lis.Max(Function(p) p.p64Ordinary) + 1
             End If
+            linkX31.Visible = False
             Return
         End If
 

@@ -199,13 +199,6 @@
                 Me.boxO23.Visible = True
                 With Me.boxO23Title
                     .Text = BO.BAS.OM2(.Text, lisO23.Count.ToString)
-                    ''If menu1.FindItemByValue("cmdO23").Visible Then
-                    ''    .Text = "<a href='javascript:notepads()'>" & .Text & "</a>"
-                    ''    If lisO23.Count > 10 Then
-                    ''        .Text += ", 10 nejnovějších:"
-                    ''        lisO23 = lisO23.Take(10)
-                    ''    End If
-                    ''End If
                 End With
                 notepad1.RefreshData(lisO23, Master.DataPID)
             Else
@@ -284,14 +277,23 @@
         Else
             comments1.Visible = False
         End If
+        RefreshP64(cRecSum)
+
+    End Sub
+    Private Sub RefreshP64(cRecSum As BO.p41ProjectSum)
         If cRecSum.p64_Exist Then
             boxP64.Visible = True
-            rpP64.DataSource = Master.Factory.p64BinderBL.GetList(cRec.PID, New BO.myQuery)
+            Dim mq As New BO.myQuery
+            mq.Closed = BO.BooleanQueryMode.NoQuery
+            Dim lis As IEnumerable(Of BO.p64Binder) = Master.Factory.p64BinderBL.GetList(Master.DataPID, mq)
+            rpP64.DataSource = lis
             rpP64.DataBind()
+            With Me.boxP64Title
+                .Text = BO.BAS.OM2(.Text, lis.Count.ToString)
+            End With
         Else
             boxP64.Visible = False
         End If
-
     End Sub
 
     Private Sub RefreshP40(cRecSum As BO.p41ProjectSum)
@@ -454,4 +456,12 @@
     End Sub
 
     
+    Private Sub rpP64_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP64.ItemDataBound
+        Dim cRec As BO.p64Binder = CType(e.Item.DataItem, BO.p64Binder)
+        With CType(e.Item.FindControl("p64Name"), HyperLink)
+            .Text = cRec.p64Ordinary.ToString & " - " & cRec.p64Name & " (" & cRec.p64ArabicCode & ")"
+            .NavigateUrl = "javascript:p64_record(" & cRec.PID.ToString & ")"
+            If cRec.IsClosed Then .Font.Strikeout = True
+        End With
+    End Sub
 End Class

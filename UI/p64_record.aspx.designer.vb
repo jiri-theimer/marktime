@@ -32,6 +32,15 @@ Partial Public Class p64_record
     Protected WithEvents p64Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''linkX31 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkX31 As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''lblLocation control.
     '''</summary>
     '''<remarks>

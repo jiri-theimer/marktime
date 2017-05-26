@@ -299,18 +299,18 @@
 
         </div>
     </asp:Panel>
-    <asp:Panel ID="boxP64" runat="server" CssClass="content-box1">
+    <asp:Panel ID="boxP64" runat="server" CssClass="content-box1" style="clear: both;">
         <div class="title">
             <img src="Images/binder.png" style="margin-right: 10px;" />
-            <asp:Label ID="Label2" runat="server" Text="Šanony"></asp:Label>
+            <asp:Label ID="boxP64Title" runat="server" Text="Šanony"></asp:Label>
         </div>
         <div class="content">
             <asp:Repeater ID="rpP64" runat="server">
                 <ItemTemplate>
-                    <div class="div6">
-                        <asp:HyperLink ID="p64Name" runat="server"></asp:HyperLink>
+                    
+                        <asp:HyperLink ID="p64Name" runat="server" style="margin-right:10px;"></asp:HyperLink>
 
-                    </div>
+                    
                 </ItemTemplate>
             </asp:Repeater>
 

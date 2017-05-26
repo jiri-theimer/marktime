@@ -635,13 +635,13 @@ Partial Public Class p41_framework_detail
     Protected WithEvents boxP64 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Label2 control.
+    '''boxP64Title control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents boxP64Title As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''rpP64 control.

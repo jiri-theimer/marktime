@@ -620,6 +620,8 @@
                 Return "a.p41ID IN (SELECT p41ID FROM j13FavourteProject WHERE j03ID=" & cUser.PID.ToString & ")"
             Case BO.myQueryP41_QuickQuery.WithBillingMemo
                 Return "a.p41BillingMemo IS NOT NULL"
+            Case BO.myQueryP41_QuickQuery.WithBinder
+                Return "a.p41ID IN (SELECT p41ID FROM p64Binder)"
             Case Else
                 Return ""
         End Select
