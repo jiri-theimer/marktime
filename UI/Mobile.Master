@@ -232,7 +232,7 @@
                     <li <%=IIf(Me.hidMenuPrefix.Value = "home", "class='active'", "")%>><a href="mobile_start.aspx">ÚKOLY</a></li>
 
                     
-                
+                    <li <%=IIf(Me.hidMenuPrefix.Value = "scheduler", "class='active'", "")%>><a href="mobile_scheduler.aspx">KALENDÁŘ</a></li>
                 
                     <li <%=IIf(Me.hidMenuPrefix.Value = "search", "class='active'", "")%>><a href="mobile_search.aspx">NAJÍT</a></li>
                                        

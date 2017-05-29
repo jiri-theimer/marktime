@@ -221,6 +221,7 @@
     <Content Include="mobile_changepassword.aspx" />
     <Content Include="mobile_grid.aspx" />
     <Content Include="mobile_j02_framework.aspx" />
+    <Content Include="mobile_o22_framework.aspx" />
     <Content Include="mobile_o23_framework.aspx" />
     <Content Include="mobile_p28_framework.aspx" />
     <Content Include="mobile_p31_calendar.aspx" />
@@ -1022,6 +1023,13 @@
     </Compile>
     <Compile Include="mobile_j02_framework.aspx.vb">
       <DependentUpon>mobile_j02_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="mobile_o22_framework.aspx.designer.vb">
+      <DependentUpon>mobile_o22_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mobile_o22_framework.aspx.vb">
+      <DependentUpon>mobile_o22_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="mobile_o23_framework.aspx.designer.vb">

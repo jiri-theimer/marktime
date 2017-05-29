@@ -26,6 +26,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
+
             If Request.Item("source") <> "" Then
                 If Not Request.UrlReferrer Is Nothing Then Me.hidRef.Value = Request.UrlReferrer.PathAndQuery
             End If
@@ -44,6 +45,7 @@
             If Me.p57ID.Items.Count = 1 Then
                 panType.Visible = False
             End If
+            Me.receiver1.AddReceiver(Master.Factory.SysUser.j02ID, 0, True)
         End If
     End Sub
     Private Sub InhaleProject()
