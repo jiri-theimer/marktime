@@ -177,6 +177,7 @@
     <Content Include="admin_menu.aspx" />
     <Content Include="admin_workflow.aspx" />
     <Content Include="alertbox.ascx" />
+    <Content Include="alertbox.aspx" />
     <Content Include="approving_framework.aspx" />
     <Content Include="b01_record.aspx" />
     <Content Include="b02_record.aspx" />
@@ -584,6 +585,13 @@
     <Compile Include="alertbox.ascx.vb">
       <DependentUpon>alertbox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="alertbox.aspx.designer.vb">
+      <DependentUpon>alertbox.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="alertbox.aspx.vb">
+      <DependentUpon>alertbox.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="approving_framework.aspx.designer.vb">
       <DependentUpon>approving_framework.aspx</DependentUpon>
