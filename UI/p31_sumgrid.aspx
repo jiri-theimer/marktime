@@ -195,8 +195,9 @@
         }
 
         function pivot() {
-
-            sw_master("p31_sumgrid.aspx?pivot=1", "Images/pivot.png", true);
+            var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
+            var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
+            sw_master("p31_sumgrid.aspx?pivot=1" + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/pivot.png", true);
 
         }
         function templatebuilder() {

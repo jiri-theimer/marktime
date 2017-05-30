@@ -383,7 +383,11 @@
         End If
         ''If Not Me.chkShowBoxP41.Checked Then Return
 
-        If lis.Count > 25 Then lis = lis.Take(25) 'omezit na maximálně 25+1
+        If lis.Count > 25 Then
+            boxP41Title.Text = BO.BAS.OM4(boxP41Title.Text, ": " & lis.Count.ToString & ", z toho prvních 25:", "")
+            lis = lis.Take(25) 'omezit na maximálně 25+1
+
+        End If
         rpP41.DataSource = lis.OrderBy(Function(p) p.IsClosed).ThenBy(Function(p) p.p41Name)
         rpP41.DataBind()
 

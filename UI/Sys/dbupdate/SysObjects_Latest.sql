@@ -142,6 +142,112 @@ END
 
 GO
 
+----------FN---------------get_domestic_j27code-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('get_domestic_j27code') and type = 'FN')
+ drop function get_domestic_j27code
+GO
+
+
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[get_domestic_j27code]()
+RETURNS varchar(10)
+AS
+BEGIN
+   declare @s varchar(10),@j27id int,@j27code varchar(10)
+
+  select @s=x35Value from x35GlobalParam WHERE x35key like 'j27ID_Domestic'
+
+  if isnull(@s,'')=''
+   set @j27id=2
+  else
+   set @j27id=convert(int,@s)
+
+  select @j27code=j27Code FROM j27Currency WHERE j27ID=@j27id
+   
+  RETURN(@j27code)
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
+----------FN---------------get_domestic_j27id-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('get_domestic_j27id') and type = 'FN')
+ drop function get_domestic_j27id
+GO
+
+
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[get_domestic_j27id]()
+RETURNS int
+AS
+BEGIN
+   declare @s varchar(10),@j27id int
+
+  select @s=x35Value from x35GlobalParam WHERE x35key like 'j27ID_Domestic'
+
+  if isnull(@s,'')=''
+   set @j27id=2
+  else
+   set @j27id=convert(int,@s)
+   
+  RETURN(@j27id)
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------get_exchange_rate-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('get_exchange_rate') and type = 'FN')
@@ -10560,6 +10666,8 @@ BEGIN TRY
 	if exists(select a.x69ID FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141)
 	 DELETE a FROM x69EntityRole_Assign a INNER JOIN x67EntityRole b ON a.x67ID=b.x67ID WHERE a.x69RecordPID=@pid AND b.x29ID=141
 
+	if exists(select p64ID FROM p64Binder WHERE p41ID=@pid)
+	 DELETE FROM p64Binder WHERE p41ID=@pid
 	
 	DELETE FROM x90EntityLog WHERE x29ID=141 AND x90RecordPID=@pid
 

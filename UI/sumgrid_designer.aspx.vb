@@ -349,6 +349,7 @@ Public Class sumgrid_designer
             End With
             Return True
         Else
+            roles1.SaveCurrentTempData()
             Dim cRec As New BO.j77WorksheetStatTemplate
             cRec.j02ID_Owner = Master.Factory.SysUser.j02ID
             cRec.j03ID = Master.Factory.SysUser.PID
