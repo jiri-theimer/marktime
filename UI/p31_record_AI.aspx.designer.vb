@@ -104,6 +104,15 @@ Partial Public Class p31_record_AI
     Protected WithEvents Edit_p31VatRate_Invoiced As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''p31IsInvoiceManual control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31IsInvoiceManual As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
     '''panEdit6 control.
     '''</summary>
     '''<remarks>

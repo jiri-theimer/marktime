@@ -26,6 +26,7 @@
     Function RecalcFPR(d1 As Date, d2 As Date, Optional intP51ID As Integer = 0) As Boolean
     Function InhaleRecordDisposition(cRec As BO.p91Invoice) As BO.p91RecordDisposition
     Function GetGridFooterSums(myQuery As BO.myQueryP91, strSumFields As String) As DataTable
+    Sub ClearExchangeDateAndRecalc(intP91ID As Integer)
 End Interface
 
 Class p91InvoiceBL
@@ -227,4 +228,9 @@ Class p91InvoiceBL
     Public Function GetGridFooterSums(myQuery As BO.myQueryP91, strSumFields As String) As DataTable Implements Ip91InvoiceBL.GetGridFooterSums
         Return _cDL.GetGridFooterSums(myQuery, strSumFields)
     End Function
+
+    Public Sub ClearExchangeDateAndRecalc(intP91ID As Integer) Implements Ip91InvoiceBL.ClearExchangeDateAndRecalc
+        _cDL.ClearExchangeDate(intP91ID)
+        _cDL.RecalcAmount(intP91ID)
+    End Sub
 End Class

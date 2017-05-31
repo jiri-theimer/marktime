@@ -7537,6 +7537,7 @@ AS
 ---p31Rate_Billing_Invoiced - p85FreeFloat02 (hodinová nebo úkonová sazba)
 ---p31VatRate_Invoiced - p85FreeFloat03  (explicitní sazba DPH)
 ---p85FreeText01 - do stringu pøevedeno FixPriceValue
+---p85FreeBoolean01 - p31IsInvoiceManual
 
 set @err_ret=''
 set @j03id_sys=isnull(@j03id_sys,0)
@@ -7574,12 +7575,12 @@ where p91ID=@p91id
 
 declare @p31id int,@p70id_edit int,@vatrate_edit float,@value_edit float,@text_edit nvarchar(2000),@rate_edit float
 declare @p33id int
-declare @p31amount_withoutvat_invoiced float,@p31amount_vat_invoiced float,@p31amount_withvat_invoiced float
+declare @p31amount_withoutvat_invoiced float,@p31amount_vat_invoiced float,@p31amount_withvat_invoiced float,@p31IsInvoiceManual bit
 
 DECLARE curP31 CURSOR FOR 
-select p85DataPID,p85OtherKey1,p85Message,p85FreeFloat01,p85FreeFloat02,p85FreeFloat03,convert(float,p85FreeNumber01)/10000000 from p85TempBox WHERE p85GUID=@guid AND p85Prefix='p31'
+select p85DataPID,p85OtherKey1,p85Message,p85FreeFloat01,p85FreeFloat02,p85FreeFloat03,convert(float,p85FreeNumber01)/10000000,isnull(p85FreeBoolean01,0) from p85TempBox WHERE p85GUID=@guid AND p85Prefix='p31'
 OPEN curP31
-FETCH NEXT FROM curP31  INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice
+FETCH NEXT FROM curP31  INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice,@p31IsInvoiceManual
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
@@ -7635,7 +7636,9 @@ if @x15id is not null and @vatrate_edit is null
   set @p31amount_vat_invoiced=@p31amount_withoutvat_invoiced*@vatrate_edit/100
   set @p31amount_withvat_invoiced=@p31amount_withoutvat_invoiced+@p31amount_vat_invoiced
 
-  UPDATE p31Worksheet set p70ID=@p70id_edit,p31IsInvoiceManual=1,j02ID_InvoiceManual=@j02id_sys,p31DateUpdate_InvoiceManual=getdate()
+  UPDATE p31Worksheet set p70ID=@p70id_edit,p31IsInvoiceManual=@p31IsInvoiceManual
+  ,j02ID_InvoiceManual=case when @p31IsInvoiceManual=1 then @j02id_sys else null end
+  ,p31DateUpdate_InvoiceManual=case when @p31IsInvoiceManual=1 then getdate() else null end
   ,p31Amount_WithoutVat_Invoiced=@p31amount_withoutvat_invoiced,p31Amount_WithVat_Invoiced=@p31amount_withvat_invoiced
   ,p31Amount_Vat_Invoiced=@p31amount_vat_invoiced,p31VatRate_Invoiced=@vatrate_edit,j27ID_Billing_Invoiced=@j27id
   ,p31Value_FixPrice=@p31value_fixprice
@@ -7644,7 +7647,7 @@ if @x15id is not null and @vatrate_edit is null
   if @text_edit is not null
    UPDATE p31Worksheet set p31Text=@text_edit WHERE p31ID=@p31id
 
-FETCH NEXT FROM curP31 INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice
+FETCH NEXT FROM curP31 INTO @p31id,@p70id_edit,@text_edit,@value_edit,@rate_edit,@vatrate_edit,@p31value_fixprice,@p31IsInvoiceManual
 END
 
 CLOSE curP31
@@ -14016,8 +14019,9 @@ CREATE procedure [dbo].[p91_recalc_amount]
 AS
 
 declare @j27id_dest int,@datSupply datetime,@j27id_domestic int,@p92invoicetype int,@p92id int,@p41id_first int,@j17id int,@p98id int,@p63id int,@p80id int
+declare @exchangedate datetime
 
-select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID,@p98id=a.p98ID,@p63id=a.p63ID,@p80id=a.p80ID
+select @j27id_dest=a.j27id,@datSupply=a.p91DateSupply,@p92id=a.p92id,@p92invoicetype=b.p92InvoiceType,@p41id_first=a.p41ID_First,@j17id=a.j17ID,@p98id=a.p98ID,@p63id=a.p63ID,@p80id=a.p80ID,@exchangedate=a.p91DateExchange
 from p91invoice a INNER JOIN p92InvoiceType b ON a.p92ID=b.p92ID
 where a.p91id=@p91id
 
@@ -14035,24 +14039,41 @@ else
 if @p98id is null
  select @p98id=p98ID FROM p98Invoice_Round_Setting_Template WHERE p98IsDefault=1	---výchozí zaokrouhlovací pravidlo v systému
 
-declare @exchangedate datetime
-if @j27id_domestic<>@j27id_dest
+if @exchangedate is null and @j27id_domestic<>@j27id_dest
  begin
   select TOP 1 @exchangedate=m62date FROM m62ExchangeRate where j27id_master=@j27id_domestic and m62date<=@datSupply and j27id_slave=@j27id_dest order by m62date desc
 
   update p91invoice set p91DateExchange=@exchangedate,p91ExchangeRate=dbo.get_exchange_rate(1,p91DateSupply,j27id,@j27id_domestic)
   where p91id=@p91id
  end
-else
- update p91invoice set p91DateExchange=null,p91ExchangeRate=1 where p91id=@p91id
 
+if @exchangedate is null and exists(select p31ID FROM p31Worksheet WHERE p91ID=@p91id AND j27ID_Billing_Orig IS NOT NULL AND j27ID_Billing_Orig<>@j27id_dest)
+ begin
+  declare @j27id_dest_worksheet int
+
+  select TOP 1 @j27id_dest_worksheet=j27ID_Billing_Orig FROM p31Worksheet WHERE p91ID=@p91id AND j27ID_Billing_Orig IS NOT NULL AND j27ID_Billing_Orig<>@j27id_dest
+
+  select TOP 1 @exchangedate=m62date FROM m62ExchangeRate where j27id_master=@j27id_domestic and m62date<=@datSupply and j27id_slave=@j27id_dest_worksheet order by m62date desc
+
+  update p91invoice set p91DateExchange=@exchangedate,p91ExchangeRate=dbo.get_exchange_rate(1,p91DateSupply,@j27id_dest_worksheet,@j27id_domestic)
+  where p91id=@p91id
+
+ end
+
+
+if @exchangedate is null
+ begin
+  update p91invoice set p91DateExchange=null,p91ExchangeRate=1 where p91id=@p91id
+
+  set @exchangedate=@datSupply
+ end
 
 ----výchozí mìnový kurz pocházející z j27id worksheet záznamu-----------
-update p31worksheet set p31ExchangeRate_Invoice=dbo.get_exchange_rate(1,@datSupply,j27ID_Billing_Orig,@j27id_dest)
+update p31worksheet set p31ExchangeRate_Invoice=dbo.get_exchange_rate(1,@exchangedate,j27ID_Billing_Orig,@j27id_dest)
 WHERE p91id=@p91id
 
 ----mìnový kurz pro manuálnì upravované èástky ve faktuøe-----------
-update p31worksheet set p31ExchangeRate_InvoiceManual=dbo.get_exchange_rate(1,@datSupply,j27ID_Billing_Invoiced,@j27id_dest)
+update p31worksheet set p31ExchangeRate_InvoiceManual=dbo.get_exchange_rate(1,@exchangedate,j27ID_Billing_Invoiced,@j27id_dest)
 WHERE p91id=@p91id and p31IsInvoiceManual=1
 
 
@@ -14086,7 +14107,7 @@ where p91id=@p91id and isnull(j27ID_Billing_Invoiced,0)<>@j27id_dest
 exec dbo.p91_calc_overhead @p91id,@p63id	---pøípadná režijní pøirážka k faktuøe
 
 ----mìnový kurz z fakturaèní mìny do domácí mìny----------
-update p31worksheet set j27ID_Billing_Invoiced_Domestic=@j27id_domestic, p31ExchangeRate_Domestic=dbo.get_exchange_rate(1,@datSupply,j27ID_Billing_Invoiced,@j27id_domestic)
+update p31worksheet set j27ID_Billing_Invoiced_Domestic=@j27id_domestic, p31ExchangeRate_Domestic=dbo.get_exchange_rate(1,@exchangedate,j27ID_Billing_Invoiced,@j27id_domestic)
 WHERE p91id=@p91id
 
 update p31worksheet set p31Amount_WithoutVat_Invoiced_Domestic=p31Amount_WithoutVat_Invoiced*p31ExchangeRate_Domestic

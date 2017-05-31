@@ -145,6 +145,17 @@
                 j27ident_invoiced.Text = cJ27I.j27Code
 
                 Handle_FF(cRec.p34ID)
+
+                If cRec.p70ID = BO.p70IdENUM.Vyfakturovano And (cRec.p33ID = BO.p33IdENUM.PenizeBezDPH Or cRec.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu) Then
+                    p31IsInvoiceManual.Visible = True
+                    If cRec.p31IsInvoiceManual Then
+                        Me.p31IsInvoiceManual.SelectedValue = "1"
+                    Else
+                        Me.p31IsInvoiceManual.SelectedValue = "0"
+                    End If
+                Else
+                    p31IsInvoiceManual.Visible = False
+                End If
             Else
                 panInvoiced.Visible = False
 
@@ -239,7 +250,13 @@
             Case Else
 
         End Select
-        
+        If Me.p31IsInvoiceManual.Visible Then
+            If Me.p31IsInvoiceManual.SelectedValue = "1" Then
+                Me.Edit_p31Value_Invoiced.Enabled = True
+            Else
+                Me.Edit_p31Value_Invoiced.Enabled = False
+            End If
+        End If
     End Sub
    
     
@@ -269,8 +286,11 @@
                         .InvoiceRate = BO.BAS.IsNullNum(Me.Edit_p31Rate_Billing_Invoiced.Value)
 
                     Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
-
-
+                        If Me.p31IsInvoiceManual.SelectedValue = "1" Then
+                            .p31IsInvoiceManual = True
+                        Else
+                            .p31IsInvoiceManual = False
+                        End If
                 End Select
                 .InvoiceVatRate = BO.BAS.IsNullNum(Me.Edit_p31VatRate_Invoiced.Value)
                 .FixPriceValue = 0

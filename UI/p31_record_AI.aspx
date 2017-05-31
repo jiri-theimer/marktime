@@ -94,6 +94,14 @@
                                     </td>
 
                                 </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <asp:RadioButtonList ID="p31IsInvoiceManual" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
+                                            <asp:ListItem Text="Částka se bude automaticky přepočítávat měnovým kurzem faktury" Value="0" Selected="true"></asp:ListItem>
+                                            <asp:ListItem Text="Částka se už dále nebude automaticky přepočítávat" Value="1"></asp:ListItem>
+                                        </asp:RadioButtonList>
+                                    </td>
+                                </tr>
                             </table>
                         </asp:Panel>
                     </td>
@@ -125,7 +133,7 @@
                             <asp:Label runat="server" ID="lblPerson" Text="Osoba:" CssClass="lbl"></asp:Label>
                         </td>
                         <td>
-                            <asp:Label ID="Person" runat="server" CssClass="valbold" /><b>CLUE</b>
+                            <asp:Label ID="Person" runat="server" CssClass="valbold" />
                         </td>
 
                     </tr>

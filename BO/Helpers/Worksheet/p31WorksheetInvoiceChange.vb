@@ -7,4 +7,6 @@
     Public Property InvoiceVatRate As Double
     Public Property TextUpdate As String
     Public Property FixPriceValue As Double
+    Public Property p31IsInvoiceManual As Boolean
+
 End Class

@@ -143,6 +143,7 @@ Public Class p31Worksheet
     Public Property p31ApprovingLevel As Integer
     Public Property o23ID_First As Integer
     Public Property p31Value_FixPrice As Double
+    Public Property p31IsInvoiceManual As Boolean
 
     Public ReadOnly Property TimeFrom As String
         Get

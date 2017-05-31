@@ -67,6 +67,9 @@
             Return False
         End If
     End Function
+    Public Sub ClearExchangeDate(intP91ID As Integer)
+        _cDB.RunSQL("update p91Invoice set p91DateExchange=null,p91ExchangeRate=null WHERE p91ID=" & intP91ID.ToString)
+    End Sub
     Public Function Update(cRec As BO.p91Invoice, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
         Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
             Dim pars As New DbParameters()

@@ -486,6 +486,7 @@
 
                             <asp:Label ID="lblExchangeRate" runat="server" Text="Měnový kurz:" CssClass="lbl" Style="margin-left: 30px;"></asp:Label>
                             <asp:Label ID="p91ExchangeRate" runat="server" CssClass="valbold"></asp:Label>
+                            <asp:Button ID="cmdRecalcExchangeRate" runat="server" CssClass="cmd" Text="Aktualizovat kurz" Visible="false" />
                         </td>
 
                     </tr>

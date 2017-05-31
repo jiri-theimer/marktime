@@ -500,6 +500,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents p91ExchangeRate As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cmdRecalcExchangeRate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRecalcExchangeRate As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''Label13 control.
     '''</summary>
     '''<remarks>

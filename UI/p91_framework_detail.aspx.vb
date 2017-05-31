@@ -209,10 +209,15 @@ Public Class p91_framework_detail
            
             HandleDirectReports(.p92ID)
 
-            Me.lblExchangeRate.Visible = False
-            If .p91ExchangeRate <> 1 Then
+            Me.lblExchangeRate.Visible = False : cmdRecalcExchangeRate.Visible = False
+            If Not BO.BAS.IsNullDBDate(.p91DateExchange) Is Nothing Then
                 lblExchangeRate.Visible = True
-                Me.p91ExchangeRate.Text = .p91ExchangeRate.ToString & " (" & BO.BAS.FD(.p91DateExchange) & ")"
+                If .p91ExchangeRate <> 1 Then
+                    Me.p91ExchangeRate.Text = .p91ExchangeRate.ToString & " (" & BO.BAS.FD(.p91DateExchange) & ")"
+                Else
+                    Me.p91ExchangeRate.Text = String.Format("Kurz ze dne {0}", BO.BAS.FD(.p91DateExchange))
+                End If
+                cmdRecalcExchangeRate.Visible = True
             End If
             Dim cRecSource As BO.p91Invoice = Nothing
             If .p91ID_CreditNoteBind <> 0 Then
@@ -593,5 +598,10 @@ Public Class p91_framework_detail
             End If
            
         End With
+    End Sub
+
+    Private Sub cmdRecalcExchangeRate_Click(sender As Object, e As EventArgs) Handles cmdRecalcExchangeRate.Click
+        Master.Factory.p91InvoiceBL.ClearExchangeDateAndRecalc(Master.DataPID)
+        ReloadPage()
     End Sub
 End Class
