@@ -9,6 +9,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
+
             With Master
                 .neededPermission = BO.x53PermValEnum.GR_Admin
                 .HeaderIcon = "Images/user_32.png"
@@ -145,7 +146,13 @@
                 Master.Factory.j03UserBL.Save(cJ03)
                 
                 If strMessage = "" Then
-                    Master.CloseAndRefreshParent("j03-create")
+                    If Request.UrlReferrer.LocalPath.IndexOf("j02_record.aspx") >= 0 Then
+                        Master.DataPID = cJ03.j02ID
+                        Master.CloseAndRefreshParent("j02-save")
+                    Else
+                        Master.CloseAndRefreshParent("j03-create")
+                    End If
+
                 Else
                     Master.Notify(strMessage, 1)
                 End If

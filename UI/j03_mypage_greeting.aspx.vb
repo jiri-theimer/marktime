@@ -41,7 +41,7 @@
                 chkP56.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP56", "0"))
                 chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "0"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
-                basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "1"))
+                basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "2"))
 
                 ''menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 ''menu1.FindItemByValue("p31_create_one").Visible = .SysUser.j04IsMenu_Worksheet

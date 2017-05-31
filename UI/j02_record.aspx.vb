@@ -188,7 +188,12 @@
                     cTemp.p85FreeText01 = c.FullNameAsc
                     Master.Factory.p85TempBoxBL.Save(cTemp)
                 End If
-                Master.CloseAndRefreshParent("j02-save")
+                If cRec.PID = 0 And cRec.j02IsIntraPerson = True Then
+                    Server.Transfer("j03_create.aspx?j02id=" & Master.DataPID.ToString)
+                Else
+                    Master.CloseAndRefreshParent("j02-save")
+                End If
+
             Else
                 Master.Notify(.ErrorMessage, 2)
             End If

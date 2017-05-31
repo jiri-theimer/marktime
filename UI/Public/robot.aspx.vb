@@ -33,6 +33,8 @@
             If Now > Today.AddHours(3) And Now < Today.AddHours(4) Then
                 'mezi třetí a čtvrtou hodinou ráno vyčistit temp tabulky
                 _Factory.p85TempBoxBL.Recovery_ClearCompleteTemp()
+
+                Handle_CentralPing()
             End If
 
             log4net.LogManager.GetLogger("robotlog").Info("End")
@@ -145,6 +147,21 @@
         If lisM62.Count = 0 Then
             _Factory.m62ExchangeRateBL.ImportRateList_CNB(datImport)
         End If
+    End Sub
+    Public Sub Handle_CentralPing()
+        Dim strGUID As String = _Factory.x35GlobalParam.GetValueString("AppScope")
+        Dim strName As String = _Factory.x35GlobalParam.GetValueString("AppName")
+        Dim s As String = "SELECT count(*) as PocetZaznamu,max(p31DateInsert) as PosledniZapis,count(distinct case when p31dateinsert between dateadd(day,-7,getdate()) and getdate() then j02id end) as PocetZapisovacu FROM p31Worksheet"
+        Dim pars As New List(Of BO.PluginDbParameter)
+        Dim dt As DataTable = _Factory.pluginBL.GetDataTable(s, pars)
+
+        s = "http://www.marktime50.net/mtrc/ping.aspx?guid=" & strGUID & "&name=" & Server.HtmlEncode(strName)
+        For Each row As DataRow In dt.Rows
+            s += "&poslednizapis=" & BO.BAS.FD(row.Item("PosledniZapis")) & "&pocetzaznamu=" & row.Item("PocetZaznamu").ToString & "&pocetzapisovacu=" & row.Item("PocetZapisovacu").ToString
+        Next
+
+        Dim rq As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create(s)
+        Dim rs As System.Net.HttpWebResponse = rq.GetResponse()
     End Sub
 
     Public Sub Handle_ScheduledReports()
