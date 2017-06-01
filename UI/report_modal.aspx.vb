@@ -493,7 +493,7 @@ Public Class report_modal
 
     Private Sub report_modal_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If period1.Visible And period1.SelectedValue <> "" Then
-            period1.BackColor = System.Drawing.Color.Red
+            period1.BackColor = basUI.ColorQueryRGB
         Else
             period1.BackColor = Nothing
         End If

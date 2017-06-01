@@ -97,7 +97,7 @@
                                 <tr>
                                     <td colspan="2">
                                         <asp:RadioButtonList ID="p31IsInvoiceManual" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
-                                            <asp:ListItem Text="Částka se bude automaticky přepočítávat měnovým kurzem faktury" Value="0" Selected="true"></asp:ListItem>
+                                            <asp:ListItem Text="Částka bude vycházet ze schvalování s přepočtem podle měnového kurzu faktury" Value="0" Selected="true"></asp:ListItem>
                                             <asp:ListItem Text="Částka se už dále nebude automaticky přepočítávat" Value="1"></asp:ListItem>
                                         </asp:RadioButtonList>
                                     </td>
@@ -313,6 +313,7 @@
 
     <div style="padding-top: 30px;clear:both;"></div>
     <uc:b07_list ID="comments1" runat="server" JS_Create="p31_comment_create()" JS_Reaction="p31_comment_reaction" />
+    <asp:HiddenField ID="hidP33ID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

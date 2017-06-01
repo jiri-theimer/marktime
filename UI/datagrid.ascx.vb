@@ -531,7 +531,7 @@ Public Class datagrid
                 DirectCast(e.Item, GridFilteringItem)(col.UniqueName).HorizontalAlign = col.HeaderStyle.HorizontalAlign
                 If Not String.IsNullOrEmpty(grid1.MasterTableView.FilterExpression) Then
                     If Not String.IsNullOrEmpty(col.CurrentFilterValue) Or col.CurrentFilterFunction = GridKnownFunction.IsNull Or col.CurrentFilterFunction = GridKnownFunction.NotIsNull Then
-                        DirectCast(e.Item, GridFilteringItem)(col.UniqueName).BackColor = Drawing.Color.Red
+                        DirectCast(e.Item, GridFilteringItem)(col.UniqueName).BackColor = basUI.ColorQueryRGB
                     End If
                 End If
             Next

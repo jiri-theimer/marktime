@@ -340,6 +340,8 @@
                                 sql.Append(" AND a.p56ID IN (SELECT p56ID FROM p56Task_FreeField WHERE " & strW & ")")
                             Case BO.x29IdEnum.o23Notepad
                                 sql.Append(" AND a.o23ID IN (SELECT o23ID FROM o23Notepad_FreeField WHERE " & strW & ")")
+                            Case BO.x29IdEnum.p31Worksheet
+                                sql.Append(" AND a.p31ID IN (SELECT p31ID FROM p31WorkSheet_FreeField WHERE " & strW & ")")
                         End Select
 
                     Else

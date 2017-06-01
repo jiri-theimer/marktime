@@ -626,6 +626,15 @@ Partial Public Class p31_record_AI
     Protected WithEvents comments1 As Global.UI.b07_list
 
     '''<summary>
+    '''hidP33ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidP33ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

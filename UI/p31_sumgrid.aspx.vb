@@ -426,7 +426,7 @@ Public Class p31_sumgrid
 
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If
@@ -434,7 +434,7 @@ Public Class p31_sumgrid
         basUIMT.RenderQueryCombo(Me.j70ID)
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If

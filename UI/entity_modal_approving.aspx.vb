@@ -276,7 +276,7 @@
     Private Sub entity_framework_detail_approving_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If

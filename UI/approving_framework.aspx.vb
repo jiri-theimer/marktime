@@ -291,7 +291,7 @@ Public Class approving_framework
         basUIMT.RenderQueryCombo(Me.j70ID)
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If

@@ -1127,14 +1127,14 @@ Public Class entity_framework
         basUIMT.RenderQueryCombo(Me.j70ID)
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
                 If Year(.DateFrom) = Year(.DateUntil) Then
                     Me.CurrentPeriodQuery.Text = Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
                 Else
                     Me.CurrentPeriodQuery.Text = Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
                 End If
                 Me.CurrentPeriodQuery.ToolTip = Me.cbxPeriodType.SelectedItem.Text & Me.CurrentPeriodQuery.Text
-                Me.CurrentPeriodQuery.ForeColor = Drawing.Color.Red
+                Me.CurrentPeriodQuery.ForeColor = System.Drawing.Color.Red
             Else
                 .BackColor = Nothing
                 Me.CurrentPeriodQuery.Text = "Období"

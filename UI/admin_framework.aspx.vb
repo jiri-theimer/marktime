@@ -106,10 +106,10 @@ Public Class admin_framework
         If Trim(txtSearch.Text) = "" Then
             txtSearch.Style.Item("background-color") = ""
         Else
-            txtSearch.Style.Item("background-color") = "red"
+            txtSearch.Style.Item("background-color") = basUI.ColorQueryCSS
         End If
         If query_validity.SelectedIndex > 0 Then
-            query_validity.BackColor = Drawing.Color.Red
+            query_validity.BackColor = basUI.ColorQueryRGB
         Else
             query_validity.BackColor = Nothing
         End If

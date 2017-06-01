@@ -586,7 +586,7 @@ Public Class p31_subgrid
             With Me.period1
                 .Visible = True
                 If .SelectedValue <> "" Then
-                    .BackColor = Drawing.Color.Red
+                    .BackColor = basUI.ColorQueryRGB
                 Else
                     .BackColor = Nothing
                 End If
@@ -595,7 +595,7 @@ Public Class p31_subgrid
         If Me.CurrentJ70ID > 0 Then
             Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & Me.CurrentJ70ID.ToString
             Me.clue_query.Visible = True
-            Me.j70ID.BackColor = Drawing.Color.Red
+            Me.j70ID.BackColor = basUI.ColorQueryRGB
         Else
             Me.clue_query.Visible = False
             Me.j70ID.BackColor = Nothing

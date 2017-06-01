@@ -537,7 +537,7 @@ Public Class p31_grid
         
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If
@@ -545,7 +545,7 @@ Public Class p31_grid
         If Trim(txtSearch.Text) = "" Then
             txtSearch.Style.Item("background-color") = ""
         Else
-            txtSearch.Style.Item("background-color") = "red"
+            txtSearch.Style.Item("background-color") = basUI.ColorQueryCSS
         End If
         If grid1.GetFilterExpression <> "" Then
             cmdCĺearFilter.Visible = True
@@ -554,7 +554,7 @@ Public Class p31_grid
         End If
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If

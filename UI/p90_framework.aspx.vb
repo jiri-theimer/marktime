@@ -75,7 +75,7 @@ Public Class p90_framework
         Dim cRec As BO.p90Proforma = CType(e.Item.DataItem, BO.p90Proforma)
         If cRec.IsClosed Then dataItem.Font.Strikeout = True
         If cRec.p90Amount_Debt > 0 Then
-            dataItem.Item("systemcolumn").BackColor = Drawing.Color.Red
+            dataItem.Item("systemcolumn").BackColor = basUI.ColorQueryRGB
         End If
     End Sub
 
@@ -130,7 +130,7 @@ Public Class p90_framework
     Private Sub p90_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If

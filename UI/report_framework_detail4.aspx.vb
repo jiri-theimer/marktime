@@ -163,7 +163,7 @@ Public Class report_framework_detail4
     Private Sub report_framework_detail4_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = System.Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If

@@ -47,6 +47,7 @@
 
             Me.Client.Text = .ClientName
             p41Name.Text = .p41Name
+            hidP33ID.Value = CInt(.p33ID).ToString
 
             If .p33ID = BO.p33IdENUM.Cas Then
                 p31value_orig.Text = BO.BAS.FN(.p31Value_Orig) & " (" & .p31HHMM_Orig & ")"
@@ -146,7 +147,7 @@
 
                 Handle_FF(cRec.p34ID)
 
-                If cRec.p70ID = BO.p70IdENUM.Vyfakturovano And (cRec.p33ID = BO.p33IdENUM.PenizeBezDPH Or cRec.p33ID = BO.p33IdENUM.PenizeVcDPHRozpisu) Then
+                If cRec.p70ID = BO.p70IdENUM.Vyfakturovano And (cRec.j27ID_Billing_Orig <> cRec.j27ID_Billing_Invoiced) Then
                     p31IsInvoiceManual.Visible = True
                     If cRec.p31IsInvoiceManual Then
                         Me.p31IsInvoiceManual.SelectedValue = "1"
@@ -253,8 +254,12 @@
         If Me.p31IsInvoiceManual.Visible Then
             If Me.p31IsInvoiceManual.SelectedValue = "1" Then
                 Me.Edit_p31Value_Invoiced.Enabled = True
+                Me.Edit_p31Rate_Billing_Invoiced.Enabled = True
+
             Else
                 Me.Edit_p31Value_Invoiced.Enabled = False
+                Me.Edit_p31Rate_Billing_Invoiced.Enabled = False
+               
             End If
         End If
     End Sub
@@ -285,13 +290,12 @@
                     Case BO.p33IdENUM.Cas, BO.p33IdENUM.Kusovnik
                         .InvoiceRate = BO.BAS.IsNullNum(Me.Edit_p31Rate_Billing_Invoiced.Value)
 
-                    Case BO.p33IdENUM.PenizeBezDPH, BO.p33IdENUM.PenizeVcDPHRozpisu
-                        If Me.p31IsInvoiceManual.SelectedValue = "1" Then
-                            .p31IsInvoiceManual = True
-                        Else
-                            .p31IsInvoiceManual = False
-                        End If
                 End Select
+                If Me.p31IsInvoiceManual.SelectedValue = "1" Then
+                    .p31IsInvoiceManual = True
+                Else
+                    .p31IsInvoiceManual = False
+                End If
                 .InvoiceVatRate = BO.BAS.IsNullNum(Me.Edit_p31VatRate_Invoiced.Value)
                 .FixPriceValue = 0
                 If cRec.p33ID = BO.p33IdENUM.Cas Then

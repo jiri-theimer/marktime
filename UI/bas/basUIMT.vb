@@ -551,7 +551,7 @@ Public Class basUIMT
     Public Shared Sub RenderQueryCombo(cbx As DropDownList)
         With cbx
             If .SelectedIndex > 0 Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If
@@ -561,8 +561,8 @@ Public Class basUIMT
     Public Shared Sub RenderQuickqueryLink(cmdClueQuickQuery As HyperLink, intQuickQueryValue As Integer, intBinQueryValue As Integer)
         With cmdClueQuickQuery
             If intQuickQueryValue > 0 Then
-                .BackColor = Drawing.Color.Red
-                .ForeColor = Drawing.Color.White
+                .BackColor = basUI.ColorQueryRGB
+                '.ForeColor = Drawing.Color.White
             Else
                 .BackColor = Nothing
                 .ForeColor = Nothing

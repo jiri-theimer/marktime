@@ -149,7 +149,7 @@ Public Class x40_framework
         basUIMT.RenderQueryCombo(cbxQueryEntity)
         With Me.period1
             If .SelectedValue <> "" Then
-                .BackColor = Drawing.Color.Red
+                .BackColor = basUI.ColorQueryRGB
             Else
                 .BackColor = Nothing
             End If
