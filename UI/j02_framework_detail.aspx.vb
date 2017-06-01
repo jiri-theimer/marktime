@@ -103,6 +103,7 @@
 
             Dim cUser As BO.j03User = Nothing
             Dim mq As New BO.myQueryJ03
+            mq.Closed = BO.BooleanQueryMode.NoQuery
             mq.j02ID = cRec.PID
             Dim lisJ03 As IEnumerable(Of BO.j03User) = Master.Factory.j03UserBL.GetList(mq)
             If lisJ03.Count > 0 Then
@@ -111,6 +112,10 @@
                 With cUser
                     Me.j03Login.Text = .j03Login
                     Me.j04Name.Text = .j04Name
+                    If .IsClosed Then
+                        lblUserHeader.Text = "Uživatelský účet je uzavřený pro přihlašování!"
+                        lblUserHeader.ForeColor = System.Drawing.Color.Red
+                    End If
                 End With
                 AccountMessage.Text = ""
                 Me.CurrentJ03ID = cUser.PID

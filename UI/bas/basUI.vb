@@ -5,10 +5,10 @@
 End Enum
 Public Class basUI
     Public Shared Function ColorQueryRGB() As System.Drawing.Color
-        Return System.Drawing.Color.FromArgb(255, 153, 153)
+        Return System.Drawing.Color.FromArgb(255, 128, 128)
     End Function
     Public Shared Function ColorQueryCSS() As String
-        Return "#ff9999"
+        Return "#ff8080"
     End Function
 
     Public Shared Function ParseRefUri(pageuri As System.Uri) As String

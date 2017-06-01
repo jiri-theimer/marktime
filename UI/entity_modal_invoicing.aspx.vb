@@ -270,16 +270,18 @@
         If strButtonValue = "save" Then
             If p91Datep31_From.IsEmpty Then p91Datep31_From.SelectedDate = Today
             If p91Datep31_Until.IsEmpty Then p91Datep31_Until.SelectedDate = Today
-            If p91DateMaturity.IsEmpty Or p91Date.IsEmpty Or p91DateSupply.IsEmpty Then
-                Master.Notify("Chybí datum splatnosti, vystavení nebo plnění.", NotifyLevel.ErrorMessage) : Return
+            If p91Date.IsEmpty Or p91DateSupply.IsEmpty Then
+                Master.Notify("Chybí datum vystavení nebo plnění.", NotifyLevel.ErrorMessage) : Return
                 Return
             End If
-            Dim errs As New List(Of String), x As Integer = 0, intLastP91ID As Integer = 0
+            Dim errs As New List(Of String), x As Integer = 0, intLastP91ID As Integer = 0, intGlobalMaturityDays As Integer = Master.Factory.x35GlobalParam.GetValueInteger("DefMaturityDays", "10")
 
             Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates", BO.BAS.GB(Me.chkRememberDates.Checked))
             Master.Factory.j03UserBL.SetUserParam("p91_create-remembermaturity", BO.BAS.GB(Me.chkRememberMaturiy.Checked))
             If Me.chkRememberDates.Checked Or Me.chkRememberMaturiy.Checked Then
-                Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates-values", MFD(Me.p91DateSupply.SelectedDate) & "|" & MFD(Me.p91Date.SelectedDate) & "|" & MFD(Me.p91DateMaturity.SelectedDate) & "|" & MFD(Me.p91Datep31_From.SelectedDate) & "|" & MFD(Me.p91Datep31_Until.SelectedDate))
+                If Not Me.p91DateMaturity.IsEmpty Then
+                    Master.Factory.j03UserBL.SetUserParam("p91_create-rememberdates-values", MFD(Me.p91DateSupply.SelectedDate) & "|" & MFD(Me.p91Date.SelectedDate) & "|" & MFD(Me.p91DateMaturity.SelectedDate) & "|" & MFD(Me.p91Datep31_From.SelectedDate) & "|" & MFD(Me.p91Datep31_Until.SelectedDate))
+                End If
             End If
 
             For Each ri As RepeaterItem In rp1.Items
@@ -287,6 +289,7 @@
                 Dim intP92ID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("p92ID"), DropDownList).SelectedValue)
                 Dim strRecord As String = CType(ri.FindControl("Entity"), Label).Text
                 Dim strP91Text1 As String = CType(ri.FindControl("p91Text1"), TextBox).Text
+                Dim intMaturityDays As Integer = intGlobalMaturityDays
 
                 Dim intP28ID As Integer
                 Dim mqP31 As New BO.myQueryP31
@@ -300,10 +303,13 @@
                     Dim c As BO.p41Project = Master.Factory.p41ProjectBL.Load(intPID)
                     intP28ID = c.p28ID_Billing
                     If intP28ID = 0 Then intP28ID = c.p28ID_Client
+                    If c.p41InvoiceMaturityDays > 0 Then intMaturityDays = c.p41InvoiceMaturityDays
                 End If
                 If Me.CurrentX29ID = BO.x29IdEnum.p28Contact Then
                     mqP31.p28ID_Client = intPID
                     intP28ID = intPID
+                    Dim c As BO.p28Contact = Master.Factory.p28ContactBL.Load(intP28ID)
+                    If c.p28InvoiceMaturityDays > 0 Then intMaturityDays = c.p28InvoiceMaturityDays
                 End If
                 Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mqP31)
                 Dim strGUID As String = BO.BAS.GetGUID
@@ -357,7 +363,13 @@
 
                     .InvoiceText1 = strP91Text1
                     .DateIssue = Me.p91Date.SelectedDate
-                    .DateMaturity = Me.p91DateMaturity.SelectedDate
+                    If Not Me.p91DateMaturity.IsEmpty Then
+                        .DateMaturity = Me.p91DateMaturity.SelectedDate
+                    Else
+                        'zjistit splatnost z klienta/projektu
+                        .DateMaturity = Today.AddDays(CDbl(intMaturityDays))
+                    End If
+
                     .DateSupply = Me.p91DateSupply.SelectedDate
                     .DateP31_From = Me.p91Datep31_From.SelectedDate
                     .DateP31_Until = Me.p91Datep31_Until.SelectedDate

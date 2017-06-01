@@ -138,7 +138,7 @@
     </div>
     <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">
         <div class="title">
-            <img src="Images/user.png" style="margin-right: 10px;" />Uživatelský účet
+            <img src="Images/user.png" style="margin-right: 10px;" /><asp:label ID="lblUserHeader" runat="server" Text="Uživatelský účet"></asp:label>
         </div>
         <div class="content">
             <asp:Panel ID="panAccount" runat="server">
