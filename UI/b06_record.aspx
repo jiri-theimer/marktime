@@ -191,8 +191,15 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </table>
-
-
+            <hr />
+            <div class="div6">
+            <span>Založit file-system složku:</span>
+            <asp:textbox ID="b06CreateDirectory" runat="server" Width="400px"></asp:textbox>
+            </div>
+            <div class="div6">
+            <span>Založit file-system pod-složky:</span>
+            <asp:textbox ID="b06CreateSubdirectory" runat="server" Width="400px"></asp:textbox>
+            </div>
 
         </telerik:RadPageView>
 

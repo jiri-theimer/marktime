@@ -19,6 +19,10 @@
     Public Property b06ValidateAutoMoveSQL As String
     Public Property b06ValidateBeforeErrorMessage As String
     Public Property b06IsRunOneInstanceOnly As Boolean  'zda je povoleno spustit krok pouze jednou
+    Public Property b06CreateDirectory As String
+    Public Property b06CreateSubdirectory As String
+
+
 
     Private Property _TargetStatus As String
 

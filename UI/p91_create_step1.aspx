@@ -65,7 +65,10 @@
                             <asp:ListItem Text="Vyfakturovat schválené úkony projekjtu" Value="p41"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovat schválené úkony osoby" Value="j02"></asp:ListItem>
                             <asp:ListItem Text="Vyfakturovat schválené úkony úkolu" Value="p56"></asp:ListItem>
-                            <asp:ListItem Text="Zrychlená fakturace jednou částkou" Value="quick" style="color: blue;"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovat úkony klienta zrychleně bez schvalování" Value="p28-draft"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovat úkony projektu zrychleně bez schvalování" Value="p41-draft"></asp:ListItem>
+                            <asp:ListItem Text="Vyfakturovat schválené úkony projekjtu" Value="p41"></asp:ListItem>
+                            <asp:ListItem Text="Nejrychlejší fakturace jednou částkou" Value="quick" style="color: blue;"></asp:ListItem>
                         </asp:RadioButtonList>
                     </fieldset>
                 </td>

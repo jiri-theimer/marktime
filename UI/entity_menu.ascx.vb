@@ -224,7 +224,7 @@ Public Class entity_menu
             If bolCanApproveOrInvoice Then
                 ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
                 If Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
-                    ami("Vystavit DRAFT fakturu bez schvalování", "cmdDraft", "javascript:menu_p41_invoice_draft();", "Images/invoice.png", mi)
+                    ami("Vystavit fakturu zrychleně bez schvalování", "cmdDraft", "javascript:menu_p41_invoice_draft();", "Images/invoice.png", mi)
                 End If
             End If
             Me.hidIsCanApprove.Value = BO.BAS.GB(bolCanApproveOrInvoice)
@@ -519,7 +519,7 @@ Public Class entity_menu
             If cRec.p28SupplierFlag <> BO.p28SupplierFlagENUM.NotClientNotSupplier Then
                 ami("Schvalovat nebo vystavit fakturu", "cmdApprove", "javascript:approve();", "Images/approve.png", mi, , True)
                 If Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator, BO.x53PermValEnum.GR_P31_Approver) Then
-                    ami("Vystavit DRAFT fakturu bez schvalování", "cmdDraft", "javascript:menu_p28_invoice_draft();", "Images/invoice.png", mi)
+                    ami("Vystavit fakturu zrychleně bez schvalování", "cmdDraft", "javascript:menu_p28_invoice_draft();", "Images/invoice.png", mi)
                 End If
             End If
 

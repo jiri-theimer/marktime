@@ -165,7 +165,7 @@
     <div style="background-color: white;">
         <div style="float: left;">
             <img src="Images/approve_32.png" title="Příprava fakturačních podkladů" />
-            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Schvalovat úkony"></asp:Label>
+            <asp:Label ID="lblHeader" runat="server" CssClass="page_header_span" Text="Schvalovat úkony" Visible="false"></asp:Label>
         </div>
 
         <div class="commandcell" style="padding-left: 20px;">
@@ -190,12 +190,12 @@
         <div class="commandcell" style="margin-left: 12px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
-                    <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
+                    <telerik:RadMenuItem Text="Akce pro vybrané (zaškrtlé)" ImageUrl="Images/menuarrow.png">
                         <Items>
-                            <telerik:RadMenuItem Text="Zahájit schvalovací/fakturační průvodce pro označené" Value="approve" NavigateUrl="javascript:approve_selected()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Hromadně vygenerovat DRAFT faktury" Value="draft" NavigateUrl="javascript:invoice_selected()" ImageUrl="Images/invoice.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Zahájit schvalovací/fakturační proces" Value="approve" NavigateUrl="javascript:approve_selected()" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Vystavit faktury zrychleně bez schvalování" Value="draft" NavigateUrl="javascript:invoice_selected()" ImageUrl="Images/invoice.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Přesunout nevyfakturované úkony do archivu" Value="bin" NavigateUrl="javascript:p31_move2bin()" ImageUrl="Images/bin.png"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Tisková sestava (funguje i hromadný tisk)" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Tisková sestava" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/menuarrow.png">

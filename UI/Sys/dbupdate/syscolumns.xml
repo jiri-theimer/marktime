@@ -2282,6 +2282,72 @@
     <TableName>b06WorkflowStep</TableName>
   </Table>
   <Table>
+    <name>b06CreateDirectory</name>
+    <id>2099048</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>255</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>29</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>29</colorder>
+    <offset>-20</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>255</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>b06WorkflowStep</TableName>
+  </Table>
+  <Table>
+    <name>b06CreateSubdirectory</name>
+    <id>2099048</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>255</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>30</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>30</colorder>
+    <offset>-21</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>255</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>b06WorkflowStep</TableName>
+  </Table>
+  <Table>
     <name>b07ID</name>
     <id>2052202361</id>
     <xtype>56</xtype>

@@ -36,6 +36,13 @@
 
                 Handle_CentralPing()
             End If
+            If BO.ASS.GetConfigVal("autobackup", "1") = "1" Then
+                If Now > Today.AddDays(1).AddHours(-1) Then
+                    'zbývá hodina do půlnoci na zálohování
+                    Handle_DbBackup()
+                End If
+            End If
+            
 
             log4net.LogManager.GetLogger("robotlog").Info("End")
 
@@ -45,6 +52,9 @@
                 Me.lblMessage.Text = String.Format("Robot spuštěn pro den {0}.", Request.Item("now"))
             End If
 
+            If Request.Item("backup") = "1" Then
+                Handle_DbBackup()
+            End If
         End If
 
     End Sub
@@ -304,6 +314,48 @@
 
             End If
         Next
+
+    End Sub
+
+    Private Sub Handle_DbBackup()
+        Dim cBL As New BL.SysObjectBL()
+        Dim strDir As String = _Factory.x35GlobalParam.UploadFolder & "\dbBackup"
+        If Not System.IO.Directory.Exists(strDir) Then
+            Try
+                System.IO.Directory.CreateDirectory(strDir)
+            Catch ex As Exception
+                log4net.LogManager.GetLogger("robotlog").Error("Handle_DbBackup: " & ex.Message)
+                Return
+            End Try
+        End If
+        Dim strBackupFileName As String = "MARKTIME50_Backup_day" & Weekday(Now, Microsoft.VisualBasic.FirstDayOfWeek.Monday).ToString & ".bak"
+
+        If System.IO.File.Exists(strDir & "\" & strBackupFileName) Then
+            If System.IO.File.Exists(strDir & "\backup.info") Then
+                Dim cF As New BO.clsFile
+                Dim strDat As String = cF.GetFileContents(strDir & "\backup.info", , , True)
+                If strDat = Format(Now, "dd.MM.yyyy") Then
+                    Return  'záloha pro tento den již existuje
+                Else
+                    Try
+                        System.IO.File.Delete(strDir & "\" & strBackupFileName)
+                    Catch ex As Exception
+                        log4net.LogManager.GetLogger("robotlog").Error("Nelze odstranit starý backup soubor: " & strDir & "\" & strBackupFileName)
+                        Return
+                    End Try
+                End If
+            End If
+        End If
+
+        Dim strRet As String = cBL.CreateDbBackup(, strDir, strBackupFileName)
+        If strRet <> strBackupFileName Then
+            log4net.LogManager.GetLogger("robotlog").Error("Handle_DbBackup: " & strRet)
+        Else
+            Dim cF As New BO.clsFile
+            cF.SaveText2File(strDir & "\backup.info", Format(Now, "dd.MM.yyyy"))
+
+
+        End If
 
     End Sub
 End Class

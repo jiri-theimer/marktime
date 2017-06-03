@@ -3954,6 +3954,10 @@ AS
 
 ---automaticky se spouští po uložení záznamu osoby
 
+if exists(select j03ID FROM j03User WHERE j02ID=@j02id)
+ UPDATE a set j03ValidFrom=b.j02ValidFrom,j03ValidUntil=b.j02ValidUntil FROM j03User a INNER JOIN j02Person b ON a.j02ID=b.j02ID WHERE a.j02ID=@j02id
+ 
+
 exec [x90_appendlog] 102,@j02id,@j03id_sys
 
 

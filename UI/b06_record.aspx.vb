@@ -122,6 +122,8 @@
             Else
                 Me.chkDirectNominee.Checked = False
             End If
+            Me.b06CreateDirectory.Text = .b06CreateDirectory
+            Me.b06CreateSubdirectory.Text = .b06CreateSubdirectory
 
             Master.Timestamp = .Timestamp
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -219,6 +221,8 @@
 
                 .b06IsRunOneInstanceOnly = Me.b06IsRunOneInstanceOnly.Checked
 
+                .b06CreateDirectory = Me.b06CreateDirectory.Text
+                .b06CreateSubdirectory = Me.b06CreateSubdirectory.Text
 
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil

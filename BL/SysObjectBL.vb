@@ -7,11 +7,12 @@
         _factory = New BL.Factory(Nothing)
     End Sub
 
-    Public Function CreateDbBackup(strCon As String) As String
+    Public Function CreateDbBackup(Optional strCon As String = "", Optional strBackupDir As String = "", Optional strBakFileName As String = "") As String
         Dim cBAK As New DL.clsDbBackup()
         cBAK.IsUseDumpDevice = False
-        Dim strBackupDir As String = _factory.x35GlobalParam.TempFolder
-        Dim strBakFileName As String = "MARKTIME50_Backup_" & Format(Now, "ddMMyyyyHHmmss") & ".bak"
+        If strCon = "" Then strCon = System.Configuration.ConfigurationManager.ConnectionStrings.Item("ApplicationPrimary").ToString
+        If strBackupDir = "" Then strBackupDir = _factory.x35GlobalParam.TempFolder
+        If strBakFileName = "" Then strBakFileName = "MARKTIME50_Backup_" & Format(Now, "ddMMyyyyHHmmss") & ".bak"
         cBAK.MakeBackup(strCon, strBakFileName, strBackupDir)
 
         If cBAK.ErrorMessage <> "" Then

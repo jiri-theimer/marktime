@@ -47,6 +47,8 @@
                 pars.Add("b06IsNomineeRequired", .b06IsNomineeRequired, DbType.Boolean)
                 
                 pars.Add("b06IsRunOneInstanceOnly", .b06IsRunOneInstanceOnly, DbType.Boolean)
+                pars.Add("b06CreateDirectory", .b06CreateDirectory, DbType.String)
+                pars.Add("b06CreateSubdirectory", .b06CreateSubdirectory, DbType.String)
 
                 pars.Add("b06validfrom", cRec.ValidFrom, DbType.DateTime)
                 pars.Add("b06validuntil", cRec.ValidUntil, DbType.DateTime)

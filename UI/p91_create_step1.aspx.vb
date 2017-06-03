@@ -119,21 +119,21 @@ Public Class p91_create_step1
         Me.p28id.Visible = False : Me.j02id.Visible = False : Me.p41id.Visible = False : Me.panQuick.Visible = False
 
         Select Case Me.CurrentPrefix
-            Case "p28"
+            Case "p28", "p28-draft"
                 Me.p28id.Visible = True
                 lblFindEntity.Text = "Vyberte klienta:"
 
                 imgEntity.ImageUrl = "Images/contact_32.png"
-            Case "p41"
+            Case "p41", "p41-draft"
                 Me.p41id.Visible = True
                 Me.lblFindEntity.Text = "Vyberte projekt:"
 
                 imgEntity.ImageUrl = "Images/project_32.png"
-            Case "j02"
+            Case "j02", "j02-draft"
                 Me.j02id.Visible = True
                 lblFindEntity.Text = "Vyberte osobu:"
                 imgEntity.ImageUrl = "Images/person_32.png"
-            Case "p56"
+            Case "p56", "p56-draft"
                 imgEntity.ImageUrl = "Images/task_32.png"
             Case "quick"
                 Me.panQuick.Visible = True
@@ -245,6 +245,10 @@ Public Class p91_create_step1
                 cTEMP.p85Prefix = "p31"
                 Master.Factory.p85TempBoxBL.Save(cTEMP)
             Next
+            If Me.CurrentPrefix = "p28-draft" Or Me.CurrentPrefix = "p41-draft" Then
+                Server.Transfer("entity_modal_invoicing.aspx?prefix=" & Me.CurrentPrefix & "&pids=" & Master.DataPID.ToString, False)
+                Return
+            End If
             If Me.CurrentPrefix = "quick" Then
                 Me.CurrentPrefix = "p41"
                 Master.DataPID = Master.Factory.p31WorksheetBL.Load(Master.DataPID).p41ID
@@ -324,16 +328,16 @@ Public Class p91_create_step1
             masterpids.Add(Master.DataPID)
         End If
         Select Case Me.CurrentPrefix
-            Case "p28"
+            Case "p28", "p28-draft"
                 ''mq.p28ID_Client = intPID
                 mq.p28IDs_Client = masterpids
-            Case "p41"
+            Case "p41", "p41_draft"
                 '' mq.p41ID = intPID
                 mq.p41IDs = masterpids
-            Case "j02"
+            Case "j02", "j02-draft"
                 ''mq.j02ID = intPID
                 mq.j02IDs = masterpids
-            Case "p56"
+            Case "p56", "p56-draft"
                 mq.p56IDs = masterpids
             Case "quick"
                 mq.AddItemToPIDs(Master.DataPID)

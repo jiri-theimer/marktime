@@ -329,6 +329,24 @@ Partial Public Class b06_record
     Protected WithEvents rpB10 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''b06CreateDirectory control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b06CreateDirectory As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''b06CreateSubdirectory control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b06CreateSubdirectory As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''RadPageView5 control.
     '''</summary>
     '''<remarks>

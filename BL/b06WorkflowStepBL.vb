@@ -261,27 +261,80 @@ Class b06WorkflowStepBL
         End If
         _cDL.RunB09Commands(intRecordPID, x29id, cB06.PID)
 
+        If cB06.b06CreateDirectory <> "" Then
+            CreateDirectories(intRecordPID, cB06, x29id)
+        End If
+
         If Not bolStopAutoNotification Then
             'test případné mailové notifikace
-            Dim objects As New List(Of Object)
-            Select Case x29id
-                Case BO.x29IdEnum.p56Task
-                    objects.Add(Factory.p56TaskBL.Load(intRecordPID))
-                Case BO.x29IdEnum.p41Project
-                    objects.Add(Factory.p41ProjectBL.Load(intRecordPID))
-                Case BO.x29IdEnum.p28Contact
-                    objects.Add(Factory.p28ContactBL.Load(intRecordPID))
-                Case BO.x29IdEnum.p91Invoice
-                    objects.Add(Factory.p91InvoiceBL.Load(intRecordPID))
-                Case BO.x29IdEnum.o23Notepad
-                    objects.Add(Factory.o23NotepadBL.Load(intRecordPID))
-            End Select
-            If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
+            Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, intP41ID_Ref)
+            ''Select Case x29id
+            ''    Case BO.x29IdEnum.p56Task
+            ''        objects.Add(Factory.p56TaskBL.Load(intRecordPID))
+            ''    Case BO.x29IdEnum.p41Project
+            ''        objects.Add(Factory.p41ProjectBL.Load(intRecordPID))
+            ''    Case BO.x29IdEnum.p28Contact
+            ''        objects.Add(Factory.p28ContactBL.Load(intRecordPID))
+            ''    Case BO.x29IdEnum.p91Invoice
+            ''        objects.Add(Factory.p91InvoiceBL.Load(intRecordPID))
+            ''    Case BO.x29IdEnum.o23Notepad
+            ''        objects.Add(Factory.o23NotepadBL.Load(intRecordPID))
+            ''End Select
+            ''If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
 
             Handle_Notification(cB06, intRecordPID, x29id, intJ02ID_Owner, objects, intP41ID_Ref, strComment)
         End If
         Return True
     End Function
+
+    Private Function GetObjects(intRecordPID As Integer, x29id As BO.x29IdEnum, intP41ID_Ref As Integer) As List(Of Object)
+        Dim objects As New List(Of Object)
+        Select Case x29id
+            Case BO.x29IdEnum.p56Task
+                objects.Add(Factory.p56TaskBL.Load(intRecordPID))
+            Case BO.x29IdEnum.p41Project
+                objects.Add(Factory.p41ProjectBL.Load(intRecordPID))
+            Case BO.x29IdEnum.p28Contact
+                objects.Add(Factory.p28ContactBL.Load(intRecordPID))
+            Case BO.x29IdEnum.p91Invoice
+                objects.Add(Factory.p91InvoiceBL.Load(intRecordPID))
+            Case BO.x29IdEnum.o23Notepad
+                objects.Add(Factory.o23NotepadBL.Load(intRecordPID))
+        End Select
+        If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
+        Return objects
+    End Function
+    Private Sub CreateDirectories(intRecordPID As Integer, cB06 As BO.b06WorkflowStep, x29id As BO.x29IdEnum)
+        _Error = ""
+        With cB06
+            If Trim(.b06CreateDirectory) = "" Then Return
+        End With
+
+        Dim objects As List(Of Object) = GetObjects(intRecordPID, x29id, 0)
+
+        Dim cM As New BO.clsMergeContent, strMasterDIR As String = cB06.b06CreateDirectory
+        strMasterDIR = cM.MergeContent(objects, strMasterDIR, "")
+
+        Try
+            If Not System.IO.Directory.Exists(strMasterDIR) Then
+                System.IO.Directory.CreateDirectory(strMasterDIR)
+            End If
+            If cB06.b06CreateSubdirectory <> "" Then
+                Dim subdirs As List(Of String) = BO.BAS.ConvertDelimitedString2List(cB06.b06CreateSubdirectory, ";")
+                For Each strDir In subdirs
+                    Try
+                        System.IO.Directory.CreateDirectory(strMasterDIR & "\" & strDir)
+                    Catch ex As Exception
+
+                    End Try
+                Next
+            End If
+
+        Catch ex As Exception
+            _Error += " | " & ex.Message
+        End Try
+
+    End Sub
 
     Private Sub Handle_Notification(cB06 As BO.b06WorkflowStep, intRecordPID As Integer, x29id As BO.x29IdEnum, intJ02ID_Owner As Integer, objects As List(Of Object), intP41ID_Ref As Integer, strComment As String)
         Dim lisB11 As IEnumerable(Of BO.b11WorkflowMessageToStep) = GetList_B11(cB06.PID)

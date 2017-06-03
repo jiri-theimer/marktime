@@ -1,6 +1,6 @@
 ﻿Public Class clsMergeContent
     Public Function MergeContent(objects As List(Of Object), strTemplateContent As String, strLinkUrl As String) As String
-        strTemplateContent = Replace(strTemplateContent, "[%link%]", strLinkUrl, , , CompareMethod.Text)
+        If strLinkUrl <> "" Then strTemplateContent = Replace(strTemplateContent, "[%link%]", strLinkUrl, , , CompareMethod.Text)
 
         Dim fields As List(Of String) = GetAllMergeFieldsInContent(strTemplateContent)
         Dim reps As New List(Of BO.EasyStringColletion)
