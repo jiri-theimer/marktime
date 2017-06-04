@@ -46,11 +46,13 @@ Public Class entity_framework_rec_p41
                     .Add("entiy_framework_p41subform-validity")
                     .Add("entiy_framework_p41subform-x67id")
                     .Add(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
+                    .Add(Me.CurrentMasterPrefix & "_menu-menuskin")
                     .Add(strKey)
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     menu1.TabSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-tabskin")
+                    menu1.MenuSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
                     ViewState("j74id") = .GetUserParam(strKey, "0")
 

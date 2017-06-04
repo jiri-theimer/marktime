@@ -319,8 +319,9 @@
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
     <div style="clear: both;"></div>
+    
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
-
+    
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
 
 </asp:Content>

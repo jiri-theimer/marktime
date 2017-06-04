@@ -21,11 +21,13 @@ Public Class p28_framework_detail_p90
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p28_menu-tabskin")
+                    .Add("p28_menu-menuskin")
                     .Add("p28_menu-x31id-plugin")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
+                    menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam("p28_menu-x31id-plugin")
                 End With
             End With

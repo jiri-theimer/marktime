@@ -30,7 +30,9 @@
                 With lisPars
                     .Add("p41_framework_detail-pid")
                     .Add("p41_framework_detail-tab")
-                    .Add("p41_menu-tabskin-tabskin")
+                    .Add("p41_menu-remember-tab")
+                    .Add("p41_menu-tabskin")
+                    .Add("p41_menu-menuskin")
                     .Add("p41_framework_detail-chkFFShowFilledOnly")
                     .Add("p41_framework_detail_pos")
                     .Add("p41_menu-x31id-plugin")
@@ -48,8 +50,9 @@
                             .SetUserParam("p41_framework_detail-pid", intPID.ToString)
                         End If
                     End If
+
                     Dim strTab As String = Request.Item("tab")
-                    If strTab = "" Then strTab = .GetUserParam("p41_framework_detail-tab") 'logika přesměrování
+                    If strTab = "" And .GetUserParam("p41_menu-remember-tab", "0") = "1" Then strTab = .GetUserParam("p41_framework_detail-tab") 'logika přesměrování
                     Select Case strTab
                         Case "p31", "time", "expense", "fee", "kusovnik"
                             Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p41&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
@@ -62,8 +65,8 @@
                     End Select
 
                     Master.DataPID = intPID
-
-                    menu1.TabSkin = .GetUserParam("p41_menu-tabskin-tabskin")
+                    menu1.MenuSkin = .GetUserParam("p41_menu-menuskin")
+                    menu1.TabSkin = .GetUserParam("p41_menu-tabskin")
                     menu1.x31ID_Plugin = .GetUserParam("p41_menu-x31id-plugin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkFFShowFilledOnly", "0"))
 
@@ -464,4 +467,6 @@
             If cRec.IsClosed Then .Font.Strikeout = True
         End With
     End Sub
+
+   
 End Class

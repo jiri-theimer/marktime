@@ -24,9 +24,12 @@
             Dim lisPars As New List(Of String)
             With lisPars
                 .Add(Me.CurrentPrefix + "_menu-tabskin")
+                .Add(Me.CurrentPrefix + "_menu-menuskin")
                 .Add(Me.CurrentPrefix + "_menu-x31id-plugin")
+                .Add(Me.CurrentPrefix + "_menu-remember-tab")
                 ''.Add(Me.CurrentPrefix + "_menu-searchbox")
             End With
+
             Me.x31ID_Plugin.DataSource = Master.Factory.x31ReportBL.GetList().Where(Function(p) p.x31FormatFlag = BO.x31FormatFlagENUM.ASPX And p.x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentPrefix) And p.x31PluginFlag = BO.x31PluginFlagENUM._AfterEntityMenu)
             Me.x31ID_Plugin.DataBind()
             Me.x31ID_Plugin.Items.Insert(0, "")
@@ -34,7 +37,9 @@
             With Master.Factory.j03UserBL
                 .InhaleUserParams(lisPars)
 
+                Me.chkRememberLastTab.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-remember-tab", "0"))
                 basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_menu-tabskin", "Default"))
+                basUI.SelectDropdownlistValue(Me.skin0, .GetUserParam(Me.CurrentPrefix + "_menu-menuskin", "Default"))
                 basUI.SelectDropdownlistValue(Me.x31ID_Plugin, .GetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin"))
 
             End With
@@ -84,7 +89,9 @@
             End If
             With Master.Factory.j03UserBL
                 .SetUserParam(Me.CurrentPrefix + "_menu-tabskin", Me.skin1.SelectedValue)
+                .SetUserParam(Me.CurrentPrefix + "_menu-menuskin", Me.skin0.SelectedValue)
                 .SetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin", Me.x31ID_Plugin.SelectedValue)
+                .SetUserParam(Me.CurrentPrefix + "_menu-remember-tab", BO.BAS.GB(Me.chkRememberLastTab.Checked))
             End With
             Master.CloseAndRefreshParent("setting")
         End If

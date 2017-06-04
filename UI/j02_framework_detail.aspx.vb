@@ -33,7 +33,9 @@
                 With lisPars
                     .Add("j02_framework_detail-pid")
                     .Add("j02_framework_detail-tab")
+                    .Add("j02_menu-remember-tab")
                     .Add("j02_menu-tabskin")
+                    .Add("j02_menu-menuskin")
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
                 End With
                 Dim intPID As Integer = Master.DataPID
@@ -48,7 +50,7 @@
                         End If
                     End If
                     Dim strTab As String = Request.Item("tab")
-                    If strTab = "" Then strTab = .GetUserParam("j02_framework_detail-tab", "board")
+                    If strTab = "" And .GetUserParam("j02_menu-remember-tab", "0") = "1" Then strTab = .GetUserParam("j02_framework_detail-tab", "board")
                     Select Case strTab
                         Case "p31", "time", "expense", "fee", "kusovnik"
                             Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=j02&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
@@ -58,6 +60,7 @@
                             'zůstat zde na BOARD stránce
                     End Select
                     menu1.TabSkin = .GetUserParam("j02_menu-tabskin")
+                    menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
                 Master.DataPID = intPID

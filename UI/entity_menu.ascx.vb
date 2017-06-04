@@ -40,6 +40,15 @@ Public Class entity_menu
             tabs1.Skin = value
         End Set
     End Property
+    Public Property MenuSkin As String
+        Get
+            Return menu1.Skin
+        End Get
+        Set(value As String)
+            If value = "" Then value = "Default"
+            menu1.Skin = value
+        End Set
+    End Property
     Public Property x31ID_Plugin As String
         Get
             Return Me.hidPlugin.Value

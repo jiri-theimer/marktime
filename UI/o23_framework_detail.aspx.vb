@@ -32,6 +32,7 @@
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("o23_menu-tabskin")
+                    .Add("o23_menu-menuskin")
                     .Add("o23_framework_detail-pid")
                     .Add("o23_framework_detail-chkFFShowFilledOnly")
                 End With
@@ -49,6 +50,7 @@
                         End If
                     End If
                     menu1.TabSkin = .GetUserParam("o23_menu-tabskin")
+                    menu1.MenuSkin = .GetUserParam("o23_menu-menuskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("o23_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
 

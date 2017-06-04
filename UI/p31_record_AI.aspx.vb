@@ -123,11 +123,10 @@
                     imgKorekceInternal.Visible = False
                 End If
                 If .j02ID_ApprovedBy > 0 Then
-
+                    lblTimestamp_Approve.Text = "<img src='Images/approve.png'> " & "Schválil" & ": " & Master.Factory.j02PersonBL.Load(.j02ID_ApprovedBy).FullNameDesc & "/" & BO.BAS.FD(.p31Approved_When, True, True)
                 End If
-
-                lblTimestamp_Approve.Text = "<img src='Images/approve.png'> " & "Schválil" & ": " & Master.Factory.j02PersonBL.Load(.j02ID_ApprovedBy).FullNameDesc & "/" & BO.BAS.FD(.p31Approved_When, True, True)
-
+               
+                
 
             Else
                 panApproved.Visible = False

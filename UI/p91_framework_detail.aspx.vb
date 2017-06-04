@@ -30,6 +30,7 @@ Public Class p91_framework_detail
                     .Add("p91_framework_detail-pagesize")
                     .Add("p91_framework_detail-chkFFShowFilledOnly")
                     .Add("p91_menu-tabskin")
+                    .Add("p91_menu-menuskin")
                     .Add("p91_framework_detail-searchbox")
                 End With
 
@@ -68,6 +69,7 @@ Public Class p91_framework_detail
 
             
             tabs1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-tabskin", "Default")
+            menu1.Skin = Master.Factory.j03UserBL.GetUserParam("p91_menu-menuskin", "Default")
         End If
         
         AdaptMenu()

@@ -9,7 +9,31 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:panel ID="panPlugin" runat="server"  CssClass="content-box2" style="margin-top:20px;">
+    <div class="div6">
+        <span>Vzhled (Skin) kontextového menu stránky:</span>
+        <asp:DropDownList ID="skin0" runat="server">
+            <asp:ListItem Text="--Výchozí--" Value="Default" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="Metro" Value="Metro"></asp:ListItem>
+            
+
+            
+            <asp:ListItem Text="WebBlue" Value="WebBlue"></asp:ListItem>
+            <asp:ListItem Text="Web20" Value="Web20"></asp:ListItem>
+            
+            <asp:ListItem Text="Outlook" Value="Outlook"></asp:ListItem>
+            <asp:ListItem Text="Office2007" Value="Office2007"></asp:ListItem>
+            <asp:ListItem Text="Office2010Blue" Value="Office2010Blue"></asp:ListItem>
+            <asp:ListItem Text="Office2010Black" Value="Office2010Black"></asp:ListItem>
+            <asp:ListItem Text="Office2010Silver" Value="Office2010Silver"></asp:ListItem>
+            
+            <asp:ListItem Text="Sunset" Value="Sunset"></asp:ListItem>
+            
+            <asp:ListItem Text="Vista" Value="Vista"></asp:ListItem>
+            
+        </asp:DropDownList>
+    </div>
+
+    <asp:Panel ID="panPlugin" runat="server" CssClass="content-box2" Style="margin-top: 20px;">
         <div class="title">
             Plugin umístěný nad záložkami
             
@@ -17,13 +41,16 @@
         <div class="content">
             <asp:DropDownList ID="x31ID_Plugin" runat="server" DataValueField="pid" DataTextField="NameWithFormat"></asp:DropDownList>
         </div>
-    </asp:panel>
+    </asp:Panel>
 
-    <div class="content-box2" style="margin-top:20px;">
+    <div class="content-box2" style="margin-top: 20px;">
         <div class="title">
             Záložky
         </div>
         <div class="content">
+            <div class="div6">
+                <asp:CheckBox ID="chkRememberLastTab" runat="server" Text="Pamatovat si poslední záložku na stránce" />
+            </div>
             <div class="div6">
                 <span>Vzhled (Skin) záložek:</span>
                 <asp:DropDownList ID="skin1" runat="server">
@@ -45,36 +72,36 @@
                     <asp:ListItem Text="Simple" Value="Simple"></asp:ListItem>
                     <asp:ListItem Text="Black" Value="Black"></asp:ListItem>
                     <asp:ListItem Text="Vista" Value="Vista"></asp:ListItem>
-                    <asp:ListItem Text="Windows7" Value="Windows7"></asp:ListItem>                    
+                    <asp:ListItem Text="Windows7" Value="Windows7"></asp:ListItem>
                 </asp:DropDownList>
             </div>
 
             <asp:Panel ID="panTabs" runat="server">
-            <table cellpadding="8">
-                <tr valign="top">
-                    <td>
-                        <div>Dostupné záložky</div>
-                        <telerik:RadListBox ID="colsSource" Height="200px" runat="server" DataTextField="x61Name" DataValueField="x61ID" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
-                            <ButtonSettings TransferButtons="All" ShowTransferAll="false" />
+                <table cellpadding="8">
+                    <tr valign="top">
+                        <td>
+                            <div>Dostupné záložky</div>
+                            <telerik:RadListBox ID="colsSource" Height="200px" runat="server" DataTextField="x61Name" DataValueField="x61ID" AllowTransfer="true" TransferMode="Move" TransferToID="colsDest" SelectionMode="Single" Culture="cs-CZ" AllowTransferOnDoubleClick="true" Width="350px" AutoPostBackOnReorder="false" AutoPostBackOnDelete="false" AutoPostBackOnTransfer="false">
+                                <ButtonSettings TransferButtons="All" ShowTransferAll="false" />
 
-                            <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
-                        </telerik:RadListBox>
-                    </td>
-                    <td>
-                        <div>Vybrané záložky</div>
-                        <telerik:RadListBox ID="colsDest" runat="server" DataTextField="x61Name" DataValueField="x61ID" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
+                                <Localization ToRight="Přesunout" ToLeft="Odebrat" AllToRight="Přesunout vše" AllToLeft="Odbrat vše" MoveDown="Posunout dolu" MoveUp="Posunout nahoru" />
+                            </telerik:RadListBox>
+                        </td>
+                        <td>
+                            <div>Vybrané záložky</div>
+                            <telerik:RadListBox ID="colsDest" runat="server" DataTextField="x61Name" DataValueField="x61ID" AllowReorder="true" AllowTransferOnDoubleClick="true" Culture="cs-CZ" Width="350px" SelectionMode="Single">
 
-                            <EmptyMessageTemplate>
-                                <div style="padding-top: 50px;">
-                                    žádné vybrané záložky
-                                </div>
-                            </EmptyMessageTemplate>
-                        </telerik:RadListBox>
+                                <EmptyMessageTemplate>
+                                    <div style="padding-top: 50px;">
+                                        žádné vybrané záložky
+                                    </div>
+                                </EmptyMessageTemplate>
+                            </telerik:RadListBox>
 
-                    </td>
+                        </td>
 
-                </tr>
-            </table>
+                    </tr>
+                </table>
             </asp:Panel>
         </div>
     </div>

@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class entity_framework_detail_setting
 
     '''<summary>
+    '''skin0 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents skin0 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''panPlugin control.
     '''</summary>
     '''<remarks>
@@ -30,6 +39,15 @@ Partial Public Class entity_framework_detail_setting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x31ID_Plugin As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkRememberLastTab control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkRememberLastTab As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''skin1 control.

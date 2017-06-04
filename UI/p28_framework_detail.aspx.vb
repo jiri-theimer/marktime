@@ -28,7 +28,9 @@
                 With lisPars
                     .Add("p28_framework_detail-pid")
                     .Add("p28_framework_detail-tab")
+                    .Add("p28_menu-remember-tab")
                     .Add("p28_menu-tabskin")
+                    .Add("p28_menu-menuskin")
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail_pos")
                     .Add("p28_menu-x31id-plugin")
@@ -47,7 +49,7 @@
                         End If
                     End If
                     Dim strTab As String = Request.Item("tab")
-                    If strTab = "" Then strTab = .GetUserParam("p28_framework_detail-tab", "board")
+                    If strTab = "" And .GetUserParam("p28_menu-remember-tab", "0") = "1" Then strTab = .GetUserParam("p28_framework_detail-tab", "board")
                     Select Case strTab
                         Case "p31", "time", "expense", "fee", "kusovnik"
                             Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p28&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
@@ -59,6 +61,7 @@
                             'zůstat zde na BOARD stránce
                     End Select
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
+                    menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam("p28_menu-x31id-plugin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
                 End With

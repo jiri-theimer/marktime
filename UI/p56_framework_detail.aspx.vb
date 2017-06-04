@@ -26,7 +26,9 @@
                 With lisPars
                     .Add("p56_framework_detail-pid")
                     .Add("p56_framework_detail-tab")
+                    .Add("p56_menu-remember-tab")
                     .Add("p56_menu-tabskin")
+                    .Add("p56_menu-menuskin")
                     .Add("p56_framework_detail-chkFFShowFilledOnly")
                     .Add("p56_framework_detail_pos")
                 End With
@@ -43,7 +45,7 @@
                         End If
                     End If
                     Dim strTab As String = Request.Item("tab")
-                    If strTab = "" Then strTab = .GetUserParam("p56_framework_detail-tab", "board")
+                    If strTab = "" And .GetUserParam("p56_menu-remember-tab", "0") = "1" Then strTab = .GetUserParam("p56_framework_detail-tab", "board")
                     Select Case strTab
                         Case "p31", "time", "expense", "fee", "kusovnik"
                             Server.Transfer("entity_framework_rec_p31.aspx?masterprefix=p56&masterpid=" & intPID.ToString & "&p31tabautoquery=" & strTab & "&source=" & menu1.PageSource, False)
@@ -53,6 +55,7 @@
                             'zůstat zde na BOARD stránce
                     End Select
                     menu1.TabSkin = .GetUserParam("p56_menu-tabskin")
+                    menu1.MenuSkin = .GetUserParam("p56_menu-menuskin")
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With

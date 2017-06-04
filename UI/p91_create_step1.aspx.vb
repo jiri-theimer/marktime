@@ -82,7 +82,7 @@ Public Class p91_create_step1
 
     Private Sub RefreshRecord()
         If Master.DataPID = 0 Then Return
-        lblEntityHeader.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Master.DataPID)
+        lblEntityHeader.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Left(Me.CurrentPrefix, 3)), Master.DataPID)
 
         bm1.RefreshData(Master.Factory, Me.CurrentPrefix, Master.DataPID)
 
@@ -124,11 +124,20 @@ Public Class p91_create_step1
                 lblFindEntity.Text = "Vyberte klienta:"
 
                 imgEntity.ImageUrl = "Images/contact_32.png"
+                If Master.DataPID <> 0 Then
+                    Me.p28id.Value = Master.DataPID
+                    Me.p28id.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, Master.DataPID, True)
+                End If
+                
             Case "p41", "p41-draft"
                 Me.p41id.Visible = True
                 Me.lblFindEntity.Text = "Vyberte projekt:"
 
                 imgEntity.ImageUrl = "Images/project_32.png"
+                If Master.DataPID <> 0 Then
+                    Me.p41id.Value = Master.DataPID
+                    Me.p41id.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Master.DataPID, True)
+                End If
             Case "j02", "j02-draft"
                 Me.j02id.Visible = True
                 lblFindEntity.Text = "Vyberte osobu:"
@@ -246,7 +255,7 @@ Public Class p91_create_step1
                 Master.Factory.p85TempBoxBL.Save(cTEMP)
             Next
             If Me.CurrentPrefix = "p28-draft" Or Me.CurrentPrefix = "p41-draft" Then
-                Server.Transfer("entity_modal_invoicing.aspx?prefix=" & Me.CurrentPrefix & "&pids=" & Master.DataPID.ToString, False)
+                Server.Transfer("entity_modal_invoicing.aspx?prefix=" & Left(Me.CurrentPrefix, 3) & "&pids=" & Master.DataPID.ToString, False)
                 Return
             End If
             If Me.CurrentPrefix = "quick" Then
@@ -328,25 +337,37 @@ Public Class p91_create_step1
             masterpids.Add(Master.DataPID)
         End If
         Select Case Me.CurrentPrefix
-            Case "p28", "p28-draft"
+            Case "p28"
                 ''mq.p28ID_Client = intPID
                 mq.p28IDs_Client = masterpids
-            Case "p41", "p41_draft"
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
+            Case "p28-draft"
+                mq.p28IDs_Client = masterpids
+                mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
+            Case "p41"
                 '' mq.p41ID = intPID
                 mq.p41IDs = masterpids
-            Case "j02", "j02-draft"
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
+            Case "p41-draft"
+                mq.p41IDs = masterpids
+                mq.QuickQuery = BO.myQueryP31_QuickQuery.EditingOrApproved
+            Case "j02"
                 ''mq.j02ID = intPID
                 mq.j02IDs = masterpids
-            Case "p56", "p56-draft"
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
+            Case "p56"
                 mq.p56IDs = masterpids
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
             Case "quick"
                 mq.AddItemToPIDs(Master.DataPID)
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
         End Select
         If Me.CurrentPrefix <> "quick" Then
             mq.DateFrom = period1.DateFrom
             mq.DateUntil = period1.DateUntil
         End If
-        mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForCreateInvoice
+
+
 
     End Sub
 
