@@ -37,28 +37,31 @@
     </div>
     <asp:Panel ID="panEditHeader" runat="server">
     </asp:Panel>
-
     <div class="div6">
-        <asp:RadioButtonList ID="opgBin" runat="server" RepeatDirection="Horizontal" AutoPostBack="false">
-            <asp:ListItem Text="Otevřené i v archivu" Value="0" Selected="true"></asp:ListItem>
+        <span>Rámcová podmínku filtru:</span>
+        <asp:dropdownlist ID="opgBin" runat="server">
+            <asp:ListItem Text="Otevřené i archivované záznamy" Value="0" Selected="true"></asp:ListItem>
             <asp:ListItem Text="Pouze otevřené" Value="1"></asp:ListItem>
-            <asp:ListItem Text="Pouze v archivu" Value="2"></asp:ListItem>
-        </asp:RadioButtonList>
+            <asp:ListItem Text="Pouze přesunuté do archivu" Value="2"></asp:ListItem>
+        </asp:dropdownlist>
     </div>
+
+    
 
     <asp:panel ID="panQueryCondition" runat="server" CssClass="content-box2">
         <div class="title">
             Filtrovací pole
-            <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit podmínku filtru" UseSubmitBehavior="false" Style="margin-left: 40px;" />
+            
         </div>
         <div class="content">
-            <asp:RadioButtonList ID="opgField" runat="server" AutoPostBack="true" RepeatColumns="4" RepeatDirection="Horizontal" CssClass="chk" CellPadding="4">
-            </asp:RadioButtonList>
+            <asp:DropDownList ID="cbxQueryField" runat="server" AutoPostBack="true" ToolTip="Filtrovací pole" style="min-width:400px;"></asp:DropDownList>
+            
 
             <asp:Panel ID="panQueryItems" runat="server" CssClass="div6" Visible="false">
-                <asp:Label ID="lbl1" runat="server" CssClass="lbl" Text="Vybrat hodnotu:"></asp:Label>
-                <uc:datacombo ID="cbxItems" runat="server" DataValueField="pid" AutoPostBack="false" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
-                <uc:datacombo ID="cbxItemsExtension" runat="server" DataValueField="pid" AutoPostBack="false" IsFirstEmptyRow="true" Width="200px"></uc:datacombo>
+                <asp:Label ID="lbl1" runat="server" CssClass="lbl" Text="Hodnoty filtrovacího pole:"></asp:Label>
+                <uc:datacombo ID="cbxItems" runat="server" DataValueField="pid" AutoPostBack="false" IsFirstEmptyRow="false" Width="400px" AllowCheckboxes="true"></uc:datacombo>
+                
+                <uc:datacombo ID="cbxItemsExtension" runat="server" DataValueField="pid" AutoPostBack="false" IsFirstEmptyRow="true" Width="200px" AllowCheckboxes="true"></uc:datacombo>
 
                 <asp:Button ID="cmdAdd2Query" runat="server" CssClass="cmd" Text="Přidat do podmínky filtru" />
 
@@ -92,6 +95,7 @@
     <asp:Panel ID="panJ71" runat="server" CssClass="content-box2">
         <div class="title">
             Podmínka filtru
+            <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit podmínku filtru" UseSubmitBehavior="false" Style="margin-left: 40px;" />
             <asp:CheckBox ID="j70IsNegation" runat="server" Text="Negovat podmínku" ToolTip="Pokud zaškrtnuto, filtr vrací záznamy nevyhovující filtrovací podmínce." style="float:right;" />
         </div>
         <div class="content">
@@ -139,6 +143,9 @@
 
         </div>
     </asp:panel>
+
+    
+  
 
     <div style="padding: 6px; margin-top: 30px;">
         <i>

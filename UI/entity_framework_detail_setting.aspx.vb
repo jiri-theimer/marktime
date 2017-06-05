@@ -59,7 +59,9 @@
                 Next
             End With
             colsSource.ClearSelection()
-
+            If Me.CurrentPrefix = "p91" Then
+                Me.chkRememberLastTab.Visible = False
+            End If
             Select Case Me.CurrentPrefix
                 Case "p41", "p56", "p91"
                     panTabs.Visible = False 

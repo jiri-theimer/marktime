@@ -119,7 +119,7 @@ Partial Public Class query_builder
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents opgBin As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents opgBin As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''panQueryCondition control.
@@ -131,22 +131,13 @@ Partial Public Class query_builder
     Protected WithEvents panQueryCondition As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''cmdClear control.
+    '''cbxQueryField control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdClear As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''opgField control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents opgField As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents cbxQueryField As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''panQueryItems control.
@@ -300,6 +291,15 @@ Partial Public Class query_builder
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panJ71 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdClear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClear As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''j70IsNegation control.

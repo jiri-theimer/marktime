@@ -255,7 +255,7 @@
         Dim fields As List(Of String) = lis.Select(Function(p) p.j71Field).Distinct.ToList, x As Integer = 0
         For Each strField In fields
             Dim strIN As String = String.Join(",", lis.Where(Function(p) p.j71Field = strField).Select(Function(r) r.j71RecordPID))
-
+            Dim strFirstValueType As String = lis.Where(Function(p) p.j71Field = strField).Select(Function(p) p.j71ValueType).First
             Select Case LCase(strField)
                 Case "_other"
                 Case "x67id"
@@ -269,7 +269,7 @@
                 Case "p95id"
                     sql.Append(" AND p32.p95ID IN (" & strIN & ")")
                 Case Else
-                    If LCase(strField).IndexOf("free") > 0 Then
+                    If LCase(strField).IndexOf("free") > 0 Or strFirstValueType = "date" Or strFirstValueType = "string" Or strFirstValueType = "boolean" Or strFirstValueType = "number" Then
                         'filtrování podle volného pole
                         Dim strW As String = strField & " IN (" & strIN & ")"
                         Dim lisRows As IEnumerable(Of BO.j71QueryTemplate_Item) = lis.Where(Function(p) p.j71Field = strField)
@@ -327,22 +327,29 @@
                                 End Select
                             Next
                         End If
-                        Select Case cRec.x29ID
-                            Case BO.x29IdEnum.p41Project
-                                sql.Append(" AND a.p41ID IN (SELECT p41ID FROM p41Project_FreeField WHERE " & strW & ")")
-                            Case BO.x29IdEnum.p28Contact
-                                sql.Append(" AND a.p28ID IN (SELECT p28ID FROM p28Contact_FreeField WHERE " & strW & ")")
-                            Case BO.x29IdEnum.p91Invoice
-                                sql.Append(" AND a.p91ID IN (SELECT p91ID FROM p91Invoice_FreeField WHERE " & strW & ")")
-                            Case BO.x29IdEnum.j02Person
-                                sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j02Person_FreeField WHERE " & strW & ")")
-                            Case BO.x29IdEnum.p56Task
-                                sql.Append(" AND a.p56ID IN (SELECT p56ID FROM p56Task_FreeField WHERE " & strW & ")")
-                            Case BO.x29IdEnum.o23Notepad
-                                sql.Append(" AND a.o23ID IN (SELECT o23ID FROM o23Notepad_FreeField WHERE " & strW & ")")
-                            Case BO.x29IdEnum.p31Worksheet
-                                sql.Append(" AND a.p31ID IN (SELECT p31ID FROM p31WorkSheet_FreeField WHERE " & strW & ")")
-                        End Select
+                        If LCase(strField).IndexOf("free") > 0 Then
+                            Select Case cRec.x29ID
+                                Case BO.x29IdEnum.p41Project
+                                    sql.Append(" AND a.p41ID IN (SELECT p41ID FROM p41Project_FreeField WHERE " & strW & ")")
+                                Case BO.x29IdEnum.p28Contact
+                                    sql.Append(" AND a.p28ID IN (SELECT p28ID FROM p28Contact_FreeField WHERE " & strW & ")")
+                                Case BO.x29IdEnum.p91Invoice
+                                    sql.Append(" AND a.p91ID IN (SELECT p91ID FROM p91Invoice_FreeField WHERE " & strW & ")")
+                                Case BO.x29IdEnum.j02Person
+                                    sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j02Person_FreeField WHERE " & strW & ")")
+                                Case BO.x29IdEnum.p56Task
+                                    sql.Append(" AND a.p56ID IN (SELECT p56ID FROM p56Task_FreeField WHERE " & strW & ")")
+                                Case BO.x29IdEnum.o23Notepad
+                                    sql.Append(" AND a.o23ID IN (SELECT o23ID FROM o23Notepad_FreeField WHERE " & strW & ")")
+                                Case BO.x29IdEnum.p31Worksheet
+                                    sql.Append(" AND a.p31ID IN (SELECT p31ID FROM p31WorkSheet_FreeField WHERE " & strW & ")")
+                                Case Else
+
+                            End Select
+                        Else
+                            If strW <> "" Then sql.Append(" AND " & strW)
+                        End If
+                        
 
                     Else
                         If strField.IndexOf(".") > 0 Then

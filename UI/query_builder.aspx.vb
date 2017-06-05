@@ -7,10 +7,15 @@
         Public Property x29ID As BO.x29IdEnum
         Public Property Field As String
         Public Property Text As String
-        Public Sub New(x29ID As BO.x29IdEnum, strField As String, strText As String)
+
+        Public Property x24ID As BO.x24IdENUM = BO.x24IdENUM.tNone
+
+
+        Public Sub New(x29ID As BO.x29IdEnum, strField As String, strText As String, Optional x24ID As BO.x24IdENUM = BO.x24IdENUM.tNone)
             Me.Text = strText
             Me.x29ID = x29ID
             Me.Field = strField
+            Me.x24ID = x24ID
         End Sub
     End Class
     
@@ -80,13 +85,14 @@
                 lis.Add(New myItem(BO.x29IdEnum.p92InvoiceType, "p92id", "Výchozí typ faktury projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p51PriceList, "p51id_billing", "Fakturační ceník projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p87BillingLanguage, "p87id", "Fakturační jazyk projektu"))
-                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu"))
+                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení projektové role"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id-j11id", "Obsazení role přes tým"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p28id_client", "Klient projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p28id_billing", "Odběratel faktury"))
                 lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p28client.p29id", "Typ klienta"))
 
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41DateInsert", "Datum založení projektu", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.p28Contact
                 ph1.Text = "Návrhář filtrů nad přehledem klientů"
 
@@ -95,8 +101,9 @@
                 lis.Add(New myItem(BO.x29IdEnum.p92InvoiceType, "p92id", "Výchozí typ faktury klienta"))
                 lis.Add(New myItem(BO.x29IdEnum.p51PriceList, "p51id_billing", "Fakturační ceník klienta"))
                 lis.Add(New myItem(BO.x29IdEnum.p87BillingLanguage, "p87id", "Fakturační jazyk klienta"))
-                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu"))
+                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu klienta"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení klientské role"))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28DateInsert", "Datum založení klienta", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.p56Task
                 ph1.Text = "Návrhář filtrů nad přehledem úkolů/požadavků"
 
@@ -108,7 +115,8 @@
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id-j11id", "Obsazení role přes tým"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient projektu"))
 
-                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník/autor záznamu"))
+                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník/autor úkolu"))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56DateInsert", "Datum založení úkolu", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.o23Notepad
                 ph1.Text = "Návrhář filtrů nad přehledem dokumentů"
 
@@ -121,16 +129,20 @@
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient projektu svázaného s dokumentem"))
 
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník/autor záznamu"))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.o23DateInsert", "Datum založení dokumentu", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.p91Invoice
                 ph1.Text = "Návrhář filtrů nad přehledem faktur"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.p92InvoiceType, "p92id", "Typ faktury"))
                 lis.Add(New myItem(BO.x29IdEnum.j27Currency, "j27id", "Měna faktury"))
-                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu"))
+
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID", "Klient faktury"))
                 lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p28client.p29id", "Typ klienta faktury"))
                 lis.Add(New myItem(BO.x29IdEnum.j18Region, "p41.j18id", "Středisko projektu"))
+
+                lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu faktury"))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91DateInsert", "Datum založení projektu", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.j02Person
                 ph1.Text = "Návrhář filtrů nad přehledem osob"
 
@@ -138,6 +150,8 @@
                 lis.Add(New myItem(BO.x29IdEnum.j07PersonPosition, "j07id", "Pozice"))
                 lis.Add(New myItem(BO.x29IdEnum.c21FondCalendar, "c21id", "Pracovní fond"))
                 lis.Add(New myItem(BO.x29IdEnum.j11Team, "j11id", "Tým osob"))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.j02DateInsert", "Datum založení osoby", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.p31Worksheet
                 ph1.Text = "Návrhář filtrů nad worksheet přehledem"
 
@@ -148,13 +162,21 @@
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "a.j02ID_ContactPerson", "Kontaktní osoba"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID_Supplier", "Dodavatel"))
-                lis.Add(New myItem(BO.x29IdEnum.p71ApproveStatus, "p71id", "Schvalování"))
-                lis.Add(New myItem(BO.x29IdEnum.p72PreBillingStatus, "p72ID_AfterApprove", "Návrh fakturace po schvalování"))
-                lis.Add(New myItem(BO.x29IdEnum.p70BillingStatus, "p70id", "Fakturace"))
+                lis.Add(New myItem(BO.x29IdEnum.p71ApproveStatus, "p71id", "Schváleno"))
+                lis.Add(New myItem(BO.x29IdEnum.p72PreBillingStatus, "p72ID_AfterApprove", "Návrh fakturačního statusu"))
+                lis.Add(New myItem(BO.x29IdEnum.p70BillingStatus, "p70id", "Fakturační status"))
                 lis.Add(New myItem(BO.x29IdEnum.j27Currency, "j27ID_Billing_Orig", "Měna úkonu"))
                 lis.Add(New myItem(BO.x29IdEnum.p95InvoiceRow, "p32.p95id", "Fakturační oddíl"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení projektové role"))
                 lis.Add(New myItem(BO.x29IdEnum.j19PaymentType, "j19id", "Typ úhrady"))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Hours_Orig", "Vykázané hodiny", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Rate_Billing_Orig", "Výchozí fakturační sazba", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Rate_Internal_Orig", "Nákladová hodinová sazba", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Text", "Podrobný popis", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31ApprovingSet", "Dávka v rámci schvalování", BO.x24IdENUM.tString))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31DateInsert", "Datum založení záznamu", BO.x24IdENUM.tDateTime))
         End Select
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
@@ -164,16 +186,19 @@
             lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Field, cField.x28Name))
         Next
         For Each c In lis
-            Me.opgField.Items.Add(New ListItem(c.Text, CInt(c.x29ID).ToString & "-" & c.Field))
+            Me.cbxQueryField.Items.Add(New ListItem(c.Text, CInt(c.x29ID).ToString & "-" & c.Field & "--" & CInt(c.x24ID).ToString))
 
         Next
+        cbxQueryField.Items.Insert(0, "--Vyberte filtrovací pole--")
     End Sub
 
     Private Sub Handle_ChangeField()
         cbxItemsExtension.Visible = False
 
-        If Me.opgField.SelectedItem Is Nothing Then Return
-        Dim a() As String = Split(Me.opgField.SelectedValue, "-")
+        ''If Me.cbxQueryField.SelectedItem Is Nothing Then Return
+        If Me.cbxQueryField.SelectedIndex = 0 Then Return
+
+        Dim a() As String = Split(Me.cbxQueryField.SelectedValue, "-")
         Dim x29id As BO.x29IdEnum = CType(CInt(a(0)), BO.x29IdEnum)
         Dim strField As String = a(1), mq As New BO.myQuery, strFieldAfter As String = ""
         If UBound(a) > 1 Then strFieldAfter = a(2)
@@ -183,8 +208,13 @@
 
         Select Case x29id
             Case BO.x29IdEnum.System
-                'uživatelské - volné pole
                 Dim cField As BO.x28EntityField = Master.Factory.x28EntityFieldBL.LoadByField(strField)
+                If cField Is Nothing Then
+                    cField = New BO.x28EntityField
+                    cField.x28Name = cbxQueryField.SelectedItem.Text
+                    cField.x24ID = CType(CInt(a(3)), BO.x24IdENUM)
+                End If
+                'uživatelské - volné pole
                 If cField.x23ID <> 0 Or cField.x24ID = BO.x24IdENUM.tBoolean Then
                     'číselníkové (combo) pole
                     If cField.x23ID <> 0 Then
@@ -214,6 +244,7 @@
 
 
                 End If
+                
             Case BO.x29IdEnum._NotSpecified
                 Dim lis As List(Of BO.OtherQueryItem) = Master.Factory.j70QueryTemplateBL.GetList_OtherQueryItem(Me.CurrentX29ID)
 
@@ -330,12 +361,19 @@
                 Me.cbxItems.DataSource = Nothing
         End Select
 
-        If panQueryItems.Visible Then Me.cbxItems.DataBind()
+        If panQueryItems.Visible Then
+            If cbxItemsExtension.Visible Then
+                cbxItems.AllowCheckboxes = False
+            Else
+                cbxItems.AllowCheckboxes = True
+            End If
+            Me.cbxItems.DataBind()
+        End If
 
     End Sub
 
   
-    Private Sub opgField_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgField.SelectedIndexChanged
+    Private Sub cbxQueryField_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQueryField.SelectedIndexChanged
         Handle_ChangeField()
     End Sub
 
@@ -351,16 +389,21 @@
     End Sub
 
     Private Sub SaveTempQueryItem()
-        Dim a() As String = Split(Me.opgField.SelectedValue, "-")
+        Dim a() As String = Split(Me.cbxQueryField.SelectedValue, "-")
         Dim x29id As BO.x29IdEnum = CType(CInt(a(0)), BO.x29IdEnum)
         Dim strField As String = a(1), mq As New BO.myQuery, bolCiselnik As Boolean = True
-        Dim intj71RecordPID As Integer = 0, strj71ValueFrom As String = "", strj71ValueUntil As String = "", intExtensionValue As Integer = 0
+        Dim intj71RecordPID As Integer, strj71ValueFrom As String = "", strj71ValueUntil As String = ""
         Dim strJ71ValueType As String = "combo", strj71RecordName As String = ""
         Dim strJ71StringOperator As String = "", strJ71ValueString As String = ""
 
         If x29id = BO.x29IdEnum.System Then
             'uživatelské - volné pole
             Dim cField As BO.x28EntityField = Master.Factory.x28EntityFieldBL.LoadByField(strField)
+            If cField Is Nothing Then
+                cField = New BO.x28EntityField
+                cField.x28Name = cbxQueryField.SelectedItem.Text
+                cField.x24ID = CType(CInt(a(3)), BO.x24IdENUM)
+            End If
             Select Case cField.x24ID
                 Case BO.x24IdENUM.tBoolean
                     strJ71ValueType = "boolean"
@@ -374,7 +417,7 @@
                             Master.Notify("[Hodnota do] musí být číslo.", NotifyLevel.WarningMessage) : Return
                         End If
                     End If
-                    
+
                 Case BO.x24IdENUM.tString
                     strJ71ValueType = "string"
                     strJ71StringOperator = Me.cbxStringOperator.SelectedValue
@@ -408,35 +451,97 @@
         End If
         If Me.panQueryItems.Visible Then
             'číselník
-            strj71RecordName = Me.cbxItems.Text
-            intj71RecordPID = BO.BAS.IsNullInt(Me.cbxItems.SelectedValue)
+            Dim items As List(Of String) = Nothing
+            If Me.cbxItems.AllowCheckboxes Then
+                items = Me.cbxItems.GetAllCheckedValues()
+                If items.Count = 0 Then
+                    Master.Notify("Musíte zaškrtnout alespoň jednu položku.", NotifyLevel.WarningMessage)
+                    Return
+                End If
+            Else
+                If Me.cbxItems.SelectedValue = "" Then
+                    Master.Notify("Musíte vybrat hodnotu.", NotifyLevel.WarningMessage)
+                    Return
+                End If
+                items = BO.BAS.ConvertDelimitedString2List(Me.cbxItems.SelectedValue, ",")
+            End If
             If Me.cbxItemsExtension.Visible Then
-                intExtensionValue = BO.BAS.IsNullInt(Me.cbxItemsExtension.SelectedValue)
-            End If
-            If intj71RecordPID = 0 And strJ71ValueType <> "boolean" Then
-                Master.Notify("Musíte vybrat hodnotu.", NotifyLevel.WarningMessage)
-                Return
+                If Me.cbxItemsExtension.GetAllCheckedValues.Count = 0 Then
+                    Master.Notify("Musíte zaškrtnout alespoň jednu položku.", NotifyLevel.WarningMessage)
+                    Return
+                End If
             End If
 
-            If Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85OtherKey1 = intj71RecordPID And p.p85FreeText04 = strField And p.p85OtherKey3 = intExtensionValue).Count > 0 Then
-                Master.Notify("Tato hodnota již byla do filtru zařazena.", NotifyLevel.WarningMessage)
-                Return
-            End If
+            For Each strItem In items
+                intj71RecordPID = BO.BAS.IsNullInt(strItem)
+                strj71RecordName = cbxItems.RadCombo.Items.FindItemByValue(strItem).Text
+
+                If Me.cbxItemsExtension.Visible Then
+                    For Each strExtItem In Me.cbxItemsExtension.GetAllCheckedValues
+                        Dim intExtensionValue As Integer = BO.BAS.IsNullInt(strExtItem), strExtensionAlias As String = ""
+                        If intExtensionValue <> 0 Then
+                            strExtensionAlias = cbxItemsExtension.RadCombo.Items.FindItemByValue(strExtItem).Text
+                        End If
+                        If Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85OtherKey1 = intj71RecordPID And p.p85FreeText04 = strField And p.p85OtherKey3 = intExtensionValue).Count > 0 Then
+                            ''Master.Notify("Tato hodnota již byla do filtru zařazena.", NotifyLevel.WarningMessage)
+                        Else
+                            SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, intExtensionValue, strExtensionAlias, "", "", strJ71ValueType, "", "")
+                        End If
+                    Next
+
+                Else
+                    If Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85OtherKey1 = intj71RecordPID And p.p85FreeText04 = strField And p.p85OtherKey3 = 0).Count > 0 Then
+                        ''Master.Notify("Tato hodnota již byla do filtru zařazena.", NotifyLevel.WarningMessage)
+                    Else
+                        SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, 0, "", "", "", strJ71ValueType, "", "")
+                    End If
+                End If
+               
+            Next
+            
+        Else
+            SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, 0, "", strj71ValueFrom, strj71ValueUntil, strJ71ValueType, strJ71StringOperator, strJ71ValueString)
         End If
+        ''Dim cRec As New BO.p85TempBox
+        ''cRec.p85GUID = ViewState("guid")
+        ''cRec.p85OtherKey1 = intj71RecordPID
+        ''cRec.p85FreeText01 = strj71RecordName
 
+        ''cRec.p85OtherKey2 = CInt(x29id)
+        ''cRec.p85FreeText03 = Me.cbxQueryField.SelectedItem.Text
+        ''cRec.p85FreeText04 = strField
 
+        ''If intExtensionValue <> 0 Then
+        ''    cRec.p85OtherKey3 = intExtensionValue
+        ''    cRec.p85FreeText02 = Me.cbxItemsExtension.Text
+        ''End If
+
+        ''cRec.p85FreeText05 = strj71ValueFrom
+        ''cRec.p85FreeText06 = strj71ValueUntil
+        ''cRec.p85FreeText07 = strJ71ValueType
+        ''cRec.p85FreeText08 = strJ71StringOperator
+        ''cRec.p85FreeText09 = strJ71ValueString
+        ''cRec.p85Message = cbxQueryField.SelectedItem.Text
+
+        ''Master.Factory.p85TempBoxBL.Save(cRec)
+
+        
+        RefreshJ71TempList()
+    End Sub
+
+    Private Sub SaveTempValue(intj71RecordPID As Integer, strj71RecordName As String, x29id As BO.x29IdEnum, strQueryField As String, strQueryField_Alias As String, intExtensionValue As Integer, strExtensionAlias As String, strj71ValueFrom As String, strj71ValueUntil As String, strJ71ValueType As String, strJ71StringOperator As String, strJ71ValueString As String)
         Dim cRec As New BO.p85TempBox
         cRec.p85GUID = ViewState("guid")
         cRec.p85OtherKey1 = intj71RecordPID
         cRec.p85FreeText01 = strj71RecordName
 
         cRec.p85OtherKey2 = CInt(x29id)
-        cRec.p85FreeText03 = Me.opgField.SelectedItem.Text
-        cRec.p85FreeText04 = strField
+        cRec.p85FreeText03 = strQueryField_Alias
+        cRec.p85FreeText04 = strQueryField
 
         If intExtensionValue <> 0 Then
             cRec.p85OtherKey3 = intExtensionValue
-            cRec.p85FreeText02 = Me.cbxItemsExtension.Text
+            cRec.p85FreeText02 = strExtensionAlias
         End If
 
         cRec.p85FreeText05 = strj71ValueFrom
@@ -444,10 +549,9 @@
         cRec.p85FreeText07 = strJ71ValueType
         cRec.p85FreeText08 = strJ71StringOperator
         cRec.p85FreeText09 = strJ71ValueString
-        cRec.p85Message = opgField.SelectedItem.Text
+        cRec.p85Message = strQueryField_Alias
 
         Master.Factory.p85TempBoxBL.Save(cRec)
-        RefreshJ71TempList()
     End Sub
     Private Sub RefreshJ71TempList()
         Dim lisTMP As List(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).OrderBy(Function(p) p.p85FreeText04).ThenBy(Function(p) p.p85OtherKey2).ToList
@@ -461,7 +565,7 @@
         CType(e.Item.FindControl("p85id"), HiddenField).Value = cRec.PID.ToString
 
         If _lastField <> cRec.p85FreeText04 Then
-
+            If cRec.p85FreeText03 = "System" Then cRec.p85FreeText03 = cRec.p85Message
             CType(e.Item.FindControl("x29Name"), Label).Text = cRec.p85FreeText03 & ":"
             e.Item.FindControl("nebo").Visible = False
         Else
@@ -470,8 +574,8 @@
         End If
         CType(e.Item.FindControl("x29id"), HiddenField).Value = cRec.p85OtherKey2.ToString
         CType(e.Item.FindControl("j71Field"), HiddenField).Value = cRec.p85FreeText04
-        If Not opgField.Items.FindByValue(cRec.p85OtherKey2.ToString & "-" & cRec.p85FreeText04) Is Nothing Then
-            CType(e.Item.FindControl("x29Name"), Label).Text = opgField.Items.FindByValue(cRec.p85OtherKey2.ToString & "-" & cRec.p85FreeText04).Text & ":"
+        If Not cbxQueryField.Items.FindByValue(cRec.p85OtherKey2.ToString & "-" & cRec.p85FreeText04) Is Nothing Then
+            CType(e.Item.FindControl("x29Name"), Label).Text = cbxQueryField.Items.FindByValue(cRec.p85OtherKey2.ToString & "-" & cRec.p85FreeText04).Text & ":"
         End If
 
         CType(e.Item.FindControl("j71RecordName"), Label).Text = cRec.p85FreeText01
@@ -622,7 +726,7 @@
             hidIsOwner.Value = "0"
         End If
 
-        basUI.SelectRadiolistValue(Me.opgBin, cRec.j70BinFlag.ToString)
+        basUI.SelectDropdownlistValue(Me.opgBin, cRec.j70BinFlag.ToString)
         Master.Factory.j70QueryTemplateBL.Setupj71TempList(Master.DataPID, ViewState("guid"))
         RefreshJ71TempList()
 
