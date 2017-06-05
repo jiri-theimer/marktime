@@ -13317,10 +13317,7 @@ BEGIN TRANSACTION
 BEGIN TRY
 
 
-if @p92invoicetype=2
- delete from p31WorkSheet where p91id=@pid	--u dobropisu se mažou zdrojové worksheet záznamy
- 
-if @p32id_overhead is not null
+if @p92invoicetype=2 AND @p32id_overhead is not null
  begin
   if exists(select p31ID FROM p31Worksheet WHERE p91ID=@pid AND p32id=@p32id_overhead)
     delete FROM p31worksheet WHERE p91id=@pid AND p32id=@p32id_overhead

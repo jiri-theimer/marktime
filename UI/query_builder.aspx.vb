@@ -100,8 +100,8 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p41InvoiceDefaultText1", "Výchozí text faktury", BO.x24IdENUM.tString))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p41InvoiceMaturityDays", "Výchozí počet dní splatnosti", BO.x24IdENUM.tDecimal))
 
-                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41PlanFrom", "Pláované datum zahájení", BO.x24IdENUM.tDateTime))
-                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41PlanUntil", "Pláované datum dokončení", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41PlanFrom", "Plánované datum zahájení", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41PlanUntil", "Plánované datum dokončení", BO.x24IdENUM.tDateTime))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p41LimitHours_Notification", "Limitní objem rozpracovaných hodin", BO.x24IdENUM.tDecimal))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p41LimitFee_Notification", "Limitní honorář z rozpracovaných hodin", BO.x24IdENUM.tDecimal))
 
@@ -249,9 +249,14 @@
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
 
-        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField Or p.x28Query_SqlSyntax <> "")
+        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField Or p.x28Query_Field <> "")
         For Each cField In lisFF
-            lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Field, cField.x28Name))
+            If cField.x28Query_Field <> "" Then
+                lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Query_Field, cField.x28Name))
+            Else
+                lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Field, cField.x28Name))
+            End If
+
         Next
         For Each c In lis
             Me.cbxQueryField.Items.Add(New ListItem(c.Text, CInt(c.x29ID).ToString & "-" & c.Field & "--" & CInt(c.x24ID).ToString))
@@ -277,6 +282,7 @@
         Select Case x29id
             Case BO.x29IdEnum.System
                 Dim cField As BO.x28EntityField = Master.Factory.x28EntityFieldBL.LoadByField(strField)
+                If cField Is Nothing Then cField = Master.Factory.x28EntityFieldBL.LoadByQueryField(strField)
                 If cField Is Nothing Then
                     cField = New BO.x28EntityField
                     cField.x28Name = cbxQueryField.SelectedItem.Text
@@ -462,15 +468,19 @@
         Dim strField As String = a(1), mq As New BO.myQuery, bolCiselnik As Boolean = True
         Dim intj71RecordPID As Integer, strj71ValueFrom As String = "", strj71ValueUntil As String = ""
         Dim strJ71ValueType As String = "combo", strj71RecordName As String = ""
-        Dim strJ71StringOperator As String = "", strJ71ValueString As String = ""
+        Dim strJ71StringOperator As String = "", strJ71ValueString As String = "", intX28ID As Integer = 0
 
         If x29id = BO.x29IdEnum.System Then
             'uživatelské - volné pole
             Dim cField As BO.x28EntityField = Master.Factory.x28EntityFieldBL.LoadByField(strField)
+            If cField Is Nothing Then cField = Master.Factory.x28EntityFieldBL.LoadByQueryField(strField)
             If cField Is Nothing Then
                 cField = New BO.x28EntityField
                 cField.x28Name = cbxQueryField.SelectedItem.Text
                 cField.x24ID = CType(CInt(a(3)), BO.x24IdENUM)
+                intX28ID = 0
+            Else
+                intX28ID = cField.PID
             End If
             Select Case cField.x24ID
                 Case BO.x24IdENUM.tBoolean
@@ -553,7 +563,7 @@
                         If Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85OtherKey1 = intj71RecordPID And p.p85FreeText04 = strField And p.p85OtherKey3 = intExtensionValue).Count > 0 Then
                             ''Master.Notify("Tato hodnota již byla do filtru zařazena.", NotifyLevel.WarningMessage)
                         Else
-                            SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, intExtensionValue, strExtensionAlias, "", "", strJ71ValueType, "", "")
+                            SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, intExtensionValue, strExtensionAlias, "", "", strJ71ValueType, "", "", intX28ID)
                         End If
                     Next
 
@@ -561,14 +571,14 @@
                     If Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85OtherKey1 = intj71RecordPID And p.p85FreeText04 = strField And p.p85OtherKey3 = 0).Count > 0 Then
                         ''Master.Notify("Tato hodnota již byla do filtru zařazena.", NotifyLevel.WarningMessage)
                     Else
-                        SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, 0, "", "", "", strJ71ValueType, "", "")
+                        SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, 0, "", "", "", strJ71ValueType, "", "", intX28ID)
                     End If
                 End If
                
             Next
             
         Else
-            SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, 0, "", strj71ValueFrom, strj71ValueUntil, strJ71ValueType, strJ71StringOperator, strJ71ValueString)
+            SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, 0, "", strj71ValueFrom, strj71ValueUntil, strJ71ValueType, strJ71StringOperator, strJ71ValueString, intX28ID)
         End If
         ''Dim cRec As New BO.p85TempBox
         ''cRec.p85GUID = ViewState("guid")
@@ -597,28 +607,30 @@
         RefreshJ71TempList()
     End Sub
 
-    Private Sub SaveTempValue(intj71RecordPID As Integer, strj71RecordName As String, x29id As BO.x29IdEnum, strQueryField As String, strQueryField_Alias As String, intExtensionValue As Integer, strExtensionAlias As String, strj71ValueFrom As String, strj71ValueUntil As String, strJ71ValueType As String, strJ71StringOperator As String, strJ71ValueString As String)
+    Private Sub SaveTempValue(intj71RecordPID As Integer, strj71RecordName As String, x29id As BO.x29IdEnum, strQueryField As String, strQueryField_Alias As String, intExtensionValue As Integer, strExtensionAlias As String, strj71ValueFrom As String, strj71ValueUntil As String, strJ71ValueType As String, strJ71StringOperator As String, strJ71ValueString As String, intX28ID As Integer)
         Dim cRec As New BO.p85TempBox
-        cRec.p85GUID = ViewState("guid")
-        cRec.p85OtherKey1 = intj71RecordPID
-        cRec.p85FreeText01 = strj71RecordName
+        With cRec
+            .p85GUID = ViewState("guid")
+            .p85OtherKey1 = intj71RecordPID
+            .p85FreeText01 = strj71RecordName
 
-        cRec.p85OtherKey2 = CInt(x29id)
-        cRec.p85FreeText03 = strQueryField_Alias
-        cRec.p85FreeText04 = strQueryField
+            .p85OtherKey2 = CInt(x29id)
+            .p85FreeText03 = strQueryField_Alias
+            .p85FreeText04 = strQueryField
 
-        If intExtensionValue <> 0 Then
-            cRec.p85OtherKey3 = intExtensionValue
-            cRec.p85FreeText02 = strExtensionAlias
-        End If
+            If intExtensionValue <> 0 Then
+                .p85OtherKey3 = intExtensionValue
+                .p85FreeText02 = strExtensionAlias
+            End If
 
-        cRec.p85FreeText05 = strj71ValueFrom
-        cRec.p85FreeText06 = strj71ValueUntil
-        cRec.p85FreeText07 = strJ71ValueType
-        cRec.p85FreeText08 = strJ71StringOperator
-        cRec.p85FreeText09 = strJ71ValueString
-        cRec.p85Message = strQueryField_Alias
-
+            .p85FreeText05 = strj71ValueFrom
+            .p85FreeText06 = strj71ValueUntil
+            .p85FreeText07 = strJ71ValueType
+            .p85FreeText08 = strJ71StringOperator
+            .p85FreeText09 = strJ71ValueString
+            .p85Message = strQueryField_Alias
+            .p85OtherKey4 = intX28ID
+        End With
         Master.Factory.p85TempBoxBL.Save(cRec)
     End Sub
     Private Sub RefreshJ71TempList()
@@ -856,6 +868,11 @@
                 c.j71StringOperator = cTMP.p85FreeText08
                 c.j71ValueString = cTMP.p85FreeText09
                 c.j71FieldLabel = cTMP.p85Message
+                If cTMP.p85OtherKey4 <> 0 Then
+                    'x28ID
+                    Dim cX28 As BO.x28EntityField = Master.Factory.x28EntityFieldBL.Load(cTMP.p85OtherKey4)
+                    c.j71SqlExpression = cX28.x28Query_SqlSyntax
+                End If
                 lisJ71.Add(c)
             Next
             Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()

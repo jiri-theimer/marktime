@@ -256,6 +256,7 @@
         For Each strField In fields
             Dim strIN As String = String.Join(",", lis.Where(Function(p) p.j71Field = strField).Select(Function(r) r.j71RecordPID))
             Dim strFirstValueType As String = lis.Where(Function(p) p.j71Field = strField).Select(Function(p) p.j71ValueType).First
+            Dim strFirstMergeSqlExpression As String = lis.Where(Function(p) p.j71Field = strField).Select(Function(p) p.j71SqlExpression).First
             Select Case LCase(strField)
                 Case "_other"
                 Case "x67id"
@@ -276,6 +277,7 @@
                         Dim strValueType As String = lisRows(0).j71ValueType
                         If strValueType <> "combo" Then
                             strW = ""
+
                             For Each c In lisRows
                                 Select Case strValueType
                                     Case "date"
@@ -326,6 +328,10 @@
                                         End If
                                 End Select
                             Next
+                          
+                        End If
+                        If strFirstMergeSqlExpression <> "" Then
+                            strW = Replace(strFirstMergeSqlExpression, "@where", strW)
                         End If
                         If LCase(strField).IndexOf("free") > 0 Then
                             Select Case cRec.x29ID

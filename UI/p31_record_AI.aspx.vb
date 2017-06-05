@@ -295,6 +295,8 @@
                 Else
                     .p31IsInvoiceManual = False
                 End If
+                If Not p31IsInvoiceManual.Visible Then .p31IsInvoiceManual = True
+
                 .InvoiceVatRate = BO.BAS.IsNullNum(Me.Edit_p31VatRate_Invoiced.Value)
                 .FixPriceValue = 0
                 If cRec.p33ID = BO.p33IdENUM.Cas Then

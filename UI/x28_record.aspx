@@ -120,7 +120,7 @@
     <table cellpadding="3" cellspacing="2" id="tabFlag2" runat="server">
         <tr>
             <td style="width:140px;">
-                <asp:Label ID="lblx28Grid_Field" Text="Pole (sloupec):" runat="server" CssClass="lblReq"></asp:Label></td>
+                <asp:Label ID="lblx28Grid_Field" Text="Pole/sloupec (GRID):" runat="server" CssClass="lblReq"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x28Grid_Field" runat="server" style="width:200px;"></asp:TextBox>
             </td>
@@ -138,10 +138,17 @@
             <td>
                 <asp:TextBox ID="x28Grid_SqlFrom" runat="server" style="width:600px;height:80px;" TextMode="MultiLine"></asp:TextBox>
             </td>
+        </tr>  
+         <tr>
+            <td>
+                <asp:Label ID="lblx28Query_Field" Text="Filtrovací sql pole:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x28Query_Field" runat="server" style="width:200px;"></asp:TextBox>
+            </td>
         </tr>      
         <tr>
             <td>
-                <asp:Label ID="lblx28Query_SqlSyntax" Text="SQL syntaxe (QUERY):" runat="server" CssClass="lbl"></asp:Label></td>
+                <asp:Label ID="lblx28Query_SqlSyntax" Text="SQL syntaxe filtrovacího pole:" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x28Query_SqlSyntax" runat="server" style="width:600px;height:80px;" TextMode="MultiLine"></asp:TextBox>
             </td>

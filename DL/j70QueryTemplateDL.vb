@@ -53,6 +53,7 @@
                 pars.Add("j71ValueString", c.j71ValueString, DbType.String)
                 pars.Add("j71StringOperator", c.j71StringOperator, DbType.String)
                 pars.Add("j71FieldLabel", c.j71FieldLabel, DbType.String)
+                pars.Add("j71SqlExpression", c.j71SqlExpression, DbType.String)
                 If Not _cDB.SaveRecord("j71QueryTemplate_Item", pars, True, , , , False) Then
 
                 End If

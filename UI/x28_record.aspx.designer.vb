@@ -302,6 +302,24 @@ Partial Public Class x28_record
     Protected WithEvents x28Grid_SqlFrom As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblx28Query_Field control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx28Query_Field As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x28Query_Field control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Query_Field As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''lblx28Query_SqlSyntax control.
     '''</summary>
     '''<remarks>

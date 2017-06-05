@@ -11,6 +11,10 @@
         Dim s As String = GetSQLPart1() & " WHERE a.x28Field LIKE @field"
         Return _cDB.GetRecord(Of BO.x28EntityField)(s, New With {.field = strField})
     End Function
+    Public Function LoadByQueryField(strField As String) As BO.x28EntityField
+        Dim s As String = GetSQLPart1() & " WHERE a.x28Query_Field LIKE @field"
+        Return _cDB.GetRecord(Of BO.x28EntityField)(s, New With {.field = strField})
+    End Function
 
     Public Function FindFirstUsableField(strPrefix As String, cX24 As BO.x24DataType, intX23ID As Integer) As String
         Return _cDB.GetValueFromSQL("select dbo.x28_getFirstUsableField('" & strPrefix & "','" & LCase(cX24.x24Name) & "'," & intX23ID.ToString & ")")
@@ -51,6 +55,8 @@
             pars.Add("x28Pivot_SelectSql", .x28Pivot_SelectSql, DbType.String)
             pars.Add("x28Pivot_GroupBySql", .x28Pivot_GroupBySql, DbType.String)
             pars.Add("x28Query_SqlSyntax", .x28Query_SqlSyntax, DbType.String)
+            pars.Add("x28Query_Field", .x28Query_Field, DbType.String)
+            pars.Add("x28Query_sqlComboSource", .x28Query_sqlComboSource, DbType.String)
 
             pars.Add("x28textboxheight", cRec.x28TextboxHeight, DbType.Int32)
             pars.Add("x28textboxwidth", cRec.x28TextboxWidth, DbType.Int32)

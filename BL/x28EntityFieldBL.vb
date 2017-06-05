@@ -3,6 +3,7 @@
     Function Save(cRec As BO.x28EntityField, lisX26 As List(Of BO.x26EntityField_Binding)) As Boolean
     Function Load(intPID As Integer) As BO.x28EntityField
     Function LoadByField(strField As String) As BO.x28EntityField
+    Function LoadByQueryField(strField As String) As BO.x28EntityField
     Function Delete(intPID As Integer) As Boolean
     Function GetList(x29id As BO.x29IdEnum, intEntityType As Integer, bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
     Function GetList(x28FieldNames As List(Of String), bolTestUserAccess As Boolean) As IEnumerable(Of BO.x28EntityField)
@@ -45,10 +46,11 @@ Class x28EntityFieldBL
                         End If
                     End If
                 Case BO.x28FlagENUM.GridField
-                    If Trim(.x28Grid_Field) = "" Then _Error = "Chybá specifikace pole." : Return False
+                    If Trim(.x28Grid_Field) = "" And Trim(.x28Query_Field) = "" Then _Error = "Chybná specifikace pole." : Return False
                     If .x28Grid_Field.IndexOf(".") > 0 Or .x28Grid_Field.IndexOf("[") > 0 Or .x28Grid_Field.IndexOf("[") > 0 Then
                         _Error = "Pole obsahuje zakázané znaky." : Return False
                     End If
+                   
             End Select
             
             
@@ -71,6 +73,9 @@ Class x28EntityFieldBL
     End Function
     Public Function LoadByField(strField As String) As BO.x28EntityField Implements Ix28EntityFieldBL.LoadByField
         Return _cDL.LoadByField(strField)
+    End Function
+    Public Function LoadByQueryField(strField As String) As BO.x28EntityField Implements Ix28EntityFieldBL.LoadByQueryField
+        Return _cDL.LoadByQueryField(strField)
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean Implements Ix28EntityFieldBL.Delete
