@@ -22,7 +22,7 @@
 
     </div>
 
-    <div class="div6">
+    <div class="div6" style="border-bottom: dashed 1px gray;">
         <asp:Label ID="lblJ70ID" runat="server" Text="Pracujete s filtrem:" CssClass="val" AssociatedControlID="j70ID"></asp:Label>
         <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 300px;" Font-Bold="true"></asp:DropDownList>
 
@@ -41,8 +41,8 @@
         <span>Rámcová podmínku filtru:</span>
         <asp:dropdownlist ID="opgBin" runat="server">
             <asp:ListItem Text="Otevřené i archivované záznamy" Value="0" Selected="true"></asp:ListItem>
-            <asp:ListItem Text="Pouze otevřené" Value="1"></asp:ListItem>
-            <asp:ListItem Text="Pouze přesunuté do archivu" Value="2"></asp:ListItem>
+            <asp:ListItem Text="Pouze otevřené záznamy" Value="1"></asp:ListItem>
+            <asp:ListItem Text="Pouze záznamy přesunuté do archivu" Value="2"></asp:ListItem>
         </asp:dropdownlist>
     </div>
 
@@ -54,7 +54,7 @@
             
         </div>
         <div class="content">
-            <asp:DropDownList ID="cbxQueryField" runat="server" AutoPostBack="true" ToolTip="Filtrovací pole" style="min-width:400px;"></asp:DropDownList>
+            <asp:DropDownList ID="cbxQueryField" runat="server" AutoPostBack="true" ToolTip="Filtrovací pole" style="min-width:400px;background-color:yellow;"></asp:DropDownList>
             
 
             <asp:Panel ID="panQueryItems" runat="server" CssClass="div6" Visible="false">
@@ -92,11 +92,11 @@
             </asp:Panel>
         </div>
     </asp:panel>
-    <asp:Panel ID="panJ71" runat="server" CssClass="content-box2">
+    <asp:Panel ID="panJ71" runat="server" CssClass="content-box2" style="margin-top:20px;">
         <div class="title">
-            Podmínka filtru
+            Podmínka celého filtru
             <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit podmínku filtru" UseSubmitBehavior="false" Style="margin-left: 40px;" />
-            <asp:CheckBox ID="j70IsNegation" runat="server" Text="Negovat podmínku" ToolTip="Pokud zaškrtnuto, filtr vrací záznamy nevyhovující filtrovací podmínce." style="float:right;" />
+            <asp:CheckBox ID="j70IsNegation" runat="server" Text="Negovat podmínku celého filtru" ToolTip="Pokud zaškrtnuto, filtr vrací záznamy nevyhovující filtrovací podmínce." style="float:right;" />
         </div>
         <div class="content">
             <table cellpadding="3" cellspacing="2">

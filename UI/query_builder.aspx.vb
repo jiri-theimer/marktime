@@ -90,9 +90,24 @@
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id-j11id", "Obsazení role přes tým"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p28id_client", "Klient projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p28id_billing", "Odběratel faktury"))
-                lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p28client.p29id", "Typ klienta"))
+                lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p28client.p29id", "Typ klienta projektu"))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41Name", "Název projektu", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41NameShort", "Zkrácený název projektu", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41Code", "Kód projektu", BO.x24IdENUM.tString))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41BillingMemo", "Fakturační poznámka projektu", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41InvoiceDefaultText1", "Výchozí text faktury", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41InvoiceMaturityDays", "Výchozí počet dní splatnosti", BO.x24IdENUM.tDecimal))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41PlanFrom", "Pláované datum zahájení", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41PlanUntil", "Pláované datum dokončení", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41LimitHours_Notification", "Limitní objem rozpracovaných hodin", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41LimitFee_Notification", "Limitní honorář z rozpracovaných hodin", BO.x24IdENUM.tDecimal))
 
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p41DateInsert", "Datum založení projektu", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41IsDraft", "Jedná se o DRAFT záznam?", BO.x24IdENUM.tBoolean))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p41ExternalPID", "Externí kód projektu", BO.x24IdENUM.tString))
             Case BO.x29IdEnum.p28Contact
                 ph1.Text = "Návrhář filtrů nad přehledem klientů"
 
@@ -103,20 +118,48 @@
                 lis.Add(New myItem(BO.x29IdEnum.p87BillingLanguage, "p87id", "Fakturační jazyk klienta"))
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu klienta"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení klientské role"))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28Name", "Název klienta", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28NameShort", "Zkrácený název klienta", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28Code", "Kód klienta", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28IsCompany", "Právnická osoba?", BO.x24IdENUM.tBoolean))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28RegID", "IČ klienta", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28VatID", "DIČ klienta", BO.x24IdENUM.tString))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28BillingMemo", "Fakturační poznámka klienta", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28InvoiceDefaultText1", "Výchozí text faktury", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28InvoiceMaturityDays", "Výchozí počet dní splatnosti", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28LimitHours_Notification", "Limitní objem rozpracovaných hodin", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28LimitFee_Notification", "Limitní honorář z rozpracovaných hodin", BO.x24IdENUM.tDecimal))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28IsDraft", "Jedná se o DRAFT záznam?", BO.x24IdENUM.tBoolean))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p28DateInsert", "Datum založení klienta", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28ExternalPID", "Externí kód klienta", BO.x24IdENUM.tString))
             Case BO.x29IdEnum.p56Task
                 ph1.Text = "Návrhář filtrů nad přehledem úkolů/požadavků"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
-                lis.Add(New myItem(BO.x29IdEnum.p57TaskType, "p57id", "Typ úkolu"))
-                lis.Add(New myItem(BO.x29IdEnum.p58Product, "p58id", "Produkt"))
+                lis.Add(New myItem(BO.x29IdEnum.p57TaskType, "p57id", "Typ úkolu"))                
                 lis.Add(New myItem(BO.x29IdEnum.b02WorkflowStatus, "b02id", "Aktuální workflow stav"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id", "Obsazení role v úkolu"))
                 lis.Add(New myItem(BO.x29IdEnum.x67EntityRole, "x67id-j11id", "Obsazení role přes tým"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient projektu"))
 
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56Name", "Název úkolu", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56Code", "Kód úkolu", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p28ExternalPID", "Externí kód úkolu", BO.x24IdENUM.tString))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56PlanUntil", "Termín (plánované datum dokončení)", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56PlanFrom", "Plánované datum zahájení", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56Description", "Podrobný popis úkolu", BO.x24IdENUM.tString))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56Plan_Hours", "Plán/limit hodin", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56Plan_Expenses", "Plán/limit výdajů", BO.x24IdENUM.tDecimal))
+
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník/autor úkolu"))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p56DateInsert", "Datum založení úkolu", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p56ExternalPID", "Externí kód úkolu", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.p58Product, "p58id", "Produkt"))
             Case BO.x29IdEnum.o23Notepad
                 ph1.Text = "Návrhář filtrů nad přehledem dokumentů"
 
@@ -137,12 +180,31 @@
                 lis.Add(New myItem(BO.x29IdEnum.p92InvoiceType, "p92id", "Typ faktury"))
                 lis.Add(New myItem(BO.x29IdEnum.j27Currency, "j27id", "Měna faktury"))
 
-                lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID", "Klient faktury"))
+                lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID", "Klient faktury (vazba)"))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Client", "Název klienta faktury", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient vyfakturovaného projektu"))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Client_RegID", "IČ klienta faktury", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Client_VatID", "DIČ klienta faktury", BO.x24IdENUM.tString))
                 lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p28client.p29id", "Typ klienta faktury"))
-                lis.Add(New myItem(BO.x29IdEnum.j18Region, "p41.j18id", "Středisko projektu"))
+                lis.Add(New myItem(BO.x29IdEnum.j18Region, "p41.j18id", "Středisko fakturovaného projektu"))
+
 
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník záznamu faktury"))
-                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91DateInsert", "Datum založení projektu", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91DateInsert", "Datum založení faktury", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91DateSupply", "Datum plnění faktury", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91DateMaturity", "Datum splatnosti faktury", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91DateBilled", "Datum poslední úhrady", BO.x24IdENUM.tDateTime))
+
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91IsDraft", "Jedná se o DRAFT záznam?", BO.x24IdENUM.tBoolean))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Code", "Číslo faktury", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Amount_TotalDue", "Částka celkem", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Amount_Vat", "DPH celkem", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91ProformaAmount", "Částka záloh", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91RoundFitAmount", "Částka haléřového zaokrouhlení", BO.x24IdENUM.tDecimal))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Text1", "Text faktury", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p91Text2", "Technický text faktury", BO.x24IdENUM.tString))
+               
+
             Case BO.x29IdEnum.j02Person
                 ph1.Text = "Návrhář filtrů nad přehledem osob"
 
@@ -150,7 +212,13 @@
                 lis.Add(New myItem(BO.x29IdEnum.j07PersonPosition, "j07id", "Pozice"))
                 lis.Add(New myItem(BO.x29IdEnum.c21FondCalendar, "c21id", "Pracovní fond"))
                 lis.Add(New myItem(BO.x29IdEnum.j11Team, "j11id", "Tým osob"))
+                lis.Add(New myItem(BO.x29IdEnum.j18Region, "j18id", "Středisko osoby"))
 
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.j02IsIntraPerson", "Je osobou s uživatelským účtem?", BO.x24IdENUM.tBoolean))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.j02Email", "E-mail adresa", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.j02Code", "Kód/osobní číslo", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.j02Office", "Kancelář", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.j02Salutation", "Oslovení pro korespondenci", BO.x24IdENUM.tString))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.j02DateInsert", "Datum založení osoby", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.p31Worksheet
                 ph1.Text = "Návrhář filtrů nad worksheet přehledem"
@@ -163,7 +231,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Klient projektu"))
                 lis.Add(New myItem(BO.x29IdEnum.p28Contact, "a.p28ID_Supplier", "Dodavatel"))
                 lis.Add(New myItem(BO.x29IdEnum.p71ApproveStatus, "p71id", "Schváleno"))
-                lis.Add(New myItem(BO.x29IdEnum.p72PreBillingStatus, "p72ID_AfterApprove", "Návrh fakturačního statusu"))
+                lis.Add(New myItem(BO.x29IdEnum.p72PreBillingStatus, "p72ID_AfterApprove", "Návrh fakturačního statusu schvalovatelem"))
                 lis.Add(New myItem(BO.x29IdEnum.p70BillingStatus, "p70id", "Fakturační status"))
                 lis.Add(New myItem(BO.x29IdEnum.j27Currency, "j27ID_Billing_Orig", "Měna úkonu"))
                 lis.Add(New myItem(BO.x29IdEnum.p95InvoiceRow, "p32.p95id", "Fakturační oddíl"))
@@ -173,15 +241,15 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Hours_Orig", "Vykázané hodiny", BO.x24IdENUM.tDecimal))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Rate_Billing_Orig", "Výchozí fakturační sazba", BO.x24IdENUM.tDecimal))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Rate_Internal_Orig", "Nákladová hodinová sazba", BO.x24IdENUM.tDecimal))
-                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Text", "Podrobný popis", BO.x24IdENUM.tString))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31Text", "Podrobný popis úkonu", BO.x24IdENUM.tString))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p31ApprovingSet", "Dávka v rámci schvalování", BO.x24IdENUM.tString))
 
-                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31DateInsert", "Datum založení záznamu", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "a.p31DateInsert", "Datum založení úkonu", BO.x24IdENUM.tDateTime))
         End Select
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
 
-        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField)
+        Dim lisFF As IEnumerable(Of BO.x28EntityField) = Master.Factory.x28EntityFieldBL.GetList(Me.CurrentX29ID, -1, True).Where(Function(p) p.x28Flag = BO.x28FlagENUM.UserField Or p.x28Query_SqlSyntax <> "")
         For Each cField In lisFF
             lis.Add(New myItem(BO.x29IdEnum.System, cField.x28Field, cField.x28Name))
         Next

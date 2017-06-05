@@ -27,7 +27,7 @@
                 <span>Druh pole:</span>
                 <asp:DropDownList ID="x28Flag" runat="server" AutoPostBack="true">
                     <asp:ListItem Value="1" Text="Formulářové pole" Selected="true"></asp:ListItem>
-                    <asp:ListItem Value="2" Text="Pole pro přehledy a statistiky"></asp:ListItem>
+                    <asp:ListItem Value="2" Text="Pomocné pole pro přehledy/statistiky/filtry"></asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>
@@ -120,25 +120,32 @@
     <table cellpadding="3" cellspacing="2" id="tabFlag2" runat="server">
         <tr>
             <td style="width:140px;">
-                <asp:Label ID="Label5" Text="Pole (sloupec):" runat="server" CssClass="lblReq"></asp:Label></td>
+                <asp:Label ID="lblx28Grid_Field" Text="Pole (sloupec):" runat="server" CssClass="lblReq"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x28Grid_Field" runat="server" style="width:200px;"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="Label6" Text="SQL syntaxe pole:" runat="server" CssClass="lbl"></asp:Label></td>
+                <asp:Label ID="lblx28Grid_SqlSyntax" Text="SQL syntaxe (GRID):" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x28Grid_SqlSyntax" runat="server" style="width:600px;"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="Label7" Text="SQL FROM klauzule:" runat="server" CssClass="lbl"></asp:Label></td>
+                <asp:Label ID="lblx28Grid_SqlFrom" Text="SQL FROM klauzule (GRID):" runat="server" CssClass="lbl"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x28Grid_SqlFrom" runat="server" style="width:600px;height:80px;" TextMode="MultiLine"></asp:TextBox>
             </td>
-        </tr>        
+        </tr>      
+        <tr>
+            <td>
+                <asp:Label ID="lblx28Query_SqlSyntax" Text="SQL syntaxe (QUERY):" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x28Query_SqlSyntax" runat="server" style="width:600px;height:80px;" TextMode="MultiLine"></asp:TextBox>
+            </td>
+        </tr>  
         
     </table>
     <table cellpadding="3" cellspacing="2" id="tabPivot" runat="server">

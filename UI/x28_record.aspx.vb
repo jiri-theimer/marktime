@@ -80,6 +80,7 @@
             Me.x28Pivot_SelectSql.Text = .x28Pivot_SelectSql
             Me.x28Pivot_GroupBySql.Text = .x28Pivot_GroupBySql
             Me.x28HelpText.Text = .x28HelpText
+            Me.x28Query_SqlSyntax.Text = .x28Query_SqlSyntax
         End With
 
 
@@ -187,6 +188,7 @@
                 .x28Pivot_SelectSql = Me.x28Pivot_SelectSql.Text
                 .x28Pivot_GroupBySql = Me.x28Pivot_GroupBySql.Text
                 .x28HelpText = Me.x28HelpText.Text
+                .x28Query_SqlSyntax = Me.x28Query_SqlSyntax.Text
             End With
 
             Dim lisX26 As New List(Of BO.x26EntityField_Binding)

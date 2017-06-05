@@ -248,13 +248,13 @@ Partial Public Class x28_record
     Protected WithEvents tabFlag2 As Global.System.Web.UI.HtmlControls.HtmlTable
 
     '''<summary>
-    '''Label5 control.
+    '''lblx28Grid_Field control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label5 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblx28Grid_Field As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''x28Grid_Field control.
@@ -266,13 +266,13 @@ Partial Public Class x28_record
     Protected WithEvents x28Grid_Field As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label6 control.
+    '''lblx28Grid_SqlSyntax control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label6 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblx28Grid_SqlSyntax As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''x28Grid_SqlSyntax control.
@@ -284,13 +284,13 @@ Partial Public Class x28_record
     Protected WithEvents x28Grid_SqlSyntax As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Label7 control.
+    '''lblx28Grid_SqlFrom control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label7 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblx28Grid_SqlFrom As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''x28Grid_SqlFrom control.
@@ -300,6 +300,24 @@ Partial Public Class x28_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x28Grid_SqlFrom As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lblx28Query_SqlSyntax control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx28Query_SqlSyntax As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x28Query_SqlSyntax control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x28Query_SqlSyntax As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''tabPivot control.

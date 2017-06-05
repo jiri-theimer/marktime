@@ -50,6 +50,7 @@
             pars.Add("x28Grid_SqlFrom", .x28Grid_SqlFrom, DbType.String)
             pars.Add("x28Pivot_SelectSql", .x28Pivot_SelectSql, DbType.String)
             pars.Add("x28Pivot_GroupBySql", .x28Pivot_GroupBySql, DbType.String)
+            pars.Add("x28Query_SqlSyntax", .x28Query_SqlSyntax, DbType.String)
 
             pars.Add("x28textboxheight", cRec.x28TextboxHeight, DbType.Int32)
             pars.Add("x28textboxwidth", cRec.x28TextboxWidth, DbType.Int32)
