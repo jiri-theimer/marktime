@@ -4134,7 +4134,8 @@ SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE j02ID=@pid
 if @ref_pid is not null
  set @err_ret='Osoba má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
 
-
+if exists(select p56ID FROM p56Task WHERE j02ID_Owner=@pid)
+ set @err_ret='Osoba je vlastníkem (zakladatelem) minimálnì jednoho úkolu.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -4166,6 +4167,20 @@ BEGIN TRY
 
 	if exists(SELECT p30ID FROM p30Contact_Person WHERE j02ID=@pid)
 	 DELETE FROM p30Contact_Person WHERE j02ID=@pid
+
+	if exists(select p28ID FROM p28Contact WHERE j02ID_ContactPerson_DefaultInWorksheet=@pid OR j02ID_ContactPerson_DefaultInInvoice=@pid)
+	begin
+	 UPDATE p28Contact set j02ID_ContactPerson_DefaultInWorksheet=null WHERE j02ID_ContactPerson_DefaultInWorksheet=@pid
+
+	 UPDATE p28Contact set j02ID_ContactPerson_DefaultInInvoice=null WHERE j02ID_ContactPerson_DefaultInInvoice=@pid
+	end
+
+	if exists(select p41ID FROM p41Project WHERE j02ID_ContactPerson_DefaultInWorksheet=@pid OR j02ID_ContactPerson_DefaultInInvoice=@pid)
+	begin
+	 UPDATE p41Project set j02ID_ContactPerson_DefaultInWorksheet=null WHERE j02ID_ContactPerson_DefaultInWorksheet=@pid
+
+	 UPDATE p41Project set j02ID_ContactPerson_DefaultInInvoice=null WHERE j02ID_ContactPerson_DefaultInInvoice=@pid
+	end
 
 	if exists(select o20ID FROM o20Milestone_Receiver WHERE j02ID=@pid)
 	 DELETE FROM o20Milestone_Receiver WHERE j02ID=@pid
@@ -10951,9 +10966,9 @@ declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count in
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@p45_count int
 declare @last_invoice varchar(100),@last_wip_worksheet varchar(100),@p64_exist bit
-declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit
+declare @p42IsModule_p31 bit,@p42IsModule_p56 bit,@p42IsModule_o23 bit,@p42IsModule_p45 bit,@p28id_client int
 
-select @p42IsModule_p31=a.p42IsModule_p31,@p42IsModule_p56=a.p42IsModule_p56,@p42IsModule_o23=a.p42IsModule_o23,@p42IsModule_p45=p42IsModule_p45
+select @p42IsModule_p31=a.p42IsModule_p31,@p42IsModule_p56=a.p42IsModule_p56,@p42IsModule_o23=a.p42IsModule_o23,@p42IsModule_p45=p42IsModule_p45,@p28id_client=b.p28ID_Client
 FROM p42ProjectType a INNER JOIN p41Project b ON a.p42ID=b.p42ID
 WHERE b.p41ID=@pid
 
@@ -10977,7 +10992,7 @@ from p91Invoice
 WHERE p91ID IN (SELECT p91ID FROM p31Worksheet WHERE p41ID=@pid)
 end
 
-if exists(select p30ID FROM p30Contact_Person WHERE p41ID=@pid AND getdate() BETWEEN p30ValidFrom AND p30ValidUntil)
+if exists(select p30ID FROM p30Contact_Person WHERE (p41ID=@pid or p28ID=isnull(@p28id_client,-1)) AND getdate() BETWEEN p30ValidFrom AND p30ValidUntil)
  set @p30_exist=1
 else
  set @p30_exist=0

@@ -732,12 +732,14 @@
             Me.chkBindToContactPerson.Checked = False : Me.j02ID_ContactPerson.Visible = False
             Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(_Project.p28ID_Client, _Project.PID, 0)
             If lisP30.Count > 0 Then
-                Me.chkBindToContactPerson.Checked = True : Me.j02ID_ContactPerson.Visible = True
+                Me.j02ID_ContactPerson.Visible = True
+
                 Dim intDefj02ID As Integer = _Project.j02ID_ContactPerson_DefaultInWorksheet
                 If intDefj02ID = 0 And _Project.p28ID_Client <> 0 Then
                     Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(_Project.p28ID_Client)
                     intDefj02ID = cP28.j02ID_ContactPerson_DefaultInWorksheet
                 End If
+                If intDefj02ID <> 0 Then Me.chkBindToContactPerson.Checked = True
                 RefreshContactPersonCombo(True, intDefj02ID)
             End If
 
@@ -1274,6 +1276,7 @@
     End Sub
     
     Private Sub RefreshContactPersonCombo(bolSilent As Boolean, intDefJ02ID As Integer)
+        
         Me.j02ID_ContactPerson.Visible = False
         If Not Me.chkBindToContactPerson.Checked Then
             Me.j02ID_ContactPerson.DataSource = Nothing
@@ -1302,9 +1305,12 @@
         If lisJ02.Count = 0 Then
             If Not bolSilent Then Master.Notify(String.Format(Resources.p31_record.NejsouZavedenyKontaktniOsoby, _Project.p41Name, _Project.Client))
         Else
+            chkBindToContactPerson.Text = BO.BAS.OM2(chkBindToContactPerson.Text, lisJ02.Count.ToString)
             Me.j02ID_ContactPerson.DataSource = lisJ02
             Me.j02ID_ContactPerson.DataBind()
-            If intDefJ02ID > 0 Then basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson, intDefJ02ID.ToString)
+            If intDefJ02ID > 0 Then
+                basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson, intDefJ02ID.ToString)
+            End If
             Me.j02ID_ContactPerson.Visible = True
         End If
     End Sub

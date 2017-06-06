@@ -61,15 +61,22 @@
                     If lisO32.Count > 0 Then
                         Me.txtTo.Text = String.Join(",", lisO32.Select(Function(p) p.o32Value))
                     Else
-                        Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(cP91.p28ID, cP91.p41ID_First, False)
-                        If lisP30.Count > 0 Then
+                        Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(cP91.p28ID, cP91.p41ID_First, False)
+                        If lisJ02.Count > 0 Then
                             Dim intJ02ID As Integer = Master.Factory.p30Contact_PersonBL.Get_j02ID_DefaultInInvoice(cP91.p28ID, cP91.p41ID_First)
-                            If intJ02ID <> 0 Then lisP30 = lisP30.Where(Function(p) p.j02ID = intJ02ID)
+                            If intJ02ID <> 0 Then lisJ02 = lisJ02.Where(Function(p) p.PID = intJ02ID)
 
-                            Me.txtTo.Text = String.Join(",", lisP30.Select(Function(p) p.j02Email))
+                            Me.txtTo.Text = String.Join(",", lisJ02.Select(Function(p) p.j02Email))
                         End If
                     End If
-                    
+                    If cP91.j02ID_ContactPerson <> 0 Then
+                        Dim s As String = Master.Factory.j02PersonBL.Load(cP91.j02ID_ContactPerson).j02Email
+                        If Me.txtTo.Text = "" Then
+                            Me.txtTo.Text = s
+                        Else
+                            If Me.txtTo.Text.IndexOf(s) < 0 Then Me.txtTo.Text += "," & s
+                        End If
+                    End If
             End Select
             If Me.hidMasterPrefix_p30.Value <> "" Then
                 linkNewPerson.Text = BO.BAS.OM2(Me.linkNewPerson.Text, Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix_p30.Value), BO.BAS.IsNullInt(hidMasterPID_p30.Value), False))
