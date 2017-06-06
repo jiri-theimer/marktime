@@ -46,35 +46,30 @@
         </div>
     </asp:Panel>
     <asp:Panel ID="panPersons" runat="server">
-        <div class="content-box2" style="padding-top: 10px;">
-            <div class="title">
-                <img alt="Osoba" src="Images/search.png" width="16px" height="16px" />
-                <span class="framework_header_span">Vyhledat osobu v adresáři</span>
-
-            </div>
-            <div class="content">
-                <table cellpadding="4">
+        <div class="div6">
+        <table cellpadding="4">
 
                     <tr style="vertical-align: top;">
-
                         <td>
-                            <uc:person ID="j02ID" runat="server" Flag="all2" Width="400px" />
+                            <button type="button" onclick="j02_edit(0)">Založit úplně novou osobu</button>
                         </td>
                         <td>
-                            <asp:DropDownList ID="p27ID" runat="server" DataTextField="p27Name" DataValueField="pid"></asp:DropDownList>
+                            <span>nebo vložit již zavedenou z adresáře lidí:</span>
                         </td>
                         <td>
-                            <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="Přidat vybranou osobu" />
+                            <uc:person ID="j02ID" runat="server" Flag="intra" Width="300px" AutoPostBack="false" />
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="p27ID" runat="server" DataTextField="p27Name" DataValueField="pid" Visible="false"></asp:DropDownList>
+                        </td>
+                        <td>
+                            <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="->Potvrdit vybranou osobu" />
                         </td>
 
                     </tr>
 
                 </table>
-            </div>
-        </div>
-        <div class="div6">
-            nebo <button type="button" onclick="j02_edit(0)">Založit novou osobu</button>
-        </div>
+       </div>
         <div class="content-box2" style="padding-top: 10px;">
             <div class="title">
                 <img alt="Osoba" src="Images/person.png" width="16px" height="16px" />
@@ -96,23 +91,14 @@
 
                                 <td>
                                     <img src="Images/edit.png" />
-                                    <asp:HyperLink ID="cmdJ02" runat="server" Text="Upravit/odstranit osobu"></asp:HyperLink>
+                                    <asp:HyperLink ID="cmdJ02" runat="server" Text="Upravit/odstranit osobní profil"></asp:HyperLink>
                                     <asp:HiddenField ID="p30id" runat="server" />
                                 </td>
                                 <td>
                                     <asp:Image ID="imgDel" runat="server" ImageUrl="Images/delete.png" Style="margin-left: 20px;" />
                                     <asp:LinkButton ID="cmdDelete" runat="server" Text="Odstranit vazbu" CommandName="delete"></asp:LinkButton>
                                 </td>
-                                <td>
-                                    <asp:LinkButton ID="cmdDefaultInWorksheet" runat="server" Text="Výchozí v zapisování výkazů" CommandName="default_add" Visible="false"></asp:LinkButton>
-                                    <asp:Label ID="lblDefaultInWorksheet" runat="server" Text="Výchozí v zapisování výkazů" CssClass="valboldred" Visible="false"></asp:Label>
-                                    <asp:ImageButton ID="cmdDeleteDefault" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit přednastavení v zapisování výkazů" CommandName="default_delete" Visible="false" />
-                                </td>
-                                <td>
-                                    <asp:LinkButton ID="cmdDefaultInInvoice" runat="server" Text="Nastavit jako fakturační osobu" CommandName="default_invoice_add" Visible="false"></asp:LinkButton>
-                                    <asp:Label ID="lblDefaultInInvoice" runat="server" Text="Přednastaveno ve fakturaci" CssClass="valboldred" Visible="false"></asp:Label>
-                                    <asp:ImageButton ID="cmdDeleteDefaultInInvoice" runat="server" ImageUrl="Images/break.png" ToolTip="Zrušit jako fakturační osobu" CommandName="default_invoice_delete" Visible="false" />
-                                </td>
+                              
                             </tr>
                             <tr>
                                 <td colspan="6" style="border-bottom: solid 1px silver;">

@@ -25,11 +25,11 @@
                 Select Case Me.CurrentPrefix
                     Case "p28"
                         .HeaderText = "Kontaktní osoby | " & .Factory.GetRecordCaption(BO.x29IdEnum.p28Contact, .DataPID)
-                        cmdSave.Text = "Přiřadit osobu ke klientovi"
+
                         lblBoundHeader.Text = .HeaderText
                     Case "p41"
                         .HeaderText = "Kontaktní osoby | " & .Factory.GetRecordCaption(BO.x29IdEnum.p41Project, .DataPID)
-                        cmdSave.Text = "Přiřadit osobu k projektu"
+
                         lblBoundHeader.Text = .HeaderText
                     Case Else
                         panMasterRecord.Visible = True
@@ -117,20 +117,7 @@
                 If Master.Factory.p30Contact_PersonBL.Delete(intP30ID) Then
                     Master.CloseAndRefreshParent("p30-delete")
                 End If
-            Case "default_add", "default_delete"
-                Dim b As Boolean = True
-                If e.CommandName = "default_delete" Then b = False
-                Dim cRec As BO.p30Contact_Person = Master.Factory.p30Contact_PersonBL.Load(intP30ID)
-                If Master.Factory.p30Contact_PersonBL.SetAsDefaultPerson(cRec, b) Then
-                    RefreshList()
-                End If
-            Case "default_invoice_add", "default_invoice_delete"
-                Dim b As Boolean = True
-                If e.CommandName = "default_invoice_delete" Then b = False
-                Dim cRec As BO.p30Contact_Person = Master.Factory.p30Contact_PersonBL.Load(intP30ID)
-                If Master.Factory.p30Contact_PersonBL.SetAsDefaultInInvoice(cRec, b) Then
-                    RefreshList()
-                End If
+           
         End Select
     End Sub
 
@@ -142,23 +129,15 @@
         With CType(e.Item.FindControl("cmdDelete"), LinkButton)
             Select Case Me.CurrentPrefix
                 Case "p28"
-                    .Text = "Odstranit vazbu ke klientovi"
+                    .Text = "Odstranit vazbu Osoba->Klient"
                     If cRec.p41ID <> 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
                         CType(e.Item.FindControl("Message"), Label).Text = String.Format("Osoba je přímo přiřazená k projektu: {0}", "<b>" & cRec.Project & "</b>")
                     End If
-                    If cRec.p28ID = Master.DataPID Then
-                        e.Item.FindControl("cmdDefaultInWorksheet").Visible = Not cRec.p30IsDefaultInWorksheet
-                        If cRec.p30IsDefaultInWorksheet Then e.Item.FindControl("cmdDeleteDefault").Visible = True
-                        e.Item.FindControl("lblDefaultInWorksheet").Visible = cRec.p30IsDefaultInWorksheet
-
-                        e.Item.FindControl("cmdDefaultInInvoice").Visible = Not cRec.p30IsDefaultInInvoice
-                        If cRec.p30IsDefaultInInvoice Then e.Item.FindControl("cmdDeleteDefaultInInvoice").Visible = True
-                        e.Item.FindControl("lblDefaultInInvoice").Visible = cRec.p30IsDefaultInInvoice
-                    End If
+                   
                 Case "p41"
-                    .Text = "Odstranit vazbu k projektu"
+                    .Text = "Odstranit vazbu Osoba->Projekt"
                     If cRec.p28ID <> 0 And cRec.p41ID = 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
@@ -169,11 +148,7 @@
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
                         CType(e.Item.FindControl("Message"), Label).Text = String.Format("Osoba je přímo přiřazená k projektu: {0}", "<b>" & cRec.Project & "</b>")
                     End If
-                    If cRec.p41ID = Master.DataPID Then
-                        e.Item.FindControl("cmdDefaultInWorksheet").Visible = Not cRec.p30IsDefaultInWorksheet
-                        If cRec.p30IsDefaultInWorksheet Then e.Item.FindControl("cmdDeleteDefault").Visible = True
-                        e.Item.FindControl("lblDefaultInWorksheet").Visible = cRec.p30IsDefaultInWorksheet
-                    End If
+                    
             End Select
         End With
         With CType(e.Item.FindControl("Person"), Label)
@@ -203,4 +178,6 @@
             Server.Transfer("p30_binding.aspx?" & s)
         End If
     End Sub
+
+   
 End Class

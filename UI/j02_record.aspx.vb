@@ -22,7 +22,8 @@
                 'režim zakládání kontaktní osoby
                 Me.j02IsIntraPerson.SelectedValue = "0"
                 Me.j02IsIntraPerson.Enabled = False
-
+                RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "none"
+                RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
             Else
                 Master.neededPermission = BO.x53PermValEnum.GR_Admin
             End If
@@ -185,8 +186,8 @@
                     Dim cTemp As New BO.p85TempBox
                     cTemp.p85GUID = Me.hidGUID.Value
 
-                    cTemp.p85OtherKey1 = Master.DataPID
-                    cTemp.p85FreeText01 = c.FullNameDescWithJobTitle
+                    cTemp.p85DataPID = Master.DataPID
+                    cTemp.p85FreeText01 = c.FullNameAsc
                     Master.Factory.p85TempBoxBL.Save(cTemp)
                 End If
                 If cRec.PID = 0 And cRec.j02IsIntraPerson = True Then

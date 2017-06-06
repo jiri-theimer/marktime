@@ -42,9 +42,14 @@
             dialog_master("p51_record.aspx?pid=" + p51id + "&prefix=p41", true)
 
         }
-        function j02_record(j02id,p85id) {
+        function j02_record(j02id) {
 
-            dialog_master("j02_record.aspx?iscontact=1&pid="+j02id+"&guid=<%=ViewState("guid_p30")%>&p85id="+p85id, true)
+            dialog_master("j02_record.aspx?iscontact=1&pid="+j02id, true)
+
+        }
+        function j02_delete(j02id) {           
+            alert("V kartě osoby stiskněte tlačítko [Odstranit].")
+            dialog_master("j02_record.aspx?pid=" + j02id, true)
 
         }
         
@@ -259,8 +264,8 @@
                     <asp:Label ID="Label2" runat="server" CssClass="framework_header_span" Text="Kontaktní osoby klienta" Style="display: inline-block; min-width: 150px;"></asp:Label>
 
                     <button type="button" onclick="j02_record(0)">Založit úplně novou osobu</button>
-                    <span>nebo vložit z adresáře již zavedených lidí:</span>
-                    <uc:person ID="j02ID" runat="server" Flag="all2" Width="200px" AutoPostBack="true" />
+                    <span>nebo vložit již zavedenou osobu z adresáře lidí:</span>
+                    <uc:person ID="j02ID" runat="server" Flag="intra" Width="200px" AutoPostBack="true" />
 
                     
                 </div>
@@ -268,7 +273,7 @@
                     <table cellpadding="6">
                     <asp:Repeater ID="rpP30" runat="server">
                         <ItemTemplate>
-                            <tr>
+                            <tr class="trHover">
                                 <td>
                                     <asp:DropDownList ID="p27id" runat="server" DataValueField="pid" DataTextField="p27Name" AutoPostBack="false" Visible="false"/>
                                     
@@ -279,7 +284,7 @@
                                     <asp:HiddenField ID="p85id" runat="server" />
                                 </td>
                                 <td>
-                                    <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
+                                    <asp:label ID="j02Email" runat="server"></asp:label>
                                 </td>
                                 <td>
                                     <asp:Label ID="j02JobTitle" runat="server" Font-Italic="true"></asp:Label>
@@ -292,13 +297,30 @@
                                 </td>
 
                                 <td>
-                                    <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
+                                    <button id="cmdDeletePerson" runat="server" type="button" title="Nenávratné odstranění osobního profilu vč. vazby na klienta" style="font-size:x-small;">Odstranit osobní profil</button>
+                                    <asp:Button ID="del" CommandName="delelete" runat="server" Text="Odstranit pouze vazbu Osoba->Klient" CssClass="cmd" ToolTip="Po odstranění vazby zůstane osoba v adresáři lidí." Font-Size="X-Small" />
+                                    
+                                    
                                 </td>
 
                             </tr>
 
                         </ItemTemplate>
                     </asp:Repeater>
+                    </table>
+                    <table id="tabDefaultPerson" runat="server">
+                        <tr>
+                            <td>Výchozí kontaktní osoba pro worksheet zapisování:</td>
+                            <td>
+                                <asp:DropDownList ID="j02ID_ContactPerson_DefaultInWorksheet" runat="server" DataValueField="p85OtherKey1" DataTextField="p85FreeText01"></asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Výchozí kontaktní osoba pro fakturaci:</td>
+                            <td>
+                                <asp:DropDownList ID="j02ID_ContactPerson_DefaultInInvoice" runat="server" DataValueField="p85OtherKey1" DataTextField="p85FreeText01"></asp:DropDownList>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -351,7 +373,8 @@
                 </asp:Panel>
             </div>
 
-            <div style="margin-top: 30px;">
+            <div style="margin-top: 30px;border-top:dashed 1px gray;">
+                <br />
                 <asp:Label ID="lblParentID" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
                 <uc:contact ID="p28ParentID" runat="server" Width="400px" Flag="client" />
 

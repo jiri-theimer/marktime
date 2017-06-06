@@ -272,7 +272,7 @@ Public Class entity_menu
             ami("WORKSHEET statistika projektu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
         If cDisp.OwnerAccess Then
-            ami("Přiřadit k projektu kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
+            ami("Kontaktní osoby projektu", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
 
             ami("Vytvořit šanon", "cmdP64", "javascript:p64_record(0);", "Images/binder.png", mi)
         End If
@@ -544,9 +544,9 @@ Public Class entity_menu
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
         End If
-        If cDisp.OwnerAccess And Not cRec.IsClosed Then
-            ami("Přiřadit ke klientovi kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
-        End If
+        ''If cDisp.OwnerAccess And Not cRec.IsClosed Then
+        ''    ami("Přiřadit ke klientovi kontaktní osoby", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
+        ''End If
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
             ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If

@@ -212,15 +212,13 @@
         End If
 
         If cRecSum.p30_Exist Then
-            Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(0, Master.DataPID, False)
+            Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(cRec.p28ID_Client, Master.DataPID, False)
             If lisP30.Count > 0 Then
                 Me.boxP30.Visible = True
                 Me.persons1.FillData(lisP30)
                 With Me.boxP30Title
                     .Text = BO.BAS.OM2(.Text, lisP30.Count.ToString)
-                    If Master.Factory.SysUser.j04IsMenu_People Then
-                        .Text = "<a href='j02_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString & "' target='_top'>" & .Text & "</a>"
-                    End If
+                   
                 End With
             Else
                 cRecSum.p30_Exist = False

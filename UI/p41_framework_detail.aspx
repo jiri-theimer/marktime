@@ -226,26 +226,7 @@
     </asp:Panel>
 
 
-    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/worksheet.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
-        </div>
-        <div class="content">
-            <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
-
-            <div style="width: 100%;">
-                <span class="val">Poslední vystavená faktura:</span>
-                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
-
-            </div>
-            <div style="width: 100%;">
-                <span class="val">Poslední nevyfakturovaný úkon:</span>
-                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
-
-            </div>
-        </div>
-    </asp:Panel>
+    
     <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/person.png" style="margin-right: 10px;" />
@@ -278,15 +259,7 @@
             <uc:entityrole_assign_inline ID="roles_project" runat="server" EntityX29ID="p41Project" NoDataText="V projektu nejsou přiřazeny projektové role."></uc:entityrole_assign_inline>
         </div>
     </asp:Panel>
-    <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/billing.png" style="margin-right: 10px;" />
-            <span>Fakturační poznámka projektu</span>
-        </div>
-        <div class="content">
-            <asp:Label ID="p41BillingMemo" runat="server"></asp:Label>
-        </div>
-    </asp:Panel>
+    
     <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/notepad.png" style="margin-right: 10px;" />
@@ -316,11 +289,43 @@
 
         </div>
     </asp:Panel>
+    <div style="clear: both;"></div>
+    <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/billing.png" style="margin-right: 10px;" />
+            <span>Fakturační poznámka projektu</span>
+        </div>
+        <div class="content">
+            <asp:Label ID="p41BillingMemo" runat="server" ForeColor="Green"></asp:Label>
+        </div>
+    </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
     <div style="clear: both;"></div>
     
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
+
+    <div style="clear: both;"></div>
+    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/worksheet.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
+        </div>
+        <div class="content">
+            <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
+
+            <div style="width: 100%;">
+                <span class="val">Poslední vystavená faktura:</span>
+                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
+
+            </div>
+            <div style="width: 100%;">
+                <span class="val">Poslední nevyfakturovaný úkon:</span>
+                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
+
+            </div>
+        </div>
+    </asp:Panel>
     
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
 

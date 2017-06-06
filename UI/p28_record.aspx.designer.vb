@@ -392,6 +392,33 @@ Partial Public Class p28_record
     Protected WithEvents rpP30 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''tabDefaultPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tabDefaultPerson As Global.System.Web.UI.HtmlControls.HtmlTable
+
+    '''<summary>
+    '''j02ID_ContactPerson_DefaultInWorksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02ID_ContactPerson_DefaultInWorksheet As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''j02ID_ContactPerson_DefaultInInvoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02ID_ContactPerson_DefaultInInvoice As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''phO32 control.
     '''</summary>
     '''<remarks>

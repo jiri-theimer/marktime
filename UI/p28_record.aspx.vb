@@ -178,23 +178,21 @@
         Next
         RefreshTempO32()
 
-        Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(Master.DataPID, 0, 0)
+        Dim lisJ02 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(Master.DataPID, 0, False)
         Master.Factory.p85TempBoxBL.Truncate(ViewState("guid_p30"))
-        For Each c In lisP30
+        For Each c In lisJ02
             Dim cTemp As New BO.p85TempBox
             With cTemp
                 .p85GUID = ViewState("guid_p30")
                 .p85DataPID = c.PID
-                .p85OtherKey1 = c.j02ID
-                .p85OtherKey2 = c.p27ID
+                .p85OtherKey1 = c.PID
                 .p85FreeText01 = c.FullNameDescWithJobTitle
-                .p85FreeText02 = c.p27Name
-                .p85FreeBoolean01 = c.p30IsDefaultInWorksheet
-                .p85FreeBoolean02 = c.p30IsDefaultInInvoice
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
         RefreshTempP30()
+        basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson_DefaultInWorksheet, cRec.j02ID_ContactPerson_DefaultInWorksheet.ToString)
+        basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson_DefaultInInvoice, cRec.j02ID_ContactPerson_DefaultInInvoice.ToString)
 
         Dim lisO37 As IEnumerable(Of BO.o37Contact_Address) = Master.Factory.p28ContactBL.GetList_o37(Master.DataPID)
         Master.Factory.p85TempBoxBL.Truncate(ViewState("guid_o37"))
@@ -277,8 +275,30 @@
         rpO32.DataBind()
     End Sub
     Private Sub RefreshTempP30()
-        rpP30.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30"))
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30"))
+        rpP30.DataSource = lis
         rpP30.DataBind()
+        Dim s As String = ""
+        With Me.j02ID_ContactPerson_DefaultInInvoice
+            If .Items.Count = 0 Then s = "" Else s = .SelectedValue
+            .DataSource = lis
+            .DataBind()
+            .Items.Insert(0, "")
+        End With
+        basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson_DefaultInInvoice, s)
+        With Me.j02ID_ContactPerson_DefaultInWorksheet
+            If .Items.Count = 0 Then s = "" Else s = .SelectedValue
+            .DataSource = lis
+            .DataBind()
+            .Items.Insert(0, "")
+        End With
+        basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson_DefaultInWorksheet, s)
+
+        If lis.Count > 0 Then
+            tabDefaultPerson.Visible = True
+        Else
+            tabDefaultPerson.Visible = False
+        End If
     End Sub
    
 
@@ -446,6 +466,8 @@
                 .p28Pohoda_VatCode = Me.p28Pohoda_VatCode.Text
                 .ValidFrom = Master.RecordValidFrom
                 .ValidUntil = Master.RecordValidUntil
+                .j02ID_ContactPerson_DefaultInWorksheet = BO.BAS.IsNullInt(Me.j02ID_ContactPerson_DefaultInWorksheet.SelectedValue)
+                .j02ID_ContactPerson_DefaultInInvoice = BO.BAS.IsNullInt(Me.j02ID_ContactPerson_DefaultInInvoice.SelectedValue)
             End With
 
             Dim lisTEMP As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o37"), True)
@@ -491,7 +513,6 @@
                 If lisP30 Is Nothing Then lisP30 = New List(Of BO.p30Contact_Person)
                 Dim c As New BO.p30Contact_Person
                 c.j02ID = cTMP.p85OtherKey1
-                c.p27ID = cTMP.p85OtherKey2
                 lisP30.Add(c)
             Next
 
@@ -633,9 +654,25 @@
                 RefreshState_Pricelist()
             Case "p51-delete"
                 SetupPriceList()
-            Case "j02-save", "j02-delete" 'kontaktní osoba
-                RefreshTempP30()
+            Case "j02-save" 'kontaktní osoba
+                Dim intJ02ID As Integer = BO.BAS.IsNullInt(strPID)
+                Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(intJ02ID)
+                If Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30")).Where(Function(p) p.p85OtherKey1 = intJ02ID).Count = 0 Then
+                    Dim cTemp As New BO.p85TempBox
+                    cTemp.p85GUID = ViewState("guid_p30")
+                    cTemp.p85OtherKey1 = c.PID
+                    cTemp.p85FreeText01 = c.FullNameDesc
+                    Master.Factory.p85TempBoxBL.Save(cTemp)
+                Else
 
+                End If
+                RefreshTempP30()
+            Case "j02-delete"   'kontaktní osoba
+                Dim intJ02ID As Integer = BO.BAS.IsNullInt(strPID)
+                If Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30")).Where(Function(p) p.p85OtherKey1 = intJ02ID).Count > 0 Then
+                    Master.Factory.p85TempBoxBL.Delete(Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30")).Where(Function(p) p.p85OtherKey1 = intJ02ID)(0))
+                End If
+                RefreshTempP30()
         End Select
 
         Me.HardRefreshPID.Value = ""
@@ -781,9 +818,7 @@
     Private Sub rpP30_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpP30.ItemCommand
         Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
         If e.CommandName = "delete" Then
-            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
-
-            End If
+            Master.Factory.p85TempBoxBL.Delete(cRec)
         End If
         RefreshTempP30()
     End Sub
@@ -791,28 +826,37 @@
     Private Sub rpP30_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP30.ItemDataBound
         Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
 
-        With CType(e.Item.FindControl("del"), ImageButton)
+        With CType(e.Item.FindControl("del"), Button)
             .CommandArgument = cRec.PID.ToString
             .CommandName = "delete"
         End With
-        Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(cRec.p85OtherKey1)
-        With cRec
-            CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
-            basUI.SelectDropdownlistValue(CType(e.Item.FindControl("p27id"), DropDownList), .p85OtherKey2.ToString)
-            With CType(e.Item.FindControl("linkPerson"), HyperLink)
-                .Text = c.FullNameAsc
-                .NavigateUrl = "javascript:j02_record(" & c.PID.ToString & ")"
-                If c.IsClosed Then .Font.Strikeout = True
-            End With
-            
-            CType(e.Item.FindControl("j02Email"), HyperLink).Text = c.j02Email
-            CType(e.Item.FindControl("j02Email"), HyperLink).NavigateUrl = "mailto:" & c.j02Email
-            CType(e.Item.FindControl("j02Mobile"), Label).Text = c.j02Mobile
-            CType(e.Item.FindControl("j02JobTitle"), Label).Text = c.j02JobTitle
+        CType(e.Item.FindControl("cmdDeletePerson"), HtmlButton).Attributes.Item("onclick") = "j02_delete(" & cRec.p85OtherKey1.ToString & ")"
 
-            CType(e.Item.FindControl("clue_j02"), HyperLink).Attributes("rel") = "clue_j02_record.aspx?pid=" & .p85OtherKey1.ToString
-            
-        End With
+        Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(cRec.p85OtherKey1)
+        If Not c Is Nothing Then
+            With cRec
+                CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
+                basUI.SelectDropdownlistValue(CType(e.Item.FindControl("p27id"), DropDownList), .p85OtherKey2.ToString)
+                With CType(e.Item.FindControl("linkPerson"), HyperLink)
+                    .Text = c.FullNameAsc
+                    .NavigateUrl = "javascript:j02_record(" & c.PID.ToString & ")"
+                    If c.IsClosed Then .Font.Strikeout = True
+                End With
+
+                CType(e.Item.FindControl("j02Email"), Label).Text = c.j02Email
+                ''CType(e.Item.FindControl("j02Email"), HyperLink).NavigateUrl = "mailto:" & c.j02Email
+                CType(e.Item.FindControl("j02Mobile"), Label).Text = c.j02Mobile
+                CType(e.Item.FindControl("j02JobTitle"), Label).Text = c.j02JobTitle
+
+                CType(e.Item.FindControl("clue_j02"), HyperLink).Attributes("rel") = "clue_j02_record.aspx?pid=" & .p85OtherKey1.ToString
+
+            End With
+        Else
+            e.Item.FindControl("clue_j02").Visible = False
+            e.Item.FindControl("cmdDeletePerson").Visible = False
+            e.Item.FindControl("del").Visible = False
+        End If
+        
     End Sub
 
     Private Sub j02ID_AutoPostBack_SelectedIndexChanged(NewValue As String, OldValue As String) Handles j02ID.AutoPostBack_SelectedIndexChanged
@@ -822,16 +866,15 @@
         If Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30")).Where(Function(p) p.p85OtherKey1 = intJ02ID).Count > 0 Then
             Master.Notify(String.Format("{0} již je v seznamu kontaktní osob klienta.", c.FullNameAsc), NotifyLevel.WarningMessage)
             Return
-        End If
-        Dim cTemp As New BO.p85TempBox
+        Else
+            Dim cTemp As New BO.p85TempBox
             cTemp.p85GUID = ViewState("guid_p30")
-
             cTemp.p85OtherKey1 = c.PID
-            cTemp.p85FreeText01 = c.FullNameDescWithJobTitle
+            cTemp.p85FreeText01 = c.FullNameDesc
             Master.Factory.p85TempBoxBL.Save(cTemp)
-
-            RefreshTempP30()
-            Me.j02ID.Text = ""
-            Me.j02ID.Value = ""
+        End If
+        RefreshTempP30()
+        Me.j02ID.Text = ""
+        Me.j02ID.Value = ""
     End Sub
 End Class

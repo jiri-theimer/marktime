@@ -34,6 +34,12 @@
             .Text = cRec.FullNameDesc
             If cRec.IsClosed Then .Font.Strikeout = True
         End With
+        With CType(e.Item.FindControl("j02JobTitle"), Label)
+            .Text = cRec.j02JobTitle
+        End With
+        With CType(e.Item.FindControl("j02Mobile"), Label)
+            .Text = cRec.j02Mobile
+        End With
         If Me.IsShowClueTip Then
             CType(e.Item.FindControl("clue_j02"), HyperLink).Attributes("rel") = "clue_j02_record.aspx?pid=" & cRec.PID.ToString
         Else

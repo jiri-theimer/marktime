@@ -162,23 +162,11 @@
         If cRecSum.p30_Exist Then
             Dim lisP30 As IEnumerable(Of BO.j02Person) = Master.Factory.p30Contact_PersonBL.GetList_J02(Master.DataPID, 0, True)
             If lisP30.Count > 0 Then
-                Me.boxP30.Visible = True
                 Me.persons1.FillData(lisP30)
-                With Me.boxP30Title
-                    If lisP30.Count > 0 Then
-                        .Text = .Text & " (" & lisP30.Count.ToString & ")"
-                        If Master.Factory.SysUser.j04IsMenu_People Then
-                            .Text = "<a href='j02_framework.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString & "' target='_top'>" & .Text & "</a>"
-                        End If
-
-                    End If
-
-                End With
             Else
                 cRecSum.p30_Exist = False
             End If
         End If
-        Me.boxP30.Visible = cRecSum.p30_Exist
 
 
 
@@ -283,7 +271,6 @@
 
 
 
-        cmdEditP30.Visible = cDisp.OwnerAccess
 
         If cRec.b02ID = 0 And cRec.p28IsDraft And cDisp.OwnerAccess Then
             panDraftCommands.Visible = True 'pokud je vlastník a projekt nemá workflow šablonu

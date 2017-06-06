@@ -163,26 +163,7 @@
         </div>
     </asp:Panel>
 
-    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/worksheet.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
-        </div>
-        <div class="content">
-            <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
-
-            <div style="width: 100%;">
-                <span class="val">Poslední vystavená faktura:</span>
-                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
-
-            </div>
-            <div style="width: 100%;">
-                <span class="val">Poslední nevyfakturovaný úkon:</span>
-                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
-
-            </div>
-        </div>
-    </asp:Panel>
+    
 
 
     <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
@@ -198,34 +179,19 @@
     <asp:Panel ID="boxO37" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/address.png" />
+            <img src="Images/person.png" />
             <img src="Images/email.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO37Title" runat="server" Text="Adresy a kontaktní média"></asp:Label>
+            <asp:Label ID="boxO37Title" runat="server" Text="Adresy a kontakty"></asp:Label>
         </div>
         <div class="content">
             <uc:p28_address ID="address1" runat="server"></uc:p28_address>
             <uc:p28_medium ID="medium1" runat="server"></uc:p28_medium>
-        </div>
-    </asp:Panel>
-
-    <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/person.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxP30Title" runat="server" Text="Kontaktní osoby klienta"></asp:Label>
-            <asp:HyperLink ID="cmdEditP30" runat="server" NavigateUrl="javascript:p30_binding()" Text="Upravit" Style="margin-left: 20px;"></asp:HyperLink>
-        </div>
-        <div class="content">
             <uc:contactpersons ID="persons1" runat="server"></uc:contactpersons>
         </div>
     </asp:Panel>
-    <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/billing.png" style="margin-right: 10px;" />
-            <span>Fakturační poznámka klienta</span>
-        </div>
-        <div class="content">
-            <asp:Label ID="p28BillingMemo" runat="server"></asp:Label>
-        </div>
-    </asp:Panel>
+
+    
+    
 
     
 
@@ -239,6 +205,16 @@
             <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project"></uc:o23_list>
 
 
+        </div>
+    </asp:Panel>
+    <div style="clear: both;"></div>
+    <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/billing.png" style="margin-right: 10px;" />
+            <span>Fakturační poznámka klienta</span>
+        </div>
+        <div class="content">
+            <asp:Label ID="p28BillingMemo" runat="server" ForeColor="Green"></asp:Label>
         </div>
     </asp:Panel>
     <div style="clear: both;"></div>
@@ -272,6 +248,27 @@
 
 
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
+
+    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
+        <div class="title">
+            <img src="Images/worksheet.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
+        </div>
+        <div class="content">
+            <uc:entity_worksheet_summary ID="p31summary1" runat="server"></uc:entity_worksheet_summary>
+
+            <div style="width: 100%;">
+                <span class="val">Poslední vystavená faktura:</span>
+                <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
+
+            </div>
+            <div style="width: 100%;">
+                <span class="val">Poslední nevyfakturovaný úkon:</span>
+                <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
+
+            </div>
+        </div>
+    </asp:Panel>
 
 
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />

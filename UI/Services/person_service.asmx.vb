@@ -58,6 +58,8 @@ Public Class user_service
         Select Case strFlag
             Case "all2"
                 mq.IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
+            Case "intra"
+                mq.IntraPersons = BO.myQueryJ02_IntraPersons.IntraOnly
             Case "all"
                 'bez omezení - všechny osoby
 
@@ -79,6 +81,7 @@ Public Class user_service
 
 
         Dim lis As IEnumerable(Of BO.j02Person) = factory.j02PersonBL.GetList(mq)
+
         result = New List(Of RadComboBoxItemData)(lis.Count)
 
         For Each usr As BO.j02Person In lis
@@ -92,7 +95,22 @@ Public Class user_service
             If usr.IsClosed Then
                 itemData.Text = "<span class='radcomboitem_archive'>" & itemData.Text & "</span>"
             End If
-            If Not usr.j02IsIntraPerson Then itemData.Text += " ...kontaktní osoba"
+            If Not usr.j02IsIntraPerson Then
+                Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = factory.p30Contact_PersonBL.GetList(0, 0, usr.PID)
+                If lisP30.Count > 0 Then
+                    With lisP30(0)
+                        If .p41ID > 0 Then
+                            itemData.Text += " ..." & BO.BAS.OM3(lisP30(0).Project, 30)
+                        Else
+                            If .p28ID > 0 Then
+                                itemData.Text += " ..." & BO.BAS.OM3(lisP30(0).p28Name, 30)
+                            Else
+                                itemData.Text += " ...kontaktní osoba"
+                            End If
+                        End If
+                    End With
+                End If
+            End If
             
 
             itemData.Value = usr.PID.ToString

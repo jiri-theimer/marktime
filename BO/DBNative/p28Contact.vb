@@ -42,6 +42,8 @@ Public Class p28Contact
     Public Property p28ExternalPID As String
     Public Property p28BillingMemo As String
     Public Property p28Pohoda_VatCode As String
+    Public Property j02ID_ContactPerson_DefaultInWorksheet As Integer
+    Public Property j02ID_ContactPerson_DefaultInInvoice As Integer
     Private Property _p28name As String
     Private Property _Owner As String
 

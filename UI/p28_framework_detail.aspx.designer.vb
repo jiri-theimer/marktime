@@ -293,51 +293,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents labels1 As Global.UI.x18_readonly
 
     '''<summary>
-    '''boxP31Summary control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxP31Summary As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxP31SummaryTitle control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxP31SummaryTitle As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p31summary1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p31summary1 As Global.UI.entity_worksheet_summary
-
-    '''<summary>
-    '''Last_Invoice control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Last_Invoice As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''Last_WIP_Worksheet control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents Last_WIP_Worksheet As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''panRoles control.
     '''</summary>
     '''<remarks>
@@ -392,33 +347,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents medium1 As Global.UI.p28_medium
 
     '''<summary>
-    '''boxP30 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxP30 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxP30Title control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxP30Title As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdEditP30 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdEditP30 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''persons1 control.
     '''</summary>
     '''<remarks>
@@ -426,24 +354,6 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents persons1 As Global.UI.contactpersons
-
-    '''<summary>
-    '''boxBillingMemo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxBillingMemo As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''p28BillingMemo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''boxO23 control.
@@ -471,6 +381,24 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents notepad1 As Global.UI.o23_list
+
+    '''<summary>
+    '''boxBillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxBillingMemo As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p28BillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''boxP41 control.
@@ -525,6 +453,51 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents comments1 As Global.UI.b07_list
+
+    '''<summary>
+    '''boxP31Summary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxP31Summary As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''boxP31SummaryTitle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxP31SummaryTitle As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p31summary1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p31summary1 As Global.UI.entity_worksheet_summary
+
+    '''<summary>
+    '''Last_Invoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Last_Invoice As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''Last_WIP_Worksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Last_WIP_Worksheet As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdConvertDraft2Normal control.
