@@ -1387,6 +1387,98 @@ END
 
 GO
 
+----------FN---------------my_iif1-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('my_iif1') and type = 'FN')
+ drop function my_iif1
+GO
+
+
+
+
+CREATE FUNCTION [dbo].[my_iif1](
+    @compare_val1 int
+	,@compare_val2 int
+	,@return_true float
+	,@return_false float
+	)
+RETURNS float
+AS
+BEGIN
+    if @compare_val1=@compare_val2
+	 RETURN @return_true
+	
+
+
+	 RETURN @return_false
+END
+
+
+
+
+
+GO
+
+----------FN---------------o22_getroles_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('o22_getroles_inline') and type = 'FN')
+ drop function o22_getroles_inline
+GO
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[o22_getroles_inline](@o22id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené obsazení  rolí v události @p56id
+
+ DECLARE @s nvarchar(2000)
+
+
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
+  FROM o20Milestone_Receiver o20
+  LEFT OUTER JOIN j02Person j02 ON o20.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON o20.j11ID=j11.j11ID
+  WHERE o20.o22ID=@o22id
+  
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------o23_getroles_inline-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('o23_getroles_inline') and type = 'FN')
@@ -2339,15 +2431,30 @@ AS
 BEGIN
   ---vrací èárkou oddìlené obsazení  rolí v úkolu @p56id
 
- DECLARE @s nvarchar(2000) 
+ DECLARE @s nvarchar(2000),@count int
 
+ select @count=count(*) FROM x67EntityRole WHERE x29ID=356
+
+ 
+ if @count>1
+ begin
 select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))+' ('+x67Name+')'
   FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
   LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
   LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
   WHERE x69.x69RecordPID=@p56id AND x67.x29ID=356
   ORDER BY x67Ordinary
+ end
 
+  if @count<=1
+ begin
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@p56id AND x67.x29ID=356
+  ORDER BY x67Ordinary
+ end
 
 RETURN(@s)
    
@@ -14330,6 +14437,7 @@ update p91invoice set p91amount_withoutvat_none=@p91amount_withoutvat_none,p91am
 ,p91proformaamount_withoutvat_low=@p91proformaamount_withoutvat_low,p91proformaamount_withoutvat_none=@p91proformaamount_withoutvat_none,p91proformaamount_vatrate=@p91proformaamount_vatrate
 ,p41id_first=@p41id_first
 ,p91DateUpdate=getdate()
+,j27ID_Domestic=@j27id_domestic
 WHERE p91id=@p91id
 
 

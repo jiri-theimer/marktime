@@ -16913,13 +16913,13 @@
     <TableName>j71QueryTemplate_Item</TableName>
   </Table>
   <Table>
-    <name>j71Field</name>
+    <name>x28ID</name>
     <id>368720366</id>
-    <xtype>167</xtype>
-    <typestat>2</typestat>
-    <xusertype>167</xusertype>
-    <length>50</length>
-    <xprec>0</xprec>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
     <xscale>0</xscale>
     <colid>4</colid>
     <xoffset>0</xoffset>
@@ -16931,6 +16931,39 @@
     <number>0</number>
     <colorder>4</colorder>
     <offset>-3</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>j71QueryTemplate_Item</TableName>
+  </Table>
+  <Table>
+    <name>j71Field</name>
+    <id>368720366</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>5</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>5</colorder>
+    <offset>-4</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -16954,7 +16987,7 @@
     <length>100</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>5</colid>
+    <colid>6</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -16962,8 +16995,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>5</colorder>
-    <offset>-4</offset>
+    <colorder>6</colorder>
+    <offset>-5</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -16987,7 +17020,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>6</colid>
+    <colid>7</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -16995,8 +17028,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>6</colorder>
-    <offset>-5</offset>
+    <colorder>7</colorder>
+    <offset>-6</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -17020,7 +17053,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>7</colid>
+    <colid>8</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -17028,8 +17061,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>7</colorder>
-    <offset>-6</offset>
+    <colorder>8</colorder>
+    <offset>-7</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -17053,7 +17086,7 @@
     <length>255</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>8</colid>
+    <colid>9</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -17061,8 +17094,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>8</colorder>
-    <offset>-7</offset>
+    <colorder>9</colorder>
+    <offset>-8</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -17086,7 +17119,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>9</colid>
+    <colid>10</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -17094,8 +17127,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>9</colorder>
-    <offset>-8</offset>
+    <colorder>10</colorder>
+    <offset>-9</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -17119,7 +17152,7 @@
     <length>255</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>10</colid>
+    <colid>11</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -17127,8 +17160,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>10</colorder>
-    <offset>-9</offset>
+    <colorder>11</colorder>
+    <offset>-10</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -17145,39 +17178,6 @@
   </Table>
   <Table>
     <name>j71ValueFrom</name>
-    <id>368720366</id>
-    <xtype>231</xtype>
-    <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>100</length>
-    <xprec>0</xprec>
-    <xscale>0</xscale>
-    <colid>11</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>11</colorder>
-    <offset>-10</offset>
-    <collationid>53252</collationid>
-    <language>0</language>
-    <status>24</status>
-    <type>39</type>
-    <usertype>0</usertype>
-    <prec>100</prec>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <collation>Czech_CI_AS</collation>
-    <tdscollation>BQTQAAA=</tdscollation>
-    <type_name>nvarchar</type_name>
-    <TableName>j71QueryTemplate_Item</TableName>
-  </Table>
-  <Table>
-    <name>j71ValueUntil</name>
     <id>368720366</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
@@ -17210,12 +17210,12 @@
     <TableName>j71QueryTemplate_Item</TableName>
   </Table>
   <Table>
-    <name>j71SqlExpression</name>
+    <name>j71ValueUntil</name>
     <id>368720366</id>
     <xtype>231</xtype>
     <typestat>2</typestat>
     <xusertype>231</xusertype>
-    <length>200</length>
+    <length>100</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
     <colid>13</colid>
@@ -17228,6 +17228,39 @@
     <number>0</number>
     <colorder>13</colorder>
     <offset>-12</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>0</usertype>
+    <prec>100</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>nvarchar</type_name>
+    <TableName>j71QueryTemplate_Item</TableName>
+  </Table>
+  <Table>
+    <name>j71SqlExpression</name>
+    <id>368720366</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>200</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>14</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>14</colorder>
+    <offset>-13</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -17251,7 +17284,7 @@
     <length>10</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>14</colid>
+    <colid>15</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -17259,8 +17292,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>14</colorder>
-    <offset>-13</offset>
+    <colorder>15</colorder>
+    <offset>-14</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -17284,7 +17317,7 @@
     <length>40</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>15</colid>
+    <colid>16</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -17292,8 +17325,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>15</colorder>
-    <offset>-14</offset>
+    <colorder>16</colorder>
+    <offset>-15</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -76168,6 +76201,39 @@
     <collation>Czech_CI_AS</collation>
     <tdscollation>BQTQAAA=</tdscollation>
     <type_name>nvarchar</type_name>
+    <TableName>p91Invoice</TableName>
+  </Table>
+  <Table>
+    <name>j27ID_Domestic</name>
+    <id>820197972</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>75</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>75</colorder>
+    <offset>-70</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
     <TableName>p91Invoice</TableName>
   </Table>
   <Table>

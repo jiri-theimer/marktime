@@ -868,9 +868,10 @@
                 c.j71StringOperator = cTMP.p85FreeText08
                 c.j71ValueString = cTMP.p85FreeText09
                 c.j71FieldLabel = cTMP.p85Message
-                If cTMP.p85OtherKey4 <> 0 Then
+                c.x28ID = cTMP.p85OtherKey4
+                If c.x28ID <> 0 Then
                     'x28ID
-                    Dim cX28 As BO.x28EntityField = Master.Factory.x28EntityFieldBL.Load(cTMP.p85OtherKey4)
+                    Dim cX28 As BO.x28EntityField = Master.Factory.x28EntityFieldBL.Load(c.x28ID)
                     c.j71SqlExpression = cX28.x28Query_SqlSyntax
                 End If
                 lisJ71.Add(c)

@@ -12,6 +12,7 @@
     Public Property j71ValueFrom As String
     Public Property j71ValueUntil As String
     Public Property j71SqlExpression As String
+    Public Property x28ID As Integer
 
     Public Property j71StringOperator As String
     Public Property j71ValueString As String

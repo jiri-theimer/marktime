@@ -25,7 +25,7 @@
                 document.getElementById("<%=Me.p28Code.ClientID%>").innerText = codeValue;
                 alert("Změna kódu záznamu byla uložena.")
             }
-            
+
             document.getElementById("<%=HardRefreshPID.ClientID%>").value = pid;
             document.getElementById("<%=HardRefreshFlag.ClientID%>").value = flag;
             <%=Me.ClientScript.GetPostBackEventReference(Me.cmdHardRefresh, "", False)%>;
@@ -42,11 +42,12 @@
             dialog_master("p51_record.aspx?pid=" + p51id + "&prefix=p41", true)
 
         }
-        function j02_create() {
+        function j02_record(j02id,p85id) {
 
-            dialog_master("j02_record.aspx?iscontact=1&pid=0&guid=<%=viewstate("guid_j02")%>", true)
+            dialog_master("j02_record.aspx?iscontact=1&pid="+j02id+"&guid=<%=ViewState("guid_p30")%>&p85id="+p85id, true)
 
         }
+        
         function vat_info() {
             var dic = document.getElementById("<%=p28VatID.ClientID%>").value;
             if (dic == "") {
@@ -54,7 +55,7 @@
                 return;
             }
 
-            dialog_master("vat_registration.aspx?vat=" + dic,true);
+            dialog_master("vat_registration.aspx?vat=" + dic, true);
 
         }
 
@@ -72,39 +73,39 @@
 
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
         <telerik:RadPageView ID="core" runat="server" Selected="true">
-            <div style="float:left;padding:10px;">
+            <div style="float: left; padding: 10px;">
                 <asp:RadioButtonList ID="p28IsCompany" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
-                            <asp:ListItem Value="1" Text="Klient je právnická osoba (společnost)" Selected="True"></asp:ListItem>
-                            <asp:ListItem Value="0" Text="Klient je fyzická osoba"></asp:ListItem>
-                        </asp:RadioButtonList>
+                    <asp:ListItem Value="1" Text="Klient je právnická osoba (společnost)" Selected="True"></asp:ListItem>
+                    <asp:ListItem Value="0" Text="Klient je fyzická osoba"></asp:ListItem>
+                </asp:RadioButtonList>
             </div>
-            <div style="float:left;padding:10px;">
-            
+            <div style="float: left; padding: 10px;">
+
                 <asp:HyperLink ID="p28Code" runat="server" ToolTip="Kód záznamu"></asp:HyperLink>
                 <div>
                     <asp:CheckBox ID="p28IsDraft" runat="server" Text="DRAFT režim" Visible="false" />
                 </div>
             </div>
-            <div style="float:left;padding:10px;">
+            <div style="float: left; padding: 10px;">
                 <asp:Label ID="lblp29ID" Text="Typ klienta:" runat="server" CssClass="lbl"></asp:Label>
                 <uc:datacombo ID="p29ID" runat="server" DataTextField="p29Name" DataValueField="pid" AutoPostBack="true" IsFirstEmptyRow="true"></uc:datacombo>
             </div>
-            <div style="float:right;">
+            <div style="float: right;">
                 <asp:CheckBox ID="chkWhisper" runat="server" Text="Zapnutý našeptávač podobných klientů" AutoPostBack="true" Checked="true" />
             </div>
-            <div style="clear:both;"></div>
+            <div style="clear: both;"></div>
 
             <asp:Panel ID="panCompany" runat="server">
                 <table cellpadding="5" cellspacing="2">
 
                     <tr>
                         <td style="width: 80px;">
-                            <asp:Label ID="lblp28CompanyName" runat="server" CssClass="lblReq" Text="Společnost:"></asp:Label>                            
+                            <asp:Label ID="lblp28CompanyName" runat="server" CssClass="lblReq" Text="Společnost:"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="p28CompanyName" runat="server" Style="width: 400px;"></asp:TextBox>
-                            
-                            
+
+
                         </td>
                     </tr>
 
@@ -146,31 +147,31 @@
                     </td>
                     <td>
                         <asp:TextBox ID="p28RegID" runat="server" Style="width: 80px;"></asp:TextBox>
-                        
+
                     </td>
                     <td>
                         <asp:LinkButton ID="cmdARES" runat="server" Text="ARES import" ToolTip="Podle IČ načte název, adresu a DIČ subjektu. Funguje pouze pro subjekty registrované v ARES databázi." />
                     </td>
                     <td>
-                        <asp:Label ID="lblp28VatID" runat="server" Text="DIČ:" CssClass="lbl"></asp:Label>                        
+                        <asp:Label ID="lblp28VatID" runat="server" Text="DIČ:" CssClass="lbl"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="p28VatID" runat="server" Style="width: 130px;"></asp:TextBox>
-                        
-                        
+
+
                     </td>
                     <td>
                         <asp:LinkButton ID="cmdVIES" runat="server" Text="VIES import" ToolTip="Podle DIČ načte název a adresu subjektu z evropského registru VIES. Funguje pro subjekty ze všech zemí EU." />
-                        <a href="javascript:vat_info()" style="margin-left:20px;">Ověření v DPH registrech</a>
-                        
+                        <a href="javascript:vat_info()" style="margin-left: 20px;">Ověření v DPH registrech</a>
+
                     </td>
-                   
+
                 </tr>
             </table>
 
-            
-          
-            
+
+
+
             <div class="div6">
                 <asp:RadioButtonList ID="p28SupplierFlag" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
                     <asp:ListItem Text="Pouze klient" Value="1" Selected="true"></asp:ListItem>
@@ -181,8 +182,8 @@
                 <asp:Label ID="lblSupplierID" runat="server" Text="Kód dodavatele:"></asp:Label>
                 <asp:TextBox ID="p28SupplierID" runat="server"></asp:TextBox>
             </div>
-            <div id="search_dupl_result" style="position:relative;left:0px;top:0px;z-index:1000;"></div>
-            
+            <div id="search_dupl_result" style="position: relative; left: 0px; top: 0px; z-index: 1000;"></div>
+
             <div class="div6">
                 <asp:CheckBox ID="chkDefineLimits" runat="server" AutoPostBack="true" Text="Definovat limity k upozornění" CssClass="chk" />
             </div>
@@ -238,7 +239,7 @@
                                         <asp:TextBox ID="o38ZIP" runat="server" Style="width: 50px;"></asp:TextBox>
                                     </td>
                                     <td>
-                                        
+
                                         <uc:datacombo ID="o38country" runat="server" Width="170px" AllowCustomText="true" ShowToggleImage="false" Filter="Contains"></uc:datacombo>
                                     </td>
                                     <td>
@@ -252,21 +253,55 @@
                 </asp:Panel>
             </div>
 
-            <asp:panel ID="panFirstP30" runat="server" CssClass="content-box2" style="padding-top: 10px;" Visible="false">
+            <div class="content-box2" style="padding-top: 10px;">
                 <div class="title">
-                    <img src="Images/contactperson.png" width="16px" height="16px" alt="E-mail" />
-                    <asp:Label ID="Label2" runat="server" CssClass="framework_header_span" Text="První kontaktní osoba klienta" Style="display: inline-block; min-width: 150px;"></asp:Label>
+                    <img src="Images/contactperson.png" width="16px" height="16px" alt="Kontaktní osoba" />
+                    <asp:Label ID="Label2" runat="server" CssClass="framework_header_span" Text="Kontaktní osoby klienta" Style="display: inline-block; min-width: 150px;"></asp:Label>
+
+                    <button type="button" onclick="j02_record(0)">Založit úplně novou osobu</button>
+                    <span>nebo vložit z adresáře již zavedených lidí:</span>
+                    <uc:person ID="j02ID" runat="server" Flag="all2" Width="200px" AutoPostBack="true" />
+
                     
                 </div>
                 <div class="content">
-                    <button type="button" onclick="j02_create()">Založit novou osobu</button>
-                    <span>nebo vyhledat již založenou:</span>
-                    <uc:person ID="j02ID" runat="server" Flag="all2" Width="200px" />                    
-                    <div>
-                        <asp:Label ID="RelevantPersons" runat="server" CssClass="valboldblue"></asp:Label>
-                    </div>
+                    <table cellpadding="6">
+                    <asp:Repeater ID="rpP30" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td>
+                                    <asp:DropDownList ID="p27id" runat="server" DataValueField="pid" DataTextField="p27Name" AutoPostBack="false" Visible="false"/>
+                                    
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="clue_j02" runat="server" CssClass="reczoom" Text="i" title="Detail"></asp:HyperLink>
+                                    <asp:HyperLink ID="linkPerson" runat="server"></asp:HyperLink>
+                                    <asp:HiddenField ID="p85id" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:HyperLink ID="j02Email" runat="server"></asp:HyperLink>
+                                </td>
+                                <td>
+                                    <asp:Label ID="j02JobTitle" runat="server" Font-Italic="true"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="j02Mobile" runat="server"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="j02Office" runat="server"></asp:Label>
+                                </td>
+
+                                <td>
+                                    <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
+                                </td>
+
+                            </tr>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
+                    </table>
                 </div>
-            </asp:panel>
+            </div>
 
             <div class="content-box2" style="padding-top: 10px;">
                 <div class="title">
@@ -315,15 +350,15 @@
                     </table>
                 </asp:Panel>
             </div>
-            
-            <div style="margin-top:30px;">
+
+            <div style="margin-top: 30px;">
                 <asp:Label ID="lblParentID" runat="server" Text="Nadřízený klient:" CssClass="lbl"></asp:Label>
                 <uc:contact ID="p28ParentID" runat="server" Width="400px" Flag="client" />
-                        
-            </div>
-                        
 
-                
+            </div>
+
+
+
         </telerik:RadPageView>
         <telerik:RadPageView ID="billing" runat="server">
             <fieldset>
@@ -411,7 +446,7 @@
                 </tr>
             </table>
             <div>Fakturační poznámka klienta:</div>
-            <asp:TextBox ID="p28BillingMemo" runat="server" style="width:99%;height:60px;" TextMode="MultiLine"></asp:TextBox>
+            <asp:TextBox ID="p28BillingMemo" runat="server" Style="width: 99%; height: 60px;" TextMode="MultiLine"></asp:TextBox>
         </telerik:RadPageView>
         <telerik:RadPageView ID="ff" runat="server">
 
@@ -470,8 +505,8 @@
                     </td>
                     <td>
                         <asp:TextBox ID="p28ExternalPID" runat="server" Style="width: 200px;"></asp:TextBox>
-                       
-                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>                   
+
+                        <span class="infoInForm">Klíč záznamu z externího IS pro integraci s MT.</span>
                     </td>
                 </tr>
                 <tr>
@@ -480,8 +515,8 @@
                     </td>
                     <td>
                         <asp:TextBox ID="p28Pohoda_VatCode" runat="server" Style="width: 200px;"></asp:TextBox>
-                       
-                                           
+
+
                     </td>
                 </tr>
             </table>
@@ -506,7 +541,7 @@
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
-   
+
 
     <script type="text/javascript">
         <%If Me.chkWhisper.Checked Then%>
@@ -518,14 +553,14 @@
                 select: function (event, ui) {
                     if (ui.item) {
                         if (ui.item.PID != null)
-                         dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
-                        
+                            dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
+
                         return false;
                     }
                 },
                 open: function (event, ui) {
                     $('ul.ui-autocomplete')
-                       .removeAttr('style').hide()                       
+                       .removeAttr('style').hide()
                        .appendTo('#search_dupl_result').show();
                 },
                 close: function (event, ui) {
@@ -534,20 +569,20 @@
                     .hide();
                 }
 
-           
+
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
                 var s = "<div style='background-color:khaki;width:500px;'>";
                 if (item.Closed == "1")
                     s = s + "<a style='text-decoration:line-through;'>";
                 else
-                    s = s + "<a>";                
+                    s = s + "<a>";
 
                 s = s + __highlight(item.ItemText, item.FilterString);
 
 
                 s = s + "</a>";
 
-              
+
                 if (item.Italic == "1")
                     s = "<i>" + s + "</i>"
 
@@ -568,7 +603,7 @@
                 select: function (event, ui) {
                     if (ui.item) {
                         if (ui.item.PID != null)
-                         dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
+                            dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
 
                         return false;
                     }
@@ -590,14 +625,14 @@
                 if (item.Closed == "1")
                     s = s + "<a style='text-decoration:line-through;'>";
                 else
-                    s = s + "<a>";                
+                    s = s + "<a>";
 
                 s = s + __highlight(item.ItemText, item.FilterString);
 
 
                 s = s + "</a>";
 
-             
+
                 if (item.Italic == "1")
                     s = "<i>" + s + "</i>"
 
@@ -618,7 +653,7 @@
                 select: function (event, ui) {
                     if (ui.item) {
                         if (ui.item.PID != null)
-                         dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
+                            dialog_master("clue_p28_record.aspx?pid=" + ui.item.PID, false)
 
                         return false;
                     }
@@ -640,14 +675,14 @@
                 if (item.Closed == "1")
                     s = s + "<a style='text-decoration:line-through;'>";
                 else
-                    s = s + "<a>";                
+                    s = s + "<a>";
 
                 s = s + __highlight(item.ItemText, item.FilterString);
 
 
                 s = s + "</a>";
 
-               
+
                 if (item.Italic == "1")
                     s = "<i>" + s + "</i>"
 
@@ -665,7 +700,7 @@
             return s.replace(matcher, "<strong>$1</strong>");
         }
 
-        
-       <%end if%>
+
+        <%End If%>
     </script>
 </asp:Content>

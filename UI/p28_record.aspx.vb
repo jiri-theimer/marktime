@@ -13,7 +13,8 @@
         If Not Page.IsPostBack Then
             ViewState("guid_o37") = BO.BAS.GetGUID()
             ViewState("guid_o32") = BO.BAS.GetGUID()
-            ViewState("guid_j02") = BO.BAS.GetGUID()
+            ViewState("guid_p30") = BO.BAS.GetGUID()
+
             With Master
                 .HeaderIcon = "Images/contact_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -52,7 +53,7 @@
 
             If Master.DataPID = 0 Then
                 Master.HeaderText = "Založit klienta"
-                panFirstP30.Visible = True
+
             End If
 
         End If
@@ -177,6 +178,24 @@
         Next
         RefreshTempO32()
 
+        Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(Master.DataPID, 0, 0)
+        Master.Factory.p85TempBoxBL.Truncate(ViewState("guid_p30"))
+        For Each c In lisP30
+            Dim cTemp As New BO.p85TempBox
+            With cTemp
+                .p85GUID = ViewState("guid_p30")
+                .p85DataPID = c.PID
+                .p85OtherKey1 = c.j02ID
+                .p85OtherKey2 = c.p27ID
+                .p85FreeText01 = c.FullNameDescWithJobTitle
+                .p85FreeText02 = c.p27Name
+                .p85FreeBoolean01 = c.p30IsDefaultInWorksheet
+                .p85FreeBoolean02 = c.p30IsDefaultInInvoice
+            End With
+            Master.Factory.p85TempBoxBL.Save(cTemp)
+        Next
+        RefreshTempP30()
+
         Dim lisO37 As IEnumerable(Of BO.o37Contact_Address) = Master.Factory.p28ContactBL.GetList_o37(Master.DataPID)
         Master.Factory.p85TempBoxBL.Truncate(ViewState("guid_o37"))
         For Each c In lisO37
@@ -256,6 +275,10 @@
     Private Sub RefreshTempO32()
         rpO32.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o32"))
         rpO32.DataBind()
+    End Sub
+    Private Sub RefreshTempP30()
+        rpP30.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30"))
+        rpP30.DataBind()
     End Sub
    
 
@@ -361,9 +384,12 @@
         Next
     End Sub
     
+
+    
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
         SaveTempO37()
         SaveTempO32()
+
         roles1.SaveCurrentTempData()
 
         With Master.Factory.p28ContactBL
@@ -460,15 +486,15 @@
                 Return
             End If
             Dim lisP30 As List(Of BO.p30Contact_Person) = Nothing
-            If Master.DataPID = 0 Then
-                lisTEMP = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_j02"))
-                For Each cTMP In lisTEMP
-                    If lisP30 Is Nothing Then lisP30 = New List(Of BO.p30Contact_Person)
-                    Dim c As New BO.p30Contact_Person
-                    c.j02ID = cTMP.p85DataPID
-                    lisP30.Add(c)
-                Next
-            End If
+            lisTEMP = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30"))
+            For Each cTMP In lisTEMP
+                If lisP30 Is Nothing Then lisP30 = New List(Of BO.p30Contact_Person)
+                Dim c As New BO.p30Contact_Person
+                c.j02ID = cTMP.p85OtherKey1
+                c.p27ID = cTMP.p85OtherKey2
+                lisP30.Add(c)
+            Next
+
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
             Dim p58vals As List(Of Integer) = Me.p58IDs.GetAllCheckedIntegerValues()
@@ -607,13 +633,9 @@
                 RefreshState_Pricelist()
             Case "p51-delete"
                 SetupPriceList()
-            Case "j02-save" 'nová kontaktní osoba
-                Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_j02"))
-                If lis.Count > 0 Then
-                    Me.RelevantPersons.Text = String.Join(", ", lis.Select(Function(p) p.p85FreeText01))
-                Else
-                    RelevantPersons.Text = ""
-                End If
+            Case "j02-save", "j02-delete" 'kontaktní osoba
+                RefreshTempP30()
+
         End Select
 
         Me.HardRefreshPID.Value = ""
@@ -754,5 +776,62 @@
 
     Private Sub chkWhisper_CheckedChanged(sender As Object, e As EventArgs) Handles chkWhisper.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p28_record-chkWhisper", BO.BAS.GB(Me.chkWhisper.Checked))
+    End Sub
+
+    Private Sub rpP30_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpP30.ItemCommand
+        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
+        If e.CommandName = "delete" Then
+            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+
+            End If
+        End If
+        RefreshTempP30()
+    End Sub
+
+    Private Sub rpP30_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP30.ItemDataBound
+        Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
+
+        With CType(e.Item.FindControl("del"), ImageButton)
+            .CommandArgument = cRec.PID.ToString
+            .CommandName = "delete"
+        End With
+        Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(cRec.p85OtherKey1)
+        With cRec
+            CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
+            basUI.SelectDropdownlistValue(CType(e.Item.FindControl("p27id"), DropDownList), .p85OtherKey2.ToString)
+            With CType(e.Item.FindControl("linkPerson"), HyperLink)
+                .Text = c.FullNameAsc
+                .NavigateUrl = "javascript:j02_record(" & c.PID.ToString & ")"
+                If c.IsClosed Then .Font.Strikeout = True
+            End With
+            
+            CType(e.Item.FindControl("j02Email"), HyperLink).Text = c.j02Email
+            CType(e.Item.FindControl("j02Email"), HyperLink).NavigateUrl = "mailto:" & c.j02Email
+            CType(e.Item.FindControl("j02Mobile"), Label).Text = c.j02Mobile
+            CType(e.Item.FindControl("j02JobTitle"), Label).Text = c.j02JobTitle
+
+            CType(e.Item.FindControl("clue_j02"), HyperLink).Attributes("rel") = "clue_j02_record.aspx?pid=" & .p85OtherKey1.ToString
+            
+        End With
+    End Sub
+
+    Private Sub j02ID_AutoPostBack_SelectedIndexChanged(NewValue As String, OldValue As String) Handles j02ID.AutoPostBack_SelectedIndexChanged
+        Dim intJ02ID As Integer = BO.BAS.IsNullInt(Me.j02ID.Value)
+        If intJ02ID = 0 Then Return
+        Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(intJ02ID)
+        If Master.Factory.p85TempBoxBL.GetList(ViewState("guid_p30")).Where(Function(p) p.p85OtherKey1 = intJ02ID).Count > 0 Then
+            Master.Notify(String.Format("{0} již je v seznamu kontaktní osob klienta.", c.FullNameAsc), NotifyLevel.WarningMessage)
+            Return
+        End If
+        Dim cTemp As New BO.p85TempBox
+            cTemp.p85GUID = ViewState("guid_p30")
+
+            cTemp.p85OtherKey1 = c.PID
+            cTemp.p85FreeText01 = c.FullNameDescWithJobTitle
+            Master.Factory.p85TempBoxBL.Save(cTemp)
+
+            RefreshTempP30()
+            Me.j02ID.Text = ""
+            Me.j02ID.Value = ""
     End Sub
 End Class

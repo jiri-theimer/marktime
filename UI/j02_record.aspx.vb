@@ -184,8 +184,9 @@
                     Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
                     Dim cTemp As New BO.p85TempBox
                     cTemp.p85GUID = Me.hidGUID.Value
-                    cTemp.p85DataPID = Master.DataPID
-                    cTemp.p85FreeText01 = c.FullNameAsc
+
+                    cTemp.p85OtherKey1 = Master.DataPID
+                    cTemp.p85FreeText01 = c.FullNameDescWithJobTitle
                     Master.Factory.p85TempBoxBL.Save(cTemp)
                 End If
                 If cRec.PID = 0 And cRec.j02IsIntraPerson = True Then

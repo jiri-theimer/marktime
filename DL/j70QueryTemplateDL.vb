@@ -54,6 +54,7 @@
                 pars.Add("j71StringOperator", c.j71StringOperator, DbType.String)
                 pars.Add("j71FieldLabel", c.j71FieldLabel, DbType.String)
                 pars.Add("j71SqlExpression", c.j71SqlExpression, DbType.String)
+                pars.Add("x28ID", BO.BAS.IsNullDBKey(c.x28ID), DbType.Int32)
                 If Not _cDB.SaveRecord("j71QueryTemplate_Item", pars, True, , , , False) Then
 
                 End If
@@ -113,8 +114,8 @@
     Public Sub Setupj71TempList(intPID As Integer, strGUID As String)
         Dim pars As New DbParameters
         Dim s As String = "IF exists(select p85id FROM p85TempBox WHERE p85GUID='" & strGUID & "') DELETE FROM p85TempBox WHERE p85GUID=@guid;"
-        s += "INSERT INTO p85TempBox(p85GUID,p85DataPID,p85OtherKey1,p85OtherKey2,p85FreeText01,p85OtherKey3,p85FreeText02,p85FreeText03,p85FreeText04,p85FreeText05,p85FreeText06,p85FreeText07,p85FreeText08,p85FreeText09,p85Message)"
-        s += " SELECT @guid,j71ID,j71RecordPID,a.x29ID,j71RecordName,j71RecordPID_Extension,j71RecordName_Extension,isnull(x29NameSingle,'Různé'),j71Field,j71ValueFrom,j71ValueUntil,j71ValueType,j71StringOperator,j71ValueString,j71FieldLabel FROM j71QueryTemplate_Item a LEFT OUTER JOIN x29Entity x29 ON a.x29ID=x29.x29ID WHERE a.j70ID=@j70id"
+        s += "INSERT INTO p85TempBox(p85GUID,p85DataPID,p85OtherKey1,p85OtherKey2,p85FreeText01,p85OtherKey3,p85FreeText02,p85FreeText03,p85FreeText04,p85FreeText05,p85FreeText06,p85FreeText07,p85FreeText08,p85FreeText09,p85Message,p85OtherKey4)"
+        s += " SELECT @guid,j71ID,j71RecordPID,a.x29ID,j71RecordName,j71RecordPID_Extension,j71RecordName_Extension,isnull(x29NameSingle,'Různé'),j71Field,j71ValueFrom,j71ValueUntil,j71ValueType,j71StringOperator,j71ValueString,j71FieldLabel,a.x28ID FROM j71QueryTemplate_Item a LEFT OUTER JOIN x29Entity x29 ON a.x29ID=x29.x29ID WHERE a.j70ID=@j70id"
         pars.Add("guid", strGUID, DbType.String)
         pars.Add("j70id", intPID, DbType.Int32)
         _cDB.RunSQL(s, pars)

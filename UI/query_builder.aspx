@@ -131,8 +131,8 @@
         </div>
     </asp:Panel>
 
-    <p></p><p></p>
-    <asp:panel ID="panRoles" runat="server" cssclass="content-box2">
+    
+    <asp:panel ID="panRoles" runat="server" cssclass="content-box2" style="margin-top:200px;">
         <div class="title">
             <img src="Images/projectrole.png" width="16px" height="16px" />
             <asp:Label ID="Label1" runat="server" Text="Přístupová práva k filtru pro další osoby"></asp:Label>

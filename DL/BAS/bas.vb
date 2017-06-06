@@ -201,7 +201,7 @@
     Shared Function CompleteSqlJ70(cDB As DL.DbHandler, intJ70ID As Integer, cUser As BO.j03UserSYS) As String
         Dim s As String = "select *," & bas.RecTail("j70") & " from j70QueryTemplate WHERE j70ID=@pid"
         Dim cRec As BO.j70QueryTemplate = cDB.GetRecord(Of BO.j70QueryTemplate)(s, New With {.pid = intJ70ID}), sql As New System.Text.StringBuilder
-        Dim strFK As String = ""
+        Dim strFK As String = "", strQueryPrefix As String = BO.BAS.GetDataPrefix(cRec.x29ID)
         Select Case cRec.x29ID
             Case BO.x29IdEnum.p41Project : strFK = "a.p41ID"
             Case BO.x29IdEnum.p28Contact : strFK = "a.p28ID"
@@ -270,7 +270,7 @@
                 Case "p95id"
                     sql.Append(" AND p32.p95ID IN (" & strIN & ")")
                 Case Else
-                    If LCase(strField).IndexOf("free") > 0 Or strFirstValueType = "date" Or strFirstValueType = "string" Or strFirstValueType = "boolean" Or strFirstValueType = "number" Then
+                    If LCase(strField).IndexOf(strQueryPrefix & "free") > 0 Or strFirstValueType = "date" Or strFirstValueType = "string" Or strFirstValueType = "boolean" Or strFirstValueType = "number" Then
                         'filtrování podle volného pole
                         Dim strW As String = strField & " IN (" & strIN & ")"
                         Dim lisRows As IEnumerable(Of BO.j71QueryTemplate_Item) = lis.Where(Function(p) p.j71Field = strField)
@@ -328,12 +328,12 @@
                                         End If
                                 End Select
                             Next
-                          
+
                         End If
                         If strFirstMergeSqlExpression <> "" Then
                             strW = Replace(strFirstMergeSqlExpression, "@where", strW)
                         End If
-                        If LCase(strField).IndexOf("free") > 0 Then
+                        If LCase(strField).IndexOf(strQueryPrefix & "free") > 0 Then
                             Select Case cRec.x29ID
                                 Case BO.x29IdEnum.p41Project
                                     sql.Append(" AND a.p41ID IN (SELECT p41ID FROM p41Project_FreeField WHERE " & strW & ")")
@@ -355,7 +355,7 @@
                         Else
                             If strW <> "" Then sql.Append(" AND " & strW)
                         End If
-                        
+
 
                     Else
                         If strField.IndexOf(".") > 0 Then
