@@ -733,6 +733,7 @@
             Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(_Project.p28ID_Client, _Project.PID, 0)
             If lisP30.Count > 0 Then
                 Me.j02ID_ContactPerson.Visible = True
+                chkBindToContactPerson.Text = BO.BAS.OM2(chkBindToContactPerson.Text, lisP30.Select(Function(p) p.j02ID).Distinct.Count.ToString)
 
                 Dim intDefj02ID As Integer = _Project.j02ID_ContactPerson_DefaultInWorksheet
                 If intDefj02ID = 0 And _Project.p28ID_Client <> 0 Then
@@ -1305,7 +1306,7 @@
         If lisJ02.Count = 0 Then
             If Not bolSilent Then Master.Notify(String.Format(Resources.p31_record.NejsouZavedenyKontaktniOsoby, _Project.p41Name, _Project.Client))
         Else
-            chkBindToContactPerson.Text = BO.BAS.OM2(chkBindToContactPerson.Text, lisJ02.Count.ToString)
+
             Me.j02ID_ContactPerson.DataSource = lisJ02
             Me.j02ID_ContactPerson.DataBind()
             If intDefJ02ID > 0 Then

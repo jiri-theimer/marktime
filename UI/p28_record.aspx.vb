@@ -294,11 +294,7 @@
         End With
         basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson_DefaultInWorksheet, s)
 
-        If lis.Count > 0 Then
-            tabDefaultPerson.Visible = True
-        Else
-            tabDefaultPerson.Visible = False
-        End If
+        
     End Sub
    
 
@@ -322,7 +318,11 @@
             Case Else
                 lblSupplierID.Visible = False : p28SupplierID.Visible = False
         End Select
-      
+        If rpP30.Items.Count > 0 Then
+            tabDefaultPerson.Visible = True
+        Else
+            tabDefaultPerson.Visible = False
+        End If
     End Sub
     Private Sub RefreshState_Pricelist()
         lblP51ID_Billing.Visible = True : Me.p51ID_Billing.Visible = True
