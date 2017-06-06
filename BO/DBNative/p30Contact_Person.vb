@@ -33,7 +33,7 @@
     End Property
     Public Property IsSetAsDeleted As Boolean
 
-    Public Property p30IsDefaultInWorksheet As Boolean
-    Public Property p30IsDefaultInInvoice As Boolean
+    ''Public Property p30IsDefaultInWorksheet As Boolean
+    ''Public Property p30IsDefaultInInvoice As Boolean
 
 End Class

@@ -93,34 +93,34 @@
 
     End Function
 
-    Public Function SaveAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean
-        With cRec
-            _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInWorksheet=" & BO.BAS.GB(bolp30IsDefaultInWorksheet) & " WHERE p30ID=" & .PID.ToString)
-            If bolp30IsDefaultInWorksheet Then
-                If .p28ID <> 0 Then
-                    _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInWorksheet=0 WHERE p28ID=" & .p28ID.ToString & " AND p30ID<>" & .PID.ToString)
-                End If
-                If .p41ID <> 0 Then
-                    _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInWorksheet=0 WHERE p41ID=" & .p41ID.ToString & " AND p30ID<>" & .PID.ToString)
-                End If
-            End If
-        End With
-        Return True
-    End Function
-    Public Function SaveAsDefaultInInvoice(cRec As BO.p30Contact_Person, bolp30IsDefaultInInvoice As Boolean) As Boolean
-        With cRec
-            _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInInvoice=" & BO.BAS.GB(bolp30IsDefaultInInvoice) & " WHERE p30ID=" & .PID.ToString)
-            If bolp30IsDefaultInInvoice Then
-                If .p28ID <> 0 Then
-                    _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInInvoice=0 WHERE p28ID=" & .p28ID.ToString & " AND p30ID<>" & .PID.ToString)
-                End If
-                If .p41ID <> 0 Then
-                    _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInInvoice=0 WHERE p41ID=" & .p41ID.ToString & " AND p30ID<>" & .PID.ToString)
-                End If
-            End If
-        End With
-        Return True
-    End Function
+    ''Public Function SaveAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean
+    ''    With cRec
+    ''        _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInWorksheet=" & BO.BAS.GB(bolp30IsDefaultInWorksheet) & " WHERE p30ID=" & .PID.ToString)
+    ''        If bolp30IsDefaultInWorksheet Then
+    ''            If .p28ID <> 0 Then
+    ''                _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInWorksheet=0 WHERE p28ID=" & .p28ID.ToString & " AND p30ID<>" & .PID.ToString)
+    ''            End If
+    ''            If .p41ID <> 0 Then
+    ''                _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInWorksheet=0 WHERE p41ID=" & .p41ID.ToString & " AND p30ID<>" & .PID.ToString)
+    ''            End If
+    ''        End If
+    ''    End With
+    ''    Return True
+    ''End Function
+    ''Public Function SaveAsDefaultInInvoice(cRec As BO.p30Contact_Person, bolp30IsDefaultInInvoice As Boolean) As Boolean
+    ''    With cRec
+    ''        _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInInvoice=" & BO.BAS.GB(bolp30IsDefaultInInvoice) & " WHERE p30ID=" & .PID.ToString)
+    ''        If bolp30IsDefaultInInvoice Then
+    ''            If .p28ID <> 0 Then
+    ''                _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInInvoice=0 WHERE p28ID=" & .p28ID.ToString & " AND p30ID<>" & .PID.ToString)
+    ''            End If
+    ''            If .p41ID <> 0 Then
+    ''                _cDB.RunSQL("UPDATE p30Contact_Person set p30IsDefaultInInvoice=0 WHERE p41ID=" & .p41ID.ToString & " AND p30ID<>" & .PID.ToString)
+    ''            End If
+    ''        End If
+    ''    End With
+    ''    Return True
+    ''End Function
 
     Public Function Delete(intPID As Integer) As Boolean
         Dim pars As New DbParameters()

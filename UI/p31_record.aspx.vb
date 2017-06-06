@@ -730,12 +730,13 @@
 
 
             Me.chkBindToContactPerson.Checked = False : Me.j02ID_ContactPerson.Visible = False
-            Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(_Project.p28ID_Client, _Project.PID, 0).Where(Function(p) p.p30IsDefaultInWorksheet = True)
+            Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(_Project.p28ID_Client, _Project.PID, 0)
             If lisP30.Count > 0 Then
                 Me.chkBindToContactPerson.Checked = True : Me.j02ID_ContactPerson.Visible = True
-                Dim intDefj02ID As Integer = lisP30.First.j02ID
-                If lisP30.Where(Function(p) p.p41ID = _Project.PID).Count > 0 Then
-                    intDefj02ID = lisP30.Where(Function(p) p.p41ID = _Project.PID).First.j02ID
+                Dim intDefj02ID As Integer = _Project.j02ID_ContactPerson_DefaultInWorksheet
+                If intDefj02ID = 0 And _Project.p28ID_Client <> 0 Then
+                    Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(_Project.p28ID_Client)
+                    intDefj02ID = cP28.j02ID_ContactPerson_DefaultInWorksheet
                 End If
                 RefreshContactPersonCombo(True, intDefj02ID)
             End If

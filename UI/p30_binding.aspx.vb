@@ -95,6 +95,25 @@
         End Select
         rpP30.DataSource = lisP30
         rpP30.DataBind()
+
+        Dim qry = From p In lisP30 Select p.j02ID, p.FullNameDesc Distinct
+        With Me.j02ID_ContactPerson_DefaultInInvoice
+            .DataSource = qry
+            .DataBind()
+            .Items.Insert(0, "")
+        End With
+        With Me.j02ID_ContactPerson_DefaultInWorksheet
+            .DataSource = qry
+            .DataBind()
+            .Items.Insert(0, "")
+        End With
+
+        Select Case Me.CurrentPrefix
+            Case "p41"
+                Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+                basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson_DefaultInWorksheet, cRec.j02ID_ContactPerson_DefaultInWorksheet.ToString)
+                basUI.SelectDropdownlistValue(Me.j02ID_ContactPerson_DefaultInInvoice, cRec.j02ID_ContactPerson_DefaultInInvoice.ToString)
+        End Select
         Dim intJ02ID_Default As Integer = BO.BAS.IsNullInt(Request.Item("default_j02id"))
         If intJ02ID_Default <> 0 Then
             If lisP30.Where(Function(p) p.j02ID = intJ02ID_Default).Count = 0 Then
@@ -133,7 +152,7 @@
                     If cRec.p41ID <> 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
-                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Osoba je přímo přiřazená k projektu: {0}", "<b>" & cRec.Project & "</b>")
+                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Přímo přiřazeno k projektu: {0}", "<b>" & cRec.Project & "</b>")
                     End If
                    
                 Case "p41"
@@ -141,12 +160,12 @@
                     If cRec.p28ID <> 0 And cRec.p41ID = 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
-                        CType(e.Item.FindControl("Message"), Label).Text = "Osoba je přiřazená přímo ke klientovi projektu"
+                        CType(e.Item.FindControl("Message"), Label).Text = "Přímo přiřazeno ke klientovi projektu"
                     End If
                     If cRec.p41ID <> 0 And cRec.p41ID <> Master.DataPID Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
-                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Osoba je přímo přiřazená k projektu: {0}", "<b>" & cRec.Project & "</b>")
+                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Přímo přiřazeno k projektu: {0}", "<b>" & cRec.Project & "</b>")
                     End If
                     
             End Select
@@ -180,4 +199,21 @@
     End Sub
 
    
+    Private Sub j02ID_ContactPerson_DefaultInWorksheet_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j02ID_ContactPerson_DefaultInWorksheet.SelectedIndexChanged
+        SaveDefaultPersons()
+    End Sub
+    Private Sub j02ID_ContactPerson_DefaultInInvoice_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j02ID_ContactPerson_DefaultInInvoice.SelectedIndexChanged
+        SaveDefaultPersons()
+    End Sub
+    Private Sub SaveDefaultPersons()
+        Select Case Me.CurrentPrefix
+            Case "p41"
+                Dim cRec As BO.p41Project = Master.Factory.p41ProjectBL.Load(Master.DataPID)
+                cRec.j02ID_ContactPerson_DefaultInWorksheet = BO.BAS.IsNullInt(Me.j02ID_ContactPerson_DefaultInWorksheet.SelectedValue)
+                cRec.j02ID_ContactPerson_DefaultInInvoice = BO.BAS.IsNullInt(Me.j02ID_ContactPerson_DefaultInInvoice.SelectedValue)
+                If Master.Factory.p41ProjectBL.Save(cRec, Nothing, Nothing, Nothing, Nothing) Then
+                    Master.CloseAndRefreshParent("p30-save")
+                End If
+        End Select
+    End Sub
 End Class

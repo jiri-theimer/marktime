@@ -261,15 +261,13 @@
         If Not cRecP31 Is Nothing Then
             basUI.SelectDropdownlistValue(Me.p32ID, cRecP31.p32ID.ToString)
         End If
+        
         Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(cRecP41.p28ID_Client, cRecP41.PID, 0)
         If lisP30.Count > 0 Then
-            lisP30 = lisP30.Where(Function(p) p.p30IsDefaultInWorksheet = True)
-            Dim intDefj02ID As Integer
-            If lisP30.Count > 0 Then
-                intDefj02ID = lisP30.First.j02ID
-                If lisP30.Where(Function(p) p.p41ID = cRecP41.PID).Count > 0 Then
-                    intDefj02ID = lisP30.Where(Function(p) p.p41ID = cRecP41.PID)(0).j02ID
-                End If
+            Dim intDefj02ID As Integer = cRecP41.j02ID_ContactPerson_DefaultInWorksheet
+            If intDefj02ID = 0 And cRecP41.p28ID_Client <> 0 Then
+                Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(cRecP41.p28ID_Client)
+                intDefj02ID = cP28.j02ID_ContactPerson_DefaultInWorksheet
             End If
             RefreshContactPersonCombo(cRecP41, intDefj02ID)
         Else

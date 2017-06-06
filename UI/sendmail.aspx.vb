@@ -61,8 +61,11 @@
                     If lisO32.Count > 0 Then
                         Me.txtTo.Text = String.Join(",", lisO32.Select(Function(p) p.o32Value))
                     Else
-                        Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(cP91.p28ID, cP91.p41ID_First, False).OrderByDescending(Function(p) p.p30IsDefaultInInvoice)
+                        Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(cP91.p28ID, cP91.p41ID_First, False)
                         If lisP30.Count > 0 Then
+                            Dim intJ02ID As Integer = Master.Factory.p30Contact_PersonBL.Get_j02ID_DefaultInInvoice(cP91.p28ID, cP91.p41ID_First)
+                            If intJ02ID <> 0 Then lisP30 = lisP30.Where(Function(p) p.j02ID = intJ02ID)
+
                             Me.txtTo.Text = String.Join(",", lisP30.Select(Function(p) p.j02Email))
                         End If
                     End If

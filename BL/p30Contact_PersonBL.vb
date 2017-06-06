@@ -1,13 +1,16 @@
 ﻿Public Interface Ip30Contact_PersonBL
     Inherits IFMother
     Function Save(cRec As BO.p30Contact_Person) As Boolean
-    Function SetAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean
-    Function SetAsDefaultInInvoice(cRec As BO.p30Contact_Person, bolp30IsDefaultInInvoice As Boolean) As Boolean
+    ''Function SetAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean
+    ''Function SetAsDefaultInInvoice(cRec As BO.p30Contact_Person, bolp30IsDefaultInInvoice As Boolean) As Boolean
     Function Load(intPID As Integer) As BO.p30Contact_Person
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intP28ID As Integer, intP41ID As Integer, intJ02ID As Integer) As IEnumerable(Of BO.p30Contact_Person)
     Function GetList_J02(intP28ID As Integer, intP41ID As Integer, bolIncludeClientProjects As Boolean) As IEnumerable(Of BO.j02Person)
     Function GetList_p27() As IEnumerable(Of BO.p27ContactPersonRole)
+
+    Function Get_j02ID_DefaultInInvoice(intP28ID As Integer, intP41ID As Integer) As Integer
+
 End Interface
 
 Class p30Contact_PersonBL
@@ -50,12 +53,12 @@ Class p30Contact_PersonBL
             Return False
         End If
     End Function
-    Function SetAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean Implements Ip30Contact_PersonBL.SetAsDefaultPerson
-        Return _cDL.SaveAsDefaultPerson(cRec, bolp30IsDefaultInWorksheet)
-    End Function
-    Public Function SetAsDefaultInInvoice(cRec As BO.p30Contact_Person, bolp30IsDefaultInInvoice As Boolean) As Boolean Implements Ip30Contact_PersonBL.SetAsDefaultInInvoice
-        Return _cDL.SaveAsDefaultInInvoice(cRec, bolp30IsDefaultInInvoice)
-    End Function
+    ''Function SetAsDefaultPerson(cRec As BO.p30Contact_Person, bolp30IsDefaultInWorksheet As Boolean) As Boolean Implements Ip30Contact_PersonBL.SetAsDefaultPerson
+    ''    Return _cDL.SaveAsDefaultPerson(cRec, bolp30IsDefaultInWorksheet)
+    ''End Function
+    ''Public Function SetAsDefaultInInvoice(cRec As BO.p30Contact_Person, bolp30IsDefaultInInvoice As Boolean) As Boolean Implements Ip30Contact_PersonBL.SetAsDefaultInInvoice
+    ''    Return _cDL.SaveAsDefaultInInvoice(cRec, bolp30IsDefaultInInvoice)
+    ''End Function
     Public Function Load(intPID As Integer) As BO.p30Contact_Person Implements Ip30Contact_PersonBL.Load
         Return _cDL.Load(intPID)
     End Function
@@ -83,5 +86,21 @@ Class p30Contact_PersonBL
     End Function
     Public Function GetList_p27() As IEnumerable(Of BO.p27ContactPersonRole) Implements Ip30Contact_PersonBL.GetList_p27
         Return _cDL.GetList_p27()
+    End Function
+
+    Public Function Get_j02ID_DefaultInInvoice(intP28ID As Integer, intP41ID As Integer) As Integer Implements Ip30Contact_PersonBL.Get_j02ID_DefaultInInvoice
+        If intP41ID <> 0 Then
+            Dim cP41 As BO.p41Project = Factory.p41ProjectBL.Load(intP41ID)
+            If cP41.j02ID_ContactPerson_DefaultInInvoice <> 0 Then Return cP41.j02ID_ContactPerson_DefaultInInvoice
+            If cP41.p28ID_Client <> 0 Then
+                Dim cP28 As BO.p28Contact = Factory.p28ContactBL.Load(cP41.p28ID_Client)
+                If cP28.j02ID_ContactPerson_DefaultInInvoice <> 0 Then Return cP28.j02ID_ContactPerson_DefaultInInvoice
+            End If
+        End If
+        If intP28ID <> 0 Then
+            Dim cP28 As BO.p28Contact = Factory.p28ContactBL.Load(intP28ID)
+            If cP28.j02ID_ContactPerson_DefaultInInvoice <> 0 Then Return cP28.j02ID_ContactPerson_DefaultInInvoice
+        End If
+        Return 0
     End Function
 End Class

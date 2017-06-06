@@ -47,33 +47,33 @@
     </asp:Panel>
     <asp:Panel ID="panPersons" runat="server">
         <div class="div6">
-        <table cellpadding="4">
+            <table cellpadding="4">
 
-                    <tr style="vertical-align: top;">
-                        <td>
-                            <button type="button" onclick="j02_edit(0)">Založit úplně novou osobu</button>
-                        </td>
-                        <td>
-                            <span>nebo vložit již zavedenou z adresáře lidí:</span>
-                        </td>
-                        <td>
-                            <uc:person ID="j02ID" runat="server" Flag="intra" Width="300px" AutoPostBack="false" />
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="p27ID" runat="server" DataTextField="p27Name" DataValueField="pid" Visible="false"></asp:DropDownList>
-                        </td>
-                        <td>
-                            <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="->Potvrdit vybranou osobu" />
-                        </td>
+                <tr style="vertical-align: top;">
+                    <td>
+                        <button type="button" onclick="j02_edit(0)">Založit úplně novou osobu</button>
+                    </td>
+                    <td>
+                        <span>nebo vložit již zavedenou z adresáře lidí:</span>
+                    </td>
+                    <td>
+                        <uc:person ID="j02ID" runat="server" flag="all2" Width="300px" AutoPostBack="false" />
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="p27ID" runat="server" DataTextField="p27Name" DataValueField="pid" Visible="false"></asp:DropDownList>
+                    </td>
+                    <td>
+                        <asp:Button ID="cmdSave" runat="server" CssClass="cmd" Text="->Potvrdit vybranou osobu" />
+                    </td>
 
-                    </tr>
+                </tr>
 
-                </table>
-       </div>
+            </table>
+        </div>
         <div class="content-box2" style="padding-top: 10px;">
             <div class="title">
                 <img alt="Osoba" src="Images/person.png" width="16px" height="16px" />
-                <asp:label ID="lblBoundHeader" runat="server" cssclass="framework_header_span" Text="Přiřazené kontaktní osoby"></asp:label>
+                <asp:Label ID="lblBoundHeader" runat="server" CssClass="framework_header_span" Text="Přiřazené kontaktní osoby"></asp:Label>
 
             </div>
             <asp:Panel ID="panP30" runat="server" CssClass="content">
@@ -86,7 +86,7 @@
                                 </td>
                                 <td>
                                     <asp:HyperLink ID="clue_j02" runat="server" CssClass="reczoom" Text="i" title="Detail"></asp:HyperLink>
-                                    <asp:Label ID="Person" runat="server" CssClass="valboldblue"></asp:Label>
+                                    <asp:Label ID="Person" runat="server" CssClass="valbold"></asp:Label>
                                 </td>
 
                                 <td>
@@ -98,11 +98,11 @@
                                     <asp:Image ID="imgDel" runat="server" ImageUrl="Images/delete.png" Style="margin-left: 20px;" />
                                     <asp:LinkButton ID="cmdDelete" runat="server" Text="Odstranit vazbu" CommandName="delete"></asp:LinkButton>
                                 </td>
-                              
+
                             </tr>
                             <tr>
                                 <td colspan="6" style="border-bottom: solid 1px silver;">
-                                    <asp:Label ID="Message" runat="server" CssClass="infoNotification"></asp:Label>
+                                    <asp:Label ID="Message" runat="server" CssClass="val"></asp:Label>
                                 </td>
                             </tr>
                         </ItemTemplate>
@@ -110,6 +110,20 @@
                 </table>
             </asp:Panel>
         </div>
+        <table id="tabDefaultPerson" runat="server">
+            <tr>
+                <td>Výchozí kontaktní osoba pro worksheet zapisování:</td>
+                <td>
+                    <asp:DropDownList ID="j02ID_ContactPerson_DefaultInWorksheet" runat="server" DataValueField="j02ID" DataTextField="FullNameDesc" AutoPostBack="true"></asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>Výchozí kontaktní osoba pro fakturaci:</td>
+                <td>
+                    <asp:DropDownList ID="j02ID_ContactPerson_DefaultInInvoice" runat="server" DataValueField="j02ID" DataTextField="FullNameDesc" AutoPostBack="true"></asp:DropDownList>
+                </td>
+            </tr>
+        </table>
     </asp:Panel>
     <asp:HiddenField ID="hidPrefix" runat="server" />
 

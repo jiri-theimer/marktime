@@ -264,8 +264,8 @@
                     <asp:Label ID="Label2" runat="server" CssClass="framework_header_span" Text="Kontaktní osoby klienta" Style="display: inline-block; min-width: 150px;"></asp:Label>
 
                     <button type="button" onclick="j02_record(0)">Založit úplně novou osobu</button>
-                    <span>nebo vložit již zavedenou osobu z adresáře lidí:</span>
-                    <uc:person ID="j02ID" runat="server" Flag="intra" Width="200px" AutoPostBack="true" />
+                    <span>nebo vložit již zavedenou z adresáře lidí:</span>
+                    <uc:person ID="j02ID" runat="server" Flag="all2" Width="200px" AutoPostBack="true" />
 
                     
                 </div>

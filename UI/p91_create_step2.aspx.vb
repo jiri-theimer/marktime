@@ -197,8 +197,9 @@ Public Class p91_create_step2
             Me.j02ID_ContactPerson.DataSource = lisJ02
             Me.j02ID_ContactPerson.DataBind()
             Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Master.Factory.p30Contact_PersonBL.GetList(CInt(Me.p28id.Value), 0, 0)
-            If lisP30.Where(Function(p) p.p30IsDefaultInInvoice = True).Count > 0 Then
-                Me.j02ID_ContactPerson.SelectedValue = lisP30.Where(Function(p) p.p30IsDefaultInInvoice = True)(0).j02ID.ToString
+            If lisP30.Count > 0 Then
+                Dim cP28 As BO.p28Contact = Master.Factory.p28ContactBL.Load(Me.CurrentP28ID)
+                Me.j02ID_ContactPerson.SelectedValue = cP28.PID.ToString
             End If
         End If
         
