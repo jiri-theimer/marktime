@@ -102,8 +102,20 @@ Public Class p91_create_step2
         Me.p91DateSupply.SelectedDate = Today
 
         Dim cP28 As BO.p28Contact = Nothing, intMaturityDays As Integer = Master.Factory.x35GlobalParam.GetValueInteger("DefMaturityDays", "10")
+        Dim strPrefix As String = Me.CurrentPrefix
+        If intDataPID = 0 And strPrefix = "" Then
+            'pravděpodobně hromadně označené worksheet záznamy
+            Dim mq As New BO.myQueryP31
+            InhaleMyQuery(mq)
+            Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
+            If lis.Count > 0 Then
+                strPrefix = "p41"
+                intDataPID = lis(0).p41ID
+            End If
+        End If
+
         If intDataPID > 0 Then
-            Select Case Me.CurrentPrefix
+            Select Case strPrefix
                 Case "p28"
                     cP28 = Master.Factory.p28ContactBL.Load(intDataPID)
                     Me.p91text1.Text = cP28.p28InvoiceDefaultText1
@@ -137,10 +149,12 @@ Public Class p91_create_step2
                         cP28 = Master.Factory.p28ContactBL.Load(cP41.p28ID_Billing)
                         If intP92ID = 0 Then intP92ID = cP28.p92ID
                     End If
+
                 Case Else
 
             End Select
         End If
+        
         Dim cLastP91 As BO.p91Invoice = Nothing
         If Not cP28 Is Nothing Then
             Me.p28id.Value = cP28.PID.ToString
@@ -314,6 +328,7 @@ Public Class p91_create_step2
         If Me.p91Datep31_Until.IsEmpty Then
             Me.p91Datep31_Until.SelectedDate = lis.Max(Function(p) p.p31Date)
         End If
+        
     End Sub
     Private Sub grid1_NeedFooterSource(footerItem As Telerik.Web.UI.GridFooterItem, footerDatasource As Object) Handles grid1.NeedFooterSource
         footerItem.Item("systemcolumn").Text = "<img src='Images/sum.png'/>"

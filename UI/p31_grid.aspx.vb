@@ -603,11 +603,11 @@ Public Class p31_grid
         With Master.Factory
             menu1.FindItemByValue("action").Visible = .SysUser.IsApprovingPerson
             panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)
-            cmdGridDesigner.Visible = panExport.Visible
+            cmdGridDesigner2.Visible = panExport.Visible
             cmdQuery.Visible = panExport.Visible
             cmdSummary.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
         End With
-        If Not cmdGridDesigner.Visible And j74id.Items.Count <= 1 Then Me.j74id.Visible = False
+        If Not cmdGridDesigner2.Visible And j74id.Items.Count <= 1 Then Me.j74id.Visible = False
 
     End Sub
 

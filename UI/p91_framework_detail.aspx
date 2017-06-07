@@ -583,9 +583,8 @@
                     </asp:DropDownList>
 
                     <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
-
-                    <a href="javascript:griddesigner()" title="Návrhář sloupců">
-                        <img src="Images/griddesigner.png" class="button-link" /></a>
+                    <button type="button" onclick="griddesigner()">Sloupce</button>
+                    
                 </div>
                 <div class="commandcell">
                     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 100;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">

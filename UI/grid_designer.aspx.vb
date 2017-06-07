@@ -105,7 +105,10 @@
                 Case BO.cfENUM.Checkbox
                     n.ImageUrl = "Images/type_checkbox.png"
             End Select
-            If c.ColumnName.IndexOf("Free") > 0 Then n.ForeColor = Drawing.Color.Green
+            If Not c.ColumnName Is Nothing Then
+                If c.ColumnName.IndexOf("Free") > 0 Then n.ForeColor = Drawing.Color.Green
+            End If
+
             If c.TreeGroup = "" Then
                 tr1.Nodes.Add(n)
             Else

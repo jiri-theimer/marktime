@@ -245,6 +245,8 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p31ApprovingSet", "Dávka v rámci schvalování", BO.x24IdENUM.tString))
 
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p31DateInsert", "Datum založení úkonu", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "p91.p91DateSupply", "Zdanitelné plnění faktury", BO.x24IdENUM.tDateTime))
+                lis.Add(New myItem(BO.x29IdEnum.System, "p91.p91Date", "Datum faktury", BO.x24IdENUM.tDateTime))
         End Select
 
         lis.Add(New myItem(BO.x29IdEnum.x25EntityField_ComboValue, "x25id", "Štítky"))
@@ -307,7 +309,7 @@
                         Case BO.x24IdENUM.tDate, BO.x24IdENUM.tDateTime, BO.x24IdENUM.tTime
                             panQueryPeriod.Visible = True
                             Dim bolEnglish As Boolean = False
-                            If Page.Culture.IndexOf("Czech") < 0 Then bolEnglish = True
+                            ''If Page.Culture.IndexOf("Czech") < 0 Then bolEnglish = True
 
                             period1.FillData(Master.Factory.ftBL.GetList_X21_NonDB(False, bolEnglish), "", "--Vlastní období--")
                         Case BO.x24IdENUM.tString

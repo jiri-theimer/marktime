@@ -148,7 +148,7 @@
         function griddesigner() {
             var j74id = "<%=Me.CurrentJ74ID%>";
             sw_master("grid_designer.aspx?prefix=p31&masterprefix=p31_grid&pid=" + j74id, "Images/griddesigner.png");
-            return (false);
+            
         }
 
         function periodcombo_setting() {
@@ -200,9 +200,9 @@
             <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="return drilldown()" ImageUrl="Images/pivot.png" ToolTip="Statistika WORKSHEET přehledu" CssClass="button-link" />
         </div>
         <div class="commandcell" style="padding-left: 10px;">
-            <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
-
-            <asp:ImageButton ID="cmdGridDesigner" runat="server" OnClientClick="return griddesigner()" ImageUrl="Images/griddesigner.png" ToolTip="Návrhář sloupců" CssClass="button-link" />
+            <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
+            <button type="button" onclick="griddesigner()" id="cmdGridDesigner2" runat="server">Sloupce</button>
+            
         </div>
         <div class="commandcell" style="padding-left: 10px;">
             <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
