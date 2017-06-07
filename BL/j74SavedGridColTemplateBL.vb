@@ -397,6 +397,24 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Aktualizace, "p28DateUpdate", BO.cfENUM.DateTime, , "a.p28DateUpdate", , , "Záznam"))
             .Add(AGC(My.Resources.common.Aktualizoval, "p28UserUpdate", , , "a.p28UserUpdate", , , "Záznam"))
             .Add(AGC("Externí kód", "p28ExternalPID", , , "a.p28ExternalPID"))
+
+            If Factory.TestPermission(BO.x53PermValEnum.GR_P31_AllowRates) Then
+                .Add(AGC("Vykázané hodiny", "Vykazano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vykazano_Hodiny", True, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID_Client=alfa.p28ID", "Vykázáno"))
+                .Add(AGC("Vykázané výdaje", "Vykazano_Vydaje", BO.cfENUM.Numeric2, , "alfa.Vykazano_Vydaje", True, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID_Client=alfa.p41ID", "Vykázáno"))
+                .Add(AGC("Vyfakturované hodiny", "Vyfakturovano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Hodiny", True, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID_Client=alfa.p28ID", "Vyfakturováno"))
+                .Add(AGC("Vyfakturovaná částka", "Vyfakturovano_Castka", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Celkem_Domestic", True, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID_Client=alfa.p28ID", "Vyfakturováno"))
+                .Add(AGC("WIP/Hodiny", "WIP_Hodiny", BO.cfENUM.Numeric2, , "beta.Hodiny", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Částka", "WIP_Castka", BO.cfENUM.Numeric2, , "beta.Castka_Celkem", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Honorář", "WIP_Honorar", BO.cfENUM.Numeric2, , "beta.Honorar", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Honorář CZK", "WIP_Honorar_CZK", BO.cfENUM.Numeric2, , "beta.Honorar_CZK", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Honorář EUR", "WIP_Honorar_EUR", BO.cfENUM.Numeric2, , "beta.Honorar_EUR", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Výdaje", "WIP_Vydaje", BO.cfENUM.Numeric2, , "beta.Vydaje", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Výdaje CZK", "WIP_Vydaje_CZK", BO.cfENUM.Numeric2, , "beta.Vydaje_CZK", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Výdaje EUR", "WIP_Vydaje_EUR", BO.cfENUM.Numeric2, , "beta.Vydaje_EUR", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Odměny", "WIP_Odmeny", BO.cfENUM.Numeric2, , "beta.Odmeny", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Odměny CZK", "WIP_Odmeny_CZK", BO.cfENUM.Numeric2, , "beta.Odmeny_CZK", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+                .Add(AGC("WIP/Odměny EUR", "WIP_Odmeny_EUR", BO.cfENUM.Numeric2, , "beta.Odmeny_EUR", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID_Client=beta.p28ID", "WIP"))
+            End If
         End With
         AppendFreeFields(BO.x29IdEnum.p28Contact, lis)
     End Sub
