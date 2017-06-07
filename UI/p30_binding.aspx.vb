@@ -152,7 +152,7 @@
                     If cRec.p41ID <> 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
-                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Přímo přiřazeno k projektu: {0}", "<b>" & cRec.Project & "</b>")
+                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Vazba k projektu: {0}", "<b>" & cRec.Project & "</b>")
                     End If
                    
                 Case "p41"
@@ -160,12 +160,12 @@
                     If cRec.p28ID <> 0 And cRec.p41ID = 0 Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
-                        CType(e.Item.FindControl("Message"), Label).Text = "Přímo přiřazeno ke klientovi projektu"
+                        CType(e.Item.FindControl("Message"), Label).Text = "Vazba ke klientovi projektu"
                     End If
                     If cRec.p41ID <> 0 And cRec.p41ID <> Master.DataPID Then
                         .Visible = False
                         CType(e.Item.FindControl("imgDel"), Image).Visible = False
-                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Přímo přiřazeno k projektu: {0}", "<b>" & cRec.Project & "</b>")
+                        CType(e.Item.FindControl("Message"), Label).Text = String.Format("Vazba k projektu: {0}", "<b>" & cRec.Project & "</b>")
                     End If
                     
             End Select

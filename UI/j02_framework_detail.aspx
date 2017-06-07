@@ -250,8 +250,9 @@
             <asp:Repeater ID="rpP30" runat="server">
                 <ItemTemplate>
                     <div class="div6">
-                        <asp:HyperLink ID="Company" runat="server" Target="_top"></asp:HyperLink>
-                        <asp:Label ID="p27Name" runat="server"></asp:Label>
+                        <asp:HyperLink ID="ContactLink" runat="server" Target="_top"></asp:HyperLink>
+                        
+                        
                     </div>
                 </ItemTemplate>
             </asp:Repeater>

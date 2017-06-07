@@ -98,13 +98,11 @@
                                     <asp:Image ID="imgDel" runat="server" ImageUrl="Images/delete.png" Style="margin-left: 20px;" />
                                     <asp:LinkButton ID="cmdDelete" runat="server" Text="Odstranit vazbu" CommandName="delete"></asp:LinkButton>
                                 </td>
-
-                            </tr>
-                            <tr>
-                                <td colspan="6" style="border-bottom: solid 1px silver;">
-                                    <asp:Label ID="Message" runat="server" CssClass="val"></asp:Label>
+                                <td>
+                                    <asp:Label ID="Message" runat="server" CssClass="val" Font-Italic="true"></asp:Label>
                                 </td>
                             </tr>
+                            
                         </ItemTemplate>
                     </asp:Repeater>
                 </table>

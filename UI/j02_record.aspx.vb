@@ -22,8 +22,8 @@
                 'režim zakládání kontaktní osoby
                 Me.j02IsIntraPerson.SelectedValue = "0"
                 Me.j02IsIntraPerson.Enabled = False
-                RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "none"
-                RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
+                ''RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "none"
+                ''RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
             Else
                 Master.neededPermission = BO.x53PermValEnum.GR_Admin
             End If
@@ -104,6 +104,7 @@
             Else
                 Me.chkIsSmtp.Checked = False
             End If
+            
 
             'val1.InitVals(.ValidFrom, .ValidUntil, .DateInsert)
         End With
@@ -245,6 +246,14 @@
             lblj02SmtpLogin.Visible = b : j02SmtpLogin.Visible = b
             lblj02SmtpPassword.Visible = b : j02SmtpPassword.Visible = b
             Me.lblVerifyPassword.Visible = b : Me.txtVerifyPassword.Visible = b
+        End If
+
+        If Me.j02IsIntraPerson.SelectedValue = "1" Then
+            RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "block"
+            RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "block"
+        Else
+            RadTabStrip1.Tabs.FindTabByValue("smtp").Style.Item("display") = "none"
+            RadTabStrip1.Tabs.FindTabByValue("other").Style.Item("display") = "none"
         End If
     End Sub
 End Class

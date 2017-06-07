@@ -215,6 +215,11 @@
             boxP30.Visible = False
         End If
 
+        If Not (Master.Factory.SysUser.j04IsMenu_Project Or Master.Factory.SysUser.j04IsMenu_Contact) Then
+            boxP30.Enabled = False
+        End If
+        
+
         If cRecSum.b07_Count > 0 Then
             comments1.Visible = True
             comments1.RefreshData(Master.Factory, BO.x29IdEnum.j02Person, cRec.PID)
@@ -239,5 +244,19 @@
         End With
 
 
+    End Sub
+
+    Private Sub rpP30_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP30.ItemDataBound
+        Dim cRec As BO.p30Contact_Person = CType(e.Item.DataItem, BO.p30Contact_Person)
+        With CType(e.Item.FindControl("ContactLink"), HyperLink)
+            If cRec.p28ID <> 0 Then
+                .Text = cRec.p28Name
+                .NavigateUrl = "p28_framework.aspx?pid=" & cRec.p28ID.ToString
+            End If
+            If cRec.p41ID <> 0 Then
+                .Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, cRec.p41ID)
+                .NavigateUrl = "p41_framework.aspx?pid=" & cRec.p41ID.ToString
+            End If
+        End With
     End Sub
 End Class
