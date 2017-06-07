@@ -100,12 +100,12 @@
         With Me.j02ID_ContactPerson_DefaultInInvoice
             .DataSource = qry
             .DataBind()
-            .Items.Insert(0, "")
+            .Items.Insert(0, "--Dědí se z klienta projektu--")
         End With
         With Me.j02ID_ContactPerson_DefaultInWorksheet
             .DataSource = qry
             .DataBind()
-            .Items.Insert(0, "")
+            .Items.Insert(0, "--Dědí se z klienta projektu--")
         End With
 
         Select Case Me.CurrentPrefix
