@@ -137,12 +137,14 @@ Public Class entity_menu
                 'sb1.Visible = False
         End Select
         If hidSource.Value = "2" Or hidSource.Value = "1" Then
-            s = s.Replace("_32", "")
             'sb1.Visible = False
             'sb1.ashx = ""
             menu1.FindItemByValue("searchbox").Visible = False
         Else
             menu1.FindItemByValue("searchbox").Controls.Add(cbx)
+        End If
+        If hidSource.Value = "2" Then
+            s = s.Replace("_32", "")
         End If
 
 

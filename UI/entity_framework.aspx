@@ -30,7 +30,7 @@
 
         });
 
-        
+
 
 
         function loadSplitter(sender) {
@@ -177,7 +177,7 @@
         function querybuilder() {
             var j70id = "<%=Me.CurrentJ70ID%>";
             sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query.png");
-            
+
         }
         function batch() {
             var pids = GetAllSelectedPIDs();
@@ -247,8 +247,8 @@
         function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
             var combo = sender;
             var pid = combo.get_value();
-            <%If opgLayout.SelectedValue = "1" Then%>           
-            var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";            
+            <%If opgLayout.SelectedValue = "1" Then%>
+            var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";
             location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
             <%End If%>
             <%If opgLayout.SelectedValue = "2" Then%>
@@ -286,14 +286,11 @@
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoad="loadSplitter" PanesBorderSize="0" Skin="Default" RenderMode="Auto" Orientation="Vertical">
         <telerik:RadPane ID="navigationPane" runat="server" Width="353px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" BackColor="white">
 
-            <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px; background: #f7f7f7;">
+            <asp:Panel ID="panSearch" runat="server" Style="min-height: 42px; background-color: #f7f7f7;">
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
                 </div>
-               
-                
 
-                
                 <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px">
                     <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientFocus="cbx1_OnClientFocus" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
@@ -302,7 +299,7 @@
                 <div class="commandcell" style="padding-left: 4px;">
 
                     <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
-                        <asp:label ID="lblGridHeader" runat="server" Text="Akce nad přehledem"></asp:label>
+                        <asp:Label ID="lblGridHeader" runat="server" Text="Akce nad přehledem"></asp:Label>
 
                         <img src="Images/arrow_down.gif" />
                     </button>
@@ -310,44 +307,47 @@
 
             </asp:Panel>
             <div style="clear: both; width: 100%;"></div>
-            <div class="commandcell">
-                    <asp:Label ID="MasterEntity" runat="server" Visible="false"></asp:Label>                    
-                </div>
+            <div style="float:left;">
+                <asp:Label ID="MasterEntity" runat="server" Visible="false"></asp:Label>
+            </div>
 
-            <div class="commandcell" style="padding-left:6px;">
+            <div style="float:left;padding-left: 6px;">
                 <asp:Label ID="CurrentPeriodQuery" runat="server" ForeColor="Red"></asp:Label>
             </div>
-            <div class="commandcell" style="padding-left:6px;">
+            <div style="float:left;padding-left: 6px;">
                 <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
                 <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
             </div>
-            <div class="commandcell" style="padding-left:6px;">
-            <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
+            <div style="float:left;padding-left: 6px;">
+                <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
             </div>
-           <div style="clear: both; width: 100%;"></div>
-
-            <div class="slidingDiv1" style="display:none;">
+            <div style="clear: both; width: 100%;"></div>
+            
+            <div class="slidingDiv1" style="display: none;">
                 <div class="content-box2">
                     <div class="title">
                         <span>Pojmenovaný filtr</span>
                     </div>
                     <div class="content" style="border: none;">
                         <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                    
-                        <button type="button" ID="cmdQuery" runat="server" onclick="querybuilder()">Návrhář filtrů</button>
+
+                        <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">Návrhář filtrů</button>
+                        <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
+                            <asp:ListItem Text="" Value=""></asp:ListItem>
+                        </asp:DropDownList>
                     </div>
                 </div>
-                <div class="content-box2" style="margin-top:20px;">
+                <div class="content-box2" style="margin-top: 20px;">
                     <div class="title">
                         <span>Filtr podle časového období</span>
                     </div>
                     <div class="content" style="border: none;">
-                        <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období" style="width:140px;">
+                        <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období" Style="width: 140px;">
                         </asp:DropDownList>
                         <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
                     </div>
                 </div>
-                <div class="content-box2" style="margin-top:20px;">
+                <div class="content-box2" style="margin-top: 20px;">
                     <div class="title">
                         <span>Operace pro označené (zaškrtlé) záznamy</span>
                     </div>
@@ -360,42 +360,38 @@
                         <button type="button" onclick="sendmail_batch()">Hromadně odeslat faktury (e-mail)</button>
                         <%End If%>
                         <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()">Schválit/připravit k fakturaci</button>
-                        
+
                     </div>
                 </div>
-                <asp:panel ID="panExport" runat="server" cssclass="content-box2" style="margin-top:20px;">
+                <asp:Panel ID="panExport" runat="server" CssClass="content-box2" Style="margin-top: 20px;">
                     <div class="title">
                         <span>Export záznamů v přehledu</span>
-                        
+
                     </div>
                     <div class="content" style="border: none;">
-                       
-                            <img src="Images/export.png" alt="export" />
-                            <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
-                            <img src="Images/xls.png" alt="xls" />
-                            <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                        <img src="Images/export.png" alt="export" />
+                        <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
-                            <img src="Images/pdf.png" alt="pdf" />
-                            <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                        <img src="Images/xls.png" alt="xls" />
+                        <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
-                            <img src="Images/doc.png" alt="doc" />
-                            <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                        <img src="Images/pdf.png" alt="pdf" />
+                        <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
 
-                       
+                        <img src="Images/doc.png" alt="doc" />
+                        <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+
                     </div>
-                </asp:panel>                                
-                <div class="content-box2" style="margin-top:20px;">
+                </asp:Panel>
+                <div class="content-box2" style="margin-top: 20px;">
                     <div class="title">
                         <span>Sloupce v přehledu</span>
-                        
+
                     </div>
                     <div class="content" style="border: none;">
-                        <div>
-                            <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
-                                <asp:ListItem Text="" Value=""></asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
+
                         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                         </asp:DropDownList>
                         <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
@@ -416,11 +412,11 @@
 
                             <asp:CheckBox ID="chkCheckboxSelector" runat="server" Text="Možnost označovat záznamy zaškrtnutím (checkbox)" AutoPostBack="true" />
                         </div>
-                        
-                        
+
+
                     </div>
                 </div>
-                <div class="content-box2" style="margin-top:20px;">
+                <div class="content-box2" style="margin-top: 20px;">
                     <div class="title">
                         <span>Rozvržení panelů</span>
                     </div>
@@ -429,7 +425,7 @@
                         <asp:RadioButtonList ID="opgLayout" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
                             <asp:ListItem Text="Levý panel = přehled, pravý panel = detail" Value="1" Selected="True"></asp:ListItem>
                             <asp:ListItem Text="Pouze jeden panel - buď přehled nebo vybraný záznam na dvoj-klik" Value="3"></asp:ListItem>
-                            <asp:ListItem Text="Horní panel = přehled, spodní panel = detail" Value="2"></asp:ListItem>                            
+                            <asp:ListItem Text="Horní panel = přehled, spodní panel = detail" Value="2"></asp:ListItem>
                         </asp:RadioButtonList>
                         <asp:Label ID="lblLayoutMessage" runat="server" CssClass="infoNotification" Text="Z důvodu malého rozlišení displeje (pod 1280px) se automaticky zapnul režim jediného panelu s datovým přehledem." Visible="false"></asp:Label>
 

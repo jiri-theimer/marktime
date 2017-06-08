@@ -140,6 +140,15 @@ Partial Public Class entity_framework
     Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''cbxQueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxQueryFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cbxPeriodType control.
     '''</summary>
     '''<remarks>
@@ -210,15 +219,6 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''cbxQueryFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxQueryFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cbxGroupBy control.
