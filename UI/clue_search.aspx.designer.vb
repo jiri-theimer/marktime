@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class clue_search
 
     '''<summary>
+    '''RadTabStrip1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''search control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents search As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''trP41 control.
     '''</summary>
     '''<remarks>
@@ -174,6 +201,15 @@ Partial Public Class clue_search
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkJ02Bin As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''fulltext control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents fulltext As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''Master property.
