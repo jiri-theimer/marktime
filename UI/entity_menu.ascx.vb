@@ -136,7 +136,7 @@ Public Class entity_menu
                 cbx.ToolTip = "Hledat projekt"
                 'sb1.Visible = False
         End Select
-        If hidSource.Value = "2" Then
+        If hidSource.Value = "2" Or hidSource.Value = "1" Then
             s = s.Replace("_32", "")
             'sb1.Visible = False
             'sb1.ashx = ""
@@ -908,6 +908,7 @@ Public Class entity_menu
                     .NavigateUrl = "entity_framework.aspx?prefix=" & Me.DataPrefix
                     .ToolTip = "Přepnout do datového přehledu"
                     .ImageUrl = "Images/fullscreen.png"
+                    .Text = "PŘEHLED"
                 End With
             
         End Select

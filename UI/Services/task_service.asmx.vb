@@ -59,7 +59,7 @@ Public Class task_service
         itemData.Enabled = False
         Select Case lis.Count
             Case 0
-                If Len(filterString) > 0 And Len(filterString) < 15 Then itemData.Text = "Ani jeden projekt pro zadanou podmínku."
+                If Len(filterString) > 0 And Len(filterString) < 15 Then itemData.Text = "Ani jeden úkol pro zadanou podmínku."
             Case Is >= mq.TopRecordsOnly
                 itemData.Text = String.Format("Nalezeno více než {0} úkolů. Je třeba zpřesnit podmínku hledání.", mq.TopRecordsOnly.ToString)
             Case Else

@@ -50,60 +50,6 @@ Partial Public Class entity_framework
     Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''clue_query control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''MasterEntity control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j70ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdCĺearFilter control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''CurrentPeriodQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''panSearchbox control.
     '''</summary>
     '''<remarks>
@@ -122,31 +68,76 @@ Partial Public Class entity_framework
     Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''opgLayout control.
+    '''lblGridHeader control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents opgLayout As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents lblGridHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblLayoutMessage control.
+    '''MasterEntity control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblLayoutMessage As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''panPeriod control.
+    '''CurrentPeriodQuery control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panPeriod As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''CurrentQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdCĺearFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''j70ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''cbxPeriodType control.
@@ -174,51 +165,6 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdApprove As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cbxQueryFlag control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxQueryFlag As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cbxGroupBy control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''j74id control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdGridDesiger control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdGridDesiger As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''cbxPaging control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''panExport control.
@@ -266,6 +212,51 @@ Partial Public Class entity_framework
     Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''cbxQueryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxQueryFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''j74id control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdGridDesiger control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdGridDesiger As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''cbxPaging control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''chkGroupsAutoExpanded control.
     '''</summary>
     '''<remarks>
@@ -282,6 +273,24 @@ Partial Public Class entity_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkCheckboxSelector As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''opgLayout control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgLayout As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''lblLayoutMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblLayoutMessage As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''grid1 control.

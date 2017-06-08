@@ -16,33 +16,7 @@
 
         });
 
-        function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
-            var combo = sender;
-            var pid = combo.get_value();
-            window.open("<%=ViewState("prefix")%>_framework.aspx?pid=" + pid,"_top");
-        }
-        function cbx1_OnClientItemsRequesting(sender, eventArgs) {
-            var context = eventArgs.get_context();
-            var combo = sender;
-
-            if (combo.get_value() == "")
-                context["filterstring"] = eventArgs.get_text();
-            else
-                context["filterstring"] = "";
-
-
-            context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
-            context["flag"] = "searchbox";
-            <%If ViewState("prefix") = "p41" Then%>
-            context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
-            <%End If%>
-        }
-        function cbx1_OnClientFocus(sender, args) {
-            var combo = sender;
-            var s = combo.get_text();
-            if (s.indexOf("...")>0)
-                combo.set_text("");
-        }
+        
 
 
         function p28_create() {
@@ -116,9 +90,7 @@
             <td>
                 <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;"></asp:Label>
             </td>
-            <td>
-                <asp:HyperLink ID="cmdNew" runat="server" Visible="false"></asp:HyperLink>
-            </td>
+            
         </tr>
     </table>
     <div class="div6">
@@ -151,21 +123,7 @@
         </div>
     </asp:Panel>
 
-    <div style="clear: both;"></div>
-    <asp:Panel ID="panSearch" runat="server" CssClass="div6">
-       
-
-
-        <telerik:RadComboBox ID="cbx1" Text="Hledat..."
-            runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ToolTip="Hledat" Width="250px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" OnClientFocus="cbx1_OnClientFocus">
-           
-            <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
-        </telerik:RadComboBox>
-
-
-    </asp:Panel>
-
-
+  
 
 
 

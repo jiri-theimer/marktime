@@ -97,14 +97,20 @@ Public Class p91_framework_detail
             panMenuContainer.Style.Item("height") = ""
             menu1.Skin = "Metro"
             menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/invoice.png'/>"))
-            menu1.FindItemByValue("searchbox").Visible = False
+
             menu1.FindItemByValue("record").GroupSettings.RepeatColumns = 4
             menu1.FindItemByValue("more").GroupSettings.RepeatColumns = 3
             menu1.FindItemByValue("level1").Visible = False
 
         Else
             menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/invoice_32.png'/>"))
+
+        End If
+        If hidSource.Value = "3" Then
             menu1.FindItemByValue("searchbox").Controls.Add(cbx)
+
+        Else
+            menu1.FindItemByValue("searchbox").Visible = False
         End If
     End Sub
 

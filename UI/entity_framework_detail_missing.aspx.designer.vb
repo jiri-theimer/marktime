@@ -41,15 +41,6 @@ Partial Public Class entity_framework_detail_missing
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdNew control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNew As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''MasterRecord control.
     '''</summary>
     '''<remarks>
@@ -102,24 +93,6 @@ Partial Public Class entity_framework_detail_missing
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents CountBin As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''panSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cbx1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
     '''Master property.

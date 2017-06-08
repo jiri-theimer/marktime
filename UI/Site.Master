@@ -30,7 +30,16 @@
         html .RadMenu_Windows7 ul.rmRootGroup {
             background-color: #25a0da;
         }
-
+        html .RadMenu_Metro .rmRootGroup {
+            background-image: none;
+            color:white;            
+        }
+ 
+        html .RadMenu_Metro ul.rmRootGroup {
+            background-color: #25a0da;
+            color:white;
+            
+        }
 
         
     </style>

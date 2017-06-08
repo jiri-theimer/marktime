@@ -186,11 +186,11 @@ Public Class entity_framework
 
             AdaptSplitterLayout()
         End If
-        If opgLayout.SelectedValue = "1" Then
-            cbx1.Visible = False
-            panSearchbox.Controls.Remove(Me.cbx1)
-            panSearchbox.Visible = False
-        End If
+        ''If opgLayout.SelectedValue = "1" Then
+        ''    cbx1.Visible = False
+        ''    panSearchbox.Controls.Remove(Me.cbx1)
+        ''    panSearchbox.Visible = False
+        ''End If
     End Sub
     Private Sub AdaptSplitterLayout()
         Select Case Me.opgLayout.SelectedValue
@@ -236,7 +236,6 @@ Public Class entity_framework
         Me.cbxQueryFlag.Visible = False
         With Me.cbxPeriodType.Items
             If .Count > 0 Then .Clear()
-
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
                     .Add(New ListItem("Založení projektu:", "DateInsert"))
@@ -283,19 +282,25 @@ Public Class entity_framework
                     img1.ImageUrl = "Images/project_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Projekty].")
                     cmdApprove.Visible = bolCanApprove
+                    lblGridHeader.Text = "Akce nad projekty"
                 Case BO.x29IdEnum.p28Contact
                     img1.ImageUrl = "Images/contact_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Klienti].")
                     cmdApprove.Visible = bolCanApprove
+                    lblGridHeader.Text = "Akce nad klienty"
                 Case BO.x29IdEnum.o23Notepad
                     img1.ImageUrl = "Images/notepad_32.png"
+                    lblGridHeader.Text = "Akce nad dokumenty"
                 Case BO.x29IdEnum.p56Task
                     img1.ImageUrl = "Images/task_32.png"
                     cmdApprove.Visible = bolCanApprove
+                    lblGridHeader.Text = "Akce nad úkoly"
                 Case BO.x29IdEnum.j02Person
+                    lblGridHeader.Text = "Akce nad přehledem"
                     img1.ImageUrl = "Images/person_32.png"
                     If Not .Factory.SysUser.j04IsMenu_People Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Lidé].")
                 Case BO.x29IdEnum.p91Invoice
+                    lblGridHeader.Text = "Akce nad fakturami"
                     img1.ImageUrl = "Images/invoice_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Faktury].")
             End Select
@@ -1114,7 +1119,7 @@ Public Class entity_framework
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-period", Me.period1.SelectedValue)
         RecalcVirtualRowCount()
         grid1.Rebind(False)
-        hidUIFlag.Value = "period"
+        ''hidUIFlag.Value = "period"
     End Sub
 
     Private Sub cbxQueryFlag_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQueryFlag.SelectedIndexChanged
@@ -1128,18 +1133,17 @@ Public Class entity_framework
         With Me.period1
             If .SelectedValue <> "" Then
                 .BackColor = basUI.ColorQueryRGB
+                Me.CurrentPeriodQuery.Text = "<img src='Images/datepicker.png'/> " & Me.cbxPeriodType.SelectedItem.Text
                 If Year(.DateFrom) = Year(.DateUntil) Then
-                    Me.CurrentPeriodQuery.Text = Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
+                    Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
                 Else
-                    Me.CurrentPeriodQuery.Text = Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
-                End If
-                Me.CurrentPeriodQuery.ToolTip = Me.cbxPeriodType.SelectedItem.Text & Me.CurrentPeriodQuery.Text
-                Me.CurrentPeriodQuery.ForeColor = System.Drawing.Color.Red
+                    Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
+                End If                
+
             Else
                 .BackColor = Nothing
-                Me.CurrentPeriodQuery.Text = "Období"
-                Me.CurrentPeriodQuery.ToolTip = ""
-                Me.CurrentPeriodQuery.ForeColor = Nothing
+                Me.CurrentPeriodQuery.Text = ""
+
             End If
         End With
         If Me.cbxGroupBy.SelectedIndex > 0 Then
@@ -1151,6 +1155,11 @@ Public Class entity_framework
             cmdCĺearFilter.Visible = True
         Else
             cmdCĺearFilter.Visible = False
+        End If
+        If Me.CurrentJ70ID > 0 Then
+            Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+        Else
+            Me.CurrentQuery.Text = ""
         End If
         If panSearchbox.Visible Then
             Select Case Me.CurrentPrefix
