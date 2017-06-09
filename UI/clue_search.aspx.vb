@@ -11,6 +11,11 @@
                 lis.Add("handler_search_contact-bin")
                 lis.Add("handler_search_person-bin")
                 lis.Add("handler_search_invoice-toprecs")
+                lis.Add("handler_search_fulltext-main")
+                lis.Add("handler_search_fulltext-invoice")
+                lis.Add("handler_search_fulltext-task")
+                lis.Add("handler_search_fulltext-worksheet")
+                lis.Add("handler_search_fulltext-doc")
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lis)
@@ -20,6 +25,12 @@
                     basUI.SelectDropdownlistValue(Me.cbxP41Top, .GetUserParam("handler_search_project-toprecs", "20"))
                     basUI.SelectDropdownlistValue(Me.cbxP28Top, .GetUserParam("handler_search_contact-toprecs", "20"))
                     basUI.SelectDropdownlistValue(Me.cbxP91Top, .GetUserParam("handler_search_invoice-toprecs", "20"))
+
+                    Me.chkMain.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-main", "1"))
+                    Me.chkInvoice.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-invoice", "1"))
+                    Me.chkDocument.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-doc", "0"))
+                    Me.chkWorksheet.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-worksheet", "0"))
+                    Me.chkTask.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-task", "1"))
                 End With
                 With .Factory.SysUser
                     trP41.Visible = .j04IsMenu_Project
@@ -27,8 +38,18 @@
                     trP91.Visible = .j04IsMenu_Invoice
                     trJ02.Visible = .j04IsMenu_People
                 End With
+                With .Factory
+                    Dim bolFulltext As Boolean = .TestPermission(BO.x53PermValEnum.GR_Admin)
+                    If Not bolFulltext Then bolFulltext = .TestPermission(BO.x53PermValEnum.GR_P31_Reader)
+                    If Not bolFulltext Then bolFulltext = .TestPermission(BO.x53PermValEnum.GR_P41_Reader)
+                    If Not bolFulltext Then
+                        RadTabStrip1.Tabs(1).Visible = False
+                    Else
+                        If Request.Item("fulltext") = "1" Then RadTabStrip1.SelectedIndex = 1 : RadMultiPage1.SelectedIndex = 1
+                    End If
+                End With
             End With
-            If Request.Item("fulltext") = "1" Then RadTabStrip1.SelectedIndex = 1 : RadMultiPage1.SelectedIndex = 1
+
         End If
         Me.p41id_search.radComboBoxOrig.DropDownWidth = Unit.Parse("570px")
         Me.p28id_search.radComboBoxOrig.DropDownWidth = Unit.Parse("570px")
@@ -68,5 +89,25 @@
 
     Private Sub cbxP91Top_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxP91Top.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("handler_search_invoice-toprecs", Me.cbxP91Top.SelectedValue)
+    End Sub
+
+    Private Sub chkMain_CheckedChanged(sender As Object, e As EventArgs) Handles chkMain.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("handler_search_fulltext-main", BO.BAS.GB(Me.chkMain.Checked))
+    End Sub
+
+    Private Sub chkTask_CheckedChanged(sender As Object, e As EventArgs) Handles chkTask.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("handler_search_fulltext-task", BO.BAS.GB(Me.chkTask.Checked))
+    End Sub
+
+    Private Sub chkInvoice_CheckedChanged(sender As Object, e As EventArgs) Handles chkInvoice.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("handler_search_fulltext-invoice", BO.BAS.GB(Me.chkInvoice.Checked))
+    End Sub
+
+    Private Sub chkWorksheet_CheckedChanged(sender As Object, e As EventArgs) Handles chkWorksheet.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("handler_search_fulltext-worksheet", BO.BAS.GB(Me.chkWorksheet.Checked))
+    End Sub
+
+    Private Sub chkDocument_CheckedChanged(sender As Object, e As EventArgs) Handles chkDocument.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("handler_search_fulltext-document", BO.BAS.GB(Me.chkDocument.Checked))
     End Sub
 End Class

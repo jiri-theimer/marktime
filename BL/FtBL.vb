@@ -24,6 +24,7 @@
     Function GetList_X45(Optional mq As BO.myQuery = Nothing) As IEnumerable(Of BO.x45Event)
     Function GetList_X61(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x61PageTab)
     Function GetList_Emails(strFilterExpression As String, intTOP As Integer) As IEnumerable(Of BO.GetString)
+    Function FulltextSearch(input As BO.FullTextQueryInput) As List(Of BO.FullTextRecord)
 End Interface
 Class FtBL
     Inherits BLMother
@@ -166,5 +167,8 @@ Class FtBL
     End Function
     Public Function GetList_Emails(strFilterExpression As String, intTOP As Integer) As IEnumerable(Of BO.GetString) Implements IFtBL.GetList_Emails
         Return _cDL.GetList_Emails(strFilterExpression, intTOP)
+    End Function
+    Public Function FullTextSearch(input As BO.FullTextQueryInput) As List(Of BO.FullTextRecord) Implements IFtBL.FulltextSearch
+        Return _cDL.FullTextSearch(input)
     End Function
 End Class

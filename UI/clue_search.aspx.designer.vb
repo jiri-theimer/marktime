@@ -212,6 +212,60 @@ Partial Public Class clue_search
     Protected WithEvents fulltext As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
+    '''cbx1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''chkMain control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkMain As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkWorksheet control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkWorksheet As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkInvoice control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkInvoice As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkTask control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkTask As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkDocument control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkDocument As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

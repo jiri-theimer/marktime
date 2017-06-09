@@ -91,6 +91,12 @@
                     End If
 
                 End If
+                If Me.chkSearch.Checked Then
+                    linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_Admin)
+                    If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Reader)
+                    If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Reader)
+                End If
+
 
                 If .SysUser.j04IsMenu_Project Then
                     RefreshFavourites()

@@ -131,6 +131,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents search_j02 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
+    '''linkFulltext control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkFulltext As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>

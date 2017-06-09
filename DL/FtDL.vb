@@ -140,4 +140,55 @@ Public Class FtDL
         Dim s As String = "SELECT x61ID,x61Name FROM x61PageTab WHERE x29ID=@x29id and x61Code not like 'summary' ORDER BY x61Ordinary"
         Return _cDB.GetList(Of BO.x61PageTab)(s, New With {.x29id = CInt(x29id)})
     End Function
+
+    Public Function FullTextSearch(input As BO.FullTextQueryInput) As List(Of BO.FullTextRecord)
+        Dim sql As New List(Of String), pars As New DbParameters, s As String = ""
+        pars.Add("expr", input.SearchExpression, DbType.String)
+        If Not input.DateFrom Is Nothing Then
+            pars.Add("d1", input.DateFrom, DbType.DateTime)
+            pars.Add("d2", input.DateUntil, DbType.DateTime)
+        End If
+        If input.IncludeMain Then
+            s = "SELECT TOP " & input.TopRecs.ToString & " * FROM view_fulltext_main WHERE RecValue LIKE '%'+@expr+'%' or RecComment like '%'+@expr+'%'"
+            If Not input.DateFrom Is Nothing Then
+                s += " WHERE RecDateInsert BETWEEN @d1 AND @d2"
+            End If
+            sql.Add(s)
+        End If
+        If input.IncludeInvoice Then
+            s = "SELECT TOP " & input.TopRecs.ToString & " * FROM view_fulltext_invoice WHERE RecValue LIKE '%'+@expr+'%' or RecComment like '%'+@expr+'%'"
+            If Not input.DateFrom Is Nothing Then
+                s += " WHERE RecDateInsert BETWEEN @d1 AND @d2"
+            End If
+            sql.Add(s)
+        End If
+        If input.IncludeTask Then
+            s = "SELECT TOP " & input.TopRecs.ToString & " * FROM view_fulltext_task WHERE RecValue LIKE '%'+@expr+'%' or RecComment like '%'+@expr+'%'"
+            If Not input.DateFrom Is Nothing Then
+                s += " WHERE RecDateInsert BETWEEN @d1 AND @d2"
+            End If
+            sql.Add(s)
+        End If
+        If input.IncludeWorksheet Then
+            s = "SELECT TOP " & input.TopRecs.ToString & " 'p31' as Prefix,'Popis úkonu' as Field,a.p31ID as RecPid,p31Text as RecValue,a.p31Date as RecDateInsert,NULL as RecComment"
+            s += ",j02.j02LastName+' '+j02.j02FirstName+' ['+p34Name+'] '+isnull(p28.p28Name+' - ','')+isnull(p41.p41NameShort,p41.p41Name) as RecName"
+            s += " FROM p31Worksheet a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
+            s += " WHERE a.p31Text LIKE '%'+@expr+'%'"
+            If Not input.DateFrom Is Nothing Then
+                s += " AND p31Date BETWEEN @d1 AND @d2"
+            End If
+            sql.Add(s)
+        End If
+        Dim ret As New List(Of BO.FullTextRecord)
+        For Each strSQL As String In sql
+            Dim lis As IEnumerable(Of BO.FullTextRecord) = _cDB.GetList(Of BO.FullTextRecord)(strSQL, pars)
+            For Each c In lis
+                ret.Add(c)
+                If ret.Count >= input.TopRecs Then Return ret
+            Next
+        Next
+
+        Return ret
+
+    End Function
 End Class

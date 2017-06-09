@@ -48,6 +48,7 @@
         function hardrefresh(pid, flag) {
             location.replace("default.aspx");
         }
+       
     </script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
@@ -99,6 +100,10 @@
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/person_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
+                        <div class="div6">
+                            <asp:HyperLink ID="linkFulltext" runat="server" Text="FULL-TEXT" CssClass='button-reczoom' rel="clue_search.aspx?fulltext=1" dialogheight="700" Visible="false"></asp:HyperLink>
+                        </div>
+                        
                     </div>
                 </asp:Panel>
 

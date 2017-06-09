@@ -407,6 +407,7 @@
       <LastGenOutput>Reference.vb</LastGenOutput>
     </None>
     <Content Include="Services\combo_external_datasource.asmx" />
+    <Content Include="Services\fulltext_service.asmx" />
     <Content Include="Services\invoice_service.asmx" />
     <Content Include="Services\notepad_service.asmx" />
     <Content Include="Services\task_service.asmx" />
@@ -2257,6 +2258,10 @@
     </Compile>
     <Compile Include="Services\combo_external_datasource.asmx.vb">
       <DependentUpon>combo_external_datasource.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\fulltext_service.asmx.vb">
+      <DependentUpon>fulltext_service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\invoice_service.asmx.vb">
