@@ -9,8 +9,6 @@
         div.divHover:hover {
             background-color: #ffffcc;
         }
-
-       
     </style>
 
     <script type="text/javascript">
@@ -24,7 +22,7 @@
                 $(".slidingDiv1").slideToggle();
             });
 
-            
+
             handleSAW();
         });
 
@@ -40,22 +38,22 @@
 
             h2 = offset.top;
 
-            h3 = h1 - h2-1;
+            h3 = h1 - h2 - 1;
 
             sender.set_height(h3);
-            
-            
-            var pane = sender.getPaneById("<%=contentPane.ClientID%>");            
+
+
+            var pane = sender.getPaneById("<%=contentPane.ClientID%>");
             pane.set_contentUrl("p31_framework_detail.aspx?parentWidth=" + pane.get_width());
-            
+
         }
 
-       
+
 
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
             document.getElementById("<%=hiddatapid.clientid%>").value = pid;
-           
+
         }
 
         function RowDoubleClick(sender, args) {
@@ -100,7 +98,7 @@
         }
 
         function sw_local(url, img, is_maximize) {
-            sw_master(url,img,is_maximize);
+            sw_master(url, img, is_maximize);
         }
 
         function SavePaneWidth(w) {
@@ -124,14 +122,13 @@
 
         }
 
-        function AfterPaneCollapsed(pane)
-        {
+        function AfterPaneCollapsed(pane) {
             var w = "-1";
             SavePaneWidth(w);
         }
         function AfterPaneExpanded(pane) {
             var w = pane.get_width();
-            SavePaneWidth(w);            
+            SavePaneWidth(w);
         }
 
         function hardrefresh(pid, flag) {
@@ -140,9 +137,9 @@
                 var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
                 pane.set_contentUrl("p31_framework_detail.aspx?pid=" + pid);
 
-                <%If RadSplitter1.GetPanes.count=3 then%>
+                <%If RadSplitter1.GetPanes.Count = 3 Then%>
                 pane = splitter.getPaneById("<%=rightPane.ClientID%>");
-                pane.set_contentUrl("p31_framework_timer.aspx");               
+                pane.set_contentUrl("p31_framework_timer.aspx");
                 <%End If%>
                 return;
             }
@@ -159,14 +156,14 @@
         function querybuilder() {
             var j70id = "<%=Me.CurrentJ70ID%>";
             sw_master("query_builder.aspx?prefix=p41&pid=" + j70id, "Images/query.png");
-            return (false);
+
         }
 
     </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    
+
     <div id="offsetY"></div>
     <telerik:RadSplitter ID="RadSplitter1" runat="server" Width="100%" ResizeMode="Proportional" OnClientLoaded="loadSplitter" PanesBorderSize="0" Skin="Default" RenderMode="Auto">
         <telerik:RadPane ID="navigationPane" runat="server" Width="350px" OnClientResized="AfterPaneResized" OnClientCollapsed="AfterPaneCollapsed" OnClientExpanded="AfterPaneExpanded" MaxWidth="1000" BackColor="white">
@@ -180,43 +177,50 @@
                 </Tabs>
             </telerik:RadTabStrip>
 
-            <asp:Panel ID="panSearch" runat="server" CssClass="div6" DefaultButton="cmdSearch" Style="height: 28px;">
+            <div Class="div6"  style="height: 28px;">
 
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
-                    <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Projekty" Style="vertical-align: top;"></asp:Label>
-                    <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
-                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                    <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
-                </div>
-                <div class="commandcell" style="padding-left: 20px;">
-                    <asp:TextBox ID="txtSearch" runat="server" Style="width: 140px;" ToolTip="Filtrovat podle názvu/kódu projektu nebo klienta"></asp:TextBox>
-                    <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="<%$Resources:p31_framework, cmdCĺearFilter%>" Style="margin-left: 10px; font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
-                </div>
-                <div class="commandcell">
-                    <asp:ImageButton ID="cmdSearch" runat="server" ImageUrl="Images/search.png" ToolTip="Spustit filtr" CssClass="button-link" />
-                    <asp:HyperLink ID="cmdNewTask" runat="server" Text="<%$Resources:p31_framework,cmdNewTask %>" NavigateUrl="javascript:p56_create()"></asp:HyperLink>
-                </div>
-
-                <div class="commandcell" style="float: right; margin-right: 10px;">
                     
-                    <button type="button" id="cmdSetting" class="show_hide1" style="float: right; padding: 3px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;" title="Další nastavení přehledu">
-                        <span>Další</span>
-                        <img src="Images/arrow_down.gif" alt="Nastavení" />
-                    </button>
-                                      
+
+
                 </div>
 
 
-            </asp:Panel>
-            <div style="clear: both; width: 100%;"></div>
-            <div class="slidingDiv1">
+
+                <div style="float:left;margin-left:10px;">
+
+                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
+
+                        <span>Nastavení přehledu</span>
+
+                        <img src="Images/arrow_down.gif" />
+                    </button>
+
+                </div>
+
+
+            </div>
+            <div style="clear: both;"></div>
+            <div class="slidingDiv1" style="display:none;">
                 <div class="content-box2">
                     <div class="title">
-                        <%=Resources.p31_framework.NastaveniProjektu%>
+                        <span>Pojmenovaný filtr</span>
                     </div>
-                    <div class="content">
-                        <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
+                    <div class="content" style="border: none;">
+                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                        <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">Návrhář filtrů</button>
+                    </div>
+                </div>
+                <div class="content-box2" style="margin-top: 20px;">
+                    <div class="title">
+                        Nastavení přehledu
+                    </div>
+                    <div class="content" style="border: none;">
+                        <div>
+                            <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
+                        </div>
+
                         <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
                         <button type="button" onclick="griddesigner()"><%=Resources.p31_framework.Sloupce%></button>
 
@@ -237,6 +241,12 @@
                     <img src="Images/help.png" /><i><%=Resources.p31_framework.Napoveda %></i>
                 </div>
             </div>
+            <div style="float: left; padding-left: 6px;">
+                <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+                <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
+                <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="<%$Resources:p31_framework, cmdCĺearFilter%>" Style="margin-left: 10px; font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
+            </div>
+            <div style="clear: both;"></div>
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Default"></uc:datagrid>
 
 
@@ -248,7 +258,7 @@
             <asp:HiddenField ID="hidReceiversInLine" runat="server" />
             <asp:HiddenField ID="hidTasksWorksheetColumns" runat="server" />
             <asp:HiddenField ID="hidCols" runat="server" />
-            <asp:HiddenField ID="hidFrom" runat="server" />            
+            <asp:HiddenField ID="hidFrom" runat="server" />
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

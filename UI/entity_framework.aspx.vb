@@ -269,12 +269,9 @@ Public Class entity_framework
     End Sub
 
     Private Sub Handle_Permissions_And_More()
-        Dim bolCanApprove As Boolean = False
-        If opgLayout.SelectedValue = "1" Then
-            bolCanApprove = False
-        Else
-            bolCanApprove = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
-        End If
+        Dim bolCanApprove As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
+        Dim bolCanInvoice As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
+
         With Master
             .PageTitle = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, True)
             Select Case Me.CurrentX29ID
@@ -282,11 +279,13 @@ Public Class entity_framework
                     img1.ImageUrl = "Images/project_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Projekty].")
                     cmdApprove.Visible = bolCanApprove
+                    cmdInvoice.Visible = bolCanInvoice
                     lblGridHeader.Text = "Akce nad projekty"
                 Case BO.x29IdEnum.p28Contact
                     img1.ImageUrl = "Images/contact_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Klienti].")
                     cmdApprove.Visible = bolCanApprove
+                    cmdInvoice.Visible = bolCanInvoice
                     lblGridHeader.Text = "Akce nad klienty"
                 Case BO.x29IdEnum.o23Notepad
                     img1.ImageUrl = "Images/notepad_32.png"
@@ -294,6 +293,7 @@ Public Class entity_framework
                 Case BO.x29IdEnum.p56Task
                     img1.ImageUrl = "Images/task_32.png"
                     cmdApprove.Visible = bolCanApprove
+                    cmdInvoice.Visible = bolCanInvoice
                     lblGridHeader.Text = "Akce nad úkoly"
                 Case BO.x29IdEnum.j02Person
                     lblGridHeader.Text = "Akce nad přehledem"

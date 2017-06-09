@@ -244,6 +244,14 @@
             }
             sw_master("p31_approving_step1.aspx?masterprefix=<%=me.CurrentPrefix%>&masterpids=" + pids, "Images/approve.png", true);
         }
+        function invoice() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Není vybrán ani jeden záznam.");
+                return;
+            }
+            sw_master("entity_modal_invoicing.aspx?prefix=<%=me.CurrentPrefix%>&pids=" + pids, "Images/invoice.png", true);
+        }
         function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
             var combo = sender;
             var pid = combo.get_value();
@@ -355,11 +363,13 @@
                         <%If Me.CurrentPrefix <> "p91" Then%>
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
                         <%End If%>
+                        <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()">Schválit/připravit k fakturaci</button>
+                        <button id="cmdInvoice" runat="server" type="button" visible="false" onclick="invoice()">Zrychlená fakturace bez schvalování</button>
                         <button type="button" onclick="report()" title="Tisková sestava">Tisková sestava</button>
                         <%If Me.CurrentPrefix = "p91" Then%>
                         <button type="button" onclick="sendmail_batch()">Hromadně odeslat faktury (e-mail)</button>
                         <%End If%>
-                        <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()">Schválit/připravit k fakturaci</button>
+                        
 
                     </div>
                 </div>

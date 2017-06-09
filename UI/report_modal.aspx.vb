@@ -62,7 +62,14 @@ Public Class report_modal
                 End If
             End If
             With Master
-                If Me.MultiPIDs = "" Then .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                If Me.MultiPIDs = "" Then
+                    .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                Else
+                    If Me.MultiPIDs.IndexOf(",") < 0 Then
+                        .DataPID = BO.BAS.IsNullInt(Me.MultiPIDs)
+                        Me.MultiPIDs = ""
+                    End If
+                End If
                 ''If .DataPID = 0 And Request.Item("guid") = "" Then .StopPage("pid missing")
                 If .DataPID = 0 And Me.MultiPIDs = "" And Request.Item("guid") = "" Then .StopPage("pid missing")
                 If .Factory.SysUser.IsAdmin Then
@@ -110,7 +117,8 @@ Public Class report_modal
                 Dim pids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Me.MultiPIDs)
                 If pids.Count > 100 Then Master.StopPage("Generovat hromadně sestavu lze maximálně pro 100 záznamů.")
                 period1.Visible = True
-                Master.HideShowToolbarButton("mail", False)
+                Master.HideShowToolbarButton("mail", False) 'hromadný tisk nemá poštu
+                Master.HideShowToolbarButton("print", False)    'hromadný tisk nemá tisk
 
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
@@ -130,7 +138,7 @@ Public Class report_modal
                         mq.PIDs = pids
                         Me.multiple_records.Text = String.Join("<hr>", Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.FullNameDesc))
                 End Select
-                Me.multiple_records.Text = "<b style='color:blue'>Pro tisk hromadné sestavy je k dispozici pouze PDF výstup. Klasický náhled k tisku není možný.</b><hr>" & Me.multiple_records.Text
+                Me.multiple_records.Text = "<b style='color:blue'>Pro tisk hromadné sestavy je k dispozici pouze PDF výstup. Náhled k tisku je možný pouze pro jeden záznam.</b><hr>" & Me.multiple_records.Text
             Else
                 RenderReport()
                 multiple_records.Visible = False

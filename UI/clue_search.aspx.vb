@@ -28,6 +28,7 @@
                     trJ02.Visible = .j04IsMenu_People
                 End With
             End With
+            If Request.Item("fulltext") = "1" Then RadTabStrip1.SelectedIndex = 1 : RadMultiPage1.SelectedIndex = 1
         End If
         Me.p41id_search.radComboBoxOrig.DropDownWidth = Unit.Parse("570px")
         Me.p28id_search.radComboBoxOrig.DropDownWidth = Unit.Parse("570px")

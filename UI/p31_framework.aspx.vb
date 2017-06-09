@@ -79,7 +79,6 @@ Public Class p31_framework
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p31_framework-pagesize-" & Me.GridPrefix)
-                    .Add("p31_framework-search")
                     .Add("p31_framework-navigationPane_width")
                     .Add("p31_framework_detail-j02id")  'výchozí osoba pro nové úkony
                     .Add("p31_framework-j74id-" & Me.GridPrefix)
@@ -103,7 +102,7 @@ Public Class p31_framework
                         strDefIsGrid = "0" : strDefIsTimer = "0"
                     End If
                     hidCurrentJ02ID.Value = .GetUserParam("p31_framework_detail-j02id", Master.Factory.SysUser.j02ID.ToString)
-                    Me.txtSearch.Text = .GetUserParam("p31_framework-search")
+
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_framework-pagesize-" & Me.GridPrefix, "20"))
                     Dim strW As String = .GetUserParam("p31_framework-navigationPane_width", "350")
                     If strW = "-1" Then
@@ -138,15 +137,9 @@ Public Class p31_framework
                 End With
             End With
 
-            If Request.Item("search") <> "" Then
-                txtSearch.Text = Request.Item("search")   'externě předaná podmínka
-                txtSearch.Focus()
-            End If
+            
             If navigationPane.Visible Then
-                If tabs1.SelectedIndex > 0 Then
-                    txtSearch.Visible = False : txtSearch.Text = "" : cmdSearch.Visible = False
-                End If
-
+                
                 grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p41")
                 RecalcVirtualRowCount()
 
@@ -163,12 +156,7 @@ Public Class p31_framework
                 Handle_DefaultSelectedRecord()
 
 
-                If tabs1.SelectedIndex = 2 Then
-                    'úkoly
-                    cmdNewTask.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator)
-                Else
-                    cmdNewTask.Visible = False
-                End If
+                
             End If
 
         End If
@@ -215,8 +203,7 @@ Public Class p31_framework
             End If
 
             If tabs1.SelectedIndex = 1 Or tabs1.SelectedIndex = 3 Then grid1.AllowFilteringByColumn = False 'v top10 a v oblíbených se nefiltruje
-            Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
-            cmdSearch.Visible = Me.txtSearch.Visible
+            
         End With
         With grid1
             .radGridOrig.ShowFooter = False
@@ -359,7 +346,7 @@ Public Class p31_framework
                 .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             End If
 
-            If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
+
             If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then .j02ID_ExplicitQueryFor = Me.CurrentJ02ID
 
             If Me.j70ID.Visible Then .j70ID = Me.CurrentJ70ID
@@ -373,19 +360,9 @@ Public Class p31_framework
         ReloadPage()
     End Sub
 
-    Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
-        Handle_RunSearch()
+    
 
-    End Sub
-
-    Private Sub Handle_RunSearch()
-        Master.Factory.j03UserBL.SetUserParam("p31_framework-search", txtSearch.Text)
-
-        RecalcVirtualRowCount()
-        grid1.Rebind(False)
-
-        txtSearch.Focus()
-    End Sub
+  
 
 
 
@@ -434,25 +411,19 @@ Public Class p31_framework
 
 
     Private Sub p31_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If txtSearch.Visible Then
-            If Trim(txtSearch.Text) = "" Then
-                txtSearch.Style.Item("background-color") = ""
-            Else
-                txtSearch.Style.Item("background-color") = "red"
-            End If
-        End If
+        
         Dim b As Boolean = False
         Select Case Me.tabs1.SelectedIndex
             Case 0
                 b = True
                 img1.ImageUrl = "Images/project_32.png"
-                lblFormHeader.Text = ""
+                ''lblFormHeader.Text = ""
             Case 1
                 img1.ImageUrl = "Images/project_32.png"
-                lblFormHeader.Text = Resources.p31_framework.tabs1_p41
+                ''lblFormHeader.Text = Resources.p31_framework.tabs1_p41
             Case 2
                 img1.ImageUrl = "Images/task_32.png"
-                lblFormHeader.Text = Resources.p31_framework.tabs1_todo
+                ''lblFormHeader.Text = Resources.p31_framework.tabs1_todo
         End Select
         Me.j70ID.Visible = b : Me.clue_query.Visible = b : cmdQuery.Visible = b
 
@@ -468,9 +439,12 @@ Public Class p31_framework
                     .ToolTip = .SelectedItem.Text
                     Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
                     Me.clue_query.Visible = True
+                    Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
                 Else
                     Me.clue_query.Visible = False
+                    Me.CurrentQuery.Text = ""
                 End If
+               
             End With
         End If
 
@@ -619,7 +593,7 @@ Public Class p31_framework
             .MG_AdditionalSqlFROM = Me.hidFrom.Value
             .Closed = BO.BooleanQueryMode.FalseQuery
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
-            If Me.txtSearch.Visible Then .SearchExpression = Trim(Me.txtSearch.Text)
+
         End With
         
 

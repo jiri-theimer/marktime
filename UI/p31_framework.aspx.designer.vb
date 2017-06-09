@@ -41,15 +41,6 @@ Partial Public Class p31_framework
     Protected WithEvents tabs1 As Global.Telerik.Web.UI.RadTabStrip
 
     '''<summary>
-    '''panSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''img1 control.
     '''</summary>
     '''<remarks>
@@ -57,24 +48,6 @@ Partial Public Class p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''lblFormHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''clue_query control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''j70ID control.
@@ -92,43 +65,7 @@ Partial Public Class p31_framework
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''txtSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdCĺearFilter control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''cmdSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSearch As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''cmdNewTask control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdNewTask As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''cbxGroupBy control.
@@ -174,6 +111,33 @@ Partial Public Class p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''CurrentQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdCĺearFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''grid1 control.
