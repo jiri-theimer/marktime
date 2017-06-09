@@ -137,7 +137,7 @@ Partial Public Class j03_mypage_greeting
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents linkFulltext As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents linkFulltext As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''menu1 control.

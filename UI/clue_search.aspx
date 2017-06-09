@@ -30,6 +30,7 @@
         function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
             var combo = sender;
             var pid = combo.get_value();
+            alert(pid);
 
         }
         function cbx1_OnClientItemsRequesting(sender, eventArgs) {
@@ -168,7 +169,7 @@
 
         </telerik:RadPageView>
         <telerik:RadPageView ID="fulltext" runat="server">
-            <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="600" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ShowToggleImage="false" Text="Hledat..." Width="500px" OnClientFocus="cbx1_OnClientFocus" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
+            <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="700px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ShowToggleImage="false" Text="Hledat..." Width="700px" OnClientFocus="cbx1_OnClientFocus" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                 <WebServiceSettings Method="LoadComboData" UseHttpGet="false" Path="~/Services/fulltext_service.asmx" />
             </telerik:RadComboBox>
 

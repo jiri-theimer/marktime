@@ -18,7 +18,7 @@ Public Class fulltext_service
         Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String)).ToLower()
         filterString = Trim(filterString)
         ''Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
-
+        If Len(filterString) > 15 Then filterString = ""
 
         Dim factory As BL.Factory = Nothing
 
@@ -54,6 +54,7 @@ Public Class fulltext_service
             input.IncludeTask = BO.BAS.BG(.GetUserParam("handler_search_fulltext-task", "0"))
         End With
         Dim id As New RadComboBoxItemData()
+        id.Enabled = False
 
         Dim lis As List(Of BO.FullTextRecord) = Nothing
         If Len(filterString) < 3 Then
@@ -70,7 +71,7 @@ Public Class fulltext_service
 
         Select Case lis.Count
             Case 0
-                If Len(filterString) > 0 And Len(filterString) < 15 Then id.Text = "Ani jeden výskyt pro zadanou podmínku."
+                If Len(filterString) > 0 Then id.Text = "Ani jeden výskyt pro zadanou podmínku."
             Case Is >= input.TopRecs
                 id.Text = String.Format("Podmínce vyhovuje více než {0} výskytů. Je třeba zpřesnit podmínku hledání.", input.TopRecs)
             Case Else
@@ -81,12 +82,15 @@ Public Class fulltext_service
         For Each c As BO.FullTextRecord In lis
             id = New RadComboBoxItemData()
 
+            c.RecValue = Replace(c.RecValue, filterString, "<span style='background-color:yellow;'>" & filterString & "</span>", , , CompareMethod.Text)
+            If c.RecComment <> "" Then c.RecValue += "<br>" & Replace(c.RecComment, filterString, "<span style='background-color:yellow;'>" & c.RecComment & "</span>", , , CompareMethod.Text)
+
             If c.Prefix = "p31" Then
                 id.Text = "Worksheet úkon: " & c.RecName
-                id.Text += "<i>" & c.RecValue & "</i>"
+                id.Text += "<br><i>" & c.RecValue & "</i><hr>"
             Else
                 id.Text = BO.BAS.GetX29EntityAlias(BO.BAS.GetX29FromPrefix(c.Prefix), False) & ": " & c.RecName
-                id.Text += vbCrLf & c.Field & ": " & c.RecValue
+                id.Text += "<br>" & c.Field & ": " & c.RecValue & "<hr>"
             End If
 
 

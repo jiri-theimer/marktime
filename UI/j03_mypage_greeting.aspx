@@ -48,6 +48,9 @@
         function hardrefresh(pid, flag) {
             location.replace("default.aspx");
         }
+        function fulltext2() {
+            sw_master("clue_search.aspx?fulltext=1", "Images/search.png")
+        }
        
     </script>
 </asp:Content>
@@ -101,7 +104,8 @@
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <div class="div6">
-                            <asp:HyperLink ID="linkFulltext" runat="server" Text="FULL-TEXT" CssClass='button-reczoom' rel="clue_search.aspx?fulltext=1" dialogheight="700" Visible="false"></asp:HyperLink>
+                            <button id="linkFulltext" runat="server" type="button" onclick="fulltext2()">FULL-TEXT hledání</button>
+                            
                         </div>
                         
                     </div>
