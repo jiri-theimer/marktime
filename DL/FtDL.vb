@@ -171,7 +171,7 @@ Public Class FtDL
         End If
         If input.IncludeWorksheet Then
             s = "SELECT TOP " & input.TopRecs.ToString & " 'p31' as Prefix,'Popis úkonu' as Field,a.p31ID as RecPid,p31Text as RecValue,a.p31Date as RecDateInsert,NULL as RecComment"
-            s += ",j02.j02LastName+' '+j02.j02FirstName+' ['+p34Name+'] '+isnull(p28.p28Name+' - ','')+isnull(p41.p41NameShort,p41.p41Name) as RecName"
+            s += ",format(varchar(10),a.p31Date,104)+': '+j02.j02LastName+' '+j02.j02FirstName+' ['+p34Name+'] '+isnull(p28.p28Name+' - ','')+isnull(p41.p41NameShort,p41.p41Name) as RecName"
             s += " FROM p31Worksheet a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID"
             s += " WHERE a.p31Text LIKE '%'+@expr+'%'"
             If Not input.DateFrom Is Nothing Then

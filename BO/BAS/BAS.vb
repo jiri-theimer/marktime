@@ -19,6 +19,8 @@
             Case BO.x29IdEnum.j02Person And bolMnozneCislo : Return "Lidé"
             Case BO.x29IdEnum.p91Invoice And Not bolMnozneCislo : Return "Faktura"
             Case BO.x29IdEnum.p91Invoice And bolMnozneCislo : Return "Faktury"
+            Case BO.x29IdEnum.p90Proforma And Not bolMnozneCislo : Return "Záloha"
+            Case BO.x29IdEnum.p90Proforma And bolMnozneCislo : Return "Zálohy"
             Case BO.x29IdEnum.p56Task And Not bolMnozneCislo : Return "Úkol"
             Case BO.x29IdEnum.p56Task And bolMnozneCislo : Return "Úkoly"
 
