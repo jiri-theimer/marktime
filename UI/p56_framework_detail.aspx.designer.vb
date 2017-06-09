@@ -32,13 +32,13 @@ Partial Public Class p56_framework_detail
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblTask control.
+    '''p56Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblTask As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents p56Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''p56Code control.
@@ -48,15 +48,6 @@ Partial Public Class p56_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p56Code As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p56Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p56Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''lblType control.

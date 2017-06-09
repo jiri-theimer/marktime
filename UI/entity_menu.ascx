@@ -5,12 +5,14 @@
     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" EnableViewState="false" runat="server" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true" Width="100%">
         <Items>
             <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/open_in_new_window.png" Text=" "></telerik:RadMenuItem>
-            <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px"></telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/open_in_new_window.png" Text=" " Width="28px"></telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku" Width="28px"></telerik:RadMenuItem>
+            <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="280px" Visible="false"></telerik:RadMenuItem>
                
             <telerik:RadMenuItem Text="ZÁZNAM PROJEKTU" ImageUrl="Images/arrow_down_menu.png" Value="record"></telerik:RadMenuItem>      
             
             <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>
+            
         </Items>
     </telerik:RadMenu>
 
@@ -248,5 +250,8 @@
     function menu_fullscreen(){
         
         window.open("<%=Me.DataPrefix%>_framework_detail.aspx?pid=<%=me.DataPID%>&tab=<%=Me.tabs1.SelectedTab.Value%>&saw=1","_blank");
+    }
+    function menu_barcode() {
+        sw_decide("barcode.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>", "Images/barcode.png", true);
     }
 </script>

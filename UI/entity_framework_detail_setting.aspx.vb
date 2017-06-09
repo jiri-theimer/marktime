@@ -27,6 +27,7 @@
                 .Add(Me.CurrentPrefix + "_menu-menuskin")
                 .Add(Me.CurrentPrefix + "_menu-x31id-plugin")
                 .Add(Me.CurrentPrefix + "_menu-remember-tab")
+                .Add(Me.CurrentPrefix + "_menu-show-level1")
                 ''.Add(Me.CurrentPrefix + "_menu-searchbox")
             End With
 
@@ -38,6 +39,7 @@
                 .InhaleUserParams(lisPars)
 
                 Me.chkRememberLastTab.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-remember-tab", "0"))
+                Me.chkShowLevel1.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-show-level1", "0"))
                 basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_menu-tabskin", "Default"))
                 basUI.SelectDropdownlistValue(Me.skin0, .GetUserParam(Me.CurrentPrefix + "_menu-menuskin", "Default"))
                 basUI.SelectDropdownlistValue(Me.x31ID_Plugin, .GetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin"))
@@ -72,6 +74,7 @@
                 Case Else
                     panPlugin.Visible = False
             End Select
+
         End If
     End Sub
 
@@ -94,6 +97,7 @@
                 .SetUserParam(Me.CurrentPrefix + "_menu-menuskin", Me.skin0.SelectedValue)
                 .SetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin", Me.x31ID_Plugin.SelectedValue)
                 .SetUserParam(Me.CurrentPrefix + "_menu-remember-tab", BO.BAS.GB(Me.chkRememberLastTab.Checked))
+                .SetUserParam(Me.CurrentPrefix + "_menu-show-level1", BO.BAS.GB(Me.chkShowLevel1.Checked))
             End With
             Master.CloseAndRefreshParent("setting")
         End If

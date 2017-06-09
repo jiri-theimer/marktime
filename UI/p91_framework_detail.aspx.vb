@@ -32,6 +32,7 @@ Public Class p91_framework_detail
                     .Add("p91_menu-tabskin")
                     .Add("p91_menu-menuskin")
                     .Add("p91_framework_detail-searchbox")
+                    .Add("p91_menu-show-level1")
                 End With
 
                 With .Factory.j03UserBL
@@ -41,6 +42,7 @@ Public Class p91_framework_detail
                     basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p91_framework_detail-pagesize", "20"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p91_framework_detail-chkFFShowFilledOnly", "0"))
                     menu1.FindItemByValue("searchbox").Visible = BO.BAS.BG(.GetUserParam("p91_framework_detail-searchbox", "1"))
+                    menu1.FindItemByValue("level1").Visible = BO.BAS.BG(.GetUserParam("p91_menu-show-level1", "0"))
                 End With
 
                 If .DataPID = 0 Then
@@ -101,10 +103,10 @@ Public Class p91_framework_detail
             menu1.FindItemByValue("record").GroupSettings.RepeatColumns = 4
             menu1.FindItemByValue("more").GroupSettings.RepeatColumns = 3
             menu1.FindItemByValue("level1").Visible = False
-
+            menu1.FindItemByValue("reload").Visible = False
         Else
             menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='Images/invoice_32.png'/>"))
-
+            menu1.FindItemByValue("reload").Visible = Not menu1.FindItemByValue("level1").Visible
         End If
         If hidSource.Value = "3" Then
             menu1.FindItemByValue("searchbox").Controls.Add(cbx)
@@ -139,7 +141,13 @@ Public Class p91_framework_detail
         With cRec
             basUIMT.RenderHeaderMenu(.IsClosed, Me.panMenuContainer, menu1)
             Me.p91Code.Text = .p91Code
-            basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
+            If menu1.FindItemByValue("level1").Visible Then
+                basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), .p92Name & ": " & .p91Code, "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
+            Else
+                Me.tabs1.Tabs(0).Text = .p92Name & ": " & .p91Code
+                menu1.FindItemByValue("reload").NavigateUrl = "p91_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value
+            End If
+
             If .IsClosed Then menu1.Skin = "Black"
 
             Me.p92Name.Text = .p92Name
@@ -561,7 +569,7 @@ Public Class p91_framework_detail
         
     End Sub
     Private Sub ReloadPage()
-        Response.Redirect(menu1.FindItemByValue("level1").NavigateUrl)
+        Response.Redirect("p91_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & Me.hidSource.Value)
     End Sub
 
     Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
@@ -600,9 +608,12 @@ Public Class p91_framework_detail
             If hidSource.Value = "3" Then
                 .ImageUrl = "Images/fullscreen.png"
                 .ToolTip = "Přepnout do datového přehledu"
+                .Text = "PŘEHLED"
+                .Width = Nothing
             Else
                 .ImageUrl = "Images/open_in_new_window.png"
-                .ToolTip = "Detail záznam v nové záložce"
+                .ToolTip = "Otevřít v nové záložce"
+                .Text = " "
             End If
            
         End With

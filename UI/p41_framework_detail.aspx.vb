@@ -36,6 +36,7 @@
                     .Add("p41_framework_detail-chkFFShowFilledOnly")
                     .Add("p41_framework_detail_pos")
                     .Add("p41_menu-x31id-plugin")
+                    .Add("p41_menu-show-level1")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -68,6 +69,7 @@
                     menu1.MenuSkin = .GetUserParam("p41_menu-menuskin")
                     menu1.TabSkin = .GetUserParam("p41_menu-tabskin")
                     menu1.x31ID_Plugin = .GetUserParam("p41_menu-x31id-plugin")
+                    menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p41_menu-show-level1", "0"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p41_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With
@@ -93,6 +95,10 @@
         Dim cClient As BO.p28Contact = Nothing
 
         With cRec
+            Me.boxCoreTitle.Text = .p42Name & " (" & .p41Code & ")"
+            If .b02ID <> 0 Then
+                Me.boxCoreTitle.Text += ": " & .b02Name
+            End If
             Me.Owner.Text = .Owner : Me.Timestamp.Text = .UserInsert & "/" & .DateInsert
 
             Me.Project.Text = .p41Name & " <span style='color:gray;padding-left:10px;'>" & .p41Code & "</span>"

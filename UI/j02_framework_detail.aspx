@@ -52,9 +52,7 @@
             window.open("o23_framework.aspx?pid=" + pid, "_top");
 
         }
-        function barcode() {
-            sw_decide("barcode.aspx?prefix=j02&pid=<%=master.datapid%>", "Images/barcode.png", true);
-        }
+      
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -63,41 +61,34 @@
 
     <div class="content-box1">
         <div class="title">
-            <img src="Images/properties.png" style="margin-right: 10px;" />Záznam osobního profilu
-            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" style="float:right;"></asp:HyperLink>            
+            <img src="Images/properties.png" style="margin-right: 10px;" />Osobní profil
+            
         </div>
         <div class="content">
             <table cellpadding="10" cellspacing="2" id="responsive">
-                <tr valign="top">
-                    <td style="min-width: 120px;">
-                        <asp:Label ID="lblPerson" runat="server" Text="Jméno:" CssClass="lbl"></asp:Label>
+                <tr>
+                    <td colspan="2">
+                        <asp:Label ID="FullNameAsc" runat="server" CssClass="valbold"></asp:Label>
                     </td>
                     <td>
-
-                        <asp:Label ID="FullNameAsc" runat="server" CssClass="valbold"></asp:Label>
-
-                        <div>
-                            <asp:Label ID="j02Code" runat="server" CssClass="valbold" ForeColor="gray"></asp:Label>
-                        </div>
+                        <asp:Label ID="j02Code" runat="server" CssClass="valbold" ForeColor="gray"></asp:Label>
                     </td>
+                </tr>
+                <tr valign="top">                                        
+                    
                     <td>
                         <asp:Label ID="lblJ07Name" runat="server" Text="Pozice:" CssClass="lbl"></asp:Label>
-                        <div>
-                            <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl"></asp:Label>
-                        </div>
-                        <div>
-                            <asp:Label ID="lblJ17Name" runat="server" Text="Stát:" CssClass="lbl"></asp:Label>
-                        </div>
                     </td>
                     <td>
                         <asp:Label ID="j07Name" runat="server" CssClass="valbold"></asp:Label>
-                        <div>
-                            <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
-                        </div>
-                        <div>
-                            <asp:Label ID="j17Name" runat="server" CssClass="valbold"></asp:Label>
-                        </div>
                     </td>
+                    <td>
+                        <asp:Label ID="lblJ18Name" runat="server" Text="Středisko:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="j18Name" runat="server" CssClass="valbold"></asp:Label>
+                        <asp:Label ID="lblJ17Name" runat="server" Text="Region:" CssClass="lbl"></asp:Label>
+                        <asp:Label ID="j17Name" runat="server" CssClass="valbold"></asp:Label>
+                    </td>
+                      
 
                 </tr>
                 <tr valign="top">
@@ -110,17 +101,15 @@
                     </td>
                     <td>
                         <asp:Label ID="lblFond" runat="server" Text="Fond hodin:" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
                         <asp:Label ID="c21Name" runat="server" CssClass="valbold"></asp:Label>
-
                     </td>
+                  
                 </tr>
                 <tr valign="top">
                     <td>
                         <asp:Label ID="lblTeams" runat="server" Text="Člen týmů:" CssClass="lbl"></asp:Label>
                     </td>
-                    <td colspan="3">
+                    <td colspan="2">
                         <asp:Label ID="TeamsInLine" runat="server" CssClass="valbold"></asp:Label>
 
                     </td>

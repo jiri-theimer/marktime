@@ -68,10 +68,8 @@
                 <asp:Label ID="lblPermissionMessage" runat="server" CssClass="infoNotificationRed"></asp:Label>
                 <table cellpadding="10" cellspacing="2" id="responsive">
                     <tr valign="top">
-                        <td style="min-width: 90px;">
-                            <asp:Label ID="lblName" runat="server" Text="Dokument:" CssClass="lbl"></asp:Label>
-                        </td>
-                        <td>
+                        
+                        <td colspan="2">
 
                             <asp:Label ID="o23Name" runat="server" CssClass="valbold"></asp:Label>
                             <asp:Image ID="imgDraft" runat="server" Visible="false" ImageUrl="Images/draft_icon.gif" AlternateText="DRAFT záznam" Style="float: right;" />

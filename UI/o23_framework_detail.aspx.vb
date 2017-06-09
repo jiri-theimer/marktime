@@ -116,8 +116,14 @@
         End If
         Handle_Permissions(cRec, cDisp)
 
+
+
         Me.BindEntity.Text = "Zatím čeká na přiřazení k dokumentu..." : clue_bind_entity.Visible = False
         With cRec
+            boxCoreTitle.Text = cRec.o24Name & " (" & .o23Code & ")"
+            If .b02ID <> 0 Then
+                Me.boxCoreTitle.Text += ": " & .b02Name
+            End If
             Select Case .x29ID
                 Case BO.x29IdEnum.p41Project
                     lblBind.Text = "Projekt:"
@@ -253,8 +259,8 @@
                 imgRecord.ImageUrl = "Images/lock.png"
 
             End If
-            
-            
+
+
         End With
 
         Me.Fileupload_list__readonly.RefreshData_O23(Master.DataPID)

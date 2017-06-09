@@ -23,24 +23,6 @@ Partial Public Class j02_framework_detail
     Protected WithEvents menu1 As Global.UI.entity_menu
 
     '''<summary>
-    '''linkBarCode control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkBarCode As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''lblPerson control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblPerson As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''FullNameAsc control.
     '''</summary>
     '''<remarks>
@@ -68,24 +50,6 @@ Partial Public Class j02_framework_detail
     Protected WithEvents lblJ07Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblJ18Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblJ18Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''lblJ17Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblJ17Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''j07Name control.
     '''</summary>
     '''<remarks>
@@ -95,6 +59,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents j07Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''lblJ18Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblJ18Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''j18Name control.
     '''</summary>
     '''<remarks>
@@ -102,6 +75,15 @@ Partial Public Class j02_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents j18Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblJ17Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblJ17Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''j17Name control.

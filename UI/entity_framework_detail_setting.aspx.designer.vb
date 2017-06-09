@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class entity_framework_detail_setting
 
     '''<summary>
+    '''chkShowLevel1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkShowLevel1 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''skin0 control.
     '''</summary>
     '''<remarks>

@@ -49,6 +49,14 @@ Public Class entity_menu
             menu1.Skin = value
         End Set
     End Property
+    Public Property ShowLevel1 As Boolean
+        Get
+            Return menu1.FindItemByValue("level1").Visible
+        End Get
+        Set(value As Boolean)
+            menu1.FindItemByValue("level1").Visible = value
+        End Set
+    End Property
     Public Property x31ID_Plugin As String
         Get
             Return Me.hidPlugin.Value
@@ -205,8 +213,11 @@ Public Class entity_menu
                     strLevel1 = Left(.Client, 30) & "..."
                     strLevel1 += "->" & .PrefferedName
                 End If
-
-                basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), strLevel1, "p41_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
+                If menu1.FindItemByValue("level1").Visible Then
+                    basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), strLevel1, "p41_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value, .IsClosed)
+                Else
+                    menu1.FindItemByValue("reload").NavigateUrl = "p41_framework_detail.aspx?pid=" & .PID.ToString & "&source=" & Me.hidSource.Value
+                End If
             End With
         End If
         
@@ -308,7 +319,7 @@ Public Class entity_menu
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
         End If
-
+        ami("Čárový kód", "barcode", "javascript:menu_barcode()", "Images/barcode.png", mi)
 
 
     End Sub
@@ -505,8 +516,10 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
-        If hidSource.Value <> "2" Then
+        If menu1.FindItemByValue("level1").Visible Then
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p28Name, "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
+        Else
+            menu1.FindItemByValue("reload").NavigateUrl = "p28_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
         End If
 
 
@@ -565,7 +578,7 @@ Public Class entity_menu
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
         End If
-
+        ami("Čárový kód", "barcode", "javascript:menu_barcode()", "Images/barcode.png", mi)
 
 
     End Sub
@@ -588,8 +601,10 @@ Public Class entity_menu
         If Not Me.Factory.SysUser.j04IsMenu_People Then
             Handle_NoAccess("Nedisponujete přístupovým oprávněním k prohlížení osobních profilů.")
         End If
-        If hidSource.Value <> "2" Then
+        If menu1.FindItemByValue("level1").Visible Then
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.FullNameAsc, "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
+        Else
+            menu1.FindItemByValue("reload").NavigateUrl = "j02_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
         End If
 
 
@@ -732,8 +747,10 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete oprávněním číst tento úkol.")
         End If
-        If hidSource.Value <> "2" Then
+        If menu1.FindItemByValue("level1").Visible Then
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.p57Name & ": " & cRec.p56Code, "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
+        Else
+            menu1.FindItemByValue("reload").NavigateUrl = "p56_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
         End If
 
 
@@ -835,8 +852,10 @@ Public Class entity_menu
         If Not cDisp.ReadAccess Then
             Handle_NoAccess("Nedisponujete oprávněním přistupovat k dokumentu.")
         End If
-        If hidSource.Value <> "2" Then
+        If menu1.FindItemByValue("level1").Visible Then
             basUIMT.RenderLevelLink(menu1.FindItemByValue("level1"), cRec.o24Name & ": " & cRec.o23Code, "o23_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value, cRec.IsClosed)
+        Else
+            menu1.FindItemByValue("reload").NavigateUrl = "o23_framework_detail.aspx?pid=" & cRec.PID.ToString & "&source=" & Me.hidSource.Value
         End If
 
         Dim mi As RadMenuItem = menu1.FindItemByValue("record")
@@ -867,7 +886,7 @@ Public Class entity_menu
         End If
         ami("Tisková sestava/pdf/e-mail", "cmdReport", "javascript:report();", "Images/report.png", mi, , True)
         ami("Odeslat e-mail", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
-
+        ami("Čárový kód", "barcode", "javascript:menu_barcode()", "Images/barcode.png", mi)
     End Sub
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
@@ -875,12 +894,13 @@ Public Class entity_menu
             Case "1"
                 With menu1.FindItemByValue("fs")
                     .ImageUrl = "Images/open_in_new_window.png"
-                    .ToolTip = "Detail záznam v nové záložce"
+                    .ToolTip = "Otevřít v nové záložce"
                 End With
+                menu1.FindItemByValue("reload").Visible = Not menu1.FindItemByValue("level1").Visible
             Case "2"
                 With menu1.FindItemByValue("fs")
                     .ImageUrl = "Images/open_in_new_window.png"
-                    .ToolTip = "Detail záznamu na celou stránku"
+                    .ToolTip = "Otevřít stránku v nové záložce prohlížeče"
                 End With
 
                 If menu1.Skin <> "Black" Then
@@ -889,6 +909,7 @@ Public Class entity_menu
 
                 panMenuContainer.Style.Item("height") = ""
                 menu1.FindItemByValue("level1").Visible = False
+                menu1.FindItemByValue("reload").Visible = False
                 ''menu1.FindItemByValue("saw").Visible = False
 
                 For Each it As RadMenuItem In Me.menu1.Items
@@ -911,8 +932,9 @@ Public Class entity_menu
                     .ToolTip = "Přepnout do datového přehledu"
                     .ImageUrl = "Images/fullscreen.png"
                     .Text = "PŘEHLED"
+                    .Width = Nothing
                 End With
-            
+                menu1.FindItemByValue("reload").Visible = Not menu1.FindItemByValue("level1").Visible
         End Select
        
     End Sub

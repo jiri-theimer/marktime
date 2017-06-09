@@ -8,7 +8,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-
+    <div class="div6">
+        <asp:CheckBox ID="chkShowLevel1" runat="server" Text="Zobrazovat v menu výrazný odkaz (název) vybraného záznamu" />
+    </div>
     <div class="div6">
         <span>Vzhled (Skin) kontextového menu stránky:</span>
         <asp:DropDownList ID="skin0" runat="server">

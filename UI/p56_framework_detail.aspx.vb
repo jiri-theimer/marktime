@@ -31,6 +31,7 @@
                     .Add("p56_menu-menuskin")
                     .Add("p56_framework_detail-chkFFShowFilledOnly")
                     .Add("p56_framework_detail_pos")
+                    .Add("p56_menu-show-level1")
                 End With
                 Dim intPID As Integer = Master.DataPID
                 With .Factory.j03UserBL
@@ -56,6 +57,7 @@
                     End Select
                     menu1.TabSkin = .GetUserParam("p56_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p56_menu-menuskin")
+                    menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p56_menu-show-level1", "0"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p56_framework_detail-chkFFShowFilledOnly", "0"))
 
                 End With
@@ -80,6 +82,10 @@
         x18_binding.Visible = cDisp.OwnerAccess
 
         With cRec
+            Me.boxCoreTitle.Text = .p57Name & " (" & .p56Code & ")"
+            If .b02ID <> 0 Then
+                Me.boxCoreTitle.Text += ": " & .b02Name
+            End If
             Me.Owner.Text = .Owner : Me.Timestamp.Text = .UserInsert & "/" & .DateInsert
             Me.p56Code.Text = .p56Code
             Me.p56Name.Text = .p56Name

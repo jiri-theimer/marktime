@@ -41,15 +41,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents boxCoreTitle As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''linkBarCode control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkBarCode As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''chkFFShowFilledOnly control.
     '''</summary>
     '''<remarks>
@@ -57,15 +48,6 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkFFShowFilledOnly As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''lblContact control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblContact As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Contact control.

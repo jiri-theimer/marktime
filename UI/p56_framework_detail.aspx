@@ -58,7 +58,7 @@
     <div class="content-box1">
         <div class="title">
             <img src="Images/properties.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxCoreTitle" Text="Záznam úkolu" runat="server"></asp:Label>
+            <asp:Label ID="boxCoreTitle" Text="Karta úkolu" runat="server"></asp:Label>
 
 
 
@@ -67,21 +67,19 @@
         <div class="content">
             <table cellpadding="10" cellspacing="2" id="responsive">
                 <tr valign="top">
-                    <td style="min-width: 120px;">
-                        <asp:Label ID="lblTask" runat="server" Text="Úkol:" CssClass="lbl"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="p56Code" runat="server" CssClass="valbold"></asp:Label>
+                     
+                    <td colspan="2">
+                        
                         <asp:Label ID="p56Name" runat="server" CssClass="valbold"></asp:Label>
 
-
+                        <asp:Label ID="p56Code" runat="server" CssClass="valbold" ForeColor="gray" style="margin-left:20px;"></asp:Label>
                     </td>
 
 
                 </tr>
 
                 <tr valign="top">
-                    <td>
+                    <td style="min-width: 120px;">
                         <asp:Label ID="lblType" runat="server" Text="Typ:" CssClass="lbl"></asp:Label>
 
                     </td>

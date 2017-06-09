@@ -34,6 +34,7 @@
                     .Add("p28_framework_detail-chkFFShowFilledOnly")
                     .Add("p28_framework_detail_pos")
                     .Add("p28_menu-x31id-plugin")
+                    .Add("p28_menu-show-level1")
                 End With
                 
                 Dim intPID As Integer = Master.DataPID
@@ -63,6 +64,7 @@
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam("p28_menu-x31id-plugin")
+                    menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("p28_menu-show-level1", "0"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("p28_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
                 Master.DataPID = intPID
@@ -85,6 +87,12 @@
         menu1.p28_RefreshRecord(cRec, cRecSum, "board", cDisp)
 
         With cRec
+            If .p29ID <> 0 Then Me.boxCoreTitle.Text = .p29Name
+            Me.boxCoreTitle.Text += " (" & .p28Code & ")"
+            If .b02ID <> 0 Then
+                Me.boxCoreTitle.Text += ": " & .b02Name
+            End If
+
             Me.Contact.Text = .p28Name
             If .p28Code <> "" Then
                 Me.Contact.Text += " <span style='color:gray;padding-left:10px;'>" & .p28Code & "</span>"
@@ -324,7 +332,7 @@
 
 
     Private Sub ReloadPage()
-        Response.Redirect("p28_framework_detail.aspx?pid=" & Master.DataPID.ToString)
+        Response.Redirect("p28_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & menu1.PageSource)
     End Sub
 
 

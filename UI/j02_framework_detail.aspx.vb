@@ -37,6 +37,7 @@
                     .Add("j02_menu-tabskin")
                     .Add("j02_menu-menuskin")
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
+                    .Add("j02_menu-show-level1")
                 End With
                 Dim intPID As Integer = Master.DataPID
                 With .Factory.j03UserBL
@@ -61,6 +62,7 @@
                     End Select
                     menu1.TabSkin = .GetUserParam("j02_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
+                    menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("j02_menu-show-level1", "0"))
                     Me.chkFFShowFilledOnly.Checked = BO.BAS.BG(.GetUserParam("j02_framework_detail-chkFFShowFilledOnly", "0"))
                 End With
                 Master.DataPID = intPID

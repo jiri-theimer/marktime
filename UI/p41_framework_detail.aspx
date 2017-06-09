@@ -64,9 +64,7 @@
         function p40_chrono(p40id) {
             sw_decide("p40_chrono.aspx?pid=" + p40id, "Images/worksheet_recurrence.png", true);
         }
-        function barcode() {
-            sw_decide("barcode.aspx?prefix=p41&pid=<%=master.datapid%>", "Images/barcode.png", true);
-        }
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -80,7 +78,7 @@
             <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
 
             <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" Style="float: right;" />
-            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" Style="float: right;"></asp:HyperLink>
+            
 
         </div>
         <div class="content">
@@ -90,11 +88,8 @@
             <table cellpadding="10" cellspacing="2" id="responsive">
 
                 <tr valign="baseline">
-                    <td style="min-width: 120px;">
-                        <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl" meta:resourcekey="lblProject"></asp:Label>
-                    </td>
-                    <td>
-
+                    <td colspan="2">
+                        
                         <asp:Label ID="Project" runat="server" CssClass="valbold"></asp:Label>
                         <asp:Image ID="imgFlag_Project" runat="server" />
                         <asp:Image ID="imgDraft" runat="server" ImageUrl="Images/draft_icon.gif" Visible="false" AlternateText="DRAFT záznam" Style="float: right;" />
@@ -109,7 +104,7 @@
                 </tr>
 
                 <tr valign="baseline">
-                    <td>
+                    <td style="min-width: 120px;">
 
                         <asp:Label ID="lblClient" runat="server" Text="Klient:" CssClass="lbl" meta:resourcekey="lblClient"></asp:Label>
 

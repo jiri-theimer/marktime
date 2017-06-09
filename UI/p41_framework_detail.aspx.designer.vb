@@ -50,24 +50,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents cmdFavourite As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''linkBarCode control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkBarCode As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''lblProject control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblProject As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''Project control.
     '''</summary>
     '''<remarks>

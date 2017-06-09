@@ -262,7 +262,8 @@
         <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Default" runat="server" Width="100%" Style="z-index: 2900;" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true" EnableAutoScroll="true">
             <Items>
                 <telerik:RadMenuItem Value="begin"></telerik:RadMenuItem>
-                <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text=" "></telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="fs" NavigateUrl="javascript:menu_fullscreen()" ImageUrl="Images/fullscreen.png" Text=" " Width="28px"></telerik:RadMenuItem>
+                <telerik:RadMenuItem Value="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku" Width="28px"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
                 </telerik:RadMenuItem>
                 
@@ -303,6 +304,8 @@
                         <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdAboImport" Text="Import úhrad z ABO souboru" NavigateUrl="javascript:abo_import();" ImageUrl="Images/payment.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdPohoda" Text="Export do účetnictví POHODA" NavigateUrl="javascript:export_pohoda();" ImageUrl="Images/license.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdBarCode" Text="Čárový kód" NavigateUrl="javascript:barcode();" ImageUrl="Images/barcode.png"></telerik:RadMenuItem>
                     </Items>
 
 
@@ -341,7 +344,7 @@
                             <asp:Image ID="imgRecord" runat="server" Visible="false" />
                             <asp:Label ID="p91Code" runat="server" CssClass="valbold"></asp:Label>
                             <asp:Button ID="cmdConvertDraft" runat="server" CssClass="cmd" Text="Převést Draft na oficiální číslo" />
-                            <asp:HyperLink ID="linkBarCode" runat="server" ImageUrl="Images/barcode.png" ToolTip="Čárový kód" CssClass="button-link" NavigateUrl="javascript:barcode()" style="float:right;"></asp:HyperLink>            
+                            
                         </td>
                         <td id="rlbl">
                             <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
