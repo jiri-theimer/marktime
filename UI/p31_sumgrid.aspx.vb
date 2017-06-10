@@ -49,6 +49,7 @@ Public Class p31_sumgrid
                 .Add("p31_sumgrid-j77id")
                 .Add("p31-j70id")
                 .Add("p31_grid-period")
+                .Add("p31_grid-periodtype")
                 .Add("periodcombo-custom_query")
                 .Add("p31_grid-filter_completesql")
                 .Add("p31_sumgrid-pagesize")
@@ -69,6 +70,7 @@ Public Class p31_sumgrid
                 SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
+                basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("p31_grid-periodtype", "p31Date"))
 
                 SetupJ77Combo(.GetUserParam("p31_sumgrid-j77id"))
 
@@ -128,8 +130,16 @@ Public Class p31_sumgrid
 
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
 
-            .DateFrom = period1.DateFrom
-            .DateUntil = period1.DateUntil
+            If period1.SelectedValue <> "" Then
+                Select Case Me.cbxPeriodType.SelectedValue
+                    Case "p91Date" : .PeriodType = BO.myQueryP31_Period.p91Date
+                    Case "p31DateInsert" : .PeriodType = BO.myQueryP31_Period.p31DateInsert
+                    Case Else
+                        .PeriodType = BO.myQueryP31_Period.p31Date
+                End Select
+                .DateFrom = period1.DateFrom
+                .DateUntil = period1.DateUntil
+            End If
             .ColumnFilteringExpression = hidGridColumnSql.Value
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
             .TabAutoQuery = Me.cbxTabQueryFlag.SelectedValue
@@ -457,6 +467,13 @@ Public Class p31_sumgrid
                 .BackColor = Nothing
             End If
         End With
+        With Me.cbxPeriodType
+            Select Case .SelectedIndex
+                Case 1 : .BackColor = Drawing.Color.LightSkyBlue
+                Case 2 : .BackColor = Drawing.Color.Green
+                Case Else : .BackColor = Nothing
+            End Select
+        End With
         basUIMT.RenderQueryCombo(Me.j70ID)
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
@@ -522,5 +539,9 @@ Public Class p31_sumgrid
     Private Sub cbxTabQueryFlag_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTabQueryFlag.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-tabqueryflag", Me.cbxTabQueryFlag.SelectedValue)
         grid1.Rebind(False)
+    End Sub
+    Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-periodtype", Me.cbxPeriodType.SelectedValue)
+        ReloadPage()
     End Sub
 End Class

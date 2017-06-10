@@ -28,6 +28,11 @@
             </button>
         </div>
         <div class="commandcell" style="padding-left: 10px;">
+            <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
+                <asp:ListItem Text="Datum úkonu:" Value="p31Date" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="Datum založení:" Value="p31DateInsert"></asp:ListItem>
+                <asp:ListItem Text="Datum fakturace:" Value="p91Date"></asp:ListItem>
+            </asp:DropDownList>
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
 
         </div>
@@ -40,10 +45,7 @@
 
 
                     <telerik:RadMenuItem Text="Akce nad přehledem" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
-                        <ContentTemplate>
-                            <div class="div6">
-                                <button type="button" onclick="pivot()">PIVOT nástroj</button>
-                            </div>
+                        <ContentTemplate>                            
                             <div class="content-box3">
                                 <div class="title">
                                     <img src="Images/query.png" />
@@ -60,6 +62,15 @@
 
                                     <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
                                     <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
+                                </div>
+                            </div>
+                            <div class="content-box3">
+                                <div class="title">
+                                    <img src="Images/pivot.png" />
+                                    <span>Modelovat výstup statistiky</span>
+                                </div>
+                                <div class="content">
+                                    <button type="button" onclick="pivot()">PIVOT nástroj</button>
                                 </div>
                             </div>
                             <asp:Panel ID="panExport" runat="server" CssClass="content-box3">

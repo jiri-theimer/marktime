@@ -23,6 +23,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents j77ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cbxPeriodType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxPeriodType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
