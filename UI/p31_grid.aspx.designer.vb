@@ -50,87 +50,6 @@ Partial Public Class p31_grid
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''panAdditionalQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panAdditionalQuery As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''imgEntity control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''MasterRecord control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''lblDrillDown control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblDrillDown As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''linkDrillDown control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkDrillDown As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''clue_query control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''CurrentQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdCĺearFilter control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
-    '''cmdSummary control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSummary As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
     '''cbxTabQueryFlag control.
     '''</summary>
     '''<remarks>
@@ -264,6 +183,87 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdSummary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSummary As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''panAdditionalQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panAdditionalQuery As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''imgEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents imgEntity As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''MasterRecord control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''lblDrillDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDrillDown As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''linkDrillDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkDrillDown As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''CurrentQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdCĺearFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''grid1 control.

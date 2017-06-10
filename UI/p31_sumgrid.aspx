@@ -52,6 +52,7 @@
                                     <span>Filtrování dat</span>
                                 </div>
                                 <div class="content">
+                                    <div class="div6">
                                     <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">
                                         <asp:ListItem Text="--Druh úkonů--" Value="p31" Selected="true"></asp:ListItem>
                                         <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
@@ -59,9 +60,12 @@
                                         <asp:ListItem Text="Paušální odměny" Value="fee"></asp:ListItem>
                                         <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
                                     </asp:DropDownList>
-
-                                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                    </div>
+                                    <div class="div6">
+                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 220px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
                                     <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="content-box3">
