@@ -435,13 +435,16 @@ Public Class p31_sumgrid
     End Sub
 
     Private Sub p31_sumgrid_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
+        
         With Me.j70ID
             If .SelectedIndex > 0 Then
                 hidJ70ID.Value = .SelectedValue
                 .ToolTip = .SelectedItem.Text
                 Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
                 Me.clue_query.Visible = True
+                Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
             Else
+                Me.CurrentQuery.Text = ""
                 Me.clue_query.Visible = False
                 hidJ70ID.Value = ""
             End If
@@ -458,6 +461,7 @@ Public Class p31_sumgrid
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
                 .BackColor = basUI.ColorQueryRGB
+                Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/>" & .SelectedItem.Text
             Else
                 .BackColor = Nothing
             End If

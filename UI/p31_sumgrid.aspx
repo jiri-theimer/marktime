@@ -13,15 +13,13 @@
             <img src="Images/pivot_32.png" title="Summary worksheet přehledy" />
 
         </div>
-        <div class="commandcell" style="padding-left:6px;">
+        <div class="commandcell" style="padding-left: 6px;">
 
-          
+
             <asp:DropDownList ID="j77ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="j77Name" Style="width: 250px;" ToolTip="Pojmenovaná šablona statistiky"></asp:DropDownList>
-            <button type="button" onclick="templatebuilder()" style="padding: 2px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; background: buttonface;">
-                <img src="Images/setting.png" />
-                Nastavení statistiky                
-            </button>
-            
+            <button type="button" onclick="templatebuilder()">Nastavení statistiky</button>
+
+
         </div>
 
         <div class="commandcell" style="padding-left: 3px;">
@@ -33,52 +31,79 @@
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
 
         </div>
-        <div class="commandcell">
-            <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">
-                <asp:ListItem Text="--Druh úkonů--" Value="p31" Selected="true"></asp:ListItem>
-                <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
-                <asp:ListItem Text="Pouze výdaje" Value="expense"></asp:ListItem>
-                <asp:ListItem Text="Paušální odměny" Value="fee"></asp:ListItem>
-                <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
-            </asp:DropDownList>
-        </div>
-        <div class="commandcell">
-            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
-            <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-            <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
-        </div>
+
+
 
         <div class="commandcell" style="margin-left: 12px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
-                    <telerik:RadMenuItem Text="Pivot" Value="pivot" NavigateUrl="javascript:pivot()"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/menuarrow.png">
-                        <Items>
-                            <telerik:RadMenuItem Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="DOC" NavigateUrl="javascript:hardrefresh(0,'doc')"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="PDF" NavigateUrl="javascript:hardrefresh(0,'pdf')"></telerik:RadMenuItem>
-                        </Items>
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Nastavení" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
 
+
+                    <telerik:RadMenuItem Text="Akce nad přehledem" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
                         <ContentTemplate>
-
                             <div class="div6">
-                                <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
-                                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
-                                    <asp:ListItem Text="20"></asp:ListItem>
-                                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Text="100"></asp:ListItem>
-                                    <asp:ListItem Text="200"></asp:ListItem>
-                                    <asp:ListItem Text="500"></asp:ListItem>
-                                </asp:DropDownList>
-
+                                <button type="button" onclick="pivot()">PIVOT nástroj</button>
                             </div>
+                            <div class="content-box3">
+                                <div class="title">
+                                    <img src="Images/query.png" />
+                                    <span>Filtrování dat</span>
+                                </div>
+                                <div class="content">
+                                    <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">
+                                        <asp:ListItem Text="--Druh úkonů--" Value="p31" Selected="true"></asp:ListItem>
+                                        <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
+                                        <asp:ListItem Text="Pouze výdaje" Value="expense"></asp:ListItem>
+                                        <asp:ListItem Text="Paušální odměny" Value="fee"></asp:ListItem>
+                                        <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
+                                    </asp:DropDownList>
 
-
-                            <div class="div6">
-                                <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
+                                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                    <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
+                                </div>
                             </div>
+                            <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
+                                <div class="title">
+                                    <img src="Images/export.png" />
+                                    <span>Export záznamů aktuálního přehledu</span>
+                                </div>
+                                <div class="content">
+
+                                    <img src="Images/xls.png" alt="xls" />
+                                    <asp:HyperLink ID="cmdXLS" runat="server" Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
+
+
+                                    <img src="Images/pdf.png" alt="pdf" />
+                                    <asp:HyperLink ID="cmdPDF" runat="server" Text="PDF" NavigateUrl="javascript:hardrefresh(0,'pdf')" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
+
+                                    <img src="Images/doc.png" alt="doc" />
+                                    <asp:HyperLink ID="cmdDOC" runat="server" Text="DOC" NavigateUrl="javascript:hardrefresh(0,'doc')" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
+
+                                </div>
+                            </asp:Panel>
+
+                            <div class="content-box3">
+                                <div class="title">
+                                    <img src="Images/griddesigner.png" />
+                                    <span>Nastavení přehledu</span>
+                                </div>
+                                <div class="content">
+
+                                    <div class="div6">
+                                        <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
+                                        <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
+                                            <asp:ListItem Text="20"></asp:ListItem>
+                                            <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                            <asp:ListItem Text="100"></asp:ListItem>
+                                            <asp:ListItem Text="200"></asp:ListItem>
+                                            <asp:ListItem Text="500"></asp:ListItem>
+                                        </asp:DropDownList>
+
+                                    </div>
+                                    <div class="div6">
+                                        <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
+                                    </div>
+                                </div>
                         </ContentTemplate>
                     </telerik:RadMenuItem>
                 </Items>
@@ -86,11 +111,7 @@
 
         </div>
 
-        <div style="clear: both;"></div>
 
-
-
-      
         <asp:Panel ID="panQueryByEntity" runat="server" CssClass="div6" Visible="false">
             <table cellpadding="0">
                 <tr>
@@ -106,7 +127,14 @@
             </table>
             <asp:Label ID="lblQuery" runat="server" CssClass="valboldred"></asp:Label>
         </asp:Panel>
-        
+
+        <div style="clear: both;"></div>
+
+        <div style="float: left; padding-left: 6px;">
+            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+            <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
+        </div>
+        <div style="clear: both;"></div>
 
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick"></uc:datagrid>
 
@@ -120,14 +148,14 @@
     <asp:HiddenField ID="hidJ70ID" runat="server" />
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
-    <asp:HiddenField ID="hidFrom" runat="server" />    
+    <asp:HiddenField ID="hidFrom" runat="server" />
     <asp:HiddenField ID="hidSGF" runat="server" />
     <asp:HiddenField ID="hidDD1" runat="server" />
     <asp:HiddenField ID="hidDD2" runat="server" />
     <asp:HiddenField ID="hidSumCols" runat="server" />
     <asp:HiddenField ID="hidAddCols" runat="server" />
 
-    
+
 
     <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:HiddenField ID="hidGridColumnSql" runat="server" />
@@ -135,16 +163,16 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
         });
 
         $(window).load(function () {
-            
+
             <%=me.grid1.ClientID%>_Scroll2SelectedRow();
-         
+
         });
 
-      
+
 
         function RowSelected(sender, args) {
             document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");
@@ -182,11 +210,11 @@
         function querybuilder() {
             var j70id = "<%=hidJ70ID.Value%>";
             sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query.png");
-            return (false);
+
         }
 
         function hardrefresh(pid, flag) {
-            
+
             document.getElementById("<%=Me.hidHardRefreshPID.ClientID%>").value = pid;
             document.getElementById("<%=Me.hidHardRefreshFlag.ClientID%>").value = flag;
 
@@ -204,9 +232,9 @@
             var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
             var pid = document.getElementById("<%=me.j77ID.clientid%>").value;
-            
-            sw_master("sumgrid_designer.aspx?pid="+pid+"&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/setting.png");
-            
+
+            sw_master("sumgrid_designer.aspx?pid=" + pid + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/setting.png");
+
         }
 
     </script>
