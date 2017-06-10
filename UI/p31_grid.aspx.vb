@@ -601,7 +601,8 @@ Public Class p31_grid
 
     Private Sub Handle_Permissions()
         With Master.Factory
-            menu1.FindItemByValue("action").Visible = .SysUser.IsApprovingPerson
+            menu1.FindItemByValue("cmdApprove").Visible = .SysUser.IsApprovingPerson
+
             panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)
             cmdGridDesigner2.Visible = panExport.Visible
             cmdQuery.Visible = panExport.Visible

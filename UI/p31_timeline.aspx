@@ -127,11 +127,11 @@
             <%If hidIsPersonsChange.Value = "1" Then%>
             $('.show_hide2').click();
             document.getElementById("<%=hidIsPersonsChange.ClientID%>").value = "";
-            <%End if%>
+            <%End If%>
             <%If hidIsProjectsChange.Value = "1" Then%>
             $('.show_hide3').click();
             document.getElementById("<%=hidIsProjectsChange.ClientID%>").value = "";
-            <%End if%>
+            <%End If%>
 
 
             var h1 = new Number;
@@ -150,14 +150,14 @@
 
 
             if (screen.availWidth < 1400) {
-                
+
                 var ss = jQuery("td[id=tdFirstCol]");
                 var i = 0;
                 ss.each(function () {
                     $(ss[i]).css("width", "100px");
                     i = i + 1;
                 });
-              
+
             }
 
         });
@@ -250,30 +250,34 @@
                 <asp:ListItem Text="Podle osob" Value="2"></asp:ListItem>
             </asp:DropDownList>
         </div>
-        <div class="commandcell" style="padding-left:10px;">
+        <div class="commandcell" style="padding-left: 10px;">
             <button type="button" onclick="entry()">
                 <img src="Images/new.png" />Vykázat hodiny do označených dnů</button>
         </div>
 
-        
 
-        
+
+
         <div class="show_hide1" style="float: left; margin-top: 10px;">
             <button type="button">
                 <img src="Images/arrow_down_menu.png" />Nastavení</button>
         </div>
         <div style="clear: both;"></div>
-        <div class="slidingDiv1">
+        <div class="slidingDiv1" style="display:none;">
 
-            <div class="div6">
-                <asp:CheckBox ID="chkShowP48" runat="server" Text="Zobrazovat i celkový operativní plán" AutoPostBack="true" />
+            <div class="content-box3">
+                <div class="title">Nastavení</div>
+                <div class="content">
+                    <asp:CheckBox ID="chkShowP48" runat="server" Text="Zobrazovat i celkový operativní plán" AutoPostBack="true" ForeColor="black" />
+                </div>
+
             </div>
-            
+
 
         </div>
 
-        
-        <div style="clear:both;"></div>
+
+        <div style="clear: both;"></div>
         <div class="show_hide2" style="float: left; margin-top: 8px;">
             <button type="button">
                 <img src="Images/arrow_down.gif" alt="Výběr osob" />
@@ -284,7 +288,7 @@
         </div>
         <div class="show_hide3" style="float: left; margin-top: 8px;">
             <button type="button">
-                <img src="Images/arrow_down.gif" alt="Výběr projektů" />               
+                <img src="Images/arrow_down.gif" alt="Výběr projektů" />
                 <asp:Label ID="ProjectsHeader" runat="server"></asp:Label>
 
             </button>
@@ -292,15 +296,15 @@
         </div>
 
         <div style="clear: both;"></div>
-        <div class="slidingDiv2" style="background-color: khaki; padding-bottom: 20px;">
+        <div class="slidingDiv2" style="padding-bottom: 20px;display:none;">
             <uc:persons ID="persons1" runat="server"></uc:persons>
         </div>
         <div style="clear: both;"></div>
-        <div class="slidingDiv3" style="background-color: khaki; padding-bottom: 20px;">
+        <div class="slidingDiv3" style="padding-bottom: 20px;display:none;">
             <uc:projects ID="projects1" runat="server"></uc:projects>
         </div>
 
-        
+
 
         <asp:Panel ID="panLayout" runat="server">
             <table cellpadding="3">
@@ -390,12 +394,12 @@
                             <tr style="border-top: dotted silver 1px; vertical-align: top;">
                                 <td id="tdFirstCol" style="width: 270px;" class="nondate">
                                     <div>
-                                        
+
                                         <asp:Label ID="person" runat="server" CssClass="valbold"></asp:Label>
                                         <asp:HyperLink ID="clue_person" runat="server" CssClass="reczoom" Text="i"></asp:HyperLink>
                                     </div>
                                     <div>
-                                        <asp:Label ID="project" runat="server" CssClass="val" Style="padding-left: 15px;word-wrap: break-word;"></asp:Label>
+                                        <asp:Label ID="project" runat="server" CssClass="val" Style="padding-left: 15px; word-wrap: break-word;"></asp:Label>
                                     </div>
 
                                     <asp:HiddenField ID="j02id" runat="server" />

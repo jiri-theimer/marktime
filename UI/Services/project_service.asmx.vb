@@ -17,6 +17,7 @@ Public Class project_service
         Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String)).ToLower()
         Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
         Dim strJ02ID_Explicit As String = (DirectCast(contextDictionary("j02id_explicit"), String))
+        If filterString.IndexOf("...") > 0 Then filterString = "" 'pokud jsou uvedeny 3 tečky, pak bráno jako nápovědný text pro hledání
         
         Dim factory As BL.Factory = Nothing
 

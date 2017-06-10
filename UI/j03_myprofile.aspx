@@ -64,7 +64,7 @@
                 <td>
                     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
                         <Items>
-                            <telerik:RadMenuItem Text="MůJ PROFIL" ImageUrl="Images/menuarrow.png">
+                            <telerik:RadMenuItem Text="Akce v mém profilu" ImageUrl="Images/menuarrow.png">
                                 <Items>
                                     <telerik:RadMenuItem Text="Osobní tiskové sestavy" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>

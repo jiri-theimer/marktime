@@ -4,6 +4,8 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
+                If Request.Item("blank") = "1" Then panCommands.Visible = True
+
                 Dim lis As New List(Of String)
                 lis.Add("handler_search_project-toprecs")
                 lis.Add("handler_search_project-bin")
@@ -42,11 +44,8 @@
                     Dim bolFulltext As Boolean = .TestPermission(BO.x53PermValEnum.GR_Admin)
                     If Not bolFulltext Then bolFulltext = .TestPermission(BO.x53PermValEnum.GR_P31_Reader)
                     If Not bolFulltext Then bolFulltext = .TestPermission(BO.x53PermValEnum.GR_P41_Reader)
-                    If Not bolFulltext Then
-                        RadTabStrip1.Tabs(1).Visible = False
-                    Else
-                        If Request.Item("fulltext") = "1" Then RadTabStrip1.SelectedIndex = 1 : RadMultiPage1.SelectedIndex = 1
-                    End If
+                    panFulltext.Visible = bolFulltext
+                   
                 End With
             End With
 

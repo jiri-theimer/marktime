@@ -202,21 +202,21 @@
 
             </div>
             <div style="clear: both;"></div>
-            <div class="slidingDiv1" style="display:none;">
-                <div class="content-box2">
+            <div class="slidingDiv1" style="display:none;background:#f0f8ff;">
+                <div class="content-box3">
                     <div class="title">
-                        <span>Pojmenovaný filtr</span>
+                        <span>Filtrování záznamů</span>
                     </div>
-                    <div class="content" style="border: none;">
-                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                    <div class="content">
+                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
                         <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">Návrhář filtrů</button>
                     </div>
                 </div>
-                <div class="content-box2" style="margin-top: 20px;">
+                <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
                         Nastavení přehledu
                     </div>
-                    <div class="content" style="border: none;">
+                    <div class="content">
                         <div>
                             <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
                         </div>

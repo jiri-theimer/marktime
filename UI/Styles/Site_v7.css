@@ -830,6 +830,33 @@ div.content-box2 .title {
     border-bottom: none;
 }
 
+div.content-box3 .content {
+    overflow: hidden;
+    padding: 5px;
+    background:#f0f8ff;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border: none;
+    
+}
+
+div.content-box3 .title {
+    cursor: default;
+    height: 20px;
+    line-height: 20px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color:#A9A9A9;
+    font-family: Arial;
+    font-weight: normal;
+    display: block;
+    color: white;
+    padding: 6px;
+    border: 1px solid silver;
+    border-bottom: none;
+    text-align:center;
+}
+
 
 
 div.menu-group-title {

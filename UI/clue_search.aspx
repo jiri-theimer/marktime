@@ -29,8 +29,15 @@
         }
         function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
             var combo = sender;
-            var pid = combo.get_value();
-            alert(pid);
+            var ret = combo.get_value();
+            var a = ret.split("|");
+            if (a[0] == "p31") {
+                alert("nic");
+            }
+            else {
+                window.open(a[0] + "_framework.aspx?pid=" + a[1], "_top");
+            }
+
 
         }
         function cbx1_OnClientItemsRequesting(sender, eventArgs) {
@@ -43,7 +50,7 @@
                 context["filterstring"] = "";
 
             context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
-            
+
 
         }
         function cbx1_OnClientFocus(sender, args) {
@@ -55,10 +62,13 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel ID="panCommands" runat="server" CssClass="div6">
+        <button type="button" onclick="window.close()">Zavřít</button>
+    </asp:Panel>
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
-            <telerik:RadTab Text="Hledat projekt/klienta/fakturu/osobu" Selected="true" Value="search"></telerik:RadTab>
-            <telerik:RadTab Text="FULL-TEXT" Value="fulltext"></telerik:RadTab>
+            <telerik:RadTab Text="Hledat" Selected="true" Value="search"></telerik:RadTab>
+            <telerik:RadTab Text="Nastavení hledání" Value="fulltext"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
 
@@ -72,7 +82,7 @@
                     <td>Projekt:
                     </td>
                     <td>
-                        <uc:project ID="p41id_search" runat="server" Width="590px" Flag="searchbox" AutoPostBack="false" OnClientSelectedIndexChanged="p41id_search" />
+                        <uc:project ID="p41id_search" runat="server" Width="690px" Flag="searchbox" AutoPostBack="false" OnClientSelectedIndexChanged="p41id_search" />
                     </td>
 
 
@@ -84,7 +94,7 @@
                     <td>Klient:
                     </td>
                     <td>
-                        <uc:contact ID="p28id_search" runat="server" Width="590px" Flag="searchbox" AutoPostBack="false" />
+                        <uc:contact ID="p28id_search" runat="server" Width="690px" Flag="searchbox" AutoPostBack="false" />
                     </td>
 
 
@@ -96,7 +106,7 @@
                     <td>Faktura:
                     </td>
                     <td>
-                        <uc:invoice ID="p91id_search" runat="server" Width="590px" Flag="searchbox" />
+                        <uc:invoice ID="p91id_search" runat="server" Width="690px" Flag="searchbox" />
 
                     </td>
 
@@ -109,13 +119,47 @@
                     </td>
 
                     <td>
-                        <uc:person ID="j02id_search" runat="server" Width="590px" Flag="searchbox" AutoPostBack="false" />
+                        <uc:person ID="j02id_search" runat="server" Width="690px" Flag="searchbox" AutoPostBack="false" />
 
                     </td>
 
 
                 </tr>
+
             </table>
+            <asp:Panel ID="panFulltext" runat="server" CssClass="content-box2">
+                <div class="title">
+                    FULL-TEXT hledání
+                </div>
+                <div class="content">
+                    <img src="Images/search_20.png" />
+                    <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="700px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ShowToggleImage="false" Text="Hledat..." Width="700px" OnClientFocus="cbx1_OnClientFocus" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
+                        <WebServiceSettings Method="LoadComboData" UseHttpGet="false" Path="~/Services/fulltext_service.asmx" />
+                    </telerik:RadComboBox>
+
+                    <div style="clear:both;">
+                    <div style="float: left; padding: 10px;">
+                        <asp:CheckBox ID="chkMain" runat="server" Checked="true" Text="Projekty, klienti, kontaktní osoby" AutoPostBack="true" />
+                    </div>
+                    <div style="float: left; padding: 10px;">
+                        <asp:CheckBox ID="chkWorksheet" runat="server" Checked="true" Text="Worksheet (hodiny, výdaje, odměny)" AutoPostBack="true" />
+                    </div>
+                    <div style="float: left; padding: 10px;">
+                        <asp:CheckBox ID="chkInvoice" runat="server" Checked="true" Text="Faktury, zálohové faktury" AutoPostBack="true" />
+                    </div>
+                    <div style="float: left; padding: 10px;">
+                        <asp:CheckBox ID="chkTask" runat="server" Text="Úkoly" AutoPostBack="true" />
+                    </div>
+                    <div style="float: left; padding: 10px;">
+                        <asp:CheckBox ID="chkDocument" runat="server" Text="Dokumenty" AutoPostBack="true" />
+                    </div>
+                    </div>
+                </div>
+            </asp:Panel>
+
+
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="fulltext" runat="server">
             <fieldset style="padding: 6px;" id="fsP41" runat="server">
                 <legend>Vyhledávání projektu</legend>
                 <p>Částečná shoda v: Název projektu | Kód projektu | Zkrácený název projektu | Název klienta | Zkrácený název klienta</p>
@@ -167,35 +211,7 @@
                 </div>
             </fieldset>
 
-        </telerik:RadPageView>
-        <telerik:RadPageView ID="fulltext" runat="server">
-            <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="700px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" ShowToggleImage="false" Text="Hledat..." Width="700px" OnClientFocus="cbx1_OnClientFocus" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
-                <WebServiceSettings Method="LoadComboData" UseHttpGet="false" Path="~/Services/fulltext_service.asmx" />
-            </telerik:RadComboBox>
-
-            <div class="content-box2">
-                <div class="title">
-                    Okruh prohledávaných dat
-                </div>
-                <div class="content">
-                    <div style="float: left; padding: 10px;">
-                        <asp:CheckBox ID="chkMain" runat="server" Checked="true" Text="Projekty, klienti, kontaktní osoby" AutoPostBack="true" />
-                    </div>
-                    <div style="float: left; padding: 10px;">
-                        <asp:CheckBox ID="chkWorksheet" runat="server" Checked="true" Text="Worksheet (hodiny, výdaje, odměny)" AutoPostBack="true" />
-                    </div>
-                    <div style="float: left; padding: 10px;">
-                        <asp:CheckBox ID="chkInvoice" runat="server" Checked="true" Text="Faktury, zálohové faktury" AutoPostBack="true" />
-                    </div>
-                    <div style="float: left; padding: 10px;">
-                        <asp:CheckBox ID="chkTask" runat="server" Text="Úkoly" AutoPostBack="true" />
-                    </div>
-                    <div style="float: left; padding: 10px;">
-                        <asp:CheckBox ID="chkDocument" runat="server" Text="Dokumenty" AutoPostBack="true" />
-                    </div>
-
-                </div>
-            </div>
+         
 
         </telerik:RadPageView>
     </telerik:RadMultiPage>

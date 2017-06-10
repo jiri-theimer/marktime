@@ -281,12 +281,7 @@
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>
         }
-        function cbx1_OnClientFocus(sender, args) {
-            var combo = sender;
-            var s = combo.get_text();
-            if (s.indexOf("...") > 0)
-                combo.set_text("");
-        }
+       
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -300,7 +295,7 @@
                 </div>
 
                 <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px">
-                    <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientFocus="cbx1_OnClientFocus" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
+                    <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                     </telerik:RadComboBox>
                 </asp:Panel>
@@ -331,35 +326,33 @@
             </div>
             <div style="clear: both; width: 100%;"></div>
             
-            <div class="slidingDiv1" style="display: none;">
-                <div class="content-box2">
+            <div class="slidingDiv1" style="display: none;background:#f0f8ff;">
+                <div class="content-box3">
                     <div class="title">
-                        <span>Pojmenovaný filtr</span>
+                        <span>Filtrování záznamů</span>
                     </div>
-                    <div class="content" style="border: none;">
+                    <div class="content">
+                        <div>
                         <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
                         <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">Návrhář filtrů</button>
                         <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                         </asp:DropDownList>
-                    </div>
-                </div>
-                <div class="content-box2" style="margin-top: 20px;">
-                    <div class="title">
-                        <span>Filtr podle časového období</span>
-                    </div>
-                    <div class="content" style="border: none;">
-                        <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období" Style="width: 140px;">
+                        </div>
+                        <div style="margin-top:20px;">
+                            <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
                         </asp:DropDownList>
                         <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
+                        </div>
                     </div>
                 </div>
-                <div class="content-box2" style="margin-top: 20px;">
+                
+                <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
                         <span>Operace pro označené (zaškrtlé) záznamy</span>
                     </div>
-                    <div class="content" style="border: none;">
+                    <div class="content">
                         <%If Me.CurrentPrefix <> "p91" Then%>
                         <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
                         <%End If%>
@@ -373,12 +366,12 @@
 
                     </div>
                 </div>
-                <asp:Panel ID="panExport" runat="server" CssClass="content-box2" Style="margin-top: 20px;">
+                <asp:Panel ID="panExport" runat="server" CssClass="content-box3" Style="margin-top: 20px;">
                     <div class="title">
-                        <span>Export záznamů v přehledu</span>
+                        <span>Export záznamů v aktuálním přehledu</span>
 
                     </div>
-                    <div class="content" style="border: none;">
+                    <div class="content">
 
                         <img src="Images/export.png" alt="export" />
                         <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
@@ -395,12 +388,12 @@
 
                     </div>
                 </asp:Panel>
-                <div class="content-box2" style="margin-top: 20px;">
+                <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
                         <span>Sloupce v přehledu</span>
 
                     </div>
-                    <div class="content" style="border: none;">
+                    <div class="content">
 
                         <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" DataTextField="ColumnHeader" DataValueField="ColumnField">
                         </asp:DropDownList>
@@ -426,11 +419,11 @@
 
                     </div>
                 </div>
-                <div class="content-box2" style="margin-top: 20px;">
+                <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
                         <span>Rozvržení panelů</span>
                     </div>
-                    <div class="content" style="border: none;">
+                    <div class="content">
 
                         <asp:RadioButtonList ID="opgLayout" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
                             <asp:ListItem Text="Levý panel = přehled, pravý panel = detail" Value="1" Selected="True"></asp:ListItem>

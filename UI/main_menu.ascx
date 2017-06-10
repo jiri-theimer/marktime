@@ -67,7 +67,10 @@
         sw_menu_decide("p90_record.aspx?pid=0&hrjs=hardrefresh_menu", "Images/proforma.png")
 
     }
+    function mysearch() {
+        sw_menu_decide("clue_search.aspx", "Images/search.png")
 
+    }
     
 
     function setlang(value) {

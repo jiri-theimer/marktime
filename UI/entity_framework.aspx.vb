@@ -151,8 +151,11 @@ Public Class entity_framework
                     basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam(Me.CurrentPrefix + "_framework-periodtype", ""))
                     If Me.cbxQueryFlag.Visible Then basUI.SelectDropdownlistValue(Me.cbxQueryFlag, .GetUserParam(Me.CurrentPrefix + "_framework-queryflag"))
                     If Me.CurrentPrefix = "j02" And Me.CurrentMasterPrefix <> "" And Me.CurrentMasterPID > 0 Then Me.cbxQueryFlag.SelectedIndex = 0 'seznam kontaktních osob k projektu/klientu
-                    period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
-                    period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
+                    If Me.cbxPeriodType.SelectedIndex > 0 Then
+                        period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
+                        period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
+                    End If
+                    
                 End With
             End With
 
@@ -231,38 +234,40 @@ Public Class entity_framework
 
         
     End Sub
+  
 
     Private Sub SetupPeriodQuery()
         Me.cbxQueryFlag.Visible = False
         With Me.cbxPeriodType.Items
             If .Count > 0 Then .Clear()
+            .Add(New ListItem("--Filtrovat období--", ""))
             Select Case Me.CurrentX29ID
                 Case BO.x29IdEnum.p41Project
-                    .Add(New ListItem("Založení projektu:", "DateInsert"))
-                    .Add(New ListItem("Plánované zahájení:", "p41PlanFrom"))
-                    .Add(New ListItem("Plánované dokončení:", "p41PlanUntil"))
+                    .Add(New ListItem("Založení projektu", "DateInsert"))
+                    .Add(New ListItem("Plánované zahájení", "p41PlanFrom"))
+                    .Add(New ListItem("Plánované dokončení", "p41PlanUntil"))
                 Case BO.x29IdEnum.p28Contact
-                    .Add(New ListItem("Založení klienta:", "DateInsert"))
+                    .Add(New ListItem("Založení klienta", "DateInsert"))
                 Case BO.x29IdEnum.p56Task
-                    .Add(New ListItem("Založení úkolu:", "DateInsert"))
-                    .Add(New ListItem("Plánované zahájení:", "p56PlanFrom"))
-                    .Add(New ListItem("Termín dokončení:", "p56PlanUntil"))
+                    .Add(New ListItem("Založení úkolu", "DateInsert"))
+                    .Add(New ListItem("Plánované zahájení", "p56PlanFrom"))
+                    .Add(New ListItem("Termín dokončení", "p56PlanUntil"))
                 Case BO.x29IdEnum.o23Notepad
-                    .Add(New ListItem("Založení dokumentu:", "DateInsert"))
-                    .Add(New ListItem("Datum dokumentu:", "o23Date"))
+                    .Add(New ListItem("Založení dokumentu", "DateInsert"))
+                    .Add(New ListItem("Datum dokumentu", "o23Date"))
                 Case BO.x29IdEnum.p91Invoice
-                    .Add(New ListItem("Založení faktury:", "DateInsert"))
-                    .Add(New ListItem("Datum plnění:", "p91DateSupply"))
-                    .Add(New ListItem("Datum splatnosti:", "p91DateMaturity"))
-                    .Add(New ListItem("Datum vystavení:", "p91Date"))
+                    .Add(New ListItem("Založení faktury", "DateInsert"))
+                    .Add(New ListItem("Datum plnění", "p91DateSupply"))
+                    .Add(New ListItem("Datum splatnosti", "p91DateMaturity"))
+                    .Add(New ListItem("Datum vystavení", "p91Date"))
 
                 Case BO.x29IdEnum.j02Person
-                    .Add(New ListItem("Založení záznamu:", "DateInsert"))
+                    .Add(New ListItem("Založení záznamu", "DateInsert"))
                     cbxQueryFlag.Items.Add(New ListItem("Pouze interní osoby", "1"))
                     cbxQueryFlag.Items.Add(New ListItem("Pouze kontaktní osoby", "2"))
                     cbxQueryFlag.Items.Add(New ListItem("Všechny osobní profily", "3"))
             End Select
-            .Add(New ListItem("Datum worksheet úkonu:", "p31Date"))
+            .Add(New ListItem("Datum worksheet úkonu", "p31Date"))
         End With
         
         If Me.cbxQueryFlag.Items.Count > 1 Then cbxQueryFlag.Visible = True
@@ -893,6 +898,7 @@ Public Class entity_framework
                         intNewPageIndex += 1 : x = 1
                     End If
                     If dbRow.Item("pid") = intSelPID Then
+                        ''Master.Notify(intSelPID & ", page-index: " & intNewPageIndex & ", x: " & x)
                         grid1.radGridOrig.CurrentPageIndex = intNewPageIndex
                         grid1.Rebind(False)
                         grid1.SelectRecords(intSelPID)
@@ -1109,7 +1115,17 @@ Public Class entity_framework
     End Sub
 
     Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-periodtype", Me.cbxPeriodType.SelectedValue)
+        With Master.Factory.j03UserBL
+            If Me.cbxPeriodType.SelectedIndex > 0 And Not period1.Visible Then
+                .InhaleUserParams("periodcombo-custom_query", Me.CurrentPrefix + "_framework-period")
+                period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
+                period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
+            End If
+            
+            .SetUserParam(Me.CurrentPrefix + "_framework-periodtype", Me.cbxPeriodType.SelectedValue)
+        End With
+
+        
         RecalcVirtualRowCount()
         grid1.Rebind(False)
         hidUIFlag.Value = "period"
@@ -1130,22 +1146,29 @@ Public Class entity_framework
 
     Private Sub entity_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         basUIMT.RenderQueryCombo(Me.j70ID)
-        With Me.period1
-            If .SelectedValue <> "" Then
-                .BackColor = basUI.ColorQueryRGB
-                Me.CurrentPeriodQuery.Text = "<img src='Images/datepicker.png'/> " & Me.cbxPeriodType.SelectedItem.Text
-                If Year(.DateFrom) = Year(.DateUntil) Then
-                    Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
+        If cbxPeriodType.SelectedIndex > 0 Then
+
+            With Me.period1
+                .Visible = True
+                If .SelectedValue <> "" Then
+                    .BackColor = basUI.ColorQueryRGB
+                    Me.CurrentPeriodQuery.Text = "<img src='Images/datepicker.png'/> " & Me.cbxPeriodType.SelectedItem.Text
+                    If Year(.DateFrom) = Year(.DateUntil) Then
+                        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
+                    Else
+                        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
+                    End If
+
                 Else
-                    Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
-                End If                
+                    .BackColor = Nothing
+                    Me.CurrentPeriodQuery.Text = ""
 
-            Else
-                .BackColor = Nothing
-                Me.CurrentPeriodQuery.Text = ""
-
-            End If
-        End With
+                End If
+            End With
+        Else
+            period1.Visible = False
+        End If
+        
         If Me.cbxGroupBy.SelectedIndex > 0 Then
             chkGroupsAutoExpanded.Visible = True
         Else

@@ -54,12 +54,7 @@
         context["j02id_explicit"]="<%=Factory.SysUser.j02ID%>";
         <%end If%>
     }
-    function cbxSearch_OnClientFocus(sender, args) {
-        var combo = sender;
-        var s = combo.get_text();
-        if (s.indexOf("...")>0)
-            combo.set_text("");
-    }
+    
     function report() {
             
         sw_decide("report_modal.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>","Images/reporting.png",true);

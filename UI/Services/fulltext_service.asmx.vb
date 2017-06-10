@@ -15,8 +15,9 @@ Public Class fulltext_service
     <WebMethod()> _
     Public Function LoadComboData(ByVal context As Object) As RadComboBoxItemData()
         Dim contextDictionary As IDictionary(Of String, Object) = DirectCast(context, IDictionary(Of String, Object))
-        Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String)).ToLower()
+        Dim filterString As String = (DirectCast(contextDictionary("filterstring"), String))
         filterString = Trim(filterString)
+        If filterString.IndexOf("...") > 0 Then filterString = "" 'pokud jsou uvedeny 3 tečky, pak bráno jako nápovědný text pro hledání
         ''Dim strFlag As String = (DirectCast(contextDictionary("flag"), String))
         If Len(filterString) > 15 Then filterString = ""
 
@@ -81,18 +82,26 @@ Public Class fulltext_service
 
         For Each c As BO.FullTextRecord In lis
             id = New RadComboBoxItemData()
+            Dim bolNameIsValue As Boolean = False
+            If c.RecValue = c.RecName Then bolNameIsValue = True
 
             c.RecValue = Replace(c.RecValue, filterString, "<span style='background-color:yellow;'>" & filterString & "</span>", , , CompareMethod.Text)
             If c.RecComment <> "" Then c.RecValue += "<br>" & Replace(c.RecComment, filterString, "<span style='background-color:yellow;'>" & c.RecComment & "</span>", , , CompareMethod.Text)
 
             If c.Prefix = "p31" Then
                 id.Text = "Worksheet úkon: " & c.RecName
-                id.Text += "<br><i>" & c.RecValue & "</i><hr>"
-            Else
-                id.Text = BO.BAS.GetX29EntityAlias(BO.BAS.GetX29FromPrefix(c.Prefix), False) & ": " & c.RecName
-                id.Text += "<br>" & c.Field & ": " & c.RecValue & "<hr>"
-            End If
+                id.Text += "<br><i>" & c.RecValue & "</i>"
 
+            Else
+                If Not bolNameIsValue Then
+                    id.Text = BO.BAS.GetX29EntityAlias(BO.BAS.GetX29FromPrefix(c.Prefix), False) & ": " & c.RecName
+                    id.Text += "<br>" & c.Field & ": " & c.RecValue
+                Else
+                    id.Text += c.Field & ": " & c.RecValue
+                End If
+
+            End If
+            id.Text += "<span style='color:red;margin-left:7px;'>" & BO.BAS.FD(c.RecDateInsert, True, True) & "</span><hr>"
 
 
 
