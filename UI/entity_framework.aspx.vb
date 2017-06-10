@@ -276,7 +276,7 @@ Public Class entity_framework
     Private Sub Handle_Permissions_And_More()
         Dim bolCanApprove As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approver)
         Dim bolCanInvoice As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator)
-
+        cmdSummary.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
         With Master
             .PageTitle = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, True)
             Select Case Me.CurrentX29ID
@@ -295,6 +295,7 @@ Public Class entity_framework
                 Case BO.x29IdEnum.o23Notepad
                     img1.ImageUrl = "Images/notepad_32.png"
                     lblGridHeader.Text = "Akce nad dokumenty"
+                    cmdSummary.Visible = False
                 Case BO.x29IdEnum.p56Task
                     img1.ImageUrl = "Images/task_32.png"
                     cmdApprove.Visible = bolCanApprove

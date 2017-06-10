@@ -32,24 +32,6 @@ Partial Public Class p31_grid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''txtSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''cmdSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSearch As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
@@ -57,15 +39,6 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
-
-    '''<summary>
-    '''lblGridHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblGridHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''panAdditionalQuery control.
@@ -111,15 +84,6 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents linkDrillDown As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''CurrentPeriodQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''clue_query control.

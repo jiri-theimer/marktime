@@ -426,6 +426,11 @@ Public Class p31_framework
                 ''lblFormHeader.Text = Resources.p31_framework.tabs1_todo
         End Select
         Me.j70ID.Visible = b : Me.clue_query.Visible = b : cmdQuery.Visible = b
+        If cbxGroupBy.SelectedIndex = 0 Then
+            chkGroupsAutoExpanded.Visible = False
+        Else
+            chkGroupsAutoExpanded.Visible = True
+        End If
 
         If grid1.GetFilterExpression <> "" Then
             cmdCĺearFilter.Visible = True

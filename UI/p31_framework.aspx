@@ -194,7 +194,7 @@
 
                         <span>Nastavení přehledu</span>
 
-                        <img src="Images/arrow_down.gif" />
+                        <img src="Images/arrow_down_menu.png" />
                     </button>
 
                 </div>
@@ -217,15 +217,16 @@
                         Nastavení přehledu
                     </div>
                     <div class="content">
-                        <div>
+                        <div class="div6">
                             <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
+                            <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="<%$Resources:p31_framework, AutoRozbaleneSouhrny%>" AutoPostBack="true" Checked="false" />
                         </div>
-
+                        <div class="div6">
                         <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
                         <button type="button" onclick="griddesigner()"><%=Resources.p31_framework.Sloupce%></button>
-
+                        </div>
                         <div class="div6">
-                            <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="<%$Resources:p31_framework,lblPaging%>"></asp:Label>
+                            <asp:Label ID="lblPaging" runat="server" CssClass="val" Text="<%$Resources:p31_framework,lblPaging%>"></asp:Label>
                             <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
                                 <asp:ListItem Text="20"></asp:ListItem>
                                 <asp:ListItem Text="50" Selected="True"></asp:ListItem>
@@ -233,7 +234,7 @@
                                 <asp:ListItem Text="200"></asp:ListItem>
                                 <asp:ListItem Text="500"></asp:ListItem>
                             </asp:DropDownList>
-                            <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="<%$Resources:p31_framework, AutoRozbaleneSouhrny%>" AutoPostBack="true" Checked="false" />
+                            
                         </div>
                     </div>
                 </div>

@@ -26,13 +26,19 @@ Public Class p31_sumgrid
 
             If hidMasterPrefix.Value <> "" Then
                 panQueryByEntity.Visible = True
-                Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value))
-                Me.MasterRecord.NavigateUrl = hidMasterPrefix.Value & "_framework.aspx?pid=" & hidMasterPID.Value
+                If hidMasterPID.Value.IndexOf(",") < 0 Then
+                    Me.MasterRecord.Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(hidMasterPrefix.Value), BO.BAS.IsNullInt(hidMasterPID.Value))
+                    Me.MasterRecord.NavigateUrl = hidMasterPrefix.Value & "_framework.aspx?pid=" & hidMasterPID.Value
+                Else
+                    Me.MasterRecord.Text = "Vybrané záznamy"
+                End If
+                
                 Select Case hidMasterPrefix.Value
                     Case "p41" : imgEntity.ImageUrl = "Images/project.png"
                     Case "j02" : imgEntity.ImageUrl = "Images/person.png"
                     Case "p28" : imgEntity.ImageUrl = "Images/contact.png"
                     Case "p91" : imgEntity.ImageUrl = "Images/invoice.png"
+                    Case "p31" : imgEntity.ImageUrl = "Images/worksheet.png"
                 End Select
             Else
                 panQueryByEntity.Visible = False
@@ -84,16 +90,33 @@ Public Class p31_sumgrid
         With mq
             Select Case hidMasterPrefix.Value
                 Case "p41"
-                    .p41ID = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    If hidMasterPID.Value.IndexOf(",") > 0 Then
+                        .p41IDs = BO.BAS.ConvertPIDs2List(hidMasterPID.Value)
+                    Else
+                        .p41ID = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    End If
                 Case "p28"
-                    .p28ID_Client = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    If hidMasterPID.Value.IndexOf(",") > 0 Then
+                        .p28IDs_Client = BO.BAS.ConvertPIDs2List(hidMasterPID.Value)
+                    Else
+                        .p28ID_Client = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    End If
                 Case "j02"
-                    .j02ID = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    If hidMasterPID.Value.IndexOf(",") > 0 Then
+                        .j02IDs = BO.BAS.ConvertPIDs2List(hidMasterPID.Value)
+                    Else
+                        .j02ID = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    End If
                 Case "p56"
-                    .p56IDs = New List(Of Integer)
-                    .p56IDs.Add(BO.BAS.IsNullInt(hidMasterPID.Value))
+                    .p56IDs = BO.BAS.ConvertPIDs2List(hidMasterPID.Value)
                 Case "p91"
-                    .p91ID = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    If hidMasterPID.Value.IndexOf(",") > 0 Then
+                        .p91IDs = BO.BAS.ConvertPIDs2List(hidMasterPID.Value)
+                    Else
+                        .p91ID = BO.BAS.IsNullInt(hidMasterPID.Value)
+                    End If
+                Case "p31"
+                    .PIDs = BO.BAS.ConvertPIDs2List(hidMasterPID.Value)
                 Case Else
 
             End Select

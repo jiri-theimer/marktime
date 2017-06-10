@@ -281,7 +281,15 @@
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>
         }
-       
+        function drilldown() {
+            var pids = GetAllSelectedPIDs();
+            if (pids == "") {
+                alert("Není vybrán ani jeden záznam.");
+                return;
+            }
+            location.replace("p31_sumgrid.aspx?masterprefix=<%=me.CurrentPrefix%>&masterpid=" + pids);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -301,10 +309,10 @@
                 </asp:Panel>
                 <div class="commandcell" style="padding-left: 4px;">
 
-                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
+                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">                        
                         <asp:Label ID="lblGridHeader" runat="server" Text="Akce nad přehledem"></asp:Label>
-
-                        <img src="Images/arrow_down.gif" />
+                        <img src="Images/arrow_down_menu.png" />
+                        
                     </button>
                 </div>
 
@@ -362,7 +370,7 @@
                         <%If Me.CurrentPrefix = "p91" Then%>
                         <button type="button" onclick="sendmail_batch()">Hromadně odeslat faktury (e-mail)</button>
                         <%End If%>
-                        
+                        <button type="button" id="cmdSummary" runat="server" onclick="drilldown()">WORKSHEET statistika</button>
 
                     </div>
                 </div>
@@ -403,7 +411,7 @@
 
 
                         <div class="div6">
-                            <span class="lbl">Stránkování přehledu:</span>
+                            <span class="val">Stránkování přehledu:</span>
                             <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
                                 <asp:ListItem Text="20"></asp:ListItem>
                                 <asp:ListItem Text="50" Selected="True"></asp:ListItem>

@@ -77,6 +77,15 @@ Partial Public Class p31_framework
     Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''chkGroupsAutoExpanded control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''j74id control.
     '''</summary>
     '''<remarks>
@@ -102,15 +111,6 @@ Partial Public Class p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''chkGroupsAutoExpanded control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''clue_query control.

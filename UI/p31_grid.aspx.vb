@@ -73,7 +73,6 @@ Public Class p31_grid
                     .Add("periodcombo-custom_query")
                     .Add("p31_grid-groupby")
                     .Add("p31_grid-groups-autoexpanded")
-                    .Add("p31_grid-search")
                     .Add("p31_grid-sort")
                     .Add("p31_grid-filter_setting")
                     .Add("p31_grid-filter_sql")
@@ -91,7 +90,7 @@ Public Class p31_grid
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_grid-pagesize", "20"))
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam("p31_grid-period")
-                    Me.txtSearch.Text = .GetUserParam("p31_grid-search")
+
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
                 End With
                 
@@ -313,10 +312,7 @@ Public Class p31_grid
             Me.hidSumCols.Value = strSqlSumCols
 
 
-            Me.txtSearch.Visible = Not cJ74.j74IsFilteringByColumn
-            cmdSearch.Visible = Me.txtSearch.Visible
-            If Not Me.txtSearch.Visible Then Me.txtSearch.Text = ""
-            ''If cJ74.j74DrillDownField1 <> "" Then Me.panGroupBy.Visible = False : Me.cbxGroupBy.SelectedIndex = 0 'v drill-down se souhrny nepoužívají
+            
         End With
         
 
@@ -483,7 +479,6 @@ Public Class p31_grid
 
             End Select
             .j70ID = Me.CurrentJ70ID
-            .SearchExpression = Trim(Me.txtSearch.Text)
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
 
             .MG_AdditionalSqlFROM = Me.hidFrom.Value
@@ -542,23 +537,26 @@ Public Class p31_grid
                 .BackColor = Nothing
             End If
         End With
-        If Trim(txtSearch.Text) = "" Then
-            txtSearch.Style.Item("background-color") = ""
-        Else
-            txtSearch.Style.Item("background-color") = basUI.ColorQueryCSS
-        End If
+       
         If grid1.GetFilterExpression <> "" Then
             cmdCĺearFilter.Visible = True
         Else
             cmdCĺearFilter.Visible = False
         End If
+        If Me.CurrentJ70ID > 0 Then
+            Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+        Else
+            Me.CurrentQuery.Text = ""
+        End If
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
                 .BackColor = basUI.ColorQueryRGB
+                Me.CurrentQuery.Text += "<img src='Images/query.png'/>" & .SelectedItem.Text
             Else
                 .BackColor = Nothing
             End If
         End With
+        
         
 
         basUIMT.RenderQueryCombo(Me.j70ID)
@@ -628,19 +626,10 @@ Public Class p31_grid
         ReloadPage()
     End Sub
   
-    Private Sub Handle_RunSearch()
-        Master.Factory.j03UserBL.SetUserParam("p31_grid-search", Trim(txtSearch.Text))
-
-        grid1.Rebind(False)
-
-        txtSearch.Focus()
-    End Sub
+    
 
     
-    Private Sub cmdSearch_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSearch.Click
-        Handle_RunSearch()
-    End Sub
-
+    
     
 
     Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click

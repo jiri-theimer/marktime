@@ -346,6 +346,9 @@
             If .p91ID <> 0 Then
                 pars.Add("p91id", .p91ID, DbType.Int32) : s.Append(" AND a.p91ID=@p91id")
             End If
+            If Not .p91IDs Is Nothing Then
+                s.Append(" AND a.p91ID IN (" & String.Join(",", .p91IDs) & ")")
+            End If
             If Not .p70ID Is Nothing Then
                 If .p70ID > 0 Then
                     pars.Add("p70id", .p70ID, DbType.Int32) : s.Append(" AND a.p70ID=@p70id")

@@ -45,6 +45,7 @@ Public Class myQueryP31
     Public Property p33IDs As List(Of Integer)
 
     Public Property p91ID As Integer
+    Public Property p91IDs As List(Of Integer)
 
     Public Property p70ID As p70IdENUM?
     Public Property p71ID As p71IdENUM?

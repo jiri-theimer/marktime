@@ -185,6 +185,15 @@ Partial Public Class entity_framework
     Protected WithEvents cmdInvoice As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''cmdSummary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSummary As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''panExport control.
     '''</summary>
     '''<remarks>
