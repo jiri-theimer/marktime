@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
 
 <div class="content-box3" style="padding-bottom: 10px;">
-    <div class="title">Výběr projektů</div>
+    <div class="title"><img src="Images/project.png" /><span style="margin-left:2px;">Výběr projektů</span></div>
     <div class="content">
         <asp:Label ID="lblMessage" runat="server" ForeColor="red"></asp:Label>
         <div style="clear: both;">

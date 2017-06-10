@@ -481,7 +481,8 @@ Public Class p31_subgrid
         Me.hidFooterString.Value = grid2.CompleteFooterString(dt, Me.hidSumCols.Value)
 
         grid2.radGridOrig.CurrentPageIndex = 0
-        Me.lblHeaderP31.Text = BO.BAS.OM2(Me.lblHeaderP31.Text, BO.BAS.FNI(grid2.VirtualRowCount))
+        ''Me.lblHeaderP31.Text = BO.BAS.OM2(Me.lblHeaderP31.Text, BO.BAS.FNI(grid2.VirtualRowCount))
+        Me.lblHeaderP31.Text = grid2.VirtualRowCount.ToString & "x"
     End Sub
 
     Private Sub p31_InhaleMyQuery(ByRef mq As BO.myQueryP31)
@@ -606,7 +607,7 @@ Public Class p31_subgrid
         ''    txtSearch.Style.Item("background-color") = "red"
         ''End If
         If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
-        recmenu1.FindItemByValue("cmdFullScreen").Visible = Me.AllowFullScreen
+        cmdFullScreen.Visible = Me.AllowFullScreen
 
         If Me.AllowFullScreen Or Me.AllowApproving Then
             recmenu1.FindItemByValue("akce").Visible = True

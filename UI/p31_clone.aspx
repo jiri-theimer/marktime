@@ -13,11 +13,9 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <table cellpadding="10">
         <tr>
+            
             <td>
-                <asp:Label ID="lblP41ID" runat="server" Text="Vybrat projekt:"></asp:Label>
-            </td>
-            <td>
-                <uc:project ID="p41id" runat="server" AutoPostBack="false" Width="400px" Flag="p31_entry" />
+                <uc:project ID="p41id" runat="server" AutoPostBack="false" Width="400px" Flag="p31_entry" Text="Hledat projekt..." />
             </td>
             <td>
                 <asp:Button ID="cmdSetProject" runat="server" Text="Doplnit všem vybraný projekt" CssClass="cmd" />

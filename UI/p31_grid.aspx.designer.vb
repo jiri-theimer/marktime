@@ -23,6 +23,15 @@ Partial Public Class p31_grid
     Protected WithEvents lblFormHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''cbxPeriodType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxPeriodType As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>

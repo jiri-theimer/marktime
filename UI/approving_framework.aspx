@@ -65,7 +65,7 @@
             }
             var scope = document.getElementById("<%=Me.cbxScope.ClientID%>").value;
 
-            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pids=" + pids+"&scope="+scope, "", true);
+            sw_master("entity_modal_approving.aspx?prefix=<%=me.hidCurPrefix.Value%>&pids=" + pids + "&scope=" + scope, "", true);
 
         }
 
@@ -171,22 +171,18 @@
         <div class="commandcell" style="padding-left: 20px;">
             <asp:DropDownList ID="cbxScope" runat="server" AutoPostBack="true" BackColor="Yellow">
                 <asp:ListItem Text="Rozpracované (čeká na schvalování)" Value="1"></asp:ListItem>
-                <asp:ListItem Text="Schválené (čeká na fakturaci)" Value="2"></asp:ListItem>               
+                <asp:ListItem Text="Schválené (čeká na fakturaci)" Value="2"></asp:ListItem>
                 <asp:ListItem Text="Schválené (čeká na fakturaci), #0" Value="20"></asp:ListItem>
                 <asp:ListItem Text="Schválené (čeká na fakturaci), #1" Value="21"></asp:ListItem>
                 <asp:ListItem Text="Schválené (čeká na fakturaci), #2" Value="22"></asp:ListItem>
             </asp:DropDownList>
-            
+
         </div>
 
-        <div class="commandcell">
+        <div class="commandcell" style="margin-left:6px;">
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
         </div>
-        <div class="commandcell">
-            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
-            <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-            <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
-        </div>
+        
         <div class="commandcell" style="margin-left: 12px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
@@ -198,47 +194,80 @@
                             <telerik:RadMenuItem Text="Tisková sestava" Value="report" NavigateUrl="javascript:report()" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Export" Value="export" ImageUrl="Images/menuarrow.png">
-                        <Items>
-                            <telerik:RadMenuItem Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="DOC" NavigateUrl="javascript:hardrefresh(0,'doc')"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="PDF" NavigateUrl="javascript:hardrefresh(0,'pdf')"></telerik:RadMenuItem>
-                        </Items>
-                    </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Nastavení" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
+
+                    <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
 
                         <ContentTemplate>
-                            <div class="div6">
-                                <asp:RadioButtonList ID="cbxScrollingFlag" runat="server" RepeatDirection="Vertical" AutoPostBack="true">
-                                    <asp:ListItem Text="Pevné ukotvení záhlaví tabulky (názvy sloupců)" Value="2"></asp:ListItem>
-                                    <asp:ListItem Text="Ukotvení všeho nad tabulkou (filtrování a menu)" Value="1" Selected="true"></asp:ListItem>
-                                    <asp:ListItem Text="Bez podpory ukotvení" Value="0"></asp:ListItem>
-                                </asp:RadioButtonList>
-                            </div>
-                            <div class="div6">
-                                <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
-                                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
-                                    <asp:ListItem Text="20"></asp:ListItem>
-                                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Text="100"></asp:ListItem>
-                                    <asp:ListItem Text="200"></asp:ListItem>
-                                    <asp:ListItem Text="500"></asp:ListItem>
-                                </asp:DropDownList>
+                            <div class="content-box3">
+                                <div class="title">
+                                    <img src="Images/query.png" />
+                                    <span>Filtrování dat</span>
+                                </div>
+                                <div class="content">
+                                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                    <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
 
+                                </div>
                             </div>
-                            <div class="div6">
-                                <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Souhrny podle">
-                                    <asp:ListItem Text="Bez souhrnů" Value=""></asp:ListItem>
-                                    <asp:ListItem Text="Souhrny podle měny" Value="j27Code"></asp:ListItem>
-                                    <asp:ListItem Text="Souhrny podle klienta projektu" Value="Client"></asp:ListItem>
+                            <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
+                                <div class="title">
+                                    <img src="Images/export.png" />
+                                    <span>Export záznamů aktuálního přehledu</span>
+                                </div>
+                                <div class="content">
 
-                                </asp:DropDownList>
-                            </div>
-                            <div class="div6">
-                                <asp:CheckBox ID="chkKusovnik" runat="server" AutoPostBack="true" Text="Zobrazovat i honoráře z kusovníkových úkonů" />
-                            </div>
-                            <div class="div6">
-                                <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
+                                    <img src="Images/xls.png" alt="xls" />
+                                    <asp:HyperLink ID="cmdXLS" runat="server" Text="XLS" NavigateUrl="javascript:hardrefresh(0,'xls')" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
+
+
+                                    <img src="Images/pdf.png" alt="pdf" />
+                                    <asp:HyperLink ID="cmdPDF" runat="server" Text="PDF" NavigateUrl="javascript:hardrefresh(0,'pdf')" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
+
+                                    <img src="Images/doc.png" alt="doc" />
+                                    <asp:HyperLink ID="cmdDOC" runat="server" Text="DOC" NavigateUrl="javascript:hardrefresh(0,'doc')" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů"></asp:HyperLink>
+
+
+                                </div>
+                            </asp:Panel>
+                            <div class="content-box3">
+                                <div class="title">
+                                    <img src="Images/griddesigner.png" />
+                                    <span>Nastavení přehledu</span>
+                                </div>
+                                <div class="content">
+                                    <div class="div6">
+                                        <asp:RadioButtonList ID="cbxScrollingFlag" runat="server" RepeatDirection="Vertical" AutoPostBack="true">
+                                            <asp:ListItem Text="Pevné ukotvení záhlaví tabulky (názvy sloupců)" Value="2"></asp:ListItem>
+                                            <asp:ListItem Text="Ukotvení všeho nad tabulkou (filtrování a menu)" Value="1" Selected="true"></asp:ListItem>
+                                            <asp:ListItem Text="Bez podpory ukotvení" Value="0"></asp:ListItem>
+                                        </asp:RadioButtonList>
+                                    </div>
+                                    <div class="div6">
+                                        <asp:Label ID="lblPaging" runat="server" CssClass="lbl" Text="Stránkování:"></asp:Label>
+                                        <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true">
+                                            <asp:ListItem Text="20"></asp:ListItem>
+                                            <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                            <asp:ListItem Text="100"></asp:ListItem>
+                                            <asp:ListItem Text="200"></asp:ListItem>
+                                            <asp:ListItem Text="500"></asp:ListItem>
+                                        </asp:DropDownList>
+
+                                    </div>
+                                    <div class="div6">
+                                        <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Souhrny podle">
+                                            <asp:ListItem Text="Bez souhrnů" Value=""></asp:ListItem>
+                                            <asp:ListItem Text="Souhrny podle měny" Value="j27Code"></asp:ListItem>
+                                            <asp:ListItem Text="Souhrny podle klienta projektu" Value="Client"></asp:ListItem>
+
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="div6">
+                                        <asp:CheckBox ID="chkKusovnik" runat="server" AutoPostBack="true" Text="Zobrazovat i honoráře z kusovníkových úkonů" />
+                                    </div>
+                                    <div class="div6">
+                                        <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
+                                    </div>
+                                </div>
                             </div>
                         </ContentTemplate>
                     </telerik:RadMenuItem>
@@ -249,12 +278,19 @@
 
 
         <div style="clear: both;"></div>
+        
+        <div style="float: left; padding-left: 6px;">
+            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+            <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
+        </div>
+        <div style="clear:both;"></div>
+
         <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
 
 
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowDblClick="RowDoubleClick" OnRowSelected="RowSelected" AllowFilteringByColumn="true"></uc:datagrid>
 
-    
+
     </div>
 
     <asp:HiddenField ID="hidCurPID" runat="server" />

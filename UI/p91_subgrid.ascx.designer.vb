@@ -68,6 +68,15 @@ Partial Public Class p91_subgrid
     Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''hidDefaultSorting control.
     '''</summary>
     '''<remarks>

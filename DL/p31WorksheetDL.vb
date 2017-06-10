@@ -364,15 +364,20 @@
                     s.Append(" AND a.p71ID IS NULL")
                 End If
             End If
-            If .DateFrom > DateSerial(1900, 1, 1) Then
-                s.Append(" AND a.p31Date>=@datefrom") : pars.Add("datefrom", .DateFrom, DbType.DateTime)
+            If .DateFrom > DateSerial(1900, 1, 1) Or .DateUntil < DateSerial(3000, 1, 1) Then
+                pars.Add("datefrom", .DateFrom, DbType.DateTime)
+                pars.Add("dateuntil", .DateUntil, DbType.DateTime)
+                Select Case .PeriodType
+                    Case BO.myQueryP31_Period.p31Date
+                        s.Append(" AND a.p31Date BETWEEN @datefrom AND @dateuntil")
+                    Case BO.myQueryP31_Period.p31DateInsert
+                        s.Append(" AND a.p31DateInsert >= @datefrom AND a.p31DateInsert < dateadd(day,1,@dateuntil)")
+                    Case BO.myQueryP31_Period.p91Date
+                        s.Append(" AND p91.p91Date BETWEEN @datefrom AND @dateuntil")
+                End Select
             End If
-            If .DateUntil < DateSerial(3000, 1, 1) Then
-                s.Append(" AND a.p31Date<=@dateuntil") : pars.Add("dateuntil", .DateUntil, DbType.DateTime)
-            End If
-            ''If Not .IsExpenses Is Nothing Then
-            ''    If .IsExpenses Then s.Append(" AND p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1")
-            ''End If
+            
+            
        
             If .j70ID > 0 Then
                 Dim strQueryW As String = bas.CompleteSqlJ70(_cDB, .j70ID, _curUser)

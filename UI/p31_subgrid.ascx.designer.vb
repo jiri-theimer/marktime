@@ -32,15 +32,6 @@ Partial Public Class p31_subgrid
     Protected WithEvents lblHeaderP31 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cmdSummary control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSummary As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
     '''period1 control.
     '''</summary>
     '''<remarks>
@@ -77,6 +68,15 @@ Partial Public Class p31_subgrid
     Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
+    '''recmenu1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
+
+    '''<summary>
     '''j70ID control.
     '''</summary>
     '''<remarks>
@@ -92,70 +92,7 @@ Partial Public Class p31_subgrid
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''recmenu1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
-
-    '''<summary>
-    '''j74id control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''linkGridDesigner control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkGridDesigner As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''cbxPaging control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''panGroupBy control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panGroupBy As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cbxGroupBy control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''chkGroupsAutoExpanded control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''panExport control.
@@ -201,6 +138,78 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''j74id control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''linkGridDesigner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents linkGridDesigner As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''panGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panGroupBy As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cbxGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''chkGroupsAutoExpanded control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''cbxPaging control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdSummary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSummary As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''chkIncludeChilds control.

@@ -337,6 +337,7 @@
             <div class="slidingDiv1" style="display: none;background:#f0f8ff;">
                 <div class="content-box3">
                     <div class="title">
+                        <img src="Images/query.png" />
                         <span>Filtrování záznamů</span>
                     </div>
                     <div class="content">
@@ -358,6 +359,7 @@
                 
                 <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
+                        <img src="Images/batch.png" />
                         <span>Operace pro označené (zaškrtlé) záznamy</span>
                     </div>
                     <div class="content">
@@ -376,6 +378,7 @@
                 </div>
                 <asp:Panel ID="panExport" runat="server" CssClass="content-box3" Style="margin-top: 20px;">
                     <div class="title">
+                        <img src="Images/export.png" />
                         <span>Export záznamů v aktuálním přehledu</span>
 
                     </div>
@@ -398,6 +401,7 @@
                 </asp:Panel>
                 <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
+                        <img src="Images/griddesigner.png" />
                         <span>Sloupce v přehledu</span>
 
                     </div>
@@ -429,6 +433,7 @@
                 </div>
                 <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
+                        <img src="Images/saw_turn_on.png" /><img src="Images/saw_turn_off.png" />
                         <span>Rozvržení panelů</span>
                     </div>
                     <div class="content">

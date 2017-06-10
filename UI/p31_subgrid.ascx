@@ -7,92 +7,59 @@
     <div class="commandcell">
         <img src="Images/worksheet.png" alt="Worksheet" />
         <asp:Label ID="lblHeaderP31" CssClass="framework_header_span" runat="server" Text=""></asp:Label>
-        
+
     </div>
-    <div class="commandcell">
-        <asp:ImageButton ID="cmdSummary" runat="server" OnClientClick="drilldown()" ImageUrl="Images/pivot.png" ToolTip="Statistika WORKSHEET přehledu" CssClass="button-link" />
-    </div>
-    <div class="commandcell" style="margin-left:10px;">
+
+    <div class="commandcell" style="margin-left: 10px;">
         <uc:periodcombo ID="period1" runat="server" Width="150px"></uc:periodcombo>
         <asp:Label ID="ExplicitPeriod" runat="server" CssClass="valboldblue"></asp:Label>
-        
+
         <asp:ImageButton ID="cmdClearExplicitPeriod" runat="server" ImageUrl="Images/close.png" ToolTip="Zrušit filtr podle kalendáře" CssClass="button-link" />
     </div>
 
     <div class="commandcell" style="padding-left: 10px;">
         <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
     </div>
-    <div class="commandcell">
-        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 150px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
-
-        <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
-
-    </div>
-    <div class="commandcell" style="margin-left:10px;">
-        <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
+    <div class="commandcell" style="margin-left: 10px;">
+        <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                     <Items>
                         <telerik:RadMenuItem Text="Nový" Value="new" NavigateUrl="javascript:p31_entry()"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Kopírovat (i hromadně)" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Rozdělit časový úkon na 2 kusy" Value="split" NavigateUrl="javascript:p31_split()"></telerik:RadMenuItem>
                     </Items>
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
+                <telerik:RadMenuItem Text="Akce pro vybrané záznamy" Value="akce" ImageUrl="Images/menuarrow.png">
                     <Items>
+                        <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Schvalovat/pře-schvalovat označené" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Text="Zobrazit přehled na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p31_fullscreen()"></telerik:RadMenuItem>
+
+
                     </Items>
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
+                <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png">
                     <ContentTemplate>
-                        <div style="padding:10px;">
-                        <div style="margin-top: 20px;">
-                            <div style="padding-right:10px;">
-                            <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="min-width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
+
+                        <div class="content-box3">
+                            <div class="title">
+                                <img src="Images/query.png" />
+                                <span>Filtrování záznamů</span>
                             </div>
-                            <div>
-                                <asp:HyperLink ID="linkGridDesigner" runat="server" NavigateUrl="javascript:p31_subgrid_columns()" Text="Sloupce"></asp:HyperLink>
+                            <div class="content">
+                                <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                <button type="button" id="cmdQuery" runat="server">Návrhář filtrů</button>
+
+
                             </div>
-
-
                         </div>
-
-                        <div style="margin-top: 20px;">
-                            <span><%=Resources.common.Strankovani%>:</span>
-                            <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
-                                <asp:ListItem Text="10"></asp:ListItem>
-                                <asp:ListItem Text="20"></asp:ListItem>
-                                <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                <asp:ListItem Text="100"></asp:ListItem>
-                                <asp:ListItem Text="200"></asp:ListItem>
-                                <asp:ListItem Text="500"></asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-
-                        <asp:Panel ID="panGroupBy" runat="server" Style="margin-top: 20px;">
-                            <span><%=Resources.common.DatoveSouhrny%>:</span>
-                            <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true">
-                                <asp:ListItem Text="<%$Resources:common,BezSouhrnu%>" Value=""></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Sesit%>" Value="p34Name"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Aktivita%>" Value="p32Name"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Osoba%>" Value="Person"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Klient%>" Value="ClientName"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Projekt %>" Value="p41Name"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Faktura%>" Value="p91Code"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Ukol%>" Value="p56Name"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,Schvalovani%>" Value="p71Name"></asp:ListItem>
-                                <asp:ListItem Text="<%$Resources:common,FaktStatus%>" Value="p70Name"></asp:ListItem>
-                                <asp:ListItem Text="Billing dávka" Value="p31ApprovingSet"></asp:ListItem>
-                            </asp:DropDownList>
-                            <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
-
-                        </asp:Panel>
-
-                        <asp:Panel ID="panExport" runat="server" Style="margin-top: 20px;">
-                            <div><strong>Export</strong></div>
-                            
+                        <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
+                            <div class="title">
+                                <img src="Images/export.png" />
+                                <span>Export záznamů aktuálního přehledu</span>
+                            </div>
+                            <div class="content">
                                 <img src="Images/export.png" alt="export" />
                                 <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
@@ -104,14 +71,73 @@
 
                                 <img src="Images/doc.png" alt="doc" />
                                 <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-                           
+                            </div>
+
+
+
                         </asp:Panel>
+
+                        <div class="content-box3">
+                            <div class="title">
+                                <img src="Images/griddesigner.png" />Sloupce v přehledu</div>
+                            <div class="content">
+                                <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="min-width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
+                                <button type="button" id="linkGridDesigner" runat="server" onclick="p31_subgrid_columns()">Sloupce</button>
+
+                                <asp:Panel ID="panGroupBy" runat="server" CssClass="div6">
+                                    <span><%=Resources.common.DatoveSouhrny%>:</span>
+                                    <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true">
+                                        <asp:ListItem Text="<%$Resources:common,BezSouhrnu%>" Value=""></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Sesit%>" Value="p34Name"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Aktivita%>" Value="p32Name"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Osoba%>" Value="Person"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Klient%>" Value="ClientName"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Projekt %>" Value="p41Name"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Faktura%>" Value="p91Code"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Ukol%>" Value="p56Name"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,Schvalovani%>" Value="p71Name"></asp:ListItem>
+                                        <asp:ListItem Text="<%$Resources:common,FaktStatus%>" Value="p70Name"></asp:ListItem>
+                                        <asp:ListItem Text="Billing dávka" Value="p31ApprovingSet"></asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="Auto-rozbalené souhrny" AutoPostBack="true" Checked="true" />
+
+                                </asp:Panel>
+
+                                <div class="div6">
+                                    <span><%=Resources.common.Strankovani%>:</span>
+                                    <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
+                                        <asp:ListItem Text="10"></asp:ListItem>
+                                        <asp:ListItem Text="20"></asp:ListItem>
+                                        <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                        <asp:ListItem Text="100"></asp:ListItem>
+                                        <asp:ListItem Text="200"></asp:ListItem>
+                                        <asp:ListItem Text="500"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-box3" style="margin-top: 20px;">
+                            <div class="title"></div>
+                            <div class="content">
+                                <div class="div6">
+                                    
+                                    <asp:HyperLink ID="cmdSummary" runat="server" NavigateUrl="javascript:drilldown()" Text="<img src='Images/pivot.png' /> WORKSHEET statistika aktuálního přehledu"></asp:HyperLink>
+                                </div>
+
+                                <div class="div6">
+                                    
+                                    <asp:HyperLink ID="cmdFullScreen" runat="server" Text="<img src='Images/fullscreen.png' /> Zobrazit přehled na celou stránku" NavigateUrl="javascript:p31_fullscreen()"></asp:HyperLink>
+
+                                </div>
+                            </div>
+
+
                         </div>
                     </ContentTemplate>
                 </telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
-        <asp:CheckBox ID="chkIncludeChilds" runat="server" AutoPostBack="true" text="Zahrnout i pod-projekty" CssClass="chk" Visible="false" />
+        <asp:CheckBox ID="chkIncludeChilds" runat="server" AutoPostBack="true" Text="Zahrnout i pod-projekty" CssClass="chk" Visible="false" />
     </div>
 
 
@@ -156,7 +182,7 @@
     function querybuilder() {
         var j70id = "<%=Me.CurrentJ70ID%>";
         p31_subgrid_querybuilder(j70id);
-        return (false);
+
     }
 
     function approving() {
@@ -216,12 +242,12 @@
 
     function drilldown() {
         var j70id = "<%=Me.CurrentJ70ID%>";
-        
+
         var w = screen.availWidth - 100;
         var masterprefix = "<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>";
         var masterpid = document.getElementById("<%=me.hidMasterDataPID.ClientID%>").value;
         var queryflag = document.getElementById("<%=hidMasterTabAutoQueryFlag.ClientID%>").value;
-        
+
         window.open("p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&p31tabautoquery=" + queryflag, "_top");
         //sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "Images/pivot.png", true);
         //return (false);

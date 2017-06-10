@@ -190,8 +190,7 @@
 
                 <div style="float:left;margin-left:10px;">
 
-                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
-
+                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">                        
                         <span>Nastavení přehledu</span>
 
                         <img src="Images/arrow_down_menu.png" />
@@ -205,6 +204,7 @@
             <div class="slidingDiv1" style="display:none;background:#f0f8ff;">
                 <div class="content-box3">
                     <div class="title">
+                        <img src="Images/query.png" />
                         <span>Filtrování záznamů</span>
                     </div>
                     <div class="content">
@@ -214,6 +214,7 @@
                 </div>
                 <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
+                        <img src="Images/griddesigner.png" />
                         Nastavení přehledu
                     </div>
                     <div class="content">

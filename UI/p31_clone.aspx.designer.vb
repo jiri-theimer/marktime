@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class p31_clone
 
     '''<summary>
-    '''lblP41ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblP41ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''p41id control.
     '''</summary>
     '''<remarks>

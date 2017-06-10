@@ -89,7 +89,7 @@ Public Class approving_framework
                         menu1.FindItemByValue("bin").Visible = False
                 End Select
                 cmdQuery.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
-                menu1.FindItemByValue("export").Visible = cmdQuery.Visible
+                panExport.Visible = cmdQuery.Visible
 
             End With
             With Master.Factory.j03UserBL
@@ -289,6 +289,11 @@ Public Class approving_framework
 
     Private Sub approving_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         basUIMT.RenderQueryCombo(Me.j70ID)
+        If Me.CurrentJ70ID > 0 Then
+            Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+        Else
+            Me.CurrentQuery.Text = ""
+        End If
         With Me.period1
             If .SelectedValue <> "" Then
                 .BackColor = basUI.ColorQueryRGB

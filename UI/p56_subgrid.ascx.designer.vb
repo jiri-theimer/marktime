@@ -23,15 +23,6 @@ Partial Public Class p56_subgrid
     Protected WithEvents lblHeaderP56 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxGroupBy control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''cbxP56Validity control.
     '''</summary>
     '''<remarks>
@@ -48,6 +39,15 @@ Partial Public Class p56_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
+
+    '''<summary>
+    '''cbxGroupBy control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxGroupBy As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''cbxPaging control.
@@ -102,6 +102,15 @@ Partial Public Class p56_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''hidReceiversInLine control.

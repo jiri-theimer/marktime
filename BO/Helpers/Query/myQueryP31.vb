@@ -23,6 +23,11 @@ Public Enum myQueryP31_SpecificQuery
     AllowedForReApprove = 3       'schválené úkony, které dosud nejsou vyfakturovány
     AllowedForCreateInvoice = 4     'pouze úkony, které mohu vyfakturovat
 End Enum
+Public Enum myQueryP31_Period
+    p31Date = 1
+    p31DateInsert = 2
+    p91Date = 3
+End Enum
 Public Class myQueryP31
     Inherits myQuery
     Public Property j70ID As Integer
@@ -60,4 +65,5 @@ Public Class myQueryP31
     Public Property j02ID_ExplicitQueryFor As Integer
 
     Public Property TabAutoQuery As String  'možné hodnoty: time, expense, fee, kusovnik
+    Public Property PeriodType As myQueryP31_Period = myQueryP31_Period.p31Date
 End Class

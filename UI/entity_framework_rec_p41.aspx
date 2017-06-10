@@ -101,33 +101,37 @@
                     </Items>
                 </telerik:RadMenuItem>
                
-                <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
-                    <Items>
-
-                        <telerik:RadMenuItem Text="Zobrazit na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p41_fullscreen()"></telerik:RadMenuItem>
-                    </Items>
-                </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
+                
+                <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
                     <ContentTemplate>
-                        <div style="padding: 20px; min-width: 200px;">
-                            <button type="button" onclick="p41_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
-                            <div>
-                                <span>Stránkování:</span>
-                                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
-                                    <asp:ListItem Text="10"></asp:ListItem>
-                                    <asp:ListItem Text="20"></asp:ListItem>
-                                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Text="100"></asp:ListItem>
-                                    <asp:ListItem Text="200"></asp:ListItem>
-                                    <asp:ListItem Text="500"></asp:ListItem>
-                                </asp:DropDownList>
+                        <div class="content-box3">
+                            <div class="title"><img src="Images/griddesigner.png" />Sloupce v přehledu</div>
+                            
+                            <div class="content">
+                                <button type="button" onclick="p41_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
+                                 <div class="div6">
+                                    <span><%=Resources.common.Strankovani%>:</span>
+                                    <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
+                                        <asp:ListItem Text="10"></asp:ListItem>
+                                        <asp:ListItem Text="20"></asp:ListItem>
+                                        <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                        <asp:ListItem Text="100"></asp:ListItem>
+                                        <asp:ListItem Text="200"></asp:ListItem>
+                                        <asp:ListItem Text="500"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
                             </div>
+                                
+                           
                         </div>
 
-                        <asp:Panel ID="panExport" runat="server" Style="margin-top: 10px;">
-                            <div><strong>Export</strong></div>
-
-                            <img src="Images/export.png" alt="export" />
+                        <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
+                            <div class="title">
+                                <img src="Images/export.png" />
+                                <span>Export záznamů aktuálního přehledu</span>
+                            </div>
+                            <div class="content">
+                                <img src="Images/export.png" alt="export" />
                             <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
 
                             <img src="Images/xls.png" alt="xls" />
@@ -138,7 +142,24 @@
 
                             <img src="Images/doc.png" alt="doc" />
                             <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+                            </div>
+                            
                         </asp:Panel>
+
+                        <div class="content-box3" style="margin-top:20px;">
+                            <div class="title"></div>
+                            <div class="content">
+                                
+                                
+                                <div class="div6">
+                                    
+                                    <asp:HyperLink ID="cmdFullScreen" runat="server" Text="<img src='Images/fullscreen.png' /> Zobrazit na celou stránku" NavigateUrl="javascript:p41_fullscreen()"></asp:HyperLink>
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
                     </ContentTemplate>
                 </telerik:RadMenuItem>
             </Items>

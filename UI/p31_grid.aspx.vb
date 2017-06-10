@@ -69,6 +69,7 @@ Public Class p31_grid
                     .Add("p31_grid-query-p34id")
                     .Add("p31_grid-j74id")
                     .Add("p31-j70id")
+                    .Add("p31_grid-periodtype")
                     .Add("p31_grid-period")
                     .Add("periodcombo-custom_query")
                     .Add("p31_grid-groupby")
@@ -90,6 +91,7 @@ Public Class p31_grid
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("p31_grid-pagesize", "20"))
                     period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                     period1.SelectedValue = .GetUserParam("p31_grid-period")
+                    basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("p31_grid-periodtype", "p31Date"))
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
                 End With
@@ -486,6 +488,12 @@ Public Class p31_grid
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
             If period1.SelectedValue <> "" Then
+                Select Case Me.cbxPeriodType.SelectedValue
+                    Case "p91Date" : .PeriodType = BO.myQueryP31_Period.p91Date
+                    Case "p31DateInsert" : .PeriodType = BO.myQueryP31_Period.p31DateInsert
+                    Case Else
+                        .PeriodType = BO.myQueryP31_Period.p31Date
+                End Select
                 .DateFrom = period1.DateFrom
                 .DateUntil = period1.DateUntil
             End If
@@ -507,7 +515,7 @@ Public Class p31_grid
 
       
         grid1.radGridOrig.CurrentPageIndex = 0
-        Me.lblFormHeader.Text = " (" & BO.BAS.FNI(grid1.VirtualRowCount) & ")"
+        Me.lblFormHeader.Text = BO.BAS.FNI(grid1.VirtualRowCount) & "x"
         
 
     End Sub
@@ -529,7 +537,6 @@ Public Class p31_grid
     End Sub
 
     Private Sub p31_grid_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        
         With Me.period1
             If .SelectedValue <> "" Then
                 .BackColor = basUI.ColorQueryRGB
@@ -551,12 +558,18 @@ Public Class p31_grid
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
                 .BackColor = basUI.ColorQueryRGB
-                Me.CurrentQuery.Text += "<img src='Images/query.png'/>" & .SelectedItem.Text
+                Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/>" & .SelectedItem.Text
             Else
                 .BackColor = Nothing
             End If
         End With
-        
+        With Me.cbxPeriodType
+            Select Case .SelectedIndex
+                Case 1 : .BackColor = Drawing.Color.LightSkyBlue
+                Case 2 : .BackColor = Drawing.Color.Green
+                Case Else : .BackColor = Nothing
+            End Select
+        End With
         
 
         basUIMT.RenderQueryCombo(Me.j70ID)
@@ -672,6 +685,11 @@ Public Class p31_grid
    
     Private Sub cbxTabQueryFlag_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTabQueryFlag.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-tabqueryflag", Me.cbxTabQueryFlag.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-periodtype", Me.cbxPeriodType.SelectedValue)
         ReloadPage()
     End Sub
 End Class

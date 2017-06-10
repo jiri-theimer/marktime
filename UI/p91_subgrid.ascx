@@ -16,39 +16,51 @@
     <uc:periodcombo ID="period1" runat="server" Width="200px"></uc:periodcombo>
 </div>
 <div class="commandcell" style="margin-left: 10px;">
-    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
+    <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
-            <telerik:RadMenuItem Text="Akce" Value="akce" ImageUrl="Images/menuarrow.png">
-                <Items>
 
-                    <telerik:RadMenuItem Text="Zobrazit na celou stránku" Value="cmdFullScreen" NavigateUrl="javascript:p91_fullscreen()"></telerik:RadMenuItem>
-                </Items>
-            </telerik:RadMenuItem>
-            <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
+            <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
                 <ContentTemplate>
-                    <div style="min-width: 200px;padding:10px;">
-                        <div style="margin-top: 20px;">
-                            <button type="button" onclick="p91_subgrid_setting(<%=ViewState("j74id")%>,'<%=BO.BAS.GetDataPrefix(Me.x29ID)%>')">Sloupce</button>
+                    <div class="content-box3">
+                        <div class="title">
+                            <img src="Images/griddesigner.png" />Sloupce v přehledu
+                        </div>
+                        <div class="content">
+                            <div class="div6">
+                                <button type="button" onclick="p91_subgrid_setting(<%=ViewState("j74id")%>,'<%=BO.BAS.GetDataPrefix(Me.x29ID)%>')">Sloupce</button>
+                            </div>
+                            <div class="div6">
+                                <span>Stránkování:</span>
+                                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
+                                    <asp:ListItem Text="10"></asp:ListItem>
+                                    <asp:ListItem Text="20"></asp:ListItem>
+                                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                    <asp:ListItem Text="100"></asp:ListItem>
+                                    <asp:ListItem Text="200"></asp:ListItem>
+                                    <asp:ListItem Text="500"></asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
 
-                        </div>
-                        <div>
-                            <span>Stránkování:</span>
-                            <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
-                                <asp:ListItem Text="10"></asp:ListItem>
-                                <asp:ListItem Text="20"></asp:ListItem>
-                                <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                <asp:ListItem Text="100"></asp:ListItem>
-                                <asp:ListItem Text="200"></asp:ListItem>
-                                <asp:ListItem Text="500"></asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-                        <div style="margin-top: 20px;">
+                    <div class="content-box3">
+                        <div class="title">
                             <img src="Images/export.png" />
+                            <span>Export záznamů aktuálního přehledu</span>
+                        </div>
+                        <div class="content">
+                            
                             <asp:LinkButton ID="cmdExport" runat="server" Text="Export do MS Excel" />
                         </div>
                     </div>
 
-
+                    <div class="content-box3">
+                        <div class="title"></div>
+                        <div class="content">
+                            <img src="Images/fullscreen.png" />
+                            <asp:HyperLink ID="cmdFullScreen" runat="server" Text="Zobrazit přehled na celou stránku" NavigateUrl="javascript:p91_fullscreen()"></asp:HyperLink>
+                        </div>
+                    </div>
                 </ContentTemplate>
             </telerik:RadMenuItem>
         </Items>

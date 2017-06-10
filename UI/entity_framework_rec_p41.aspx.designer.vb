@@ -122,6 +122,15 @@ Partial Public Class entity_framework_rec_p41
     Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''cmdFullScreen control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdFullScreen As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
     '''grid1 control.
     '''</summary>
     '''<remarks>

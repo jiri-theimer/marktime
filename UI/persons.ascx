@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <div class="content-box3" style="padding-bottom: 10px;">
-    <div class="title">Výběr lidí, týmů a pozic</div>
+    <div class="title"><img src="Images/persons.png" /><span style="margin-left:2px;">Výběr lidí, týmů a pozic</span></div>
     <div class="content">
         <asp:Label ID="lblMessage" runat="server" ForeColor="red"></asp:Label>
         <div style="clear: both;">

@@ -194,6 +194,11 @@
 
 
         <div class="commandcell" style="padding-left: 10px;">
+            <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
+                <asp:ListItem Text="Datum úkonu:" Value="p31Date" Selected="true"></asp:ListItem>
+                <asp:ListItem Text="Datum založení:" Value="p31DateInsert"></asp:ListItem>
+                <asp:ListItem Text="Datum fakturace:" Value="p91Date"></asp:ListItem>
+            </asp:DropDownList>
             <uc:periodcombo ID="period1" runat="server" Width="220px"></uc:periodcombo>
         </div>
 
@@ -267,6 +272,7 @@
         </div>
         <div class="content-box3">
             <div class="title">
+                <img src="Images/query.png" />
                 <span>Filtrování záznamů</span>
             </div>
             <div class="content">
@@ -292,7 +298,8 @@
 
         <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
             <div class="title">
-                Export záznamů v aktuálním přehledu
+                <img src="Images/export.png" />
+                Export záznamů aktuálního přehledu
             </div>
             <div class="content">
                 <img src="Images/export.png" alt="export" />
@@ -310,6 +317,7 @@
         </asp:Panel>
         <div class="content-box3" style="margin-top: 20px;">
             <div class="title">
+                <img src="Images/griddesigner.png" />
                 <span>Sloupce v přehledu</span>
 
             </div>

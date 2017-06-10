@@ -50,13 +50,13 @@ Partial Public Class approving_framework
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''clue_query control.
+    '''menu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''j70ID control.
@@ -74,16 +74,43 @@ Partial Public Class approving_framework
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
-    '''menu1 control.
+    '''panExport control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
+    Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''cmdXLS control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''cmdPDF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''cmdDOC control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''cbxScrollingFlag control.
@@ -138,6 +165,24 @@ Partial Public Class approving_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkFirstLastCount As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''CurrentQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''cmdHardRefreshOnBehind control.
