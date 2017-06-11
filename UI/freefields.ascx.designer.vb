@@ -32,6 +32,15 @@ Partial Public Class freefields
     Protected WithEvents rpFF As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''hidDataTable control.
     '''</summary>
     '''<remarks>
@@ -48,4 +57,13 @@ Partial Public Class freefields
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidJ03ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidDataPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidDataPID As Global.System.Web.UI.WebControls.HiddenField
 End Class

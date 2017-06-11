@@ -63,8 +63,10 @@
         With RadTabStrip1.FindTabByValue("ff")
             If .Visible Then
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p41Project, Master.DataPID, BO.BAS.IsNullInt(Me.p42ID.SelectedValue))
-                ff1.FillData(fields)
-                .Text = BO.BAS.OM2(.Text, ff1.FieldsCount.ToString)
+                Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project)
+                ff1.FillData(fields, lisX18, "p41Project_FreeField", 0)
+
+                .Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
             End If
         End With
     End Sub

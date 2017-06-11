@@ -260,7 +260,7 @@
                     Dim intX28ID As Integer = CInt(a(1))
                     Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p41Project, 0, -1)
 
-                    ff1.FillData(fields.Where(Function(p) p.PID = intX28ID))
+                    ff1.FillData(fields.Where(Function(p) p.PID = intX28ID), Nothing, "p41Project_FreeField", 0)
                 Else
                     panCombo.Visible = True
                     RefreshCombo()

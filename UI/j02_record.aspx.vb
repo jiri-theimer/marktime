@@ -114,8 +114,10 @@
         With RadTabStrip1.FindTabByValue("ff")
             If .Visible Then
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.j02Person, Master.DataPID, BO.BAS.IsNullInt(Me.j07ID.SelectedValue))
-                ff1.FillData(fields)
-                .Text = BO.BAS.OM2(.Text, ff1.FieldsCount.ToString)
+                Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person)
+                ff1.FillData(fields, lisX18, "j02Person_FreeField", Master.DataPID)
+                .Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
+
             End If
         End With
     End Sub

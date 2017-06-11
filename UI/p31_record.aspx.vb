@@ -618,7 +618,9 @@
 
     Private Sub Handle_FF()
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, BO.BAS.IsNullInt(Me.p34ID.SelectedValue))
-        ff1.FillData(fields)
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p31Worksheet)
+        ff1.FillData(fields, lisX18, "p31Worksheet_FreeField", Master.DataPID)
+        
     End Sub
 
     Private Sub Handle_ChangeP41(bolTryRun_Handle_P34 As Boolean)
@@ -742,6 +744,7 @@
                 End If
                 If intDefj02ID <> 0 Then Me.chkBindToContactPerson.Checked = True
                 RefreshContactPersonCombo(True, intDefj02ID)
+            
             End If
 
             If Me.chkBindToP56.Checked Then

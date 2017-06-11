@@ -22,6 +22,11 @@ Public Class freefields
             Return rpFF.Items.Count
         End Get
     End Property
+    Public ReadOnly Property TagsCount As Integer
+        Get
+            Return rp1.Items.Count
+        End Get
+    End Property
     Public ReadOnly Property ErrorMessage As String
         Get
             Return _Error
@@ -37,20 +42,76 @@ Public Class freefields
             _dataprefix = Left(value, 3)
         End Set
     End Property
+    Public Property DataPID As Integer
+        Get
+            Return BO.BAS.IsNullInt(hidDataPID.Value)
+        End Get
+        Set(value As Integer)
+            hidDataPID.Value = value.ToString
+        End Set
+    End Property
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
 
-    Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField))
+    Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX18 As IEnumerable(Of BO.x18EntityCategory), strDataTable As String, intDataPID As Integer)
+        hidDataTable.Value = strDataTable
+        hidDataPID.Value = intDataPID.ToString
+
         rpFF.DataSource = listFF
         rpFF.DataBind()
+
         If Me.rpFF.Items.Count = 0 Then
             Me.panContainer.Visible = False
         Else
             Me.panContainer.Visible = True
         End If
+        rp1.DataSource = lisX18
+        rp1.DataBind()
+        If rp1.Items.Count = 0 Then
+            rp1.Visible = False
+        Else
+            rp1.Visible = True
+            If Me.DataPID <> 0 Then
+                Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), Me.DataPID)
+                For Each ri As RepeaterItem In rp1.Items
+                    Dim intX18ID As Integer = CInt(CType(ri.FindControl("x18ID"), HiddenField).Value)
+                    Dim lis As List(Of String) = lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25ID.ToString).ToList
+                    If lis.Count > 0 Then
+                        With CType(ri.FindControl("x25IDs"), UI.datacombo)
+                            If .AllowCheckboxes Then
+                                .SelectCheckboxItems(lis)
+                            Else
+                                If lis.Count > 0 Then .SelectedValue = lis(0)
+                            End If
+
+                        End With
+                    End If
+                Next
+            End If
+            
+        End If
+
+    End Sub
+
+    Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
+        Dim cRec As BO.x18EntityCategory = CType(e.Item.DataItem, BO.x18EntityCategory)
+        With CType(e.Item.FindControl("x18Name"), Label)
+            .Text = cRec.x18Name & ":"
+        End With
+        Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(cRec.x23ID).Where(Function(p) p.IsClosed = False)
+        With CType(e.Item.FindControl("x25IDs"), UI.datacombo)
+            If Not cRec.x18IsMultiSelect Then
+                .AllowCheckboxes = False
+                .IsFirstEmptyRow = True
+            End If
+            .DataSource = lisX25
+            .DataBind()
+        End With
+        CType(e.Item.FindControl("x18ID"), HiddenField).Value = cRec.PID.ToString
+        CType(e.Item.FindControl("x18IsMultiSelect"), HiddenField).Value = BO.BAS.GB(cRec.x18IsMultiSelect)
     End Sub
 
     Private Sub rpFF_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.RepeaterItemEventArgs) Handles rpFF.ItemDataBound
@@ -229,6 +290,28 @@ Public Class freefields
 
     End Sub
 
+    Public Function GetTags() As List(Of BO.x19EntityCategory_Binding)
+        Dim lis As New List(Of BO.x19EntityCategory_Binding), intDataPID As Integer = BO.BAS.IsNullInt(Me.hidDataPID.Value)
+        For Each ri As RepeaterItem In rp1.Items
+            Dim intX18ID As Integer = CInt(CType(ri.FindControl("x18ID"), HiddenField).Value)
+            Dim x25IDs As New List(Of Integer)
+            With CType(ri.FindControl("x25IDs"), UI.datacombo)
+                If .AllowCheckboxes Then
+                    x25IDs = .GetAllCheckedIntegerValues
+                Else
+                    If .SelectedValue <> "" Then x25IDs.Add(CInt(.SelectedValue))
+                End If
+            End With
+            For Each intX25ID As Integer In x25IDs
+                Dim c As New BO.x19EntityCategory_Binding
+                c.x18ID = intX18ID
+                c.x25ID = intX25ID
+                c.x19RecordPID = intDataPID
+                lis.Add(c)
+            Next
+        Next
+        Return lis
+    End Function
     Public Function GetValues() As List(Of BO.FreeField)
         Dim lis As New List(Of BO.FreeField)
 

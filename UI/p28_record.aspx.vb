@@ -235,8 +235,10 @@
         With RadTabStrip1.FindTabByValue("ff")
             If .Visible Then
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p28Contact, Master.DataPID, BO.BAS.IsNullInt(Me.p29ID.SelectedValue))
-                ff1.FillData(fields)
-                .Text = BO.BAS.OM2(.Text, ff1.FieldsCount.ToString)
+                Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact)
+                ff1.FillData(fields, lisX18, "p28Contact_FreeField", Master.DataPID)
+                .Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
+
             End If
         End With
     End Sub
@@ -523,6 +525,7 @@
             If .Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, p58vals) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p28Contact, Master.DataPID, ff1.GetTags())
                 If bolNew Then
                     Master.CloseAndRefreshParent("p28-create")
                 Else

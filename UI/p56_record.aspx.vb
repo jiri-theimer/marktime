@@ -230,7 +230,7 @@
             lblCompletePercent.Visible = b : p56CompletePercent.Visible = b
             panBudget.Visible = b
 
-            If ff1.FieldsCount > 0 Or b Then
+            If ff1.FieldsCount > 0 Or ff1.TagsCount > 0 Or b Then
                 RadTabStrip1.FindTabByValue("core").Style.Item("display") = "block"
                 RadTabStrip1.FindTabByValue("ff").Style.Item("display") = "block"
             Else
@@ -345,8 +345,10 @@
         With RadTabStrip1.FindTabByValue("ff")
             If .Visible Then
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, BO.BAS.IsNullInt(Me.p57ID.SelectedValue))
-                ff1.FillData(fields)
-                .Text = BO.BAS.OM2(.Text, ff1.FieldsCount.ToString)
+                Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p56Task)
+                ff1.FillData(fields, lisX18, "p56Task_FreeField", Master.DataPID)
+                .Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
+
                 
             End If
         End With
