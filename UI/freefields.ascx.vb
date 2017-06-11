@@ -68,6 +68,7 @@ Public Class freefields
         Else
             Me.panContainer.Visible = True
         End If
+        Dim curTags As List(Of BO.x19EntityCategory_Binding) = GetTags()    'naposledy ve formuláři vyplněné štítky - pokud existují, mají přednost
         rp1.DataSource = lisX18
         rp1.DataBind()
         If rp1.Items.Count = 0 Then
@@ -75,7 +76,12 @@ Public Class freefields
         Else
             rp1.Visible = True
             If Me.DataPID <> 0 Then
-                Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), intDataPID)
+                Dim lisX19 As List(Of BO.x19EntityCategory_Binding) = Nothing
+                If curTags.Count = 0 Then
+                    lisX19 = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), intDataPID).ToList
+                Else
+                    lisX19 = curTags
+                End If
                 For Each ri As RepeaterItem In rp1.Items
                     Dim intX18ID As Integer = CInt(CType(ri.FindControl("x18ID"), HiddenField).Value)
                     Dim lis As List(Of String) = lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25ID.ToString).ToList

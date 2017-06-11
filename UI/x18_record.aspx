@@ -35,7 +35,9 @@
                         <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
                         <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
                         <asp:ListItem Text="Vystavená faktura" Value="391"></asp:ListItem>
+                        <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
                         <asp:ListItem Text="Osoba" Value="102"></asp:ListItem>
+                        <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
                     </asp:CheckBoxList>
                 </fieldset>
 

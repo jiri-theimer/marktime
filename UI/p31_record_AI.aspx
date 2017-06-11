@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
@@ -297,6 +298,7 @@
             </td>
         </tr>
     </table>
+    <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
     <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
     <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
         <div class="title">

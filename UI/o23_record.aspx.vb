@@ -140,7 +140,7 @@
         Me.clue_o24.Attributes("rel") = "clue_o24_record.aspx?pid=" & intO24ID.ToString
 
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.o23Notepad, Master.DataPID, intO24ID)
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.o23Notepad)
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.o23Notepad, intO24ID)
         ff1.FillData(fields, lisX18, "o23Notepad_FreeField", Master.DataPID)
         ''.Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
 

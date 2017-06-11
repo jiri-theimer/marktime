@@ -8,6 +8,7 @@
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <%If panApproving.Visible Then%>
@@ -234,7 +235,7 @@
             </td>
         </tr>
     </table>
-
+    <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
 
 
 

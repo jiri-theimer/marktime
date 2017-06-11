@@ -105,7 +105,7 @@
             If intEntityType = 0 Then
                 s += " AND a.x18IsAllEntityTypes=1"
             Else
-                s += " AND (a.x18IsAllEntityTypes=1 OR a.128ID IN (select x18ID FROM x22EntiyCategory_Binding WHERE x22EntityTypePID=" & intEntityType.ToString
+                s += " AND (a.x18IsAllEntityTypes=1 OR a.x18ID IN (select x18ID FROM x22EntiyCategory_Binding WHERE x22EntityTypePID=" & intEntityType.ToString
                 s += " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & "))"
 
             End If

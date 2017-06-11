@@ -213,6 +213,7 @@
             Else
                 Me.boxO23.Visible = False
             End If
+            labels1.RefreshData(BO.x29IdEnum.p31Worksheet, .PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p31Worksheet, .PID))
 
             Me.Timestamp.Text = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"
             Master.HeaderText = .p34Name & " | " & BO.BAS.FD(.p31Date) & " | " & .Person & " | " & .p41Name
@@ -244,6 +245,7 @@
             Master.Notify(strErr, 2)
         Else
             Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False, "")
+            If ff1.TagsCount > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags())
             Master.CloseAndRefreshParent("p31-save")
         End If
         cmdApprove.Visible = True
@@ -257,7 +259,7 @@
 
     Private Sub Handle_FF(intP34ID As Integer)
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID)
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p31Worksheet)
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p31Worksheet, intP34ID)
         If fields.Count > 0 Or lisX18.Count > 0 Then
             ff1.FillData(fields, lisX18, "p31Worksheet_FreeField", Master.DataPID)
         End If
