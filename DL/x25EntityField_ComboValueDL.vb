@@ -70,7 +70,7 @@
             s += " WHERE a.x23ID=@x23id"
         End If
 
-        s += " ORDER BY a.x23ID,a.x25Ordinary"
+        s += " ORDER BY a.x23ID,a.x25Ordinary,a.x25Name"
 
         Dim pars As New DbParameters
         pars.Add("x23id", intX23ID, DbType.Int32)

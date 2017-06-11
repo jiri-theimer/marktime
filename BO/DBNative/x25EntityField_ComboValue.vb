@@ -19,4 +19,9 @@
             Return _x23Name & ": " & Me.x25Name
         End Get
     End Property
+    Public ReadOnly Property StyleDecoration As String
+        Get
+            If Me.IsClosed Then Return "line-through" Else Return ""
+        End Get
+    End Property
 End Class

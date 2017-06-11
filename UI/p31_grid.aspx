@@ -282,7 +282,7 @@
                                     <div class="div6" style="float: left;">
                                         <span class="val">Pojmenovaná šablona sloupců:</span>
                                         <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 150px;"></asp:DropDownList>
-                                        <button type="button" onclick="griddesigner()" id="cmdGridDesigner2" runat="server">Návrhář sloupců</button>
+                                        <button type="button" onclick="griddesigner()" id="cmdGridDesigner2" runat="server">Sloupce</button>
                                     </div>
 
                                     <div class="div6" style="float: left;">

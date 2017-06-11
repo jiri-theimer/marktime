@@ -105,7 +105,7 @@ Public Class freefields
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As BO.x18EntityCategory = CType(e.Item.DataItem, BO.x18EntityCategory)
         With CType(e.Item.FindControl("x18Name"), Label)
-            .Text = cRec.x18Name & ":"
+            .Text = "<img src='Images/label.png'/> " & cRec.x18Name & ":"
         End With
         Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(cRec.x23ID).Where(Function(p) p.IsClosed = False)
         With CType(e.Item.FindControl("x25IDs"), UI.datacombo)
@@ -136,7 +136,7 @@ Public Class freefields
         End If
         _lastX27ID = BO.BAS.IsNullInt(cRec.X27ID)
         With CType(e.Item.FindControl("lblFF"), Label)
-            .Text = cRec.x28Name & ":"
+            .Text = "<img src='Images/form.png'/> " & cRec.x28Name & ":"
             If cRec.x28IsRequired Then
                 .ForeColor = Drawing.Color.Red
                 .Text = .Text & "*"

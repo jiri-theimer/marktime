@@ -271,21 +271,21 @@ Class j74SavedGridColTemplateBL
                 If c.x23ID = 0 Then
                     Select Case c.x24ID
                         Case BO.x24IdENUM.tString
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.AnyString, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.AnyString, , , , , "Uživatelské pole", c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tDate
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateOnly, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateOnly, , , , , "Uživatelské pole", c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tDateTime
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateTime, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.DateTime, , , , , "Uživatelské pole", c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tDecimal
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric, , , , , "Uživatelské pole", c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tInteger
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric0, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Numeric0, , , , , "Uživatelské pole", c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                         Case BO.x24IdENUM.tBoolean
-                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Checkbox, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
+                            lis.Add(AGC(c.x28Name, c.x28Field, BO.cfENUM.Checkbox, , , , , "Uživatelské pole", c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                     End Select
                 Else
                     'text combo položky
-                    lis.Add(AGC(c.x28Name, c.x28Field & "Text", BO.cfENUM.AnyString, , , , , , c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
+                    lis.Add(AGC(c.x28Name, c.x28Field & "Text", BO.cfENUM.AnyString, , , , , "Uživatelské pole", c.x28Pivot_SelectSql, c.x28Pivot_GroupBySql))
                 End If
             End If
             If c.x28Flag = BO.x28FlagENUM.GridField Then
@@ -304,6 +304,34 @@ Class j74SavedGridColTemplateBL
                 lis.Add(col)
             End If
         Next
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Factory.x18EntityCategoryBL.GetList(, x29id, -1), x As Integer = 0
+        For Each c In lisX18
+            x += 1
+            Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & "," & CInt(x29id).ToString & ",a." & BO.BAS.GetDataPrefix(x29id) & "ID)"
+            lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Štítek", , ))
+        Next
+        Select Case x29id
+            Case BO.x29IdEnum.p41Project
+                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
+                For Each c In lisX18
+                    x += 1
+                    Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & ",328,a.p28ID_Client)"
+                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Štítek klienta projektu", , ))
+                Next
+            Case BO.x29IdEnum.p31Worksheet
+                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1)
+                For Each c In lisX18
+                    x += 1
+                    Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & ",141,a.p41ID)"
+                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Štítek projektu", , ))
+                Next
+                lisX18 = Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
+                For Each c In lisX18
+                    x += 1
+                    Dim strSql As String = "dbo.stitek_hodnoty(" & c.PID.ToString & ",328,p41.p28ID_Client)"
+                    lis.Add(AGC(Left(c.x18Name, 20), "tag" & x.ToString & "_" & c.PID.ToString, BO.cfENUM.AnyString, , strSql, , , "Štítek klienta projektu", , ))
+                Next
+        End Select
     End Sub
 
     Private Sub InhaleP41ColList(ByRef lis As List(Of BO.GridColumn))

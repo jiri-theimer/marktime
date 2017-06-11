@@ -46,7 +46,7 @@
         Return True
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding)) As Boolean
+    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
         If cRec.PID <> 0 Then
             bolINSERT = False
@@ -61,6 +61,7 @@
             pars.Add("x18IsMultiSelect", .x18IsMultiSelect, DbType.Boolean)
             pars.Add("x18IsAllEntityTypes", .x18IsAllEntityTypes, DbType.Boolean)
             pars.Add("x18IsRequired", .x18IsRequired, DbType.Boolean)
+            pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
         End With
 
@@ -77,7 +78,9 @@
                     _cDB.RunSQL("INSERT INTO x22EntiyCategory_Binding(x18ID,x22EntityTypePID,x29ID_EntityType,x22IsEntryRequired) VALUES (" & intX18ID.ToString & "," & c.x22EntityTypePID.ToString & "," & c.x29ID_EntityType.ToString & "," & BO.BAS.GB(c.x22IsEntryRequired) & ")")
                 Next
             End If
-
+            If Not lisX69 Is Nothing Then   'přiřazení rolí k štítku
+                bas.SaveX69(_cDB, BO.x29IdEnum.x18EntityCategory, intX18ID, lisX69, bolINSERT)
+            End If
             Return True
         Else
             Return False
@@ -135,8 +138,8 @@
         Return _cDB.GetList(Of BO.GetInteger)("select x29ID as Value FROM x20EntiyToCategory WHERE x18ID=@pid", pars).Select(Function(p) p.Value)
     End Function
     Private Function GetSQLPart1() As String
-        Dim s As String = "select a.*,x23.x23Name as _x23Name," & bas.RecTail("x18", "a")
-        s += " FROM x18EntityCategory a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID"
+        Dim s As String = "select a.*,x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner," & bas.RecTail("x18", "a")
+        s += " FROM x18EntityCategory a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         Return s
     End Function
 

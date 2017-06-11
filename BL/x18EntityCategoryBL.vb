@@ -1,6 +1,6 @@
 ﻿Public Interface Ix18EntityCategoryBL
     Inherits ifMother
-    Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding)) As Boolean
+    Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
     Function Load(intPID As Integer) As BO.x18EntityCategory
     Function Delete(intPID As Integer) As Boolean
     Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1) As IEnumerable(Of BO.x18EntityCategory)
@@ -31,10 +31,11 @@ Class x18EntityCategoryBL
         Return _cDL.Load(intPID)
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding)) As Boolean Implements Ix18EntityCategoryBL.Save
+    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean Implements Ix18EntityCategoryBL.Save
         If x29IDs Is Nothing Then _Error = "x29ids is nothing" : Return False
         If x29IDs.Count = 0 Then _Error = "Na vstupu musí být vazba minimálně na jednu entitu." : Return False
         If cRec.x23ID = 0 Then _Error = "Chybí datový zdroj (combo seznam)." : Return False
+        If cRec.j02ID_Owner = 0 Then cRec.j02ID_Owner = _cUser.j02ID
 
         If cRec.x18IsAllEntityTypes Then
             lisX22 = New List(Of BO.x22EntiyCategory_Binding)
@@ -47,7 +48,17 @@ Class x18EntityCategoryBL
             End If
         End If
 
-        Return _cDL.Save(cRec, x29IDs, lisX22)
+        If _cDL.Save(cRec, x29IDs, lisX22, lisX69) Then
+            Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
+            If cX23.x23Ordinary = -666 Then
+                cX23.x23Name = cRec.x18Name
+                Factory.x23EntityField_ComboBL.Save(cX23)
+            End If
+
+            Return True
+        Else
+            Return False
+        End If
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ix18EntityCategoryBL.Delete
         Return _cDL.Delete(intPID)

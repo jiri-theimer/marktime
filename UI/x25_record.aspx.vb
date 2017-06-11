@@ -15,10 +15,22 @@
                 .HeaderText = "Combo položka"
                 Me.x23ID.DataSource = .Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
                 Me.x23ID.DataBind()
-                If Request.Item("x23id") <> "" Then
-                    Me.x23ID.SelectedValue = Request.Item("x23id")
+                If .DataPID = 0 Then
+                    If Request.Item("x23id") <> "" Then
+                        Me.x23ID.SelectedValue = Request.Item("x23id")
+                    End If
+                    If Request.Item("x18id") <> "" Then
+                        Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(BO.BAS.IsNullInt(Request.Item("x18id")))
+                        Me.x23ID.SelectedValue = c.x23ID.ToString
+                    End If
+                    If Me.x23ID.SelectedIndex > 0 Then
+                        lblX23ID.Visible = False
+                        Me.x23ID.Visible = False
+                    End If
                 End If
+                
             End With
+            
 
             RefreshRecord()
 
@@ -47,9 +59,7 @@
         Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
         If cX23.x23DataSource <> "" Then
             Master.Notify("Tato položka byla vložena automaticky, protože pochází z externího datového zdroje.", NotifyLevel.InfoMessage)
-        Else
-            cmdX23.Visible = True
-            cmdX23.NavigateUrl = "x23_record.aspx?pid=" & cRec.x23ID.ToString
+        
         End If
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete

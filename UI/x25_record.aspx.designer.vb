@@ -32,15 +32,6 @@ Partial Public Class x25_record
     Protected WithEvents x23ID As Global.UI.datacombo
 
     '''<summary>
-    '''cmdX23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdX23 As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''lblName control.
     '''</summary>
     '''<remarks>

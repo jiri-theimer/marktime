@@ -107,6 +107,7 @@
             End Select
             If Not c.ColumnName Is Nothing Then
                 If c.ColumnName.IndexOf("Free") > 0 Then n.ForeColor = Drawing.Color.Green
+                If Left(c.ColumnName, 3) = "tag" Then n.ImageUrl = "Images/label.png"
             End If
 
             If c.TreeGroup = "" Then

@@ -6,15 +6,26 @@
     Private Sub x18_record_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
+    Public ReadOnly Property CurrentX23ID As Integer
+        Get
+            If hidTempX23ID.Value <> "" Then
+                Return BO.BAS.IsNullInt(Me.hidTempX23ID.Value)
+            Else
+                Return BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
+            End If
+        End Get
+    End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        roles1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
                 .neededPermission = BO.x53PermValEnum.GR_Admin
                 .HeaderIcon = "Images/label_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Nastavení štítku"
-                Me.x23ID.DataSource = .Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
+                Dim lis As IEnumerable(Of BO.x23EntityField_Combo) = .Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
+                Me.x23ID.DataSource = lis
                 Me.x23ID.DataBind()
 
             End With
@@ -29,8 +40,11 @@
         End If
     End Sub
     Private Sub RefreshRecord()
-
-        If Master.DataPID = 0 Then Return
+        roles1.SaveCurrentTempData()
+        If Master.DataPID = 0 Then
+            Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
+            Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
+        End If
         _lisX22 = Master.Factory.x18EntityCategoryBL.GetList_x22(Master.DataPID)
 
         Dim cRec As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Master.DataPID)
@@ -41,15 +55,36 @@
             Me.x18Ordinary.Value = .x18Ordinary
             Me.x18IsMultiSelect.Checked = .x18IsMultiSelect
             Me.x18IsRequired.Checked = .x18IsRequired
+            Me.j02ID_Owner.Value = .j02ID_Owner.ToString
+            Me.j02ID_Owner.Text = .Owner
             Master.Timestamp = .Timestamp
 
+            If .x23ID <> 0 Then
+                Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(.x23ID)
+                If cX23.x23Ordinary = -666 Then Me.x23ID.Enabled = False
+            End If
 
-
+            roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
         basUI.CheckItems(Me.x29IDs, Master.Factory.x18EntityCategoryBL.GetList_x29(Master.DataPID).Select(Function(p) p.PID).ToList)
 
         Handle_ChangeX29ID()
+
+        RefreshItems()
+
+
+    End Sub
+    Private Sub RefreshItems()
+        If Me.CurrentX23ID <> 0 Then
+            rpX25.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(Me.CurrentX23ID)
+        Else
+            rpX25.DataSource = Nothing
+        End If
+        rpX25.DataBind()
+
+
+
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x18EntityCategoryBL
@@ -67,16 +102,24 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        If Master.DataPID = 0 And hidTempX23ID.Value = "" Then
+            Master.Notify("Musíte kliknout na tlačítko [Potvrdit].", NotifyLevel.WarningMessage)
+            Return
+        End If
+        Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
+        
+
         With Master.Factory.x18EntityCategoryBL
             Dim cRec As BO.x18EntityCategory = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.x18EntityCategory)
             cRec.x18Name = Me.x18Name.Text
             cRec.x18Ordinary = BO.BAS.IsNullInt(Me.x18Ordinary.Value)
-            cRec.x23ID = BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
+            cRec.x23ID = Me.CurrentX23ID
             cRec.x18IsMultiSelect = Me.x18IsMultiSelect.Checked
             cRec.x18IsRequired = Me.x18IsRequired.Checked
             cRec.x18IsAllEntityTypes = Me.x18IsAllEntityTypes.Checked
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
+            cRec.j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
             Dim x29IDs As List(Of Integer) = basUI.GetCheckedItems(Me.x29IDs)
             Dim lisX22 As New List(Of BO.x22EntiyCategory_Binding)
             For Each ri As RepeaterItem In rp1.Items
@@ -90,8 +133,8 @@
                 End If
 
             Next
-            
-            If .Save(cRec, x29IDs, lisX22) Then
+
+            If .Save(cRec, x29IDs, lisX22, lisX69) Then
                 Master.DataPID = .LastSavedPID
                 Master.CloseAndRefreshParent("x18-save")
             Else
@@ -101,14 +144,34 @@
     End Sub
 
     Private Sub x18_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Me.x23ID.SelectedValue <> "" Then
-            cmdX23.NavigateUrl = "x23_record.aspx?pid=" & Me.x23ID.SelectedValue
-            cmdX23.Visible = True
-        Else
-            cmdX23.Visible = False
-        End If
+        
         Me.panEntityTypes.Visible = Not Me.x18IsAllEntityTypes.Checked
         Me.x18IsRequired.Visible = Me.x18IsAllEntityTypes.Checked
+
+        opg1.Visible = False
+        cmdConfirmOpg1.Visible = False
+        Me.rpX25.Visible = True
+        lblX23ID.Visible = True
+        Me.x23ID.Visible = True
+
+        If Master.DataPID = 0 Then
+            If hidGUID.Value = "" Then
+                opg1.Visible = True
+                cmdConfirmOpg1.Visible = True
+            End If
+            If opg1.SelectedValue = "1" Then
+                Me.lblX23ID.Visible = False
+                Me.x23ID.Visible = False
+                
+            End If
+        End If
+
+        
+        If Me.hidTempX23ID.Value <> "" Then
+            lblX23ID.Visible = False
+            Me.x23ID.Visible = False
+        End If
+
     End Sub
 
     Private Sub Handle_ChangeX29ID()
@@ -187,5 +250,33 @@
 
     Private Sub x18IsAllEntityTypes_CheckedChanged(sender As Object, e As EventArgs) Handles x18IsAllEntityTypes.CheckedChanged
         Handle_ChangeX29ID()
+    End Sub
+
+    Private Sub x23ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles x23ID.SelectedIndexChanged
+        RefreshItems()
+    End Sub
+
+    Private Sub cmdHardRefresh_Click(sender As Object, e As EventArgs) Handles cmdHardRefresh.Click
+        RefreshItems()
+    End Sub
+
+    Private Sub cmdConfirmOpg1_Click(sender As Object, e As EventArgs) Handles cmdConfirmOpg1.Click
+        Me.hidGUID.Value = BO.BAS.GetGUID
+        If opg1.SelectedValue = "1" Then
+            Dim c As New BO.x23EntityField_Combo
+            c.x23Name = hidGUID.Value
+            c.x23Ordinary = -666
+            If Master.Factory.x23EntityField_ComboBL.Save(c) Then
+                hidTempX23ID.Value = Master.Factory.x23EntityField_ComboBL.LastSavedPID.ToString
+
+            End If
+        End If
+
+        RefreshItems()
+
+    End Sub
+
+    Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
+        roles1.AddNewRow()
     End Sub
 End Class

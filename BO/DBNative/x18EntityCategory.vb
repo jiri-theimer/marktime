@@ -1,6 +1,7 @@
 ﻿Public Class x18EntityCategory
     Inherits BOMother
     Public Property x23ID As Integer
+    Public Property j02ID_Owner As Integer
     Public Property x18Name As String
     Public Property x18IsMultiSelect As Boolean
     Public Property x18Ordinary As Integer
@@ -13,6 +14,12 @@
     Public ReadOnly Property x23Name As String
         Get
             Return _x23Name
+        End Get
+    End Property
+    Private Property _Owner As String
+    Public ReadOnly Property Owner As String
+        Get
+            Return _Owner
         End Get
     End Property
 End Class

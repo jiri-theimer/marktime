@@ -13,8 +13,10 @@
                     </td>
                 </tr>
                 <tr style="vertical-align: top;">
-                    <td style="width: 140px;">
+                    
+                    <td style="width: 150px;">
                         <asp:HiddenField ID="x28IsRequired" runat="server" />
+
                         <asp:Label ID="lblFF" runat="server" CssClass="lbl"></asp:Label>
                         <asp:HyperLink ID="clue_help" runat="server" CssClass="reczoom" Text="?" Visible="false" title="Nápověda"></asp:HyperLink>
                     </td>
@@ -42,8 +44,9 @@
 <asp:Repeater ID="rp1" runat="server">
     <ItemTemplate>
         <div class="div6">
-            <asp:Label ID="x18Name" runat="server" Width="140px"></asp:Label>
-            <uc:datacombo id="x25IDs" runat="server" datatextfield="x25Name" datavaluefield="pid" allowcheckboxes="true" filter="Contains" width="400px"></uc:datacombo>
+           
+            <asp:Label ID="x18Name" runat="server" Width="150px"></asp:Label>
+            <uc:datacombo ID="x25IDs" runat="server" DataTextField="x25Name" DataValueField="pid" AllowCheckboxes="true" Filter="Contains" Width="400px"></uc:datacombo>
             <asp:HiddenField ID="x18ID" runat="server" />
             <asp:HiddenField ID="x18IsMultiSelect" runat="server" />
         </div>
