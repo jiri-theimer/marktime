@@ -163,6 +163,10 @@
                 pane.set_contentUrl(url);
                 return;
             }
+            if (flag == "<%=Me.CurrentPrefix%>-create" || flag == "<%=Me.CurrentPrefix%>-save") {
+                location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
+                return;
+            }
 
             location.replace("entity_framework.aspx?prefix=<%=Me.CurrentPrefix%>");
 

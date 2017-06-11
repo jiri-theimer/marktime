@@ -525,7 +525,10 @@
             If .Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, p58vals) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
-                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p28Contact, Master.DataPID, ff1.GetTags())
+                If Not bolNew Or ff1.GetTags.Count > 0 Then
+                    Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p28Contact, Master.DataPID, ff1.GetTags())
+                End If
+
                 If bolNew Then
                     Master.CloseAndRefreshParent("p28-create")
                 Else

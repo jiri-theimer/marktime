@@ -27,10 +27,16 @@
         }
 
         function hardrefresh(pid, flag) {
+            
             if (flag == "p28-save" || flag == "p28-create") {
+                <%If menu1.PageSource = "3" Then%>
+                location.replace("p28_framework_detail.aspx?pid=" + pid + "&source=3");                
+                <%else%>                
                 parent.window.location.replace("p28_framework.aspx?pid=" + pid);
+                <%end If%>
                 return;
             }
+            
             if (flag == "p28-delete") {
                 parent.window.location.replace("p28_framework.aspx");
                 return;

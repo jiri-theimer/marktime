@@ -323,6 +323,7 @@
         With Master.Factory.p41ProjectBL
             If .Save(cRec, Nothing, Nothing, lisX69, lisFF) Then
                 Master.DataPID = .LastSavedPID
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p41Project, Master.DataPID, ff1.GetTags())
                 Master.CloseAndRefreshParent("p41-save")
             Else
                 Master.Notify(.ErrorMessage, 2)

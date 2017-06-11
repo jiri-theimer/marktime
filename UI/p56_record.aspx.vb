@@ -329,7 +329,11 @@
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
 
             If .Save(cRec, lisX69, lisFF, "") Then
+                Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
+                If Not bolNew Or ff1.GetTags.Count > 0 Then
+                    Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p56Task, Master.DataPID, ff1.GetTags())
+                End If
                 Master.CloseAndRefreshParent("p56-save")
             Else
                 Master.Notify(.ErrorMessage, 2)

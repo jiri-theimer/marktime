@@ -199,6 +199,7 @@
 
             If .Save(cRec, lisFF, lisP82) Then
                 Master.DataPID = .LastSavedPID
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p90Proforma, Master.DataPID, ff1.GetTags())
                 Master.CloseAndRefreshParent("p90-save")
             Else
                 Master.Notify(.ErrorMessage, 2)

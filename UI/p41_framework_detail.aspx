@@ -25,15 +25,21 @@
         }
         function hardrefresh(pid, flag) {
             <%If menu1.PageSource <> "navigator" Then%>
-            if (flag == "p41-create") {
+            if (flag == "p41-save" || flag == "p41-create") {
+                <%If menu1.PageSource = "3" Then%>
+                location.replace("p41_framework_detail.aspx?pid=" + pid + "&source=3");
+                <%else%>
                 parent.window.location.replace("p41_framework.aspx?pid=" + pid);
+                <%end If%>
                 return;
             }
+            
             if (flag == "p41-delete") {
                 parent.window.location.replace("p41_framework.aspx");
                 return;
             }
             <%End If%>
+            
             if (flag == "draft2normal") {
                 document.getElementById('<%= cmdConvertDraft2Normal.ClientID%>').click();
                 return;

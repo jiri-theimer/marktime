@@ -182,6 +182,7 @@
 
             If .Update(cRec, lisX69, lisFF) Then
                 Master.DataPID = .LastSavedPID
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p91Invoice, Master.DataPID, ff1.GetTags())
                 Master.CloseAndRefreshParent("p91-save")
             Else
                 Master.Notify(.ErrorMessage, 2)

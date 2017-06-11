@@ -184,6 +184,7 @@
 
             If .Save(cRec, lisFF) Then
                 Master.DataPID = .LastSavedPID
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.j02Person, Master.DataPID, ff1.GetTags())
                 If Me.hidGUID.Value <> "" Then
                     Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
                     Dim cTemp As New BO.p85TempBox
