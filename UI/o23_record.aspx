@@ -234,8 +234,9 @@
 
                 <asp:Panel ID="panFF" runat="server" CssClass="content-box2">
                     <div class="title">
-                        <img src="Images/form.png" />
-                        <span style="padding-left: 10px;">Další pole dokumentu</span>
+                        <img src="Images/label.png" />
+                        <img src="Images/form.png" />                        
+                        <span style="padding-left: 10px;">Štítky a další pole dokumentu</span>
                     </div>
                     <div class="content">
                         <uc:freefields ID="ff1" runat="server" />

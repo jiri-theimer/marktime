@@ -270,12 +270,8 @@ Public Class p91_framework_detail
                 cmdConvertDraft.Visible = True
             End If
         End If
-        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p91Invoice).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p91&pid={0}','Images/label_32.png',false);", cRec.PID)
-            labels1.RefreshData(BO.x29IdEnum.p91Invoice, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p91Invoice, cRec.PID))
-        Else
-            boxX18.Visible = False
-        End If
+        labels1.RefreshData(BO.x29IdEnum.p91Invoice, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p91Invoice, cRec.PID))
+
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p91Invoice, cRec.PID)
         Me.roles1.RefreshData(lisX69, cRec.PID)
         If Me.roles1.RowsCount = 0 Then panRoles.Visible = False
@@ -331,7 +327,6 @@ Public Class p91_framework_detail
 
         menu1.FindItemByValue("cmdX40").NavigateUrl = "x40_framework.aspx?masterprefix=p91&masterpid=" & cRec.PID.ToString
         Dim cDisp As BO.p91RecordDisposition = Master.Factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
-        x18_binding.Visible = cDisp.OwnerAccess
 
         With Master.Factory
             menu1.FindItemByValue("cmdCreateInvoice").Visible = .TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator)

@@ -42,7 +42,7 @@
 <asp:Repeater ID="rp1" runat="server">
     <ItemTemplate>
         <div class="div6">
-            <asp:Label ID="x18Name" runat="server" Width="150px"></asp:Label>
+            <asp:Label ID="x18Name" runat="server" Width="140px"></asp:Label>
             <uc:datacombo id="x25IDs" runat="server" datatextfield="x25Name" datavaluefield="pid" allowcheckboxes="true" filter="Contains" width="400px"></uc:datacombo>
             <asp:HiddenField ID="x18ID" runat="server" />
             <asp:HiddenField ID="x18IsMultiSelect" runat="server" />

@@ -29,7 +29,7 @@
             <td colspan="2">
                 <fieldset>
                     <legend>Štítek se nabízí pro entity</legend>
-                    <asp:CheckBoxList ID="x29IDs" runat="server" RepeatDirection="Horizontal">
+                    <asp:CheckBoxList ID="x29IDs" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
                         <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
                         <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
                         <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
@@ -44,7 +44,7 @@
         
         <tr>
             <td colspan="2">
-                <asp:CheckBox ID="x18IsMultiSelect" runat="server" Text="Povolen MULTI-SELECT (možnost svázat více položek k jednomu záznamu entity)" Checked="true" />
+                <asp:CheckBox ID="x18IsMultiSelect" runat="server" Text="Povolen MULTI-SELECT (možnost oštítkovat záznam entity více položkami najednou)" Checked="true" />
             </td>
         </tr>
         <tr>
@@ -55,8 +55,39 @@
                 <telerik:RadNumericTextBox ID="x18Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
             </td>
         </tr>
+     
     </table>
+    <div class="div6">
+        <asp:CheckBox ID="x18IsAllEntityTypes" runat="server" CssClass="chk" AutoPostBack="true" Text="Štítek je aplikovatelný pro všechny entitní typy" Checked="true" />
+    </div>
+    <asp:panel ID="panEntityTypes" runat="server" cssclass="content-box2">
+        <div class="title">
+            Štítek se bude nabízet k oštítkování pouze u níže zaškrtlých typů entity:
+        </div>
+        <div class="content">
+            <table cellpadding="10">
 
+                <asp:Repeater ID="rp1" runat="server">
+                    <ItemTemplate>
+                        <tr>
+                            <td>
+                                <asp:CheckBox ID="chkEntityType" runat="server" CssClass="chk" Font-Bold="true" />
+                                <asp:HiddenField ID="x22EntityTypePID" runat="server" />
+                                <asp:HiddenField ID="x29ID_EntityType" runat="server" />
+                            </td>
+                            <td>
+                                <asp:CheckBox ID="x22IsEntryRequired" runat="server" Text="Povinné oštítkování u záznamu entity" />
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </table>
+        </div>
+    </asp:panel>
+
+    <div class="div6">
+        <asp:CheckBox ID="x18IsRequired" runat="server" Text="U záznamu entity je oštítkování povinné" CssClass="chk" />
+    </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

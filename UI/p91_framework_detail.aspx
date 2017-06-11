@@ -548,16 +548,7 @@
                         <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </asp:Panel>
-                <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
-                    <div class="title">
-                        <img src="Images/label.png" style="margin-right: 10px;" />
-                        <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
-                        <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
-                    </div>
-                    <div class="content">
-                        <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
-                    </div>
-                </asp:Panel>
+               <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
 
                 <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p91Invoice"></uc:o23_list>
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />

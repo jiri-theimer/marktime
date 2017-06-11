@@ -79,7 +79,6 @@
         menu1.p56_RefreshRecord(cRec, cRecSum, cP41, "board", cDisp)
 
         If Not cDisp.ReadAccess Then Master.StopPage("Nedisponujete oprávněním číst tento úkol.")
-        x18_binding.Visible = cDisp.OwnerAccess
 
         With cRec
             Me.boxCoreTitle.Text = .p57Name & " (" & .p56Code & ")"
@@ -180,14 +179,7 @@
             Me.boxO23.Visible = False
         End If
 
-
-
-        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p56Task).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p56&pid={0}','Images/label_32.png',false);", cRec.PID)
-            labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID))
-        Else
-            boxX18.Visible = False
-        End If
+        labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID))
 
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, cRec.p57ID)
         If lisFF.Count > 0 Then

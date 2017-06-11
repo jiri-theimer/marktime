@@ -261,12 +261,7 @@
             boxFF.Visible = False
         End If
 
-        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p41&pid={0}','Images/label_32.png',false);", cRec.PID)
-            labels1.RefreshData(BO.x29IdEnum.p41Project, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p41Project, cRec.PID))
-        Else
-            boxX18.Visible = False
-        End If
+        labels1.RefreshData(BO.x29IdEnum.p41Project, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p41Project, cRec.PID))
 
         If cRecSum.is_My_Favourite Then
             cmdFavourite.ImageUrl = "Images/favourite.png"
@@ -317,7 +312,6 @@
 
     Private Sub Handle_Permissions(cRec As BO.p41Project, cP42 As BO.p42ProjectType, cDisp As BO.p41RecordDisposition)
 
-        x18_binding.Visible = cDisp.OwnerAccess
         With Master.Factory
 
 

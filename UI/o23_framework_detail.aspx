@@ -156,20 +156,12 @@
                 <div class="div6">
                     <uc:entityrole_assign_inline ID="roles_notepad" runat="server" EntityX29ID="o23Notepad" NoDataText=""></uc:entityrole_assign_inline>
                 </div>
+                <uc:x18_readonly id="labels1" runat="server"></uc:x18_readonly>
                 <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
             </div>
         </div>
-
-        <asp:panel ID="boxX18" runat="server" CssClass="content-box1">
-            <div class="title">
-                <img src="Images/label.png" style="margin-right: 10px;" />
-                <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
-                <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
-            </div>
-            <div class="content">
-                <uc:x18_readonly id="labels1" runat="server"></uc:x18_readonly>
-            </div>
-        </asp:panel>
+        
+       
 
         <div class="content-box1">
             <div class="title">

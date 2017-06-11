@@ -239,33 +239,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents linkISIR_Monitoring As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''boxX18 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxX18Title control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxX18Title As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x18_binding control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18_binding As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''labels1 control.
     '''</summary>
     '''<remarks>

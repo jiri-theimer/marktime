@@ -7,7 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/pageheader.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -33,41 +33,41 @@
         function NewRecord(bolContextMenu) {
             sw_master("<%=ViewState("page")%>?pid=0&prefix=<%=ViewState("prefix")%>", "Images/setting.png");
 
-        if (bolContextMenu == true)
-            return
+            if (bolContextMenu == true)
+                return
 
-        return (false);
+            return (false);
+        }
+
+        function RowSelected(sender, args) {
+
+            document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");
+
     }
 
-    function RowSelected(sender, args) {
-
-        document.getElementById("<%=hiddatapid.clientid%>").value = args.getDataKeyValue("pid");
-
-        }
-
-        function RowDoubleClick(sender, args) {
-            Edit();
-        }
+    function RowDoubleClick(sender, args) {
+        Edit();
+    }
 
 
-        function CloneRecord() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+    function CloneRecord() {
+        var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             if (pid == "" || pid == null) {
                 alert("Není vybrán záznam.");
                 return
             }
             sw_master("<%=ViewState("page")%>?clone=1&pid=" + pid, "Images/setting.png");
-            
+
         }
 
         function hardrefresh(pid, flag) {
 
-            
-            var s="<%=menu1.FindItemByValue("refresh").NavigateUrl%>";
-            location.replace(s + "&go2pid=" + pid);
-            
 
-            
+            var s = "<%=menu1.FindItemByValue("refresh").NavigateUrl%>";
+            location.replace(s + "&go2pid=" + pid);
+
+
+
 
         }
 
@@ -91,7 +91,7 @@
             <asp:ImageButton ID="cmdCollapseAll" runat="server" ImageUrl="Images/collapse.png" ToolTip="Sbalit celé menu" CssClass="button-link" />
         </div>
         <div class="commandcell" style="min-width: 200px;">
-            
+
             <asp:Label ID="lblPath" runat="server" CssClass="framework_header_span" Style="padding-left: 10px;"></asp:Label>
         </div>
         <div class="commandcell">
@@ -110,12 +110,16 @@
         </div>
 
         <div class="commandcell" style="margin-left: 20px;">
-            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 2900;">
+            <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
+                    <telerik:RadMenuItem Text="ZÁZNAM" ImageUrl="Images/arrow_down_menu.png" PostBack="false">
+                        <Items>
+                            <telerik:RadMenuItem Text="Nový" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Upravit" ImageUrl="Images/edit.png" NavigateUrl="javascript:Edit();" Value="edit" PostBack="false"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Kopírovat" ImageUrl="Images/copy.png" NavigateUrl="javascript:CloneRecord();" Value="clone"></telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem Text="NOVÝ ZÁZNAM" ImageUrl="Images/new.png" NavigateUrl="javascript:NewRecord(true);" Value="new"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="UPRAVIT" ImageUrl="Images/edit.png" NavigateUrl="javascript:Edit();" Value="edit" PostBack="false"></telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="KOPÍROVAT" ImageUrl="Images/copy.png" NavigateUrl="javascript:CloneRecord();" Value="clone"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="EXPORT" Value="export" ImageUrl="Images/export.png" PostBack="true"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="OBNOVIT" ImageUrl="Images/refresh.png" Value="refresh"></telerik:RadMenuItem>
                 </Items>
@@ -137,7 +141,7 @@
         </asp:DropDownList>
     </div>
 
-    <div class="right_panel" style="margin-left:270px;">
+    <div class="right_panel" style="margin-left: 270px;">
 
         <asp:Panel ID="panDashboard" runat="server" Style="background-color: white; padding: 10px; display: table;">
 
@@ -174,7 +178,7 @@
                 </div>
             </div>
 
-            
+
 
             <div class="content-box1">
                 <div class="title">
@@ -185,7 +189,7 @@
                     <button type="button" onclick="sw_master('x35_record.aspx?key=p32ID_CreditNote','Images/setting_32.png')">Nastavit</button>
                 </div>
             </div>
-         
+
 
             <div class="content-box1" style="width: 100%; max-width: none;">
                 <div class="title">
@@ -279,14 +283,14 @@
                 <div class="content">
 
                     <asp:Label ID="version" runat="server" CssClass="valbold"></asp:Label>
-                    
+
                     <span class="lbl">Počet otevřených uživatelů</span>
                     <asp:Label ID="lblRealUsersCount" runat="server" CssClass="badge1"></asp:Label>
 
                     <div>
                         <a href="log_app_update.aspx">Histoire změn a novinek v systému</a>
-                    
-                        <a href="about.aspx" style="margin-left:20px;">O aplikaci</a>
+
+                        <a href="about.aspx" style="margin-left: 20px;">O aplikaci</a>
                     </div>
                 </div>
             </div>
@@ -300,24 +304,24 @@
                     <div>
                         Čas posledního spuštění robota:
                                     <asp:Label ID="robot_cache_lastrequest" runat="server" CssClass="valbold"></asp:Label>
-                        
+
 
                     </div>
                     <div>
                         <button type="button" onclick="run_robot()">Spusit robota ručně</button>
-                        
+
                     </div>
                 </div>
             </div>
-            <div class="content-box1" style="display:none;">
+            <div class="content-box1" style="display: none;">
                 <div class="title">
                     Název databáze
                 </div>
                 <div class="content">
                     <asp:Label ID="AppName" runat="server" CssClass="valbold"></asp:Label>
                     <button type="button" onclick="sw_master('x35_record.aspx?key=AppName','Images/setting_32.png')">Nastavit</button>
-                    
-                    
+
+
                 </div>
             </div>
             <div class="content-box1">
@@ -351,6 +355,6 @@
     </div>
 
     <asp:HiddenField ID="hiddatapid" runat="server" />
-   <asp:HiddenField ID="hidGo2Pid" runat="server" />
+    <asp:HiddenField ID="hidGo2Pid" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

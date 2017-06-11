@@ -6,6 +6,10 @@
     Public Property x18Ordinary As Integer
 
     Private Property _x23Name As String
+    Public Property x18IsAllEntityTypes As Boolean
+    Public Property x18IsRequired As Boolean
+
+
     Public ReadOnly Property x23Name As String
         Get
             Return _x23Name

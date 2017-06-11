@@ -57,8 +57,8 @@ Public Class freefields
     End Sub
 
     Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX18 As IEnumerable(Of BO.x18EntityCategory), strDataTable As String, intDataPID As Integer)
-        hidDataTable.Value = strDataTable
-        hidDataPID.Value = intDataPID.ToString
+        Me.DataTable = strDataTable
+        Me.DataPID = intDataPID
 
         rpFF.DataSource = listFF
         rpFF.DataBind()
@@ -75,7 +75,7 @@ Public Class freefields
         Else
             rp1.Visible = True
             If Me.DataPID <> 0 Then
-                Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), Me.DataPID)
+                Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), intDataPID)
                 For Each ri As RepeaterItem In rp1.Items
                     Dim intX18ID As Integer = CInt(CType(ri.FindControl("x18ID"), HiddenField).Value)
                     Dim lis As List(Of String) = lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25ID.ToString).ToList

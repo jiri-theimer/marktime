@@ -95,6 +95,42 @@ Partial Public Class x18_record
     Protected WithEvents x18Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
+    '''x18IsAllEntityTypes control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsAllEntityTypes As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panEntityTypes control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panEntityTypes As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''rp1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''x18IsRequired control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsRequired As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

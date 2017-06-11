@@ -46,7 +46,7 @@
         Return True
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer)) As Boolean
+    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding)) As Boolean
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
         If cRec.PID <> 0 Then
             bolINSERT = False
@@ -59,6 +59,8 @@
             pars.Add("x18validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("x18validuntil", .ValidUntil, DbType.DateTime)
             pars.Add("x18IsMultiSelect", .x18IsMultiSelect, DbType.Boolean)
+            pars.Add("x18IsAllEntityTypes", .x18IsAllEntityTypes, DbType.Boolean)
+            pars.Add("x18IsRequired", .x18IsRequired, DbType.Boolean)
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
         End With
 
@@ -66,6 +68,16 @@
             Dim intX18ID As Integer = _cDB.LastSavedRecordPID
             _cDB.RunSQL("DELETE FROM x20EntiyToCategory WHERE x18ID=" & intX18ID.ToString)
             _cDB.RunSQL("INSERT INTO x20EntiyToCategory(x18ID,x29ID) SELECT " & intX18ID.ToString & ",x29ID FROM x29Entity WHERE x29ID IN (" & String.Join(",", x29IDs) & ")")
+
+            If Not lisX22 Is Nothing Then
+                If Not bolINSERT Then
+                    _cDB.RunSQL("DELETE FROM x22EntiyCategory_Binding WHERE x18ID=" & intX18ID.ToString)
+                End If
+                For Each c In lisX22
+                    _cDB.RunSQL("INSERT INTO x22EntiyCategory_Binding(x18ID,x22EntityTypePID,x29ID_EntityType,x22IsEntryRequired) VALUES (" & intX18ID.ToString & "," & c.x22EntityTypePID.ToString & "," & c.x29ID_EntityType.ToString & "," & BO.BAS.GB(c.x22IsEntryRequired) & ")")
+                Next
+            End If
+
             Return True
         Else
             Return False
@@ -82,18 +94,40 @@
         Return _cDB.RunSP("x18_delete", pars)
     End Function
 
-    Public Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified) As IEnumerable(Of BO.x18EntityCategory)
+    Public Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = 0) As IEnumerable(Of BO.x18EntityCategory)
         Dim s As String = GetSQLPart1()
         Dim strW As String = bas.ParseWhereMultiPIDs("a.x18ID", myQuery)
         strW += bas.ParseWhereValidity("x18", "a", myQuery)
         If x29ID > BO.x29IdEnum._NotSpecified Then
             strW += " AND a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & ")"
         End If
+        If intEntityType >= 0 Then
+            If intEntityType = 0 Then
+                s += " AND a.x18IsAllEntityTypes=1"
+            Else
+                s += " AND (a.x18IsAllEntityTypes=1 OR a.128ID IN (select x18ID FROM x22EntiyCategory_Binding WHERE x22EntityTypePID=" & intEntityType.ToString
+                s += " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & "))"
+
+            End If
+        End If
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
         s += " ORDER BY a.x18Ordinary,a.x18Name"
         Return _cDB.GetList(Of BO.x18EntityCategory)(s)
 
+    End Function
+    Private Function GetEntityTypeX29ID(x29id As BO.x29IdEnum) As Integer
+        Select Case x29id
+            Case BO.x29IdEnum.p41Project : Return 342
+            Case BO.x29IdEnum.p28Contact : Return 329
+            Case BO.x29IdEnum.p91Invoice : Return 392
+            Case BO.x29IdEnum.p31Worksheet : Return 334
+            Case BO.x29IdEnum.j02Person : Return 107
+            Case BO.x29IdEnum.o23Notepad : Return 224
+            Case BO.x29IdEnum.p56Task : Return 357
+            Case Else
+                Return 0
+        End Select
     End Function
     Public Function GetX29IDs(intX18ID As Integer) As IEnumerable(Of Integer)
         Dim pars As New DbParameters
@@ -116,5 +150,8 @@
         pars.Add("x29id", CInt(x29id), DbType.Int32)
         Return _cDB.GetList(Of BO.x25EntityField_ComboValue)(s, pars)
 
+    End Function
+    Public Function GetList_x22(intX18ID As Integer) As IEnumerable(Of BO.x22EntiyCategory_Binding)
+        Return _cDB.GetList(Of BO.x22EntiyCategory_Binding)("SELECT * FROM x22EntiyCategory_Binding WHERE x18ID=@pid", New With {.pid = intX18ID})
     End Function
 End Class

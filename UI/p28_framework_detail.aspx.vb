@@ -201,12 +201,7 @@
             Me.trWorkflow.Visible = False
         End If
 
-        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact).Count > 0 Then
-            x18_binding.NavigateUrl = String.Format("javascript:sw_decide('x18_binding.aspx?prefix=p28&pid={0}','Images/label_32.png',false);", cRec.PID)
-            labels1.RefreshData(BO.x29IdEnum.p28Contact, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p28Contact, cRec.PID))
-        Else
-            boxX18.Visible = False
-        End If
+        labels1.RefreshData(BO.x29IdEnum.p28Contact, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p28Contact, cRec.PID))
 
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p28Contact, Master.DataPID, cRec.p29ID)
         If lisFF.Count > 0 Then
@@ -275,7 +270,6 @@
         If Not cDisp.ReadAccess Then
             Master.StopPage("Nedisponujete přístupovým oprávněním ke klientovi.")
         End If
-        x18_binding.Visible = cDisp.OwnerAccess
 
 
 

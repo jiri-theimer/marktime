@@ -122,6 +122,7 @@
     <Compile Include="DBNative\p48OperativePlan.vb" />
     <Compile Include="DBNative\p49FinancialPlan.vb" />
     <Compile Include="DBNative\x19EntityCategory_Binding.vb" />
+    <Compile Include="DBNative\x22EntiyCategory_Binding.vb" />
     <Compile Include="DBNative\x23EntityField_Combo.vb" />
     <Compile Include="DBNative\x25EntityField_ComboValue.vb" />
     <Compile Include="DBNative\x26EntityField_Binding.vb" />

@@ -193,20 +193,13 @@
                 </tr>
 
             </table>
+            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
             <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" Text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>
         </div>
     </div>
-    <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/label.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxX18Title" runat="server" Text="Štítky" meta:resourcekey="boxX18Title"></asp:Label>
-            <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit" meta:resourcekey="x18_binding"></asp:HyperLink>
-        </div>
-        <div class="content">
-            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
-        </div>
-    </asp:Panel>
+    
     <asp:Panel ID="boxP40" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/worksheet_recurrence.png" style="margin-right: 10px;" />

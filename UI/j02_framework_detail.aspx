@@ -122,7 +122,7 @@
             <div>
                 <asp:Label ID="Correspondence" runat="server"></asp:Label>
             </div>
-            
+            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
         </div>
     </div>
     <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">
@@ -205,16 +205,7 @@
         </div>
 
     </asp:Panel>
-    <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/label.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxX18Title" runat="server" Text="Štítky"></asp:Label>
-            <asp:HyperLink ID="x18_binding" runat="server" Text="Přiřadit"></asp:HyperLink>
-        </div>
-        <div class="content">
-            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
-        </div>
-    </asp:Panel>
+   
     <asp:Panel ID="boxFF" runat="server" CssClass="content-box1">
 
         <div class="title">
