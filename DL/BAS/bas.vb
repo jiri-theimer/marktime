@@ -197,6 +197,67 @@
         strSQL = Replace(strSQL, "--", "##")  'očištění SQL
         Return strSQL
     End Function
+    Shared Function CompleteX18QuerySql(strMasterPrefix As String, strX18Value As String) As String
+        Dim lis As List(Of String) = BO.BAS.ConvertDelimitedString2List(strX18Value, "|")
+        Dim sql As New System.Text.StringBuilder
+        'sql.Append(" AND " & strFK & " IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=" & CInt(cRec.x29ID).ToString & " AND x25ID IN (" & strIN & "))")
+        Select Case strMasterPrefix
+            Case "p28"
+                Dim s As String = parse_ids_getsql(lis, strX18Value, "p28", "a.p28ID", "328")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+            Case "p41"
+                Dim s As String = parse_ids_getsql(lis, strX18Value, "p41", "a.p41ID", "141")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+                s = parse_ids_getsql(lis, strX18Value, "p28", "a.p28ID_Client", "328")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+                
+            Case "p91"
+                Dim s As String = parse_ids_getsql(lis, strX18Value, "p91", "a.p91ID", "391")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+                s = parse_ids_getsql(lis, strX18Value, "p28", "a.p28ID", "328")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+            Case "p31"
+                Dim s As String = parse_ids_getsql(lis, strX18Value, "p31", "a.p31ID", "331")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+                s = parse_ids_getsql(lis, strX18Value, "p41", "a.p41ID", "141")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+                s = parse_ids_getsql(lis, strX18Value, "p28", "p41.p28ID_Client", "328")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+        End Select
+        Return sql.ToString
+
+    End Function
+    Shared Function parse_ids_getsql(lisPairs As List(Of String), strX18Value As String, strFindPrefix As String, strKeyField As String, strX29ID As String) As String
+        Dim strRet As String = ""
+        For Each str8 As String In lisPairs.Where(Function(p) Left(p, 3) = strFindPrefix).Select(Function(p) Left(p, 3 + 1 + 4)).Distinct
+            Dim intX18ID As Integer = CInt(Right(str8, 4))
+            Dim ids As New List(Of String)
+            For Each s As String In lisPairs.Where(Function(p) Left(p, 3 + 1 + 4) = str8)
+                Dim a() As String = Split(s, "-")
+                ids.Add(a(2))
+            Next
+            If ids.Count > 0 Then
+                strRet += " AND " & strKeyField & " IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=" & strX29ID & " AND x18ID=" & intX18ID.ToString & " AND x25ID IN (" & String.Join(",", ids) & "))"
+            End If
+        Next
+        Return strRet
+    End Function
 
     Shared Function CompleteSqlJ70(cDB As DL.DbHandler, intJ70ID As Integer, cUser As BO.j03UserSYS) As String
         Dim s As String = "select *," & bas.RecTail("j70") & " from j70QueryTemplate WHERE j70ID=@pid"

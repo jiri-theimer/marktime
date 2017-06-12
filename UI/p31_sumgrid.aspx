@@ -178,6 +178,7 @@
 
     <asp:HiddenField ID="hidMasterAW" runat="server" />
     <asp:HiddenField ID="hidGridColumnSql" runat="server" />
+    <asp:HiddenField ID="hidX18_value" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
 
     <script type="text/javascript">
@@ -256,7 +257,7 @@
 
         }
         function x18_querybuilder() {
-            sw_master("x18_querybuilder.aspx?prefix=<%=Me.hidMasterPrefix.Value%>", "Images/query.png");
+            sw_master("x18_querybuilder.aspx?key=p31grid&prefix=<%=Me.hidMasterPrefix.Value%>", "Images/query.png");
 
         }
 

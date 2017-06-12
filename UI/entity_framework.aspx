@@ -295,7 +295,7 @@
 
         }
         function x18_querybuilder() {
-            sw_master("x18_querybuilder.aspx?prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
+            sw_master("x18_querybuilder.aspx?key=grid&prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
 
         }
     </script>
@@ -317,33 +317,33 @@
                 </asp:Panel>
                 <div class="commandcell" style="padding-left: 4px;">
 
-                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">                        
+                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
                         <asp:Label ID="lblGridHeader" runat="server" Text="Akce nad přehledem"></asp:Label>
                         <img src="Images/arrow_down_menu.png" />
-                        
+
                     </button>
                 </div>
-              
+
 
             </asp:Panel>
             <div style="clear: both; width: 100%;"></div>
-            <div style="float:left;">
+            <div style="float: left;">
                 <asp:Label ID="MasterEntity" runat="server" Visible="false"></asp:Label>
             </div>
 
-            <div style="float:left;padding-left: 6px;">
+            <div style="float: left; padding-left: 6px;">
                 <asp:Label ID="CurrentPeriodQuery" runat="server" ForeColor="Red"></asp:Label>
             </div>
-            <div style="float:left;padding-left: 6px;">
+            <div style="float: left; padding-left: 6px;">
                 <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
                 <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
             </div>
-            <div style="float:left;padding-left: 6px;">
+            <div style="float: left; padding-left: 6px;">
                 <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
             </div>
             <div style="clear: both; width: 100%;"></div>
-            
-            <div class="slidingDiv1" style="display: none;background:#f0f8ff;">
+
+            <div class="slidingDiv1" style="display: none; background: #f0f8ff;">
                 <div class="content-box3">
                     <div class="title">
                         <img src="Images/query.png" />
@@ -351,25 +351,28 @@
                     </div>
                     <div class="content">
                         <div>
-                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
-                                        <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
-                                    </div>
-                        <div>
-                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-
-                        <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
-                        <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
-                            <asp:ListItem Text="" Value=""></asp:ListItem>
-                        </asp:DropDownList>
+                            <button type="button" onclick="x18_querybuilder()">
+                            <img src="Images/label.png" />Filtrování podle štítků</button>
+                            <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr podle štítků" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                            <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>                            
                         </div>
-                        <div style="margin-top:20px;">
+                        <div>
+                            <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+
+                            <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">
+                                <img src="Images/query.png" />Návrhář filtrů</button>
+                            <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
+                                <asp:ListItem Text="" Value=""></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div style="margin-top: 20px;">
                             <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
-                        </asp:DropDownList>
-                        <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
+                            </asp:DropDownList>
+                            <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="content-box3" style="margin-top: 20px;">
                     <div class="title">
                         <img src="Images/batch.png" />

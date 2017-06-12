@@ -59,14 +59,14 @@ Public Class approving_framework
                     .Add("approving_framework-j70id-j02")
                     .Add("approving_framework-chkFirstLastCount")
                     .Add("approving_framework-cbxScrollingFlag")
-                    .Add("x18_querybuilder-value-p41")
-                    .Add("x18_querybuilder-text-p41")
-                    .Add("x18_querybuilder-value-p28")
-                    .Add("x18_querybuilder-text-p28")
-                    .Add("x18_querybuilder-value-j02")
-                    .Add("x18_querybuilder-text-j02")
-                    .Add("x18_querybuilder-value-p56")
-                    .Add("x18_querybuilder-text-p56")
+                    .Add("x18_querybuilder-value-p41-approve")
+                    .Add("x18_querybuilder-text-p41-approve")
+                    .Add("x18_querybuilder-value-p28-approve")
+                    .Add("x18_querybuilder-text-p28-approve")
+                    .Add("x18_querybuilder-value-j02-approve")
+                    .Add("x18_querybuilder-text-j02-approve")
+                    .Add("x18_querybuilder-value-p56-approve")
+                    .Add("x18_querybuilder-text-p56-approve")
                 End With
 
                 With .Factory.j03UserBL
@@ -86,8 +86,8 @@ Public Class approving_framework
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("approving_framework-groupby-" & Me.CurrentPrefix, ""))
                     Me.chkKusovnik.Checked = BO.BAS.BG(.GetUserParam("approving_framework-kusovnik", "0"))
                     basUI.SelectRadiolistValue(Me.cbxScrollingFlag, .GetUserParam("approving_framework-cbxScrollingFlag", "2"))
-                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix)
-                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix)
+                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-approve")
+                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-approve")
                 End With
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact

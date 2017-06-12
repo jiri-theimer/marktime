@@ -103,8 +103,8 @@ Public Class entity_framework
                     .Add(Me.CurrentPrefix + "_framework-filter_setting")
                     .Add(Me.CurrentPrefix + "_framework-filter_sql")
                     .Add(Me.CurrentPrefix + "_framework-layout")
-                    .Add("x18_querybuilder-value-" & Me.CurrentPrefix)
-                    .Add("x18_querybuilder-text-" & Me.CurrentPrefix)
+                    .Add("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid")
+                    .Add("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
                 cbxGroupBy.DataBind()
@@ -157,8 +157,8 @@ Public Class entity_framework
                         period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                         period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
                     End If
-                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix)
-                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix)
+                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid")
+                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
                 End With
             End With
 
@@ -706,6 +706,7 @@ Public Class entity_framework
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
             .j70ID = Me.CurrentJ70ID
+            .x18Value = Me.hidX18_value.Value
         End With
     End Sub
     Private Sub InhaleMyQuery_p28(ByRef mq As BO.myQueryP28)
@@ -1189,6 +1190,9 @@ Public Class entity_framework
         End If
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
+            cmdClearX18.Visible = True
+        Else
+            cmdClearX18.Visible = False
         End If
         If panSearchbox.Visible Then
             Select Case Me.CurrentPrefix
@@ -1248,6 +1252,14 @@ Public Class entity_framework
   
     Private Sub opgLayout_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgLayout.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_framework-layout", Me.opgLayout.SelectedValue)
+        ReloadPage()
+    End Sub
+
+    Private Sub cmdClearX18_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearX18.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid", "")
+            .SetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid", "")
+        End With
         ReloadPage()
     End Sub
 End Class

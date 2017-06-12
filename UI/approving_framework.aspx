@@ -152,7 +152,7 @@
             sw_master("p31_move2bin.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids + "&direction=" + direction, "Images/bin.png", true);
         }
         function x18_querybuilder() {
-            sw_master("x18_querybuilder.aspx?prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
+            sw_master("x18_querybuilder.aspx?key=approve&prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
 
         }
     </script>

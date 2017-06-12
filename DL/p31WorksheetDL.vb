@@ -481,6 +481,9 @@
                 End Select
             End If
             If _curUser.j02WorksheetAccessFlag = 1 Then s.Append(" AND a.p91ID IS NULL") 'absolutně bez práva vidět vyfakturované úkony
+            If .x18Value <> "" Then
+                s.Append(bas.CompleteX18QuerySql("p31", .x18Value)) 'filtr podle štítků
+            End If
         End With
 
         Return bas.TrimWHERE(s.ToString)

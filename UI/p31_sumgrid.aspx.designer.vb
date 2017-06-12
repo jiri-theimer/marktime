@@ -347,6 +347,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents hidGridColumnSql As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidX18_value control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidX18_value As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdHardRefresh control.
     '''</summary>
     '''<remarks>

@@ -502,6 +502,9 @@
                 s.Append(")")
                 pars.Add("expr", .SearchExpression, DbType.String)
             End If
+            If .x18Value <> "" Then
+                s.Append(bas.CompleteX18QuerySql("p41", .x18Value))
+            End If
         End With
         Return bas.TrimWHERE(s.ToString)
     End Function

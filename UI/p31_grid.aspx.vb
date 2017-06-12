@@ -78,8 +78,8 @@ Public Class p31_grid
                     .Add("p31_grid-filter_setting")
                     .Add("p31_grid-filter_sql")
                     .Add("p31_grid-tabqueryflag")
-                    .Add("x18_querybuilder-value-p31")
-                    .Add("x18_querybuilder-text-p31")
+                    .Add("x18_querybuilder-value-p31-p31grid")
+                    .Add("x18_querybuilder-text-p31-p31grid")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
                 cbxGroupBy.DataBind()
@@ -96,8 +96,8 @@ Public Class p31_grid
                     basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("p31_grid-periodtype", "p31Date"))
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
-                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31")
-                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31")
+                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
+                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
                 End With
                 
                
@@ -504,6 +504,7 @@ Public Class p31_grid
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
             
             .TabAutoQuery = cbxTabQueryFlag.SelectedValue
+            .x18Value = Me.hidX18_value.Value
         End With
     End Sub
 
@@ -568,6 +569,9 @@ Public Class p31_grid
         End With
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
+            cmdClearX18.Visible = True
+        Else
+            cmdClearX18.Visible = False
         End If
         With Me.cbxPeriodType
             Select Case .SelectedIndex
@@ -696,6 +700,13 @@ Public Class p31_grid
 
     Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-periodtype", Me.cbxPeriodType.SelectedValue)
+        ReloadPage()
+    End Sub
+    Private Sub cmdClearX18_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearX18.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("x18_querybuilder-value-p31-p31grid", "")
+            .SetUserParam("x18_querybuilder-text-p31-p31grid", "")
+        End With
         ReloadPage()
     End Sub
 End Class

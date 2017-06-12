@@ -122,6 +122,15 @@ Partial Public Class entity_framework
     Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''cmdClearX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClearX18 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''x18_querybuilder_info control.
     '''</summary>
     '''<remarks>

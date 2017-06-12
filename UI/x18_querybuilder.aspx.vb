@@ -19,6 +19,7 @@ Public Class x18_querybuilder
                 Master.StopPage("prefix is missing.")
             End If
             hidPrefix.Value = Request.Item("prefix")
+            hidKey.Value = Request.Item("key")
 
             With Master
                 .HeaderIcon = "Images/query_32.png"
@@ -29,10 +30,10 @@ Public Class x18_querybuilder
             End With
 
             With Master.Factory.j03UserBL
-                .InhaleUserParams("x18_querybuilder-value-" & hidPrefix.Value, "x18_querybuilder-value-" & hidPrefix.Value)
+                .InhaleUserParams("x18_querybuilder-value-" & hidPrefix.Value & "-" & hidKey.Value, "x18_querybuilder-value-" & hidPrefix.Value & "-" & hidKey.Value)
 
                 SetupTree()
-                Dim strDefs As String = .GetUserParam("x18_querybuilder-value-" & hidPrefix.Value)
+                Dim strDefs As String = .GetUserParam("x18_querybuilder-value-" & hidPrefix.Value & "-" & hidKey.Value)
                 If strDefs <> "" Then
                     Dim defs As List(Of String) = BO.BAS.ConvertDelimitedString2List(strDefs, "|")
                     For Each s In defs
@@ -63,7 +64,7 @@ Public Class x18_querybuilder
         tr1.Nodes.Add(nParent)
         Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, Me.CurrentX29ID)
         For Each c In lisX18
-            WN(c, hidPrefix.Value & "-" & c.PID.ToString, nParent)
+            WN(c, hidPrefix.Value & "-" & Right("0000" & c.PID.ToString, 4), nParent)
         Next
 
         Select Case Me.CurrentX29ID
@@ -72,7 +73,7 @@ Public Class x18_querybuilder
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta projektu", "p28", nParent)
                     For Each c In lisX18
-                        WN(c, "p28-" & c.PID.ToString, nParent)
+                        WN(c, "p28" & "-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
 
@@ -82,7 +83,7 @@ Public Class x18_querybuilder
                     nParent = WN0("Štítky projektu", "p41", nParent)
 
                     For Each c In lisX18
-                        WN(c, "p41-" & c.PID.ToString, nParent)
+                        WN(c, "p41" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
@@ -90,7 +91,7 @@ Public Class x18_querybuilder
                     nParent = WN0("Štítky klienta projektu", "p28", nParent)
 
                     For Each c In lisX18
-                        WN(c, "p28-" & c.PID.ToString, nParent)
+                        WN(c, "p28" & "-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
             Case BO.x29IdEnum.p91Invoice
@@ -98,7 +99,7 @@ Public Class x18_querybuilder
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta faktury", "p28", nParent)
                     For Each c In lisX18
-                        WN(c, "p28-" & c.PID.ToString, nParent)
+                        WN(c, "p28" & "-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
         End Select
@@ -138,11 +139,29 @@ Public Class x18_querybuilder
             Dim lis As List(Of RadTreeNode) = Me.tr1.CheckedNodes
             If lis.Count > 0 Then
                 strV = String.Join("|", lis.Select(Function(p) p.Value))
-                strT = String.Join(", ", lis.Select(Function(p) p.Text & "(" & p.ParentNode.Text & ")"))
+                Dim strLast As String = "", s As String = ""
+                For Each c In tr1.GetAllNodes.Where(Function(p) p.Nodes.Count > 0 And Not p.ParentNode Is Nothing)
+                    Dim ss As String = ""
+                    For Each n In c.GetAllNodes.Where(Function(p) p.Checked = True)
+                        If ss = "" Then
+                            ss = n.Text
+                        Else
+                            ss += ", " & n.Text
+                        End If
+                    Next
+                    If ss <> "" Then
+                        If strT = "" Then
+                            strT = "<span style='color:green;'>[" & c.Text & "]</span> = " & ss
+                        Else
+                            strT += "<span style='color:green;'> [" & c.Text & "]</span> = " & ss
+                        End If
+                    End If
+                Next
+                
             End If
             With Master.Factory.j03UserBL
-                .SetUserParam("x18_querybuilder-value-" & hidPrefix.Value, strV)
-                .SetUserParam("x18_querybuilder-text-" & hidPrefix.Value, strT)
+                .SetUserParam("x18_querybuilder-value-" & hidPrefix.Value & "-" & hidKey.Value, strV)
+                .SetUserParam("x18_querybuilder-text-" & hidPrefix.Value & "-" & hidKey.Value, strT)
             End With
             Master.CloseAndRefreshParent("x18_querybuilder")
         End If

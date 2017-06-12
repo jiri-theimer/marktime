@@ -983,11 +983,11 @@ div.menu-group-item {
     text-align:center;
     border:solid;
     border-width:1px;
-    border-color:silver;
+    border-color:gray;
     vertical-align: middle;
     border-radius: 6px;
     margin-left: 1px;
-    background-color: #99CCFF;
+    background-color:whitesmoke;
     color:black;
     margin-left:10px;
 }

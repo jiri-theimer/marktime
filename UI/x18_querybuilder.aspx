@@ -21,6 +21,7 @@
 
 
     <asp:HiddenField ID="hidPrefix" runat="server" />
+    <asp:HiddenField ID="hidKey" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

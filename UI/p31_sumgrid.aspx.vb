@@ -55,6 +55,8 @@ Public Class p31_sumgrid
                 .Add("p31_sumgrid-pagesize")
                 .Add("p31_sumgrid-chkFirstLastCount")
                 .Add("p31_grid-tabqueryflag")
+                .Add("x18_querybuilder-value-p31-p31grid")
+                .Add("x18_querybuilder-text-p31-p31grid")
             End With
 
 
@@ -76,7 +78,8 @@ Public Class p31_sumgrid
 
                 
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
-
+                hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
+                Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
             End With
 
 
@@ -445,7 +448,7 @@ Public Class p31_sumgrid
     End Sub
 
     Private Sub p31_sumgrid_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
-        
+        Me.CurrentQuery.Text = ""
         With Me.j70ID
             If .SelectedIndex > 0 Then
                 hidJ70ID.Value = .SelectedValue
@@ -454,11 +457,13 @@ Public Class p31_sumgrid
                 Me.clue_query.Visible = True
                 Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
             Else
-                Me.CurrentQuery.Text = ""
                 Me.clue_query.Visible = False
                 hidJ70ID.Value = ""
             End If
         End With
+        If hidX18_value.Value <> "" Then
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
+        End If
 
         With Me.period1
             If .SelectedValue <> "" Then

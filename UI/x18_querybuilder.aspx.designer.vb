@@ -59,6 +59,15 @@ Partial Public Class x18_querybuilder
     Protected WithEvents hidPrefix As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidKey control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidKey As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>
