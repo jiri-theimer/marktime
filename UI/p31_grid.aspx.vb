@@ -78,6 +78,8 @@ Public Class p31_grid
                     .Add("p31_grid-filter_setting")
                     .Add("p31_grid-filter_sql")
                     .Add("p31_grid-tabqueryflag")
+                    .Add("x18_querybuilder-value-p31")
+                    .Add("x18_querybuilder-text-p31")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
                 cbxGroupBy.DataBind()
@@ -94,6 +96,8 @@ Public Class p31_grid
                     basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("p31_grid-periodtype", "p31Date"))
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
+                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31")
+                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31")
                 End With
                 
                
@@ -550,10 +554,9 @@ Public Class p31_grid
         Else
             cmdCĺearFilter.Visible = False
         End If
+        Me.CurrentQuery.Text = ""
         If Me.CurrentJ70ID > 0 Then
             Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-        Else
-            Me.CurrentQuery.Text = ""
         End If
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
@@ -563,6 +566,9 @@ Public Class p31_grid
                 .BackColor = Nothing
             End If
         End With
+        If hidX18_value.Value <> "" Then
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
+        End If
         With Me.cbxPeriodType
             Select Case .SelectedIndex
                 Case 1 : .BackColor = Drawing.Color.LightSkyBlue

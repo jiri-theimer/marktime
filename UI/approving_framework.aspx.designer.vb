@@ -59,6 +59,15 @@ Partial Public Class approving_framework
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
+    '''x18_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''j70ID control.
     '''</summary>
     '''<remarks>
@@ -228,6 +237,15 @@ Partial Public Class approving_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidX18_value control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidX18_value As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

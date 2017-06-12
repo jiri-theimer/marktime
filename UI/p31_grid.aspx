@@ -172,7 +172,7 @@
 
         }
         function x18_querybuilder() {            
-            sw_master("x18_querybuilder.aspx?prefix=p31", "Images/label.png");
+            sw_master("x18_querybuilder.aspx?prefix=p31", "Images/query.png");
 
         }
 
@@ -231,6 +231,7 @@
                                 <div class="content">
                                     <div class="div6">
                                         <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                     </div>
                                     <div class="div6">
                                         <span class="val">Druh úkonů:</span>
@@ -246,7 +247,7 @@
 
                                         <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 220px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
-                                        <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
+                                        <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
                                     </div>
 
                                 </div>
@@ -379,6 +380,8 @@
     <asp:HiddenField ID="hidSGA" runat="server" />
     <asp:HiddenField ID="hidSGV" runat="server" />
     <asp:HiddenField ID="hidUIFlag" runat="server" />
+    <asp:HiddenField ID="hidX18_value" runat="server" />
+    
 
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
 </asp:Content>

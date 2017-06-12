@@ -59,7 +59,14 @@ Public Class approving_framework
                     .Add("approving_framework-j70id-j02")
                     .Add("approving_framework-chkFirstLastCount")
                     .Add("approving_framework-cbxScrollingFlag")
-
+                    .Add("x18_querybuilder-value-p41")
+                    .Add("x18_querybuilder-text-p41")
+                    .Add("x18_querybuilder-value-p28")
+                    .Add("x18_querybuilder-text-p28")
+                    .Add("x18_querybuilder-value-j02")
+                    .Add("x18_querybuilder-text-j02")
+                    .Add("x18_querybuilder-value-p56")
+                    .Add("x18_querybuilder-text-p56")
                 End With
 
                 With .Factory.j03UserBL
@@ -79,7 +86,8 @@ Public Class approving_framework
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("approving_framework-groupby-" & Me.CurrentPrefix, ""))
                     Me.chkKusovnik.Checked = BO.BAS.BG(.GetUserParam("approving_framework-kusovnik", "0"))
                     basUI.SelectRadiolistValue(Me.cbxScrollingFlag, .GetUserParam("approving_framework-cbxScrollingFlag", "2"))
-
+                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix)
+                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix)
                 End With
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
@@ -289,10 +297,12 @@ Public Class approving_framework
 
     Private Sub approving_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         basUIMT.RenderQueryCombo(Me.j70ID)
+        Me.CurrentQuery.Text = ""
         If Me.CurrentJ70ID > 0 Then
             Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-        Else
-            Me.CurrentQuery.Text = ""
+        End If
+        If hidX18_value.Value <> "" Then
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
         End If
         With Me.period1
             If .SelectedValue <> "" Then
@@ -339,7 +349,7 @@ Public Class approving_framework
         Select Case Me.hidHardRefreshFlag.Value
             Case "pdf", "xls", "doc"
                 basUIMT.Handle_GridTelerikExport(grid1, Me.hidHardRefreshFlag.Value)
-            Case "j70-run"
+            Case "j70-run", "x18_querybuilder"
                 ReloadPage()
             Case Else
                 grid1.Rebind(False)

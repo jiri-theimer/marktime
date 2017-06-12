@@ -53,6 +53,10 @@
                                 </div>
                                 <div class="content">
                                     <div class="div6">
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                    </div>
+                                    <div class="div6">
                                     <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">
                                         <asp:ListItem Text="--Druh úkonů--" Value="p31" Selected="true"></asp:ListItem>
                                         <asp:ListItem Text="Pouze hodiny" Value="time"></asp:ListItem>
@@ -249,6 +253,10 @@
             var pid = document.getElementById("<%=me.j77ID.clientid%>").value;
 
             sw_master("sumgrid_designer.aspx?pid=" + pid + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid, "Images/setting.png");
+
+        }
+        function x18_querybuilder() {
+            sw_master("x18_querybuilder.aspx?prefix=<%=Me.hidMasterPrefix.Value%>", "Images/query.png");
 
         }
 

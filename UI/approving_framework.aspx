@@ -151,6 +151,10 @@
 
             sw_master("p31_move2bin.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + pids + "&direction=" + direction, "Images/bin.png", true);
         }
+        function x18_querybuilder() {
+            sw_master("x18_querybuilder.aspx?prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -204,9 +208,14 @@
                                     <span>Filtrování dat</span>
                                 </div>
                                 <div class="content">
+                                    <div class="div6">
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                    </div>
+                                    <div class="div6">
                                     <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                                    <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
-
+                                    <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
+                                    </div>
                                 </div>
                             </div>
                             <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
@@ -296,4 +305,5 @@
     <asp:HiddenField ID="hidCurPID" runat="server" />
     <asp:HiddenField ID="hidCurPrefix" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
+    <asp:HiddenField ID="hidX18_value" runat="server" />
 </asp:Content>

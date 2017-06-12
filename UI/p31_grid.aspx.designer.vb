@@ -50,6 +50,15 @@ Partial Public Class p31_grid
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
+    '''x18_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cbxTabQueryFlag control.
     '''</summary>
     '''<remarks>
@@ -426,6 +435,15 @@ Partial Public Class p31_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidUIFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidX18_value control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidX18_value As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdRefresh control.

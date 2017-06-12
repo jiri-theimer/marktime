@@ -294,6 +294,10 @@
             location.replace("p31_sumgrid.aspx?masterprefix=<%=me.CurrentPrefix%>&masterpid=" + pids);
 
         }
+        function x18_querybuilder() {
+            sw_master("x18_querybuilder.aspx?prefix=<%=Me.CurrentPrefix%>", "Images/query.png");
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -347,9 +351,13 @@
                     </div>
                     <div class="content">
                         <div>
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                    </div>
+                        <div>
                         <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
-                        <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">Návrhář filtrů</button>
+                        <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
                         <asp:DropDownList ID="cbxQueryFlag" runat="server" AutoPostBack="true">
                             <asp:ListItem Text="" Value=""></asp:ListItem>
                         </asp:DropDownList>
@@ -471,7 +479,7 @@
             <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
-
+            <asp:HiddenField ID="hidX18_value" runat="server" />
 
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">

@@ -9,11 +9,14 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <span class="val">Zaškrtněte jeden nebo více položek šítků</span>
+        <span class="val">Zaškrtněte jednu nebo více položek šítků</span>
+        <asp:Button ID="cmdUncheckAll" runat="server" CssClass="cmd" Text="Odškrtnout vše" />
+        <asp:Button ID="cmdExpandAll" runat="server" CssClass="cmd" Text="Rozbalit vše" />
+        <asp:Button ID="cmdCollapseAll" runat="server" CssClass="cmd" Text="Sbalit vše" />
     </div>
     
 
-    <telerik:RadTreeView ID="tr1" runat="server" Skin="Default" ShowLineImages="false" SingleExpandPath="true" Height="500px" CheckBoxes="true">        
+    <telerik:RadTreeView ID="tr1" runat="server" Skin="Default" ShowLineImages="false" SingleExpandPath="false" Height="90%" CheckBoxes="true">        
     </telerik:RadTreeView>
 
 

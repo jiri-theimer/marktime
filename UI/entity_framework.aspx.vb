@@ -103,6 +103,8 @@ Public Class entity_framework
                     .Add(Me.CurrentPrefix + "_framework-filter_setting")
                     .Add(Me.CurrentPrefix + "_framework-filter_sql")
                     .Add(Me.CurrentPrefix + "_framework-layout")
+                    .Add("x18_querybuilder-value-" & Me.CurrentPrefix)
+                    .Add("x18_querybuilder-text-" & Me.CurrentPrefix)
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
                 cbxGroupBy.DataBind()
@@ -155,7 +157,8 @@ Public Class entity_framework
                         period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                         period1.SelectedValue = .GetUserParam(Me.CurrentPrefix + "_framework-period")
                     End If
-                    
+                    hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix)
+                    Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix)
                 End With
             End With
 
@@ -1180,10 +1183,12 @@ Public Class entity_framework
         Else
             cmdCĺearFilter.Visible = False
         End If
+        Me.CurrentQuery.Text = ""
         If Me.CurrentJ70ID > 0 Then
             Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-        Else
-            Me.CurrentQuery.Text = ""
+        End If
+        If hidX18_value.Value <> "" Then
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
         End If
         If panSearchbox.Visible Then
             Select Case Me.CurrentPrefix

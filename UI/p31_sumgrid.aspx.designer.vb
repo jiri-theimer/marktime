@@ -50,6 +50,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
+    '''x18_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cbxTabQueryFlag control.
     '''</summary>
     '''<remarks>

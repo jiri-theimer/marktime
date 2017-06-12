@@ -21,24 +21,45 @@ Public Class x18_querybuilder
             hidPrefix.Value = Request.Item("prefix")
 
             With Master
-                .HeaderIcon = "Images/label_32.png"
+                .HeaderIcon = "Images/query_32.png"
                 .HeaderText = "Filtrování podle štítků"
                 .AddToolbarButton(Resources.grid_designer.Vybrat, "ok", , "Images/ok.png")
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
 
             End With
-            Dim pids As List(Of Integer) = BO.BAS.ConvertPIDs2List(Request.Item("pids"))
 
-            SetupTree
+            With Master.Factory.j03UserBL
+                .InhaleUserParams("x18_querybuilder-value-" & hidPrefix.Value, "x18_querybuilder-value-" & hidPrefix.Value)
 
+                SetupTree()
+                Dim strDefs As String = .GetUserParam("x18_querybuilder-value-" & hidPrefix.Value)
+                If strDefs <> "" Then
+                    Dim defs As List(Of String) = BO.BAS.ConvertDelimitedString2List(strDefs, "|")
+                    For Each s In defs
+                        Dim n As RadTreeNode = tr1.FindNodeByValue(s)
+                        If Not n Is Nothing Then
+                            n.Checked = True
+                            If n.ParentNode Is Nothing Then n.ParentNode.Expanded = True
+                        End If
+                    Next
+                End If
+
+            End With
+
+
+            If tr1.GetAllNodes.Count < 25 Then
+                tr1.ExpandAllNodes()
+            End If
 
         End If
     End Sub
 
     Private Sub SetupTree()
+
         Dim nParent As RadTreeNode = WN0("Štítky", Me.hidPrefix.Value, Nothing)
         nParent.ImageUrl = "Images/folder.png"
         nParent.Checkable = False
+        nParent.Expanded = True
         tr1.Nodes.Add(nParent)
         Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, Me.CurrentX29ID)
         For Each c In lisX18
@@ -51,25 +72,25 @@ Public Class x18_querybuilder
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta projektu", "p28", nParent)
                     For Each c In lisX18
-                        WN(c, "a.p28ID_Client-" & c.PID.ToString, nParent)
+                        WN(c, "p28-" & c.PID.ToString, nParent)
                     Next
                 End If
-                
+
             Case BO.x29IdEnum.p31Worksheet
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky projektu", "p41", nParent)
-                    
+
                     For Each c In lisX18
-                        WN(c, "a.p28ID_Client-" & c.PID.ToString, nParent)
+                        WN(c, "p41-" & c.PID.ToString, nParent)
                     Next
                 End If
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta projektu", "p28", nParent)
-                    
+
                     For Each c In lisX18
-                        WN(c, "p41.p28ID_Client-" & c.PID.ToString, nParent)
+                        WN(c, "p28-" & c.PID.ToString, nParent)
                     Next
                 End If
             Case BO.x29IdEnum.p91Invoice
@@ -77,11 +98,11 @@ Public Class x18_querybuilder
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta faktury", "p28", nParent)
                     For Each c In lisX18
-                        WN(c, "p41.p28ID_Client-" & c.PID.ToString, nParent)
+                        WN(c, "p28-" & c.PID.ToString, nParent)
                     Next
                 End If
         End Select
-        tr1.ExpandAllNodes()
+
     End Sub
     Private Function WN0(strName As String, strValue As String, nParent As RadTreeNode) As RadTreeNode
         Dim n As RadTreeNode = New RadTreeNode(strName, strValue)
@@ -113,19 +134,32 @@ Public Class x18_querybuilder
 
     Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
         If strButtonValue = "ok" Then
-            Dim s As String = String.Join(",", GetCheckedNodes)
+            Dim strT As String = "", strV As String = ""
+            Dim lis As List(Of RadTreeNode) = Me.tr1.CheckedNodes
+            If lis.Count > 0 Then
+                strV = String.Join("|", lis.Select(Function(p) p.Value))
+                strT = String.Join(", ", lis.Select(Function(p) p.Text & "(" & p.ParentNode.Text & ")"))
+            End If
             With Master.Factory.j03UserBL
-                .SetUserParam("x18_querybuilder-" & hidPrefix.Value, s)
+                .SetUserParam("x18_querybuilder-value-" & hidPrefix.Value, strV)
+                .SetUserParam("x18_querybuilder-text-" & hidPrefix.Value, strT)
             End With
             Master.CloseAndRefreshParent("x18_querybuilder")
         End If
     End Sub
 
-    Private Function GetCheckedNodes() As List(Of String)
-        Dim lis As New List(Of String)
-        For Each c In Me.tr1.CheckedNodes
-            lis.Add(c.Value)
+    
+    Private Sub cmdUncheckAll_Click(sender As Object, e As EventArgs) Handles cmdUncheckAll.Click
+        For Each n In Me.tr1.CheckedNodes
+            n.Checked = False
         Next
-        Return lis
-    End Function
+    End Sub
+
+    Private Sub cmdExpandAll_Click(sender As Object, e As EventArgs) Handles cmdExpandAll.Click
+        tr1.ExpandAllNodes()
+    End Sub
+
+    Private Sub cmdCollapseAll_Click(sender As Object, e As EventArgs) Handles cmdCollapseAll.Click
+        tr1.CollapseAllNodes()
+    End Sub
 End Class
