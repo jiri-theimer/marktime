@@ -146,7 +146,7 @@ Public Class p31_sumgrid
             .ColumnFilteringExpression = hidGridColumnSql.Value
             .MG_AdditionalSqlWHERE = Me.hidMasterAW.Value
             .TabAutoQuery = Me.cbxTabQueryFlag.SelectedValue
-
+            .x18Value = Me.hidX18_value.Value
         End With
     End Sub
     
@@ -463,6 +463,9 @@ Public Class p31_sumgrid
         End With
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
+            cmdClearX18.Visible = True
+        Else
+            cmdClearX18.Visible = False
         End If
 
         With Me.period1
@@ -499,7 +502,7 @@ Public Class p31_sumgrid
                 GridExport("xls")
             Case "doc"
                 GridExport("doc")
-            Case "sumgrid_designer"
+            Case "sumgrid_designer", "x18_querybuilder"
                 ReloadPage()
             Case Else
                 grid1.Rebind(False)
@@ -547,6 +550,13 @@ Public Class p31_sumgrid
     End Sub
     Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-periodtype", Me.cbxPeriodType.SelectedValue)
+        ReloadPage()
+    End Sub
+    Private Sub cmdClearX18_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearX18.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("x18_querybuilder-value-p31-p31grid", "")
+            .SetUserParam("x18_querybuilder-text-p31-p31grid", "")
+        End With
         ReloadPage()
     End Sub
 End Class

@@ -80,9 +80,10 @@ Public Class x18_querybuilder
                 End If
 
             Case BO.x29IdEnum.p31Worksheet
+                Dim nS As RadTreeNode = nParent
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky projektu", "p41", nParent)
+                    nParent = WN0("Štítky projektu", "p41", nS)
 
                     For Each c In lisX18
                         WN(c, "p41-" & Right("0000" & c.PID.ToString, 4), nParent)
@@ -90,10 +91,18 @@ Public Class x18_querybuilder
                 End If
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
                 If lisX18.Count > 0 Then
-                    nParent = WN0("Štítky klienta projektu", "p28", nParent)
+                    nParent = WN0("Štítky klienta projektu", "p28", nS)
 
                     For Each c In lisX18
                         WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
+                    Next
+                End If
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person, -1)
+                If lisX18.Count > 0 Then
+                    nParent = WN0("Štítky osoby", "j02", nS)
+
+                    For Each c In lisX18
+                        WN(c, "j02-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
             Case BO.x29IdEnum.p91Invoice
@@ -102,6 +111,15 @@ Public Class x18_querybuilder
                     nParent = WN0("Štítky klienta faktury", "p28", nParent)
                     For Each c In lisX18
                         WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
+                    Next
+                End If
+            Case BO.x29IdEnum.p56Task
+                lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, -1)
+                If lisX18.Count > 0 Then
+                    nParent = WN0("Štítky projektu", "p41", nParent)
+
+                    For Each c In lisX18
+                        WN(c, "p41-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
         End Select

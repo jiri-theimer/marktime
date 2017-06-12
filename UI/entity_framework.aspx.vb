@@ -590,6 +590,7 @@ Public Class entity_framework
                     .MG_SortString = strPrimarySortField & "," & .MG_SortString
                 End If
             End If
+            .x18Value = Me.hidX18_value.Value
         End With
 
     End Sub
@@ -631,7 +632,7 @@ Public Class entity_framework
             .j70ID = Me.CurrentJ70ID
             .SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
 
-
+            .x18Value = Me.hidX18_value.Value
         End With
 
     End Sub
@@ -670,6 +671,7 @@ Public Class entity_framework
             .Closed = BO.BooleanQueryMode.NoQuery
             .j70ID = Me.CurrentJ70ID
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
+            .x18Value = Me.hidX18_value.Value
         End With
     End Sub
     Private Sub InhaleMyQuery_p41(ByRef mq As BO.myQueryP41)
@@ -737,7 +739,7 @@ Public Class entity_framework
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
             .j70ID = Me.CurrentJ70ID
-
+            .x18Value = Me.hidX18_value.Value
 
         End With
 
@@ -782,6 +784,7 @@ Public Class entity_framework
                 Case Else : .IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
             End Select
             .j70ID = Me.CurrentJ70ID
+            .x18Value = Me.hidX18_value.Value
         End With
     End Sub
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged

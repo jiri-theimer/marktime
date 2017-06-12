@@ -46,8 +46,9 @@ Public Class myQueryP28
     Public QuickQuery As myQueryP28_QuickQuery = myQueryP28_QuickQuery._NotSpecified
     Public SpecificQuery As myQueryP28_SpecificQuery = myQueryP28_SpecificQuery._NotSpecified
     Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat klienty, pokud je 0, pak přihlášený uživatel
-    Public Property x25ID As Integer    'štítek
+    'Public Property x25ID As Integer    'štítek
     Public Property TreeIndexFrom As Integer
     Public Property TreeIndexUntil As Integer
     Public Property p28TreeLevel As Integer = -1
+    Public Property x18Value As String  'filtrování podle štítků
 End Class

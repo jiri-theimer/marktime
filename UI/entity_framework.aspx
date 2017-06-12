@@ -353,10 +353,10 @@
                         <div>
                             <button type="button" onclick="x18_querybuilder()">
                             <img src="Images/label.png" />Filtrování podle štítků</button>
-                            <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr podle štítků" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                            <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                             <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>                            
                         </div>
-                        <div>
+                        <div style="margin-top: 20px;">
                             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
                             <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">

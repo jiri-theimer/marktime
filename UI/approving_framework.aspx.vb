@@ -290,7 +290,7 @@ Public Class approving_framework
 
 
 
-        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, Me.CurrentJ70ID)
+        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, Me.CurrentJ70ID, hidX18_value.Value)
 
         grid1.DataSource = lis
     End Sub
@@ -303,6 +303,9 @@ Public Class approving_framework
         End If
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
+            cmdClearX18.Visible = True
+        Else
+            cmdClearX18.Visible = False
         End If
         With Me.period1
             If .SelectedValue <> "" Then
@@ -391,6 +394,12 @@ Public Class approving_framework
         Master.Factory.j03UserBL.SetUserParam("approving_framework-cbxScrollingFlag", Me.cbxScrollingFlag.SelectedValue)
         ReloadPage()
     End Sub
-
+    Private Sub cmdClearX18_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearX18.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-approve", "")
+            .SetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-approve", "")
+        End With
+        ReloadPage()
+    End Sub
     
 End Class

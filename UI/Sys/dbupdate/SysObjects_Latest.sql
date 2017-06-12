@@ -2846,6 +2846,71 @@ END
 
 GO
 
+----------FN---------------stitek_hodnoty-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('stitek_hodnoty') and type = 'FN')
+ drop function stitek_hodnoty
+GO
+
+
+
+
+
+
+
+CREATE    FUNCTION [dbo].[stitek_hodnoty](@x18id int,@x29id int,@recpid int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené hodnoty štítkù
+
+ DECLARE @s nvarchar(2000) 
+
+if exists(select x18ID FROM x18EntityCategory WHERE x18ID=@x18id AND x18IsMultiSelect=1)
+begin
+select @s=COALESCE(@s + ', ', '')+x25.x25Name
+FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID
+where a.x18ID=@x18id and a.x29ID=@x29id AND a.x19RecordPID=@recpid
+end
+else
+begin
+select TOP 1 @s=x25.x25Name FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID
+where a.x18ID=@x18id and a.x29ID=@x29id AND a.x19RecordPID=@recpid
+end
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------x25_get_text-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('x25_get_text') and type = 'FN')
@@ -3132,6 +3197,86 @@ create function [dbo].[SplitString]
         from tokens
       )
 
+
+
+GO
+
+----------IF---------------tview_p28_wip-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_p28_wip') and type = 'IF')
+ drop function tview_p28_wip
+GO
+
+
+
+
+CREATE function [dbo].[tview_p28_wip] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select p41.p28ID_Client as p28ID
+,sum(a.p31Hours_Orig) as Hodiny
+,sum(case when a.p31Amount_WithoutVat_Orig<>0 then p31Amount_WithoutVat_Orig end) as Castka_Celkem
+,sum(case when p34.p33ID=1 then p31Amount_WithoutVat_Orig end) as Honorar
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Honorar_CZK
+,sum(case when p34.p33ID=1 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Honorar_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 then p31Amount_WithoutVat_Orig end) as Vydaje
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Vydaje_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=1 AND a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Vydaje_EUR
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 then p31Amount_WithoutVat_Orig end) as Odmeny
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=2 then p31Amount_WithoutVat_Orig end) as Odmeny_CZK
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 and a.j27ID_Billing_Orig=3 then p31Amount_WithoutVat_Orig end) as Odmeny_EUR
+,count(a.p41ID) as PocetProjektu
+from
+p31WorkSheet a
+INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p41.p28ID_Client IS NOT NULL AND a.p71ID IS NULL AND p31Date between @d1 and @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY p41.p28ID_Client
+
+      )
+
+
+
+GO
+
+----------IF---------------tview_p28_worksheet-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('tview_p28_worksheet') and type = 'IF')
+ drop function tview_p28_worksheet
+GO
+
+
+
+CREATE function [dbo].[tview_p28_worksheet] 
+    (
+        @d1 datetime,
+		@d2 datetime
+    )
+    returns table
+    AS
+    return (
+        select p41.p28ID_Client as p28ID
+,sum(a.p31Hours_Orig) as Vykazano_Hodiny
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN a.p31Amount_WithoutVat_Orig END) as Vykazano_Vydaje
+,sum(a.p31Hours_Invoiced) as Vyfakturovano_Hodiny
+,sum(a.p31Amount_WithoutVat_Invoiced_Domestic) as Vyfakturovano_Celkem_Domestic
+,sum(case when p34.p33ID=1 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Hodiny_Domestic
+,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Odmeny_Domestic
+from
+p31WorkSheet a
+INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
+INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
+INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+WHERE p41.p28ID_Client IS NOT NULL AND p31Date BETWEEN @d1 AND @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
+GROUP BY p41.p28ID_Client
+
+      )
 
 
 GO
@@ -4164,6 +4309,12 @@ BEGIN TRY
 
 	if exists(select j12ID FROM j12Team_Person where j02ID=@pid)
 	 DELETE FROM j12Team_Person WHERE j02ID=@pid
+
+	if exists(select j02ID FROM j02Person_FreeField WHERE j02ID=@pid)
+	 DELETE FROM j02Person_FreeField WHERE j02ID=@pid
+
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=102 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=102 AND x19RecordPID=@pid
 
 	if exists(SELECT p30ID FROM p30Contact_Person WHERE j02ID=@pid)
 	 DELETE FROM p30Contact_Person WHERE j02ID=@pid
@@ -6075,6 +6226,9 @@ BEGIN TRY
 	if exists(select o23ID FROM o23Notepad_FreeField WHERE o23ID=@pid)
 	 DELETE FROM o23Notepad_FreeField WHERE o23ID=@pid
 
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=223 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=223 AND x19RecordPID=@pid
+
 	if exists(select o43ID FROM o43ImapRobotHistory WHERE o23ID=@pid)
 	 DELETE FROM o43ImapRobotHistory WHERE o23ID=@pid
 
@@ -6722,6 +6876,9 @@ BEGIN TRY
 
 	if exists(select p28ID FROM p28Contact_FreeField WHERE p28ID=@pid)
 	 DELETE FROM p28Contact_FreeField WHERE p28ID=@pid
+
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=328 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=328 AND x19RecordPID=@pid
 
 	if exists(select p30ID FROM p30Contact_Person where p28ID=@pid)
 	 DELETE FROM p30Contact_Person where p28ID=@pid
@@ -7395,6 +7552,9 @@ BEGIN TRY
 
 	if exists(select p31ID FROM p31worksheet_FreeField WHERE p31ID=@pid)
 	 DELETE FROM p31WorkSheet_FreeField WHERE p31ID=@pid
+
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=331 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=331 AND x19RecordPID=@pid
 
 	if exists(select o23ID FROM o23Notepad WHERE p31ID=@pid)
 	 UPDATE o23Notepad SET p31ID=NULL WHERE p31ID=@pid
@@ -10770,6 +10930,9 @@ BEGIN TRY
 	if exists(select p41ID FROM p41Project_FreeField WHERE p41ID=@pid)
 	 DELETE FROM p41Project_FreeField WHERE p41ID=@pid
 
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=141 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=141 AND x19RecordPID=@pid
+
 	if exists(select o39ID FROM o39Project_Address WHERE p41ID=@pid)
 	 DELETE FROM o39Project_Address WHERE p41ID=@pid
 
@@ -11842,6 +12005,9 @@ BEGIN TRY
 	if exists(select p56ID FROM p56Task_FreeField WHERE p56ID=@pid)
 	 DELETE FROM p56Task_FreeField WHERE p56ID=@pid
 
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=356 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=356 AND x19RecordPID=@pid
+
 	if exists(select o43ID FROM o43ImapRobotHistory WHERE p56ID=@pid)
 	 DELETE FROM o43ImapRobotHistory WHERE p56ID=@pid
 
@@ -12642,6 +12808,9 @@ if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@pid)
 
 if exists(select p90ID FROM p90Proforma_FreeField WHERE p90ID=@pid)
   delete from p90Proforma_FreeField where p90id=@pid
+
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=390 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=390 AND x19RecordPID=@pid
 
 if exists(SELECT o22ID FROM o22Milestone WHERE p90ID=@pid)
   DELETE FROM o22Milestone WHERE p90ID=@pid
@@ -13449,7 +13618,8 @@ update p31Worksheet set p91ID=null,p70ID=null
 ,j27ID_Billing_Invoiced=null,j27ID_Billing_Invoiced_Domestic=null,p31Value_Invoiced=null,p31Rate_Billing_Invoiced=null
 ,p31Amount_WithoutVat_Invoiced=null,p31Amount_WithVat_Invoiced=null,p31Amount_Vat_Invoiced=null,p31VatRate_Invoiced=null
 ,p31Amount_WithoutVat_Invoiced_Domestic=null,p31Amount_WithVat_Invoiced_Domestic=null,p31Amount_Vat_Invoiced_Domestic=null
-,p31Minutes_Invoiced=null,p31HHMM_Invoiced=null,p31ExchangeRate_Invoice=null
+,p31Minutes_Invoiced=null,p31HHMM_Invoiced=null,p31Hours_Invoiced=null
+,p31ExchangeRate_Invoice=null
 where p91ID=@pid
 
 if exists(select p94ID FROM p94Invoice_Payment where p91ID=@pid)
@@ -13463,6 +13633,9 @@ if exists(select p96ID FROM p96Invoice_ExchangeRate where p91ID=@pid)
 
 if exists(select p91ID FROM p91Invoice_FreeField WHERE p91ID=@pid)
   delete from p91Invoice_FreeField where p91id=@pid
+
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=391 AND x19RecordPID=@pid)
+ DELETE FROM x19EntityCategory_Binding WHERE x29ID=391 AND x19RecordPID=@pid
 
 if exists(select p99ID FROM p99Invoice_Proforma WHERE p91ID=@pid)
   delete from p99Invoice_Proforma where p91id=@pid
@@ -14907,6 +15080,10 @@ CREATE   procedure [dbo].[x18_delete]
 AS
 --odstranìní záznamu kategorie z tabulky  èíselníku z tabulky x18EntityCategory
 
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE x18ID=@pid)
+ set @err_ret='Nelze odstranit, protože minimálnì jedna položka již byla použita v oštítkování nìjakého záznamu. Štítek mùžete pøesunout do archivu nebo vyèistit jeho vazby.'
+
+
 if isnull(@err_ret,'')<>''
  return 
 
@@ -14916,6 +15093,8 @@ BEGIN TRY
 	DELETE FROM x19EntityCategory_Binding WHERE x18ID=@pid
 
 	DELETE FROM x20EntiyToCategory WHERE x18ID=@pid
+
+	DELETE FROM x22EntiyCategory_Binding WHERE x18ID=@pid
 
 	delete from x18EntityCategory where x18ID=@pid
 
@@ -14971,7 +15150,7 @@ if exists(select x25ID FROM x25EntityField_ComboValue WHERE x23ID=@pid)
  set @err_ret='Èíselník obsahuje minimálnì jednu položku - je tøeba vyèistit položky èíselníku.'
 
 if exists(select x18ID FROM x18EntityCategory where x23ID=@pid)
- set @err_ret='Combo seznam má vazbu na minimálnì jednu kategorii.'
+ set @err_ret='Combo seznam má vazbu na minimálnì jeden štítek.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -15025,6 +15204,9 @@ CREATE   procedure [dbo].[x25_delete]
 
 AS
 --odstranìní záznamu položky èíselníku z tabulky x25EntityField_ComboValue
+
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE x25ID=@pid)
+ set @err_ret='Nelze odstranit, protože položka již byla použita v oštítkování nìjakého záznamu. Položku mùžete pøesunout do archivu.'
 
 if isnull(@err_ret,'')<>''
  return 
@@ -16142,6 +16324,177 @@ WHERE x40Recipient IS NOT NULL
 
 GO
 
+----------V---------------view_fulltext_invoice-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_fulltext_invoice') and type = 'V')
+ drop view view_fulltext_invoice
+GO
+
+
+
+
+CREATE VIEW [dbo].[view_fulltext_invoice]
+as
+select 'p91' as Prefix,'Kód' as Field,p91ID as RecPid,p91Code as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+UNION SELECT 'p91' as Prefix,'Text faktury' as Field,p91ID as RecPid,p91Text1 as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+WHERE p91Text1 IS NOT NULL
+UNION SELECT 'p91' as Prefix,'Technický text' as Field,p91ID as RecPid,p91Text2 as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+WHERE p91Text2 is not null
+UNION SELECT 'p91' as Prefix,'Klient faktury' as Field,p91ID as RecPid,p91Client as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+WHERE p91Client is not null
+UNION SELECT 'p91' as Prefix,'Osoba klienta' as Field,p91ID as RecPid,p91ClientPerson as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+WHERE p91ClientPerson is not null
+UNION SELECT 'p91' as Prefix,'IÈ' as Field,p91ID as RecPid,p91Client_RegID as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+WHERE p91Client_RegID is not null
+UNION SELECT 'p91' as Prefix,'DIÈ' as Field,p91ID as RecPid,p91Client_VatID as RecValue,NULL as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+WHERE p91Client_VatID is not null
+UNION SELECT 'p91' as Prefix,'Adresa faktury' as Field,p91ID as RecPid
+,isnull(p91ClientAddress1_Street,'')+isnull(', '+p91ClientAddress1_City,'')+isnull(', '+p91ClientAddress1_ZIP,'') as RecValue
+,p91ClientAddress1_Country as RecComment,p91Code+isnull('/'+p91Client,'') as RecName,p91DateInsert as RecDateInsert
+from
+p91Invoice
+WHERE p91ClientAddress1_Street is not null
+UNION select 'p90' as Prefix,'Kód' as Field,a.p90ID as RecPid,a.p90Code as RecValue,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
+from
+p90Proforma a INNER JOIN p28Contact b ON a.p28ID=b.p28ID
+UNION select 'p90' as Prefix,'Text zálohy' as Field,a.p90ID as RecPid,a.p90Text1 as RecValue,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
+from
+p90Proforma a INNER JOIN p28Contact b ON a.p28ID=b.p28ID
+WHERE p90Text1 IS NOT NULL
+UNION select 'p90' as Prefix,'Klient zálohy' as Field,a.p90ID as RecPid
+,b.p28Name+isnull(', '+b.p28RegID,'')+isnull(', '+b.p28VatID,'') as RecValue
+,NULL as RecComment,a.p90Code+'/'+b.p28Name as RecName,a.p90DateInsert as RecDateInsert
+from
+p90Proforma a INNER JOIN p28Contact b ON a.p28ID=b.p28ID
+
+
+
+GO
+
+----------V---------------view_fulltext_main-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_fulltext_main') and type = 'V')
+ drop view view_fulltext_main
+GO
+
+
+
+
+CREATE VIEW [dbo].[view_fulltext_main]
+as
+select 'p41' as Prefix,'Kód' as Field,p41ID as RecPid,p41Code as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+from
+p41Project
+UNION SELECT 'p41' as Prefix,'Název' as Field,p41ID as RecPid,p41Name as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+from
+p41Project
+UNION SELECT 'p41' as Prefix,'Zkrácený název' as Field,p41ID as RecPid,p41NameShort as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+from
+p41Project
+WHERE p41NameShort is not null
+UNION SELECT 'p41' as Prefix,'Fakturaèní poznámka' as Field,p41ID as RecPid,p41BillingMemo as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+from
+p41Project
+WHERE p41BillingMemo is not null
+UNION SELECT 'p41' as Prefix,'Výchozí text faktury' as Field,p41ID as RecPid,p41InvoiceDefaultText1 as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+from
+p41Project
+WHERE p41InvoiceDefaultText1 is not null
+UNION SELECT 'p41' as Prefix,'Výchozí technický text faktury' as Field,p41ID as RecPid,p41InvoiceDefaultText2 as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+from
+p41Project
+WHERE p41InvoiceDefaultText2 is not null
+UNION SELECT 'p41' as Prefix,'Externí kód' as Field,p41ID as RecPid,p41ExternalPID as RecValue,NULL as RecComment,p41Code+' - '+p41Name as RecName,p41DateInsert as RecDateInsert
+from
+p41Project
+WHERE p41ExternalPID is not null
+UNION SELECT 'p28' as Prefix,'Kód' as Field,p28ID as RecPid,p28Code as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+UNION SELECT 'p28' as Prefix,'Název' as Field,p28ID as RecPid,p28Name as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+UNION SELECT 'p28' as Prefix,'IÈ' as Field,p28ID as RecPid,p28RegID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+WHERE p28RegID IS NOT NULL
+UNION SELECT 'p28' as Prefix,'DIÈ' as Field,p28ID as RecPid,p28VatID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+WHERE p28VatID IS NOT NULL
+UNION SELECT 'p28' as Prefix,'Výchozí text faktury' as Field,p28ID as RecPid,p28InvoiceDefaultText1 as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+WHERE p28InvoiceDefaultText1 IS NOT NULL
+UNION SELECT 'p28' as Prefix,'Výchozí technický text faktury' as Field,p28ID as RecPid,p28InvoiceDefaultText2 as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+WHERE p28InvoiceDefaultText2 IS NOT NULL
+UNION SELECT 'p28' as Prefix,'Externí kód' as Field,p28ID as RecPid,p28ExternalPID as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+WHERE p28ExternalPID IS NOT NULL
+UNION SELECT 'p28' as Prefix,'Fakturaèní poznámka' as Field,p28ID as RecPid,p28BillingMemo as RecValue,NULL as RecComment,p28Code+' - '+p28Code as RecName,p28DateInsert as RecDateInsert
+from
+p28Contact
+WHERE p28BillingMemo IS NOT NULL
+UNION SELECT 'p28' as Prefix,'Kontaktní médium klienta' as Field,a.p28ID as RecPid,b.o33Name+': '+a.o32Value as RecValue,NULL as RecComment,c.p28Code+' - '+c.p28Code as RecName,a.o32DateInsert as RecDateInsert
+FROM
+o32Contact_Medium a INNER JOIN o33MediumType b ON a.o33ID=b.o33ID INNER JOIN p28Contact c ON a.p28ID=c.p28ID
+UNION SELECT 'p28' as Prefix,'Adresa klienta' as Field,b.p28ID as RecPid
+,isnull(a.o38Name+': ','')+isnull(a.o38Street+', ','')+isnull(a.o38City,'')+isnull(' '+a.o38ZIP,'') as RecValue,a.o38Country as RecComment
+,c.p28Code+' - '+c.p28Code as RecName,c.p28DateInsert as RecDateInsert
+FROM o38Address a INNER JOIN o37Contact_Address b ON a.o38ID=b.o38ID INNER JOIN p28Contact c ON b.p28ID=c.p28ID
+UNION SELECT 'j02' as Prefix,'Osoba' as Field,a.j02ID as RecPid
+,a.j02LastName+' '+a.j02FirstName+isnull(' '+a.j02TitleBeforeName,'')+isnull(' <'+a.j02Email+'>','')+isnull(', '+a.j02Mobile,'') as RecValue
+,isnull(c.p28Name,'')+isnull(', '+a.j02JobTitle,'')+isnull(', '+a.j02Office,'') as RecComment
+,a.j02LastName+' '+a.j02FirstName as RecName,a.j02DateInsert as RecDateInsert
+FROM j02Person a LEFT OUTER JOIN p30Contact_Person b ON a.j02ID=b.j02ID LEFT OUTER JOIN p28Contact c ON b.p28ID=c.p28ID
+
+
+
+GO
+
+----------V---------------view_fulltext_task-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_fulltext_task') and type = 'V')
+ drop view view_fulltext_task
+GO
+
+
+
+
+CREATE VIEW [dbo].[view_fulltext_task]
+as
+select 'p56' as Prefix,'Kód' as Field,a.p56ID as RecPid,a.p56Code as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
+from
+p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
+UNION select 'p56' as Prefix,'Název úkolu' as Field,a.p56ID as RecPid,a.p56Name as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
+from
+p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
+UNION select 'p56' as Prefix,'Podrobný popis' as Field,a.p56ID as RecPid,a.p56Description as RecValue,NULL as RecComment,b.p41Name+'/'+a.p56Name as RecName,a.p56DateInsert as RecDateInsert
+from
+p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
+WHERE a.p56Description IS NOT NULL
+
+
+
+GO
+
 ----------V---------------view_LastWorksheetDateOfPerson-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('view_LastWorksheetDateOfPerson') and type = 'V')
@@ -16354,11 +16707,12 @@ GO
 
 
 
+
 CREATE VIEW [dbo].[view_p41_worksheet]
 as
 select a.p41ID
 ,sum(a.p31Hours_Orig) as Vykazano_Hodiny
-,sum(a.p31Hours_Invoiced) as Vyfakturovano_Hodiny
+,sum(case when a.p70ID=4 then a.p31Hours_Invoiced end) as Vyfakturovano_Hodiny
 ,sum(a.p31Amount_WithoutVat_Invoiced_Domestic) as Vyfakturovano_Celkem_Domestic
 ,sum(case when p34.p33ID=1 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Hodiny_Domestic
 ,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Odmeny_Domestic
@@ -16368,6 +16722,7 @@ INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
 WHERE getdate() between a.p31ValidFrom and a.p31ValidUntil
 GROUP BY a.p41ID
+
 
 
 

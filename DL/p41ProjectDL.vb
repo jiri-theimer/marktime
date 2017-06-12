@@ -481,7 +481,7 @@
                     s.Append(" AND " & strQueryW)
                 End If
             End If
-            If .x25ID > 0 Then s.Append(" AND a.p41ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=141 AND x25ID=" & .x25ID.ToString & ")")
+            'If .x25ID > 0 Then s.Append(" AND a.p41ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=141 AND x25ID=" & .x25ID.ToString & ")")
             If .x67ID_ProjectRole > 0 Then
                 s.Append(" AND a.p41ID IN (SELECT x69RecordPID FROM x69EntityRole_Assign WHERE x67ID=@x67id AND (j02ID=@j02id_query OR j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))")
                 pars.Add("x67id", .x67ID_ProjectRole, DbType.Int32)

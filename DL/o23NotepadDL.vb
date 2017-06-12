@@ -201,7 +201,7 @@
                     strW += " AND " & strQueryW
                 End If
             End If
-            If .x25ID > 0 Then strW += " AND a.o23ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=223 AND x25ID=" & .x25ID.ToString & ")"
+            'If .x25ID > 0 Then strW += " AND a.o23ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=223 AND x25ID=" & .x25ID.ToString & ")"
             Select Case .SpecificQuery
                 Case BO.myQueryO23_SpecificQuery.AllowedForRead
                     If Not _curUser.IsAdmin Then    'admin má automaticky nárok na všechny dokumenty
@@ -223,6 +223,9 @@
                 strW += "a.o23Name LIKE '%'+@expr+'%' OR a.o23Code LIKE '%'+@expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR p41.p41NameShort LIKE '%'+@expr+'%' OR p28_client.p28Name LIKE '%'+@expr+'%' OR p28_client.p28CompanyShortName LIKE '%'+@expr+'%'"
                 strW += ")"
                 pars.Add("expr", .SearchExpression, DbType.String)
+            End If
+            If .x18Value <> "" Then
+                strW += bas.CompleteX18QuerySql("o23", .x18Value)
             End If
         End With
         strW += bas.ParseWhereValidity("o23", "a", myQuery)

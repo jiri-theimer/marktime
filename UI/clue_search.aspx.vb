@@ -31,7 +31,7 @@
                     Me.chkMain.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-main", "1"))
                     Me.chkInvoice.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-invoice", "1"))
                     Me.chkDocument.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-doc", "0"))
-                    Me.chkWorksheet.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-worksheet", "0"))
+                    Me.chkWorksheet.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-worksheet", "1"))
                     Me.chkTask.Checked = BO.BAS.BG(.GetUserParam("handler_search_fulltext-task", "1"))
                 End With
                 With .Factory.SysUser

@@ -271,7 +271,7 @@
                 pars.Add("b02id", .b02ID, DbType.Int32)
                 strW += " AND a.b02ID=@b02id"
             End If
-            If .x25ID > 0 Then strW += " AND a.p91ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=391 AND x25ID=" & .x25ID.ToString & ")"
+            'If .x25ID > 0 Then strW += " AND a.p91ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=391 AND x25ID=" & .x25ID.ToString & ")"
             
             If .SpecificQuery > BO.myQueryp91_SpecificQuery._NotSpecified Then
                 If .j02ID_ExplicitQueryFor > 0 Then
@@ -342,6 +342,9 @@
                 strW += "a.p91Code LIKE '%'+@expr+'%' OR a.p91Text1 LIKE '%'+@expr+'%' OR a.p91Client_RegID LIKE '%'+@expr+'%' OR a.p91Client_VatID LIKE @expr+'%' OR p41.p41Name LIKE '%'+@expr+'%' OR a.p91Client LIKE '%'+@expr+'%' OR p28client.p28Name LIKE '%'+@expr+'%' OR p28client.p28CompanyShortName LIKE '%'+@expr+'%'"
                 strW += ")"
                 pars.Add("expr", .SearchExpression, DbType.String)
+            End If
+            If .x18Value <> "" Then
+                strW += bas.CompleteX18QuerySql("p91", .x18Value)
             End If
         End With
         Return bas.TrimWHERE(strW)

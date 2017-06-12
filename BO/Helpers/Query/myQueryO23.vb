@@ -32,10 +32,10 @@ Public Class myQueryO23
     Public Property b02ID As Integer
 
     Public Property j70ID As Integer
-    Public Property x25ID As Integer    'štítek
+    'Public Property x25ID As Integer    'štítek
     Public SpecificQuery As myQueryO23_SpecificQuery = myQueryO23_SpecificQuery._NotSpecified
     Public QuickQuery As myQueryO23_QuickQuery = myQueryO23_QuickQuery._NotSpecified
 
     Public Property o23GUID As String
-
+    Public Property x18Value As String  'filtrování podle štítků
 End Class

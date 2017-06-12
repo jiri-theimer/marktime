@@ -216,7 +216,15 @@
                 If s <> "" Then
                     sql.Append(s)
                 End If
-                
+            Case "p56"
+                Dim s As String = parse_ids_getsql(lis, strX18Value, "p56", "a.p56ID", "356")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+                s = parse_ids_getsql(lis, strX18Value, "p41", "a.p41ID", "141")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
             Case "p91"
                 Dim s As String = parse_ids_getsql(lis, strX18Value, "p91", "a.p91ID", "391")
                 If s <> "" Then
@@ -236,6 +244,15 @@
                     sql.Append(s)
                 End If
                 s = parse_ids_getsql(lis, strX18Value, "p28", "p41.p28ID_Client", "328")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+                s = parse_ids_getsql(lis, strX18Value, "j02", "a.j02ID", "102")
+                If s <> "" Then
+                    sql.Append(s)
+                End If
+            Case "j02"
+                Dim s As String = parse_ids_getsql(lis, strX18Value, "j02", "a.j02ID", "102")
                 If s <> "" Then
                     sql.Append(s)
                 End If
