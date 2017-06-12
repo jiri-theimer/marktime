@@ -40,7 +40,9 @@ Public Class x18_querybuilder
                         Dim n As RadTreeNode = tr1.FindNodeByValue(s)
                         If Not n Is Nothing Then
                             n.Checked = True
-                            If n.ParentNode Is Nothing Then n.ParentNode.Expanded = True
+                            n.ExpandParentNodes()
+                            'If Not n.ParentNode Is Nothing Then n.ParentNode.Expanded = True
+
                         End If
                     Next
                 End If
@@ -73,7 +75,7 @@ Public Class x18_querybuilder
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta projektu", "p28", nParent)
                     For Each c In lisX18
-                        WN(c, "p28" & "-" & Right("0000" & c.PID.ToString, 4), nParent)
+                        WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
 
@@ -83,7 +85,7 @@ Public Class x18_querybuilder
                     nParent = WN0("Štítky projektu", "p41", nParent)
 
                     For Each c In lisX18
-                        WN(c, "p41" & Right("0000" & c.PID.ToString, 4), nParent)
+                        WN(c, "p41-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
                 lisX18 = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, -1)
@@ -91,7 +93,7 @@ Public Class x18_querybuilder
                     nParent = WN0("Štítky klienta projektu", "p28", nParent)
 
                     For Each c In lisX18
-                        WN(c, "p28" & "-" & Right("0000" & c.PID.ToString, 4), nParent)
+                        WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
             Case BO.x29IdEnum.p91Invoice
@@ -99,7 +101,7 @@ Public Class x18_querybuilder
                 If lisX18.Count > 0 Then
                     nParent = WN0("Štítky klienta faktury", "p28", nParent)
                     For Each c In lisX18
-                        WN(c, "p28" & "-" & Right("0000" & c.PID.ToString, 4), nParent)
+                        WN(c, "p28-" & Right("0000" & c.PID.ToString, 4), nParent)
                     Next
                 End If
         End Select
@@ -140,7 +142,7 @@ Public Class x18_querybuilder
             If lis.Count > 0 Then
                 strV = String.Join("|", lis.Select(Function(p) p.Value))
                 Dim strLast As String = "", s As String = ""
-                For Each c In tr1.GetAllNodes.Where(Function(p) p.Nodes.Count > 0 And Not p.ParentNode Is Nothing)
+                For Each c In tr1.GetAllNodes.Where(Function(p) p.Nodes.Count > 0 And Len(p.Value) = 8)
                     Dim ss As String = ""
                     For Each n In c.GetAllNodes.Where(Function(p) p.Checked = True)
                         If ss = "" Then
