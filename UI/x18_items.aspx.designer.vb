@@ -11,25 +11,34 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class x18_binding
+Partial Public Class x18_items
 
     '''<summary>
-    '''rp1 control.
+    '''x18Name control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents x18Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''hidPrefix control.
+    '''rpX25 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidPrefix As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents rpX25 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''hidX23ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidX23ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

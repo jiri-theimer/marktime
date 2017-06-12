@@ -4,7 +4,7 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.x18EntityCategory
-        Dim s As String = GetSQLPart1() & " WHERE a.x18ID=@x18id"
+        Dim s As String = GetSQLPart1(False) & " WHERE a.x18ID=@x18id"
 
         Return _cDB.GetRecord(Of BO.x18EntityCategory)(s, New With {.x18id = intPID})
     End Function
@@ -97,8 +97,8 @@
         Return _cDB.RunSP("x18_delete", pars)
     End Function
 
-    Public Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = 0) As IEnumerable(Of BO.x18EntityCategory)
-        Dim s As String = GetSQLPart1()
+    Public Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = 0, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory)
+        Dim s As String = GetSQLPart1(bolInhaleAllCols)
         Dim strW As String = bas.ParseWhereMultiPIDs("a.x18ID", myQuery)
         strW += bas.ParseWhereValidity("x18", "a", myQuery)
         If x29ID > BO.x29IdEnum._NotSpecified Then
@@ -137,8 +137,22 @@
         pars.Add("pid", intX18ID, DbType.Int32)
         Return _cDB.GetList(Of BO.GetInteger)("select x29ID as Value FROM x20EntiyToCategory WHERE x18ID=@pid", pars).Select(Function(p) p.Value)
     End Function
-    Private Function GetSQLPart1() As String
+    Private Function GetSQLPart1(bolInhaleAllCols As Boolean) As String
         Dim s As String = "select a.*,x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner," & bas.RecTail("x18", "a")
+        If bolInhaleAllCols Then
+            s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=102) then 1 else 0 end) _Is_j02"
+            s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=141) then 1 else 0 end) _Is_p41"
+            s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=328) then 1 else 0 end) _Is_p28"
+            s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=331) then 1 else 0 end) _Is_p31"
+            s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=356) then 1 else 0 end) _Is_p56"
+            s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=223) then 1 else 0 end) _Is_o23"
+        End If
+        s += " FROM x18EntityCategory a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
+        Return s
+    End Function
+    Private Function GetSQLPart1_Full() As String
+        Dim s As String = "select a.*,x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner," & bas.RecTail("x18", "a")
+        s += ",case when a.x18ID IN (SELECT FROM "
         s += " FROM x18EntityCategory a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         Return s
     End Function

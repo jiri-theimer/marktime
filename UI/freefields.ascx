@@ -47,6 +47,7 @@
            
             <asp:Label ID="x18Name" runat="server" Width="150px"></asp:Label>
             <uc:datacombo ID="x25IDs" runat="server" DataTextField="x25Name" DataValueField="pid" AllowCheckboxes="true" Filter="Contains" Width="400px"></uc:datacombo>
+            <button type="button" onclick="x18_items(<%#Eval("pid")%>)" class="button-link" title="Nastavit položky štítku"><img src="Images/settings.png" /></button>
             <asp:HiddenField ID="x18ID" runat="server" />
             <asp:HiddenField ID="x18IsMultiSelect" runat="server" />
         </div>
@@ -67,7 +68,11 @@
 
     }
 
+    function x18_items(x18id) {
 
+        dialog_master("x18_items.aspx?pid=" + x18id, true)
+
+    }
 
 
 </script>

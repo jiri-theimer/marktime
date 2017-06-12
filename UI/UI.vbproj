@@ -510,7 +510,7 @@
     <Content Include="Services\person_service.asmx" />
     <Content Include="stoppage.aspx" />
     <Content Include="stoppage_site.aspx" />
-    <Content Include="Styles\Site_v7.css" />
+    <Content Include="Styles\Site_v8.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Sys\sys_dbobjects.aspx" />
@@ -531,7 +531,9 @@
     <Content Include="p31_approving_step3_subform.aspx" />
     <Content Include="WebForm2.aspx" />
     <Content Include="workflow_dialog.aspx" />
-    <Content Include="x18_binding.aspx" />
+    <Content Include="x18_framework.aspx" />
+    <Content Include="x18_items.aspx" />
+    <Content Include="x18_querybuilder.aspx" />
     <Content Include="x18_readonly.ascx" />
     <Content Include="x18_record.aspx" />
     <Content Include="x23_record.aspx" />
@@ -3063,11 +3065,25 @@
       <DependentUpon>workflow_dialog.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="x18_binding.aspx.designer.vb">
-      <DependentUpon>x18_binding.aspx</DependentUpon>
+    <Compile Include="x18_framework.aspx.designer.vb">
+      <DependentUpon>x18_framework.aspx</DependentUpon>
     </Compile>
-    <Compile Include="x18_binding.aspx.vb">
-      <DependentUpon>x18_binding.aspx</DependentUpon>
+    <Compile Include="x18_framework.aspx.vb">
+      <DependentUpon>x18_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x18_items.aspx.designer.vb">
+      <DependentUpon>x18_items.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x18_items.aspx.vb">
+      <DependentUpon>x18_items.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x18_querybuilder.aspx.designer.vb">
+      <DependentUpon>x18_querybuilder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x18_querybuilder.aspx.vb">
+      <DependentUpon>x18_querybuilder.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="x18_readonly.ascx.designer.vb">

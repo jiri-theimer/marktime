@@ -20,10 +20,19 @@
         roles1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
-                .neededPermission = BO.x53PermValEnum.GR_Admin
                 .HeaderIcon = "Images/label_32.png"
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Nastavení štítku"
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                If Not .Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin) Then
+                    If .DataPID <> 0 Then
+                        Server.Transfer("x18_items.aspx?pid=" & .DataPID.ToString, False)
+                    Else
+                        .StopPage("Pro správu štítků nemáte oprávnění.")
+                    End If
+                End If
+                .neededPermission = BO.x53PermValEnum.GR_X18_Admin
+
+
                 Dim lis As IEnumerable(Of BO.x23EntityField_Combo) = .Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
                 Me.x23ID.DataSource = lis
                 Me.x23ID.DataBind()
@@ -40,10 +49,11 @@
         End If
     End Sub
     Private Sub RefreshRecord()
-        roles1.SaveCurrentTempData()
+
         If Master.DataPID = 0 Then
             Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
             Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
+            Return
         End If
         _lisX22 = Master.Factory.x18EntityCategoryBL.GetList_x22(Master.DataPID)
 
@@ -102,12 +112,14 @@
     End Sub
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
+        roles1.SaveCurrentTempData()
+
         If Master.DataPID = 0 And hidTempX23ID.Value = "" Then
             Master.Notify("Musíte kliknout na tlačítko [Potvrdit].", NotifyLevel.WarningMessage)
             Return
         End If
         Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
-        
+
 
         With Master.Factory.x18EntityCategoryBL
             Dim cRec As BO.x18EntityCategory = IIf(Master.DataPID <> 0, .Load(Master.DataPID), New BO.x18EntityCategory)

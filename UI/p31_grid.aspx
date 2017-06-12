@@ -171,6 +171,10 @@
 
 
         }
+        function x18_querybuilder() {            
+            sw_master("x18_querybuilder.aspx?prefix=p31", "Images/label.png");
+
+        }
 
     </script>
 </asp:Content>
@@ -225,6 +229,9 @@
                                     <span>Filtrování záznamů</span>
                                 </div>
                                 <div class="content">
+                                    <div class="div6">
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                    </div>
                                     <div class="div6">
                                         <span class="val">Druh úkonů:</span>
                                         <asp:DropDownList ID="cbxTabQueryFlag" runat="server" AutoPostBack="true">

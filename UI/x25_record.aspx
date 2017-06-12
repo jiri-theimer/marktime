@@ -24,21 +24,7 @@
                 <asp:TextBox ID="x25Name" runat="server" Style="width: 400px;"></asp:TextBox>
             </td>
         </tr>
-        <tr>
-            <td>
-                <asp:Label ID="lblOrdinary" Text="Index pořadí:" runat="server" CssClass="lbl"></asp:Label></td>
-            <td>
-
-                <telerik:RadNumericTextBox ID="x25Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:Label ID="lblx25UserKey" runat="server" CssClass="lbl" Text="Klíč položky z externího datového zdroje:"></asp:Label></td>
-            <td>
-                <asp:TextBox ID="x25UserKey" runat="server"></asp:TextBox>
-            </td>
-        </tr>
+        
 
         <tr>
             <td>
@@ -73,6 +59,21 @@
             <td>
                 <telerik:RadColorPicker ID="x25ForeColor" runat="server" CurrentColorText="Vybraná barva" NoColorText="Bez barvy" ShowIcon="true" Preset="Standard">                   
                 </telerik:RadColorPicker>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblOrdinary" Text="Index pořadí:" runat="server" CssClass="lbl"></asp:Label></td>
+            <td>
+
+                <telerik:RadNumericTextBox ID="x25Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label ID="lblx25UserKey" runat="server" CssClass="lbl" Text="Klíč položky z externího datového zdroje:"></asp:Label></td>
+            <td>
+                <asp:TextBox ID="x25UserKey" runat="server"></asp:TextBox>
             </td>
         </tr>
     </table>

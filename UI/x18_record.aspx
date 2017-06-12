@@ -10,7 +10,7 @@
     <script type="text/javascript">
         function x25_record(x25id) {
 
-            dialog_master("x25_record.aspx?x23id=<%=Me.CurrentX23ID%>&pid=" + x25id, true)
+            dialog_master("x25_record.aspx?source=x18_record&x23id=<%=Me.CurrentX23ID%>&pid=" + x25id, true)
 
         }
 

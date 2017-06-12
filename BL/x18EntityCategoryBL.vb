@@ -3,7 +3,7 @@
     Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
     Function Load(intPID As Integer) As BO.x18EntityCategory
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1) As IEnumerable(Of BO.x18EntityCategory)
+    Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory)
     Function GetList_x29(intX18ID As Integer) As IEnumerable(Of BO.x29Entity)
     Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
     Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer) As IEnumerable(Of BO.x19EntityCategory_Binding)
@@ -64,8 +64,8 @@ Class x18EntityCategoryBL
         Return _cDL.Delete(intPID)
     End Function
 
-    Public Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1) As IEnumerable(Of BO.x18EntityCategory) Implements Ix18EntityCategoryBL.GetList
-        Return _cDL.GetList(myQuery, x29ID, intEntityType)
+    Public Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory) Implements Ix18EntityCategoryBL.GetList
+        Return _cDL.GetList(myQuery, x29ID, intEntityType, bolInhaleAllCols)
     End Function
 
     Public Function GetList_x29(intX18ID As Integer) As IEnumerable(Of BO.x29Entity) Implements Ix18EntityCategoryBL.GetList_x29

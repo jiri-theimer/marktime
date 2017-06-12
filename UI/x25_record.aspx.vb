@@ -9,10 +9,9 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .neededPermission = BO.x53PermValEnum.GR_Admin
-                .HeaderIcon = "Images/settings_32.png"
+                .HeaderIcon = "Images/label_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .HeaderText = "Combo položka"
+                .HeaderText = "Položka"
                 Me.x23ID.DataSource = .Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
                 Me.x23ID.DataBind()
                 If .DataPID = 0 Then
@@ -28,7 +27,9 @@
                         Me.x23ID.Visible = False
                     End If
                 End If
-                
+                If Not (Request.Item("source") = "x18_items" Or Request.Item("source") = "x18_record") Then
+                    .neededPermission = BO.x53PermValEnum.GR_Admin
+                End If
             End With
             
 

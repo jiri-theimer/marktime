@@ -50,42 +50,6 @@ Partial Public Class x25_record
     Protected WithEvents x25Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lblOrdinary control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblOrdinary As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x25Ordinary control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x25Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
-
-    '''<summary>
-    '''lblx25UserKey control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblx25UserKey As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''x25UserKey control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x25UserKey As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
     '''Label2 control.
     '''</summary>
     '''<remarks>
@@ -120,6 +84,42 @@ Partial Public Class x25_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x25ForeColor As Global.Telerik.Web.UI.RadColorPicker
+
+    '''<summary>
+    '''lblOrdinary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblOrdinary As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x25Ordinary control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x25Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''lblx25UserKey control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx25UserKey As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x25UserKey control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x25UserKey As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''Master property.
