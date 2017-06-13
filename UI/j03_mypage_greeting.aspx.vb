@@ -82,31 +82,29 @@
                 ''menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
                 ''menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
 
-                If chkSearch.Checked Then
-                    panSearch_j02.Visible = .SysUser.j04IsMenu_People
-                    panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
-                    panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
-                    panSearch_P41.Visible = .SysUser.j04IsMenu_Project
+                panSearch_j02.Visible = .SysUser.j04IsMenu_People
+                panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
+                panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
+                panSearch_P41.Visible = .SysUser.j04IsMenu_Project
 
-                    ''If linkCreateTask.Visible Then
-                    ''    If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
-                    ''        panSearch_p56.Visible = True
-                    ''    End If
-                    ''End If
-                    panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible Or panSearch_P41.Visible)
+                panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible Or panSearch_P41.Visible)
+                chkSearch.Visible = panSearch.Visible
 
-                    If panSearch.Visible Then
-                        If Not Me.chkSearch.Checked Then
-                            panSearch_j02.Visible = False : panSearch_p28.Visible = False : panSearch_p91.Visible = False : panSearch_p56.Visible = False : panSearch_P41.Visible = False
-                        End If
+                ''If panSearch.Visible Then
+                ''    If Not Me.chkSearch.Checked Then
+                ''        panSearch_j02.Visible = False : panSearch_p28.Visible = False : panSearch_p91.Visible = False : panSearch_p56.Visible = False : panSearch_P41.Visible = False
+                ''    End If
 
-                    End If
+                ''End If
 
-                    linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_Admin)
-                    If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Reader)
-                    If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Reader)
-                Else
-                    panSearch.Visible = False
+                linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_Admin)
+                If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Reader)
+                If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Reader)
+
+
+                If chkSearch.Visible Then
+
+                    panSearch.Visible = chkSearch.Checked
                 End If
 
 
@@ -219,8 +217,9 @@
         panP56.Visible = False
         Dim mq As New BO.myQueryP56
         mq.Closed = BO.BooleanQueryMode.FalseQuery
+        mq.TerminNeniVyplnen = BO.BooleanQueryMode.TrueQuery
         mq.TopRecordsOnly = 100
-        Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID).Where(Function(p) p.p56PlanUntil Is Nothing)
+        Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq)
 
         If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
         Me.p56Count.Text = lisP56.Count.ToString
@@ -230,9 +229,9 @@
         rpP56.DataSource = lisP56
         rpP56.DataBind()
         If lisP56.Count = 0 Then
-            Me.panP56.Visible = True
-        Else
             Me.panP56.Visible = False
+        Else
+            Me.panP56.Visible = True
         End If
         
         
@@ -293,10 +292,12 @@
             e.Item.FindControl("img1").Visible = False
         End If
         With CType(e.Item.FindControl("Project"), Label)
-            .Text = BO.BAS.OM3(cRec.p41Name, 20)
+            .Text = BO.BAS.OM3(cRec.p41Name, 100)
             If cRec.Client <> "" Then
-                .Text = BO.BAS.OM3(cRec.Client, 20) & "<br>" & .Text
+                .Text = cRec.Client & " - " & .Text
             End If
+
+
         End With
         With CType(e.Item.FindControl("linkWorkflow"), HyperLink)
             .Text = cRec.b02Name

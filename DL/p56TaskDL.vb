@@ -207,6 +207,12 @@
                 End If
                 
             End If
+            Select Case .TerminNeniVyplnen
+                Case BO.BooleanQueryMode.TrueQuery
+                    strW += " AND a.p56PlanUntil IS NULL"
+                Case BO.BooleanQueryMode.FalseQuery
+                    strW += " AND a.p56PlanUntil IS NOT NULL"
+            End Select
             If .SpecificQuery > BO.myQueryP56_SpecificQuery._NotSpecified Then
                 If .j02ID_ExplicitQueryFor > 0 Then
                     pars.Add("j02id_query", .j02ID_ExplicitQueryFor, DbType.Int32)

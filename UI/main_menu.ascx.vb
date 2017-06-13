@@ -107,9 +107,10 @@ Public Class main_menu
                 If factory.TestPermission(BO.x53PermValEnum.GR_P41_Creator, BO.x53PermValEnum.GR_P41_Draft_Creator) Then ai(Resources.common.Projekt, "", "javascript:p41_create()", "", n) : b = True
             End If
             
-            If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
-                ai(Resources.common.Ukol, "", "javascript:p56_create()", "", n)
-            End If
+            'If factory.TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
+
+            'End If
+            ai(Resources.common.Ukol, "", "javascript:p56_create()", "", n)
             If .j04IsMenu_Invoice Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
             End If

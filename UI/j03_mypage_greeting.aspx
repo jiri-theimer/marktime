@@ -144,19 +144,16 @@
                 <div class="content">
                     
                     <table>
-                        <tr>
-                            <th>Projekt</th>
-                            <th></th>
-                            <th></th>
-                            <th>Stav</th>
-                            
-                        </tr>
+                       
                         <asp:Repeater ID="rpP56" runat="server">
                             <ItemTemplate>
-                                <tr class="trHover" valign="top">
-                                    <td>
+                                <tr>
+                                    <td colspan="3">
                                         <asp:Label ID="Project" runat="server" CssClass="timestamp"></asp:Label>
                                     </td>
+                                </tr>
+                                <tr valign="top">
+                                   
                                     <td style="max-width: 300px;">
                                         <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
                                         <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>

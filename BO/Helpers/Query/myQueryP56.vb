@@ -44,4 +44,5 @@ Public Class myQueryP56
     Public Property j02ID_ExplicitQueryFor As Integer = 0   'ID osoby, z jejíhož pohledu se mají odfiltrovat úkoly, pokud je 0, pak přihlášený uživatel
     'Public Property x25ID As Integer    'štítek
     Public Property x18Value As String  'filtrování podle štítků
+    Public Property TerminNeniVyplnen As BooleanQueryMode = BooleanQueryMode.NoQuery
 End Class
