@@ -23,15 +23,6 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents lblHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''panSearch control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
     '''chkSearch control.
     '''</summary>
     '''<remarks>
@@ -39,6 +30,33 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkSearch As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkLog control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkLog As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''chkShowCharts control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkShowCharts As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''panSearch control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''panSearch_P41 control.
@@ -140,13 +158,13 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents linkFulltext As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
-    '''menu1 control.
+    '''cal1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadPanelBar
+    Protected WithEvents cal1 As Global.UI.myscheduler
 
     '''<summary>
     '''panP56 control.
@@ -167,15 +185,6 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents p56Count As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''cbxP56Types control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxP56Types As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''rpP56 control.
     '''</summary>
     '''<remarks>
@@ -183,42 +192,6 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents rpP56 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''linkCreateTask control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents linkCreateTask As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''panO22 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panO22 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''o22Count control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o22Count As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''rpO22 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpO22 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''panO23 control.
@@ -338,6 +311,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents chkO23 As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''chkJ02 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkJ02 As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''panP48 control.
     '''</summary>
     '''<remarks>
@@ -453,15 +435,6 @@ Partial Public Class j03_mypage_greeting
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdReadUpgradeInfo As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''chkShowCharts control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkShowCharts As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''Master property.

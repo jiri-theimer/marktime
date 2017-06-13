@@ -41,11 +41,11 @@
             </td>
             <td>
                 <asp:DropDownList ID="p57PlanDatesEntryFlag" runat="server">
-                    <asp:ListItem Text="Termín nepovinný, plánované zahájení nepovinné" Value="" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Termín nepovinný, plánované zahájení skryté" Value="" Selected="true"></asp:ListItem>
                     <asp:ListItem Text="Termín povinný, plánované zahájení nepovinné" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Termín nepovinný, plánované zahájení skryté" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Termín nepovinný, plánované zahájení nepovinné" Value="2"></asp:ListItem>
                     <asp:ListItem Text="Termín povinný, plánované zahájení povinné" Value="3"></asp:ListItem>
-                    <asp:ListItem Text="Termín povinný, plánované zahájení povinné, v kalendáři zobrazovat úkol jako událost od-do" Value="4"></asp:ListItem>
+                    <asp:ListItem Text="Termín povinný, plánované zahájení povinné, v kalendáři zobrazovat jako událost od-do" Value="4"></asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>

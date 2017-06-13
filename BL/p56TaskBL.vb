@@ -72,11 +72,17 @@ Class p56TaskBL
             End If
 
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt!" : Return False
-            If Not (BO.BAS.IsNullDBDate(.p56PlanFrom) Is Nothing Or BO.BAS.IsNullDBDate(.p56PlanUntil) Is Nothing) Then
-                If .p56PlanFrom > .p56PlanUntil Then
-                    _Error = "Plánované zahájení úkolu nesmí být větší než plánované dokončení!" : Return False
+            If Not BO.BAS.IsNullDBDate(.p56PlanUntil) Is Nothing Then
+                If Format(.p56PlanUntil, "HH:mm") = "00:00" Then    'pokud je čas termínu 00:00, pak doplnit 23:59
+                    .p56PlanUntil = CDate(.p56PlanUntil).AddDays(1).AddSeconds(-1)
                 End If
             End If
+            If Not (BO.BAS.IsNullDBDate(.p56PlanFrom) Is Nothing Or BO.BAS.IsNullDBDate(.p56PlanUntil) Is Nothing) Then
+                If .p56PlanFrom > .p56PlanUntil Then
+                    _Error = "Plánované zahájení úkolu nesmí být větší než plánované dokončení (termín úkolu)!" : Return False
+                End If
+            End If
+            
 
             If .p56IsPlan_Expenses_Ceiling And .p56Plan_Expenses = 0 Then _Error = "Chybí zadání plánu peněžních výdajů." : Return False
             If .p56IsPlan_Hours_Ceiling And .p56Plan_Hours = 0 Then _Error = "Chybí zadání plánu hodin." : Return False

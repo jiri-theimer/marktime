@@ -54,10 +54,26 @@
                 </tr>
                 <tr style="border-top: dashed gray 1px;">
                     <td>
-                        <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název (předmět):"></asp:Label>
+                        <asp:Label ID="lblName" runat="server" CssClass="lblReq" Text="Název úkolu:"></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="p56Name" runat="server" Style="width: 540px;"></asp:TextBox>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <asp:Label ID="lblDateFrom" Text="Plánované zahájení:" runat="server" AssociatedControlID="p56PlanFrom" CssClass="lbl"></asp:Label></td>
+                    <td>
+                        <telerik:RadDateTimePicker ID="p56PlanFrom" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
+                            <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
+                            <TimePopupButton Visible="true" />
+                            <TimeView StartTime="06:00" EndTime="22:00" ShowHeader="false" ShowFooter="false"></TimeView>
+
+                        </telerik:RadDateTimePicker>
+
+
 
                     </td>
                 </tr>
@@ -85,21 +101,7 @@
                 </tr>
 
 
-                <tr>
-                    <td>
-                        <asp:Label ID="lblDateFrom" Text="Plánované zahájení:" runat="server" AssociatedControlID="p56PlanFrom" CssClass="lbl"></asp:Label></td>
-                    <td>
-                        <telerik:RadDateTimePicker ID="p56PlanFrom" runat="server" Width="190px" SharedCalendarID="SharedCalendar">
-                            <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy HH:mm ddd" DateFormat="d.M.yyyy HH:mm ddd" runat="server"></DateInput>
-                            <TimePopupButton Visible="true" />
-                            <TimeView StartTime="06:00" EndTime="22:00" ShowHeader="false" ShowFooter="false"></TimeView>
-
-                        </telerik:RadDateTimePicker>
-
-
-
-                    </td>
-                </tr>
+                
 
 
                 <tr>

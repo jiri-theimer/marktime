@@ -7,7 +7,12 @@
         _MasterPage = Me.Master
     End Sub
 
+    
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        cal1.factory = Master.Factory
+        cal1.RecordPID = Master.Factory.SysUser.j02ID
+
         If Not Page.IsPostBack Then
             lblBuild.Text = "Verze: " & BO.ASS.GetUIVersion()
 
@@ -25,23 +30,27 @@
                 .Add("j03_mypage_greeting-chkP91")
                 .Add("j03_mypage_greeting-chkO23")
                 .Add("j03_mypage_greeting-chkP56")
+                .Add("j03_mypage_greeting-chkJ02")
                 .Add("j03_mypage_greeting-chkShowCharts")
                 .Add("j03_mypage_greeting-chkSearch")
                 .Add("j03_mypage_greeting-cbxP56Types")
+                .Add("j03_mypage_greeting-chkLog")
             End With
 
             With Master.Factory
                 cmdReadUpgradeInfo.Visible = .SysUser.j03IsShallReadUpgradeInfo
 
                 .j03UserBL.InhaleUserParams(lisPars)
+                chkLog.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkLog", "1"))
                 chkP41.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP41", "1"))
                 chkP28.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP28", "1"))
                 chkP91.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP91", "0"))
                 chkO23.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkO23", "0"))
                 chkP56.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkP56", "0"))
+                chkJ02.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkJ02", "0"))
                 chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "0"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
-                basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "2"))
+                ''basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "2"))
 
                 ''menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
                 ''menu1.FindItemByValue("p31_create_one").Visible = .SysUser.j04IsMenu_Worksheet
@@ -56,51 +65,56 @@
                 'menu1.FindItemByValue("o10_create").Visible = .TestPermission(BO.x53PermValEnum.GR_O10_Creator)
 
                 ''menu1.FindItemByValue("p56_create").Visible = False
-                linkCreateTask.Visible = False
-                If .TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
-                    linkCreateTask.Visible = True
-                    ''menu1.FindItemByValue("p56_create").Visible = True
-                Else
-                    Dim lis As IEnumerable(Of BO.x67EntityRole) = .j02PersonBL.GetList_AllAssignedEntityRoles(.SysUser.j02ID, BO.x29IdEnum.p41Project)
-                    For Each c In lis
-                        If .x67EntityRoleBL.GetList_BoundX53(c.PID).Where(Function(p) p.x53Value = BO.x53PermValEnum.PR_P56_Creator).Count > 0 Then
-                            ''menu1.FindItemByValue("p56_create").Visible = True : Exit For
-                            linkCreateTask.Visible = True : Exit For
-                        End If
-                    Next
-                End If
+                ''linkCreateTask.Visible = False
+                ''If .TestPermission(BO.x53PermValEnum.GR_P56_Creator) Then
+                ''    linkCreateTask.Visible = True
+                ''    ''menu1.FindItemByValue("p56_create").Visible = True
+                ''Else
+                ''    Dim lis As IEnumerable(Of BO.x67EntityRole) = .j02PersonBL.GetList_AllAssignedEntityRoles(.SysUser.j02ID, BO.x29IdEnum.p41Project)
+                ''    For Each c In lis
+                ''        If .x67EntityRoleBL.GetList_BoundX53(c.PID).Where(Function(p) p.x53Value = BO.x53PermValEnum.PR_P56_Creator).Count > 0 Then
+                ''            ''menu1.FindItemByValue("p56_create").Visible = True : Exit For
+                ''            linkCreateTask.Visible = True : Exit For
+                ''        End If
+                ''    Next
+                ''End If
                 ''menu1.FindItemByValue("admin").Visible = .SysUser.IsAdmin
                 ''menu1.FindItemByValue("approve").Visible = .SysUser.IsApprovingPerson
                 ''menu1.FindItemByValue("report").Visible = .SysUser.j04IsMenu_Report
 
-                panSearch_j02.Visible = .SysUser.j04IsMenu_People
-                panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
-                panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
-                panSearch_P41.Visible = .SysUser.j04IsMenu_Project
+                If chkSearch.Checked Then
+                    panSearch_j02.Visible = .SysUser.j04IsMenu_People
+                    panSearch_p28.Visible = .SysUser.j04IsMenu_Contact
+                    panSearch_p91.Visible = .SysUser.j04IsMenu_Invoice
+                    panSearch_P41.Visible = .SysUser.j04IsMenu_Project
 
-                If linkCreateTask.Visible Then
-                    If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
-                        panSearch_p56.Visible = True
+                    ''If linkCreateTask.Visible Then
+                    ''    If Master.Factory.p56TaskBL.GetTotalTasksCount() > 20 Then
+                    ''        panSearch_p56.Visible = True
+                    ''    End If
+                    ''End If
+                    panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible Or panSearch_P41.Visible)
+
+                    If panSearch.Visible Then
+                        If Not Me.chkSearch.Checked Then
+                            panSearch_j02.Visible = False : panSearch_p28.Visible = False : panSearch_p91.Visible = False : panSearch_p56.Visible = False : panSearch_P41.Visible = False
+                        End If
+
                     End If
-                End If
-                panSearch.Visible = (panSearch_j02.Visible Or panSearch_p28.Visible Or panSearch_p91.Visible Or panSearch_p56.Visible Or panSearch_P41.Visible)
 
-                If panSearch.Visible Then
-                    If Not Me.chkSearch.Checked Then
-                        panSearch_j02.Visible = False : panSearch_p28.Visible = False : panSearch_p91.Visible = False : panSearch_p56.Visible = False : panSearch_P41.Visible = False
-                    End If
-
-                End If
-                If Me.chkSearch.Checked Then
                     linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_Admin)
                     If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Reader)
                     If Not linkFulltext.Visible Then linkFulltext.Visible = .TestPermission(BO.x53PermValEnum.GR_P41_Reader)
+                Else
+                    panSearch.Visible = False
                 End If
 
 
-                If .SysUser.j04IsMenu_Project Then
-                    RefreshFavourites()
-                End If
+
+
+        ''If .SysUser.j04IsMenu_Project Then
+        ''    RefreshFavourites()
+        ''End If
             End With
 
             RefreshNoticeBoard()
@@ -141,7 +155,10 @@
             'If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
             '    menu1.Visible = False
             'End If
+            cal1.RefreshData(Today.AddDays(-5))
+
         End If
+
     End Sub
 
     Private Sub ShowImage()
@@ -179,66 +196,46 @@
 
     End Sub
 
-    Private Sub RefreshFavourites()
-        Dim mq As New BO.myQueryP41
-        mq.IsFavourite = BO.BooleanQueryMode.TrueQuery
-        Dim lisP41 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
-        If lisP41.Count > 0 Then
-            menu1.FindItemByValue("favourites").Visible = True
-            With menu1.FindItemByValue("favourites").Items
-                For Each c In lisP41
-                    Dim link1 As New Telerik.Web.UI.RadPanelItem(c.FullName, "p41_framework.aspx?pid=" & c.PID.ToString)
-                    link1.ImageUrl = "Images/project.png"
-                    .Add(link1)
-                Next
-            End With
-            menu1.FindItemByValue("favourites").Text += " (" & lisP41.Count.ToString & ")"
-        Else
-            menu1.Visible = False
-        End If
-    End Sub
+    ''Private Sub RefreshFavourites()
+    ''    Dim mq As New BO.myQueryP41
+    ''    mq.IsFavourite = BO.BooleanQueryMode.TrueQuery
+    ''    Dim lisP41 As IEnumerable(Of BO.p41Project) = Master.Factory.p41ProjectBL.GetList(mq)
+    ''    If lisP41.Count > 0 Then
+    ''        menu1.FindItemByValue("favourites").Visible = True
+    ''        With menu1.FindItemByValue("favourites").Items
+    ''            For Each c In lisP41
+    ''                Dim link1 As New Telerik.Web.UI.RadPanelItem(c.FullName, "p41_framework.aspx?pid=" & c.PID.ToString)
+    ''                link1.ImageUrl = "Images/project.png"
+    ''                .Add(link1)
+    ''            Next
+    ''        End With
+    ''        menu1.FindItemByValue("favourites").Text += " (" & lisP41.Count.ToString & ")"
+    ''    Else
+    ''        menu1.Visible = False
+    ''    End If
+    ''End Sub
 
     Private Sub RefreshBoxes()
         panP56.Visible = False
-        Dim lisP56 As IEnumerable(Of BO.p56Task) = Nothing, mq As New BO.myQueryP56
+        Dim mq As New BO.myQueryP56
         mq.Closed = BO.BooleanQueryMode.FalseQuery
         mq.TopRecordsOnly = 100
-        Select Case cbxP56Types.SelectedValue
-            Case "1"
-                lisP56 = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
-            Case "2"
-                mq.j02ID = Master.Factory.SysUser.j02ID
-                lisP56 = Master.Factory.p56TaskBL.GetList(mq)
-            Case "3"
-                mq.j02ID_Owner = Master.Factory.SysUser.j02ID
-                lisP56 = Master.Factory.p56TaskBL.GetList(mq)
-        End Select
+        Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID).Where(Function(p) p.p56PlanUntil Is Nothing)
+
         If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
         Me.p56Count.Text = lisP56.Count.ToString
         If lisP56.Count = 100 Then
-            Me.p56Count.Text = "Podmínce vyhovuje více než 100 úkolů!"
+            Me.p56Count.Text = "Podmínce vyhovuje více než 100 úkolů bez termínu!"
         End If
         rpP56.DataSource = lisP56
         rpP56.DataBind()
-        If lisP56.Count = 0 And Me.cbxP56Types.SelectedValue <> "3" Then
-            mq.Closed = BO.BooleanQueryMode.NoQuery
-            mq.j02ID = Master.Factory.SysUser.j02ID
-            If Master.Factory.p56TaskBL.GetList(mq).Count > 0 Then
-                Me.panP56.Visible = True
-            End If
-        Else
+        If lisP56.Count = 0 Then
             Me.panP56.Visible = True
+        Else
+            Me.panP56.Visible = False
         End If
         
-        Dim lisO22 As IEnumerable(Of BO.o22Milestone) = Master.Factory.o22MilestoneBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
-        If lisO22.Count > 0 Then
-            Me.panO22.Visible = True
-            Me.o22Count.Text = lisO22.Count.ToString
-            rpO22.DataSource = lisO22
-            rpO22.DataBind()
-        Else
-            Me.panO22.Visible = False
-        End If
+        
         Dim lisO23 As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
         If lisO23.Count > 0 Then
             Me.panO23.Visible = True
@@ -323,23 +320,7 @@
         End If
     End Sub
 
-    Private Sub rpO22_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO22.ItemDataBound
-        Dim cRec As BO.o22Milestone = CType(e.Item.DataItem, BO.o22Milestone)
-        With CType(e.Item.FindControl("link1"), HyperLink)
-            .Text = cRec.NameWithDate
-            .NavigateUrl = "dr.aspx?prefix=o22&pid=" & cRec.PID.ToString
-            If cRec.IsClosed Then .Font.Strikeout = True
-        End With
-        With CType(e.Item.FindControl("clue1"), HyperLink)
-            .Attributes.Item("rel") = "clue_o22_record.aspx?&pid=" & cRec.PID.ToString
-        End With
-        If Not cRec.o22ReminderDate Is Nothing Then
-            e.Item.FindControl("img1").Visible = True
-        Else
-            e.Item.FindControl("img1").Visible = False
-        End If
-        
-    End Sub
+    
 
     Private Sub rpO23_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpO23.ItemDataBound
         Dim cRec As BO.o23NotepadGrid = CType(e.Item.DataItem, BO.o23NotepadGrid)
@@ -486,8 +467,19 @@
         rpNoticeBoard.DataBind()
     End Sub
     Private Sub RefreshX47Log()
+        With Master.Factory
+            If Not (.SysUser.j04IsMenu_Project Or .SysUser.j04IsMenu_Contact Or .SysUser.j04IsMenu_Invoice Or .TestPermission(BO.x53PermValEnum.GR_Admin)) Then
+                chkLog.Visible = False
+                chkLog.Checked = False
+                panX47.Visible = False
+                Return
+            End If
+        End With
+        If Not chkLog.Checked Then
+            panX47.Visible = False
+            Return
+        End If
         Dim mq As New BO.myQueryX47, x45ids As New List(Of String), b As Boolean = Master.Factory.TestPermission(BO.x53PermValEnum.GR_Admin)
-        If b Then x45ids.Add("10201")
         With Master.Factory
             If (b Or .TestPermission(BO.x53PermValEnum.GR_P41_Reader)) And .SysUser.j04IsMenu_Project Then
                 chkP41.Visible = True
@@ -502,6 +494,12 @@
                 If chkP91.Checked Then
                     x45ids.Add("39101")
                     x45ids.Add("39001")
+                End If
+            End If
+            If .SysUser.j04IsMenu_People Then
+                chkJ02.Visible = True
+                If chkJ02.Checked Then
+                    x45ids.Add("10201")
                 End If
             End If
             If b Then
@@ -596,8 +594,22 @@
         Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkSearch", BO.BAS.GB(Me.chkSearch.Checked))
         ReloadPage()
     End Sub
-    Private Sub cbxP56Types_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxP56Types.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-cbxP56Types", Me.cbxP56Types.SelectedValue)
+    ''Private Sub cbxP56Types_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxP56Types.SelectedIndexChanged
+    ''    Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-cbxP56Types", Me.cbxP56Types.SelectedValue)
+    ''    ReloadPage()
+    ''End Sub
+
+    Private Sub j03_mypage_greeting_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+
+    End Sub
+
+    Private Sub chkLog_CheckedChanged(sender As Object, e As EventArgs) Handles chkLog.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkLog", BO.BAS.GB(Me.chkLog.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub chkJ02_CheckedChanged(sender As Object, e As EventArgs) Handles chkJ02.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkJ02", BO.BAS.GB(Me.chkJ02.Checked))
         ReloadPage()
     End Sub
 End Class

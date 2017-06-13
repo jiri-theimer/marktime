@@ -113,6 +113,24 @@ Partial Public Class p56_record
     Protected WithEvents p56Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''lblDateFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblDateFrom As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p56PlanFrom control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56PlanFrom As Global.Telerik.Web.UI.RadDateTimePicker
+
+    '''<summary>
     '''lblDateUntil control.
     '''</summary>
     '''<remarks>
@@ -138,24 +156,6 @@ Partial Public Class p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkMore As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''lblDateFrom control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblDateFrom As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p56PlanFrom control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p56PlanFrom As Global.Telerik.Web.UI.RadDateTimePicker
 
     '''<summary>
     '''lblCompletePercent control.

@@ -185,10 +185,11 @@
                 End If
                 lblP59ID_Submitter.Visible = .p57IsEntry_Priority
                 p59ID_Submitter.Visible = .p57IsEntry_Priority
+                lblDateFrom.Visible = True : p56PlanFrom.Visible = True
                 Select Case .p57PlanDatesEntryFlag
                     Case 1, 3, 4
                         lblDateUntil.CssClass = "lblReq"
-                    Case 2
+                    Case 0
                         lblDateFrom.Visible = False
                         p56PlanFrom.Visible = False
                 End Select
@@ -222,13 +223,17 @@
 
         If Me.chkMore.Visible Then
             Dim b As Boolean = Me.chkMore.Checked
-            lblDateFrom.Visible = b : p56PlanFrom.Visible = b
+
+            'lblDateFrom.Visible = b : p56PlanFrom.Visible = b
             panDescription.Visible = b
             Me.lblOwner.Visible = b : Me.j02ID_Owner.Visible = b
             Me.p56IsNoNotify.Visible = b
             lblP59ID_Submitter.Visible = b : p59ID_Submitter.Visible = b
             lblCompletePercent.Visible = b : p56CompletePercent.Visible = b
             panBudget.Visible = b
+            If p57ID.Rows = 2 Then
+                p57ID.Visible = b : Me.lblP57ID.Visible = b
+            End If
 
             If ff1.FieldsCount > 0 Or ff1.TagsCount > 0 Or b Then
                 RadTabStrip1.FindTabByValue("core").Style.Item("display") = "block"

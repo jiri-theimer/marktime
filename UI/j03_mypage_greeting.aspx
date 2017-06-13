@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="j03_mypage_greeting.aspx.vb" Inherits="UI.j03_mypage_greeting" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
-
+<%@ Register TagPrefix="uc" TagName="myscheduler" Src="~/myscheduler.ascx" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -51,6 +51,16 @@
         function fulltext2() {
             sw_master("clue_search.aspx?fulltext=1&blank=1", "Images/search.png")
         }
+
+        function re(pid, prefix) {
+            if (prefix == 'o22')
+                sw_master("o22_record.aspx?pid=" + pid, "Images/event.png")
+           
+
+            if (prefix == 'p56')
+                location.replace("p56_framework.aspx?pid=" + pid);
+            
+        }
        
     </script>
 </asp:Content>
@@ -58,9 +68,16 @@
     <div style="padding: 10px; background-color: white;">
         <div style="float: left;">
             <asp:Label ID="lblHeader" runat="server" CssClass="framework_header_span" Style="font-size: 200%;" Text="Vítejte v systému"></asp:Label>
+
+            
         </div>
         <div style="float: left; margin-top: 7px; padding-left: 10px;">
             <img src="Images/logo_transparent.png" />
+        </div>
+        <div style="float:right;">
+            <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
+            <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významější akce" AutoPostBack="true" CssClass="chk" Checked="true" style="margin-left:20px;" />
+            <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk" style="margin-left:20px;" />
         </div>
         <div style="clear: both;"></div>
 
@@ -70,35 +87,35 @@
                 <asp:Panel ID="panSearch" runat="server" CssClass="content-box2">
                     <div class="title">
                         <img src="Images/search.png" />
-                        <asp:CheckBox ID="chkSearch" runat="server" Text="Nabízet na stránce vyhledávání" AutoPostBack="true" Checked="false" />
+                        
                     </div>
                     <div class="content">
                         <asp:Panel ID="panSearch_P41" runat="server" Visible="false">
-                            <img src="Images/project.png" />
+                           
                             <telerik:RadComboBox ID="search_p41" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat projekt..." Width="250px" OnClientSelectedIndexChanged="project_OnClientSelectedIndexChanged" OnClientItemsRequesting="project_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p28" runat="server" Visible="false">
-                            <img src="Images/contact.png" />
+                            
                             <telerik:RadComboBox ID="search_p28" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat klienta..." Width="250px" OnClientSelectedIndexChanged="contact_OnClientSelectedIndexChanged" OnClientItemsRequesting="contact_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/contact_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p91" runat="server" Style="margin-top: 6px;" Visible="false">
-                            <img src="Images/invoice.png" />
+                            
                             <telerik:RadComboBox ID="search_p91" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat fakturu..." Width="250px" OnClientSelectedIndexChanged="invoice_OnClientSelectedIndexChanged" OnClientItemsRequesting="invoice_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/invoice_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_p56" runat="server" Style="margin-top: 6px;" Visible="false">
-                            <img src="Images/task.png" />
+                            
                             <telerik:RadComboBox ID="search_p56" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat úkol..." Width="250px" OnClientSelectedIndexChanged="task_OnClientSelectedIndexChanged" OnClientItemsRequesting="task_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/task_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
                         <asp:Panel ID="panSearch_j02" runat="server" Style="margin-top: 6px;" Visible="false">
-                            <img src="Images/person.png" />
+                            
                             <telerik:RadComboBox ID="search_j02" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat osobu..." Width="250px" OnClientSelectedIndexChanged="person_OnClientSelectedIndexChanged" OnClientItemsRequesting="person_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/person_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
@@ -111,31 +128,18 @@
                     </div>
                 </asp:Panel>
 
-                <telerik:RadPanelBar ID="menu1" runat="server" RenderMode="Auto" Skin="Default" Width="300px" ExpandMode="SingleExpandedItem" EnableViewState="false">
-                    <Items>
-                        
-
-                        <telerik:RadPanelItem Text="Oblíbené projekty" Value="favourites" ImageUrl="Images/favourite.png" Visible="false">
-                        </telerik:RadPanelItem>
-                     
-
-
-                    </Items>
-
-                </telerik:RadPanelBar>
+              
 
             </div>
-
-            <asp:Panel ID="panP56" runat="server" CssClass="content-box1">
+            <div style="float:left;">                
+            <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
+            
+            <asp:Panel ID="panP56" runat="server" CssClass="content-box2">
                 <div class="title">
                     <img src="Images/task.png" alt="Úkol" />
-                    Otevřené úkoly, ke kterým mám vztah
+                    Otevřené úkoly bez termínu
                     <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
-                    <asp:DropDownList ID="cbxP56Types" runat="server" AutoPostBack="true">
-                        <asp:ListItem Text="S termínem" Value="1" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="Bez ohledu na termín" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="Jsem zakladatelem úkolu" Value="3"></asp:ListItem>
-                    </asp:DropDownList>                    
+                             
                 </div>
                 <div class="content">
                     
@@ -173,30 +177,11 @@
                             </ItemTemplate>
                         </asp:Repeater>
                     </table>
-                    <div>
-                        <asp:HyperLink ID="linkCreateTask" runat="server" Text="Vytvořit úkol" NavigateUrl="javascript:p56_create();"></asp:HyperLink>
-                    </div>
+                  
                 </div>
             </asp:Panel>
-            <asp:Panel ID="panO22" runat="server" CssClass="content-box1">
-                <div class="title">
-                    <img src="Images/calendar.png" alt="Kalendářová událost" />
-                    Blízké kalendářové události/milníky (+-1 den)
-                    <asp:Label ID="o22Count" runat="server" CssClass="badge1"></asp:Label>
-                    <a href="entity_scheduler.aspx">Kalendář</a>
-                </div>
-                <div class="content">
-                    <asp:Repeater ID="rpO22" runat="server">
-                        <ItemTemplate>
-                            <div class="div6">
-                                <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail milníku"></asp:HyperLink>
-                                <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
-                            </div>
-                        </ItemTemplate>
-                    </asp:Repeater>
-                </div>
-            </asp:Panel>
+            </div>
+            
             <asp:Panel ID="panO23" runat="server" CssClass="content-box1">
                 <div class="title">
                     <img src="Images/notepad.png" alt="Dokument" />
@@ -279,11 +264,12 @@
                         </asp:Repeater>
                     </table>
                     <hr />
-                    <asp:CheckBox ID="chkP41" runat="server" Text="Nové projekty" AutoPostBack="true" Checked="true" Visible="false" />
-                    <asp:CheckBox ID="chkP28" runat="server" Text="Noví klienti" AutoPostBack="true" Checked="true" Visible="false" />
-                    <asp:CheckBox ID="chkP91" runat="server" Text="Nové faktury" AutoPostBack="true" Checked="false" Visible="false" />
-                    <asp:CheckBox ID="chkP56" runat="server" Text="Nové úkoly" AutoPostBack="true" Checked="false" Visible="false" />
-                    <asp:CheckBox ID="chkO23" runat="server" Text="Nové dokumenty" AutoPostBack="true" Checked="false" Visible="false" />
+                    <asp:CheckBox ID="chkP41" runat="server" Text="Projekty" AutoPostBack="true" Checked="true" Visible="false" />
+                    <asp:CheckBox ID="chkP28" runat="server" Text="Klienti" AutoPostBack="true" Checked="true" Visible="false" />
+                    <asp:CheckBox ID="chkP91" runat="server" Text="Faktury" AutoPostBack="true" Checked="false" Visible="false" />
+                    <asp:CheckBox ID="chkP56" runat="server" Text="Úkoly" AutoPostBack="true" Checked="false" Visible="false" />
+                    <asp:CheckBox ID="chkO23" runat="server" Text="Dokumenty" AutoPostBack="true" Checked="false" Visible="false" />
+                    <asp:CheckBox ID="chkJ02" runat="server" Text="Osoby" AutoPostBack="true" Checked="false" Visible="false" />
                 </div>
             </asp:Panel>
 
@@ -412,7 +398,7 @@
 
                 <a href="log_app_update.aspx">Historie novinek a změn v systému</a>
 
-                <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Zobrazovat na stránce grafy z mých hodin a obrázek" Checked="true" Style="float: right;" />
+                
             </div>
         </div>
 

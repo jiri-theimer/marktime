@@ -50,6 +50,15 @@ Partial Public Class pokus
     Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''scheduler1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents scheduler1 As Global.Telerik.Web.UI.RadScheduler
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

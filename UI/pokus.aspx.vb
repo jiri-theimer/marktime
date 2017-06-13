@@ -24,7 +24,49 @@ Public Class pokus
 
 
         If Not Page.IsPostBack Then
-            
+            Dim c As New Telerik.Web.UI.Appointment
+            c.Start = Now
+            c.End = Now.AddHours(1)
+            c.ID = 1
+            c.Subject = "AK lhůta"
+            c.Description = "Poznámka"
+
+            scheduler1.InsertAppointment(c)
+
+            c = New Telerik.Web.UI.Appointment
+            c.Start = Now.AddHours(1)
+            c.End = Now.AddHours(1)
+            c.ID = 2
+            c.Subject = "AK úkol"
+            c.Description = "Poznámka k úkolu"
+            c.BackColor = Drawing.Color.SkyBlue
+            scheduler1.InsertAppointment(c)
+
+            c = New Telerik.Web.UI.Appointment
+            c.Start = Now.AddDays(50)
+            c.End = Now.AddDays(50)
+            c.ID = 3
+            c.Subject = "Zajít na pivo"
+            c.Description = "Poznámka k úkolu"
+            c.BackColor = Drawing.Color.SkyBlue
+            scheduler1.InsertAppointment(c)
+
+            c = New Telerik.Web.UI.Appointment
+            c.Start = Now.AddHours(71)
+            c.End = Now.AddHours(71)
+            c.ID = 4
+            c.Subject = "Zajít na poštu"
+            c.Description = "Poznámka k úkolu"
+            c.BackColor = Drawing.Color.SkyBlue
+            scheduler1.InsertAppointment(c)
+
+            c = New Telerik.Web.UI.Appointment
+            c.ID = 43
+            c.Subject = "Úkol bez termínu"
+            c.Description = "Poznámka k úkolu"
+            c.BackColor = Drawing.Color.SkyBlue
+
+            scheduler1.InsertAppointment(c)
 
         End If
 

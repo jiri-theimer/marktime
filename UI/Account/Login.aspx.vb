@@ -50,6 +50,9 @@
         If Not b Then b = Membership.ValidateUser(LoginUser.UserName, LoginUser.Password)
         If b Then
             bolStop = IsValidateUserByLogin(LoginUser.UserName)
+
+
+
             ''Dim factory As New BL.Factory(, LoginUser.UserName)
             ''If factory.SysUser Is Nothing Then
             ''    bolStop = True
@@ -73,6 +76,8 @@
         Dim factory As New BL.Factory(, LoginUser.UserName)
         If Not factory.SysUser Is Nothing Then
 
+            
+
             basUI.Write2AccessLog(factory, True, Request, screenwidth.Value, screenheight.Value)
 
         End If
@@ -90,6 +95,10 @@
                 LoginUser.FailureText = "Uzavřený účet pro přihlašování.<br>Your user account is closed."
                 basUI.Write2AccessLog(factory, False, Request, screenwidth.Value, screenheight.Value)
             End If
+        End If
+        If Now > DateSerial(2017, 8, 31) Then
+            bolStop = True
+            LoginUser.FailureText = "Platnost této licence vypršela."
         End If
         Return bolStop
     End Function
