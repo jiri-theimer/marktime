@@ -51,7 +51,7 @@
             Me.x23ID.SelectedValue = .x23ID.ToString
             Me.x25Name.Text = .x25Name
             Me.x25Ordinary.Value = .x25Ordinary
-            Me.x25UserKey.Text = .x25UserKey
+            Me.x25Code.Text = .x25Code
             Master.Timestamp = .Timestamp
             basUI.SetColorToPicker(Me.x25BackColor, .x25BackColor)
             basUI.SetColorToPicker(Me.x25ForeColor, .x25ForeColor)
@@ -84,7 +84,7 @@
             cRec.x25Name = Me.x25Name.Text
             cRec.x25Ordinary = BO.BAS.IsNullInt(Me.x25Ordinary.Value)
             cRec.x23ID = BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
-            cRec.x25UserKey = Me.x25UserKey.Text
+            cRec.x25Code = Me.x25Code.Text
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.x25BackColor = basUI.GetColorFromPicker(Me.x25BackColor)

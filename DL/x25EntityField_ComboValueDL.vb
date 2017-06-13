@@ -7,11 +7,11 @@
         Dim s As String = "select a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name FROM x25EntityField_ComboValue a LEFT OUTER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID WHERE a.x25ID=@pid"
         Return _cDB.GetRecord(Of BO.x25EntityField_ComboValue)(s, New With {.pid = intPID})
     End Function
-    Public Function LoadByExternalPID(strUserKey As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
+    Public Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
         Dim pars As New DbParameters
         pars.Add("x23id", intX23ID, DbType.Int32)
-        pars.Add("userkey", strUserKey, DbType.String)
-        Dim s As String = "select TOP 1 a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name FROM x25EntityField_ComboValue a LEFT OUTER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID WHERE a.x23ID=@x23id AND a.x25UserKey=@userkey"
+        pars.Add("code", strCode, DbType.String)
+        Dim s As String = "select TOP 1 a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name FROM x25EntityField_ComboValue a LEFT OUTER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID WHERE a.x23ID=@x23id AND a.x25Code=@code"
         Return _cDB.GetRecord(Of BO.x25EntityField_ComboValue)(s, pars)
     End Function
 
@@ -35,12 +35,23 @@
         With cRec
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
             pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
-            pars.Add("x25UserKey", .x25UserKey, DbType.String)
+            pars.Add("x25Code", .x25Code, DbType.String)
             pars.Add("x25ForeColor", .x25ForeColor, DbType.String)
             pars.Add("x25BackColor", .x25BackColor, DbType.String)
             pars.Add("x25Ordinary", .x25Ordinary, DbType.Int32)
             pars.Add("x25ValidFrom", .ValidFrom, DbType.DateTime)
             pars.Add("x25ValidUntil", .ValidUntil, DbType.DateTime)
+
+            pars.Add("x25FreeText01", .x25FreeText01, DbType.String)
+            pars.Add("x25FreeText02", .x25FreeText02, DbType.String)
+            pars.Add("x25FreeText03", .x25FreeText03, DbType.String)
+            pars.Add("x25FreeText04", .x25FreeText04, DbType.String)
+            pars.Add("x25FreeText05", .x25FreeText05, DbType.String)
+            pars.Add("x25FreeNumber01", .x25FreeNumber01, DbType.Double)
+            pars.Add("x25FreeNumber02", .x25FreeNumber02, DbType.Double)
+            pars.Add("x25FreeNumber03", .x25FreeNumber03, DbType.Double)
+            pars.Add("x25FreeNumber04", .x25FreeNumber04, DbType.Double)
+            pars.Add("x25FreeNumber05", .x25FreeNumber05, DbType.Double)
         End With
 
         If _cDB.SaveRecord("x25EntityField_ComboValue", pars, bolINSERT, strW, True, _curUser.j03Login) Then

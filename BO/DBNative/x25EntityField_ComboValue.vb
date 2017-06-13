@@ -3,9 +3,20 @@
     Public Property x23ID As Integer
     Public Property x25Name As String
     Public Property x25Ordinary As Integer
-    Public Property x25UserKey As String
+    Public Property x25Code As String
     Public Property x25BackColor As String
     Public Property x25ForeColor As String
+
+    Public Property x25FreeText01 As String
+    Public Property x25FreeText02 As String
+    Public Property x25FreeText03 As String
+    Public Property x25FreeText04 As String
+    Public Property x25FreeText05 As String
+    Public Property x25FreeNumber01 As Double?
+    Public Property x25FreeNumber02 As Double?
+    Public Property x25FreeNumber03 As Double
+    Public Property x25FreeNumber04 As Double
+    Public Property x25FreeNumber05 As Double
 
     Private Property _x23Name As String
     Public ReadOnly Property x23Name As String

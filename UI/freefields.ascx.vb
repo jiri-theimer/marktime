@@ -112,6 +112,7 @@ Public Class freefields
             If Not cRec.x18IsMultiSelect Then
                 .AllowCheckboxes = False
                 .IsFirstEmptyRow = True
+                If lisX25.Count > 30 Then .Filter = datacombo.FilterMode.Contains
             End If
             .DataSource = lisX25
             .DataBind()

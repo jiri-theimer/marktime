@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class x18_record
 
     '''<summary>
+    '''RadTabStrip1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''core control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents core As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''lblName control.
     '''</summary>
     '''<remarks>
@@ -48,6 +75,24 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
+
+    '''<summary>
+    '''x18IsMultiSelect control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsMultiSelect As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x29IDs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x29IDs As Global.System.Web.UI.WebControls.CheckBoxList
 
     '''<summary>
     '''rpX25 control.
@@ -95,22 +140,13 @@ Partial Public Class x18_record
     Protected WithEvents cmdConfirmOpg1 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''x18IsMultiSelect control.
+    '''other control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x18IsMultiSelect As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''x29IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x29IDs As Global.System.Web.UI.WebControls.CheckBoxList
+    Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''x18IsAllEntityTypes control.

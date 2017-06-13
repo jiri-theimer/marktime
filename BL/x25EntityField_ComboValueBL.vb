@@ -2,7 +2,7 @@
     Inherits IFMother
     Function Save(cRec As BO.x25EntityField_ComboValue) As Boolean
     Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
-    Function LoadByExternalPID(strUserKey As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
+    Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
     Function Delete(intPID As Integer) As Boolean
     Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x25EntityField_ComboValue)
 
@@ -59,8 +59,8 @@ Class x25EntityField_ComboValueBL
     Public Function Load(intPID As Integer) As BO.x25EntityField_ComboValue Implements Ix25EntityField_ComboValueBL.Load
         Return _cDL.Load(intPID)
     End Function
-    Public Function LoadByExternalPID(strUserKey As String, intX23ID As Integer) As BO.x25EntityField_ComboValue Implements Ix25EntityField_ComboValueBL.LoadByExternalPID
-        Return _cDL.LoadByExternalPID(strUserKey, intX23ID)
+    Public Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue Implements Ix25EntityField_ComboValueBL.LoadByCode
+        Return _cDL.LoadByCode(strCode, intX23ID)
     End Function
     Public Function Delete(intPID As Integer) As Boolean Implements Ix25EntityField_ComboValueBL.Delete
         Dim cRec As BO.x25EntityField_ComboValue = Load(intPID)

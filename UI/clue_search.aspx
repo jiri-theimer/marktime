@@ -32,7 +32,7 @@
             var ret = combo.get_value();
             var a = ret.split("|");
             if (a[0] == "p31") {
-                alert("nic");
+                window.open("p31_grid.aspx?pid=" + a[1], "_top");
             }
             else {
                 window.open(a[0] + "_framework.aspx?pid=" + a[1], "_top");

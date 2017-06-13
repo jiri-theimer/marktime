@@ -349,53 +349,7 @@ Public Class p31_grid
 
     End Sub
 
-    ''Private Sub grid1_DetailTableDataBind(sender As Object, e As GridDetailTableDataBindEventArgs) Handles grid1.DetailTableDataBind
-    ''    Dim dataItem As GridDataItem = DirectCast(e.DetailTableView.ParentItem, GridDataItem)
-    ''    Dim mq As New BO.myQueryP31
-    ''    Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
-    ''    Select Case LCase(colDrill.LinqQueryField)
-    ''        Case "p71id"
-    ''            mq.p71ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p71IdENUM)
-    ''        Case "p70id"
-    ''            mq.p70ID = DirectCast(BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")), BO.p70IdENUM)
-    ''        Case Else
-    ''            BO.BAS.SetPropertyValue(mq, colDrill.LinqQueryField, BO.BAS.IsNullInt(dataItem.GetDataKeyValue("pid")))
-    ''    End Select
-
-
-    ''    With mq
-    ''        .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
-    ''        .MG_CurrentPageIndex = e.DetailTableView.CurrentPageIndex
-    ''        .MG_SortString = e.DetailTableView.SortExpressions.GetSortString()
-    ''        If Me.hidDefaultSorting.Value <> "" Then
-    ''            If .MG_SortString = "" Then
-    ''                .MG_SortString = Me.hidDefaultSorting.Value
-    ''            Else
-    ''                .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
-    ''            End If
-    ''        End If
-    ''        If Me.cbxGroupBy.SelectedValue <> "" Then
-    ''            Dim strPrimarySortField As String = Me.cbxGroupBy.SelectedValue
-    ''            If strPrimarySortField = "SupplierName" Then strPrimarySortField = "supplier.p28Name"
-    ''            If strPrimarySortField = "ClientName" Then strPrimarySortField = "p28client.p28Name"
-    ''            If strPrimarySortField = "Person" Then strPrimarySortField = "j02.j02LastName+char(32)+j02.j02Firstname"
-
-    ''            If .MG_SortString = "" Then
-    ''                .MG_SortString = strPrimarySortField
-    ''            Else
-    ''                .MG_SortString = strPrimarySortField & "," & .MG_SortString
-    ''            End If
-    ''        End If
-    ''    End With
-    ''    InhaleMyQuery(mq)
-    ''    With e.DetailTableView
-    ''        .AllowCustomPaging = True
-    ''        .AllowSorting = True
-    ''        If .VirtualItemCount = 0 Then .VirtualItemCount = GetRowsCount(mq)
-    ''        .DataSource = Master.Factory.p31WorksheetBL.GetList(mq)
-
-    ''    End With
-    ''End Sub
+  
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
         _needFilterIsChanged = True
@@ -506,6 +460,15 @@ Public Class p31_grid
             .TabAutoQuery = cbxTabQueryFlag.SelectedValue
             .x18Value = Me.hidX18_value.Value
         End With
+        If Not Page.IsPostBack Then
+            If Request.Item("pid") <> "" Then
+                mq = New BO.myQueryP31    'vyčistit filtr
+                mq.SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
+                mq.MG_AdditionalSqlFROM = Me.hidFrom.Value
+                mq.MG_GridSqlColumns = Me.hidCols.Value
+                mq.PIDs = BO.BAS.ConvertPIDs2List(Request.Item("pid"))
+            End If
+        End If
     End Sub
 
 
