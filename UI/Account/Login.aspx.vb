@@ -96,10 +96,10 @@
                 basUI.Write2AccessLog(factory, False, Request, screenwidth.Value, screenheight.Value)
             End If
         End If
-        If Now > DateSerial(2017, 8, 31) Then
-            bolStop = True
-            LoginUser.FailureText = "Platnost této licence vypršela."
-        End If
+        ''If Now > DateSerial(2017, 8, 31) Then
+        ''    bolStop = True
+        ''    LoginUser.FailureText = "Platnost této licence vypršela."
+        ''End If
         Return bolStop
     End Function
 

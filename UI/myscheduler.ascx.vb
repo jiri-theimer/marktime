@@ -39,12 +39,13 @@ Public Class myscheduler
     End Sub
 
     Public Sub RefreshData(d0 As Date)
+        If Me.RecordPID = 0 Then Return
         scheduler1.SelectedDate = d0
         scheduler1.Appointments.Clear()
 
         Dim d1 As Date = d0.AddDays(-5)
         Dim d2 As Date = d1.AddDays(Me.NumberOfDays)
-       
+
         fill_o22(d1, d2)
         fill_p56(d1.AddDays(-100), d2)
 

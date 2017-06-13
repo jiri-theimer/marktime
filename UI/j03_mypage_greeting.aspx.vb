@@ -11,7 +11,10 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         cal1.factory = Master.Factory
-        cal1.RecordPID = Master.Factory.SysUser.j02ID
+        
+
+
+
 
         If Not Page.IsPostBack Then
             lblBuild.Text = "Verze: " & BO.ASS.GetUIVersion()
@@ -35,6 +38,7 @@
                 .Add("j03_mypage_greeting-chkSearch")
                 .Add("j03_mypage_greeting-cbxP56Types")
                 .Add("j03_mypage_greeting-chkLog")
+                .Add("j03_mypage_greeting-chkScheduler")
             End With
 
             With Master.Factory
@@ -50,6 +54,8 @@
                 chkJ02.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkJ02", "0"))
                 chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "0"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
+                chkScheduler.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkScheduler", "1"))
+
                 ''basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "2"))
 
                 ''menu1.FindItemByValue("p31_create").Visible = .SysUser.j04IsMenu_Worksheet
@@ -153,8 +159,13 @@
             'If basUI.GetCookieValue(Request, "MT50-SAW") = "1" Then
             '    menu1.Visible = False
             'End If
-            cal1.RefreshData(Today.AddDays(-5))
+            If chkScheduler.Checked Then
+                cal1.RecordPID = Master.Factory.SysUser.j02ID
+                cal1.RefreshData(Today.AddDays(-5))
+            End If
 
+        Else
+            If chkScheduler.Checked Then cal1.RecordPID = Master.Factory.SysUser.j02ID
         End If
 
     End Sub
@@ -601,7 +612,7 @@
     ''End Sub
 
     Private Sub j03_mypage_greeting_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-
+        cal1.Visible = chkScheduler.Checked
     End Sub
 
     Private Sub chkLog_CheckedChanged(sender As Object, e As EventArgs) Handles chkLog.CheckedChanged
@@ -611,6 +622,11 @@
 
     Private Sub chkJ02_CheckedChanged(sender As Object, e As EventArgs) Handles chkJ02.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkJ02", BO.BAS.GB(Me.chkJ02.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub chkScheduler_CheckedChanged(sender As Object, e As EventArgs) Handles chkScheduler.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("j03_mypage_greeting-chkScheduler", BO.BAS.GB(Me.chkScheduler.Checked))
         ReloadPage()
     End Sub
 End Class

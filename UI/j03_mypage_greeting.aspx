@@ -75,6 +75,7 @@
             <img src="Images/logo_transparent.png" />
         </div>
         <div style="float:right;">
+            <asp:CheckBox ID="chkScheduler" runat="server" Text="Úkoly a termíny" AutoPostBack="true" CssClass="chk" Checked="true" />
             <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
             <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významější akce" AutoPostBack="true" CssClass="chk" Checked="true" style="margin-left:20px;" />
             <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk" style="margin-left:20px;" />
