@@ -18,6 +18,7 @@
         ''mq.Closed = BO.BooleanQueryMode.NoQuery
         ''Dim lis As IEnumerable(Of BO.p56TaskWithWorksheetSum) = Master.Factory.p56TaskBL.GetList_WithWorksheetSum(mq)
         Dim cRec As BO.p56Task = Master.Factory.p56TaskBL.Load(Master.DataPID)
+        Dim cP57 As BO.p57TaskType = Master.Factory.p57TaskTypeBL.Load(cRec.p57ID)
         Dim cRecSum As BO.p56TaskSum = Master.Factory.p56TaskBL.LoadSumRow(Master.DataPID)
         Me.Project.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, cRec.p41ID)
         With cRec
@@ -48,20 +49,29 @@
         End With
         Me.RolesInLine.Text = Master.Factory.p56TaskBL.GetRolesInline(Master.DataPID)
         If Not BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
-
             Me.p56PlanUntil.Text = BO.BAS.FD(cRec.p56PlanUntil, True, True)
-            If cRec.p56PlanUntil < Now Then
-                Me.p56PlanUntil.Text += "...je po termínu!" : p56PlanUntil.ForeColor = Drawing.Color.Red
-            Else
-                p56PlanUntil.ForeColor = Drawing.Color.Green
+            If cRec.p57PlanDatesEntryFlag <> 4 Then
+                If cRec.p56PlanUntil < Now Then
+                    Me.p56PlanUntil.Text += "...je po termínu!" : p56PlanUntil.ForeColor = Drawing.Color.Red
+                Else
+                    p56PlanUntil.ForeColor = Drawing.Color.Green
+                End If
             End If
-
         End If
         If Not BO.BAS.IsNullDBDate(cRec.p56PlanFrom) Is Nothing Then
             Me.p56PlanFrom.Text = BO.BAS.FD(cRec.p56PlanFrom, True, True)
         Else
             lblp56PlanFrom.Visible = False
         End If
+        With cP57
+            If .p57Caption_PlanFrom <> "" Then
+                lblp56PlanFrom.Text = .p57Caption_PlanFrom & ":"
+            End If
+            If .p57Caption_PlanUntil <> "" Then
+                lblp56PlanUntil.Text = .p57Caption_PlanUntil & ":"
+            End If
+        End With
+        
         If cRecSum.Expenses_Orig > 0 Then
             trExpenses.Visible = True
             Me.Expenses_Orig.Text = BO.BAS.FN(cRecSum.Expenses_Orig)
@@ -94,15 +104,8 @@
             End Select
             
         End If
-        Dim cP57 As BO.p57TaskType = Master.Factory.p57TaskTypeBL.Load(cRec.p57ID)
-        With cP57
-            If .p57Caption_PlanFrom <> "" Then
-                lblp56PlanFrom.Text = .p57Caption_PlanFrom & ":"
-            End If
-            If .p57Caption_PlanUntil <> "" Then
-                lblp56PlanUntil.Text = .p57Caption_PlanUntil & ":"
-            End If
-        End With
+
+        
 
         If cRec.IsClosed Then
             img1.ImageUrl = "Images/bin_32.png"

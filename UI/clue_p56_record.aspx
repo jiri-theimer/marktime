@@ -58,11 +58,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>
+                            <asp:Label ID="lblp56PlanFrom" runat="server" Text="Plánované zahájení:"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="p56PlanFrom" runat="server" CssClass="valbold" ForeColor="green"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><asp:Label ID="lblp56PlanUntil" runat="server" Text="Termín:"></asp:Label></td>
                         <td>
                             <asp:Label ID="p56PlanUntil" runat="server" CssClass="valboldred"></asp:Label>
-                            <asp:Label ID="lblp56PlanFrom" runat="server" Text="Plánované zahájení:"></asp:Label>
-                            <asp:Label ID="p56PlanFrom" runat="server" CssClass="valbold" ForeColor="green"></asp:Label>
+                            
                         </td>
                     </tr>
                     <tr>

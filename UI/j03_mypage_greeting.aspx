@@ -77,7 +77,7 @@
         <div style="float:right;">
             <asp:CheckBox ID="chkScheduler" runat="server" Text="Úkoly a termíny" AutoPostBack="true" CssClass="chk" Checked="true" />
             <asp:CheckBox ID="chkSearch" runat="server" Text="Vyhledávání" AutoPostBack="true" CssClass="chk" Checked="false" />
-            <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významější akce" AutoPostBack="true" CssClass="chk" Checked="true" style="margin-left:20px;" />
+            <asp:CheckBox ID="chkLog" runat="server" Text="Poslední významnější akce" AutoPostBack="true" CssClass="chk" Checked="true" style="margin-left:20px;" />
             <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk" style="margin-left:20px;" />
         </div>
         <div style="clear: both;"></div>
@@ -97,7 +97,7 @@
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/project_service.asmx" UseHttpGet="false" />
                             </telerik:RadComboBox>
                         </asp:Panel>
-                        <asp:Panel ID="panSearch_p28" runat="server" Visible="false">
+                        <asp:Panel ID="panSearch_p28" runat="server" Style="margin-top: 6px;" Visible="false">
                             
                             <telerik:RadComboBox ID="search_p28" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat klienta..." Width="250px" OnClientSelectedIndexChanged="contact_OnClientSelectedIndexChanged" OnClientItemsRequesting="contact_OnClientItemsRequesting">
                                 <WebServiceSettings Method="LoadComboData" Path="~/Services/contact_service.asmx" UseHttpGet="false" />
@@ -135,49 +135,7 @@
             <div style="float:left;">                
             <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
             
-            <asp:Panel ID="panP56" runat="server" CssClass="content-box2">
-                <div class="title">
-                    <img src="Images/task.png" alt="Úkol" />
-                    Otevřené úkoly bez termínu
-                    <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
-                             
-                </div>
-                <div class="content">
-                    
-                    <table>
-                       
-                        <asp:Repeater ID="rpP56" runat="server">
-                            <ItemTemplate>
-                                <tr>
-                                    <td colspan="3">
-                                        <asp:Label ID="Project" runat="server" CssClass="timestamp"></asp:Label>
-                                    </td>
-                                </tr>
-                                <tr valign="top">
-                                   
-                                    <td style="max-width: 300px;">
-                                        <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
-                                        <asp:HyperLink ID="link1" runat="server"></asp:HyperLink>
-                                        <div>
-                                            <asp:Label ID="p56PlanUntil" runat="server" ToolTip="Termín úkolu"></asp:Label>
-                                            <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
-                                        </div>
-                                    </td>
-                                    <td style="width:30px;">
-                                        <asp:HyperLink ID="linkWorksheet" ImageUrl="Images/worksheet.png" runat="server" ToolTip="Vykázat úkon do úkolu"></asp:HyperLink>
-                                    </td>
-                                    <td style="text-align:center;">
-                                        <asp:HyperLink ID="linkWorkflow" runat="server" Text="Posunout/doplnit"></asp:HyperLink>
-                                        
-                                    </td>
-                                   
-                                </tr>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </table>
-                  
-                </div>
-            </asp:Panel>
+            
             </div>
             
             <asp:Panel ID="panO23" runat="server" CssClass="content-box1">

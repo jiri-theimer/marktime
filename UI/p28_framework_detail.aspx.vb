@@ -13,6 +13,8 @@
    
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        cal1.factory = Master.Factory()
+
         If Not Page.IsPostBack Then
             With Master
                 .SiteMenuValue = "p28"
@@ -35,8 +37,9 @@
                     .Add("p28_framework_detail_pos")
                     .Add("p28_menu-x31id-plugin")
                     .Add("p28_menu-show-level1")
+                    .Add("p28_menu-show-cal1")
                 End With
-                
+
                 Dim intPID As Integer = Master.DataPID
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -61,6 +64,7 @@
                         Case Else
                             'zůstat zde na BOARD stránce
                     End Select
+                    hidCal1ShallBeActive.Value = .GetUserParam("p28_menu-show-cal1", "1")
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam("p28_menu-x31id-plugin")
@@ -228,6 +232,18 @@
             boxP41.Visible = False
         End If
 
+        If hidCal1ShallBeActive.Value = "1" Then
+            cal1.RecordPID = Master.DataPID
+            If cRecSum.p56_Actual_Count > 0 Or cRecSum.o22_Actual_Count > 0 Then
+                cal1.RefreshData(Today.AddDays(-5))
+                cal1.RefreshTasksWithoutDate()
+            Else
+                cal1.Visible = False
+            End If
+        Else
+            cal1.Visible = False
+        End If
+        
 
         If cRecSum.o23_Count > 0 Then
             Dim mqO23 As New BO.myQueryO23

@@ -30,7 +30,7 @@ Class o22MilestoneBL
     End Sub
     Public Function Save(cRec As BO.o22Milestone, lisO20 As List(Of BO.o20Milestone_Receiver), lisO19 As List(Of BO.o19Milestone_NonPerson)) As Boolean Implements Io22MilestoneBL.Save
         With cRec
-            If .o21ID = 0 Then _Error = "Chybí typ milníku/události." : Return False
+            If .o21ID = 0 Then _Error = "Chybí typ události." : Return False
             Dim cO21 As BO.o21MilestoneType = Me.Factory.o21MilestoneTypeBL.Load(.o21ID)
             Select Case .x29ID
                 Case BO.x29IdEnum.j02Person
@@ -73,6 +73,13 @@ Class o22MilestoneBL
                     .o22DateFrom = Nothing
                     .o22DateUntil = Nothing
             End Select
+            If Not lisO20 Is Nothing Then
+                If lisO20.Count = 0 Then
+                    Dim c As New BO.o20Milestone_Receiver
+                    c.j02ID = cRec.j02ID_Owner
+                    lisO20.Add(c)
+                End If
+            End If
             If Not BO.BAS.IsNullDBDate(.o22ReminderDate) Is Nothing Then
                 If .o22ReminderDate > .o22DateFrom Then
                     _Error = "[Čas připomenutí] musí být menší než [Začátek]." : Return False

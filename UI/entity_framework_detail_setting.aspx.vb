@@ -28,6 +28,7 @@
                 .Add(Me.CurrentPrefix + "_menu-x31id-plugin")
                 .Add(Me.CurrentPrefix + "_menu-remember-tab")
                 .Add(Me.CurrentPrefix + "_menu-show-level1")
+                .Add(Me.CurrentPrefix + "_menu-show-cal1")
                 ''.Add(Me.CurrentPrefix + "_menu-searchbox")
             End With
 
@@ -40,6 +41,7 @@
 
                 Me.chkRememberLastTab.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-remember-tab", "0"))
                 Me.chkShowLevel1.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-show-level1", "0"))
+                Me.chkScheduler.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_menu-show-cal1", "1"))
                 basUI.SelectDropdownlistValue(Me.skin1, .GetUserParam(Me.CurrentPrefix + "_menu-tabskin", "Default"))
                 basUI.SelectDropdownlistValue(Me.skin0, .GetUserParam(Me.CurrentPrefix + "_menu-menuskin", "Default"))
                 basUI.SelectDropdownlistValue(Me.x31ID_Plugin, .GetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin"))
@@ -71,8 +73,10 @@
             Select Case Me.CurrentPrefix
                 Case "p41", "p28", "j02"
                     panPlugin.Visible = True
+                    chkScheduler.Visible = True
                 Case Else
                     panPlugin.Visible = False
+                    chkScheduler.Visible = False
             End Select
 
         End If
@@ -98,6 +102,7 @@
                 .SetUserParam(Me.CurrentPrefix + "_menu-x31id-plugin", Me.x31ID_Plugin.SelectedValue)
                 .SetUserParam(Me.CurrentPrefix + "_menu-remember-tab", BO.BAS.GB(Me.chkRememberLastTab.Checked))
                 .SetUserParam(Me.CurrentPrefix + "_menu-show-level1", BO.BAS.GB(Me.chkShowLevel1.Checked))
+                .SetUserParam(Me.CurrentPrefix + "_menu-show-cal1", BO.BAS.GB(Me.chkScheduler.Checked))
             End With
             Master.CloseAndRefreshParent("setting")
         End If

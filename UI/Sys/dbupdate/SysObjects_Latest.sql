@@ -4388,7 +4388,7 @@ CREATE procedure [dbo].[j02_inhale_sumrow]
 ,@pid int						---j02id		
 AS
 
-declare @p56_actual_count int,@p56_closed_count int,@p91_count int
+declare @p56_actual_count int,@p56_closed_count int,@p91_count int,@o22_actual_count int
 declare @p31_wip_time_count int,@p31_wip_expense_count int,@p31_wip_fee_count int,@p31_wip_kusovnik_count int,@b07_count int
 declare @p31_approved_time_count int,@p31_approved_expense_count int,@p31_approved_fee_count int,@p31_approved_kusovnik_count int
 declare @o23_count int,@last_access datetime,@last_worksheet varchar(100)
@@ -4401,6 +4401,11 @@ if exists(SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67En
 	WHERE p56ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=356 AND (x69.j02ID=@pid OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@pid)))
 
  end
+
+
+SELECT @o22_actual_count=COUNT(o22ID)
+FROM o22Milestone
+WHERE o22DateUntil>=dateadd(day,-5,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil AND o22ID IN (select o22ID FROM o20Milestone_Receiver WHERE j02ID=@pid OR j11ID IN (select j11ID FROM j12Team_Person WHERE j02ID=@pid))
 
 declare @is_p31id bit,@j03id int
 select @j03id=j03ID FROM j03User WHERE j02ID=@pid
@@ -4455,6 +4460,7 @@ if @j03id is not null
  select TOP 1 @last_access=j90Date FROM j90LoginAccessLog WHERE j03ID=@j03id ORDER BY j90ID DESC
 
 select isnull(@p56_actual_count,0) as p56_Actual_Count
+,isnull(@o22_actual_count,0) as o22_Actual_Count
 ,isnull(@p56_closed_count,0) as p56_Closed_Count
 ,isnull(@p91_count,0) as p91_Count
 ,isnull(@p31_wip_time_count,0) as p31_Wip_Time_Count
@@ -6942,9 +6948,12 @@ SELECT @p56_actual_count=sum(case when getdate() BETWEEN p56ValidFrom AND p56Val
 FROM p56Task a INNER JOIN p41Project b ON a.p41ID=b.p41ID
 WHERE b.p28ID_Client=@pid
 
-SELECT @o22_actual_count=COUNT(a.o22ID)
-FROM o22Milestone a INNER JOIN p41Project b ON a.p41ID=b.p41ID
-WHERE b.p41ID=@pid AND o22DateUntil>=dateadd(day,-2,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil
+if exists(select o22ID FROM o22Milestone WHERE o22DateUntil>=dateadd(day,-5,getdate()) AND p28ID=@pid OR p41ID IN (SELECT p41ID FROM p41Project WHERE p28ID_Client=@pid))
+begin
+SELECT @o22_actual_count=COUNT(o22ID)
+FROM o22Milestone
+WHERE p28ID=@pid OR p41ID IN (SELECT p41ID FROM p41Project WHERE p28ID_Client=@pid) AND o22DateUntil>=dateadd(day,-5,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil
+end
 
 SELECT @p91_count=COUNT(p91ID)
 from p91Invoice
@@ -11146,7 +11155,7 @@ end
 
 SELECT @o22_actual_count=COUNT(o22ID)
 FROM o22Milestone
-WHERE p41ID=@pid AND o22DateUntil>=dateadd(day,-2,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil
+WHERE p41ID=@pid AND o22DateUntil>=dateadd(day,-5,getdate()) AND getdate() BETWEEN o22ValidFrom AND o22ValidUntil
 
 if @p42IsModule_p31=1
 begin

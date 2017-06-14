@@ -77,24 +77,6 @@ Partial Public Class clue_p56_record
     Protected WithEvents p59name_submitter As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblp56PlanUntil control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblp56PlanUntil As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p56PlanUntil control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p56PlanUntil As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''lblp56PlanFrom control.
     '''</summary>
     '''<remarks>
@@ -111,6 +93,24 @@ Partial Public Class clue_p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents p56PlanFrom As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''lblp56PlanUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblp56PlanUntil As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''p56PlanUntil control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p56PlanUntil As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''Project control.

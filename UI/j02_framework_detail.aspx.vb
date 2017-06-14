@@ -19,6 +19,7 @@
    
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        cal1.factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
                 .SiteMenuValue = "j02"
@@ -38,6 +39,7 @@
                     .Add("j02_menu-menuskin")
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
                     .Add("j02_menu-show-level1")
+                    .Add("j02_menu-show-cal1")
                 End With
                 Dim intPID As Integer = Master.DataPID
                 With .Factory.j03UserBL
@@ -60,6 +62,7 @@
                         Case Else
                             'zůstat zde na BOARD stránce
                     End Select
+                    hidCal1ShallBeActive.Value = .GetUserParam("j02_menu-show-cal1", "1")
                     menu1.TabSkin = .GetUserParam("j02_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
                     menu1.ShowLevel1 = BO.BAS.BG(.GetUserParam("j02_menu-show-level1", "0"))
@@ -216,14 +219,26 @@
         If Not (Master.Factory.SysUser.j04IsMenu_Project Or Master.Factory.SysUser.j04IsMenu_Contact) Then
             boxP30.Enabled = False
         End If
-        
 
-        If cRecSum.b07_Count > 0 Then
-            comments1.Visible = True
-            comments1.RefreshData(Master.Factory, BO.x29IdEnum.j02Person, cRec.PID)
+        If hidCal1ShallBeActive.Value = "1" Then
+            cal1.RecordPID = Master.DataPID
+            If cRecSum.p56_Actual_Count > 0 Or cRecSum.o22_Actual_Count > 0 Then
+                cal1.RefreshData(Today.AddDays(-5))
+                cal1.RefreshTasksWithoutDate()
+            Else
+                cal1.Visible = False
+            End If
+
+            If cRecSum.b07_Count > 0 Then
+                comments1.Visible = True
+                comments1.RefreshData(Master.Factory, BO.x29IdEnum.j02Person, cRec.PID)
+            Else
+                comments1.Visible = False
+            End If
         Else
-            comments1.Visible = False
+            cal1.Visible = False
         End If
+        
     End Sub
 
     Private Sub Handle_Permissions(cRec As BO.j02Person)

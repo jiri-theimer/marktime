@@ -1,7 +1,7 @@
 ﻿Public Class j03_mypage_greeting
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
-    Private Property _curIsShowP57name As Boolean = False
+
 
     Private Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -162,6 +162,7 @@
             If chkScheduler.Checked Then
                 cal1.RecordPID = Master.Factory.SysUser.j02ID
                 cal1.RefreshData(Today.AddDays(-5))
+                cal1.RefreshTasksWithoutDate()
             End If
 
         Else
@@ -225,25 +226,7 @@
     ''End Sub
 
     Private Sub RefreshBoxes()
-        panP56.Visible = False
-        Dim mq As New BO.myQueryP56
-        mq.Closed = BO.BooleanQueryMode.FalseQuery
-        mq.TerminNeniVyplnen = BO.BooleanQueryMode.TrueQuery
-        mq.TopRecordsOnly = 100
-        Dim lisP56 As IEnumerable(Of BO.p56Task) = Master.Factory.p56TaskBL.GetList(mq)
-
-        If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
-        Me.p56Count.Text = lisP56.Count.ToString
-        If lisP56.Count = 100 Then
-            Me.p56Count.Text = "Podmínce vyhovuje více než 100 úkolů bez termínu!"
-        End If
-        rpP56.DataSource = lisP56
-        rpP56.DataBind()
-        If lisP56.Count = 0 Then
-            Me.panP56.Visible = False
-        Else
-            Me.panP56.Visible = True
-        End If
+        
         
         
         Dim lisO23 As IEnumerable(Of BO.o23NotepadGrid) = Master.Factory.o23NotepadBL.GetList_forMessagesDashboard(Master.Factory.SysUser.j02ID)
@@ -282,55 +265,7 @@
 
     
 
-    Private Sub rpP56_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpP56.ItemDataBound
-        Dim cRec As BO.p56Task = CType(e.Item.DataItem, BO.p56Task)
-        With CType(e.Item.FindControl("link1"), HyperLink)
-            If _curIsShowP57name Then
-                .Text = cRec.NameWithTypeAndCode
-            Else
-                .Text = cRec.p56Name
-            End If
-
-            .NavigateUrl = "p56_framework.aspx?pid=" & cRec.PID.ToString
-            If cRec.IsClosed Then .Font.Strikeout = True
-        End With
-        With CType(e.Item.FindControl("clue1"), HyperLink)
-            .Attributes.Item("rel") = "clue_p56_record.aspx?&pid=" & cRec.PID.ToString
-        End With
-        If Not cRec.p56ReminderDate Is Nothing Then
-            e.Item.FindControl("img1").Visible = True
-        Else
-            e.Item.FindControl("img1").Visible = False
-        End If
-        With CType(e.Item.FindControl("Project"), Label)
-            .Text = BO.BAS.OM3(cRec.p41Name, 100)
-            If cRec.Client <> "" Then
-                .Text = cRec.Client & " - " & .Text
-            End If
-
-
-        End With
-        With CType(e.Item.FindControl("linkWorkflow"), HyperLink)
-            .Text = cRec.b02Name
-            If cRec.b02Color <> "" Then .Style.Item("background-color") = cRec.b02Color
-            .NavigateUrl = "javascript:wd(" & cRec.PID.ToString & ")"
-        End With
-        With CType(e.Item.FindControl("linkWorksheet"), HyperLink)
-            .NavigateUrl = "javascript:ew(" & cRec.PID.ToString & ")"
-        End With
-
-        If Not BO.BAS.IsNullDBDate(cRec.p56PlanUntil) Is Nothing Then
-            With CType(e.Item.FindControl("p56PlanUntil"), Label)
-                .Text = BO.BAS.FD(cRec.p56PlanUntil, True, True)
-                If cRec.p56PlanUntil < Now Then
-                    .Text += "...je po termínu!" : .ForeColor = Drawing.Color.Red
-                Else
-                    .ForeColor = Drawing.Color.Green
-                End If
-            End With
-
-        End If
-    End Sub
+    
 
     
 

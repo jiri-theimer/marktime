@@ -9,7 +9,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="div6">
-        <asp:CheckBox ID="chkShowLevel1" runat="server" Text="Zobrazovat v menu výrazný odkaz (název) vybraného záznamu" />
+        <asp:CheckBox ID="chkShowLevel1" runat="server" Text="Zobrazovat v menu výrazný odkaz (název) vybraného záznamu" CssClass="chk" />
     </div>
     <div class="div6">
         <span>Vzhled (Skin) kontextového menu stránky:</span>
@@ -107,7 +107,14 @@
             </asp:Panel>
         </div>
     </div>
-
+    <div class="content-box2">
+        <div class="title">Kalendář</div>
+        <div class="content">
+            <div class="div6">
+        <asp:CheckBox ID="chkScheduler" runat="server" Text="Zobrazovat na stránce kalendář, pokud existují otevřené úkoly nebo termíny" CssClass="chk" Checked="true" />
+    </div>
+        </div>
+    </div>
 
     <asp:HiddenField ID="hidPrefix" runat="server" />
 </asp:Content>

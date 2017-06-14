@@ -7,7 +7,7 @@
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
-
+<%@ Register TagPrefix="uc" TagName="myscheduler" Src="~/myscheduler.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -51,6 +51,18 @@
 
             window.open("o23_framework.aspx?pid=" + pid, "_top");
 
+        }
+        function re(pid, prefix) {
+            if (prefix == 'o22')
+                sw_decide("o22_record.aspx?pid=" + pid, "Images/datepicker.png")
+
+
+            if (prefix == 'p56')
+                window.open("p56_framework.aspx?pid=" + pid, "_top");
+
+        }
+        function wd(pid) {
+            sw_decide("workflow_dialog.aspx?pid=" + pid + "&prefix=p56", "Images/workflow.png")
         }
       
     </script>
@@ -242,7 +254,11 @@
 
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
+    <div style="clear:both;"></div>
+    <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
+
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <asp:HiddenField ID="hidJ03ID" runat="server" />
+    <asp:HiddenField ID="hidCal1ShallBeActive" Value="1" runat="server" />
 </asp:Content>

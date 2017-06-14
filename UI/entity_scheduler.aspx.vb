@@ -195,10 +195,15 @@ Public Class entity_scheduler
 
                             If .o22IsAllDay Then
                                 c.Start = DateSerial(Year(c.Start), Month(c.Start), Day(c.Start))
-                                c.End = c.Start.AddDays(1)
+                                c.End = c.End.AddDays(1)
+
                             End If
 
                     End Select
+                    If c.End.Hour = 0 And c.End.Minute = 0 And c.End.Second = 0 Then    'nastavit jako celo-denní událost bez času od-do
+                        c.Start = DateSerial(Year(c.Start), Month(c.Start), Day(c.Start))
+                        c.End = DateSerial(Year(c.End), Month(c.End), Day(c.End)).AddDays(1)
+                    End If
                     c.BorderColor = Drawing.Color.Gray
                     c.BorderStyle = BorderStyle.Dashed
 
@@ -321,6 +326,11 @@ Public Class entity_scheduler
                     c.End = .p56PlanUntil
 
                     c.BackColor = Drawing.Color.FromName("#3CB371")
+
+                    If (c.End.Hour = 23 And c.End.Minute = 59) Or (c.End.Hour = 0 And c.End.Minute = 0 And c.End.Second = 0) Then
+                        c.Start = DateSerial(Year(c.Start), Month(c.Start), Day(c.Start))
+                        c.End = DateSerial(Year(c.End), Month(c.End), Day(c.End)).AddDays(1)
+                    End If
 
                     Select Case Me.CurrentView
                         Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView, SchedulerViewType.WeekView

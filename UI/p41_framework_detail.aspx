@@ -12,6 +12,7 @@
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="treemenu" Src="~/treemenu.ascx" %>
+<%@ Register TagPrefix="uc" TagName="myscheduler" Src="~/myscheduler.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -69,6 +70,20 @@
         }
         function p40_chrono(p40id) {
             sw_decide("p40_chrono.aspx?pid=" + p40id, "Images/worksheet_recurrence.png", true);
+        }
+        function re(pid, prefix) {
+            if (prefix == 'o22')
+                sw_decide("o22_record.aspx?pid=" + pid, "Images/datepicker.png")
+
+            if (prefix == 'p56')
+                window.open("p56_framework.aspx?pid=" + pid,"_top");
+
+        }
+        function wd(pid) {
+            sw_decide("workflow_dialog.aspx?pid=" + pid + "&prefix=p56", "Images/workflow.png")
+        }
+        function ew(p56id) {
+            sw_decide("p31_record.aspx?pid=0&p56id=" + p56id, "Images/worksheet.png")
         }
         
     </script>
@@ -296,6 +311,7 @@
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
     <div style="clear: both;"></div>
+    <uc:myscheduler ID="cal1" runat="server" Prefix="p41" />
     
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
@@ -322,5 +338,5 @@
     </asp:Panel>
     
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
-
+    <asp:HiddenField ID="hidCal1ShallBeActive" Value="1" runat="server" />
 </asp:Content>

@@ -428,6 +428,15 @@ Partial Public Class j02_framework_detail
     Protected WithEvents alert1 As Global.UI.alertbox
 
     '''<summary>
+    '''cal1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cal1 As Global.UI.myscheduler
+
+    '''<summary>
     '''comments1 control.
     '''</summary>
     '''<remarks>
@@ -444,6 +453,15 @@ Partial Public Class j02_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidJ03ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCal1ShallBeActive control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCal1ShallBeActive As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

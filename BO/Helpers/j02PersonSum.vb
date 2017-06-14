@@ -1,6 +1,7 @@
 ﻿Public Class j02PersonSum
     Public Property p56_Actual_Count As Integer
     Public Property p56_Closed_Count As Integer
+    Public Property o22_Actual_Count As Integer
     Public Property p91_Count As Integer
     Public Property p31_Wip_Time_Count As Integer
     Public Property p31_Wip_Expense_Count As Integer
