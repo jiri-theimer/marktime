@@ -45,7 +45,9 @@
 
     function p56_create() {
         sw_menu_decide("p56_record.aspx?masterprefix=p41&masterpid=0&hrjs=hardrefresh_menu", "Images/task.png");
-
+    }
+    function o22_create() {
+        sw_menu_decide("o22_record.aspx?hrjs=hardrefresh_menu", "Images/milestone.png");
     }
     function p91_create() {
         sw_menu_decide("p91_create_step1.aspx?prefix=p28&hrjs=hardrefresh_menu", "Images/invoice.png", true);
@@ -119,17 +121,20 @@
 
         if (flag == "p28-save" || flag == "p28-create") {
             location.replace("p28_framework.aspx?pid=" + pid);
-            return;
+            
         }
         if (flag == "o23-save" || flag == "o23-create") {
             location.replace("o23_framework.aspx?pid=" + pid);
-            return;
+            
         }
         if (flag == "j03_myprofile_defaultpage") {
             location.replace("default.aspx");
-            return;
+            
         }
-
+        if (flag == "o22-save" || flag == "o22-create") {
+            location.replace("entity_scheduler.aspx");
+            
+        }
         
 
     }

@@ -176,7 +176,7 @@ Public Class myscheduler
         Dim mq As New BO.myQueryP56
         mq.TopRecordsOnly = Me.MaxTopRecs
         mq.Closed = BO.BooleanQueryMode.FalseQuery
-        mq.MG_SortString = "a.p56PlanFrom,a.p56PlanUntil"
+        mq.MG_SortString = "a.p56PlanUntil"
         Select Case hidPrefix.Value
             Case "p28"
                 mq.p28ID = intRecordPID
@@ -341,4 +341,5 @@ Public Class myscheduler
     End Sub
 
 
+    
 End Class

@@ -87,6 +87,7 @@
         End If
 
         Me.BoundObject.Text = Master.Factory.GetRecordCaption(Me.CurrentX29ID, Me.CurrentMasterDataPID)
+        Me.lblObject.Text = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False) & ":"
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.j02Person
 
@@ -259,7 +260,7 @@
         Select Case Me.CurrentO21Flag
             Case BO.o21FlagEnum.DeadlineOrMilestone
                 Me.lblDateUntil.Visible = True : Me.o22DateUntil.Visible = True
-                If Me.o22DateUntil.IsEmpty Then Me.o22DateUntil.SelectedDate = Now.AddDays(1)
+                If Me.o22DateUntil.IsEmpty Then Me.o22DateUntil.SelectedDate = Today.AddDays(1)
                 imgO21Flag.ImageUrl = "Images/milestone.png"
                 lblDateUntil.Text = "Termín:"
                 With Me.o22DateUntil.DateInput

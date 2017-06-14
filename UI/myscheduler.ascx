@@ -5,7 +5,7 @@
     <div class="title">
         <img src="Images/calendar.png" />
         Kalendář
-        <asp:DropDownList ID="cbxNumberOfDays" runat="server" AutoPostBack="true" ToolTip="Počet zobrazovaných dnů" Style="margin-left: 40px;">
+        <asp:DropDownList ID="cbxNumberOfDays" runat="server" AutoPostBack="true" ToolTip="Počet maximálně zobrazovaných dnů" Style="margin-left: 40px;">
             <asp:ListItem Text="10 dní" Value="10" Selected="true"></asp:ListItem>
             <asp:ListItem Text="20 dní" Value="20"></asp:ListItem>
             <asp:ListItem Text="30 dní" Value="50"></asp:ListItem>

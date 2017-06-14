@@ -111,6 +111,7 @@ Public Class main_menu
 
             'End If
             ai(Resources.common.Ukol, "", "javascript:p56_create()", "", n)
+            ai("Kalendářová událost", "", "javascript:o22_create()", "", n)
             If .j04IsMenu_Invoice Then
                 If factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator, BO.x53PermValEnum.GR_P91_Draft_Creator) Then ai(Resources.common.Faktura, "", "javascript:p91_create()", "", n) : b = True
             End If

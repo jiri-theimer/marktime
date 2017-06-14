@@ -59,6 +59,15 @@ Partial Public Class j03_mypage_greeting
     Protected WithEvents chkShowCharts As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''place_j04DashboardHtml control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents place_j04DashboardHtml As Global.System.Web.UI.WebControls.PlaceHolder
+
+    '''<summary>
     '''panSearch control.
     '''</summary>
     '''<remarks>

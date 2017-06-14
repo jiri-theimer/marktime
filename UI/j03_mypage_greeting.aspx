@@ -81,7 +81,7 @@
             <asp:CheckBox ID="chkShowCharts" runat="server" AutoPostBack="true" Text="Grafy z mých hodin" Checked="true" CssClass="chk" style="margin-left:20px;" />
         </div>
         <div style="clear: both;"></div>
-
+        <asp:PlaceHolder ID="place_j04DashboardHtml" runat="server"></asp:PlaceHolder>
 
         <div style="min-height: 430px;">
             <div style="float: left;">
@@ -133,21 +133,7 @@
 
             </div>
             <div style="float:left;">    
-                <fieldset>
-                    <legend>Příklad ELINKX odkazů</legend>
-                    <div class="div6">
-                        <a href="javascript:sw_master('p56_record.aspx?pid=0&p57id=7&p41id=10966')">Žádost o dovolenou (D1.OverCost.010601.AllProd.Dovolena)</a>
-                    </div>
-                    <div class="div6">
-                        <a href="javascript:sw_master('p56_record.aspx?pid=0&p57id=7&p41id=10965')">Žádost o dovolenou (D1.OverCost.010602.AllProd.Dovolena)</a>
-                    </div>
-                    <div class="div6">
-                        <a href="javascript:sw_master('p56_record.aspx?pid=0&p57id=7&p41id=10964')">Žádost o dovolenou (D1.OverCost.010603.AllProd.Dovolena)</a>
-                    </div>
-                    <div class="div6">
-                        <a href="javascript:sw_master('p56_record.aspx?pid=0&p57id=7&p41id=10963')">Žádost o dovolenou (D1.OverCost.010604.AllProd.Dovolena)</a>
-                    </div>
-                </fieldset>            
+                
             <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
             
                 

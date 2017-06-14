@@ -66,7 +66,7 @@ Public Class x18_querybuilder
         tr1.Nodes.Add(nParent)
         Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, Me.CurrentX29ID)
         If lisX18.Count = 0 Then
-            Master.Notify(String.Format("Pro entitu [{0}] v systému neexistuje štítek.", BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False)))
+            Master.Notify(String.Format("Pro entitu [{0}] zatím neexistuje štítek.", BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False)))
         End If
         For Each c In lisX18
             WN(c, hidPrefix.Value & "-" & Right("0000" & c.PID.ToString, 4), nParent)

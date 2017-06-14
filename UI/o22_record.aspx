@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="lblObject" runat="server" CssClass="lbl" Text="Primární kalendář:"></asp:Label>
+                <asp:Label ID="lblObject" runat="server" CssClass="lbl" Text="Entita:"></asp:Label>
             </td>
             <td>
                 <asp:Label ID="BoundObject" runat="server" CssClass="valbold"></asp:Label>
