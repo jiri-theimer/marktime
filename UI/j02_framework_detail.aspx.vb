@@ -40,6 +40,9 @@
                     .Add("j02_framework_detail-chkFFShowFilledOnly")
                     .Add("j02_menu-show-level1")
                     .Add("j02_menu-show-cal1")
+                    .Add("myscheduler-maxtoprecs-j02")
+                    .Add("myscheduler-numberofdays-j02")
+                    .Add("myscheduler-firstday")
                 End With
                 Dim intPID As Integer = Master.DataPID
                 With .Factory.j03UserBL
@@ -62,6 +65,9 @@
                         Case Else
                             'zůstat zde na BOARD stránce
                     End Select
+                    cal1.MaxTopRecs = BO.BAS.IsNullInt(.GetUserParam("myscheduler-maxtoprecs-j02", "10"))
+                    cal1.NumberOfDays = BO.BAS.IsNullInt(.GetUserParam("myscheduler-numberofdays-j02", "10"))
+                    cal1.FirstDayMinus = BO.BAS.IsNullInt(.GetUserParam("myscheduler-firstday", "-1"))
                     hidCal1ShallBeActive.Value = .GetUserParam("j02_menu-show-cal1", "1")
                     menu1.TabSkin = .GetUserParam("j02_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
@@ -223,7 +229,7 @@
         If hidCal1ShallBeActive.Value = "1" Then
             cal1.RecordPID = Master.DataPID
             If cRecSum.p56_Actual_Count > 0 Or cRecSum.o22_Actual_Count > 0 Then
-                cal1.RefreshData(Today.AddDays(-5))
+                cal1.RefreshData(Today)
                 cal1.RefreshTasksWithoutDate(True)
             Else
                 cal1.Visible = False

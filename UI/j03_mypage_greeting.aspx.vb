@@ -40,6 +40,8 @@
                 .Add("j03_mypage_greeting-chkLog")
                 .Add("j03_mypage_greeting-chkScheduler")
                 .Add("myscheduler-maxtoprecs-j02")
+                .Add("myscheduler-numberofdays-j02")
+                .Add("myscheduler-firstday")
             End With
 
             With Master.Factory
@@ -57,6 +59,8 @@
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
                 chkScheduler.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkScheduler", "1"))
                 cal1.MaxTopRecs = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-maxtoprecs-j02", "10"))
+                cal1.NumberOfDays = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-numberofdays-j02", "10"))
+                cal1.FirstDayMinus = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-firstday", "-1"))
 
                 ''basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "2"))
 
@@ -163,7 +167,7 @@
             'End If
             If chkScheduler.Checked Then
                 cal1.RecordPID = Master.Factory.SysUser.j02ID
-                cal1.RefreshData(Today.AddDays(-5))
+                cal1.RefreshData(Today)
                 cal1.RefreshTasksWithoutDate(True)
             End If
 

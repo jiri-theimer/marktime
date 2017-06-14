@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class myscheduler
 
     '''<summary>
+    '''cbxNumberOfDays control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxNumberOfDays As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxFirstDay control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxFirstDay As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cbxTopRecs control.
     '''</summary>
     '''<remarks>

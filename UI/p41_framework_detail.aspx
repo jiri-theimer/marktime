@@ -310,9 +310,10 @@
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    <div style="clear: both;"></div>
+    <div style="clear: both;padding-top:6px;padding-left:6px;">
     <uc:myscheduler ID="cal1" runat="server" Prefix="p41" />
-    
+    </div>
+
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <div style="clear: both;"></div>

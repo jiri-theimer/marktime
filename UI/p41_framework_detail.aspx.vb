@@ -39,6 +39,8 @@
                     .Add("p41_menu-x31id-plugin")
                     .Add("p41_menu-show-level1")
                     .Add("p41_menu-show-cal1")
+                    .Add("myscheduler-maxtoprecs-p41")
+                    .Add("myscheduler-firstday")
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -68,6 +70,8 @@
                     End Select
 
                     Master.DataPID = intPID
+                    cal1.FirstDayMinus = BO.BAS.IsNullInt(.GetUserParam("myscheduler-firstday", "-1"))
+                    cal1.MaxTopRecs = BO.BAS.IsNullInt(.GetUserParam("myscheduler-maxtoprecs-p41", "10"))
                     hidCal1ShallBeActive.Value = .GetUserParam("p41_menu-show-cal1", "1")
                     menu1.MenuSkin = .GetUserParam("p41_menu-menuskin")
                     menu1.TabSkin = .GetUserParam("p41_menu-tabskin")
@@ -286,7 +290,7 @@
         If hidCal1ShallBeActive.Value = "1" Then
             cal1.RecordPID = Master.DataPID
             If cRecSum.p56_Actual_Count > 0 Or cRecSum.o22_Actual_Count > 0 Then
-                cal1.RefreshData(Today.AddDays(-5))
+                cal1.RefreshData(Today)
                 cal1.RefreshTasksWithoutDate(False)
             Else
                 cal1.Visible = False

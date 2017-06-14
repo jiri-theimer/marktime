@@ -5,13 +5,25 @@
     <div class="title">
         <img src="Images/calendar.png" />
         Kalendář
-        
-        <asp:DropDownList ID="cbxTopRecs" runat="server" AutoPostBack="true" ToolTip="Počet maximálně zobrazených položek v agendě" Style="margin-left: 40px;">
-            <asp:ListItem Text="10" Value="10" Selected="true"></asp:ListItem>
-            <asp:ListItem Text="20" Value="20"></asp:ListItem>
-            <asp:ListItem Text="50" Value="50"></asp:ListItem>
-            <asp:ListItem Text="100" Value="100"></asp:ListItem>
+        <asp:DropDownList ID="cbxNumberOfDays" runat="server" AutoPostBack="true" ToolTip="Počet zobrazovaných dnů" Style="margin-left: 40px;">
+            <asp:ListItem Text="10 dní" Value="10" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="20 dní" Value="20"></asp:ListItem>
+            <asp:ListItem Text="30 dní" Value="50"></asp:ListItem>
+            <asp:ListItem Text="100 dní" Value="100"></asp:ListItem>
         </asp:DropDownList>
+        <asp:DropDownList ID="cbxFirstDay" runat="server" AutoPostBack="true" ToolTip="První zobrazený den vůči dnešku" Style="margin-left: 10px;">
+            <asp:ListItem Text="-5" Value="-5"></asp:ListItem>
+            <asp:ListItem Text="-1" Value="-1" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="0" Value="0"></asp:ListItem>            
+        </asp:DropDownList>
+        <asp:DropDownList ID="cbxTopRecs" runat="server" AutoPostBack="true" ToolTip="Maximální počet najednou zobrazených položek" Style="margin-left: 40px;">
+            <asp:ListItem Text="10 položek" Value="10" Selected="true"></asp:ListItem>
+            <asp:ListItem Text="20 položek" Value="20"></asp:ListItem>
+            <asp:ListItem Text="50 položek" Value="50"></asp:ListItem>
+            <asp:ListItem Text="100 položek" Value="100"></asp:ListItem>
+        </asp:DropDownList>
+        <button type="button" class="button-link" onclick="window.open('entity_scheduler.aspx?masterprefix=<%=Me.hidPrefix.Value%>&masterpid=<%=Me.hidRecordPID.Value%>','_top')" title="Přepnout na plný kalendář" style="float:right;"><img border="0" src="Images/fullscreen.png"/></button>
+        
     </div>
     <div class="content" style="padding: 0px;">
         <telerik:RadScheduler ID="scheduler1" BorderStyle="none" SelectedView="AgendaView" RenderMode="Lightweight" FirstDayOfWeek="Monday" LastDayOfWeek="Sunday" Width="600px" Height="300px" EnableViewState="false" Skin="Default" AppointmentStyleMode="Simple" ShowFooter="false" runat="server" ShowViewTabs="false" EnableAdvancedForm="false" ShowHeader="true" ShowAllDayRow="true"
@@ -20,7 +32,7 @@
             DataSubjectField="o22Name" DataStartField="o22DateFrom" DataEndField="o22DateUntil" DataKeyField="pid">
             <Localization HeaderAgendaDate="Datum" AllDay="Bez času od/do" HeaderMonth="Měsíc" HeaderDay="Den" HeaderMultiDay="Multi-den" HeaderWeek="Týden" ShowMore="více..." HeaderToday="Dnes" HeaderAgendaAppointment="Úkol nebo Událost" HeaderAgendaTime="Čas" />
 
-            <AgendaView UserSelectable="false" NumberOfDays="100" ShowDateHeaders="true" ReadOnly="true" ShowColumnHeaders="false" TimeColumnWidth="110px" DateColumnWidth="130px" />
+            <AgendaView UserSelectable="false" NumberOfDays="30" ShowDateHeaders="true" ReadOnly="true" ShowColumnHeaders="false" TimeColumnWidth="110px" DateColumnWidth="130px" />
             <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="20:00" ShowInsertArea="false" />
 
             <AppointmentTemplate>
@@ -69,7 +81,7 @@
                             </div>
                         </td>
                         <td style="width: 30px; padding: 4px;">
-                            <asp:HyperLink ID="linkWorksheet" ImageUrl="Images/worksheet.png" runat="server" ToolTip="Vykázat úkon do úkolu"></asp:HyperLink>
+                            <asp:HyperLink ID="linkWorksheet" ImageUrl="Images/worksheet.png" runat="server" ToolTip="Vykázat úkon do úkolu" CssClass="button-link"></asp:HyperLink>
                         </td>
                         <td style="text-align: center; padding: 4px;">
                             <asp:HyperLink ID="linkWorkflow" runat="server" Text="Posunout/doplnit"></asp:HyperLink>
@@ -87,3 +99,4 @@
 <asp:HiddenField ID="hidPrefix" runat="server" />
 <asp:HiddenField ID="hidRecordPID" runat="server" />
 <asp:HiddenField ID="hidDefHeight" runat="server" Value="300px" />
+

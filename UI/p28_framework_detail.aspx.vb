@@ -38,6 +38,8 @@
                     .Add("p28_menu-x31id-plugin")
                     .Add("p28_menu-show-level1")
                     .Add("p28_menu-show-cal1")
+                    .Add("myscheduler-maxtoprecs-p28")
+                    .Add("myscheduler-firstday")
                 End With
 
                 Dim intPID As Integer = Master.DataPID
@@ -64,6 +66,8 @@
                         Case Else
                             'zůstat zde na BOARD stránce
                     End Select
+                    cal1.FirstDayMinus = BO.BAS.IsNullInt(.GetUserParam("myscheduler-firstday", "-1"))
+                    cal1.MaxTopRecs = BO.BAS.IsNullInt(.GetUserParam("myscheduler-maxtoprecs-p28", "10"))
                     hidCal1ShallBeActive.Value = .GetUserParam("p28_menu-show-cal1", "1")
                     menu1.TabSkin = .GetUserParam("p28_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam("p28_menu-menuskin")
@@ -235,7 +239,7 @@
         If hidCal1ShallBeActive.Value = "1" Then
             cal1.RecordPID = Master.DataPID
             If cRecSum.p56_Actual_Count > 0 Or cRecSum.o22_Actual_Count > 0 Then
-                cal1.RefreshData(Today.AddDays(-5))
+                cal1.RefreshData(Today)
                 cal1.RefreshTasksWithoutDate(True)
             Else
                 cal1.Visible = False

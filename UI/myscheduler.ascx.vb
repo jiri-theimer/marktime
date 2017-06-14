@@ -13,6 +13,8 @@ Public Class myscheduler
         End Get
         Set(value As Integer)
             Me.scheduler1.AgendaView.NumberOfDays = value
+            basUI.SelectDropdownlistValue(cbxNumberOfDays, value.ToString)
+
         End Set
     End Property
     Public Property MaxTopRecs As Integer
@@ -21,6 +23,14 @@ Public Class myscheduler
         End Get
         Set(value As Integer)
             cbxTopRecs.SelectedValue = value.ToString
+        End Set
+    End Property
+    Public Property FirstDayMinus As Integer
+        Get
+            Return CInt(Me.cbxFirstDay.SelectedValue)
+        End Get
+        Set(value As Integer)
+            cbxFirstDay.SelectedValue = value.ToString
         End Set
     End Property
     Public Property Prefix As String
@@ -51,24 +61,28 @@ Public Class myscheduler
     End Sub
 
     Public Sub RefreshData(d0 As Date)
+        scheduler1.AgendaView.NumberOfDays = CInt(cbxNumberOfDays.SelectedValue)
         If Me.RecordPID = 0 Then
             Return
         End If
-        scheduler1.SelectedDate = d0
-        scheduler1.Appointments.Clear()
 
-        Dim d1 As Date = d0.AddDays(-5)
+        Dim d1 As Date = d0.AddDays(Me.FirstDayMinus)
         Dim d2 As Date = d1.AddDays(Me.NumberOfDays)
+
         With scheduler1
+            .Appointments.Clear()
+            If .SelectedView = SchedulerViewType.AgendaView Then
+                .SelectedDate = d1
+            End If
             If .SelectedView = SchedulerViewType.DayView Then
                 d1 = .SelectedDate
                 d2 = d1.AddDays(1)
             End If
         End With
-        
+
 
         fill_o22(d1, d2)
-        fill_p56(d1.AddDays(-100), d2)
+        fill_p56(d1, d2)
         lblNoAppointments.Visible = False
         With scheduler1
             If .Appointments.Count = 0 Then
@@ -85,7 +99,7 @@ Public Class myscheduler
             End If
 
         End With
-        
+
 
     End Sub
     Private Sub fill_o22(d1 As Date, d2 As Date)
@@ -93,6 +107,7 @@ Public Class myscheduler
         Dim mq As New BO.myQueryO22
         mq.Closed = BO.BooleanQueryMode.FalseQuery
         mq.TopRecordsOnly = Me.MaxTopRecs
+        mq.MG_SortString = "a.o22DateFrom,a.o22DateUntil"
         'mq.SpecificQuery = BO.myQueryO22_SpecificQuery.AllowedForRead
         Select Case hidPrefix.Value
             Case "p28"
@@ -161,7 +176,7 @@ Public Class myscheduler
         Dim mq As New BO.myQueryP56
         mq.TopRecordsOnly = Me.MaxTopRecs
         mq.Closed = BO.BooleanQueryMode.FalseQuery
-        mq.MG_SortString = "a.p56PlanUntil"
+        mq.MG_SortString = "a.p56PlanFrom,a.p56PlanUntil"
         Select Case hidPrefix.Value
             Case "p28"
                 mq.p28ID = intRecordPID
@@ -311,6 +326,19 @@ Public Class myscheduler
     
     Private Sub cbxTopRecs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTopRecs.SelectedIndexChanged
         factory.j03UserBL.SetUserParam("myscheduler-maxtoprecs-" & Me.Prefix, cbxTopRecs.SelectedValue)
-        RefreshData(scheduler1.SelectedDate)
+        RefreshData(Today)
     End Sub
+
+    Private Sub cbxNumberOfDays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxNumberOfDays.SelectedIndexChanged
+        factory.j03UserBL.SetUserParam("myscheduler-numberofdays-" & Me.Prefix, cbxNumberOfDays.SelectedValue)
+        RefreshData(Today)
+
+    End Sub
+
+    Private Sub cbxFirstDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxFirstDay.SelectedIndexChanged
+        factory.j03UserBL.SetUserParam("myscheduler-firstday", cbxFirstDay.SelectedValue)
+        RefreshData(Today)
+    End Sub
+
+
 End Class

@@ -184,7 +184,7 @@
             </div>
             <div style="width:100%;padding:6px;">
                 <span class="lbl">Počet otevřených úkolů:</span>
-                <asp:HyperLink ID="link_p56_actual_count" runat="server" style="margin-left:20px;" CssClass="badge1" ForeColor="white"></asp:HyperLink>
+                <asp:HyperLink ID="link_p56_actual_count" runat="server" style="margin-left:20px;"></asp:HyperLink>
 
             </div>
         </div>
@@ -254,9 +254,9 @@
 
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    <div style="clear:both;"></div>
+    <div style="clear:both;padding-top:6px;padding-left:6px;">
     <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
-
+    </div>
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
 
     <asp:HiddenField ID="hidJ03ID" runat="server" />
