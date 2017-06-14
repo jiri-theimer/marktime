@@ -236,7 +236,7 @@
             cal1.RecordPID = Master.DataPID
             If cRecSum.p56_Actual_Count > 0 Or cRecSum.o22_Actual_Count > 0 Then
                 cal1.RefreshData(Today.AddDays(-5))
-                cal1.RefreshTasksWithoutDate()
+                cal1.RefreshTasksWithoutDate(True)
             Else
                 cal1.Visible = False
             End If

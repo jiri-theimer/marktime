@@ -82,6 +82,10 @@
             End If
             'Me.o22DateUntil.SelectedDate = dt2.DateWithTime
         End If
+        If Request.Item("p57id") <> "" Then
+            Me.p57ID.SelectedValue = Request.Item("p57id")
+            Return
+        End If
 
         Dim cRecLast As BO.p56Task = Master.Factory.p56TaskBL.LoadMyLastCreated()
         If cRecLast Is Nothing Then
@@ -283,7 +287,10 @@
 
     Private Sub p57ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p57ID.NeedMissingItem
         Dim cRec As BO.p57TaskType = Master.Factory.p57TaskTypeBL.Load(CInt(strFoundedMissingItemValue))
-        strAddMissingItemText = cRec.p57Name
+        If Not cRec Is Nothing Then
+            strAddMissingItemText = cRec.p57Name
+        End If
+
     End Sub
 
     Private Sub _MasterPage_Master_OnRefresh() Handles _MasterPage.Master_OnRefresh

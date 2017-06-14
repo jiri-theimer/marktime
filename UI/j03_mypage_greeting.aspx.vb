@@ -162,7 +162,7 @@
             If chkScheduler.Checked Then
                 cal1.RecordPID = Master.Factory.SysUser.j02ID
                 cal1.RefreshData(Today.AddDays(-5))
-                cal1.RefreshTasksWithoutDate()
+                cal1.RefreshTasksWithoutDate(True)
             End If
 
         Else

@@ -3,6 +3,8 @@ Public Class myscheduler
     Inherits System.Web.UI.UserControl
     Public Property factory As BL.Factory
     Private Property _curIsShowP57name As Boolean = False
+    Private Property _lastP41ID As Integer = 0
+    Private Property _showProjectRow As Boolean = True
 
     Public Property NumberOfDays As Integer
         Get
@@ -168,6 +170,7 @@ Public Class myscheduler
                 c.ID = .PID.ToString & ",'p56'"
                 c.Description = "clue_p56_record.aspx?pid=" & .PID.ToString
                 c.Subject = "<img src='Images/task.png'/> " & BO.BAS.OM3(.p56Name, 100)
+                If .b02ID <> 0 Then c.Subject += " [" & .b02Name & "]"
                 If Len(c.Subject) > 120 Then
                     c.ToolTip = .p56Name
                 Else
@@ -202,7 +205,8 @@ Public Class myscheduler
         RefreshData(scheduler1.SelectedDate)
     End Sub
 
-    Public Sub RefreshTasksWithoutDate()
+    Public Sub RefreshTasksWithoutDate(bolShowProjectRow As Boolean)
+        _showProjectRow = bolShowProjectRow
         If Me.RecordPID = 0 Or Me.Prefix = "" Then Return
         panP56.Visible = False
         Dim mq As New BO.myQueryP56
@@ -219,13 +223,14 @@ Public Class myscheduler
             Case Else
                 Return
         End Select
-        Dim lisP56 As IEnumerable(Of BO.p56Task) = factory.p56TaskBL.GetList(mq)
+        Dim lisP56 As IEnumerable(Of BO.p56Task) = factory.p56TaskBL.GetList(mq).OrderBy(Function(p) p.Client).ThenBy(Function(p) p.p41Name)
 
         If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
         Me.p56Count.Text = lisP56.Count.ToString
         If lisP56.Count = 100 Then
             Me.p56Count.Text = "Podmínce vyhovuje více než 100 úkolů bez termínu!"
         End If
+        _lastP41ID = 0
         rpP56.DataSource = lisP56
         rpP56.DataBind()
         If lisP56.Count = 0 Then
@@ -255,14 +260,21 @@ Public Class myscheduler
         Else
             e.Item.FindControl("img1").Visible = False
         End If
-        With CType(e.Item.FindControl("Project"), Label)
-            .Text = BO.BAS.OM3(cRec.p41Name, 100)
-            If cRec.Client <> "" Then
-                .Text = cRec.Client & " - " & .Text
-            End If
-
-
-        End With
+        If _showProjectRow Then
+            With CType(e.Item.FindControl("Project"), Label)
+                If _lastP41ID = cRec.p41ID Then
+                    .Visible = False
+                Else
+                    .Text = BO.BAS.OM3(cRec.p41Name, 100)
+                    If cRec.Client <> "" Then
+                        .Text = cRec.Client & " - " & .Text
+                    End If
+                End If
+            End With
+        Else
+            e.Item.FindControl("Project").Visible = False
+        End If
+        
         With CType(e.Item.FindControl("linkWorkflow"), HyperLink)
             .Text = cRec.b02Name
             If cRec.b02Color <> "" Then .Style.Item("background-color") = cRec.b02Color
@@ -283,6 +295,7 @@ Public Class myscheduler
             End With
 
         End If
+        _lastP41ID = cRec.p41ID
     End Sub
 
     

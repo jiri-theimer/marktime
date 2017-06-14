@@ -29,20 +29,20 @@
                     <asp:Label ID="p56Count" runat="server" CssClass="badge1"></asp:Label>
 
     </div>
-    <div class="content" style="overflow: auto; max-height: 200px;">
+    <div class="content" style="overflow: auto; max-height: 200px;background-color:#F1F1F1;padding:0px;">
 
-        <table>
+        <table style="width:100%;" cellpadding="0" cellspacing="0">
 
             <asp:Repeater ID="rpP56" runat="server">
                 <ItemTemplate>
                     <tr>
                         <td colspan="3">
-                            <asp:Label ID="Project" runat="server" CssClass="timestamp"></asp:Label>
+                            <asp:Label ID="Project" runat="server" Font-Italic="true"></asp:Label>
                         </td>
                     </tr>
-                    <tr valign="top">
+                    <tr valign="top" style="background-color:white;">
 
-                        <td style="max-width: 500px;">
+                        <td style="max-width: 500px;padding:4px;">
                             <asp:HyperLink ID="clue1" runat="server" CssClass="reczoom" Text="i" title="Detail úkolu"></asp:HyperLink>
                             <asp:HyperLink ID="link1" runat="server" Target="_top"></asp:HyperLink>
                             <div>
@@ -50,13 +50,14 @@
                                 <asp:Image ID="img1" runat="server" ImageUrl="Images/reminder.png" ToolTip="Připomenutí" />
                             </div>
                         </td>
-                        <td style="width: 30px;">
+                        <td style="width: 30px;padding:4px;">
                             <asp:HyperLink ID="linkWorksheet" ImageUrl="Images/worksheet.png" runat="server" ToolTip="Vykázat úkon do úkolu"></asp:HyperLink>
                         </td>
-                        <td style="text-align: center;">
+                        <td style="text-align: center;padding:4px;">
                             <asp:HyperLink ID="linkWorkflow" runat="server" Text="Posunout/doplnit"></asp:HyperLink>
 
                         </td>
+                        <td></td>
 
                     </tr>
                 </ItemTemplate>
