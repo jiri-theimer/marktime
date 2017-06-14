@@ -6,12 +6,21 @@ Public Class myscheduler
     Private Property _lastP41ID As Integer = 0
     Private Property _showProjectRow As Boolean = True
 
+
     Public Property NumberOfDays As Integer
         Get
             Return Me.scheduler1.AgendaView.NumberOfDays
         End Get
         Set(value As Integer)
             Me.scheduler1.AgendaView.NumberOfDays = value
+        End Set
+    End Property
+    Public Property MaxTopRecs As Integer
+        Get
+            Return CInt(Me.cbxTopRecs.SelectedValue)
+        End Get
+        Set(value As Integer)
+            cbxTopRecs.SelectedValue = value.ToString
         End Set
     End Property
     Public Property Prefix As String
@@ -83,7 +92,7 @@ Public Class myscheduler
         Dim intRecordPID As Integer = Me.RecordPID
         Dim mq As New BO.myQueryO22
         mq.Closed = BO.BooleanQueryMode.FalseQuery
-        mq.TopRecordsOnly = 50
+        mq.TopRecordsOnly = Me.MaxTopRecs
         'mq.SpecificQuery = BO.myQueryO22_SpecificQuery.AllowedForRead
         Select Case hidPrefix.Value
             Case "p28"
@@ -150,8 +159,9 @@ Public Class myscheduler
     Private Sub fill_p56(d1 As Date, d2 As Date)
         Dim intRecordPID As Integer = Me.RecordPID
         Dim mq As New BO.myQueryP56
-        mq.TopRecordsOnly = 100
+        mq.TopRecordsOnly = Me.MaxTopRecs
         mq.Closed = BO.BooleanQueryMode.FalseQuery
+        mq.MG_SortString = "a.p56PlanUntil"
         Select Case hidPrefix.Value
             Case "p28"
                 mq.p28ID = intRecordPID
@@ -212,7 +222,7 @@ Public Class myscheduler
         Dim mq As New BO.myQueryP56
         mq.Closed = BO.BooleanQueryMode.FalseQuery
         mq.TerminNeniVyplnen = BO.BooleanQueryMode.TrueQuery
-        mq.TopRecordsOnly = 100
+        mq.TopRecordsOnly = Me.MaxTopRecs
         Select Case hidPrefix.Value
             Case "p28"
                 mq.p28ID = Me.RecordPID
@@ -227,8 +237,8 @@ Public Class myscheduler
 
         If lisP56.Select(Function(p) p.p57ID).Distinct.Count > 1 Then _curIsShowP57name = True
         Me.p56Count.Text = lisP56.Count.ToString
-        If lisP56.Count = 100 Then
-            Me.p56Count.Text = "Podmínce vyhovuje více než 100 úkolů bez termínu!"
+        If lisP56.Count = Me.MaxTopRecs Then
+            Me.p56Count.Text = String.Format("Podmínce vyhovuje více než {0} úkolů bez termínu!", MaxTopRecs)
         End If
         _lastP41ID = 0
         rpP56.DataSource = lisP56
@@ -299,4 +309,8 @@ Public Class myscheduler
     End Sub
 
     
+    Private Sub cbxTopRecs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTopRecs.SelectedIndexChanged
+        factory.j03UserBL.SetUserParam("myscheduler-maxtoprecs-" & Me.Prefix, cbxTopRecs.SelectedValue)
+        RefreshData(scheduler1.SelectedDate)
+    End Sub
 End Class

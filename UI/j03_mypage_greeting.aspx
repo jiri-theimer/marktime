@@ -134,7 +134,7 @@
             </div>
             <div style="float:left;">    
                 <fieldset>
-                    <legend>ELINKX odkazy</legend>
+                    <legend>Příklad ELINKX odkazů</legend>
                     <div class="div6">
                         <a href="javascript:sw_master('p56_record.aspx?pid=0&p57id=7&p41id=10966')">Žádost o dovolenou (D1.OverCost.010601.AllProd.Dovolena)</a>
                     </div>

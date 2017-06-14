@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class myscheduler
 
     '''<summary>
+    '''cbxTopRecs control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxTopRecs As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''scheduler1 control.
     '''</summary>
     '''<remarks>

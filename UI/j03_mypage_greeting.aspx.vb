@@ -39,6 +39,7 @@
                 .Add("j03_mypage_greeting-cbxP56Types")
                 .Add("j03_mypage_greeting-chkLog")
                 .Add("j03_mypage_greeting-chkScheduler")
+                .Add("myscheduler-maxtoprecs-j02")
             End With
 
             With Master.Factory
@@ -55,6 +56,7 @@
                 chkSearch.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkSearch", "0"))
                 chkShowCharts.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkShowCharts", "1"))
                 chkScheduler.Checked = BO.BAS.BG(.j03UserBL.GetUserParam("j03_mypage_greeting-chkScheduler", "1"))
+                cal1.MaxTopRecs = BO.BAS.IsNullInt(.j03UserBL.GetUserParam("myscheduler-maxtoprecs-j02", "10"))
 
                 ''basUI.SelectDropdownlistValue(Me.cbxP56Types, .j03UserBL.GetUserParam("j03_mypage_greeting-cbxP56Types", "2"))
 
