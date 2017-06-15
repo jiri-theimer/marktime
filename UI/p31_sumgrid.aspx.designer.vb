@@ -95,6 +95,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
+    '''chkQueryOnTop control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkQueryOnTop As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
     '''panExport control.
     '''</summary>
     '''<remarks>

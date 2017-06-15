@@ -67,6 +67,7 @@ Public Class approving_framework
                     .Add("x18_querybuilder-text-j02-approve")
                     .Add("x18_querybuilder-value-p56-approve")
                     .Add("x18_querybuilder-text-p56-approve")
+                    .Add("approving_framework-query-on-top")
                 End With
 
                 With .Factory.j03UserBL
@@ -88,6 +89,7 @@ Public Class approving_framework
                     basUI.SelectRadiolistValue(Me.cbxScrollingFlag, .GetUserParam("approving_framework-cbxScrollingFlag", "2"))
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-approve")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-approve")
+                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("approving_framework-query-on-top", "0"))
                 End With
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
@@ -105,6 +107,16 @@ Public Class approving_framework
             End With
 
         End If
+        'If Me.chkQueryOnTop.Checked Then
+        '    Dim ctl As New Control
+        '    ctl = Me.clue_query
+        '    Me.panCurrentQuery.Controls.Remove(Me.clue_query)
+        '    Me.placeQuery.Controls.Add(ctl)
+        '    ctl = New Control
+        '    ctl = Me.j70ID
+        '    Me.panJ70.Controls.Remove(Me.j70ID)
+        '    Me.placeQuery.Controls.Add(ctl)
+        'End If
     End Sub
 
     Private Sub SetupJ70Combo(intDef As Integer)
@@ -113,12 +125,12 @@ Public Class approving_framework
         j70ID.DataBind()
         j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+        Me.clue_query.Visible = False
         With Me.j70ID
             If .SelectedIndex > 0 Then
                 .ToolTip = .SelectedItem.Text
                 Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-            Else
-                Me.clue_query.Visible = False
+                If Not chkQueryOnTop.Checked Then Me.clue_query.Visible = True
             End If
         End With
     End Sub
@@ -299,7 +311,7 @@ Public Class approving_framework
         basUIMT.RenderQueryCombo(Me.j70ID)
         Me.CurrentQuery.Text = ""
         If Me.CurrentJ70ID > 0 Then
-            Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+            If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
         End If
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
@@ -327,8 +339,8 @@ Public Class approving_framework
                     Case Else : .ToolTip = ""
                 End Select
             End With
-            
         End If
+        
     End Sub
 
     
@@ -401,5 +413,8 @@ Public Class approving_framework
         End With
         ReloadPage()
     End Sub
-    
+    Private Sub chkQueryOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkQueryOnTop.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("approving_framework-query-on-top", BO.BAS.GB(Me.chkQueryOnTop.Checked))
+        ReloadPage()
+    End Sub
 End Class

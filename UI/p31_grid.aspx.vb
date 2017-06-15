@@ -149,6 +149,16 @@ Public Class p31_grid
             RecalcVirtualRowCount()
             Handle_Permissions()
         End If
+        'If Me.chkQueryOnTop.Checked Then
+        '    Dim ctl As New Control
+        '    ctl = Me.clue_query
+        '    Me.panCurrentQuery.Controls.Remove(Me.clue_query)
+        '    Me.placeQuery.Controls.Add(ctl)
+        '    ctl = New Control
+        '    ctl = Me.j70ID
+        '    Me.panJ70.Controls.Remove(Me.j70ID)
+        '    Me.placeQuery.Controls.Add(ctl)
+        'End If
     End Sub
     Private Sub SetupSG()
         panAdditionalQuery.Visible = True
@@ -213,7 +223,7 @@ Public Class p31_grid
             If .SelectedIndex > 0 Then
                 .ToolTip = .SelectedItem.Text
                 Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-                If Not Me.chkQueryOnTop.Checked Then Me.clue_query.Visible = True
+                Me.clue_query.Visible = True
             End If
         End With
     End Sub
@@ -520,10 +530,10 @@ Public Class p31_grid
         Else
             cmdCĺearFilter.Visible = False
         End If
-        Me.CurrentQuery.Text = "" : Me.j70ID.BackColor = Nothing
+        basUIMT.RenderQueryCombo(Me.j70ID)
+        Me.CurrentQuery.Text = ""
         If Me.CurrentJ70ID > 0 Then
             If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-            Me.j70ID.BackColor = basUI.ColorQueryRGB
         End If
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
@@ -552,12 +562,7 @@ Public Class p31_grid
 
         If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
 
-        If Me.chkQueryOnTop.Checked Then
-            Dim ctl As New Control
-            ctl = Me.j70ID
-            Me.panJ70.Controls.Remove(Me.j70ID)
-            Me.placeQuery.Controls.Add(ctl)
-        End If
+        
     End Sub
 
 

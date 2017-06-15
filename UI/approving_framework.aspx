@@ -21,7 +21,12 @@
         $(document).ready(function () {
 
 
-
+            <%If Me.chkQueryOnTop.Checked then%>
+            $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
+            <%if Me.clue_query.Visible then%>
+            $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
+            <%end If%>
+            <%End If%>
 
 
 
@@ -182,12 +187,14 @@
             </asp:DropDownList>
 
         </div>
-
-        <div class="commandcell" style="margin-left:6px;">
+       
+        <div class="commandcell" style="margin-left: 6px; margin-right: 6px;">
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
         </div>
-        
-        <div class="commandcell" style="margin-left: 12px;">
+        <div class="commandcell" id="divQueryContainer">            
+        </div>
+
+        <div class="commandcell" style="margin-left: 10px;">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
                     <telerik:RadMenuItem Text="Akce pro vybrané (zaškrtlé)" ImageUrl="Images/menuarrow.png">
@@ -209,14 +216,17 @@
                                 </div>
                                 <div class="content">
                                     <div class="div6">
-                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <button type="button" onclick="x18_querybuilder()">
+                                            <img src="Images/label.png" />Štítky</button>
                                         <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                         <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                     </div>
                                     <div class="div6">
-                                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 170px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                                    <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
+                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                        <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">
+                                            <img src="Images/query.png" />Návrhář filtrů</button>
                                     </div>
+                                    <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
                                 </div>
                             </div>
                             <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
@@ -288,12 +298,12 @@
 
 
         <div style="clear: both;"></div>
-        
+
         <div style="float: left; padding-left: 6px;">
             <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
             <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
         </div>
-        <div style="clear:both;"></div>
+        <div style="clear: both;"></div>
 
         <asp:Button ID="cmdHardRefreshOnBehind" runat="server" Style="display: none;" />
 

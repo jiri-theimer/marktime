@@ -41,15 +41,6 @@ Partial Public Class p31_grid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''placeQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents placeQuery As Global.System.Web.UI.WebControls.PlaceHolder
-
-    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>

@@ -57,6 +57,7 @@ Public Class p31_sumgrid
                 .Add("p31_grid-tabqueryflag")
                 .Add("x18_querybuilder-value-p31-p31grid")
                 .Add("x18_querybuilder-text-p31-p31grid")
+                .Add("p31_sumgrid-query-on-top")
             End With
 
 
@@ -80,6 +81,7 @@ Public Class p31_sumgrid
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
                 hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
                 Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
+                Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_sumgrid-query-on-top", "0"))
             End With
 
 
@@ -87,6 +89,16 @@ Public Class p31_sumgrid
             RenderQueryInfo()
 
         End If
+        'If Me.chkQueryOnTop.Checked Then
+        '    Dim ctl As New Control
+        '    ctl = Me.clue_query
+        '    Me.panCurrentQuery.Controls.Remove(Me.clue_query)
+        '    Me.placeQuery.Controls.Add(ctl)
+        '    ctl = New Control
+        '    ctl = Me.j70ID
+        '    Me.panJ70.Controls.Remove(Me.j70ID)
+        '    Me.placeQuery.Controls.Add(ctl)
+        'End If
     End Sub
 
 
@@ -455,7 +467,7 @@ Public Class p31_sumgrid
                 .ToolTip = .SelectedItem.Text
                 Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
                 Me.clue_query.Visible = True
-                Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+                If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
             Else
                 Me.clue_query.Visible = False
                 hidJ70ID.Value = ""
@@ -557,6 +569,10 @@ Public Class p31_sumgrid
             .SetUserParam("x18_querybuilder-value-p31-p31grid", "")
             .SetUserParam("x18_querybuilder-text-p31-p31grid", "")
         End With
+        ReloadPage()
+    End Sub
+    Private Sub chkQueryOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkQueryOnTop.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_sumgrid-query-on-top", BO.BAS.GB(Me.chkQueryOnTop.Checked))
         ReloadPage()
     End Sub
 End Class

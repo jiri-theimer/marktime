@@ -199,12 +199,12 @@ Public Class p31_subgrid
             SetupP31Grid()
 
         End If
-        If Me.chkQueryOnTop.Checked Then
-            Dim ctl As New Control
-            ctl = Me.j70ID
-            Me.panJ70.Controls.Remove(Me.j70ID)
-            Me.placeQuery.Controls.Add(ctl)
-        End If
+        'If Me.chkQueryOnTop.Checked Then
+        '    Dim ctl As New Control
+        '    ctl = Me.j70ID
+        '    Me.panJ70.Controls.Remove(Me.j70ID)
+        '    Me.placeQuery.Controls.Add(ctl)
+        'End If
         RefreshState()
     End Sub
     Private Sub SetupJ74Combo()
@@ -580,6 +580,7 @@ Public Class p31_subgrid
         
     End Sub
     Private Sub RefreshState()
+        basUIMT.RenderQueryCombo(Me.j70ID)
         If Not Me.ExplicitMyQuery Is Nothing Then
             Me.panCommand.Visible = False
         Else
@@ -606,13 +607,12 @@ Public Class p31_subgrid
                 End If
             End With
         End If
-        Me.CurrentQuery.Text = "" : Me.clue_query.Visible = False : Me.j70ID.BackColor = Nothing
+        Me.CurrentQuery.Text = "" : Me.clue_query.Visible = False
         If Me.CurrentJ70ID > 0 Then
             Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & Me.CurrentJ70ID.ToString
-            Me.j70ID.BackColor = basUI.ColorQueryRGB
+            Me.clue_query.Visible = True
             If Not Me.chkQueryOnTop.Checked Then
                 Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-                Me.clue_query.Visible = True
             End If
         End If
 
@@ -622,7 +622,7 @@ Public Class p31_subgrid
         Else
             cmdClearX18.Visible = False
         End If
-        
+
         ''If Trim(txtSearch.Text) = "" Then
         ''    txtSearch.Style.Item("background-color") = ""
         ''Else

@@ -8,7 +8,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="background-color: white;">
+    <asp:panel style="background-color: white;">
         <div style="float: left;">
             <img src="Images/pivot_32.png" title="Summary worksheet přehledy" />
 
@@ -27,7 +27,7 @@
                 Sledované veličiny<img src="Images/arrow_down.gif" />
             </button>
         </div>
-        <div class="commandcell" style="padding-left: 10px;">
+        <div class="commandcell" style="padding-left: 10px;padding-right:10px;">
             <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
                 <asp:ListItem Text="Datum úkonu:" Value="p31Date" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="Datum založení:" Value="p31DateInsert"></asp:ListItem>
@@ -37,9 +37,10 @@
 
         </div>
 
+        <div class="commandcell" id="divQueryContainer">        
+        </div>
 
-
-        <div class="commandcell" style="margin-left: 12px;">
+        <div class="commandcell">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
 
@@ -53,7 +54,7 @@
                                 </div>
                                 <div class="content">
                                     <div class="div6">
-                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Štítky</button>
                                         <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit filtr podle štítků" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                         <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                     </div>
@@ -67,10 +68,10 @@
                                     </asp:DropDownList>
                                     </div>
                                     <div class="div6">
-                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 220px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
                                     <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
                                     </div>
-                                    
+                                    <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
                                 </div>
                             </div>
                             <div class="content-box3">
@@ -121,7 +122,7 @@
 
                                     </div>
                                     <div class="div6">
-                                        <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" Checked="true" />
+                                        <asp:CheckBox ID="chkFirstLastCount" runat="server" AutoPostBack="true" Text="Zobrazovat sloupce [Datum prvního úkonu], [Datum posledního úkonu]" CssClass="chk" Checked="true" />
                                     </div>
                                 </div>
                         </ContentTemplate>
@@ -184,7 +185,12 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
+            <%If Me.chkQueryOnTop.Checked then%>
+            $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
+            <%if Me.clue_query.Visible then%>
+            $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
+            <%end If%>
+            <%End If%>
         });
 
         $(window).load(function () {

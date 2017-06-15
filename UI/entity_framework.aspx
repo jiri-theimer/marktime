@@ -28,6 +28,19 @@
             _initResizing = "0";
             <%End If%>
 
+            <%If Me.CurrentPrefix <> "p91" Then%>
+            document.getElementById("buttonBatch").style.display = "block";
+            <%End If%>
+            <%If Me.CurrentPrefix = "p91" Then%>
+            document.getElementById("buttonBatchMail").style.display = "block";           
+            <%end If%>
+
+            <%if Me.opgLayout.SelectedValue="2" or Me.opgLayout.SelectedValue="3" then%>            
+            $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
+            $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
+            
+            
+            <%End If%>
         });
 
 
@@ -310,11 +323,13 @@
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
                 </div>
 
-                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px">
+                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px;">
                     <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                     </telerik:RadComboBox>
                 </asp:Panel>
+                
+
                 <div class="commandcell" style="padding-left: 4px;">
 
                     <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
@@ -323,9 +338,10 @@
 
                     </button>
                 </div>
-
-
+                
+                <div class="commandcell" id="divQueryContainer"></div>
             </asp:Panel>
+
             <div style="clear: both; width: 100%;"></div>
             <div style="float: left;">
                 <asp:Label ID="MasterEntity" runat="server" Visible="false"></asp:Label>
@@ -352,9 +368,9 @@
                     <div class="content">
                         <div>
                             <button type="button" onclick="x18_querybuilder()">
-                            <img src="Images/label.png" />Filtrování podle štítků</button>
+                                <img src="Images/label.png" />Štítky</button>
                             <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
-                            <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>                            
+                            <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                         </div>
                         <div style="margin-top: 20px;">
                             <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
@@ -379,15 +395,15 @@
                         <span>Operace pro označené (zaškrtlé) záznamy</span>
                     </div>
                     <div class="content">
-                        <%If Me.CurrentPrefix <> "p91" Then%>
-                        <button type="button" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu">Hromadné operace</button>
-                        <%End If%>
+                        
+                        <button type="button" id="buttonBatch" onclick="batch()" title="Hromadné operace nad označenými záznamy v přehledu" style="display:none;">Hromadné operace</button>
+                        
                         <button id="cmdApprove" runat="server" type="button" visible="false" onclick="approve()">Schválit/připravit k fakturaci</button>
                         <button id="cmdInvoice" runat="server" type="button" visible="false" onclick="invoice()">Zrychlená fakturace bez schvalování</button>
                         <button type="button" onclick="report()" title="Tisková sestava">Tisková sestava</button>
-                        <%If Me.CurrentPrefix = "p91" Then%>
-                        <button type="button" onclick="sendmail_batch()">Hromadně odeslat faktury (e-mail)</button>
-                        <%End If%>
+                        
+                        <button type="button" id="buttonBatchMail" onclick="sendmail_batch()" style="display:none;">Hromadně odeslat faktury (e-mail)</button>
+                        
                         <button type="button" id="cmdSummary" runat="server" onclick="drilldown()">WORKSHEET statistika</button>
 
                     </div>
@@ -464,7 +480,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
 
 

@@ -59,15 +59,6 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdClearExplicitPeriod As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''placeQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents placeQuery As Global.System.Web.UI.WebControls.PlaceHolder
-
-    '''<summary>
     '''recmenu1 control.
     '''</summary>
     '''<remarks>
@@ -93,15 +84,6 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''panJ70 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panJ70 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''j70ID control.

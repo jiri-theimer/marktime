@@ -192,11 +192,17 @@ Public Class entity_framework
 
             AdaptSplitterLayout()
         End If
-        ''If opgLayout.SelectedValue = "1" Then
-        ''    cbx1.Visible = False
-        ''    panSearchbox.Controls.Remove(Me.cbx1)
-        ''    panSearchbox.Visible = False
-        ''End If
+        'If opgLayout.SelectedValue = "3" Or opgLayout.SelectedValue = "2" Then
+        '    Dim ctl As New Control
+        '    ctl = Me.clue_query
+        '    Me.panCurrentQuery.Controls.Remove(Me.clue_query)
+        '    Me.placeQuery.Controls.Add(ctl)
+        '    ctl = New Control
+        '    ctl = Me.j70ID
+        '    Me.panJ70.Controls.Remove(Me.j70ID)
+        '    Me.placeQuery.Controls.Add(ctl)
+
+        'End If
     End Sub
     Private Sub AdaptSplitterLayout()
         Select Case Me.opgLayout.SelectedValue
@@ -1189,7 +1195,7 @@ Public Class entity_framework
         End If
         Me.CurrentQuery.Text = ""
         If Me.CurrentJ70ID > 0 Then
-            Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+            If opgLayout.SelectedValue = "1" Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
         End If
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text

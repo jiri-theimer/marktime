@@ -13,7 +13,12 @@
 
 
 
-
+            <%If Me.chkQueryOnTop.Checked then%>
+            $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
+            <%if Me.clue_query.Visible then%>
+            $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
+            <%end If%>
+            <%End If%>
 
         });
 
@@ -179,7 +184,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="min-height: 44px; background-color: white;">
+    <asp:panel style="min-height: 44px; background-color: white;">
         <div style="float: left; padding-top: 3px;">
             <img src="Images/worksheet_32.png" alt="Worksheet přehled" />
         </div>
@@ -197,8 +202,7 @@
             </asp:DropDownList>
             <uc:periodcombo ID="period1" runat="server" Width="220px"></uc:periodcombo>
         </div>
-        <div class="commandcell">
-        <asp:PlaceHolder ID="placeQuery" runat="server"></asp:PlaceHolder>
+        <div class="commandcell" id="divQueryContainer">        
         </div>
 
 
@@ -232,7 +236,7 @@
                                 </div>
                                 <div class="content">
                                     <div class="div6">
-                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <button type="button" onclick="x18_querybuilder()"><img src="Images/label.png" />Štítky</button>
                                         <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                         <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                     </div>
@@ -248,7 +252,7 @@
                                     </div>
                                     <asp:panel ID="panJ70" runat="server" CssClass="div6">
 
-                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 220px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
                                         <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
                                     </asp:panel>
