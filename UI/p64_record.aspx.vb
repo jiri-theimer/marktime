@@ -15,15 +15,23 @@
         If Not Page.IsPostBack Then
             hidP41ID.Value = Request.Item("p41id")
             With Master
-                If Me.CurrentP41ID = 0 Then .StopPage("p41id is missing.")
+                .HeaderIcon = "Images/binder_32.png"
+                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
+                .HeaderText = "Šanon projektu"
+
+                If Me.CurrentP41ID = 0 And .DataPID = 0 Then
+                    Server.Transfer("select_project.aspx?oper=createp64&" & basUI.GetCompleteQuerystring(Request))
+                End If
+                If .DataPID <> 0 And Me.CurrentP41ID = 0 Then
+                    Dim cRec As BO.p64Binder = .Factory.p64BinderBL.Load(.DataPID)
+                    hidP41ID.Value = cRec.p41ID.ToString
+                End If
                 Dim cP41 As BO.p41Project = Master.Factory.p41ProjectBL.Load(Me.CurrentP41ID)
                 If Not Master.Factory.p41ProjectBL.InhaleRecordDisposition(cP41).OwnerAccess Then
                     .StopPage("Pro založení šanonu musíte k projektu disponovat vlastnickým oprávněním.")
                 End If
 
-                .HeaderIcon = "Images/binder_32.png"
-                .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .HeaderText = "Šanon projektu"
+                
             End With
 
             RefreshRecord()

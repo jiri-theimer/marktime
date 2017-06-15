@@ -260,6 +260,7 @@
     <Content Include="p31_sumgrid.aspx" />
     <Content Include="p31_sumgrid_pivot.aspx" />
     <Content Include="p40_chrono.aspx" />
+    <Content Include="p64_framework.aspx" />
     <Content Include="p64_record.aspx" />
     <Content Include="p91_batch_sendmail.aspx" />
     <Content Include="persons.ascx" />
@@ -1301,6 +1302,13 @@
     <Compile Include="p40_chrono.aspx.vb">
       <DependentUpon>p40_chrono.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="p64_framework.aspx.designer.vb">
+      <DependentUpon>p64_framework.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p64_framework.aspx.vb">
+      <DependentUpon>p64_framework.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p64_record.aspx.designer.vb">
       <DependentUpon>p64_record.aspx</DependentUpon>

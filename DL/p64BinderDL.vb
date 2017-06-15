@@ -67,10 +67,16 @@
         Dim s As String = GetSQLPart1()
         Dim strW As String = bas.ParseWhereMultiPIDs("a.p64ID", myQuery)
         strW += bas.ParseWhereValidity("p64", "a", myQuery)
-        s += " WHERE a.p41ID=" & intP41ID.ToString
+        If intP41ID <> -1 Then
+            s += " WHERE a.p41ID=" & intP41ID.ToString
+        End If
         If strW <> "" Then s += " AND " & bas.TrimWHERE(strW)
+        If intP41ID = -1 Then
+            s += " ORDER BY a.p64ID DESC"
+        Else
+            s += " ORDER BY a.p64Ordinary"
+        End If
 
-        s += " ORDER BY a.p64Ordinary"
 
         Return _cDB.GetList(Of BO.p64Binder)(s)
 
@@ -78,8 +84,9 @@
 
 
     Private Function GetSQLPart1() As String
-        Dim s As String = "SELECT a.*,j02.j02LastName+' '+j02.j02FirstName as _Owner," & bas.RecTail("p64", "a")
-        s += " FROM p64Binder a LEFT OUTER JOIN j02Person j02 ON a.j02ID_Owner=j02.j02ID"
+
+        Dim s As String = "SELECT TOP 1000 a.*,j02.j02LastName+' '+j02.j02FirstName as _Owner,isnull(p41.p41NameShort,p41Name) as _Project,p28.p28Name as _Client," & bas.RecTail("p64", "a")
+        s += " FROM p64Binder a INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID LEFT OUTER JOIN p28Contact p28 ON p41.p28ID_Client=p28.p28ID LEFT OUTER JOIN j02Person j02 ON a.j02ID_Owner=j02.j02ID"
 
         Return s
     End Function

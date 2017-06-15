@@ -14,4 +14,17 @@
             Return _Owner
         End Get
     End Property
+    Private Property _Project As String
+    Public ReadOnly Property Project As String
+        Get
+            Return _Project
+        End Get
+    End Property
+    Private Property _Client As String
+    Public ReadOnly Property Client As String
+        Get
+            Return _Client
+        End Get
+    End Property
+
 End Class

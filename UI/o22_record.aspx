@@ -133,7 +133,7 @@
             <div class="div6">
                 <asp:Label ID="lblSelectJ02ID" runat="server" Text="Vybrat osobu:" CssClass="lbl"></asp:Label>
                 <uc:person ID="j02ID_Search" runat="server" Width="200px" AutoPostBack="true" Flag="all" />
-                <asp:Label ID="lblSelectJ11ID" runat="server" Text=" nebo celý tým osob:" CssClass="lbl"></asp:Label>
+                <asp:Label ID="lblSelectJ11ID" runat="server" Text=" nebo tým osob:" CssClass="lbl"></asp:Label>
                 <uc:datacombo ID="cbxSelectJ11ID" runat="server" DataTextField="j11Name" DataValueField="pid" IsFirstEmptyRow="true" Filter="Contains" AutoPostBack="true" Width="200px"></uc:datacombo>
             </div>
             <div class="div6">

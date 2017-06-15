@@ -15,7 +15,7 @@
                     Me.p41ID.Flag = "createtask"
                 Case "createp49"
                     Me.p41ID.Flag = "createp49"
-                Case "createo22"
+                Case "createo22", "createp64"
                     Me.p41ID.Flag = ""
                 Case Else
 
@@ -48,6 +48,8 @@
                     strURL = "p49_record.aspx?p41id=" & intP41ID.ToString
                 Case "createo22"
                     strURL = "o22_record.aspx?masterprefix=p41&masterpid=" & intP41ID.ToString
+                Case "createp64"
+                    strURL = "p64_record.aspx?p41id=" & intP41ID.ToString
                 Case Else
                     Master.Notify("Neznámá operace: " & ViewState("oper"), NotifyLevel.ErrorMessage)
                     Return

@@ -285,6 +285,7 @@
         <div class="title">
             <img src="Images/binder.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP64Title" runat="server" Text="Šanony"></asp:Label>
+            <button type="button" class="button-link" onclick="window.open('p64_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>','_top')" title="Přepnout na plný přehled šanonů" style="float:right;"><img border="0" src="Images/fullscreen.png"/></button>
         </div>
         <div class="content">
             <asp:Repeater ID="rpP64" runat="server">

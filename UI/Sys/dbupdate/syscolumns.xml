@@ -10685,6 +10685,39 @@
     <TableName>j04UserRole</TableName>
   </Table>
   <Table>
+    <name>j04DashboardHtml</name>
+    <id>1195151303</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>255</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>22</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>22</colorder>
+    <offset>-9</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>255</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>j04UserRole</TableName>
+  </Table>
+  <Table>
     <name>j04DateInsert</name>
     <id>1195151303</id>
     <xtype>61</xtype>
@@ -10693,7 +10726,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>22</colid>
+    <colid>23</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -10701,8 +10734,8 @@
     <cdefault>1403152044</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>22</colorder>
-    <offset>-9</offset>
+    <colorder>23</colorder>
+    <offset>-10</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -10726,7 +10759,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>23</colid>
+    <colid>24</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -10734,8 +10767,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>23</colorder>
-    <offset>-10</offset>
+    <colorder>24</colorder>
+    <offset>-11</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -10759,7 +10792,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>24</colid>
+    <colid>25</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -10767,8 +10800,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>24</colorder>
-    <offset>-11</offset>
+    <colorder>25</colorder>
+    <offset>-12</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -10792,7 +10825,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>25</colid>
+    <colid>26</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -10800,8 +10833,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>25</colorder>
-    <offset>-12</offset>
+    <colorder>26</colorder>
+    <offset>-13</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -10825,7 +10858,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>26</colid>
+    <colid>27</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -10833,8 +10866,8 @@
     <cdefault>1419152101</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>26</colorder>
-    <offset>-13</offset>
+    <colorder>27</colorder>
+    <offset>-14</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -10858,7 +10891,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>27</colid>
+    <colid>28</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -10866,8 +10899,8 @@
     <cdefault>1435152158</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>27</colorder>
-    <offset>-14</offset>
+    <colorder>28</colorder>
+    <offset>-15</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
