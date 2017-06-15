@@ -59,13 +59,13 @@ Partial Public Class p31_subgrid
     Protected WithEvents cmdClearExplicitPeriod As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
-    '''clue_query control.
+    '''placeQuery control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+    Protected WithEvents placeQuery As Global.System.Web.UI.WebControls.PlaceHolder
 
     '''<summary>
     '''recmenu1 control.
@@ -75,6 +75,33 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents recmenu1 As Global.Telerik.Web.UI.RadMenu
+
+    '''<summary>
+    '''cmdClearX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdClearX18 As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
+    '''x18_querybuilder_info control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''panJ70 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panJ70 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''j70ID control.
@@ -93,6 +120,15 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''chkQueryOnTop control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents chkQueryOnTop As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''panExport control.
@@ -219,6 +255,24 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''clue_query control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
+
+    '''<summary>
+    '''CurrentQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''grid2 control.
@@ -363,4 +417,13 @@ Partial Public Class p31_subgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidMasterTabAutoQueryFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidX18_value control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidX18_value As Global.System.Web.UI.WebControls.HiddenField
 End Class

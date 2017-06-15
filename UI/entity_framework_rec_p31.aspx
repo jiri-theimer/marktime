@@ -101,6 +101,11 @@
         function p31_subgrid_periodcombo() {
             sw_decide("periodcombo_setting.aspx", "Images/settings_32.png");
         }
+        
+        function p31_subgrid_x18query() {            
+            sw_decide("x18_querybuilder.aspx?key=p31grid&prefix=p31", "Images/query.png", true);
+        }
+               
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

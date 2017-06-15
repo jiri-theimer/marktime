@@ -185,7 +185,7 @@
         </div>
     </asp:Panel>
 
-    <asp:Panel ID="boxO37" runat="server" CssClass="content-box1">
+    <asp:Panel ID="boxO37" runat="server" CssClass="content-box1" style="overflow:auto;max-height:300px;">
         <div class="title">
             <img src="Images/address.png" />
             <img src="Images/person.png" />

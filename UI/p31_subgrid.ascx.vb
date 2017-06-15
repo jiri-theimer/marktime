@@ -155,6 +155,9 @@ Public Class p31_subgrid
                     ''.Add("p31_subgrid-search")
                     .Add("p31_subgrid-groups-autoexpanded")
                     .Add("p31_subgrid-sort")
+                    .Add("x18_querybuilder-value-p31-p31grid")
+                    .Add("x18_querybuilder-text-p31-p31grid")
+                    .Add("p31_subgrid-query-on-top")
                     .Add(strKey)
                 End With
                 .InhaleUserParams(lisPars)
@@ -169,6 +172,8 @@ Public Class p31_subgrid
                     Me.hidDrillDownField.Value = _curJ74.j74DrillDownField1
                 End If
                 SetupJ74Combo()
+                hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
+                Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
                 period1.SetupData(Me.Factory, .GetUserParam("periodcombo-custom_query"))
 
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
@@ -182,6 +187,7 @@ Public Class p31_subgrid
                 If Me.EntityX29ID = BO.x29IdEnum.p41Project Then
                     Me.chkIncludeChilds.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-includechilds-" & Me.MasterPrefixWithQueryFlag))
                 End If
+                Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-query-on-top", "0"))
             End With
             panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
             cmdSummary.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
@@ -193,7 +199,13 @@ Public Class p31_subgrid
             SetupP31Grid()
 
         End If
-
+        If Me.chkQueryOnTop.Checked Then
+            Dim ctl As New Control
+            ctl = Me.j70ID
+            Me.panJ70.Controls.Remove(Me.j70ID)
+            Me.placeQuery.Controls.Add(ctl)
+        End If
+        RefreshState()
     End Sub
     Private Sub SetupJ74Combo()
         Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = Me.MasterPrefixWithQueryFlag And p.j74RecordState = Me.j74RecordState)
@@ -211,7 +223,7 @@ Public Class p31_subgrid
         j70ID.DataBind()
         j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        
+
     End Sub
 
     Private Sub SetupP31Grid()
@@ -523,6 +535,7 @@ Public Class p31_subgrid
             .MG_GridGroupByField = Me.cbxGroupBy.SelectedValue
             .MG_AdditionalSqlFROM = Me.hidFrom.Value
             .MG_GridSqlColumns = Me.hidCols.Value
+            .x18Value = Me.hidX18_value.Value
 
             If Me.hidDefaultSorting.Value <> "" Then
                 If .MG_SortString = "" Then
@@ -564,7 +577,7 @@ Public Class p31_subgrid
    
 
     Private Sub Page_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
-        RefreshState()
+        
     End Sub
     Private Sub RefreshState()
         If Not Me.ExplicitMyQuery Is Nothing Then
@@ -593,14 +606,23 @@ Public Class p31_subgrid
                 End If
             End With
         End If
+        Me.CurrentQuery.Text = "" : Me.clue_query.Visible = False : Me.j70ID.BackColor = Nothing
         If Me.CurrentJ70ID > 0 Then
             Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & Me.CurrentJ70ID.ToString
-            Me.clue_query.Visible = True
             Me.j70ID.BackColor = basUI.ColorQueryRGB
-        Else
-            Me.clue_query.Visible = False
-            Me.j70ID.BackColor = Nothing
+            If Not Me.chkQueryOnTop.Checked Then
+                Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+                Me.clue_query.Visible = True
+            End If
         End If
+
+        If hidX18_value.Value <> "" Then
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
+            cmdClearX18.Visible = True
+        Else
+            cmdClearX18.Visible = False
+        End If
+        
         ''If Trim(txtSearch.Text) = "" Then
         ''    txtSearch.Style.Item("background-color") = ""
         ''Else
@@ -747,6 +769,19 @@ Public Class p31_subgrid
 
     Private Sub chkIncludeChilds_CheckedChanged(sender As Object, e As EventArgs) Handles chkIncludeChilds.CheckedChanged
         Factory.j03UserBL.SetUserParam("p31_subgrid-includechilds-" & Me.MasterPrefixWithQueryFlag, BO.BAS.GB(Me.chkIncludeChilds.Checked))
+        ReloadPage()
+    End Sub
+
+    Private Sub cmdClearX18_Click(sender As Object, e As ImageClickEventArgs) Handles cmdClearX18.Click
+        With Me.Factory.j03UserBL
+            .SetUserParam("x18_querybuilder-value-p31-p31grid", "")
+            .SetUserParam("x18_querybuilder-text-p31-p31grid", "")
+        End With
+        ReloadPage()
+    End Sub
+
+    Private Sub chkQueryOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkQueryOnTop.CheckedChanged
+        Factory.j03UserBL.SetUserParam("p31_subgrid-query-on-top", BO.BAS.GB(Me.chkQueryOnTop.Checked))
         ReloadPage()
     End Sub
 End Class

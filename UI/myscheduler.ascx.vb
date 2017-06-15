@@ -327,6 +327,7 @@ Public Class myscheduler
     Private Sub cbxTopRecs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTopRecs.SelectedIndexChanged
         factory.j03UserBL.SetUserParam("myscheduler-maxtoprecs-" & Me.Prefix, cbxTopRecs.SelectedValue)
         RefreshData(Today)
+        RefreshTasksWithoutDate(True)
     End Sub
 
     Private Sub cbxNumberOfDays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxNumberOfDays.SelectedIndexChanged

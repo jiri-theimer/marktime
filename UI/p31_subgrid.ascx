@@ -10,18 +10,18 @@
 
     </div>
 
-    <div class="commandcell" style="margin-left: 10px;">
+    <div class="commandcell" style="margin-left: 10px;margin-right:10px;">
         <uc:periodcombo ID="period1" runat="server" Width="150px"></uc:periodcombo>
         <asp:Label ID="ExplicitPeriod" runat="server" CssClass="valboldblue"></asp:Label>
 
         <asp:ImageButton ID="cmdClearExplicitPeriod" runat="server" ImageUrl="Images/close.png" ToolTip="Zrušit filtr podle kalendáře" CssClass="button-link" />
     </div>
-
-    <div class="commandcell" style="padding-left: 10px;">
-        <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+    <div class="commandcell">
+        <asp:PlaceHolder ID="placeQuery" runat="server"></asp:PlaceHolder>
     </div>
+    
 
-    <div class="commandcell" style="margin-left: 10px;">
+    <div class="commandcell">
         <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
@@ -48,10 +48,17 @@
                                 <span>Filtrování záznamů</span>
                             </div>
                             <div class="content">
+                                <div class="div6">
+                                        <button type="button" onclick="p31_subgrid_x18query()"><img src="Images/label.png" />Filtrování podle štítků</button>
+                                        <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
+                                        <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
+                                    </div>
+                               <asp:Panel ID="panJ70" runat="server" CssClass="div6">
                                 <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                                <button type="button" id="cmdQuery" runat="server">Návrhář filtrů</button>
-
-
+                                <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
+                                 
+                                </asp:Panel>
+                                <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
                             </div>
                         </div>
                         <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
@@ -119,6 +126,7 @@
                         <div class="content-box3" style="margin-top: 20px;">
                             <div class="title"></div>
                             <div class="content">
+
                                 <div class="div6">
                                     
                                     <asp:HyperLink ID="cmdSummary" runat="server" NavigateUrl="javascript:drilldown()" Text="<img src='Images/pivot.png' /> WORKSHEET statistika aktuálního přehledu"></asp:HyperLink>
@@ -129,6 +137,9 @@
                                     <asp:HyperLink ID="cmdFullScreen" runat="server" Text="<img src='Images/fullscreen.png' /> Zobrazit přehled na celou stránku" NavigateUrl="javascript:p31_fullscreen()"></asp:HyperLink>
 
                                 </div>
+                                <div class="div6">
+                                    <asp:CheckBox ID="chkIncludeChilds" runat="server" AutoPostBack="true" Text="Zahrnout i pod-projekty" CssClass="chk" Visible="false" />
+                                </div>
                             </div>
 
 
@@ -137,13 +148,17 @@
                 </telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
-        <asp:CheckBox ID="chkIncludeChilds" runat="server" AutoPostBack="true" Text="Zahrnout i pod-projekty" CssClass="chk" Visible="false" />
+        
     </div>
 
 
 
 </asp:Panel>
 <div style="clear: both; width: 100%;"></div>
+<div>
+    <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+        <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
+</div>
 
 <uc:datagrid ID="grid2" runat="server" ClientDataKeyNames="pid" OnRowSelected="p31_RowSelected" OnRowDblClick="p31_RowDoubleClick_first"></uc:datagrid>
 
@@ -162,6 +177,7 @@
 <asp:HiddenField ID="hidFrom" runat="server" />
 <asp:HiddenField ID="hidAllowFullScreen" runat="server" Value="1" />
 <asp:HiddenField ID="hidMasterTabAutoQueryFlag" runat="server" />
+<asp:HiddenField ID="hidX18_value" runat="server" />
 
 <script type="text/javascript">
 
@@ -217,6 +233,10 @@
         p31_subgrid_setting(document.getElementById("<%=Me.j74id.ClientID%>").value);
         //return (false);
     }
+    function p31_subgrid_query() {
+        p31_subgrid_setting(document.getElementById("<%=Me.j70ID.ClientID%>").value);
+        //return (false);
+    }
 
     function p31_RowDoubleClick_first(sender, args) {
         if (args.get_tableView().get_name() == "grid") {
@@ -252,4 +272,6 @@
         //sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "Images/pivot.png", true);
         //return (false);
     }
+
+    
 </script>

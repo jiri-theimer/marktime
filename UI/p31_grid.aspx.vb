@@ -80,6 +80,7 @@ Public Class p31_grid
                     .Add("p31_grid-tabqueryflag")
                     .Add("x18_querybuilder-value-p31-p31grid")
                     .Add("x18_querybuilder-text-p31-p31grid")
+                    .Add("p31_grid-query-on-top")
                 End With
                 cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
                 cbxGroupBy.DataBind()
@@ -98,6 +99,7 @@ Public Class p31_grid
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
+                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_grid-query-on-top", "0"))
                 End With
                 
                
@@ -206,12 +208,12 @@ Public Class p31_grid
             End If
         End If
         basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
+        Me.clue_query.Visible = False
         With Me.j70ID
             If .SelectedIndex > 0 Then
                 .ToolTip = .SelectedItem.Text
                 Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-            Else
-                Me.clue_query.Visible = False
+                If Not Me.chkQueryOnTop.Checked Then Me.clue_query.Visible = True
             End If
         End With
     End Sub
@@ -518,9 +520,10 @@ Public Class p31_grid
         Else
             cmdCĺearFilter.Visible = False
         End If
-        Me.CurrentQuery.Text = ""
+        Me.CurrentQuery.Text = "" : Me.j70ID.BackColor = Nothing
         If Me.CurrentJ70ID > 0 Then
-            Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+            If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+            Me.j70ID.BackColor = basUI.ColorQueryRGB
         End If
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
@@ -548,6 +551,13 @@ Public Class p31_grid
         basUIMT.RenderQueryCombo(Me.j70ID)
 
         If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
+
+        If Me.chkQueryOnTop.Checked Then
+            Dim ctl As New Control
+            ctl = Me.j70ID
+            Me.panJ70.Controls.Remove(Me.j70ID)
+            Me.placeQuery.Controls.Add(ctl)
+        End If
     End Sub
 
 
@@ -670,6 +680,10 @@ Public Class p31_grid
             .SetUserParam("x18_querybuilder-value-p31-p31grid", "")
             .SetUserParam("x18_querybuilder-text-p31-p31grid", "")
         End With
+        ReloadPage()
+    End Sub
+    Private Sub chkQueryOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkQueryOnTop.CheckedChanged
+        Master.Factory.j03UserBL.SetUserParam("p31_grid-query-on-top", BO.BAS.GB(Me.chkQueryOnTop.Checked))
         ReloadPage()
     End Sub
 End Class

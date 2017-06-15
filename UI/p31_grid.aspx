@@ -189,7 +189,7 @@
 
 
 
-        <div class="commandcell" style="padding-left: 10px;">
+        <div class="commandcell" style="padding-left: 10px;padding-right:10px;">
             <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
                 <asp:ListItem Text="Datum úkonu:" Value="p31Date" Selected="true"></asp:ListItem>
                 <asp:ListItem Text="Datum založení:" Value="p31DateInsert"></asp:ListItem>
@@ -197,12 +197,14 @@
             </asp:DropDownList>
             <uc:periodcombo ID="period1" runat="server" Width="220px"></uc:periodcombo>
         </div>
+        <div class="commandcell">
+        <asp:PlaceHolder ID="placeQuery" runat="server"></asp:PlaceHolder>
+        </div>
 
 
 
 
-
-        <div class="commandcell" style="padding-left: 20px;">
+        <div class="commandcell">
             <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
                 <Items>
 
@@ -244,13 +246,13 @@
                                             <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="div6">
+                                    <asp:panel ID="panJ70" runat="server" CssClass="div6">
 
                                         <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 220px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
 
                                         <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
-                                    </div>
-
+                                    </asp:panel>
+                                    <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
                                 </div>
                             </div>
 

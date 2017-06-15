@@ -249,4 +249,5 @@
     function menu_barcode() {
         sw_decide("barcode.aspx?prefix=<%=Me.DataPrefix%>&pid=<%=Me.DataPID%>", "Images/barcode.png", true);
     }
+    
 </script>
