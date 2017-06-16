@@ -6,7 +6,7 @@
     Function LoadCreditNote(intPID As Integer) As BO.p91Invoice
     Function LoadMyLastCreated() As BO.p91Invoice
     Function LoadLastCreatedByClient(intP28ID As Integer) As BO.p91Invoice
-    Function Delete(intPID As Integer) As Boolean
+    Function Delete(intPID As Integer, strGUID As String) As Boolean
     Function GetList(mq As BO.myQueryP91) As IEnumerable(Of BO.p91Invoice)
     Function GetListAsDR(myQuery As BO.myQueryP91) As SqlClient.SqlDataReader
     Function Update(cRec As BO.p91Invoice, lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
@@ -113,9 +113,9 @@ Class p91InvoiceBL
         Return _cDL.LoadCreditNote(intPID)
     End Function
 
-    Public Function Delete(intPID As Integer) As Boolean Implements Ip91InvoiceBL.Delete
+    Public Function Delete(intPID As Integer, strGUID As String) As Boolean Implements Ip91InvoiceBL.Delete
         Dim s As String = Me.Factory.GetRecordCaption(BO.x29IdEnum.p91Invoice, intPID) 'úschova kvůli logování historie
-        If _cDL.Delete(intPID) Then
+        If _cDL.Delete(intPID, strGUID) Then
             Me.RaiseAppEvent(BO.x45IDEnum.p91_delete, intPID, s)
             Return True
         Else

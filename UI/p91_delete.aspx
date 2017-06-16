@@ -41,20 +41,18 @@
     
 
 
-    <asp:Panel ID="panIndividual" runat="server">
+    <asp:Panel ID="panIndividual" runat="server" style="margin-top:20px;">
 
         <fieldset>
-            <legend>Individální rozhodnutí o vybraných (zaškrtlých úkonech)</legend>
+            <legend>Individuální rozhodnutí o vybraných (zaškrtlých úkonech)</legend>
             <asp:Button ID="cmdBatch1" runat="server" Text="Zaškrtlé budou schválené" CssClass="cmd" />
             <asp:Button ID="cmdBatch2" runat="server" Text="Zaškrtlé budou rozpracované" CssClass="cmd" />
             <asp:Button ID="cmdBatch3" runat="server" Text="Zaškrtlé budou v archivu" CssClass="cmd" />
-            <asp:Button ID="cmdBatch4" runat="server" Text="Zaškrtlé nenávratně odstranit" CssClass="cmd" />
+            <asp:Button ID="cmdBatch4" runat="server" Text="Zaškrtlé budou nenávratně odstraněny" CssClass="cmd" />
         </fieldset>
 
     </asp:Panel>
-    <div class="div6">
-        <asp:Label ID="lbl1" CssClass="valbold" Text="Vyfakturované úkony:" runat="server"></asp:Label>
-    </div>
+  
     <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
 
     <a class="show_hide1" id="linkHelp" href="#">

@@ -215,11 +215,12 @@
 
     End Function
 
-    Public Function Delete(intPID As Integer) As Boolean
+    Public Function Delete(intPID As Integer, strGUID As String) As Boolean
         Dim pars As New DbParameters()
         With pars
             .Add("j03id_sys", _curUser.PID, DbType.Int32)
             .Add("pid", intPID, DbType.Int32)
+            .Add("guid", strGUID, DbType.String)
             .Add("err_ret", , DbType.String, ParameterDirection.Output, 500)
         End With
         Return _cDB.RunSP("p91_delete", pars)

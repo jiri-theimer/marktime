@@ -22,11 +22,19 @@ Public Class p91_delete
                 Dim cDisp As BO.p91RecordDisposition = Master.Factory.p91InvoiceBL.InhaleRecordDisposition(cRec)
                 If Not cDisp.OwnerAccess Then .StopPage("Nemáte vlastnické oprávnění k této faktuře.")
 
+
+                SetupGrid()
+
+                If cRec.p92InvoiceType = BO.p92InvoiceTypeENUM.CreditNote Then
+                    opg1.SelectedValue = "0"
+
+                End If
             End With
+            RefreshTemp(Nothing, CInt(opg1.SelectedValue))
 
-            SetupGrid()
 
-            RefreshTemp(Nothing, 1)
+
+
         End If
     End Sub
 
@@ -57,7 +65,7 @@ Public Class p91_delete
                     Case 3
                         .Text = "<span style='background-color:silver;color:black;'>Přesunout do archivu</span>"
                     Case 4
-                        .Text = "<spanstyle='background-color:red;color:navy;'>Nenávratně odstranit</span>"
+                        .Text = "<span style='background-color:red;color:navy;'>Nenávratně odstranit</span>"
                     Case 0
                         .Text = "????"
                 End Select
@@ -89,7 +97,7 @@ Public Class p91_delete
                 Return
             End If
             With Master.Factory.p91InvoiceBL
-                If .Delete(Master.DataPID) Then
+                If .Delete(Master.DataPID, hidGUID.Value) Then
                     Master.DataPID = 0
                     Master.CloseAndRefreshParent("p91-delete")
                 Else
@@ -113,6 +121,18 @@ Public Class p91_delete
         If lis.Count = 0 Then
             Master.Notify("Musíte vybrat (zaškrtnout) alespoň jeden záznam.")
             Return
+        End If
+        If intOper = 4 Then
+            'nenávratně odstranit
+            For Each intP31ID In lis
+                With Master.Factory.p31WorksheetBL.InhaleRecordDisposition(intP31ID)
+                    If Not (.RecordDisposition = BO.p31RecordDisposition.CanApproveAndEdit Or .RecordDisposition = BO.p31RecordDisposition.CanEdit) Then
+                        Master.Notify(.LockedReasonMessage, NotifyLevel.WarningMessage)
+                        Return
+                    End If
+                End With
+
+            Next
         End If
         RefreshTemp(lis, intOper)
         grid1.Rebind(True)
@@ -140,6 +160,7 @@ Public Class p91_delete
             Dim cTemp As BO.p85TempBox = Nothing
             If lisTemp.Count > 0 Then cTemp = lisTemp(0)
             If cTemp Is Nothing Then cTemp = New BO.p85TempBox
+            cTemp.p85Prefix = "p31"
             cTemp.p85GUID = hidGUID.Value
             cTemp.p85DataPID = c
             cTemp.p85OtherKey1 = intOper

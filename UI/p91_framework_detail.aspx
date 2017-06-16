@@ -553,6 +553,9 @@
                 <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p91Invoice"></uc:o23_list>
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
                 <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
+                <div class="div6">
+                <asp:Label ID="lblTimestamp" runat="server" CssClass="timestamp"></asp:Label>
+                </div>
             </telerik:RadPageView>
             <telerik:RadPageView ID="p31" runat="server">
 
