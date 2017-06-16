@@ -35,7 +35,7 @@
         <asp:ListItem Text="Přesunout do schválených" Value="1" Selected="true"></asp:ListItem>
         <asp:ListItem Text="Přesunout do rozpracovaných" Value="2"></asp:ListItem>
         <asp:ListItem Text="Přesunout do archivu" Value="3"></asp:ListItem>
-        <asp:ListItem Text="Rozhodnu individuálně u každého úkonu" Value="4"></asp:ListItem>
+        <asp:ListItem Text="Rozhodnu individuálně u každého úkonu" Value="0"></asp:ListItem>
     </asp:RadioButtonList>
     </fieldset>
     
@@ -48,7 +48,7 @@
             <asp:Button ID="cmdBatch1" runat="server" Text="Zaškrtlé budou schválené" CssClass="cmd" />
             <asp:Button ID="cmdBatch2" runat="server" Text="Zaškrtlé budou rozpracované" CssClass="cmd" />
             <asp:Button ID="cmdBatch3" runat="server" Text="Zaškrtlé budou v archivu" CssClass="cmd" />
-            <asp:Button ID="Button1" runat="server" Text="Zaškrtlé nenávratně odstranit" CssClass="cmd" />
+            <asp:Button ID="cmdBatch4" runat="server" Text="Zaškrtlé nenávratně odstranit" CssClass="cmd" />
         </fieldset>
 
     </asp:Panel>

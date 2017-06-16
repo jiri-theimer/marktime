@@ -59,13 +59,13 @@ Partial Public Class p91_delete
     Protected WithEvents cmdBatch3 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Button1 control.
+    '''cmdBatch4 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents cmdBatch4 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''lbl1 control.
