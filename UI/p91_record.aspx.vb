@@ -18,7 +18,7 @@
                 If .DataPID = 0 Then
                     .StopPage("pid missing")
                 End If
-
+                .AddToolbarButton("Odstranit", "mydelete", 2, "Images/delete.png")
 
                 Me.j17ID.DataSource = .Factory.j17CountryBL.GetList()
                 Me.j17ID.DataBind()
@@ -35,7 +35,7 @@
 
 
             RefreshRecord()
-
+            Master.IsRecordDeletable = False
 
         End If
     End Sub
@@ -118,16 +118,16 @@
         Me.o38ID_Delivery.DataSource = lis
         Me.o38ID_Delivery.DataBind()
     End Sub
-    Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
-        With Master.Factory.p91InvoiceBL
-            If .Delete(Master.DataPID) Then
-                Master.DataPID = 0
-                Master.CloseAndRefreshParent("p91-delete")
-            Else
-                Master.Notify(.ErrorMessage, 2)
-            End If
-        End With
-    End Sub
+    ''Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
+    ''    With Master.Factory.p91InvoiceBL
+    ''        If .Delete(Master.DataPID) Then
+    ''            Master.DataPID = 0
+    ''            Master.CloseAndRefreshParent("p91-delete")
+    ''        Else
+    ''            Master.Notify(.ErrorMessage, 2)
+    ''        End If
+    ''    End With
+    ''End Sub
 
     Private Sub _MasterPage_Master_OnRefresh() Handles _MasterPage.Master_OnRefresh
         RefreshRecord()
@@ -250,5 +250,11 @@
     End Sub
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
         roles1.AddNewRow()
+    End Sub
+
+    Private Sub _MasterPage_Master_OnToolbarClick(strButtonValue As String) Handles _MasterPage.Master_OnToolbarClick
+        If strButtonValue = "mydelete" Then
+            Server.Transfer("p91_delete.aspx?pid=" & Master.DataPID.ToString)
+        End If
     End Sub
 End Class

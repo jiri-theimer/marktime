@@ -263,6 +263,7 @@
     <Content Include="p64_framework.aspx" />
     <Content Include="p64_record.aspx" />
     <Content Include="p91_batch_sendmail.aspx" />
+    <Content Include="p91_delete.aspx" />
     <Content Include="persons.ascx" />
     <Content Include="projects.ascx" />
     <Content Include="select_field.aspx" />
@@ -1322,6 +1323,13 @@
     </Compile>
     <Compile Include="p91_batch_sendmail.aspx.vb">
       <DependentUpon>p91_batch_sendmail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="p91_delete.aspx.designer.vb">
+      <DependentUpon>p91_delete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="p91_delete.aspx.vb">
+      <DependentUpon>p91_delete.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="persons.ascx.designer.vb">

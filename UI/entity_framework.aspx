@@ -40,9 +40,10 @@
             $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
             
             
+            
             <%End If%>
         });
-
+        
 
 
 

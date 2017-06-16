@@ -1,0 +1,77 @@
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/ModalForm.Master" CodeBehind="p91_delete.aspx.vb" Inherits="UI.p91_delete" %>
+
+<%@ MasterType VirtualPath="~/ModalForm.Master" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".tooltiptext").hide();
+            $(".show_hide1").show();
+
+            $('.show_hide1').click(function () {
+                $(".tooltiptext").slideToggle();
+            });
+
+
+
+        });
+
+        function individual(p31id, oper) {
+            alert(p31id)
+        }
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="OverMainContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+
+
+
+    <asp:RadioButtonList ID="opg1" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
+        <asp:ListItem Text="Uvolněné úkony zůstanou schválené" Value="1" Selected="true"></asp:ListItem>
+        <asp:ListItem Text="Uvolněné úkony zůstanou rozpracované" Value="2"></asp:ListItem>
+        <asp:ListItem Text="Uvolněné úkony se přesunou do archivu" Value="3"></asp:ListItem>
+        <asp:ListItem Text="Rozhodnu individuálně u každého úkonu" Value="4"></asp:ListItem>
+    </asp:RadioButtonList>
+
+
+    <asp:Panel ID="panIndividual" runat="server">
+
+        <fieldset>
+            <legend>Individální rozhodnutí o vybraných (zaškrtlých úkonech)</legend>
+            <asp:Button ID="cmdBatch1" runat="server" Text="Zaškrtlé úkony budou schválené" CssClass="cmd" />
+            <asp:Button ID="cmdBatch2" runat="server" Text="Zaškrtlé úkony budou rozpracované" CssClass="cmd" />
+            <asp:Button ID="cmdBatch3" runat="server" Text="Zaškrtlé úkony budou v archivu" CssClass="cmd" />
+            <asp:Button ID="Button1" runat="server" Text="Zaškrtlé úkony nenávratně odstranit" CssClass="cmd" />
+        </fieldset>
+
+    </asp:Panel>
+    <div class="div6">
+        <asp:Label ID="lbl1" CssClass="valbold" Text="Vyfakturované úkony:" runat="server"></asp:Label>
+    </div>
+    <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
+
+    <a class="show_hide1" id="linkHelp" href="#">
+        <img src="Images/help.png" />
+        Jak funguje odstranění faktury...
+    </a>
+    <div class="tooltiptext" style="display: none;">
+        <div class="content-box2">
+            <div class="title">
+                Logika odstranění faktury:
+            </div>
+            <div class="content" style="padding: 0px;">
+                <ul>
+                    <li>Odstraněním faktury nedochází automaticky k odstranění vyfakturovaných worksheet úkonů.</li>
+                    <li>Vyfakturované úkony budou uvolněny z faktury. Stanou se z nich schválené, rozpracované nebo archivované úkony (záleží na vašem rozhodnutí v tomto dialogu).</li>
+                    <li>Uvolněné úkony můžete později znovu vyfakturovat.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
+</asp:Content>
