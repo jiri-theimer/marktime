@@ -12,11 +12,17 @@
     Public Property x25FreeText03 As String
     Public Property x25FreeText04 As String
     Public Property x25FreeText05 As String
-    Public Property x25FreeNumber01 As Double?
-    Public Property x25FreeNumber02 As Double?
+    Public Property x25FreeNumber01 As Double
+    Public Property x25FreeNumber02 As Double
     Public Property x25FreeNumber03 As Double
     Public Property x25FreeNumber04 As Double
     Public Property x25FreeNumber05 As Double
+    Public Property x25FreeDate01 As Date?
+    Public Property x25FreeDate02 As Date?
+    Public Property x25FreeDate03 As Date?
+    Public Property x25FreeDate04 As Date?
+    Public Property x25FreeDate05 As Date?
+
 
     Private Property _x23Name As String
     Public ReadOnly Property x23Name As String

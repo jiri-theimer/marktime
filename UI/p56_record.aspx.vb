@@ -47,8 +47,8 @@
                 
                 Me.p57ID.DataSource = .Factory.p57TaskTypeBL.GetList(New BO.myQuery)
                 Me.p57ID.DataBind()
-                Me.p58ID.DataSource = .Factory.p58ProductBL.GetList(New BO.myQuery)
-                Me.p58ID.DataBind()
+                ''Me.p58ID.DataSource = .Factory.p58ProductBL.GetList(New BO.myQuery)
+                ''Me.p58ID.DataBind()
                 Me.p59ID_Submitter.DataSource = .Factory.p59PriorityBL.GetList(New BO.myQuery)
                 Me.p59ID_Submitter.DataBind()
             End With
@@ -61,9 +61,9 @@
                 Master.DataPID = 0
 
             End If
-            If Me.p58ID.Rows <= 1 Then
-                lblP58ID.Visible = False : Me.p58ID.Visible = False   'produkty se nepoužívají - jsou prázdné
-            End If
+            ''If Me.p58ID.Rows <= 1 Then
+            ''    lblP58ID.Visible = False : Me.p58ID.Visible = False   'produkty se nepoužívají - jsou prázdné
+            ''End If
         End If
     End Sub
 
@@ -123,7 +123,7 @@
             Me.Project.Text = Master.Factory.GetRecordCaption(BO.x29IdEnum.p41Project, Me.CurrentP41ID)
 
             Me.p57ID.SelectedValue = .p57ID.ToString
-            Me.p58ID.SelectedValue = .p58ID.ToString
+            ''Me.p58ID.SelectedValue = .p58ID.ToString
             Me.p59ID_Submitter.SelectedValue = .p59ID_Submitter
             Handle_FF()
             SetupO22Combo()
@@ -306,7 +306,7 @@
                 .p56Name = Me.p56Name.Text
 
                 .p57ID = BO.BAS.IsNullInt(Me.p57ID.SelectedValue)
-                .p58ID = BO.BAS.IsNullInt(Me.p58ID.SelectedValue)
+                ''.p58ID = BO.BAS.IsNullInt(Me.p58ID.SelectedValue)
                 .o22ID = BO.BAS.IsNullInt(Me.o22ID.SelectedValue)
                 .p59ID_Submitter = BO.BAS.IsNullInt(Me.p59ID_Submitter.SelectedValue)
 
@@ -374,10 +374,10 @@
         Handle_FF()
     End Sub
 
-    Private Sub p58ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p58ID.NeedMissingItem
-        Dim cRec As BO.p58Product = Master.Factory.p58ProductBL.Load(CInt(strFoundedMissingItemValue))
-        strAddMissingItemText = cRec.TreeMenuItem
-    End Sub
+    ''Private Sub p58ID_NeedMissingItem(strFoundedMissingItemValue As String, ByRef strAddMissingItemText As String) Handles p58ID.NeedMissingItem
+    ''    Dim cRec As BO.p58Product = Master.Factory.p58ProductBL.Load(CInt(strFoundedMissingItemValue))
+    ''    strAddMissingItemText = cRec.TreeMenuItem
+    ''End Sub
 
     Private Sub chkMore_CheckedChanged(sender As Object, e As EventArgs) Handles chkMore.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p56_record-more", BO.BAS.GB(chkMore.Checked))

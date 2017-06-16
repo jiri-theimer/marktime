@@ -257,7 +257,7 @@
                     <telerik:RadPageView ID="selected" runat="server">
                         <p></p>
                         <div class="content-box1">
-                            <div class="title">Operace nad vybranými záznamy</div>
+                            <div class="title" style="text-align:center;">Operace nad vybranými (zaškrtlými) záznamy</div>
                             <div class="content">
                                 <div class="div6">
                                     <asp:Button ID="cmdBatch_4" Text="[Fakturovat]" runat="server" CssClass="cmd" Width="280px" />

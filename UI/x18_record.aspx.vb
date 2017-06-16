@@ -19,6 +19,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         roles1.Factory = Master.Factory
         If Not Page.IsPostBack Then
+            ViewState("guid") = BO.BAS.GetGUID()
             With Master
                 .HeaderIcon = "Images/label_32.png"
                 .HeaderText = "Nastavení štítku"
@@ -83,7 +84,35 @@
 
         RefreshItems()
 
+        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Master.DataPID)
+        Master.Factory.p85TempBoxBL.Truncate(ViewState("guid"))
+        For Each c In lisX16
+            Dim cTemp As New BO.p85TempBox
+            With cTemp
+                .p85GUID = ViewState("guid")
+                .p85DataPID = c.x16ID
+                If Not Page.IsPostBack Then
+                    If Master.IsRecordClone Then
+                        .p85DataPID = 0
+                    End If
+                End If
+                .p85OtherKey1 = c.x16Ordinary
+                .p85FreeText01 = c.x16Field
+                .p85FreeText02 = c.x16Name
+                .p85Message = c.x16DataSource
+                .p85FreeBoolean01 = c.x16IsEntryRequired
+                .p85FreeBoolean02 = c.x16IsGridField
+                .p85FreeBoolean03 = c.x16IsFixedDataSource
+            End With
+            Master.Factory.p85TempBoxBL.Save(cTemp)
+        Next
+        RefreshTempX16()
 
+
+    End Sub
+    Private Sub RefreshTempX16()
+        rpX16.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        rpX16.DataBind()
     End Sub
     Private Sub RefreshItems()
         If Me.CurrentX23ID <> 0 Then
@@ -113,12 +142,29 @@
 
     Private Sub _MasterPage_Master_OnSave() Handles _MasterPage.Master_OnSave
         roles1.SaveCurrentTempData()
+        SaveTempX16()
 
         If Master.DataPID = 0 And hidTempX23ID.Value = "" Then
             Master.Notify("Musíte kliknout na tlačítko [Potvrdit].", NotifyLevel.WarningMessage)
             Return
         End If
         Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
+
+
+        Dim lisX16 As New List(Of BO.x16EntityCategory_FieldSetting)
+        For Each cTMP In Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+            Dim c As New BO.x16EntityCategory_FieldSetting
+            With cTMP
+                c.x16Field = .p85FreeText01
+                c.x16Name = .p85FreeText02
+                c.x16Ordinary = .p85OtherKey1
+                c.x16IsEntryRequired = .p85FreeBoolean01
+                c.x16IsGridField = .p85FreeBoolean02
+                c.x16DataSource = .p85Message
+                c.x16IsFixedDataSource = .p85FreeBoolean03
+            End With
+            lisX16.Add(c)
+        Next
 
 
         With Master.Factory.x18EntityCategoryBL
@@ -146,7 +192,7 @@
 
             Next
 
-            If .Save(cRec, x29IDs, lisX22, lisX69) Then
+            If .Save(cRec, x29IDs, lisX22, lisX69, lisX16) Then
                 Master.DataPID = .LastSavedPID
                 Master.CloseAndRefreshParent("x18-save")
             Else
@@ -290,5 +336,62 @@
 
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
         roles1.AddNewRow()
+    End Sub
+
+    Private Sub rpX16_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpX16.ItemCommand
+        SaveTempX16()
+        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
+        If e.CommandName = "delete" Then
+            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+
+            End If
+        End If
+        RefreshTempX16()
+    End Sub
+
+    Private Sub cmdNewX16_Click(sender As Object, e As EventArgs) Handles cmdNewX16.Click
+        SaveTempX16()
+        Dim cRec As New BO.p85TempBox()
+        cRec.p85GUID = ViewState("guid")
+        Master.Factory.p85TempBoxBL.Save(cRec)
+        RefreshTempX16()
+    End Sub
+
+    Private Sub rpX16_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX16.ItemDataBound
+        Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
+
+        With CType(e.Item.FindControl("del"), ImageButton)
+            .CommandArgument = cRec.PID.ToString
+            .CommandName = "delete"
+        End With
+
+        With cRec
+            CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
+            basUI.SelectDropdownlistValue(CType(e.Item.FindControl("x16Field"), DropDownList), .p85FreeText01)
+            CType(e.Item.FindControl("x16Name"), TextBox).Text = .p85FreeText02
+            CType(e.Item.FindControl("x16Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value = .p85OtherKey1
+            CType(e.Item.FindControl("x16IsEntryRequired"), CheckBox).Checked = .p85FreeBoolean01
+            CType(e.Item.FindControl("x16IsGridField"), CheckBox).Checked = .p85FreeBoolean02
+            CType(e.Item.FindControl("x16IsFixedDataSource"), CheckBox).Checked = .p85FreeBoolean03
+            CType(e.Item.FindControl("x16DataSource"), TextBox).Text = .p85Message
+
+        End With
+    End Sub
+    Private Sub SaveTempX16()
+        Dim lisTEMP As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        For Each ri As RepeaterItem In rpX16.Items
+            Dim intP85ID As Integer = BO.BAS.IsNullInt(CType(ri.FindControl("p85id"), HiddenField).Value)
+            Dim cRec As BO.p85TempBox = lisTEMP.Where(Function(p) p.PID = intP85ID)(0)
+            With cRec
+                .p85FreeText01 = CType(ri.FindControl("x16Field"), DropDownList).SelectedValue
+                .p85FreeText02 = CType(ri.FindControl("x16Name"), TextBox).Text
+                .p85OtherKey1 = BO.BAS.IsNullInt(CType(ri.FindControl("x16Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value)
+                .p85FreeBoolean01 = CType(ri.FindControl("x16IsEntryRequired"), CheckBox).Checked
+                .p85FreeBoolean02 = CType(ri.FindControl("x16IsGridField"), CheckBox).Checked
+                .p85FreeBoolean03 = CType(ri.FindControl("x16IsFixedDataSource"), CheckBox).Checked
+                .p85Message = CType(ri.FindControl("x16DataSource"), TextBox).Text
+            End With
+            Master.Factory.p85TempBoxBL.Save(cRec)
+        Next
     End Sub
 End Class

@@ -52,6 +52,11 @@
             pars.Add("x25FreeNumber03", .x25FreeNumber03, DbType.Double)
             pars.Add("x25FreeNumber04", .x25FreeNumber04, DbType.Double)
             pars.Add("x25FreeNumber05", .x25FreeNumber05, DbType.Double)
+            pars.Add("x25FreeDate01", .x25FreeDate01, DbType.DateTime)
+            pars.Add("x25FreeDate02", .x25FreeDate02, DbType.DateTime)
+            pars.Add("x25FreeDate03", .x25FreeDate03, DbType.DateTime)
+            pars.Add("x25FreeDate04", .x25FreeDate04, DbType.DateTime)
+            pars.Add("x25FreeDate05", .x25FreeDate05, DbType.DateTime)
         End With
 
         If _cDB.SaveRecord("x25EntityField_ComboValue", pars, bolINSERT, strW, True, _curUser.j03Login) Then

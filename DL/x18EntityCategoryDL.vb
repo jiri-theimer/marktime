@@ -78,7 +78,7 @@
         Return True
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
+    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
         If cRec.PID <> 0 Then
             bolINSERT = False
@@ -108,6 +108,17 @@
                 End If
                 For Each c In lisX22
                     _cDB.RunSQL("INSERT INTO x22EntiyCategory_Binding(x18ID,x22EntityTypePID,x29ID_EntityType,x22IsEntryRequired) VALUES (" & intX18ID.ToString & "," & c.x22EntityTypePID.ToString & "," & c.x29ID_EntityType.ToString & "," & BO.BAS.GB(c.x22IsEntryRequired) & ")")
+                Next
+            End If
+            If Not lisX16 Is Nothing Then
+                If Not bolINSERT Then
+                    _cDB.RunSQL("DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=" & intX18ID.ToString)
+                End If
+                For Each c In lisX16
+                    pars = New DbParameters
+                    pars.Add("datasource", c.x16DataSource, DbType.String)
+
+                    _cDB.RunSQL("INSERT INTO x16EntityCategory_FieldSetting(x18ID,x16Name,x16Field,x16Ordinary,x16IsEntryRequired,x16DataSource,x16IsFixedDataSource,x16IsGridField) VALUES (" & intX18ID.ToString & "," & BO.BAS.GS(c.x16Name) & "," & BO.BAS.GS(c.x16Field) & "," & c.x16Ordinary.ToString & "," & BO.BAS.GB(c.x16IsEntryRequired) & ",@datasource," & BO.BAS.GB(c.x16IsFixedDataSource) & "," & BO.BAS.GB(c.x16IsGridField) & ")", pars)
                 Next
             End If
             If Not lisX69 Is Nothing Then   'přiřazení rolí k štítku
@@ -202,5 +213,8 @@
     End Function
     Public Function GetList_x22(intX18ID As Integer) As IEnumerable(Of BO.x22EntiyCategory_Binding)
         Return _cDB.GetList(Of BO.x22EntiyCategory_Binding)("SELECT * FROM x22EntiyCategory_Binding WHERE x18ID=@pid", New With {.pid = intX18ID})
+    End Function
+    Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
+        Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)("SELECT * FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid", New With {.pid = intX18ID})
     End Function
 End Class

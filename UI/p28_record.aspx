@@ -501,14 +501,7 @@
                         <span class="infoInForm">Pro uživatele systém upřednostňuje zkrácený název před standardním názvem klienta.</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblP58ID" runat="server" CssClass="lbl" Text="Produkty klienta:"></asp:Label>
-                    </td>
-                    <td>
-                        <uc:datacombo ID="p58IDs" runat="server" AllowCheckboxes="true" DataTextField="TreeMenuItem" DataValueField="pid" IsFirstEmptyRow="false" Width="400px"></uc:datacombo>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td>
                         <asp:Label ID="lblp28RobotAddress" runat="server" Text="Adresa pro IMAP robot:" CssClass="lbl"></asp:Label>

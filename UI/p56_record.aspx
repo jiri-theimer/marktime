@@ -35,15 +35,7 @@
 
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblP58ID" runat="server" CssClass="lbl" Text="Produkt:"></asp:Label>
-                    </td>
-                    <td>
-                        <uc:datacombo ID="p58ID" runat="server" DataTextField="TreeMenuItem" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
-                    </td>
-                </tr>
-
+              
                 <tr>
                     <td>
                         <asp:Label ID="lblProject" runat="server" CssClass="lbl" Text="Projekt:"></asp:Label>

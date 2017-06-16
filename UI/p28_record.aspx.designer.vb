@@ -725,24 +725,6 @@ Partial Public Class p28_record
     Protected WithEvents p28CompanyShortName As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''lblP58ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblP58ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p58IDs control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p58IDs As Global.UI.datacombo
-
-    '''<summary>
     '''lblp28RobotAddress control.
     '''</summary>
     '''<remarks>

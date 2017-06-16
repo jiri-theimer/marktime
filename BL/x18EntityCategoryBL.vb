@@ -1,6 +1,6 @@
 ﻿Public Interface Ix18EntityCategoryBL
     Inherits ifMother
-    Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
+    Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
     Function Load(intPID As Integer) As BO.x18EntityCategory
     Function Delete(intPID As Integer) As Boolean
     Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory)
@@ -10,6 +10,7 @@
     Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, Optional strTempGUID As String = "") As IEnumerable(Of BO.x19EntityCategory_Binding)
     Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)
     Function GetList_x22(intX18ID As Integer) As IEnumerable(Of BO.x22EntiyCategory_Binding)
+    Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
 End Interface
 Class x18EntityCategoryBL
     Inherits BLMother
@@ -32,7 +33,7 @@ Class x18EntityCategoryBL
         Return _cDL.Load(intPID)
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean Implements Ix18EntityCategoryBL.Save
+    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean Implements Ix18EntityCategoryBL.Save
         If x29IDs Is Nothing Then _Error = "x29ids is nothing" : Return False
         If x29IDs.Count = 0 Then _Error = "Na vstupu musí být vazba minimálně na jednu entitu." : Return False
         If cRec.x23ID = 0 Then _Error = "Chybí datový zdroj (combo seznam)." : Return False
@@ -48,8 +49,18 @@ Class x18EntityCategoryBL
                 End If
             End If
         End If
+        If Not lisX16 Is Nothing Then
+            For Each c In lisX16
+                If Trim(c.x16Name) = "" Then
+                    _Error = "V nastavení uživatelských polí štítku chybí název." : Return False
+                End If
+                If Trim(c.x16Field) = "" Then
+                    _Error = "V nastavení uživatelských polí štítku chybí obsazené pole." : Return False
+                End If
+            Next
+        End If
 
-        If _cDL.Save(cRec, x29IDs, lisX22, lisX69) Then
+        If _cDL.Save(cRec, x29IDs, lisX22, lisX69, lisX16) Then
             Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
             If cX23.x23Ordinary = -666 Then
                 cX23.x23Name = cRec.x18Name
@@ -89,5 +100,8 @@ Class x18EntityCategoryBL
     End Function
     Public Function GetList_x22(intX18ID As Integer) As IEnumerable(Of BO.x22EntiyCategory_Binding) Implements Ix18EntityCategoryBL.GetList_x22
         Return _cDL.GetList_x22(intX18ID)
+    End Function
+    Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting) Implements Ix18EntityCategoryBL.GetList_x16
+        Return _cDL.GetList_x16(intX18ID)
     End Function
 End Class

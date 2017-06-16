@@ -646,7 +646,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.Termin, "p56PlanUntil", BO.cfENUM.DateTime, , , , , "Plán úkolu"))
             .Add(AGC(My.Resources.common.PlanStart, "p56PlanFrom", BO.cfENUM.DateTime, , , , , "Plán úkolu"))
             .Add(AGC("Hotovo%", "p56CompletePercent", BO.cfENUM.Numeric0))
-            .Add(AGC("Produkt", "p58Name"))
+            ''.Add(AGC("Produkt", "p58Name"))
             .Add(AGC(My.Resources.common.PrioritaZadavatele, "p59NameSubmitter", , , "p59submitter.p59Name"))
 
             .Add(AGC("Hodnocení", "p56RatingValue", BO.cfENUM.Numeric0))
@@ -749,7 +749,7 @@ Class j74SavedGridColTemplateBL
                 lis.Add(New BO.GridGroupByColumn("Klient", "Client", "p41.p28ID_Client", "min(p28client.p28Name)"))
                 lis.Add(New BO.GridGroupByColumn("Projekt", "ProjectCodeAndName", "a.p41ID", "min(isnull(p28client.p28Name+' - ','')+isnull(p41NameShort,p41Name))"))
                 lis.Add(New BO.GridGroupByColumn("Aktuální stav", "b02Name", "a.b02ID", "min(b02.b02Name)"))
-                lis.Add(New BO.GridGroupByColumn("Produkt", "p58Name", "a.p58ID", "min(p58Name)"))
+                ''lis.Add(New BO.GridGroupByColumn("Produkt", "p58Name", "a.p58ID", "min(p58Name)"))
                 lis.Add(New BO.GridGroupByColumn("Priorita zadavatele", "p59NameSubmitter", "a.p59ID_Submitter", "min(p59submitter.p59name)"))
                 lis.Add(New BO.GridGroupByColumn("Příjemce", "ReceiversInLine", "", ""))
                 lis.Add(New BO.GridGroupByColumn("Vlastník záznamu", "Owner", "a.j02ID_Owner", "min(j02owner.j02LastName+' '+j02owner.j02FirstName)"))

@@ -230,6 +230,24 @@ Partial Public Class x18_record
     Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
+    '''cmdNewX16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdNewX16 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''rpX16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX16 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''hidTempX23ID control.
     '''</summary>
     '''<remarks>

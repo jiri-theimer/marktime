@@ -90,7 +90,7 @@
 
     Private Sub Handle_FF(intP34ID As Integer)
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID, ViewState("guid"))
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p31Worksheet)
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p31Worksheet, intP34ID)
         If fields.Count > 0 Or lisX18.Count > 0 Then
             ff1.FillData(fields, lisX18, "p31Worksheet_FreeField", Master.DataPID, ViewState("guid"))
         End If

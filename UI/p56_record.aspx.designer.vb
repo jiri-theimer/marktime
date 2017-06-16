@@ -59,24 +59,6 @@ Partial Public Class p56_record
     Protected WithEvents p57ID As Global.UI.datacombo
 
     '''<summary>
-    '''lblP58ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblP58ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p58ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p58ID As Global.UI.datacombo
-
-    '''<summary>
     '''lblProject control.
     '''</summary>
     '''<remarks>

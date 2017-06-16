@@ -50,7 +50,7 @@
 
 
 
-            
+
 
             <div class="div6">
                 <asp:CheckBox ID="x18IsMultiSelect" runat="server" Text="Povolen MULTI-SELECT (možnost oštítkovat záznam entity více položkami najednou)" Checked="true" CssClass="chk" />
@@ -72,7 +72,7 @@
                 </div>
             </div>
 
-            <div class="content-box2" style="margin-top:20px;">
+            <div class="content-box2" style="margin-top: 20px;">
                 <div class="title">
                     Položky štítku
             <% If Me.CurrentX23ID <> 0 Then%>
@@ -153,6 +153,76 @@
             <div class="div6">
                 <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq"></asp:Label>
                 <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
+            </div>
+            <div class="content-box2" style="margin-top: 20px;">
+                <div class="title">
+                    <img src="Images/form.png" width="16px" height="16px" />
+                    Rozšíření položky štítku o další pole
+                    <asp:Button ID="cmdNewX16" runat="server" CssClass="cmd" Text="Přidat" />
+                </div>
+                <div class="content">
+                    <table cellpadding="4">
+                        <tr>
+                            <th>Pole</th>
+                            <th>Název (popisek)</th>
+                            <th></th>                            
+                            <th>#</th>
+                            <th>Možné hodnoty textového pole</th>
+                            <th></th>
+                        </tr>
+                        <asp:Repeater ID="rpX16" runat="server">
+                            <ItemTemplate>
+                                <tr class="trHover">
+                                    <td>
+
+                                        <asp:DropDownList ID="x16Field" runat="server">
+                                            <asp:ListItem Text="--Obsazené pole--" Value=""></asp:ListItem>
+                                            <asp:ListItem Text="Text 1" Value="x25FreeText01"></asp:ListItem>
+                                            <asp:ListItem Text="Text 2" Value="x25FreeText02"></asp:ListItem>
+                                            <asp:ListItem Text="Text 3" Value="x25FreeText03"></asp:ListItem>
+                                            <asp:ListItem Text="Text 4" Value="x25FreeText04"></asp:ListItem>
+                                            <asp:ListItem Text="Text 5" Value="x25FreeText05"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 1" Value="x25FreeNumber01"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 2" Value="x25FreeNumber02"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 3" Value="x25FreeNumber03"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 4" Value="x25FreeNumber04"></asp:ListItem>
+                                            <asp:ListItem Text="Číslo 5" Value="x25FreeNumber05"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 1" Value="x25FreeDate01"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 2" Value="x25FreeDate02"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
+                                            <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
+                                        </asp:DropDownList>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="x16Name" runat="server" Width="250px"></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:CheckBox ID="x16IsEntryRequired" runat="server" Text="Povinné k vyplnění" />
+                                        <div>
+                                            <asp:CheckBox ID="x16IsGridField" runat="server" Text="Sloupec v přehledu" Checked="true" />
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <telerik:RadNumericTextBox ID="x16Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="x16DataSource" runat="server" Width="400px"></asp:TextBox>
+                                        <div>
+                                            <asp:CheckBox ID="x16IsFixedDataSource" runat="server" Text="Okruh hodnot je zafixován" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
+                                        <asp:HiddenField ID="p85id" runat="server" />
+                                    </td>
+                                </tr>
+                                
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </table>
+                </div>
             </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>
