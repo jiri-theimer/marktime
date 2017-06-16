@@ -264,10 +264,14 @@
                 Case BO.x29IdEnum.p31Worksheet
                     For Each c In Master.Factory.p34ActivityGroupBL.GetList(mq)
                         lis.Add(x22rec(c.PID, 334, c.p34Name & " (Worksheet)"))
-                    Next
+                    Next                    
                 Case BO.x29IdEnum.p56Task
                     For Each c In Master.Factory.p57TaskTypeBL.GetList(mq)
                         lis.Add(x22rec(c.PID, 357, c.p57Name & " (Úkol)"))
+                    Next
+                Case BO.x29IdEnum.o22Milestone
+                    For Each c In Master.Factory.o21MilestoneTypeBL.GetList(mq)
+                        lis.Add(x22rec(c.PID, 221, c.o21Name & " (Událost v kalendáři)"))
                     Next
                 Case Else
             End Select

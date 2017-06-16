@@ -85,10 +85,7 @@
         rpO20.DataBind()
         If rpO20.Items.Count = 0 Then rpO20.Visible = False
 
-        rpO19.DataSource = Master.Factory.o22MilestoneBL.GetList_o19(Master.DataPID)
-        rpO19.DataBind()
-        If rpO19.Items.Count = 0 Then panO19.Visible = False
-
+        labels1.RefreshData(BO.x29IdEnum.o22Milestone, Master.DataPID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.o22Milestone, Master.DataPID))
 
     End Sub
 

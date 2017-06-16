@@ -189,6 +189,7 @@
             s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=331) then 1 else 0 end) _Is_p31"
             s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=356) then 1 else 0 end) _Is_p56"
             s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=223) then 1 else 0 end) _Is_o23"
+            s += ",convert(bit,case when a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=222) then 1 else 0 end) _Is_o22"
         End If
         s += " FROM x18EntityCategory a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         Return s

@@ -50,6 +50,24 @@ Partial Public Class clue_o22_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
+
+    '''<summary>
+    '''o21Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents o21Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''cmDetail control.
     '''</summary>
     '''<remarks>
@@ -66,15 +84,6 @@ Partial Public Class clue_o22_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdSendMail As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''o21Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents o21Name As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''o22Name control.
@@ -165,24 +174,6 @@ Partial Public Class clue_o22_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents o22Description As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''panO19 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panO19 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''rpO19 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpO19 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''Timestamp control.

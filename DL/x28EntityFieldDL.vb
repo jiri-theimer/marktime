@@ -215,6 +215,8 @@
                     dr = _cDB.GetDataReader("select * from j02Person_FreeField WHERE j02ID=" & intRecordPID.ToString)
                 Case BO.x29IdEnum.o23Notepad
                     dr = _cDB.GetDataReader("select * from o23Notepad_FreeField WHERE o23ID=" & intRecordPID.ToString)
+                Case BO.x29IdEnum.o22Milestone
+                    dr = _cDB.GetDataReader("select * from o22Milestone_FreeField WHERE o22ID=" & intRecordPID.ToString)
             End Select
         End If
         If Not dr Is Nothing Then

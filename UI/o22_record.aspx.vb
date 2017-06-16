@@ -33,13 +33,14 @@
         _MasterPage = Me.Master
     End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ff1.Factory = Master.Factory
         If Not Page.IsPostBack Then
-            ViewState("guid_o19") = BO.BAS.GetGUID()
+            ''ViewState("guid_o19") = BO.BAS.GetGUID()
             ViewState("guid_o20") = BO.BAS.GetGUID()
             With Master
                 .HeaderIcon = "Images/calendar_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
-                .HeaderText = "Kalendářová událost"
+                .HeaderText = "Událost v kalendáři"
 
 
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("masterprefix"))
@@ -146,14 +147,16 @@
             Me.o22Location.Text = .o22Location
             Master.Timestamp = .Timestamp
 
+            Handle_FF()
+
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
 
-        Dim lisO19 As IEnumerable(Of BO.o19Milestone_NonPerson) = Master.Factory.o22MilestoneBL.GetList_o19(cRec.PID)
-        For Each c In lisO19
-            CreateTempRecord_o19(c.j23ID, c.j23Name & " (" & c.j23Code & ")")
-        Next
-        If lisO19.Count > 0 Then RefreshTempO19()
+        ''Dim lisO19 As IEnumerable(Of BO.o19Milestone_NonPerson) = Master.Factory.o22MilestoneBL.GetList_o19(cRec.PID)
+        ''For Each c In lisO19
+        ''    CreateTempRecord_o19(c.j23ID, c.j23Name & " (" & c.j23Code & ")")
+        ''Next
+        ''If lisO19.Count > 0 Then RefreshTempO19()
 
         Dim lisO20 As IEnumerable(Of BO.o20Milestone_Receiver) = Master.Factory.o22MilestoneBL.GetList_o20(cRec.PID)
         For Each c In lisO20
@@ -220,12 +223,12 @@
                 .ValidUntil = Master.RecordValidUntil
             End With
 
-            Dim lisO19 As New List(Of BO.o19Milestone_NonPerson)
-            For Each cTemp In Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o19"))
-                Dim c As New BO.o19Milestone_NonPerson
-                c.j23ID = cTemp.p85OtherKey1
-                lisO19.Add(c)
-            Next
+            ''Dim lisO19 As New List(Of BO.o19Milestone_NonPerson)
+            ''For Each cTemp In Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o19"))
+            ''    Dim c As New BO.o19Milestone_NonPerson
+            ''    c.j23ID = cTemp.p85OtherKey1
+            ''    lisO19.Add(c)
+            ''Next
             Dim lisO20 As New List(Of BO.o20Milestone_Receiver)
             For Each cTemp In Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o20"))
                 Dim c As New BO.o20Milestone_Receiver
@@ -234,8 +237,10 @@
                 lisO20.Add(c)
             Next
 
-            If .Save(cRec, lisO20, lisO19) Then
+            If .Save(cRec, lisO20, Nothing) Then
                 Master.DataPID = .LastSavedPID
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.o22Milestone, Master.DataPID, ff1.GetTags())
+
                 Master.CloseAndRefreshParent("o22-save")
             Else
                 Master.Notify(.ErrorMessage, 2)
@@ -268,7 +273,7 @@
                     .DisplayDateFormat = .DateFormat
                 End With
                 Me.o22DateUntil.TimePopupButton.Visible = True
-                panReservation.Visible = False
+                'panReservation.Visible = False
             Case BO.o21FlagEnum.EventFromUntil
                 Me.o22IsAllDay.Visible = True
                 Me.lblDateFrom.Visible = True : Me.o22DateFrom.Visible = True
@@ -293,19 +298,19 @@
                 End With
                 Me.o22DateFrom.TimePopupButton.Visible = Not Me.o22IsAllDay.Checked
                 Me.o22DateUntil.TimePopupButton.Visible = Not Me.o22IsAllDay.Checked
-                panReservation.Visible = True
-                With Me.cbxSelectJ23ID
-                    If .Rows <= 1 Then
-                        Dim lis As IEnumerable(Of BO.j23NonPerson) = Master.Factory.j23NonPersonBL.GetList(New BO.myQuery)
-                        .DataSource = lis
-                        .DataBind()
-                    End If
-                End With
+                'panReservation.Visible = True
+                'With Me.cbxSelectJ23ID
+                '    If .Rows <= 1 Then
+                '        Dim lis As IEnumerable(Of BO.j23NonPerson) = Master.Factory.j23NonPersonBL.GetList(New BO.myQuery)
+                '        .DataSource = lis
+                '        .DataBind()
+                '    End If
+                'End With
                 
                 
             Case Else
                 imgO21Flag.ImageUrl = "Images/notepad.png"
-                panReservation.Visible = False
+                'panReservation.Visible = False
         End Select
         With Me.cbxSelectJ11ID
             If .Rows <= 1 Then
@@ -326,6 +331,7 @@
         If Me.o21ID.SelectedValue = "" Then Return
         Dim cRec As BO.o21MilestoneType = Master.Factory.o21MilestoneTypeBL.Load(BO.BAS.IsNullInt(Me.o21ID.SelectedValue))
         Me.CurrentO21Flag = cRec.o21Flag
+        Handle_FF()
     End Sub
 
     Private Sub InhaleMyDefault()
@@ -351,58 +357,58 @@
 
     End Sub
 
-    Private Sub cbxSelectJ23ID_ItemDataBound(sender As Object, e As Telerik.Web.UI.RadComboBoxItemEventArgs) Handles cbxSelectJ23ID.ItemDataBound
-        Dim cRec As BO.j23NonPerson = CType(e.Item.DataItem, BO.j23NonPerson)
-        If _curBindingLastJ24ID <> cRec.j24ID Then
-            Dim item As New Telerik.Web.UI.RadComboBoxItem(cRec.j24Name, "")
-            With item
-                .BackColor = Drawing.Color.WhiteSmoke
-                .Enabled = False
-                .Font.Bold = True
-                .ForeColor = Drawing.Color.Black
-            End With
-            Me.cbxSelectJ23ID.RadCombo.Items.Insert(cbxSelectJ23ID.Rows - 1, item)
-        End If
-        _curBindingLastJ24ID = cRec.j24ID
-    End Sub
+    'Private Sub cbxSelectJ23ID_ItemDataBound(sender As Object, e As Telerik.Web.UI.RadComboBoxItemEventArgs) Handles cbxSelectJ23ID.ItemDataBound
+    '    Dim cRec As BO.j23NonPerson = CType(e.Item.DataItem, BO.j23NonPerson)
+    '    If _curBindingLastJ24ID <> cRec.j24ID Then
+    '        Dim item As New Telerik.Web.UI.RadComboBoxItem(cRec.j24Name, "")
+    '        With item
+    '            .BackColor = Drawing.Color.WhiteSmoke
+    '            .Enabled = False
+    '            .Font.Bold = True
+    '            .ForeColor = Drawing.Color.Black
+    '        End With
+    '        Me.cbxSelectJ23ID.RadCombo.Items.Insert(cbxSelectJ23ID.Rows - 1, item)
+    '    End If
+    '    _curBindingLastJ24ID = cRec.j24ID
+    'End Sub
 
-    Private Sub cbxSelectJ23ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles cbxSelectJ23ID.SelectedIndexChanged
-        Dim intJ23ID As Integer = BO.BAS.IsNullInt(Me.cbxSelectJ23ID.SelectedValue)
-        If intJ23ID = 0 Then Return
-        If Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o19")).Where(Function(p) p.p85OtherKey1 = intJ23ID).Count > 0 Then
-            Return
-        End If
-        CreateTempRecord_o19(intJ23ID, cbxSelectJ23ID.Text)
-        'Dim c As New BO.p85TempBox()
-        'c.p85GUID = ViewState("guid_o19")
-        'c.p85OtherKey1 = intJ23ID
-        'c.p85FreeText01 = cbxSelectJ23ID.Text
-        'Master.Factory.p85TempBoxBL.Save(c)
-        RefreshTempO19()
-        Me.cbxSelectJ23ID.SelectedIndex = 0
-    End Sub
+    'Private Sub cbxSelectJ23ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles cbxSelectJ23ID.SelectedIndexChanged
+    '    Dim intJ23ID As Integer = BO.BAS.IsNullInt(Me.cbxSelectJ23ID.SelectedValue)
+    '    If intJ23ID = 0 Then Return
+    '    If Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o19")).Where(Function(p) p.p85OtherKey1 = intJ23ID).Count > 0 Then
+    '        Return
+    '    End If
+    '    CreateTempRecord_o19(intJ23ID, cbxSelectJ23ID.Text)
+    '    'Dim c As New BO.p85TempBox()
+    '    'c.p85GUID = ViewState("guid_o19")
+    '    'c.p85OtherKey1 = intJ23ID
+    '    'c.p85FreeText01 = cbxSelectJ23ID.Text
+    '    'Master.Factory.p85TempBoxBL.Save(c)
+    '    RefreshTempO19()
+    '    Me.cbxSelectJ23ID.SelectedIndex = 0
+    'End Sub
 
-    Private Sub RefreshTempO19()
-        Me.j23ids.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o19"))
-        Me.j23ids.DataBind()
-    End Sub
+    'Private Sub RefreshTempO19()
+    '    Me.j23ids.DataSource = Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o19"))
+    '    Me.j23ids.DataBind()
+    'End Sub
 
-    Private Sub j23ids_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles j23ids.ItemCommand
-        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
-        If e.CommandName = "delete" Then
-            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
-                RefreshTempO19()
-            End If
-        End If
-    End Sub
+    'Private Sub j23ids_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles j23ids.ItemCommand
+    '    Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
+    '    If e.CommandName = "delete" Then
+    '        If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+    '            RefreshTempO19()
+    '        End If
+    '    End If
+    'End Sub
 
-    Private Sub j23ids_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles j23ids.ItemDataBound
-        Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
-        CType(e.Item.FindControl("Source"), Label).Text = cRec.p85FreeText01
-        With CType(e.Item.FindControl("cmdDelete"), ImageButton)
-            .CommandArgument = cRec.PID.ToString
-        End With
-    End Sub
+    'Private Sub j23ids_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles j23ids.ItemDataBound
+    '    Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
+    '    CType(e.Item.FindControl("Source"), Label).Text = cRec.p85FreeText01
+    '    With CType(e.Item.FindControl("cmdDelete"), ImageButton)
+    '        .CommandArgument = cRec.PID.ToString
+    '    End With
+    'End Sub
 
     Private Sub cbxSelectJ11ID_ItemDataBound(sender As Object, e As Telerik.Web.UI.RadComboBoxItemEventArgs) Handles cbxSelectJ11ID.ItemDataBound
         Dim cRec As BO.j11Team = CType(e.Item.DataItem, BO.j11Team)
@@ -485,11 +491,18 @@
         End If
         Master.Factory.p85TempBoxBL.Save(c)
     End Sub
-    Private Sub CreateTempRecord_o19(intJ23ID As Integer, strJ23Name As String)
-        Dim c As New BO.p85TempBox()
-        c.p85GUID = ViewState("guid_o19")
-        c.p85OtherKey1 = intJ23ID
-        c.p85FreeText01 = strJ23Name
-        Master.Factory.p85TempBoxBL.Save(c)
+    'Private Sub CreateTempRecord_o19(intJ23ID As Integer, strJ23Name As String)
+    '    Dim c As New BO.p85TempBox()
+    '    c.p85GUID = ViewState("guid_o19")
+    '    c.p85OtherKey1 = intJ23ID
+    '    c.p85FreeText01 = strJ23Name
+    '    Master.Factory.p85TempBoxBL.Save(c)
+    'End Sub
+
+    Private Sub Handle_FF()
+        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.o22Milestone, Master.DataPID, BO.BAS.IsNullInt(Me.o21ID.SelectedValue))
+        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.o22Milestone, BO.BAS.IsNullInt(Me.o21ID.SelectedValue))
+        ff1.FillData(fields, lisX18, "o22Milestone_FreeField", Master.DataPID)
+
     End Sub
 End Class

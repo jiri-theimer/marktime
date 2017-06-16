@@ -403,7 +403,7 @@
                         <div class="div6">
                             <asp:DropDownList ID="cbxNewRecType" runat="server" AutoPostBack="true">
                                 <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
-                                <asp:ListItem Text="Kalendářová událost" Value="o22"></asp:ListItem>
+                                <asp:ListItem Text="Událost v kalendáři" Value="o22"></asp:ListItem>
                                 <asp:ListItem Text="Operativní plán" Value="p48"></asp:ListItem>
 
                             </asp:DropDownList>

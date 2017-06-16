@@ -212,40 +212,13 @@ Partial Public Class o22_record
     Protected WithEvents rpO20 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''panReservation control.
+    '''ff1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panReservation As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''lblSelectJ23ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblSelectJ23ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cbxSelectJ23ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxSelectJ23ID As Global.UI.datacombo
-
-    '''<summary>
-    '''j23ids control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j23ids As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents ff1 As Global.UI.freefields
 
     '''<summary>
     '''o22Description control.

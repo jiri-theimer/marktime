@@ -2,6 +2,7 @@
 
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -24,10 +25,10 @@
             <asp:Image ID="img1" runat="server" ImageUrl="Images/calendar_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
         </asp:Panel>
-
+        <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
         <div class="content-box2">
             <div class="title">
-                Záznam kalendářové události  
+                <asp:Label ID="o21Name" runat="server"></asp:Label>
                 
                 <asp:HyperLink ID="cmDetail" runat="server" NavigateUrl="javascript:detail()" Text="Upravit"></asp:HyperLink>
                 <asp:HyperLink ID="cmdSendMail" runat="server" NavigateUrl="javascript:o22_sendmail()" Text="Odeslat e-mail" style="margin-left:20px;"></asp:HyperLink>
@@ -35,13 +36,7 @@
             <div class="content">
 
                 <table cellpadding="5" cellspacing="2">
-                    <tr>
-                        <td>Typ:</td>
-                        <td>
-                            <asp:Label ID="o21Name" runat="server" CssClass="valboldblue"></asp:Label>
-
-                        </td>
-                    </tr>
+                  
                     <tr>
                         <td>Název:</td>
                         <td>
@@ -92,23 +87,8 @@
         </div>
 
 
-
-        <asp:Panel ID="panO19" runat="server" CssClass="content-box2">
-            <div class="title">
-                <img src="Images/car.png" style="padding-right: 6px;" />Rezervované nepersonální zdroje k události
-            </div>
-            <div class="content">
-                <asp:Repeater ID="rpO19" runat="server">
-                    <ItemTemplate>
-
-                        <span class="valboldblue" style="padding: 20px;"><%# Eval("j23Name")%> (<%# Eval("j23Code")%>)</span>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </div>
-
-
-
-        </asp:Panel>
+        
+       
 
         <div class="div6">
             <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>

@@ -65,4 +65,10 @@
             Return _Is_p56
         End Get
     End Property
+    Private Property _Is_o22 As Boolean
+    Public ReadOnly Property Is_o22 As Boolean
+        Get
+            Return _Is_o22
+        End Get
+    End Property
 End Class

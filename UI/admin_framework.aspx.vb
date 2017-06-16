@@ -168,10 +168,7 @@ Public Class admin_framework
             .AddItem("Typy klientů", "p29", NU("p29"), "p28")
             .AddItem("Role v klientovi", "p28_x67", NU("p28_x67"), "p28")
 
-            .AddItem("Úkoly", "p56", , , "Images/task.png")
-            .AddItem("Typy úkolů", "p57", NU("p57"), "p56")
-            .AddItem("Role v úkolu", "p56_x67", NU("p56_x67"), "p56")
-            .AddItem("Priority úkolu", "p59", NU("p59"), "p56")
+            
             ''.AddItem("Produkty", "p58", NU("p58"), "p56")
 
 
@@ -197,13 +194,16 @@ Public Class admin_framework
             .AddItem("Typy záloh", "p89", NU("p89"), "p91")
 
 
-
-            .AddItem("Kalendáře", "o22", , , "Images/calendar.png")
-            .AddItem("Typy událostí", "p41_o21", NU("p41_o21"), "o22")
-            .AddItem("Klientské události", "p28_o21", NU("p28_o21"), "o22")
-            .AddItem("Osobní události", "j02_o21", NU("j02_o21"), "o22")
-            .AddItem("Nepersonální zdroje", "j23", NU("j23"), "o22")
-            .AddItem("Typy neper. zdrojů", "j24", NU("j24"), "o22")
+            .AddItem("Úkoly", "p56", , , "Images/task.png")
+            .AddItem("Typy úkolů", "p57", NU("p57"), "p56")
+            .AddItem("Role v úkolu", "p56_x67", NU("p56_x67"), "p56")
+            .AddItem("Priority úkolu", "p59", NU("p59"), "p56")
+            .AddItem("Kalendářové události", "o22", , , "Images/calendar.png")
+            .AddItem("Typy událostí pro projekt", "p41_o21", NU("p41_o21"), "o22")
+            .AddItem("Typy událostí pro klienta", "p28_o21", NU("p28_o21"), "o22")
+            .AddItem("Typy událostí pro osobní profil", "j02_o21", NU("j02_o21"), "o22")
+            ''.AddItem("Nepersonální zdroje", "j23", NU("j23"), "o22")
+            ''.AddItem("Typy neper. zdrojů", "j24", NU("j24"), "o22")
 
             .AddItem("Tiskové sestavy a pluginy", "reporting", , , "Images/report.png")
             .AddItem("Šablony sestav", "rep_x31", NU("rep_x31"), "reporting")
@@ -372,14 +372,14 @@ Public Class admin_framework
                     .AddColumn("j17Name", "Region")
                 Case "j11"
                     .AddColumn("j11Name", "Název týmu")
-                Case "j23"
-                    .AddColumn("j24Name", "Typ zdroje")
-                    .AddColumn("j23Name", "Název")
-                    .AddColumn("j23Code", "Kód")
-                    .AddColumn("j23Ordinary", "#")
-                Case "j24"
-                    .AddColumn("j24Name", "Název typu zdroje")
-                    .AddColumn("j24Ordinary", "#")
+                    ''Case "j23"
+                    ''    .AddColumn("j24Name", "Typ zdroje")
+                    ''    .AddColumn("j23Name", "Název")
+                    ''    .AddColumn("j23Code", "Kód")
+                    ''    .AddColumn("j23Ordinary", "#")
+                    ''Case "j24"
+                    ''    .AddColumn("j24Name", "Název typu zdroje")
+                    ''    .AddColumn("j24Ordinary", "#")
                 Case "p50"
                     .AddColumn("Binding", "Druh sazby")
                     .AddColumn("p51Name", "Název ceníku")
@@ -685,12 +685,12 @@ Public Class admin_framework
                 Case "c26"
                     Dim lis As IEnumerable(Of BO.c26Holiday) = .c26HolidayBL.GetList(mqDef)
                     grid1.DataSource = lis
-                Case "j24"
-                    Dim lis As IEnumerable(Of BO.j24NonPersonType) = .j24NonePersonTypeBL.GetList(mqDef)
-                    grid1.DataSource = lis
-                Case "j23"
-                    Dim lis As IEnumerable(Of BO.j23NonPerson) = .j23NonPersonBL.GetList(mqDef)
-                    grid1.DataSource = lis
+                    'Case "j24"
+                    '    Dim lis As IEnumerable(Of BO.j24NonPersonType) = .j24NonePersonTypeBL.GetList(mqDef)
+                    '    grid1.DataSource = lis
+                    '    ''Case "j23"
+                    '    ''    Dim lis As IEnumerable(Of BO.j23NonPerson) = .j23NonPersonBL.GetList(mqDef)
+                    '    ''    grid1.DataSource = lis
                 Case "j25"
                     Dim lis As IEnumerable(Of BO.j25ReportCategory) = .j25ReportCategoryBL.GetList(mqDef)
                     grid1.DataSource = lis

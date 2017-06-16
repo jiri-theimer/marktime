@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="uc" TagName="pageheader" Src="~/PageHeader.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
+<%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -149,30 +150,9 @@
 
         </div>
     </asp:Panel>
-    <asp:Panel ID="panReservation" runat="server" CssClass="content-box2">
+    
+    <uc:freefields ID="ff1" runat="server" />
 
-        <div class="title">
-            <img src="Images/car.png" style="margin-right: 5px;" />
-            Rezervace nepersonálních zdrojů k události
-
-        </div>
-        <div class="content">
-            <div class="div6">
-                <asp:Label ID="lblSelectJ23ID" runat="server" Text="Vybrat zdroj:" CssClass="lbl"></asp:Label>
-                <uc:datacombo ID="cbxSelectJ23ID" runat="server" DataTextField="NameWithCode" DataValueField="pid" IsFirstEmptyRow="true" Filter="Contains" AutoPostBack="true" Width="400px"></uc:datacombo>
-            </div>
-            <div class="div6">
-                <asp:Repeater ID="j23ids" runat="server">
-                    <ItemTemplate>
-                        <asp:Label ID="Source" runat="server" CssClass="valboldblue"></asp:Label>
-                        <asp:ImageButton ID="cmdDelete" runat="server" CommandName="delete" ImageUrl="Images/delete.png" CssClass="button-link" ToolTip="Odstranit položku"></asp:ImageButton>
-                        <span style="padding-left: 20px;"></span>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </div>
-        </div>
-
-    </asp:Panel>
     <div class="content-box2">
         <div class="title">Poznámka</div>
         <div class="content">

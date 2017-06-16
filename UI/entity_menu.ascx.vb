@@ -294,7 +294,7 @@ Public Class entity_menu
 
         End If
         If cP42.p42IsModule_o22 Then
-            ami("Vytvořit kalendářovou událost", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
+            ami("Vytvořit událost v kalendáři", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
             ami("Kalendář projektu", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
         End If
 
@@ -566,7 +566,7 @@ Public Class entity_menu
             ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
         End If
 
-        If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
+        If Not cRec.IsClosed Then ami("Vytvořit událost v kalendáři", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
         ami("Kalendář klienta", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
 
         If cRec.b02ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
@@ -634,7 +634,7 @@ Public Class entity_menu
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_O23_Creator, BO.x53PermValEnum.GR_O23_Draft_Creator) Then
                 ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
             End If
-            If Not cRec.IsClosed Then ami("Vytvořit kalendářovou událost", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
+            If Not cRec.IsClosed Then ami("Vytvořit událost v kalendáři", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
             ami("Kalendář osoby", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
 
             ami("Operativní plán osoby", "cmdP48", "javascript:p48_plan();", "Images/oplan.png", mi, , True)
