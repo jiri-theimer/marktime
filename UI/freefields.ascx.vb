@@ -56,7 +56,8 @@ Public Class freefields
 
     End Sub
 
-    Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX18 As IEnumerable(Of BO.x18EntityCategory), strDataTable As String, intDataPID As Integer)
+    Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX18 As IEnumerable(Of BO.x18EntityCategory), strDataTable As String, intDataPID As Integer, Optional strTempGUID As String = "")
+        'strTempGUID je tu pouze pro agendu štítků
         Me.DataTable = strDataTable
         Me.DataPID = intDataPID
 
@@ -78,7 +79,7 @@ Public Class freefields
             If Me.DataPID <> 0 Then
                 Dim lisX19 As List(Of BO.x19EntityCategory_Binding) = Nothing
                 If curTags.Count = 0 Then
-                    lisX19 = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), intDataPID).ToList
+                    lisX19 = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), intDataPID, strTempGUID).ToList
                 Else
                     lisX19 = curTags
                 End If
@@ -97,7 +98,7 @@ Public Class freefields
                     End If
                 Next
             End If
-            
+
         End If
 
     End Sub
@@ -107,6 +108,7 @@ Public Class freefields
         With CType(e.Item.FindControl("x18Name"), Label)
             .Text = "<img src='Images/label.png'/> " & cRec.x18Name & ":"
         End With
+
         Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(cRec.x23ID).Where(Function(p) p.IsClosed = False)
         With CType(e.Item.FindControl("x25IDs"), UI.datacombo)
             If Not cRec.x18IsMultiSelect Then

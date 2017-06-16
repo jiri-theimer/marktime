@@ -1,9 +1,13 @@
 ﻿Public Class p31_approving_step3_subform
     Inherits System.Web.UI.Page
+
+    
    
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ff1.Factory = Master.Factory
         approve1.Factory = Master.Factory
+
 
         If Not Page.IsPostBack Then
             Master.DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
@@ -77,6 +81,9 @@
             Return
         Else
             Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), True, ViewState("guid"))
+            If ff1.TagsCount > 0 Then
+                Master.Factory.x18EntityCategoryBL.SaveX19TempBinding(Master.DataPID, ViewState("guid"), ff1.GetTags)
+            End If
         End If
         Me.hidRefreshParent.Value = "1"
     End Sub
@@ -85,7 +92,7 @@
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID, ViewState("guid"))
         Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p31Worksheet)
         If fields.Count > 0 Or lisX18.Count > 0 Then
-            ff1.FillData(fields, lisX18, "p31Worksheet_FreeField", Master.DataPID)
+            ff1.FillData(fields, lisX18, "p31Worksheet_FreeField", Master.DataPID, ViewState("guid"))
         End If
 
     End Sub

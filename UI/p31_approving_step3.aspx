@@ -244,7 +244,7 @@
                 <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
                     <Tabs>
                         <telerik:RadTab Text="Aktuální záznam" Selected="true" Value="one"></telerik:RadTab>
-                        <telerik:RadTab Text="Vybrané záznamy" Value="selected"></telerik:RadTab>
+                        <telerik:RadTab Text="Hromadné operace" Value="selected"></telerik:RadTab>
                         <telerik:RadTab Text="Fakt.poznámka" Value="memo"></telerik:RadTab>
                     </Tabs>
                 </telerik:RadTabStrip>

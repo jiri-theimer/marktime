@@ -9,13 +9,45 @@
         Return _cDB.GetRecord(Of BO.x18EntityCategory)(s, New With {.x18id = intPID})
     End Function
 
-    Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer) As IEnumerable(Of BO.x19EntityCategory_Binding)
+    Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, strTempGUID As String) As IEnumerable(Of BO.x19EntityCategory_Binding)
         Dim pars As New DbParameters
         pars.Add("x29id", CInt(x29id), DbType.Int32)
         pars.Add("recordpid", intRecordPID, DbType.Int32)
-        Return _cDB.GetList(Of BO.x19EntityCategory_Binding)("select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor from x19EntityCategory_Binding a INNER JOIN x18EntityCategory x18 ON a.x18ID=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID WHERE a.x29ID=@x29id AND a.x19RecordPID=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID", pars)
+        If strTempGUID = "" Then
+            Return _cDB.GetList(Of BO.x19EntityCategory_Binding)("select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor from x19EntityCategory_Binding a INNER JOIN x18EntityCategory x18 ON a.x18ID=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID WHERE a.x29ID=@x29id AND a.x19RecordPID=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID", pars)
+        Else
+            pars.Add("guid", strTempGUID, DbType.String)
+            Dim s As String = "select p85.p85ID as _pid,p85.p85OtherKey1 as x18ID,p85.p85OtherKey2 as x25ID,p85.p85OtherKey3 as x19RecordPID"
+            s += ",x25.x25Name as _x25Name,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor"
+            s += " from p85TempBox p85 INNER JOIN x18EntityCategory x18 ON p85.p85OtherKey1=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON p85.p85OtherKey2=x25.x25ID"
+            s += " WHERE p85.p85GUID=@guid AND p85.p85Prefix='x19' AND p85.p85OtherKey3=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID"
+            Return _cDB.GetList(Of BO.x19EntityCategory_Binding)(s, pars)
+        End If
+
     End Function
 
+    Public Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
+        Dim pars As New DbParameters
+        pars.Add("guid", strTempGUID, DbType.String)
+        pars.Add("recordpid", intRecordPID, DbType.Int32)
+
+        _cDB.RunSQL("DELETE FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19' AND p85OtherKey3=@recordpid", pars)
+        Dim cDLP85 As New DL.p85TempBoxDL(_curUser)
+
+        For Each c In lisX19
+            Dim cTemp As New BO.p85TempBox
+            With cTemp
+                .p85GUID = strTempGUID
+                .p85Prefix = "x19"
+                .p85OtherKey1 = c.x18ID
+                .p85OtherKey2 = c.x25ID
+                .p85OtherKey3 = intRecordPID
+            End With
+
+            cDLP85.Save(cTemp)
+        Next
+        Return True
+    End Function
     Public Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
         Dim pars As New DbParameters
         pars.Add("x29id", CInt(x29id), DbType.Int32)

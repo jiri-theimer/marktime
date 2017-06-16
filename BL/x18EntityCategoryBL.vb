@@ -6,7 +6,8 @@
     Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory)
     Function GetList_x29(intX18ID As Integer) As IEnumerable(Of BO.x29Entity)
     Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
-    Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer) As IEnumerable(Of BO.x19EntityCategory_Binding)
+    Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
+    Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, Optional strTempGUID As String = "") As IEnumerable(Of BO.x19EntityCategory_Binding)
     Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)
     Function GetList_x22(intX18ID As Integer) As IEnumerable(Of BO.x22EntiyCategory_Binding)
 End Interface
@@ -77,8 +78,11 @@ Class x18EntityCategoryBL
     Public Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean Implements Ix18EntityCategoryBL.SaveX19Binding
         Return _cDL.SaveX19Binding(x29id, intRecordPID, lisX19)
     End Function
-    Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer) As IEnumerable(Of BO.x19EntityCategory_Binding) Implements Ix18EntityCategoryBL.GetList_X19
-        Return _cDL.GetList_X19(x29id, intRecordPID)
+    Public Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean Implements Ix18EntityCategoryBL.SaveX19TempBinding
+        Return _cDL.SaveX19TempBinding(intRecordPID, strTempGUID, lisX19)
+    End Function
+    Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, Optional strTempGUID As String = "") As IEnumerable(Of BO.x19EntityCategory_Binding) Implements Ix18EntityCategoryBL.GetList_X19
+        Return _cDL.GetList_X19(x29id, intRecordPID, strTempGUID)
     End Function
     Public Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix18EntityCategoryBL.GetList_X25
         Return _cDL.GetList_X25(x29id)

@@ -76,7 +76,7 @@ Public Class p31_approving_step3
                 .AddToolbarButton("Editovatelná tabulka", "", 1, , False, "javascript:batch_p31text()")
 
                 If .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Creator) Or .Factory.TestPermission(BO.x53PermValEnum.GR_P91_Draft_Creator) Then
-                    .AddToolbarButton("Pokračovat fakturací", "save_invoice", 1, "Images/save.png")
+                    .AddToolbarButton("Uložit a pokračovat fakturací", "save_invoice", 1, "Images/save.png")
                 End If
 
                 If Me.CurrentMasterPrefix <> "" Then
@@ -213,7 +213,7 @@ Public Class p31_approving_step3
         
     End Sub
     Private Sub SetupTempData()
-        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = "")
         For Each cTemp In lis
             Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(cTemp.p85DataPID)
             Dim bolOK As Boolean = True
@@ -628,7 +628,7 @@ Public Class p31_approving_step3
                 Response.Redirect("entity_modal_approving.aspx?" & cTEMP.p85Message)
             Case "save_invoice"
                 If Not SaveChanges() Then Return
-                Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")), strGUID As String = BO.BAS.GetGUID(), x As Integer = 0
+                Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = ""), strGUID As String = BO.BAS.GetGUID(), x As Integer = 0
                 For Each cTemp In lis
                     Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.Load(cTemp.p85DataPID)
                     If cRec.p71ID = BO.p71IdENUM.Schvaleno And cRec.p72ID_AfterApprove <> BO.p72IdENUM.FakturovatPozdeji And cRec.p72ID_AfterApprove <> BO.p72IdENUM._NotSpecified And cRec.p91ID = 0 Then
@@ -648,7 +648,7 @@ Public Class p31_approving_step3
     End Sub
 
     Private Function SaveChanges() As Boolean
-        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")), x As Integer = 0
+        Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).Where(Function(p) p.p85Prefix = ""), x As Integer = 0
         Dim strErrs As String = ""
         For Each cTemp In lis
             Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadTempRecord(cTemp.p85DataPID, ViewState("guid"))
@@ -696,7 +696,6 @@ Public Class p31_approving_step3
         If Not Page.IsPostBack Then
             If Request.Item("clearapprove") = "1" Then
                 'Žádost z aplikace o hromadné vyčištění
-                'Dim lis As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid"))
                 Dim lisP31 As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(New BO.myQueryP31, ViewState("guid"))
                 Dim p31ids As List(Of Integer) = lisP31.Select(Function(p) p.PID).ToList
                 If p31ids.Count = 0 Then
