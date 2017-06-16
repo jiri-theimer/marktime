@@ -13,7 +13,10 @@
                 .SiteMenuValue = "cmdMyProfile"
                 recmenu1.FindItemByValue("report").Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_X31_Personal)
             End With
-
+            With Master.Factory.j03UserBL
+                .InhaleUserParams("handler_search_project-toprecs")
+                basUI.SelectDropdownlistValue(Me.search_p41_toprecs, .GetUserParam("handler_search_project-toprecs", "20"))
+            End With
 
             RefreshRecord()
            
@@ -92,6 +95,8 @@
             If Not Master.Factory.j03UserBL.Save(cJ03) Then
                 Master.Notify(Master.Factory.j03UserBL.ErrorMessage, NotifyLevel.ErrorMessage)
                 Return
+            Else
+                Master.Factory.j03UserBL.SetUserParam("handler_search_project-toprecs", Me.search_p41_toprecs.SelectedValue)
             End If
             Master.Factory.j03UserBL.SetMyTag("1")
             Response.Redirect("j03_myprofile.aspx")

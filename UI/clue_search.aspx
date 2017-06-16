@@ -173,6 +173,17 @@
                     </asp:DropDownList>
                     <asp:CheckBox ID="chkP41Bin" runat="server" Text="Hledat i v archivu" AutoPostBack="true" CssClass="chk" />
                 </div>
+                <div class="div6">
+                    <span>Maska ve vyhledávači projektu:</span>
+                    <asp:DropDownList ID="j03ProjectMaskIndex" runat="server" AutoPostBack="true">
+                        <asp:ListItem Text="Klient+název projektu+kód projektu" Value="0"></asp:ListItem>
+                        <asp:ListItem Text="Strom cesta" Value="5"></asp:ListItem>
+                        <asp:ListItem Text="Název projektu" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="Název projektu+kód projektu" Value="2"></asp:ListItem>
+                        <asp:ListItem Text="Název projektu+klient" Value="3"></asp:ListItem>
+                        <asp:ListItem Text="Kód projektu" Value="4"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
             </fieldset>
             <fieldset style="padding: 6px;" id="fsP28" runat="server">
                 <legend>Vyhledávání klienta</legend>

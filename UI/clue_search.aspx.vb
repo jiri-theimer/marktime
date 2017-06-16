@@ -49,6 +49,10 @@
                 End With
             End With
 
+            Dim cRec As BO.j03User = Master.Factory.j03UserBL.Load(Master.Factory.SysUser.PID)
+            With cRec
+                basUI.SelectDropdownlistValue(Me.j03ProjectMaskIndex, .j03ProjectMaskIndex.ToString)
+            End With
         End If
         Me.p41id_search.radComboBoxOrig.DropDownWidth = Unit.Parse("570px")
         Me.p28id_search.radComboBoxOrig.DropDownWidth = Unit.Parse("570px")
@@ -108,5 +112,13 @@
 
     Private Sub chkDocument_CheckedChanged(sender As Object, e As EventArgs) Handles chkDocument.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("handler_search_fulltext-document", BO.BAS.GB(Me.chkDocument.Checked))
+    End Sub
+
+    Private Sub j03ProjectMaskIndex_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j03ProjectMaskIndex.SelectedIndexChanged
+        Dim cJ03 As BO.j03User = Master.Factory.j03UserBL.Load(Master.Factory.SysUser.PID)
+        With cJ03
+            .j03ProjectMaskIndex = CInt(Me.j03ProjectMaskIndex.SelectedValue)
+        End With
+        Master.Factory.j03UserBL.Save(cJ03)
     End Sub
 End Class

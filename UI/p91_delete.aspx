@@ -29,23 +29,26 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 
 
-
-    <asp:RadioButtonList ID="opg1" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
-        <asp:ListItem Text="Uvolněné úkony zůstanou schválené" Value="1" Selected="true"></asp:ListItem>
-        <asp:ListItem Text="Uvolněné úkony zůstanou rozpracované" Value="2"></asp:ListItem>
-        <asp:ListItem Text="Uvolněné úkony se přesunou do archivu" Value="3"></asp:ListItem>
+    <fieldset>
+        <legend>Co se stane se zdrojovými úkony po odstranění faktury?</legend>
+        <asp:RadioButtonList ID="opg1" runat="server" AutoPostBack="true" RepeatDirection="Vertical">
+        <asp:ListItem Text="Přesunout do schválených" Value="1" Selected="true"></asp:ListItem>
+        <asp:ListItem Text="Přesunout do rozpracovaných" Value="2"></asp:ListItem>
+        <asp:ListItem Text="Přesunout do archivu" Value="3"></asp:ListItem>
         <asp:ListItem Text="Rozhodnu individuálně u každého úkonu" Value="4"></asp:ListItem>
     </asp:RadioButtonList>
+    </fieldset>
+    
 
 
     <asp:Panel ID="panIndividual" runat="server">
 
         <fieldset>
             <legend>Individální rozhodnutí o vybraných (zaškrtlých úkonech)</legend>
-            <asp:Button ID="cmdBatch1" runat="server" Text="Zaškrtlé úkony budou schválené" CssClass="cmd" />
-            <asp:Button ID="cmdBatch2" runat="server" Text="Zaškrtlé úkony budou rozpracované" CssClass="cmd" />
-            <asp:Button ID="cmdBatch3" runat="server" Text="Zaškrtlé úkony budou v archivu" CssClass="cmd" />
-            <asp:Button ID="Button1" runat="server" Text="Zaškrtlé úkony nenávratně odstranit" CssClass="cmd" />
+            <asp:Button ID="cmdBatch1" runat="server" Text="Zaškrtlé budou schválené" CssClass="cmd" />
+            <asp:Button ID="cmdBatch2" runat="server" Text="Zaškrtlé budou rozpracované" CssClass="cmd" />
+            <asp:Button ID="cmdBatch3" runat="server" Text="Zaškrtlé budou v archivu" CssClass="cmd" />
+            <asp:Button ID="Button1" runat="server" Text="Zaškrtlé nenávratně odstranit" CssClass="cmd" />
         </fieldset>
 
     </asp:Panel>
@@ -72,6 +75,7 @@
             </div>
         </div>
     </div>
+    <asp:HiddenField ID="hidGUID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

@@ -173,6 +173,7 @@
                     </asp:DropDownList>
 
                 </div>
+                
                 <div class="div6">
                     <span>Maska ve vyhledávači projektu:</span>
                     <asp:DropDownList ID="j03ProjectMaskIndex" runat="server">
@@ -182,6 +183,15 @@
                         <asp:ListItem Text="Název projektu+kód projektu" Value="2"></asp:ListItem>
                         <asp:ListItem Text="Název projektu+klient" Value="3"></asp:ListItem>
                         <asp:ListItem Text="Kód projektu" Value="4"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="div6">
+                    <span>Počet maximálně zobrazených záznamů ve vyhledávači projektu:</span>
+                    <asp:DropDownList ID="search_p41_toprecs" runat="server">
+                        <asp:ListItem Text="20" Value="20"></asp:ListItem>
+                        <asp:ListItem Text="50" Value="50" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="100" Value="100"></asp:ListItem>
+                        <asp:ListItem Text="200" Value="200"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
                 <table cellpadding="10">

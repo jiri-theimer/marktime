@@ -86,6 +86,15 @@ Partial Public Class p91_delete
     Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
+    '''hidGUID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidGUID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''Master property.
     '''</summary>
     '''<remarks>

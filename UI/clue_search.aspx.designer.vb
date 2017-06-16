@@ -221,6 +221,15 @@ Partial Public Class clue_search
     Protected WithEvents chkP41Bin As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''j03ProjectMaskIndex control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j03ProjectMaskIndex As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''fsP28 control.
     '''</summary>
     '''<remarks>
