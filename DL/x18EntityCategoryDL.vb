@@ -87,6 +87,7 @@
         End If
         With cRec
             pars.Add("x18Name", .x18Name, DbType.String, , , True, "Název")
+            pars.Add("x18NameShort", .x18NameShort, DbType.String)
             pars.Add("x18Ordinary", .x18Ordinary, DbType.Int32)
             pars.Add("x18validfrom", .ValidFrom, DbType.DateTime)
             pars.Add("x18validuntil", .ValidUntil, DbType.DateTime)
@@ -102,12 +103,15 @@
             Dim lisX20Saved As IEnumerable(Of BO.x20EntiyToCategory) = GetList_x20(intX18ID)
             For Each c In lisX20
                 pars = New DbParameters
-                pars.Add("x18ID", c.x18ID, DbType.Int32)
+                pars.Add("x18ID", intX18ID, DbType.Int32)
                 pars.Add("x29ID", c.x29ID, DbType.Int32)
                 pars.Add("x20Name", c.x20Name, DbType.String)
-                pars.Add("x20EntryFlag", CInt(c.x20EntryFlag), DbType.Int32)
-                pars.Add("x20IsMultiselect", c.x20IsMultiselect, DbType.Boolean)
+                pars.Add("x20EntryModeFlag", CInt(c.x20EntryModeFlag), DbType.Int32)
+                pars.Add("x20GridColumnFlag", CInt(c.x20GridColumnFlag), DbType.Int32)
+                pars.Add("x20IsMultiselect", c.x20IsMultiSelect, DbType.Boolean)
+                pars.Add("x20IsClosed", c.x20IsClosed, DbType.Boolean)
                 pars.Add("x20IsEntryRequired", c.x20IsEntryRequired, DbType.Boolean)
+                pars.Add("x20Ordinary", c.x20Ordinary, DbType.Int32)
                 pars.Add("x20EntityTypePID", BO.BAS.IsNullDBKey(c.x20EntityTypePID), DbType.Int32)
                 pars.Add("x29ID_EntityType", BO.BAS.IsNullDBKey(c.x29ID_EntityType), DbType.Int32)
                 bolINSERT = True : strW = ""
@@ -221,9 +225,9 @@
 
     End Function
     Public Function GetList_x20(intX18ID As Integer) As IEnumerable(Of BO.x20EntiyToCategory)
-        Return _cDB.GetList(Of BO.x20EntiyToCategory)("SELECT * FROM x20EntiyToCategory WHERE x18ID=@pid", New With {.pid = intX18ID})
+        Return _cDB.GetList(Of BO.x20EntiyToCategory)("SELECT * FROM x20EntiyToCategory WHERE x18ID=@pid ORDER BY x20Ordinary", New With {.pid = intX18ID})
     End Function
     Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
-        Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)("SELECT * FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid", New With {.pid = intX18ID})
+        Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)("SELECT * FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid ORDER BY x16Ordinary", New With {.pid = intX18ID})
     End Function
 End Class

@@ -111,16 +111,16 @@ Public Class freefields
 
         Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(cRec.x23ID).Where(Function(p) p.IsClosed = False)
         With CType(e.Item.FindControl("x25IDs"), UI.datacombo)
-            If Not cRec.x18IsMultiSelect Then
-                .AllowCheckboxes = False
-                .IsFirstEmptyRow = True
-                If lisX25.Count > 30 Then .Filter = datacombo.FilterMode.Contains
-            End If
+            'If Not cRec.x18IsMultiSelect Then
+            .AllowCheckboxes = False
+            .IsFirstEmptyRow = True
+            If lisX25.Count > 30 Then .Filter = datacombo.FilterMode.Contains
+            'End If
             .DataSource = lisX25
             .DataBind()
         End With
         CType(e.Item.FindControl("x18ID"), HiddenField).Value = cRec.PID.ToString
-        CType(e.Item.FindControl("x18IsMultiSelect"), HiddenField).Value = BO.BAS.GB(cRec.x18IsMultiSelect)
+        'CType(e.Item.FindControl("x18IsMultiSelect"), HiddenField).Value = BO.BAS.GB(cRec.x18IsMultiSelect)
     End Sub
 
     Private Sub rpFF_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.RepeaterItemEventArgs) Handles rpFF.ItemDataBound

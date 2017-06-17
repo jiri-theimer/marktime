@@ -4,7 +4,6 @@
     Public Property x25Name As String
     Public Property x25Ordinary As Integer
     Public Property x25ArabicCode As String
-    Public Property p28ID1 As Integer
     Public Property x25Code As String
     Public Property x25BackColor As String
     Public Property x25ForeColor As String
@@ -14,6 +13,7 @@
     Public Property x25FreeText03 As String
     Public Property x25FreeText04 As String
     Public Property x25FreeText05 As String
+    Public Property x25BigText As String
     Public Property x25FreeNumber01 As Double
     Public Property x25FreeNumber02 As Double
     Public Property x25FreeNumber03 As Double

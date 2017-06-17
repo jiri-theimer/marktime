@@ -1,15 +1,14 @@
 ﻿Public Interface Ix18EntityCategoryBL
     Inherits ifMother
-    Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
+    Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
     Function Load(intPID As Integer) As BO.x18EntityCategory
     Function Delete(intPID As Integer) As Boolean
     Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory)
-    Function GetList_x29(intX18ID As Integer) As IEnumerable(Of BO.x29Entity)
+    Function GetList_x20(intX18ID As Integer) As IEnumerable(Of BO.x20EntiyToCategory)
     Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
     Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
     Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, Optional strTempGUID As String = "") As IEnumerable(Of BO.x19EntityCategory_Binding)
-    Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)
-    Function GetList_x22(intX18ID As Integer) As IEnumerable(Of BO.x22EntiyCategory_Binding)
+    Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)   
     Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
 End Interface
 Class x18EntityCategoryBL
@@ -33,22 +32,20 @@ Class x18EntityCategoryBL
         Return _cDL.Load(intPID)
     End Function
 
-    Public Function Save(cRec As BO.x18EntityCategory, x29IDs As List(Of Integer), lisX22 As List(Of BO.x22EntiyCategory_Binding), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean Implements Ix18EntityCategoryBL.Save
-        If x29IDs Is Nothing Then _Error = "x29ids is nothing" : Return False
-        If x29IDs.Count = 0 Then _Error = "Na vstupu musí být vazba minimálně na jednu entitu." : Return False
+    Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean Implements Ix18EntityCategoryBL.Save
         If cRec.x23ID = 0 Then _Error = "Chybí datový zdroj (combo seznam)." : Return False
         If cRec.j02ID_Owner = 0 Then cRec.j02ID_Owner = _cUser.j02ID
 
-        If cRec.x18IsAllEntityTypes Then
-            lisX22 = New List(Of BO.x22EntiyCategory_Binding)
-            cRec.x18IsRequired = False
-        Else
-            If Not lisX22 Is Nothing Then
-                If lisX22.Count = 0 Then
-                    _Error = "Musíte zaškrtnout minimálně jeden typ entity." : Return False
-                End If
-            End If
-        End If
+        ''If cRec.x18IsAllEntityTypes Then
+        ''    lisX22 = New List(Of BO.x22EntiyCategory_Binding)
+        ''    cRec.x18IsRequired = False
+        ''Else
+        ''    If Not lisX22 Is Nothing Then
+        ''        If lisX22.Count = 0 Then
+        ''            _Error = "Musíte zaškrtnout minimálně jeden typ entity." : Return False
+        ''        End If
+        ''    End If
+        ''End If
         If Not lisX16 Is Nothing Then
             For Each c In lisX16
                 If Trim(c.x16Name) = "" Then
@@ -59,8 +56,11 @@ Class x18EntityCategoryBL
                 End If
             Next
         End If
+        If Not lisX20 Is Nothing Then
+            
+        End If
 
-        If _cDL.Save(cRec, x29IDs, lisX22, lisX69, lisX16) Then
+        If _cDL.Save(cRec, lisX20, lisX69, lisX16) Then
             Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
             If cX23.x23Ordinary = -666 Then
                 cX23.x23Name = cRec.x18Name
@@ -80,12 +80,7 @@ Class x18EntityCategoryBL
         Return _cDL.GetList(myQuery, x29ID, intEntityType, bolInhaleAllCols)
     End Function
 
-    Public Function GetList_x29(intX18ID As Integer) As IEnumerable(Of BO.x29Entity) Implements Ix18EntityCategoryBL.GetList_x29
-        Dim x29IDs As IEnumerable(Of Integer) = _cDL.GetX29IDs(intX18ID)
-        Dim mq As New BO.myQuery
-        mq.PIDs = x29IDs.ToList
-        Return Factory.ftBL.GetList_X29(mq)
-    End Function
+    
     Public Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean Implements Ix18EntityCategoryBL.SaveX19Binding
         Return _cDL.SaveX19Binding(x29id, intRecordPID, lisX19)
     End Function
@@ -98,8 +93,8 @@ Class x18EntityCategoryBL
     Public Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix18EntityCategoryBL.GetList_X25
         Return _cDL.GetList_X25(x29id)
     End Function
-    Public Function GetList_x22(intX18ID As Integer) As IEnumerable(Of BO.x22EntiyCategory_Binding) Implements Ix18EntityCategoryBL.GetList_x22
-        Return _cDL.GetList_x22(intX18ID)
+    Public Function GetList_x20(intX18ID As Integer) As IEnumerable(Of BO.x20EntiyToCategory) Implements Ix18EntityCategoryBL.GetList_x20
+        Return _cDL.GetList_x20(intX18ID)
     End Function
     Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting) Implements Ix18EntityCategoryBL.GetList_x16
         Return _cDL.GetList_x16(intX18ID)

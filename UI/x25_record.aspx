@@ -35,26 +35,7 @@
                 <asp:TextBox ID="x25Code" runat="server"></asp:TextBox>
             </td>
         </tr>
-        <tr valign="top" id="trP28ID1" runat="server">
-            <td>
-                <asp:Label ID="lblP28ID1" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>
-
-            </td>
-            <td>
-                <uc:contact ID="p28ID1" runat="server" Width="400px" AutoPostBack="false" />
-
-            </td>
-        </tr>
-        <tr valign="top" id="trP28ID2" runat="server">
-            <td>
-                <asp:Label ID="lblP28ID2" runat="server" Text="Klient:" CssClass="lbl"></asp:Label>
-
-            </td>
-            <td>
-                <uc:contact ID="p28ID2" runat="server" Width="400px" AutoPostBack="false" />
-
-            </td>
-        </tr>
+       
 
 
     </table>

@@ -77,22 +77,58 @@ Partial Public Class x18_record
     Protected WithEvents x18Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
 
     '''<summary>
-    '''x18IsMultiSelect control.
+    '''x18NameShort control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x18IsMultiSelect As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents x18NameShort As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''x29IDs control.
+    '''x18IsColors control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x29IDs As Global.System.Web.UI.WebControls.CheckBoxList
+    Protected WithEvents x18IsColors As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x18IsManyItems control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsManyItems As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''x29ID_addX20 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x29ID_addX20 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdAddX20 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAddX20 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''rpX20 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX20 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''lblItemsMessage control.
@@ -156,51 +192,6 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
-
-    '''<summary>
-    '''x18IsColors control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18IsColors As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''x18IsAllEntityTypes control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18IsAllEntityTypes As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''panEntityTypes control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panEntityTypes As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''rp1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rp1 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''x18IsRequired control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18IsRequired As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''ph1 control.
@@ -275,13 +266,31 @@ Partial Public Class x18_record
     Protected WithEvents hidTempX23ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidGUID control.
+    '''hidGUID_confirm control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidGUID As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidGUID_confirm As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidGUID_x16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidGUID_x16 As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidGUID_x20 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidGUID_x20 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''HardRefreshPID control.

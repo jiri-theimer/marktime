@@ -43,23 +43,31 @@
                         <asp:Label ID="lblOrdinary" Text="Index pořadí:" runat="server" CssClass="lbl"></asp:Label>
                         <telerik:RadNumericTextBox ID="x18Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
                     </td>
-
+                    
                 </tr>
-
+                <tr>
+                    <td>
+                        <span>Zkrácený název:</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="x18NameShort" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                
             </table>
-
-
-
-
-
             <div class="div6">
-                <asp:CheckBox ID="x18IsMultiSelect" runat="server" Text="Povolen MULTI-SELECT (možnost oštítkovat záznam entity více položkami najednou)" Checked="true" CssClass="chk" />
+                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat položky štítku barvou" Checked="true" />
+            </div>
+            <div class="div6">
+                <asp:CheckBox ID="x18IsManyItems" runat="server" CssClass="chk" AutoPostBack="false" Text="Jedná se o štítek s mnoha položkami (100 a více)" />
             </div>
 
-            <div class="content-box2" style="margin-top: 20px;">
-                <div class="title">Štítek se nabízí pro entity:</div>
-                <div class="content">
-                    <asp:CheckBoxList ID="x29IDs" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
+
+            <div class="content-box2" style="margin-top:20px;">
+                <div class="title">
+                    Vazba štítku na entity
+                    <asp:DropDownList ID="x29ID_addX20" runat="server">
+                        <asp:ListItem Text="--Vyberte entitu--" Value=""></asp:ListItem>
                         <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
                         <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
                         <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
@@ -69,15 +77,94 @@
                         <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
                         <asp:ListItem Text="Osoba" Value="102"></asp:ListItem>
                         <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
-                    </asp:CheckBoxList>
+                    </asp:DropDownList>
+                    <asp:Button ID="cmdAddX20" runat="server" CssClass="cmd" Text="Přidat vazbu na vybranou entitu" />
+                </div>
+                <div class="content">
+                    <table cellpadding="10">
+
+                        <asp:Repeater ID="rpX20" runat="server">
+                            <ItemTemplate>
+                                <tr class="trHover">
+                                    <td>
+                                        <div>
+                                            <span>Vazba na entitu:</span>
+                                        </div>
+                                        <div>
+                                            <span>Název vazby (nepovinné):</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <asp:DropDownList ID="x29ID" runat="server" Enabled="false">
+                                                <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
+                                                <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
+                                                <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
+                                                <asp:ListItem Text="Událost v kalendáři" Value="222"></asp:ListItem>
+                                                <asp:ListItem Text="Dokument" Value="223"></asp:ListItem>
+                                                <asp:ListItem Text="Vystavená faktura" Value="391"></asp:ListItem>
+                                                <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
+                                                <asp:ListItem Text="Osoba" Value="102"></asp:ListItem>
+                                                <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div>
+                                            <asp:TextBox ID="x20Name" runat="server" Width="200px"></asp:TextBox>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div>
+                                            <asp:CheckBox ID="x20IsEntryRequired" runat="server" CssClass="chk" Text="Povinná vazba k přiřazení" />
+                                        </div>
+                                        <div>
+                                            <asp:CheckBox ID="x20IsMultiselect" runat="server" CssClass="chk" Text="Multi-Select (možnost zaškrtnout více položek najednou)" />
+                                        </div>
+                                        <div>
+                                            <asp:CheckBox ID="x20IsClosed" runat="server" Text="Vazba uzavřena pro přiřazování" />
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <asp:DropDownList ID="x20EntryModeFlag" runat="server">
+                                                <asp:ListItem Text="Vazbu vyplňovat odkazem na položku štítku (combo-list v záznamu entity)" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Vazbu vyplňovat odkazem na záznam entity (přímo v záznamu položky štítku)" Value="2"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div>
+                                            <asp:DropDownList ID="x20GridColumnFlag" runat="server">
+                                                <asp:ListItem Text="Sloupec v přehledu záznamů entity" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Sloupec v přehledu položek štítku" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="Sloupec v entitním přehledu i v přehledu položek" Value="3"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div>
+                                            <span>Pořadí:</span>
+                                            <telerik:RadNumericTextBox ID="x20Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
+                                        <asp:HiddenField ID="p85id" runat="server" />
+                                        <asp:HiddenField ID="x20ID" runat="server" />
+                                        <asp:HiddenField ID="x20EntityTypePID" runat="server" />
+                                        <asp:HiddenField ID="x29ID_EntityType" runat="server" />
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </table>
                 </div>
             </div>
 
-            <div class="content-box2" style="margin-top: 20px;">
+            <div class="content-box2" style="margin-top: 40px;">
                 <div class="title">
                     Položky štítku
             <% If Me.CurrentX23ID <> 0 Then%>
-                    <a href="javascript:x25_record(0)" style="margin-left: 40px;">Přidat položku</a>
+                    <button type="button" onclick="x25_record(0)" style="margin-left: 40px;">Přidat položku</button>
+
                     <%End If%>
                 </div>
                 <div class="content">
@@ -109,42 +196,12 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="other" runat="server">
-            <div class="div6">
-                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Položky štítku rozlišovat barvou" Checked="true" />
-            </div>
-            <div class="div6">
-                <asp:CheckBox ID="x18IsAllEntityTypes" runat="server" CssClass="chk" AutoPostBack="true" Text="Štítek je aplikovatelný pro všechny záznamy vybraných entit" Checked="true" />
-            </div>
-            <asp:Panel ID="panEntityTypes" runat="server" CssClass="content-box2">
-                <div class="title">
-                    Štítek se bude nabízet k oštítkování pouze u níže zaškrtlých typů entity:
-                </div>
-                <div class="content">
-                    <table cellpadding="10">
 
-                        <asp:Repeater ID="rp1" runat="server">
-                            <ItemTemplate>
-                                <tr>
-                                    <td>
-                                        <asp:CheckBox ID="chkEntityType" runat="server" CssClass="chk" Font-Bold="true" />
-                                        <asp:HiddenField ID="x22EntityTypePID" runat="server" />
-                                        <asp:HiddenField ID="x29ID_EntityType" runat="server" />
-                                    </td>
-                                    <td>
-                                        <asp:CheckBox ID="x22IsEntryRequired" runat="server" Text="Povinné oštítkování u záznamu entity" />
-                                    </td>
-                                </tr>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </table>
-                </div>
-            </asp:Panel>
 
-            <div class="div6">
-                <asp:CheckBox ID="x18IsRequired" runat="server" Text="U záznamu entity je oštítkování povinné" CssClass="chk" />
-            </div>
 
-            <div class="content-box2" style="margin-top: 100px;">
+
+
+            <div class="content-box2">
                 <div class="title">
                     <img src="Images/projectrole.png" width="16px" height="16px" />
                     <asp:Label ID="ph1" runat="server" Text="Oprávnění ke správě položek štítku"></asp:Label>
@@ -155,10 +212,10 @@
                 </div>
             </div>
             <div class="div6">
-                <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq"></asp:Label>
+                <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu štítku:" CssClass="lblReq"></asp:Label>
                 <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
             </div>
-            <div class="content-box2" style="margin-top: 20px;">
+            <div class="content-box2" style="margin-top: 60px;">
                 <div class="title">
                     <img src="Images/form.png" width="16px" height="16px" />
                     Rozšíření položky štítku o další pole
@@ -169,7 +226,7 @@
                         <tr>
                             <th>Pole</th>
                             <th>Název (popisek)</th>
-                            <th></th>                            
+                            <th></th>
                             <th>#</th>
                             <th>Možné hodnoty textového pole</th>
                             <th></th>
@@ -186,6 +243,7 @@
                                             <asp:ListItem Text="Text 3" Value="x25FreeText03"></asp:ListItem>
                                             <asp:ListItem Text="Text 4" Value="x25FreeText04"></asp:ListItem>
                                             <asp:ListItem Text="Text 5" Value="x25FreeText05"></asp:ListItem>
+                                            <asp:ListItem Text="Více-řádkový text" Value="x25BigText"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 1" Value="x25FreeNumber01"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 2" Value="x25FreeNumber02"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 3" Value="x25FreeNumber03"></asp:ListItem>
@@ -196,7 +254,7 @@
                                             <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
                                             <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
                                             <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
-                                            <asp:ListItem Text="Vazba na adresář klientů" Value="p28ID1"></asp:ListItem>
+                                            
                                         </asp:DropDownList>
                                     </td>
                                     <td>
@@ -223,18 +281,20 @@
                                         <asp:HiddenField ID="p85id" runat="server" />
                                     </td>
                                 </tr>
-                                
+
                             </ItemTemplate>
                         </asp:Repeater>
                     </table>
                 </div>
             </div>
-           
+
         </telerik:RadPageView>
     </telerik:RadMultiPage>
 
     <asp:HiddenField ID="hidTempX23ID" runat="server" />
-    <asp:HiddenField ID="hidGUID" runat="server" />
+    <asp:HiddenField ID="hidGUID_confirm" runat="server" />
+    <asp:HiddenField ID="hidGUID_x16" runat="server" />
+    <asp:HiddenField ID="hidGUID_x20" runat="server" />
     <asp:HiddenField ID="HardRefreshPID" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
 </asp:Content>

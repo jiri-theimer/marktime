@@ -2,7 +2,9 @@
     Inherits BOMother
     Public Property x23ID As Integer
     Public Property j02ID_Owner As Integer
-    Public Property x18Name As String    
+    Public Property x18Name As String
+    Public Property x18NameShort As String
+
     Public Property x18Ordinary As Integer
 
     Private Property _x23Name As String

@@ -17,8 +17,8 @@
     Private Function GetSQLPart1(intTopRecs As Integer) As String
         Dim s As String = "select "
         If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
-        s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,p28a.p28Name as _p28Name1"
-        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN p28Contact p28a ON a.p28ID1=p28a.p28ID"
+        s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name"
+        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID"
         Return s
     End Function
 
@@ -40,8 +40,7 @@
             pars.Add("pid", cRec.PID)
         End If
         With cRec
-            pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
-            pars.Add("p28ID1", BO.BAS.IsNullDBKey(.p28ID1), DbType.Int32)
+            pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)            
             pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
             pars.Add("x25Code", .x25Code, DbType.String)
             pars.Add("x25ForeColor", .x25ForeColor, DbType.String)
@@ -61,6 +60,8 @@
             pars.Add("x25FreeText03", .x25FreeText03, DbType.String)
             pars.Add("x25FreeText04", .x25FreeText04, DbType.String)
             pars.Add("x25FreeText05", .x25FreeText05, DbType.String)
+            pars.Add("x25BigText", .x25BigText, DbType.String, , , True, "Podrobný popis")
+
             pars.Add("x25FreeNumber01", .x25FreeNumber01, DbType.Double)
             pars.Add("x25FreeNumber02", .x25FreeNumber02, DbType.Double)
             pars.Add("x25FreeNumber03", .x25FreeNumber03, DbType.Double)

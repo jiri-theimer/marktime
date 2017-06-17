@@ -71,8 +71,7 @@
             End If
             
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
-            Me.p28ID1.Value = .p28ID1.ToString
-            Me.p28ID1.Text = .p28Name1
+            
         End With
         Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
         If cX23.x23DataSource <> "" Then

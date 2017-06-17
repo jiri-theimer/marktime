@@ -86,60 +86,6 @@ Partial Public Class x25_record
     Protected WithEvents x25Code As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''trP28ID1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trP28ID1 As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''lblP28ID1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblP28ID1 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p28ID1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p28ID1 As Global.UI.contact
-
-    '''<summary>
-    '''trP28ID2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trP28ID2 As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''lblP28ID2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblP28ID2 As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p28ID2 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p28ID2 As Global.UI.contact
-
-    '''<summary>
     '''panColors control.
     '''</summary>
     '''<remarks>
