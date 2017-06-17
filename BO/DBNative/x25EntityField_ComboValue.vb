@@ -36,6 +36,11 @@
             Return _x23Name & ": " & Me.x25Name
         End Get
     End Property
+    Public ReadOnly Property NameWithCode As String
+        Get
+            If Me.x25Code = "" Then Return Me.x25Name Else Return Me.x25Name + " (" & Me.x25Code + ")"
+        End Get
+    End Property
     Public ReadOnly Property StyleDecoration As String
         Get
             If Me.IsClosed Then Return "line-through" Else Return ""

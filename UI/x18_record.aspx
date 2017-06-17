@@ -85,7 +85,7 @@
                     <asp:Repeater ID="rpX25" runat="server">
                         <ItemTemplate>
                             <div class="badge_label" style="background-color: <%#Eval("x25BackColor")%>">
-                                <a href="javascript:x25_record(<%# Eval("pid") %>)" style="color: <%#Eval("x25ForeColor")%>; text-decoration: <%#Eval("StyleDecoration")%>" title="Upravit/odstranit položku"><%# Eval("x25Name") %></a>
+                                <a href="javascript:x25_record(<%# Eval("pid") %>)" style="color: <%#Eval("x25ForeColor")%>; text-decoration: <%#Eval("StyleDecoration")%>" title="Upravit/odstranit položku"><%# Eval("NameWithCode") %></a>
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>

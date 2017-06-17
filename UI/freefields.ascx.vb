@@ -216,7 +216,7 @@ Public Class freefields
                             .ShowToggleImage = True
                             .Items.Add(New RadComboBoxItem(""))
                             For Each c In _lisX25.Where(Function(p) p.IsClosed = False And p.x23ID = cRec.x23ID)
-                                .Items.Add(New RadComboBoxItem(c.x25Name, c.PID.ToString))
+                                .Items.Add(New RadComboBoxItem(c.NameWithCode, c.PID.ToString))
                             Next
                             If Not (cRec.DBValue Is Nothing Or cRec.DBValue Is System.DBNull.Value) Then
                                 .SelectedValue = cRec.DBValue.ToString
@@ -226,7 +226,7 @@ Public Class freefields
                                     If lis.Count > 0 Then
                                         Dim cItem As BO.x25EntityField_ComboValue = lis(0)
                                         If Not cItem Is Nothing Then
-                                            Dim cbxItem As RadComboBoxItem = New RadComboBoxItem(cItem.x25Name, cItem.PID.ToString)
+                                            Dim cbxItem As RadComboBoxItem = New RadComboBoxItem(cItem.NameWithCode, cItem.PID.ToString)
                                             cbxItem.Font.Strikeout = cItem.IsClosed
                                             .Items.Add(cbxItem)
                                         End If

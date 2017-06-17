@@ -6,7 +6,7 @@
             <asp:Repeater ID="rpItems" runat="server">
                 <ItemTemplate>
                     <div class="badge_label" style="background-color:<%#Eval("BackColor")%>" title="<%#Eval("x18Name") %>">
-                    <span style="color:<%#Eval("ForeColor")%>"><%# Eval("x25Name") %></span>
+                    <span style="color:<%#Eval("ForeColor")%>"><%# Eval("NameWithCode") %></span>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
