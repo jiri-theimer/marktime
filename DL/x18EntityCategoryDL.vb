@@ -99,7 +99,7 @@
         If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then
             Dim intX18ID As Integer = _cDB.LastSavedRecordPID
 
-            Dim lisX22Saved As IEnumerable(Of BO.x20EntiyToCategory) = GetList_x20(intX18ID)
+            Dim lisX20Saved As IEnumerable(Of BO.x20EntiyToCategory) = GetList_x20(intX18ID)
             For Each c In lisX20
                 pars = New DbParameters
                 pars.Add("x18ID", c.x18ID, DbType.Int32)
@@ -111,14 +111,14 @@
                 pars.Add("x20EntityTypePID", BO.BAS.IsNullDBKey(c.x20EntityTypePID), DbType.Int32)
                 pars.Add("x29ID_EntityType", BO.BAS.IsNullDBKey(c.x29ID_EntityType), DbType.Int32)
                 bolINSERT = True : strW = ""
-                If lisX22Saved.Where(Function(p) p.x20ID = c.x20ID).Count > 0 Then
+                If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count > 0 Then
                     bolINSERT = False
                     strW = "x20ID=" & c.x20ID.ToString
                 End If
                 _cDB.SaveRecord("x20EntiyToCategory", pars, bolINSERT, strW, False, "", False)
             Next
-            For Each c In lisX22Saved.Where(Function(p) p.x20ID <> 0)
-                If lisX22Saved.Where(Function(p) p.x20ID = c.x20ID).Count = 0 Then
+            For Each c In lisX20Saved.Where(Function(p) p.x20ID <> 0)
+                If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count = 0 Then
                     _cDB.RunSQL("DELETE FROM x20EntiyToCategory WHERE x20ID=" & c.x20ID.ToString)
                 End If
             Next
@@ -160,14 +160,9 @@
         If x29ID > BO.x29IdEnum._NotSpecified Then
             strW += " AND a.x18ID IN (SELECT x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & ")"
         End If
-        If intEntityType >= 0 Then
-            If intEntityType = 0 Then
-                s += " AND a.x18IsAllEntityTypes=1"
-            Else
-                s += " AND (a.x18IsAllEntityTypes=1 OR a.x18ID IN (select x18ID FROM x22EntiyCategory_Binding WHERE x22EntityTypePID=" & intEntityType.ToString
-                s += " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & "))"
-
-            End If
+        If intEntityType > 0 Then
+            s += " AND (a.x18ID IN (select x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & " AND x20EntityTypePID=" & intEntityType.ToString & " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & ")"
+            s += " OR a.x18ID IN (select x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & " AND x20EntityTypePID IS NULL))"
         End If
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 
