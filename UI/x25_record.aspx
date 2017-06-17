@@ -35,10 +35,53 @@
                 <asp:TextBox ID="x25Code" runat="server"></asp:TextBox>
             </td>
         </tr>
-       
+
 
 
     </table>
+
+    <asp:Panel ID="panX16" runat="server">
+        <table cellpadding="3" cellspacing="2" width="100%">
+            <asp:Repeater ID="rpX16" runat="server">
+                <ItemTemplate>
+                    <tr style="vertical-align: top;">
+
+                        <td style="width: 150px;">
+                            <asp:HiddenField ID="x16IsEntryRequired" runat="server" />
+
+                            <asp:Label ID="x16Name" runat="server" CssClass="lbl"></asp:Label>
+
+                        </td>
+                        <td>
+
+                            <asp:TextBox ID="txtFF_Text" runat="server"></asp:TextBox>
+                            <telerik:RadNumericTextBox ID="txtFF_Number" runat="server"></telerik:RadNumericTextBox>
+                            <asp:CheckBox ID="chkFF" runat="server" ForeColor="Black" />
+
+                            <telerik:RadDatePicker ID="txtFF_Date" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
+                                <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
+                            </telerik:RadDatePicker>
+                            <telerik:RadComboBox ID="cbxFF" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="400px"></telerik:RadComboBox>
+
+
+                            <asp:HiddenField runat="server" ID="x16Field" />
+                            <asp:HiddenField runat="server" ID="x16ID" />
+                            <asp:HiddenField runat="server" ID="hidType" />
+
+
+                        </td>
+                    </tr>
+                </ItemTemplate>
+            </asp:Repeater>
+
+        </table>
+        <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+            <SpecialDays>
+                <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
+            </SpecialDays>
+        </telerik:RadCalendar>
+    </asp:Panel>
+
     <asp:Panel ID="panColors" runat="server">
         <table>
             <tr>

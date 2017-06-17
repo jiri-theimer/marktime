@@ -1,6 +1,15 @@
-﻿Public Class x25_record
+﻿Imports Telerik.Web.UI
+
+Public Class x25_record
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As ModalDataRecord
+    Private _curRec As BO.x25EntityField_ComboValue
+
+    Public ReadOnly Property CurrentX18ID As Integer
+        Get
+            Return BO.BAS.IsNullInt(hidX18ID.Value)
+        End Get
+    End Property
 
     Private Sub x25_record_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
@@ -20,12 +29,11 @@
                 End If
                 If Request.Item("x18id") <> "" Then
                     hidX18ID.Value = Request.Item("x18id")
-                    Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(BO.BAS.IsNullInt(hidX18ID.Value))
+                    Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
                     Me.x23ID.SelectedValue = c.x23ID.ToString
 
-                    Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = .Factory.x18EntityCategoryBL.GetList_x16(BO.BAS.IsNullInt(hidX18ID.Value))
 
-                    
+
                     panColors.Visible = c.x18IsColors
                     If Not c.x18IsColors Then
                         x25BackColor.Preset = Telerik.Web.UI.ColorPreset.None
@@ -44,7 +52,7 @@
                     .neededPermission = BO.x53PermValEnum.GR_Admin
                 End If
             End With
-            
+
 
             RefreshRecord()
 
@@ -55,11 +63,21 @@
             End If
         End If
     End Sub
+    Private Sub RefreshUserFields()
+        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID)
+        If lisX16.Count > 0 Then
+            rpX16.DataSource = lisX16
+            rpX16.DataBind()
+
+        Else
+            panX16.Visible = False
+        End If
+    End Sub
     Private Sub RefreshRecord()
         If Master.DataPID = 0 Then Return
 
-        Dim cRec As BO.x25EntityField_ComboValue = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
-        With cRec
+        _curRec = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
+        With _curRec
             Me.x23ID.SelectedValue = .x23ID.ToString
             Me.x25Name.Text = .x25Name
             Me.x25Ordinary.Value = .x25Ordinary
@@ -69,15 +87,16 @@
                 basUI.SetColorToPicker(Me.x25BackColor, .x25BackColor)
                 basUI.SetColorToPicker(Me.x25ForeColor, .x25ForeColor)
             End If
-            
+
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
-            
+
         End With
-        Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(cRec.x23ID)
+        Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(_curRec.x23ID)
         If cX23.x23DataSource <> "" Then
             Master.Notify("Tato položka byla vložena automaticky, protože pochází z externího datového zdroje.", NotifyLevel.InfoMessage)
-        
+
         End If
+        RefreshUserFields()
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x25EntityField_ComboValueBL
@@ -107,7 +126,7 @@
                 cRec.x25BackColor = basUI.GetColorFromPicker(Me.x25BackColor)
                 cRec.x25ForeColor = basUI.GetColorFromPicker(Me.x25ForeColor)
             End If
-            
+
 
 
             If .Save(cRec) Then
@@ -125,5 +144,117 @@
         Else
             Me.x23ID.Enabled = True
         End If
+    End Sub
+
+    Private Sub rpX16_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX16.ItemDataBound
+        Dim cRec As BO.x16EntityCategory_FieldSetting = CType(e.Item.DataItem, BO.x16EntityCategory_FieldSetting)
+
+        e.Item.FindControl("txtFF_Number").Visible = False
+        e.Item.FindControl("txtFF_Text").Visible = False
+        e.Item.FindControl("chkFF").Visible = False
+        e.Item.FindControl("txtFF_Date").Visible = False
+        e.Item.FindControl("cbxFF").Visible = False
+
+        CType(e.Item.FindControl("x16IsEntryRequired"), HiddenField).Value = BO.BAS.GB(cRec.x16IsEntryRequired)
+
+
+        With CType(e.Item.FindControl("x16Name"), Label)
+            .Text = "<img src='Images/form.png'/> " & cRec.x16Name & ":"
+            If cRec.x16IsEntryRequired Then
+                .ForeColor = Drawing.Color.Red
+                .Text = .Text & "*"
+            End If
+        End With
+
+        CType(e.Item.FindControl("x16Field"), HiddenField).Value = cRec.x16Field
+
+        CType(e.Item.FindControl("x16ID"), HiddenField).Value = cRec.x16ID.ToString
+
+
+        Dim curValue As Object = BO.BAS.GetPropertyValue(_curRec, cRec.x16Field)
+        If curValue Is System.DBNull.Value Then curValue = Nothing
+
+        Select Case cRec.FieldType
+            Case BO.x24IdENUM.tString
+                CType(e.Item.FindControl("hidType"), HiddenField).Value = "string"
+                If cRec.x16DataSource <> "" Then
+                    e.Item.FindControl("cbxFF").Visible = True
+                    Dim a() As String = Split(cRec.x16DataSource, ";")
+                    With CType(e.Item.FindControl("cbxFF"), RadComboBox)
+                        .AllowCustomText = Not cRec.x16IsFixedDataSource
+                        If .AllowCustomText Then .Items.Add(New RadComboBoxItem(" "))
+                        For i As Integer = 0 To UBound(a)
+                            .Items.Add(New RadComboBoxItem(a(i)))
+                        Next
+                        If Not curValue Is Nothing Then
+                            If .AllowCustomText Then
+                                .Text = curValue
+                            Else
+                                Try
+                                    .Items.FindItemByText(curValue).Selected = True
+                                Catch ex As Exception
+                                End Try
+                            End If
+                        End If
+                        If cRec.x16TextboxWidth > 0 Then
+                            .Style.Item("width") = cRec.x16TextboxWidth.ToString & "px"
+                        End If
+                    End With
+                Else
+                    With CType(e.Item.FindControl("txtFF_Text"), TextBox)
+                        .Visible = True
+                        If cRec.x16TextboxWidth > 40 Then
+                            .Style.Item("width") = cRec.x16TextboxWidth.ToString & "px"
+                        End If
+                        If cRec.x16TextboxHeight > 20 Then
+                            .Style.Item("height") = cRec.x16TextboxHeight.ToString & "px"
+                            .TextMode = TextBoxMode.MultiLine
+                        End If
+
+                        If Not curValue Is Nothing Then
+                            .Text = curValue
+                        End If
+                    End With
+                End If
+
+            Case BO.x24IdENUM.tDecimal
+                CType(e.Item.FindControl("hidType"), HiddenField).Value = "decimal"
+                With CType(e.Item.FindControl("txtFF_Number"), RadNumericTextBox)
+                    .Visible = True
+                    .NumberFormat.DecimalDigits = 2
+                    If Not curValue Is Nothing Then .Value = CDbl(curValue)
+                End With
+           
+            Case BO.x24IdENUM.tBoolean
+                CType(e.Item.FindControl("hidType"), HiddenField).Value = "boolean"
+                e.Item.FindControl("lblFF").Visible = False
+                With CType(e.Item.FindControl("chkFF"), CheckBox)
+                    .Visible = True
+                    .Text = cRec.x16Name
+                    If Not curValue Is Nothing Then
+                        .Checked = curValue
+                    End If
+                End With
+            Case BO.x24IdENUM.tDateTime
+                CType(e.Item.FindControl("hidType"), HiddenField).Value = "datetime"
+                With CType(e.Item.FindControl("txtFF_Date"), RadDatePicker)
+                    .Visible = True
+                    .MinDate = DateSerial(1900, 1, 1)
+                    .MaxDate = DateSerial(2100, 1, 1)
+                    .DateInput.DateFormat = "dd.MM.yyyy HH:mm"
+                    'Select Case cRec.TypeName
+                    '    Case "datetime"
+                    '        .DateFormat = "dd.MM.yyyy HH:mm"
+                    '    Case "time"
+                    '        .DateFormat = "HH:mm"
+                    '    Case Else
+                    '        .DateFormat = "dd.MM.yyyy"
+                    'End Select
+
+                    If Not curValue Is Nothing Then
+                        If Year(curValue) > 1900 Then .SelectedDate = curValue
+                    End If
+                End With
+        End Select
     End Sub
 End Class

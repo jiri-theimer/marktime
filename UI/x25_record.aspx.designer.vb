@@ -86,6 +86,33 @@ Partial Public Class x25_record
     Protected WithEvents x25Code As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''panX16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panX16 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''rpX16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX16 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
+    '''SharedCalendar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
+
+    '''<summary>
     '''panColors control.
     '''</summary>
     '''<remarks>
