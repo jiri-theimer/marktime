@@ -11,7 +11,7 @@
     <script type="text/javascript">
         function x25_record(x25id) {
 
-            dialog_master("x25_record.aspx?source=x18_record&x23id=<%=Me.CurrentX23ID%>&pid=" + x25id, true)
+            dialog_master("x25_record.aspx?x18id=<%=Master.DataPID%>&source=x18_record&x23id=<%=Me.CurrentX23ID%>&pid=" + x25id, true)
 
         }
 
@@ -81,7 +81,7 @@
                     <%End If%>
                 </div>
                 <div class="content">
-
+                    <asp:Label ID="lblItemsMessage" runat="server" CssClass="infoNotification"></asp:Label>
                     <asp:Repeater ID="rpX25" runat="server">
                         <ItemTemplate>
                             <div class="badge_label" style="background-color: <%#Eval("x25BackColor")%>">
@@ -109,6 +109,9 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="other" runat="server">
+            <div class="div6">
+                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Položky štítku rozlišovat barvou" Checked="true" />
+            </div>
             <div class="div6">
                 <asp:CheckBox ID="x18IsAllEntityTypes" runat="server" CssClass="chk" AutoPostBack="true" Text="Štítek je aplikovatelný pro všechny záznamy vybraných entit" Checked="true" />
             </div>
@@ -193,6 +196,7 @@
                                             <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
                                             <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
                                             <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
+                                            <asp:ListItem Text="Vazba na adresář klientů" Value="p28ID1"></asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
                                     <td>
@@ -225,6 +229,7 @@
                     </table>
                 </div>
             </div>
+           
         </telerik:RadPageView>
     </telerik:RadMultiPage>
 

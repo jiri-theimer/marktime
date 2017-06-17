@@ -65,9 +65,11 @@
             Me.x18Name.Text = .x18Name
             Me.x18Ordinary.Value = .x18Ordinary
             Me.x18IsMultiSelect.Checked = .x18IsMultiSelect
-            Me.x18IsRequired.Checked = .x18IsRequired
+
             Me.j02ID_Owner.Value = .j02ID_Owner.ToString
             Me.j02ID_Owner.Text = .Owner
+
+            Me.x18IsColors.Checked = .x18IsColors
             Master.Timestamp = .Timestamp
 
             If .x23ID <> 0 Then
@@ -116,7 +118,13 @@
     End Sub
     Private Sub RefreshItems()
         If Me.CurrentX23ID <> 0 Then
-            rpX25.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(Me.CurrentX23ID)
+            Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(Me.CurrentX23ID)
+            If lis.Count <= 50 Then
+                rpX25.DataSource = lis
+            Else
+                lblItemsMessage.Text = "Štítek má více než 50 položek. Jejich správa by na tomto místě byla nepřehledná."
+                rpX25.DataSource = Nothing
+            End If
         Else
             rpX25.DataSource = Nothing
         End If
@@ -175,6 +183,8 @@
             cRec.x18IsMultiSelect = Me.x18IsMultiSelect.Checked
             cRec.x18IsRequired = Me.x18IsRequired.Checked
             cRec.x18IsAllEntityTypes = Me.x18IsAllEntityTypes.Checked
+            cRec.x18IsRequired = Me.x18IsRequired.Checked
+            cRec.x18IsColors = Me.x18IsColors.Checked
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)

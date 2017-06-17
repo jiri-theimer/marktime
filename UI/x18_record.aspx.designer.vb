@@ -95,6 +95,15 @@ Partial Public Class x18_record
     Protected WithEvents x29IDs As Global.System.Web.UI.WebControls.CheckBoxList
 
     '''<summary>
+    '''lblItemsMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblItemsMessage As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''rpX25 control.
     '''</summary>
     '''<remarks>
@@ -147,6 +156,15 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents other As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''x18IsColors control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsColors As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''x18IsAllEntityTypes control.

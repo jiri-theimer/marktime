@@ -4,15 +4,22 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
-        Dim s As String = "select a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name FROM x25EntityField_ComboValue a LEFT OUTER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID WHERE a.x25ID=@pid"
+        Dim s As String = GetSQLPart1(0) & " WHERE a.x25ID=@pid"
         Return _cDB.GetRecord(Of BO.x25EntityField_ComboValue)(s, New With {.pid = intPID})
     End Function
     Public Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
         Dim pars As New DbParameters
         pars.Add("x23id", intX23ID, DbType.Int32)
         pars.Add("code", strCode, DbType.String)
-        Dim s As String = "select TOP 1 a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name FROM x25EntityField_ComboValue a LEFT OUTER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID WHERE a.x23ID=@x23id AND a.x25Code=@code"
+        Dim s As String = GetSQLPart1(0) & " WHERE a.x23ID=@x23id AND a.x25Code=@code"
         Return _cDB.GetRecord(Of BO.x25EntityField_ComboValue)(s, pars)
+    End Function
+    Private Function GetSQLPart1(intTopRecs As Integer) As String
+        Dim s As String = "select "
+        If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
+        s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,p28a.p28Name as _p28Name1"
+        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN p28Contact p28a ON a.p28ID1=p28a.p28ID"
+        Return s
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean
@@ -34,11 +41,18 @@
         End If
         With cRec
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
+            pars.Add("p28ID1", BO.BAS.IsNullDBKey(.p28ID1), DbType.Int32)
             pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
             pars.Add("x25Code", .x25Code, DbType.String)
             pars.Add("x25ForeColor", .x25ForeColor, DbType.String)
             pars.Add("x25BackColor", .x25BackColor, DbType.String)
             pars.Add("x25Ordinary", .x25Ordinary, DbType.Int32)
+            If .x25Ordinary > 0 Then
+                Dim cAra As New BO.clsArabicNumber
+                pars.Add("x25ArabicCode", cAra.NumberToRoman(.x25Ordinary), DbType.String)
+            Else
+                pars.Add("x25ArabicCode", "", DbType.String)
+            End If
             pars.Add("x25ValidFrom", .ValidFrom, DbType.DateTime)
             pars.Add("x25ValidUntil", .ValidUntil, DbType.DateTime)
 
@@ -79,17 +93,22 @@
             _cDB.RunSQL("UPDATE " & .SourceTableName & " SET " & .x28Field & "Text=NULL," & .x28Field & "=NULL WHERE " & .x28Field & "=" & intX25ID.ToString)
         End With
     End Sub
-    Public Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x25EntityField_ComboValue)
-        Dim s As String = "select a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name"
-        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID"
-        If intX23ID <> 0 Then
-            s += " WHERE a.x23ID=@x23id"
+    Public Function GetList(intX23ID As Integer, Optional myQuery As BO.myQuery = Nothing) As IEnumerable(Of BO.x25EntityField_ComboValue)
+        If myQuery Is Nothing Then
+            myQuery = New BO.myQuery
+            myQuery.Closed = BO.BooleanQueryMode.NoQuery
         End If
-
+        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly)
+        Dim strW As String = bas.ParseWhereMultiPIDs("a.x25ID", myQuery)
+        strW += bas.ParseWhereValidity("x25", "a", myQuery)
+        Dim pars As New DbParameters
+        If intX23ID <> 0 Then
+            strW += " AND  a.x23ID=@x23id"
+            pars.Add("x23id", intX23ID, DbType.Int32)
+        End If
+        If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
         s += " ORDER BY a.x23ID,a.x25Ordinary,a.x25Name"
 
-        Dim pars As New DbParameters
-        pars.Add("x23id", intX23ID, DbType.Int32)
         Return _cDB.GetList(Of BO.x25EntityField_ComboValue)(s, pars)
 
     End Function
