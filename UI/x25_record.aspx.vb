@@ -32,7 +32,7 @@ Public Class x25_record
                     Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
                     Me.x23ID.SelectedValue = c.x23ID.ToString
 
-
+                    .HeaderText += " | " & c.x18Name
 
                     panColors.Visible = c.x18IsColors
                     If Not c.x18IsColors Then
@@ -66,15 +66,23 @@ Public Class x25_record
     Private Sub RefreshUserFields()
         Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID)
         If lisX16.Count > 0 Then
+            If lisX16.Where(Function(p) LCase(p.x16Field).IndexOf("date") > 0).Count = 0 Then
+                Me.SharedCalendar.Visible = False
+            End If
             rpX16.DataSource = lisX16
             rpX16.DataBind()
 
         Else
             panX16.Visible = False
+            Me.SharedCalendar.Visible = False
         End If
     End Sub
     Private Sub RefreshRecord()
-        If Master.DataPID = 0 Then Return
+        If Master.DataPID = 0 Then
+            _curRec = New BO.x25EntityField_ComboValue
+            RefreshUserFields()
+            Return
+        End If
 
         _curRec = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
         With _curRec
@@ -126,7 +134,9 @@ Public Class x25_record
                 cRec.x25BackColor = basUI.GetColorFromPicker(Me.x25BackColor)
                 cRec.x25ForeColor = basUI.GetColorFromPicker(Me.x25ForeColor)
             End If
-
+            If Not InhaleUserFieldValues(cRec) Then
+                Return
+            End If
 
 
             If .Save(cRec) Then
@@ -146,6 +156,49 @@ Public Class x25_record
         End If
     End Sub
 
+    Private Function InhaleUserFieldValues(ByRef cRec As BO.x25EntityField_ComboValue) As Boolean
+        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID)
+        Dim errs As New List(Of String)
+        For Each ri As RepeaterItem In rpX16.Items
+            Dim intX16ID As Integer = CInt(CType(ri.FindControl("x16ID"), HiddenField).Value)
+            Dim c As BO.x16EntityCategory_FieldSetting = lisX16.First(Function(p) p.x16ID = intX16ID)
+            Dim val As Object = Nothing
+            Select Case c.FieldType
+                Case BO.x24IdENUM.tString
+                    If ri.FindControl("cbxFF").Visible Then
+                        val = CType(ri.FindControl("cbxFF"), RadComboBox).Text
+                    Else
+                        val = CType(ri.FindControl("txtFF_Text"), TextBox).Text
+                    End If
+                    If val = "" Then val = Nothing
+                Case BO.x24IdENUM.tDecimal
+                    val = CType(ri.FindControl("txtFF_Number"), RadNumericTextBox).DbValue
+                Case BO.x24IdENUM.tBoolean
+                    val = CType(ri.FindControl("chkFF"), CheckBox).Checked
+                Case BO.x24IdENUM.tDate, BO.x24IdENUM.tDateTime
+                    With CType(ri.FindControl("txtFF_Date"), RadDatePicker)
+                        If .IsEmpty Then
+                            val = Nothing
+                        Else
+                            val = .DbSelectedDate
+                        End If
+                    End With
+            End Select
+            BO.BAS.SetPropertyValue(cRec, c.x16Field, val)
+            If c.x16IsEntryRequired And val Is Nothing Then
+                If c.FieldType <> BO.x24IdENUM.tBoolean Then
+                    errs.Add(String.Format("Pole [{0}] je povinné k vyplnění.", c.x16Name))
+                End If
+            End If
+        Next
+        If errs.Count = 0 Then
+            Return True
+        Else
+            Master.Notify(String.Join("<hr>", errs), NotifyLevel.ErrorMessage)
+            Return False
+        End If
+    End Function
+
     Private Sub rpX16_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX16.ItemDataBound
         Dim cRec As BO.x16EntityCategory_FieldSetting = CType(e.Item.DataItem, BO.x16EntityCategory_FieldSetting)
 
@@ -159,7 +212,13 @@ Public Class x25_record
 
 
         With CType(e.Item.FindControl("x16Name"), Label)
-            .Text = "<img src='Images/form.png'/> " & cRec.x16Name & ":"
+            Select Case cRec.FieldType
+                Case BO.x24IdENUM.tDecimal : .Text = "<img src='Images/type_number.png'/> "
+                Case BO.x24IdENUM.tBoolean : .Text = "<img src='Images/type_checkbox.png'/> "
+                Case BO.x24IdENUM.tDate, BO.x24IdENUM.tDateTime : .Text = "<img src='Images/type_date.png'/> "
+                Case Else : .Text = "<img src='Images/type_text.png'/> "
+            End Select
+            .Text += cRec.x16Name & ":"
             If cRec.x16IsEntryRequired Then
                 .ForeColor = Drawing.Color.Red
                 .Text = .Text & "*"
@@ -227,7 +286,7 @@ Public Class x25_record
            
             Case BO.x24IdENUM.tBoolean
                 CType(e.Item.FindControl("hidType"), HiddenField).Value = "boolean"
-                e.Item.FindControl("lblFF").Visible = False
+                e.Item.FindControl("x16Name").Visible = False
                 With CType(e.Item.FindControl("chkFF"), CheckBox)
                     .Visible = True
                     .Text = cRec.x16Name
@@ -237,11 +296,16 @@ Public Class x25_record
                 End With
             Case BO.x24IdENUM.tDateTime
                 CType(e.Item.FindControl("hidType"), HiddenField).Value = "datetime"
+
                 With CType(e.Item.FindControl("txtFF_Date"), RadDatePicker)
+                    .SharedCalendar = Me.SharedCalendar
                     .Visible = True
                     .MinDate = DateSerial(1900, 1, 1)
                     .MaxDate = DateSerial(2100, 1, 1)
-                    .DateInput.DateFormat = "dd.MM.yyyy HH:mm"
+                    If cRec.FormatString = "" Then cRec.FormatString = "dd.MM.yyyy"
+                    .DateInput.DisplayDateFormat = cRec.FormatString
+                    .DateInput.DateFormat = cRec.FormatString
+                    
                     'Select Case cRec.TypeName
                     '    Case "datetime"
                     '        .DateFormat = "dd.MM.yyyy HH:mm"

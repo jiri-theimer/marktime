@@ -10,7 +10,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <table cellpadding="5" cellspacing="2">
         <tr>
-            <td>
+            <td style="width:70px;">
                 <asp:Label ID="lblX23ID" Text="Zdroj:" runat="server" CssClass="lblReq"></asp:Label>
             </td>
             <td>
@@ -41,14 +41,14 @@
     </table>
 
     <asp:Panel ID="panX16" runat="server">
-        <table cellpadding="3" cellspacing="2" width="100%">
+        <table cellpadding="5" cellspacing="2">
             <asp:Repeater ID="rpX16" runat="server">
                 <ItemTemplate>
                     <tr style="vertical-align: top;">
 
-                        <td style="width: 150px;">
+                        <td style="min-width:70px;">
                             <asp:HiddenField ID="x16IsEntryRequired" runat="server" />
-
+                            
                             <asp:Label ID="x16Name" runat="server" CssClass="lbl"></asp:Label>
 
                         </td>
@@ -58,7 +58,7 @@
                             <telerik:RadNumericTextBox ID="txtFF_Number" runat="server"></telerik:RadNumericTextBox>
                             <asp:CheckBox ID="chkFF" runat="server" ForeColor="Black" />
 
-                            <telerik:RadDatePicker ID="txtFF_Date" runat="server" Width="120px" SharedCalendarID="SharedCalendar">
+                            <telerik:RadDatePicker ID="txtFF_Date" runat="server" Width="130px">
                                 <DateInput ID="DateInput1" DisplayDateFormat="d.M.yyyy ddd" runat="server"></DateInput>
                             </telerik:RadDatePicker>
                             <telerik:RadComboBox ID="cbxFF" runat="server" ShowToggleImage="false" ShowDropDownOnTextboxClick="true" MarkFirstMatch="true" Width="400px"></telerik:RadComboBox>

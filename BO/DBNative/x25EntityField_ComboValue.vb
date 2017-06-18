@@ -24,6 +24,11 @@
     Public Property x25FreeDate03 As Date?
     Public Property x25FreeDate04 As Date?
     Public Property x25FreeDate05 As Date?
+    Public Property x25FreeBoolean01 As Boolean
+    Public Property x25FreeBoolean02 As Boolean
+    Public Property x25FreeBoolean03 As Boolean
+    Public Property x25FreeBoolean04 As Boolean
+    Public Property x25FreeBoolean05 As Boolean
 
     
     Private Property _x23Name As String

@@ -71,6 +71,9 @@
 
             Me.x18IsColors.Checked = .x18IsColors
             Me.x18IsManyItems.Checked = .x18IsManyItems
+            Me.x18IsClueTip.Checked = .x18IsClueTip
+            Me.x18Icon.Text = .x18Icon
+            Me.x18ReportCodes.Text = .x18ReportCodes
             Master.Timestamp = .Timestamp
 
             If .x23ID <> 0 Then
@@ -99,6 +102,8 @@
                 .p85FreeBoolean01 = c.x16IsEntryRequired
                 .p85FreeBoolean02 = c.x16IsGridField
                 .p85FreeBoolean03 = c.x16IsFixedDataSource
+                .p85FreeNumber01 = c.x16TextboxWidth
+                .p85FreeNumber02 = c.x16TextboxHeight
             End With
             Master.Factory.p85TempBoxBL.Save(cTemp)
         Next
@@ -189,6 +194,8 @@
                 c.x16IsGridField = .p85FreeBoolean02
                 c.x16DataSource = .p85Message
                 c.x16IsFixedDataSource = .p85FreeBoolean03
+                c.x16TextboxWidth = .p85FreeNumber01
+                c.x16TextboxHeight = .p85FreeNumber02
             End With
             lisX16.Add(c)
         Next
@@ -215,6 +222,9 @@
             cRec.x18NameShort = Me.x18NameShort.Text
             cRec.x18Ordinary = BO.BAS.IsNullInt(Me.x18Ordinary.Value)
             cRec.x23ID = Me.CurrentX23ID
+            cRec.x18Icon = Me.x18Icon.Text
+            cRec.x18IsClueTip = Me.x18IsClueTip.Checked
+            cRec.x18ReportCodes = Me.x18ReportCodes.Text
 
             cRec.x18IsColors = Me.x18IsColors.Checked
             cRec.x18IsManyItems = Me.x18IsManyItems.Checked
@@ -387,7 +397,8 @@
             CType(e.Item.FindControl("x16IsGridField"), CheckBox).Checked = .p85FreeBoolean02
             CType(e.Item.FindControl("x16IsFixedDataSource"), CheckBox).Checked = .p85FreeBoolean03
             CType(e.Item.FindControl("x16DataSource"), TextBox).Text = .p85Message
-
+            CType(e.Item.FindControl("x16TextboxWidth"), TextBox).Text = .p85FreeNumber01
+            CType(e.Item.FindControl("x16TextboxHeight"), TextBox).Text = .p85FreeNumber02
         End With
     End Sub
     Private Sub SaveTempX16()
@@ -403,6 +414,8 @@
                 .p85FreeBoolean02 = CType(ri.FindControl("x16IsGridField"), CheckBox).Checked
                 .p85FreeBoolean03 = CType(ri.FindControl("x16IsFixedDataSource"), CheckBox).Checked
                 .p85Message = CType(ri.FindControl("x16DataSource"), TextBox).Text
+                .p85FreeNumber01 = BO.BAS.IsNullInt(CType(ri.FindControl("x16TextboxWidth"), TextBox).Text)
+                .p85FreeNumber02 = BO.BAS.IsNullInt(CType(ri.FindControl("x16TextboxHeight"), TextBox).Text)
             End With
             Master.Factory.p85TempBoxBL.Save(cRec)
         Next

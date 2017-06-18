@@ -24,6 +24,6 @@ Public Class x20EntiyToCategory
     Public Property EntityTypeAlias As String   'pomocný atribut - není v SQL
     Public Property x20IsClosed As Boolean
     Public Property x20Ordinary As Integer
-
+    Public Property x18ReportCodes As String
 
 End Class

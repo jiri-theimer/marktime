@@ -95,6 +95,9 @@
             pars.Add("x18IsColors", .x18IsColors, DbType.Boolean)
             pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
+            pars.Add("x18Icon", .x18Icon, DbType.String)
+            pars.Add("x18IsClueTip", .x18IsClueTip, DbType.Boolean)
+            pars.Add("x18ReportCodes", .x18ReportCodes, DbType.String)
         End With
 
         If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then
@@ -133,9 +136,16 @@
                 End If
                 For Each c In lisX16
                     pars = New DbParameters
-                    pars.Add("datasource", c.x16DataSource, DbType.String)
-
-                    _cDB.RunSQL("INSERT INTO x16EntityCategory_FieldSetting(x18ID,x16Name,x16Field,x16Ordinary,x16IsEntryRequired,x16DataSource,x16IsFixedDataSource,x16IsGridField) VALUES (" & intX18ID.ToString & "," & BO.BAS.GS(c.x16Name) & "," & BO.BAS.GS(c.x16Field) & "," & c.x16Ordinary.ToString & "," & BO.BAS.GB(c.x16IsEntryRequired) & ",@datasource," & BO.BAS.GB(c.x16IsFixedDataSource) & "," & BO.BAS.GB(c.x16IsGridField) & ")", pars)
+                    pars.Add("x18ID", intX18ID, DbType.Int32)
+                    pars.Add("x16Name", c.x16Name, DbType.String)
+                    pars.Add("x16Field", c.x16Field, DbType.String)
+                    pars.Add("x16IsEntryRequired", c.x16IsEntryRequired, DbType.Boolean)
+                    pars.Add("x16IsGridField", c.x16IsGridField, DbType.Boolean)
+                    pars.Add("x16IsFixedDataSource", c.x16IsFixedDataSource, DbType.Boolean)
+                    pars.Add("x16DataSource", c.x16DataSource, DbType.Boolean)
+                    pars.Add("x16TextboxHeight", c.x16TextboxHeight, DbType.Int32)
+                    pars.Add("x16TextboxWidth", c.x16TextboxWidth, DbType.Int32)
+                    _cDB.SaveRecord("x16EntityCategory_FieldSetting", pars, True, "", False, "", False)
                 Next
             End If
             If Not lisX69 Is Nothing Then   'přiřazení rolí k štítku

@@ -11,6 +11,9 @@
 
     Public Property x18IsColors As Boolean
     Public Property x18IsManyItems As Boolean
+    Public Property x18Icon As String
+    Public Property x18IsClueTip As Boolean
+    Public Property x18ReportCodes As String
 
 
     Public ReadOnly Property x23Name As String

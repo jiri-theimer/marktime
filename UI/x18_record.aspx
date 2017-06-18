@@ -43,7 +43,7 @@
                         <asp:Label ID="lblOrdinary" Text="Index pořadí:" runat="server" CssClass="lbl"></asp:Label>
                         <telerik:RadNumericTextBox ID="x18Ordinary" runat="server" NumberFormat-DecimalDigits="0" Width="50px" ShowSpinButtons="true"></telerik:RadNumericTextBox>
                     </td>
-                    
+
                 </tr>
                 <tr>
                     <td>
@@ -53,7 +53,7 @@
                         <asp:TextBox ID="x18NameShort" runat="server"></asp:TextBox>
                     </td>
                 </tr>
-                
+
             </table>
             <div class="div6">
                 <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat položky štítku barvou" Checked="true" />
@@ -63,7 +63,7 @@
             </div>
 
 
-            <div class="content-box2" style="margin-top:20px;">
+            <div class="content-box2" style="margin-top: 20px;">
                 <div class="title">
                     Vazba štítku na entity
                     <asp:DropDownList ID="x29ID_addX20" runat="server">
@@ -196,11 +196,6 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="other" runat="server">
-
-
-
-
-
             <div class="content-box2">
                 <div class="title">
                     <img src="Images/projectrole.png" width="16px" height="16px" />
@@ -209,12 +204,15 @@
                 </div>
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="x18EntityCategory"></uc:entityrole_assign>
+                    <div class="div6" style="clear:both;margin-top: 20px; border-top: dashed silver 1px;">
+                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu štítku:" CssClass="lblReq"></asp:Label>
+                        <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
+                    </div>
                 </div>
             </div>
-            <div class="div6">
-                <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu štítku:" CssClass="lblReq"></asp:Label>
-                <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
-            </div>
+
+
+
             <div class="content-box2" style="margin-top: 60px;">
                 <div class="title">
                     <img src="Images/form.png" width="16px" height="16px" />
@@ -243,7 +241,7 @@
                                             <asp:ListItem Text="Text 3" Value="x25FreeText03"></asp:ListItem>
                                             <asp:ListItem Text="Text 4" Value="x25FreeText04"></asp:ListItem>
                                             <asp:ListItem Text="Text 5" Value="x25FreeText05"></asp:ListItem>
-                                            <asp:ListItem Text="Více-řádkový text" Value="x25BigText"></asp:ListItem>
+                                            <asp:ListItem Text="Velký text" Value="x25BigText"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 1" Value="x25FreeNumber01"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 2" Value="x25FreeNumber02"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 3" Value="x25FreeNumber03"></asp:ListItem>
@@ -254,7 +252,11 @@
                                             <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
                                             <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
                                             <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
-                                            
+                                            <asp:ListItem Text="ANO/NE 1" Value="x25FreeBoolean01"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 2" Value="x25FreeBoolean02"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 3" Value="x25FreeBoolean03"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 4" Value="x25FreeBoolean04"></asp:ListItem>
+                                            <asp:ListItem Text="ANO/NE 5" Value="x25FreeBoolean05"></asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
                                     <td>
@@ -275,6 +277,12 @@
                                         <div>
                                             <asp:CheckBox ID="x16IsFixedDataSource" runat="server" Text="Okruh hodnot je zafixován" />
                                         </div>
+                                        <div>
+                                            <span>Šířka pole:</span>
+                                            <asp:TextBox ID="x16TextboxWidth" runat="server" Width="40px"></asp:TextBox>(px)
+                                            <span>Výška pole:</span>
+                                            <asp:TextBox ID="x16TextboxHeight" runat="server" Width="40px"></asp:TextBox>(px)
+                                        </div>
                                     </td>
                                     <td>
                                         <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
@@ -284,6 +292,37 @@
 
                             </ItemTemplate>
                         </asp:Repeater>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="content-box2" style="margin-top: 60px;">
+                <div class="title">Různé</div>
+                <div class="content">
+                    <table cellpadding="5" cellspacing="2">
+                        <tr>
+                            <td>
+                                <span>Grafická ikona:</span>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="x18Icon" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <asp:CheckBox ID="x18IsClueTip" runat="server" Text="U přiřazené položky zobrazovat info-bublinu" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Přiřazené šablony tiskových sestav:</span>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="x18ReportCodes" runat="server" Width="600px"></asp:TextBox>
+                                (čárkou oddělené kódy sestav)
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>

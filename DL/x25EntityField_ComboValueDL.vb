@@ -55,11 +55,11 @@
             pars.Add("x25ValidFrom", .ValidFrom, DbType.DateTime)
             pars.Add("x25ValidUntil", .ValidUntil, DbType.DateTime)
 
-            pars.Add("x25FreeText01", .x25FreeText01, DbType.String)
-            pars.Add("x25FreeText02", .x25FreeText02, DbType.String)
-            pars.Add("x25FreeText03", .x25FreeText03, DbType.String)
-            pars.Add("x25FreeText04", .x25FreeText04, DbType.String)
-            pars.Add("x25FreeText05", .x25FreeText05, DbType.String)
+            pars.Add("x25FreeText01", .x25FreeText01, DbType.String, , , True, "Text 1")
+            pars.Add("x25FreeText02", .x25FreeText02, DbType.String, , , True, "Text 2")
+            pars.Add("x25FreeText03", .x25FreeText03, DbType.String, , , True, "Text 3")
+            pars.Add("x25FreeText04", .x25FreeText04, DbType.String, , , True, "Text 4")
+            pars.Add("x25FreeText05", .x25FreeText05, DbType.String, , , True, "Text 5")
             pars.Add("x25BigText", .x25BigText, DbType.String, , , True, "Podrobný popis")
 
             pars.Add("x25FreeNumber01", .x25FreeNumber01, DbType.Double)
@@ -72,6 +72,11 @@
             pars.Add("x25FreeDate03", .x25FreeDate03, DbType.DateTime)
             pars.Add("x25FreeDate04", .x25FreeDate04, DbType.DateTime)
             pars.Add("x25FreeDate05", .x25FreeDate05, DbType.DateTime)
+            pars.Add("x25FreeBoolean01", .x25FreeBoolean01, DbType.Boolean)
+            pars.Add("x25FreeBoolean02", .x25FreeBoolean02, DbType.Boolean)
+            pars.Add("x25FreeBoolean03", .x25FreeBoolean03, DbType.Boolean)
+            pars.Add("x25FreeBoolean04", .x25FreeBoolean04, DbType.Boolean)
+            pars.Add("x25FreeBoolean05", .x25FreeBoolean05, DbType.Boolean)
         End With
 
         If _cDB.SaveRecord("x25EntityField_ComboValue", pars, bolINSERT, strW, True, _curUser.j03Login) Then
