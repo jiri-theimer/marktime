@@ -270,7 +270,7 @@
                 ids.Add(a(2))
             Next
             If ids.Count > 0 Then
-                strRet += " AND " & strKeyField & " IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=" & strX29ID & " AND x18ID=" & intX18ID.ToString & " AND x25ID IN (" & String.Join(",", ids) & "))"
+                strRet += " AND " & strKeyField & " IN (SELECT ta.x19RecordPID FROM x19EntityCategory_Binding ta INNER JOIN x20EntiyToCategory tb ON ta.x20ID=tb.x20ID WHERE tb.x29ID=" & strX29ID & " AND tb.x18ID=" & intX18ID.ToString & " AND ta.x25ID IN (" & String.Join(",", ids) & "))"
             End If
         Next
         Return strRet
@@ -342,7 +342,7 @@
                     sql.Append(" AND a.j02ID IN (SELECT j02ID FROM j12Team_Person WHERE j11ID IN (" & strIN & "))")
 
                 Case "x25id"    'štítky
-                    sql.Append(" AND " & strFK & " IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=" & CInt(cRec.x29ID).ToString & " AND x25ID IN (" & strIN & "))")
+                    sql.Append(" AND " & strFK & " IN (SELECT ta.x19RecordPID FROM x19EntityCategory_Binding ta INNER JOIN x20EntiyToCategory tb ON ta.x20ID=tb.x20ID WHERE tb.x29ID=" & CInt(cRec.x29ID).ToString & " AND ta.x25ID IN (" & strIN & "))")
                 Case "p34id"
                     sql.Append(" AND p32.p34ID IN (" & strIN & ")")
                 Case "p95id"
