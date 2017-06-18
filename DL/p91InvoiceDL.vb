@@ -272,8 +272,7 @@
                 pars.Add("b02id", .b02ID, DbType.Int32)
                 strW += " AND a.b02ID=@b02id"
             End If
-            'If .x25ID > 0 Then strW += " AND a.p91ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=391 AND x25ID=" & .x25ID.ToString & ")"
-            
+
             If .SpecificQuery > BO.myQueryp91_SpecificQuery._NotSpecified Then
                 If .j02ID_ExplicitQueryFor > 0 Then
                     pars.Add("j02id_query", .j02ID_ExplicitQueryFor, DbType.Int32)

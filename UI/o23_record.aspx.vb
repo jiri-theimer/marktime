@@ -140,8 +140,8 @@
         Me.clue_o24.Attributes("rel") = "clue_o24_record.aspx?pid=" & intO24ID.ToString
 
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.o23Notepad, Master.DataPID, intO24ID)
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.o23Notepad, intO24ID)
-        ff1.FillData(fields, lisX18, "o23Notepad_FreeField", Master.DataPID)
+        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.o23Notepad, intO24ID)
+        ff1.FillData(fields, lisX20X18, "o23Notepad_FreeField", Master.DataPID)
         ''.Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
 
         ff2.FillData(fields, True)
@@ -429,8 +429,8 @@
             If .Save(cRec, upload1.GUID, lisX69, lisFF) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
-                If Not bolNew Or ff1.GetTags.Count > 0 Then
-                    Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.o23Notepad, Master.DataPID, ff1.GetTags())
+                If Not bolNew Or ff1.GetX20IDs.Count > 0 Then
+                    Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.o23Notepad, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 End If
 
                 Master.CloseAndRefreshParent("o23-save")

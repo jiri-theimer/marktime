@@ -235,9 +235,9 @@
         With RadTabStrip1.FindTabByValue("ff")
             If .Visible Then
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p28Contact, Master.DataPID, BO.BAS.IsNullInt(Me.p29ID.SelectedValue))
-                Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p28Contact, BO.BAS.IsNullInt(Me.p29ID.SelectedValue))
-                ff1.FillData(fields, lisX18, "p28Contact_FreeField", Master.DataPID)
-                .Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
+                Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p28Contact, BO.BAS.IsNullInt(Me.p29ID.SelectedValue))
+                ff1.FillData(fields, lisX20X18, "p28Contact_FreeField", Master.DataPID)
+                .Text = String.Format(.Text, ff1.FieldsCount, lisX20X18.Count)
 
             End If
         End With
@@ -525,8 +525,8 @@
             If .Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, Nothing) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
-                If Not bolNew Or ff1.GetTags.Count > 0 Then
-                    Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p28Contact, Master.DataPID, ff1.GetTags())
+                If Not bolNew Or ff1.GetX20IDs.Count > 0 Then
+                    Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p28Contact, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 End If
 
                 If bolNew Then

@@ -27,6 +27,7 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true">
         <Tabs>
             <telerik:RadTab Text="Vlastnosti" Selected="true" Value="core"></telerik:RadTab>
+            <telerik:RadTab Text="Rozšiřující pole" Value="ff"></telerik:RadTab>
             <telerik:RadTab Text="Ostatní" Value="other"></telerik:RadTab>
 
         </Tabs>
@@ -55,12 +56,7 @@
                 </tr>
 
             </table>
-            <div class="div6">
-                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat položky štítku barvou" Checked="true" />
-            </div>
-            <div class="div6">
-                <asp:CheckBox ID="x18IsManyItems" runat="server" CssClass="chk" AutoPostBack="false" Text="Jedná se o štítek s mnoha položkami (100 a více)" />
-            </div>
+            
 
 
             <div class="content-box2" style="margin-top: 20px;">
@@ -195,25 +191,8 @@
 
         </telerik:RadPageView>
 
-        <telerik:RadPageView ID="other" runat="server">
-            <div class="content-box2">
-                <div class="title">
-                    <img src="Images/projectrole.png" width="16px" height="16px" />
-                    <asp:Label ID="ph1" runat="server" Text="Oprávnění ke správě položek štítku"></asp:Label>
-                    <asp:Button ID="cmdAddX69" runat="server" CssClass="cmd" Text="Přidat" />
-                </div>
-                <div class="content">
-                    <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="x18EntityCategory"></uc:entityrole_assign>
-                    <div class="div6" style="clear:both;margin-top: 20px; border-top: dashed silver 1px;">
-                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu štítku:" CssClass="lblReq"></asp:Label>
-                        <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="content-box2" style="margin-top: 60px;">
+        <telerik:RadPageView ID="ff" runat="server">
+            <div class="content-box2" style="margin-top: 10px;">
                 <div class="title">
                     <img src="Images/form.png" width="16px" height="16px" />
                     Rozšíření položky štítku o další pole
@@ -295,12 +274,41 @@
                     </table>
                 </div>
             </div>
+        </telerik:RadPageView>
+
+        <telerik:RadPageView ID="other" runat="server" style="margin-top:10px;">
+            <div class="content-box2">
+                <div class="title">
+                    <img src="Images/projectrole.png" width="16px" height="16px" />
+                    <asp:Label ID="ph1" runat="server" Text="Oprávnění k položkám štítku"></asp:Label>
+                    <asp:Button ID="cmdAddX69" runat="server" CssClass="cmd" Text="Přidat" />
+                </div>
+                <div class="content">
+                    <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="x18EntityCategory"></uc:entityrole_assign>
+                    <div class="div6" style="clear:both;margin-top: 20px; border-top: dashed silver 1px;display:none;">
+                        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu štítku:" CssClass="lblReq"></asp:Label>
+                        <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
+                    </div>
+                </div>
+            </div>
 
 
+
+            
             <div class="content-box2" style="margin-top: 60px;">
                 <div class="title">Různé</div>
                 <div class="content">
                     <table cellpadding="5" cellspacing="2">
+                        <tr>
+                            <td colspan="2">
+                                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat položky štítku barvou" Checked="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <asp:CheckBox ID="x18IsManyItems" runat="server" CssClass="chk" AutoPostBack="false" Text="Jedná se o štítek s mnoha položkami (100 a více)" />
+                            </td>
+                        </tr>
                         <tr>
                             <td>
                                 <span>Grafická ikona:</span>

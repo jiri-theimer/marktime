@@ -10,6 +10,7 @@ Public Class freefields
     Private _lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue)
     Public Factory As BL.Factory
 
+    
     Public Function IsEmpty() As Boolean
         If rpFF.Items.Count > 0 Then
             Return False
@@ -56,7 +57,8 @@ Public Class freefields
 
     End Sub
 
-    Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX18 As IEnumerable(Of BO.x18EntityCategory), strDataTable As String, intDataPID As Integer, Optional strTempGUID As String = "")
+    Public Sub FillData(ByVal listFF As IEnumerable(Of BO.FreeField), lisX20X18 As IEnumerable(Of BO.x20_join_x18), strDataTable As String, intDataPID As Integer, Optional strTempGUID As String = "")
+        lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.Combo)   'omezit pouze na otevřené vazby + vazby vyplňované přes combo
         'strTempGUID je tu pouze pro agendu štítků
         Me.DataTable = strDataTable
         Me.DataPID = intDataPID
@@ -70,22 +72,23 @@ Public Class freefields
             Me.panContainer.Visible = True
         End If
         Dim curTags As List(Of BO.x19EntityCategory_Binding) = GetTags()    'naposledy ve formuláři vyplněné štítky - pokud existují, mají přednost
-        rp1.DataSource = lisX18
+        rp1.DataSource = lisX20X18
         rp1.DataBind()
         If rp1.Items.Count = 0 Then
-            rp1.Visible = False
+            rp1.Visible = False 'žádné štítky k vyplnění
         Else
             rp1.Visible = True
             If Me.DataPID <> 0 Then
                 Dim lisX19 As List(Of BO.x19EntityCategory_Binding) = Nothing
                 If curTags.Count = 0 Then
-                    lisX19 = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), intDataPID, strTempGUID).ToList
+                    Dim x20IDs As List(Of Integer) = lisX20X18.Select(Function(p) p.x20ID).ToList
+                    lisX19 = Me.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.GetX29FromPrefix(_dataprefix), intDataPID, strTempGUID, x20IDs).ToList
                 Else
                     lisX19 = curTags
                 End If
                 For Each ri As RepeaterItem In rp1.Items
-                    Dim intX18ID As Integer = CInt(CType(ri.FindControl("x18ID"), HiddenField).Value)
-                    Dim lis As List(Of String) = lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25ID.ToString).ToList
+                    Dim intX20ID As Integer = CInt(CType(ri.FindControl("x20ID"), HiddenField).Value)
+                    Dim lis As List(Of String) = lisX19.Where(Function(p) p.x20ID = intX20ID).Select(Function(p) p.x25ID.ToString).ToList
                     If lis.Count > 0 Then
                         With CType(ri.FindControl("x25IDs"), UI.datacombo)
                             If .AllowCheckboxes Then
@@ -104,22 +107,23 @@ Public Class freefields
     End Sub
 
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
-        Dim cRec As BO.x18EntityCategory = CType(e.Item.DataItem, BO.x18EntityCategory)
+        Dim cRec As BO.x20_join_x18 = CType(e.Item.DataItem, BO.x20_join_x18)
         With CType(e.Item.FindControl("x18Name"), Label)
             .Text = "<img src='Images/label.png'/> " & cRec.x18Name & ":"
         End With
 
         Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(cRec.x23ID).Where(Function(p) p.IsClosed = False)
         With CType(e.Item.FindControl("x25IDs"), UI.datacombo)
-            'If Not cRec.x18IsMultiSelect Then
-            .AllowCheckboxes = False
-            .IsFirstEmptyRow = True
-            If lisX25.Count > 30 Then .Filter = datacombo.FilterMode.Contains
-            'End If
+            If Not cRec.x20IsMultiSelect Then
+                .AllowCheckboxes = False
+                .IsFirstEmptyRow = True
+                If lisX25.Count > 30 Then .Filter = datacombo.FilterMode.Contains
+            End If
             .DataSource = lisX25
             .DataBind()
         End With
-        CType(e.Item.FindControl("x18ID"), HiddenField).Value = cRec.PID.ToString
+        CType(e.Item.FindControl("x18ID"), HiddenField).Value = cRec.x18ID.ToString
+        CType(e.Item.FindControl("x20ID"), HiddenField).Value = cRec.x20ID.ToString
         'CType(e.Item.FindControl("x18IsMultiSelect"), HiddenField).Value = BO.BAS.GB(cRec.x18IsMultiSelect)
     End Sub
 
@@ -298,11 +302,17 @@ Public Class freefields
         End With
 
     End Sub
-
+    Public Function GetX20IDs() As List(Of Integer)
+        Dim lis As New List(Of Integer)
+        For Each ri As RepeaterItem In rp1.Items
+            lis.Add(CInt(CType(ri.FindControl("x20ID"), HiddenField).Value))
+        Next
+        Return lis
+    End Function
     Public Function GetTags() As List(Of BO.x19EntityCategory_Binding)
         Dim lis As New List(Of BO.x19EntityCategory_Binding), intDataPID As Integer = BO.BAS.IsNullInt(Me.hidDataPID.Value)
         For Each ri As RepeaterItem In rp1.Items
-            Dim intX18ID As Integer = CInt(CType(ri.FindControl("x18ID"), HiddenField).Value)
+            Dim intX20ID As Integer = CInt(CType(ri.FindControl("x20ID"), HiddenField).Value)
             Dim x25IDs As New List(Of Integer)
             With CType(ri.FindControl("x25IDs"), UI.datacombo)
                 If .AllowCheckboxes Then
@@ -313,7 +323,7 @@ Public Class freefields
             End With
             For Each intX25ID As Integer In x25IDs
                 Dim c As New BO.x19EntityCategory_Binding
-                c.x18ID = intX18ID
+                c.x20ID = intX20ID
                 c.x25ID = intX25ID
                 c.x19RecordPID = intDataPID
                 lis.Add(c)

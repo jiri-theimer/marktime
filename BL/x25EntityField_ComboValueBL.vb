@@ -27,6 +27,7 @@ Class x25EntityField_ComboValueBL
     End Sub
     Public Function Save(cRec As BO.x25EntityField_ComboValue) As Boolean Implements Ix25EntityField_ComboValueBL.Save
         With cRec
+            If .PID = 0 And .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
             If Trim(.x25Name) = "" Then _Error = "Chybí název položky." : Return False
             If .x23ID = 0 Then _Error = "Chybí vazba na číselník." : Return False
 

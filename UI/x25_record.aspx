@@ -3,14 +3,14 @@
 <%@ MasterType VirtualPath="~/ModalDataRecord.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
-<%@ Register TagPrefix="uc" TagName="contact" Src="~/contact.ascx" %>
+<%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <table cellpadding="5" cellspacing="2">
         <tr>
-            <td style="width:70px;">
+            <td style="width: 140px;">
                 <asp:Label ID="lblX23ID" Text="Zdroj:" runat="server" CssClass="lblReq"></asp:Label>
             </td>
             <td>
@@ -46,9 +46,9 @@
                 <ItemTemplate>
                     <tr style="vertical-align: top;">
 
-                        <td style="min-width:70px;">
+                        <td style="min-width: 140px;">
                             <asp:HiddenField ID="x16IsEntryRequired" runat="server" />
-                            
+
                             <asp:Label ID="x16Name" runat="server" CssClass="lbl"></asp:Label>
 
                         </td>
@@ -123,6 +123,11 @@
             </tr>
         </table>
     </asp:Panel>
+
+    <div class="div6" style="clear: both; margin-top: 20px;">
+        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq" style="padding-right:30px;"></asp:Label>
+        <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
+    </div>
     <asp:HiddenField ID="hidX18ID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">

@@ -1,15 +1,5 @@
-﻿Public Enum x20EntryModeENUM
-    Combo = 1
-    InsertUpdateWithoutCombo = 2
-End Enum
-Public Enum x20GridColumnENUM
-    EntityColumn = 1
-    CategoryColumn = 2
-    Both = 3
-    None = 4
-End Enum
-
-Public Class x20EntiyToCategory
+﻿Public Class x20_join_x18
+    Inherits BO.x18EntityCategory
     Public Property x20ID As Integer
     Public Property x18ID As Integer
     Public Property x29ID As Integer
@@ -24,6 +14,5 @@ Public Class x20EntiyToCategory
     Public Property EntityTypeAlias As String   'pomocný atribut - není v SQL
     Public Property x20IsClosed As Boolean
     Public Property x20Ordinary As Integer
-
 
 End Class

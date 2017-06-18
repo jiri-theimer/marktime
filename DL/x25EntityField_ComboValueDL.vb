@@ -17,8 +17,8 @@
     Private Function GetSQLPart1(intTopRecs As Integer) As String
         Dim s As String = "select "
         If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
-        s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name"
-        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID"
+        s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner"
+        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         Return s
     End Function
 
@@ -40,7 +40,8 @@
             pars.Add("pid", cRec.PID)
         End If
         With cRec
-            pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)            
+            pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
+            pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
             pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
             pars.Add("x25Code", .x25Code, DbType.String)
             pars.Add("x25ForeColor", .x25ForeColor, DbType.String)

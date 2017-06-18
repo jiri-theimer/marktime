@@ -200,7 +200,7 @@
         End If
 
         If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.o23Notepad).Count > 0 Then
-            labels1.RefreshData(BO.x29IdEnum.o23Notepad, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.o23Notepad, cRec.PID))
+            labels1.RefreshData(BO.x29IdEnum.o23Notepad, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.o23Notepad, cRec.PID, "", Nothing))
         Else
             boxX18.Visible = False
         End If

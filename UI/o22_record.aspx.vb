@@ -239,7 +239,7 @@
 
             If .Save(cRec, lisO20, Nothing) Then
                 Master.DataPID = .LastSavedPID
-                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.o22Milestone, Master.DataPID, ff1.GetTags())
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.o22Milestone, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
 
                 Master.CloseAndRefreshParent("o22-save")
             Else
@@ -501,8 +501,8 @@
 
     Private Sub Handle_FF()
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.o22Milestone, Master.DataPID, BO.BAS.IsNullInt(Me.o21ID.SelectedValue))
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.o22Milestone, BO.BAS.IsNullInt(Me.o21ID.SelectedValue))
-        ff1.FillData(fields, lisX18, "o22Milestone_FreeField", Master.DataPID)
+        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.o22Milestone, BO.BAS.IsNullInt(Me.o21ID.SelectedValue))
+        ff1.FillData(fields, lisX20X18, "o22Milestone_FreeField", Master.DataPID)
 
     End Sub
 End Class

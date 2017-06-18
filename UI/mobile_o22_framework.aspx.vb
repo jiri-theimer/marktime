@@ -75,7 +75,7 @@
         
         
 
-        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.o22Milestone, cRec.PID)
+        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.o22Milestone, cRec.PID, "", Nothing)
         If lisX19.Count > 0 Then
             labels1.RefreshData(BO.x29IdEnum.o22Milestone, cRec.PID, lisX19)
         Else

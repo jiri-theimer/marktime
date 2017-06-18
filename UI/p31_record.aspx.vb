@@ -618,8 +618,8 @@
 
     Private Sub Handle_FF()
         Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, BO.BAS.IsNullInt(Me.p34ID.SelectedValue))
-        Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p31Worksheet, BO.BAS.IsNullInt(Me.p34ID.SelectedValue))
-        ff1.FillData(fields, lisX18, "p31Worksheet_FreeField", Master.DataPID)
+        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p31Worksheet, BO.BAS.IsNullInt(Me.p34ID.SelectedValue))
+        ff1.FillData(fields, lisX20X18, "p31Worksheet_FreeField", Master.DataPID)
         
     End Sub
 
@@ -1020,8 +1020,8 @@
                 If Me.GuidApprove <> "" And Not bolNewRec Then
                     Master.Factory.p31WorksheetBL.UpdateTemp_After_EditOrig(Master.DataPID, Me.GuidApprove) 'záznam otevřený k editaci ze schvalovacího dialogu
                 End If
-                If Not bolNewRec Or ff1.GetTags.Count > 0 Then
-                    If ff1.TagsCount > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags())
+                If Not bolNewRec Or ff1.GetX20IDs.Count > 0 Then
+                    If ff1.TagsCount > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs())
                 End If
                 If Me.CurrentP85ID > 0 Then
                     'odstranit temp záznam předlohy

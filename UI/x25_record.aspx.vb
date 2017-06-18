@@ -79,6 +79,8 @@ Public Class x25_record
     End Sub
     Private Sub RefreshRecord()
         If Master.DataPID = 0 Then
+            Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
+            Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
             _curRec = New BO.x25EntityField_ComboValue
             RefreshUserFields()
             Return
@@ -86,6 +88,8 @@ Public Class x25_record
 
         _curRec = Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID)
         With _curRec
+            Me.j02ID_Owner.Value = .j02ID_Owner.ToString
+            Me.j02ID_Owner.Text = .Owner
             Me.x23ID.SelectedValue = .x23ID.ToString
             Me.x25Name.Text = .x25Name
             Me.x25Ordinary.Value = .x25Ordinary
@@ -130,6 +134,7 @@ Public Class x25_record
             cRec.x25Code = Me.x25Code.Text
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
+            cRec.j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
             If panColors.Visible Then
                 cRec.x25BackColor = basUI.GetColorFromPicker(Me.x25BackColor)
                 cRec.x25ForeColor = basUI.GetColorFromPicker(Me.x25ForeColor)

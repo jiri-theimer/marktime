@@ -114,9 +114,9 @@
         With RadTabStrip1.FindTabByValue("ff")
             If .Visible Then
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.j02Person, Master.DataPID, BO.BAS.IsNullInt(Me.j07ID.SelectedValue))
-                Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.j02Person, BO.BAS.IsNullInt(Me.j07ID.SelectedValue))
-                ff1.FillData(fields, lisX18, "j02Person_FreeField", Master.DataPID)
-                .Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
+                Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.j02Person, BO.BAS.IsNullInt(Me.j07ID.SelectedValue))
+                ff1.FillData(fields, lisX20X18, "j02Person_FreeField", Master.DataPID)
+                .Text = String.Format(.Text, ff1.FieldsCount, lisX20X18.Count)
 
             End If
         End With
@@ -184,7 +184,7 @@
 
             If .Save(cRec, lisFF) Then
                 Master.DataPID = .LastSavedPID
-                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.j02Person, Master.DataPID, ff1.GetTags())
+                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.j02Person, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 If Me.hidGUID.Value <> "" Then
                     Dim c As BO.j02Person = Master.Factory.j02PersonBL.Load(Master.DataPID)
                     Dim cTemp As New BO.p85TempBox

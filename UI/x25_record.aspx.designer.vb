@@ -158,6 +158,24 @@ Partial Public Class x25_record
     Protected WithEvents x25ForeColor As Global.Telerik.Web.UI.RadColorPicker
 
     '''<summary>
+    '''lblOwner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblOwner As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''j02ID_Owner control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j02ID_Owner As Global.UI.person
+
+    '''<summary>
     '''hidX18ID control.
     '''</summary>
     '''<remarks>

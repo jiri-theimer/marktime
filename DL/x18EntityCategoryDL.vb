@@ -9,12 +9,19 @@
         Return _cDB.GetRecord(Of BO.x18EntityCategory)(s, New With {.x18id = intPID})
     End Function
 
-    Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, strTempGUID As String) As IEnumerable(Of BO.x19EntityCategory_Binding)
+    Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, strTempGUID As String, x20IDs_Query As List(Of Integer)) As IEnumerable(Of BO.x19EntityCategory_Binding)
         Dim pars As New DbParameters
         pars.Add("x29id", CInt(x29id), DbType.Int32)
         pars.Add("recordpid", intRecordPID, DbType.Int32)
         If strTempGUID = "" Then
-            Return _cDB.GetList(Of BO.x19EntityCategory_Binding)("select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor from x19EntityCategory_Binding a INNER JOIN x18EntityCategory x18 ON a.x18ID=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID WHERE a.x29ID=@x29id AND a.x19RecordPID=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID", pars)
+            Dim s As String = "select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x20.x18ID as _x18ID,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor"
+            s += " from x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID INNER JOIN x18EntityCategory x18 ON x20.x18ID=x18.x18ID"
+            s += " WHERE x20.x29ID=@x29id AND a.x19RecordPID=@recordpid"
+            If Not x20IDs_Query Is Nothing Then
+                If x20IDs_Query.Count > 0 Then s += " AND a.x20ID IN (" & String.Join(",", x20IDs_Query) & ")"
+            End If
+            s += " ORDER BY x18.x18Ordinary,x18.x18ID"
+            Return _cDB.GetList(Of BO.x19EntityCategory_Binding)(s, pars)
         Else
             pars.Add("guid", strTempGUID, DbType.String)
             Dim s As String = "select p85.p85ID as _pid,p85.p85OtherKey1 as x18ID,p85.p85OtherKey2 as x25ID,p85.p85OtherKey3 as x19RecordPID"
@@ -42,37 +49,39 @@
                 .p85OtherKey1 = c.x18ID
                 .p85OtherKey2 = c.x25ID
                 .p85OtherKey3 = intRecordPID
+                .p85OtherKey4 = c.x20ID
             End With
 
             cDLP85.Save(cTemp)
         Next
         Return True
     End Function
-    Public Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
+    Public Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean
         Dim pars As New DbParameters
         pars.Add("x29id", CInt(x29id), DbType.Int32)
         pars.Add("recordpid", intRecordPID, DbType.Int32)
         pars.Add("login", _curUser.j03Login, DbType.String)
 
-        Dim lisSaved As IEnumerable(Of BO.x19EntityCategory_Binding) = _cDB.GetList(Of BO.x19EntityCategory_Binding)("select *," & bas.RecTail("x19") & " from x19EntityCategory_Binding WHERE x29ID=@x29id AND x19RecordPID=@recordpid", pars)
+        'Dim lisSaved As IEnumerable(Of BO.x19EntityCategory_Binding) = _cDB.GetList(Of BO.x19EntityCategory_Binding)("select a.*," & bas.RecTail("x19", "a") & " from x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID WHERE x20.x29ID=@x29id AND a.x19RecordPID=@recordpid", pars)
+        Dim lisSaved As IEnumerable(Of BO.x19EntityCategory_Binding) = GetList_X19(x29id, intRecordPID, "", x20IDs)
         For Each c In lisX19
             Dim cRec As BO.x19EntityCategory_Binding = Nothing
-            If lisSaved.Where(Function(p) p.x18ID = c.x18ID And p.x25ID = c.x25ID).Count > 0 Then
-                cRec = lisSaved.Where(Function(p) p.x18ID = c.x18ID And p.x25ID = c.x25ID).First
+            If lisSaved.Where(Function(p) p.x20ID = c.x20ID And p.x25ID = c.x25ID).Count > 0 Then
+                cRec = lisSaved.Where(Function(p) p.x20ID = c.x20ID And p.x25ID = c.x25ID).First
             End If
             If cRec Is Nothing Then
-                _cDB.RunSQL("INSERT INTO x19EntityCategory_Binding(x18ID,x25ID,x29ID,x19RecordPID,x19UserUpdate,x19UserInsert,x19DateUpdate) VALUES(" & c.x18ID.ToString & "," & c.x25ID.ToString & ",@x29id,@recordpid,@login,@login,getdate())", pars)
+                _cDB.RunSQL("INSERT INTO x19EntityCategory_Binding(x20ID,x25ID,x19RecordPID,x19UserUpdate,x19UserInsert,x19DateUpdate) VALUES(" & c.x20ID.ToString & "," & c.x25ID.ToString & ",@recordpid,@login,@login,getdate())", pars)
             End If
         Next
         For Each c In lisSaved
             Dim cRec As BO.x19EntityCategory_Binding = Nothing
-            If lisX19.Where(Function(p) p.x18ID = c.x18ID And p.x25ID = c.x25ID).Count > 0 Then
-                cRec = lisX19.Where(Function(p) p.x18ID = c.x18ID And p.x25ID = c.x25ID).First
+            If lisX19.Where(Function(p) p.x20ID = c.x20ID And p.x25ID = c.x25ID).Count > 0 Then
+                cRec = lisX19.Where(Function(p) p.x20ID = c.x20ID And p.x25ID = c.x25ID).First
             End If
             If Not cRec Is Nothing Then
-                _cDB.RunSQL("UPDATE x19EntityCategory_Binding set x19UserUpdate=@login,x19DateUpdate=getdate() WHERE x18ID=" & c.x18ID.ToString & " AND x25ID=" & c.x25ID.ToString & " AND x29ID=@x29id AND x19RecordPID=@recordpid", pars)
+                _cDB.RunSQL("UPDATE x19EntityCategory_Binding set x19UserUpdate=@login,x19DateUpdate=getdate() WHERE x20ID=" & c.x20ID.ToString & " AND x25ID=" & c.x25ID.ToString & " AND x19RecordPID=@recordpid", pars)
             Else
-                _cDB.RunSQL("DELETE FROM x19EntityCategory_Binding WHERE x18ID=" & c.x18ID.ToString & " AND x25ID=" & c.x25ID.ToString & " AND x29ID=@x29id AND x19RecordPID=@recordpid", pars)
+                _cDB.RunSQL("DELETE FROM x19EntityCategory_Binding WHERE x20ID=" & c.x20ID.ToString & " AND x25ID=" & c.x25ID.ToString & " AND x19RecordPID=@recordpid", pars)
             End If
         Next
         Return True
@@ -103,7 +112,7 @@
         If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then
             Dim intX18ID As Integer = _cDB.LastSavedRecordPID
 
-            Dim lisX20Saved As IEnumerable(Of BO.x20EntiyToCategory) = GetList_x20(intX18ID)
+            Dim lisX20Saved As IEnumerable(Of BO.x20EntiyToCategory) = GetList_x20(BO.BAS.ConvertInt2List(intX18ID))
             For Each c In lisX20
                 pars = New DbParameters
                 pars.Add("x18ID", intX18ID, DbType.Int32)
@@ -197,11 +206,11 @@
                 Return 0
         End Select
     End Function
-    Public Function GetX29IDs(intX18ID As Integer) As IEnumerable(Of Integer)
-        Dim pars As New DbParameters
-        pars.Add("pid", intX18ID, DbType.Int32)
-        Return _cDB.GetList(Of BO.GetInteger)("select x29ID as Value FROM x20EntiyToCategory WHERE x18ID=@pid", pars).Select(Function(p) p.Value)
-    End Function
+    ''Public Function GetX29IDs(intX18ID As Integer) As IEnumerable(Of Integer)
+    ''    Dim pars As New DbParameters
+    ''    pars.Add("pid", intX18ID, DbType.Int32)
+    ''    Return _cDB.GetList(Of BO.GetInteger)("select x29ID as Value FROM x20EntiyToCategory WHERE x18ID=@pid", pars).Select(Function(p) p.Value)
+    ''End Function
     Private Function GetSQLPart1(bolInhaleAllCols As Boolean) As String
         Dim s As String = "select a.*,x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner," & bas.RecTail("x18", "a")
         If bolInhaleAllCols Then
@@ -234,8 +243,25 @@
         Return _cDB.GetList(Of BO.x25EntityField_ComboValue)(s, pars)
 
     End Function
-    Public Function GetList_x20(intX18ID As Integer) As IEnumerable(Of BO.x20EntiyToCategory)
-        Return _cDB.GetList(Of BO.x20EntiyToCategory)("SELECT * FROM x20EntiyToCategory WHERE x18ID=@pid ORDER BY x20Ordinary", New With {.pid = intX18ID})
+    ''Public Function GetList_x20(intX18ID As Integer) As IEnumerable(Of BO.x20EntiyToCategory)
+    ''    Dim lis As New List(Of Integer)
+    ''    lis.Add(intX18ID)
+    ''    Return GetList_x20(lis)
+    ''    ''Return _cDB.GetList(Of BO.x20EntiyToCategory)("SELECT * FROM x20EntiyToCategory WHERE x18ID=@pid ORDER BY x20Ordinary", New With {.pid = intX18ID})
+    ''End Function
+    Public Function GetList_x20(x18IDs As List(Of Integer)) As IEnumerable(Of BO.x20EntiyToCategory)
+        Return _cDB.GetList(Of BO.x20EntiyToCategory)("SELECT * FROM x20EntiyToCategory WHERE x18ID IN (" & String.Join(",", x18IDs) & ") ORDER BY x20Ordinary")
+    End Function
+    Public Function GetList_x20_join_x18(x29ID As BO.x29IdEnum, Optional intEntityType As Integer = 0) As IEnumerable(Of BO.x20_join_x18)
+        Dim s As String = "SELECT a.*," & bas.RecTail("x18", "a") & ",x20.* FROM x18EntityCategory a INNER JOIN x20EntiyToCategory x20 ON a.x18ID=x20.x20ID"
+        s += " WHERE x20.x29ID=" & CInt(x29ID).ToString
+        If intEntityType > 0 Then
+            s += " AND ((x20EntityTypePID=" & intEntityType.ToString & " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & ") OR x20EntityTypePID IS NULL)"
+
+        End If
+        s += " ORDER BY a.x18Ordinary,a.x18Name"
+
+        Return _cDB.GetList(Of BO.x20_join_x18)(s)
     End Function
     Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
         Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)("SELECT * FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid ORDER BY x16Ordinary", New With {.pid = intX18ID})

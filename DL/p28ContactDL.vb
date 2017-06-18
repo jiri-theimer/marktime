@@ -310,7 +310,7 @@
                     s.Append(" AND " & strQueryW)
                 End If
             End If
-            'If .x25ID > 0 Then s.Append(" AND a.p28ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=328 AND x25ID=" & .x25ID.ToString & ")")
+
             If .SpecificQuery > BO.myQueryP28_QuickQuery._NotSpecified Then
                 If .j02ID_ExplicitQueryFor > 0 Then
                     pars.Add("j02id_query", .j02ID_ExplicitQueryFor, DbType.Int32)

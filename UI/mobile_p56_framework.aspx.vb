@@ -98,7 +98,7 @@
             Me.boxO23.Visible = False
         End If
 
-        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID)
+        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID, "", Nothing)
         If lisX19.Count > 0 Then
             labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, lisX19)
         Else

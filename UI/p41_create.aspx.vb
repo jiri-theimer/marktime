@@ -66,10 +66,10 @@
         With RadTabStrip1.FindTabByValue("ff")
             If .Visible Then
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p41Project, Master.DataPID, BO.BAS.IsNullInt(Me.p42ID.SelectedValue))
-                Dim lisX18 As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.p41Project, BO.BAS.IsNullInt(Me.p42ID.SelectedValue))
-                ff1.FillData(fields, lisX18, "p41Project_FreeField", Master.DataPID)
+                Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p41Project, BO.BAS.IsNullInt(Me.p42ID.SelectedValue))
+                ff1.FillData(fields, lisX20X18, "p41Project_FreeField", Master.DataPID)
 
-                .Text = String.Format(.Text, ff1.FieldsCount, lisX18.Count)
+                .Text = String.Format(.Text, ff1.FieldsCount, lisX20X18.Count)
             End If
         End With
     End Sub
@@ -349,7 +349,7 @@
             With Master.Factory.p41ProjectBL
                 If .Save(cRec, Nothing, Nothing, lisX69, lisFF) Then
                     Master.DataPID = .LastSavedPID
-                    If ff1.GetTags.Count > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p41Project, Master.DataPID, ff1.GetTags())
+                    If ff1.GetTags.Count > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p41Project, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                     Master.CloseAndRefreshParent("p41-create")
                 Else
                     Master.Notify(.ErrorMessage, 2)

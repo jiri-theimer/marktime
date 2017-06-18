@@ -201,7 +201,7 @@
                     strW += " AND " & strQueryW
                 End If
             End If
-            'If .x25ID > 0 Then strW += " AND a.o23ID IN (SELECT x19RecordPID FROM x19EntityCategory_Binding WHERE x29ID=223 AND x25ID=" & .x25ID.ToString & ")"
+
             Select Case .SpecificQuery
                 Case BO.myQueryO23_SpecificQuery.AllowedForRead
                     If Not _curUser.IsAdmin Then    'admin má automaticky nárok na všechny dokumenty

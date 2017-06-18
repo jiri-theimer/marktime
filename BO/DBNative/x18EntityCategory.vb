@@ -7,7 +7,7 @@
 
     Public Property x18Ordinary As Integer
 
-    Private Property _x23Name As String
+    Friend Property _x23Name As String
 
     Public Property x18IsColors As Boolean
     Public Property x18IsManyItems As Boolean
@@ -21,7 +21,7 @@
             Return _x23Name
         End Get
     End Property
-    Private Property _Owner As String
+    Friend Property _Owner As String
     Public ReadOnly Property Owner As String
         Get
             Return _Owner

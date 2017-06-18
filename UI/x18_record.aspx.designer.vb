@@ -86,24 +86,6 @@ Partial Public Class x18_record
     Protected WithEvents x18NameShort As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''x18IsColors control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18IsColors As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''x18IsManyItems control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents x18IsManyItems As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''x29ID_addX20 control.
     '''</summary>
     '''<remarks>
@@ -185,6 +167,33 @@ Partial Public Class x18_record
     Protected WithEvents cmdConfirmOpg1 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''ff control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ff As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''cmdNewX16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdNewX16 As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''rpX16 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX16 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''other control.
     '''</summary>
     '''<remarks>
@@ -239,22 +248,22 @@ Partial Public Class x18_record
     Protected WithEvents j02ID_Owner As Global.UI.person
 
     '''<summary>
-    '''cmdNewX16 control.
+    '''x18IsColors control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNewX16 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents x18IsColors As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''rpX16 control.
+    '''x18IsManyItems control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpX16 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents x18IsManyItems As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''x18Icon control.

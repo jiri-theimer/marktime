@@ -179,7 +179,7 @@
             Me.boxO23.Visible = False
         End If
 
-        labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID))
+        labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID, "", Nothing))
 
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, cRec.p57ID)
         If lisFF.Count > 0 Then
