@@ -147,6 +147,12 @@ Public Class x18_querybuilder
         nParent.Nodes.Add(n0)
 
         Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(cX18.x23ID)
+        If lis.Count > 50 Then
+            Dim n As New RadTreeNode(String.Join("Příliš mnoho položek pro tento druh filtrování {0}.", lis.Count))
+            n.Checkable = False
+            n.Enabled = False
+            Return
+        End If
         For Each c In lis
             Dim n As New RadTreeNode(c.x25Name, strValue & "-" & c.PID.ToString)
             n.Checkable = True

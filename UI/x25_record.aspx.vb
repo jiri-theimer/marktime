@@ -326,4 +326,11 @@ Public Class x25_record
                 End With
         End Select
     End Sub
+
+    Private Sub Handle_Changex20ID()
+        If Me.opgX20ID.SelectedItem Is Nothing Then Return
+        Dim lis As IEnumerable(Of BO.x20EntiyToCategory) = Master.Factory.x18EntityCategoryBL.GetList_x20(Me.CurrentX18ID)
+
+
+    End Sub
 End Class

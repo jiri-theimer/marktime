@@ -14,7 +14,7 @@
         pars.Add("x29id", CInt(x29id), DbType.Int32)
         pars.Add("recordpid", intRecordPID, DbType.Int32)
         If strTempGUID = "" Then
-            Dim s As String = "select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x20.x18ID as _x18ID,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor"
+            Dim s As String = "select a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x20.x18ID as _x18ID,x18.x18Name as _x18Name,x18.x18Icon as _x18Icon,isnull(x20.x20Name,x18.x18Name) as _BindName,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor"
             s += " from x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID INNER JOIN x18EntityCategory x18 ON x20.x18ID=x18.x18ID"
             s += " WHERE x20.x29ID=@x29id AND a.x19RecordPID=@recordpid"
             If Not x20IDs_Query Is Nothing Then
@@ -253,10 +253,10 @@
         Return _cDB.GetList(Of BO.x20EntiyToCategory)("SELECT * FROM x20EntiyToCategory WHERE x18ID IN (" & String.Join(",", x18IDs) & ") ORDER BY x20Ordinary")
     End Function
     Public Function GetList_x20_join_x18(x29ID As BO.x29IdEnum, Optional intEntityType As Integer = 0) As IEnumerable(Of BO.x20_join_x18)
-        Dim s As String = "SELECT a.*," & bas.RecTail("x18", "a") & ",x20.* FROM x18EntityCategory a INNER JOIN x20EntiyToCategory x20 ON a.x18ID=x20.x20ID"
+        Dim s As String = "SELECT a.*," & bas.RecTail("x18", "a") & ",x20.* FROM x18EntityCategory a INNER JOIN x20EntiyToCategory x20 ON a.x18ID=x20.x18ID"
         s += " WHERE x20.x29ID=" & CInt(x29ID).ToString
         If intEntityType > 0 Then
-            s += " AND ((x20EntityTypePID=" & intEntityType.ToString & " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & ") OR x20EntityTypePID IS NULL)"
+            s += " AND ((x20.x20EntityTypePID=" & intEntityType.ToString & " AND x20.x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & ") OR x20.x20EntityTypePID IS NULL)"
 
         End If
         s += " ORDER BY a.x18Ordinary,a.x18Name"

@@ -343,7 +343,7 @@
             If .Save(cRec, lisX69, lisFF, "") Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
-                If Not bolNew Or ff1.GetX20IDs.Count > 0 Then
+                If Not bolNew Or ff1.TagsCount > 0 Then
                     Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p56Task, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 End If
                 Master.CloseAndRefreshParent("p56-save")
@@ -363,7 +363,7 @@
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, BO.BAS.IsNullInt(Me.p57ID.SelectedValue))
                 Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p56Task, BO.BAS.IsNullInt(Me.p57ID.SelectedValue))
                 ff1.FillData(fields, lisX20X18, "p56Task_FreeField", Master.DataPID)
-                .Text = String.Format(.Text, ff1.FieldsCount, lisX20X18.Count)
+                .Text = String.Format(.Text, ff1.FieldsCount, ff1.TagsCount)
 
                 
             End If

@@ -6,8 +6,62 @@
 <%@ Register TagPrefix="uc" TagName="person" Src="~/person.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script type="text/javascript">
+        function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
+            var combo = sender;
+            var pid = combo.get_value();
+            <%If opgLayout.SelectedValue = "1" Then%>
+            var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";
+            location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
+            <%End If%>
+            <%If opgLayout.SelectedValue = "2" Then%>
+            location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
+            <%End If%>
+            <%If opgLayout.SelectedValue = "3" Then%>
+            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?source=3&pid=" + pid);
+            <%End If%>
+        }
+        function cbx1_OnClientItemsRequesting(sender, eventArgs) {
+            var context = eventArgs.get_context();
+            var combo = sender;
+
+            if (combo.get_value() == "")
+                context["filterstring"] = eventArgs.get_text();
+            else
+                context["filterstring"] = "";
+
+            context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
+            context["flag"] = "searchbox";
+            <%If Me.CurrentPrefix = "p41" Then%>
+            context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
+            <%End If%>
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="div6">
+        <div>
+            <asp:RadioButtonList ID="opgX20ID" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" DataValueField="x20ID" DataTextField="BindName"></asp:RadioButtonList>
+        </div>
+        <div>
+            <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
+                <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
+            </telerik:RadComboBox>
+        </div>
+        <asp:HiddenField ID="hidSearchPrefix" runat="server" />
+    </div>
+    <table cellpadding="5" cellspacing="2">
+        <asp:Repeater ID="rpX20" runat="server">
+            <ItemTemplate>
+                <tr>
+                    <td style="width: 140px;">
+                        <asp:Label ID="x20Name" runat="server"></asp:Label>
+                    </td>
+                    <td></td>
+                </tr>
+            </ItemTemplate>
+        </asp:Repeater>
+    </table>
     <table cellpadding="5" cellspacing="2">
         <tr>
             <td style="width: 140px;">
@@ -125,7 +179,7 @@
     </asp:Panel>
 
     <div class="div6" style="clear: both; margin-top: 20px;">
-        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq" style="padding-right:30px;"></asp:Label>
+        <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu:" CssClass="lblReq" Style="padding-right: 30px;"></asp:Label>
         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
     </div>
     <asp:HiddenField ID="hidX18ID" runat="server" />

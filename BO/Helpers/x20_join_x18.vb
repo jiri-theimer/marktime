@@ -15,4 +15,18 @@
     Public Property x20IsClosed As Boolean
     Public Property x20Ordinary As Integer
 
+    Public ReadOnly Property BindName As String
+        Get
+            If Me.x20Name = "" Then
+                If Me.x18NameShort = "" Then
+                    Return Me.x18Name
+                Else
+                    Return Me.x18NameShort
+                End If
+            Else
+                Return Me.x20Name
+            End If
+        End Get
+    End Property
+
 End Class

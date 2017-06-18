@@ -237,7 +237,7 @@
                 Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p28Contact, Master.DataPID, BO.BAS.IsNullInt(Me.p29ID.SelectedValue))
                 Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p28Contact, BO.BAS.IsNullInt(Me.p29ID.SelectedValue))
                 ff1.FillData(fields, lisX20X18, "p28Contact_FreeField", Master.DataPID)
-                .Text = String.Format(.Text, ff1.FieldsCount, lisX20X18.Count)
+                .Text = String.Format(.Text, ff1.FieldsCount, ff1.TagsCount)
 
             End If
         End With

@@ -17,6 +17,18 @@
             Return _x18Name
         End Get
     End Property
+    Private Property _BindName As String
+    Public ReadOnly Property BindName As String
+        Get
+            Return _BindName
+        End Get
+    End Property
+    Private Property _x18Icon As String
+    Public ReadOnly Property x18Icon As String
+        Get
+            Return _x18Icon
+        End Get
+    End Property
     Private Property _x25Name As String
     Public ReadOnly Property x25Name As String
         Get
@@ -38,6 +50,7 @@
     Private Property _ForeColor As String
     Public ReadOnly Property ForeColor As String
         Get
+            If _ForeColor = "" Then Return "black"
             Return _ForeColor
         End Get
     End Property

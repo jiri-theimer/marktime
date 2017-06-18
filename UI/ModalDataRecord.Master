@@ -279,5 +279,8 @@
 
     }
 
+    function sw_everywhere(url, iconUrl, is_maximize) {
+        dialog_master(url, is_maximize,null,null);
+    }
 </script>
 </html>

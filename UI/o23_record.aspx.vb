@@ -429,7 +429,7 @@
             If .Save(cRec, upload1.GUID, lisX69, lisFF) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
-                If Not bolNew Or ff1.GetX20IDs.Count > 0 Then
+                If Not bolNew Or ff1.TagsCount > 0 Then
                     Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.o23Notepad, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
                 End If
 

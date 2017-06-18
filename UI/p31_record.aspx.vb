@@ -1020,7 +1020,7 @@
                 If Me.GuidApprove <> "" And Not bolNewRec Then
                     Master.Factory.p31WorksheetBL.UpdateTemp_After_EditOrig(Master.DataPID, Me.GuidApprove) 'záznam otevřený k editaci ze schvalovacího dialogu
                 End If
-                If Not bolNewRec Or ff1.GetX20IDs.Count > 0 Then
+                If Not bolNewRec Or ff1.TagsCount > 0 Then
                     If ff1.TagsCount > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs())
                 End If
                 If Me.CurrentP85ID > 0 Then

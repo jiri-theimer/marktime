@@ -14,6 +14,42 @@ Option Explicit On
 Partial Public Class x25_record
 
     '''<summary>
+    '''opgX20ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgX20ID As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''cbx1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
+
+    '''<summary>
+    '''hidSearchPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidSearchPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''rpX20 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rpX20 As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''lblX23ID control.
     '''</summary>
     '''<remarks>

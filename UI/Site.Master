@@ -274,7 +274,9 @@
         }
 
 
-
+        function sw_everywhere(url, iconUrl, is_maximize) {
+            sw_master(url, iconUrl, is_maximize);
+        }
 
     </script>
 </body>

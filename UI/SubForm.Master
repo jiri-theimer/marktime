@@ -224,6 +224,10 @@
                 //nic
             }
         }
+
+        function sw_everywhere(url, iconUrl, is_maximize) {
+            sw_local(url, iconUrl, is_maximize);
+        }
     </script>
 </body>
 </html>

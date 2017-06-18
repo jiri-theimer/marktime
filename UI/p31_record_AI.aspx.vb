@@ -317,7 +317,7 @@
             With Master.Factory.p31WorksheetBL
                 If .UpdateInvoice(cRec.p91ID, lis) Then
                     Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False, "")
-                    If ff1.GetX20IDs.Count > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
+                    If ff1.TagsCount > 0 Then Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
 
                     Master.CloseAndRefreshParent("p31-save")
                 Else

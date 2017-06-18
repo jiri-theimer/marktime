@@ -109,7 +109,16 @@ Public Class freefields
     Private Sub rp1_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rp1.ItemDataBound
         Dim cRec As BO.x20_join_x18 = CType(e.Item.DataItem, BO.x20_join_x18)
         With CType(e.Item.FindControl("x18Name"), Label)
-            .Text = "<img src='Images/label.png'/> " & cRec.x18Name & ":"
+            If cRec.x18Icon = "" Then
+                .Text = "<img src='Images/label.png'/>"
+            Else
+                .Text = "<img src='" & cRec.x18Icon & "' alt='Štítek'/>"
+            End If
+            If cRec.x20Name = "" Then
+                .Text += " " & cRec.x18Name & ":"
+            Else
+                .Text += " " & cRec.x20Name & ":"
+            End If
         End With
 
         Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(cRec.x23ID).Where(Function(p) p.IsClosed = False)
