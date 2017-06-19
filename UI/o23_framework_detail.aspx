@@ -156,7 +156,7 @@
                 <div class="div6">
                     <uc:entityrole_assign_inline ID="roles_notepad" runat="server" EntityX29ID="o23Notepad" NoDataText=""></uc:entityrole_assign_inline>
                 </div>
-                <uc:x18_readonly id="labels1" runat="server"></uc:x18_readonly>
+                <uc:x18_readonly id="labels1" runat="server" IsShowLinks="true"></uc:x18_readonly>
                 <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
             </div>
         </div>

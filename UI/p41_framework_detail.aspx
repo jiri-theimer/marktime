@@ -208,7 +208,7 @@
                 </tr>
 
             </table>
-            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+            <uc:x18_readonly ID="labels1" runat="server" IsShowLinks="true"></uc:x18_readonly>
 
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
             <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" Text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>
