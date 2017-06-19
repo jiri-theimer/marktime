@@ -165,7 +165,7 @@
                             <asp:HyperLink ID="linkISIR_Monitoring" runat="server" Text="NE" NavigateUrl="javascript:o48_edit()" ToolTip="Zapnout monitoring klienta v insolvenčním rejstříku"></asp:HyperLink>
             </div>
             <div style="clear: both;"></div>
-             <uc:x18_readonly ID="labels1" runat="server" ishowlinks="true"></uc:x18_readonly>
+             <uc:x18_readonly ID="labels1" IsShowLinks="true" runat="server"></uc:x18_readonly>
         </div>
 
 

@@ -4,18 +4,18 @@
         _curUser = ServiceUser
     End Sub
     Public Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
-        Dim s As String = GetSQLPart1(0) & " WHERE a.x25ID=@pid"
+        Dim s As String = "SELECT " & GetSQLPart1(0) & " WHERE a.x25ID=@pid"
         Return _cDB.GetRecord(Of BO.x25EntityField_ComboValue)(s, New With {.pid = intPID})
     End Function
     Public Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
         Dim pars As New DbParameters
         pars.Add("x23id", intX23ID, DbType.Int32)
         pars.Add("code", strCode, DbType.String)
-        Dim s As String = GetSQLPart1(0) & " WHERE a.x23ID=@x23id AND a.x25Code=@code"
+        Dim s As String = "SELECT " & GetSQLPart1(0) & " WHERE a.x23ID=@x23id AND a.x25Code=@code"
         Return _cDB.GetRecord(Of BO.x25EntityField_ComboValue)(s, pars)
     End Function
     Private Function GetSQLPart1(intTopRecs As Integer) As String
-        Dim s As String = "select "
+        Dim s As String = ""
         If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
         s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner"
         s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
@@ -100,23 +100,104 @@
             _cDB.RunSQL("UPDATE " & .SourceTableName & " SET " & .x28Field & "Text=NULL," & .x28Field & "=NULL WHERE " & .x28Field & "=" & intX25ID.ToString)
         End With
     End Sub
-    Public Function GetList(intX23ID As Integer, Optional myQuery As BO.myQuery = Nothing) As IEnumerable(Of BO.x25EntityField_ComboValue)
+    Public Function GetList(myQuery As BO.myQueryX25) As IEnumerable(Of BO.x25EntityField_ComboValue)
         If myQuery Is Nothing Then
-            myQuery = New BO.myQuery
+            myQuery = New BO.myQueryX25(0)
             myQuery.Closed = BO.BooleanQueryMode.NoQuery
         End If
-        Dim s As String = GetSQLPart1(myQuery.TopRecordsOnly)
+        Dim s As String = "SELECT " & GetSQLPart1(myQuery.TopRecordsOnly)
         Dim strW As String = bas.ParseWhereMultiPIDs("a.x25ID", myQuery)
         strW += bas.ParseWhereValidity("x25", "a", myQuery)
         Dim pars As New DbParameters
-        If intX23ID <> 0 Then
-            strW += " AND  a.x23ID=@x23id"
-            pars.Add("x23id", intX23ID, DbType.Int32)
-        End If
+        With myQuery
+            If .x23ID <> 0 Then
+                strW += " AND  a.x23ID=@x23id"
+                pars.Add("x23id", .x23ID, DbType.Int32)
+            End If
+        End With
+        
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
         s += " ORDER BY a.x23ID,a.x25Ordinary,a.x25Name"
 
         Return _cDB.GetList(Of BO.x25EntityField_ComboValue)(s, pars)
 
+    End Function
+
+    Private Function GetSQLWHERE(myQuery As BO.myQueryX25, ByRef pars As DL.DbParameters) As String
+        Dim strW As String = bas.ParseWhereMultiPIDs("a.x25ID", myQuery)
+        strW += bas.ParseWhereValidity("x25", "a", myQuery)
+        With myQuery
+            If Not BO.BAS.IsNullDBDate(.DateFrom) Is Nothing Then
+                pars.Add("d1", .DateFrom, DbType.DateTime) : pars.Add("d2", .DateUntil, DbType.DateTime)
+                strW += " AND " & .DateQueryFieldBy & " BETWEEN @d1 AND @d2"
+            End If
+            
+            If Not .DateInsertFrom Is Nothing Then
+                If Year(.DateInsertFrom) > 1900 Then
+                    pars.Add("d1", .DateInsertFrom) : pars.Add("d2", .DateInsertUntil)
+                    strW += " AND a.x25DateInsert BETWEEN @d1 AND @d2"
+                End If
+            End If
+            If .x23ID <> 0 Then
+                strW += " AND  a.x23ID=@x23id"
+                pars.Add("x23id", .x23ID, DbType.Int32)
+            End If
+            If .Record_x29ID > BO.x29IdEnum._NotSpecified And .RecordPID <> 0 Then
+                pars.Add("x29id", CInt(.Record_x29ID), DbType.Int32)
+                pars.Add("recordpid", .RecordPID, DbType.Int32)
+                strW += " AND a.x25ID IN (select x25ID FROM x19EntityCategory_Binding WHERE x29ID=@x29id AND x19RecordPID=@recordpid)"
+            End If
+
+            If .ColumnFilteringExpression <> "" Then
+                strW += " AND " & .ColumnFilteringExpression
+            End If
+            If .SearchExpression <> "" Then
+                strW += " AND ("
+                'něco jako fulltext
+                strW += "a.x25Name LIKE '%'+@expr+'%' OR a.x25Code LIKE '%'+@expr+'%' OR a.x25FreeText01 LIKE '%'+@expr+'%' OR a.x25FreeText02 LIKE '%'+@expr+'%' OR a.x25FreeText03 LIKE '%'+@expr+'%' OR a.x25FreeText04 LIKE '%'+@expr+'%' OR a.x25FreeText05 LIKE '%'+@expr+'%' OR a.x25BigText LIKE '%'+@expr+'%'"
+                strW += ")"
+                pars.Add("expr", .SearchExpression, DbType.String)
+            End If
+        End With
+        strW += bas.ParseWhereValidity("x25", "a", myQuery)
+        Return bas.TrimWHERE(strW)
+    End Function
+
+    Public Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable
+        Dim s As String = ""
+        Dim strFROM As String = "FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
+        With myQuery
+            .MG_GridSqlColumns += ",a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed"
+        End With
+
+        Dim pars As New DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+
+        With myQuery
+            If .MG_SelectPidFieldOnly Then .MG_GridSqlColumns = "a.x25ID as pid"
+            Dim strORDERBY As String = .MG_SortString
+            If strORDERBY = "" Then strORDERBY = "a.x25ID DESC"
+            If .MG_PageSize > 0 Then
+                Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
+
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & strFROM
+
+                If strW <> "" Then s += " WHERE " & strW
+                s += ") SELECT * FROM rst"
+                pars.Add("start", intStart, DbType.Int32)
+                pars.Add("end", (intStart + .MG_PageSize - 1), DbType.Int32)
+                s += " WHERE RowIndex BETWEEN @start AND @end"
+            Else
+                'bez stránkování
+                s = "SELECT " & .MG_GridSqlColumns & " " & strFROM
+                If strW <> "" Then s += " WHERE " & strW
+                s += " ORDER BY " & strORDERBY
+            End If
+
+
+        End With
+
+        Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
+        If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
 End Class

@@ -804,7 +804,7 @@ Public Class admin_framework
                     Dim lis As IEnumerable(Of BO.x23EntityField_Combo) = .x23EntityField_ComboBL.GetList(mqDef)
                     grid1.DataSource = lis
                 Case "x25"
-                    Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = .x25EntityField_ComboValueBL.GetList(0)
+                    Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = .x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(0))
                     grid1.DataSource = lis
                 
                 Case "x46"

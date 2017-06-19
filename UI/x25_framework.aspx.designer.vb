@@ -11,34 +11,61 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class x25_record
+Partial Public Class x25_framework
 
     '''<summary>
-    '''panX20 control.
+    '''RadSplitter1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panX20 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents RadSplitter1 As Global.Telerik.Web.UI.RadSplitter
 
     '''<summary>
-    '''x18Name control.
+    '''navigationPane control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x18Name As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents navigationPane As Global.Telerik.Web.UI.RadPane
 
     '''<summary>
-    '''opgX20ID control.
+    '''panSearch control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents opgX20ID As Global.System.Web.UI.WebControls.RadioButtonList
+    Protected WithEvents panSearch As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''img1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''x18ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18ID As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''panSearchbox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panSearchbox As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''cbx1 control.
@@ -50,202 +77,220 @@ Partial Public Class x25_record
     Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''rpX19 control.
+    '''lblGridHeader control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpX19 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents lblGridHeader As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblX23ID control.
+    '''MasterEntity control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblX23ID As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x23ID control.
+    '''CurrentPeriodQuery control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x23ID As Global.UI.datacombo
+    Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblName control.
+    '''CurrentQuery control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblName As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''x25Name control.
+    '''cmdCĺearFilter control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x25Name As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''lblOrdinary control.
+    '''cbxPeriodType control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblOrdinary As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cbxPeriodType As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''x25Ordinary control.
+    '''period1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x25Ordinary As Global.Telerik.Web.UI.RadNumericTextBox
+    Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
-    '''lblx25Code control.
+    '''panExport control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblx25Code As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents panExport As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''x25Code control.
+    '''cmdExport control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x25Code As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents cmdExport As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''panX16 control.
+    '''cmdXLS control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panX16 As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents cmdXLS As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''rpX16 control.
+    '''cmdPDF control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents rpX16 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents cmdPDF As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''panColors control.
+    '''cmdDOC control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents panColors As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents cmdDOC As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
-    '''Label2 control.
+    '''cbxPaging control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''x25BackColor control.
+    '''grid1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x25BackColor As Global.Telerik.Web.UI.RadColorPicker
+    Protected WithEvents grid1 As Global.UI.datagrid
 
     '''<summary>
-    '''Label1 control.
+    '''hidX23ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents hidX23ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''x25ForeColor control.
+    '''hiddatapid control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents x25ForeColor As Global.Telerik.Web.UI.RadColorPicker
+    Protected WithEvents hiddatapid As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''lblOwner control.
+    '''hidDefaultSorting control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblOwner As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents hidDefaultSorting As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''j02ID_Owner control.
+    '''hidMasterPrefix control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j02ID_Owner As Global.UI.person
+    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidX18ID control.
+    '''hidMasterPID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidX18ID As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidX29ID control.
+    '''hidUIFlag control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidX29ID As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidUIFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidGUID_x19 control.
+    '''hidContentPaneDefUrl control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidGUID_x19 As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidContentPaneDefUrl As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''SharedCalendar control.
+    '''hidContentPaneWidth control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents SharedCalendar As Global.Telerik.Web.UI.RadCalendar
+    Protected WithEvents hidContentPaneWidth As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''RadSplitbar1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadSplitbar1 As Global.Telerik.Web.UI.RadSplitBar
+
+    '''<summary>
+    '''contentPane control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents contentPane As Global.Telerik.Web.UI.RadPane
 
     '''<summary>
     '''Master property.
@@ -253,9 +298,9 @@ Partial Public Class x25_record
     '''<remarks>
     '''Auto-generated property.
     '''</remarks>
-    Public Shadows ReadOnly Property Master() As UI.ModalDataRecord
+    Public Shadows ReadOnly Property Master() As UI.Site
         Get
-            Return CType(MyBase.Master, UI.ModalDataRecord)
+            Return CType(MyBase.Master, UI.Site)
         End Get
     End Property
 End Class

@@ -4,7 +4,8 @@
     Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
     Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x25EntityField_ComboValue)
+    Function GetList(myQuery As BO.myQueryX25) As IEnumerable(Of BO.x25EntityField_ComboValue)
+    Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable
 
 
 End Interface
@@ -78,9 +79,11 @@ Class x25EntityField_ComboValueBL
             Return False
         End If
     End Function
-    Public Function GetList(intX23ID As Integer) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix25EntityField_ComboValueBL.GetList
-        Return _cDL.GetList(intX23ID)
+    Public Function GetList(myQuery As BO.myQueryX25) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix25EntityField_ComboValueBL.GetList
+        Return _cDL.GetList(myQuery)
     End Function
-
+    Public Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable Implements Ix25EntityField_ComboValueBL.GetDataTable4Grid
+        Return _cDL.GetDataTable4Grid(myQuery)
+    End Function
    
 End Class

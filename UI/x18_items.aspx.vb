@@ -45,7 +45,7 @@
 
     End Sub
     Private Sub RefreshItems()
-        rpX25.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(CInt(Me.hidX23ID.Value))
+        rpX25.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(CInt(Me.hidX23ID.Value)))
         rpX25.DataBind()
 
     End Sub

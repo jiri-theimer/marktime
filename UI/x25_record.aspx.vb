@@ -128,32 +128,34 @@ Public Class x25_record
 
         ''End If
         RefreshUserFields()
+        If panX20.Visible Then
+            Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(Master.DataPID, lisX20X18.Select(Function(p) p.x20ID).ToList, True)
+            Master.Factory.p85TempBoxBL.Truncate(hidGUID_x19.Value)
+            For Each c In lisX19
+                Dim cTemp As New BO.p85TempBox
+                With cTemp
+                    .p85GUID = hidGUID_x19.Value
+                    .p85Prefix = "x19"
+                    .p85DataPID = c.PID
+                    .p85OtherKey1 = c.x19RecordPID
+                    .p85OtherKey2 = c.x20ID
+                    .p85OtherKey3 = c.x29ID
+                    .p85FreeBoolean01 = c.x20IsMultiselect
+                    If c.x20Name <> "" Then
+                        .p85FreeText01 = c.x20Name
+                    Else
+                        .p85FreeText01 = BO.BAS.GetX29EntityAlias(CType(c.x29ID, BO.x29IdEnum), False)
+                    End If
 
-        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(Master.DataPID, lisX20X18.Select(Function(p) p.x20ID).ToList, True)
-        Master.Factory.p85TempBoxBL.Truncate(hidGUID_x19.Value)
-        For Each c In lisX19
-            Dim cTemp As New BO.p85TempBox
-            With cTemp
-                .p85GUID = hidGUID_x19.Value
-                .p85Prefix = "x19"
-                .p85DataPID = c.PID
-                .p85OtherKey1 = c.x19RecordPID
-                .p85OtherKey2 = c.x20ID
-                .p85OtherKey3 = c.x29ID
-                .p85FreeBoolean01 = c.x20IsMultiselect
-                If c.x20Name <> "" Then
-                    .p85FreeText01 = c.x20Name
-                Else
-                    .p85FreeText01 = BO.BAS.GetX29EntityAlias(CType(c.x29ID, BO.x29IdEnum), False)
-                End If
+                    .p85FreeText02 = c.RecordAlias
 
-                .p85FreeText02 = c.RecordAlias
 
-                
-            End With
-            Master.Factory.p85TempBoxBL.Save(cTemp)
-        Next
-        RefreshTempX19()
+                End With
+                Master.Factory.p85TempBoxBL.Save(cTemp)
+            Next
+            RefreshTempX19()
+        End If
+        
         
 
 
@@ -293,6 +295,13 @@ Public Class x25_record
         End If
     End Function
 
+    Private Sub rpX16_ItemCreated(sender As Object, e As RepeaterItemEventArgs) Handles rpX16.ItemCreated
+        With CType(e.Item.FindControl("txtFF_Date"), RadDatePicker)
+            .SharedCalendar = Me.SharedCalendar
+        End With
+
+    End Sub
+
     Private Sub rpX16_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX16.ItemDataBound
         Dim cRec As BO.x16EntityCategory_FieldSetting = CType(e.Item.DataItem, BO.x16EntityCategory_FieldSetting)
 
@@ -392,7 +401,7 @@ Public Class x25_record
                 CType(e.Item.FindControl("hidType"), HiddenField).Value = "datetime"
 
                 With CType(e.Item.FindControl("txtFF_Date"), RadDatePicker)
-                    .SharedCalendar = Me.SharedCalendar
+                    ''.SharedCalendar = Me.SharedCalendar
                     .Visible = True
                     .MinDate = DateSerial(1900, 1, 1)
                     .MaxDate = DateSerial(2100, 1, 1)

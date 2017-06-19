@@ -121,7 +121,7 @@ Public Class freefields
             End If
         End With
 
-        Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(cRec.x23ID).Where(Function(p) p.IsClosed = False)
+        Dim lisX25 As IEnumerable(Of BO.x25EntityField_ComboValue) = Me.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cRec.x23ID)).Where(Function(p) p.IsClosed = False)
         With CType(e.Item.FindControl("x25IDs"), UI.datacombo)
             If Not cRec.x20IsMultiSelect Then
                 .AllowCheckboxes = False
@@ -222,7 +222,7 @@ Public Class freefields
                 If cRec.x23ID <> 0 Then
                     If cRec.x23DataSource = "" Then
                         'combo seznam bez externího datového zdroje
-                        If _lisX25 Is Nothing Then _lisX25 = Me.Factory.x25EntityField_ComboValueBL.GetList(0)
+                        If _lisX25 Is Nothing Then _lisX25 = Me.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cRec.x23ID))
                         With CType(e.Item.FindControl("cbxFF"), RadComboBox)
                             .Visible = True
                             .AllowCustomText = False

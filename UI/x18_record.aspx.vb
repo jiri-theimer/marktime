@@ -141,7 +141,7 @@
     End Sub
     Private Sub RefreshItems()
         If Me.CurrentX23ID <> 0 Then
-            Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(Me.CurrentX23ID)
+            Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(Me.CurrentX23ID))
             If lis.Count <= 50 Then
                 rpX25.DataSource = lis
             Else

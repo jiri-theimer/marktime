@@ -135,11 +135,7 @@
             </asp:Repeater>
 
         </table>
-        <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
-            <SpecialDays>
-                <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
-            </SpecialDays>
-        </telerik:RadCalendar>
+        
     </asp:Panel>
 
     <asp:Panel ID="panColors" runat="server">
@@ -191,6 +187,12 @@
     <asp:HiddenField ID="hidX18ID" runat="server" />
     <asp:HiddenField ID="hidX29ID" runat="server" />
     <asp:HiddenField ID="hidGUID_x19" runat="server" />
+
+    <telerik:RadCalendar ID="SharedCalendar" runat="server" EnableMultiSelect="False" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+            <SpecialDays>
+                <telerik:RadCalendarDay Repeatable="Today" ItemStyle-BackColor="SkyBlue"></telerik:RadCalendarDay>
+            </SpecialDays>
+        </telerik:RadCalendar>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

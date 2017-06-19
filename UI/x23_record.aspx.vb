@@ -47,7 +47,7 @@
         End With
 
         If Not Me.chkIsDatasource.Checked Then
-            Me.rp1.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(cRec.PID)
+            Me.rp1.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cRec.PID))
             Me.rp1.DataBind()
         End If
     End Sub

@@ -295,7 +295,7 @@
                     'číselníkové (combo) pole
                     If cField.x23ID <> 0 Then
                         Me.cbxItems.DataTextField = "x25Name"
-                        Me.cbxItems.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(cField.x23ID)
+                        Me.cbxItems.DataSource = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(cField.x23ID))
                     Else
                         Me.cbxItems.Clear()
                         Me.cbxItems.AddOneComboItem("1", "ANO")
