@@ -88,29 +88,84 @@
 
             With Master.Factory.j03UserBL
                 SetupX18Combo(BO.BAS.IsNullInt(.GetUserParam("x25_framework-x18id")))
-                Dim intJ74ID As Integer = BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "_framework-j74id"))
-                If intJ74ID = 0 Then
-                    If Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID) Then
-                        _curJ74 = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID)
-                        .SetUserParam(Me.CurrentPrefix + "_framework-j74id", _curJ74.PID)
-                    End If
-                End If
-                SetupJ74Combo(intJ74ID)
-                SetupGrid(.GetUserParam(Me.CurrentPrefix + "_framework-filter_setting"), .GetUserParam(Me.CurrentPrefix + "_framework-filter_sql"))
+
+                SetupGrid(.GetUserParam("x25_framework-filter_setting"), .GetUserParam("x25_framework-filter_sql"))
             End With
             RecalcVirtualRowCount()
 
-            If Me.CurrentMasterPID = 0 Then
-                Handle_DefaultSelectedRecord()
-            Else
-                Me.hidContentPaneDefUrl.Value = "entity_framework_detail_missing.aspx?prefix=" & Me.CurrentPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString & "&masterprefix=" & Me.CurrentMasterPrefix & "&source=" & opgLayout.SelectedValue
-            End If
-
+            Handle_DefaultSelectedRecord
 
         End If
     End Sub
 
+    Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
+        Dim lisSqlSEL As New List(Of String)
+        With grid1
+            .ClearColumns()
+            .radGridOrig.ShowFooter = False
+            .AllowMultiSelect = False
+            .DataKeyNames = "pid"
+            .AllowCustomSorting = True
+
+            .AllowCustomPaging = True
+            '.AddCheckboxSelector()
+
+            .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+
+            .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
+            .AllowFilteringByColumn = True
+
+            .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+            .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+
+            .radGridOrig.MasterTableView.Name = "grid"
+
+            Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID).Where(Function(p) p.x16IsGridField = True)
+            If lisX16.Count = 0 Then
+                .AddColumn("x25Name", "Název", BO.cfENUM.AnyString, True, , "x25Name", , False, True)
+                .AddColumn("x25Code", "Kód", BO.cfENUM.AnyString, True, , "x25Code", , False, True)
+                .AddColumn("x25Ordinary", "#", BO.cfENUM.Numeric0, True, , "x25Ordinary", , False, False)
+            Else
+                If hidx18GridColsFlag.Value = "1" Or hidx18GridColsFlag.Value = "3" Then
+                    .AddColumn("x25Name", "Název", BO.cfENUM.AnyString, True, , "x25Name", , False, True)
+                End If
+                If hidx18GridColsFlag.Value = "1" Or hidx18GridColsFlag.Value = "2" Then
+                    .AddColumn("x25Code", "Kód", BO.cfENUM.AnyString, True, , "x25Code", , False, True)
+                End If
+                For Each c In lisX16
+                    Dim strH As String = c.x16NameGrid
+                    If strH = "" Then strH = c.x16Name
+                    .AddColumn(c.x16Field, strH, c.GridColumnType, True, , c.x16Field, , False, True)
+                    lisSqlSEL.Add(c.x16Field)
+
+                    If c.FieldType = BO.x24IdENUM.tDate Or c.FieldType = BO.x24IdENUM.tDateTime Then
+                        Me.cbxPeriodType.Items.Add(New ListItem(c.x16Name, c.x16Field))
+                    End If
+                Next
+            End If
+
+
+            .SetFilterSetting(strFilterSetting, strFilterExpression)
+        End With
+        hidCols.Value = String.Join(",", lisSqlSEL)
+    End Sub
+
     Private Sub SetupX18Combo(strDef As String)
+        Dim mq As New BO.myQuery
+        mq.Closed = BO.BooleanQueryMode.FalseQuery
+        If Not Master.Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin, BO.x53PermValEnum.GR_Admin) Then
+            mq.MyRecordsDisponible = True
+        End If
+
+        Dim lis As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(mq)
+        Me.x18ID.DataSource = lis
+        Me.x18ID.DataBind()
+        If lis.Count = 0 Then
+            Master.Notify("V databázi zatím neexistuje štítek.", NotifyLevel.InfoMessage)
+        Else
+            If strDef <> "" Then basUI.SelectDropdownlistValue(Me.x18ID, strDef)
+            Handle_ChangeX18ID()
+        End If
 
     End Sub
 
@@ -119,11 +174,228 @@
             If .Count > 0 Then .Clear()
             .Add(New ListItem("--Filtrovat období--", ""))
             .Add(New ListItem("Založení záznamu", "DateInsert"))
-            
+
         End With
 
     End Sub
     Private Sub Handle_Permissions()
+
+    End Sub
+
+    Private Sub RecalcVirtualRowCount()
+        Dim mq As New BO.myQueryX25(0)
+        InhaleMyQuery(mq)
+        grid1.VirtualRowCount = Master.Factory.x25EntityField_ComboValueBL.GetVirtualCount(mq)
+
+
+
+        grid1.radGridOrig.CurrentPageIndex = 0
+
+    End Sub
+
+    Private Sub InhaleMyQuery(ByRef mq As BO.myQueryX25)
+        With mq
+            .x23ID = Me.CurrentX23ID
+
+            .MyRecordsDisponible = True
+            .MG_GridSqlColumns = Me.hidCols.Value
+            .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
+            If Me.CurrentMasterPrefix <> "" Then
+                .Record_x29ID = BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix)
+                .RecordPID = Me.CurrentMasterPID
+            End If
+
+            .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
+            If Me.hidDefaultSorting.Value <> "" Then
+                If .MG_SortString = "" Then
+                    .MG_SortString = Me.hidDefaultSorting.Value
+                Else
+                    .MG_SortString = Me.hidDefaultSorting.Value & "," & .MG_SortString
+                End If
+            End If
+            With Me.cbxPeriodType
+                If .SelectedValue <> "" Then
+                    Select Case .SelectedValue
+                        Case "DateInsert"
+                            mq.DateInsertFrom = period1.DateFrom : mq.DateInsertUntil = period1.DateUntil
+                        Case Else
+                            mq.DateFrom = period1.DateFrom
+                            mq.DateUntil = period1.DateUntil
+                            mq.DateQueryFieldBy = .SelectedValue
+                    End Select
+                End If
+
+            End With
+            Select Case Me.cbxX25Validity.SelectedValue
+                Case "1" : .Closed = BO.BooleanQueryMode.NoQuery
+                Case "2" : .Closed = BO.BooleanQueryMode.FalseQuery
+                Case "3" : .Closed = BO.BooleanQueryMode.TrueQuery
+            End Select
+
+
+
+        End With
+
+    End Sub
+
+    Private Sub Handle_DefaultSelectedRecord()
+        Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx"
+        Dim intSelPID As Integer = 0
+        If Not Page.IsPostBack Then
+            Dim strDefPID As String = Request.Item("pid")
+            If strDefPID = "" Then strDefPID = Master.Factory.j03UserBL.GetUserParam("x25_framework_detail-pid")
+            If strDefPID <> "" Then intSelPID = BO.BAS.IsNullInt(strDefPID)
+        End If
+
+        If intSelPID > 0 Then
+            'označit výchozí záznam
+            grid1.SelectRecords(intSelPID)
+            If grid1.GetSelectedPIDs.Count = 0 Then
+
+                Dim mq As New BO.myQueryX25(Me.CurrentX23ID)
+                InhaleMyQuery(mq)
+                mq.MG_SelectPidFieldOnly = True
+                mq.TopRecordsOnly = 0
+                Dim dt As DataTable = Master.Factory.x25EntityField_ComboValueBL.GetDataTable4Grid(mq)
+                If dt Is Nothing Then
+                    Master.Notify(Master.Factory.x25EntityField_ComboValueBL.ErrorMessage, NotifyLevel.ErrorMessage)
+                    Return
+                End If
+                Dim x As Integer, intNewPageIndex As Integer = 0
+                For Each dbRow As DataRow In dt.Rows
+                    x += 1
+                    If x > grid1.PageSize Then
+                        intNewPageIndex += 1 : x = 1
+                    End If
+                    If dbRow.Item("pid") = intSelPID Then
+                        grid1.radGridOrig.CurrentPageIndex = intNewPageIndex
+                        grid1.Rebind(False)
+                        grid1.SelectRecords(intSelPID)
+                        Exit For
+                    End If
+                Next
+            End If
+
+            Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx?pid=" & intSelPID.ToString
+        End If
+    End Sub
+
+    Private Sub ReloadPage()
+        Dim s As String = "x25_framework.aspx?x18id=" & Me.CurrentX18ID
+        If Me.CurrentMasterPID > 0 Then s += "&masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString
+        Response.Redirect(s, True)
+    End Sub
+
+    Private Sub x18ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles x18ID.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-x18id", Me.x18ID.SelectedValue)
         
+        ReloadPage()
+
+    End Sub
+
+    Private Sub Handle_ChangeX18ID()
+        Dim c As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
+        hidX23ID.Value = c.x23ID.ToString
+        hidx18GridColsFlag.Value = CInt(c.x18GridColsFlag).ToString
+    End Sub
+
+    Private Sub x25_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        If Me.CurrentX18ID = 0 Then
+            cmdSetting.Visible = False
+        Else
+            cmdSetting.Visible = True
+        End If
+        If cbxPeriodType.SelectedIndex > 0 Then
+            With Me.period1
+                .Visible = True
+                If .SelectedValue <> "" Then
+                    .BackColor = basUI.ColorQueryRGB
+                    Me.CurrentPeriodQuery.Text = "<img src='Images/datepicker.png'/> " & Me.cbxPeriodType.SelectedItem.Text
+                    If Year(.DateFrom) = Year(.DateUntil) Then
+                        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M") & "-" & Format(.DateUntil, "d.M.yyyy")
+                    Else
+                        Me.CurrentPeriodQuery.Text += " " & Format(.DateFrom, "d.M.yy") & "-" & Format(.DateUntil, "d.M.yyyy")
+                    End If
+
+                Else
+                    .BackColor = Nothing
+                    Me.CurrentPeriodQuery.Text = ""
+
+                End If
+            End With
+        Else
+            period1.Visible = False
+        End If
+
+    End Sub
+
+    Private Sub GridExport(strFormat As String)
+        _curIsExport = True
+        basUIMT.Handle_GridTelerikExport(Me.grid1, strFormat)
+
+
+    End Sub
+
+    Private Sub cmdDOC_Click(sender As Object, e As EventArgs) Handles cmdDOC.Click
+        GridExport("doc")
+    End Sub
+
+    Private Sub cmdPDF_Click(sender As Object, e As EventArgs) Handles cmdPDF.Click
+        GridExport("pdf")
+    End Sub
+
+    Private Sub cmdXLS_Click(sender As Object, e As EventArgs) Handles cmdXLS.Click
+        GridExport("xls")
+    End Sub
+    Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
+        With Master.Factory.j03UserBL
+            .SetUserParam("x25_framework-filter_setting", "")
+            .SetUserParam("x25_framework-filter_sql", "")
+        End With
+        ReloadPage()
+    End Sub
+
+    Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
+        If _needFilterIsChanged Then
+            With Master.Factory.j03UserBL
+                .SetUserParam("x25_framework-filter_setting", grid1.GetFilterSetting())
+                .SetUserParam("x25_framework-filter_sql", grid1.GetFilterExpression())
+            End With
+            RecalcVirtualRowCount()
+        End If
+        Dim mq As New BO.myQueryX25(Me.CurrentX23ID)
+        With mq
+            .MG_PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
+            .MG_CurrentPageIndex = grid1.radGridOrig.CurrentPageIndex
+        End With
+        InhaleMyQuery(mq)
+
+        If _curIsExport Then mq.MG_PageSize = 2000
+        Dim dt As DataTable = Master.Factory.x25EntityField_ComboValueBL.GetDataTable4Grid(mq)
+        If dt Is Nothing Then
+            Master.Notify(Master.Factory.p41ProjectBL.ErrorMessage, NotifyLevel.ErrorMessage)
+        Else
+            grid1.DataSourceDataTable = dt
+        End If
+    End Sub
+
+    Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-sort", SortExpression)
+    End Sub
+    Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
+        With Master.Factory.j03UserBL
+            If Me.cbxPeriodType.SelectedIndex > 0 And Not period1.Visible Then
+                .InhaleUserParams("periodcombo-custom_query", "x25_framework-period")
+                period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
+                period1.SelectedValue = .GetUserParam("x25_framework-period")
+            End If
+
+            .SetUserParam("x25_framework-periodtype", Me.cbxPeriodType.SelectedValue)
+        End With
+
+
+        RecalcVirtualRowCount()
+        grid1.Rebind(False)
+        hidUIFlag.Value = "period"
     End Sub
 End Class

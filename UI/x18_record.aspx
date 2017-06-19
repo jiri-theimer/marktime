@@ -202,7 +202,7 @@
                     <table cellpadding="4">
                         <tr>
                             <th>Pole</th>
-                            <th>Název (popisek)</th>
+                            <th>Název</th>
                             <th></th>
                             <th>#</th>
                             <th>Možné hodnoty textového pole</th>
@@ -210,7 +210,7 @@
                         </tr>
                         <asp:Repeater ID="rpX16" runat="server">
                             <ItemTemplate>
-                                <tr class="trHover">
+                                <tr class="trHover" valign="top">
                                     <td>
 
                                         <asp:DropDownList ID="x16Field" runat="server">
@@ -240,6 +240,10 @@
                                     </td>
                                     <td>
                                         <asp:TextBox ID="x16Name" runat="server" Width="250px"></asp:TextBox>
+                                        <div>
+                                            <span>Název sloupce:</span>
+                                            <asp:TextBox ID="x16NameGrid" runat="server" Width="150px"></asp:TextBox>
+                                        </div>
                                     </td>
                                     <td>
                                         <asp:CheckBox ID="x16IsEntryRequired" runat="server" Text="Povinné k vyplnění" />
@@ -273,6 +277,13 @@
                         </asp:Repeater>
                     </table>
                 </div>
+            </div>
+            <div class="div6">
+                <asp:DropDownList ID="x18GridColsFlag" runat="server">
+                    <asp:ListItem Text="Kromě rozšiřujících polí zobrazovat v přehledu sloupce [Název] a [Kód]" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Kromě rozšiřujících polí zobrazovat v přehledu sloupec [Kód]" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Kromě rozšiřujících polí zobrazovat v přehledu sloupec [Název]" Value="3"></asp:ListItem>
+                </asp:DropDownList>
             </div>
         </telerik:RadPageView>
 

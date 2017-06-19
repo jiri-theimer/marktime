@@ -122,6 +122,15 @@ Partial Public Class x25_framework
     Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
+    '''cbxX25Validity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxX25Validity As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cbxPeriodType control.
     '''</summary>
     '''<remarks>
@@ -192,6 +201,15 @@ Partial Public Class x25_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cmdSetting control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSetting As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''grid1 control.
@@ -273,6 +291,24 @@ Partial Public Class x25_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidContentPaneWidth As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidx18GridColsFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx18GridColsFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCols control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCols As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''RadSplitbar1 control.

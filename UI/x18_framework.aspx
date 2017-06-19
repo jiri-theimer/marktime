@@ -89,7 +89,7 @@
             <img src="Images/label_32.png" alt="Štítky" />
         </div>
         <div class="commandcell" style="padding-left: 10px;">
-            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Štítky" Style="vertical-align: top;"></asp:Label>
+            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Nastavení štítků" Style="vertical-align: top;"></asp:Label>
 
         </div>
         

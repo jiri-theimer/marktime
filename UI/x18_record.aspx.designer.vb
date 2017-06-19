@@ -194,6 +194,15 @@ Partial Public Class x18_record
     Protected WithEvents rpX16 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''x18GridColsFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18GridColsFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''other control.
     '''</summary>
     '''<remarks>

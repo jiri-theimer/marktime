@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="x25_framework.aspx.vb" Inherits="UI.x25_framework" %>
+
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
@@ -27,9 +28,9 @@
             _initResizing = "0";
             <%End If%>
 
-           
+
         });
-        
+
 
 
 
@@ -67,19 +68,29 @@
 
         function RowSelected(sender, args) {
             var pid = args.getDataKeyValue("pid");
-            document.getElementById("<%=hiddatapid.clientid%>").value = pid;            
-            
+            document.getElementById("<%=hiddatapid.clientid%>").value = pid;
+
 
             var splitter = $find("<%= RadSplitter1.ClientID %>");
             var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
-
+            
             var url = "x25_framework_detail.aspx?pid=" + pid;
             pane.set_contentUrl(url);
 
 
         }
+        function RowDoubleClick(sender, args) {
+            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+            if (pid == null)
+                return;
 
-        
+            x25_record(pid);
+        }
+
+        function x25_record(pid) {
+            sw_everywhere("x25_record.aspx?x18id=<%=Me.CurrentX18ID%>&pid=" + pid, "Images/label.png", true);
+        }
+
 
         function GetAllSelectedPIDs() {
 
@@ -103,7 +114,7 @@
             }
 
             var keyname = "x25_framework-navigationPane_width";
-            
+
             $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: keyname, oper: "set" }, function (data) {
                 if (data == ' ') {
                     return;
@@ -130,14 +141,14 @@
         }
 
         function hardrefresh(pid, flag) {
-   
 
-            location.replace("x25_framework.aspx?pid="+pid+"&x18id=<%=Me.CurrentX18ID%>");
+
+            location.replace("x25_framework.aspx?pid=" + pid + "&x18id=<%=Me.CurrentX18ID%>");
 
 
         }
 
-       
+
 
         function report() {
             var pids = GetAllSelectedPIDs();
@@ -154,9 +165,9 @@
 
             sw_master("periodcombo_setting.aspx");
         }
-       
-  
-       
+
+
+
         function cbx1_OnClientItemsRequesting(sender, eventArgs) {
             var context = eventArgs.get_context();
             var combo = sender;
@@ -174,10 +185,10 @@
         }
 
         function x18_setting() {
-            var pid=
+            var pid =
             sw_master("x18_record.aspx?pid=<%=Me.currentx18id%>", "Images/label.png", true);
         }
-      
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -192,14 +203,14 @@
 
                 <div class="commandcell">
                     <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="true" DataTextField="x18Name" DataValueField="pid" Style="width: 200px;" ToolTip="Štítek"></asp:DropDownList>
-                    <button type="button" onclick="x18_setting()"><img src="Images/label.png" />Nastavení štítku</button>
+                    
                 </div>
                 <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px;">
                     <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                     </telerik:RadComboBox>
                 </asp:Panel>
-                
+
 
                 <div class="commandcell" style="padding-left: 4px;">
 
@@ -209,7 +220,7 @@
 
                     </button>
                 </div>
-                
+
                 <div class="commandcell" id="divQueryContainer"></div>
             </asp:Panel>
 
@@ -222,7 +233,7 @@
                 <asp:Label ID="CurrentPeriodQuery" runat="server" ForeColor="Red"></asp:Label>
             </div>
             <div style="float: left; padding-left: 6px;">
-                
+
                 <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
             </div>
             <div style="float: left; padding-left: 6px;">
@@ -237,16 +248,22 @@
                         <span>Filtrování záznamů</span>
                     </div>
                     <div class="content">
-                        
+                        <div class="div6">
+                            <asp:DropDownList ID="cbxX25Validity" runat="server" AutoPostBack="true">
+                                <asp:ListItem Text="Otevřené i archivované záznamy" Value="1" Selected="true"></asp:ListItem>
+                                <asp:ListItem Text="Pouze otevřené záznamy" Value="2"></asp:ListItem>
+                                <asp:ListItem Text="Pouze archivované záznamy" Value="3"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
                         <div style="margin-top: 20px;">
                             <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
                             </asp:DropDownList>
-                            <uc:periodcombo ID="period1" runat="server" Width="160px"></uc:periodcombo>
+                            <uc:periodcombo ID="period1" runat="server" Width="160px" Visible="false"></uc:periodcombo>
                         </div>
                     </div>
                 </div>
 
-                
+
                 <asp:Panel ID="panExport" runat="server" CssClass="content-box3" Style="margin-top: 20px;">
                     <div class="title">
                         <img src="Images/export.png" />
@@ -278,7 +295,7 @@
                     </div>
                     <div class="content">
 
-                        
+
 
 
                         <div class="div6">
@@ -290,29 +307,34 @@
                                 <asp:ListItem Text="200"></asp:ListItem>
                                 <asp:ListItem Text="500"></asp:ListItem>
                             </asp:DropDownList>
-                            
 
-                            
+
+
                         </div>
 
 
                     </div>
                 </div>
-              
+                <div class="div6">
+                    <button type="button" onclick="x18_setting()" id="cmdSetting" runat="server">
+                        <img src="Images/label.png" />Nastavení štítku</button>
+                </div>
             </div>
-            
-            <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" Skin="Default"></uc:datagrid>
+
+            <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Default"></uc:datagrid>
 
 
             <asp:HiddenField ID="hidX23ID" runat="server" />
             <asp:HiddenField ID="hiddatapid" runat="server" />
             <asp:HiddenField ID="hidDefaultSorting" runat="server" />
-            
+
             <asp:HiddenField ID="hidMasterPrefix" runat="server" />
             <asp:HiddenField ID="hidMasterPID" runat="server" />
             <asp:HiddenField ID="hidUIFlag" runat="server" />
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
+            <asp:HiddenField ID="hidx18GridColsFlag" runat="server" Value="1" />
+            <asp:HiddenField ID="hidCols" runat="server" />
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">
         </telerik:RadSplitBar>

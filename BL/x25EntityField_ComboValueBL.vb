@@ -6,7 +6,7 @@
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQueryX25) As IEnumerable(Of BO.x25EntityField_ComboValue)
     Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable
-
+    Function GetVirtualCount(myQuery As BO.myQueryX25) As Integer
 
 End Interface
 Class x25EntityField_ComboValueBL
@@ -60,6 +60,9 @@ Class x25EntityField_ComboValueBL
         Else
             Return False
         End If
+    End Function
+    Public Function GetVirtualCount(myQuery As BO.myQueryX25) As Integer Implements Ix25EntityField_ComboValueBL.GetVirtualCount
+        Return _cDL.GetVirtualCount(myQuery)
     End Function
     Public Function Load(intPID As Integer) As BO.x25EntityField_ComboValue Implements Ix25EntityField_ComboValueBL.Load
         Return _cDL.Load(intPID)

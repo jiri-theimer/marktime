@@ -80,6 +80,7 @@
                 Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(.x23ID)
                 If cX23.x23Ordinary = -666 Then Me.x23ID.Enabled = False
             End If
+            basUI.SelectDropdownlistValue(Me.x18GridColsFlag, CInt(.x18GridColsFlag).ToString)
 
             roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -98,6 +99,7 @@
                 .p85OtherKey1 = c.x16Ordinary
                 .p85FreeText01 = c.x16Field
                 .p85FreeText02 = c.x16Name
+                .p85FreeText03 = c.x16NameGrid
                 .p85Message = c.x16DataSource
                 .p85FreeBoolean01 = c.x16IsEntryRequired
                 .p85FreeBoolean02 = c.x16IsGridField
@@ -189,6 +191,7 @@
             With cTMP
                 c.x16Field = .p85FreeText01
                 c.x16Name = .p85FreeText02
+                c.x16NameGrid = .p85FreeText03
                 c.x16Ordinary = .p85OtherKey1
                 c.x16IsEntryRequired = .p85FreeBoolean01
                 c.x16IsGridField = .p85FreeBoolean02
@@ -231,7 +234,7 @@
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
-
+            cRec.x18GridColsFlag = CType(x18GridColsFlag.SelectedValue, BO.x18GridColsFlag)
 
 
             If .Save(cRec, lisX20, lisX69, lisX16) Then
@@ -269,7 +272,11 @@
             lblX23ID.Visible = False
             Me.x23ID.Visible = False
         End If
-
+        If rpX16.Items.Count > 0 Then
+            Me.x18GridColsFlag.Visible = True
+        Else
+            Me.x18GridColsFlag.Visible = False
+        End If
     End Sub
 
     'Private Sub Handle_ChangeX29ID()
@@ -376,6 +383,7 @@
         Dim cRec As New BO.p85TempBox()
         cRec.p85GUID = hidGUID_x16.Value
         cRec.p85Prefix = "x16"
+        cRec.p85FreeBoolean02 = True
         Master.Factory.p85TempBoxBL.Save(cRec)
         RefreshTempX16()
     End Sub
@@ -392,6 +400,7 @@
             CType(e.Item.FindControl("p85id"), HiddenField).Value = .PID.ToString
             basUI.SelectDropdownlistValue(CType(e.Item.FindControl("x16Field"), DropDownList), .p85FreeText01)
             CType(e.Item.FindControl("x16Name"), TextBox).Text = .p85FreeText02
+            CType(e.Item.FindControl("x16NameGrid"), TextBox).Text = .p85FreeText03
             CType(e.Item.FindControl("x16Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value = .p85OtherKey1
             CType(e.Item.FindControl("x16IsEntryRequired"), CheckBox).Checked = .p85FreeBoolean01
             CType(e.Item.FindControl("x16IsGridField"), CheckBox).Checked = .p85FreeBoolean02
@@ -409,6 +418,7 @@
             With cRec
                 .p85FreeText01 = CType(ri.FindControl("x16Field"), DropDownList).SelectedValue
                 .p85FreeText02 = CType(ri.FindControl("x16Name"), TextBox).Text
+                .p85FreeText03 = CType(ri.FindControl("x16NameGrid"), TextBox).Text
                 .p85OtherKey1 = BO.BAS.IsNullInt(CType(ri.FindControl("x16Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value)
                 .p85FreeBoolean01 = CType(ri.FindControl("x16IsEntryRequired"), CheckBox).Checked
                 .p85FreeBoolean02 = CType(ri.FindControl("x16IsGridField"), CheckBox).Checked

@@ -109,6 +109,7 @@
             pars.Add("x18Icon", .x18Icon, DbType.String)
             pars.Add("x18IsClueTip", .x18IsClueTip, DbType.Boolean)
             pars.Add("x18ReportCodes", .x18ReportCodes, DbType.String)
+            pars.Add("x18GridColsFlag", CInt(.x18GridColsFlag), DbType.Int32)
         End With
 
         If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then
@@ -149,6 +150,7 @@
                     pars = New DbParameters
                     pars.Add("x18ID", intX18ID, DbType.Int32)
                     pars.Add("x16Name", c.x16Name, DbType.String)
+                    pars.Add("x16NameGrid", c.x16NameGrid, DbType.String)
                     pars.Add("x16Field", c.x16Field, DbType.String)
                     pars.Add("x16IsEntryRequired", c.x16IsEntryRequired, DbType.Boolean)
                     pars.Add("x16IsGridField", c.x16IsGridField, DbType.Boolean)
@@ -156,6 +158,7 @@
                     pars.Add("x16DataSource", c.x16DataSource, DbType.Boolean)
                     pars.Add("x16TextboxHeight", c.x16TextboxHeight, DbType.Int32)
                     pars.Add("x16TextboxWidth", c.x16TextboxWidth, DbType.Int32)
+                    pars.Add("x16Ordinary", c.x16Ordinary, DbType.Int32)
                     _cDB.SaveRecord("x16EntityCategory_FieldSetting", pars, True, "", False, "", False)
                 Next
             End If
@@ -179,7 +182,7 @@
     End Function
 
     Public Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = 0, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory)
-        Dim s As String = GetSQLPart1(bolInhaleAllCols)
+        Dim s As String = GetSQLPart1(bolInhaleAllCols), pars As New DbParameters
         Dim strW As String = bas.ParseWhereMultiPIDs("a.x18ID", myQuery)
         strW += bas.ParseWhereValidity("x18", "a", myQuery)
         If x29ID > BO.x29IdEnum._NotSpecified Then
@@ -188,6 +191,11 @@
         If intEntityType > 0 Then
             s += " AND (a.x18ID IN (select x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & " AND x20EntityTypePID=" & intEntityType.ToString & " AND x29ID_EntityType=" & GetEntityTypeX29ID(x29ID).ToString & ")"
             s += " OR a.x18ID IN (select x18ID FROM x20EntiyToCategory WHERE x29ID=" & CInt(x29ID).ToString & " AND x20EntityTypePID IS NULL))"
+        End If
+        If myQuery.MyRecordsDisponible Then
+            'pouze mě přístupné
+            pars.Add("j02id_query", _curUser.j02ID, DbType.Int32)
+            strW += " AND a.x18ID IN (SELECT x69.x69RecordPID FROM x69EntityRole_Assign x69 INNER JOIN x67EntityRole x67 ON x69.x67ID=x67.x67ID WHERE x67.x29ID=918 AND (x69.j02ID=@j02id_query OR x69.j11ID IN (SELECT j11ID FROM j12Team_Person WHERE j02ID=@j02id_query)))"   'obdržel nějakou (jakoukoliv) roli ve štítku
         End If
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
 

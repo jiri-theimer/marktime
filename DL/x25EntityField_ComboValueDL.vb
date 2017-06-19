@@ -18,8 +18,11 @@
         Dim s As String = ""
         If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
         s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner"
-        s += " FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
+        s += " " & GetSQLPart2_From()
         Return s
+    End Function
+    Private Function GetSQLPart2_From() As String
+        Return "FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean
@@ -162,12 +165,19 @@
         strW += bas.ParseWhereValidity("x25", "a", myQuery)
         Return bas.TrimWHERE(strW)
     End Function
+    Public Function GetVirtualCount(myQuery As BO.myQueryX25) As Integer
+        Dim s As String = "SELECT count(a.x25ID) as Value " & GetSQLPart2_From()
+        Dim pars As New DL.DbParameters
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+        If strW <> "" Then s += " WHERE " & strW
 
+        Return _cDB.GetRecord(Of BO.GetInteger)(s, pars).Value
+    End Function
     Public Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable
         Dim s As String = ""
-        Dim strFROM As String = "FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
         With myQuery
-            .MG_GridSqlColumns += ",a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed"
+            If .MG_GridSqlColumns <> "" Then .MG_GridSqlColumns += ","
+            .MG_GridSqlColumns += "a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed,x25Name,x25Code,x25Ordinary"
         End With
 
         Dim pars As New DbParameters
@@ -180,7 +190,7 @@
             If .MG_PageSize > 0 Then
                 Dim intStart As Integer = (.MG_CurrentPageIndex) * .MG_PageSize
 
-                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & strFROM
+                s = "WITH rst AS (SELECT ROW_NUMBER() OVER (ORDER BY " & strORDERBY & ")-1 as RowIndex," & .MG_GridSqlColumns & " " & GetSQLPart2_From()
 
                 If strW <> "" Then s += " WHERE " & strW
                 s += ") SELECT * FROM rst"
@@ -189,7 +199,7 @@
                 s += " WHERE RowIndex BETWEEN @start AND @end"
             Else
                 'bez stránkování
-                s = "SELECT " & .MG_GridSqlColumns & " " & strFROM
+                s = "SELECT " & .MG_GridSqlColumns & " " & GetSQLPart2_From()
                 If strW <> "" Then s += " WHERE " & strW
                 s += " ORDER BY " & strORDERBY
             End If
