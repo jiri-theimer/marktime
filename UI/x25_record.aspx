@@ -10,16 +10,7 @@
         function cbx1_OnClientSelectedIndexChanged(sender, eventArgs) {
             var combo = sender;
             var pid = combo.get_value();
-            <%If opgLayout.SelectedValue = "1" Then%>
-            var url = "<%=Me.CurrentPrefix%>_framework_detail.aspx?pid=" + pid + "&source=<%=opgLayout.SelectedValue%>";
-            location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
-            <%End If%>
-            <%If opgLayout.SelectedValue = "2" Then%>
-            location.replace("<%=Me.CurrentPrefix%>_framework.aspx?pid=" + pid);
-            <%End If%>
-            <%If opgLayout.SelectedValue = "3" Then%>
-            location.replace("<%=Me.CurrentPrefix%>_framework_detail.aspx?source=3&pid=" + pid);
-            <%End If%>
+
         }
         function cbx1_OnClientItemsRequesting(sender, eventArgs) {
             var context = eventArgs.get_context();
@@ -32,36 +23,51 @@
 
             context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
             context["flag"] = "searchbox";
-            <%If Me.CurrentPrefix = "p41" Then%>
+            <%If Me.CurrentX29ID = BO.x29IdEnum.p41Project Then%>
             context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
             <%End If%>
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="div6">
-        <div>
-            <asp:RadioButtonList ID="opgX20ID" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" DataValueField="x20ID" DataTextField="BindName"></asp:RadioButtonList>
+    <asp:Panel ID="panX20" runat="server" CssClass="content-box2">
+        <div class="title">
+            Vazby štítku [<asp:Label ID="x18Name" runat="server"></asp:Label>]
         </div>
-        <div>
-            <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientSelectedIndexChanged="cbx1_OnClientSelectedIndexChanged" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
-                <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
-            </telerik:RadComboBox>
+        <div class="content">
+            <div>
+                <asp:RadioButtonList ID="opgX20ID" runat="server" AutoPostBack="true" RepeatDirection="Horizontal" DataValueField="x20ID" DataTextField="BindName"></asp:RadioButtonList>
+            </div>
+            <div>
+                <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="600px" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="600px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="true">
+                    <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
+                </telerik:RadComboBox>
+            </div>
         </div>
-        <asp:HiddenField ID="hidSearchPrefix" runat="server" />
-    </div>
+
+
+    </asp:Panel>
+
+    <div style="overflow:auto;max-height:200px;width:700px;">
     <table cellpadding="5" cellspacing="2">
-        <asp:Repeater ID="rpX20" runat="server">
-            <ItemTemplate>
-                <tr>
-                    <td style="width: 140px;">
-                        <asp:Label ID="x20Name" runat="server"></asp:Label>
-                    </td>
-                    <td></td>
-                </tr>
-            </ItemTemplate>
-        </asp:Repeater>
+    <asp:Repeater ID="rpX19" runat="server">
+        <ItemTemplate>
+            <tr class="trHover">
+                <td style="width: 140px;">
+                    <asp:Label ID="Entity" runat="server" CssClass="lbl"></asp:Label>
+                </td>
+                <td>
+                    <asp:Label ID="RecordAlias" runat="server" CssClass="valbold"></asp:Label>
+                    <asp:ImageButton ID="del" runat="server" CommandName="delete" ImageUrl="Images/delete.png" ToolTip="Odstranit vazbu" CssClass="button-link" />
+                    <asp:HiddenField ID="p85id" runat="server" />
+                </td>
+            </tr>
+
+        </ItemTemplate>
+    </asp:Repeater>
     </table>
+    </div>
+
     <table cellpadding="5" cellspacing="2">
         <tr>
             <td style="width: 140px;">
@@ -183,6 +189,8 @@
         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
     </div>
     <asp:HiddenField ID="hidX18ID" runat="server" />
+    <asp:HiddenField ID="hidX29ID" runat="server" />
+    <asp:HiddenField ID="hidGUID_x19" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

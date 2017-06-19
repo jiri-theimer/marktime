@@ -8,12 +8,12 @@
     <script type="text/javascript">
         function detail() {
 
-            window.parent.sw_local("o22_record.aspx?masterprefix=<%=ViewState("masterprefix")%>&masterpid=<%=ViewState("masterpid")%>&pid=<%=Master.DataPID%>", "Images/calendar_32.png", true);
+            window.parent.sw_everywhere("o22_record.aspx?masterprefix=<%=ViewState("masterprefix")%>&masterpid=<%=ViewState("masterpid")%>&pid=<%=Master.DataPID%>", "Images/calendar.png", true);
 
         }
         function o22_sendmail() {
 
-            window.parent.sw_local("sendmail.aspx?prefix=o22&pid=<%=Master.DataPID%>", "Images/email_32.png", true);
+            window.parent.sw_everywhere("sendmail.aspx?prefix=o22&pid=<%=Master.DataPID%>", "Images/email.png", true);
 
         }
     </script>

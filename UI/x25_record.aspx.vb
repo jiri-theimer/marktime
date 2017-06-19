@@ -3,11 +3,28 @@
 Public Class x25_record
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As ModalDataRecord
-    Private _curRec As BO.x25EntityField_ComboValue
+    Private Property _curRec As BO.x25EntityField_ComboValue
+    Private Property _loadingLastX20ID As Integer
+
 
     Public ReadOnly Property CurrentX18ID As Integer
         Get
             Return BO.BAS.IsNullInt(hidX18ID.Value)
+        End Get
+    End Property
+    Public ReadOnly Property CurrentX20ID As Integer
+        Get
+            If opgX20ID.SelectedItem Is Nothing Then Return 0
+            Return BO.BAS.IsNullInt(opgX20ID.SelectedValue)
+        End Get
+    End Property
+    Public ReadOnly Property CurrentX29ID As BO.x29IdEnum
+        Get
+            If hidX29ID.Value = "" Then
+                Return BO.x29IdEnum._NotSpecified
+            Else
+                Return CType(CInt(hidX29ID.Value), BO.x29IdEnum)
+            End If
         End Get
     End Property
 
@@ -21,6 +38,7 @@ Public Class x25_record
                 .HeaderIcon = "Images/label_32.png"
                 .DataPID = BO.BAS.IsNullInt(Request.Item("pid"))
                 .HeaderText = "Položka"
+                hidGUID_x19.Value = BO.BAS.GetGUID()
                 Me.x23ID.DataSource = .Factory.x23EntityField_ComboBL.GetList(New BO.myQuery)
                 Me.x23ID.DataBind()
 
@@ -32,7 +50,8 @@ Public Class x25_record
                     Dim c As BO.x18EntityCategory = .Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
                     Me.x23ID.SelectedValue = c.x23ID.ToString
 
-                    .HeaderText += " | " & c.x18Name
+                    .HeaderText = c.x18Name
+                    Me.x18Name.Text = c.x18Name
 
                     panColors.Visible = c.x18IsColors
                     If Not c.x18IsColors Then
@@ -63,21 +82,21 @@ Public Class x25_record
             End If
         End If
     End Sub
-    Private Sub RefreshUserFields()
-        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID)
-        If lisX16.Count > 0 Then
-            If lisX16.Where(Function(p) LCase(p.x16Field).IndexOf("date") > 0).Count = 0 Then
-                Me.SharedCalendar.Visible = False
-            End If
-            rpX16.DataSource = lisX16
-            rpX16.DataBind()
-
-        Else
-            panX16.Visible = False
-            Me.SharedCalendar.Visible = False
-        End If
-    End Sub
+    
     Private Sub RefreshRecord()
+        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.CurrentX18ID)
+        lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky štítku
+        With opgX20ID
+            .DataSource = lisX20X18
+            .DataBind()
+            If .Items.Count > 0 Then
+                .SelectedIndex = 0
+                Handle_Changex20ID()
+            Else
+                panX20.Visible = False
+            End If
+        End With
+
         If Master.DataPID = 0 Then
             Me.j02ID_Owner.Value = Master.Factory.SysUser.j02ID.ToString
             Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
@@ -103,12 +122,59 @@ Public Class x25_record
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
 
         End With
-        Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(_curRec.x23ID)
-        If cX23.x23DataSource <> "" Then
-            Master.Notify("Tato položka byla vložena automaticky, protože pochází z externího datového zdroje.", NotifyLevel.InfoMessage)
+        ''Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(_curRec.x23ID)
+        ''If cX23.x23DataSource <> "" Then
+        ''    Master.Notify("Tato položka byla vložena automaticky, protože pochází z externího datového zdroje.", NotifyLevel.InfoMessage)
 
-        End If
+        ''End If
         RefreshUserFields()
+
+        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(Master.DataPID, lisX20X18.Select(Function(p) p.x20ID).ToList, True)
+        Master.Factory.p85TempBoxBL.Truncate(hidGUID_x19.Value)
+        For Each c In lisX19
+            Dim cTemp As New BO.p85TempBox
+            With cTemp
+                .p85GUID = hidGUID_x19.Value
+                .p85Prefix = "x19"
+                .p85DataPID = c.PID
+                .p85OtherKey1 = c.x19RecordPID
+                .p85OtherKey2 = c.x20ID
+                .p85OtherKey3 = c.x29ID
+                .p85FreeBoolean01 = c.x20IsMultiselect
+                If c.x20Name <> "" Then
+                    .p85FreeText01 = c.x20Name
+                Else
+                    .p85FreeText01 = BO.BAS.GetX29EntityAlias(CType(c.x29ID, BO.x29IdEnum), False)
+                End If
+
+                .p85FreeText02 = c.RecordAlias
+
+                
+            End With
+            Master.Factory.p85TempBoxBL.Save(cTemp)
+        Next
+        RefreshTempX19()
+        
+
+
+    End Sub
+    Private Sub RefreshTempX19()
+        rpX19.DataSource = Master.Factory.p85TempBoxBL.GetList(hidGUID_x19.Value).OrderBy(Function(p) p.p85FreeBoolean01).ThenBy(Function(p) p.p85OtherKey2)
+        rpX19.DataBind()
+    End Sub
+    Private Sub RefreshUserFields()
+        Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID)
+        If lisX16.Count > 0 Then
+            If lisX16.Where(Function(p) LCase(p.x16Field).IndexOf("date") > 0).Count = 0 Then
+                Me.SharedCalendar.Visible = False
+            End If
+            rpX16.DataSource = lisX16
+            rpX16.DataBind()
+
+        Else
+            panX16.Visible = False
+            Me.SharedCalendar.Visible = False
+        End If
     End Sub
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x25EntityField_ComboValueBL
@@ -143,15 +209,38 @@ Public Class x25_record
                 Return
             End If
 
+            Dim lisX19 As List(Of BO.x19EntityCategory_Binding) = Nothing
+            If panX20.Visible Then
+                lisX19 = New List(Of BO.x19EntityCategory_Binding)
+                For Each cTMP In Master.Factory.p85TempBoxBL.GetList(hidGUID_x19.Value)
+                    Dim c As New BO.x19EntityCategory_Binding
+                    With cTMP
+                        c.x19RecordPID = .p85OtherKey1
+                        c.x20ID = .p85OtherKey2
+                        c.x25ID = Master.DataPID
+                    End With
+                    lisX19.Add(c)
+                Next
+            End If
 
             If .Save(cRec) Then
                 Master.DataPID = .LastSavedPID
+                If Not lisX19 Is Nothing Then
+                    Master.Factory.x18EntityCategoryBL.SaveX19Binding(Master.DataPID, lisX19, GetX20IDs())
+                End If
                 Master.CloseAndRefreshParent("x25-save")
             Else
                 Master.Notify(.ErrorMessage, 2)
             End If
         End With
     End Sub
+    Private Function GetX20IDs() As List(Of Integer)
+        Dim lis As New List(Of Integer)
+        For Each li As ListItem In opgX20ID.Items
+            lis.Add(CInt(li.Value))
+        Next
+        Return lis
+    End Function
 
     Private Sub x25_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Master.DataPID <> 0 Then
@@ -326,11 +415,120 @@ Public Class x25_record
                 End With
         End Select
     End Sub
+    Private Function LoadX20Record() As BO.x20EntiyToCategory
+        Dim lis As IEnumerable(Of BO.x20EntiyToCategory) = Master.Factory.x18EntityCategoryBL.GetList_x20(Me.CurrentX18ID).Where(Function(p) p.x20ID = Me.CurrentX20ID)
+        If lis.Count = 0 Then
+            Return Nothing
+        Else
+            Return lis(0)
+        End If
+    End Function
 
     Private Sub Handle_Changex20ID()
         If Me.opgX20ID.SelectedItem Is Nothing Then Return
-        Dim lis As IEnumerable(Of BO.x20EntiyToCategory) = Master.Factory.x18EntityCategoryBL.GetList_x20(Me.CurrentX18ID)
 
+        Dim cX20 As BO.x20EntiyToCategory = LoadX20Record()
+        If cX20 Is Nothing Then Return
+        hidX29ID.Value = cX20.x29ID.ToString
+        
+        cbx1.Visible = True
+        Select Case Me.CurrentX29ID
+            Case BO.x29IdEnum.p41Project
+                cbx1.WebServiceSettings.Path = "~/Services/project_service.asmx" : cbx1.Text = "Hledat projekt..."
+            Case BO.x29IdEnum.p28Contact
+                cbx1.WebServiceSettings.Path = "~/Services/contact_service.asmx" : cbx1.Text = "Hledat klienta..."
+            Case BO.x29IdEnum.p91Invoice
+                cbx1.WebServiceSettings.Path = "~/Services/invoice_service.asmx" : cbx1.Text = "Hledat fakturu..."
+            Case BO.x29IdEnum.p56Task
+                cbx1.WebServiceSettings.Path = "~/Services/task_service.asmx" : cbx1.Text = "Hledat úkol..."
+            Case BO.x29IdEnum.j02Person
+                cbx1.WebServiceSettings.Path = "~/Services/person_service.asmx" : cbx1.Text = "Hledat osobu..."
+            Case BO.x29IdEnum.o23Notepad
+                cbx1.WebServiceSettings.Path = "~/Services/notepad_service.asmx" : cbx1.Text = "Hledat dokument..."
+            Case Else
+                Me.cbx1.Visible = False
+                Master.Notify("Pro tuto entitu nelze použít hledací combo!", NotifyLevel.ErrorMessage)
+        End Select
+        If cX20.x20Name <> "" Then
+            cbx1.Text = String.Format("Hledat [{0}]...", cX20.x20Name)
+        End If
+    End Sub
 
+    Private Sub cbx1_SelectedIndexChanged(sender As Object, e As RadComboBoxSelectedIndexChangedEventArgs) Handles cbx1.SelectedIndexChanged
+        Dim intRecordPID As Integer = BO.BAS.IsNullInt(e.Value)
+        If intRecordPID = 0 Then
+            Master.Notify("Musíte vybrat záznam!", NotifyLevel.WarningMessage)
+            Return
+        End If
+        Dim cX20 As BO.x20EntiyToCategory = LoadX20Record()
+        Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(hidGUID_x19.Value)
+        If lisTemp.Where(Function(p) p.p85OtherKey1 = intRecordPID And p.p85OtherKey2 = Me.CurrentX20ID).Count > 0 Then
+            Master.Notify("Tato vazba již existuje!", NotifyLevel.WarningMessage)
+            Return
+        End If
+
+        Dim cRec As New BO.p85TempBox()
+
+        If Not cX20.x20IsMultiSelect Then
+            If lisTemp.Where(Function(p) p.p85OtherKey2 = Me.CurrentX20ID).Count > 0 Then
+                'automaticky nahradit původní vazbu za tuto, protože není MULTI-SELECT
+                cRec = lisTemp.Where(Function(p) p.p85OtherKey2 = Me.CurrentX20ID)(0)
+            End If
+        End If
+
+        With cRec
+            .p85GUID = hidGUID_x19.Value
+            .p85Prefix = "x19"
+            .p85OtherKey1 = intRecordPID
+            .p85OtherKey2 = Me.CurrentX20ID
+            .p85OtherKey3 = BO.BAS.IsNullInt(hidX29ID.Value)
+            .p85FreeBoolean01 = cX20.x20IsMultiSelect
+            If cX20.x20Name <> "" Then
+                .p85FreeText01 = cX20.x20Name
+            Else
+                .p85FreeText01 = BO.BAS.GetX29EntityAlias(Me.CurrentX29ID, False)
+            End If
+            .p85FreeText02 = Master.Factory.GetRecordCaption(Me.CurrentX29ID, intRecordPID)
+        End With
+
+        Master.Factory.p85TempBoxBL.Save(cRec)
+
+        RefreshTempX19()
+        cbx1.SelectedValue = ""
+        cbx1.Text = ""
+
+    End Sub
+
+    Private Sub opgX20ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgX20ID.SelectedIndexChanged
+        Handle_Changex20ID()
+    End Sub
+
+    Private Sub rpX19_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rpX19.ItemCommand
+        Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
+        If e.CommandName = "delete" Then
+            If Master.Factory.p85TempBoxBL.Delete(cRec) Then
+
+            End If
+        End If
+        RefreshTempX19()
+    End Sub
+
+    Private Sub rpX19_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rpX19.ItemDataBound
+        Dim cRec As BO.p85TempBox = CType(e.Item.DataItem, BO.p85TempBox)
+        With CType(e.Item.FindControl("del"), ImageButton)
+            .CommandArgument = cRec.PID.ToString
+            .CommandName = "delete"
+        End With
+        CType(e.Item.FindControl("p85id"), HiddenField).Value = cRec.PID.ToString
+        With CType(e.Item.FindControl("Entity"), Label)
+            If cRec.p85OtherKey2 <> _loadingLastX20ID Then
+                .Text = cRec.p85FreeText01 & ":"
+            End If
+        End With
+        With CType(e.Item.FindControl("RecordAlias"), Label)
+            .Text = cRec.p85FreeText02
+            .ToolTip = cRec.p85FreeText01
+        End With
+        _loadingLastX20ID = cRec.p85OtherKey2
     End Sub
 End Class

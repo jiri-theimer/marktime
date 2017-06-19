@@ -41,7 +41,7 @@ Public Class p85TempBoxDL
     Public Function Truncate(strGUID As String) As Boolean
         Dim pars As New DbParameters
         pars.Add("guid", strGUID, DbType.String)
-        If _cDB.RunSQL("DELETE FROM p85Tempbox WHERE p85GUID=@guid", pars) Then
+        If _cDB.RunSQL("if exists(select p85ID FROM p85Tempbox WHERE p85GUID=@guid) DELETE FROM p85Tempbox WHERE p85GUID=@guid", pars) Then
             Return True
         Else
             _Error = _cDB.ErrorMessage

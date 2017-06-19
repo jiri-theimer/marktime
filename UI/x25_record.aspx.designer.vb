@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class x25_record
 
     '''<summary>
+    '''panX20 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panX20 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''x18Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''opgX20ID control.
     '''</summary>
     '''<remarks>
@@ -32,22 +50,13 @@ Partial Public Class x25_record
     Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
 
     '''<summary>
-    '''hidSearchPrefix control.
+    '''rpX19 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidSearchPrefix As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''rpX20 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpX20 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents rpX19 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
     '''lblX23ID control.
@@ -219,6 +228,24 @@ Partial Public Class x25_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidX18ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidX29ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidX29ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidGUID_x19 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidGUID_x19 As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

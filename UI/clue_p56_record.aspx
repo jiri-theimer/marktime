@@ -7,7 +7,7 @@
     <script type="text/javascript">
         function detail() {
 
-            window.parent.sw_local("p56_record.aspx?masterprefix=<%=ViewState("masterprefix")%>&masterpid=<%=ViewState("masterpid")%>&pid=<%=Master.DataPID%>", "Images/task_32.png", true);
+            window.parent.sw_everywhere("p56_record.aspx?masterprefix=<%=ViewState("masterprefix")%>&masterpid=<%=ViewState("masterpid")%>&pid=<%=Master.DataPID%>", "Images/task.png", true);
 
         }
         function go2module() {
@@ -17,7 +17,7 @@
         }
         function go2workflow() {
 
-            window.parent.sw_local("workflow_dialog.aspx?prefix=p56&pid=<%=Master.DataPID%>", "Images/task_32.png", true);
+            window.parent.sw_everywhere("workflow_dialog.aspx?prefix=p56&pid=<%=Master.DataPID%>", "Images/task.png", true);
 
         }
 

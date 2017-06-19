@@ -37,21 +37,24 @@ Class x25EntityField_ComboValueBL
             End If
         End With
 
-        Dim cRecOld As BO.x25EntityField_ComboValue = Nothing
-        If cRec.PID <> 0 Then cRecOld = Load(cRec.PID)
+        ''Dim cRecOld As BO.x25EntityField_ComboValue = Nothing
+        ''If cRec.PID <> 0 Then cRecOld = Load(cRec.PID)
 
         If _cDL.Save(cRec) Then
-            If Not cRecOld Is Nothing Then
-                'zjistit, zda aktualizovat u combo volných polí statický text
-                cRec = Load(cRec.PID)
-                If cRec.x25Name <> cRecOld.x25Name Then
-                    'došlo ke změně názvu combo položky
-                    Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(cRec.x23ID)
-                    For Each c In lisX28
-                        _cDL.UpdateComboItemTextInData(c, cRec)
-                    Next
-                End If
-            End If
+            Dim intX25ID As Integer = _LastSavedPID
+           
+
+            ''If Not cRecOld Is Nothing Then
+            ''    'zjistit, zda aktualizovat u combo volných polí statický text
+            ''    cRec = Load(cRec.PID)
+            ''    If cRec.x25Name <> cRecOld.x25Name Then
+            ''        'došlo ke změně názvu combo položky
+            ''        Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(cRec.x23ID)
+            ''        For Each c In lisX28
+            ''            _cDL.UpdateComboItemTextInData(c, cRec)
+            ''        Next
+            ''    End If
+            ''End If
             Return True
         Else
             Return False

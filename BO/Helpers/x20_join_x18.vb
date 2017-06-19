@@ -18,11 +18,7 @@
     Public ReadOnly Property BindName As String
         Get
             If Me.x20Name = "" Then
-                If Me.x18NameShort = "" Then
-                    Return Me.x18Name
-                Else
-                    Return Me.x18NameShort
-                End If
+                Return BO.BAS.GetX29EntityAlias(CType(Me.x29ID, BO.x29IdEnum), False)
             Else
                 Return Me.x20Name
             End If

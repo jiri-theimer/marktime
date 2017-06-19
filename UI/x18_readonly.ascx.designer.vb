@@ -39,4 +39,13 @@ Partial Public Class x18_readonly
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidRecordPID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidIsLinks control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidIsLinks As Global.System.Web.UI.WebControls.HiddenField
 End Class

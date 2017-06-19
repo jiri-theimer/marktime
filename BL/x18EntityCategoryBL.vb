@@ -7,9 +7,12 @@
     Function GetList_x20(intX18ID As Integer) As IEnumerable(Of BO.x20EntiyToCategory)
     Function GetList_x20(x18IDs As List(Of Integer)) As IEnumerable(Of BO.x20EntiyToCategory)
     Function GetList_x20_join_x18(x29ID As BO.x29IdEnum, Optional intEntityType As Integer = 0) As IEnumerable(Of BO.x20_join_x18)
+    Function GetList_x20_join_x18(intX18ID As Integer) As IEnumerable(Of BO.x20_join_x18)
     Function SaveX19Binding(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean
+    Function SaveX19Binding(intX25ID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean
     Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
     Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, strTempGUID As String, x20IDs_Query As List(Of Integer)) As IEnumerable(Of BO.x19EntityCategory_Binding)
+    Function GetList_X19(intX25ID As Integer, x20IDs_Query As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding)
     Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)   
     Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
 End Interface
@@ -88,11 +91,19 @@ Class x18EntityCategoryBL
         If x20IDs.Count = 0 Then Return True
         Return _cDL.SaveX19Binding(x29id, intRecordPID, lisX19, x20IDs)
     End Function
+    Public Function SaveX19Binding(intX25ID As Integer, lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean Implements Ix18EntityCategoryBL.SaveX19Binding
+        If x20IDs Is Nothing Then Return False
+        If x20IDs.Count = 0 Then Return True
+        Return _cDL.SaveX19Binding(intX25ID, lisX19, x20IDs)
+    End Function
     Public Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean Implements Ix18EntityCategoryBL.SaveX19TempBinding
         Return _cDL.SaveX19TempBinding(intRecordPID, strTempGUID, lisX19)
     End Function
     Public Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, strTempGUID As String, x20IDs_Query As List(Of Integer)) As IEnumerable(Of BO.x19EntityCategory_Binding) Implements Ix18EntityCategoryBL.GetList_X19
         Return _cDL.GetList_X19(x29id, intRecordPID, strTempGUID, x20IDs_Query)
+    End Function
+    Public Function GetList_X19(intX25ID As Integer, x20IDs_Query As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding) Implements Ix18EntityCategoryBL.GetList_X19
+        Return _cDL.GetList_X19(intX25ID, x20IDs_Query, bolInhaleRecordAlias)
     End Function
     Public Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix18EntityCategoryBL.GetList_X25
         Return _cDL.GetList_X25(x29id)
@@ -105,6 +116,9 @@ Class x18EntityCategoryBL
     End Function
     Public Function GetList_x20_join_x18(x29ID As BO.x29IdEnum, Optional intEntityType As Integer = 0) As IEnumerable(Of BO.x20_join_x18) Implements Ix18EntityCategoryBL.GetList_x20_join_x18
         Return _cDL.GetList_x20_join_x18(x29ID, intEntityType)
+    End Function
+    Public Function GetList_x20_join_x18(intX18ID As Integer) As IEnumerable(Of BO.x20_join_x18) Implements Ix18EntityCategoryBL.GetList_x20_join_x18
+        Return _cDL.GetList_x20_join_x18(intX18ID)
     End Function
     Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting) Implements Ix18EntityCategoryBL.GetList_x16
         Return _cDL.GetList_x16(intX18ID)

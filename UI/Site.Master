@@ -118,7 +118,7 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
 
-        <telerik:RadWindow ID="okno1" runat="server" ShowOnTopWhenMaximized="true" RenderMode="Native" Modal="false" KeepInScreenBounds="true" VisibleStatusbar="false" Skin="MetroTouch" IconUrl="Images/setting.png" ShowContentDuringLoad="false" InitialBehaviors="None" Behaviors="Close,Move,Resize,Maximize" Style="z-index: 9000;">
+        <telerik:RadWindow ID="okno1" runat="server" ShowOnTopWhenMaximized="true" RenderMode="Auto" Modal="false" KeepInScreenBounds="true" VisibleStatusbar="false" Skin="MetroTouch" IconUrl="Images/setting.png" ShowContentDuringLoad="false" InitialBehaviors="None" Behaviors="Close,Move,Resize,Maximize" Style="z-index: 9000;">
             <Shortcuts>
                 <telerik:WindowShortcut CommandName="Close" Shortcut="Esc" />
             </Shortcuts>

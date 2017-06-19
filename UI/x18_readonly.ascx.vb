@@ -7,7 +7,14 @@
         Public Property x18Icon As String
     End Class
 
-
+    Public Property IsShowLinks As Boolean
+        Get
+            Return BO.BAS.BG(hidIsLinks.Value)
+        End Get
+        Set(value As Boolean)
+            hidIsLinks.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub

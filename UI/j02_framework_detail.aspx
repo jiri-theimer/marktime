@@ -134,7 +134,7 @@
             <div>
                 <asp:Label ID="Correspondence" runat="server"></asp:Label>
             </div>
-            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+            <uc:x18_readonly ID="labels1" runat="server" IsShowLinks="true"></uc:x18_readonly>
         </div>
     </div>
     <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">
