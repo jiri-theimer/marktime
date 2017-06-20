@@ -14,67 +14,13 @@ Option Explicit On
 Partial Public Class x25_scheduler
 
     '''<summary>
-    '''clue_query control.
+    '''x18ID control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''j70ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.WebControls.ImageButton
-
-    '''<summary>
-    '''panMasterRecord control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panMasterRecord As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''imgMaster control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents imgMaster As Global.System.Web.UI.WebControls.Image
-
-    '''<summary>
-    '''MasterRecord control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents MasterRecord As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
-    '''chkIncludeChilds control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkIncludeChilds As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents x18ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''PersonsHeader control.
@@ -113,51 +59,6 @@ Partial Public Class x25_scheduler
     Protected WithEvents projects1 As Global.UI.projects
 
     '''<summary>
-    '''cbxNewRecType control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbxNewRecType As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''panSettingOPlan control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSettingOPlan As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''chkSetting_P48 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkSetting_P48 As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''chkSetting_O22 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkSetting_O22 As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''chkSetting_P56 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkSetting_P56 As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
     '''entity_scheduler_daystarttime control.
     '''</summary>
     '''<remarks>
@@ -194,24 +95,6 @@ Partial Public Class x25_scheduler
     Protected WithEvents entity_scheduler_agendadays As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cmdExportICalendar control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdExportICalendar As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''cmdExportPDF control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdExportPDF As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''scheduler1 control.
     '''</summary>
     '''<remarks>
@@ -246,24 +129,6 @@ Partial Public Class x25_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidCurTime As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidMasterPrefix control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidMasterPID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidMasterPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidHardRefreshFlag control.

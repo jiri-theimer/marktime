@@ -238,15 +238,10 @@
 
                 //Gets all the data needed for the an Appointment, from the TreeView node.
                 var node = eventArgs.get_sourceNode();
-                <%If cbxNewRecType.SelectedValue = "p48" Then%>
-                var url = "p48_multiple_create.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
+               
+                var url = "o25_record.aspx?x18id=<%=Me.CurrentX18ID%>&d1=" + formattedDate(d1) + " & d2 = " + formattedDate(d2);
 
-                <%End If%>
-                <%If cbxNewRecType.SelectedValue = "o22" Then%>
-                var url = "o22_record.aspx?d1=" + formattedDate(d1) + "&d2=" + formattedDate(d2);
-                <%End If%>
-
-                sw_master(url, "Images/oplan.png");
+                sw_master(url, "Images/label.png");
 
             }
             else {
@@ -261,7 +256,17 @@
 
         }
 
-       
+        function x18id_onchange(ctl) {
+
+            $.post("Handler/handler_userparam.ashx", { x36value: ctl.value, x36key: "x25_framework-x18id", oper: "set" }, function (data) {
+                if (data == ' ') {
+                    return;
+                }
+
+            });
+
+            location.replace("x25_scheduler.aspx?x18id=" + ctl.value);
+        }
     </script>
 
 </asp:Content>
@@ -277,25 +282,14 @@
             </div>
             <div class="div6" style="float: left;">
 
-                <span class="page_header_span">Kalendář</span>
+                <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px; " ToolTip="Štítek"></asp:DropDownList>
             </div>
 
             <div style="clear: both;"></div>
-            <div>
-                <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
-                <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr úkolů"></asp:DropDownList>
-                <asp:ImageButton ID="cmdQuery" runat="server" OnClientClick="return querybuilder()" ImageUrl="Images/query.png" ToolTip="Návrhář filtrů" CssClass="button-link" />
-            </div>
+            
 
             <div style="clear: both;"></div>
-            <asp:Panel ID="panMasterRecord" runat="server" CssClass="div6">
-                <asp:Image ID="imgMaster" runat="server" />
-
-                <asp:HyperLink ID="MasterRecord" runat="server"></asp:HyperLink>
-                <div>
-                    <asp:CheckBox ID="chkIncludeChilds" runat="server" Text="Zahrnout i pod-projekty" Visible="false" CssClass="chk" AutoPostBack="true" />
-                </div>
-            </asp:Panel>
+            
 
             <div style="clear: both;"></div>
             <div class="show_hide2" style="float: left; margin-top: 8px;">
@@ -346,30 +340,7 @@
                 <div class="content-box3">
                     <div class="title">Nastavení</div>
                     <div class="content">
-                        <div>
-                            Na klik v kalendáři založit:
-                    
-                        </div>
-                        <div class="div6">
-                            <asp:DropDownList ID="cbxNewRecType" runat="server" AutoPostBack="true">
-                                <asp:ListItem Text="Úkol" Value="p56"></asp:ListItem>
-                                <asp:ListItem Text="Událost v kalendáři" Value="o22"></asp:ListItem>
-                                <asp:ListItem Text="Operativní plán" Value="p48"></asp:ListItem>
-
-                            </asp:DropDownList>
-                        </div>
-                        <asp:Panel ID="panSettingOPlan" runat="server" CssClass="div6">
-                            <asp:CheckBox ID="chkSetting_P48" runat="server" Text="Zobrazovat i operatavní plán" AutoPostBack="true" CssClass="chk" />
-                        </asp:Panel>
-                        <div class="div6" style="display: none;">
-                            <img src="Images/calendar.png" />
-                            <asp:CheckBox ID="chkSetting_O22" runat="server" Checked="true" Text="Zobrazovat kalendářové události" AutoPostBack="true" CssClass="chk" />
-                        </div>
-                        <div class="div6" style="display: none;">
-                            <img src="Images/task.png" />
-                            <asp:CheckBox ID="chkSetting_P56" runat="server" Checked="true" Text="Zobrazovat úkoly s termínem" AutoPostBack="true" CssClass="chk" />
-                        </div>
-
+                       
                         <div class="div6">
                             <span>Začátek v rozhraní [Den/Týden/Multi]:</span>
                             <asp:DropDownList ID="entity_scheduler_daystarttime" runat="server" AutoPostBack="true">
@@ -430,15 +401,7 @@
                         </div>
 
 
-                        <div class="div6">
-                            <asp:Button ID="cmdExportICalendar" runat="server" CssClass="cmd" Text="Export do ICalendar" />
-                        </div>
-                        <div class="div6">
-                            <asp:Button ID="cmdExportPDF" runat="server" CssClass="cmd" Text="PDF export" />
-                        </div>
-                        <div class="div6">
-                            <img src="Images/help.png" /><i>Zápis do kalendáře provedete přes pravé tlačítko myši nad označenými buňkami nebo přes click do kalendáře.</i>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -469,9 +432,7 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Operativní plán" ImageUrl="Images/oplan.png" Value="p48"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Kalendářová událost" ImageUrl="Images/milestone.png" Value="o22"></telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="Úkol" ImageUrl="Images/task.png" NavigateUrl="javascript:p56_record(0)" Value="p56"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/label.png" NavigateUrl="javascript:x25_record(0)" Value="p56"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>
@@ -498,8 +459,6 @@
     <asp:HiddenField ID="hidCurResource" runat="server" />
     <asp:HiddenField ID="hidCurTime" runat="server" />
 
-    <asp:HiddenField ID="hidMasterPrefix" runat="server" />
-    <asp:HiddenField ID="hidMasterPID" runat="server" />
 
 
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />

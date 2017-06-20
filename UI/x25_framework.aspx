@@ -248,7 +248,7 @@
                 </div>
 
                 <div class="commandcell">
-                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px; height: 26px;" ToolTip="Štítek"></asp:DropDownList>
+                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px; " ToolTip="Štítek"></asp:DropDownList>
 
                 </div>
                 <div class="commandcell" style="padding-left:10px;">
