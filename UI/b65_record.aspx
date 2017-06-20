@@ -15,6 +15,7 @@
                     
                     <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
                     <asp:ListItem Text="Úkol" Value="356"></asp:ListItem>
+            <asp:ListItem Text="Štítek" Value="925"></asp:ListItem>
                     
                 </asp:DropDownList>
         </td>

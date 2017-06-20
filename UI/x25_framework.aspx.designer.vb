@@ -59,13 +59,13 @@ Partial Public Class x25_framework
     Protected WithEvents x18ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''cmdNew control.
+    '''menu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNew As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
     '''panSearchbox control.

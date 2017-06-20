@@ -137,6 +137,10 @@ Public Class report_modal
                         Dim mq As New BO.myQueryJ02
                         mq.PIDs = pids
                         Me.multiple_records.Text = String.Join("<hr>", Master.Factory.j02PersonBL.GetList(mq).Select(Function(p) p.FullNameDesc))
+                    Case BO.x29IdEnum.x25EntityField_ComboValue
+                        Dim mq As New BO.myQueryX25(0)
+                        mq.PIDs = pids
+                        Me.multiple_records.Text = String.Join("<hr>", Master.Factory.x25EntityField_ComboValueBL.GetList(mq).Select(Function(p) p.NameWithCode))
                 End Select
                 Me.multiple_records.Text = "<b style='color:blue'>Pro tisk hromadné sestavy je k dispozici pouze PDF výstup. Náhled k tisku je možný pouze pro jeden záznam.</b><hr>" & Me.multiple_records.Text
             Else

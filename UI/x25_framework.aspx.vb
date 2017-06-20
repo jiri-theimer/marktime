@@ -126,7 +126,7 @@ Public Class x25_framework
 
             .AllowCustomPaging = True
             '.AddCheckboxSelector()
-            If hidB01ID.Value = "1" Or hidx18IsColors.Value = "1" Then
+            If hidB01ID.Value <> "" Or hidx18IsColors.Value = "1" Then
                 .AddSystemColumn(20)
             End If
 
@@ -330,7 +330,7 @@ Public Class x25_framework
 
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
-        cmdNew.Visible = cDisp.CreateItem
+        menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
 
     End Sub
 

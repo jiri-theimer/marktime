@@ -73,14 +73,14 @@
 
             var splitter = $find("<%= RadSplitter1.ClientID %>");
             var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
-            
+
             var url = "x25_framework_detail.aspx?pid=" + pid;
             pane.set_contentUrl(url);
 
 
         }
-        function x18id_onchange(ctl) {            
-           
+        function x18id_onchange(ctl) {
+
             $.post("Handler/handler_userparam.ashx", { x36value: ctl.value, x36key: "x25_framework-x18id", oper: "set" }, function (data) {
                 if (data == ' ') {
                     return;
@@ -91,9 +91,16 @@
             location.replace("x25_framework.aspx?x18id=" + ctl.value);
         }
         function RowDoubleClick(sender, args) {
+            record_edit();
+
+            
+        }
+        function record_edit() {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == null)
+            if (pid == null) {
                 return;
+            }
+                
 
             x25_record(pid);
         }
@@ -153,7 +160,10 @@
 
         function hardrefresh(pid, flag) {
 
+            if (flag == "b07-save") {
 
+                return;
+            }
             location.replace("x25_framework.aspx?pid=" + pid + "&x18id=<%=Me.CurrentX18ID%>");
 
 
@@ -195,12 +205,21 @@
             <%End If%>
         }
 
-        function x18_setting() {
-            var pid =
+        function x18_setting() {            
             sw_master("x18_record.aspx?pid=<%=Me.currentx18id%>", "Images/label.png", true);
         }
         function x18_framework() {
             location.replace("x18_framework.aspx")
+        }
+
+        function b07_create() {
+            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+            if (pid == "") {
+                alert("Musíte vybrat záznam.");
+                return;
+            }
+            sw_master("b07_create.aspx?masterprefix=x25&masterpid=" + pid, "Images/comment.png", true);
+
         }
 
     </script>
@@ -216,12 +235,32 @@
                 </div>
 
                 <div class="commandcell">
-                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px;height:26px;" ToolTip="Štítek"></asp:DropDownList>
-                    
+                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px; height: 26px;" ToolTip="Štítek"></asp:DropDownList>
+
                 </div>
-                <div class="commandcell">
-                    <button type="button" id="cmdNew" runat="server" onclick="x25_record(0)" title="Založit nový záznam"><img src="Images/new.png" /> Nový</button>
+                <div class="commandcell" style="padding-left:10px;">
+                    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
+                        <Items>
+
+                            <telerik:RadMenuItem Text="ZÁZNAM" Value="record" PostBack="false" ImageUrl="Images/arrow_down_menu.png">
+                                <Items>
+                                    <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:x25_record(0);" ImageUrl="Images/new.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Value="cmdReport" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                                </Items>
+                            </telerik:RadMenuItem>
+
+
+                        </Items>
+                    </telerik:RadMenu>
+
                 </div>
+
+                
                 <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px;" Visible="false">
                     <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
@@ -229,11 +268,12 @@
                 </asp:Panel>
 
 
-                <div class="commandcell" style="padding-left: 4px;">
+                <div class="commandcell">
 
-                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
-                        <asp:Label ID="lblGridHeader" runat="server" Text="Akce nad přehledem"></asp:Label>
+                    <button type="button" class="show_hide1" style="padding: 4px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
                         <img src="Images/arrow_down_menu.png" />
+                        <asp:Label ID="lblGridHeader" runat="server" Text="DALŠÍ AKCE"></asp:Label>
+                        
 
                     </button>
                 </div>
@@ -262,7 +302,7 @@
                 <div class="div6">
                     <button type="button" id="cmdSetting" runat="server" onclick="x18_setting()">
                         <img src="Images/label.png" />Nastavení štítku</button>
-                    <button type="button" onclick="x18_framework()" id="cmdAdmin" runat="server" style="margin-left:30px;">
+                    <button type="button" onclick="x18_framework()" id="cmdAdmin" runat="server" style="margin-left: 30px;">
                         <img src="Images/setting.png" />Správa štítků</button>
                 </div>
                 <div class="content-box3">
@@ -338,7 +378,7 @@
 
                     </div>
                 </div>
-                
+
             </div>
 
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Default"></uc:datagrid>

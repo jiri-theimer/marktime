@@ -215,6 +215,8 @@
                 Return _cDB.SaveRecord("p28Contact", pars, , "p28ID=@pid")
             Case BO.x29IdEnum.o23Notepad
                 Return _cDB.SaveRecord("o23Notepad", pars, , "o23ID=@pid")
+            Case BO.x29IdEnum.x25EntityField_ComboValue
+                Return _cDB.SaveRecord("x25EntityField_ComboValue", pars, , "x25ID=@pid")
             Case Else
                 Return False
         End Select

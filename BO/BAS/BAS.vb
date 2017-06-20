@@ -62,6 +62,7 @@
             Case "p48" : Return x29IdEnum.p48OperativePlan
             Case "p47" : Return x29IdEnum.p47CapacityPlan
             Case "p64" : Return x29IdEnum.p64Binder
+            Case "x25" : Return x29IdEnum.x25EntityField_ComboValue
             Case Else
                 Return x29IdEnum._NotSpecified
         End Select
