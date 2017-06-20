@@ -74,6 +74,10 @@
             Me.x18IsClueTip.Checked = .x18IsClueTip
             Me.x18Icon.Text = .x18Icon
             Me.x18ReportCodes.Text = .x18ReportCodes
+            Me.x18IsCalendar.Checked = .x18IsCalendar
+
+            basUI.SelectDropdownlistValue(Me.x18CalendarFieldStart, .x18CalendarFieldStart)
+            basUI.SelectDropdownlistValue(Me.x18CalendarFieldEnd, .x18CalendarFieldEnd)
             Master.Timestamp = .Timestamp
 
            
@@ -225,7 +229,9 @@
             cRec.x18EntryNameFlag = CType(x18EntryNameFlag.SelectedValue, BO.x18EntryNameENUM)
             cRec.x18EntryCodeFlag = CType(x18EntryCodeFlag.SelectedValue, BO.x18EntryCodeENUM)
             cRec.x18EntryOrdinaryFlag = CType(x18EntryOrdinaryFlag.SelectedValue, BO.x18EntryOrdinaryENUM)
-
+            cRec.x18IsCalendar = Me.x18IsCalendar.Checked
+            cRec.x18CalendarFieldStart = Me.x18CalendarFieldStart.SelectedValue
+            cRec.x18CalendarFieldEnd = Me.x18CalendarFieldEnd.SelectedValue
 
             If .Save(cRec, lisX20, lisX69, lisX16) Then
                 Master.DataPID = .LastSavedPID
@@ -255,6 +261,10 @@
         Else
             Me.x18GridColsFlag.Visible = False
         End If
+        Me.lblx18CalendarFieldEnd.Visible = Me.x18IsCalendar.Checked
+        Me.lblx18CalendarFieldStart.Visible = Me.x18IsCalendar.Checked
+        Me.x18CalendarFieldStart.Visible = Me.x18IsCalendar.Checked
+        Me.x18CalendarFieldEnd.Visible = Me.x18IsCalendar.Checked
     End Sub
 
     'Private Sub Handle_ChangeX29ID()

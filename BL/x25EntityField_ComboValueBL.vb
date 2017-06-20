@@ -7,7 +7,7 @@
     Function GetList(myQuery As BO.myQueryX25) As IEnumerable(Of BO.x25EntityField_ComboValue)
     Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable
     Function GetVirtualCount(myQuery As BO.myQueryX25) As Integer
-
+    Sub SetCalendarDateFields(strCalendarFieldStart As String, strCalendarFieldEnd As String)
 End Interface
 Class x25EntityField_ComboValueBL
     Inherits BLMother
@@ -35,6 +35,7 @@ Class x25EntityField_ComboValueBL
                     _Error = "Chybí název." : Return False
                 End If
             End If
+
             ''If .x23ID = 0 Then _Error = "Chybí vazba na číselník." : Return False
 
             ''Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(.x23ID)
@@ -98,5 +99,8 @@ Class x25EntityField_ComboValueBL
     Public Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable Implements Ix25EntityField_ComboValueBL.GetDataTable4Grid
         Return _cDL.GetDataTable4Grid(myQuery)
     End Function
-   
+    Public Sub SetCalendarDateFields(strCalendarFieldStart As String, strCalendarFieldEnd As String) Implements Ix25EntityField_ComboValueBL.SetCalendarDateFields
+        _cDL.CalendarFieldStart = strCalendarFieldStart
+        _cDL.CalendarFieldEnd = strCalendarFieldEnd
+    End Sub
 End Class

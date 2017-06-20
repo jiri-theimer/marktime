@@ -39,10 +39,24 @@ Class x18EntityCategoryBL
     End Function
 
     Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean Implements Ix18EntityCategoryBL.Save
-        If Trim(cRec.x18Name) = "" Then
-            _Error = "Chybí název štítku." : Return False
-        End If
+        With cRec
+            If Trim(.x18Name) = "" Then
+                _Error = "Chybí název štítku." : Return False
+            End If
+            If .x18IsCalendar Then
+                If .x18CalendarFieldStart = "" Then
+                    _Error = String.Format("Pro nastavení kalendářového zobrazení musíte vyplnit atribut [{0}]", "DB pole pro začátek kalendářové události") : Return False
+                End If
+                If .x18CalendarFieldEnd = "" Then
+                    _Error = String.Format("Pro nastavení kalendářového zobrazení musíte vyplnit atribut [{0}]", "DB pole pro konec kalendářové události") : Return False
+                End If
+            Else
+                .x18CalendarFieldStart = "" : .x18CalendarFieldEnd = ""
+            End If
+        End With
         
+
+
         If cRec.j02ID_Owner = 0 Then cRec.j02ID_Owner = _cUser.j02ID
 
         ''If cRec.x18IsAllEntityTypes Then

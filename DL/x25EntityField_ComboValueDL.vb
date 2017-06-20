@@ -1,5 +1,7 @@
 ﻿Public Class x25EntityField_ComboValueDL
     Inherits DLMother
+    Public Property CalendarFieldStart As String = "NULL"
+    Public Property CalendarFieldEnd As String = "NULL"
     Public Sub New(ServiceUser As BO.j03UserSYS)
         _curUser = ServiceUser
     End Sub
@@ -18,6 +20,8 @@
         Dim s As String = ""
         If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
         s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,b02.b02Name as _b02Name,b02.b02Color as _b02Color"
+        If Me.CalendarFieldStart <> "" Then s += "," & Me.CalendarFieldStart & " AS CalendarDateStart"
+        If Me.CalendarFieldEnd <> "" Then s += "," & Me.CalendarFieldEnd & " AS CalendarDateEnd"
         s += " " & GetSQLPart2_From()
         Return s
     End Function
@@ -122,7 +126,7 @@
                 pars.Add("x23id", .x23ID, DbType.Int32)
             End If
         End With
-        
+
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
         s += " ORDER BY a.x23ID,a.x25Ordinary,a.x25Name"
 
@@ -182,6 +186,8 @@
         With myQuery
             If .MG_GridSqlColumns <> "" Then .MG_GridSqlColumns += ","
             .MG_GridSqlColumns += "a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed,a.x25Name,a.x25Code,a.x25Ordinary,a.x25BackColor,a.x25ForeColor,a.b02ID,b02.b02Name,b02.b02Color"
+            If Me.CalendarFieldStart <> "" Then .MG_GridSqlColumns += "," & Me.CalendarFieldStart & " AS CalendarDateStart"
+            If Me.CalendarFieldEnd <> "" Then .MG_GridSqlColumns += "," & Me.CalendarFieldEnd & " AS CalendarDateEnd"
         End With
 
         Dim pars As New DbParameters

@@ -32,7 +32,9 @@
     Public Property x25FreeBoolean04 As Boolean
     Public Property x25FreeBoolean05 As Boolean
 
-    
+    Public Property CalendarDateStart As Date?
+    Public Property CalendarDateEnd As Date?
+
     Private Property _x23Name As String
     Public ReadOnly Property x23Name As String
         Get

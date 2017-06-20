@@ -302,6 +302,51 @@ Partial Public Class x18_record
     Protected WithEvents b01ID As Global.UI.datacombo
 
     '''<summary>
+    '''x18IsCalendar control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18IsCalendar As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''lblx18CalendarFieldStart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx18CalendarFieldStart As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x18CalendarFieldStart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18CalendarFieldStart As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''lblx18CalendarFieldEnd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblx18CalendarFieldEnd As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''x18CalendarFieldEnd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18CalendarFieldEnd As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''x18Icon control.
     '''</summary>
     '''<remarks>

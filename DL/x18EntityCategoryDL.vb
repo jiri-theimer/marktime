@@ -114,6 +114,9 @@
             pars.Add("x18EntryNameFlag", CInt(.x18EntryNameFlag), DbType.Int32)
             pars.Add("x18EntryCodeFlag", CInt(.x18EntryCodeFlag), DbType.Int32)
             pars.Add("x18EntryOrdinaryFlag", CInt(.x18EntryOrdinaryFlag), DbType.Int32)
+            pars.Add("x18IsCalendar", .x18IsCalendar, DbType.Boolean)
+            pars.Add("x18CalendarFieldStart", .x18CalendarFieldStart, DbType.String)
+            pars.Add("x18CalendarFieldEnd", .x18CalendarFieldEnd, DbType.String)
         End With
 
         If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then

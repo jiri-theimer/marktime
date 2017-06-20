@@ -44,6 +44,9 @@ Public Class x18EntityCategory
     Public Property x18EntryNameFlag As x18EntryNameENUM = x18EntryNameENUM.Manual
     Public Property x18EntryCodeFlag As x18EntryCodeENUM = x18EntryCodeENUM.Manual
     Public Property x18EntryOrdinaryFlag As x18EntryOrdinaryENUM = x18EntryOrdinaryENUM.Manual
+    Public Property x18IsCalendar As Boolean
+    Public Property x18CalendarFieldStart As String
+    Public Property x18CalendarFieldEnd As String
 
     Public ReadOnly Property x23Name As String
         Get

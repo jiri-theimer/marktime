@@ -344,6 +344,41 @@
                             </td>
                         </tr>
                         <tr>
+                            <td colspan="2">
+                                <asp:CheckBox ID="x18IsCalendar" runat="server" Text="Položky štítku zobrazovat i v kalendáři" AutoPostBack="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblx18CalendarFieldStart" runat="server" Text="DB pole pro začátek kalendářové události"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18CalendarFieldStart" runat="server">
+                                    <asp:ListItem Text=""></asp:ListItem>
+                                    <asp:ListItem Text="Datum 1" Value="x25FreeDate01"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 2" Value="x25FreeDate02"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblx18CalendarFieldEnd" runat="server" Text="DB pole pro konec kalendářové události"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18CalendarFieldEnd" runat="server">
+                                    <asp:ListItem Text=""></asp:ListItem>
+                                    <asp:ListItem Text="Datum 1" Value="x25FreeDate01"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 2" Value="x25FreeDate02"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 3" Value="x25FreeDate03"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 4" Value="x25FreeDate04"></asp:ListItem>
+                                    <asp:ListItem Text="Datum 5" Value="x25FreeDate05"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>
                                 <span>Grafická ikona:</span>
                             </td>
@@ -365,6 +400,7 @@
                                 (čárkou oddělené kódy sestav)
                             </td>
                         </tr>
+                        
                     </table>
                 </div>
             </div>
