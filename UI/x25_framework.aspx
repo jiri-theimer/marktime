@@ -220,7 +220,7 @@
                     
                 </div>
                 <div class="commandcell">
-                    <button type="button" id="cmdNew" runat="server" onclick="x25_record(0)"><img src="Images/new.png" /> Nový</button>
+                    <button type="button" id="cmdNew" runat="server" onclick="x25_record(0)" title="Založit nový záznam"><img src="Images/new.png" /> Nový</button>
                 </div>
                 <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px;" Visible="false">
                     <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
@@ -354,6 +354,8 @@
             <asp:HiddenField ID="hidContentPaneDefUrl" runat="server" />
             <asp:HiddenField ID="hidContentPaneWidth" runat="server" />
             <asp:HiddenField ID="hidx18GridColsFlag" runat="server" Value="1" />
+            <asp:HiddenField ID="hidB01ID" runat="server" />
+            <asp:HiddenField ID="hidx18IsColors" runat="server" Value="0" />
             <asp:HiddenField ID="hidCols" runat="server" />
         </telerik:RadPane>
         <telerik:RadSplitBar ID="RadSplitbar1" runat="server" CollapseMode="Forward">

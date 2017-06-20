@@ -225,6 +225,13 @@ Class b06WorkflowStepBL
                 If Not lisNominee Is Nothing Then
                     Me.Factory.o23NotepadBL.Save(cRec, "", lisNominee, Nothing)
                 End If
+            Case BO.x29IdEnum.x25EntityField_ComboValue
+                Dim cRec As BO.x25EntityField_ComboValue = Me.Factory.x25EntityField_ComboValueBL.Load(intRecordPID)
+                intCurB02ID = cRec.b02ID
+                intJ02ID_Owner = cRec.j02ID_Owner
+                If Not lisNominee Is Nothing Then
+                    Me.Factory.x25EntityField_ComboValueBL.Save(cRec, 0, lisNominee)
+                End If
         End Select
 
         If cB06.b02ID_Target <> 0 Then
@@ -300,6 +307,8 @@ Class b06WorkflowStepBL
                 objects.Add(Factory.p91InvoiceBL.Load(intRecordPID))
             Case BO.x29IdEnum.o23Notepad
                 objects.Add(Factory.o23NotepadBL.Load(intRecordPID))
+            Case BO.x29IdEnum.x25EntityField_ComboValue
+                objects.Add(Factory.x25EntityField_ComboValueBL.Load(intRecordPID))
         End Select
         If intP41ID_Ref <> 0 Then objects.Add(Factory.p41ProjectBL.Load(intP41ID_Ref))
         Return objects
@@ -445,6 +454,9 @@ Class b06WorkflowStepBL
                 intCurB02ID = cRec.b02ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
             Case "p91"
                 Dim cRec As BO.p91Invoice = Factory.p91InvoiceBL.Load(intRecordPID)
+                intCurB02ID = cRec.b02ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
+            Case "x25"
+                Dim cRec As BO.x25EntityField_ComboValue = Factory.x25EntityField_ComboValueBL.Load(intRecordPID)
                 intCurB02ID = cRec.b02ID : intRecOwnerID = cRec.j02ID_Owner : strRecUserInsert = cRec.UserInsert
         End Select
 

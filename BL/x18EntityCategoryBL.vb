@@ -39,7 +39,10 @@ Class x18EntityCategoryBL
     End Function
 
     Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean Implements Ix18EntityCategoryBL.Save
-        If cRec.x23ID = 0 Then _Error = "Chybí datový zdroj (combo seznam)." : Return False
+        If Trim(cRec.x18Name) = "" Then
+            _Error = "Chybí název štítku." : Return False
+        End If
+        
         If cRec.j02ID_Owner = 0 Then cRec.j02ID_Owner = _cUser.j02ID
 
         ''If cRec.x18IsAllEntityTypes Then
@@ -62,9 +65,17 @@ Class x18EntityCategoryBL
                 End If
             Next
         End If
-        If Not lisX20 Is Nothing Then
-            
+        If cRec.PID = 0 And cRec.x23ID = 0 Then
+            'založit nový datový zdroj
+            Dim cX23 As New BO.x23EntityField_Combo
+            cX23.x23Name = cRec.x18Name
+            If Factory.x23EntityField_ComboBL.Save(cX23) Then
+                cRec.x23ID = Factory.x23EntityField_ComboBL.LastSavedPID
+            End If
         End If
+        If cRec.x23ID = 0 Then _Error = "Chybí datový zdroj (combo seznam)." : Return False
+
+
 
         If _cDL.Save(cRec, lisX20, lisX69, lisX16) Then
             Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(cRec.x23ID)

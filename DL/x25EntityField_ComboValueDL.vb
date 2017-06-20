@@ -17,12 +17,12 @@
     Private Function GetSQLPart1(intTopRecs As Integer) As String
         Dim s As String = ""
         If intTopRecs > 0 Then s += " TOP " & intTopRecs.ToString
-        s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner"
+        s += " a.*," & bas.RecTail("x25", "a") & ",x23.x23Name as _x23Name,j02owner.j02LastName+' '+j02owner.j02FirstName as _Owner,b02.b02Name as _b02Name,b02.b02Color as _b02Color"
         s += " " & GetSQLPart2_From()
         Return s
     End Function
     Private Function GetSQLPart2_From() As String
-        Return "FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID"
+        Return "FROM x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID LEFT OUTER JOIN j02Person j02owner ON a.j02ID_Owner=j02owner.j02ID LEFT OUTER JOIN b02WorkflowStatus b02 ON a.b02ID=b02.b02ID"
     End Function
 
     Public Function Delete(intPID As Integer) As Boolean
@@ -35,7 +35,7 @@
         Return _cDB.RunSP("x25_delete", pars)
 
     End Function
-    Public Function Save(cRec As BO.x25EntityField_ComboValue) As Boolean
+    Public Function Save(cRec As BO.x25EntityField_ComboValue, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
         If cRec.PID <> 0 Then
             bolINSERT = False
@@ -84,6 +84,10 @@
         End With
 
         If _cDB.SaveRecord("x25EntityField_ComboValue", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+            Dim intX25ID As Integer = _cDB.LastSavedRecordPID
+            If Not lisX69 Is Nothing Then   'přiřazení rolí klienta
+                bas.SaveX69(_cDB, BO.x29IdEnum.x25EntityField_ComboValue, intX25ID, lisX69, bolINSERT)
+            End If
             Return True
 
         Else
@@ -177,7 +181,7 @@
         Dim s As String = ""
         With myQuery
             If .MG_GridSqlColumns <> "" Then .MG_GridSqlColumns += ","
-            .MG_GridSqlColumns += "a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed,a.x25Name,a.x25Code,a.x25Ordinary,a.x25BackColor,a.x25ForeColor"
+            .MG_GridSqlColumns += "a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed,a.x25Name,a.x25Code,a.x25Ordinary,a.x25BackColor,a.x25ForeColor,a.b02ID,b02.b02Name,b02.b02Color"
         End With
 
         Dim pars As New DbParameters

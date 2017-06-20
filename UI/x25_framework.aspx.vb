@@ -126,6 +126,9 @@ Public Class x25_framework
 
             .AllowCustomPaging = True
             '.AddCheckboxSelector()
+            If hidB01ID.Value = "1" Or hidx18IsColors.Value = "1" Then
+                .AddSystemColumn(20)
+            End If
 
             .PageSize = BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue)
 
@@ -138,12 +141,14 @@ Public Class x25_framework
             .radGridOrig.MasterTableView.Name = "grid"
 
             Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.CurrentX18ID)
-            lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky štítku
+            lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And (p.x20GridColumnFlag = BO.x20GridColumnENUM.CategoryColumn Or p.x20GridColumnFlag = BO.x20GridColumnENUM.Both)).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky štítku
             For Each c In lisX20X18
                 .AddColumn("Entita" & c.x20ID.ToString, c.BindName, BO.cfENUM.AnyString, True, , "dbo.stitek_entity(a.x25ID," & c.x20ID.ToString & ")", , False, True)
                 lisSqlSEL.Add("dbo.stitek_entity(a.x25ID," & c.x20ID.ToString & ") as Entita" & c.x20ID.ToString)
             Next
-
+            If hidB01ID.Value <> "" Then
+                .AddColumn("b02Name", "Stav", BO.cfENUM.AnyString, True, , "b02Name", , False, True)
+            End If
             Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID).Where(Function(p) p.x16IsGridField = True)
             If lisX16.Count = 0 Then
                 .AddColumn("x25Name", "Název", BO.cfENUM.AnyString, True, , "x25Name", , False, True)
@@ -316,6 +321,13 @@ Public Class x25_framework
         Dim c As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
         hidX23ID.Value = c.x23ID.ToString
         hidx18GridColsFlag.Value = CInt(c.x18GridColsFlag).ToString
+        hidx18IsColors.Value = BO.BAS.GB(c.x18IsColors)
+        If c.b01ID <> 0 Then
+            hidB01ID.Value = c.b01ID.ToString
+        Else
+            hidB01ID.Value = ""
+        End If
+
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         cmdNew.Visible = cDisp.CreateItem
@@ -388,12 +400,20 @@ Public Class x25_framework
         Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
         Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
         If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
-        If Not cRec.Item("x25BackColor") Is System.DBNull.Value Then
-            dataItem.Style.Item("background-color") = cRec.Item("x25BackColor")
+        If hidx18IsColors.Value = "1" And hidB01ID.Value = "" Then
+            If Not cRec.Item("x25BackColor") Is System.DBNull.Value Then
+                dataItem.Item("systemcolumn").Style.Item("background-color") = cRec.Item("x25BackColor")
+            End If
+            If Not cRec.Item("x25ForeColor") Is System.DBNull.Value Then
+                dataItem.Item("systemcolumn").Style.Item("color") = cRec.Item("x25ForeColor")
+            End If
         End If
-        If Not cRec.Item("x25ForeColor") Is System.DBNull.Value Then
-            dataItem.Style.Item("color") = cRec.Item("x25ForeColor")
+        If hidB01ID.Value <> "" Then
+            If Not cRec.Item("b02Color") Is System.DBNull.Value Then
+                dataItem.Item("systemcolumn").Style.Item("background-color") = cRec.Item("b02Color")
+            End If
         End If
+        
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource

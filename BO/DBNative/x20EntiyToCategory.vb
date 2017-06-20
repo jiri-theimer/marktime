@@ -6,7 +6,7 @@ Public Enum x20GridColumnENUM
     EntityColumn = 1
     CategoryColumn = 2
     Both = 3
-    None = 4
+    _None = 4
 End Enum
 
 Public Class x20EntiyToCategory

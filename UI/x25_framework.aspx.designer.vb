@@ -320,6 +320,24 @@ Partial Public Class x25_framework
     Protected WithEvents hidx18GridColsFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidB01ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidB01ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidx18IsColors control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx18IsColors As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidCols control.
     '''</summary>
     '''<remarks>

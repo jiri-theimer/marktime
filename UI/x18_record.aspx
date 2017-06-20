@@ -9,11 +9,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
-        function x25_record(x25id) {
-
-            dialog_master("x25_record.aspx?x18id=<%=Master.DataPID%>&source=x18_record&x23id=<%=Me.CurrentX23ID%>&pid=" + x25id, true)
-
-        }
+        
 
         function hardrefresh(pid, flag) {
             document.getElementById("<%=HardRefreshPID.ClientID%>").value = pid;
@@ -56,7 +52,7 @@
                 </tr>
 
             </table>
-
+            
 
 
             <div class="content-box2" style="margin-top: 20px;">
@@ -133,6 +129,7 @@
                                                 <asp:ListItem Text="Sloupec v přehledu záznamů entity" Value="1"></asp:ListItem>
                                                 <asp:ListItem Text="Sloupec v přehledu položek štítku" Value="2"></asp:ListItem>
                                                 <asp:ListItem Text="Sloupec v entitním přehledu i v přehledu položek" Value="3"></asp:ListItem>
+                                                <asp:ListItem Text="Nezobrazovat jako sloupec" Value="4"></asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                         <div>
@@ -155,37 +152,17 @@
                 </div>
             </div>
 
-            <div class="content-box2" style="margin-top: 40px;">
-                <div class="title">
-                    Položky štítku
-            <% If Me.CurrentX23ID <> 0 Then%>
-                    <button type="button" onclick="x25_record(0)" style="margin-left: 40px;">Přidat položku</button>
+            <asp:panel ID="panX23" runat="server" CssClass="div6">
+                <asp:RadioButtonList ID="opg1" runat="server" AutoPostBack="true" Visible="false" RepeatDirection="Vertical">
+                    <asp:ListItem Text="Štítek bude mít vlastní zdroj položek" Value="1" Selected="true"></asp:ListItem>
+                    <asp:ListItem Text="Štítek bude využívat již existující zdroj položek" Value="2"></asp:ListItem>
+                </asp:RadioButtonList>
 
-                    <%End If%>
+                <div style="margin-top:20px;">
+                    <asp:Label ID="lblX23ID" Text="Datový zdroj položek štítku:" runat="server" CssClass="lblReq"></asp:Label>
+                                <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true" Width="400px"></uc:datacombo>
                 </div>
-                <div class="content">
-                    <asp:Label ID="lblItemsMessage" runat="server" CssClass="infoNotification"></asp:Label>
-                    <asp:Repeater ID="rpX25" runat="server">
-                        <ItemTemplate>
-                            <div class="badge_label" style="background-color: <%#Eval("x25BackColor")%>">
-                                <a href="javascript:x25_record(<%# Eval("pid") %>)" style="color: <%#Eval("x25ForeColor")%>; text-decoration: <%#Eval("StyleDecoration")%>" title="Upravit/odstranit položku"><%# Eval("NameWithCode") %></a>
-                            </div>
-                        </ItemTemplate>
-                    </asp:Repeater>
-
-                    <div class="div6" style="margin-top: 20px;">
-                        <asp:RadioButtonList ID="opg1" runat="server" AutoPostBack="true" Visible="false" RepeatDirection="Vertical">
-                            <asp:ListItem Text="Štítek bude mít vlastní zdroj položek" Value="1" Selected="true"></asp:ListItem>
-                            <asp:ListItem Text="Štítek bude využívat již existující zdroj položek" Value="2"></asp:ListItem>
-                        </asp:RadioButtonList>
-                        <div>
-                            <asp:Label ID="lblX23ID" Text="Datový zdroj položek štítku:" runat="server" CssClass="lblReq"></asp:Label>
-                            <uc:datacombo ID="x23ID" runat="server" DataTextField="x23Name" DataValueField="pid" IsFirstEmptyRow="true" AutoPostBack="true"></uc:datacombo>
-                            <asp:Button ID="cmdConfirmOpg1" runat="server" CssClass="cmd" Text="Potvrdit" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </asp:panel>
 
 
 
@@ -320,6 +297,7 @@
                                 <asp:CheckBox ID="x18IsManyItems" runat="server" CssClass="chk" AutoPostBack="false" Text="Jedná se o štítek s mnoha položkami (100 a více)" />
                             </td>
                         </tr>
+                      
                         <tr>
                             <td>
                                 <span>Vyplňování názvu položky:</span>
@@ -351,8 +329,18 @@
                             <td>
                                 <asp:DropDownList ID="x18EntryOrdinaryFlag" runat="server">
                                     <asp:ListItem Text="Ručně" Value="1"></asp:ListItem>
-                                    <asp:ListItem Text="Nepoužívat" Value="2"></asp:ListItem>                                    
+                                    <asp:ListItem Text="Nepoužívat" Value="2"></asp:ListItem>
                                 </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblB01ID" Text="Workflow šablona:" runat="server"></asp:Label>
+                            </td>
+                            <td>
+                                <uc:datacombo ID="b01ID" runat="server" AutoPostBack="false" DataTextField="b01Name" DataValueField="pid" IsFirstEmptyRow="true" Width="300px"></uc:datacombo>
+
+
                             </td>
                         </tr>
                         <tr>
@@ -384,8 +372,6 @@
         </telerik:RadPageView>
     </telerik:RadMultiPage>
 
-    <asp:HiddenField ID="hidTempX23ID" runat="server" />
-    <asp:HiddenField ID="hidGUID_confirm" runat="server" />
     <asp:HiddenField ID="hidGUID_x16" runat="server" />
     <asp:HiddenField ID="hidGUID_x20" runat="server" />
     <asp:HiddenField ID="HardRefreshPID" runat="server" />

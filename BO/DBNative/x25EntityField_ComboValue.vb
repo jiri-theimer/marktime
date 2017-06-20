@@ -2,6 +2,7 @@
     Inherits BOMother
     Public Property x23ID As Integer
     Public Property j02ID_Owner As Integer
+    Public Property b02ID As Integer
     Public Property x25Name As String
     Public Property x25Ordinary As Integer
     Public Property x25ArabicCode As String
@@ -38,7 +39,18 @@
             Return _x23Name
         End Get
     End Property
-
+    Private Property _b02Name As String
+    Public ReadOnly Property b02Name As String
+        Get
+            Return _b02Name
+        End Get
+    End Property
+    Private Property _b02Color As String
+    Public ReadOnly Property b02Color As String
+        Get
+            Return _b02Color
+        End Get
+    End Property
     Public ReadOnly Property NameWithComboName As String
         Get
             Return _x23Name & ": " & Me.x25Name

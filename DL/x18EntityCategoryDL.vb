@@ -106,6 +106,7 @@
             pars.Add("x18IsColors", .x18IsColors, DbType.Boolean)
             pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
+            pars.Add("b01ID", BO.BAS.IsNullDBKey(.b01ID), DbType.Int32)
             pars.Add("x18Icon", .x18Icon, DbType.String)
             pars.Add("x18IsClueTip", .x18IsClueTip, DbType.Boolean)
             pars.Add("x18ReportCodes", .x18ReportCodes, DbType.String)

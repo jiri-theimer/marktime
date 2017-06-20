@@ -237,7 +237,7 @@ Public Class x25_record
                 Next
             End If
 
-            If .Save(cRec, Me.CurrentX18ID) Then
+            If .Save(cRec, Me.CurrentX18ID, Nothing) Then
                 Master.DataPID = .LastSavedPID
                 If Not lisX19 Is Nothing Then
                     Master.Factory.x18EntityCategoryBL.SaveX19Binding(Master.DataPID, lisX19, GetX20IDs())

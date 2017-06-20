@@ -66,6 +66,11 @@
 
         function hardrefresh(pid, flag) {
 
+            if (flag == "x18-save") {
+                location.replace("x25_framework.aspx?x18id=" + pid);
+                return;
+            }
+                
 
             location.replace("x18_framework.aspx")
 
@@ -89,7 +94,7 @@
             <img src="Images/label_32.png" alt="Štítky" />
         </div>
         <div class="commandcell" style="padding-left: 10px;">
-            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Nastavení štítků" Style="vertical-align: top;"></asp:Label>
+            <asp:Label ID="lblFormHeader" runat="server" CssClass="page_header_span" Text="Administrace štítků" Style="vertical-align: top;"></asp:Label>
 
         </div>
         

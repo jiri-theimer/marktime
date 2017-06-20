@@ -8,17 +8,16 @@
     End Sub
     Public ReadOnly Property CurrentX23ID As Integer
         Get
-            If hidTempX23ID.Value <> "" Then
-                Return BO.BAS.IsNullInt(Me.hidTempX23ID.Value)
-            Else
-                Return BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
-            End If
+            Return BO.BAS.IsNullInt(Me.x23ID.SelectedValue)
         End Get
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         roles1.Factory = Master.Factory
         If Not Page.IsPostBack Then
+            Me.b01ID.DataSource = Master.Factory.b01WorkflowTemplateBL.GetList().Where(Function(p) p.x29ID = BO.x29IdEnum.x25EntityField_ComboValue)
+            Me.b01ID.DataBind()
+
             hidGUID_x16.Value = BO.BAS.GetGUID()
             hidGUID_x20.Value = BO.BAS.GetGUID()
             With Master
@@ -68,6 +67,7 @@
 
             Me.j02ID_Owner.Value = .j02ID_Owner.ToString
             Me.j02ID_Owner.Text = .Owner
+            Me.b01ID.SelectedValue = .b01ID.ToString
 
             Me.x18IsColors.Checked = .x18IsColors
             Me.x18IsManyItems.Checked = .x18IsManyItems
@@ -76,10 +76,7 @@
             Me.x18ReportCodes.Text = .x18ReportCodes
             Master.Timestamp = .Timestamp
 
-            If .x23ID <> 0 Then
-                Dim cX23 As BO.x23EntityField_Combo = Master.Factory.x23EntityField_ComboBL.Load(.x23ID)
-                If cX23.x23Ordinary = -666 Then Me.x23ID.Enabled = False
-            End If
+           
             basUI.SelectDropdownlistValue(Me.x18GridColsFlag, CInt(.x18GridColsFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18EntryNameFlag, CInt(.x18EntryNameFlag).ToString)
             basUI.SelectDropdownlistValue(Me.x18EntryCodeFlag, CInt(.x18EntryCodeFlag).ToString)
@@ -89,7 +86,7 @@
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
 
-        RefreshItems()
+
 
         Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Master.DataPID)
         Master.Factory.p85TempBoxBL.Truncate(hidGUID_x16.Value)
@@ -144,23 +141,7 @@
         rpX20.DataSource = Master.Factory.p85TempBoxBL.GetList(hidGUID_x20.Value)
         rpX20.DataBind()
     End Sub
-    Private Sub RefreshItems()
-        If Me.CurrentX23ID <> 0 Then
-            Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(New BO.myQueryX25(Me.CurrentX23ID))
-            If lis.Count <= 50 Then
-                rpX25.DataSource = lis
-            Else
-                lblItemsMessage.Text = "Štítek má více než 50 položek. Jejich správa by na tomto místě byla nepřehledná."
-                rpX25.DataSource = Nothing
-            End If
-        Else
-            rpX25.DataSource = Nothing
-        End If
-        rpX25.DataBind()
-
-
-
-    End Sub
+    
     Private Sub _MasterPage_Master_OnDelete() Handles _MasterPage.Master_OnDelete
         With Master.Factory.x18EntityCategoryBL
             If .Delete(Master.DataPID) Then
@@ -181,9 +162,11 @@
         SaveTempX16()
         SaveTempX20()
 
-        If Master.DataPID = 0 And hidTempX23ID.Value = "" Then
-            Master.Notify("Musíte kliknout na tlačítko [Potvrdit].", NotifyLevel.WarningMessage)
-            Return
+        If Master.DataPID = 0 And opg1.SelectedValue = "2" Then
+            If Me.x23ID.SelectedValue = "" Then
+                Master.Notify("Musíte vybrat datový zdroj štítku z nabídky zdrojů.")
+                Return
+            End If
         End If
         Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
 
@@ -231,6 +214,7 @@
             cRec.x18Icon = Me.x18Icon.Text
             cRec.x18IsClueTip = Me.x18IsClueTip.Checked
             cRec.x18ReportCodes = Me.x18ReportCodes.Text
+            cRec.b01ID = BO.BAS.IsNullInt(Me.b01ID.SelectedValue)
 
             cRec.x18IsColors = Me.x18IsColors.Checked
             cRec.x18IsManyItems = Me.x18IsManyItems.Checked
@@ -245,6 +229,7 @@
 
             If .Save(cRec, lisX20, lisX69, lisX16) Then
                 Master.DataPID = .LastSavedPID
+
                 Master.CloseAndRefreshParent("x18-save")
             Else
                 Master.Notify(.ErrorMessage, 2)
@@ -253,30 +238,17 @@
     End Sub
 
     Private Sub x18_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        
-        
-        opg1.Visible = False
-        cmdConfirmOpg1.Visible = False
-        Me.rpX25.Visible = True
-        lblX23ID.Visible = True
-        Me.x23ID.Visible = True
-
         If Master.DataPID = 0 Then
-            If hidGUID_confirm.Value = "" Then
-                opg1.Visible = True
-                cmdConfirmOpg1.Visible = True
-            End If
-            If opg1.SelectedValue = "1" Then
-                Me.lblX23ID.Visible = False
+            opg1.Visible = True
+            If opg1.SelectedValue = "2" Then
+                Me.x23ID.Visible = True
+            Else
                 Me.x23ID.Visible = False
-                
             End If
-        End If
-
-        
-        If Me.hidTempX23ID.Value <> "" Then
-            lblX23ID.Visible = False
-            Me.x23ID.Visible = False
+            Me.lblX23ID.Visible = Me.x23ID.Visible
+        Else
+            opg1.Visible = False
+            Me.x23ID.Enabled = False
         End If
         If rpX16.Items.Count > 0 Then
             Me.x18GridColsFlag.Visible = True
@@ -345,29 +317,12 @@
     
     
 
-    Private Sub x23ID_SelectedIndexChanged(OldValue As String, OldText As String, CurValue As String, CurText As String) Handles x23ID.SelectedIndexChanged
-        RefreshItems()
-    End Sub
-
+    
     Private Sub cmdHardRefresh_Click(sender As Object, e As EventArgs) Handles cmdHardRefresh.Click
-        RefreshItems()
-    End Sub
-
-    Private Sub cmdConfirmOpg1_Click(sender As Object, e As EventArgs) Handles cmdConfirmOpg1.Click
-        Me.hidGUID_confirm.Value = BO.BAS.GetGUID
-        If opg1.SelectedValue = "1" Then
-            Dim c As New BO.x23EntityField_Combo
-            c.x23Name = hidGUID_confirm.Value
-            c.x23Ordinary = -666
-            If Master.Factory.x23EntityField_ComboBL.Save(c) Then
-                hidTempX23ID.Value = Master.Factory.x23EntityField_ComboBL.LastSavedPID.ToString
-
-            End If
-        End If
-
-        RefreshItems()
 
     End Sub
+
+    
 
     Private Sub cmdAddX69_Click(sender As Object, e As EventArgs) Handles cmdAddX69.Click
         roles1.AddNewRow()

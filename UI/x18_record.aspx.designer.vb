@@ -113,22 +113,13 @@ Partial Public Class x18_record
     Protected WithEvents rpX20 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
-    '''lblItemsMessage control.
+    '''panX23 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblItemsMessage As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''rpX25 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rpX25 As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents panX23 As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''opg1 control.
@@ -156,15 +147,6 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x23ID As Global.UI.datacombo
-
-    '''<summary>
-    '''cmdConfirmOpg1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdConfirmOpg1 As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''ff control.
@@ -302,6 +284,24 @@ Partial Public Class x18_record
     Protected WithEvents x18EntryOrdinaryFlag As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''lblB01ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblB01ID As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''b01ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b01ID As Global.UI.datacombo
+
+    '''<summary>
     '''x18Icon control.
     '''</summary>
     '''<remarks>
@@ -327,24 +327,6 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18ReportCodes As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''hidTempX23ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidTempX23ID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidGUID_confirm control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidGUID_confirm As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidGUID_x16 control.
