@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="x25_scheduler.aspx.vb" Inherits="UI.x25_scheduler" %>
+
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="persons" Src="~/persons.ascx" %>
@@ -35,7 +36,7 @@
             $(".show_hide3").show();
             $(".slidingDiv3").hide();
 
-            
+
 
             $('.show_hide2').click(function () {
                 $(".slidingDiv1").hide();
@@ -107,19 +108,19 @@
 
         function x25_record(pid) {
 
-            sw_master("x25_record.aspx?x18id=<%=me.CurrentX18ID%>=" + pid, "Images/label.png")
+            sw_master("x25_record.aspx?x18id=<%=me.CurrentX18ID%>&pid=" + pid, "Images/label.png")
         }
 
-       
-        
 
-       
+
+
+
 
         function re(pid, prefix) {
             if (prefix == 'x25')
                 x25_record(pid);
 
-           
+
         }
 
         function record_create_contextmenu(sender, eventArgs) {
@@ -136,11 +137,11 @@
                 d2.setDate(d2.getDate() - 1);
             }
 
-            
+
             var url = "x25_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
-                       
-           
-               
+
+
+
             sw_master(url, "Images/calendar.png")
         }
 
@@ -156,11 +157,11 @@
                 d2.setDate(d2.getDate() - 1);
             }
 
-            
-            
+
+
             var url = "x25_record.aspx?t1=" + formattedDate(d1) + "&t2=" + formattedDate(d2) + "&x18id=<%=Me.CurrentX18ID%>";
-           
-            
+
+
 
             sw_master(url, "Images/calendar.png")
 
@@ -238,7 +239,7 @@
 
                 //Gets all the data needed for the an Appointment, from the TreeView node.
                 var node = eventArgs.get_sourceNode();
-               
+
                 var url = "o25_record.aspx?x18id=<%=Me.CurrentX18ID%>&d1=" + formattedDate(d1) + " & d2 = " + formattedDate(d2);
 
                 sw_master(url, "Images/label.png");
@@ -267,6 +268,9 @@
 
             location.replace("x25_scheduler.aspx?x18id=" + ctl.value);
         }
+        function switch2grid(){
+            location.replace("x25_framework.aspx?x18id=<%=me.CurrentX18ID%>");
+        }
     </script>
 
 </asp:Content>
@@ -279,46 +283,52 @@
         <div id="left_panel" style="float: left; width: 250px;">
             <div style="float: left;">
                 <img src="Images/calendar_32.png" />
-            </div>
+            </div>            
             <div class="div6" style="float: left;">
 
-                <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px; " ToolTip="Štítek"></asp:DropDownList>
+                <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 200px;" ToolTip="Štítek"></asp:DropDownList>                
             </div>
-
-            <div style="clear: both;"></div>
             
 
             <div style="clear: both;"></div>
-            
 
-            <div style="clear: both;"></div>
-            <div class="show_hide2" style="float: left; margin-top: 8px;">
-                <button type="button">
-                    <img src="Images/arrow_down.gif" alt="Výběr osob" />
-                    <asp:Label ID="PersonsHeader" runat="server"></asp:Label>
 
-                </button>
-
-            </div>
-            <div style="clear: both;"></div>
-            <div class="slidingDiv2" style="padding-bottom: 20px; display: none;">
-
-                <uc:persons ID="persons1" runat="server"></uc:persons>
+            <div>
+                <button type="button" onclick="switch2grid()"><img src="Images/grid.png" />Přepnout do přehledu</button>
             </div>
 
-            <div style="clear: both;"></div>
-            <div class="show_hide3" style="float: left; margin-top: 8px;">
-                <button type="button">
-                    <img src="Images/arrow_down.gif" alt="Výběr projektů" />
-                    <asp:Label ID="ProjectsHeader" runat="server"></asp:Label>
 
-                </button>
-
-            </div>
             <div style="clear: both;"></div>
-            <div class="slidingDiv3" style="padding-bottom: 20px; display: none;">
-                <uc:projects ID="projects1" runat="server"></uc:projects>
-            </div>
+            <asp:Panel ID="panPersons" runat="server">
+                <div class="show_hide2" style="float: left; margin-top: 8px;">
+                    <button type="button">
+                        <img src="Images/arrow_down.gif" alt="Výběr osob" />
+                        <asp:Label ID="PersonsHeader" runat="server"></asp:Label>
+
+                    </button>
+
+                </div>
+                <div style="clear: both;"></div>
+                <div class="slidingDiv2" style="padding-bottom: 20px; display: none;">
+
+                    <uc:persons ID="persons1" runat="server"></uc:persons>
+                </div>
+            </asp:Panel>
+            <div style="clear: both;"></div>
+            <asp:Panel ID="panProjects" runat="server">
+                <div class="show_hide3" style="float: left; margin-top: 8px;">
+                    <button type="button">
+                        <img src="Images/arrow_down.gif" alt="Výběr projektů" />
+                        <asp:Label ID="ProjectsHeader" runat="server"></asp:Label>
+
+                    </button>
+
+                </div>
+                <div style="clear: both;"></div>
+                <div class="slidingDiv3" style="padding-bottom: 20px; display: none;">
+                    <uc:projects ID="projects1" runat="server"></uc:projects>
+                </div>
+            </asp:Panel>
 
             <div style="clear: both;"></div>
             <div class="show_hide1" style="float: left; margin-top: 50px;">
@@ -340,7 +350,7 @@
                 <div class="content-box3">
                     <div class="title">Nastavení</div>
                     <div class="content">
-                       
+
                         <div class="div6">
                             <span>Začátek v rozhraní [Den/Týden/Multi]:</span>
                             <asp:DropDownList ID="entity_scheduler_daystarttime" runat="server" AutoPostBack="true">
@@ -401,7 +411,7 @@
                         </div>
 
 
-                        
+
                     </div>
                 </div>
             </div>
@@ -421,7 +431,7 @@
                 <TimelineView UserSelectable="true" NumberOfSlots="7" />
                 <AgendaView UserSelectable="true" NumberOfDays="20" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
-
+                
                 <AppointmentTemplate>
                     <a class="reczoom" rel="<%# Eval("Description")%>">i</a>
                     <a href="javascript:re(<%# Eval("ID")%>)"><%# Eval("Subject")%></a>
@@ -453,8 +463,8 @@
     </div>
 
 
-
-
+    <asp:HiddenField ID="hidx18IsColors" runat="server" />
+    <asp:HiddenField ID="hidX23ID" runat="server" />
 
     <asp:HiddenField ID="hidCurResource" runat="server" />
     <asp:HiddenField ID="hidCurTime" runat="server" />
@@ -466,5 +476,7 @@
     <asp:HiddenField ID="hidIsLoadingSetting" runat="server" Value="" />
     <asp:HiddenField ID="hidIsPersonsChange" runat="server" Value="" />
     <asp:HiddenField ID="hidIsProjectsChange" runat="server" Value="" />
+    <asp:HiddenField ID="hidCalendarFieldStart" runat="server" />
+    <asp:HiddenField ID="hidCalendarFieldEnd" runat="server" />
 </asp:Content>
 

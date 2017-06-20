@@ -99,11 +99,11 @@ Public Class x25_scheduler
             mq.MyRecordsDisponible = True
         End If
 
-        Dim lis As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(mq)
+        Dim lis As IEnumerable(Of BO.x18EntityCategory) = Master.Factory.x18EntityCategoryBL.GetList(mq).Where(Function(p) p.x18IsCalendar = True)
         Me.x18ID.DataSource = lis
         Me.x18ID.DataBind()
         If lis.Count = 0 Then
-            Master.Notify("V databázi zatím neexistuje štítek.", NotifyLevel.InfoMessage)
+            Master.Notify("V databázi zatím neexistuje štítek pro kalendářové rozhraní.", NotifyLevel.InfoMessage)
         Else
             If strDef <> "" Then basUI.SelectDropdownlistValue(Me.x18ID, strDef)
         End If
@@ -136,7 +136,116 @@ Public Class x25_scheduler
     End Sub
 
     Private Sub ReloadPage()
-        Response.Redirect("x25_scheduler.aspx")
+        Response.Redirect("x25_scheduler.aspx?x18id=" & Me.CurrentX18ID.ToString)
 
     End Sub
+
+    Private Sub Handle_ChangeX18ID()
+        Dim c As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
+        hidX23ID.Value = c.x23ID.ToString
+
+        hidx18IsColors.Value = BO.BAS.GB(c.x18IsColors)
+        hidCalendarFieldStart.Value = c.x18CalendarFieldStart
+        hidCalendarFieldEnd.Value = c.x18CalendarFieldEnd
+
+        Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
+        ''menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
+
+    End Sub
+
+    Private Sub RefreshData(bolData4Export As Boolean)
+        With Me.scheduler1
+            .Appointments.Clear()
+            .DayView.DayStartTime = System.TimeSpan.FromHours(CDbl(Me.entity_scheduler_daystarttime.SelectedValue))
+            .DayView.DayEndTime = System.TimeSpan.FromHours(CDbl(Me.entity_scheduler_dayendtime.SelectedValue))
+            .WeekView.DayStartTime = .DayView.DayStartTime
+            .WeekView.DayEndTime = .DayView.DayEndTime
+            .MultiDayView.DayStartTime = .DayView.DayStartTime
+            .MultiDayView.DayEndTime = .DayView.DayEndTime
+            .MultiDayView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_multidays.SelectedValue)
+            .Localization.HeaderMultiDay = "Multi-den (" & .MultiDayView.NumberOfDays.ToString & ")"
+            .AgendaView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_agendadays.SelectedValue)
+
+        End With
+        Dim d1 As Date = scheduler1.VisibleRangeStart.AddDays(-1), d2 As Date = scheduler1.VisibleRangeEnd.AddDays(1)
+
+        Dim mq As New BO.myQueryX25(BO.BAS.IsNullInt(hidX23ID.Value))
+        If panPersons.Visible Then
+            If persons1.CurrentPersonsRole = "-1" Then
+                mq.Owners = persons1.CurrentJ02IDs
+            Else
+                mq.j02IDs = persons1.CurrentJ02IDs
+            End If
+        End If
+        If panProjects.Visible Then
+            mq.p41IDs = projects1.CurrentP41IDs
+        End If
+
+
+        mq.CalendarDateFieldStart = hidCalendarFieldStart.Value
+        mq.CalendarDateFieldEnd = hidCalendarFieldEnd.Value
+        mq.DateFrom = d1
+        mq.DateUntil = d2
+
+        Master.Factory.x25EntityField_ComboValueBL.SetCalendarDateFields(hidCalendarFieldStart.Value, hidCalendarFieldEnd.Value)
+        Dim lis As IEnumerable(Of BO.x25EntityField_ComboValue) = Master.Factory.x25EntityField_ComboValueBL.GetList(mq)
+        For Each cRec In lis
+            Dim c As New Appointment()
+            With cRec
+                c.ID = .PID.ToString & ",'p56'"
+                c.Description = "clue_x25_record.aspx?pid=" & .PID.ToString
+                c.Subject = .x25Name
+                If c.Subject = "" Then c.Subject = .x25Code
+                c.Start = .CalendarDateStart
+                c.End = .CalendarDateEnd
+
+                If .b02ID <> 0 Then
+                    If .b02Color <> "" Then
+                        c.BackColor = Drawing.Color.FromName(.b02Color)
+                    End If
+                Else
+                    If .x25BackColor <> "" Then
+                        c.BackColor = Drawing.Color.FromName(.x25BackColor)
+                        c.ForeColor = Drawing.Color.FromName(.x25ForeColor)
+                    End If
+                End If
+
+
+                If (c.End.Hour = 23 And c.End.Minute = 59) Or (c.End.Hour = 0 And c.End.Minute = 0 And c.End.Second = 0) Then
+                    c.Start = DateSerial(Year(c.Start), Month(c.Start), Day(c.Start))
+                    c.End = DateSerial(Year(c.End), Month(c.End), Day(c.End)).AddDays(1)
+                End If
+
+                Select Case Me.CurrentView
+                    Case SchedulerViewType.MonthView, SchedulerViewType.TimelineView, SchedulerViewType.WeekView
+                        If Len(c.Subject) > 0 Then c.Subject = BO.BAS.OM3(c.Subject, 15)
+
+
+                End Select
+            End With
+
+            scheduler1.InsertAppointment(c)
+        Next
+    End Sub
+
+    Private Sub persons1_OnChange() Handles persons1.OnChange
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-scope", persons1.CurrentScope.ToString)
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-value", persons1.CurrentValue)
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-persons1-personsrole", persons1.CurrentPersonsRole)
+
+        RefreshData(False)
+        hidIsPersonsChange.Value = "1"
+    End Sub
+    Private Sub projects1_OnChange() Handles projects1.OnChange
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-projects1-scope", projects1.CurrentScope.ToString)
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-projects1-value", projects1.CurrentValue)
+        RefreshData(False)
+        hidIsProjectsChange.Value = "1"
+    End Sub
+
+    Private Sub x25_scheduler_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
+        PersonsHeader.Text = persons1.CurrentHeader
+        ProjectsHeader.Text = projects1.CurrentHeader
+    End Sub
+
 End Class

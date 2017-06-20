@@ -234,6 +234,7 @@
 
             return (pid);
         }
+        
 
     </script>
 </asp:Content>
@@ -266,6 +267,7 @@
                                     <telerik:RadMenuItem Value="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
                                 </Items>
                             </telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="KALENDÁŘ" Value="scheduler" ImageUrl="Images/calendar.png" ToolTip="Přepnout do kalendáře"></telerik:RadMenuItem>
 
 
                         </Items>
@@ -290,6 +292,7 @@
 
                     </button>
                 </div>
+                
 
                 <div class="commandcell" id="divQueryContainer"></div>
             </asp:Panel>

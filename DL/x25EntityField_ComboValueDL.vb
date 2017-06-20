@@ -112,20 +112,11 @@
         End With
     End Sub
     Public Function GetList(myQuery As BO.myQueryX25) As IEnumerable(Of BO.x25EntityField_ComboValue)
-        If myQuery Is Nothing Then
-            myQuery = New BO.myQueryX25(0)
-            myQuery.Closed = BO.BooleanQueryMode.NoQuery
-        End If
         Dim s As String = "SELECT " & GetSQLPart1(myQuery.TopRecordsOnly)
-        Dim strW As String = bas.ParseWhereMultiPIDs("a.x25ID", myQuery)
-        strW += bas.ParseWhereValidity("x25", "a", myQuery)
         Dim pars As New DbParameters
-        With myQuery
-            If .x23ID <> 0 Then
-                strW += " AND  a.x23ID=@x23id"
-                pars.Add("x23id", .x23ID, DbType.Int32)
-            End If
-        End With
+        Dim strW As String = GetSQLWHERE(myQuery, pars)
+
+       
 
         If strW <> "" Then s += " WHERE " & bas.TrimWHERE(strW)
         s += " ORDER BY a.x23ID,a.x25Ordinary,a.x25Name"
@@ -139,8 +130,18 @@
         strW += bas.ParseWhereValidity("x25", "a", myQuery)
         With myQuery
             If Not BO.BAS.IsNullDBDate(.DateFrom) Is Nothing Then
+
                 pars.Add("d1", .DateFrom, DbType.DateTime) : pars.Add("d2", .DateUntil, DbType.DateTime)
-                strW += " AND " & .DateQueryFieldBy & " BETWEEN @d1 AND @d2"
+                If .DateQueryFieldBy <> "" Then
+                    strW += " AND " & .DateQueryFieldBy & " BETWEEN @d1 AND @d2"
+                End If
+                If .CalendarDateFieldStart <> "" And .CalendarDateFieldEnd <> "" Then
+                    ''strW += " AND " & .CalendarDateFieldStart & " IS NOT NULL"
+                    ''If .CalendarDateFieldStart <> .CalendarDateFieldEnd Then
+                    ''    strW += " AND " & .CalendarDateFieldEnd & " IS NOT NULL"
+                    ''End If
+                    strW += " AND (" & .CalendarDateFieldStart & " BETWEEN @d1 AND @d2 OR " & .CalendarDateFieldEnd & " BETWEEN @d1 AND @d2 OR (" & .CalendarDateFieldStart & "<@d1 AND " & .CalendarDateFieldEnd & ">@d2))"
+                End If
             End If
             
             If Not .DateInsertFrom Is Nothing Then
@@ -153,10 +154,26 @@
                 strW += " AND  a.x23ID=@x23id"
                 pars.Add("x23id", .x23ID, DbType.Int32)
             End If
-            If .Record_x29ID > BO.x29IdEnum._NotSpecified And .RecordPID <> 0 Then
-                pars.Add("x29id", CInt(.Record_x29ID), DbType.Int32)
+            If .RecordPID <> 0 And .Record_x29ID > BO.x29IdEnum._NotSpecified Then
                 pars.Add("recordpid", .RecordPID, DbType.Int32)
-                strW += " AND a.x25ID IN (select x25ID FROM x19EntityCategory_Binding WHERE x29ID=@x29id AND x19RecordPID=@recordpid)"
+                pars.Add("x29id", CInt(.Record_x29ID), DbType.Int32)
+                strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=@x29id AND xa.x19RecordPID=@recordpid)"
+
+            End If
+            If Not .p41IDs Is Nothing Then
+                If .p41IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=141 AND xa.x19RecordPID IN (" & String.Join(",", .p41IDs) & "))"
+            End If
+            If Not .j02IDs Is Nothing Then
+                If .j02IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=102 AND xa.x19RecordPID IN (" & String.Join(",", .j02IDs) & "))"
+            End If
+            If Not .Owners Is Nothing Then
+                If .Owners.Count > 0 Then strW += " AND a.j02ID_Owner IN (" & String.Join(",", .j02IDs) & ")"
+            End If
+            If Not .p28IDs Is Nothing Then
+                If .p28IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=328 AND xa.x19RecordPID IN (" & String.Join(",", .p28IDs) & "))"
+            End If
+            If Not .p56IDs Is Nothing Then
+                If .p56IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=356 AND xa.x19RecordPID IN (" & String.Join(",", .p56IDs) & "))"
             End If
 
             If .ColumnFilteringExpression <> "" Then

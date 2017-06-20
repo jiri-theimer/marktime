@@ -23,6 +23,15 @@ Partial Public Class x25_scheduler
     Protected WithEvents x18ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''panPersons control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panPersons As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''PersonsHeader control.
     '''</summary>
     '''<remarks>
@@ -39,6 +48,15 @@ Partial Public Class x25_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents persons1 As Global.UI.persons
+
+    '''<summary>
+    '''panProjects control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panProjects As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
     '''ProjectsHeader control.
@@ -113,6 +131,24 @@ Partial Public Class x25_scheduler
     Protected WithEvents RadAjaxLoadingPanel1 As Global.Telerik.Web.UI.RadAjaxLoadingPanel
 
     '''<summary>
+    '''hidx18IsColors control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx18IsColors As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidX23ID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidX23ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidCurResource control.
     '''</summary>
     '''<remarks>
@@ -174,6 +210,24 @@ Partial Public Class x25_scheduler
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidIsProjectsChange As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCalendarFieldStart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCalendarFieldStart As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidCalendarFieldEnd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidCalendarFieldEnd As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

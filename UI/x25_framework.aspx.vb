@@ -336,7 +336,10 @@ Public Class x25_framework
             menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
             menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
         End If
-
+        With menu1.FindItemByValue("scheduler")
+            .Visible = c.x18IsCalendar
+            If .Visible Then .NavigateUrl = "x25_scheduler.aspx?x18id=" & Me.CurrentX18ID.ToString
+        End With
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
