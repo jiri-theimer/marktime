@@ -275,6 +275,33 @@ Partial Public Class x18_record
     Protected WithEvents x18IsManyItems As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
+    '''x18EntryNameFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18EntryNameFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''x18EntryCodeFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18EntryCodeFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''x18EntryOrdinaryFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18EntryOrdinaryFlag As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''x18Icon control.
     '''</summary>
     '''<remarks>

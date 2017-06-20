@@ -11,8 +11,8 @@ Public Class x18_framework
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             With Master
-                .PageTitle = "Štítky"
-                .SiteMenuValue = "x18_framework"
+                .PageTitle = "Správa štítků"
+                .SiteMenuValue = "x25_framework"
 
                 Dim lisPars As New List(Of String)
                 With lisPars

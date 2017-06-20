@@ -1,4 +1,5 @@
-﻿Public Class x25_framework
+﻿Imports Telerik.Web.UI
+Public Class x25_framework
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
     Public Property _curIsExport As Boolean
@@ -41,6 +42,21 @@
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
             End If
+            Dim strX18ID As String = Request.Item("x18id")
+            With Master.Factory.j03UserBL
+                If strX18ID = "" Then
+                    .InhaleUserParams("x25_framework-x18id")
+                    strX18ID = .GetUserParam("x25_framework-x18id")
+                End If
+            End With
+            SetupX18Combo(strX18ID)
+            If Me.x18ID.Items.Count > 0 Then
+                strX18ID = Me.x18ID.SelectedValue
+                Handle_ChangeX18ID()
+            Else
+                strX18ID = ""
+            End If
+
             Handle_Permissions()
             SetupPeriodQuery()
             With Master
@@ -48,38 +64,39 @@
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("x25_framework-pagesize")
-                    .Add("x25_framework-navigationPane_width")
+                    .Add("x25_framework-navigationPane_width-" & strX18ID)
                     .Add("x25_framework-x18id")
                     .Add("x25_framework-x23id")
-                    .Add("x25_framework_detail-pid")
+                    .Add("x25_framework_detail-pid-" & strX18ID)
 
-                    .Add("x25_framework-sort")
+                    .Add("x25_framework-sort-" & strX18ID)
                     .Add("periodcombo-custom_query")
-                    .Add("x25_framework-periodtype")
-                    .Add("x25_framework-period")
-                    .Add("x25_framework-filter_setting")
-                    .Add("x25_framework-filter_sql")
+                    .Add("x25_framework-periodtype-" & strX18ID)
+                    .Add("x25_framework-period-" & strX18ID)
+                    .Add("x25_framework-filter_setting-" & strX18ID)
+                    .Add("x25_framework-filter_sql-" & strX18ID)
+                    .Add("x25_framework-filter_validity-" & strX18ID)
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
 
-
+                    basUI.SelectDropdownlistValue(Me.cbxX25Validity, .GetUserParam("x25_framework-filter_validity-" & strX18ID, "1"))
                     basUI.SelectDropdownlistValue(cbxPaging, .GetUserParam("x25_framework-pagesize", "20"))
                     Dim strDefWidth As String = "800"
-                    Dim strW As String = .GetUserParam("x25_framework-navigationPane_width", strDefWidth)
+                    Dim strW As String = .GetUserParam("x25_framework-navigationPane_width-" & strX18ID, strDefWidth)
                     If strW = "-1" Then
                         Me.navigationPane.Collapsed = True
                     Else
                         Me.navigationPane.Width = Unit.Parse(strW & "px")
                     End If
 
-                    If .GetUserParam("x25_framework-sort") <> "" Then
-                        grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam("x25_framework-sort"))
+                    If .GetUserParam("x25_framework-sort-" & strX18ID) <> "" Then
+                        grid1.radGridOrig.MasterTableView.SortExpressions.AddSortExpression(.GetUserParam("x25_framework-sort-" & strX18ID))
                     End If
-                    basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("x25_framework-periodtype", ""))
+                    basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("x25_framework-periodtype-" & strX18ID, ""))
                     If Me.cbxPeriodType.SelectedIndex > 0 Then
                         period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
-                        period1.SelectedValue = .GetUserParam("x25_framework-period")
+                        period1.SelectedValue = .GetUserParam("x25_framework-period-" & strX18ID)
                     End If
                 End With
             End With
@@ -87,13 +104,13 @@
 
 
             With Master.Factory.j03UserBL
-                SetupX18Combo(BO.BAS.IsNullInt(.GetUserParam("x25_framework-x18id")))
 
-                SetupGrid(.GetUserParam("x25_framework-filter_setting"), .GetUserParam("x25_framework-filter_sql"))
+
+                SetupGrid(.GetUserParam("x25_framework-filter_setting-" & strX18ID), .GetUserParam("x25_framework-filter_sql-" & strX18ID))
             End With
             RecalcVirtualRowCount()
 
-            Handle_DefaultSelectedRecord
+            Handle_DefaultSelectedRecord()
 
         End If
     End Sub
@@ -119,6 +136,13 @@
             .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
 
             .radGridOrig.MasterTableView.Name = "grid"
+
+            Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.CurrentX18ID)
+            lisX20X18 = lisX20X18.Where(Function(p) p.x20IsClosed = False And p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo).OrderBy(Function(p) p.x20IsMultiSelect).ThenBy(Function(p) p.x29ID)   'omezit pouze na otevřené vazby + vazby vyplňované přes záznam položky štítku
+            For Each c In lisX20X18
+                .AddColumn("Entita" & c.x20ID.ToString, c.BindName, BO.cfENUM.AnyString, True, , "dbo.stitek_entity(a.x25ID," & c.x20ID.ToString & ")", , False, True)
+                lisSqlSEL.Add("dbo.stitek_entity(a.x25ID," & c.x20ID.ToString & ") as Entita" & c.x20ID.ToString)
+            Next
 
             Dim lisX16 As IEnumerable(Of BO.x16EntityCategory_FieldSetting) = Master.Factory.x18EntityCategoryBL.GetList_x16(Me.CurrentX18ID).Where(Function(p) p.x16IsGridField = True)
             If lisX16.Count = 0 Then
@@ -164,7 +188,6 @@
             Master.Notify("V databázi zatím neexistuje štítek.", NotifyLevel.InfoMessage)
         Else
             If strDef <> "" Then basUI.SelectDropdownlistValue(Me.x18ID, strDef)
-            Handle_ChangeX18ID()
         End If
 
     End Sub
@@ -179,7 +202,8 @@
 
     End Sub
     Private Sub Handle_Permissions()
-
+        cmdSetting.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin)
+        cmdAdmin.Visible = cmdSetting.Visible
     End Sub
 
     Private Sub RecalcVirtualRowCount()
@@ -286,25 +310,20 @@
         Response.Redirect(s, True)
     End Sub
 
-    Private Sub x18ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles x18ID.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("x25_framework-x18id", Me.x18ID.SelectedValue)
-        
-        ReloadPage()
-
-    End Sub
+   
 
     Private Sub Handle_ChangeX18ID()
         Dim c As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
         hidX23ID.Value = c.x23ID.ToString
         hidx18GridColsFlag.Value = CInt(c.x18GridColsFlag).ToString
+
+        Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
+        cmdNew.Visible = cDisp.CreateItem
+
     End Sub
 
     Private Sub x25_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        If Me.CurrentX18ID = 0 Then
-            cmdSetting.Visible = False
-        Else
-            cmdSetting.Visible = True
-        End If
+       
         If cbxPeriodType.SelectedIndex > 0 Then
             With Me.period1
                 .Visible = True
@@ -326,7 +345,15 @@
         Else
             period1.Visible = False
         End If
-
+        If grid1.GetFilterExpression <> "" Then
+            cmdCĺearFilter.Visible = True
+        Else
+            cmdCĺearFilter.Visible = False
+        End If
+        Me.CurrentQuery.Text = ""
+        If Me.cbxX25Validity.SelectedIndex > 0 Then
+            Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/>" & Me.cbxX25Validity.SelectedItem.Text
+        End If
     End Sub
 
     Private Sub GridExport(strFormat As String)
@@ -349,17 +376,31 @@
     End Sub
     Private Sub cmdCĺearFilter_Click(sender As Object, e As EventArgs) Handles cmdCĺearFilter.Click
         With Master.Factory.j03UserBL
-            .SetUserParam("x25_framework-filter_setting", "")
-            .SetUserParam("x25_framework-filter_sql", "")
+            .SetUserParam("x25_framework-filter_setting-" & Me.CurrentX18ID.ToString, "")
+            .SetUserParam("x25_framework-filter_sql-" & Me.CurrentX18ID.ToString, "")
         End With
         ReloadPage()
+    End Sub
+
+    Private Sub grid1_ItemDataBound(sender As Object, e As Telerik.Web.UI.GridItemEventArgs) Handles grid1.ItemDataBound
+        If Not TypeOf e.Item Is GridDataItem Then Return
+
+        Dim dataItem As GridDataItem = CType(e.Item, GridDataItem)
+        Dim cRec As System.Data.DataRowView = CType(e.Item.DataItem, System.Data.DataRowView)
+        If cRec.Item("IsClosed") Then dataItem.Font.Strikeout = True
+        If Not cRec.Item("x25BackColor") Is System.DBNull.Value Then
+            dataItem.Style.Item("background-color") = cRec.Item("x25BackColor")
+        End If
+        If Not cRec.Item("x25ForeColor") Is System.DBNull.Value Then
+            dataItem.Style.Item("color") = cRec.Item("x25ForeColor")
+        End If
     End Sub
 
     Private Sub grid1_NeedDataSource(sender As Object, e As Telerik.Web.UI.GridNeedDataSourceEventArgs) Handles grid1.NeedDataSource
         If _needFilterIsChanged Then
             With Master.Factory.j03UserBL
-                .SetUserParam("x25_framework-filter_setting", grid1.GetFilterSetting())
-                .SetUserParam("x25_framework-filter_sql", grid1.GetFilterExpression())
+                .SetUserParam("x25_framework-filter_setting-" & Me.CurrentX18ID.ToString, grid1.GetFilterSetting())
+                .SetUserParam("x25_framework-filter_sql-" & Me.CurrentX18ID.ToString, grid1.GetFilterExpression())
             End With
             RecalcVirtualRowCount()
         End If
@@ -380,22 +421,31 @@
     End Sub
 
     Private Sub grid1_SortCommand(SortExpression As String, strOwnerTableName As String) Handles grid1.SortCommand
-        Master.Factory.j03UserBL.SetUserParam("x25_framework-sort", SortExpression)
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-sort-" & Me.CurrentX18ID.ToString, SortExpression)
+    End Sub
+    Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
+        _needFilterIsChanged = True
+        ''_CurFilterDbField = strFilterColumn
     End Sub
     Private Sub cbxPeriodType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPeriodType.SelectedIndexChanged
         With Master.Factory.j03UserBL
             If Me.cbxPeriodType.SelectedIndex > 0 And Not period1.Visible Then
-                .InhaleUserParams("periodcombo-custom_query", "x25_framework-period")
+                .InhaleUserParams("periodcombo-custom_query", "x25_framework-period-" & Me.CurrentX18ID.ToString)
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
-                period1.SelectedValue = .GetUserParam("x25_framework-period")
+                period1.SelectedValue = .GetUserParam("x25_framework-period-" & Me.CurrentX18ID.ToString)
             End If
 
-            .SetUserParam("x25_framework-periodtype", Me.cbxPeriodType.SelectedValue)
+            .SetUserParam("x25_framework-periodtype-" & Me.CurrentX18ID.ToString, Me.cbxPeriodType.SelectedValue)
         End With
 
 
         RecalcVirtualRowCount()
         grid1.Rebind(False)
         hidUIFlag.Value = "period"
+    End Sub
+
+    Private Sub cbxX25Validity_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxX25Validity.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("x25_framework-filter_validity-" & Me.CurrentX18ID.ToString, Me.cbxX25Validity.SelectedValue)
+        ReloadPage()
     End Sub
 End Class

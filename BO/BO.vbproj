@@ -218,6 +218,7 @@
     <Compile Include="BAS\clsTime.vb" />
     <Compile Include="Helpers\Worksheet\p31ValidateBeforeSave.vb" />
     <Compile Include="DBNative\j77WorksheetStatTemplate.vb" />
+    <Compile Include="Helpers\x18RecordDisposition.vb" />
     <Compile Include="Helpers\x20_join_x18.vb" />
     <Compile Include="Mother\BOMother.vb" />
     <Compile Include="Mother\BOMotherFT.vb" />

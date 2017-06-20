@@ -59,6 +59,15 @@ Partial Public Class x25_framework
     Protected WithEvents x18ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''cmdNew control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdNew As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
     '''panSearchbox control.
     '''</summary>
     '''<remarks>
@@ -120,6 +129,24 @@ Partial Public Class x25_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''cmdSetting control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSetting As Global.System.Web.UI.HtmlControls.HtmlButton
+
+    '''<summary>
+    '''cmdAdmin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAdmin As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''cbxX25Validity control.
@@ -201,15 +228,6 @@ Partial Public Class x25_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdSetting control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdSetting As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''grid1 control.

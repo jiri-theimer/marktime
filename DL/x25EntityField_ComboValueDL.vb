@@ -177,7 +177,7 @@
         Dim s As String = ""
         With myQuery
             If .MG_GridSqlColumns <> "" Then .MG_GridSqlColumns += ","
-            .MG_GridSqlColumns += "a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed,x25Name,x25Code,x25Ordinary"
+            .MG_GridSqlColumns += "a.x25ID as pid,CONVERT(BIT,CASE WHEN GETDATE() BETWEEN a.x25ValidFrom AND a.x25ValidUntil THEN 0 else 1 END) as IsClosed,a.x25Name,a.x25Code,a.x25Ordinary,a.x25BackColor,a.x25ForeColor"
         End With
 
         Dim pars As New DbParameters

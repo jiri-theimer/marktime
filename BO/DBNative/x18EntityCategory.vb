@@ -1,8 +1,27 @@
-﻿Public Enum x18GridColsFlag
-    NameAndCode = 1
-    CodeOnly = 2
-    NameOnly = 3
+﻿Public Enum x18GridColsENUM
+    NameAndCode = 1 '1-kromě vlastních polí zobrazovat v přehledu i název i kód
+    CodeOnly = 2    '2-kromě vlastních polí zobrazovat kód
+    NameOnly = 3    '3-kromě vlastních polí zobrazovat název
 End Enum
+Public Enum x18EntryCodeENUM
+    Manual = 1  '1-vyplňovat ručně kód
+    NotUsed = 2 '2-nepoužívat kód
+    AutoX18 = 3 '3-automaticky generovat v rámci štítku
+    AutoP41 = 4 '4-automaticky generovat v rámci projektu
+End Enum
+
+
+Public Enum x18EntryNameENUM
+    Manual = 1    '1-vyplňovat ručně název
+    NotUsed = 2     '2-nevyplňovat název
+End Enum
+
+
+Public Enum x18EntryOrdinaryENUM
+    Manual = 1      '1-pořadí zadávat ručně
+    NotUsed = 2     '2-nepracovat s pořadím
+End Enum
+
 
 Public Class x18EntityCategory
     Inherits BOMother
@@ -20,8 +39,10 @@ Public Class x18EntityCategory
     Public Property x18Icon As String
     Public Property x18IsClueTip As Boolean
     Public Property x18ReportCodes As String
-    Public Property x18GridColsFlag As x18GridColsFlag = BO.x18GridColsFlag.NameAndCode
-
+    Public Property x18GridColsFlag As x18GridColsENUM = x18GridColsENUM.NameAndCode
+    Public Property x18EntryNameFlag As x18EntryNameENUM = x18EntryNameENUM.Manual
+    Public Property x18EntryCodeFlag As x18EntryCodeENUM = x18EntryCodeENUM.Manual
+    Public Property x18EntryOrdinaryFlag As x18EntryOrdinaryENUM = x18EntryOrdinaryENUM.Manual
 
     Public ReadOnly Property x23Name As String
         Get

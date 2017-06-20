@@ -1,6 +1,6 @@
 ﻿Public Interface Ix25EntityField_ComboValueBL
     Inherits IFMother
-    Function Save(cRec As BO.x25EntityField_ComboValue) As Boolean
+    Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer) As Boolean
     Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
     Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
     Function Delete(intPID As Integer) As Boolean
@@ -26,10 +26,15 @@ Class x25EntityField_ComboValueBL
         _cDL = New DL.x25EntityField_ComboValueDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.x25EntityField_ComboValue) As Boolean Implements Ix25EntityField_ComboValueBL.Save
+    Public Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer) As Boolean Implements Ix25EntityField_ComboValueBL.Save
         With cRec
             If .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
-            If Trim(.x25Name) = "" Then _Error = "Chybí název položky." : Return False
+            If Trim(.x25Name) = "" Then
+                Dim cX18 As BO.x18EntityCategory = Factory.x18EntityCategoryBL.Load(intX18ID)
+                If cX18.x18EntryNameFlag = BO.x18EntryNameENUM.Manual Then
+                    _Error = "Chybí název položky." : Return False
+                End If
+            End If
             If .x23ID = 0 Then _Error = "Chybí vazba na číselník." : Return False
 
             Dim cX23 As BO.x23EntityField_Combo = Factory.x23EntityField_ComboBL.Load(.x23ID)
@@ -43,7 +48,7 @@ Class x25EntityField_ComboValueBL
 
         If _cDL.Save(cRec) Then
             Dim intX25ID As Integer = _LastSavedPID
-           
+
 
             ''If Not cRecOld Is Nothing Then
             ''    'zjistit, zda aktualizovat u combo volných polí statický text

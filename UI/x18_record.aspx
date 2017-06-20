@@ -56,7 +56,7 @@
                 </tr>
 
             </table>
-            
+
 
 
             <div class="content-box2" style="margin-top: 20px;">
@@ -280,14 +280,14 @@
             </div>
             <div class="div6">
                 <asp:DropDownList ID="x18GridColsFlag" runat="server">
-                    <asp:ListItem Text="Kromě rozšiřujících polí zobrazovat v přehledu sloupce [Název] a [Kód]" Value="1"></asp:ListItem>
-                    <asp:ListItem Text="Kromě rozšiřujících polí zobrazovat v přehledu sloupec [Kód]" Value="2"></asp:ListItem>
-                    <asp:ListItem Text="Kromě rozšiřujících polí zobrazovat v přehledu sloupec [Název]" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Kód]" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název]" Value="3"></asp:ListItem>
                 </asp:DropDownList>
             </div>
         </telerik:RadPageView>
 
-        <telerik:RadPageView ID="other" runat="server" style="margin-top:10px;">
+        <telerik:RadPageView ID="other" runat="server" Style="margin-top: 10px;">
             <div class="content-box2">
                 <div class="title">
                     <img src="Images/projectrole.png" width="16px" height="16px" />
@@ -296,7 +296,7 @@
                 </div>
                 <div class="content">
                     <uc:entityrole_assign ID="roles1" runat="server" EntityX29ID="x18EntityCategory"></uc:entityrole_assign>
-                    <div class="div6" style="clear:both;margin-top: 20px; border-top: dashed silver 1px;display:none;">
+                    <div class="div6" style="clear: both; margin-top: 20px; border-top: dashed silver 1px; display: none;">
                         <asp:Label ID="lblOwner" runat="server" Text="Vlastník záznamu štítku:" CssClass="lblReq"></asp:Label>
                         <uc:person ID="j02ID_Owner" runat="server" Width="300px" Flag="all" />
                     </div>
@@ -305,7 +305,7 @@
 
 
 
-            
+
             <div class="content-box2" style="margin-top: 60px;">
                 <div class="title">Různé</div>
                 <div class="content">
@@ -318,6 +318,41 @@
                         <tr>
                             <td colspan="2">
                                 <asp:CheckBox ID="x18IsManyItems" runat="server" CssClass="chk" AutoPostBack="false" Text="Jedná se o štítek s mnoha položkami (100 a více)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Vyplňování názvu položky:</span>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18EntryNameFlag" runat="server">
+                                    <asp:ListItem Text="Ručně" Value="1"></asp:ListItem>
+                                    <asp:ListItem Text="Nevyplňovat" Value="2"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Vyplňování kódu položky:</span>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18EntryCodeFlag" runat="server">
+                                    <asp:ListItem Text="Ručně" Value="1"></asp:ListItem>
+                                    <asp:ListItem Text="Nepoužívat" Value="2"></asp:ListItem>
+                                    <asp:ListItem Text="Automaticky v rámci všech položek štítku" Value="3"></asp:ListItem>
+                                    <asp:ListItem Text="Automaticky v rámci projektu" Value="3"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Vyplňování pořadí:</span>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="x18EntryOrdinaryFlag" runat="server">
+                                    <asp:ListItem Text="Ručně" Value="1"></asp:ListItem>
+                                    <asp:ListItem Text="Nepoužívat" Value="2"></asp:ListItem>                                    
+                                </asp:DropDownList>
                             </td>
                         </tr>
                         <tr>

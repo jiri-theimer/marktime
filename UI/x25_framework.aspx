@@ -79,6 +79,17 @@
 
 
         }
+        function x18id_onchange(ctl) {            
+           
+            $.post("Handler/handler_userparam.ashx", { x36value: ctl.value, x36key: "x25_framework-x18id", oper: "set" }, function (data) {
+                if (data == ' ') {
+                    return;
+                }
+
+            });
+
+            location.replace("x25_framework.aspx?x18id=" + ctl.value);
+        }
         function RowDoubleClick(sender, args) {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             if (pid == null)
@@ -113,7 +124,7 @@
                 return;
             }
 
-            var keyname = "x25_framework-navigationPane_width";
+            var keyname = "x25_framework-navigationPane_width-<%=me.currentx18id%>";
 
             $.post("Handler/handler_userparam.ashx", { x36value: w, x36key: keyname, oper: "set" }, function (data) {
                 if (data == ' ') {
@@ -188,6 +199,9 @@
             var pid =
             sw_master("x18_record.aspx?pid=<%=Me.currentx18id%>", "Images/label.png", true);
         }
+        function x18_framework() {
+            location.replace("x18_framework.aspx")
+        }
 
     </script>
 </asp:Content>
@@ -202,10 +216,13 @@
                 </div>
 
                 <div class="commandcell">
-                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="true" DataTextField="x18Name" DataValueField="pid" Style="width: 200px;" ToolTip="Štítek"></asp:DropDownList>
+                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px;height:26px;" ToolTip="Štítek"></asp:DropDownList>
                     
                 </div>
-                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px;">
+                <div class="commandcell">
+                    <button type="button" id="cmdNew" runat="server" onclick="x25_record(0)"><img src="Images/new.png" /> Nový</button>
+                </div>
+                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px;" Visible="false">
                     <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
                         <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
                     </telerik:RadComboBox>
@@ -242,6 +259,12 @@
             <div style="clear: both; width: 100%;"></div>
 
             <div class="slidingDiv1" style="display: none; background: #f0f8ff;">
+                <div class="div6">
+                    <button type="button" id="cmdSetting" runat="server" onclick="x18_setting()">
+                        <img src="Images/label.png" />Nastavení štítku</button>
+                    <button type="button" onclick="x18_framework()" id="cmdAdmin" runat="server" style="margin-left:30px;">
+                        <img src="Images/setting.png" />Správa štítků</button>
+                </div>
                 <div class="content-box3">
                     <div class="title">
                         <img src="Images/query.png" />
@@ -315,10 +338,7 @@
 
                     </div>
                 </div>
-                <div class="div6">
-                    <button type="button" onclick="x18_setting()" id="cmdSetting" runat="server">
-                        <img src="Images/label.png" />Nastavení štítku</button>
-                </div>
+                
             </div>
 
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Default"></uc:datagrid>

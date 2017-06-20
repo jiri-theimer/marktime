@@ -15,6 +15,7 @@
     Function GetList_X19(intX25ID As Integer, x20IDs_Query As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding)
     Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)   
     Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
+    Function InhaleDisposition(cRec As BO.x18EntityCategory) As BO.x18RecordDisposition
 End Interface
 Class x18EntityCategoryBL
     Inherits BLMother
@@ -122,5 +123,26 @@ Class x18EntityCategoryBL
     End Function
     Public Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting) Implements Ix18EntityCategoryBL.GetList_x16
         Return _cDL.GetList_x16(intX18ID)
+    End Function
+
+    Public Function InhaleDisposition(cRec As BO.x18EntityCategory) As BO.x18RecordDisposition Implements Ix18EntityCategoryBL.InhaleDisposition
+        Dim c As New BO.x18RecordDisposition
+        If Factory.SysUser.IsAdmin Then
+            c.ReadItems = True : c.OwnerItems = True : c.CreateItem = True
+            Return c
+        End If
+
+        If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, cRec.PID, BO.x53PermValEnum.X18_OwnerItems, False) Then
+            c.ReadItems = True : c.OwnerItems = True
+        End If
+        If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, cRec.PID, BO.x53PermValEnum.X18_CreateItems, True) Then
+            c.CreateItem = True
+        End If
+        If Factory.x67EntityRoleBL.TestEntityRolePermission(BO.x29IdEnum.x18EntityCategory, cRec.PID, BO.x53PermValEnum.X18_ReaderItems, True) Then
+            c.ReadItems = True
+        End If
+
+
+        Return c
     End Function
 End Class

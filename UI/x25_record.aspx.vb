@@ -61,6 +61,18 @@ Public Class x25_record
                         x25ForeColor.Items.Clear()
 
                     End If
+                    If c.x18EntryNameFlag = BO.x18EntryNameENUM.NotUsed Then
+                        Me.lblName.Visible = False : Me.x25Name.Visible = False
+                    End If
+                    Select Case c.x18EntryCodeFlag
+                        Case BO.x18EntryCodeENUM.NotUsed
+                            lblx25Code.Visible = False : Me.x25Code.Visible = False
+                        Case BO.x18EntryCodeENUM.AutoP41, BO.x18EntryCodeENUM.AutoX18
+                            Me.x25Code.Enabled = False                            
+                    End Select
+                    If c.x18EntryOrdinaryFlag = BO.x18EntryOrdinaryENUM.NotUsed Then
+                        lblOrdinary.Visible = False : x25Ordinary.Visible = False
+                    End If
                 End If
                 If Me.x23ID.SelectedIndex > 0 Then
                     lblX23ID.Visible = False
@@ -225,7 +237,7 @@ Public Class x25_record
                 Next
             End If
 
-            If .Save(cRec) Then
+            If .Save(cRec, Me.CurrentX18ID) Then
                 Master.DataPID = .LastSavedPID
                 If Not lisX19 Is Nothing Then
                     Master.Factory.x18EntityCategoryBL.SaveX19Binding(Master.DataPID, lisX19, GetX20IDs())

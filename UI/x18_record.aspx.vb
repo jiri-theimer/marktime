@@ -81,6 +81,9 @@
                 If cX23.x23Ordinary = -666 Then Me.x23ID.Enabled = False
             End If
             basUI.SelectDropdownlistValue(Me.x18GridColsFlag, CInt(.x18GridColsFlag).ToString)
+            basUI.SelectDropdownlistValue(Me.x18EntryNameFlag, CInt(.x18EntryNameFlag).ToString)
+            basUI.SelectDropdownlistValue(Me.x18EntryCodeFlag, CInt(.x18EntryCodeFlag).ToString)
+            basUI.SelectDropdownlistValue(Me.x18EntryOrdinaryFlag, CInt(.x18EntryOrdinaryFlag).ToString)
 
             roles1.InhaleInitialData(.PID)
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
@@ -234,7 +237,10 @@
             cRec.ValidFrom = Master.RecordValidFrom
             cRec.ValidUntil = Master.RecordValidUntil
             cRec.j02ID_Owner = BO.BAS.IsNullInt(Me.j02ID_Owner.Value)
-            cRec.x18GridColsFlag = CType(x18GridColsFlag.SelectedValue, BO.x18GridColsFlag)
+            cRec.x18GridColsFlag = CType(x18GridColsFlag.SelectedValue, BO.x18GridColsENUM)
+            cRec.x18EntryNameFlag = CType(x18EntryNameFlag.SelectedValue, BO.x18EntryNameENUM)
+            cRec.x18EntryCodeFlag = CType(x18EntryCodeFlag.SelectedValue, BO.x18EntryCodeENUM)
+            cRec.x18EntryOrdinaryFlag = CType(x18EntryOrdinaryFlag.SelectedValue, BO.x18EntryOrdinaryENUM)
 
 
             If .Save(cRec, lisX20, lisX69, lisX16) Then
