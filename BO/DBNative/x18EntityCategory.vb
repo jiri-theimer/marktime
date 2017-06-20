@@ -2,6 +2,7 @@
     NameAndCode = 1 '1-kromě vlastních polí zobrazovat v přehledu i název i kód
     CodeOnly = 2    '2-kromě vlastních polí zobrazovat kód
     NameOnly = 3    '3-kromě vlastních polí zobrazovat název
+    NotUsed = 4       '4-Ani název ani kód
 End Enum
 Public Enum x18EntryCodeENUM
     Manual = 1  '1-vyplňovat ručně kód

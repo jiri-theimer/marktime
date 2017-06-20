@@ -114,6 +114,7 @@ Public Class x25_record
             Me.j02ID_Owner.Text = Master.Factory.SysUser.PersonDesc
             _curRec = New BO.x25EntityField_ComboValue
             RefreshUserFields()
+            
             Return
         End If
 

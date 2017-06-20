@@ -260,6 +260,7 @@
                     <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název] a [Kód]" Value="1"></asp:ListItem>
                     <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Kód]" Value="2"></asp:ListItem>
                     <asp:ListItem Text="Jako sloupce v přehledu zobrazovat i [Název]" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="Nezobrazovat ani [Název] ani [Kód]" Value="4"></asp:ListItem>
                 </asp:DropDownList>
             </div>
         </telerik:RadPageView>
@@ -345,7 +346,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <asp:CheckBox ID="x18IsCalendar" runat="server" Text="Položky štítku zobrazovat i v kalendáři" AutoPostBack="true" />
+                                <asp:CheckBox ID="x18IsCalendar" runat="server" Text="Štítek podporuje i kalendářové rozhraní (samostatný kalendář)" AutoPostBack="true" />
                             </td>
                         </tr>
                         <tr>
@@ -393,7 +394,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>Přiřazené šablony tiskových sestav:</span>
+                                <span>Svázané šablony tiskových sestav:</span>
                             </td>
                             <td>
                                 <asp:TextBox ID="x18ReportCodes" runat="server" Width="600px"></asp:TextBox>

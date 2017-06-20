@@ -45,10 +45,10 @@ Class x18EntityCategoryBL
             End If
             If .x18IsCalendar Then
                 If .x18CalendarFieldStart = "" Then
-                    _Error = String.Format("Pro nastavení kalendářového zobrazení musíte vyplnit atribut [{0}]", "DB pole pro začátek kalendářové události") : Return False
+                    _Error = String.Format("Pro nastavení kalendářového rozhraní musíte vyplnit atribut [{0}]", "DB pole pro začátek kalendářové události") : Return False
                 End If
                 If .x18CalendarFieldEnd = "" Then
-                    _Error = String.Format("Pro nastavení kalendářového zobrazení musíte vyplnit atribut [{0}]", "DB pole pro konec kalendářové události") : Return False
+                    _Error = String.Format("Pro nastavení kalendářového rozhraní musíte vyplnit atribut [{0}]", "DB pole pro konec kalendářové události") : Return False
                 End If
             Else
                 .x18CalendarFieldStart = "" : .x18CalendarFieldEnd = ""
