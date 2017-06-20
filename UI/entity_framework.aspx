@@ -333,8 +333,8 @@
 
                 <div class="commandcell" style="padding-left: 4px;">
 
-                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
-                        <asp:Label ID="lblGridHeader" runat="server" Text="Akce nad přehledem"></asp:Label>
+                    <button type="button" class="show_hide1" style="padding: 4px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;font: normal 12px 'Segoe UI', Arial, Helvetica, sans-serif;text-transform: uppercase;">
+                        <asp:Label ID="lblGridHeader" runat="server" Text="AKCE NAD PŘEHLEDEM"></asp:Label>
                         <img src="Images/arrow_down_menu.png" />
 
                     </button>

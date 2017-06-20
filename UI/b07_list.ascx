@@ -43,17 +43,17 @@
 <asp:HiddenField ID="hidJS_Reaction" runat="server" Value="reaction" />
 <script type="text/javascript">
     function comment() {
-        window.parent.sw_local("b07_create.aspx?masterprefix=" + document.getElementById("<%=Me.hidPrefix.ClientID%>").value + "&masterpid=" + document.getElementById("<%=Me.hidRecordPID.ClientID%>").value, "Images/comment_32.png", true);
+        window.parent.sw_everywhere("b07_create.aspx?masterprefix=" + document.getElementById("<%=Me.hidPrefix.ClientID%>").value + "&masterpid=" + document.getElementById("<%=Me.hidRecordPID.ClientID%>").value, "Images/comment.png", true);
 
     }
     function reaction(pid) {
 
-        window.parent.sw_local("b07_create.aspx?parentpid=" + pid + "&masterprefix=" + document.getElementById("<%=Me.hidPrefix.ClientID%>").value + "&masterpid=" + document.getElementById("<%=Me.hidRecordPID.ClientID%>").value, "Images/comment_32.png", true);
+        window.parent.sw_everywhere("b07_create.aspx?parentpid=" + pid + "&masterprefix=" + document.getElementById("<%=Me.hidPrefix.ClientID%>").value + "&masterpid=" + document.getElementById("<%=Me.hidRecordPID.ClientID%>").value, "Images/comment.png", true);
 
     }
     function trydeleteb07(pid) {
 
-        window.parent.sw_local("b07_delete.aspx?pid=" + pid, "Images/comment_32.png", true);
+        window.parent.sw_everywhere("b07_delete.aspx?pid=" + pid, "Images/comment.png", true);
 
     }
     

@@ -304,8 +304,11 @@ Public Class x25_framework
                     End If
                 Next
             End If
-
-            Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx?pid=" & intSelPID.ToString
+            If grid1.GetSelectedPIDs.Count > 0 Then
+                Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx?pid=" & intSelPID.ToString
+                hiddatapid.Value = intSelPID.ToString
+            End If
+            
         End If
     End Sub
 
@@ -324,8 +327,14 @@ Public Class x25_framework
         hidx18IsColors.Value = BO.BAS.GB(c.x18IsColors)
         If c.b01ID <> 0 Then
             hidB01ID.Value = c.b01ID.ToString
+            menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"
+            menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/workflow.png"
+            menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
         Else
             hidB01ID.Value = ""
+            menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit komentář nebo přílohu"
+            menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
+            menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
         End If
 
 

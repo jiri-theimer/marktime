@@ -96,13 +96,11 @@
             
         }
         function record_edit() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == null) {
+            if (getpid(false) == "")
                 return;
-            }
                 
 
-            x25_record(pid);
+            x25_record(getpid(false));
         }
 
         function x25_record(pid) {
@@ -159,14 +157,15 @@
         }
 
         function hardrefresh(pid, flag) {
-
+         
             if (flag == "b07-save") {
-
                 return;
             }
+            if (flag == "workflow-dialog") {
+                pid = document.getElementById("<%=hiddatapid.clientid%>").value;                
+            }
+
             location.replace("x25_framework.aspx?pid=" + pid + "&x18id=<%=Me.CurrentX18ID%>");
-
-
         }
 
 
@@ -213,13 +212,27 @@
         }
 
         function b07_create() {
-            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "") {
-                alert("Musíte vybrat záznam.");
+            if (getpid(true) == "")
                 return;
-            }
-            sw_master("b07_create.aspx?masterprefix=x25&masterpid=" + pid, "Images/comment.png", true);
 
+            sw_master("b07_create.aspx?masterprefix=x25&masterpid=" + getpid(true), "Images/comment.png", true);
+
+        }
+        function workflow() {            
+            if (getpid(true) == "")             
+                return;
+            
+            sw_master("workflow_dialog.aspx?prefix=x25&pid=" + getpid(true), "Images/workflow.png", true);
+        }
+
+        function getpid(shall_alert) {
+            var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
+            if (pid == "" && shall_alert==true) {
+                alert("Musíte vybrat záznam.");
+                return("");
+            }
+
+            return (pid);
         }
 
     </script>
@@ -250,7 +263,7 @@
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem Value="cmdReport" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Value="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
                                 </Items>
                             </telerik:RadMenuItem>
 
@@ -270,7 +283,7 @@
 
                 <div class="commandcell">
 
-                    <button type="button" class="show_hide1" style="padding: 4px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">
+                    <button type="button" class="show_hide1" style="padding: 4px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;font: normal 12px 'Segoe UI', Arial, Helvetica, sans-serif;">
                         <img src="Images/arrow_down_menu.png" />
                         <asp:Label ID="lblGridHeader" runat="server" Text="DALŠÍ AKCE"></asp:Label>
                         

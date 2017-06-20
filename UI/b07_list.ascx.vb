@@ -90,7 +90,7 @@
         With CType(e.Item.FindControl("aDelete"), HyperLink)
             If (cRec.j02ID_Owner = _sysUser.j02ID Or _sysUser.IsAdmin) And cRec.b07Value <> "" Then
                 .Visible = True
-                .NavigateUrl = "javascript:b07_delete(" & cRec.PID.ToString & ")"
+                .NavigateUrl = "javascript:trydeleteb07(" & cRec.PID.ToString & ")"
             Else
                 .Visible = False
             End If
