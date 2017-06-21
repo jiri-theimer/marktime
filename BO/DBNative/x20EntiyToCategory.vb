@@ -9,9 +9,10 @@ Public Enum x20GridColumnENUM
     _None = 4
 End Enum
 Public Enum x20EntityPageENUM
-    Hyperlink = 1
-    Label = 2
-    NotUsed = 3
+    Label = 1
+    Hyperlink = 2
+    HyperlinkPlusNew = 3
+    NotUsed = 9
 End Enum
 
 Public Class x20EntiyToCategory

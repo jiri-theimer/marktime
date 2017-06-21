@@ -199,11 +199,9 @@
             Me.trB02.Visible = False
         End If
 
-        If Master.Factory.x18EntityCategoryBL.GetList(, BO.x29IdEnum.o23Notepad).Count > 0 Then
-            labels1.RefreshData(BO.x29IdEnum.o23Notepad, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.o23Notepad, cRec.PID, "", Nothing))
-        Else
-            boxX18.Visible = False
-        End If
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.o23Notepad, cRec.PID, True)
+        boxX18.Visible = labels1.ContainsAnyData
+        
     End Sub
 
     Private Sub cmdDecrypt_Click(sender As Object, e As EventArgs) Handles cmdDecrypt.Click

@@ -28,16 +28,16 @@
         }
 
         function hardrefresh(pid, flag) {
-            
+
             if (flag == "p28-save" || flag == "p28-create") {
                 <%If menu1.PageSource = "3" Then%>
-                location.replace("p28_framework_detail.aspx?pid=" + pid + "&source=3");                
-                <%else%>                
+                location.replace("p28_framework_detail.aspx?pid=" + pid + "&source=3");
+                <%Else%>
                 parent.window.location.replace("p28_framework.aspx?pid=" + pid);
-                <%end If%>
+                <%End If%>
                 return;
             }
-            
+
             if (flag == "p28-delete") {
                 parent.window.location.replace("p28_framework.aspx");
                 return;
@@ -65,7 +65,7 @@
             window.open("o23_framework.aspx?pid=" + pid, "_top");
 
         }
-       
+
         function re(pid, prefix) {
             if (prefix == 'o22')
                 sw_decide("o22_record.aspx?pid=" + pid, "Images/datepicker.png")
@@ -89,16 +89,16 @@
         <div class="title">
             <asp:Image ID="imgRecord" runat="server" Style="margin-right: 10px;" ImageUrl="Images/properties.png" />
             <asp:Label ID="boxCoreTitle" Text="Klient" runat="server"></asp:Label>
-            
+
             <asp:CheckBox ID="chkFFShowFilledOnly" runat="server" AutoPostBack="true" Text="Pouze vyplněná uživatelská pole" Style="float: right;" />
-            
+
         </div>
         <div class="content">
             <div style="float: left;">
                 <table cellpadding="10" cellspacing="2" id="responsive">
 
                     <tr valign="top">
-                        
+
                         <td colspan="2">
 
                             <asp:Label ID="Contact" runat="server" CssClass="valbold"></asp:Label>
@@ -164,15 +164,15 @@
                 +Monitoring:
                             <asp:HyperLink ID="linkISIR_Monitoring" runat="server" Text="NE" NavigateUrl="javascript:o48_edit()" ToolTip="Zapnout monitoring klienta v insolvenčním rejstříku"></asp:HyperLink>
             </div>
-            <div style="clear: both;"></div>
-             <uc:x18_readonly ID="labels1" IsShowLinks="true" runat="server"></uc:x18_readonly>
+
+
         </div>
 
 
     </div>
-  
 
-    
+
+
 
 
     <asp:Panel ID="panRoles" runat="server" CssClass="content-box1">
@@ -185,7 +185,7 @@
         </div>
     </asp:Panel>
 
-    <asp:Panel ID="boxO37" runat="server" CssClass="content-box1" style="overflow:auto;max-height:300px;">
+    <asp:Panel ID="boxO37" runat="server" CssClass="content-box1" Style="overflow: auto; max-height: 300px;">
         <div class="title">
             <img src="Images/address.png" />
             <img src="Images/person.png" />
@@ -199,12 +199,38 @@
         </div>
     </asp:Panel>
 
-    
-    
 
-    
 
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
+
+    <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1" Style="clear: both;">
+        <div class="title">
+            <img src="Images/billing.png" style="margin-right: 10px;" />
+            <span>Fakturační poznámka klienta</span>
+        </div>
+        <div class="content">
+            <asp:Label ID="p28BillingMemo" runat="server" ForeColor="Green"></asp:Label>
+        </div>
+    </asp:Panel>
+
+
+    <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
+
+    <div style="clear: both; padding-top: 6px;">
+        <div style="float: left;">
+            <uc:myscheduler ID="cal1" runat="server" Prefix="p28" />
+        </div>
+        <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
+            </div>
+            <div class="content">
+                <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+            </div>
+
+        </asp:Panel>
+    </div>
+
+    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">
             <img src="Images/notepad.png" style="margin-right: 10px;" />
             <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
@@ -216,22 +242,12 @@
 
         </div>
     </asp:Panel>
-    <div style="clear: both;"></div>
-    <asp:Panel ID="boxBillingMemo" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/billing.png" style="margin-right: 10px;" />
-            <span>Fakturační poznámka klienta</span>
-        </div>
-        <div class="content">
-            <asp:Label ID="p28BillingMemo" runat="server" ForeColor="Green"></asp:Label>
-        </div>
-    </asp:Panel>
-    <div style="clear: both;"></div>
-    <asp:Panel ID="boxP41" runat="server" CssClass="content-box1">
+
+    <asp:Panel ID="boxP41" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">
             <img src="Images/project.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP41Title" runat="server" Text="Otevřené projekty klienta"></asp:Label>
-            
+
         </div>
         <asp:Panel ID="panProjects" runat="server" CssClass="content" Style="overflow: auto; max-height: 200px;">
 
@@ -251,19 +267,12 @@
 
     </asp:Panel>
 
-    <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    <div style="clear: both;padding-top:6px;padding-left:6px;">
-        <uc:myscheduler ID="cal1" runat="server" Prefix="p28" />
-    </div>
-    <div style="padding:6px;">
-        
-    
+    <div style="clear: both;">
+        <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
     </div>
 
-    <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
-
-    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
+    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1" style="clear: both;">
         <div class="title">
             <img src="Images/worksheet.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>

@@ -98,12 +98,8 @@
             Me.boxO23.Visible = False
         End If
 
-        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p56Task, cRec.PID, "", Nothing)
-        If lisX19.Count > 0 Then
-            labels1.RefreshData(BO.x29IdEnum.p56Task, cRec.PID, lisX19)
-        Else
-            boxX18.Visible = False
-        End If
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, cRec.PID, True)
+        boxX18.Visible = labels1.ContainsAnyData
 
 
         With cRec

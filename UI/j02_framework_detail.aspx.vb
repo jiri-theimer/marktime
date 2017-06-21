@@ -210,7 +210,8 @@
         Else
             boxFF.Visible = False
         End If
-        labels1.RefreshData(BO.x29IdEnum.j02Person, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.j02Person, cRec.PID, "", Nothing))
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.j02Person, cRec.PID)
+        boxX18.Visible = labels1.ContainsAnyData
 
         
 

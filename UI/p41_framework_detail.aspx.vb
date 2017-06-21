@@ -268,7 +268,8 @@
             boxFF.Visible = False
         End If
 
-        labels1.RefreshData(BO.x29IdEnum.p41Project, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p41Project, cRec.PID, "", Nothing))
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.p41Project, cRec.PID)
+        boxX18.Visible = labels1.ContainsAnyData
 
         If cRecSum.is_My_Favourite Then
             cmdFavourite.ImageUrl = "Images/favourite.png"

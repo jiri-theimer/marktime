@@ -136,9 +136,10 @@
                                         </div>
                                         <div>
                                             <asp:DropDownList ID="x20EntityPageFlag" runat="server">
-                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako info" Value="2"></asp:ListItem>   
-                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz" Value="1"></asp:ListItem>                                                                                             
-                                                <asp:ListItem Text="Na stránce záznamu entity nic nezobrazovat" Value="3"></asp:ListItem>
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako info" Value="1"></asp:ListItem>   
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz" Value="2"></asp:ListItem> 
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz + tlačítko [Přidat]" Value="3"></asp:ListItem>                                                                                            
+                                                <asp:ListItem Text="Na stránce záznamu entity nic nezobrazovat" Value="9"></asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                         <div>

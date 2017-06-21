@@ -10,6 +10,7 @@
     Public Property x29ID_EntityType As Integer
     Public Property x20EntryModeFlag As x20EntryModeENUM = x20EntryModeENUM.Combo
     Public Property x20GridColumnFlag As x20GridColumnENUM = x20GridColumnENUM.EntityColumn
+    Public Property x20EntityPageFlag As x20EntityPageENUM = x20EntityPageENUM.Label
 
     Public Property EntityTypeAlias As String   'pomocný atribut - není v SQL
     Public Property x20IsClosed As Boolean

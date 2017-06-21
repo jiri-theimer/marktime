@@ -635,6 +635,15 @@ Partial Public Class p91_framework_detail
     Protected WithEvents p91Text1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''boxX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
     '''labels1 control.
     '''</summary>
     '''<remarks>

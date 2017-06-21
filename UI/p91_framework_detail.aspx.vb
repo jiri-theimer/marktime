@@ -271,7 +271,8 @@ Public Class p91_framework_detail
                 cmdConvertDraft.Visible = True
             End If
         End If
-        labels1.RefreshData(BO.x29IdEnum.p91Invoice, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.p91Invoice, cRec.PID, "", Nothing))
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.p91Invoice, cRec.PID)
+        boxX18.Visible = labels1.ContainsAnyData
 
         Dim lisX69 As IEnumerable(Of BO.x69EntityRole_Assign) = Master.Factory.x67EntityRoleBL.GetList_x69(BO.x29IdEnum.p91Invoice, cRec.PID)
         Me.roles1.RefreshData(lisX69, cRec.PID)

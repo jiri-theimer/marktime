@@ -29,9 +29,9 @@
         });
 
         function sw_decide(url, iconUrl, is_maximize) {
-            <%If hidSource.Value="2" then%>
+            <%If hidSource.Value = "2" Then%>
             window.parent.sw_master(url, iconUrl, is_maximize);
-            <%else%>
+            <%Else%>
             sw_local(url, iconUrl, is_maximize);
             <%End If%>
             
@@ -243,9 +243,9 @@
         }
 
         function menu_fullscreen(){
-            <%If hidSource.Value="3" then%>
+            <%If hidSource.Value = "3" Then%>
             location.replace("p91_framework.aspx?pid=<%=Master.DataPID%>");
-            <%else%>
+            <%Else%>
             window.open("p91_framework_detail.aspx?pid=<%=Master.DataPID%>&saw=1","_blank");
             <%End If%>
             
@@ -266,7 +266,7 @@
                 <telerik:RadMenuItem Value="reload" ImageUrl="Images/refresh.png" Text=" " ToolTip="Obnovit stránku" Width="28px"></telerik:RadMenuItem>
                 <telerik:RadMenuItem Value="level1" NavigateUrl="#" Width="300px">
                 </telerik:RadMenuItem>
-                
+
                 <telerik:RadMenuItem Text="ZÁZNAM FAKTURY" ImageUrl="Images/arrow_down_menu.png" Value="record">
                     <Items>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit kartu faktury" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png" ToolTip="Zahrnuje i možnost přesunutí do archivu nebo nenávratného odstranění."></telerik:RadMenuItem>
@@ -310,8 +310,8 @@
 
 
                 </telerik:RadMenuItem>
-                       
-                <telerik:RadMenuItem value="searchbox"></telerik:RadMenuItem>
+
+                <telerik:RadMenuItem Value="searchbox"></telerik:RadMenuItem>
             </Items>
         </telerik:RadMenu>
 
@@ -344,7 +344,7 @@
                             <asp:Image ID="imgRecord" runat="server" Visible="false" />
                             <asp:Label ID="p91Code" runat="server" CssClass="valbold"></asp:Label>
                             <asp:Button ID="cmdConvertDraft" runat="server" CssClass="cmd" Text="Převést Draft na oficiální číslo" />
-                            
+
                         </td>
                         <td id="rlbl">
                             <asp:Label ID="lblProject" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
@@ -548,13 +548,22 @@
                         <asp:Label ID="p91Text1" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
                     </div>
                 </asp:Panel>
-               <uc:x18_readonly ID="labels1" runat="server" IsShowLinks="true"></uc:x18_readonly>
+                <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" style="clear:both;">
+                    <div class="title">
+                        <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
+                    </div>
+                    <div class="content">
+                        <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+                    </div>
+
+                </asp:Panel>
+
 
                 <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p91Invoice"></uc:o23_list>
                 <uc:b07_list ID="comments1" runat="server" ShowHeader="false" ShowInsertButton="false" JS_Reaction="b07_reaction" />
                 <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
                 <div class="div6">
-                <asp:Label ID="lblTimestamp" runat="server" CssClass="timestamp"></asp:Label>
+                    <asp:Label ID="lblTimestamp" runat="server" CssClass="timestamp"></asp:Label>
                 </div>
             </telerik:RadPageView>
             <telerik:RadPageView ID="p31" runat="server">
@@ -581,7 +590,7 @@
 
                     <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
                     <button type="button" onclick="griddesigner()">Sloupce</button>
-                    
+
                 </div>
                 <div class="commandcell">
                     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 100;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
@@ -686,6 +695,6 @@
     <asp:HiddenField ID="hidParentWidth" runat="server" />
     <asp:HiddenField ID="hidSource" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
-    
+
 
 </asp:Content>

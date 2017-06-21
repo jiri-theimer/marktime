@@ -167,15 +167,6 @@ Partial Public Class j02_framework_detail
     Protected WithEvents Correspondence As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''labels1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents labels1 As Global.UI.x18_readonly
-
-    '''<summary>
     '''panIntraPerson control.
     '''</summary>
     '''<remarks>
@@ -435,6 +426,24 @@ Partial Public Class j02_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cal1 As Global.UI.myscheduler
+
+    '''<summary>
+    '''boxX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
 
     '''<summary>
     '''comments1 control.

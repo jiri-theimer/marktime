@@ -32,6 +32,15 @@ Partial Public Class x18_readonly
     Protected WithEvents hidX29ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidMasterPrefix control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''hidRecordPID control.
     '''</summary>
     '''<remarks>
@@ -41,11 +50,11 @@ Partial Public Class x18_readonly
     Protected WithEvents hidRecordPID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidIsLinks control.
+    '''hidNoLinksAndButtons control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidIsLinks As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidNoLinksAndButtons As Global.System.Web.UI.WebControls.HiddenField
 End Class

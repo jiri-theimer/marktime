@@ -239,15 +239,6 @@ Partial Public Class p28_framework_detail
     Protected WithEvents linkISIR_Monitoring As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
-    '''labels1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents labels1 As Global.UI.x18_readonly
-
-    '''<summary>
     '''panRoles control.
     '''</summary>
     '''<remarks>
@@ -311,6 +302,60 @@ Partial Public Class p28_framework_detail
     Protected WithEvents persons1 As Global.UI.contactpersons
 
     '''<summary>
+    '''boxBillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxBillingMemo As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''p28BillingMemo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''alert1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents alert1 As Global.UI.alertbox
+
+    '''<summary>
+    '''cal1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cal1 As Global.UI.myscheduler
+
+    '''<summary>
+    '''boxX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
+
+    '''<summary>
     '''boxO23 control.
     '''</summary>
     '''<remarks>
@@ -336,24 +381,6 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents notepad1 As Global.UI.o23_list
-
-    '''<summary>
-    '''boxBillingMemo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxBillingMemo As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''p28BillingMemo control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p28BillingMemo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''boxP41 control.
@@ -390,24 +417,6 @@ Partial Public Class p28_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents rpP41 As Global.System.Web.UI.WebControls.Repeater
-
-    '''<summary>
-    '''alert1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents alert1 As Global.UI.alertbox
-
-    '''<summary>
-    '''cal1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cal1 As Global.UI.myscheduler
 
     '''<summary>
     '''comments1 control.

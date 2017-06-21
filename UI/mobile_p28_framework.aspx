@@ -191,7 +191,7 @@
 
                     </div>
                     
-                        <uc:x18_readonly id="labels1" runat="server"></uc:x18_readonly>
+                        <uc:x18_readonly id="labels1" runat="server" AlwaysNoLinksAndButtons="true"></uc:x18_readonly>
                     
                 </div>
             </asp:Panel>

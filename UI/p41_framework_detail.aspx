@@ -29,18 +29,18 @@
             if (flag == "p41-save" || flag == "p41-create") {
                 <%If menu1.PageSource = "3" Then%>
                 location.replace("p41_framework_detail.aspx?pid=" + pid + "&source=3");
-                <%else%>
+                <%Else%>
                 parent.window.location.replace("p41_framework.aspx?pid=" + pid);
-                <%end If%>
+                <%End If%>
                 return;
             }
-            
+
             if (flag == "p41-delete") {
                 parent.window.location.replace("p41_framework.aspx");
                 return;
             }
             <%End If%>
-            
+
             if (flag == "draft2normal") {
                 document.getElementById('<%= cmdConvertDraft2Normal.ClientID%>').click();
                 return;
@@ -76,7 +76,7 @@
                 sw_decide("o22_record.aspx?pid=" + pid, "Images/datepicker.png")
 
             if (prefix == 'p56')
-                window.open("p56_framework.aspx?pid=" + pid,"_top");
+                window.open("p56_framework.aspx?pid=" + pid, "_top");
 
         }
         function wd(pid) {
@@ -85,7 +85,7 @@
         function ew(p56id) {
             sw_decide("p31_record.aspx?pid=0&p56id=" + p56id, "Images/worksheet.png")
         }
-        
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -99,7 +99,7 @@
             <asp:Label ID="boxCoreTitle" Text="Záznam projektu" runat="server" meta:resourcekey="boxCoreTitle"></asp:Label>
 
             <asp:ImageButton ID="cmdFavourite" runat="server" ImageUrl="Images/not_favourite.png" ToolTip="Zařadit do mých oblíbených projektů" CssClass="button-link" Style="float: right;" />
-            
+
 
         </div>
         <div class="content">
@@ -110,7 +110,7 @@
 
                 <tr valign="baseline">
                     <td colspan="2">
-                        
+
                         <asp:Label ID="Project" runat="server" CssClass="valbold"></asp:Label>
                         <asp:Image ID="imgFlag_Project" runat="server" />
                         <asp:Image ID="imgDraft" runat="server" ImageUrl="Images/draft_icon.gif" Visible="false" AlternateText="DRAFT záznam" Style="float: right;" />
@@ -208,13 +208,13 @@
                 </tr>
 
             </table>
-            <uc:x18_readonly ID="labels1" runat="server" IsShowLinks="true"></uc:x18_readonly>
+
 
             <uc:treemenu ID="tree1" runat="server" Visible="false" />
             <asp:HyperLink ID="linkBatchUpdateChilds" runat="server" Text="Aktualizovat nastavení pod-projektů" NavigateUrl="javascript:batch_update_childs()" Visible="false"></asp:HyperLink>
         </div>
     </div>
-    
+
     <asp:Panel ID="boxP40" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/worksheet_recurrence.png" style="margin-right: 10px;" />
@@ -235,7 +235,7 @@
     </asp:Panel>
 
 
-    
+
     <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">
         <div class="title">
             <img src="Images/person.png" style="margin-right: 10px;" />
@@ -268,32 +268,22 @@
             <uc:entityrole_assign_inline ID="roles_project" runat="server" EntityX29ID="p41Project" NoDataText="V projektu nejsou přiřazeny projektové role."></uc:entityrole_assign_inline>
         </div>
     </asp:Panel>
+
     
-    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
-        <div class="title">
-            <img src="Images/notepad.png" style="margin-right: 10px;" />
-            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
-        </div>
-        <div class="content" style="overflow: auto; max-height: 200px;">
-
-            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project"></uc:o23_list>
-
-
-        </div>
-    </asp:Panel>
-    <asp:Panel ID="boxP64" runat="server" CssClass="content-box1" style="clear: both;">
+    <asp:Panel ID="boxP64" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">
             <img src="Images/binder.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP64Title" runat="server" Text="Šanony"></asp:Label>
-            <button type="button" class="button-link" onclick="window.open('p64_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>','_top')" title="Přepnout na plný přehled šanonů" style="float:right;"><img border="0" src="Images/fullscreen.png"/></button>
+            <button type="button" class="button-link" onclick="window.open('p64_framework.aspx?masterprefix=p41&masterpid=<%=Master.DataPID%>','_top')" title="Přepnout na plný přehled šanonů" style="float: right;">
+                <img border="0" src="Images/fullscreen.png" /></button>
         </div>
         <div class="content">
             <asp:Repeater ID="rpP64" runat="server">
                 <ItemTemplate>
-                    
-                        <asp:HyperLink ID="p64Name" runat="server" style="margin-right:10px;"></asp:HyperLink>
 
-                    
+                    <asp:HyperLink ID="p64Name" runat="server" Style="margin-right: 10px;"></asp:HyperLink>
+
+
                 </ItemTemplate>
             </asp:Repeater>
 
@@ -311,14 +301,37 @@
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    <div style="clear: both;padding-top:6px;padding-left:6px;">
-    <uc:myscheduler ID="cal1" runat="server" Prefix="p41" />
+    <div style="clear: both; padding-top: 6px;">
+        <div style="float: left;">
+            <uc:myscheduler ID="cal1" runat="server" Prefix="p41" />
+        </div>
+        <asp:panel ID="boxX18" runat="server" cssclass="content-box1">
+            <div class="title">
+                <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
+            </div>
+            <div class="content">
+                <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+            </div>
+
+        </asp:panel>
     </div>
+    <asp:Panel ID="boxO23" runat="server" CssClass="content-box1" style="clear:both;">
+        <div class="title">
+            <img src="Images/notepad.png" style="margin-right: 10px;" />
+            <asp:Label ID="boxO23Title" runat="server" Text="Dokumenty" meta:resourcekey="boxO23Title"></asp:Label>
+        </div>
+        <div class="content" style="overflow: auto; max-height: 200px;">
 
+            <uc:o23_list ID="notepad1" runat="server" EntityX29ID="p41Project"></uc:o23_list>
+
+
+        </div>
+    </asp:Panel>
+    <div style="clear:both;">
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
-
-    <div style="clear: both;"></div>
-    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1">
+    </div>
+    
+    <asp:Panel ID="boxP31Summary" runat="server" CssClass="content-box1" style="clear: both;">
         <div class="title">
             <img src="Images/worksheet.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP31SummaryTitle" runat="server" Text="WORKSHEET Summary"></asp:Label>
@@ -338,7 +351,7 @@
             </div>
         </div>
     </asp:Panel>
-    
+
     <asp:Button ID="cmdConvertDraft2Normal" runat="server" Style="display: none;" />
     <asp:HiddenField ID="hidCal1ShallBeActive" Value="1" runat="server" />
 </asp:Content>

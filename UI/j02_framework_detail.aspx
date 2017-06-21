@@ -64,12 +64,12 @@
         function wd(pid) {
             sw_decide("workflow_dialog.aspx?pid=" + pid + "&prefix=p56", "Images/workflow.png")
         }
-      
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <uc:entity_menu ID="menu1" runat="server"></uc:entity_menu>
-    <div style="height:10px;clear:both;"></div>
+    <div style="height: 10px; clear: both;"></div>
 
     <div class="content-box1">
         <div class="title">
@@ -86,8 +86,8 @@
                         <asp:Label ID="j02Code" runat="server" CssClass="valbold" ForeColor="gray"></asp:Label>
                     </td>
                 </tr>
-                <tr valign="top">                                        
-                    
+                <tr valign="top">
+
                     <td>
                         <asp:Label ID="lblJ07Name" runat="server" Text="Pozice:" CssClass="lbl"></asp:Label>
                     </td>
@@ -100,7 +100,7 @@
                         <asp:Label ID="lblJ17Name" runat="server" Text="Region:" CssClass="lbl"></asp:Label>
                         <asp:Label ID="j17Name" runat="server" CssClass="valbold"></asp:Label>
                     </td>
-                      
+
 
                 </tr>
                 <tr valign="top">
@@ -115,7 +115,7 @@
                         <asp:Label ID="lblFond" runat="server" Text="Fond hodin:" CssClass="lbl"></asp:Label>
                         <asp:Label ID="c21Name" runat="server" CssClass="valbold"></asp:Label>
                     </td>
-                  
+
                 </tr>
                 <tr valign="top">
                     <td>
@@ -130,16 +130,16 @@
 
             </table>
 
-            <asp:Label ID="Mediums" runat="server" CssClass="val" ForeColor="Orange" style="padding-left:8px;"></asp:Label>
+            <asp:Label ID="Mediums" runat="server" CssClass="val" ForeColor="Orange" Style="padding-left: 8px;"></asp:Label>
             <div>
                 <asp:Label ID="Correspondence" runat="server"></asp:Label>
             </div>
-            <uc:x18_readonly ID="labels1" runat="server" IsShowLinks="true"></uc:x18_readonly>
+
         </div>
     </div>
     <asp:Panel ID="panIntraPerson" runat="server" CssClass="content-box1">
         <div class="title">
-            <img src="Images/user.png" style="margin-right: 10px;" /><asp:label ID="lblUserHeader" runat="server" Text="Uživatelský účet"></asp:label>
+            <img src="Images/user.png" style="margin-right: 10px;" /><asp:Label ID="lblUserHeader" runat="server" Text="Uživatelský účet"></asp:Label>
         </div>
         <div class="content">
             <asp:Panel ID="panAccount" runat="server">
@@ -168,23 +168,23 @@
                 </table>
             </asp:Panel>
             <asp:Label ID="AccountMessage" runat="server" CssClass="infoInForm"></asp:Label>
-            <asp:HyperLink ID="cmdLog" runat="server" Text="Historie aktivit" NavigateUrl="javascript: timeline()" style="margin-left:6px;"></asp:HyperLink>
+            <asp:HyperLink ID="cmdLog" runat="server" Text="Historie aktivit" NavigateUrl="javascript: timeline()" Style="margin-left: 6px;"></asp:HyperLink>
             <span style="padding-left: 40px;"></span>
             <asp:HyperLink ID="cmdAccount" runat="server" Text="Založit uživatelský účet" Visible="false"></asp:HyperLink>
 
-            <div style="width:100%;padding:6px;margin-top:10px;">
+            <div style="width: 100%; padding: 6px; margin-top: 10px;">
                 <span class="lbl">Poslední přístup do MT:</span>
-                <asp:Label ID="Last_Access" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                <asp:Label ID="Last_Access" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
-            <div style="width:100%;padding:6px;">
+            <div style="width: 100%; padding: 6px;">
                 <span class="lbl">Naposledy zapsaný úkon:</span>
-                <asp:Label ID="Last_Worksheet" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                <asp:Label ID="Last_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
 
             </div>
-            <div style="width:100%;padding:6px;">
+            <div style="width: 100%; padding: 6px;">
                 <span class="lbl">Počet otevřených úkolů:</span>
-                <asp:HyperLink ID="link_p56_actual_count" runat="server" style="margin-left:20px;"></asp:HyperLink>
+                <asp:HyperLink ID="link_p56_actual_count" runat="server" Style="margin-left: 20px;"></asp:HyperLink>
 
             </div>
         </div>
@@ -217,7 +217,7 @@
         </div>
 
     </asp:Panel>
-   
+
     <asp:Panel ID="boxFF" runat="server" CssClass="content-box1">
 
         <div class="title">
@@ -230,7 +230,7 @@
         </div>
 
     </asp:Panel>
-    
+
 
     <asp:Panel ID="boxP30" runat="server" CssClass="content-box1">
         <div class="title">
@@ -243,8 +243,8 @@
                 <ItemTemplate>
                     <div class="div6">
                         <asp:HyperLink ID="ContactLink" runat="server" Target="_top"></asp:HyperLink>
-                        
-                        
+
+
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
@@ -254,10 +254,24 @@
 
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    <div style="clear:both;padding-top:6px;padding-left:6px;">
-    <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
+    <div style="clear: both; padding-top: 6px;">
+        <div style="float: left;">
+            <uc:myscheduler ID="cal1" runat="server" Prefix="j02" />
+        </div>
+        <asp:Panel ID="boxX18" runat="server" CssClass="content-box1">
+            <div class="title">
+                <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
+            </div>
+            <div class="content">
+                <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+            </div>
+
+        </asp:Panel>
     </div>
-    <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
+    <div style="clear: both;">
+        <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
+    </div>
+
 
     <asp:HiddenField ID="hidJ03ID" runat="server" />
     <asp:HiddenField ID="hidCal1ShallBeActive" Value="1" runat="server" />

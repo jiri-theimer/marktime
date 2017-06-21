@@ -297,7 +297,7 @@
             Me.trWorkflow.Visible = False
         End If
 
-        labels1.RefreshData(BO.x29IdEnum.o23Notepad, cRec.PID, Master.Factory.x18EntityCategoryBL.GetList_X19(BO.x29IdEnum.o23Notepad, cRec.PID, "", Nothing))
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.o23Notepad, cRec.PID)
 
         RefreshDropbox(cO24)
 

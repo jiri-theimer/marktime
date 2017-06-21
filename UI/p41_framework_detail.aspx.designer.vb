@@ -338,15 +338,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''labels1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents labels1 As Global.UI.x18_readonly
-
-    '''<summary>
     '''tree1 control.
     '''</summary>
     '''<remarks>
@@ -491,33 +482,6 @@ Partial Public Class p41_framework_detail
     Protected WithEvents roles_project As Global.UI.entityrole_assign_inline
 
     '''<summary>
-    '''boxO23 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxO23 As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''boxO23Title control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents boxO23Title As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''notepad1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents notepad1 As Global.UI.o23_list
-
-    '''<summary>
     '''boxP64 control.
     '''</summary>
     '''<remarks>
@@ -579,6 +543,51 @@ Partial Public Class p41_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cal1 As Global.UI.myscheduler
+
+    '''<summary>
+    '''boxX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
+
+    '''<summary>
+    '''boxO23 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxO23 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''boxO23Title control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxO23Title As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''notepad1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents notepad1 As Global.UI.o23_list
 
     '''<summary>
     '''comments1 control.
