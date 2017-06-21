@@ -108,7 +108,6 @@
     <Compile Include="p40WorkSheet_RecurrenceDL.vb" />
     <Compile Include="p45BudgetDL.vb" />
     <Compile Include="p50OfficePriceListDL.vb" />
-    <Compile Include="p58ProductDL.vb" />
     <Compile Include="p59PriorityDL.vb" />
     <Compile Include="p61ActivityClusterDL.vb" />
     <Compile Include="p63OverheadDL.vb" />

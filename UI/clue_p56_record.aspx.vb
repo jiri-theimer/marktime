@@ -36,12 +36,7 @@
             Else
                 Me.p59name_submitter.Visible = False : Me.lblPriority.Visible = False
             End If
-            If .p58ID > 0 Then
-                Me.p58Name.Text = .p58Name
-            Else
-                Me.p58Name.Visible = False : lblProduct.Visible = False
-            End If
-
+            
             Me.Hours_Orig.Text = BO.BAS.FN(cRecSum.Hours_Orig)
             Me.b02Name.Text = .b02Name
             Me.Timestamp.Text = .Timestamp

@@ -348,7 +348,7 @@
         End With
         lisO37.Add(cc)
 
-        If _Factory.p28ContactBL.Save(c, lisO37, Nothing, Nothing, Nothing, Nothing, Nothing) Then
+        If _Factory.p28ContactBL.Save(c, lisO37, Nothing, Nothing, Nothing, Nothing) Then
             Dim intP28ID As Integer = _Factory.p28ContactBL.LastSavedPID
             Dim intP42ID As Integer = _Factory.p42ProjectTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p42Code = "NP")(0).PID
             CreateP41(intP28ID, "Vnitrofiremní režije", intP42ID, intJ02ID)
@@ -364,7 +364,7 @@
         c.p28IsCompany = True
         c.j02ID_Owner = intJ02ID
 
-        If _Factory.p28ContactBL.Save(c, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing) Then
+        If _Factory.p28ContactBL.Save(c, Nothing, Nothing, Nothing, Nothing, Nothing) Then
             Dim intP28ID As Integer = _Factory.p28ContactBL.LastSavedPID
             Dim intP42ID As Integer = _Factory.p42ProjectTypeBL.GetList(New BO.myQuery).Where(Function(p) p.p42Code = "FP")(0).PID
             If Trim(Me.txtProject1.Text) = "" Then Me.txtProject1.Text = "General"

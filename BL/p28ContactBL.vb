@@ -1,6 +1,6 @@
 ﻿Public Interface Ip28ContactBL
     Inherits IFMother
-    Function Save(cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField), p58IDs As List(Of Integer)) As Boolean
+    Function Save(cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean
     Function Load(intPID As Integer) As BO.p28Contact
     Function LoadByRegID(strRegID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
     Function LoadByVatID(strVatID As String, Optional intP28ID_Exclude As Integer = 0) As BO.p28Contact
@@ -150,7 +150,7 @@ Class p28ContactBL
         End If
         Return True
     End Function
-    Public Function Save(cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField), p58IDs As List(Of Integer)) As Boolean Implements Ip28ContactBL.Save
+    Public Function Save(cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField)) As Boolean Implements Ip28ContactBL.Save
         With cRec
             If .PID = 0 And .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
             If .p28IsCompany Then .p28CompanyName = Trim(.p28CompanyName) Else .p28LastName = Trim(.p28LastName)
@@ -163,7 +163,7 @@ Class p28ContactBL
         End If
         If Not Me.RaiseAppEvent_TailoringTestBeforeSave(cRec, lisFF, "p28_beforesave") Then Return False
 
-        If _cDL.Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, p58IDs, _LastSavedPID) Then
+        If _cDL.Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, _LastSavedPID) Then
             Me.RaiseAppEvent_TailoringAfterSave(_LastSavedPID, "p28_aftersave")
             Dim cP29 As BO.p29ContactType = Me.Factory.p29ContactTypeBL.Load(cRec.p29ID)
             Dim intB01ID As Integer = 0

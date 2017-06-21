@@ -86,33 +86,6 @@ Partial Public Class p56_framework_detail
     Protected WithEvents p59NameSubmitter As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''trProduct control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents trProduct As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
-    '''<summary>
-    '''lblProduct control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblProduct As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p58Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p58Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''Label2 control.
     '''</summary>
     '''<remarks>

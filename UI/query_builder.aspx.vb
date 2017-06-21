@@ -159,7 +159,6 @@
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník/autor úkolu"))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p56DateInsert", "Datum založení úkolu", BO.x24IdENUM.tDateTime))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p56ExternalPID", "Externí kód úkolu", BO.x24IdENUM.tString))
-                lis.Add(New myItem(BO.x29IdEnum.p58Product, "p58id", "Produkt"))
             Case BO.x29IdEnum.o23Notepad
                 ph1.Text = "Návrhář filtrů nad přehledem dokumentů"
 
@@ -340,9 +339,7 @@
             Case BO.x29IdEnum.p57TaskType
                 Me.cbxItems.DataTextField = "p57Name"
                 Me.cbxItems.DataSource = Master.Factory.p57TaskTypeBL.GetList(mq)
-            Case BO.x29IdEnum.p58Product
-                Me.cbxItems.DataTextField = "TreeMenuItem"
-                Me.cbxItems.DataSource = Master.Factory.p58ProductBL.GetList(mq)
+            
             Case BO.x29IdEnum.o24NotepadType
                 Me.cbxItems.DataTextField = "o24Name"
                 Me.cbxItems.DataSource = Master.Factory.o24NotepadTypeBL.GetList(mq)

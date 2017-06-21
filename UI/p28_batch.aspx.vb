@@ -178,7 +178,7 @@
 
                     End If
                 End If
-                If Not Master.Factory.p28ContactBL.Save(c, Nothing, Nothing, Nothing, Nothing, lisFF, Nothing) Then
+                If Not Master.Factory.p28ContactBL.Save(c, Nothing, Nothing, Nothing, Nothing, lisFF) Then
                     errs.Add(c.p28Name & ": " & Master.Factory.p28ContactBL.ErrorMessage)
                 End If
 

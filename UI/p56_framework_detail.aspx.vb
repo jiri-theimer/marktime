@@ -101,12 +101,7 @@
                 Me.lblp59NameSubmitter.Visible = False
             End If
 
-            If .p58ID > 0 Then
-                Me.p58Name.Text = .p58Name
-            Else
-                trProduct.Visible = False
-            End If
-
+           
 
             If .p56Description <> "" Then
                 panDescription.Visible = True : Me.p56Description.Text = BO.BAS.CrLfText2Html(.p56Description)

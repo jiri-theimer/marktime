@@ -134,12 +134,7 @@ Class mtService
 
     End Function
     
-    Public Function ListProducts(intP28ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p58Product) Implements ImtService.ListProducts
-        VerifyUser(strLogin, strPassword)
-
-        Return _factory.p58ProductBL.GetList(New BO.myQuery, intP28ID)
-    End Function
-
+    
 
     Public Function ListTaskTypes(strLogin As String, strPassword As String) As IEnumerable(Of BO.p57TaskType) Implements ImtService.ListTaskTypes
        VerifyUser(strLogin, strPassword)
@@ -298,7 +293,7 @@ Class mtService
 
         Return sr
     End Function
-    Public Function SaveClient(intPID As Integer, fields As Dictionary(Of String, Object), addresses As List(Of BO.o37Contact_Address), p58ids As List(Of Integer), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveClient
+    Public Function SaveClient(intPID As Integer, fields As Dictionary(Of String, Object), addresses As List(Of BO.o37Contact_Address), strLogin As String, strPassword As String) As BO.ServiceResult Implements ImtService.SaveClient
         VerifyUser(strLogin, strPassword)
         Dim sr As New BO.ServiceResult()
         If fields Is Nothing Then
@@ -318,7 +313,7 @@ Class mtService
             End Try
         Next
         Try
-            If _factory.p28ContactBL.Save(cRec, addresses, Nothing, Nothing, Nothing, Nothing, p58ids) Then
+            If _factory.p28ContactBL.Save(cRec, addresses, Nothing, Nothing, Nothing, Nothing) Then
                 sr.PID = _factory.p28ContactBL.LastSavedPID
                 sr.IsSuccess = True
             Else
@@ -327,9 +322,9 @@ Class mtService
             End If
         Catch ex As Exception
             Throw New FaultException(ex.Message)
-        
+
         End Try
-       
+
 
         Return sr
     End Function

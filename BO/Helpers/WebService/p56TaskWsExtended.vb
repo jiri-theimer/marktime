@@ -5,7 +5,6 @@
     Public Property p57ID As Integer
     Public Property o22ID As Integer
     Public Property b02ID As Integer
-    Public Property p58ID As Integer
     Public Property j02ID_Owner As Integer
     Public Property p59ID_Submitter As Integer
     Public Property p59ID_Receiver As Integer
@@ -39,7 +38,6 @@
     Public Property p57Name As String
 
 
-    Public Property p58Name As String
 
     Public Property p59NameSubmitter As String
 
@@ -94,7 +92,6 @@
             Me.p57ID = .p57ID
             Me.p57IsHelpdesk = .p57IsHelpdesk
             Me.p57Name = .p57Name
-            Me.p58ID = .p58ID
             Me.p59ID_Receiver = .p59ID_Receiver
             Me.p59ID_Submitter = .p59ID_Submitter
             Me.p59NameSubmitter = .p59NameSubmitter

@@ -369,7 +369,6 @@
     <Content Include="p56_batch.aspx" />
     <Content Include="p56_framework.aspx" />
     <Content Include="p56_framework_detail.aspx" />
-    <Content Include="p58_record.aspx" />
     <Content Include="p59_record.aspx" />
     <Content Include="p61_record.aspx" />
     <Content Include="p63_record.aspx" />
@@ -2128,13 +2127,6 @@
     </Compile>
     <Compile Include="p56_framework_detail.aspx.vb">
       <DependentUpon>p56_framework_detail.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="p58_record.aspx.designer.vb">
-      <DependentUpon>p58_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p58_record.aspx.vb">
-      <DependentUpon>p58_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p59_record.aspx.designer.vb">

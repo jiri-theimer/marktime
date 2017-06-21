@@ -138,7 +138,7 @@
                     Case BO.x29IdEnum.p28Contact
                         Dim cRec As BO.p28Contact = .p28ContactBL.Load(Master.DataPID)
                         cRec.p28Code = strCode
-                        If .p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing) Then
+                        If .p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, Nothing, Nothing) Then
                             bolOK = True
                         Else
                             strErr = .p28ContactBL.ErrorMessage

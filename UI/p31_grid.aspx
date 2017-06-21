@@ -13,10 +13,10 @@
 
 
 
-            <%If Me.chkQueryOnTop.Checked then%>
-            $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
+            <%If Not Me.chkQueryOnTop.Checked Then%>
+            $('#<%=Me.j70ID.ClientID%>').prependTo('#<%=panJ70.ClientID%>');  
             <%if Me.clue_query.Visible then%>
-            $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
+            $('#<%=Me.clue_query.ClientID%>').prependTo('#divCurrentQuery');
             <%end If%>
             <%End If%>
 
@@ -202,7 +202,9 @@
             </asp:DropDownList>
             <uc:periodcombo ID="period1" runat="server" Width="220px"></uc:periodcombo>
         </div>
-        <div class="commandcell" id="divQueryContainer">        
+        <div class="commandcell" id="divQueryContainer">  
+            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+            <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>      
         </div>
 
 
@@ -252,11 +254,11 @@
                                     </div>
                                     <asp:panel ID="panJ70" runat="server" CssClass="div6">
 
-                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                        
 
                                         <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()"><img src="Images/query.png" />Návrhář filtrů</button>
                                     </asp:panel>
-                                    <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
+                                    <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku pojmenovaných filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
                                 </div>
                             </div>
 
@@ -354,8 +356,8 @@
 
         <div style="clear: both;"></div>
 
-        <div style="float: left; padding-left: 6px;">
-            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+        <div style="float: left; padding-left: 6px;" id="divCurrentQuery">
+            
             <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
         </div>
         <div style="float: left;">

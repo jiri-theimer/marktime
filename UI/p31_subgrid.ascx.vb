@@ -187,7 +187,7 @@ Public Class p31_subgrid
                 If Me.EntityX29ID = BO.x29IdEnum.p41Project Then
                     Me.chkIncludeChilds.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-includechilds-" & Me.MasterPrefixWithQueryFlag))
                 End If
-                Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-query-on-top", "0"))
+                Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_subgrid-query-on-top", "1"))
             End With
             panExport.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
             cmdSummary.Visible = Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot)

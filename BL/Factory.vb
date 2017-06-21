@@ -44,7 +44,6 @@
     Private Property _p53 As Ip53VatRateBL
     Private Property _p42 As Ip42ProjectTypeBL
     Private Property _p57 As Ip57TaskTypeBL
-    Private Property _p58 As Ip58ProductBL
     Private Property _p59 As Ip59PriorityBL
     Private Property _x67 As Ix67EntityRoleBL
     Private Property _p95 As Ip95InvoiceRowBL
@@ -381,12 +380,7 @@
             Return _p57
         End Get
     End Property
-    Public ReadOnly Property p58ProductBL As Ip58ProductBL
-        Get
-            If _p58 Is Nothing Then _p58 = New p58ProductBL(_cUser)
-            Return _p58
-        End Get
-    End Property
+
     Public ReadOnly Property p59PriorityBL As Ip59PriorityBL
         Get
             If _p59 Is Nothing Then _p59 = New p59PriorityBL(_cUser)

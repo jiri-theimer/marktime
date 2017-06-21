@@ -99,7 +99,7 @@ Public Class p31_grid
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
-                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_grid-query-on-top", "0"))
+                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_grid-query-on-top", "1"))
                 End With
                 
                

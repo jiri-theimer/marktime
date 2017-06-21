@@ -169,7 +169,6 @@ Public Class admin_framework
             .AddItem("Role v klientovi", "p28_x67", NU("p28_x67"), "p28")
 
             
-            ''.AddItem("Produkty", "p58", NU("p58"), "p56")
 
 
             .AddItem("Dokumenty", "o23", , , "Images/notepad.png")
@@ -484,9 +483,7 @@ Public Class admin_framework
                     .AddColumn("p57Name", "Název")
                     .AddColumn("b01Name", "Workflow šablona")
                     .AddColumn("p57Ordinary", "#", BO.cfENUM.Numeric0)
-                    ''Case "p58"
-                    ''    .AddColumn("TreeMenuItem", "Název produktu")
-                    ''    .AddColumn("p58Ordinary", "#", BO.cfENUM.Numeric0)
+                  
                 Case "p59"
                     .AddColumn("p59Name", "Název priority")
                     .AddColumn("p59Ordinary", "#", BO.cfENUM.Numeric0)
@@ -783,9 +780,7 @@ Public Class admin_framework
                     ''Case "j62"
                     ''    Dim lis As IEnumerable(Of BO.j62MenuHome) = .j62MenuHomeBL.GetList(0, mqDef)
                     ''    grid1.DataSource = lis
-                Case "p58"
-                    Dim lis As IEnumerable(Of BO.p58Product) = .p58ProductBL.GetList(mqDef)
-                    grid1.DataSource = lis
+               
                 Case "p59"
                     Dim lis As IEnumerable(Of BO.p59Priority) = .p59PriorityBL.GetList(mqDef)
                     grid1.DataSource = lis

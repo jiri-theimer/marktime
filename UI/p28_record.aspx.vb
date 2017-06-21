@@ -35,8 +35,7 @@
             basUI.SetupP87Combo(Master.Factory, Me.p87ID)
 
             SetupPriceList()
-            ''Me.p58IDs.DataSource = Master.Factory.p58ProductBL.GetList(New BO.myQuery)
-            ''Me.p58IDs.DataBind()
+            
             Me.p63ID.DataSource = Master.Factory.p63OverheadBL.GetList(New BO.myQuery)
             Me.p63ID.DataBind()
             
@@ -224,9 +223,7 @@
 
         roles1.InhaleInitialData(cRec.PID)
 
-        ''Dim lisP58 As IEnumerable(Of BO.p58Product) = Master.Factory.p58ProductBL.GetList(New BO.myQuery, cRec.PID)
-        ''Me.p58IDs.SelectCheckboxItems(lisP58.Select(Function(p) p.PID.ToString).ToList)
-
+        
         RefreshTempO37()
 
         
@@ -520,9 +517,9 @@
 
 
             Dim lisFF As List(Of BO.FreeField) = Me.ff1.GetValues()
-            ''Dim p58vals As List(Of Integer) = Me.p58IDs.GetAllCheckedIntegerValues()
 
-            If .Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF, Nothing) Then
+
+            If .Save(cRec, lisO37, lisO32, lisP30, lisX69, lisFF) Then
                 Dim bolNew As Boolean = Master.IsRecordNew
                 Master.DataPID = .LastSavedPID
                 If Not bolNew Or ff1.GetX20IDs.Count > 0 Then

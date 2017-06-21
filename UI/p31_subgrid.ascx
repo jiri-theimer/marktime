@@ -17,6 +17,8 @@
         <asp:ImageButton ID="cmdClearExplicitPeriod" runat="server" ImageUrl="Images/close.png" ToolTip="Zrušit filtr podle kalendáře" CssClass="button-link" />
     </div>
     <div class="commandcell" id="divQueryContainer">
+        <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
     </div>
 
 
@@ -53,8 +55,8 @@
                                     <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                     <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                 </div>
-                                <div class="div6">
-                                    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+                                <div id="divJ70" class="div6">
+                                    
                                     <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">
                                         <img src="Images/query.png" />Návrhář filtrů</button>
 
@@ -157,8 +159,9 @@
 
 </asp:Panel>
 <div style="clear: both; width: 100%;"></div>
-<div>
-    <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+<div id="divCurrentQuery">
+    
+    
     <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
 </div>
 
@@ -184,10 +187,10 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        <%If Me.chkQueryOnTop.Checked Then%>
-        $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
+        <%If Not Me.chkQueryOnTop.Checked Then%>
+        $('#<%=Me.j70ID.ClientID%>').prependTo('#divJ70');
         <%If Me.clue_query.Visible Then%>
-        $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
+        $('#<%=Me.clue_query.ClientID%>').prependTo('#divCurrentQuery');
         <%End If%>
         <%End If%>
 

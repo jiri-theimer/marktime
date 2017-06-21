@@ -39,7 +39,7 @@ Class p56TaskBL
         _cDL = New DL.p56TaskDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Private Function TryFindProjectBySubmitter(intJ02ID_Submiter As Integer, intP58ID As Integer) As Integer
+    Private Function TryFindProjectBySubmitter(intJ02ID_Submiter As Integer) As Integer
         Dim lisP30 As IEnumerable(Of BO.p30Contact_Person) = Factory.p30Contact_PersonBL.GetList(0, 0, intJ02ID_Submiter)
         If lisP30.Count > 0 Then
             For Each c In lisP30.Where(Function(p) p.p41ID <> 0 Or p.p28ID <> 0).OrderByDescending(Function(p) p.p41ID)
@@ -68,7 +68,7 @@ Class p56TaskBL
             If .PID = 0 And .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
             If .j02ID_Owner = 0 Then _Error = "Chybí vlastník záznamu." : Return False
             If .p41ID = 0 Then  'zkusit najít chybějící projekt
-                .p41ID = TryFindProjectBySubmitter(.j02ID_Owner, .p58ID)
+                .p41ID = TryFindProjectBySubmitter(.j02ID_Owner)
             End If
 
             If .p41ID = 0 Then _Error = "Chybí vazba na projekt!" : Return False

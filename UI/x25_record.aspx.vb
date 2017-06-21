@@ -519,6 +519,10 @@ Public Class x25_record
 
     End Sub
 
+    Private Sub Handle_CreateTempX19Reocrd()
+
+    End Sub
+
     Private Sub opgX20ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgX20ID.SelectedIndexChanged
         Handle_Changex20ID()
     End Sub

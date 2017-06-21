@@ -118,6 +118,7 @@
                 Case 102 : .Text = "<img src='Images/person.png'/> "
                 Case 141 : .Text = "<img src='Images/project.png'/> "
                 Case 328 : .Text = "<img src='Images/contact.png'/> "
+                Case 391 : .Text = "<img src='Images/invoice.png'/> "
                 Case Else : .Text = "<img src='Images/record.png'/> "
             End Select
             If cRec.x20Name <> "" Then

@@ -23,7 +23,6 @@ Public Class myQueryP56
     Inherits myQuery
 
     Public Property p57ID As Integer
-    Public Property p58ID As Integer
     Public Property p41ID As Integer
     Public Property p41IDs As List(Of Integer)
     Public Property IsIncludeChildProjects As Boolean = False  'zda zahrnout pod-projekty

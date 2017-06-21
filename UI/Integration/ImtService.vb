@@ -41,10 +41,8 @@ Public Interface ImtService
     <OperationContract()>
     Function LoadClientByExternalPID(strExternalPID As String, strLogin As String, strPassword As String) As BO.p28Contact
     <OperationContract()>
-    Function SaveClient(intPID As Integer, fields As Dictionary(Of String, Object), addresses As List(Of BO.o37Contact_Address), p58ids As List(Of Integer), strLogin As String, strPassword As String) As BO.ServiceResult
+    Function SaveClient(intPID As Integer, fields As Dictionary(Of String, Object), addresses As List(Of BO.o37Contact_Address), strLogin As String, strPassword As String) As BO.ServiceResult
 
-    <OperationContract()>
-    Function ListProducts(intP28ID As Integer, strLogin As String, strPassword As String) As IEnumerable(Of BO.p58Product)
     <OperationContract()>
     Function ListPriorities(strLogin As String, strPassword As String) As IEnumerable(Of BO.p59Priority)
     <OperationContract()>

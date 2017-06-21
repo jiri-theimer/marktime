@@ -4,7 +4,6 @@
     Public Property p57ID As Integer
     Public Property o22ID As Integer
     Public Property b02ID As Integer
-    Public Property p58ID As Integer
     Public Property j02ID_Owner As Integer
     Public Property p59ID_Submitter As Integer
     Public Property p59ID_Receiver As Integer
@@ -63,12 +62,7 @@
             Return _p57Name
         End Get
     End Property
-    Friend Property _p58Name As String
-    Public ReadOnly Property p58Name As String
-        Get
-            Return _p58Name
-        End Get
-    End Property
+    
     Friend Property _p59NameSubmitter As String
     Public ReadOnly Property p59NameSubmitter As String
         Get

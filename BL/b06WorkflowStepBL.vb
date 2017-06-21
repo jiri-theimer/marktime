@@ -216,7 +216,7 @@ Class b06WorkflowStepBL
                 intCurB02ID = cRec.b02ID
                 intJ02ID_Owner = cRec.j02ID_Owner
                 If Not lisNominee Is Nothing Then
-                    Me.Factory.p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, lisNominee, Nothing, Nothing)
+                    Me.Factory.p28ContactBL.Save(cRec, Nothing, Nothing, Nothing, lisNominee, Nothing)
                 End If
             Case BO.x29IdEnum.o23Notepad
                 Dim cRec As BO.o23Notepad = Me.Factory.o23NotepadBL.Load(intRecordPID)

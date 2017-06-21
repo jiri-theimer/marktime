@@ -76,7 +76,7 @@
         Return _cDB.GetRecord(Of BO.p28Contact)(s, New With {.robotkey = strRobotAddress})
     End Function
 
-    Public Function Save(cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField), p58IDs As List(Of Integer), ByRef intLastSavedP28ID As Integer) As Boolean
+    Public Function Save(cRec As BO.p28Contact, lisO37 As List(Of BO.o37Contact_Address), lisO32 As List(Of BO.o32Contact_Medium), lisP30 As List(Of BO.p30Contact_Person), lisX69 As List(Of BO.x69EntityRole_Assign), lisFF As List(Of BO.FreeField), ByRef intLastSavedP28ID As Integer) As Boolean
         intLastSavedP28ID = 0
         Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
             Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
@@ -169,12 +169,7 @@
 
                     Next
                 End If
-                If Not p58IDs Is Nothing Then   'produkty klienta
-                    If Not bolINSERT Then _cDB.RunSQL("DELETE FROM p26Contact_Product WHERE p28ID=" & intLastSavedP28ID.ToString)
-                    For Each intP58ID As Integer In p58IDs
-                        _cDB.RunSQL("INSERT INTO p26Contact_Product(p28ID,p58ID) VALUES(" & intLastSavedP28ID.ToString & "," & intP58ID.ToString & ")")
-                    Next
-                End If
+               
                 If Not lisX69 Is Nothing Then   'přiřazení rolí klienta
                     bas.SaveX69(_cDB, BO.x29IdEnum.p28Contact, intLastSavedP28ID, lisX69, bolINSERT)
                 End If

@@ -77,8 +77,7 @@
                         <td>
                             <asp:Label ID="Project" runat="server" CssClass="valbold"></asp:Label>
 
-                            <asp:Label ID="lblProduct" runat="server" Text="Produkt:" style="margin-left:20px;"></asp:Label>
-                            <asp:Label ID="p58Name" runat="server" CssClass="valbold"></asp:Label>
+                            
                         </td>
                     </tr>
                   

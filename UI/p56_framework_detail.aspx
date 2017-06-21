@@ -91,17 +91,7 @@
                     </td>
 
                 </tr>
-                <tr valign="top" id="trProduct" runat="server">
-                    <td>
-                        <asp:Label ID="lblProduct" runat="server" Text="Produkt:" CssClass="lbl"></asp:Label>
-
-                    </td>
-                    <td>
-                        <asp:Label ID="p58Name" runat="server" CssClass="valbold"></asp:Label>
-
-                    </td>
-
-                </tr>
+              
                 <tr valign="top">
                     <td>
                         <asp:Label ID="Label2" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>

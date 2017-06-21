@@ -122,24 +122,6 @@ Partial Public Class clue_p56_record
     Protected WithEvents Project As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblProduct control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblProduct As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''p58Name control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents p58Name As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
     '''RolesInLine control.
     '''</summary>
     '''<remarks>
