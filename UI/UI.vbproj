@@ -349,8 +349,6 @@
     <Content Include="j05_record.aspx" />
     <Content Include="j17_record.aspx" />
     <Content Include="j18_record.aspx" />
-    <Content Include="j23_record.aspx" />
-    <Content Include="j24_record.aspx" />
     <Content Include="j25_record.aspx" />
     <Content Include="kurzy_cnb.aspx" />
     <Content Include="m62_record.aspx" />
@@ -1980,20 +1978,6 @@
     </Compile>
     <Compile Include="j18_record.aspx.vb">
       <DependentUpon>j18_record.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="j23_record.aspx.designer.vb">
-      <DependentUpon>j23_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="j23_record.aspx.vb">
-      <DependentUpon>j23_record.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="j24_record.aspx.designer.vb">
-      <DependentUpon>j24_record.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="j24_record.aspx.vb">
-      <DependentUpon>j24_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="j25_record.aspx.designer.vb">

@@ -17,7 +17,7 @@
         Return _cDB.GetRecord(Of BO.o22Milestone)(s, New With {.j02id_owner = _curUser.j02ID})
     End Function
 
-    Public Function Save(cRec As BO.o22Milestone, lisO20 As List(Of BO.o20Milestone_Receiver), lisO19 As List(Of BO.o19Milestone_NonPerson)) As Boolean
+    Public Function Save(cRec As BO.o22Milestone, lisO20 As List(Of BO.o20Milestone_Receiver)) As Boolean
         Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
         If cRec.PID <> 0 Then
             bolINSERT = False
@@ -56,13 +56,8 @@
             If bolINSERT Then intLastSavedPID = _cDB.LastIdentityValue
             If Not bolINSERT Then
                 If Not lisO20 Is Nothing Then _cDB.RunSQL("DELETE FROM o20Milestone_Receiver WHERE o22ID=" & intLastSavedPID.ToString)
-                If Not lisO19 Is Nothing Then _cDB.RunSQL("DELETE FROM o19Milestone_NonPerson WHERE o22ID=" & intLastSavedPID.ToString)
             End If
-            If Not lisO19 Is Nothing Then
-                For Each c In lisO19
-                    _cDB.RunSQL("INSERT INTO o19Milestone_NonPerson(o22ID,j23ID) VALUES (" & intLastSavedPID.ToString & "," & c.j23ID.ToString & ")")
-                Next
-            End If
+    
             If Not lisO20 Is Nothing Then
                 For Each c In lisO20
                     If c.j02ID <> 0 Then
@@ -196,11 +191,5 @@
 
         Return _cDB.GetList(Of BO.o20Milestone_Receiver)(s, New With {.pid = intPID})
     End Function
-    Public Function GetList_o19(intPID As Integer) As IEnumerable(Of BO.o19Milestone_NonPerson)
-        Dim s As String = "select a.*,j23.j23Name as _j23Name,j23.j23Code as _j23Code," & bas.RecTail("o19", "a", False, False)
-        s += " FROM o19Milestone_NonPerson a INNER JOIN j23NonPerson j23 ON a.j23ID=j23.j23ID"
-        s += " WHERE a.o22ID=@pid"
-
-        Return _cDB.GetList(Of BO.o19Milestone_NonPerson)(s, New With {.pid = intPID})
-    End Function
+    
 End Class

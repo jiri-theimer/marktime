@@ -88,8 +88,6 @@
     <Compile Include="FtDL.vb" />
     <Compile Include="j05MasterSlaveDL.vb" />
     <Compile Include="j17CountryDL.vb" />
-    <Compile Include="j23NonPersonDL.vb" />
-    <Compile Include="j24NonPersonTypeDL.vb" />
     <Compile Include="j25ReportCategoryDL.vb" />
     <Compile Include="j61TextTemplateDL.vb" />
     <Compile Include="j62MenuHomeDL.vb" />

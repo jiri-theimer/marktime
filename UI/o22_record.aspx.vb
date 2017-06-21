@@ -152,11 +152,7 @@
             Master.InhaleRecordValidity(.ValidFrom, .ValidUntil, .DateInsert)
         End With
 
-        ''Dim lisO19 As IEnumerable(Of BO.o19Milestone_NonPerson) = Master.Factory.o22MilestoneBL.GetList_o19(cRec.PID)
-        ''For Each c In lisO19
-        ''    CreateTempRecord_o19(c.j23ID, c.j23Name & " (" & c.j23Code & ")")
-        ''Next
-        ''If lisO19.Count > 0 Then RefreshTempO19()
+       
 
         Dim lisO20 As IEnumerable(Of BO.o20Milestone_Receiver) = Master.Factory.o22MilestoneBL.GetList_o20(cRec.PID)
         For Each c In lisO20
@@ -223,12 +219,7 @@
                 .ValidUntil = Master.RecordValidUntil
             End With
 
-            ''Dim lisO19 As New List(Of BO.o19Milestone_NonPerson)
-            ''For Each cTemp In Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o19"))
-            ''    Dim c As New BO.o19Milestone_NonPerson
-            ''    c.j23ID = cTemp.p85OtherKey1
-            ''    lisO19.Add(c)
-            ''Next
+           
             Dim lisO20 As New List(Of BO.o20Milestone_Receiver)
             For Each cTemp In Master.Factory.p85TempBoxBL.GetList(ViewState("guid_o20"))
                 Dim c As New BO.o20Milestone_Receiver
@@ -237,7 +228,7 @@
                 lisO20.Add(c)
             Next
 
-            If .Save(cRec, lisO20, Nothing) Then
+            If .Save(cRec, lisO20) Then
                 Master.DataPID = .LastSavedPID
                 Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.o22Milestone, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs)
 
@@ -298,15 +289,7 @@
                 End With
                 Me.o22DateFrom.TimePopupButton.Visible = Not Me.o22IsAllDay.Checked
                 Me.o22DateUntil.TimePopupButton.Visible = Not Me.o22IsAllDay.Checked
-                'panReservation.Visible = True
-                'With Me.cbxSelectJ23ID
-                '    If .Rows <= 1 Then
-                '        Dim lis As IEnumerable(Of BO.j23NonPerson) = Master.Factory.j23NonPersonBL.GetList(New BO.myQuery)
-                '        .DataSource = lis
-                '        .DataBind()
-                '    End If
-                'End With
-                
+              
                 
             Case Else
                 imgO21Flag.ImageUrl = "Images/notepad.png"

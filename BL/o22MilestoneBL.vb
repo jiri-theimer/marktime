@@ -1,13 +1,13 @@
 ﻿Public Interface Io22MilestoneBL
     Inherits IFMother
-    Function Save(cRec As BO.o22Milestone, lisO20 As List(Of BO.o20Milestone_Receiver), lisO19 As List(Of BO.o19Milestone_NonPerson)) As Boolean
+    Function Save(cRec As BO.o22Milestone, lisO20 As List(Of BO.o20Milestone_Receiver)) As Boolean
     Function Load(intPID As Integer) As BO.o22Milestone
     Function LoadMyLastCreated() As BO.o22Milestone
     Function Delete(intPID As Integer) As Boolean
     Function GetList(mq As BO.myQueryO22) As IEnumerable(Of BO.o22Milestone)
     Function GetList_forMessagesDashboard(intJ02ID As Integer) As IEnumerable(Of BO.o22Milestone)
     Function GetList_o20(intPID As Integer) As IEnumerable(Of BO.o20Milestone_Receiver)
-    Function GetList_o19(intPID As Integer) As IEnumerable(Of BO.o19Milestone_NonPerson)
+
     Function CreateICalendarTempFullPath(intO22ID As Integer) As String
     Sub Handle_Reminder()
 End Interface
@@ -28,7 +28,7 @@ Class o22MilestoneBL
         _cDL = New DL.o22MilestoneDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.o22Milestone, lisO20 As List(Of BO.o20Milestone_Receiver), lisO19 As List(Of BO.o19Milestone_NonPerson)) As Boolean Implements Io22MilestoneBL.Save
+    Public Function Save(cRec As BO.o22Milestone, lisO20 As List(Of BO.o20Milestone_Receiver)) As Boolean Implements Io22MilestoneBL.Save
         With cRec
             If .o21ID = 0 Then _Error = "Chybí typ události." : Return False
             Dim cO21 As BO.o21MilestoneType = Me.Factory.o21MilestoneTypeBL.Load(.o21ID)
@@ -68,7 +68,7 @@ Class o22MilestoneBL
                     If .o22DateFrom.Value > .o22DateUntil.Value Then
                         _Error = "[Začátek] musí být menší [Konec] události." : Return False
                     End If
-                    
+
                 Case BO.o21FlagEnum.MemoOnly
                     .o22DateFrom = Nothing
                     .o22DateUntil = Nothing
@@ -89,7 +89,7 @@ Class o22MilestoneBL
             If .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
         End With
 
-        If _cDL.Save(cRec, lisO20, lisO19) Then
+        If _cDL.Save(cRec, lisO20) Then
             If cRec.PID = 0 Then
                 Me.RaiseAppEvent(BO.x45IDEnum.o22_new, _LastSavedPID, , , cRec.o22IsNoNotify)
             Else
@@ -121,9 +121,7 @@ Class o22MilestoneBL
     Public Function GetList_o20(intPID As Integer) As IEnumerable(Of BO.o20Milestone_Receiver) Implements Io22MilestoneBL.GetList_o20
         Return _cDL.GetList_o20(intPID)
     End Function
-    Public Function GetList_o19(intPID As Integer) As IEnumerable(Of BO.o19Milestone_NonPerson) Implements Io22MilestoneBL.GetList_o19
-        Return _cDL.GetList_o19(intPID)
-    End Function
+  
     
     Public Sub Handle_Reminder() Implements Io22MilestoneBL.Handle_Reminder
         Dim d1 As Date = DateAdd(DateInterval.Day, -2, Now)

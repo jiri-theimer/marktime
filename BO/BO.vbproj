@@ -83,8 +83,6 @@
     <Compile Include="DBNative\j07PersonPosition.vb" />
     <Compile Include="DBNative\j17Country.vb" />
     <Compile Include="DBNative\j18Region.vb" />
-    <Compile Include="DBNative\j23NonPerson.vb" />
-    <Compile Include="DBNative\j24NonPersonType.vb" />
     <Compile Include="DBNative\j60MenuTemplate.vb" />
     <Compile Include="DBNative\j61TextTemplate.vb" />
     <Compile Include="DBNative\j62MenuHome.vb" />
@@ -93,7 +91,6 @@
     <Compile Include="DBNative\j74SavedGridColTemplate.vb" />
     <Compile Include="DBNative\m62ExchangeRate.vb" />
     <Compile Include="DBNative\o10NoticeBoard.vb" />
-    <Compile Include="DBNative\o19Milestone_NonPerson.vb" />
     <Compile Include="DBNative\o20Milestone_Receiver.vb" />
     <Compile Include="DBNative\o21MilestoneType.vb" />
     <Compile Include="DBNative\o24NotepadType.vb" />

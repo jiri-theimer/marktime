@@ -32,8 +32,7 @@
     Private Property _p35 As Ip35UnitBL
     Private Property _o13 As Io13AttachmentTypeBL
     Private Property _p98 As Ip98Invoice_Round_Setting_TemplateBL
-    Private Property _j23 As Ij23NonPersonBL
-    Private Property _j24 As Ij24NonPersonTypeBL
+
     Private Property _j18 As Ij18RegionBL
     Private Property _x31 As Ix31ReportBL
     Private Property _x35 As Ix35GlobalParamBL
@@ -266,18 +265,7 @@
             Return _c26
         End Get
     End Property
-    Public ReadOnly Property j24NonePersonTypeBL As Ij24NonPersonTypeBL
-        Get
-            If _j24 Is Nothing Then _j24 = New j24NonPersonTypeBL(_cUser)
-            Return _j24
-        End Get
-    End Property
-    Public ReadOnly Property j23NonPersonBL As Ij23NonPersonBL
-        Get
-            If _j23 Is Nothing Then _j23 = New j23NonPersonBL(_cUser)
-            Return _j23
-        End Get
-    End Property
+   
     Public ReadOnly Property p98Invoice_Round_Setting_TemplateBL As Ip98Invoice_Round_Setting_TemplateBL
         Get
             If _p98 Is Nothing Then _p98 = New p98Invoice_Round_Setting_TemplateBL(_cUser)

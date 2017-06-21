@@ -92,6 +92,8 @@ Public Class x25_record
                 Master.DataPID = 0
 
             End If
+
+            
         End If
     End Sub
     
@@ -101,6 +103,25 @@ Public Class x25_record
         With opgX20ID
             .DataSource = lisX20X18
             .DataBind()
+            If Master.DataPID = 0 Then
+                If Request.Item("masterprefix") <> "" And Request.Item("masterpid") <> "" Then 'předvyplnit nový záznam odkazem na entitu
+                    Dim intX29ID As Integer = CInt(BO.BAS.GetX29FromPrefix(Request.Item("masterprefix")))
+                    If lisX20X18.Where(Function(p) p.x29ID = intX29ID).Count > 0 Then
+                        .SelectedValue = lisX20X18.Where(Function(p) p.x29ID = intX29ID)(0).x20ID.ToString
+                        Handle_Changex20ID()
+                        Handle_CreateTempX19Reocrd(BO.BAS.IsNullInt(Request.Item("masterpid")))
+                    End If
+                End If
+                If lisX20X18.Where(Function(p) p.x29ID = 102).Count > 0 And Request.Item("masterprefix") <> "j02" Then   'předvyplnit nový záznam vazbou na přihlášeného usera
+                    'předvyplnit vazbu osoby na přihlášeného uživatele
+                    .SelectedValue = lisX20X18.Where(Function(p) p.x29ID = 102)(0).x20ID.ToString
+                    Handle_Changex20ID()
+                    Handle_CreateTempX19Reocrd(Master.Factory.SysUser.j02ID)
+                End If
+            End If
+            
+            
+
             If .Items.Count > 0 Then
                 .SelectedIndex = 0
                 Handle_Changex20ID()
@@ -480,6 +501,16 @@ Public Class x25_record
             Master.Notify("Musíte vybrat záznam!", NotifyLevel.WarningMessage)
             Return
         End If
+        Handle_CreateTempX19Reocrd(intRecordPID)
+
+
+        cbx1.SelectedValue = ""
+        cbx1.Text = ""
+
+    End Sub
+
+    Private Sub Handle_CreateTempX19Reocrd(intRecordPID As Integer)
+        If intRecordPID = 0 Then Return
         Dim cX20 As BO.x20EntiyToCategory = LoadX20Record()
         Dim lisTemp As IEnumerable(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(hidGUID_x19.Value)
         If lisTemp.Where(Function(p) p.p85OtherKey1 = intRecordPID And p.p85OtherKey2 = Me.CurrentX20ID).Count > 0 Then
@@ -514,13 +545,6 @@ Public Class x25_record
         Master.Factory.p85TempBoxBL.Save(cRec)
 
         RefreshTempX19()
-        cbx1.SelectedValue = ""
-        cbx1.Text = ""
-
-    End Sub
-
-    Private Sub Handle_CreateTempX19Reocrd()
-
     End Sub
 
     Private Sub opgX20ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles opgX20ID.SelectedIndexChanged

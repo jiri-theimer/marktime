@@ -109,8 +109,6 @@
     <Compile Include="j11TeamBL.vb" />
     <Compile Include="j17CountryBL.vb" />
     <Compile Include="j18RegionBL.vb" />
-    <Compile Include="j23NonPersonBL.vb" />
-    <Compile Include="j24NonPersonTypeBL.vb" />
     <Compile Include="j25ReportCategoryBL.vb" />
     <Compile Include="j61TextTemplateBL.vb" />
     <Compile Include="j62MenuHomeBL.vb" />
