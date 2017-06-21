@@ -13,12 +13,12 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("x18_record.aspx?pid=" + pid, "Images/label.png",true);
+            sw_master("x18_record.aspx?source=admin&pid=" + pid, "Images/label.png",true);
 
         }
 
         function record_new() {
-            sw_master("x18_record.aspx?pid=0", "Images/label.png",true);
+            sw_master("x18_record.aspx?pid=0&source=admin", "Images/label.png",true);
 
 
         }
@@ -56,7 +56,7 @@
                 alert("Není vybrán záznam.");
                 return
             }
-            sw_master("x18_record.aspx?clone=1&pid=" + pid, "Images/label.png",true);
+            sw_master("x18_record.aspx?source=admin&clone=1&pid=" + pid, "Images/label.png",true);
 
         }
 
@@ -65,6 +65,12 @@
 
 
         function hardrefresh(pid, flag) {
+            var source = document.getElementById("<%=hidSource.ClientID%>").value;
+            
+            if (source == "admin") {
+                location.replace("x18_framework.aspx?source=admin&pid="+pid);
+                return
+            }
 
             if (flag == "x18-save") {
                 location.replace("x25_framework.aspx?x18id=" + pid);
@@ -72,7 +78,7 @@
             }
                 
 
-            location.replace("x18_framework.aspx")
+            
 
         }
 
@@ -151,4 +157,5 @@
 
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:Button ID="cmdRefresh" runat="server" Style="display: none;" />
+    <asp:HiddenField ID="hidSource" runat="server" />
 </asp:Content>

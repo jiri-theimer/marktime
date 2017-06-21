@@ -84,4 +84,13 @@
             End If
         End Get
     End Property
+
+    Private Property _x20EntityPageFlag As BO.x20EntityPageENUM
+    Public ReadOnly Property x20EntityPageFlag As BO.x20EntityPageENUM
+        Get
+            Return _x20EntityPageFlag
+        End Get
+    End Property
+
+
 End Class

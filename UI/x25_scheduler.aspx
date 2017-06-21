@@ -442,7 +442,7 @@
                 <TimeSlotContextMenus>
                     <telerik:RadSchedulerContextMenu>
                         <Items>
-                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/label.png" NavigateUrl="javascript:x25_record(0)" Value="p56"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="Nový záznam" ImageUrl="Images/label.png" NavigateUrl="javascript:x25_record(0)" Value="x25"></telerik:RadMenuItem>
                             <telerik:RadMenuItem IsSeparator="true" Text="."></telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="Jdi na DNES" Value="CommandGoToToday" />
                         </Items>

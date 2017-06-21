@@ -103,15 +103,17 @@
                                         <div>
                                             <asp:TextBox ID="x20Name" runat="server" Width="200px"></asp:TextBox>
                                         </div>
+                                        
                                     </td>
 
                                     <td>
                                         <div>
-                                            <asp:CheckBox ID="x20IsEntryRequired" runat="server" CssClass="chk" Text="Povinná vazba k přiřazení" />
-                                        </div>
-                                        <div>
                                             <asp:CheckBox ID="x20IsMultiselect" runat="server" CssClass="chk" Text="Multi-Select (možnost zaškrtnout více položek najednou)" />
                                         </div>
+                                        <div>
+                                            <asp:CheckBox ID="x20IsEntryRequired" runat="server" CssClass="chk" Text="Povinná vazba k přiřazení" />
+                                        </div>
+                                        
                                         <div>
                                             <asp:CheckBox ID="x20IsClosed" runat="server" Text="Vazba uzavřena pro přiřazování" />
                                         </div>
@@ -130,6 +132,13 @@
                                                 <asp:ListItem Text="Sloupec v přehledu položek štítku" Value="2"></asp:ListItem>
                                                 <asp:ListItem Text="Sloupec v entitním přehledu i v přehledu položek" Value="3"></asp:ListItem>
                                                 <asp:ListItem Text="Nezobrazovat jako sloupec" Value="4"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div>
+                                            <asp:DropDownList ID="x20EntityPageFlag" runat="server">
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako info" Value="2"></asp:ListItem>   
+                                                <asp:ListItem Text="Na stránce záznamu entity zobrazovat jako odkaz" Value="1"></asp:ListItem>                                                                                             
+                                                <asp:ListItem Text="Na stránce záznamu entity nic nezobrazovat" Value="3"></asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                         <div>

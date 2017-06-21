@@ -230,6 +230,7 @@ Public Class admin_framework
             .AddItem("Skupiny uživatelských polí", "x27", NU("x27"), "ff")
 
             .AddItem("Ostatní nastavení", "other", , , "Images/more.png")
+            .AddItem("Administrace štítků", "x18", "x18_framework.aspx?source=admin", "other")
             .AddItem("Číselné řady", "x38", NU("x38"), "other")
             .AddItem("Střediska", "j18", NU("j18"), "other")
             .AddItem("Regiony", "j17", NU("j17"), "other")

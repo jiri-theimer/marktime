@@ -200,13 +200,13 @@ Public Class x25_scheduler
         For Each cRec In lis
             Dim c As New Appointment()
             With cRec
-                c.ID = .PID.ToString & ",'p56'"
+                c.ID = .PID.ToString & ",'x25'"
                 c.Description = "clue_x25_record.aspx?pid=" & .PID.ToString
                 c.Subject = .x25Name
                 If c.Subject = "" Then c.Subject = .x25Code
                 c.Start = .CalendarDateStart
                 c.End = .CalendarDateEnd
-
+                c.ForeColor = Drawing.Color.Black
                 If .b02ID <> 0 Then
                     If .b02Color <> "" Then
                         c.BackColor = Drawing.Color.FromName(.b02Color)
@@ -214,7 +214,7 @@ Public Class x25_scheduler
                 Else
                     If .x25BackColor <> "" Then
                         c.BackColor = Drawing.Color.FromName(.x25BackColor)
-                        c.ForeColor = Drawing.Color.FromName(.x25ForeColor)
+                        If .x25ForeColor <> "" Then c.ForeColor = Drawing.Color.FromName(.x25ForeColor)
                     End If
                 End If
 

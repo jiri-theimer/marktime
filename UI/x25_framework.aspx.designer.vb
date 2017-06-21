@@ -68,24 +68,6 @@ Partial Public Class x25_framework
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''panSearchbox control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panSearchbox As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''cbx1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cbx1 As Global.Telerik.Web.UI.RadComboBox
-
-    '''<summary>
     '''lblGridHeader control.
     '''</summary>
     '''<remarks>

@@ -126,6 +126,7 @@
                 .p85FreeText01 = c.x20Name
                 .p85OtherKey2 = CInt(c.x20EntryModeFlag)
                 .p85OtherKey3 = CInt(c.x20GridColumnFlag)
+                .p85OtherKey6 = CInt(c.x20EntityPageFlag)
                 .p85FreeBoolean01 = c.x20IsEntryRequired
                 .p85FreeBoolean02 = c.x20IsMultiSelect
                 .p85FreeBoolean03 = c.x20IsClosed
@@ -203,6 +204,7 @@
             c.x20IsMultiSelect = cTMP.p85FreeBoolean02
             c.x20EntryModeFlag = cTMP.p85OtherKey2
             c.x20GridColumnFlag = cTMP.p85OtherKey3
+            c.x20EntityPageFlag = cTMP.p85OtherKey6
             c.x20IsClosed = cTMP.p85FreeBoolean03
             c.x20Ordinary = cTMP.p85FreeNumber01
             lisX20.Add(c)
@@ -430,9 +432,14 @@
             CType(e.Item.FindControl("x20IsClosed"), CheckBox).Checked = .p85FreeBoolean03
             CType(e.Item.FindControl("x20Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value = .p85FreeNumber01
 
+
+
             Dim cbx1 As DropDownList = CType(e.Item.FindControl("x20EntryModeFlag"), DropDownList), cbx2 As DropDownList = CType(e.Item.FindControl("x20GridColumnFlag"), DropDownList)
+            Dim cbx3 As DropDownList = CType(e.Item.FindControl("x20EntityPageFlag"), DropDownList)
+
             basUI.SelectDropdownlistValue(cbx1, .p85OtherKey2.ToString)
             basUI.SelectDropdownlistValue(cbx2, .p85OtherKey3.ToString)
+            basUI.SelectDropdownlistValue(cbx3, cRec.p85OtherKey6.ToString)
             Dim strName As String = Me.x18Name.Text
             If Trim(Me.x18NameShort.Text) <> "" Then strName = Me.x18NameShort.Text
 
@@ -464,11 +471,13 @@
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu worksheet úkonů", strName)
                     cbx2.Items.FindByValue("2").Enabled = False
                     cbx2.Items.FindByValue("3").Enabled = False
+                   
                 Case BO.x29IdEnum.o22Milestone
                     cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky položek [{0}] ve formuláři pro kalendářovou událost", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Pole [{0}] v kalendáři událostí", strName)
                     cbx2.Items.FindByValue("2").Enabled = False
                     cbx2.Items.FindByValue("3").Enabled = False
+                    
                 Case BO.x29IdEnum.p91Invoice
                     cbx1.Items.FindByValue("1").Text = String.Format("Vazbu vyplňovat z combo nabídky položek [{0}] v kartě faktury", strName)
                     cbx2.Items.FindByValue("1").Text = String.Format("Sloupec [{0}] v přehledu faktur", strName)
@@ -502,6 +511,7 @@
                 .p85FreeText01 = CType(ri.FindControl("x20Name"), TextBox).Text
                 .p85OtherKey2 = CInt(CType(ri.FindControl("x20EntryModeFlag"), DropDownList).SelectedValue)
                 .p85OtherKey3 = CInt(CType(ri.FindControl("x20GridColumnFlag"), DropDownList).SelectedValue)
+                .p85OtherKey6 = CInt(CType(ri.FindControl("x20EntityPageFlag"), DropDownList).SelectedValue)
                 .p85FreeBoolean01 = CType(ri.FindControl("x20IsEntryRequired"), CheckBox).Checked
                 .p85FreeBoolean02 = CType(ri.FindControl("x20IsMultiselect"), CheckBox).Checked
                 .p85FreeBoolean03 = CType(ri.FindControl("x20IsClosed"), CheckBox).Checked

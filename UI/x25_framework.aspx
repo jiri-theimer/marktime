@@ -188,21 +188,7 @@
 
 
 
-        function cbx1_OnClientItemsRequesting(sender, eventArgs) {
-            var context = eventArgs.get_context();
-            var combo = sender;
-
-            if (combo.get_value() == "")
-                context["filterstring"] = eventArgs.get_text();
-            else
-                context["filterstring"] = "";
-
-            context["j03id"] = "<%=Master.Factory.SysUser.PID%>";
-            context["flag"] = "searchbox";
-            <%If 1 = 1 Then%>
-            context["j02id_explicit"] = "<%=Master.Factory.SysUser.j02ID%>";
-            <%End If%>
-        }
+        
 
         function x18_setting() {            
             sw_master("x18_record.aspx?pid=<%=Me.currentx18id%>", "Images/label.png", true);
@@ -276,12 +262,7 @@
                 </div>
 
                 
-                <asp:Panel ID="panSearchbox" runat="server" CssClass="commandcell" Style="padding-left: 10px;" Visible="false">
-                    <telerik:RadComboBox ID="cbx1" runat="server" RenderMode="Auto" DropDownWidth="400" EnableTextSelection="true" MarkFirstMatch="true" EnableLoadOnDemand="true" Text="Hledat..." Width="120px" OnClientItemsRequesting="cbx1_OnClientItemsRequesting" AutoPostBack="false">
-                        <WebServiceSettings Method="LoadComboData" UseHttpGet="false" />
-                    </telerik:RadComboBox>
-                </asp:Panel>
-
+                
 
                 <div class="commandcell">
 
@@ -319,7 +300,7 @@
                     <button type="button" id="cmdSetting" runat="server" onclick="x18_setting()">
                         <img src="Images/label.png" />Nastavení štítku</button>
                     <button type="button" onclick="x18_framework()" id="cmdAdmin" runat="server" style="margin-left: 30px;">
-                        <img src="Images/setting.png" />Správa štítků</button>
+                        <img src="Images/setting.png" />Administrace štítků</button>
                 </div>
                 <div class="content-box3">
                     <div class="title">

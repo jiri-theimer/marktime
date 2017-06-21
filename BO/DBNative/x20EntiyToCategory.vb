@@ -8,6 +8,11 @@ Public Enum x20GridColumnENUM
     Both = 3
     _None = 4
 End Enum
+Public Enum x20EntityPageENUM
+    Hyperlink = 1
+    Label = 2
+    NotUsed = 3
+End Enum
 
 Public Class x20EntiyToCategory
     Public Property x20ID As Integer
@@ -24,6 +29,6 @@ Public Class x20EntiyToCategory
     Public Property EntityTypeAlias As String   'pomocný atribut - není v SQL
     Public Property x20IsClosed As Boolean
     Public Property x20Ordinary As Integer
-
+    Public Property x20EntityPageFlag As x20EntityPageENUM = x20EntityPageENUM.Label
 
 End Class

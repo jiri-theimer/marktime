@@ -135,12 +135,14 @@
                 pars.Add("x20Name", c.x20Name, DbType.String)
                 pars.Add("x20EntryModeFlag", CInt(c.x20EntryModeFlag), DbType.Int32)
                 pars.Add("x20GridColumnFlag", CInt(c.x20GridColumnFlag), DbType.Int32)
+                pars.Add("x20EntityPageFlag", CInt(c.x20EntityPageFlag), DbType.Int32)
                 pars.Add("x20IsMultiselect", c.x20IsMultiSelect, DbType.Boolean)
                 pars.Add("x20IsClosed", c.x20IsClosed, DbType.Boolean)
                 pars.Add("x20IsEntryRequired", c.x20IsEntryRequired, DbType.Boolean)
                 pars.Add("x20Ordinary", c.x20Ordinary, DbType.Int32)
                 pars.Add("x20EntityTypePID", BO.BAS.IsNullDBKey(c.x20EntityTypePID), DbType.Int32)
                 pars.Add("x29ID_EntityType", BO.BAS.IsNullDBKey(c.x29ID_EntityType), DbType.Int32)
+
                 bolINSERT = True : strW = ""
                 If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count > 0 Then
                     bolINSERT = False
@@ -302,7 +304,7 @@
         Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)("SELECT * FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid ORDER BY x16Ordinary", New With {.pid = intX18ID})
     End Function
     Private Function GetSQLPart1_x19(bolInhaleRecordAlias As Boolean) As String
-        Dim s As String = "SELECT a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x20.x18ID as _x18ID,x18.x18Name as _x18Name,x18.x18Icon as _x18Icon,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor,x20.x29ID as _x29ID,x20.x20Name as _x20Name,x20.x20IsMultiselect as _x20IsMultiselect"
+        Dim s As String = "SELECT a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x20.x18ID as _x18ID,x18.x18Name as _x18Name,x18.x18Icon as _x18Icon,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor,x20.x29ID as _x29ID,x20.x20Name as _x20Name,x20.x20IsMultiselect as _x20IsMultiselect,x20.x20EntityPageFlag as _x20EntityPageFlag"
         If bolInhaleRecordAlias Then
             s += ",dbo.GetObjectAlias(convert(varchar(10),x20.x29ID),a.x19RecordPID) as _RecordAlias"
         End If

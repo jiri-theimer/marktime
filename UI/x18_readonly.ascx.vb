@@ -20,6 +20,7 @@
     End Sub
 
     Public Sub RefreshData(x29id As BO.x29IdEnum, intRecordPID As Integer, lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding))
+        lisX19 = lisX19.Where(Function(p) p.x20EntityPageFlag < BO.x20EntityPageENUM.NotUsed)
         Me.hidRecordPID.Value = intRecordPID.ToString
         Me.hidX29ID.Value = CInt(x29id).ToString
 
@@ -58,8 +59,9 @@
 
         'Next
         'CType(e.Item.FindControl("items"), Label).Text = String.Join(", ", _lisX19.Where(Function(p) p.x18ID = intX18ID).Select(Function(p) p.x25Name))
-        CType(e.Item.FindControl("rpItems"), Repeater).DataSource = _lisX19.Where(Function(p) p.x18ID = c.x18ID)
+        CType(e.Item.FindControl("rpItems"), Repeater).DataSource = _lisX19.Where(Function(p) p.x18ID = c.x18ID And p.x20EntityPageFlag = BO.x20EntityPageENUM.Hyperlink)
         CType(e.Item.FindControl("rpItems"), Repeater).DataBind()
-
+        CType(e.Item.FindControl("rpLabels"), Repeater).DataSource = _lisX19.Where(Function(p) p.x18ID = c.x18ID And p.x20EntityPageFlag = BO.x20EntityPageENUM.Label)
+        CType(e.Item.FindControl("rpLabels"), Repeater).DataBind()
     End Sub
 End Class
