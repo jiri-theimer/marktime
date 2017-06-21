@@ -32,6 +32,15 @@ Partial Public Class x25_record_readonly
     Protected WithEvents x25Code As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''trName control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trName As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
     '''x25Name control.
     '''</summary>
     '''<remarks>

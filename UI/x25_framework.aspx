@@ -91,20 +91,26 @@
             location.replace("x25_framework.aspx?x18id=" + ctl.value);
         }
         function RowDoubleClick(sender, args) {
-            record_edit();
-
-            
+            record_edit();            
         }
+
         function record_edit() {
             if (getpid(false) == "")
                 return;
                 
-
             x25_record(getpid(false));
         }
 
         function x25_record(pid) {
             sw_everywhere("x25_record.aspx?x18id=<%=Me.CurrentX18ID%>&pid=" + pid, "Images/label.png", true);
+        }
+
+        function record_clone() {
+            var pid = getpid(true);
+            if (pid == "")
+                return;
+
+            sw_everywhere("x25_record.aspx?clone=1&x18id=<%=Me.CurrentX18ID%>&pid=" + pid, "Images/label.png", true);
         }
 
 

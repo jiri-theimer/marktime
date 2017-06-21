@@ -11,7 +11,7 @@
                 <asp:Label ID="x25Code" runat="server" CssClass="valbold"></asp:Label>
             </td>
         </tr>
-        <tr class="trHover">
+        <tr class="trHover" id="trName" runat="server">
             <td style="width:200px;">
                 <span class="lbl"><img src="Images/type_text.png" /> Název:</span>
             </td>
@@ -40,7 +40,11 @@
                 </tr>
             </ItemTemplate>
         </asp:Repeater>
-        
+        <tr>
+            <td colspan="2" style="border-top:dashed 1px silver;">
+
+            </td>
+        </tr>
         <asp:Repeater ID="rpX19" runat="server">
             <ItemTemplate>
            

@@ -62,7 +62,7 @@
             menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:workflow()"
         Else
             hidB01ID.Value = ""
-            menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit komentář nebo přílohu"
+            menu1.FindItemByValue("cmdWorkflow").Text = "Doplnit poznámku, komentář, přílohu"
             menu1.FindItemByValue("cmdWorkflow").ImageUrl = "Images/comment.png"
             menu1.FindItemByValue("cmdWorkflow").NavigateUrl = "javascript:b07_create()"
         End If

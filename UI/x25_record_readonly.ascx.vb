@@ -34,7 +34,12 @@
         If Me.X18ID <> 0 And cX18 Is Nothing Then
             cX18 = Me.Factory.x18EntityCategoryBL.Load(Me.X18ID)
         End If
-        Me.x25Name.Text = cRec.x25Name
+
+        If cRec.x25Name <> "" Then
+            Me.x25Name.Text = cRec.x25Name
+        Else
+            trName.Visible = False
+        End If
         If cRec.x25Code <> "" Then
             Me.x25Code.Text = cRec.x25Code
         Else
@@ -44,7 +49,7 @@
 
         Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo)
         Dim x20IDs As List(Of Integer) = lisX20X18.Where(Function(p) p.x29ID <> 331).Select(Function(p) p.x20ID).ToList
-        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(cRec.PID, x20IDs, True)
+        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = Me.Factory.x18EntityCategoryBL.GetList_X19(cRec.PID, x20IDs, True).OrderBy(Function(p) p.x20IsMultiselect).ThenBy(Function(p) p.x20ID).ThenBy(Function(p) p.RecordAlias)
 
         rpX19.DataSource = lisX19
         rpX19.DataBind()

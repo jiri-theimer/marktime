@@ -314,7 +314,7 @@ Public Class entity_menu
             If cDisp.P31_MoveToOtherProject Then ami("Přesunout rozpracovanost na jiný projekt", "cmdP31MoveToOtherProject", "javascript:p31_move2project();", "Images/cut.png", mi)
         End If
 
-        If cRec.b01ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
+        If cRec.b01ID = 0 Then ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
         ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
@@ -569,7 +569,7 @@ Public Class entity_menu
         If Not cRec.IsClosed Then ami("Vytvořit událost v kalendáři", "cmdO22", "javascript:menu_o22_record(0);", "Images/calendar.png", mi, , True)
         ami("Kalendář klienta", "cmdScheduler", "javascript:scheduler()", "Images/calendar.png", mi)
 
-        If cRec.b02ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
+        If cRec.b02ID = 0 Then ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
 
 
 
@@ -643,7 +643,7 @@ Public Class entity_menu
             ami("Historie aktivit osoby", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
         End If
 
-        ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
+        ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
     End Sub
 
     Private Sub j02_SetupTabs(cRec As BO.j02Person, crs As BO.j02PersonSum)
@@ -821,7 +821,7 @@ Public Class entity_menu
         ami("Vytvořit dokument", "cmdO23", "javascript:menu_o23_record(0);", "Images/notepad.png", mi, , True)
 
 
-        If cRec.b01ID = 0 Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
+        If cRec.b01ID = 0 Then ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
         ami("Historie odeslané pošty", "cmdX40", "x40_framework.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/email.png", mi, , , "_top")
         If cDisp.OwnerAccess Then
             ami("Historie záznamu", "cmdLog", "javascript: timeline()", "Images/event.png", mi)
@@ -880,7 +880,7 @@ Public Class entity_menu
 
         End If
         If cRec.b02ID = 0 Then
-            If cDisp.Comments Then ami("Zapsat komentář/poznámku", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
+            If cDisp.Comments Then ami("Doplnit poznámku, komentář, přílohu", "cmdB07", "javascript:menu_b07_record();", "Images/comment.png", mi, , True)
         Else
             ami("Posunout/doplnit", "cmdWorkflow", "javascript:workflow();", "Images/workflow.png", mi, , True)
         End If
