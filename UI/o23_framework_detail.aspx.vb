@@ -298,6 +298,7 @@
         End If
 
         labels1.RefreshData(Master.Factory, BO.x29IdEnum.o23Notepad, cRec.PID)
+        boxX18.Visible = labels1.ContainsAnyData
 
         RefreshDropbox(cO24)
 

@@ -175,6 +175,7 @@
         End If
 
         labels1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, cRec.PID)
+        boxX18.Visible = labels1.ContainsAnyData
 
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p56Task, Master.DataPID, cRec.p57ID)
         If lisFF.Count > 0 Then

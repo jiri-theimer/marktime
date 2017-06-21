@@ -28,9 +28,9 @@
             Return  'pro entitu nejsou vazby k zobrazení
         End If
         hidNoLinksAndButtons.Value = BO.BAS.GB(bolWithoutLinksAndButtons)
-        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = factory.x18EntityCategoryBL.GetList_X19(x29id, intRecordPID, "", Nothing)
-
+        Dim lisX19 As IEnumerable(Of BO.x19EntityCategory_Binding) = factory.x18EntityCategoryBL.GetList_X19(x29id, intRecordPID, "", lisX20X18.Select(Function(p) p.x20ID).ToList)
         lisX19 = lisX19.Where(Function(p) p.x20EntityPageFlag < BO.x20EntityPageENUM.NotUsed)
+
         Me.hidRecordPID.Value = intRecordPID.ToString
         Me.hidX29ID.Value = CInt(x29id).ToString
         hidMasterPrefix.Value = BO.BAS.GetDataPrefix(x29id)
@@ -48,6 +48,16 @@
                 c.ShowAddNewLink = True
             End If
             lis.Add(c)
+        Next
+        For Each cX20 In lisX20X18.Where(Function(p) p.x20EntityPageFlag = BO.x20EntityPageENUM.HyperlinkPlusNew)
+            If lis.Where(Function(p) p.x18ID = cX20.x18ID).Count = 0 Then
+                Dim c As New _qry
+                c.x18ID = cX20.x18ID
+                c.x18Name = cX20.x18Name
+                c.x18Icon = cX20.x18Icon
+                c.ShowAddNewLink = True
+                lis.Add(c)
+            End If
         Next
 
 

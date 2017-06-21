@@ -257,15 +257,6 @@ Partial Public Class o23_framework_detail
     Protected WithEvents roles_notepad As Global.UI.entityrole_assign_inline
 
     '''<summary>
-    '''labels1 control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents labels1 As Global.UI.x18_readonly
-
-    '''<summary>
     '''Timestamp control.
     '''</summary>
     '''<remarks>
@@ -390,6 +381,24 @@ Partial Public Class o23_framework_detail
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents o23BodyPlainText As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''boxX18 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents boxX18 As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
 
     '''<summary>
     '''panEntryPassword control.

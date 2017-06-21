@@ -863,11 +863,7 @@ if @prefix='j03'
 if @prefix='j02'
   select @ret=j02LastName+' '+j02FirstName FROM j02Person WHERE j02ID=@pid
 
-if @prefix='j23'
-  select @ret=j23Name+isnull(' ('+j23code+')','') FROM j23NonPerson WHERE j23ID=@pid
 
-if @prefix='j24'
-  select @ret=j24Name FROM j24NonPersonType WHERE j24ID=@pid
 
 if @prefix='o22'
  select @ret=o22Name+' - '+[dbo].GetDDMMYYYYHHMM(o22DateUntil)+' ('+o21Name+')',@refp28id=p28id,@refp41id=p41id,@refp91id=p91id,@refj02id=j02id FROM o22Milestone a inner join o21MilestoneType b ON a.o21ID=b.o21ID WHERE a.o22ID=@pid
@@ -4376,8 +4372,8 @@ BEGIN TRY
 	if exists(select j02ID FROM j02Person_FreeField WHERE j02ID=@pid)
 	 DELETE FROM j02Person_FreeField WHERE j02ID=@pid
 
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=102 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=102 AND x19RecordPID=@pid
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=102))
+	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=102)
 
 	if exists(SELECT p30ID FROM p30Contact_Person WHERE j02ID=@pid)
 	 DELETE FROM p30Contact_Person WHERE j02ID=@pid
@@ -5256,130 +5252,6 @@ END CATCH
 
 GO
 
-----------P---------------j23_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('j23_delete') and type = 'P')
- drop procedure j23_delete
-GO
-
-
-
-
-
-
-CREATE   procedure [dbo].[j23_delete]
-@j03id_sys int				--pøihlášený uživatel
-,@pid int					--j23id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu typu nepersonálního zdroje z tabulky j23NonPerson
-declare @ref_pid int
-
-SELECT TOP 1 @ref_pid=o22ID from o19Milestone_NonPerson WHERE j23ID=@pid
-if @ref_pid is not null
- set @err_ret='Minimálnì jedna rezervaèní událost má vazbu na tento zdroj ('+dbo.GetObjectAlias('o22',@ref_pid)+')'
-
-
-
-
-if isnull(@err_ret,'')<>''
- return 
-
-BEGIN TRANSACTION
-
-BEGIN TRY
-	
-	delete from j23NonPerson where j23ID=@pid
-
-	COMMIT TRANSACTION
-
-END TRY
-BEGIN CATCH
-  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
-  ROLLBACK TRANSACTION
-  
-END CATCH  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
-----------P---------------j24_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('j24_delete') and type = 'P')
- drop procedure j24_delete
-GO
-
-
-
-
-
-
-CREATE   procedure [dbo].[j24_delete]
-@j03id_sys int				--pøihlášený uživatel
-,@pid int					--j24id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu typu nepersonálního zdroje z tabulky j24NonPersonType
-declare @ref_pid int
-
-SELECT TOP 1 @ref_pid=j23ID from j23NonPerson WHERE j24ID=@pid
-if @ref_pid is not null
- set @err_ret='Minimálnì jeden nepersonální zdroj je svázaný s tímto typem ('+dbo.GetObjectAlias('j23',@ref_pid)+')'
-
-
-
-
-if isnull(@err_ret,'')<>''
- return 
-
-BEGIN TRANSACTION
-
-BEGIN TRY
-	
-	delete from j24NonPersonType where j24ID=@pid
-
-	COMMIT TRANSACTION
-
-END TRY
-BEGIN CATCH
-  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
-  ROLLBACK TRANSACTION
-  
-END CATCH  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
 ----------P---------------j25_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('j25_delete') and type = 'P')
@@ -6119,8 +5991,8 @@ BEGIN TRY
     if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=222 AND b07RecordPID=@pid
 
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=222 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=222 AND x19RecordPID=@pid
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=222))
+	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=222)
 
 	delete from o22Milestone where o22ID=@pid
 
@@ -6298,8 +6170,8 @@ BEGIN TRY
 	if exists(select o23ID FROM o23Notepad_FreeField WHERE o23ID=@pid)
 	 DELETE FROM o23Notepad_FreeField WHERE o23ID=@pid
 
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=223 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=223 AND x19RecordPID=@pid
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=223))
+	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=223)
 
 	if exists(select o43ID FROM o43ImapRobotHistory WHERE o23ID=@pid)
 	 DELETE FROM o43ImapRobotHistory WHERE o23ID=@pid
@@ -6949,8 +6821,8 @@ BEGIN TRY
 	if exists(select p28ID FROM p28Contact_FreeField WHERE p28ID=@pid)
 	 DELETE FROM p28Contact_FreeField WHERE p28ID=@pid
 
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=328 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=328 AND x19RecordPID=@pid
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=328))
+	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=328)
 
 	if exists(select p30ID FROM p30Contact_Person where p28ID=@pid)
 	 DELETE FROM p30Contact_Person where p28ID=@pid
@@ -7628,8 +7500,8 @@ BEGIN TRY
 	if exists(select p31ID FROM p31worksheet_FreeField WHERE p31ID=@pid)
 	 DELETE FROM p31WorkSheet_FreeField WHERE p31ID=@pid
 
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=331 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=331 AND x19RecordPID=@pid
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331))
+	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331)
 
 	if exists(select o23ID FROM o23Notepad WHERE p31ID=@pid)
 	 UPDATE o23Notepad SET p31ID=NULL WHERE p31ID=@pid
@@ -11017,8 +10889,8 @@ BEGIN TRY
 	if exists(select p41ID FROM p41Project_FreeField WHERE p41ID=@pid)
 	 DELETE FROM p41Project_FreeField WHERE p41ID=@pid
 
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=141 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=141 AND x19RecordPID=@pid
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=141))
+	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=141)
 
 	if exists(select o39ID FROM o39Project_Address WHERE p41ID=@pid)
 	 DELETE FROM o39Project_Address WHERE p41ID=@pid
@@ -12092,8 +11964,8 @@ BEGIN TRY
 	if exists(select p56ID FROM p56Task_FreeField WHERE p56ID=@pid)
 	 DELETE FROM p56Task_FreeField WHERE p56ID=@pid
 
-	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=356 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=356 AND x19RecordPID=@pid
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=356))
+	 DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=356)
 
 	if exists(select o43ID FROM o43ImapRobotHistory WHERE p56ID=@pid)
 	 DELETE FROM o43ImapRobotHistory WHERE p56ID=@pid
@@ -12281,68 +12153,6 @@ BEGIN CATCH
   ROLLBACK TRANSACTION
   
 END CATCH  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO
-
-----------P---------------p58_delete-------------------------
-
-if exists (select 1 from sysobjects where  id = object_id('p58_delete') and type = 'P')
- drop procedure p58_delete
-GO
-
-
-
-
-
-CREATE   procedure [dbo].[p58_delete]
-@j03id_sys int				--pøihlášený uživatel
-,@pid int					--p58id
-,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
-
-AS
---odstranìní záznamu produktu z tabulky p58Product
-declare @ref_pid int
-
-SELECT TOP 1 @ref_pid=p56ID from p56Task WHERE p58ID=@pid
-if @ref_pid is not null
- set @err_ret='Minimálnì jeden úkol má vazbu na tento produkt ('+dbo.GetObjectAlias('p56',@ref_pid)+')'
-
-if exists(select p58ID FROM p58Product WHERE p58ParentID=@pid)
- set @err_ret='Tento produkt má pod sebou minimálnì jeden podøízený produkt.'
-
-if isnull(@err_ret,'')<>''
- return 
-
-BEGIN TRANSACTION
-
-BEGIN TRY
-	
-
-	DELETE from p58Product where p58ID=@pid
-
-	COMMIT TRANSACTION
-
-END TRY
-BEGIN CATCH
-  set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
-  ROLLBACK TRANSACTION
-  
-END CATCH  
-
 
 
 
@@ -12896,8 +12706,8 @@ if exists(select p82ID FROM p82Proforma_Payment WHERE p90ID=@pid)
 if exists(select p90ID FROM p90Proforma_FreeField WHERE p90ID=@pid)
   delete from p90Proforma_FreeField where p90id=@pid
 
-if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=390 AND x19RecordPID=@pid)
-	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=390 AND x19RecordPID=@pid
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=390))
+ DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=390)
 
 if exists(SELECT o22ID FROM o22Milestone WHERE p90ID=@pid)
   DELETE FROM o22Milestone WHERE p90ID=@pid
@@ -13743,8 +13553,8 @@ if exists(select p96ID FROM p96Invoice_ExchangeRate where p91ID=@pid)
 if exists(select p91ID FROM p91Invoice_FreeField WHERE p91ID=@pid)
   delete from p91Invoice_FreeField where p91id=@pid
 
-if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=391 AND x19RecordPID=@pid)
- DELETE FROM x19EntityCategory_Binding WHERE x29ID=391 AND x19RecordPID=@pid
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=391))
+ DELETE FROM x19EntityCategory_Binding WHERE x19RecordPID=@pid AND x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=391)
 
 if exists(select p99ID FROM p99Invoice_Proforma WHERE p91ID=@pid)
   delete from p99Invoice_Proforma where p91id=@pid

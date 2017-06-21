@@ -39,7 +39,7 @@
 
         function p56_record_new(p41id) {
 
-            sw_decide("p56_record.aspx?pid=0&p41id="+p41id, "Images/task.png", true);
+            sw_decide("p56_record.aspx?pid=0&p41id=" + p41id, "Images/task.png", true);
 
         }
         function o23_record(pid) {
@@ -67,12 +67,12 @@
         <div class="content">
             <table cellpadding="10" cellspacing="2" id="responsive">
                 <tr valign="top">
-                     
+
                     <td colspan="2">
-                        
+
                         <asp:Label ID="p56Name" runat="server" CssClass="valbold"></asp:Label>
 
-                        <asp:Label ID="p56Code" runat="server" CssClass="valbold" ForeColor="gray" style="margin-left:20px;"></asp:Label>
+                        <asp:Label ID="p56Code" runat="server" CssClass="valbold" ForeColor="gray" Style="margin-left: 20px;"></asp:Label>
                     </td>
 
 
@@ -91,7 +91,7 @@
                     </td>
 
                 </tr>
-              
+
                 <tr valign="top">
                     <td>
                         <asp:Label ID="Label2" runat="server" Text="Projekt:" CssClass="lbl"></asp:Label>
@@ -109,11 +109,12 @@
                     </td>
                     <td>
                         <asp:Label ID="b02Name" runat="server" CssClass="valboldred"></asp:Label>
-                        <a href="javascript: workflow()" title="Změnit stav úkolu, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona..."><img src="Images/workflow.png" />Posunout/doplnit</a>
-                      
+                        <a href="javascript: workflow()" title="Změnit stav úkolu, zapsat komentář, případně další kroky, které podporuje aktuální workflow šablona...">
+                            <img src="Images/workflow.png" />Posunout/doplnit</a>
+
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td>
                         <asp:Label ID="lblDeadline" runat="server" Text="Termín:" CssClass="lbl"></asp:Label>
@@ -137,11 +138,19 @@
             <div class="div6">
                 <uc:entityrole_assign_inline ID="roles_task" runat="server" EntityX29ID="p56Task" NoDataText=""></uc:entityrole_assign_inline>
             </div>
-            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+
         </div>
     </div>
+    <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">
+        <div class="title">
+            <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
+        </div>
+        <div class="content">
+            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+        </div>
 
-    
+    </asp:Panel>
+
 
     <asp:Panel ID="boxVysledovka" runat="server" CssClass="content-box1">
         <div class="title">
@@ -192,19 +201,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        Poslední nevyfakturovaný úkon:
+                    <td>Poslední nevyfakturovaný úkon:
                     </td>
                     <td colspan="2">
-                        <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                        <asp:Label ID="Last_WIP_Worksheet" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        Poslední vystavená faktura:
+                    <td>Poslední vystavená faktura:
                     </td>
                     <td colspan="2">
-                        <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" style="float:right;"></asp:Label>
+                        <asp:Label ID="Last_Invoice" runat="server" ForeColor="Brown" Style="float: right;"></asp:Label>
                     </td>
                 </tr>
             </table>
@@ -245,17 +252,16 @@
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>
 
-    <div style="clear: both; width: 100%;"></div>
-
-    <asp:Panel ID="panDescription" runat="server" CssClass="content-box1" Style="width: 99%; max-width: none;">
+    
+    <asp:Panel ID="panDescription" runat="server" CssClass="content-box1" Style="width: 99%; max-width: none;clear:both;">
         <div class="title">Podrobný popis</div>
         <div class="content" style="background-color: #ffffcc; max-height: 120px; overflow: auto;">
             <asp:Label ID="p56Description" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
         </div>
     </asp:Panel>
 
-    <div style="clear:both;"></div>
+    <div style="clear: both;">
     <uc:b07_list ID="comments1" runat="server" JS_Create="menu_b07_record()" JS_Reaction="b07_reaction" />
-
+    </div>
     <asp:HiddenField ID="hidCurP41ID" runat="server" />
 </asp:Content>

@@ -156,7 +156,7 @@
                 <div class="div6">
                     <uc:entityrole_assign_inline ID="roles_notepad" runat="server" EntityX29ID="o23Notepad" NoDataText=""></uc:entityrole_assign_inline>
                 </div>
-                <uc:x18_readonly id="labels1" runat="server" IsShowLinks="true"></uc:x18_readonly>
+                
                 <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
             </div>
         </div>
@@ -212,13 +212,22 @@
         </asp:Panel>
 
     </asp:Panel>
-    <div style="clear: both; width: 100%;"></div>
+    
 
-    <asp:Panel ID="panBody" runat="server" CssClass="content-box1">
+    <asp:Panel ID="panBody" runat="server" CssClass="content-box1" Style="clear: both;">
         <div class="title">Podrobný popis</div>
         <div class="content" style="background-color: #ffffcc;">
             <asp:Label ID="o23BodyPlainText" runat="server" CssClass="val" Style="font-family: 'Courier New'; word-wrap: break-word; display: block; font-size: 120%;"></asp:Label>
         </div>
+    </asp:Panel>
+    <asp:Panel ID="boxX18" runat="server" CssClass="content-box1" Style="clear: both;">
+        <div class="title">
+            <img src="Images/label.png" style="margin-right: 10px;" /><span>Štítky</span>
+        </div>
+        <div class="content">
+            <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
+        </div>
+
     </asp:Panel>
     <asp:Panel ID="panEntryPassword" runat="server" Visible="false" CssClass="content-box2">
 
