@@ -74,7 +74,7 @@
             var splitter = $find("<%= RadSplitter1.ClientID %>");
             var pane = splitter.getPaneById("<%=contentPane.ClientID%>");
 
-            var url = "x25_framework_detail.aspx?pid=" + pid;
+            var url = "x25_framework_detail.aspx?x18id=<%=Me.CurrentX18ID%>&pid=" + pid;
             pane.set_contentUrl(url);
 
 
@@ -267,7 +267,7 @@
                                     <telerik:RadMenuItem Value="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
                                 </Items>
                             </telerik:RadMenuItem>
-                            <telerik:RadMenuItem Text="KALENDÁŘ" Value="scheduler" ImageUrl="Images/calendar.png" ToolTip="Přepnout do kalendáře"></telerik:RadMenuItem>
+                            <telerik:RadMenuItem Text="KALENDÁŘ" Value="scheduler" ImageUrl="Images/calendar.png" ToolTip="Přepnout do kalendáře" Visible="false"></telerik:RadMenuItem>
 
 
                         </Items>

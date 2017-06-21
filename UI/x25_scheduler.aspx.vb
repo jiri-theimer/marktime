@@ -151,6 +151,14 @@ Public Class x25_scheduler
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         ''menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
 
+        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.CurrentX18ID).Where(Function(p) p.x20IsClosed = False And (p.x29ID = 102 Or p.x29ID = 141))
+        If lisX20X18.Where(Function(p) p.x29ID = 102).Count > 0 Then
+            panPersons.Style.Item("display") = "block"
+        End If
+        If lisX20X18.Where(Function(p) p.x29ID = 141).Count > 0 Then
+            panProjects.Style.Item("display") = "block"
+        End If
+
     End Sub
 
     Private Sub RefreshData(bolData4Export As Boolean)

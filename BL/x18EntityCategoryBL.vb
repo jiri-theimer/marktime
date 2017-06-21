@@ -2,6 +2,7 @@
     Inherits ifMother
     Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
     Function Load(intPID As Integer) As BO.x18EntityCategory
+    Function LoadByX23ID(intX23ID As Integer) As BO.x18EntityCategory
     Function Delete(intPID As Integer) As Boolean
     Function GetList(Optional myQuery As BO.myQuery = Nothing, Optional x29ID As BO.x29IdEnum = BO.x29IdEnum._NotSpecified, Optional intEntityType As Integer = -1, Optional bolInhaleAllCols As Boolean = False) As IEnumerable(Of BO.x18EntityCategory)
     Function GetList_x20(intX18ID As Integer) As IEnumerable(Of BO.x20EntiyToCategory)
@@ -36,6 +37,9 @@ Class x18EntityCategoryBL
 
     Public Function Load(intPID As Integer) As BO.x18EntityCategory Implements Ix18EntityCategoryBL.Load
         Return _cDL.Load(intPID)
+    End Function
+    Public Function LoadByX23ID(intX23ID As Integer) As BO.x18EntityCategory Implements Ix18EntityCategoryBL.LoadByX23ID
+        Return _cDL.LoadByX23ID(intX23ID)
     End Function
 
     Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean Implements Ix18EntityCategoryBL.Save

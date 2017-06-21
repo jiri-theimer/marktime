@@ -24,6 +24,7 @@
 
             End If
 
+            If lblMessage.Text = "" Then img1.Visible = False
         End If
     End Sub
 

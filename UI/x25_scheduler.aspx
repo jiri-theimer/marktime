@@ -299,7 +299,7 @@
 
 
             <div style="clear: both;"></div>
-            <asp:Panel ID="panPersons" runat="server">
+            <asp:Panel ID="panPersons" runat="server" style="display:none;">
                 <div class="show_hide2" style="float: left; margin-top: 8px;">
                     <button type="button">
                         <img src="Images/arrow_down.gif" alt="Výběr osob" />
@@ -315,7 +315,7 @@
                 </div>
             </asp:Panel>
             <div style="clear: both;"></div>
-            <asp:Panel ID="panProjects" runat="server">
+            <asp:Panel ID="panProjects" runat="server" style="display:none;">
                 <div class="show_hide3" style="float: left; margin-top: 8px;">
                     <button type="button">
                         <img src="Images/arrow_down.gif" alt="Výběr projektů" />

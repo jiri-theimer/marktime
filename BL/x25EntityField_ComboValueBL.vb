@@ -1,6 +1,6 @@
 ﻿Public Interface Ix25EntityField_ComboValueBL
     Inherits IFMother
-    Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
+    Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean
     Function Load(intPID As Integer) As BO.x25EntityField_ComboValue
     Function LoadByCode(strCode As String, intX23ID As Integer) As BO.x25EntityField_ComboValue
     Function Delete(intPID As Integer) As Boolean
@@ -26,7 +26,7 @@ Class x25EntityField_ComboValueBL
         _cDL = New DL.x25EntityField_ComboValueDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
-    Public Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean Implements Ix25EntityField_ComboValueBL.Save
+    Public Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean Implements Ix25EntityField_ComboValueBL.Save
         With cRec
             If .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
             If Trim(.x25Name) = "" And intX18ID <> 0 Then
@@ -50,6 +50,10 @@ Class x25EntityField_ComboValueBL
         If _cDL.Save(cRec, lisX69) Then
             Dim intX25ID As Integer = _LastSavedPID
 
+            If Not lisX19 Is Nothing Then
+                Factory.x18EntityCategoryBL.SaveX19Binding(intX25ID, lisX19, x20IDs)
+            End If
+
             Me.RaiseAppEvent_TailoringAfterSave(intX25ID, "x25_aftersave")
             If intX18ID <> 0 Then
                 Dim cX18 As BO.x18EntityCategory = Me.Factory.x18EntityCategoryBL.Load(intX18ID)
@@ -60,7 +64,7 @@ Class x25EntityField_ComboValueBL
                     If intB01ID > 0 And cRec.b02ID = 0 Then InhaleDefaultWorkflowMove(cRec.PID, intB01ID) 'chybí hodnota workflow stavu
                 End If
             End If
-            
+
 
             Return True
         Else

@@ -230,7 +230,7 @@ Class b06WorkflowStepBL
                 intCurB02ID = cRec.b02ID
                 intJ02ID_Owner = cRec.j02ID_Owner
                 If Not lisNominee Is Nothing Then
-                    Me.Factory.x25EntityField_ComboValueBL.Save(cRec, 0, lisNominee)
+                    Me.Factory.x25EntityField_ComboValueBL.Save(cRec, 0, lisNominee, Nothing, Nothing)
                 End If
         End Select
 

@@ -53,7 +53,6 @@ Public Class x18_framework
             .AddColumn("Is_j02", "Osoby", BO.cfENUM.Checkbox)
             .AddColumn("Is_o22", "Kal.události", BO.cfENUM.Checkbox)
             .AddColumn("x18Ordinary", "#", BO.cfENUM.Numeric0, , , , , , False)
-            .AddColumn("Owner", "Vlastník")
             .AddColumn("DateInsert", "Založeno", BO.cfENUM.DateTime, , , , , , False)
 
             .SetFilterSetting(strFilterSetting, strFilterExpression)

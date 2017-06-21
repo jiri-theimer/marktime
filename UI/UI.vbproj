@@ -192,6 +192,7 @@
     <Content Include="clue_p41_myworksheet.aspx" />
     <Content Include="clue_p48_record.aspx" />
     <Content Include="clue_search.aspx" />
+    <Content Include="clue_x25_record.aspx" />
     <Content Include="email_receiver.ascx" />
     <Content Include="entity_framework.aspx" />
     <Content Include="entity_framework_detail_setting.aspx" />
@@ -541,7 +542,9 @@
     <Content Include="x18_record.aspx" />
     <Content Include="x23_record.aspx" />
     <Content Include="x25_framework.aspx" />
+    <Content Include="x25_framework_detail.aspx" />
     <Content Include="x25_record.aspx" />
+    <Content Include="x25_record_readonly.ascx" />
     <Content Include="x25_scheduler.aspx" />
     <Content Include="x27_record.aspx" />
     <Content Include="x28_record.aspx" />
@@ -816,6 +819,13 @@
     </Compile>
     <Compile Include="clue_search.aspx.vb">
       <DependentUpon>clue_search.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="clue_x25_record.aspx.designer.vb">
+      <DependentUpon>clue_x25_record.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="clue_x25_record.aspx.vb">
+      <DependentUpon>clue_x25_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="email_receiver.ascx.designer.vb">
@@ -3140,12 +3150,26 @@
       <DependentUpon>x25_framework.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="x25_framework_detail.aspx.designer.vb">
+      <DependentUpon>x25_framework_detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="x25_framework_detail.aspx.vb">
+      <DependentUpon>x25_framework_detail.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="x25_record.aspx.designer.vb">
       <DependentUpon>x25_record.aspx</DependentUpon>
     </Compile>
     <Compile Include="x25_record.aspx.vb">
       <DependentUpon>x25_record.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="x25_record_readonly.ascx.designer.vb">
+      <DependentUpon>x25_record_readonly.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="x25_record_readonly.ascx.vb">
+      <DependentUpon>x25_record_readonly.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="x25_scheduler.aspx.designer.vb">
       <DependentUpon>x25_scheduler.aspx</DependentUpon>

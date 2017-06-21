@@ -829,6 +829,9 @@ BEGIN
 if @pid is null or @prefix is null
   return null
 
+if isnumeric(@prefix)=1
+ select @prefix=left(x29TableName,3) FROM x29Entity WHERE x29ID=convert(int,@prefix)
+
 declare @ret nvarchar(300),@refp28id int,@refp41id int,@refp91id int,@refj02id int,@refpid int,@refx29id int,@refp56id int
 	
 if @prefix='p28'
@@ -844,7 +847,7 @@ if @prefix='p41'
   
 
 if @prefix='p91'
-  select @ret=p91code+isnull(' | '+b.p28name,'') FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID where a.p91id=@pid
+  select @ret=p91code+' | '+isnull(a.p91Client,b.p28Name) FROM p91invoice a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID where a.p91id=@pid
 
 if @prefix='p90'
   select @ret=p90code+isnull(' ['+b.p28name+']','') FROM p90Proforma a LEFT OUTER JOIN p28Contact b ON a.p28ID=b.p28ID where a.p90ID=@pid
@@ -902,7 +905,8 @@ if @prefix='p56'
  if @prefix='p45'
   select @ret=p45Name+' | '+isnull(b.p41NameShort,b.p41Name) from p45Budget a inner join p41Project b on a.p41ID=b.p41id where a.p45ID=@pid 
 
-
+if @prefix='x25'
+ select @ret=isnull(x25Name+' ('+x25Code+')',x25Name) FROM x25EntityField_ComboValue where x25ID=@pid
   
 
 if @prefix='c21'
@@ -2846,6 +2850,65 @@ END
 
 GO
 
+----------FN---------------stitek_entity-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('stitek_entity') and type = 'FN')
+ drop function stitek_entity
+GO
+
+
+
+
+
+
+
+CREATE FUNCTION [dbo].[stitek_entity](@x25id int,@x20id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené názvy entit
+  
+ DECLARE @s nvarchar(2000) 
+
+
+select top 10 @s=COALESCE(@s + ', ', '')+dbo.GetObjectAlias(convert(varchar(10),x20.x29ID),a.x19RecordPID)
+FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
+where a.x25ID=@x25id AND a.x20ID=@x20id
+
+
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------stitek_hodnoty-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('stitek_hodnoty') and type = 'FN')
@@ -2866,17 +2929,11 @@ BEGIN
 
  DECLARE @s nvarchar(2000) 
 
-if exists(select x18ID FROM x18EntityCategory WHERE x18ID=@x18id AND x18IsMultiSelect=1)
-begin
-select @s=COALESCE(@s + ', ', '')+x25.x25Name
-FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID
-where a.x18ID=@x18id and a.x29ID=@x29id AND a.x19RecordPID=@recpid
-end
-else
-begin
-select TOP 1 @s=x25.x25Name FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID
-where a.x18ID=@x18id and a.x29ID=@x29id AND a.x19RecordPID=@recpid
-end
+
+select top 10 @s=COALESCE(@s + ', ', '')+x25.x25Name
+FROM x19EntityCategory_Binding a INNER JOIN x25EntityField_ComboValue x25 ON a.x25ID=x25.x25ID INNER JOIN x20EntiyToCategory x20 ON a.x20ID=x20.x20ID
+where a.x19RecordPID=@recpid AND x20.x18ID=@x18id and x20.x29ID=@x29id
+
 
 
 RETURN(@s)
@@ -3374,7 +3431,13 @@ AS
  
 if exists(select b01ID from p42ProjectType where b01id=@pid)
  set @err_ret='Minimálnì jeden typ projektu má vazbu na tuto šablonu.'
- 
+
+if exists(select b01ID from p57TaskType where b01id=@pid)
+ set @err_ret='Minimálnì jeden typ úkolu má vazbu na tuto šablonu.'
+
+if exists(select b01ID from x18EntityCategory where b01id=@pid)
+ set @err_ret='Minimálnì jeden štítek má vazbu na tuto šablonu.'
+  
 if isnull(@err_ret,'')<>''
  return 
  
@@ -6044,8 +6107,8 @@ BEGIN TRANSACTION
 
 BEGIN TRY
 	
-	if exists(select o19ID FROM o19Milestone_NonPerson WHERE o22ID=@pid)
-	 DELETE FROM o19Milestone_NonPerson WHERE o22ID=@pid
+	if exists(select o22ID FROM o22Milestone_FreeField WHERE o22ID=@pid)
+	 DELETE FROM o22Milestone_FreeField WHERE o22ID=@pid
 
 	if exists(select o20ID FROM o20Milestone_Receiver WHERE o22ID=@pid)
 	 DELETE FROM o20Milestone_Receiver WHERE o22ID=@pid
@@ -6055,6 +6118,9 @@ BEGIN TRY
 
     if exists(select b07ID FROM b07Comment WHERE x29ID=223 AND b07RecordPID=@pid)
 	 DELETE FROM b07Comment WHERE x29ID=222 AND b07RecordPID=@pid
+
+	if exists(select x19ID FROM x19EntityCategory_Binding WHERE x29ID=222 AND x19RecordPID=@pid)
+	 DELETE FROM x19EntityCategory_Binding WHERE x29ID=222 AND x19RecordPID=@pid
 
 	delete from o22Milestone where o22ID=@pid
 
@@ -8958,6 +9024,13 @@ CREATE  procedure [dbo].[p31_save_freefields_after_approving]
 
 AS
 
+if exists(select p85ID FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
+ begin
+  DELETE FROM x19EntityCategory_Binding WHERE x29ID=331 AND x19RecordPID IN (select p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
+
+  INSERT INTO x19EntityCategory_Binding(x18ID,x25ID,x29ID,x19RecordPID) SELECT p85OtherKey1,p85OtherKey2,331,p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19'
+ end
+
 if not exists(select p31ID FROM p31WorkSheet_FreeField_Temp WHERE p31GUID=@guid)
  return
 
@@ -9112,6 +9185,11 @@ CREATE procedure [dbo].[p31_setup_temp]
 @p31id int	---p31id
 ,@guid varchar(50)
 AS
+
+if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@p31id AND x29ID=331)
+ begin	---k záznamu existuje vazba na štítky
+  INSERT INTO p85TempBox(p85GUID,p85Prefix,p85OtherKey1,p85OtherKey2,p85OtherKey3) select @guid,'x19',x18ID,x25ID,x19RecordPID FROM x19EntityCategory_Binding WHERE x19RecordPID=@p31id AND x29ID=331
+ end
 
 if exists(select p31ID FROM p31WorkSheet_FreeField WHERE p31ID=@p31id)
  begin	---k záznamu existují uživatelská pole
@@ -13582,12 +13660,10 @@ GO
 
 
 
-
-
-
 CREATE   procedure [dbo].[p91_delete]
 @j03id_sys int				--pøihlášený uživatel
 ,@pid int					--p91id
+,@guid varchar(50)			---seznam úkonù ve faktuøe
 ,@err_ret varchar(500) OUTPUT		---pøípadná návratová chyba
 
 AS
@@ -13598,6 +13674,9 @@ set @ref_pid=null
 SELECT TOP 1 @ref_pid=o23ID from o23Notepad WHERE p91ID=@pid
 if @ref_pid is not null
  set @err_ret='Faktura má vazbu s minimálnì jedním dokumentem ('+dbo.GetObjectAlias('o23',@ref_pid)+')'
+
+if @guid is null
+ set @err_ret='Na vstupu chybí guid.'
 
 
 if isnull(@err_ret,'')<>''
@@ -13617,19 +13696,40 @@ BEGIN TRANSACTION
 BEGIN TRY
 
 
-if @p92invoicetype=2 AND @p32id_overhead is not null
- begin
-  if exists(select p31ID FROM p31Worksheet WHERE p91ID=@pid AND p32id=@p32id_overhead)
-    delete FROM p31worksheet WHERE p91id=@pid AND p32id=@p32id_overhead
- end
+---if @p92invoicetype=2 AND @p32id_overhead is not null
+--- begin
+---  if exists(select p31ID FROM p31Worksheet WHERE p91ID=@pid AND p32id=@p32id_overhead)
+---    delete FROM p31worksheet WHERE p91id=@pid AND p32id=@p32id_overhead
+--- end
 
 update p31Worksheet set p91ID=null,p70ID=null
 ,j27ID_Billing_Invoiced=null,j27ID_Billing_Invoiced_Domestic=null,p31Value_Invoiced=null,p31Rate_Billing_Invoiced=null
 ,p31Amount_WithoutVat_Invoiced=null,p31Amount_WithVat_Invoiced=null,p31Amount_Vat_Invoiced=null,p31VatRate_Invoiced=null
 ,p31Amount_WithoutVat_Invoiced_Domestic=null,p31Amount_WithVat_Invoiced_Domestic=null,p31Amount_Vat_Invoiced_Domestic=null
 ,p31Minutes_Invoiced=null,p31HHMM_Invoiced=null,p31Hours_Invoiced=null
-,p31ExchangeRate_Invoice=null
+,p31ExchangeRate_Invoice=null,p31ExchangeRate_InvoiceManual=null
+,p31IsInvoiceManual=0,j02ID_InvoiceManual=null
 where p91ID=@pid
+
+---pøesunout úkony do rozpracovnaosti
+update p31Worksheet set p71ID=null,p72ID_AfterApprove=null,p31Approved_When=null,p31Value_Approved_Billing=null,p31Value_Approved_Internal=null
+,p31Minutes_Approved_Billing=null,p31Hours_Approved_Billing=null,p31Hours_Approved_Internal=null,p31HHMM_Approved_Billing=null,p31HHMM_Approved_Internal=null
+,p31Rate_Billing_Approved=null,p31Rate_Internal_Approved=null
+,p31Amount_WithoutVat_Approved=null,p31Amount_WithVat_Approved=null,p31Amount_Vat_Approved=null,p31VatRate_Approved=null,p31Amount_Internal_Approved=null
+,j02ID_ApprovedBy=null
+FROM p31Worksheet WHERE p31ID IN (SELECT p85DataPID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=2)
+
+---pøesunout úkony do archivu
+update p31Worksheet set p31ValidUntil=getdate() WHERE p31ID IN (SELECT p85DataPID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=3)
+
+---nenávratnì odstranit úkony
+if exists(select p85ID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=4)
+begin
+ DELETE FROM p31WorkSheet_FreeField WHERE p31ID IN (SELECT p85DataPID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=4)
+
+ delete from p31Worksheet WHERE p31ID IN (SELECT p85DataPID FROM p85TempBox WHERE p85GUID=@guid and p85Prefix='p31' AND p85OtherKey1=4)
+end
+ 
 
 if exists(select p94ID FROM p94Invoice_Payment where p91ID=@pid)
   delete from p94Invoice_Payment where p91id=@pid
@@ -13677,6 +13777,7 @@ END CATCH
 
 --if @p91id_bind is not null
 -- exec p91_recalc_amount @p91id_bind,0
+
 
 
 
@@ -15088,29 +15189,49 @@ CREATE   procedure [dbo].[x18_delete]
 
 AS
 --odstranìní záznamu kategorie z tabulky  èíselníku z tabulky x18EntityCategory
-
-if exists(select x19ID FROM x19EntityCategory_Binding WHERE x18ID=@pid)
+if exists(select x19ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE b.x18ID=@pid)
  set @err_ret='Nelze odstranit, protože minimálnì jedna položka již byla použita v oštítkování nìjakého záznamu. Štítek mùžete pøesunout do archivu nebo vyèistit jeho vazby.'
-
 
 if isnull(@err_ret,'')<>''
  return 
 
+declare @x23id int
+
+SELECT @x23id=x23ID FROM x18EntityCategory WHERE x18ID=@pid
+
+if not exists(select x18ID FROM x18EntityCategory WHERE x18ID<>@pid AND x23ID=@x23id)
+ begin
+  if exists(select x25ID FROM x25EntityField_ComboValue WHERE x23ID=@x23id)
+   set @err_ret='Štítek obsahuje minimálnì jednu položku. Je tøeba nejdøíve odstranit položky štítku.'
+
+ end
+
+if isnull(@err_ret,'')<>''
+ return 
+
+
+
 BEGIN TRANSACTION
 
 BEGIN TRY	
-	DELETE FROM x19EntityCategory_Binding WHERE x18ID=@pid
-
+	
 	DELETE FROM x20EntiyToCategory WHERE x18ID=@pid
 
-	DELETE FROM x22EntiyCategory_Binding WHERE x18ID=@pid
+	DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid		
 
 	delete from x18EntityCategory where x18ID=@pid
+
+	if not exists(select x25ID FROM x25EntityField_ComboValue WHERE x23ID=@x23id)
+	  DELETE FROM x23EntityField_Combo WHERE x23ID=@x23id
+
+	
 
 	COMMIT TRANSACTION
 
 END TRY
 BEGIN CATCH
+  update x18EntityCategory set x23ID=@x23id WHERE x18ID=@pid
+
   set @err_ret=dbo.parse_errinfo(ERROR_PROCEDURE(),ERROR_LINE(),ERROR_MESSAGE())
   ROLLBACK TRANSACTION
   
@@ -15215,7 +15336,13 @@ AS
 --odstranìní záznamu položky èíselníku z tabulky x25EntityField_ComboValue
 
 if exists(select x19ID FROM x19EntityCategory_Binding WHERE x25ID=@pid)
- set @err_ret='Nelze odstranit, protože položka již byla použita v oštítkování nìjakého záznamu. Položku mùžete pøesunout do archivu.'
+begin
+ declare @count int
+ select @count=count(*) from x19EntityCategory_Binding WHERE x25ID=@pid
+ if isnull(@count,0)>10
+  set @err_ret='Nelze odstranit, protože položka byla použita k oštítkování více záznamù. Položku mùžete pøesunout do archivu.'
+
+end
 
 if isnull(@err_ret,'')<>''
  return 
@@ -15223,6 +15350,7 @@ if isnull(@err_ret,'')<>''
 BEGIN TRANSACTION
 
 BEGIN TRY	
+	delete from x19EntityCategory_Binding WHERE x25ID=@pid
 
 	delete from x25EntityField_ComboValue where x25ID=@pid
 

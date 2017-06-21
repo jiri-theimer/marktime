@@ -43,6 +43,10 @@ Public Class x25_framework
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
             End If
             Dim strX18ID As String = Request.Item("x18id")
+            If strX18ID = "" And Request.Item("pid") <> "" Then
+                Dim cRec As BO.x25EntityField_ComboValue = Master.Factory.x25EntityField_ComboValueBL.Load(BO.BAS.IsNullInt(Request.Item("pid")))
+                If Not cRec Is Nothing Then strX18ID = Master.Factory.x18EntityCategoryBL.LoadByX23ID(cRec.x23ID).PID.ToString
+            End If
             With Master.Factory.j03UserBL
                 If strX18ID = "" Then
                     .InhaleUserParams("x25_framework-x18id")
@@ -191,6 +195,12 @@ Public Class x25_framework
         Me.x18ID.DataBind()
         If lis.Count = 0 Then
             Master.Notify("V databázi zatím neexistuje štítek.", NotifyLevel.InfoMessage)
+
+            If Master.Factory.TestPermission(BO.x53PermValEnum.GR_X18_Admin) Then
+                Response.Redirect("x18_framework.aspx", True)
+            Else
+                menu1.Visible = False
+            End If
         Else
             If strDef <> "" Then basUI.SelectDropdownlistValue(Me.x18ID, strDef)
         End If
@@ -305,7 +315,7 @@ Public Class x25_framework
                 Next
             End If
             If grid1.GetSelectedPIDs.Count > 0 Then
-                Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx?pid=" & intSelPID.ToString
+                Me.hidContentPaneDefUrl.Value = "x25_framework_detail.aspx?pid=" & intSelPID.ToString & "&x18id=" & Me.CurrentX18ID.ToString
                 hiddatapid.Value = intSelPID.ToString
             End If
             
@@ -343,7 +353,7 @@ Public Class x25_framework
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
-
+        menu1.FindItemByValue("cmdClone").Visible = cDisp.CreateItem
     End Sub
 
     Private Sub x25_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete

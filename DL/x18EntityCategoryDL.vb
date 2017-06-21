@@ -8,6 +8,11 @@
 
         Return _cDB.GetRecord(Of BO.x18EntityCategory)(s, New With {.x18id = intPID})
     End Function
+    Public Function LoadByX23ID(intX23ID As Integer) As BO.x18EntityCategory
+        Dim s As String = GetSQLPart1(False) & " WHERE a.x23ID=@x23id"
+
+        Return _cDB.GetRecord(Of BO.x18EntityCategory)(s, New With {.x23id = intX23ID})
+    End Function
     
 
     Public Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean

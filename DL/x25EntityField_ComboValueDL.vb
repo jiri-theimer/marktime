@@ -167,7 +167,7 @@
                 If .j02IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=102 AND xa.x19RecordPID IN (" & String.Join(",", .j02IDs) & "))"
             End If
             If Not .Owners Is Nothing Then
-                If .Owners.Count > 0 Then strW += " AND a.j02ID_Owner IN (" & String.Join(",", .j02IDs) & ")"
+                If .Owners.Count > 0 Then strW += " AND a.j02ID_Owner IN (" & String.Join(",", .Owners) & ")"
             End If
             If Not .p28IDs Is Nothing Then
                 If .p28IDs.Count > 0 Then strW += " AND a.x25ID IN (select xa.x25ID FROM x19EntityCategory_Binding xa INNER JOIN x20EntiyToCategory xb ON xa.x20ID=xb.x20ID WHERE xb.x29ID=328 AND xa.x19RecordPID IN (" & String.Join(",", .p28IDs) & "))"

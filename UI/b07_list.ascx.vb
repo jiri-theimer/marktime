@@ -61,6 +61,10 @@
         rp1.DataSource = lisB07
         rp1.DataBind()
 
+        If cmdAdd.Visible = False And rp1.Items.Count = 0 Then
+            panHeader.Visible = False
+        End If
+
         lblHeader.Text = BO.BAS.OM2(Me.lblHeader.Text, lisB07.Count.ToString)
     End Sub
 
