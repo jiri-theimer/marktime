@@ -305,7 +305,7 @@
                 <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
             </div>
             <div style="float: left; padding-left: 6px;">
-                <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
+                <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="<img src='Images/sweep.png'/>Vyčistit sloupcový filtr" Style="font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
             </div>
             <div style="clear: both; width: 100%;"></div>
 
