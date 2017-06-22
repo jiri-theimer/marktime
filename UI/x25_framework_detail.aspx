@@ -63,6 +63,11 @@
         function workflow() {         
             sw_everywhere("workflow_dialog.aspx?prefix=x25&pid=<%=Master.DataPID%>", "Images/workflow.png", true);
         }
+        function sendmail() {
+            sw_everywhere("sendmail.aspx?prefix=x25&pid=<%=Master.DataPID%>", "Images/email.png")
+
+
+        }
 
     </script>
 </asp:Content>
@@ -82,10 +87,12 @@
                         <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:record_create();" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
-                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>                        
                         <telerik:RadMenuItem Value="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>                        
+                        <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
+                        <telerik:RadMenuItem Value="cmdEmail" Text="Odeslat e-mail" NavigateUrl="javascript:sendmail();" ImageUrl="Images/email.png"></telerik:RadMenuItem>
                     </Items>
 
                 </telerik:RadMenuItem>
