@@ -59,6 +59,7 @@ Public Class x25_scheduler
                     .Add("entity_scheduler-projects1-scope")
                     .Add("entity_scheduler-projects1-value")
                     .Add("entity_scheduler-agendadays")
+                    .Add("entity_scheduler-timelinedays")
                     .Add("entity_scheduler-include_childs")
 
                 End With
@@ -82,6 +83,7 @@ Public Class x25_scheduler
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_dayendtime, .GetUserParam("entity_scheduler-dayendtime", "20"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_multidays, .GetUserParam("entity_scheduler-multidays", "2"))
                     basUI.SelectDropdownlistValue(Me.entity_scheduler_agendadays, .GetUserParam("entity_scheduler-agendadays", "20"))
+                    basUI.SelectDropdownlistValue(Me.entity_scheduler_timelinedays, .GetUserParam("entity_scheduler-timelinedays", "10"))
 
                     
                 End With
@@ -173,7 +175,7 @@ Public Class x25_scheduler
             .MultiDayView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_multidays.SelectedValue)
             .Localization.HeaderMultiDay = "Multi-den (" & .MultiDayView.NumberOfDays.ToString & ")"
             .AgendaView.NumberOfDays = BO.BAS.IsNullInt(Me.entity_scheduler_agendadays.SelectedValue)
-
+            .TimelineView.NumberOfSlots = BO.BAS.IsNullInt(Me.entity_scheduler_timelinedays.SelectedValue)
         End With
         Dim d1 As Date = scheduler1.VisibleRangeStart.AddDays(-1), d2 As Date = scheduler1.VisibleRangeEnd.AddDays(1)
 
@@ -254,6 +256,41 @@ Public Class x25_scheduler
     Private Sub x25_scheduler_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         PersonsHeader.Text = persons1.CurrentHeader
         ProjectsHeader.Text = projects1.CurrentHeader
+        With scheduler1.TimelineView
+            If .NumberOfSlots <= 10 Then
+                .ColumnHeaderDateFormat = "ddd d.M.yyyy"
+            Else
+                .ColumnHeaderDateFormat = "ddd d.M."
+            End If
+            If .NumberOfSlots >= 30 Then
+                .ColumnHeaderDateFormat = "ddd d.M."
+            End If
+            If .NumberOfSlots >= 50 Then
+                .ColumnHeaderDateFormat = "d.M."
+            End If
+            
+        End With
     End Sub
 
+    
+    Private Sub entity_scheduler_daystarttime_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_daystarttime.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-daystarttime", Me.entity_scheduler_daystarttime.SelectedValue)
+        RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
+    End Sub
+    Private Sub entity_scheduler_agendadays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_agendadays.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-agendadays", Me.entity_scheduler_agendadays.SelectedValue)
+        RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
+    End Sub
+    Private Sub entity_scheduler_dayendtime_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_dayendtime.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-dayendtime", Me.entity_scheduler_dayendtime.SelectedValue)
+        RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
+    End Sub
+    Private Sub entity_scheduler_timelinedays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles entity_scheduler_timelinedays.SelectedIndexChanged
+        Master.Factory.j03UserBL.SetUserParam("entity_scheduler-timelinedays", Me.entity_scheduler_timelinedays.SelectedValue)
+        RefreshData(False)
+        hidIsLoadingSetting.Value = "1"
+    End Sub
 End Class

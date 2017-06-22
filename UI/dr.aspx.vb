@@ -24,13 +24,21 @@
 
             With Master.Factory.SysUser
                 If .j03MobileForwardFlag = BO.j03MobileForwardFlagENUM.Auto Then bolNeedMobileUI = basUI.DetectIfMobileDefice(Request)
-                If bolNeedMobileUI Then strPage = "mobile_" & strPrefix & "_framework.aspx"
+                If bolNeedMobileUI Then
+                    strPage = "mobile_" & strPrefix & "_framework.aspx"
+                End If
                 strPage += "?board=1"
                 If bolNeedMobileUI Then strPage += "&source=start"
                 Select Case strPrefix
                     Case "p56", "p41", "p28", "p91", "o23", "j02"
                         strPage += "&pid=" & strPID
                         Response.Redirect(strPage)
+                    Case "x25"
+                        If bolNeedMobileUI Then
+                            Response.Redirect("clue_x25_record.aspx?dr=1&pid=" & strPID)
+                        Else
+                            Response.Redirect("x25_framework.aspx?pid=" & strPID)
+                        End If
                     Case "x31"
                         Dim c As BO.x31Report = Master.Factory.x31ReportBL.Load(CInt(strPID))
                         If c.x29ID = BO.x29IdEnum._NotSpecified Then

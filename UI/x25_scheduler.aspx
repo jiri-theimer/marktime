@@ -380,6 +380,18 @@
                             </asp:DropDownList>
                         </div>
                         <div class="div6">
+                            <span>Počet dní v [Timeline]:</span>
+                            <asp:DropDownList ID="entity_scheduler_timelinedays" runat="server" AutoPostBack="true">
+                                <asp:ListItem Text="5" Value="5"></asp:ListItem>
+                                <asp:ListItem Text="10" Value="10"></asp:ListItem>
+                                <asp:ListItem Text="20" Value="20"></asp:ListItem>
+                                <asp:ListItem Text="30" Value="30"></asp:ListItem>
+                                <asp:ListItem Text="50" Value="50"></asp:ListItem>
+                                
+
+                            </asp:DropDownList>
+                        </div>
+                        <div class="div6">
                             <span>Počet dní v [Multi-den]:</span>
                             <asp:DropDownList ID="entity_scheduler_multidays" runat="server" AutoPostBack="true">
                                 <asp:ListItem Text="2" Value="2"></asp:ListItem>
@@ -428,7 +440,7 @@
                 <DayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <WeekView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" ShowInsertArea="true" />
                 <MultiDayView UserSelectable="true" DayStartTime="08:00" DayEndTime="22:00" NumberOfDays="10" />
-                <TimelineView UserSelectable="true" NumberOfSlots="7" />
+                <TimelineView UserSelectable="true" NumberOfSlots="14" ColumnHeaderDateFormat="ddd d.M." />
                 <AgendaView UserSelectable="true" NumberOfDays="20" />
                 <MonthView UserSelectable="true" VisibleAppointmentsPerDay="4" />
                 
