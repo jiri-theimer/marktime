@@ -356,6 +356,15 @@ Partial Public Class x18_record
     Protected WithEvents x18Icon As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''x18Icon32 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x18Icon32 As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''x18IsClueTip control.
     '''</summary>
     '''<remarks>

@@ -50,6 +50,15 @@ Partial Public Class x25_framework
     Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
+    '''lblVirtualCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblVirtualCount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''x18ID control.
     '''</summary>
     '''<remarks>

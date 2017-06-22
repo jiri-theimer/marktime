@@ -226,7 +226,7 @@ Public Class x25_framework
         InhaleMyQuery(mq)
         grid1.VirtualRowCount = Master.Factory.x25EntityField_ComboValueBL.GetVirtualCount(mq)
 
-
+        lblVirtualCount.Text = grid1.VirtualRowCount.ToString & "x"
 
         grid1.radGridOrig.CurrentPageIndex = 0
 
@@ -350,6 +350,9 @@ Public Class x25_framework
             .Visible = c.x18IsCalendar
             If .Visible Then .NavigateUrl = "x25_scheduler.aspx?x18id=" & Me.CurrentX18ID.ToString
         End With
+        If c.x18Icon32 <> "" Then
+            img1.ImageUrl = c.x18Icon32
+        End If
 
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(c)
         menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem

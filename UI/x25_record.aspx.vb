@@ -51,6 +51,7 @@ Public Class x25_record
                     Me.x23ID.SelectedValue = c.x23ID.ToString
 
                     .HeaderText = c.x18Name
+                    If c.x18Icon32 <> "" Then .HeaderIcon = c.x18Icon32
                     Me.x18Name.Text = c.x18Name
 
                     panColors.Visible = c.x18IsColors

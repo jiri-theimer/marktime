@@ -54,7 +54,10 @@
         If cRec Is Nothing Then Return
 
         Dim cX18 As BO.x18EntityCategory = Master.Factory.x18EntityCategoryBL.Load(Me.CurrentX18ID)
-
+        If cX18.x18Icon32 <> "" Then
+            menu1.FindItemByValue("begin").Controls.Clear()
+            menu1.FindItemByValue("begin").Controls.Add(New LiteralControl("<img src='" & cX18.x18Icon32 & "'/>"))
+        End If
         If cX18.b01ID <> 0 Then
             hidB01ID.Value = cX18.b01ID.ToString
             menu1.FindItemByValue("cmdWorkflow").Text = "Posunout stav/doplnit"

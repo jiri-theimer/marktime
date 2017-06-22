@@ -391,10 +391,18 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>Grafická ikona:</span>
+                                <span>Grafická ikona (16px):</span>
                             </td>
                             <td>
                                 <asp:TextBox ID="x18Icon" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Grafická ikona (32px):</span>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="x18Icon32" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>

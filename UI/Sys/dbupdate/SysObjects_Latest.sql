@@ -15129,6 +15129,76 @@ END CATCH
 
 GO
 
+----------P---------------x25_aftersave-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x25_aftersave') and type = 'P')
+ drop procedure x25_aftersave
+GO
+
+
+
+
+
+CREATE    PROCEDURE [dbo].[x25_aftersave]
+@x25id int
+,@j03id_sys int
+
+AS
+
+declare @x25code varchar(50),@x23id int,@x18id int,@x18EntryCodeFlag int,@x38id int,@count int
+
+select @x25code=a.x25Code,@x23id=a.x23ID,@x18id=x18.x18ID,@x18EntryCodeFlag=x18.x18EntryCodeFlag,@x38id=x18.x38ID
+from x25EntityField_ComboValue a INNER JOIN x23EntityField_Combo x23 ON a.x23ID=x23.x23ID
+INNER JOIN x18EntityCategory x18 ON x23.x23ID=x18.x23ID
+where a.x25ID=@x25id
+
+if @x18EntryCodeFlag=3 and @x25code is null
+begin	---automaticky generovat kód v rámci všech položek štítku
+ select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id
+
+ set @x25code=isnull(@count,0)+1
+
+ update x25EntityField_ComboValue set x25Code=@x25code WHERE x25ID=@x25id
+end
+
+if @x18EntryCodeFlag=4 and @x25code is null
+begin	---automaticky generovat kód v rámci projektu daného štítku
+ declare @p41id int,@x20id int
+ select @p41id=a.x19RecordPID,@x20id=b.x20ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x25ID=@x25id AND b.x29ID=141
+
+ if @p41id is not null and @x20id is not null
+ begin
+  select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id AND x25ID IN (select x25ID FROM x19EntityCategory_Binding WHERE x20ID=@x20id AND x19RecordPID=@p41id)
+
+  set @x25code=isnull(@count,0)+1
+
+  update x25EntityField_ComboValue set x25Code=@x25code WHERE x25ID=@x25id
+ end
+end
+
+
+
+if (left(@x25code,4)='TEMP' OR @x25code is null) AND @x38id is not null
+ begin
+ 
+
+  exec dbo.x38_get_freecode_proc @x38id,925,@x25id,0,1,@x25code OUTPUT
+
+  if @x25code<>''
+   UPDATE x25EntityField_ComboValue SET x25Code=@x25code WHERE x25ID=@x25id 
+ end 
+
+
+exec [x90_appendlog] 925,@x25id,@j03id_sys
+ 
+ 
+
+
+
+
+
+GO
+
 ----------P---------------x25_delete-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('x25_delete') and type = 'P')

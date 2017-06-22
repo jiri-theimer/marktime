@@ -9,12 +9,18 @@
     <script type="text/javascript">
 
         function hardrefresh(pid, flag) {            
-            if (flag = "x25-delete") {
+            if (flag == "x25-delete") {
                 window.open("x25_framework.aspx?x18id=<%=me.CurrentX18ID%>","_top");
                 return;
             }
+            if (flag == "x25-save") {
+                window.open("x25_framework.aspx?x18id=<%=me.CurrentX18ID%>&pid="+pid,"_top");
+                return;
+            }
+            
             if (flag != "x25-save") {
                 pid=<%=Master.DataPID%>;
+                
             }
 
             location.replace("x25_framework_detail.aspx?x18id=<%=me.CurrentX18ID%>&pid="+pid);

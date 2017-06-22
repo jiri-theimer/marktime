@@ -239,7 +239,9 @@
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/label_32.png" />
                 </div>
-
+                <div class="commandcell" style="min-width:25px;text-align:center;">
+                    <asp:Label ID="lblVirtualCount" runat="server" ToolTip="Počet záznamů v aktuálním přehledu"></asp:Label>
+                </div>
                 <div class="commandcell">
                     <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px; " ToolTip="Štítek"></asp:DropDownList>
 

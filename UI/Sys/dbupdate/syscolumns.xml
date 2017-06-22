@@ -83402,13 +83402,13 @@
     <TableName>x18EntityCategory</TableName>
   </Table>
   <Table>
-    <name>x18Name</name>
+    <name>x38ID</name>
     <id>1470628282</id>
-    <xtype>231</xtype>
-    <typestat>2</typestat>
-    <xusertype>231</xusertype>
-    <length>255</length>
-    <xprec>0</xprec>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
     <xscale>0</xscale>
     <colid>5</colid>
     <xoffset>0</xoffset>
@@ -83420,6 +83420,39 @@
     <number>0</number>
     <colorder>5</colorder>
     <offset>-4</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>x18EntityCategory</TableName>
+  </Table>
+  <Table>
+    <name>x18Name</name>
+    <id>1470628282</id>
+    <xtype>231</xtype>
+    <typestat>2</typestat>
+    <xusertype>231</xusertype>
+    <length>255</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>6</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>6</colorder>
+    <offset>-5</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -83443,7 +83476,7 @@
     <length>100</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>6</colid>
+    <colid>7</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83451,8 +83484,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>6</colorder>
-    <offset>-5</offset>
+    <colorder>7</colorder>
+    <offset>-6</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -83476,7 +83509,7 @@
     <length>4</length>
     <xprec>10</xprec>
     <xscale>0</xscale>
-    <colid>7</colid>
+    <colid>8</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83484,7 +83517,7 @@
     <cdefault>1502628396</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>7</colorder>
+    <colorder>8</colorder>
     <offset>6</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -83509,7 +83542,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>8</colid>
+    <colid>9</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83517,7 +83550,7 @@
     <cdefault>1518628453</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>8</colorder>
+    <colorder>9</colorder>
     <offset>10</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -83541,7 +83574,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>9</colid>
+    <colid>10</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83549,7 +83582,7 @@
     <cdefault>1534628510</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>9</colorder>
+    <colorder>10</colorder>
     <offset>10</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -83573,7 +83606,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>10</colid>
+    <colid>11</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83581,8 +83614,8 @@
     <cdefault>1550628567</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>10</colorder>
-    <offset>-6</offset>
+    <colorder>11</colorder>
+    <offset>-7</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -83606,7 +83639,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>11</colid>
+    <colid>12</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83614,8 +83647,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>11</colorder>
-    <offset>-7</offset>
+    <colorder>12</colorder>
+    <offset>-8</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -83639,7 +83672,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>12</colid>
+    <colid>13</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83647,8 +83680,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>12</colorder>
-    <offset>-8</offset>
+    <colorder>13</colorder>
+    <offset>-9</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -83672,7 +83705,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>13</colid>
+    <colid>14</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83680,8 +83713,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>13</colorder>
-    <offset>-9</offset>
+    <colorder>14</colorder>
+    <offset>-10</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -83705,7 +83738,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>14</colid>
+    <colid>15</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83713,8 +83746,8 @@
     <cdefault>1566628624</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>14</colorder>
-    <offset>-10</offset>
+    <colorder>15</colorder>
+    <offset>-11</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -83738,7 +83771,7 @@
     <length>8</length>
     <xprec>23</xprec>
     <xscale>3</xscale>
-    <colid>15</colid>
+    <colid>16</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83746,8 +83779,8 @@
     <cdefault>1582628681</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>15</colorder>
-    <offset>-11</offset>
+    <colorder>16</colorder>
+    <offset>-12</offset>
     <collationid>0</collationid>
     <language>0</language>
     <status>8</status>
@@ -83771,7 +83804,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>16</colid>
+    <colid>17</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83779,8 +83812,41 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>16</colorder>
-    <offset>-12</offset>
+    <colorder>17</colorder>
+    <offset>-13</offset>
+    <collationid>53252</collationid>
+    <language>0</language>
+    <status>24</status>
+    <type>39</type>
+    <usertype>2</usertype>
+    <prec>50</prec>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <collation>Czech_CI_AS</collation>
+    <tdscollation>BQTQAAA=</tdscollation>
+    <type_name>varchar</type_name>
+    <TableName>x18EntityCategory</TableName>
+  </Table>
+  <Table>
+    <name>x18Icon32</name>
+    <id>1470628282</id>
+    <xtype>167</xtype>
+    <typestat>2</typestat>
+    <xusertype>167</xusertype>
+    <length>50</length>
+    <xprec>0</xprec>
+    <xscale>0</xscale>
+    <colid>18</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>18</colorder>
+    <offset>-14</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -83804,7 +83870,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>17</colid>
+    <colid>19</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83812,7 +83878,7 @@
     <cdefault>1598628738</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>17</colorder>
+    <colorder>19</colorder>
     <offset>10</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -83836,7 +83902,7 @@
     <length>255</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>18</colid>
+    <colid>20</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -83844,8 +83910,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>18</colorder>
-    <offset>-13</offset>
+    <colorder>20</colorder>
+    <offset>-15</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -83862,72 +83928,6 @@
   </Table>
   <Table>
     <name>x18GridColsFlag</name>
-    <id>1470628282</id>
-    <xtype>56</xtype>
-    <typestat>0</typestat>
-    <xusertype>56</xusertype>
-    <length>4</length>
-    <xprec>10</xprec>
-    <xscale>0</xscale>
-    <colid>19</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>19</colorder>
-    <offset>-14</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>38</type>
-    <usertype>7</usertype>
-    <prec>10</prec>
-    <scale>0</scale>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>int</type_name>
-    <TableName>x18EntityCategory</TableName>
-  </Table>
-  <Table>
-    <name>x18EntryNameFlag</name>
-    <id>1470628282</id>
-    <xtype>56</xtype>
-    <typestat>0</typestat>
-    <xusertype>56</xusertype>
-    <length>4</length>
-    <xprec>10</xprec>
-    <xscale>0</xscale>
-    <colid>20</colid>
-    <xoffset>0</xoffset>
-    <bitpos>0</bitpos>
-    <reserved>0</reserved>
-    <colstat>0</colstat>
-    <cdefault>0</cdefault>
-    <domain>0</domain>
-    <number>0</number>
-    <colorder>20</colorder>
-    <offset>-15</offset>
-    <collationid>0</collationid>
-    <language>0</language>
-    <status>8</status>
-    <type>38</type>
-    <usertype>7</usertype>
-    <prec>10</prec>
-    <scale>0</scale>
-    <iscomputed>0</iscomputed>
-    <isoutparam>0</isoutparam>
-    <isnullable>1</isnullable>
-    <tdscollation>AAAAAAA=</tdscollation>
-    <type_name>int</type_name>
-    <TableName>x18EntityCategory</TableName>
-  </Table>
-  <Table>
-    <name>x18EntryCodeFlag</name>
     <id>1470628282</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -83960,7 +83960,7 @@
     <TableName>x18EntityCategory</TableName>
   </Table>
   <Table>
-    <name>x18EntryOrdinaryFlag</name>
+    <name>x18EntryNameFlag</name>
     <id>1470628282</id>
     <xtype>56</xtype>
     <typestat>0</typestat>
@@ -83993,6 +83993,72 @@
     <TableName>x18EntityCategory</TableName>
   </Table>
   <Table>
+    <name>x18EntryCodeFlag</name>
+    <id>1470628282</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>23</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>23</colorder>
+    <offset>-18</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>x18EntityCategory</TableName>
+  </Table>
+  <Table>
+    <name>x18EntryOrdinaryFlag</name>
+    <id>1470628282</id>
+    <xtype>56</xtype>
+    <typestat>0</typestat>
+    <xusertype>56</xusertype>
+    <length>4</length>
+    <xprec>10</xprec>
+    <xscale>0</xscale>
+    <colid>24</colid>
+    <xoffset>0</xoffset>
+    <bitpos>0</bitpos>
+    <reserved>0</reserved>
+    <colstat>0</colstat>
+    <cdefault>0</cdefault>
+    <domain>0</domain>
+    <number>0</number>
+    <colorder>24</colorder>
+    <offset>-19</offset>
+    <collationid>0</collationid>
+    <language>0</language>
+    <status>8</status>
+    <type>38</type>
+    <usertype>7</usertype>
+    <prec>10</prec>
+    <scale>0</scale>
+    <iscomputed>0</iscomputed>
+    <isoutparam>0</isoutparam>
+    <isnullable>1</isnullable>
+    <tdscollation>AAAAAAA=</tdscollation>
+    <type_name>int</type_name>
+    <TableName>x18EntityCategory</TableName>
+  </Table>
+  <Table>
     <name>x18IsCalendar</name>
     <id>1470628282</id>
     <xtype>104</xtype>
@@ -84001,7 +84067,7 @@
     <length>1</length>
     <xprec>1</xprec>
     <xscale>0</xscale>
-    <colid>23</colid>
+    <colid>25</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -84009,7 +84075,7 @@
     <cdefault>1614628795</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>23</colorder>
+    <colorder>25</colorder>
     <offset>10</offset>
     <collationid>0</collationid>
     <language>0</language>
@@ -84033,7 +84099,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>24</colid>
+    <colid>26</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -84041,8 +84107,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>24</colorder>
-    <offset>-18</offset>
+    <colorder>26</colorder>
+    <offset>-20</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>
@@ -84066,7 +84132,7 @@
     <length>50</length>
     <xprec>0</xprec>
     <xscale>0</xscale>
-    <colid>25</colid>
+    <colid>27</colid>
     <xoffset>0</xoffset>
     <bitpos>0</bitpos>
     <reserved>0</reserved>
@@ -84074,8 +84140,8 @@
     <cdefault>0</cdefault>
     <domain>0</domain>
     <number>0</number>
-    <colorder>25</colorder>
-    <offset>-19</offset>
+    <colorder>27</colorder>
+    <offset>-21</offset>
     <collationid>53252</collationid>
     <language>0</language>
     <status>24</status>

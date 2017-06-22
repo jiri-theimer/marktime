@@ -73,6 +73,7 @@
             Me.x18IsManyItems.Checked = .x18IsManyItems
             Me.x18IsClueTip.Checked = .x18IsClueTip
             Me.x18Icon.Text = .x18Icon
+            Me.x18Icon32.Text = .x18Icon32
             Me.x18ReportCodes.Text = .x18ReportCodes
             Me.x18IsCalendar.Checked = .x18IsCalendar
 
@@ -218,6 +219,7 @@
             cRec.x18Ordinary = BO.BAS.IsNullInt(Me.x18Ordinary.Value)
             cRec.x23ID = Me.CurrentX23ID
             cRec.x18Icon = Me.x18Icon.Text
+            cRec.x18Icon32 = Me.x18Icon32.Text
             cRec.x18IsClueTip = Me.x18IsClueTip.Checked
             cRec.x18ReportCodes = Me.x18ReportCodes.Text
             cRec.b01ID = BO.BAS.IsNullInt(Me.b01ID.SelectedValue)

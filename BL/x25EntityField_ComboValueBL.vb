@@ -43,6 +43,16 @@ Class x25EntityField_ComboValueBL
             ''    _Error = "Combo seznam [" & cX23.x23Name & "] má externí datový zdroj combo položek." : Return False
             ''End If
         End With
+        If Not x20IDs Is Nothing And intX18ID <> 0 Then   'otestovat vyplnění povinných vazeb
+            Dim lisAllRequiredX20 As IEnumerable(Of BO.x20_join_x18) = Factory.x18EntityCategoryBL.GetList_x20_join_x18(intX18ID).Where(Function(p) p.x20IsEntryRequired = True)   'povinné vazby
+            For Each intX20ID As Integer In x20IDs
+                Dim c As BO.x20_join_x18 = lisAllRequiredX20.First(Function(p) p.x20ID = intX20ID)
+                If Not c Is Nothing And lisX19.Where(Function(p) p.x20ID = intX20ID).Count = 0 Then
+                    _Error = String.Format("V záznamu [{0}] chybí povinná vazba [{1}].", c.x18Name, c.BindName)
+                    Return False
+                End If
+            Next
+        End If
 
         ''Dim cRecOld As BO.x25EntityField_ComboValue = Nothing
         ''If cRec.PID <> 0 Then cRecOld = Load(cRec.PID)

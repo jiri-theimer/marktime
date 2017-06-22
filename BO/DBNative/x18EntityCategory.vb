@@ -40,6 +40,7 @@ Public Class x18EntityCategory
     Public Property x18IsColors As Boolean
     Public Property x18IsManyItems As Boolean
     Public Property x18Icon As String
+    Public Property x18Icon32 As String
     Public Property x18IsClueTip As Boolean
     Public Property x18ReportCodes As String
     Public Property x18GridColsFlag As x18GridColsENUM = x18GridColsENUM.NameAndCode
