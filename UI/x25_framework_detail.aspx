@@ -110,8 +110,10 @@
         <uc:entityrole_assign_inline ID="roles1" runat="server" EntityX29ID="x25EntityField_ComboValue" NoDataText=""></uc:entityrole_assign_inline>
     </div>
 
-    <div style="clear: both;"></div>
-    <uc:b07_list ID="comments1" runat="server" JS_Create="b07_create()" JS_Reaction="b07_reaction" ShowInsertButton="false" />
+    <div style="clear: both;margin-top:20px;">
+        <uc:b07_list ID="comments1" runat="server" JS_Create="b07_create()" JS_Reaction="b07_reaction" ShowInsertButton="false" />
+    </div>
+    
 
 
     <asp:HiddenField ID="hidX18ID" runat="server" />

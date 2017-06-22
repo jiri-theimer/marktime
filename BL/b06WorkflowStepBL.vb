@@ -397,8 +397,16 @@ Class b06WorkflowStepBL
                     mes.SenderName = "MARKTIME robot"
 
                     mes.Body = cMerge.MergeContent(objects, cB65.b65MessageBody, strLinkUrl)
-                    If mes.Body.IndexOf("#RolesInline#") > 0 And x29id = BO.x29IdEnum.p56Task Then
-                        mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
+                    If mes.Body.IndexOf("#RolesInline#") > 0 Then
+                        Select Case x29id
+                            Case BO.x29IdEnum.p56Task
+                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p56TaskBL.GetRolesInline(intRecordPID))
+                            Case BO.x29IdEnum.x25EntityField_ComboValue
+                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.x25EntityField_ComboValueBL.GetRolesInline(intRecordPID))
+                            Case BO.x29IdEnum.p41Project
+                                mes.Body = Replace(mes.Body, "#RolesInline#", Factory.p41ProjectBL.GetRolesInline(intRecordPID))
+                        End Select
+
                     End If
                     mes.Body = Replace(mes.Body, "#comment#", strComment, , , CompareMethod.Text)
 

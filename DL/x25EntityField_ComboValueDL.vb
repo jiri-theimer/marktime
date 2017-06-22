@@ -251,4 +251,7 @@
         Dim ds As DataSet = _cDB.GetDataSet(s, , pars.Convert2PluginDbParameters())
         If Not ds Is Nothing Then Return ds.Tables(0) Else Return Nothing
     End Function
+    Public Function GetRolesInline(intPID As Integer) As String
+        Return _cDB.GetValueFromSQL("SELECT dbo.x25_getroles_inline(" & intPID.ToString & ") as Value")
+    End Function
 End Class

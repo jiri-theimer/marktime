@@ -8,6 +8,7 @@
     Function GetDataTable4Grid(myQuery As BO.myQueryX25) As DataTable
     Function GetVirtualCount(myQuery As BO.myQueryX25) As Integer
     Sub SetCalendarDateFields(strCalendarFieldStart As String, strCalendarFieldEnd As String)
+    Function GetRolesInline(intPID As Integer) As String
 End Interface
 Class x25EntityField_ComboValueBL
     Inherits BLMother
@@ -29,10 +30,19 @@ Class x25EntityField_ComboValueBL
     Public Function Save(cRec As BO.x25EntityField_ComboValue, intX18ID As Integer, lisX69 As List(Of BO.x69EntityRole_Assign), lisX19 As List(Of BO.x19EntityCategory_Binding), x20IDs As List(Of Integer)) As Boolean Implements Ix25EntityField_ComboValueBL.Save
         With cRec
             If .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
-            If Trim(.x25Name) = "" And intX18ID <> 0 Then
+            If intX18ID <> 0 Then
                 Dim cX18 As BO.x18EntityCategory = Factory.x18EntityCategoryBL.Load(intX18ID)
-                If cX18.x18EntryNameFlag = BO.x18EntryNameENUM.Manual Then
+                If Trim(.x25Name) = "" And cX18.x18EntryNameFlag = BO.x18EntryNameENUM.Manual Then
                     _Error = "Chybí název." : Return False
+                End If
+                If cX18.x18IsCalendar And cX18.x18CalendarFieldStart <> "" And cX18.x18CalendarFieldEnd <> "" Then
+                    Dim d1 As Date? = BO.BAS.GetPropertyValue(cRec, cX18.x18CalendarFieldStart), d2 As Date? = BO.BAS.GetPropertyValue(cRec, cX18.x18CalendarFieldEnd)
+                    If d1 Is Nothing Or d2 Is Nothing Then
+                        _Error = "Tento záznam navíc funguje jako událost v kalendáři. Rozsah datumů události není zadán správně." : Return False
+                    End If
+                    If d1 > d2 Then
+                        _Error = "Tento záznam navíc funguje jako událost v kalendáři. Datum začátku události nesmí být větší než datum konce." : Return False
+                    End If
                 End If
             End If
 
@@ -119,4 +129,7 @@ Class x25EntityField_ComboValueBL
         _cDL.CalendarFieldStart = strCalendarFieldStart
         _cDL.CalendarFieldEnd = strCalendarFieldEnd
     End Sub
+    Public Function GetRolesInline(intPID As Integer) As String Implements Ix25EntityField_ComboValueBL.GetRolesInline
+        Return _cDL.GetRolesInline(intPID)
+    End Function
 End Class

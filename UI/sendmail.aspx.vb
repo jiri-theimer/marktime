@@ -416,6 +416,11 @@
                         If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
                             c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", Master.Factory.p56TaskBL.GetRolesInline(Master.DataPID))
                         End If
+                    Case BO.x29IdEnum.x25EntityField_ComboValue
+                        objects.Add(Master.Factory.x25EntityField_ComboValueBL.Load(Master.DataPID))
+                        If c.j61PlainTextBody.IndexOf("#RolesInline#") > 0 Then
+                            c.j61PlainTextBody = Replace(c.j61PlainTextBody, "#RolesInline#", Master.Factory.x25EntityField_ComboValueBL.GetRolesInline(Master.DataPID))
+                        End If
                 End Select
                 c.j61PlainTextBody = cM.MergeContent(objects, c.j61PlainTextBody, strLINK)
                 c.j61MailSubject = cM.MergeContent(objects, c.j61MailSubject, strLINK)
