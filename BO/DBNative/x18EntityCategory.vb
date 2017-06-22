@@ -29,6 +29,7 @@ Public Class x18EntityCategory
     Public Property x23ID As Integer
     Public Property b01ID As Integer
     Public Property j02ID_Owner As Integer
+    Public Property x38ID As Integer
     Public Property x18Name As String
     Public Property x18NameShort As String
 

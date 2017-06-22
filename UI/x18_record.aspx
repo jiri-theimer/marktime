@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span>Zkrácený název:</span>
+                        <span class="lbl">Zkrácený název:</span>
                     </td>
                     <td>
                         <asp:TextBox ID="x18NameShort" runat="server"></asp:TextBox>
@@ -328,8 +328,8 @@
                                 <asp:DropDownList ID="x18EntryCodeFlag" runat="server">
                                     <asp:ListItem Text="Ručně" Value="1"></asp:ListItem>
                                     <asp:ListItem Text="Nepoužívat" Value="2"></asp:ListItem>
-                                    <asp:ListItem Text="Automaticky v rámci všech položek štítku" Value="3"></asp:ListItem>
-                                    <asp:ListItem Text="Automaticky v rámci projektu" Value="3"></asp:ListItem>
+                                    <asp:ListItem Text="Generovat automaticky v rámci všech položek štítku" Value="3"></asp:ListItem>
+                                    <asp:ListItem Text="Generovat automaticky v rámci projektu" Value="4"></asp:ListItem>
                                 </asp:DropDownList>
                             </td>
                         </tr>

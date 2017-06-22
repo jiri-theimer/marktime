@@ -39,65 +39,79 @@
         Return _cDB.RunSP("x25_delete", pars)
 
     End Function
-    Public Function Save(cRec As BO.x25EntityField_ComboValue, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
-        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
-        If cRec.PID <> 0 Then
-            bolINSERT = False
-            strW = "x25ID=@pid"
-            pars.Add("pid", cRec.PID)
-        End If
-        With cRec
-            pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
-            pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
-            pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
-            pars.Add("x25Code", .x25Code, DbType.String)
-            pars.Add("x25ForeColor", .x25ForeColor, DbType.String)
-            pars.Add("x25BackColor", .x25BackColor, DbType.String)
-            pars.Add("x25Ordinary", .x25Ordinary, DbType.Int32)
-            If .x25Ordinary > 0 Then
-                Dim cAra As New BO.clsArabicNumber
-                pars.Add("x25ArabicCode", cAra.NumberToRoman(.x25Ordinary), DbType.String)
-            Else
-                pars.Add("x25ArabicCode", "", DbType.String)
-            End If
-            pars.Add("x25ValidFrom", .ValidFrom, DbType.DateTime)
-            pars.Add("x25ValidUntil", .ValidUntil, DbType.DateTime)
-
-            pars.Add("x25FreeText01", .x25FreeText01, DbType.String, , , True, "Text 1")
-            pars.Add("x25FreeText02", .x25FreeText02, DbType.String, , , True, "Text 2")
-            pars.Add("x25FreeText03", .x25FreeText03, DbType.String, , , True, "Text 3")
-            pars.Add("x25FreeText04", .x25FreeText04, DbType.String, , , True, "Text 4")
-            pars.Add("x25FreeText05", .x25FreeText05, DbType.String, , , True, "Text 5")
-            pars.Add("x25BigText", .x25BigText, DbType.String, , , True, "Podrobný popis")
-
-            pars.Add("x25FreeNumber01", .x25FreeNumber01, DbType.Double)
-            pars.Add("x25FreeNumber02", .x25FreeNumber02, DbType.Double)
-            pars.Add("x25FreeNumber03", .x25FreeNumber03, DbType.Double)
-            pars.Add("x25FreeNumber04", .x25FreeNumber04, DbType.Double)
-            pars.Add("x25FreeNumber05", .x25FreeNumber05, DbType.Double)
-            pars.Add("x25FreeDate01", .x25FreeDate01, DbType.DateTime)
-            pars.Add("x25FreeDate02", .x25FreeDate02, DbType.DateTime)
-            pars.Add("x25FreeDate03", .x25FreeDate03, DbType.DateTime)
-            pars.Add("x25FreeDate04", .x25FreeDate04, DbType.DateTime)
-            pars.Add("x25FreeDate05", .x25FreeDate05, DbType.DateTime)
-            pars.Add("x25FreeBoolean01", .x25FreeBoolean01, DbType.Boolean)
-            pars.Add("x25FreeBoolean02", .x25FreeBoolean02, DbType.Boolean)
-            pars.Add("x25FreeBoolean03", .x25FreeBoolean03, DbType.Boolean)
-            pars.Add("x25FreeBoolean04", .x25FreeBoolean04, DbType.Boolean)
-            pars.Add("x25FreeBoolean05", .x25FreeBoolean05, DbType.Boolean)
+    Public Function RunSp_AfterSave(intPID As Integer) As Boolean
+        Dim pars As New DbParameters()
+        With pars
+            .Add("x25id", intPID, DbType.Int32)
+            .Add("j03id_sys", _curUser.PID, DbType.Int32)
         End With
-
-        If _cDB.SaveRecord("x25EntityField_ComboValue", pars, bolINSERT, strW, True, _curUser.j03Login) Then
-            Dim intX25ID As Integer = _cDB.LastSavedRecordPID
-            If Not lisX69 Is Nothing Then   'přiřazení rolí klienta
-                bas.SaveX69(_cDB, BO.x29IdEnum.x25EntityField_ComboValue, intX25ID, lisX69, bolINSERT)
-            End If
+        If _cDB.RunSP("x25_aftersave", pars) Then
             Return True
-
         Else
             Return False
         End If
+    End Function
+    Public Function Save(cRec As BO.x25EntityField_ComboValue, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
+        Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
+            Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
+            If cRec.PID <> 0 Then
+                bolINSERT = False
+                strW = "x25ID=@pid"
+                pars.Add("pid", cRec.PID)
+            End If
+            With cRec
+                pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
+                pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
+                pars.Add("x25Name", .x25Name, DbType.String, , , True, "Název")
+                pars.Add("x25Code", .x25Code, DbType.String)
+                pars.Add("x25ForeColor", .x25ForeColor, DbType.String)
+                pars.Add("x25BackColor", .x25BackColor, DbType.String)
+                pars.Add("x25Ordinary", .x25Ordinary, DbType.Int32)
+                If .x25Ordinary > 0 Then
+                    Dim cAra As New BO.clsArabicNumber
+                    pars.Add("x25ArabicCode", cAra.NumberToRoman(.x25Ordinary), DbType.String)
+                Else
+                    pars.Add("x25ArabicCode", "", DbType.String)
+                End If
+                pars.Add("x25ValidFrom", .ValidFrom, DbType.DateTime)
+                pars.Add("x25ValidUntil", .ValidUntil, DbType.DateTime)
 
+                pars.Add("x25FreeText01", .x25FreeText01, DbType.String, , , True, "Text 1")
+                pars.Add("x25FreeText02", .x25FreeText02, DbType.String, , , True, "Text 2")
+                pars.Add("x25FreeText03", .x25FreeText03, DbType.String, , , True, "Text 3")
+                pars.Add("x25FreeText04", .x25FreeText04, DbType.String, , , True, "Text 4")
+                pars.Add("x25FreeText05", .x25FreeText05, DbType.String, , , True, "Text 5")
+                pars.Add("x25BigText", .x25BigText, DbType.String, , , True, "Podrobný popis")
+
+                pars.Add("x25FreeNumber01", .x25FreeNumber01, DbType.Double)
+                pars.Add("x25FreeNumber02", .x25FreeNumber02, DbType.Double)
+                pars.Add("x25FreeNumber03", .x25FreeNumber03, DbType.Double)
+                pars.Add("x25FreeNumber04", .x25FreeNumber04, DbType.Double)
+                pars.Add("x25FreeNumber05", .x25FreeNumber05, DbType.Double)
+                pars.Add("x25FreeDate01", .x25FreeDate01, DbType.DateTime)
+                pars.Add("x25FreeDate02", .x25FreeDate02, DbType.DateTime)
+                pars.Add("x25FreeDate03", .x25FreeDate03, DbType.DateTime)
+                pars.Add("x25FreeDate04", .x25FreeDate04, DbType.DateTime)
+                pars.Add("x25FreeDate05", .x25FreeDate05, DbType.DateTime)
+                pars.Add("x25FreeBoolean01", .x25FreeBoolean01, DbType.Boolean)
+                pars.Add("x25FreeBoolean02", .x25FreeBoolean02, DbType.Boolean)
+                pars.Add("x25FreeBoolean03", .x25FreeBoolean03, DbType.Boolean)
+                pars.Add("x25FreeBoolean04", .x25FreeBoolean04, DbType.Boolean)
+                pars.Add("x25FreeBoolean05", .x25FreeBoolean05, DbType.Boolean)
+            End With
+
+            If _cDB.SaveRecord("x25EntityField_ComboValue", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+                Dim intX25ID As Integer = _cDB.LastSavedRecordPID
+                If Not lisX69 Is Nothing Then   'přiřazení rolí v samotném záznamu štítku
+                    bas.SaveX69(_cDB, BO.x29IdEnum.x25EntityField_ComboValue, intX25ID, lisX69, bolINSERT)
+                End If
+                sc.Complete()
+                Return True
+
+            Else
+                Return False
+            End If
+        End Using
     End Function
     Public Sub UpdateComboItemTextInData(cX28_ComboField As BO.x28EntityField, cX25 As BO.x25EntityField_ComboValue)
         Dim strTab As String = ""

@@ -93,6 +93,7 @@
                 <asp:Label ID="lblx25Code" runat="server" CssClass="lbl" Text="Kód:"></asp:Label></td>
             <td>
                 <asp:TextBox ID="x25Code" runat="server"></asp:TextBox>
+                <asp:Button ID="cmdChangeCode" runat="server" CssClass="cmd" Text="Změnit kód ručně" Visible="false" />
             </td>
         </tr>
 

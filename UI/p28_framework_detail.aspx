@@ -208,7 +208,7 @@
             <span>Fakturační poznámka klienta</span>
         </div>
         <div class="content" style="background-color:#ffffcc;">
-            <asp:Label ID="p28BillingMemo" runat="server"  Font-Italic="true" Font-Size="Larger"></asp:Label>
+            <asp:Label ID="p28BillingMemo" runat="server" ForeColor="Black"  Font-Italic="true" Font-Size="Larger"></asp:Label>
         </div>
     </asp:Panel>
 

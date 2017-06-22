@@ -54,6 +54,8 @@ Class x25EntityField_ComboValueBL
                 Factory.x18EntityCategoryBL.SaveX19Binding(intX25ID, lisX19, x20IDs)
             End If
 
+            _cDL.RunSp_AfterSave(intX25ID)
+
             Me.RaiseAppEvent_TailoringAfterSave(intX25ID, "x25_aftersave")
             If intX18ID <> 0 Then
                 Dim cX18 As BO.x18EntityCategory = Me.Factory.x18EntityCategoryBL.Load(intX18ID)

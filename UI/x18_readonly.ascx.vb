@@ -43,6 +43,7 @@
             Dim c As New _qry
             c.x18ID = rec.x18ID
             c.x18Name = rec.x18Name
+
             c.x18Icon = rec.x18Icon
             If lisX20X18.Where(Function(p) p.x18ID = rec.x18ID And p.x20EntityPageFlag = BO.x20EntityPageENUM.HyperlinkPlusNew).Count > 0 Then
                 c.ShowAddNewLink = True

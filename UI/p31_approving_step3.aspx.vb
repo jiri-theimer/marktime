@@ -107,7 +107,7 @@ Public Class p31_approving_step3
         bm1.RefreshData(Master.Factory, Me.CurrentMasterPrefix, BO.BAS.IsNullInt(Me.CurrentMasterPID))
         bm1.HideTogleButton()
         If Not bm1.IsEmpty Then
-            RadTabStrip1.FindTabByValue("memo").ForeColor = Drawing.Color.Blue
+            RadTabStrip1.FindTabByValue("memo").BackColor = System.Drawing.Color.FromArgb(255, 255, 204)
             RadTabStrip1.FindTabByValue("memo").Font.Bold = True
             ''Master.RenameToolbarButton("o23", "<strong style='color:blue;'>Fakturační poznámka</strong>")
             ''If bm1.o23Rows() > 0 Then

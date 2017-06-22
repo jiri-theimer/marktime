@@ -296,7 +296,7 @@
             <span>Fakturační poznámka projektu</span>
         </div>
         <div class="content" style="background-color:#ffffcc;" >
-            <asp:Label ID="p41BillingMemo" runat="server" Font-Italic="true" Font-Size="Larger" ></asp:Label>
+            <asp:Label ID="p41BillingMemo" runat="server" ForeColor="Black" Font-Italic="true" Font-Size="Larger" ></asp:Label>
         </div>
     </asp:Panel>
     <uc:alertbox ID="alert1" runat="server"></uc:alertbox>

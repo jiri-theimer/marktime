@@ -279,8 +279,12 @@ Public Class x25_record
     Private Sub x25_record_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Master.DataPID <> 0 Then
             Me.x23ID.Enabled = False
+            If Me.x25Code.Visible Then
+                cmdChangeCode.Visible = Not Me.x25Code.Enabled
+            End If
         Else
             Me.x23ID.Enabled = True
+            cmdChangeCode.Visible = False
         End If
     End Sub
 
@@ -578,5 +582,11 @@ Public Class x25_record
             .ToolTip = cRec.p85FreeText01
         End With
         _loadingLastX20ID = cRec.p85OtherKey2
+    End Sub
+
+    Private Sub cmdChangeCode_Click(sender As Object, e As EventArgs) Handles cmdChangeCode.Click
+        Me.x25Code.Enabled = True
+        Me.x25Code.Focus()
+        Master.Notify("Hodnota kódu se uloží až po uložení celého záznamu tlačítkem [Uložit změny].")
     End Sub
 End Class

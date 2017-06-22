@@ -112,6 +112,7 @@
             pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
             pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
             pars.Add("b01ID", BO.BAS.IsNullDBKey(.b01ID), DbType.Int32)
+            pars.Add("x38ID", BO.BAS.IsNullDBKey(.x38ID), DbType.Int32)
             pars.Add("x18Icon", .x18Icon, DbType.String)
             pars.Add("x18IsClueTip", .x18IsClueTip, DbType.Boolean)
             pars.Add("x18ReportCodes", .x18ReportCodes, DbType.String)
@@ -304,7 +305,7 @@
         Return _cDB.GetList(Of BO.x16EntityCategory_FieldSetting)("SELECT * FROM x16EntityCategory_FieldSetting WHERE x18ID=@pid ORDER BY x16Ordinary", New With {.pid = intX18ID})
     End Function
     Private Function GetSQLPart1_x19(bolInhaleRecordAlias As Boolean) As String
-        Dim s As String = "SELECT a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x20.x18ID as _x18ID,x18.x18Name as _x18Name,x18.x18Icon as _x18Icon,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor,x20.x29ID as _x29ID,x20.x20Name as _x20Name,x20.x20IsMultiselect as _x20IsMultiselect,x20.x20EntityPageFlag as _x20EntityPageFlag"
+        Dim s As String = "SELECT a.*," & bas.RecTail("x19", "a") & ",x25.x25Name as _x25Name,x25.x25Name+isnull(' ('+x25.x25Code+')','') as _NameWithCode,x20.x18ID as _x18ID,isnull(x18.x18NameShort,x18.x18Name) as _x18Name,x18.x18Icon as _x18Icon,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor,x20.x29ID as _x29ID,x20.x20Name as _x20Name,x20.x20IsMultiselect as _x20IsMultiselect,x20.x20EntityPageFlag as _x20EntityPageFlag"
         If bolInhaleRecordAlias Then
             s += ",dbo.GetObjectAlias(convert(varchar(10),x20.x29ID),a.x19RecordPID) as _RecordAlias"
         End If
@@ -326,7 +327,7 @@
         Else
             pars.Add("guid", strTempGUID, DbType.String)
             Dim s As String = "select p85.p85ID as _pid,p85.p85OtherKey1 as x18ID,p85.p85OtherKey2 as x25ID,p85.p85OtherKey3 as x19RecordPID"
-            s += ",x25.x25Name as _x25Name,x18.x18Name as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor"
+            s += ",x25.x25Name as _x25Name,isnull(x18.x18NameShort,x18.x18Name) as _x18Name,x25.x25ForeColor as _ForeColor,x25.x25BackColor as _BackColor"
             s += " from p85TempBox p85 INNER JOIN x18EntityCategory x18 ON p85.p85OtherKey1=x18.x18ID INNER JOIN x25EntityField_ComboValue x25 ON p85.p85OtherKey2=x25.x25ID"
             s += " WHERE p85.p85GUID=@guid AND p85.p85Prefix='x19' AND p85.p85OtherKey3=@recordpid ORDER BY x18.x18Ordinary,x18.x18ID"
             Return _cDB.GetList(Of BO.x19EntityCategory_Binding)(s, pars)
