@@ -208,6 +208,8 @@
             c.x20EntityPageFlag = cTMP.p85OtherKey6
             c.x20IsClosed = cTMP.p85FreeBoolean03
             c.x20Ordinary = cTMP.p85FreeNumber01
+            c.x20EntityTypePID = cTMP.p85OtherKey7
+            c.x29ID_EntityType = cTMP.p85OtherKey8
             lisX20.Add(c)
         Next
 
@@ -269,6 +271,11 @@
         Me.lblx18CalendarFieldStart.Visible = Me.x18IsCalendar.Checked
         Me.x18CalendarFieldStart.Visible = Me.x18IsCalendar.Checked
         Me.x18CalendarFieldEnd.Visible = Me.x18IsCalendar.Checked
+        If Me.x29ID_addX20.SelectedValue = "" Then
+            Me.x20EntityTypePID_addX20.Visible = False
+        Else
+            Me.x20EntityTypePID_addX20.Visible = True
+        End If
     End Sub
 
     'Private Sub Handle_ChangeX29ID()
@@ -434,7 +441,11 @@
             CType(e.Item.FindControl("x20IsClosed"), CheckBox).Checked = .p85FreeBoolean03
             CType(e.Item.FindControl("x20Ordinary"), Telerik.Web.UI.RadNumericTextBox).Value = .p85FreeNumber01
 
-
+            CType(e.Item.FindControl("x20EntityTypePID"), HiddenField).Value = .p85OtherKey7.ToString
+            CType(e.Item.FindControl("x29ID_EntityType"), HiddenField).Value = .p85OtherKey8.ToString
+            If .p85OtherKey7 <> 0 And .p85OtherKey8 <> 0 Then
+                CType(e.Item.FindControl("x20EntityTypePID_Alias"), Label).Text = "<img src='Images/query.png'/>" & Master.Factory.GetRecordCaption(.p85OtherKey8, .p85OtherKey7)
+            End If
 
             Dim cbx1 As DropDownList = CType(e.Item.FindControl("x20EntryModeFlag"), DropDownList), cbx2 As DropDownList = CType(e.Item.FindControl("x20GridColumnFlag"), DropDownList)
             Dim cbx3 As DropDownList = CType(e.Item.FindControl("x20EntityPageFlag"), DropDownList)
@@ -533,9 +544,83 @@
         cRec.p85GUID = hidGUID_x20.Value
         cRec.p85Prefix = "x20"
         cRec.p85OtherKey1 = Me.x29ID_addX20.SelectedValue
+        cRec.p85OtherKey7 = BO.BAS.IsNullInt(Me.x20EntityTypePID_addX20.SelectedValue)
+        cRec.p85OtherKey8 = BO.BAS.IsNullInt(Me.hidx29ID_EntityType.Value)
         Master.Factory.p85TempBoxBL.Save(cRec)
 
         RefreshTempX20()
         x29ID_addX20.SelectedIndex = 0
+    End Sub
+
+    Private Sub x29ID_addX20_SelectedIndexChanged(sender As Object, e As EventArgs) Handles x29ID_addX20.SelectedIndexChanged
+        If Me.x29ID_addX20.SelectedValue = "" Then
+            Me.x20EntityTypePID_addX20.DataSource = Nothing
+            Me.x20EntityTypePID_addX20.DataBind()
+            Return
+        End If
+        Dim mq As New BO.myQuery, lis As New List(Of ListItem)
+        mq.Closed = BO.BooleanQueryMode.NoQuery
+
+        Select Case CType(Me.x29ID_addX20.SelectedValue, BO.x29IdEnum)
+            Case BO.x29IdEnum.p28Contact
+                For Each c In Master.Factory.p29ContactTypeBL.GetList(mq)
+                    lis.Add(New ListItem(c.p29Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "329"
+            Case BO.x29IdEnum.p41Project
+                For Each c In Master.Factory.p42ProjectTypeBL.GetList(mq)
+                    lis.Add(New ListItem(c.p42Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "342"
+            Case BO.x29IdEnum.j02Person
+                For Each c In Master.Factory.j07PersonPositionBL.GetList(mq)
+                    lis.Add(New ListItem(c.j07Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "107"
+            Case BO.x29IdEnum.o23Notepad
+                For Each c In Master.Factory.o24NotepadTypeBL.GetList(mq)
+                    lis.Add(New ListItem(c.o24Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "224"
+            Case BO.x29IdEnum.p91Invoice
+                For Each c In Master.Factory.p92InvoiceTypeBL.GetList(mq)
+                    lis.Add(New ListItem(c.p92Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "392"
+            Case BO.x29IdEnum.p31Worksheet
+                For Each c In Master.Factory.p34ActivityGroupBL.GetList(mq)
+                    lis.Add(New ListItem(c.p34Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "334"
+            Case BO.x29IdEnum.p56Task
+                For Each c In Master.Factory.p57TaskTypeBL.GetList(mq)
+                    lis.Add(New ListItem(c.p57Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "357"
+            Case BO.x29IdEnum.o22Milestone
+                For Each c In Master.Factory.o21MilestoneTypeBL.GetList(mq)
+                    lis.Add(New ListItem(c.o21Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "221"
+            Case BO.x29IdEnum.x25EntityField_ComboValue
+                For Each c In Master.Factory.x18EntityCategoryBL.GetList(mq).Where(Function(p) p.PID <> Master.DataPID)
+                    lis.Add(New ListItem(c.x18Name, c.PID.ToString))
+                Next
+                hidx29ID_EntityType.Value = "925"
+            Case Else
+        End Select
+
+        With Me.x20EntityTypePID_addX20
+            .Items.Clear()
+            .Items.Add(New ListItem("--Omezit na typ--", ""))
+            For Each c In lis
+                .Items.Add(New ListItem(c.Text, c.Value))
+            Next
+        End With
+
+
+
+
+
     End Sub
 End Class

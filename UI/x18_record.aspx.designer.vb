@@ -95,6 +95,15 @@ Partial Public Class x18_record
     Protected WithEvents x29ID_addX20 As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''x20EntityTypePID_addX20 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents x20EntityTypePID_addX20 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''cmdAddX20 control.
     '''</summary>
     '''<remarks>
@@ -417,6 +426,15 @@ Partial Public Class x18_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cmdHardRefresh As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''hidx29ID_EntityType control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidx29ID_EntityType As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''Master property.

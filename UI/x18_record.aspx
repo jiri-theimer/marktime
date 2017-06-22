@@ -58,7 +58,7 @@
             <div class="content-box2" style="margin-top: 20px;">
                 <div class="title">
                     Vazba štítku na entity
-                    <asp:DropDownList ID="x29ID_addX20" runat="server">
+                    <asp:DropDownList ID="x29ID_addX20" runat="server" AutoPostBack="true">
                         <asp:ListItem Text="--Vyberte entitu--" Value=""></asp:ListItem>
                         <asp:ListItem Text="Projekt" Value="141"></asp:ListItem>
                         <asp:ListItem Text="Klient" Value="328"></asp:ListItem>
@@ -69,8 +69,10 @@
                         <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
                         <asp:ListItem Text="Osoba" Value="102"></asp:ListItem>
                         <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
+                        <asp:ListItem Text="Jiný štítek" Value="925"></asp:ListItem>
                     </asp:DropDownList>
-                    <asp:Button ID="cmdAddX20" runat="server" CssClass="cmd" Text="Přidat vazbu na vybranou entitu" />
+                    <asp:DropDownList ID="x20EntityTypePID_addX20" runat="server"></asp:DropDownList>
+                    <asp:Button ID="cmdAddX20" runat="server" CssClass="cmd" Text="Vložit vybranou vazbu" />
                 </div>
                 <div class="content">
                     <table cellpadding="10">
@@ -98,10 +100,15 @@
                                                 <asp:ListItem Text="Zálohová faktura" Value="390"></asp:ListItem>
                                                 <asp:ListItem Text="Osoba" Value="102"></asp:ListItem>
                                                 <asp:ListItem Text="Worksheet úkon" Value="331"></asp:ListItem>
+                                                <asp:ListItem Text="Jiný štítek" Value="925"></asp:ListItem>
                                             </asp:DropDownList>
+                                            <asp:Label ID="x20EntityTypePID_Alias" runat="server" ForeColor="Green"></asp:Label>
                                         </div>
                                         <div>
                                             <asp:TextBox ID="x20Name" runat="server" Width="200px"></asp:TextBox>
+                                            <asp:HiddenField ID="x20EntityTypePID" runat="server" />
+                                            <asp:HiddenField ID="x29ID_EntityType" runat="server" />
+                                            
                                         </div>
                                         
                                     </td>
@@ -152,8 +159,7 @@
                                         <asp:ImageButton ID="del" runat="server" ImageUrl="Images/delete_row.png" ToolTip="Odstranit položku" CssClass="button-link" />
                                         <asp:HiddenField ID="p85id" runat="server" />
                                         <asp:HiddenField ID="x20ID" runat="server" />
-                                        <asp:HiddenField ID="x20EntityTypePID" runat="server" />
-                                        <asp:HiddenField ID="x29ID_EntityType" runat="server" />
+                                        
                                     </td>
                                 </tr>
                             </ItemTemplate>
@@ -431,6 +437,7 @@
     <asp:HiddenField ID="hidGUID_x20" runat="server" />
     <asp:HiddenField ID="HardRefreshPID" runat="server" />
     <asp:Button ID="cmdHardRefresh" runat="server" Style="display: none;" />
+    <asp:HiddenField ID="hidx29ID_EntityType" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="FootContent" runat="server">
 </asp:Content>

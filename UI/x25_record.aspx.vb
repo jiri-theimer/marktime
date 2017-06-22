@@ -91,7 +91,8 @@ Public Class x25_record
 
             If Master.IsRecordClone Then
                 Master.DataPID = 0
-
+                Me.x25Code.Text = ""
+                Me.x25Name.Text += " KOPIE"
             End If
 
             

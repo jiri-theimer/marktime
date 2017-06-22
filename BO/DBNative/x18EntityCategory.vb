@@ -111,4 +111,6 @@ Public Class x18EntityCategory
             Return _Is_o22
         End Get
     End Property
+
+
 End Class

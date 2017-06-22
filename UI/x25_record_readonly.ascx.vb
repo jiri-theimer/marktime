@@ -105,7 +105,15 @@
                         CType(e.Item.FindControl("valFF"), Label).Text = "NE"
                     End If
                 Case BO.x24IdENUM.tDateTime
-                    CType(e.Item.FindControl("valFF"), Label).Text = BO.BAS.FD(curValue)
+                    With CType(e.Item.FindControl("valFF"), Label)
+                        .Text = BO.BAS.FD(curValue, True, True)
+                        If CDate(curValue) > Now Then
+                            .ForeColor = Drawing.Color.Green
+                        Else
+                            .ForeColor = Drawing.Color.Red
+                        End If
+                    End With
+
             End Select
         End If
         
