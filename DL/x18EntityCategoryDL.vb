@@ -160,9 +160,7 @@
                 Next
 
                 If Not lisX16 Is Nothing Then
-                    If Not bolINSERT Then
-                        _cDB.RunSQL("DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=" & intX18ID.ToString)
-                    End If
+                    _cDB.RunSQL("DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=" & intX18ID.ToString)
                     For Each c In lisX16
                         pars = New DbParameters
                         pars.Add("x18ID", intX18ID, DbType.Int32)

@@ -42,18 +42,18 @@
         }
 
         function record_edit() {
-            sw_everywhere("x25_record.aspx?x18id=<%=Me.CurrentX18ID%>&pid=<%=Master.DataPID%>", "Images/report.png", true);
+            window.parent.sw_everywhere("x25_record.aspx?x18id=<%=Me.CurrentX18ID%>&pid=<%=Master.DataPID%>", "Images/report.png", true);
         }
         function record_create() {
-            sw_everywhere("x25_record.aspx?x18id=<%=Me.CurrentX18ID%>&pid=0", "Images/report.png", true);
+            window.parent.sw_everywhere("x25_record.aspx?x18id=<%=Me.CurrentX18ID%>&pid=0", "Images/report.png", true);
         }
         function record_clone() {
-            sw_everywhere("x25_record.aspx?clone=1&x18id=<%=Me.CurrentX18ID%>&pid=<%=Master.DataPID%>", "Images/report.png", true);
+            window.parent.sw_everywhere("x25_record.aspx?clone=1&x18id=<%=Me.CurrentX18ID%>&pid=<%=Master.DataPID%>", "Images/report.png", true);
         }
 
         function report() {            
 
-            sw_everywhere("report_modal.aspx?prefix=x25&pid=<%=Master.DataPID%>", "Images/report.png", true);
+            window.parent.sw_everywhere("report_modal.aspx?prefix=x25&pid=<%=Master.DataPID%>", "Images/report.png", true);
 
         }
         function b07_create() {           

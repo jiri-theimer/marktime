@@ -306,7 +306,7 @@
                     <table cellpadding="5" cellspacing="2">
                         <tr>
                             <td colspan="2">
-                                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat položky štítku barvou" Checked="true" />
+                                <asp:CheckBox ID="x18IsColors" runat="server" CssClass="chk" Text="Možnost rozlišovat položky štítku barvou" Checked="false" />
                             </td>
                         </tr>
                         <tr>
