@@ -14,6 +14,24 @@ Option Explicit On
 Partial Public Class x25_record_readonly
 
     '''<summary>
+    '''trB02Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents trB02Name As Global.System.Web.UI.HtmlControls.HtmlTableRow
+
+    '''<summary>
+    '''b02Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents b02Name As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
     '''trCode control.
     '''</summary>
     '''<remarks>
@@ -84,4 +102,13 @@ Partial Public Class x25_record_readonly
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidX18ID As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidPID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidPID As Global.System.Web.UI.WebControls.HiddenField
 End Class

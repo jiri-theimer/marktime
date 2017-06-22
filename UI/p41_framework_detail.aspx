@@ -270,7 +270,7 @@
     </asp:Panel>
 
     
-    <asp:Panel ID="boxP64" runat="server" CssClass="content-box1" Style="clear: both;">
+    <asp:Panel ID="boxP64" runat="server" CssClass="content-box1" Style="clear: both;" Visible="false">
         <div class="title">
             <img src="Images/binder.png" style="margin-right: 10px;" />
             <asp:Label ID="boxP64Title" runat="server" Text="Šanony"></asp:Label>

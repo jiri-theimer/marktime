@@ -2994,6 +2994,75 @@ END
 
 GO
 
+----------FN---------------x25_getroles_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('x25_getroles_inline') and type = 'FN')
+ drop function x25_getroles_inline
+GO
+
+
+create    FUNCTION [dbo].[x25_getroles_inline](@x25id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené obsazení  rolí v položce štítku @x25id
+
+ DECLARE @s nvarchar(2000),@count int
+
+ select @count=count(*) FROM x67EntityRole WHERE x29ID=925
+
+ 
+ if @count>1
+ begin
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))+' ('+x67Name+')'
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@x25id AND x67.x29ID=925
+  ORDER BY x67Ordinary
+ end
+
+  if @count<=1
+ begin
+select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastName,'')+isnull(' '+j11.j11Name,''))
+  FROM x67EntityRole x67 INNER JOIN x69EntityRole_Assign x69 ON x67.x67ID=x69.x67ID
+  LEFT OUTER JOIN j02Person j02 ON x69.j02ID=j02.j02ID
+  LEFT OUTER JOIN j11Team j11 ON x69.j11ID=j11.j11ID
+  WHERE x69.x69RecordPID=@x25id AND x67.x29ID=925
+  ORDER BY x67Ordinary
+ end
+
+RETURN(@s)
+   
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+
 ----------FN---------------x28_getFirstUsableField-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('x28_getFirstUsableField') and type = 'FN')
@@ -15154,12 +15223,13 @@ where a.x25ID=@x25id
 
 if @x18EntryCodeFlag=3 and @x25code is null
 begin	---automaticky generovat kód v rámci všech položek štítku
- select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id
-
+ select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id AND x25Code is not null
  set @x25code=isnull(@count,0)+1
 
  update x25EntityField_ComboValue set x25Code=@x25code WHERE x25ID=@x25id
 end
+
+ 
 
 if @x18EntryCodeFlag=4 and @x25code is null
 begin	---automaticky generovat kód v rámci projektu daného štítku
@@ -15168,7 +15238,7 @@ begin	---automaticky generovat kód v rámci projektu daného štítku
 
  if @p41id is not null and @x20id is not null
  begin
-  select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id AND x25ID IN (select x25ID FROM x19EntityCategory_Binding WHERE x20ID=@x20id AND x19RecordPID=@p41id)
+  select @count=count(*) FROM x25EntityField_ComboValue WHERE x23ID=@x23id AND x25ID<>@x25id AND x25Code IS NOT NULL AND x25ID IN (select x25ID FROM x19EntityCategory_Binding WHERE x20ID=@x20id AND x19RecordPID=@p41id)
 
   set @x25code=isnull(@count,0)+1
 

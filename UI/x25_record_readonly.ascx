@@ -2,7 +2,16 @@
 
     
     <table cellpadding="5" cellspacing="2" style="width: 100%;" id="responsive">    
-        
+        <tr class="trHover" id="trB02Name" runat="server">
+            <td style="width:200px;">
+                <span class="lbl"><img src="Images/workflow.png" /> Aktuální stav (workflow):</span>
+            </td>
+            <td>
+                <asp:Label ID="b02Name" runat="server" CssClass="valbold"></asp:Label>
+                <a href="javascript:workflow()">Posunout/doplnit</a>
+                
+            </td>
+        </tr>
         <tr class="trHover" id="trCode" runat="server">
             <td style="width:200px;">
                 <span class="lbl"><img src="Images/type_text.png" /> Kód:</span>
@@ -69,4 +78,14 @@
 </div>
 
 <asp:HiddenField ID="hidX18ID" runat="server" />
+<asp:HiddenField ID="hidPID" runat="server" />
+
+<script type="text/javascript">
+    function workflow() {
+        
+            sw_everywhere("workflow_dialog.aspx?prefix=x25&pid=<%=hidPID.Value%>", "Images/workflow.png", true);
+
+       
+    }
+</script>
 

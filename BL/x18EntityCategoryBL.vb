@@ -74,6 +74,12 @@ Class x18EntityCategoryBL
         ''    End If
         ''End If
         If Not lisX16 Is Nothing Then
+            For Each c In lisX16.GroupBy(Function(p) p.x16Field)
+                If c.Count > 1 Then
+                    _Error = String.Format("V nastavení uživatelských polí je duplicitní pole [{0}]/[{1}].", c.First.x16Name, c.Last.x16Name) : Return False
+                End If
+            Next
+            
             For Each c In lisX16
                 If Trim(c.x16Name) = "" Then
                     _Error = "V nastavení uživatelských polí štítku chybí název." : Return False

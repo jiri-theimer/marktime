@@ -25,7 +25,7 @@
     End Sub
 
     Public Sub FillData(cRec As BO.x25EntityField_ComboValue, cX18 As BO.x18EntityCategory)
-
+        hidPID.Value = cRec.PID.ToString
 
         _curRec = cRec
         If Not cX18 Is Nothing Then
@@ -34,18 +34,30 @@
         If Me.X18ID <> 0 And cX18 Is Nothing Then
             cX18 = Me.Factory.x18EntityCategoryBL.Load(Me.X18ID)
         End If
-
-        If cRec.x25Name <> "" Then
-            Me.x25Name.Text = cRec.x25Name
-        Else
-            trName.Visible = False
-        End If
-        If cRec.x25Code <> "" Then
-            Me.x25Code.Text = cRec.x25Code
-        Else
-            trCode.Visible = False
-        End If
-        Me.Timestamp.Text = cRec.Timestamp
+        With cRec
+            If .x25Name <> "" Then
+                Me.x25Name.Text = .x25Name
+                If .x25BackColor <> "" Then Me.x25Name.Style.Item("background-color") = .x25BackColor
+                If .x25ForeColor <> "" Then Me.x25Name.Style.Item("color") = .x25ForeColor
+            Else
+                trName.Visible = False
+            End If
+            If .x25Code <> "" Then
+                Me.x25Code.Text = .x25Code
+            Else
+                trCode.Visible = False
+            End If
+            If cRec.b02ID <> 0 Then
+                b02Name.Text = .b02Name
+                If .b02Color <> "" Then
+                    b02Name.Style.Item("background-color") = .b02Color
+                End If
+            Else
+                trB02Name.Visible = False
+            End If
+            Me.Timestamp.Text = .Timestamp
+        End With
+        
 
         Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Me.Factory.x18EntityCategoryBL.GetList_x20_join_x18(Me.X18ID).Where(Function(p) p.x20EntryModeFlag = BO.x20EntryModeENUM.InsertUpdateWithoutCombo)
         Dim x20IDs As List(Of Integer) = lisX20X18.Where(Function(p) p.x29ID <> 331).Select(Function(p) p.x20ID).ToList
@@ -88,11 +100,16 @@
         If Not curValue Is Nothing Then
             Select Case cRec.FieldType
                 Case BO.x24IdENUM.tString
-                    If curValue.ToString.IndexOf(vbCrLf) > 0 Then
-                        CType(e.Item.FindControl("valFF"), Label).Text = BO.BAS.CrLfText2Html(curValue.ToString)
-                    Else
-                        CType(e.Item.FindControl("valFF"), Label).Text = curValue
-                    End If
+                    With CType(e.Item.FindControl("valFF"), Label)
+                        If curValue.ToString.IndexOf(vbCrLf) > 0 Or cRec.x16Field = "x25BigText" Then
+                            .Text = BO.BAS.CrLfText2Html(curValue.ToString)
+                            .CssClass = "val"
+                            .Font.Italic = True
+                        Else
+                            .Text = curValue
+                        End If
+                    End With
+                    
 
 
                 Case BO.x24IdENUM.tDecimal

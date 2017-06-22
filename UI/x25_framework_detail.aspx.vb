@@ -74,7 +74,7 @@
         Dim cDisp As BO.x18RecordDisposition = Master.Factory.x18EntityCategoryBL.InhaleDisposition(cX18)
         menu1.FindItemByValue("cmdNew").Visible = cDisp.CreateItem
         menu1.FindItemByValue("cmdClone").Visible = cDisp.CreateItem
-
+        If cRec.IsClosed Then menu1.Skin = "Black"
 
         rec1.FillData(cRec, cX18)
 

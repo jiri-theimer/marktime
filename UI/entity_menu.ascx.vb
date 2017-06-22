@@ -287,7 +287,7 @@ Public Class entity_menu
         If cDisp.OwnerAccess Then
             ami("Kontaktní osoby projektu", "cmdP30", "javascript:p30_record(0);", "Images/person.png", mi, , True)
 
-            ami("Vytvořit šanon", "cmdP64", "javascript:p64_record(0);", "Images/binder.png", mi)
+            'ami("Vytvořit šanon", "cmdP64", "javascript:p64_record(0);", "Images/binder.png", mi)
         End If
         If Not cRec.IsClosed Then
             If cP42.p42IsModule_p56 Then ami("Vytvořit úkol", "cmdP56", "javascript:menu_p56_record(0);", "Images/person.png", mi, , True)

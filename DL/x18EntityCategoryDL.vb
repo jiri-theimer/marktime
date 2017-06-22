@@ -95,96 +95,99 @@
     End Function
 
     Public Function Save(cRec As BO.x18EntityCategory, lisX20 As List(Of BO.x20EntiyToCategory), lisX69 As List(Of BO.x69EntityRole_Assign), lisX16 As List(Of BO.x16EntityCategory_FieldSetting)) As Boolean
-        Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
-        If cRec.PID <> 0 Then
-            bolINSERT = False
-            strW = "x18ID=@pid"
-            pars.Add("pid", cRec.PID)
-        End If
-        With cRec
-            pars.Add("x18Name", .x18Name, DbType.String, , , True, "Název")
-            pars.Add("x18NameShort", .x18NameShort, DbType.String)
-            pars.Add("x18Ordinary", .x18Ordinary, DbType.Int32)
-            pars.Add("x18validfrom", .ValidFrom, DbType.DateTime)
-            pars.Add("x18validuntil", .ValidUntil, DbType.DateTime)
-            pars.Add("x18IsManyItems", .x18IsManyItems, DbType.Boolean)
-            pars.Add("x18IsColors", .x18IsColors, DbType.Boolean)
-            pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
-            pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
-            pars.Add("b01ID", BO.BAS.IsNullDBKey(.b01ID), DbType.Int32)
-            pars.Add("x38ID", BO.BAS.IsNullDBKey(.x38ID), DbType.Int32)
-            pars.Add("x18Icon", .x18Icon, DbType.String)
-            pars.Add("x18Icon32", .x18Icon32, DbType.String)
-            pars.Add("x18IsClueTip", .x18IsClueTip, DbType.Boolean)
-            pars.Add("x18ReportCodes", .x18ReportCodes, DbType.String)
-            pars.Add("x18GridColsFlag", CInt(.x18GridColsFlag), DbType.Int32)
-            pars.Add("x18EntryNameFlag", CInt(.x18EntryNameFlag), DbType.Int32)
-            pars.Add("x18EntryCodeFlag", CInt(.x18EntryCodeFlag), DbType.Int32)
-            pars.Add("x18EntryOrdinaryFlag", CInt(.x18EntryOrdinaryFlag), DbType.Int32)
-            pars.Add("x18IsCalendar", .x18IsCalendar, DbType.Boolean)
-            pars.Add("x18CalendarFieldStart", .x18CalendarFieldStart, DbType.String)
-            pars.Add("x18CalendarFieldEnd", .x18CalendarFieldEnd, DbType.String)
-        End With
+        Using sc As New Transactions.TransactionScope()     'ukládání podléhá transakci
+            Dim pars As New DbParameters(), bolINSERT As Boolean = True, strW As String = ""
+            If cRec.PID <> 0 Then
+                bolINSERT = False
+                strW = "x18ID=@pid"
+                pars.Add("pid", cRec.PID)
+            End If
+            With cRec
+                pars.Add("x18Name", .x18Name, DbType.String, , , True, "Název")
+                pars.Add("x18NameShort", .x18NameShort, DbType.String)
+                pars.Add("x18Ordinary", .x18Ordinary, DbType.Int32)
+                pars.Add("x18validfrom", .ValidFrom, DbType.DateTime)
+                pars.Add("x18validuntil", .ValidUntil, DbType.DateTime)
+                pars.Add("x18IsManyItems", .x18IsManyItems, DbType.Boolean)
+                pars.Add("x18IsColors", .x18IsColors, DbType.Boolean)
+                pars.Add("j02ID_Owner", BO.BAS.IsNullDBKey(.j02ID_Owner), DbType.Int32)
+                pars.Add("x23ID", BO.BAS.IsNullDBKey(.x23ID), DbType.Int32)
+                pars.Add("b01ID", BO.BAS.IsNullDBKey(.b01ID), DbType.Int32)
+                pars.Add("x38ID", BO.BAS.IsNullDBKey(.x38ID), DbType.Int32)
+                pars.Add("x18Icon", .x18Icon, DbType.String)
+                pars.Add("x18Icon32", .x18Icon32, DbType.String)
+                pars.Add("x18IsClueTip", .x18IsClueTip, DbType.Boolean)
+                pars.Add("x18ReportCodes", .x18ReportCodes, DbType.String)
+                pars.Add("x18GridColsFlag", CInt(.x18GridColsFlag), DbType.Int32)
+                pars.Add("x18EntryNameFlag", CInt(.x18EntryNameFlag), DbType.Int32)
+                pars.Add("x18EntryCodeFlag", CInt(.x18EntryCodeFlag), DbType.Int32)
+                pars.Add("x18EntryOrdinaryFlag", CInt(.x18EntryOrdinaryFlag), DbType.Int32)
+                pars.Add("x18IsCalendar", .x18IsCalendar, DbType.Boolean)
+                pars.Add("x18CalendarFieldStart", .x18CalendarFieldStart, DbType.String)
+                pars.Add("x18CalendarFieldEnd", .x18CalendarFieldEnd, DbType.String)
+            End With
 
-        If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then
-            Dim intX18ID As Integer = _cDB.LastSavedRecordPID
+            If _cDB.SaveRecord("x18EntityCategory", pars, bolINSERT, strW, True, _curUser.j03Login) Then
+                Dim intX18ID As Integer = _cDB.LastSavedRecordPID
 
-            Dim lisX20Saved As IEnumerable(Of BO.x20EntiyToCategory) = GetList_x20(BO.BAS.ConvertInt2List(intX18ID))
-            For Each c In lisX20
-                pars = New DbParameters
-                pars.Add("x18ID", intX18ID, DbType.Int32)
-                pars.Add("x29ID", c.x29ID, DbType.Int32)
-                pars.Add("x20Name", c.x20Name, DbType.String)
-                pars.Add("x20EntryModeFlag", CInt(c.x20EntryModeFlag), DbType.Int32)
-                pars.Add("x20GridColumnFlag", CInt(c.x20GridColumnFlag), DbType.Int32)
-                pars.Add("x20EntityPageFlag", CInt(c.x20EntityPageFlag), DbType.Int32)
-                pars.Add("x20IsMultiselect", c.x20IsMultiSelect, DbType.Boolean)
-                pars.Add("x20IsClosed", c.x20IsClosed, DbType.Boolean)
-                pars.Add("x20IsEntryRequired", c.x20IsEntryRequired, DbType.Boolean)
-                pars.Add("x20Ordinary", c.x20Ordinary, DbType.Int32)
-                pars.Add("x20EntityTypePID", BO.BAS.IsNullDBKey(c.x20EntityTypePID), DbType.Int32)
-                pars.Add("x29ID_EntityType", BO.BAS.IsNullDBKey(c.x29ID_EntityType), DbType.Int32)
-
-                bolINSERT = True : strW = ""
-                If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count > 0 Then
-                    bolINSERT = False
-                    strW = "x20ID=" & c.x20ID.ToString
-                End If
-                _cDB.SaveRecord("x20EntiyToCategory", pars, bolINSERT, strW, False, "", False)
-            Next
-            For Each c In lisX20Saved.Where(Function(p) p.x20ID <> 0)
-                If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count = 0 Then
-                    _cDB.RunSQL("DELETE FROM x20EntiyToCategory WHERE x20ID=" & c.x20ID.ToString)
-                End If
-            Next
-
-            If Not lisX16 Is Nothing Then
-                If Not bolINSERT Then
-                    _cDB.RunSQL("DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=" & intX18ID.ToString)
-                End If
-                For Each c In lisX16
+                Dim lisX20Saved As IEnumerable(Of BO.x20EntiyToCategory) = GetList_x20(BO.BAS.ConvertInt2List(intX18ID))
+                For Each c In lisX20
                     pars = New DbParameters
                     pars.Add("x18ID", intX18ID, DbType.Int32)
-                    pars.Add("x16Name", c.x16Name, DbType.String)
-                    pars.Add("x16NameGrid", c.x16NameGrid, DbType.String)
-                    pars.Add("x16Field", c.x16Field, DbType.String)
-                    pars.Add("x16IsEntryRequired", c.x16IsEntryRequired, DbType.Boolean)
-                    pars.Add("x16IsGridField", c.x16IsGridField, DbType.Boolean)
-                    pars.Add("x16IsFixedDataSource", c.x16IsFixedDataSource, DbType.Boolean)
-                    pars.Add("x16DataSource", c.x16DataSource, DbType.Boolean)
-                    pars.Add("x16TextboxHeight", c.x16TextboxHeight, DbType.Int32)
-                    pars.Add("x16TextboxWidth", c.x16TextboxWidth, DbType.Int32)
-                    pars.Add("x16Ordinary", c.x16Ordinary, DbType.Int32)
-                    _cDB.SaveRecord("x16EntityCategory_FieldSetting", pars, True, "", False, "", False)
+                    pars.Add("x29ID", c.x29ID, DbType.Int32)
+                    pars.Add("x20Name", c.x20Name, DbType.String)
+                    pars.Add("x20EntryModeFlag", CInt(c.x20EntryModeFlag), DbType.Int32)
+                    pars.Add("x20GridColumnFlag", CInt(c.x20GridColumnFlag), DbType.Int32)
+                    pars.Add("x20EntityPageFlag", CInt(c.x20EntityPageFlag), DbType.Int32)
+                    pars.Add("x20IsMultiselect", c.x20IsMultiSelect, DbType.Boolean)
+                    pars.Add("x20IsClosed", c.x20IsClosed, DbType.Boolean)
+                    pars.Add("x20IsEntryRequired", c.x20IsEntryRequired, DbType.Boolean)
+                    pars.Add("x20Ordinary", c.x20Ordinary, DbType.Int32)
+                    pars.Add("x20EntityTypePID", BO.BAS.IsNullDBKey(c.x20EntityTypePID), DbType.Int32)
+                    pars.Add("x29ID_EntityType", BO.BAS.IsNullDBKey(c.x29ID_EntityType), DbType.Int32)
+
+                    bolINSERT = True : strW = ""
+                    If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count > 0 Then
+                        bolINSERT = False
+                        strW = "x20ID=" & c.x20ID.ToString
+                    End If
+                    _cDB.SaveRecord("x20EntiyToCategory", pars, bolINSERT, strW, False, "", False)
                 Next
+                For Each c In lisX20Saved.Where(Function(p) p.x20ID <> 0)
+                    If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count = 0 Then
+                        _cDB.RunSQL("DELETE FROM x20EntiyToCategory WHERE x20ID=" & c.x20ID.ToString)
+                    End If
+                Next
+
+                If Not lisX16 Is Nothing Then
+                    If Not bolINSERT Then
+                        _cDB.RunSQL("DELETE FROM x16EntityCategory_FieldSetting WHERE x18ID=" & intX18ID.ToString)
+                    End If
+                    For Each c In lisX16
+                        pars = New DbParameters
+                        pars.Add("x18ID", intX18ID, DbType.Int32)
+                        pars.Add("x16Name", c.x16Name, DbType.String)
+                        pars.Add("x16NameGrid", c.x16NameGrid, DbType.String)
+                        pars.Add("x16Field", c.x16Field, DbType.String)
+                        pars.Add("x16IsEntryRequired", c.x16IsEntryRequired, DbType.Boolean)
+                        pars.Add("x16IsGridField", c.x16IsGridField, DbType.Boolean)
+                        pars.Add("x16IsFixedDataSource", c.x16IsFixedDataSource, DbType.Boolean)
+                        pars.Add("x16DataSource", c.x16DataSource, DbType.String)
+                        pars.Add("x16TextboxHeight", c.x16TextboxHeight, DbType.Int32)
+                        pars.Add("x16TextboxWidth", c.x16TextboxWidth, DbType.Int32)
+                        pars.Add("x16Ordinary", c.x16Ordinary, DbType.Int32)
+                        _cDB.SaveRecord("x16EntityCategory_FieldSetting", pars, True, "", False, "", False)
+                    Next
+                End If
+                If Not lisX69 Is Nothing Then   'přiřazení rolí k štítku
+                    bas.SaveX69(_cDB, BO.x29IdEnum.x18EntityCategory, intX18ID, lisX69, bolINSERT)
+                End If
+                sc.Complete()   'dokončení transakce
+                Return True
+            Else
+                Return False
             End If
-            If Not lisX69 Is Nothing Then   'přiřazení rolí k štítku
-                bas.SaveX69(_cDB, BO.x29IdEnum.x18EntityCategory, intX18ID, lisX69, bolINSERT)
-            End If
-            Return True
-        Else
-            Return False
-        End If
+        End Using
 
     End Function
     Public Function Delete(intPID As Integer) As Boolean
