@@ -22,10 +22,10 @@
                         <div style="padding-top: 4px;">
                             <asp:Label ID="b07Value" runat="server" Style="font-style: italic; font-size: 110%;"></asp:Label>
                             <asp:Image ID="img1" runat="server" AlternateText="File format" ImageUrl="Images/Files/other.png" Style="vertical-align: bottom;" />
-                            <asp:HyperLink ID="att1" runat="server"></asp:HyperLink>
+                            <asp:HyperLink ID="att1" runat="server" ToolTip="Náhled nebo stáhnout přílohu"></asp:HyperLink>
                         </div>
                       
-                        <div style="padding-top: 4px;">
+                        <div style="padding-top: 8px;">
                             <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
                             <asp:HyperLink ID="aAnswer" runat="server" Text="Reagovat"></asp:HyperLink>
                             <asp:HyperLink ID="aDelete" runat="server" Text="Odstranit" Visible="false"></asp:HyperLink>

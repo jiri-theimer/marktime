@@ -81,6 +81,11 @@
                 pars.Add("x25FreeText03", .x25FreeText03, DbType.String, , , True, "Text 3")
                 pars.Add("x25FreeText04", .x25FreeText04, DbType.String, , , True, "Text 4")
                 pars.Add("x25FreeText05", .x25FreeText05, DbType.String, , , True, "Text 5")
+                pars.Add("x25FreeText06", .x25FreeText06, DbType.String, , , True, "Text 6")
+                pars.Add("x25FreeText07", .x25FreeText07, DbType.String, , , True, "Text 7")
+                pars.Add("x25FreeText08", .x25FreeText08, DbType.String, , , True, "Text 8")
+                pars.Add("x25FreeText09", .x25FreeText09, DbType.String, , , True, "Text 9")
+                pars.Add("x25FreeText10", .x25FreeText10, DbType.String, , , True, "Text 10")
                 pars.Add("x25BigText", .x25BigText, DbType.String, , , True, "Podrobný popis")
 
                 pars.Add("x25FreeNumber01", .x25FreeNumber01, DbType.Double)

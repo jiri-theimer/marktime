@@ -12,6 +12,8 @@
     Public Property x16TextboxHeight As Integer
     Public Property x16TextboxWidth As Integer
     Public Property FormatString As String
+    Public Property x16IsReportField As Boolean
+    Public Property x16FieldGroup As String
 
 
     Public ReadOnly Property FieldType As BO.x24IdENUM

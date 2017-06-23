@@ -213,6 +213,11 @@
                                             <asp:ListItem Text="Text 3" Value="x25FreeText03"></asp:ListItem>
                                             <asp:ListItem Text="Text 4" Value="x25FreeText04"></asp:ListItem>
                                             <asp:ListItem Text="Text 5" Value="x25FreeText05"></asp:ListItem>
+                                            <asp:ListItem Text="Text 6" Value="x25FreeText06"></asp:ListItem>
+                                            <asp:ListItem Text="Text 7" Value="x25FreeText07"></asp:ListItem>
+                                            <asp:ListItem Text="Text 8" Value="x25FreeText08"></asp:ListItem>
+                                            <asp:ListItem Text="Text 9" Value="x25FreeText09"></asp:ListItem>
+                                            <asp:ListItem Text="Text 10" Value="x25FreeText10"></asp:ListItem>
                                             <asp:ListItem Text="Velký text" Value="x25BigText"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 1" Value="x25FreeNumber01"></asp:ListItem>
                                             <asp:ListItem Text="Číslo 2" Value="x25FreeNumber02"></asp:ListItem>
