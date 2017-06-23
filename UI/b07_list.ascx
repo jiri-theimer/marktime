@@ -21,6 +21,7 @@
                         </div>
                         <div style="padding-top: 4px;">
                             <asp:Label ID="b07Value" runat="server" Style="font-style: italic; font-size: 110%;"></asp:Label>
+                            <asp:Image ID="img1" runat="server" AlternateText="File format" ImageUrl="Images/Files/other.png" Style="vertical-align: bottom;" />
                             <asp:HyperLink ID="att1" runat="server"></asp:HyperLink>
                         </div>
                       
@@ -54,6 +55,13 @@
     function trydeleteb07(pid) {
 
         window.parent.sw_everywhere("b07_delete.aspx?pid=" + pid, "Images/comment.png", true);
+
+    }
+
+    function file_preview(prefix, pid) {
+        ///náhled na soubor
+        
+        window.parent.sw_everywhere("fileupload_preview.aspx?prefix=" + prefix + "&pid=" + pid, "Images/attachment.png", true);
 
     }
     

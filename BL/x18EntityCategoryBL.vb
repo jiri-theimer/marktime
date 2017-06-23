@@ -14,6 +14,7 @@
     Function SaveX19TempBinding(intRecordPID As Integer, strTempGUID As String, lisX19 As List(Of BO.x19EntityCategory_Binding)) As Boolean
     Function GetList_X19(x29id As BO.x29IdEnum, intRecordPID As Integer, strTempGUID As String, x20IDs_Query As List(Of Integer)) As IEnumerable(Of BO.x19EntityCategory_Binding)
     Function GetList_X19(intX25ID As Integer, x20IDs_Query As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding)
+    Function GetList_x19(x20IDs As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding)
     Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue)   
     Function GetList_x16(intX18ID As Integer) As IEnumerable(Of BO.x16EntityCategory_FieldSetting)
     Function InhaleDisposition(cRec As BO.x18EntityCategory) As BO.x18RecordDisposition
@@ -140,6 +141,9 @@ Class x18EntityCategoryBL
     End Function
     Public Function GetList_X19(intX25ID As Integer, x20IDs_Query As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding) Implements Ix18EntityCategoryBL.GetList_X19
         Return _cDL.GetList_X19(intX25ID, x20IDs_Query, bolInhaleRecordAlias)
+    End Function
+    Public Function GetList_x19(x20IDs As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding) Implements Ix18EntityCategoryBL.GetList_X19
+        Return _cDL.GetList_x19(x20IDs, bolInhaleRecordAlias)
     End Function
     Public Function GetList_X25(x29id As BO.x29IdEnum) As IEnumerable(Of BO.x25EntityField_ComboValue) Implements Ix18EntityCategoryBL.GetList_X25
         Return _cDL.GetList_X25(x29id)

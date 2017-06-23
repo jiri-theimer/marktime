@@ -103,9 +103,12 @@
         With CType(e.Item.FindControl("att1"), HyperLink)
             If cRec.o27ID > 0 Then
                 .Text = cRec.o27OriginalFileName
-                .NavigateUrl = "binaryfile.aspx?prefix=o27&pid=" & cRec.o27ID.ToString
+                '.NavigateUrl = "binaryfile.aspx?prefix=o27&disposition=inline&pid=" & cRec.o27ID.ToString
+                .NavigateUrl = "javascript:file_preview('o27'," & cRec.o27ID.ToString & ")"
+                CType(e.Item.FindControl("img1"), Image).ImageUrl = "Images/Files/" & BO.BAS.GetFileExtensionIcon(Right(cRec.o27OriginalFileName, 4))
             Else
                 .Visible = False
+                e.Item.FindControl("img1").Visible = False
             End If
 
         End With

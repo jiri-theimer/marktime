@@ -417,6 +417,13 @@
         SaveTempX20()
         Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.Load(BO.BAS.IsNullInt(e.CommandArgument))
         If e.CommandName = "delete" Then
+            Dim intX20ID As Integer = cRec.p85DataPID
+            If intX20ID <> 0 Then
+                If Master.Factory.x18EntityCategoryBL.GetList_X19(BO.BAS.ConvertInt2List(intX20ID), False).Count > 0 Then
+                    Master.Notify("Tato vazba  již obsahuje data. Buď daná data nejdřív odstraníte nebo vazbu nastavte jako uzavřenou.", NotifyLevel.WarningMessage)
+                    Return
+                End If
+            End If
             If Master.Factory.p85TempBoxBL.Delete(cRec) Then
 
             End If

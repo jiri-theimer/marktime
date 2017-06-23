@@ -153,8 +153,8 @@
                     End If
                     _cDB.SaveRecord("x20EntiyToCategory", pars, bolINSERT, strW, False, "", False)
                 Next
-                For Each c In lisX20Saved.Where(Function(p) p.x20ID <> 0)
-                    If lisX20Saved.Where(Function(p) p.x20ID = c.x20ID).Count = 0 Then
+                For Each c In lisX20Saved
+                    If lisX20.Where(Function(p) p.x20ID = c.x20ID And p.x20ID <> 0).Count = 0 Then
                         _cDB.RunSQL("DELETE FROM x20EntiyToCategory WHERE x20ID=" & c.x20ID.ToString)
                     End If
                 Next
@@ -347,6 +347,11 @@
         s += " ORDER BY x20.x20IsMultiselect,a.x20ID,a.x19RecordPID"
         Return _cDB.GetList(Of BO.x19EntityCategory_Binding)(s, pars)
     End Function
-    
+    Public Function GetList_x19(x20IDs As List(Of Integer), bolInhaleRecordAlias As Boolean) As IEnumerable(Of BO.x19EntityCategory_Binding)
+        Dim s As String = GetSQLPart1_x19(bolInhaleRecordAlias)
+        s += " WHERE a.x20ID IN (" & String.Join(",", x20IDs) & ")"
+        s += " ORDER BY x20.x20IsMultiselect,a.x20ID,a.x19RecordPID"
+        Return _cDB.GetList(Of BO.x19EntityCategory_Binding)(s)
+    End Function
     
 End Class

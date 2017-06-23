@@ -47,9 +47,9 @@
             Me.uploadlist1.GUID = Me.upload1.GUID
 
             With Master
-                .HeaderText = "Zapsat komentář | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID)
+                .HeaderText = "Zapsat poznámku/komentář/přílohu | " & .Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Me.CurrentRecordPID)
                 .HeaderIcon = "Images/comment_32.png"
-                .AddToolbarButton("Uložit komentář", "save", , "Images/save.png")
+                .AddToolbarButton("Uložit", "save", , "Images/save.png")
             End With
             If Me.CurrentParentID <> 0 Then
                 Dim c As BO.b07Comment = Master.Factory.b07CommentBL.Load(Me.CurrentParentID)

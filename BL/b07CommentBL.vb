@@ -24,13 +24,17 @@ Class b07CommentBL
         _cUser = ServiceUser
     End Sub
     Public Function Save(cRec As BO.b07Comment, strUploadGUID As String, notifyReceivers As List(Of BO.PersonOrTeam)) As Boolean Implements Ib07CommentBL.Save
-        Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Nothing
+        Dim lisTempUpload As IEnumerable(Of BO.p85TempBox) = Nothing, bolIsUploaded As Boolean = False
 
         If strUploadGUID <> "" Then
             lisTempUpload = Me.Factory.p85TempBoxBL.GetList(strUploadGUID, True)
+            If lisTempUpload.Where(Function(p) p.p85IsDeleted = False).Count > 0 Then bolIsUploaded = True
         End If
         With cRec
-            If Len(Trim(.b07Value)) <= 1 And .b07WorkflowInfo = "" Then _Error = "Chybí obsah komentáře." : Return False
+            If Len(Trim(.b07Value)) <= 1 And .b07WorkflowInfo = "" And bolIsUploaded = False Then
+                _Error = "Chybí obsah komentáře nebo souborová příloha." : Return False
+
+            End If
             If .j02ID_Owner = 0 Then .j02ID_Owner = _cUser.j02ID
         End With
 
