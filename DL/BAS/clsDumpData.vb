@@ -50,10 +50,10 @@ Public Class clsDumpData
             For i = 0 To dr.FieldCount - 1
                 If strComputedFields > "" Then
                     If Not IsComputedField(LCase(dr.GetName(i)), aCF) Then
-                        strFs += "," & dr.GetName(i)
+                        strFs += ",[" & dr.GetName(i) & "]"
                     End If
                 Else
-                    strFs += "," & dr.GetName(i)
+                    strFs += ",[" & dr.GetName(i) & "]"
                 End If
             Next
             dr.Close()

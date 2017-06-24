@@ -10,17 +10,7 @@
         var _initResizing = "1";
 
         $(document).ready(function () {
-            $(".slidingDiv1").hide();
-            $(".show_hide1").show();
-
-            $('.show_hide1').click(function () {
-                $(".slidingDiv1").slideToggle();
-            });
-
-
-
-            if (document.getElementById("<%=Me.hidUIFlag.ClientID%>").value != "")
-                $(".slidingDiv1").show();
+            
 
 
             document.getElementById("<%=Me.hidUIFlag.ClientID%>").value = "";
@@ -91,13 +81,13 @@
             location.replace("x25_framework.aspx?x18id=" + ctl.value);
         }
         function RowDoubleClick(sender, args) {
-            record_edit();            
+            record_edit();
         }
 
         function record_edit() {
             if (getpid(false) == "")
                 return;
-                
+
             x25_record(getpid(false));
         }
 
@@ -163,12 +153,12 @@
         }
 
         function hardrefresh(pid, flag) {
-         
+
             if (flag == "b07-save") {
                 return;
             }
             if (flag == "workflow-dialog") {
-                pid = document.getElementById("<%=hiddatapid.clientid%>").value;                
+                pid = document.getElementById("<%=hiddatapid.clientid%>").value;
             }
 
             location.replace("x25_framework.aspx?pid=" + pid + "&x18id=<%=Me.CurrentX18ID%>");
@@ -194,9 +184,9 @@
 
 
 
-        
 
-        function x18_setting() {            
+
+        function x18_setting() {
             sw_master("x18_record.aspx?pid=<%=Me.currentx18id%>", "Images/label.png", true);
         }
         function x18_framework() {
@@ -210,18 +200,18 @@
             sw_master("b07_create.aspx?masterprefix=x25&masterpid=" + getpid(true), "Images/comment.png", true);
 
         }
-        function workflow() {            
-            if (getpid(true) == "")             
+        function workflow() {
+            if (getpid(true) == "")
                 return;
-            
+
             sw_master("workflow_dialog.aspx?prefix=x25&pid=" + getpid(true), "Images/workflow.png", true);
         }
 
         function getpid(shall_alert) {
             var pid = document.getElementById("<%=hiddatapid.clientid%>").value;
-            if (pid == "" && shall_alert==true) {
+            if (pid == "" && shall_alert == true) {
                 alert("Musíte vybrat záznam.");
-                return("");
+                return ("");
             }
 
             return (pid);
@@ -243,14 +233,14 @@
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/label_32.png" />
                 </div>
-                <div class="commandcell" style="min-width:25px;text-align:center;">
+                <div class="commandcell" style="min-width: 25px; text-align: center;">
                     <asp:Label ID="lblVirtualCount" runat="server" ToolTip="Počet záznamů v aktuálním přehledu"></asp:Label>
                 </div>
                 <div class="commandcell">
-                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px; " ToolTip="Štítek"></asp:DropDownList>
+                    <asp:DropDownList ID="x18ID" runat="server" AutoPostBack="false" BackColor="Yellow" onchange="x18id_onchange(this)" DataTextField="x18Name" DataValueField="pid" Style="width: 220px;" ToolTip="Štítek"></asp:DropDownList>
 
                 </div>
-                <div class="commandcell" style="padding-left:10px;">
+                <div class="commandcell" style="padding-left: 10px;">
                     <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" runat="server" Style="z-index: 3000;" ExpandAnimation-Duration="0" ExpandAnimation-Type="none" ClickToOpen="true">
                         <Items>
 
@@ -259,7 +249,7 @@
                                     <telerik:RadMenuItem Value="cmdNew" Text="Nový" NavigateUrl="javascript:x25_record(0);" ImageUrl="Images/new.png"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem Value="cmdEdit" Text="Upravit" NavigateUrl="javascript:record_edit();" ImageUrl="Images/edit.png"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png" Visible="false"></telerik:RadMenuItem>
-                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>                                    
+                                    <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem Value="cmdWorkflow" Text="Zapsat komentář/souborovou přílohu" NavigateUrl="javascript:b07_create();" ImageUrl="Images/comment.png"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem IsSeparator="true"></telerik:RadMenuItem>
                                     <telerik:RadMenuItem Value="cmdReport" Text="Tisková sestava" NavigateUrl="javascript:report();" ImageUrl="Images/report.png"></telerik:RadMenuItem>
@@ -269,25 +259,104 @@
                             </telerik:RadMenuItem>
                             <telerik:RadMenuItem Text="KALENDÁŘ" Value="scheduler" ImageUrl="Images/calendar.png" ToolTip="Přepnout do kalendáře" Visible="false"></telerik:RadMenuItem>
 
+                            <telerik:RadMenuItem Text="DALŠÍ AKCE" Value="more" ImageUrl="Images/arrow_down_menu.png" >
+                                <GroupSettings OffsetX="-150"/>
+                                <ContentTemplate>
+                                    <div style="padding:10px;background-color:#f0f8ff;border:solid 1px black;">
+                                    <div class="content-box3">
+                                       
+                                        <div class="content">
+                                            <button type="button" id="cmdSetting" runat="server" onclick="x18_setting()">
+                                            <img src="Images/label.png" />Nastavení štítku</button>
+                                        <button type="button" onclick="x18_framework()" id="cmdAdmin" runat="server" style="margin-left: 30px;">
+                                            <img src="Images/setting.png" />Administrace všech štítků</button>
+                                        </div>
+                                    </div>
+                                    <div class="content-box3">
+                                        <div class="title">
+                                            <img src="Images/query.png" />
+                                            <span>Filtrování záznamů</span>
+                                        </div>
+                                        <div class="content">
+                                            <div class="div6">
+                                                <asp:DropDownList ID="cbxX25Validity" runat="server" AutoPostBack="true">
+                                                    <asp:ListItem Text="Otevřené i archivované záznamy" Value="1" Selected="true"></asp:ListItem>
+                                                    <asp:ListItem Text="Pouze otevřené záznamy" Value="2"></asp:ListItem>
+                                                    <asp:ListItem Text="Pouze archivované záznamy" Value="3"></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div style="margin-top: 20px;">
+                                                <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
+                                                </asp:DropDownList>
+                                                <uc:periodcombo ID="period1" runat="server" Width="160px" Visible="false"></uc:periodcombo>
+                                            </div>
+                                        </div>
+                                    </div>
 
+
+                                    <asp:Panel ID="panExport" runat="server" CssClass="content-box3" Style="margin-top: 20px;">
+                                        <div class="title">
+                                            <img src="Images/export.png" />
+                                            <span>Export záznamů v aktuálním přehledu</span>
+
+                                        </div>
+                                        <div class="content">
+
+                                            <img src="Images/export.png" alt="export" />
+                                            <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
+
+                                            <img src="Images/xls.png" alt="xls" />
+                                            <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+                                            <img src="Images/pdf.png" alt="pdf" />
+                                            <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+                                            <img src="Images/doc.png" alt="doc" />
+                                            <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
+
+
+                                        </div>
+                                    </asp:Panel>
+                                    <div class="content-box3" style="margin-top: 20px;">
+                                        <div class="title">
+                                            <img src="Images/griddesigner.png" />
+                                            <span>Nastavení přehledu</span>
+
+                                        </div>
+                                        <div class="content">
+
+
+
+
+                                            <div class="div6">
+                                                <span class="val">Stránkování přehledu:</span>
+                                                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
+                                                    <asp:ListItem Text="20"></asp:ListItem>
+                                                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                                    <asp:ListItem Text="100"></asp:ListItem>
+                                                    <asp:ListItem Text="200"></asp:ListItem>
+                                                    <asp:ListItem Text="500"></asp:ListItem>
+                                                </asp:DropDownList>
+
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </ContentTemplate>
+                            </telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenu>
 
                 </div>
 
-                
-                
 
-                <div class="commandcell">
 
-                    <button type="button" class="show_hide1" style="padding: 4px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;font: normal 12px 'Segoe UI', Arial, Helvetica, sans-serif;">
-                        <img src="Images/arrow_down_menu.png" />
-                        <asp:Label ID="lblGridHeader" runat="server" Text="DALŠÍ AKCE"></asp:Label>
-                        
 
-                    </button>
-                </div>
-                
+
 
                 <div class="commandcell" id="divQueryContainer"></div>
             </asp:Panel>
@@ -309,88 +378,7 @@
             </div>
             <div style="clear: both; width: 100%;"></div>
 
-            <div class="slidingDiv1" style="display: none; background: #f0f8ff;">
-                <div class="div6">
-                    <button type="button" id="cmdSetting" runat="server" onclick="x18_setting()">
-                        <img src="Images/label.png" />Nastavení štítku</button>
-                    <button type="button" onclick="x18_framework()" id="cmdAdmin" runat="server" style="margin-left: 30px;">
-                        <img src="Images/setting.png" />Administrace štítků</button>
-                </div>
-                <div class="content-box3">
-                    <div class="title">
-                        <img src="Images/query.png" />
-                        <span>Filtrování záznamů</span>
-                    </div>
-                    <div class="content">
-                        <div class="div6">
-                            <asp:DropDownList ID="cbxX25Validity" runat="server" AutoPostBack="true">
-                                <asp:ListItem Text="Otevřené i archivované záznamy" Value="1" Selected="true"></asp:ListItem>
-                                <asp:ListItem Text="Pouze otevřené záznamy" Value="2"></asp:ListItem>
-                                <asp:ListItem Text="Pouze archivované záznamy" Value="3"></asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-                        <div style="margin-top: 20px;">
-                            <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server" ToolTip="Druh filtrovaného období">
-                            </asp:DropDownList>
-                            <uc:periodcombo ID="period1" runat="server" Width="160px" Visible="false"></uc:periodcombo>
-                        </div>
-                    </div>
-                </div>
-
-
-                <asp:Panel ID="panExport" runat="server" CssClass="content-box3" Style="margin-top: 20px;">
-                    <div class="title">
-                        <img src="Images/export.png" />
-                        <span>Export záznamů v aktuálním přehledu</span>
-
-                    </div>
-                    <div class="content">
-
-                        <img src="Images/export.png" alt="export" />
-                        <asp:LinkButton ID="cmdExport" runat="server" Text="Export" ToolTip="Export do MS EXCEL tabulky, plný počet záznamů" />
-
-                        <img src="Images/xls.png" alt="xls" />
-                        <asp:LinkButton ID="cmdXLS" runat="server" Text="XLS" ToolTip="Export do XLS vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-                        <img src="Images/pdf.png" alt="pdf" />
-                        <asp:LinkButton ID="cmdPDF" runat="server" Text="PDF" ToolTip="Export do PDF vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-                        <img src="Images/doc.png" alt="doc" />
-                        <asp:LinkButton ID="cmdDOC" runat="server" Text="DOC" ToolTip="Export do DOC vč. souhrnů s omezovačem na maximálně 2000 záznamů" />
-
-
-                    </div>
-                </asp:Panel>
-                <div class="content-box3" style="margin-top: 20px;">
-                    <div class="title">
-                        <img src="Images/griddesigner.png" />
-                        <span>Nastavení přehledu</span>
-
-                    </div>
-                    <div class="content">
-
-
-
-
-                        <div class="div6">
-                            <span class="val">Stránkování přehledu:</span>
-                            <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
-                                <asp:ListItem Text="20"></asp:ListItem>
-                                <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                <asp:ListItem Text="100"></asp:ListItem>
-                                <asp:ListItem Text="200"></asp:ListItem>
-                                <asp:ListItem Text="500"></asp:ListItem>
-                            </asp:DropDownList>
-
-
-
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
+           
 
             <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid" OnRowSelected="RowSelected" OnRowDblClick="RowDoubleClick" Skin="Default"></uc:datagrid>
 

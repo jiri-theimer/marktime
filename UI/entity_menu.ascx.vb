@@ -280,6 +280,7 @@ Public Class entity_menu
         End If
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
+        mi.GroupSettings.OffsetX = -270
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky projektu", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika projektu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p41&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
@@ -555,6 +556,7 @@ Public Class entity_menu
         ami("Odeslat e-mail", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
+        mi.GroupSettings.OffsetX = -200
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky klienta", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika klienta", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p28&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")
@@ -625,6 +627,7 @@ Public Class entity_menu
         ami("Odeslat e-mail", "cmdMail", "javascript:menu_sendmail();", "Images/email.png", mi, , True)
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
+        mi.GroupSettings.OffsetX = -200
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky osoby", "", "javascript:page_setting()", "Images/setting.png", mi)
         If cRec.j02IsIntraPerson Then
             If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
@@ -813,6 +816,7 @@ Public Class entity_menu
 
 
         mi = ami("DALŠÍ", "more", "", "Images/arrow_down_menu.png", Nothing)
+        mi.GroupSettings.OffsetX = -270
         If hidSource.Value <> "2" Then ami("Nastavení vzhledu stránky úkolu", "", "javascript:page_setting()", "Images/setting.png", mi)
         If Me.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Pivot) Then
             ami("WORKSHEET statistika úkolu", "cmdPivot", "p31_sumgrid.aspx?masterprefix=p56&masterpid=" & cRec.PID.ToString, "Images/pivot.png", mi, , True, "_top")

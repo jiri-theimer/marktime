@@ -3,7 +3,7 @@
     
     <table cellpadding="5" cellspacing="2" style="width: 100%;" id="responsive">    
         <tr class="trHover" id="trB02Name" runat="server">
-            <td style="width:200px;">
+            <td style="width:140px;">
                 <span class="lbl"><img src="Images/workflow.png" /> Aktuální stav (workflow):</span>
             </td>
             <td>
@@ -13,7 +13,7 @@
             </td>
         </tr>
         <tr class="trHover" id="trCode" runat="server">
-            <td style="width:200px;">
+            <td style="width:140px;">
                 <span class="lbl"><img src="Images/type_text.png" /> Kód:</span>
             </td>
             <td>
@@ -21,7 +21,7 @@
             </td>
         </tr>
         <tr class="trHover" id="trName" runat="server">
-            <td style="width:200px;">
+            <td style="width:140px;">
                 <span class="lbl"><img src="Images/type_text.png" /> Název:</span>
             </td>
             <td>
@@ -58,7 +58,7 @@
             <ItemTemplate>
            
                 <tr class="trHover" style="vertical-align: top;">
-                    <td style="width:200px;">
+                    <td style="width:140px;">
 
                         <asp:Label ID="BindName" runat="server" CssClass="lbl"></asp:Label>
 

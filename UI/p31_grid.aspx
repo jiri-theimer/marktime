@@ -222,7 +222,7 @@
                             <telerik:RadMenuItem Value="cmdSplit" Text="<%$Resources:p31_grid,Rozdelit %>" NavigateUrl="javascript:record_split();" ImageUrl="Images/split.png"></telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenuItem>
-                    <telerik:RadMenuItem Text="Akce pro vybrané záznamy (zaškrtlé)" Value="recs" ImageUrl="Images/arrow_down_menu.png">
+                    <telerik:RadMenuItem Text="Vybrané (zaškrtlé) záznamy" Value="recs" ImageUrl="Images/arrow_down_menu.png">
                         <Items>
                             <telerik:RadMenuItem Value="cmdClone" Text="Kopírovat záznamy" NavigateUrl="javascript:record_clone();" ImageUrl="Images/copy.png"></telerik:RadMenuItem>
                             <telerik:RadMenuItem Value="cmdApprove" Text="Schvalovat/pře-schvalovat/fakturovat úkony" NavigateUrl="javascript:approving();" ImageUrl="Images/approve.png"></telerik:RadMenuItem>
@@ -230,6 +230,7 @@
                         </Items>
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Další akce nad přehledem" Value="more" ImageUrl="Images/arrow_down_menu.png">
+                        <GroupSettings OffsetX="-220" />
                         <ContentTemplate>
                             <div class="content-box3">
                                 <div class="title">

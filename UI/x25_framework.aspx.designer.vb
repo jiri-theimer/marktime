@@ -77,51 +77,6 @@ Partial Public Class x25_framework
     Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''lblGridHeader control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblGridHeader As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''MasterEntity control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''CurrentPeriodQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''CurrentQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''cmdCĺearFilter control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
-
-    '''<summary>
     '''cmdSetting control.
     '''</summary>
     '''<remarks>
@@ -219,6 +174,42 @@ Partial Public Class x25_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''MasterEntity control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents MasterEntity As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''CurrentPeriodQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CurrentPeriodQuery As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''CurrentQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CurrentQuery As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''cmdCĺearFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdCĺearFilter As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''grid1 control.

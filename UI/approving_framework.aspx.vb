@@ -89,7 +89,7 @@ Public Class approving_framework
                     basUI.SelectRadiolistValue(Me.cbxScrollingFlag, .GetUserParam("approving_framework-cbxScrollingFlag", "2"))
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-approve")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-approve")
-                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("approving_framework-query-on-top", "0"))
+                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("approving_framework-query-on-top", "1"))
                 End With
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
