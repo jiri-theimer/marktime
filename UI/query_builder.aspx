@@ -41,13 +41,13 @@
     </div>
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server" MultiPageID="RadMultiPage1" ShowBaseLine="true" Skin="MetroTouch">
         <Tabs>
-            <telerik:RadTab Text="Filtrovací podmínka" Value="j70"></telerik:RadTab>
+            <telerik:RadTab Text="Filtrovací podmínka" Value="query"></telerik:RadTab>
             <telerik:RadTab Text="Nastavení sloupců" Value="columns" Selected="true"></telerik:RadTab>
             <telerik:RadTab Text="Přístupová práva" Value="perm"></telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
     <telerik:RadMultiPage ID="RadMultiPage1" runat="server">
-        <telerik:RadPageView ID="j70" runat="server">
+        <telerik:RadPageView ID="query" runat="server">
 
             <asp:Panel ID="panEditHeader" runat="server">
             </asp:Panel>
@@ -105,7 +105,7 @@
             <asp:Button ID="cmdClear" runat="server" CssClass="cmd" Text="Vyčistit podmínku filtru" UseSubmitBehavior="false" Style="margin-left: 40px;" />
                     <asp:CheckBox ID="j70IsNegation" runat="server" Text="Negovat podmínku celého filtru" ToolTip="Pokud zaškrtnuto, filtr vrací záznamy nevyhovující filtrovací podmínce." Style="float: right;" />
                 </div>
-                <div class="content">
+                <div class="content" >
                     <table cellpadding="3" cellspacing="2">
                         <asp:Repeater ID="rpJ71" runat="server">
                             <ItemTemplate>
@@ -231,6 +231,7 @@
 
     <asp:HiddenField ID="hidPrefix" runat="server" />
     <asp:HiddenField ID="hidNewJ70Name" runat="server" />
+    <asp:HiddenField ID="hidOnlyQuery" runat="server" Value="0" />
     <asp:Button ID="cmdSaveNewTemplate" runat="server" style="display:none;" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

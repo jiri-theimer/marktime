@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -21,12 +22,7 @@
         $(document).ready(function () {
 
 
-            <%If Me.chkQueryOnTop.Checked then%>
-            $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
-            <%if Me.clue_query.Visible then%>
-            $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
-            <%end If%>
-            <%End If%>
+           
 
 
 
@@ -127,11 +123,7 @@
 
         }
 
-        function querybuilder() {
-            var j70id = "<%=Me.CurrentJ70ID%>";
-            sw_master("query_builder.aspx?prefix=<%=Me.CurrentPrefix%>&pid=" + j70id, "Images/query.png");
-            return (false);
-        }
+      
 
         function report() {
             var pids = GetAllSelectedPIDs();
@@ -191,7 +183,8 @@
         <div class="commandcell" style="margin-left: 6px; margin-right: 6px;">
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
         </div>
-        <div class="commandcell" id="divQueryContainer">            
+        <div class="commandcell" id="divQueryContainer">     
+            <uc:mygrid id="query1" runat="server" prefix="p31" masterprefix="" x36key="approving_framework-j70id" OnlyQuery="true" ReloadUrl="approving_framework.aspx"></uc:mygrid>       
         </div>
 
         <div class="commandcell" style="margin-left: 10px;">
@@ -207,12 +200,12 @@
                     </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem Text="Další akce" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
-
+                        <GroupSettings OffsetX="-250" />
                         <ContentTemplate>
                             <div class="content-box3">
                                 <div class="title">
                                     <img src="Images/query.png" />
-                                    <span>Filtrování dat</span>
+                                    <span>Dodatečné filtrování dat</span>
                                 </div>
                                 <div class="content">
                                     <div class="div6">
@@ -221,12 +214,8 @@
                                         <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                         <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                     </div>
-                                    <div class="div6">
-                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                                        <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">
-                                            <img src="Images/query.png" />Návrhář filtrů</button>
-                                    </div>
-                                    <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
+                                    
+                                    
                                 </div>
                             </div>
                             <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
@@ -300,7 +289,7 @@
         <div style="clear: both;"></div>
 
         <div style="float: left; padding-left: 6px;">
-            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+            
             <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
         </div>
         <div style="clear: both;"></div>

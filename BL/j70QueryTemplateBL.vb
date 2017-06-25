@@ -3,7 +3,7 @@
     Function Save(cRec As BO.j70QueryTemplate, lisJ71 As List(Of BO.j71QueryTemplate_Item), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
     Function Load(intPID As Integer) As BO.j70QueryTemplate
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "") As IEnumerable(Of BO.j70QueryTemplate)
+    Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "", Optional onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery) As IEnumerable(Of BO.j70QueryTemplate)
     Function GetList_j71(intPID As Integer) As IEnumerable(Of BO.j71QueryTemplate_Item)
     Function GetList_OtherQueryItem(x29id As BO.x29IdEnum) As List(Of BO.OtherQueryItem)
 
@@ -36,7 +36,7 @@ Class j70QueryTemplateBL
         Return _cDL.Delete(intPID)
     End Function
 
-    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "") As System.Collections.Generic.IEnumerable(Of BO.j70QueryTemplate) Implements Ij70QueryTemplateBL.GetList
+    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "", Optional onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery) As System.Collections.Generic.IEnumerable(Of BO.j70QueryTemplate) Implements Ij70QueryTemplateBL.GetList
         Return _cDL.GetList(myQuery, _x29id, strMasterPrefix)
     End Function
 

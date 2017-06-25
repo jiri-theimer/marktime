@@ -50,6 +50,15 @@ Partial Public Class approving_framework
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''query1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents query1 As Global.UI.mygrid
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
@@ -75,33 +84,6 @@ Partial Public Class approving_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents x18_querybuilder_info As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j70ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''chkQueryOnTop control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkQueryOnTop As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''panExport control.
@@ -192,15 +174,6 @@ Partial Public Class approving_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents chkFirstLastCount As Global.System.Web.UI.WebControls.CheckBox
-
-    '''<summary>
-    '''clue_query control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''CurrentQuery control.

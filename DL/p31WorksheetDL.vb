@@ -1150,7 +1150,7 @@
 
     End Function
 
-    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, Optional intJ70ID As Integer = 0, Optional strX18Value As String = "") As IEnumerable(Of BO.ApprovingFramework)
+    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, Optional strX18Value As String = "") As IEnumerable(Of BO.ApprovingFramework)
         Dim pars As New DbParameters
         Dim s As String = ""
         Select Case x29id
@@ -1206,20 +1206,20 @@
         Dim strW As String = GetSQLWHERE(myQuery, pars)
         If strW <> "" Then s += " WHERE " & strW
 
-        If intJ70ID <> 0 Then
-            Dim strInW As String = bas.CompleteSqlJ70(_cDB, intJ70ID, _curUser)
-            Select Case x29id
-                Case BO.x29IdEnum.p41Project And strInW <> ""
-                    s += " AND a.p41ID IN (SELECT a.p41ID FROM p41Project a LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID WHERE " & strInW & ")"
-                Case BO.x29IdEnum.p28Contact And strInW <> ""
-                    s += " AND p41.p28ID_Client IN (SELECT a.p28ID FROM p28Contact a LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID WHERE " & strInW & ")"
-                Case BO.x29IdEnum.j02Person And strInW <> ""
-                    s += " AND a.j02ID IN (SELECT a.j02ID FROM j02Person a LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID WHERE " & strInW & ")"
-                Case BO.x29IdEnum.p56Task And strInW <> ""
-                    s += " AND a.p56ID IN (SELECT a.p56ID FROM p56Task a LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID WHERE " & strInW & ")"
-                Case Else
-            End Select
-        End If
+        ''If intJ70ID <> 0 Then
+        ''    Dim strInW As String = bas.CompleteSqlJ70(_cDB, intJ70ID, _curUser)
+        ''    Select Case x29id
+        ''        Case BO.x29IdEnum.p41Project And strInW <> ""
+        ''            s += " AND a.p41ID IN (SELECT a.p41ID FROM p41Project a LEFT OUTER JOIN p41Project_FreeField p41free ON a.p41ID=p41free.p41ID WHERE " & strInW & ")"
+        ''        Case BO.x29IdEnum.p28Contact And strInW <> ""
+        ''            s += " AND p41.p28ID_Client IN (SELECT a.p28ID FROM p28Contact a LEFT OUTER JOIN p28Contact_FreeField p28free ON a.p28ID=p28free.p28ID WHERE " & strInW & ")"
+        ''        Case BO.x29IdEnum.j02Person And strInW <> ""
+        ''            s += " AND a.j02ID IN (SELECT a.j02ID FROM j02Person a LEFT OUTER JOIN j02Person_FreeField j02free ON a.j02ID=j02free.j02ID WHERE " & strInW & ")"
+        ''        Case BO.x29IdEnum.p56Task And strInW <> ""
+        ''            s += " AND a.p56ID IN (SELECT a.p56ID FROM p56Task a LEFT OUTER JOIN p56Task_FreeField p56free ON a.p56ID=p56free.p56ID WHERE " & strInW & ")"
+        ''        Case Else
+        ''    End Select
+        ''End If
         If strX18Value <> "" Then
             Dim strInW As String = bas.TrimWHERE(bas.CompleteX18QuerySql(BO.BAS.GetDataPrefix(x29id), strX18Value))
             Select Case x29id

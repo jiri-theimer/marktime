@@ -4,11 +4,12 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:panel style="background-color: white;">
+    <div style="background-color: white;">
         <div style="float: left;">
             <img src="Images/pivot_32.png" title="Summary worksheet přehledy" />
 
@@ -17,7 +18,7 @@
 
 
             <asp:DropDownList ID="j77ID" runat="server" AutoPostBack="true" DataValueField="pid" DataTextField="j77Name" Style="width: 250px;" ToolTip="Pojmenovaná šablona statistiky"></asp:DropDownList>
-            <button type="button" onclick="templatebuilder()">Nastavení statistiky</button>
+            <button type="button" onclick="templatebuilder()" title="Nastavení statistiky" class="button-link"><img src="Images/setting.png" /></button>
 
 
         </div>
@@ -37,7 +38,8 @@
 
         </div>
 
-        <div class="commandcell" id="divQueryContainer">        
+        <div class="commandcell" id="divQueryContainer"> 
+            <uc:mygrid id="query1" runat="server" prefix="p31" masterprefix="" x36key="p31-j70id" OnlyQuery="true"></uc:mygrid>              
         </div>
 
         <div class="commandcell">
@@ -46,11 +48,12 @@
 
 
                     <telerik:RadMenuItem Text="Akce nad přehledem" ImageUrl="Images/menuarrow.png" Value="more" PostBack="false">
+                        <GroupSettings OffsetX="-250" />
                         <ContentTemplate>                            
                             <div class="content-box3">
                                 <div class="title">
                                     <img src="Images/query.png" />
-                                    <span>Filtrování dat</span>
+                                    <span>Dodatečné filtrování dat</span>
                                 </div>
                                 <div class="content">
                                     <div class="div6">
@@ -67,11 +70,8 @@
                                         <asp:ListItem Text="Pouze kusovník" Value="kusovnik"></asp:ListItem>
                                     </asp:DropDownList>
                                     </div>
-                                    <div class="div6">
-                                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                                    <button type="button" runat="server" id="cmdQuery" onclick="querybuilder()">Návrhář filtrů</button>
-                                    </div>
-                                    <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="content-box3">
@@ -166,7 +166,7 @@
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
     <asp:HiddenField ID="hidJ74ID" runat="server" />
-    <asp:HiddenField ID="hidJ70ID" runat="server" />
+    
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />
     <asp:HiddenField ID="hidFrom" runat="server" />
@@ -185,12 +185,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            <%If Me.chkQueryOnTop.Checked then%>
-            $('#<%=Me.j70ID.ClientID%>').prependTo('#divQueryContainer');
-            <%if Me.clue_query.Visible then%>
-            $('#<%=Me.clue_query.ClientID%>').prependTo('#divQueryContainer');
-            <%end If%>
-            <%End If%>
+           
         });
 
         $(window).load(function () {
@@ -227,18 +222,14 @@
 
         function go2grid(pid, sga) {
             var sgf = document.getElementById("<%=hidSGF.ClientID%>").value;
-            var j70id = "<%=hidJ70ID.Value%>";
+            var j70id = "<%=query1.CurrentJ70ID%>";
             var masterprefix = document.getElementById("<%=hidMasterPrefix.ClientID%>").value;
             var masterpid = document.getElementById("<%=hidMasterPID.ClientID%>").value;
 
             location.replace("p31_grid.aspx?sgf=" + sgf + "&sgv=" + pid + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&sga=" + encodeURI(sga));
         }
 
-        function querybuilder() {
-            var j70id = "<%=hidJ70ID.Value%>";
-            sw_master("query_builder.aspx?prefix=p31&pid=" + j70id, "Images/query.png");
-
-        }
+       
 
         function hardrefresh(pid, flag) {
 

@@ -131,13 +131,13 @@ Partial Public Class query_builder
     Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
 
     '''<summary>
-    '''j70 control.
+    '''query control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j70 As Global.Telerik.Web.UI.RadPageView
+    Protected WithEvents query As Global.Telerik.Web.UI.RadPageView
 
     '''<summary>
     '''panEditHeader control.
@@ -525,6 +525,15 @@ Partial Public Class query_builder
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidNewJ70Name As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidOnlyQuery control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidOnlyQuery As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''cmdSaveNewTemplate control.

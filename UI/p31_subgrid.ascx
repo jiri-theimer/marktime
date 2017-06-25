@@ -2,6 +2,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <asp:Panel runat="server" ID="panCommand" CssClass="div6">
     <div class="commandcell">
@@ -17,8 +18,8 @@
         <asp:ImageButton ID="cmdClearExplicitPeriod" runat="server" ImageUrl="Images/close.png" ToolTip="Zrušit filtr podle kalendáře" CssClass="button-link" />
     </div>
     <div class="commandcell" id="divQueryContainer">
-        <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
-        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 180px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+        <uc:mygrid id="designer1" runat="server" prefix="p31" masterprefix="" x36key="p31_subgrid-j70id"></uc:mygrid>
+       
     </div>
 
 
@@ -32,7 +33,7 @@
                         <telerik:RadMenuItem Text="Rozdělit časový úkon na 2 kusy" Value="split" NavigateUrl="javascript:p31_split()"></telerik:RadMenuItem>
                     </Items>
                 </telerik:RadMenuItem>
-                <telerik:RadMenuItem Text="Akce pro vybrané záznamy" Value="akce" ImageUrl="Images/menuarrow.png">
+                <telerik:RadMenuItem Text="Vybrané záznamy" Value="akce" ImageUrl="Images/menuarrow.png">
                     <Items>
                         <telerik:RadMenuItem Text="Kopírovat" Value="clone" NavigateUrl="javascript:p31_clone()"></telerik:RadMenuItem>
                         <telerik:RadMenuItem Text="Schvalovat/pře-schvalovat označené" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
@@ -47,7 +48,7 @@
                         <div class="content-box3">
                             <div class="title">
                                 <img src="Images/query.png" />
-                                <span>Filtrování záznamů</span>
+                                <span>Dodatečné filtrování záznamů</span>
                             </div>
                             <div class="content">
                                 <div class="div6">
@@ -56,13 +57,7 @@
                                     <asp:ImageButton ID="cmdClearX18" runat="server" ToolTip="Vyčistit štítkovací filtr" ImageUrl="Images/delete.png" Visible="false" CssClass="button-link" />
                                     <asp:Label ID="x18_querybuilder_info" runat="server" ForeColor="Red"></asp:Label>
                                 </div>
-                                <div id="divJ70" class="div6">
-                                    
-                                    <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">
-                                        <img src="Images/query.png" />Návrhář filtrů</button>
-
-                                </div>
-                                <asp:CheckBox ID="chkQueryOnTop" runat="server" Text="Nabídku filtrů zobrazovat nad přehledem" AutoPostBack="true" CssClass="chk" />
+                                
                             </div>
                         </div>
                         <asp:Panel ID="panExport" runat="server" CssClass="content-box3">
@@ -93,8 +88,7 @@
                                 <img src="Images/griddesigner.png" />Sloupce v přehledu
                             </div>
                             <div class="content">
-                                <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="min-width: 200px;" ToolTip="Pojmenované šablony sloupců"></asp:DropDownList>
-                                <button type="button" id="linkGridDesigner" runat="server" onclick="p31_subgrid_columns()">Sloupce</button>
+                                
 
                                 <asp:Panel ID="panGroupBy" runat="server" CssClass="div6">
                                     <span><%=Resources.common.DatoveSouhrny%>:</span>
@@ -173,9 +167,9 @@
 <asp:HiddenField ID="hidNeedRefreshP31_subgrid" runat="server" />
 <asp:HiddenField ID="hidExplicitDateFrom" runat="server" Value="01.01.1900" />
 <asp:HiddenField ID="hidExplicitDateUntil" runat="server" Value="01.01.3000" />
-<asp:HiddenField ID="hidJ74RecordState" runat="server" />
+
 <asp:HiddenField ID="hidDefaultSorting" runat="server" />
-<asp:HiddenField ID="hidJ74ID" runat="server" />
+
 <asp:HiddenField ID="hidDrillDownField" runat="server" />
 <asp:HiddenField ID="hidCols" runat="server" />
 <asp:HiddenField ID="hidSumCols" runat="server" />
@@ -188,12 +182,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        <%If Not Me.chkQueryOnTop.Checked Then%>
-        $('#<%=Me.j70ID.ClientID%>').prependTo('#divJ70');
-        <%If Me.clue_query.Visible Then%>
-        $('#<%=Me.clue_query.ClientID%>').prependTo('#divCurrentQuery');
-        <%End If%>
-        <%End If%>
+        
 
 
 
@@ -206,11 +195,7 @@
 
     }
 
-    function querybuilder() {
-        var j70id = "<%=Me.CurrentJ70ID%>";
-        p31_subgrid_querybuilder(j70id);
-
-    }
+ 
 
     function approving() {
         var pids = GetAllSelectedPIDs();
@@ -240,12 +225,9 @@
         return (pids);
     }
 
-    function p31_subgrid_columns() {
-        p31_subgrid_setting(document.getElementById("<%=Me.j74id.ClientID%>").value);
-        //return (false);
-    }
+   
     function p31_subgrid_query() {
-        p31_subgrid_setting(document.getElementById("<%=Me.j70ID.ClientID%>").value);
+        alert("prázdné");
         //return (false);
     }
 
@@ -272,7 +254,7 @@
     }
 
     function drilldown() {
-        var j70id = "<%=Me.CurrentJ70ID%>";
+        var j70id = "<%=designer1.CurrentJ70ID%>";
 
         var w = screen.availWidth - 100;
         var masterprefix = "<%=BO.BAS.GetDataPrefix(Me.EntityX29ID)%>";
@@ -280,8 +262,7 @@
         var queryflag = document.getElementById("<%=hidMasterTabAutoQueryFlag.ClientID%>").value;
 
         window.open("p31_sumgrid.aspx?j70id=" + j70id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&p31tabautoquery=" + queryflag, "_top");
-        //sw_local("p31_drilldown.aspx?j70id=" + j70id + "&j74id=" + j74id + "&masterprefix=" + masterprefix + "&masterpid=" + masterpid + "&tabqueryflag=" + queryflag, "Images/pivot.png", true);
-        //return (false);
+       
     }
 
 

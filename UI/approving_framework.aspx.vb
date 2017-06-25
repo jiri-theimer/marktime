@@ -17,14 +17,7 @@ Public Class approving_framework
             Return BO.BAS.GetX29FromPrefix(Me.hidCurPrefix.Value)
         End Get
     End Property
-    Public Property CurrentJ70ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
-        End Set
-    End Property
+    
     Private Sub approving_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
@@ -32,13 +25,20 @@ Public Class approving_framework
     
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        query1.Factory = Master.Factory
+
         If Not Page.IsPostBack Then
             With Master
-                .PageTitle = "Schvalování | Příprava podkladů k fakturaci"
+                .PageTitle = "Schvalovat, připravit fakturační podklady"
                 .SiteMenuValue = "p31_approving"
 
                 Dim lisPars As New List(Of String)
                 With lisPars
+                    .Add("approving_framework-j70id")
+                    .Add("p31_grid-period")
+                    .Add("p31_grid-periodtype")
+                    .Add("periodcombo-custom_query")
+
                     .Add("approving_framework-prefix")
                     .Add("approving_framework-pagesize")
                     .Add("approving_framework-scope")
@@ -46,17 +46,15 @@ Public Class approving_framework
                     .Add("approving_framework-groupby-j02")
                     .Add("approving_framework-groupby-p28")
                     .Add("approving_framework-kusovnik")
-                    .Add("periodcombo-custom_query")
-                    .Add("p31_grid-period")
+
+
                     .Add("approving_framework-filter_setting-p41")
                     .Add("approving_framework-filter_sql-p41")
                     .Add("approving_framework-filter_setting-p28")
                     .Add("approving_framework-filter_sql-p28")
                     .Add("approving_framework-filter_setting-j02")
                     .Add("approving_framework-filter_sql-j02")
-                    .Add("approving_framework-j70id-p41")
-                    .Add("approving_framework-j70id-p28")
-                    .Add("approving_framework-j70id-j02")
+                    
                     .Add("approving_framework-chkFirstLastCount")
                     .Add("approving_framework-cbxScrollingFlag")
                     .Add("x18_querybuilder-value-p41-approve")
@@ -67,7 +65,7 @@ Public Class approving_framework
                     .Add("x18_querybuilder-text-j02-approve")
                     .Add("x18_querybuilder-value-p56-approve")
                     .Add("x18_querybuilder-text-p56-approve")
-                    .Add("approving_framework-query-on-top")
+
                 End With
 
                 With .Factory.j03UserBL
@@ -80,7 +78,7 @@ Public Class approving_framework
                     Else
                         Me.CurrentPrefix = Request.Item("prefix")
                     End If
-                    SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("approving_framework-j70id-" & Me.CurrentPrefix)))
+
                     Me.tabs1.FindTabByValue(Me.CurrentPrefix).Selected = True
                     basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("approving_framework-pagesize", "50"))
                     basUI.SelectDropdownlistValue(Me.cbxScope, .GetUserParam("approving_framework-scope", "1"))
@@ -89,7 +87,7 @@ Public Class approving_framework
                     basUI.SelectRadiolistValue(Me.cbxScrollingFlag, .GetUserParam("approving_framework-cbxScrollingFlag", "2"))
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-" & Me.CurrentPrefix & "-approve")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-" & Me.CurrentPrefix & "-approve")
-                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("approving_framework-query-on-top", "1"))
+
                 End With
                 Select Case Me.CurrentX29ID
                     Case BO.x29IdEnum.p28Contact
@@ -97,43 +95,25 @@ Public Class approving_framework
                     Case BO.x29IdEnum.j02Person
                         Me.cbxGroupBy.Items.FindByValue("Client").Enabled = False
                         menu1.FindItemByValue("bin").Visible = False
+                       
                 End Select
-                cmdQuery.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
-                panExport.Visible = cmdQuery.Visible
+
+                panExport.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
+                query1.AllowSettingButton = panExport.Visible
 
             End With
             With Master.Factory.j03UserBL
+                Dim strJ70ID As String = Request.Item("j70id")
+                If strJ70ID = "" Then strJ70ID = .GetUserParam("approving_framework-j70id")
+                query1.RefreshData(BO.BAS.IsNullInt(strJ70ID))
                 SetupGrid(.GetUserParam("approving_framework-filter_setting-" + Me.CurrentPrefix), .GetUserParam("approving_framework-filter_sql-" + Me.CurrentPrefix))
             End With
 
         End If
-        'If Me.chkQueryOnTop.Checked Then
-        '    Dim ctl As New Control
-        '    ctl = Me.clue_query
-        '    Me.panCurrentQuery.Controls.Remove(Me.clue_query)
-        '    Me.placeQuery.Controls.Add(ctl)
-        '    ctl = New Control
-        '    ctl = Me.j70ID
-        '    Me.panJ70.Controls.Remove(Me.j70ID)
-        '    Me.placeQuery.Controls.Add(ctl)
-        'End If
+        
     End Sub
 
-    Private Sub SetupJ70Combo(intDef As Integer)
-        Dim mq As New BO.myQuery
-        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID)
-        j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
-        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        Me.clue_query.Visible = False
-        With Me.j70ID
-            If .SelectedIndex > 0 Then
-                .ToolTip = .SelectedItem.Text
-                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-                If Not chkQueryOnTop.Checked Then Me.clue_query.Visible = True
-            End If
-        End With
-    End Sub
+    
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
         With grid1
             .ClearColumns()
@@ -299,20 +279,17 @@ Public Class approving_framework
         End If
         mq.DateFrom = period1.DateFrom
         mq.DateUntil = period1.DateUntil
+        mq.j70ID = query1.CurrentJ70ID
 
 
-
-        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, Me.CurrentJ70ID, hidX18_value.Value)
+        Dim lis As IEnumerable(Of BO.ApprovingFramework) = Master.Factory.p31WorksheetBL.GetList_ApprovingFramework(Me.CurrentX29ID, mq, hidX18_value.Value)
 
         grid1.DataSource = lis
     End Sub
 
     Private Sub approving_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        basUIMT.RenderQueryCombo(Me.j70ID)
         Me.CurrentQuery.Text = ""
-        If Me.CurrentJ70ID > 0 Then
-            If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-        End If
+        
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
             cmdClearX18.Visible = True
@@ -392,10 +369,7 @@ Public Class approving_framework
 
     End Sub
 
-    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("approving_framework-j70id-" & Me.CurrentPrefix, j70ID.SelectedValue)
-        ReloadPage()
-    End Sub
+    
 
     Private Sub chkFirstLastCount_CheckedChanged(sender As Object, e As EventArgs) Handles chkFirstLastCount.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("approving_framework-chkFirstLastCount", BO.BAS.GB(Me.chkFirstLastCount.Checked))
@@ -413,8 +387,5 @@ Public Class approving_framework
         End With
         ReloadPage()
     End Sub
-    Private Sub chkQueryOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkQueryOnTop.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("approving_framework-query-on-top", BO.BAS.GB(Me.chkQueryOnTop.Checked))
-        ReloadPage()
-    End Sub
+    
 End Class

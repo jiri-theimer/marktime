@@ -16,10 +16,11 @@ Public Class p31_sumgrid
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        query1.Factory = Master.Factory
+
         If Not Page.IsPostBack Then
             Master.SiteMenuValue = "p31_pivot"
             Master.neededPermission = BO.x53PermValEnum.GR_P31_Pivot
-            hidJ70ID.Value = Request.Item("j70id")
 
             hidMasterPID.Value = Request.Item("masterpid")
             hidMasterPrefix.Value = Request.Item("masterprefix")
@@ -32,7 +33,7 @@ Public Class p31_sumgrid
                 Else
                     Me.MasterRecord.Text = "Vybrané záznamy"
                 End If
-                
+
                 Select Case hidMasterPrefix.Value
                     Case "p41" : imgEntity.ImageUrl = "Images/project.png"
                     Case "j02" : imgEntity.ImageUrl = "Images/person.png"
@@ -57,7 +58,6 @@ Public Class p31_sumgrid
                 .Add("p31_grid-tabqueryflag")
                 .Add("x18_querybuilder-value-p31-p31grid")
                 .Add("x18_querybuilder-text-p31-p31grid")
-                .Add("p31_sumgrid-query-on-top")
             End With
 
 
@@ -70,18 +70,22 @@ Public Class p31_sumgrid
 
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p31_sumgrid-pagesize", "100"))
                 Me.chkFirstLastCount.Checked = BO.BAS.BG(.GetUserParam("p31_sumgrid-chkFirstLastCount", "1"))
-                SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
+
+                Dim strJ70ID As String = Request.Item("j70id")
+                If strJ70ID = "" Then strJ70ID = .GetUserParam("p31-j70id")
+                query1.RefreshData(BO.BAS.IsNullInt(strJ70ID))
+
                 period1.SetupData(Master.Factory, .GetUserParam("periodcombo-custom_query"))
                 period1.SelectedValue = .GetUserParam("p31_grid-period")
                 basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("p31_grid-periodtype", "p31Date"))
 
                 SetupJ77Combo(.GetUserParam("p31_sumgrid-j77id"))
 
-                
+
                 hidGridColumnSql.Value = .GetUserParam("p31_grid-filter_completesql")
                 hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
                 Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
-                Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_sumgrid-query-on-top", "1"))
+
             End With
 
 
@@ -89,16 +93,7 @@ Public Class p31_sumgrid
             RenderQueryInfo()
 
         End If
-        'If Me.chkQueryOnTop.Checked Then
-        '    Dim ctl As New Control
-        '    ctl = Me.clue_query
-        '    Me.panCurrentQuery.Controls.Remove(Me.clue_query)
-        '    Me.placeQuery.Controls.Add(ctl)
-        '    ctl = New Control
-        '    ctl = Me.j70ID
-        '    Me.panJ70.Controls.Remove(Me.j70ID)
-        '    Me.placeQuery.Controls.Add(ctl)
-        'End If
+        query1.ReloadUrl = GetReloadedPage()
     End Sub
 
 
@@ -137,7 +132,7 @@ Public Class p31_sumgrid
                 Case Else
 
             End Select
-            .j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
+            .j70ID = query1.CurrentJ70ID
 
             '.ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
             .MG_AdditionalSqlFROM = Me.hidFrom.Value
@@ -309,7 +304,7 @@ Public Class p31_sumgrid
                 hidDD2.Value = .j77DD2
                 hidSumCols.Value = .j77SumFields
                 hidAddCols.Value = .j77ColFields
-                basUI.SelectDropdownlistValue(Me.j70ID, .j70ID.ToString)
+                query1.CurrentJ70ID = .j70ID
                 If Request.Item("p31tabautoquery") = "" Then
                     basUI.SelectDropdownlistValue(Me.cbxTabQueryFlag, .j77TabQueryFlag)
                 End If
@@ -443,36 +438,24 @@ Public Class p31_sumgrid
         grid1.Rebind(False)
     End Sub
 
-    Private Sub SetupJ70Combo(intDef As Integer)
-        Dim mq As New BO.myQuery
-        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p31Worksheet)
-        j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
-        
-        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        
-    End Sub
+    
 
-    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
-        hidJ70ID.Value = Me.j70ID.SelectedValue
-        Master.Factory.j03UserBL.SetUserParam("p31-j70id", Me.j70ID.SelectedValue)
-        grid1.Rebind(False)
-    End Sub
+    
 
     Private Sub p31_sumgrid_PreRender(sender As Object, e As EventArgs) Handles Me.PreRender
         Me.CurrentQuery.Text = ""
-        With Me.j70ID
-            If .SelectedIndex > 0 Then
-                hidJ70ID.Value = .SelectedValue
-                .ToolTip = .SelectedItem.Text
-                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-                Me.clue_query.Visible = True
-                If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-            Else
-                Me.clue_query.Visible = False
-                hidJ70ID.Value = ""
-            End If
-        End With
+        ''With Me.j70ID
+        ''    If .SelectedIndex > 0 Then
+        ''        hidJ70ID.Value = .SelectedValue
+        ''        .ToolTip = .SelectedItem.Text
+        ''        Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
+        ''        Me.clue_query.Visible = True
+        ''        If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
+        ''    Else
+        ''        Me.clue_query.Visible = False
+        ''        hidJ70ID.Value = ""
+        ''    End If
+        ''End With
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
             cmdClearX18.Visible = True
@@ -494,7 +477,7 @@ Public Class p31_sumgrid
                 Case Else : .BackColor = Nothing
             End Select
         End With
-        basUIMT.RenderQueryCombo(Me.j70ID)
+
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
                 .BackColor = basUI.ColorQueryRGB
@@ -549,12 +532,15 @@ Public Class p31_sumgrid
         ReloadPage()
     End Sub
     Private Sub ReloadPage()
+        Response.Redirect(GetReloadedPage())
+    End Sub
+    Private Function GetReloadedPage() As String
         Dim s As String = "p31_sumgrid.aspx"
         If Me.hidMasterPrefix.Value <> "" Then
             s += "?masterprefix=" & hidMasterPrefix.Value & "&masterpid=" & Me.hidMasterPID.Value
         End If
-        Response.Redirect(s)
-    End Sub
+        Return s
+    End Function
 
     Private Sub cbxTabQueryFlag_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxTabQueryFlag.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-tabqueryflag", Me.cbxTabQueryFlag.SelectedValue)
@@ -571,8 +557,5 @@ Public Class p31_sumgrid
         End With
         ReloadPage()
     End Sub
-    Private Sub chkQueryOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkQueryOnTop.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_sumgrid-query-on-top", BO.BAS.GB(Me.chkQueryOnTop.Checked))
-        ReloadPage()
-    End Sub
+  
 End Class

@@ -90,7 +90,7 @@
         End If
 
     End Function
-    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "") As IEnumerable(Of BO.j70QueryTemplate)
+    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "", Optional onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery) As IEnumerable(Of BO.j70QueryTemplate)
         Dim s As String = GetSQLPart1()
         Dim pars As New DbParameters
 
@@ -107,6 +107,9 @@
             s += " AND a.j70MasterPrefix=@masterprefix"
         Else
             s += " AND a.j70MasterPrefix is null"
+        End If
+        If onlyQuery = BO.BooleanQueryMode.TrueQuery Then
+            s += " AND (a.j70BinFlag>0 OR a.j70ID IN (SELECT j70ID FROM j71QueryTemplate_Item))"
         End If
 
         If Not myQuery Is Nothing Then

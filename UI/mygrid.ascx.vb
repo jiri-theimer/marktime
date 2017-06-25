@@ -1,7 +1,14 @@
 ﻿Public Class mygrid
     Inherits System.Web.UI.UserControl
     Public Property Factory As BL.Factory
-
+    Public Property OnlyQuery As Boolean
+        Get
+            Return BO.BAS.BG(hidOnlyQuery.Value)
+        End Get
+        Set(value As Boolean)
+            hidOnlyQuery.Value = BO.BAS.GB(value)
+        End Set
+    End Property
     Public Property Prefix As String
         Get
             Return hidPrefix.Value
@@ -84,16 +91,27 @@
     End Sub
     Private Sub SetupJ70Combo(intDef As Integer)
         Dim mq As New BO.myQuery
-        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, Me.MasterPrefix)
-        If lisJ70.Where(Function(p) p.j70IsSystem = True).Count = 0 Then
-            'uživatel zatím nemá výchozí systémovou šablonu přehledu - založit první j70IsSystem=1
-            If Me.Factory.j70QueryTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Factory.SysUser.PID, Me.MasterPrefix) Then
-                lisJ70 = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, Me.MasterPrefix)
+        Dim onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery
+        If hidOnlyQuery.Value = "1" Then
+            onlyQuery = BO.BooleanQueryMode.TrueQuery
+            cmdSetting.InnerHtml = "<img src='Images/query.png'/>"
+        End If
+        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, Me.MasterPrefix, onlyQuery)
+        If hidOnlyQuery.Value <> "1" Then
+            If lisJ70.Where(Function(p) p.j70IsSystem = True).Count = 0 Then
+                'uživatel zatím nemá výchozí systémovou šablonu přehledu - založit první j70IsSystem=1
+                If Me.Factory.j70QueryTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Factory.SysUser.PID, Me.MasterPrefix) Then
+                    lisJ70 = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, Me.MasterPrefix)
+                End If
             End If
         End If
+        
         j70ID.DataSource = lisJ70
         j70ID.DataBind()
-        ''j70ID.Items.Insert(0, "--Pojmenovaný přehled--")
+        If hidOnlyQuery.Value = "1" Then
+            j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
+        End If
+
         
 
         If hidJ62ID.Value <> "" Then

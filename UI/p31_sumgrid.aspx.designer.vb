@@ -41,6 +41,15 @@ Partial Public Class p31_sumgrid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''query1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents query1 As Global.UI.mygrid
+
+    '''<summary>
     '''menu1 control.
     '''</summary>
     '''<remarks>
@@ -75,33 +84,6 @@ Partial Public Class p31_sumgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxTabQueryFlag As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''j70ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''cmdQuery control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
-
-    '''<summary>
-    '''chkQueryOnTop control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents chkQueryOnTop As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
     '''panExport control.
@@ -264,15 +246,6 @@ Partial Public Class p31_sumgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidJ74ID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidJ70ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ70ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidMasterPrefix control.

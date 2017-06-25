@@ -35,7 +35,7 @@
     Function GetDataSourceForTimeline(j02ids As List(Of Integer), d1 As Date, d2 As Date, p41ids As List(Of Integer)) As IEnumerable(Of BO.p31DataSourceForTimeline)
     Sub UpdateDeleteApprovingSet(strApprovingSet As String, p31ids As List(Of Integer), bolClear As Boolean, strTempGUID As String)
     Function GetList_ApprovingSet(strTempGUID As String, p41ids As List(Of Integer), p28ids As List(Of Integer)) As List(Of String)
-    Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, intJ70ID As Integer, strX18Value As String) As IEnumerable(Of BO.ApprovingFramework)
+    Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, strX18Value As String) As IEnumerable(Of BO.ApprovingFramework)
     Function LoadRate(bolCostRate As Boolean, dat As Date, intJ02ID As Integer, intP41ID As Integer, intP32ID As Integer, ByRef intRetJ27ID As Integer) As Double
 
     ''Function GetDrillDownDataTable(colDrill As BO.GridGroupByColumn, myQuery As BO.myQueryP31, strSumFieldsList As String) As DataTable
@@ -412,8 +412,8 @@ Class p31WorksheetBL
     Public Function GetList_ApprovingSet(strTempGUID As String, p41ids As List(Of Integer), p28ids As List(Of Integer)) As List(Of String) Implements Ip31WorksheetBL.GetList_ApprovingSet
         Return _cDL.GetList_ApprovingSet(strTempGUID, p41ids, p28ids)
     End Function
-    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, intJ70ID As Integer, strX18Value As String) As IEnumerable(Of BO.ApprovingFramework) Implements Ip31WorksheetBL.GetList_ApprovingFramework
-        Return _cDL.GetList_ApprovingFramework(x29id, myQuery, intJ70ID, strX18Value)
+    Public Function GetList_ApprovingFramework(x29id As BO.x29IdEnum, myQuery As BO.myQueryP31, strX18Value As String) As IEnumerable(Of BO.ApprovingFramework) Implements Ip31WorksheetBL.GetList_ApprovingFramework
+        Return _cDL.GetList_ApprovingFramework(x29id, myQuery, strX18Value)
     End Function
 
     Public Function LoadRate(bolCostRate As Boolean, dat As Date, intJ02ID As Integer, intP41ID As Integer, intP32ID As Integer, ByRef intRetJ27ID As Integer) As Double Implements Ip31WorksheetBL.LoadRate

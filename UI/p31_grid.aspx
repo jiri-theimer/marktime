@@ -222,7 +222,7 @@
                             <div class="content-box3">
                                 <div class="title">
                                     <img src="Images/query.png" />
-                                    <span>Filtrování záznamů</span>
+                                    <span>Dodatečné filtrování záznamů</span>
                                 </div>
                                 <div class="content">
                                     <div class="div6">

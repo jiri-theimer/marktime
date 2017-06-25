@@ -50,6 +50,7 @@
             ViewState("guid") = BO.BAS.GetGUID()
             ViewState("x36key") = Request.Item("x36key")
             Me.CurrentPrefix = Request.Item("prefix")
+            hidOnlyQuery.Value = Request.Item("onlyquery")
             ViewState("masterprefix") = Request.Item("masterprefix")
             If ViewState("x36key") = "" Then ViewState("x36key") = Me.CurrentPrefix & "-j70id"
             With Master
@@ -74,6 +75,22 @@
             SetupCols()
             RefreshRecord()
 
+            Select Case Request.Item("tab")
+                Case "query"
+                    RadTabStrip1.SelectedIndex = 0
+                Case "columns"
+                    RadTabStrip1.SelectedIndex = 1
+                Case Else
+                    RadTabStrip1.SelectedIndex = 1
+            End Select
+            If hidOnlyQuery.Value = "1" Then
+                RadTabStrip1.Tabs(1).Visible = False
+                RadMultiPage1.PageViews(1).Visible = False
+                RadTabStrip1.SelectedIndex = 0
+                RadMultiPage1.SelectedIndex = 0
+                lblName.Text = "Název:"
+                lblJ70ID.Text = "Pojmenovaný filtr:"
+            End If
         End If
     End Sub
 
@@ -705,16 +722,29 @@
                 Me.txtStringValue.Visible = True
         End Select
 
+        If rpJ71.Items.Count > 0 Then
+            Me.RadTabStrip1.Tabs(0).ForeColor = Drawing.Color.Red
+        Else
+            Me.RadTabStrip1.Tabs(0).ForeColor = Nothing
+        End If
+        If roles1.RowsCount > 0 Then
+            Me.RadTabStrip1.Tabs(2).ForeColor = Drawing.Color.Red
+        Else
+            Me.RadTabStrip1.Tabs(2).ForeColor = Nothing
+        End If
+        Me.RadTabStrip1.Tabs(1).Text = String.Format("Nastavení sloupců ({0})", lt1.Items.Count)
     End Sub
 
     Private Sub SetupJ70Combo()
         Dim mq As BO.myQuery = Nothing
-        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID)
+        Dim onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery
+        If hidOnlyQuery.Value = "1" Then onlyQuery = BO.BooleanQueryMode.TrueQuery
+        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, ViewState("masterprefix"), onlyQuery)
         If lisJ70.Count = 0 Then
             'uživatel zatím nemá žádný filtr - založit první j70IsSystem=1
             Dim c As New BO.j70QueryTemplate
             c.j70IsSystem = True
-            c.j70Name = "Můj výchozí filtr"
+            c.j70Name = "Můj výchozí přehled"
             c.j03ID = Master.Factory.SysUser.PID
             c.x29ID = Me.CurrentX29ID
             If Not Master.Factory.j70QueryTemplateBL.Save(c, New List(Of BO.j71QueryTemplate_Item), Nothing) Then
