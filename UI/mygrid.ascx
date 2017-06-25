@@ -21,8 +21,13 @@
         if (onlyquery == "1") {
             url = url + "&onlyquery=1";
         }
+        if (masterprefix == "") {
+            sw_everywhere(url, "Images/griddesigner.png", true);
+        }
+        else {
+            window.parent.sw_everywhere(url, "Images/griddesigner.png", true);
+        }
         
-        sw_everywhere(url, "Images/griddesigner.png",true);
 
     }
     function mygrid_reloadurl(ctl) {
