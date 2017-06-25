@@ -102,12 +102,15 @@
             pars.Add("x29id", _x29id, DbType.Int32)
             strW += " AND a.x29ID=@x29id"
         End If
-        If strMasterPrefix <> "" Then
-            pars.Add("masterprefix", strMasterPrefix, DbType.String)
-            s += " AND a.j70MasterPrefix=@masterprefix"
-        Else
-            s += " AND a.j70MasterPrefix is null"
+        If strMasterPrefix <> "-1" Then     '-1 volá návrhář přehledu, pokud pracuje s MasterPrefix<>""
+            If strMasterPrefix <> "" Then
+                pars.Add("masterprefix", strMasterPrefix, DbType.String)
+                s += " AND a.j70MasterPrefix=@masterprefix"
+            Else
+                s += " AND a.j70MasterPrefix is null"
+            End If
         End If
+
         If onlyQuery = BO.BooleanQueryMode.TrueQuery Then
             s += " AND (a.j70BinFlag>0 OR a.j70ID IN (SELECT j70ID FROM j71QueryTemplate_Item))"
         End If

@@ -132,7 +132,7 @@ Class j74SavedGridColTemplateBL
                         c.j74Name = "Hodiny projektu"
                         c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
                     Case "p41-expense", "p41-fee"
-                        c.j74Name = "Peněžní úkonu projektu"
+                        c.j74Name = "Peněžní úkony projektu"
                         c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
                     Case "p41-kusovnik"
                         c.j74Name = "Kusovníkové úkony projektu"

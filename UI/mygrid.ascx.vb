@@ -96,7 +96,10 @@
             onlyQuery = BO.BooleanQueryMode.TrueQuery
             cmdSetting.InnerHtml = "<img src='Images/query.png'/>"
         End If
-        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, Me.MasterPrefix, onlyQuery)
+        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, "-1", onlyQuery)
+        If Me.MasterPrefix <> "" Then
+            lisJ70 = lisJ70.Where(Function(p) p.j70MasterPrefix = Me.MasterPrefix Or (p.j70MasterPrefix = "" And p.j70IsSystem = False))
+        End If
         If hidOnlyQuery.Value <> "1" Then
             If lisJ70.Where(Function(p) p.j70IsSystem = True).Count = 0 Then
                 'uživatel zatím nemá výchozí systémovou šablonu přehledu - založit první j70IsSystem=1

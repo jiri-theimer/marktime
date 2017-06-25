@@ -18,7 +18,7 @@
         <asp:ImageButton ID="cmdClearExplicitPeriod" runat="server" ImageUrl="Images/close.png" ToolTip="Zrušit filtr podle kalendáře" CssClass="button-link" />
     </div>
     <div class="commandcell" id="divQueryContainer">
-        <uc:mygrid id="designer1" runat="server" prefix="p31" masterprefix="" x36key="p31_subgrid-j70id"></uc:mygrid>
+        <uc:mygrid id="designer1" runat="server" prefix="p31"></uc:mygrid>
        
     </div>
 
@@ -85,7 +85,7 @@
 
                         <div class="content-box3">
                             <div class="title">
-                                <img src="Images/griddesigner.png" />Sloupce v přehledu
+                                <img src="Images/griddesigner.png" />Nastavení přehledu
                             </div>
                             <div class="content">
                                 

@@ -739,7 +739,10 @@
         Dim mq As BO.myQuery = Nothing
         Dim onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery
         If hidOnlyQuery.Value = "1" Then onlyQuery = BO.BooleanQueryMode.TrueQuery
-        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, ViewState("masterprefix"), onlyQuery)
+        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, "-1", onlyQuery)
+        If ViewState("masterprefix") <> "" Then
+            lisJ70 = lisJ70.Where(Function(p) p.j70MasterPrefix = ViewState("masterprefix") Or (p.j70MasterPrefix = "" And p.j70IsSystem = False))
+        End If
         If lisJ70.Count = 0 Then
             'uživatel zatím nemá žádný filtr - založit první j70IsSystem=1
             Dim c As New BO.j70QueryTemplate

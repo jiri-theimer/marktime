@@ -145,7 +145,7 @@ Public Class basUIMT
         'If lisSqlFROM.Count > 0 Then strRet += "||" & String.Join(" ", lisSqlFROM)
         'Return strRet
     End Function
-    Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String
+    Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "", Optional strMasterPrefix As String = "") As String
         If cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.Scrolling Then cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
         Dim lisSqlSumCols As New List(Of String)
@@ -186,10 +186,14 @@ Public Class basUIMT
             ''End If
             .radGridOrig.MasterTableView.Name = "grid"
             If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
-            
+
 
             Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ70.x29ID), bolMobile As Boolean = False
-            If cJ70.j70MasterPrefix = "mobile_grid" Then               
+            Select Case Left(strMasterPrefix, 3)
+                Case "p41"
+                    lisCols = lisCols.Where(Function(p) p.TreeGroup <> "Projekt").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu
+            End Select
+            If cJ70.j70MasterPrefix = "mobile_grid" Then
                 bolMobile = True
             End If
             Dim intIndex As Integer = 0
@@ -215,7 +219,7 @@ Public Class basUIMT
                 intIndex += 1
             Next
             grid.SetFilterSetting(strFilterSetting, strFilterExpression)
-            
+
 
         End With
 
@@ -223,7 +227,7 @@ Public Class basUIMT
         strGetSumCols = String.Join("|", lisSqlSumCols)
         Return String.Join(",", lisSqlSEL)
 
-     
+
     End Function
     Public Shared Sub MakeDockZonesUserFriendly(rdl As RadDockLayout, bolLockedInteractivity As Boolean)
 

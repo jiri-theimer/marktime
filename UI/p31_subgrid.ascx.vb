@@ -178,7 +178,7 @@ Public Class p31_subgrid
 
         Me.hidDefaultSorting.Value = cJ70.j70OrderBy
         Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
-        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.grid2, cJ70, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect, , , , strAddSqlFrom, , strSqlSumCols)
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.grid2, cJ70, CInt(Me.cbxPaging.SelectedValue), True, Me.AllowMultiSelect, Me.AllowMultiSelect, , , , strAddSqlFrom, , strSqlSumCols, Me.MasterPrefixWithQueryFlag)
         Me.hidFrom.Value = strAddSqlFrom
         Me.hidSumCols.Value = strSqlSumCols
         
