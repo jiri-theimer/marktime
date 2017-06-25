@@ -191,7 +191,12 @@ Public Class basUIMT
             Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ70.x29ID), bolMobile As Boolean = False
             Select Case Left(strMasterPrefix, 3)
                 Case "p41"
-                    lisCols = lisCols.Where(Function(p) p.TreeGroup <> "Projekt").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu
+                    lisCols = lisCols.Where(Function(p) p.TreeGroup <> "Projekt" And p.TreeGroup <> "Project").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu
+                Case "j02"
+                    lisCols = lisCols.Where(Function(p) p.TreeGroup <> "Osoba" And p.TreeGroup <> "Person").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu
+                Case "p28"
+                    lisCols = lisCols.Where(Function(p) p.ColumnName <> "ClientName" And p.TreeGroup <> "Project").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu
+
             End Select
             If cJ70.j70MasterPrefix = "mobile_grid" Then
                 bolMobile = True

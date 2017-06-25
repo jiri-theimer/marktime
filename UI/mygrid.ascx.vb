@@ -18,6 +18,14 @@
             hidX29ID.Value = CInt(BO.BAS.GetX29FromPrefix(value)).ToString
         End Set
     End Property
+    Public Property Width As String
+        Get
+            Return Me.j70ID.Style.Item("width")
+        End Get
+        Set(value As String)
+            Me.j70ID.Style.Item("width") = value
+        End Set
+    End Property
     Public Property MasterPrefix As String
         Get
             Return hidMasterPrefix.Value

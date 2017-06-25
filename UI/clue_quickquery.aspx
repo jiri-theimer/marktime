@@ -13,7 +13,7 @@
         <div class="div6">
             <img src="Images/query_32.png" />
             <asp:Image ID="imgEntity" runat="server" />
-            <asp:Label ID="ph1" runat="server" Text="Detail filtru" CssClass="clue_header_span"></asp:Label>
+            <asp:Label ID="ph1" runat="server" Text="Datový přehled" CssClass="clue_header_span"></asp:Label>
 
         </div>
 

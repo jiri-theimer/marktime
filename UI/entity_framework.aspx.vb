@@ -2,8 +2,7 @@
 Public Class entity_framework
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
-    Private Property _curJ74 As BO.j74SavedGridColTemplate
-    Private Property _curJ62 As BO.j62MenuHome
+    
     Private Property _x29id As BO.x29IdEnum
     Private Property _needFilterIsChanged As Boolean = False
     Private Property _CurFilterDbField As String = ""
@@ -40,22 +39,7 @@ Public Class entity_framework
             hidMasterPID.Value = value.ToString
         End Set
     End Property
-    Public Property CurrentJ74ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j74id.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j74id, value.ToString)
-        End Set
-    End Property
-    Public Property CurrentJ70ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
-        End Set
-    End Property
+  
     Public Property CurrentJ62ID As Integer
         Get
             Return BO.BAS.IsNullInt(Me.hidJ62ID.Value)
@@ -73,8 +57,8 @@ Public Class entity_framework
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Master.Factory
         If Not Page.IsPostBack Then
-            'hidAutoScrollHashID.Value = ""
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
             End If
@@ -91,7 +75,6 @@ Public Class entity_framework
                     .Add(Me.CurrentPrefix + "_framework-navigationPane_width")
                     .Add(Me.CurrentPrefix + "_framework-contentPane_height")
                     .Add(Me.CurrentPrefix + "_framework_detail-pid")
-                    .Add(Me.CurrentPrefix + "_framework-j74id")
                     .Add(Me.CurrentPrefix + "_framework-groupby")
                     .Add(Me.CurrentPrefix + "_framework-sort")
                     .Add(Me.CurrentPrefix + "_framework-groups-autoexpanded")
@@ -142,7 +125,7 @@ Public Class entity_framework
                             End If
 
                     End Select
-                   
+
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam(Me.CurrentPrefix + "_framework-groupby"))
                     Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam(Me.CurrentPrefix + "_framework-groups-autoexpanded", "1"))
@@ -162,26 +145,34 @@ Public Class entity_framework
                 End With
             End With
 
+            Master.SiteMenuValue = Me.CurrentPrefix
             Me.CurrentJ62ID = BO.BAS.IsNullInt(Request.Item("j62id"))
-            If Me.CurrentJ62ID <> 0 Then
-                _curJ62 = Master.Factory.j62MenuHomeBL.Load(Me.CurrentJ62ID)
-                If _curJ62 Is Nothing Then Master.StopPage("j62 record not found")
-            Else
-                Master.SiteMenuValue = Me.CurrentPrefix
-            End If
+            designer1.CurrentJ62ID = Me.CurrentJ62ID
+            designer1.x36Key = Me.CurrentPrefix + "-j70id"
+            'If Me.CurrentJ62ID <> 0 Then
+            '    _curJ62 = Master.Factory.j62MenuHomeBL.Load(Me.CurrentJ62ID)
+            '    If _curJ62 Is Nothing Then Master.StopPage("j62 record not found")
+            'Else
+            '    Master.SiteMenuValue = Me.CurrentPrefix
+            'End If
+            
 
             With Master.Factory.j03UserBL
-                SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "-j70id")))
-                Dim intJ74ID As Integer = BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "_framework-j74id"))
-                If intJ74ID = 0 Then
-                    If Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID) Then
-                        _curJ74 = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID)
-                        .SetUserParam(Me.CurrentPrefix + "_framework-j74id", _curJ74.PID)
-                    End If
-                End If
-                SetupJ74Combo(intJ74ID)
+                Dim strJ70ID As String = Request.Item("j70id")
+                If strJ70ID = "" Then strJ70ID = .GetUserParam(Me.CurrentPrefix + "-j70id")
+                designer1.RefreshData(BO.BAS.IsNullInt(strJ70ID))
+
+               
                 SetupGrid(.GetUserParam(Me.CurrentPrefix + "_framework-filter_setting"), .GetUserParam(Me.CurrentPrefix + "_framework-filter_sql"))
             End With
+            If Me.CurrentMasterPID > 0 Then
+                Me.designer1.Visible = False
+                With Me.MasterEntity
+                    .Visible = True
+                    .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
+                    .Text = "<a href='" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString & "'>" & .Text & "</a>"
+                End With
+            End If
             RecalcVirtualRowCount()
 
             If Me.CurrentMasterPID = 0 Then
@@ -192,17 +183,7 @@ Public Class entity_framework
 
             AdaptSplitterLayout()
         End If
-        'If opgLayout.SelectedValue = "3" Or opgLayout.SelectedValue = "2" Then
-        '    Dim ctl As New Control
-        '    ctl = Me.clue_query
-        '    Me.panCurrentQuery.Controls.Remove(Me.clue_query)
-        '    Me.placeQuery.Controls.Add(ctl)
-        '    ctl = New Control
-        '    ctl = Me.j70ID
-        '    Me.panJ70.Controls.Remove(Me.j70ID)
-        '    Me.placeQuery.Controls.Add(ctl)
-
-        'End If
+    
     End Sub
     Private Sub AdaptSplitterLayout()
         Select Case Me.opgLayout.SelectedValue
@@ -294,34 +275,34 @@ Public Class entity_framework
                     If Not .Factory.SysUser.j04IsMenu_Project Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Projekty].")
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
-                    lblGridHeader.Text = "Akce nad projekty"
+                    ''menu1.FindItemByValue("more").Text = "Akce nad projekty"
                 Case BO.x29IdEnum.p28Contact
                     img1.ImageUrl = "Images/contact_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Contact Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Klienti].")
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
-                    lblGridHeader.Text = "Akce nad klienty"
+                    ''menu1.FindItemByValue("more").Text = "Akce nad klienty"
                 Case BO.x29IdEnum.o23Notepad
                     img1.ImageUrl = "Images/notepad_32.png"
-                    lblGridHeader.Text = "Akce nad dokumenty"
+                    ''menu1.FindItemByValue("more").Text = "Akce nad dokumenty"
                     cmdSummary.Visible = False
                 Case BO.x29IdEnum.p56Task
                     img1.ImageUrl = "Images/task_32.png"
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
-                    lblGridHeader.Text = "Akce nad úkoly"
+                    menu1.FindItemByValue("more").Text = "Akce nad úkoly"
                 Case BO.x29IdEnum.j02Person
-                    lblGridHeader.Text = "Akce nad přehledem"
+                    ''menu1.FindItemByValue("more").Text = "Akce nad přehledem"
                     img1.ImageUrl = "Images/person_32.png"
                     If Not .Factory.SysUser.j04IsMenu_People Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Lidé].")
                 Case BO.x29IdEnum.p91Invoice
-                    lblGridHeader.Text = "Akce nad fakturami"
+                    ''menu1.FindItemByValue("more").Text = "Akce nad fakturami"
                     img1.ImageUrl = "Images/invoice_32.png"
                     If Not .Factory.SysUser.j04IsMenu_Invoice Then .StopPage("Nedisponujete oprávněním k zobrazení stránky [Faktury].")
             End Select
             panExport.Visible = .Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
-            cmdGridDesiger.Visible = panExport.Visible
-            cmdQuery.Visible = panExport.Visible
+            designer1.Visible = panExport.Visible
+
         End With
         If opgLayout.SelectedValue = "3" Then
             cmdApprove.Visible = False
@@ -329,64 +310,19 @@ Public Class entity_framework
 
     End Sub
 
-    Private Sub SetupJ70Combo(intDef As Integer)
-        If Me.CurrentMasterPID > 0 Then
-            Me.j70ID.Visible = False : cmdQuery.Visible = False : Me.clue_query.Visible = False
-            With Me.MasterEntity
-                .Visible = True
-                .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
-                .Text = "<a href='" & Me.CurrentMasterPrefix & "_framework.aspx?pid=" & Me.CurrentMasterPID.ToString & "'>" & .Text & "</a>"
-            End With
-            Return 'pokud se zobrazuje přehled v rámci nadřazeného záznam, pak se nefiltruje
-        End If
-
-        Dim mq As New BO.myQuery
-        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID)
-        j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
-        If Not _curJ62 Is Nothing Then
-            If _curJ62.j70ID <> 0 Then
-                intDef = _curJ62.j70ID
-                If Me.j70ID.Items.FindByValue(intDef.ToString) Is Nothing Then
-                    Dim c As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(intDef)
-                    Me.j70ID.Items.Add(New ListItem(c.j70Name, intDef.ToString))
-                End If
-            End If
-        End If
-
-        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        With Me.j70ID
-            If .SelectedIndex > 0 Then
-                .ToolTip = .SelectedItem.Text
-                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-            Else
-                Me.clue_query.Visible = False
-            End If
-        End With
-
-    End Sub
-
-
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
-            If cJ74 Is Nothing Then
-                cJ74 = .LoadSystemTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID)
-                If Not cJ74 Is Nothing Then
-                    SetupJ74Combo(cJ74.PID)
-                End If
-            End If
-            Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-           
-            Dim strAddtionalSqlFrom As String = "", strSumCols As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom, , strSumCols)
-            Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
-            Me.hidSumCols.Value = strSumCols
-            If cJ74.j74ScrollingFlag > BO.j74ScrollingFlagENUM.NoScrolling Then
-                navigationPane.Scrolling = SplitterPaneScrolling.None
-            End If
-        End With
-        
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
+
+        Dim strAddtionalSqlFrom As String = "", strSumCols As String = ""
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, Me.chkCheckboxSelector.Checked, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom, , strSumCols)
+        Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
+        Me.hidSumCols.Value = strSumCols
+        If cJ70.j70ScrollingFlag > BO.j70ScrollingFlagENUM.NoScrolling Then
+            navigationPane.Scrolling = SplitterPaneScrolling.None
+        End If
+
         With grid1
             If Me.hidSumCols.Value = "" Then
                 .radGridOrig.ShowFooter = False
@@ -578,7 +514,7 @@ Public Class entity_framework
                 .DateUntil = period1.DateUntil
             End If
 
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
 
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
@@ -635,7 +571,7 @@ Public Class entity_framework
                     .DateFrom = period1.DateFrom : .DateUntil = period1.DateUntil
             End Select
             .Closed = BO.BooleanQueryMode.NoQuery
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
 
             .x18Value = Me.hidX18_value.Value
@@ -675,7 +611,7 @@ Public Class entity_framework
             End Select
 
             .Closed = BO.BooleanQueryMode.NoQuery
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
             .x18Value = Me.hidX18_value.Value
         End With
@@ -713,7 +649,7 @@ Public Class entity_framework
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .x18Value = Me.hidX18_value.Value
         End With
     End Sub
@@ -744,7 +680,7 @@ Public Class entity_framework
             End Select
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .x18Value = Me.hidX18_value.Value
 
         End With
@@ -789,7 +725,7 @@ Public Class entity_framework
                 Case "2" : .IntraPersons = BO.myQueryJ02_IntraPersons.NonIntraOnly
                 Case Else : .IntraPersons = BO.myQueryJ02_IntraPersons._NotSpecified
             End Select
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .x18Value = Me.hidX18_value.Value
         End With
     End Sub
@@ -930,33 +866,33 @@ Public Class entity_framework
 
 
 
-    Private Sub SetupJ74Combo(intDef As Integer)
-        If Not _curJ62 Is Nothing Then
-            If _curJ62.j74ID <> 0 Then
-                Me.j74id.Items.Add(New ListItem("", _curJ62.j74ID.ToString)) : Me.j74id.Visible = False : cmdGridDesiger.Visible = False
-                _curJ74 = Master.Factory.j74SavedGridColTemplateBL.Load(_curJ62.j74ID)
-                If _curJ62.j62GridGroupBy <> "" Then basUI.SelectDropdownlistValue(Me.cbxGroupBy, _curJ62.j62GridGroupBy)
-                Return
-            End If
-        End If
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j74MasterPrefix = "")
-        If lisJ74.Count = 0 Then
-            'uživatel zatím nemá žádnou šablonu - založit první j74IsSystem=1
-            Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID)
-            lisJ74 = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j74MasterPrefix = "")
-        End If
-        j74id.DataSource = lisJ74
-        j74id.DataBind()
+    ''Private Sub SetupJ74Combo(intDef As Integer)
+    ''    If Not _curJ62 Is Nothing Then
+    ''        If _curJ62.j74ID <> 0 Then
+    ''            Me.j74id.Items.Add(New ListItem("", _curJ62.j74ID.ToString)) : Me.j74id.Visible = False : cmdGridDesiger.Visible = False
+    ''            _curJ74 = Master.Factory.j74SavedGridColTemplateBL.Load(_curJ62.j74ID)
+    ''            If _curJ62.j62GridGroupBy <> "" Then basUI.SelectDropdownlistValue(Me.cbxGroupBy, _curJ62.j62GridGroupBy)
+    ''            Return
+    ''        End If
+    ''    End If
+    ''    Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j74MasterPrefix = "")
+    ''    If lisJ74.Count = 0 Then
+    ''        'uživatel zatím nemá žádnou šablonu - založit první j74IsSystem=1
+    ''        Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID)
+    ''        lisJ74 = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j74MasterPrefix = "")
+    ''    End If
+    ''    j74id.DataSource = lisJ74
+    ''    j74id.DataBind()
 
-        If intDef > 0 Then
-            basUI.SelectDropdownlistValue(Me.j74id, intDef.ToString)
-        End If
-        If Me.CurrentJ74ID > 0 Then
-            _curJ74 = lisJ74.Where(Function(p) p.PID = Me.CurrentJ74ID)(0)
-        End If
+    ''    If intDef > 0 Then
+    ''        basUI.SelectDropdownlistValue(Me.j74id, intDef.ToString)
+    ''    End If
+    ''    If Me.CurrentJ74ID > 0 Then
+    ''        _curJ74 = lisJ74.Where(Function(p) p.PID = Me.CurrentJ74ID)(0)
+    ''    End If
 
 
-    End Sub
+    ''End Sub
 
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
         With grid1.radGridOrig.MasterTableView
@@ -983,26 +919,26 @@ Public Class entity_framework
         End With
         grid1.Rebind(True)
     End Sub
-    Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
-        SaveLastJ74Reference()
-        ReloadPage()
-    End Sub
+   
+    ''Private Sub SaveLastJ74Reference()
+    ''    With Master.Factory.j03UserBL
+    ''        .SetUserParam(Me.CurrentPrefix + "_framework-j74id", Me.CurrentJ74ID.ToString)
+    ''        .SetUserParam(Me.CurrentPrefix + "_framework-sort", "")
+    ''        .SetUserParam(Me.CurrentPrefix + "_framework-filter_setting", "")
+    ''        .SetUserParam(Me.CurrentPrefix + "_framework-filter_sql", "")
+    ''    End With
 
-    Private Sub SaveLastJ74Reference()
-        With Master.Factory.j03UserBL
-            .SetUserParam(Me.CurrentPrefix + "_framework-j74id", Me.CurrentJ74ID.ToString)
-            .SetUserParam(Me.CurrentPrefix + "_framework-sort", "")
-            .SetUserParam(Me.CurrentPrefix + "_framework-filter_setting", "")
-            .SetUserParam(Me.CurrentPrefix + "_framework-filter_sql", "")
-        End With
-        
-    End Sub
+    ''End Sub
     Private Sub ReloadPage()
+        
+        Response.Redirect(GetReloadUrl(), True)
+    End Sub
+    Private Function GetReloadUrl() As String
         Dim s As String = "entity_framework.aspx?prefix=" & Me.CurrentPrefix
         If Me.CurrentJ62ID > 0 Then s += "&j62id=" & Me.CurrentJ62ID.ToString
         If Me.CurrentMasterPID > 0 Then s += "&masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString
-        Response.Redirect(s, True)
-    End Sub
+        Return s
+    End Function
 
     Private Sub RecalcVirtualRowCount()
         Dim dtSum As DataTable = Nothing
@@ -1054,14 +990,9 @@ Public Class entity_framework
 
    
 
-    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
-        Me.CurrentJ62ID = 0
-        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "-j70id", Me.CurrentJ70ID.ToString)
-        ReloadPage()
-    End Sub
 
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
-        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
         Dim cXLS As New clsExportToXls(Master.Factory)
         ''Dim lis As IEnumerable(Of Object) = Nothing
         Dim dt As DataTable = Nothing
@@ -1106,7 +1037,7 @@ Public Class entity_framework
 
         End Select
 
-        Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
+        Dim strFileName As String = cXLS.ExportDataGrid(dt.AsEnumerable, cJ70)
         If strFileName = "" Then
             Master.Notify(cXLS.ErrorMessage, NotifyLevel.ErrorMessage)
         Else
@@ -1159,7 +1090,8 @@ Public Class entity_framework
     End Sub
 
     Private Sub entity_framework_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        basUIMT.RenderQueryCombo(Me.j70ID)
+        designer1.ReloadUrl = GetReloadUrl()
+
         If cbxPeriodType.SelectedIndex > 0 Then
 
             With Me.period1
@@ -1182,6 +1114,10 @@ Public Class entity_framework
         Else
             period1.Visible = False
         End If
+        If opgLayout.SelectedValue = "2" Or opgLayout.SelectedValue = "3" Then
+            Me.cbx1.Width = Unit.Parse("200px")
+            designer1.Width = "220px"
+        End If
         
         If Me.cbxGroupBy.SelectedIndex > 0 Then
             chkGroupsAutoExpanded.Visible = True
@@ -1194,9 +1130,9 @@ Public Class entity_framework
             cmdCĺearFilter.Visible = False
         End If
         Me.CurrentQuery.Text = ""
-        If Me.CurrentJ70ID > 0 Then
-            If opgLayout.SelectedValue = "1" Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-        End If
+        ''If designer1.CurrentJ70ID > 0 Then
+        ''    If opgLayout.SelectedValue = "1" Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & designer1.CurrentName
+        ''End If
         If hidX18_value.Value <> "" Then
             Me.CurrentQuery.Text += "<img src='Images/query.png' style='margin-left:20px;'/><img src='Images/label.png'/>" & Me.x18_querybuilder_info.Text
             cmdClearX18.Visible = True
