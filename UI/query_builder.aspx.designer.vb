@@ -38,7 +38,7 @@ Partial Public Class query_builder
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdNew As Global.System.Web.UI.WebControls.ImageButton
+    Protected WithEvents cmdNew As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''lblJ70ID control.
@@ -95,6 +95,15 @@ Partial Public Class query_builder
     Protected WithEvents j70Name As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
+    '''cmdSave control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSave As Global.System.Web.UI.WebControls.ImageButton
+
+    '''<summary>
     '''cmdDelete control.
     '''</summary>
     '''<remarks>
@@ -104,6 +113,33 @@ Partial Public Class query_builder
     Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.ImageButton
 
     '''<summary>
+    '''RadTabStrip1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadTabStrip1 As Global.Telerik.Web.UI.RadTabStrip
+
+    '''<summary>
+    '''RadMultiPage1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents RadMultiPage1 As Global.Telerik.Web.UI.RadMultiPage
+
+    '''<summary>
+    '''j70 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70 As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''panEditHeader control.
     '''</summary>
     '''<remarks>
@@ -111,15 +147,6 @@ Partial Public Class query_builder
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents panEditHeader As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''opgBin control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents opgBin As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
     '''panQueryCondition control.
@@ -320,6 +347,123 @@ Partial Public Class query_builder
     Protected WithEvents rpJ71 As Global.System.Web.UI.WebControls.Repeater
 
     '''<summary>
+    '''opgBin control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents opgBin As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''columns control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents columns As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
+    '''tr1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents tr1 As Global.Telerik.Web.UI.RadTreeView
+
+    '''<summary>
+    '''cmdAdd control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdAdd As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''cmdRemove control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdRemove As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''lt1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lt1 As Global.Telerik.Web.UI.RadListBox
+
+    '''<summary>
+    '''j70ScrollingFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70ScrollingFlag As Global.System.Web.UI.WebControls.RadioButtonList
+
+    '''<summary>
+    '''j70IsFilteringByColumn control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents j70IsFilteringByColumn As Global.System.Web.UI.WebControls.CheckBox
+
+    '''<summary>
+    '''cbxOrderBy1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxOrderBy1 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxOrderBy1Dir control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxOrderBy1Dir As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxOrderBy2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxOrderBy2 As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''cbxOrderBy2Dir control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cbxOrderBy2Dir As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''perm control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents perm As Global.Telerik.Web.UI.RadPageView
+
+    '''<summary>
     '''panRoles control.
     '''</summary>
     '''<remarks>
@@ -372,6 +516,24 @@ Partial Public Class query_builder
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidPrefix As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''hidNewJ70Name control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidNewJ70Name As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
+    '''cmdSaveNewTemplate control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents cmdSaveNewTemplate As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''Master property.

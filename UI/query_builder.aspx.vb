@@ -33,6 +33,7 @@
             Return BO.BAS.GetX29FromPrefix(Me.CurrentPrefix)
         End Get
     End Property
+    
     Public ReadOnly Property CurrentIsOwner As Boolean
         Get
             Return BO.BAS.BG(hidIsOwner.Value)
@@ -49,6 +50,7 @@
             ViewState("guid") = BO.BAS.GetGUID()
             ViewState("x36key") = Request.Item("x36key")
             Me.CurrentPrefix = Request.Item("prefix")
+            ViewState("masterprefix") = Request.Item("masterprefix")
             If ViewState("x36key") = "" Then ViewState("x36key") = Me.CurrentPrefix & "-j70id"
             With Master
                 .neededPermission = BO.x53PermValEnum.GR_GridTools
@@ -62,12 +64,14 @@
                     .DataPID = BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(CStr(ViewState("x36key"))))
                 End If
 
-                .AddToolbarButton("Uložit a spustit filtr", "run", , "Images/ok.png")
+                .AddToolbarButton("Uložit a spustit", "run", , "Images/ok.png")
 
             End With
 
             SetupQuery()
             SetupJ70Combo()
+
+            SetupCols()
             RefreshRecord()
 
         End If
@@ -77,7 +81,7 @@
         Dim lis As New List(Of myItem)
         Select Case Me.CurrentX29ID
             Case BO.x29IdEnum.p41Project
-                ph1.Text = "Návrhář filtrů nad přehledem projektů"
+                ph1.Text = "Přehled projektů"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.p42ProjectType, "p42id", "Typ projektu"))
@@ -109,7 +113,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p41IsDraft", "Jedná se o DRAFT záznam?", BO.x24IdENUM.tBoolean))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p41ExternalPID", "Externí kód projektu", BO.x24IdENUM.tString))
             Case BO.x29IdEnum.p28Contact
-                ph1.Text = "Návrhář filtrů nad přehledem klientů"
+                ph1.Text = "Přehled klientů"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.p29ContactType, "p29id", "Typ klienta"))
@@ -136,7 +140,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p28DateInsert", "Datum založení klienta", BO.x24IdENUM.tDateTime))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p28ExternalPID", "Externí kód klienta", BO.x24IdENUM.tString))
             Case BO.x29IdEnum.p56Task
-                ph1.Text = "Návrhář filtrů nad přehledem úkolů/požadavků"
+                ph1.Text = "Přehled úkolů"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.p57TaskType, "p57id", "Typ úkolu"))                
@@ -160,7 +164,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p56DateInsert", "Datum založení úkolu", BO.x24IdENUM.tDateTime))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.p56ExternalPID", "Externí kód úkolu", BO.x24IdENUM.tString))
             Case BO.x29IdEnum.o23Notepad
-                ph1.Text = "Návrhář filtrů nad přehledem dokumentů"
+                ph1.Text = "Přehled dokumentů"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.o24NotepadType, "o24ID", "Typ dokumentu"))
@@ -173,7 +177,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.j02Person, "j02id_owner", "Vlastník/autor záznamu"))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.o23DateInsert", "Datum založení dokumentu", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.p91Invoice
-                ph1.Text = "Návrhář filtrů nad přehledem faktur"
+                ph1.Text = "Přehled faktur"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.p92InvoiceType, "p92id", "Typ faktury"))
@@ -205,7 +209,7 @@
                
 
             Case BO.x29IdEnum.j02Person
-                ph1.Text = "Návrhář filtrů nad přehledem osob"
+                ph1.Text = "Přehled lidí"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.j07PersonPosition, "j07id", "Pozice"))
@@ -220,7 +224,7 @@
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.j02Salutation", "Oslovení pro korespondenci", BO.x24IdENUM.tString))
                 lis.Add(New myItem(BO.x29IdEnum.System, "a.j02DateInsert", "Datum založení osoby", BO.x24IdENUM.tDateTime))
             Case BO.x29IdEnum.p31Worksheet
-                ph1.Text = "Návrhář filtrů nad worksheet přehledem"
+                ph1.Text = "WORKSHEET přehled"
 
                 lis.Add(New myItem(BO.x29IdEnum._NotSpecified, "_other", "Různé"))
                 lis.Add(New myItem(BO.x29IdEnum.p34ActivityGroup, "p32.p34id", "Sešit"))
@@ -579,29 +583,7 @@
         Else
             SaveTempValue(intj71RecordPID, strj71RecordName, x29id, strField, cbxQueryField.SelectedItem.Text, 0, "", strj71ValueFrom, strj71ValueUntil, strJ71ValueType, strJ71StringOperator, strJ71ValueString, intX28ID)
         End If
-        ''Dim cRec As New BO.p85TempBox
-        ''cRec.p85GUID = ViewState("guid")
-        ''cRec.p85OtherKey1 = intj71RecordPID
-        ''cRec.p85FreeText01 = strj71RecordName
-
-        ''cRec.p85OtherKey2 = CInt(x29id)
-        ''cRec.p85FreeText03 = Me.cbxQueryField.SelectedItem.Text
-        ''cRec.p85FreeText04 = strField
-
-        ''If intExtensionValue <> 0 Then
-        ''    cRec.p85OtherKey3 = intExtensionValue
-        ''    cRec.p85FreeText02 = Me.cbxItemsExtension.Text
-        ''End If
-
-        ''cRec.p85FreeText05 = strj71ValueFrom
-        ''cRec.p85FreeText06 = strj71ValueUntil
-        ''cRec.p85FreeText07 = strJ71ValueType
-        ''cRec.p85FreeText08 = strJ71StringOperator
-        ''cRec.p85FreeText09 = strJ71ValueString
-        ''cRec.p85Message = cbxQueryField.SelectedItem.Text
-
-        ''Master.Factory.p85TempBoxBL.Save(cRec)
-
+       
         
         RefreshJ71TempList()
     End Sub
@@ -682,12 +664,7 @@
         RefreshState()
     End Sub
     Private Sub RefreshState()
-        'panQueryItems.Visible = False : panQueryNonItems.Visible = False
-        'If Me.opgField.SelectedItem Is Nothing Then
-        '    panQueryItems.Visible = False
-        'Else
-        '    panQueryItems.Visible = True
-        'End If
+      
         If rpJ71.Items.Count > 0 Then
             panJ71.Visible = True
         Else
@@ -704,7 +681,7 @@
         End If
 
         If Not Me.CurrentIsOwner Then
-            Master.RenameToolbarButton("run", "Spustit filtr")
+            Master.RenameToolbarButton("run", "Spustit přehled")
             panRoles.Visible = False
             cmdClear.Visible = False
             cmdDelete.Visible = False
@@ -712,11 +689,13 @@
             Me.j70Name.Visible = False
             Me.panQueryCondition.Visible = False
             Me.opgBin.Enabled = False
+            cmdSave.Visible = False
         Else
-            Master.RenameToolbarButton("run", "Uložit a spustit filtr")
+            Master.RenameToolbarButton("run", "Uložit a spustit přehled")
             panRoles.Visible = Not bolIsSystem
             Me.panQueryCondition.Visible = True
             Me.opgBin.Enabled = True
+            cmdSave.Visible = True
         End If
 
         Select Case Me.cbxStringOperator.SelectedValue
@@ -778,10 +757,10 @@
 
     Private Sub RefreshRecord()
         Master.DataPID = BO.BAS.IsNullInt(j70ID.SelectedValue)
-        cmdDelete.Visible = False : cmdNew.Visible = False
+        cmdDelete.Visible = False : cmdNew.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
         If Master.DataPID = 0 Then
             If j70ID.Items.Count = 0 Then
-                j70Name.Text = "Můj výchozí filtr"
+                j70Name.Text = "Můj výchozí přehled"
             End If
             j70Name.Enabled = True
             ClearQuery()
@@ -792,7 +771,7 @@
             j70Name.Text = .j70Name
             Me.j70IsNegation.Checked = .j70IsNegation
             cmdDelete.Visible = True
-            cmdNew.Visible = True
+
             lblTimeStamp.Text = .Timestamp
             
             Me.j70IsSystem.Value = BO.BAS.GB(.j70IsSystem)
@@ -809,20 +788,10 @@
         Master.Factory.j70QueryTemplateBL.Setupj71TempList(Master.DataPID, ViewState("guid"))
         RefreshJ71TempList()
 
+        RefreshRecord_Columns(cRec)
     End Sub
 
-    Private Sub cmdNew_Click(sender As Object, e As ImageClickEventArgs) Handles cmdNew.Click
-        Me.j70IsSystem.Value = "0"
-        Me.hidIsOwner.Value = "1"
-        If j70ID.Items.FindByValue("0") Is Nothing Then
-            j70ID.Items.Insert(0, New ListItem("---Založit nový filtr---", "0"))
-        End If
-        j70ID.SelectedIndex = 0
-        j70Name.Text = "" : j70Name.Focus()
-        Me.opgBin.SelectedValue = "0"
-        Me.j70IsNegation.Checked = False
-        RefreshRecord()
-    End Sub
+    
 
     Private Sub cmdDelete_Click(sender As Object, e As ImageClickEventArgs) Handles cmdDelete.Click
         If Master.DataPID = 0 Then Return
@@ -842,54 +811,118 @@
                 Return
             End If
             roles1.SaveCurrentTempData()
-            Dim cRec As BO.j70QueryTemplate = IIf(Master.DataPID = 0, New BO.j70QueryTemplate, Master.Factory.j70QueryTemplateBL.Load(Master.DataPID))
-            With cRec
-                .x29ID = Me.CurrentX29ID
-                .j70Name = j70Name.Text
-                .j70IsNegation = Me.j70IsNegation.Checked
-                .j70BinFlag = BO.BAS.IsNullInt(Me.opgBin.SelectedValue)
-            End With
-
-            Dim lisTMP As List(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).ToList
-            Dim lisJ71 As New List(Of BO.j71QueryTemplate_Item)
-            For Each cTMP In lisTMP
-                Dim c As New BO.j71QueryTemplate_Item
-                c.j71RecordPID = cTMP.p85OtherKey1
-                c.j71RecordName = cTMP.p85FreeText01
-
-                c.x29ID = cTMP.p85OtherKey2
-                c.j71Field = cTMP.p85FreeText04
-                c.j71RecordPID_Extension = cTMP.p85OtherKey3
-                c.j71RecordName_Extension = cTMP.p85FreeText02
-                c.j71ValueFrom = cTMP.p85FreeText05
-                c.j71ValueUntil = cTMP.p85FreeText06
-                c.j71ValueType = cTMP.p85FreeText07
-                c.j71StringOperator = cTMP.p85FreeText08
-                c.j71ValueString = cTMP.p85FreeText09
-                c.j71FieldLabel = cTMP.p85Message
-                c.x28ID = cTMP.p85OtherKey4
-                If c.x28ID <> 0 Then
-                    'x28ID
-                    Dim cX28 As BO.x28EntityField = Master.Factory.x28EntityFieldBL.Load(c.x28ID)
-                    c.j71SqlExpression = cX28.x28Query_SqlSyntax
-                End If
-                lisJ71.Add(c)
-            Next
-            Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
-            If roles1.ErrorMessage <> "" Then
-                Master.Notify(roles1.ErrorMessage, 2)
-                Return
-            End If
-
-
-            If Master.Factory.j70QueryTemplateBL.Save(cRec, lisJ71, lisX69) Then
-                Master.DataPID = Master.Factory.j70QueryTemplateBL.LastSavedPID
+            If SaveChanges() Then
                 SubmitQuery()
-            Else
-                Master.Notify(Master.Factory.j70QueryTemplateBL.ErrorMessage, NotifyLevel.ErrorMessage)
             End If
+            ''Dim cRec As BO.j70QueryTemplate = IIf(Master.DataPID = 0, New BO.j70QueryTemplate, Master.Factory.j70QueryTemplateBL.Load(Master.DataPID))
+            ''With cRec
+            ''    .x29ID = Me.CurrentX29ID
+            ''    .j70Name = j70Name.Text
+            ''    .j70IsNegation = Me.j70IsNegation.Checked
+            ''    .j70BinFlag = BO.BAS.IsNullInt(Me.opgBin.SelectedValue)
+
+            ''    Dim s As String = ""
+            ''    For Each it As Telerik.Web.UI.RadListBoxItem In lt1.Items
+            ''        s += "," & it.Value
+            ''    Next
+            ''    .j70ColumnNames = BO.BAS.OM1(s)
+
+            ''    .j70OrderBy = GetOrderBy()
+            ''    .j70IsFilteringByColumn = Me.j70IsFilteringByColumn.Checked
+            ''    .j70ScrollingFlag = BO.BAS.IsNullInt(Me.j70ScrollingFlag.SelectedValue)
+            ''End With
+
+            ''Dim lisJ71 As List(Of BO.j71QueryTemplate_Item) = GetList_j71()
+
+            ''Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
+            ''If roles1.ErrorMessage <> "" Then
+            ''    Master.Notify(roles1.ErrorMessage, 2)
+            ''    Return
+            ''End If
+
+
+            ''If Master.Factory.j70QueryTemplateBL.Save(cRec, lisJ71, lisX69) Then
+            ''    Master.DataPID = Master.Factory.j70QueryTemplateBL.LastSavedPID
+            ''    SubmitQuery()
+            ''Else
+            ''    Master.Notify(Master.Factory.j70QueryTemplateBL.ErrorMessage, NotifyLevel.ErrorMessage)
+            ''End If
         End If
     End Sub
+    Private Function SaveChanges() As Boolean
+        roles1.SaveCurrentTempData()
+        If Trim(j70Name.Text) = "" Then
+            Master.Notify("Chybí specifikace jména přehledu.", NotifyLevel.ErrorMessage)
+            Return False
+        End If
+        If lt1.Items.Count = 0 Then
+            Master.Notify("Přehled musí mít minimálně jeden sloupec.", NotifyLevel.ErrorMessage)
+            Return False
+        End If
+        Dim cRec As BO.j70QueryTemplate = IIf(Master.DataPID = 0, New BO.j70QueryTemplate, Master.Factory.j70QueryTemplateBL.Load(Master.DataPID))
+        With cRec
+            .x29ID = Me.CurrentX29ID
+            .j70Name = j70Name.Text
+            .j70IsNegation = Me.j70IsNegation.Checked
+            .j70BinFlag = BO.BAS.IsNullInt(Me.opgBin.SelectedValue)
+
+            Dim s As String = ""
+            For Each it As Telerik.Web.UI.RadListBoxItem In lt1.Items
+                s += "," & it.Value
+            Next
+            .j70ColumnNames = BO.BAS.OM1(s)
+
+            .j70OrderBy = GetOrderBy()
+            .j70IsFilteringByColumn = Me.j70IsFilteringByColumn.Checked
+            .j70ScrollingFlag = BO.BAS.IsNullInt(Me.j70ScrollingFlag.SelectedValue)
+        End With
+
+        Dim lisJ71 As List(Of BO.j71QueryTemplate_Item) = GetList_j71()
+
+        Dim lisX69 As List(Of BO.x69EntityRole_Assign) = roles1.GetData4Save()
+        If roles1.ErrorMessage <> "" Then
+            Master.Notify(roles1.ErrorMessage, 2)
+            Return False
+        End If
+
+
+        If Master.Factory.j70QueryTemplateBL.Save(cRec, lisJ71, lisX69) Then
+            Master.DataPID = Master.Factory.j70QueryTemplateBL.LastSavedPID
+            Return True
+        Else
+            Master.Notify(Master.Factory.j70QueryTemplateBL.ErrorMessage, NotifyLevel.ErrorMessage)
+            Return False
+        End If
+    End Function
+
+    Private Function GetList_j71() As List(Of BO.j71QueryTemplate_Item)
+        Dim lisTMP As List(Of BO.p85TempBox) = Master.Factory.p85TempBoxBL.GetList(ViewState("guid")).ToList
+        Dim lisJ71 As New List(Of BO.j71QueryTemplate_Item)
+        For Each cTMP In lisTMP
+            Dim c As New BO.j71QueryTemplate_Item
+            c.j71RecordPID = cTMP.p85OtherKey1
+            c.j71RecordName = cTMP.p85FreeText01
+
+            c.x29ID = cTMP.p85OtherKey2
+            c.j71Field = cTMP.p85FreeText04
+            c.j71RecordPID_Extension = cTMP.p85OtherKey3
+            c.j71RecordName_Extension = cTMP.p85FreeText02
+            c.j71ValueFrom = cTMP.p85FreeText05
+            c.j71ValueUntil = cTMP.p85FreeText06
+            c.j71ValueType = cTMP.p85FreeText07
+            c.j71StringOperator = cTMP.p85FreeText08
+            c.j71ValueString = cTMP.p85FreeText09
+            c.j71FieldLabel = cTMP.p85Message
+            c.x28ID = cTMP.p85OtherKey4
+            If c.x28ID <> 0 Then
+                'x28ID
+                Dim cX28 As BO.x28EntityField = Master.Factory.x28EntityFieldBL.Load(c.x28ID)
+                c.j71SqlExpression = cX28.x28Query_SqlSyntax
+            End If
+            lisJ71.Add(c)
+        Next
+        Return lisJ71
+    End Function
 
     Private Sub SubmitQuery()
         Master.Factory.j03UserBL.SetUserParam(CStr(ViewState("x36key")), Master.DataPID.ToString)
@@ -914,5 +947,233 @@
 
     Private Sub cmdAdd2QueryString_Click(sender As Object, e As EventArgs) Handles cmdAdd2QueryString.Click
         SaveTempQueryItem()
+    End Sub
+
+   
+
+    Private Sub SetupCols()
+        tr1.Nodes.Clear()
+
+
+        Dim lisAllCols As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(Me.CurrentX29ID)
+        For Each c In lisAllCols.Where(Function(p) p.TreeGroup <> "").Select(Function(p) p.TreeGroup).Distinct
+            Dim n As New Telerik.Web.UI.RadTreeNode(c, c)
+            n.ImageUrl = "Images/folder.png"
+            tr1.Nodes.Add(n)
+        Next
+        For Each c In lisAllCols
+            Dim n As New Telerik.Web.UI.RadTreeNode(c.ColumnHeader, c.ColumnName)
+
+            Select Case c.ColumnType
+                Case BO.cfENUM.DateTime, BO.cfENUM.DateTime
+                    n.ImageUrl = "Images/type_datetime.png"
+                Case BO.cfENUM.DateOnly
+                    n.ImageUrl = "Images/type_date.png"
+                Case BO.cfENUM.Numeric, BO.cfENUM.Numeric2, BO.cfENUM.Numeric0
+                    n.ImageUrl = "Images/type_number.png"
+                Case BO.cfENUM.AnyString
+                    n.ImageUrl = "Images/type_text.png"
+                Case BO.cfENUM.Checkbox
+                    n.ImageUrl = "Images/type_checkbox.png"
+            End Select
+            If Not c.ColumnName Is Nothing Then
+                If c.ColumnName.IndexOf("Free") > 0 Then n.ForeColor = Drawing.Color.Green
+                If Left(c.ColumnName, 3) = "tag" Then n.ImageUrl = "Images/label.png"
+            End If
+
+            If c.TreeGroup = "" Then
+                tr1.Nodes.Add(n)
+            Else
+                tr1.FindNodeByValue(c.TreeGroup).Nodes.Add(n)
+            End If
+
+        Next
+
+        Me.cbxOrderBy1.DataSource = lisAllCols.Where(Function(p) p.IsSortable = True)
+        Me.cbxOrderBy1.DataBind()
+        Me.cbxOrderBy1.Items.Insert(0, "")
+        Me.cbxOrderBy2.DataSource = lisAllCols.Where(Function(p) p.IsSortable = True)
+        Me.cbxOrderBy2.DataBind()
+        Me.cbxOrderBy2.Items.Insert(0, "")
+
+        
+    End Sub
+    Private Sub RefreshRecord_Columns(cRec As BO.j70QueryTemplate)
+
+        lt1.Items.Clear()
+        With cRec
+
+
+
+            Master.DataPID = .PID
+
+            For Each s In Split(.j70ColumnNames, ",")
+                If s <> "" Then
+                    Dim strField As String = Trim(s)
+                    Dim n As Telerik.Web.UI.RadTreeNode = tr1.FindNodeByValue(strField)
+                    Handle_Add(n)
+                End If
+            Next
+            If .j70OrderBy <> "" Then
+                Dim a() As String = Split(.j70OrderBy, ",")
+                If a(0).IndexOf("DESC") > 0 Then
+                    Me.cbxOrderBy1Dir.SelectedValue = "DESC"
+                    basUI.SelectDropdownlistValue(Me.cbxOrderBy1, Replace(a(0), " DESC", ""))
+                Else
+                    basUI.SelectDropdownlistValue(Me.cbxOrderBy1, a(0))
+                End If
+                If UBound(a) > 0 Then
+                    If a(1).IndexOf("DESC") > 0 Then
+                        Me.cbxOrderBy2Dir.SelectedValue = "DESC"
+                        basUI.SelectDropdownlistValue(Me.cbxOrderBy2, Replace(a(1), " DESC", ""))
+                    Else
+                        basUI.SelectDropdownlistValue(Me.cbxOrderBy2, a(1))
+                    End If
+                End If
+            End If
+            basUI.SelectRadiolistValue(Me.j70ScrollingFlag, CInt(.j70ScrollingFlag).ToString)
+            Me.j70IsFilteringByColumn.Checked = cRec.j70IsFilteringByColumn
+
+
+        End With
+
+
+        RefreshTreeState()
+    End Sub
+
+    Private Sub Handle_Add(n As Telerik.Web.UI.RadTreeNode)
+        If n Is Nothing Then Return
+        If n.ImageUrl = "Images/folder.png" Then Return
+        If n.Value = "" Then Return
+
+        If Not lt1.FindItemByValue(n.Value) Is Nothing Then
+            Return
+        End If
+        Dim it As New Telerik.Web.UI.RadListBoxItem(n.Text, n.Value)
+        it.ToolTip = n.ToolTip
+        it.ForeColor = n.ForeColor
+        it.ImageUrl = n.ImageUrl
+
+        lt1.Items.Add(it)
+
+    End Sub
+
+    Private Sub RefreshTreeState(Optional strSelectValue As String = "")
+        For Each n In tr1.GetAllNodes()
+            n.Enabled = True
+        Next
+        For i As Integer = 0 To lt1.Items.Count - 1
+            Dim n As Telerik.Web.UI.RadTreeNode = tr1.FindNodeByValue(lt1.Items(i).Value)
+            If Not n Is Nothing Then
+                n.Enabled = False
+
+            End If
+        Next
+        If strSelectValue <> "" Then
+            If Not tr1.FindNodeByValue(strSelectValue) Is Nothing Then
+                tr1.FindNodeByValue(strSelectValue).Selected = True
+            End If
+        End If
+        If lt1.Items.Count > 0 Then
+            cmdRemove.Enabled = True
+        Else
+            cmdRemove.Enabled = False
+        End If
+    End Sub
+
+   
+   
+    Private Sub cmdAdd_Click(sender As Object, e As EventArgs) Handles cmdAdd.Click
+        Handle_Add(tr1.SelectedNode)
+
+        RefreshTreeState()
+        With lt1.Items
+            For i As Integer = 0 To .Count - 1
+                .Item(i).Selected = False
+            Next
+            If .Count > 0 Then
+                lt1.Items(.Count - 1).Selected = True
+            End If
+        End With
+
+    End Sub
+
+    Private Sub cmdRemove_Click(sender As Object, e As EventArgs) Handles cmdRemove.Click
+        If lt1.SelectedItem Is Nothing Then Return
+        Dim strVal As String = lt1.SelectedItem.Value, x As Integer = lt1.SelectedIndex
+        lt1.Items.Remove(lt1.SelectedItem)
+        RefreshTreeState(strVal)
+        If lt1.Items.Count > x Then
+            lt1.SelectedIndex = x
+        Else
+            lt1.SelectedIndex = 0
+        End If
+    End Sub
+
+    Private Function GetOrderBy() As String
+        Dim s As String = ""
+        If Me.cbxOrderBy1.SelectedValue <> "" Then
+            s = Me.cbxOrderBy1.SelectedValue
+            If Me.cbxOrderBy1Dir.SelectedValue <> "" Then
+                s += " DESC"
+            End If
+        End If
+        If Me.cbxOrderBy2.SelectedValue <> "" Then
+            If s = "" Then
+                s = Me.cbxOrderBy2.SelectedValue
+            Else
+                s += "," & Me.cbxOrderBy2.SelectedValue
+            End If
+
+            If Me.cbxOrderBy2Dir.SelectedValue <> "" Then
+                s += " DESC"
+            End If
+        End If
+        Return s
+    End Function
+
+    Private Sub cmdSaveNewTemplate_Click(sender As Object, e As EventArgs) Handles cmdSaveNewTemplate.Click
+        If hidNewJ70Name.Value <> "" Then
+            roles1.SaveCurrentTempData()
+
+            Dim c As New BO.j70QueryTemplate
+            With c
+                .x29ID = Me.CurrentX29ID
+                .j70Name = Trim(Me.hidNewJ70Name.Value)
+                .j70IsNegation = Me.j70IsNegation.Checked
+                .j70BinFlag = BO.BAS.IsNullInt(Me.opgBin.SelectedValue)
+                .j70IsSystem = False
+
+                Dim s As String = ""
+                For Each it As Telerik.Web.UI.RadListBoxItem In lt1.Items
+                    s += "," & it.Value
+                Next
+                .j70ColumnNames = BO.BAS.OM1(s)
+
+                .j70OrderBy = GetOrderBy()
+                .j70IsFilteringByColumn = Me.j70IsFilteringByColumn.Checked
+                .j70ScrollingFlag = BO.BAS.IsNullInt(Me.j70ScrollingFlag.SelectedValue)
+            End With
+
+            If Master.Factory.j70QueryTemplateBL.Save(c, GetList_j71(), roles1.GetData4Save()) Then
+                Master.DataPID = Master.Factory.j70QueryTemplateBL.LastSavedPID
+
+                SetupJ70Combo()
+
+                ''SetupCols()
+                RefreshRecord()
+            Else
+                Master.Notify(Master.Factory.j70QueryTemplateBL.ErrorMessage)
+            End If
+
+            hidNewJ70Name.Value = ""
+        End If
+        
+    End Sub
+
+    Private Sub cmdSave_Click(sender As Object, e As ImageClickEventArgs) Handles cmdSave.Click
+        If SaveChanges() Then
+            Me.j70ID.SelectedItem.Text = Me.j70Name.Text
+        End If
     End Sub
 End Class

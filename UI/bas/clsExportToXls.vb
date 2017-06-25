@@ -114,7 +114,33 @@ Public Class clsExportToXls
         Next
         Return Nothing
     End Function
+    Public Function ExportDataGrid(lis As IEnumerable(Of Object), cJ70 As BO.j70QueryTemplate) As String
+        Dim sheet As ExcelWorksheet = CreateSheet(), strFields As String = "", strHeaders As String = ""
 
+        Dim lisCols As List(Of BO.GridColumn) = _factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ70.x29ID)
+        For Each s In Split(cJ70.j70ColumnNames, ",")
+            Dim strField As String = Trim(s)
+
+            Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
+            If Not c Is Nothing Then
+                strFields += "|" & c.ColumnName
+                strHeaders += "|" & c.ColumnHeader
+
+            End If
+
+        Next
+        strFields = BO.BAS.OM1(strFields)
+        strHeaders = BO.BAS.OM1(strHeaders)
+
+        RenderHeaders(strHeaders, sheet)
+
+        Dim x As Integer = 2
+        For Each c In lis
+            RenderDataRow(c, strFields, sheet, x)
+            x += 1
+        Next
+        Return SaveAsFile(sheet, False)
+    End Function
     Public Function ExportGridData(lis As IEnumerable(Of Object), cJ74 As BO.j74SavedGridColTemplate) As String
         Dim sheet As ExcelWorksheet = CreateSheet(), strFields As String = "", strHeaders As String = ""
 

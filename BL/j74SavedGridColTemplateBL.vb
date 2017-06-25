@@ -484,7 +484,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.TimeFrom, "TimeFrom", , False, "p31DateTimeFrom_Orig", , , "Datum a čas"))
             .Add(AGC(My.Resources.common.TimeUntil, "TimeUntil", , False, "p31DateTimeUntil_Orig", , , "Datum a čas"))
 
-            .Add(AGC(My.Resources.common.Osoba, "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName", , , "Osoba", "min(j02.j02LastName+char(32)+j02.j02FirstName)", "a.j02ID"))
+            .Add(AGC("Jméno", "Person", , , "j02.j02LastName+char(32)+j02.j02FirstName", , , "Osoba", "min(j02.j02LastName+char(32)+j02.j02FirstName)", "a.j02ID"))
             .Add(AGC("Pozice osoby", "PoziceOsoby", , True, "j07.j07Name", , "LEFT OUTER JOIN j07PersonPosition j07 ON j02.j07ID=j07.j07ID", "Osoba", "min(j07.j07Name)", "j02.j07ID"))
             .Add(AGC("Středisko osoby", "StrediskoOsoby", , True, "j18_j02.j18Name", , "LEFT OUTER JOIN j18Region j18_j02 ON j02.j18ID=j18_j02.j18ID", "Osoba", "min(j18_j02.j18Name)", "j02.j18ID"))
 
@@ -495,7 +495,7 @@ Class j74SavedGridColTemplateBL
             .Add(AGC(My.Resources.common.FakturacniOddil, "p95Name", , , , , , "Aktivita", "min(p95.p95Name)", "p32.p95ID"))
 
             .Add(AGC(My.Resources.common.Projekt, "p41Name", , , "isnull(p41NameShort,p41Name)", , , "Projekt", "min(p41Name)", "a.p41ID"))
-            .Add(AGC("Klient+Projekt", "ClientAndProject", , , "isnull(p28Client.p28Name+' - ','')+p41Name", , , "Projekt", "min(isnull(p28Client.p28Name+' - ','')+p41Name)", "a.p41ID"))
+            .Add(AGC("Klient+Projekt", "ClientAndProject", , , "isnull(p28Client.p28Name+'-','')+p41Name", , , "Projekt", "min(isnull(p28Client.p28Name+' - ','')+p41Name)", "a.p41ID"))
             .Add(AGC("Stromový název", "p41TreePath", , , "isnull(p41TreePath,p41Name)", , , "Projekt", "min(p41TreePath)", "a.p41ID"))
 
             .Add(AGC(My.Resources.common.KodProjektu, "p41Code", , , , , , "Projekt", "min(p41Code)", "a.p41ID"))

@@ -7,7 +7,20 @@
         Dim s As String = GetSQLPart1() & " WHERE a.j70ID=@j70id"
         Return _cDB.GetRecord(Of BO.j70QueryTemplate)(s, New With {.j70id = intPID})
     End Function
+    Public Function LoadSystemTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "") As BO.j70QueryTemplate
+        Dim pars As New DbParameters
+        pars.Add("j03id", intJ03ID, DbType.Int32)
+        pars.Add("x29id", x29id, DbType.Int32)
 
+        Dim s As String = GetSQLPart1() & " WHERE a.j70IsSystem=1 AND a.j03ID=@j03id AND x29ID=@x29id"
+        If strMasterPrefix <> "" Then
+            pars.Add("masterprefix", strMasterPrefix, DbType.String)
+            s += " AND j70MasterPrefix=@masterprefix"
+        Else
+            s += " AND j70MasterPrefix is null"
+        End If
+        Return _cDB.GetRecord(Of BO.j70QueryTemplate)(s, pars)
+    End Function
 
     Public Function Save(cRec As BO.j70QueryTemplate, lisJ71 As List(Of BO.j71QueryTemplate_Item), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
         _Error = ""
@@ -28,6 +41,12 @@
             pars.Add("j70BinFlag", .j70BinFlag, DbType.Int32)
             pars.Add("j70IsNegation", .j70IsNegation, DbType.Boolean)
 
+            pars.Add("j70ColumnNames", .j70ColumnNames, DbType.String)
+            pars.Add("j70OrderBy", .j70OrderBy, DbType.String)
+            pars.Add("j70IsFilteringByColumn", .j70IsFilteringByColumn, DbType.Boolean)
+            pars.Add("j70ScrollingFlag", CInt(.j70ScrollingFlag), DbType.Int32)
+            pars.Add("j70MasterPrefix", .j70MasterPrefix, DbType.String)
+
             pars.Add("j70validfrom", cRec.ValidFrom, DbType.DateTime)
             pars.Add("j70validuntil", cRec.ValidUntil, DbType.DateTime)
 
@@ -36,29 +55,32 @@
 
         If _cDB.SaveRecord("j70QueryTemplate", pars, bolINSERT, strW, True, _curUser.j03Login) Then
             Dim intJ70ID As Integer = _cDB.LastSavedRecordPID
-            If Not bolINSERT Then _cDB.RunSQL("DELETE FROM j71QueryTemplate_Item WHERE j70ID=" & intJ70ID.ToString)
+            If Not lisJ71 Is Nothing Then
+                If Not bolINSERT Then _cDB.RunSQL("DELETE FROM j71QueryTemplate_Item WHERE j70ID=" & intJ70ID.ToString)
 
-            For Each c In lisJ71
-                pars = New DbParameters
-                pars.Add("j70ID", intJ70ID, DbType.Int32)
-                pars.Add("x29ID", BO.BAS.IsNullDBKey(c.x29ID), DbType.Int32)
-                pars.Add("j71Field", c.j71Field, DbType.String)
-                pars.Add("j71RecordPID", BO.BAS.IsNullDBKey(c.j71RecordPID), DbType.Int32)
-                pars.Add("j71RecordName", c.j71RecordName, DbType.String)
-                pars.Add("j71RecordPID_Extension", BO.BAS.IsNullDBKey(c.j71RecordPID_Extension), DbType.Int32)
-                pars.Add("j71RecordName_Extension", c.j71RecordName_Extension, DbType.String)
-                pars.Add("j71ValueType", c.j71ValueType, DbType.String)
-                pars.Add("j71ValueFrom", c.j71ValueFrom, DbType.String)
-                pars.Add("j71ValueUntil", c.j71ValueUntil, DbType.String)
-                pars.Add("j71ValueString", c.j71ValueString, DbType.String)
-                pars.Add("j71StringOperator", c.j71StringOperator, DbType.String)
-                pars.Add("j71FieldLabel", c.j71FieldLabel, DbType.String)
-                pars.Add("j71SqlExpression", c.j71SqlExpression, DbType.String)
-                pars.Add("x28ID", BO.BAS.IsNullDBKey(c.x28ID), DbType.Int32)
-                If Not _cDB.SaveRecord("j71QueryTemplate_Item", pars, True, , , , False) Then
+                For Each c In lisJ71
+                    pars = New DbParameters
+                    pars.Add("j70ID", intJ70ID, DbType.Int32)
+                    pars.Add("x29ID", BO.BAS.IsNullDBKey(c.x29ID), DbType.Int32)
+                    pars.Add("j71Field", c.j71Field, DbType.String)
+                    pars.Add("j71RecordPID", BO.BAS.IsNullDBKey(c.j71RecordPID), DbType.Int32)
+                    pars.Add("j71RecordName", c.j71RecordName, DbType.String)
+                    pars.Add("j71RecordPID_Extension", BO.BAS.IsNullDBKey(c.j71RecordPID_Extension), DbType.Int32)
+                    pars.Add("j71RecordName_Extension", c.j71RecordName_Extension, DbType.String)
+                    pars.Add("j71ValueType", c.j71ValueType, DbType.String)
+                    pars.Add("j71ValueFrom", c.j71ValueFrom, DbType.String)
+                    pars.Add("j71ValueUntil", c.j71ValueUntil, DbType.String)
+                    pars.Add("j71ValueString", c.j71ValueString, DbType.String)
+                    pars.Add("j71StringOperator", c.j71StringOperator, DbType.String)
+                    pars.Add("j71FieldLabel", c.j71FieldLabel, DbType.String)
+                    pars.Add("j71SqlExpression", c.j71SqlExpression, DbType.String)
+                    pars.Add("x28ID", BO.BAS.IsNullDBKey(c.x28ID), DbType.Int32)
+                    If Not _cDB.SaveRecord("j71QueryTemplate_Item", pars, True, , , , False) Then
 
-                End If
-            Next
+                    End If
+                Next
+            End If
+            
             If Not lisX69 Is Nothing Then   'přiřazení rolí k filtru
                 bas.SaveX69(_cDB, BO.x29IdEnum.j70QueryTemplate, intJ70ID, lisX69, bolINSERT)
             End If
@@ -68,7 +90,7 @@
         End If
 
     End Function
-    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum) As IEnumerable(Of BO.j70QueryTemplate)
+    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "") As IEnumerable(Of BO.j70QueryTemplate)
         Dim s As String = GetSQLPart1()
         Dim pars As New DbParameters
 
@@ -79,6 +101,12 @@
         If _x29id > BO.x29IdEnum._NotSpecified Then
             pars.Add("x29id", _x29id, DbType.Int32)
             strW += " AND a.x29ID=@x29id"
+        End If
+        If strMasterPrefix <> "" Then
+            pars.Add("masterprefix", strMasterPrefix, DbType.String)
+            s += " AND a.j70MasterPrefix=@masterprefix"
+        Else
+            s += " AND a.j70MasterPrefix is null"
         End If
 
         If Not myQuery Is Nothing Then

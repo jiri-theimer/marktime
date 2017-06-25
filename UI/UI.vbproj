@@ -239,6 +239,7 @@
     <Content Include="mobile_stoppage.aspx" />
     <Content Include="mobile_workflow_dialog.aspx" />
     <Content Include="mobile_workflow_history.ascx" />
+    <Content Include="mygrid.ascx" />
     <Content Include="myscheduler.ascx" />
     <Content Include="navigator.aspx" />
     <Content Include="o10_framework.aspx" />
@@ -1157,6 +1158,13 @@
     </Compile>
     <Compile Include="mobile_workflow_history.ascx.vb">
       <DependentUpon>mobile_workflow_history.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mygrid.ascx.designer.vb">
+      <DependentUpon>mygrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="mygrid.ascx.vb">
+      <DependentUpon>mygrid.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="myscheduler.ascx.designer.vb">

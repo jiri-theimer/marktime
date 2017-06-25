@@ -145,7 +145,86 @@ Public Class basUIMT
         'If lisSqlFROM.Count > 0 Then strRet += "||" & String.Join(" ", lisSqlFROM)
         'Return strRet
     End Function
+    Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String
+        If cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.Scrolling Then cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders
+        Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
+        Dim lisSqlSumCols As New List(Of String)
+        Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
+        With grid
+            .ClearColumns()
+            .AllowMultiSelect = bolAllowMultiSelect
+            .DataKeyNames = "pid"
+            .AllowCustomSorting = True
 
+
+
+            .AllowCustomPaging = bolCustomPaging
+            If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
+
+
+            .PageSize = intPageSize
+            If intSysColumnWidth > 0 Then .AddSystemColumn(intSysColumnWidth)
+            .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
+            .AllowFilteringByColumn = cJ70.j70IsFilteringByColumn
+            Select Case cJ70.j70ScrollingFlag
+                Case BO.j74ScrollingFlagENUM.Scrolling
+                    .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+                    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
+                Case BO.j74ScrollingFlagENUM.StaticHeaders
+                    .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+                    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+                Case Else
+                    .radGridOrig.ClientSettings.Scrolling.AllowScroll = False
+                    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
+            End Select
+            ''If cJ70.j74IsVirtualScrolling Then
+            ''    .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
+            ''    .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
+            ''    .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
+            ''    .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
+            ''    .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
+            ''End If
+            .radGridOrig.MasterTableView.Name = "grid"
+            If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
+            
+
+            Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ70.x29ID), bolMobile As Boolean = False
+            If cJ70.j70MasterPrefix = "mobile_grid" Then               
+                bolMobile = True
+            End If
+            Dim intIndex As Integer = 0
+            For Each s In Split(cJ70.j70ColumnNames, ",")
+                Dim strField As String = Trim(s)
+
+                Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
+
+                If Not c Is Nothing Then
+                    .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
+
+                    lisSqlSEL.Add(c.ColumnSqlSyntax_Select)
+                    If c.IsShowTotals Then
+                        If c.ColumnDBName <> "" Then
+                            lisSqlSumCols.Add("sum(" & c.ColumnDBName & ") as " & c.ColumnName)
+                        Else
+                            lisSqlSumCols.Add("sum(" & c.ColumnName & ") as " & c.ColumnName)
+                        End If
+                    End If
+
+                    If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
+                End If
+                intIndex += 1
+            Next
+            grid.SetFilterSetting(strFilterSetting, strFilterExpression)
+            
+
+        End With
+
+        If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
+        strGetSumCols = String.Join("|", lisSqlSumCols)
+        Return String.Join(",", lisSqlSEL)
+
+     
+    End Function
     Public Shared Sub MakeDockZonesUserFriendly(rdl As RadDockLayout, bolLockedInteractivity As Boolean)
 
         For Each zone In rdl.RegisteredZones

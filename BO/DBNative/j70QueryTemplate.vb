@@ -7,6 +7,11 @@
         Me.Text = strText
     End Sub
 End Class
+Public Enum j70ScrollingFlagENUM
+    NoScrolling = 0
+    Scrolling = 1
+    StaticHeaders = 2
+End Enum
 Public Class j70QueryTemplate
     Inherits BOMother
     Public Property j70Name As String
@@ -16,6 +21,12 @@ Public Class j70QueryTemplate
     Public Property j70IsSystem As Boolean
     Public Property j70BinFlag As Integer
     Public Property j70IsNegation As Boolean
+
+    Public Property j70ColumnNames As String
+    Public Property j70OrderBy As String
+    Public Property j70IsFilteringByColumn As Boolean
+    Public Property j70ScrollingFlag As j70ScrollingFlagENUM = j70ScrollingFlagENUM.StaticHeaders
+    Public Property j70MasterPrefix As String
 
     Private Property _Mark As String
     Public ReadOnly Property NameWithMark As String

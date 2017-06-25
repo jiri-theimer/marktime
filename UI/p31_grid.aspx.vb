@@ -3,7 +3,7 @@
 Public Class p31_grid
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Site
-    Private Property _curJ74 As BO.j74SavedGridColTemplate
+
     Private Property _curJ62 As BO.j62MenuHome
     Private Property _needFilterIsChanged As Boolean = False
     Private Property _curIsExport As Boolean
@@ -12,14 +12,7 @@ Public Class p31_grid
         _MasterPage = Me.Master
         Master.HelpTopicID = "p31_grid"
     End Sub
-    Public Property CurrentJ70ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
-        End Set
-    End Property
+    
     Public Property CurrentMasterPrefix As String
         Get
             Return hidMasterPrefix.Value
@@ -47,6 +40,8 @@ Public Class p31_grid
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Master.Factory
+
         If Not Page.IsPostBack Then
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
@@ -67,7 +62,6 @@ Public Class p31_grid
                 With lisPars
                     .Add("p31_grid-pagesize")
                     .Add("p31_grid-query-p34id")
-                    .Add("p31_grid-j74id")
                     .Add("p31-j70id")
                     .Add("p31_grid-periodtype")
                     .Add("p31_grid-period")
@@ -99,10 +93,10 @@ Public Class p31_grid
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_grid-groupby"))
                     hidX18_value.Value = .GetUserParam("x18_querybuilder-value-p31-p31grid")
                     Me.x18_querybuilder_info.Text = .GetUserParam("x18_querybuilder-text-p31-p31grid")
-                    Me.chkQueryOnTop.Checked = BO.BAS.BG(.GetUserParam("p31_grid-query-on-top", "1"))
+
                 End With
-                
-               
+
+
             End With
 
             Me.CurrentJ62ID = BO.BAS.IsNullInt(Request.Item("j62id"))
@@ -115,19 +109,15 @@ Public Class p31_grid
 
             With Master.Factory.j03UserBL
                 Me.chkGroupsAutoExpanded.Checked = BO.BAS.BG(.GetUserParam("p31_grid-groups-autoexpanded", "1"))
-                SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31-j70id")))
-                Dim intJ74ID As Integer = BO.BAS.IsNullInt(.GetUserParam("p31_grid-j74id"))
-                If intJ74ID = 0 Then
-                    If Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p31_grid") Then
-                        _curJ74 = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p31_grid")
-                        .SetUserParam("p31_grid-j74id", _curJ74.PID)
-                    End If
-                End If
-                SetupJ74Combo(intJ74ID)
+                Dim strJ70ID As String = Request.Item("j70id")
+                If strJ70ID = "" Then strJ70ID = .GetUserParam("p31-j70id")
+                designer1.RefreshData(BO.BAS.IsNullInt(strJ70ID))
+
+                
                 SetupGrid(.GetUserParam("p31_grid-filter_setting"), .GetUserParam("p31_grid-filter_sql"), .GetUserParam("p31_grid-sort"))
 
             End With
-            
+
 
             If CurrentMasterPrefix <> "" Then
                 panAdditionalQuery.Visible = True
@@ -203,80 +193,14 @@ Public Class p31_grid
         linkDrillDown.Text = hidSGA.Value
         linkDrillDown.NavigateUrl = "p31_sumgrid.aspx?masterprefix=" + Me.CurrentMasterPrefix + "&masterpid=" + Me.CurrentMasterPID.ToString & "&tabqueryflag=" + Me.cbxTabQueryFlag.SelectedValue & "&pid=" & hidSGV.Value
     End Sub
-    Private Sub SetupJ70Combo(intDef As Integer)
-        Dim mq As New BO.myQuery
-        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p31Worksheet)
-        j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
-        If Not _curJ62 Is Nothing Then
-            If _curJ62.j70ID <> 0 Then
-                intDef = _curJ62.j70ID
-                If Me.j70ID.Items.FindByValue(intDef.ToString) Is Nothing Then
-                    Dim c As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(intDef)
-                    Me.j70ID.Items.Add(New ListItem(c.j70Name, intDef.ToString))
-                End If
-            End If
-        End If
-        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        Me.clue_query.Visible = False
-        With Me.j70ID
-            If .SelectedIndex > 0 Then
-                .ToolTip = .SelectedItem.Text
-                Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-                Me.clue_query.Visible = True
-            End If
-        End With
-    End Sub
-    Public Property CurrentJ74ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j74id.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j74id, value.ToString)
-        End Set
-    End Property
+    
+    
 
-    Private Sub SetupJ74Combo(intDef As Integer)
-        If Not _curJ62 Is Nothing Then
-            If _curJ62.j74ID <> 0 Then
-                intDef = _curJ62.j74ID
-                _curJ74 = Master.Factory.j74SavedGridColTemplateBL.Load(intDef)
-                j74id.Items.Clear()
-                Me.j74id.Items.Add(New ListItem(_curJ74.j74Name, intDef.ToString))
-                Me.j74id.Enabled = False
-                If _curJ62.j62GridGroupBy <> "" Then basUI.SelectDropdownlistValue(Me.cbxGroupBy, _curJ62.j62GridGroupBy)
-                Return
-            End If
-        End If
-
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = "" Or p.j74MasterPrefix = "p31_grid")
-        If lisJ74.Count = 0 Then
-            'uživatel zatím nemá žádnou šablonu - založit první j74IsSystem=1
-            Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p31_grid")
-            lisJ74 = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = "" Or p.j74MasterPrefix = "p31_grid")
-        End If
-        j74id.DataSource = lisJ74
-        j74id.DataBind()
-
-        If intDef > 0 Then
-            basUI.SelectDropdownlistValue(Me.j74id, intDef.ToString)
-        End If
-        If Me.CurrentJ74ID > 0 Then
-            _curJ74 = lisJ74.Where(Function(p) p.PID = Me.CurrentJ74ID)(0)
-        End If
-
-
-    End Sub
-
+    
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
 
         Select Case Me.hidHardRefreshFlag.Value
-            Case "j74"
-                If Me.hidHardRefreshPID.Value <> "" Then
-                    Me.CurrentJ74ID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
-                    SaveLastJ74Reference()
-                End If
-                ReloadPage()
+         
             Case "quickquery"
                 grid1.Rebind(False)
             Case "p31-save"
@@ -295,20 +219,16 @@ Public Class p31_grid
 
     End Sub
 
-    Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
-        SaveLastJ74Reference()
-        ReloadPage()
-    End Sub
+    
 
-    Private Sub SaveLastJ74Reference()
-        With Master.Factory.j03UserBL
-            .SetUserParam("p31_grid-j74id", Me.CurrentJ74ID.ToString)
-            .SetUserParam("p31_grid-sort", "")
-            .SetUserParam("p31_grid-filter_setting", "")
-            .SetUserParam("p31_grid-filter_sql", "")
-        End With
-        
-    End Sub
+    ''Private Sub SaveLastJ74Reference()
+    ''    With Master.Factory.j03UserBL
+    ''        .SetUserParam("p31_grid-sort", "")
+    ''        .SetUserParam("p31_grid-filter_setting", "")
+    ''        .SetUserParam("p31_grid-filter_sql", "")
+    ''    End With
+
+    ''End Sub
 
     Private Sub cbxPaging_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxPaging.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("p31_grid-pagesize", Me.cbxPaging.SelectedValue)
@@ -317,21 +237,12 @@ Public Class p31_grid
     End Sub
 
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String, strSortExpression As String)
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
-            If cJ74 Is Nothing Then
-                cJ74 = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p31_grid")
-                If Not cJ74 Is Nothing Then SetupJ74Combo(cJ74.PID)
-            End If
-            Me.hidDefaultSorting.Value = cJ74.j74OrderBy : Me.hidDrillDownField.Value = cJ74.j74DrillDownField1
-            Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom, , strSqlSumCols)
-            Me.hidFrom.Value = strAddSqlFrom
-            Me.hidSumCols.Value = strSqlSumCols
-
-
-            
-        End With
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
+        Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, strFilterSetting, strFilterExpression, strSortExpression, strAddSqlFrom, , strSqlSumCols)
+        Me.hidFrom.Value = strAddSqlFrom
+        Me.hidSumCols.Value = strSqlSumCols
         
 
         With Me.cbxGroupBy.SelectedItem
@@ -401,16 +312,7 @@ Public Class p31_grid
         End With
         InhaleMyQuery(mq)
 
-        ''If Me.hidDrillDownField.Value <> "" Then
-        ''    'drill down úroveň
-        ''    Dim colDrill As BO.GridGroupByColumn = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet).Where(Function(p) p.ColumnField = Me.hidDrillDownField.Value).First
-
-        ''    Dim dtDD As DataTable = Master.Factory.p31WorksheetBL.GetDrillDownDataTable(colDrill, mq, grid1.radGridOrig.MasterTableView.Attributes("sumfields"))
-        ''    grid1.VirtualRowCount = dtDD.Rows.Count
-        ''    grid1.DataSourceDataTable = dtDD
-        ''    Return
-        ''End If
-
+      
         If _needFilterIsChanged Then
             With Master.Factory.j03UserBL
                 .SetUserParam("p31_grid-filter_setting", grid1.GetFilterSetting())
@@ -450,7 +352,7 @@ Public Class p31_grid
                 Case Else
 
             End Select
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
 
             .MG_AdditionalSqlFROM = Me.hidFrom.Value
@@ -503,6 +405,9 @@ Public Class p31_grid
 
 
     Private Sub ReloadPage()
+        Response.Redirect(GetPage4Reload())
+    End Sub
+    Private Function GetPage4Reload() As String
         Dim s As String = ""
         If Me.CurrentMasterPID <> 0 Then
             s = basUI.AddQuerystring2Page(s, "masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Me.CurrentMasterPID.ToString)
@@ -513,8 +418,8 @@ Public Class p31_grid
         If hidSGF.Value <> "" Then
             s = basUI.AddQuerystring2Page(s, "sgf=" & hidSGF.Value & "&sgv=" & hidSGV.Value & "&sga=" & hidSGA.Value)
         End If
-        Response.Redirect("p31_grid.aspx" & s)
-    End Sub
+        Return "p31_grid.aspx" & s
+    End Function
 
     Private Sub p31_grid_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         With Me.period1
@@ -524,17 +429,16 @@ Public Class p31_grid
                 .BackColor = Nothing
             End If
         End With
+        designer1.ReloadUrl = GetPage4Reload()
        
         If grid1.GetFilterExpression <> "" Then
             cmdCĺearFilter.Visible = True
         Else
             cmdCĺearFilter.Visible = False
         End If
-        basUIMT.RenderQueryCombo(Me.j70ID)
+
         Me.CurrentQuery.Text = ""
-        If Me.CurrentJ70ID > 0 Then
-            If Not Me.chkQueryOnTop.Checked Then Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-        End If
+        
         With Me.cbxTabQueryFlag
             If .SelectedIndex > 0 Then
                 .BackColor = basUI.ColorQueryRGB
@@ -558,7 +462,6 @@ Public Class p31_grid
         End With
         
 
-        basUIMT.RenderQueryCombo(Me.j70ID)
 
         If cbxGroupBy.SelectedValue <> "" Then chkGroupsAutoExpanded.Visible = True Else chkGroupsAutoExpanded.Visible = False
 
@@ -576,16 +479,15 @@ Public Class p31_grid
     End Sub
 
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
-        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
         Dim cXLS As New clsExportToXls(Master.Factory)
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
 
         Dim mq As New BO.myQueryP31
         InhaleMyQuery(mq)
         mq.MG_GridGroupByField = ""
-        ''Dim lis As IEnumerable(Of BO.p31Worksheet) = Master.Factory.p31WorksheetBL.GetList(mq)
         Dim dt As DataTable = Master.Factory.p31WorksheetBL.GetGridDataSource(mq)
 
-        Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
+        Dim strFileName As String = cXLS.ExportDataGrid(dt.AsEnumerable, cJ70)
         If strFileName = "" Then
             Master.Notify(cXLS.ErrorMessage, NotifyLevel.ErrorMessage)
         Else
@@ -603,12 +505,11 @@ Public Class p31_grid
             menu1.FindItemByValue("cmdApprove").Visible = .SysUser.IsApprovingPerson
 
             panExport.Visible = .TestPermission(BO.x53PermValEnum.GR_GridTools)
-            cmdGridDesigner2.Visible = panExport.Visible
-            cmdQuery.Visible = panExport.Visible
+            designer1.AllowSettingButton = panExport.Visible
+
             cmdSummary.Visible = .TestPermission(BO.x53PermValEnum.GR_P31_Pivot)
         End With
-        If Not cmdGridDesigner2.Visible And j74id.Items.Count <= 1 Then Me.j74id.Visible = False
-
+        
     End Sub
 
     Private Sub cbxGroupBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxGroupBy.SelectedIndexChanged
@@ -621,11 +522,7 @@ Public Class p31_grid
         ''End With
         ''grid1.Rebind(True)
     End Sub
-    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
-        Me.CurrentJ62ID = 0
-        Master.Factory.j03UserBL.SetUserParam("p31-j70id", Me.CurrentJ70ID.ToString)
-        ReloadPage()
-    End Sub
+   
   
     
 
@@ -687,8 +584,5 @@ Public Class p31_grid
         End With
         ReloadPage()
     End Sub
-    Private Sub chkQueryOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles chkQueryOnTop.CheckedChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_grid-query-on-top", BO.BAS.GB(Me.chkQueryOnTop.Checked))
-        ReloadPage()
-    End Sub
+    
 End Class

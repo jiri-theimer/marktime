@@ -3,13 +3,15 @@
     Function Save(cRec As BO.j70QueryTemplate, lisJ71 As List(Of BO.j71QueryTemplate_Item), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
     Function Load(intPID As Integer) As BO.j70QueryTemplate
     Function Delete(intPID As Integer) As Boolean
-    Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum) As IEnumerable(Of BO.j70QueryTemplate)
+    Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "") As IEnumerable(Of BO.j70QueryTemplate)
     Function GetList_j71(intPID As Integer) As IEnumerable(Of BO.j71QueryTemplate_Item)
     Function GetList_OtherQueryItem(x29id As BO.x29IdEnum) As List(Of BO.OtherQueryItem)
 
     Function GetSqlWhere(intJ70ID As Integer) As String
     
     Sub Setupj71TempList(intPID As Integer, strGUID As String)
+
+    Function CheckDefaultTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "") As Boolean
 End Interface
 
 Class j70QueryTemplateBL
@@ -34,8 +36,8 @@ Class j70QueryTemplateBL
         Return _cDL.Delete(intPID)
     End Function
 
-    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum) As System.Collections.Generic.IEnumerable(Of BO.j70QueryTemplate) Implements Ij70QueryTemplateBL.GetList
-        Return _cDL.GetList(myQuery, _x29id)
+    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "") As System.Collections.Generic.IEnumerable(Of BO.j70QueryTemplate) Implements Ij70QueryTemplateBL.GetList
+        Return _cDL.GetList(myQuery, _x29id, strMasterPrefix)
     End Function
 
 
@@ -48,7 +50,9 @@ Class j70QueryTemplateBL
             If .j03ID = 0 Then .j03ID = _cUser.PID
             If Trim(.j70Name) = "" Then _Error = "Chybí název šablony filtru."
             If .x29ID = BO.x29IdEnum._NotSpecified Then _Error = "Chybí x29ID."
-
+            If Trim(.j70ColumnNames) = "" Then
+                _Error = "Přehled musí obsahovat minimálně jeden sloupec."
+            End If
         End With
 
         If _Error <> "" Then Return False
@@ -168,5 +172,167 @@ Class j70QueryTemplateBL
 
     Public Function GetSqlWhere(intJ70ID As Integer) As String Implements Ij70QueryTemplateBL.GetSqlWhere
         Return _cDL.GetSqlWhere(intJ70ID)
+    End Function
+
+    Public Function CheckDefaultTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "") As Boolean Implements Ij70QueryTemplateBL.CheckDefaultTemplate
+        If Not _cDL.LoadSystemTemplate(x29id, intJ03ID, strMasterPrefix) Is Nothing Then Return True 'systém šablona již existuje
+
+        Dim c As New BO.j70QueryTemplate
+        c.x29ID = x29id
+        c.j70IsSystem = True
+        c.j70Name = BL.My.Resources.common.VychoziDatovyPrehled
+        c.j70MasterPrefix = strMasterPrefix
+
+        If c.j70MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j70MasterPrefix = "p31_grid") Or c.j70MasterPrefix = "p31_framework" Then
+            c.j70IsFilteringByColumn = True 'pro hlavní přehledy nahodit sloupcový auto-filter
+            c.j70ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders    'pro hlavní přehledy nastavit ukotvení záhlaví
+        End If
+
+        Select Case x29id
+            Case BO.x29IdEnum.p31Worksheet
+                Select Case strMasterPrefix
+                    Case "j02", "j02-p31"
+                        c.j70Name = String.Format(BL.My.Resources.common.VychoziPrehledOsoby, "osoby")
+                        c.j70ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "j02-approved"
+                        c.j70Name = "Schválené úkony osoby"
+                        c.j70ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,p31Text"
+                    Case "j02-time"
+                        c.j70Name = "Hodiny osoby"
+                        c.j70ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "j02-expense", "j02-fee"
+                        c.j70Name = "Peněžní úkony osoby"
+                        c.j70ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "j02-kusovnik"
+                        c.j70Name = "Kusovníkové úkony osoby"
+                        c.j70ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p28", "p28-p31"
+                        c.j70Name = My.Resources.common.VychoziPrehledKlienta
+                        c.j70ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p28-approved"
+                        c.j70Name = "Schválené úkony klienta"
+                        c.j70ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
+                    Case "p28-time"
+                        c.j70Name = "Hodiny klienta"
+                        c.j70ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p28-expense", "p28-fee"
+                        c.j70Name = "Peněžní úkony klienta"
+                        c.j70ColumnNames = "p31Date,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "p28-kusovnik"
+                        c.j70Name = "Kusovníkové úkony klienta"
+                        c.j70ColumnNames = "p31Date,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p41", "p41-p31"
+                        c.j70Name = My.Resources.common.VychoziPrehledProjektu
+                        c.j70ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p41-approved"
+                        c.j70Name = "Schválené úkony projektu"
+                        c.j70ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
+                    Case "p41-time"
+                        c.j70Name = "Hodiny projektu"
+                        c.j70ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p41-expense", "p41-fee"
+                        c.j70Name = "Peněžní úkonu projektu"
+                        c.j70ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "p41-kusovnik"
+                        c.j70Name = "Kusovníkové úkony projektu"
+                        c.j70ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p56", "p56-p31"
+                        c.j70Name = "Úkony vybraného úkolu"
+                        c.j70ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p56-approved"
+
+                        c.j70Name = "Schválené úkony úkolu"
+                        c.j70ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
+
+                    Case "p56-time"
+                        c.j70Name = "Hodiny v úkolu"
+                        c.j70ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "p56-expense", "p56-fee"
+                        c.j70Name = "Peněžní úkony v úkolu"
+                        c.j70ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+                    Case "p56-kusovnik"
+                        c.j70Name = "Kusovníkové úkony v úkolu"
+                        c.j70ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+
+                    Case "p91"
+                        c.j70Name = My.Resources.common.VychoziPrehledFaktury
+                        c.j70ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Invoiced,p31Rate_Billing_Invoiced,p31Amount_WithoutVat_Invoiced,p31VatRate_Invoiced,p31Amount_WithVat_Invoiced,p31Text"
+                    Case "approving_step3"  'schvalovací rozhraní
+                        c.j70Name = "Rozhraní pro schvalování úkonů | Příprava k fakturaci"
+                        c.j70ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Orig,p31Amount_WithoutVat_Approved,p31Text"
+                    Case "p31_grid"
+                        c.j70Name = My.Resources.common.VychoziPrehled
+                        c.j70ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                    Case "mobile_grid"
+                        c.j70ColumnNames = "p31Date,Person,p41Name,p31Value_Orig,p31Text"
+                    Case Else
+                        c.j70ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+                End Select
+
+            Case BO.x29IdEnum.p41Project
+                Select Case strMasterPrefix
+                    Case "p31_framework"
+                        c.j70Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
+                    Case "mobile_grid"
+                        c.j70ColumnNames = "FullName"
+                    Case "p28"
+                        c.j70Name = "Projekty klienta"
+                        c.j70ColumnNames = "p41Name,p41Code,p42Name"    'projekty v záložce pod klientem
+                    Case "p41"
+                        c.j70Name = "Pod-projekty"
+                        c.j70ColumnNames = "p41Code,p41Name,p42Name"    'podřízené projekty
+                End Select
+                If c.j70ColumnNames = "" Then c.j70ColumnNames = "Client,p41Name"
+            Case BO.x29IdEnum.p28Contact
+                c.j70ColumnNames = "p28Name"
+            Case BO.x29IdEnum.p91Invoice
+
+                Select Case strMasterPrefix
+                    Case "p41"
+                        c.j70Name = "Výchozí přehled v detailu projektu"
+                        c.j70ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+                    Case "p28"
+                        c.j70Name = "Výchozí přehled v detailu klienta"
+                        c.j70ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+                    Case "j02"
+                        c.j70Name = "Výchozí přehled v detailu osoby"
+                        c.j70ColumnNames = "p91Code,p28Name,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+                    Case "mobile_grid"
+                        c.j70ColumnNames = "p91Code,p91Client,p91Amount_WithoutVat"
+                    Case Else
+                        c.j70ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat,p91Amount_Debt"
+                End Select
+            Case BO.x29IdEnum.j02Person
+                c.j70ColumnNames = "FullNameDesc"
+            Case BO.x29IdEnum.p56Task
+                Select Case strMasterPrefix
+                    Case "j02"
+                        c.j70Name = My.Resources.common.VychoziPrehledOsoby
+                        c.j70ColumnNames = "p57Name,Client,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
+                    Case "p28"
+                        c.j70Name = My.Resources.common.VychoziPrehledKlienta
+                        c.j70ColumnNames = "p57Name,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
+                    Case "p31_framework"
+                        c.j70Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
+                        c.j70ColumnNames = "p57Name,p56Name"
+                    Case "mobile_grid"
+                        c.j70Name = My.Resources.common.VychoziPrehled
+                        c.j70ColumnNames = "p56Code,p56Name"
+                    Case Else
+                        c.j70ColumnNames = "p56Code,p56Name,b02Name"
+                End Select
+            Case BO.x29IdEnum.o23Notepad
+                Select Case strMasterPrefix
+                    Case "p41"
+                        c.j70ColumnNames = "o24Name,o23Name"
+                    Case "mobile_grid"
+                        c.j70ColumnNames = "o24Name,o23Name"
+                    Case Else
+                        c.j70ColumnNames = "o24Name,o23Name,Project"
+                End Select
+
+        End Select
+        c.j03ID = intJ03ID
+        Return Save(c, Nothing, Nothing)
     End Function
 End Class
