@@ -107,7 +107,8 @@
             p56Name.Font.Strikeout = True
         End If
        
-
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID, True)
+        Me.comments1.RefreshData(Master.Factory, BO.x29IdEnum.p56Task, Master.DataPID)
     End Sub
 
     

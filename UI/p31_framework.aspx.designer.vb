@@ -50,22 +50,22 @@ Partial Public Class p31_framework
     Protected WithEvents img1 As Global.System.Web.UI.WebControls.Image
 
     '''<summary>
-    '''j70ID control.
+    '''menu1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents menu1 As Global.Telerik.Web.UI.RadMenu
 
     '''<summary>
-    '''cmdQuery control.
+    '''designer1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cmdQuery As Global.System.Web.UI.HtmlControls.HtmlButton
+    Protected WithEvents designer1 As Global.UI.mygrid
 
     '''<summary>
     '''cbxGroupBy control.
@@ -86,15 +86,6 @@ Partial Public Class p31_framework
     Protected WithEvents chkGroupsAutoExpanded As Global.System.Web.UI.WebControls.CheckBox
 
     '''<summary>
-    '''j74id control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
     '''lblPaging control.
     '''</summary>
     '''<remarks>
@@ -111,15 +102,6 @@ Partial Public Class p31_framework
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents cbxPaging As Global.System.Web.UI.WebControls.DropDownList
-
-    '''<summary>
-    '''clue_query control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
 
     '''<summary>
     '''CurrentQuery control.

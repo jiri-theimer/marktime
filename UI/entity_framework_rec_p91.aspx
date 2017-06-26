@@ -36,10 +36,7 @@
             <%End If%>
         }
 
-        function p91_subgrid_setting(j74id, masterprefix) {
-
-            sw_decide("grid_designer.aspx?prefix=p91&masterprefix=<%=Me.CurrentMasterPrefix%>&pid=" + j74id, "Images/griddesigner.png", true);
-        }
+      
     </script>
 
 

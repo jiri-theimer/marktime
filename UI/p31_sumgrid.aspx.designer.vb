@@ -185,15 +185,6 @@ Partial Public Class p31_sumgrid
     Protected WithEvents lblQuery As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''clue_query control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents clue_query As Global.System.Web.UI.WebControls.HyperLink
-
-    '''<summary>
     '''CurrentQuery control.
     '''</summary>
     '''<remarks>
@@ -237,15 +228,6 @@ Partial Public Class p31_sumgrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidHardRefreshPID As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidJ74ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ74ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidMasterPrefix control.

@@ -3,18 +3,10 @@ Public Class p31_framework
     Inherits System.Web.UI.Page
 
     Protected WithEvents _MasterPage As Site
-    Private Property _curJ74 As BO.j74SavedGridColTemplate
+
     Private _lastP41ID As Integer = 0
     Private Property _needFilterIsChanged As Boolean = False
 
-    Public Property CurrentJ74ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j74id.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j74id, value.ToString)
-        End Set
-    End Property
     
     Public ReadOnly Property CurrentJ02ID As Integer
         Get
@@ -43,21 +35,13 @@ Public Class p31_framework
             hidTasksWorksheetColumns.Value = BO.BAS.GB(value)
         End Set
     End Property
-    Public Property CurrentJ70ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
-        End Set
-    End Property
-    
-
+   
     Private Sub p31_framework_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
         Master.HelpTopicID = "p31_framework"
     End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
                 .PageTitle = "Zapisování úkonů"
@@ -75,19 +59,19 @@ Public Class p31_framework
                     tabs1.SelectedIndex = CInt(Request.Item("tab"))
                 End If
                 InitialGroupByCombo(tabs1.SelectedIndex)
-
+                designer1.Prefix = Me.GridPrefix
+                designer1.x36Key = "p31_framework-j70id-" & Me.GridPrefix
                 Dim lisPars As New List(Of String)
                 With lisPars
+                    .Add(designer1.x36Key)
                     .Add("p31_framework-pagesize-" & Me.GridPrefix)
                     .Add("p31_framework-navigationPane_width")
                     .Add("p31_framework_detail-j02id")  'výchozí osoba pro nové úkony
-                    .Add("p31_framework-j74id-" & Me.GridPrefix)
                     .Add("p31_framework-groupby-" & Me.GridPrefix)
                     .Add("p31_framework-sort-" & Me.GridPrefix)
                     .Add("p31_framework-groups-autoexpanded")
                     .Add("p31_framework-timer")
                     .Add("p31_framework-grid")
-                    .Add("p31_framework-j70id")
                     If tabs1.SelectedIndex <> 1 Then    'v top10 se nefiltruje
                         .Add("p31_framework-filter_setting_p41")
                         .Add("p31_framework-filter_sql_p41")
@@ -110,7 +94,10 @@ Public Class p31_framework
                     Else
                         Me.navigationPane.Width = Unit.Parse(.GetUserParam("p31_framework-navigationPane_width", "350") & "px")
                     End If
-                    SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam("p31_framework-j70id")))
+                    Dim strJ70ID As String = Request.Item("j70id")
+                    If strJ70ID = "" Then strJ70ID = .GetUserParam(designer1.x36Key, "0")
+                    designer1.AllowSettingButton = Master.Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
+                    designer1.RefreshData(CInt(strJ70ID))
 
                     basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p31_framework-groupby-" & Me.GridPrefix, IIf(Me.GridPrefix = "p56", "Client", "")))
                     If tabs1.SelectedIndex = 0 Then
@@ -137,16 +124,16 @@ Public Class p31_framework
                 End With
             End With
 
-            
+
             If navigationPane.Visible Then
-                
+
                 grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p41")
                 RecalcVirtualRowCount()
 
                 grid1.radGridOrig.MasterTableView.FilterExpression = Master.Factory.j03UserBL.GetUserParam("p31_framework-filter_sql_p56")
                 RecalcTasksCount()
 
-                SetupJ74Combo(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam("p31_framework-j74id-" & Me.GridPrefix)))
+
                 With Master.Factory.j03UserBL
                     SetupGrid(.GetUserParam("p31_framework-filter_setting_" & Me.GridPrefix), .GetUserParam("p31_framework-filter_sql_" & Me.GridPrefix))
                 End With
@@ -156,7 +143,7 @@ Public Class p31_framework
                 Handle_DefaultSelectedRecord()
 
 
-                
+
             End If
 
         End If
@@ -183,28 +170,21 @@ Public Class p31_framework
     End Sub
 
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
-            If cJ74 Is Nothing Then
-                cJ74 = .LoadSystemTemplate(BO.BAS.GetX29FromPrefix(Me.GridPrefix), Master.Factory.SysUser.PID, "p31_framework")
-                If Not cJ74 Is Nothing Then
-                    SetupJ74Combo(cJ74.PID)
-                End If
-            End If
-            Dim strAddSqlFrom As String = ""
-            If tabs1.SelectedIndex = 0 Then
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
-            Else
-                Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
-            End If
-            hidFrom.Value = strAddSqlFrom
-            If cJ74.j74ScrollingFlag > BO.j74ScrollingFlagENUM.NoScrolling Then
-                navigationPane.Scrolling = SplitterPaneScrolling.None
-            End If
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
 
-            If tabs1.SelectedIndex = 1 Or tabs1.SelectedIndex = 3 Then grid1.AllowFilteringByColumn = False 'v top10 a v oblíbených se nefiltruje
-            
-        End With
+        Dim strAddSqlFrom As String = ""
+        If tabs1.SelectedIndex = 0 Then
+            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
+        Else
+            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 100, False, False, , strFilterSetting, strFilterExpression, , strAddSqlFrom, 30)
+        End If
+        hidFrom.Value = strAddSqlFrom
+        If cJ70.j70ScrollingFlag > BO.j70ScrollingFlagENUM.NoScrolling Then
+            navigationPane.Scrolling = SplitterPaneScrolling.None
+        End If
+
+        If tabs1.SelectedIndex = 1 Or tabs1.SelectedIndex = 3 Then grid1.AllowFilteringByColumn = False 'v top10 a v oblíbených se nefiltruje
+
         With grid1
             .radGridOrig.ShowFooter = False
             .radGridOrig.SelectedItemStyle.BackColor = Drawing.Color.Red
@@ -349,7 +329,7 @@ Public Class p31_framework
 
             If Me.CurrentJ02ID <> Master.Factory.SysUser.j02ID Then .j02ID_ExplicitQueryFor = Me.CurrentJ02ID
 
-            If Me.j70ID.Visible Then .j70ID = Me.CurrentJ70ID
+
         End With
 
     End Sub
@@ -425,7 +405,7 @@ Public Class p31_framework
                 img1.ImageUrl = "Images/task_32.png"
                 ''lblFormHeader.Text = Resources.p31_framework.tabs1_todo
         End Select
-        Me.j70ID.Visible = b : Me.clue_query.Visible = b : cmdQuery.Visible = b
+        ''Me.designer1.Visible = b
         If cbxGroupBy.SelectedIndex = 0 Then
             chkGroupsAutoExpanded.Visible = False
         Else
@@ -437,21 +417,7 @@ Public Class p31_framework
         Else
             cmdCĺearFilter.Visible = False
         End If
-        If Me.j70ID.Visible Then
-            basUIMT.RenderQueryCombo(Me.j70ID)
-            With Me.j70ID
-                If .SelectedIndex > 0 Then
-                    .ToolTip = .SelectedItem.Text
-                    Me.clue_query.Attributes("rel") = "clue_quickquery.aspx?j70id=" & .SelectedValue
-                    Me.clue_query.Visible = True
-                    Me.CurrentQuery.Text = "<img src='Images/query.png'/>" & Me.j70ID.SelectedItem.Text
-                Else
-                    Me.clue_query.Visible = False
-                    Me.CurrentQuery.Text = ""
-                End If
-               
-            End With
-        End If
+        
 
     End Sub
 
@@ -462,36 +428,7 @@ Public Class p31_framework
         Me.hidHardRefreshPID.Value = ""
     End Sub
 
-    Private Sub SetupJ74Combo(intDef As Integer)
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.BAS.GetX29FromPrefix(Me.GridPrefix)).Where(Function(p) p.j74MasterPrefix = "p31_framework")
-        If lisJ74.Count = 0 Then
-            'uživatel zatím nemá žádnou šablonu - založit první j74IsSystem=1
-            Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.BAS.GetX29FromPrefix(Me.GridPrefix), Master.Factory.SysUser.PID, "p31_framework")
-            lisJ74 = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.BAS.GetX29FromPrefix(Me.GridPrefix)).Where(Function(p) p.j74MasterPrefix = "p31_framework")
-        End If
-        j74id.DataSource = lisJ74
-        j74id.DataBind()
-
-        If intDef > 0 Then
-            basUI.SelectDropdownlistValue(Me.j74id, intDef.ToString)
-        End If
-        If Me.CurrentJ74ID > 0 Then
-            _curJ74 = lisJ74.Where(Function(p) p.PID = Me.CurrentJ74ID)(0)
-            If _curJ74.j74ColumnNames.IndexOf("ReceiversInLine") > 0 Then
-                Me.IsUseReceiversInLine = True
-            Else
-                Me.IsUseReceiversInLine = False
-            End If
-            If _curJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or _curJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then
-                Me.IsUseTasksWorksheetColumns = True
-            Else
-                Me.IsUseTasksWorksheetColumns = False
-            End If
-        End If
-
-
-    End Sub
-
+    
     Private Sub SetupGrouping(strGroupField As String, strFieldHeader As String)
         With grid1.radGridOrig.MasterTableView
             .GroupByExpressions.Clear()
@@ -517,20 +454,17 @@ Public Class p31_framework
         End With
         grid1.Rebind(True)
     End Sub
-    Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
-        SaveLastJ74Reference()
-        ReloadPage()
-    End Sub
+    
 
-    Private Sub SaveLastJ74Reference()
-        With Master.Factory.j03UserBL
-            .SetUserParam("p31_framework-j74id-" & Me.GridPrefix, Me.CurrentJ74ID.ToString)
-            .SetUserParam("p31_framework-sort-" & Me.GridPrefix, "")
-            .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, "")
-            .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, "")
-        End With
-        
-    End Sub
+    ''Private Sub SaveLastJ74Reference()
+    ''    With Master.Factory.j03UserBL
+    ''        .SetUserParam("p31_framework-j74id-" & Me.GridPrefix, Me.CurrentJ74ID.ToString)
+    ''        .SetUserParam("p31_framework-sort-" & Me.GridPrefix, "")
+    ''        .SetUserParam("p31_framework-filter_setting_" & Me.GridPrefix, "")
+    ''        .SetUserParam("p31_framework-filter_sql_" & Me.GridPrefix, "")
+    ''    End With
+
+    ''End Sub
     Private Sub ReloadPage()
         Response.Redirect("p31_framework.aspx")
     End Sub
@@ -616,19 +550,5 @@ Public Class p31_framework
         Master.Factory.j03UserBL.SetUserParam("p31_framework-sort-" & Me.GridPrefix, SortExpression)
     End Sub
 
-    Private Sub SetupJ70Combo(intDef As Integer)
-        Dim mq As New BO.myQuery
-        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, BO.x29IdEnum.p41Project)
-        j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Pojmenovaný filtr projektů--")
-        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-        
-
-    End Sub
-
-    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_framework-j70id", Me.j70ID.SelectedValue)
-        grid1.Rebind(False)
-
-    End Sub
+   
 End Class

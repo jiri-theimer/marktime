@@ -81,11 +81,7 @@
             sw_decide(url, "Images/worksheet.png", false);
 
         }
-        function p31_subgrid_setting(j74id) {
-            ///volá se z p31_subgrid
-            sw_decide("grid_designer.aspx?prefix=p31&masterprefix=<%=gridP31.MasterPrefixWithQueryFlag%>&pid=" + j74id, "Images/griddesigner_32.png", true);
-
-        }
+    
         function p31_subgrid_approving(pids) {
             try {
                 window.parent.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
@@ -94,10 +90,7 @@
                 window.sw_master("p31_approving_step2.aspx?pids=" + pids, "Images/approve_32.png", true);
             }
         }
-        function p31_subgrid_querybuilder(j70id) {
-            sw_decide("query_builder.aspx?prefix=p31&x36key=p31_subgrid-j70id&pid=" + j70id, "Images/query_32.png", true);
-
-        }
+       
         function p31_subgrid_periodcombo() {
             sw_decide("periodcombo_setting.aspx", "Images/settings_32.png");
         }

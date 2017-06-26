@@ -1,11 +1,15 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="o23_subgrid.ascx.vb" Inherits="UI.o23_subgrid" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <div class="commandcell">
     <img src="Images/notepad.png" alt="Dokumenty" />
     <asp:Label ID="lblHeaderO23" CssClass="framework_header_span" runat="server" Text="Dokumenty"></asp:Label>
 </div>
+<div class="commandcell" style="margin-left: 10px;">
+        <uc:mygrid id="designer1" runat="server" prefix="o23" MasterPrefixFlag="2"></uc:mygrid>
+    </div>
 <div class="commandcell" style="margin-left: 10px;">
 
     <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny" Visible="false">
@@ -14,7 +18,7 @@
 
     </asp:DropDownList>
 </div>
-<div class="commandcell" style="margin-left: 10px;">
+<div class="commandcell" >
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" style="z-index:2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
             <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
@@ -32,7 +36,7 @@
             <telerik:RadMenuItem Text="Další" ImageUrl="Images/menuarrow.png">
                 <ContentTemplate>
                     <div style="padding: 20px; min-width: 200px;">
-                        <button type="button" onclick="o23_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
+                      
                         <div>
                         <span>Stránkování:</span>
                         <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">

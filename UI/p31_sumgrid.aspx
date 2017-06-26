@@ -152,7 +152,7 @@
         <div style="clear: both;"></div>
 
         <div style="float: left; padding-left: 6px;">
-            <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+            
             <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
         </div>
         <div style="clear: both;"></div>
@@ -165,7 +165,7 @@
     <asp:HiddenField ID="hiddatapid" runat="server" />
     <asp:HiddenField ID="hidHardRefreshFlag" runat="server" />
     <asp:HiddenField ID="hidHardRefreshPID" runat="server" />
-    <asp:HiddenField ID="hidJ74ID" runat="server" />
+    
     
     <asp:HiddenField ID="hidMasterPrefix" runat="server" />
     <asp:HiddenField ID="hidMasterPID" runat="server" />

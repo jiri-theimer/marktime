@@ -55,8 +55,11 @@
         else {
             url = url + "?";
         }
-        
-        location.replace(url+"j70id="+ctl.value);
+
+        if (ctl.value != "")
+            url = url + "j70id=" + ctl.value;
+
+        location.replace(url);
     }
 </script>
 

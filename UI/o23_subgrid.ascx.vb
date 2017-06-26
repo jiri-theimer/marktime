@@ -20,46 +20,43 @@ Public Class o23_subgrid
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Me.Factory
         If Not Page.IsPostBack Then
-            ViewState("j74id") = ""
+            designer1.MasterPrefix = BO.BAS.GetDataPrefix(Me.x29ID)
+            designer1.x36Key = "o23_subgrid-j70id-" & designer1.MasterPrefix
             With Factory.j03UserBL
-                Dim lisPars As New List(Of String), strKey As String = "o23_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.x29ID)
+                Dim lisPars As New List(Of String)
                 With lisPars
+                    .Add(designer1.x36Key)
                     .Add("o23_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID))
                     .Add("o23_subgrid-pagesize")
                     .Add("o23_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID))
 
-                    .Add(strKey)
                 End With
                 .InhaleUserParams(lisPars)
-                ViewState("j74id") = .GetUserParam(strKey, "0")
 
-                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
-                    Me.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.o23Notepad, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-                    Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.o23Notepad, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-                    ViewState("j74id") = cJ74.PID
-                    .SetUserParam(strKey, ViewState("j74id"))
-                End If
+
+                Dim strJ70ID As String = Request.Item("j70id")
+                If strJ70ID = "" Then strJ70ID = .GetUserParam(designer1.x36Key, "0")
+                designer1.RefreshData(CInt(strJ70ID))
 
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("o23_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("o23_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID)))
             End With
-            
+
             SetupgridO23()
-            
+
 
         End If
     End Sub
 
     Private Sub SetupgridO23()
-        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
-        If cJ74 Is Nothing Then
-            cJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.o23Notepad, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-        End If
+        Dim cJ70 As BO.j70QueryTemplate = Me.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+       
 
-        Me.hidDefaultSorting.Value = cJ74.j74OrderBy
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
         Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridO23, cJ74, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridO23, cJ70, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
         Me.hidFrom.Value = strAddSqlFrom
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)

@@ -3,6 +3,7 @@
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style type="text/css">
@@ -15,12 +16,7 @@
         var _initResizing = "1";
 
         $(document).ready(function () {
-            $(".slidingDiv1").hide();
-            $(".show_hide1").show();
-
-            $('.show_hide1').click(function () {
-                $(".slidingDiv1").slideToggle();
-            });
+           
 
 
             handleSAW();
@@ -148,16 +144,7 @@
 
         }
 
-        function griddesigner() {
-            var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_master("grid_designer.aspx?nodrilldown=1&prefix=<%=me.gridprefix%>&masterprefix=p31_framework&pid=" + j74id, "Images/griddesigner.png");
-        }
 
-        function querybuilder() {
-            var j70id = "<%=Me.CurrentJ70ID%>";
-            sw_master("query_builder.aspx?prefix=p41&pid=" + j70id, "Images/query.png");
-
-        }
 
     </script>
 
@@ -177,74 +164,69 @@
                 </Tabs>
             </telerik:RadTabStrip>
 
-            <div Class="div6"  style="height: 28px;">
+            <div class="div6" style="height: 28px;">
 
                 <div style="float: left;">
                     <asp:Image ID="img1" runat="server" ImageUrl="Images/project_32.png" />
-                    
+
 
 
                 </div>
 
 
+                <div style="float: left; margin-left: 10px;">
+                    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" ClickToOpen="true">
+                        <Items>
+                            <telerik:RadMenuItem Value="more" Text="Nastavení přehledu" ImageUrl="Images/arrow_down_menu.png" Style="padding-right: 0px">
+                                <GroupSettings OffsetX="-50" />
+                                <ContentTemplate>
+                                    <div class="content-box3">
+                                        <div class="title">
+                                            <img src="Images/griddesigner.png" />
+                                            Nastavení přehledu
+                                        </div>
+                                        <div class="content">
+                                            <div class="div6">
+                                                <uc:mygrid ID="designer1" runat="server" MasterPrefix="p31_framework" MasterPrefixFlag="2" ReloadUrl="p31_framework.aspx"></uc:mygrid>
+                                            </div>
+                                            <div class="div6">
+                                                <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
+                                                <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="<%$Resources:p31_framework, AutoRozbaleneSouhrny%>" AutoPostBack="true" Checked="false" />
+                                            </div>
 
-                <div style="float:left;margin-left:10px;">
+                                            <div class="div6">
+                                                <asp:Label ID="lblPaging" runat="server" CssClass="val" Text="<%$Resources:p31_framework,lblPaging%>"></asp:Label>
+                                                <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
+                                                    <asp:ListItem Text="20"></asp:ListItem>
+                                                    <asp:ListItem Text="50" Selected="True"></asp:ListItem>
+                                                    <asp:ListItem Text="100"></asp:ListItem>
+                                                    <asp:ListItem Text="200"></asp:ListItem>
+                                                    <asp:ListItem Text="500"></asp:ListItem>
+                                                </asp:DropDownList>
 
-                    <button type="button" class="show_hide1" style="padding: 5px; border-radius: 4px; border-top: solid 1px silver; border-left: solid 1px silver; border-bottom: solid 1px gray; border-right: solid 1px gray; color: white; background-color: #25a0da;">                        
-                        <span>Nastavení přehledu</span>
+                                            </div>
 
-                        <img src="Images/arrow_down_menu.png" />
-                    </button>
+                                            <div class="div6">
+                                        <img src="Images/help.png" /><i><%=Resources.p31_framework.Napoveda %></i>
+                                    </div>
+                                        </div>
+                                    </div>
+                                    
+                                </ContentTemplate>
+                            </telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenu>
+
+
 
                 </div>
 
 
             </div>
             <div style="clear: both;"></div>
-            <div class="slidingDiv1" style="display:none;background:#f0f8ff;">
-                <div class="content-box3">
-                    <div class="title">
-                        <img src="Images/query.png" />
-                        <span>Filtrování záznamů</span>
-                    </div>
-                    <div class="content">
-                        <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 200px;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
-                        <button type="button" id="cmdQuery" runat="server" onclick="querybuilder()">Návrhář filtrů</button>
-                    </div>
-                </div>
-                <div class="content-box3" style="margin-top: 20px;">
-                    <div class="title">
-                        <img src="Images/griddesigner.png" />
-                        Nastavení přehledu
-                    </div>
-                    <div class="content">
-                        <div class="div6">
-                            <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
-                            <asp:CheckBox ID="chkGroupsAutoExpanded" runat="server" Text="<%$Resources:p31_framework, AutoRozbaleneSouhrny%>" AutoPostBack="true" Checked="false" />
-                        </div>
-                        <div class="div6">
-                        <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 180px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
-                        <button type="button" onclick="griddesigner()"><%=Resources.p31_framework.Sloupce%></button>
-                        </div>
-                        <div class="div6">
-                            <asp:Label ID="lblPaging" runat="server" CssClass="val" Text="<%$Resources:p31_framework,lblPaging%>"></asp:Label>
-                            <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování" TabIndex="3">
-                                <asp:ListItem Text="20"></asp:ListItem>
-                                <asp:ListItem Text="50" Selected="True"></asp:ListItem>
-                                <asp:ListItem Text="100"></asp:ListItem>
-                                <asp:ListItem Text="200"></asp:ListItem>
-                                <asp:ListItem Text="500"></asp:ListItem>
-                            </asp:DropDownList>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="div6">
-                    <img src="Images/help.png" /><i><%=Resources.p31_framework.Napoveda %></i>
-                </div>
-            </div>
+          
             <div style="float: left; padding-left: 6px;">
-                <asp:HyperLink ID="clue_query" runat="server" CssClass="reczoom" ToolTip="Detail filtru" Text="i"></asp:HyperLink>
+
                 <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>
                 <asp:LinkButton ID="cmdCĺearFilter" runat="server" Text="<%$Resources:p31_framework, cmdCĺearFilter%>" Style="margin-left: 10px; font-weight: bold; color: red;" Visible="false"></asp:LinkButton>
             </div>

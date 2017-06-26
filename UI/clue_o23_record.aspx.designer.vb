@@ -41,6 +41,15 @@ Partial Public Class clue_o23_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
+
+    '''<summary>
     '''panFiles control.
     '''</summary>
     '''<remarks>

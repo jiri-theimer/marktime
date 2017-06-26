@@ -21,10 +21,7 @@
 
         }
 
-        function o23_subgrid_setting(j74id) {
-            ///volá se z o23_subgrid
-            sw_decide("grid_designer.aspx?prefix=o23&masterprefix=<%=Me.CurrentMasterPrefix%>&pid=" + j74id, "Images/griddesigner.png", true);
-        }
+       
         function RowSelected_o23(sender, args) {
             document.getElementById("<%=hiddatapid_o23.ClientID%>").value = args.getDataKeyValue("pid");
         }

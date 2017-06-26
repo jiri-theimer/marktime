@@ -31,7 +31,7 @@
                 Master.StopPage("Nedisponujete oprávněním číst tento dokument.")
             End If
             Master.DataPID = .PID
-            ph1.Text = .o24Name & ": " & .o23Code
+            ph1.Text = .o24Name
             If .o23BodyPlainText <> "" And Not .o23IsEncrypted Then
                 o23BodyPlainText.Text = BO.BAS.CrLfText2Html(.o23BodyPlainText)
             Else
@@ -92,6 +92,7 @@
             panFiles.Visible = False
         End If
 
+        labels1.RefreshData(Master.Factory, BO.x29IdEnum.o23Notepad, Master.DataPID, True)
         Me.comments1.RefreshData(Master.Factory, BO.x29IdEnum.o23Notepad, intPID)
     End Sub
 

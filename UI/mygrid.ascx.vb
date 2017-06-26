@@ -131,7 +131,7 @@
         j70ID.DataSource = lisJ70
         j70ID.DataBind()
         If hidOnlyQuery.Value = "1" Then
-            j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
+            j70ID.Items.Insert(0, New ListItem("--Pojmenovaný filtr--", ""))
         End If
 
         

@@ -528,6 +528,7 @@ Public Class p91_framework_detail
         Select Case Me.hidHardRefreshFlag.Value
             Case "p31-save", "p31-remove", "p31-add"
                 RefreshRecord()
+                RecalcVirtualRowCount()
                 grid1.Rebind(True)
                 Me.tabs1.FindTabByValue("p31").Selected = True
             Case Else

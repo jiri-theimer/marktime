@@ -2,12 +2,13 @@
 <%@ MasterType VirtualPath="~/Clue.Master" %>
 <%@ Register TagPrefix="uc" TagName="fileupload_list" Src="~/fileupload_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         function detail() {
 
-            window.parent.sw_local("o23_record.aspx?pid=<%=Master.DataPID%>", "Images/notepad_32.png", true);
+            window.parent.sw_everywhere("o23_record.aspx?pid=<%=Master.DataPID%>", "Images/notepad_32.png", true);
 
         }
         function go2module() {
@@ -23,6 +24,7 @@
             <asp:Image ID="img1" runat="server" ImageUrl="Images/notepad_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
         </div>
+        <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
         <asp:panel ID="panFiles" runat="server" cssclass="content-box2">
             <div class="title">
                 Souborové přílohy

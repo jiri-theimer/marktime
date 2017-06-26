@@ -23,6 +23,15 @@ Partial Public Class o23_subgrid
     Protected WithEvents lblHeaderO23 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''designer1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents designer1 As Global.UI.mygrid
+
+    '''<summary>
     '''cbxGroupBy control.
     '''</summary>
     '''<remarks>

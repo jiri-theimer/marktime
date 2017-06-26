@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Clue.Master" CodeBehind="clue_p56_record.aspx.vb" Inherits="UI.clue_p56_record" %>
 
 <%@ MasterType VirtualPath="~/Clue.Master" %>
-
+<%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
+<%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -30,7 +31,7 @@
             <asp:Image ID="img1" runat="server" ImageUrl="Images/task_32.png" />
             <asp:Label ID="ph1" runat="server" CssClass="clue_header_span"></asp:Label>
         </div>
-
+        <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
         <div class="content-box2">
             <div class="title">
                 
@@ -148,7 +149,7 @@
             <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
         </div>
 
-        
+        <uc:b07_list ID="comments1" runat="server" ShowInsertButton="false" ShowHeader="false" />
     </asp:Panel>
 
 </asp:Content>

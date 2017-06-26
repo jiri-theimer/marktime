@@ -41,6 +41,15 @@ Partial Public Class clue_p56_record
     Protected WithEvents ph1 As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''labels1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents labels1 As Global.UI.x18_readonly
+
+    '''<summary>
     '''p56Name control.
     '''</summary>
     '''<remarks>
@@ -246,6 +255,15 @@ Partial Public Class clue_p56_record
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents Timestamp As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''comments1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents comments1 As Global.UI.b07_list
 
     '''<summary>
     '''Master property.

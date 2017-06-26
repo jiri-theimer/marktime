@@ -146,6 +146,7 @@ Public Class entity_framework
             End With
 
             Me.CurrentJ62ID = BO.BAS.IsNullInt(Request.Item("j62id"))
+            designer1.AllowSettingButton = Master.Factory.TestPermission(BO.x53PermValEnum.GR_GridTools)
             designer1.Prefix = Me.CurrentPrefix
             designer1.CurrentJ62ID = Me.CurrentJ62ID
             designer1.x36Key = Me.CurrentPrefix + "-j70id"
