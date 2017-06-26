@@ -23,6 +23,7 @@ Class j70QueryTemplateBL
     Implements Ij70QueryTemplateBL
     Private WithEvents _cDL As DL.j70QueryTemplateDL
     Private _x29id As BO.x29IdEnum
+    Private _lisX67 As IEnumerable(Of BO.x67EntityRole)
 
     Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
         _Error = strError
@@ -380,6 +381,25 @@ Class j70QueryTemplateBL
 
     End Function
 
+    Private Sub AppendRoles(x29id As BO.x29IdEnum, strRefField As String, strTreeGroup As String, ByRef lis As List(Of BO.GridColumn))
+        Dim mq As New BO.myQuery
+
+        Dim lisX67 As IEnumerable(Of BO.x67EntityRole) = _lisX67
+        If _lisX67 Is Nothing Then lisX67 = Factory.x67EntityRoleBL.GetList(mq)
+        lisX67 = lisX67.Where(Function(p) p.x29ID = x29id)
+
+        For Each c In lisX67
+            Select Case x29id
+                Case BO.x29IdEnum.p28Contact
+                    lis.Add(AGC(c.x67Name, "Role_x67_" & c.PID.ToString, BO.cfENUM.AnyString, , "dbo.p28_getonerole_inline(" & strRefField & "," & c.PID.ToString & ")", , , strTreeGroup))
+                Case BO.x29IdEnum.p41Project
+                    lis.Add(AGC(c.x67Name, "Role_x67_" & c.PID.ToString, BO.cfENUM.AnyString, , "dbo.p41_get_one_role_inline(" & strRefField & "," & c.PID.ToString & ")", , , strTreeGroup))
+                Case BO.x29IdEnum.p56Task
+                    lis.Add(AGC(c.x67Name, "Role_x67_" & c.PID.ToString, BO.cfENUM.AnyString, , "dbo.p56_get_one_role_inline(" & strRefField & "," & c.PID.ToString & ")", , , strTreeGroup))
+            End Select
+        Next
+      
+    End Sub
     Private Sub AppendFreeFields(x29id As BO.x29IdEnum, ByRef lis As List(Of BO.GridColumn))
         Dim lisX28 As IEnumerable(Of BO.x28EntityField) = Factory.x28EntityFieldBL.GetList(x29id, -1, True)
         For Each c In lisX28
@@ -489,6 +509,9 @@ Class j70QueryTemplateBL
                 .Add(AGC("Vykázané výdaje", "Vykazano_Vydaje", BO.cfENUM.Numeric2, , "alfa.Vykazano_Vydaje", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vykázáno"))
                 .Add(AGC("Vyfakturované hodiny", "Vyfakturovano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Hodiny", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vyfakturováno"))
                 .Add(AGC("Vyfakturovaná částka", "Vyfakturovano_Castka", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Celkem_Domestic", True, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vyfakturováno"))
+                .Add(AGC("Faktura naposledy", "Vyfakturovano_Naposledy_Kdy", BO.cfENUM.DateOnly, , "alfa.Vyfakturovano_Naposledy_Kdy", False, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vyfakturováno"))
+                .Add(AGC("Faktura první", "Vyfakturovano_Poprve_Kdy", BO.cfENUM.DateOnly, , "alfa.Vyfakturovano_Poprve_Kdy", False, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vyfakturováno"))
+                .Add(AGC("Počet faktur", "Vyfakturovano_PocetFaktur", BO.cfENUM.Numeric0, , "alfa.Vyfakturovano_PocetFaktur", False, "LEFT OUTER JOIN tview_p41_worksheet(@dp31f1,@dp31f2) alfa ON a.p41ID=alfa.p41ID", "Vyfakturováno"))
                 .Add(AGC("WIP/Hodiny", "WIP_Hodiny", BO.cfENUM.Numeric2, , "beta.Hodiny", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
                 .Add(AGC("WIP/Částka", "WIP_Castka", BO.cfENUM.Numeric2, , "beta.Castka_Celkem", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
                 .Add(AGC("WIP/Honorář", "WIP_Honorar", BO.cfENUM.Numeric2, , "beta.Honorar", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
@@ -502,6 +525,8 @@ Class j70QueryTemplateBL
                 .Add(AGC("WIP/Odměny EUR", "WIP_Odmeny_EUR", BO.cfENUM.Numeric2, , "beta.Odmeny_EUR", True, "LEFT OUTER JOIN tview_p41_wip(@dp31f1,@dp31f2) beta ON a.p41ID=beta.p41ID", "WIP"))
             End If
         End With
+        AppendRoles(BO.x29IdEnum.p41Project, "a.p41ID", "Projektová a klientská role", lis)
+        AppendRoles(BO.x29IdEnum.p28Contact, "a.p28ID_Client", "Projektová a klientská role", lis)
         AppendFreeFields(BO.x29IdEnum.p41Project, lis)
 
     End Sub
@@ -522,16 +547,19 @@ Class j70QueryTemplateBL
             .Add(AGC("PSČ", "Adress1_ZIP", , , "pa.o38ZIP", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
             .Add(AGC("Stát", "Adress1_Country", , , "pa.o38Country", , "LEFT OUTER JOIN view_PrimaryAddress pa ON a.p28ID=pa.p28ID"))
             .Add(AGC(My.Resources.common.Zkratka, "p28CompanyShortName", , , "a.p28CompanyShortName"))
+            .Add(AGC("Otevřené projekty", "OtevreneProjekty", BO.cfENUM.Numeric0, , "op.PocetOtevrenychProjektu", , "LEFT OUTER JOIN view_p28_projects op ON a.p28ID=op.p28ID"))
             .Add(AGC(My.Resources.common.FakturacniCenik, "p51Name_Billing", , , "p51billing.p51Name"))
             .Add(AGC(My.Resources.common.NakladovyCenik, "p51Name_Internal", , , "p51internal.p51Name"))
             .Add(AGC(My.Resources.common.TypFaktury, "p92Name"))
-            .Add(AGC(My.Resources.common.FakturacniJazyk, "p87Name"))
+            .Add(AGC("Fakturační jazyk", "p87Name"))
 
             .Add(AGC(My.Resources.common.LimitHodin, "p28LimitHours_Notification", BO.cfENUM.Numeric, , "a.p28LimitHours_Notification", True))
             .Add(AGC(My.Resources.common.LimitniHonorar, "p28LimitFee_Notification", BO.cfENUM.Numeric, , "a.p28LimitFee_Notification", True))
 
             .Add(AGC(My.Resources.common.VlastnikZaznamu, "Owner", , , "j02owner.j02LastName+char(32)+j02owner.j02FirstName", , , "Záznam"))
-            .Add(AGC("Kontaktní osoba", "KontaktniOsoba", , , "ko.Person", , "LEFT OUTER JOIN view_p28_contactpersons ko ON a.p28ID=ko.p28ID"))
+            .Add(AGC("Kontaktní osoby", "KontaktniOsoby", , , "dbo.p28_ko_inline(a.p28ID)"))
+            .Add(AGC("1.kontaktní osoba", "KontaktniOsoba", , , "ko.Person", , "LEFT OUTER JOIN view_p28_contactpersons ko ON a.p28ID=ko.p28ID"))
+
             .Add(AGC("Fakt.kontaktní osoba", "FakturacniKontaktniOsoba", , , "fko.Person", , "LEFT OUTER JOIN view_p28_contactpersons_invoice fko ON a.p28ID=fko.p28ID"))
             .Add(AGC("Stromový název", "p28TreePath", , True, "a.p28TreePath", , , "Strom"))
             .Add(AGC("Strom index", "p28TreeIndex", , True, "a.p28TreeIndex", , , "Strom"))
@@ -547,6 +575,9 @@ Class j70QueryTemplateBL
                 .Add(AGC("Vykázané výdaje", "Vykazano_Vydaje", BO.cfENUM.Numeric2, , "alfa.Vykazano_Vydaje", True, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID=alfa.p28ID", "Vykázáno"))
                 .Add(AGC("Vyfakturované hodiny", "Vyfakturovano_Hodiny", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Hodiny", True, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID=alfa.p28ID", "Vyfakturováno"))
                 .Add(AGC("Vyfakturovaná částka", "Vyfakturovano_Castka", BO.cfENUM.Numeric2, , "alfa.Vyfakturovano_Celkem_Domestic", True, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID=alfa.p28ID", "Vyfakturováno"))
+                .Add(AGC("Faktura naposledy", "Vyfakturovano_Naposledy_Kdy", BO.cfENUM.DateOnly, , "alfa.Vyfakturovano_Naposledy_Kdy", False, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID=alfa.p28ID", "Vyfakturováno"))
+                .Add(AGC("Faktura poprvé", "Vyfakturovano_Poprve_Kdy", BO.cfENUM.DateOnly, , "alfa.Vyfakturovano_Poprve_Kdy", False, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID=alfa.p28ID", "Vyfakturováno"))
+                .Add(AGC("Počet faktur", "Vyfakturovano_PocetFaktur", BO.cfENUM.Numeric0, , "alfa.Vyfakturovano_PocetFaktur", False, "LEFT OUTER JOIN tview_p28_worksheet(@dp31f1,@dp31f2) alfa ON a.p28ID=alfa.p28ID", "Vyfakturováno"))
                 .Add(AGC("WIP/Hodiny", "WIP_Hodiny", BO.cfENUM.Numeric2, , "beta.Hodiny", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID=beta.p28ID", "WIP"))
                 .Add(AGC("WIP/Částka", "WIP_Castka", BO.cfENUM.Numeric2, , "beta.Castka_Celkem", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID=beta.p28ID", "WIP"))
                 .Add(AGC("WIP/Honorář", "WIP_Honorar", BO.cfENUM.Numeric2, , "beta.Honorar", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID=beta.p28ID", "WIP"))
@@ -560,6 +591,7 @@ Class j70QueryTemplateBL
                 .Add(AGC("WIP/Odměny EUR", "WIP_Odmeny_EUR", BO.cfENUM.Numeric2, , "beta.Odmeny_EUR", True, "LEFT OUTER JOIN tview_p28_wip(@dp31f1,@dp31f2) beta ON a.p28ID=beta.p28ID", "WIP"))
             End If
         End With
+        AppendRoles(BO.x29IdEnum.p28Contact, "a.p28ID", "Klientské role", lis)
         AppendFreeFields(BO.x29IdEnum.p28Contact, lis)
     End Sub
     Private Sub InhaleJ02ColList(ByRef lis As List(Of BO.GridColumn))
@@ -574,7 +606,16 @@ Class j70QueryTemplateBL
             .Add(AGC("Osobní číslo (kód)", "j02Code"))
             .Add(AGC("Fond", "c21Name"))
             .Add(AGC("Středisko", "j18Name"))
+
+            .Add(AGC("Mobil", "j02Mobile"))
+            .Add(AGC("Pevná", "j02Phone"))
             .Add(AGC("Oslovení", "j02Salutation"))
+            .Add(AGC("Kancelář", "j02Office"))
+
+            
+            .Add(AGC("Pozice KO", "j02JobTitle", , , , , , "Kontaktní osoba"))
+            .Add(AGC("Klient KO", "VazbaKlient", , , "dbo.j02_clients_inline(a.j02ID)", , , "Kontaktní osoba"))
+
 
             .Add(AGC("Interní osoba", "j02IsIntraPerson", BO.cfENUM.Checkbox))
             .Add(AGC("Založeno", "j02DateInsert", BO.cfENUM.DateTime, , , , , "Záznam"))
@@ -689,6 +730,9 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Aktualizace, "p31DateUpdate", BO.cfENUM.DateTime, , , , , "Záznam"))
             .Add(AGC(My.Resources.common.Aktualizoval, "p31UserUpdate", , , , , , "Záznam"))
         End With
+        AppendRoles(BO.x29IdEnum.p41Project, "a.p41ID", "Projektová a klientská role", lis)
+        AppendRoles(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Projektová a klientská role", lis)
+        AppendRoles(BO.x29IdEnum.p56Task, "a.p56ID", "Úkolová role", lis)
         AppendFreeFields(BO.x29IdEnum.p31Worksheet, lis)
     End Sub
     Private Sub InhaleP91ColList(ByRef lis As List(Of BO.GridColumn))
@@ -724,6 +768,7 @@ Class j70QueryTemplateBL
             .Add(AGC("Datum", "p91Date", BO.cfENUM.DateOnly))
             .Add(AGC("Plnění", "p91DateSupply", BO.cfENUM.DateOnly))
             .Add(AGC("Splatnost", "p91DateMaturity", BO.cfENUM.DateOnly))
+            .Add(AGC("Dnů po splatnosti", "DnuPoSplatnosti", BO.cfENUM.Numeric0, , "dbo.my_iif1(a.p91Amount_Debt,0,null,datediff(day,p91DateMaturity,dbo.get_today()))", False))
             .Add(AGC("Datum úhrady", "p91DateBilled", BO.cfENUM.DateOnly))
             .Add(AGC("Aktuální stav", "b02Name"))
 
@@ -745,6 +790,8 @@ Class j70QueryTemplateBL
             .Add(AGC("Aktualizace", "p91DateUpdate", BO.cfENUM.DateTime))
             .Add(AGC("Aktualizoval", "p91UserUpdate"))
         End With
+        AppendRoles(BO.x29IdEnum.p41Project, "a.p41ID_First", "Projektová role", lis)
+        AppendRoles(BO.x29IdEnum.p28Contact, "p41.p28ID_Client", "Role klienta projektu", lis)
         AppendFreeFields(BO.x29IdEnum.p91Invoice, lis)
     End Sub
 
@@ -780,6 +827,7 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Aktualizoval, "p56UserUpdate", , , , , , "Záznam"))
             .Add(AGC(My.Resources.common.ExterniKod, "p56ExternalPID"))
         End With
+        AppendRoles(BO.x29IdEnum.p56Task, "a.p56ID", "Úkolová role", lis)
         AppendFreeFields(BO.x29IdEnum.p56Task, lis)
     End Sub
     Private Sub InhaleO23ColList(ByRef lis As List(Of BO.GridColumn))
@@ -804,6 +852,7 @@ Class j70QueryTemplateBL
             .Add(AGC(My.Resources.common.Aktualizace, "o23DateUpdate", BO.cfENUM.DateTime, , , , , "Záznam"))
             .Add(AGC(My.Resources.common.Aktualizoval, "o23UserUpdate", , , , , , "Záznam"))
         End With
+
         AppendFreeFields(BO.x29IdEnum.o23Notepad, lis)
     End Sub
 

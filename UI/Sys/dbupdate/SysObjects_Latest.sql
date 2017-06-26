@@ -1044,6 +1044,34 @@ END
 
 GO
 
+----------FN---------------j02_clients_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('j02_clients_inline') and type = 'FN')
+ drop function j02_clients_inline
+GO
+
+
+CREATE    FUNCTION [dbo].[j02_clients_inline](@j02id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené názvy týmù, v kterých je osoba @j02id
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+b.p28Name
+  FROM p30Contact_Person a INNER JOIN p28Contact b ON a.p28ID=b.p28ID
+  WHERE a.j02ID=@j02id
+
+
+
+RETURN(@s)
+   
+END
+
+
+GO
+
 ----------FN---------------j02_get_pid_from_login-------------------------
 
 if exists (select 1 from sysobjects where  id = object_id('j02_get_pid_from_login') and type = 'FN')
@@ -1653,6 +1681,8 @@ RETURNS nvarchar(2000)
 AS
 BEGIN
   ---vrací èárkou oddìlené obsazení jedné klientské role @x67id u klienta @p28id
+ if @p28id is null
+  RETURN(null)
 
  DECLARE @s nvarchar(2000) 
 
@@ -1730,6 +1760,34 @@ END
 
 
 
+
+
+GO
+
+----------FN---------------p28_ko_inline-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('p28_ko_inline') and type = 'FN')
+ drop function p28_ko_inline
+GO
+
+
+CREATE    FUNCTION [dbo].[p28_ko_inline](@p28id int)
+RETURNS nvarchar(2000)
+AS
+BEGIN
+  ---vrací èárkou oddìlené názvy kontaktní osob
+
+ DECLARE @s nvarchar(2000) 
+
+select @s=COALESCE(@s + ', ', '')+b.j02LastName+' '+b.j02FirstName
+  FROM p30Contact_Person a INNER JOIN j02Person b ON a.j02ID=b.j02ID
+  WHERE a.p28ID=@p28id
+
+
+
+RETURN(@s)
+   
+END
 
 
 GO
@@ -2157,11 +2215,14 @@ GO
 
 
 
+
 CREATE    FUNCTION [dbo].[p41_get_one_role_inline](@p41id int,@x67id int)
 RETURNS nvarchar(2000)
 AS
 BEGIN
   ---vrací èárkou oddìlené obsazení jedné projektové role @x67id v projektu @p41id
+ if @p41id is null
+  RETURN(NULL)
 
  DECLARE @s nvarchar(2000) 
 
@@ -2175,6 +2236,7 @@ select @s=COALESCE(@s + ', ', '')+ltrim(isnull(j02.j02FirstName+' '+j02.j02LastN
 RETURN(@s)
    
 END
+
 
 
 
@@ -3390,11 +3452,15 @@ CREATE function [dbo].[tview_p28_worksheet]
 ,sum(a.p31Amount_WithoutVat_Invoiced_Domestic) as Vyfakturovano_Celkem_Domestic
 ,sum(case when p34.p33ID=1 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Hodiny_Domestic
 ,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Odmeny_Domestic
+,max(p91.p91Date) as Vyfakturovano_Naposledy_Kdy
+,min(p91.p91Date) as Vyfakturovano_Poprve_Kdy
+,count(distinct p91.p91ID) as Vyfakturovano_PocetFaktur
 from
 p31WorkSheet a
 INNER JOIN p41Project p41 ON a.p41ID=p41.p41ID
 INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
 WHERE p41.p28ID_Client IS NOT NULL AND p31Date BETWEEN @d1 AND @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
 GROUP BY p41.p28ID_Client
 
@@ -3464,10 +3530,14 @@ CREATE function [dbo].[tview_p41_worksheet]
 ,sum(a.p31Amount_WithoutVat_Invoiced_Domestic) as Vyfakturovano_Celkem_Domestic
 ,sum(case when p34.p33ID=1 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Hodiny_Domestic
 ,sum(case when p34.p33ID IN (2,5) AND p34.p34IncomeStatementFlag=2 THEN a.p31Amount_WithoutVat_Invoiced_Domestic END) as Vyfakturovano_Odmeny_Domestic
+,max(p91.p91Date) as Vyfakturovano_Naposledy_Kdy
+,min(p91.p91Date) as Vyfakturovano_Poprve_Kdy
+,count(distinct p91.p91ID) as Vyfakturovano_PocetFaktur
 from
 p31WorkSheet a
 INNER JOIN p32Activity p32 ON a.p32ID=p32.p32ID
 INNER JOIN p34ActivityGroup p34 ON p32.p34ID=p34.p34ID
+LEFT OUTER JOIN p91Invoice p91 ON a.p91ID=p91.p91ID
 WHERE p31Date BETWEEN @d1 AND @d2 AND getdate() between a.p31ValidFrom and a.p31ValidUntil
 GROUP BY a.p41ID
 
@@ -16631,12 +16701,35 @@ GO
 
 
 
+
 CREATE VIEW [dbo].[view_p28_contactpersons_invoice]
 as
-SELECT a.p28ID,min(j02.j02LastName+' '+j02.j02FirstName) as Person
-FROM p30Contact_Person a INNER JOIN j02Person j02 ON a.j02ID=j02.j02ID
-WHERE a.p30IsDefaultInInvoice=1
-GROUP BY a.p28ID
+SELECT b.p28ID,a.j02LastName+' '+a.j02FirstName as Person
+FROM j02Person a INNER JOIN p28Contact b ON a.j02ID=b.j02ID_ContactPerson_DefaultInInvoice
+WHERE b.j02ID_ContactPerson_DefaultInInvoice IS NOT NULL
+
+
+
+
+GO
+
+----------V---------------view_p28_projects-------------------------
+
+if exists (select 1 from sysobjects where  id = object_id('view_p28_projects') and type = 'V')
+ drop view view_p28_projects
+GO
+
+
+
+
+CREATE VIEW [dbo].[view_p28_projects]
+as
+SELECT b.p28ID, COUNT(*) as PocetOtevrenychProjektu
+FROM p41Project a INNER JOIN p28Contact b ON a.p28ID_Client=b.p28ID
+WHERE a.p28ID_Client IS NOT NULL AND getdate() between a.p41ValidFrom AND a.p41ValidUntil
+GROUP BY b.p28ID
+
+
 
 
 GO
