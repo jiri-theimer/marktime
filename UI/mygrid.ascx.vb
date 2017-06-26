@@ -34,6 +34,15 @@
             hidMasterPrefix.Value = value
         End Set
     End Property
+    Public Property MasterPrefixFlag As Integer '1: pokud je masterprefix, zobrazují se přehledy pro masterprefix i s nevyplněným masterprefix, 2: zobrazují se přehledy pouze pro masterprefix
+        Get
+            Return CInt(hidMasterPrefixFlag.Value)
+        End Get
+        Set(value As Integer)
+            hidMasterPrefixFlag.Value = value.ToString
+        End Set
+    End Property
+
     Public Property CurrentJ62ID As Integer
         Get
             Return BO.BAS.IsNullInt(Me.hidJ62ID.Value)
@@ -104,7 +113,9 @@
             onlyQuery = BO.BooleanQueryMode.TrueQuery
             cmdSetting.InnerHtml = "<img src='Images/query.png'/>"
         End If
-        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, "-1", onlyQuery)
+        Dim s As String = Me.MasterPrefix
+        If Me.MasterPrefix <> "" And Me.MasterPrefixFlag = 1 Then s = "-1"
+        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, s, onlyQuery)
         If Me.MasterPrefix <> "" Then
             lisJ70 = lisJ70.Where(Function(p) p.j70MasterPrefix = Me.MasterPrefix Or (p.j70MasterPrefix = "" And p.j70IsSystem = False))
         End If
@@ -112,7 +123,7 @@
             If lisJ70.Where(Function(p) p.j70IsSystem = True).Count = 0 Then
                 'uživatel zatím nemá výchozí systémovou šablonu přehledu - založit první j70IsSystem=1
                 If Me.Factory.j70QueryTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Factory.SysUser.PID, Me.MasterPrefix) Then
-                    lisJ70 = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, Me.MasterPrefix)
+                    lisJ70 = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, s)
                 End If
             End If
         End If

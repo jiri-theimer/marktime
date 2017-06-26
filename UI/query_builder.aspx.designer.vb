@@ -536,6 +536,15 @@ Partial Public Class query_builder
     Protected WithEvents hidOnlyQuery As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
+    '''hidMasterprefixFlag control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hidMasterprefixFlag As Global.System.Web.UI.WebControls.HiddenField
+
+    '''<summary>
     '''cmdSaveNewTemplate control.
     '''</summary>
     '''<remarks>

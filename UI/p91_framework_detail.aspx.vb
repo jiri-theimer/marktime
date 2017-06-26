@@ -10,6 +10,8 @@ Public Class p91_framework_detail
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         ff1.Factory = Master.Factory
+        designer1.Factory = Master.Factory
+
         If Not Page.IsPostBack Then
             Me.hidParentWidth.Value = BO.BAS.IsNullInt(Request.Item("parentWidth")).ToString
             hidSource.Value = Request.Item("source")
@@ -26,7 +28,7 @@ Public Class p91_framework_detail
                 With lisPars
                     .Add("p91_framework_detail-pid")
                     .Add("p91_framework_detail-group")
-                    .Add("p91_framework_detail-j74id")
+                    .Add("p91_framework_detail-j70id")
                     .Add("p91_framework_detail-pagesize")
                     .Add("p91_framework_detail-chkFFShowFilledOnly")
                     .Add("p91_menu-tabskin")
@@ -58,7 +60,11 @@ Public Class p91_framework_detail
             End With
 
             RefreshRecord()
-            SetupJ74Combo(CInt(Master.Factory.j03UserBL.GetUserParam("p91_framework_detail-j74id", "0")))
+
+            Dim strJ70ID As String = Request.Item("j70id")
+            If strJ70ID = "" Then strJ70ID = Master.Factory.j03UserBL.GetUserParam("p91_framework_detail-j70id")
+            designer1.RefreshData(CInt(Master.Factory.j03UserBL.GetUserParam("p91_framework_detail-j70id", "0")))
+
             SetupGrid()
             RecalcVirtualRowCount()
 
@@ -116,24 +122,7 @@ Public Class p91_framework_detail
         End If
     End Sub
 
-    Public Property CurrentJ74ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j74id.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j74id, value.ToString)
-        End Set
-    End Property
-    Private Sub SetupJ74Combo(intDef As Integer)
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = "" Or p.j74MasterPrefix = "p91")
-        j74id.DataSource = lisJ74
-        j74id.DataBind()
-        If intDef > 0 Then
-            Me.CurrentJ74ID = intDef
-        End If
-
-    End Sub
-
+   
     Private Sub RefreshRecord()
         Dim cRec As BO.p91Invoice = Master.Factory.p91InvoiceBL.Load(Master.DataPID)
         If cRec Is Nothing Then Response.Redirect("entity_framework_detail_missing.aspx?prefix=p91")
@@ -370,18 +359,10 @@ Public Class p91_framework_detail
 
     Private Sub SetupGrid()
         With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = Nothing
-            If Me.CurrentJ74ID > 0 Then cJ74 = .Load(Me.CurrentJ74ID)
-            If cJ74 Is Nothing Then
-                cJ74 = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p91")
-                If Not cJ74 Is Nothing Then
+            Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
 
-                    SetupJ74Combo(cJ74.PID)
-                    Me.CurrentJ74ID = cJ74.PID
-                End If
-            End If
             Dim strF As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), True, True, , , , , strF)
+            Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, CInt(Me.cbxPaging.SelectedValue), True, True, , , , , strF, , , "p91")
             Me.hidFrom.Value = strF
         End With
 
@@ -408,6 +389,7 @@ Public Class p91_framework_detail
                 Return
         End Select
 
+        ''grid1.radGridOrig.ClientSettings.Scrolling.ScrollHeight = Unit.Parse("300px")
         With grid1.radGridOrig.MasterTableView
             .ShowGroupFooter = True
             Dim GGE As New Telerik.Web.UI.GridGroupByExpression
@@ -449,6 +431,7 @@ Public Class p91_framework_detail
     Private Sub InhaleMyQuery(ByRef mq As BO.myQueryP31)
 
         mq.p91ID = Master.DataPID
+        mq.j70ID = designer1.CurrentJ70ID
 
     End Sub
 
@@ -569,14 +552,7 @@ Public Class p91_framework_detail
         Response.Redirect("p91_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & Me.hidSource.Value)
     End Sub
 
-    Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p91_framework_detail-j74id", Me.j74id.SelectedValue)
-        SetupGrid()
-        RecalcVirtualRowCount()
-
-        grid1.Rebind(True)
-    End Sub
-
+  
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p91_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
         ReloadPage()

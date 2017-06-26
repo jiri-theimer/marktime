@@ -18,13 +18,13 @@
         <asp:ImageButton ID="cmdClearExplicitPeriod" runat="server" ImageUrl="Images/close.png" ToolTip="Zrušit filtr podle kalendáře" CssClass="button-link" />
     </div>
     <div class="commandcell" id="divQueryContainer">
-        <uc:mygrid id="designer1" runat="server" prefix="p31"></uc:mygrid>
+        <uc:mygrid id="designer1" runat="server" prefix="p31" MasterPrefixFlag="1"></uc:mygrid>
        
     </div>
 
 
     <div class="commandcell">
-        <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None">
+        <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None">
             <Items>
                 <telerik:RadMenuItem Text="Záznam" ImageUrl="Images/menuarrow.png">
                     <Items>

@@ -5,7 +5,7 @@
    
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        ff1.Factory = Master.Factory
+        ff2.Factory = Master.Factory
         approve1.Factory = Master.Factory
 
 
@@ -29,7 +29,7 @@
     End Sub
 
     Private Sub RefreshRecord()
-        Me.cmdSourceRecord.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approve_Text)
+        Me.cmdSourceRecord.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approve_Rates)
         Dim cRec As BO.p31Worksheet = Master.Factory.p31WorksheetBL.LoadTempRecord(Master.DataPID, ViewState("guid"))
         approve1.InhaleRecord(cRec, False)
 
@@ -71,7 +71,13 @@
             Else
                 lblP56.Visible = False
             End If
-            Handle_FF(.p34ID)
+
+            Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, cRec.p34ID)
+            If lisFF.Count > 0 Then
+                ff2.FillData(lisFF, False)
+            End If
+            labels1.RefreshData(Master.Factory, BO.x29IdEnum.p31Worksheet, Master.DataPID, True)
+
         End With
     End Sub
 
@@ -80,20 +86,20 @@
             Master.Notify(strErr, NotifyLevel.WarningMessage)
             Return
         Else
-            Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), True, ViewState("guid"))
-            If ff1.TagsCount > 0 Then
-                Master.Factory.x18EntityCategoryBL.SaveX19TempBinding(Master.DataPID, ViewState("guid"), ff1.GetTags)
-            End If
+            ''Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), True, ViewState("guid"))
+            ''If ff1.TagsCount > 0 Then
+            ''    Master.Factory.x18EntityCategoryBL.SaveX19TempBinding(Master.DataPID, ViewState("guid"), ff1.GetTags)
+            ''End If
         End If
         Me.hidRefreshParent.Value = "1"
     End Sub
 
-    Private Sub Handle_FF(intP34ID As Integer)
-        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID, ViewState("guid"))
-        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p31Worksheet, intP34ID)
-        If fields.Count > 0 Or lisX20X18.Count > 0 Then
-            ff1.FillData(fields, lisX20X18, "p31Worksheet_FreeField", Master.DataPID, ViewState("guid"))
-        End If
+    ''Private Sub Handle_FF(intP34ID As Integer)
+    ''    Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID, ViewState("guid"))
+    ''    Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p31Worksheet, intP34ID)
+    ''    If fields.Count > 0 Or lisX20X18.Count > 0 Then
+    ''        ff1.FillData(fields, lisX20X18, "p31Worksheet_FreeField", Master.DataPID, ViewState("guid"))
+    ''    End If
 
-    End Sub
+    ''End Sub
 End Class

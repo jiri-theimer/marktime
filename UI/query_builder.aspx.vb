@@ -51,6 +51,7 @@
             ViewState("x36key") = Request.Item("x36key")
             Me.CurrentPrefix = Request.Item("prefix")
             hidOnlyQuery.Value = Request.Item("onlyquery")
+            hidMasterprefixFlag.Value = Request.Item("masterprefixflag")
             ViewState("masterprefix") = Request.Item("masterprefix")
             If ViewState("x36key") = "" Then ViewState("x36key") = Me.CurrentPrefix & "-j70id"
             With Master
@@ -739,7 +740,9 @@
         Dim mq As BO.myQuery = Nothing
         Dim onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery
         If hidOnlyQuery.Value = "1" Then onlyQuery = BO.BooleanQueryMode.TrueQuery
-        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, "-1", onlyQuery)
+        Dim s As String = ViewState("masterprefix")
+        If hidMasterprefixFlag.Value = "1" And ViewState("masterprefix") <> "" Then s = "-1"
+        Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, s, onlyQuery)
         If ViewState("masterprefix") <> "" Then
             lisJ70 = lisJ70.Where(Function(p) p.j70MasterPrefix = ViewState("masterprefix") Or (p.j70MasterPrefix = "" And p.j70IsSystem = False))
         End If

@@ -446,6 +446,15 @@ Partial Public Class p31_record_AA
     Protected WithEvents j27ident_invoiced As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
+    '''ff2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ff2 As Global.UI.freefields_readonly
+
+    '''<summary>
     '''labels1 control.
     '''</summary>
     '''<remarks>
@@ -536,13 +545,13 @@ Partial Public Class p31_record_AA
     Protected WithEvents approve1 As Global.UI.p31_approve_onerec
 
     '''<summary>
-    '''ff1 control.
+    '''cmdSourceRecord control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ff1 As Global.UI.freefields
+    Protected WithEvents cmdSourceRecord As Global.System.Web.UI.HtmlControls.HtmlButton
 
     '''<summary>
     '''panInvoicing control.

@@ -182,10 +182,14 @@ Class j70QueryTemplateBL
         c.j70IsSystem = True
         c.j70Name = BL.My.Resources.common.VychoziDatovyPrehled
         c.j70MasterPrefix = strMasterPrefix
+        c.j70ScrollingFlag = BO.j70ScrollingFlagENUM.NoScrolling
 
         If c.j70MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j70MasterPrefix = "p31_grid") Or c.j70MasterPrefix = "p31_framework" Then
             c.j70IsFilteringByColumn = True 'pro hlavní přehledy nahodit sloupcový auto-filter
             c.j70ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders    'pro hlavní přehledy nastavit ukotvení záhlaví
+        End If
+        If c.j70MasterPrefix <> "" Then
+            c.j70IsFilteringByColumn = False
         End If
 
         Select Case x29id

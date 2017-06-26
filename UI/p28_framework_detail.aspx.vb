@@ -215,6 +215,9 @@
         Dim lisFF As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p28Contact, Master.DataPID, cRec.p29ID)
         If lisFF.Count > 0 Then
             ff1.FillData(lisFF, Not Me.chkFFShowFilledOnly.Checked)
+            chkFFShowFilledOnly.Visible = True
+        Else
+            chkFFShowFilledOnly.Visible = False
         End If
         If cRec.p28ParentID <> 0 Then
             RenderTree(cRec, cRecSum)

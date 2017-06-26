@@ -8,7 +8,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         approve1.Factory = Master.Factory
-        ff1.Factory = Master.Factory
+        ff2.Factory = Master.Factory
 
         If Not Page.IsPostBack Then
             With Master
@@ -62,7 +62,7 @@
                 End If
                 approve1.HeaderText = cmdApprove.Text
 
-                Handle_FF(.p34ID)
+
             End If
             If .IsClosed Then
                 lblLockedReasonMessage.Text = "Schválený záznam byl přesunutý do archivu."
@@ -217,6 +217,10 @@
 
             Me.Timestamp.Text = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"
             Master.HeaderText = .p34Name & " | " & BO.BAS.FD(.p31Date) & " | " & .Person & " | " & .p41Name
+
+            Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, cRec.p34ID)
+            ff2.FillData(fields, False)
+            labels1.RefreshData(Master.Factory, BO.x29IdEnum.p31Worksheet, Master.DataPID, True)
         End With
     End Sub
 
@@ -238,16 +242,17 @@
         approve1.InhaleRecord(Master.Factory.p31WorksheetBL.Load(Master.DataPID))
         cmdApprove.Visible = False
         Me.panP31Text.Visible = False
+        cmdSourceRecord.Visible = Master.Factory.TestPermission(BO.x53PermValEnum.GR_P31_Approve_Rates)
     End Sub
 
     Private Sub approve1_AfterSave(ByRef strErr As String) Handles approve1.AfterSave
         If strErr <> "" Then
             Master.Notify(strErr, 2)
         Else
-            Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False, "")
-            If ff1.TagsCount > 0 Then
-                Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs())
-            End If
+            ''Master.Factory.p31WorksheetBL.SaveFreeFields(Master.DataPID, ff1.GetValues(), False, "")
+            ''If ff1.TagsCount > 0 Then
+            ''    Master.Factory.x18EntityCategoryBL.SaveX19Binding(BO.x29IdEnum.p31Worksheet, Master.DataPID, ff1.GetTags(), ff1.GetX20IDs())
+            ''End If
             Master.CloseAndRefreshParent("p31-save")
         End If
         cmdApprove.Visible = True
@@ -259,12 +264,5 @@
         cmdApprove.Visible = True
     End Sub
 
-    Private Sub Handle_FF(intP34ID As Integer)
-        Dim fields As List(Of BO.FreeField) = Master.Factory.x28EntityFieldBL.GetListWithValues(BO.x29IdEnum.p31Worksheet, Master.DataPID, intP34ID)
-        Dim lisX20X18 As IEnumerable(Of BO.x20_join_x18) = Master.Factory.x18EntityCategoryBL.GetList_x20_join_x18(BO.x29IdEnum.p31Worksheet, intP34ID)
-        If fields.Count > 0 Or lisX20X18.Count > 0 Then
-            ff1.FillData(fields, lisX20X18, "p31Worksheet_FreeField", Master.DataPID)
-        End If
-
-    End Sub
+    
 End Class

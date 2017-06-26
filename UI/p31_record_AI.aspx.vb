@@ -178,7 +178,7 @@
                 rate_j27ident.Visible = False
             End If
 
-            labels1.RefreshData(Master.Factory, BO.x29IdEnum.p31Worksheet, .PID)
+            labels1.RefreshData(Master.Factory, BO.x29IdEnum.p31Worksheet, .PID, True)
 
             Me.Timestamp.Text = .Timestamp & " | Vlastník záznamu: <span class='val'>" & .Owner & "</span>"
             Master.HeaderText = .p34Name & " | " & BO.BAS.FD(.p31Date) & " | " & .Person & " | " & .p41Name

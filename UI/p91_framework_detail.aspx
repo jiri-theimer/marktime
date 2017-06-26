@@ -10,6 +10,7 @@
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
 <%@ Register TagPrefix="uc" TagName="plugin_datatable" Src="~/plugin_datatable.ascx" %>
 <%@ Register TagPrefix="uc" TagName="alertbox" Src="~/alertbox.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" type="text/css" href="Plugins/Plugin.css" />
@@ -184,10 +185,7 @@
             sw_decide("b07_delete.aspx?pid=" + b07id, "Images/delete.png", true)
 
         }
-        function griddesigner() {
-            var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_decide("grid_designer.aspx?nodrilldown=1&x29id=331&masterprefix=p91&pid=" + j74id,"Images/griddesigner.png");
-        }
+      
        
         function proforma() {           
             sw_decide("p91_proforma.aspx?pid=<%=Master.DataPID%>","Images/proforma.png");
@@ -290,6 +288,7 @@
 
 
                 <telerik:RadMenuItem Text="DALŠÍ" ImageUrl="Images/menuarrow.png" Value="more">
+                    <GroupSettings OffsetX="-150" />
                     <Items>
                         <telerik:RadMenuItem Value="switchHeight" Text="Nastavení vzhledu stránky" ImageUrl="Images/setting.png" NavigateUrl="javascript:page_setting()">
                         </telerik:RadMenuItem>
@@ -588,8 +587,7 @@
                         <asp:ListItem Text="100"></asp:ListItem>
                     </asp:DropDownList>
 
-                    <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
-                    <button type="button" onclick="griddesigner()">Sloupce</button>
+                    <uc:mygrid id="designer1" runat="server" prefix="p31" MasterPrefix="p91" MasterPrefixFlag="2" Width="250px"></uc:mygrid>
 
                 </div>
                 <div class="commandcell">

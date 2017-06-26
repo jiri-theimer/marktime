@@ -313,7 +313,7 @@
 
 
                 <div class="commandcell" style="padding-left: 4px;">
-                    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
+                    <telerik:RadMenu ID="menu1" RenderMode="Auto" Skin="Metro" Style="z-index: 2900;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" CollapseAnimation-Duration="0" CollapseAnimation-Type="None" ClickToOpen="true">
                         <Items>
                             <telerik:RadMenuItem Value="more" Text="Akce" ImageUrl="Images/arrow_down_menu.png" style="padding-right:0px">
                                 <GroupSettings OffsetX="-135" />

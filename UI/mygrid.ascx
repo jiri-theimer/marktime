@@ -10,6 +10,7 @@
 <asp:HiddenField ID="hidJ62ID" runat="server" />
 <asp:HiddenField ID="hidReloadURL" runat="server" />
 <asp:HiddenField ID="hidX36Key" runat="server" />
+<asp:HiddenField ID="hidMasterPrefixFlag" Value="1" runat="server" />
 <asp:HiddenField ID="hidOnlyQuery" runat="server" Value="0" />
 <script type="text/javascript">
     function mygrid_setting() {
@@ -17,10 +18,13 @@
         var prefix = document.getElementById("<%=me.hidPrefix.clientid%>").value;
         var masterprefix = document.getElementById("<%=Me.hidMasterPrefix.ClientID%>").value;
         var onlyquery = document.getElementById("<%=Me.hidOnlyQuery.ClientID%>").value;
+        
         var url = "query_builder.aspx?prefix=" + prefix + "&pid=" + j70id + "&masterprefix=" + masterprefix;
         if (onlyquery == "1") {
             url = url + "&onlyquery=1";
         }
+        url = url + "&masterprefixflag="+document.getElementById("<%=Me.hidMasterPrefixFlag.ClientID%>").value;
+
         if (masterprefix == "") {
             sw_everywhere(url, "Images/griddesigner.png", true);
         }

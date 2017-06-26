@@ -232,6 +232,7 @@
     <asp:HiddenField ID="hidPrefix" runat="server" />
     <asp:HiddenField ID="hidNewJ70Name" runat="server" />
     <asp:HiddenField ID="hidOnlyQuery" runat="server" Value="0" />
+    <asp:HiddenField ID="hidMasterprefixFlag" runat="server" />
     <asp:Button ID="cmdSaveNewTemplate" runat="server" style="display:none;" />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="FootContent" runat="server">

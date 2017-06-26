@@ -46,7 +46,7 @@ Public Class entity_framework
         End Get
         Set(value As Integer)
             hidJ62ID.Value = value.ToString
-            Master.SiteMenuValue = "hm" & value.ToString
+            If value > 0 Then Master.SiteMenuValue = "hm" & value.ToString
         End Set
     End Property
 
@@ -145,8 +145,8 @@ Public Class entity_framework
                 End With
             End With
 
-            Master.SiteMenuValue = Me.CurrentPrefix
             Me.CurrentJ62ID = BO.BAS.IsNullInt(Request.Item("j62id"))
+            designer1.Prefix = Me.CurrentPrefix
             designer1.CurrentJ62ID = Me.CurrentJ62ID
             designer1.x36Key = Me.CurrentPrefix + "-j70id"
             'If Me.CurrentJ62ID <> 0 Then
@@ -155,7 +155,11 @@ Public Class entity_framework
             'Else
             '    Master.SiteMenuValue = Me.CurrentPrefix
             'End If
-            
+            If Me.CurrentJ62ID <> 0 Then
+            Else
+                Master.SiteMenuValue = Me.CurrentPrefix
+            End If
+
 
             With Master.Factory.j03UserBL
                 Dim strJ70ID As String = Request.Item("j70id")
@@ -290,7 +294,7 @@ Public Class entity_framework
                     img1.ImageUrl = "Images/task_32.png"
                     cmdApprove.Visible = bolCanApprove
                     cmdInvoice.Visible = bolCanInvoice
-                    menu1.FindItemByValue("more").Text = "Akce nad úkoly"
+                    ''menu1.FindItemByValue("more").Text = "Akce nad úkoly"
                 Case BO.x29IdEnum.j02Person
                     ''menu1.FindItemByValue("more").Text = "Akce nad přehledem"
                     img1.ImageUrl = "Images/person_32.png"

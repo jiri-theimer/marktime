@@ -6,9 +6,10 @@
 <%@ Register TagPrefix="uc" TagName="datacombo" Src="~/datacombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="p31_approve_onerec" Src="~/p31_approve_onerec.ascx" %>
 <%@ Register TagPrefix="uc" TagName="b07_list" Src="~/b07_list.ascx" %>
-<%@ Register TagPrefix="uc" TagName="freefields" Src="~/freefields.ascx" %>
 <%@ Register TagPrefix="uc" TagName="o23_list" Src="~/o23_list.ascx" %>
 <%@ Register TagPrefix="uc" TagName="x18_readonly" Src="~/x18_readonly.ascx" %>
+<%@ Register TagPrefix="uc" TagName="freefields_readonly" Src="~/freefields_readonly.ascx" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <%If panApproving.Visible Then%>
@@ -36,19 +37,23 @@
         }
 
         function p31_comment_create() {
-            dialog_master("b07_create.aspx?masterprefix=p31&masterpid=<%=master.datapid%>", true);
+            sw_everywhere("b07_create.aspx?masterprefix=p31&masterpid=<%=master.datapid%>", true);
 
         }
 
         function p31_comment_reaction(b07id) {
 
-            dialog_master("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p31&masterpid=<%=master.datapid%>", true)
+            sw_everywhere("b07_create.aspx?parentpid=" + b07id + "&masterprefix=p31&masterpid=<%=master.datapid%>", true)
 
         }
         function o23_record(pid) {
 
             window.open("o23_framework.aspx?pid=" + pid, "_top");
 
+        }
+
+        function source_record() {
+            sw_everywhere("p31_record.aspx?pid=<%=Master.DataPID%>&edit_approve=1","Images/worksheet.png", true);
         }
 
     </script>
@@ -235,6 +240,7 @@
             </td>
         </tr>
     </table>
+    <uc:freefields_readonly ID="ff2" runat="server" />
     <uc:x18_readonly ID="labels1" runat="server"></uc:x18_readonly>
 
 
@@ -244,7 +250,7 @@
         <img src="Images/arrow_down.gif" />
     </button>
 
-    <asp:Button ID="cmdApprove" runat="server" Text="Pře-schválit worksheet úkon" CssClass="cmd" Visible="false" />
+    <asp:Button ID="cmdApprove" runat="server" Text="Pře-schválit worksheet úkon" CssClass="cmd" Visible="false" Font-Size="Large" />
 
     
 
@@ -268,8 +274,8 @@
 
             <uc:p31_approve_onerec ID="approve1" runat="server" IsVertical="false" HeaderText="Schvalování worksheet úkonu" ShowCancelCommand="true"/>
 
-            <uc:freefields ID="ff1" runat="server" />
-       
+            
+       <button type="button" id="cmdSourceRecord" runat="server" onclick="javascript:source_record()">Upravit zdrojový úkon</button>
     </asp:Panel>
 
     <asp:Panel ID="panInvoicing" runat="server" CssClass="innerform" Visible="false">
@@ -295,7 +301,10 @@
             <asp:Label ID="p31text" runat="server" Style="color: Black;"></asp:Label>
         </div>
     </asp:panel>
-    <asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+    <div class="div6">
+<asp:Label ID="Timestamp" runat="server" CssClass="timestamp"></asp:Label>
+    </div>
+    
     
     <asp:Panel ID="boxO23" runat="server" CssClass="content-box1">
         <div class="title">
