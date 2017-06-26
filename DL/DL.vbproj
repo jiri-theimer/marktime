@@ -132,7 +132,6 @@
     <Compile Include="j11TeamDL.vb" />
     <Compile Include="j18RegionDL.vb" />
     <Compile Include="j19PaymentTypeDL.vb" />
-    <Compile Include="j74SavedGridColTemplateDL.vb" />
     <Compile Include="Mother\DLMother.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

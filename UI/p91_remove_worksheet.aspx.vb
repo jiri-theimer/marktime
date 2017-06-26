@@ -51,11 +51,12 @@ Public Class p91_remove_worksheet
     End Sub
 
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p91")
-
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 500, False, False)
+        With Master.Factory.j70QueryTemplateBL
+            Dim cJ70 As BO.j70QueryTemplate = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p91")
+            cJ70.j70IsFilteringByColumn = False
+            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, False)
         End With
+       
 
 
 

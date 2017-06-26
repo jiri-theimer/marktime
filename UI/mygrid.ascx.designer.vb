@@ -104,11 +104,11 @@ Partial Public Class mygrid
     Protected WithEvents hidMasterPrefixFlag As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
-    '''hidOnlyQuery control.
+    '''hidModeFlag control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hidOnlyQuery As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents hidModeFlag As Global.System.Web.UI.WebControls.HiddenField
 End Class

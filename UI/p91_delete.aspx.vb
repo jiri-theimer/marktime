@@ -39,10 +39,10 @@ Public Class p91_delete
     End Sub
 
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p91")
+        With Master.Factory.j70QueryTemplateBL
+            Dim cJ70 As BO.j70QueryTemplate = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p91")
 
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 500, False, True, True, , , , , 80)
+            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 500, False, True, True, , , , , 80)
         End With
 
     End Sub

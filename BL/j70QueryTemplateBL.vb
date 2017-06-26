@@ -2,6 +2,7 @@
     Inherits IFMother
     Function Save(cRec As BO.j70QueryTemplate, lisJ71 As List(Of BO.j71QueryTemplate_Item), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
     Function Load(intPID As Integer) As BO.j70QueryTemplate
+    Function LoadSystemTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "")
     Function Delete(intPID As Integer) As Boolean
     Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum, Optional strMasterPrefix As String = "", Optional onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery) As IEnumerable(Of BO.j70QueryTemplate)
     Function GetList_j71(intPID As Integer) As IEnumerable(Of BO.j71QueryTemplate_Item)
@@ -43,6 +44,15 @@ Class j70QueryTemplateBL
 
     Public Function Load(intPID As Integer) As BO.j70QueryTemplate Implements Ij70QueryTemplateBL.Load
         Return _cDL.Load(intPID)
+    End Function
+    Public Function LoadSystemTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "") Implements Ij70QueryTemplateBL.LoadSystemTemplate
+        Dim c As BO.j70QueryTemplate = _cDL.LoadSystemTemplate(x29id, intJ03ID, strMasterPrefix)
+        If c Is Nothing Then
+            If CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, _cUser.PID, strMasterPrefix) Then
+                c = _cDL.LoadSystemTemplate(x29id, intJ03ID, strMasterPrefix)
+            End If
+        End If
+        Return c
     End Function
    
     Public Function Save(cRec As BO.j70QueryTemplate, lisJ71 As List(Of BO.j71QueryTemplate_Item), lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean Implements Ij70QueryTemplateBL.Save
@@ -186,7 +196,7 @@ Class j70QueryTemplateBL
 
         If c.j70MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j70MasterPrefix = "p31_grid") Or c.j70MasterPrefix = "p31_framework" Then
             c.j70IsFilteringByColumn = True 'pro hlavní přehledy nahodit sloupcový auto-filter
-            c.j70ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders    'pro hlavní přehledy nastavit ukotvení záhlaví
+            c.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders    'pro hlavní přehledy nastavit ukotvení záhlaví
         End If
         If c.j70MasterPrefix <> "" Then
             c.j70IsFilteringByColumn = False

@@ -77,7 +77,7 @@
             Me.j62Target.SelectedValue = .j62Target
             Me.j62ImageUrl.Text = .j62ImageUrl
             Me.j70ID.SelectedValue = .j70ID.ToString
-            Me.j74ID.SelectedValue = .j74ID.ToString
+
             basUI.SelectDropdownlistValue(Me.j62GridGroupBy, .j62GridGroupBy)
             Me.j62IsSeparator.Checked = .j62IsSeparator
             Me.j62Tag.Text = .j62Tag
@@ -110,7 +110,6 @@
                 .j60ID = Me.CurrentJ60ID
                 .x29ID = BO.BAS.IsNullInt(Me.x29ID.SelectedValue)
                 .j62ParentID = BO.BAS.IsNullInt(Me.j62ParentID.SelectedValue)
-                .j74ID = BO.BAS.IsNullInt(Me.j74ID.SelectedValue)
                 .j70ID = BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
                 .j62GridGroupBy = Me.j62GridGroupBy.SelectedValue
                 .j62Name = Me.j62Name.Text
@@ -172,8 +171,7 @@
         ''Me.j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) (p.j02ID_Owner = Master.Factory.SysUser.j02ID And p.j70IsSystem = False))
         Me.j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) (p.j70IsSystem = False))
         Me.j70ID.DataBind()
-        Me.j74ID.DataSource = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, Me.CurrentX29ID).Where(Function(p) p.j02ID_Owner = Master.Factory.SysUser.j02ID And p.j74IsSystem = False)
-        Me.j74ID.DataBind()
+      
         
         Me.j62GridGroupBy.DataSource = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
         Me.j62GridGroupBy.DataBind()

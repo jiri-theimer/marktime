@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class p31_approving_step3
 
     '''<summary>
-    '''j74id control.
+    '''designer1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j74id As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents designer1 As Global.UI.mygrid
 
     '''<summary>
     '''chkAutoFilter control.

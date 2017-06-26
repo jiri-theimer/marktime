@@ -8,14 +8,7 @@ Public Class p31_approving_step3
         _MasterPage = Me.Master
         Master.HelpTopicID = "p31_approving_dialog"
     End Sub
-    Public Property CurrentJ74ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j74id.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j74id, value.ToString)
-        End Set
-    End Property
+    
     Public ReadOnly Property CurrentMasterPrefix As String
         Get
             Return Me.hidMasterPrefix.Value
@@ -28,6 +21,7 @@ Public Class p31_approving_step3
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             With Master
                 Me.hidApprovingLevel.Value = Request.Item("approving_level")
@@ -51,7 +45,7 @@ Public Class p31_approving_step3
                 .HeaderIcon = "Images/approve_32.png"
                 Dim lisPars As New List(Of String)
                 With lisPars
-                    .Add("p31_approving_step3-j74id")
+                    .Add(designer1.x36Key)
                     .Add("p31_approving-use_internal_approving")
                     .Add("p31_approving-group")
                     .Add("p31_approving-autofilter")
@@ -89,7 +83,7 @@ Public Class p31_approving_step3
 
 
             End With
-            SetupJ74Combo()
+            designer1.RefreshData(BO.BAS.IsNullInt(Master.Factory.j03UserBL.GetUserParam(designer1.x36Key)))
 
             If Request.Item("reloadonly") = "" Then
                 SetupTempData()
@@ -309,20 +303,10 @@ Public Class p31_approving_step3
     End Sub
 
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = Nothing
-            If Me.CurrentJ74ID > 0 Then cJ74 = .Load(Me.CurrentJ74ID)
-            If cJ74 Is Nothing Then
-                cJ74 = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "approving_step3")
-                If Not cJ74 Is Nothing Then
-                    SetupJ74Combo()
-                    Me.CurrentJ74ID = cJ74.PID
-                End If
-            End If
-            Dim strF As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, True, , , , , strF)
-            Me.hidFrom.Value = strF
-        End With
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+        Dim strF As String = ""
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, True, , , , , strF)
+        Me.hidFrom.Value = strF
 
         If Not Page.IsPostBack Then
             Dim intGridHeight As Integer = BO.BAS.IsNullInt(Request.Item("gridheight").Replace(".", ","))
@@ -364,7 +348,7 @@ Public Class p31_approving_step3
             .GroupByExpressions.Add(GGE)
 
         End With
-        
+
 
     End Sub
 
@@ -416,30 +400,9 @@ Public Class p31_approving_step3
         End With
     End Sub
 
-    Private Sub SetupJ74Combo()
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = "approving_step3")
-        If lisJ74.Count = 0 Then
-            Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "approving_step3")
-            lisJ74 = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.p31Worksheet).Where(Function(p) p.j74MasterPrefix = "approving_step3")
-        End If
-        j74id.DataSource = lisJ74
-        j74id.DataBind()
+    
 
-
-        If Not Page.IsPostBack Then
-            If Me.j74id.Items.Count > 0 Then Me.CurrentJ74ID = CInt(Master.Factory.j03UserBL.GetUserParam("p31_approving_step3-j74id", "0"))
-        End If
-
-
-    End Sub
-
-    Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("p31_approving_step3-j74id", Me.CurrentJ74ID.ToString)
-        SetupGrid()
-        grid1.Rebind(True)
-        RefreshSubform(Me.hiddatapid.Value)
-    End Sub
-
+    
     Private Sub RefreshSubform(strPID As String)
         If strPID = "" Then Return
 
@@ -452,11 +415,11 @@ Public Class p31_approving_step3
         If Me.hidHardRefreshFlag.Value = "" And Me.hidHardRefreshPID.Value = "" Then Return
 
         Select Case Me.hidHardRefreshFlag.Value
-            Case "j74"
-                SetupJ74Combo()
-                Me.CurrentJ74ID = BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value)
+            Case "j70-run"
+
                 SetupGrid()
-                grid1.Rebind(False)
+                grid1.Rebind(True)
+                RefreshSubform(Me.hiddatapid.Value)
             Case "p31text"
 
                 grid1.Rebind(True, BO.BAS.IsNullInt(Me.hidHardRefreshPID.Value))

@@ -337,7 +337,6 @@
     <Content Include="framework_detail_header.ascx" />
     <Content Include="freefields.ascx" />
     <Content Include="freefields_readonly.ascx" />
-    <Content Include="grid_designer.aspx" />
     <Content Include="help.aspx" />
     <Content Include="helpdesk_default.aspx" />
     <Content Include="j02_batch.aspx" />
@@ -443,7 +442,6 @@
     <Content Include="p31_record_router.aspx" />
     <Content Include="p31_setting.aspx" />
     <Content Include="p31_subgrid.ascx" />
-    <Content Include="p31_subgrid_setting.aspx" />
     <Content Include="p31_timeline.aspx" />
     <Content Include="p31_timer.aspx" />
     <Content Include="p34_after_create.aspx" />
@@ -1873,13 +1871,6 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="grid_designer.aspx.designer.vb">
-      <DependentUpon>grid_designer.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="grid_designer.aspx.vb">
-      <DependentUpon>grid_designer.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Handler\handler_search_contact.ashx.vb">
       <DependentUpon>handler_search_contact.ashx</DependentUpon>
     </Compile>
@@ -2500,13 +2491,6 @@
     <Compile Include="p31_subgrid.ascx.vb">
       <DependentUpon>p31_subgrid.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="p31_subgrid_setting.aspx.designer.vb">
-      <DependentUpon>p31_subgrid_setting.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="p31_subgrid_setting.aspx.vb">
-      <DependentUpon>p31_subgrid_setting.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="p31_timeline.aspx.designer.vb">
       <DependentUpon>p31_timeline.aspx</DependentUpon>

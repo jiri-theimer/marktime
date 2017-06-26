@@ -39,7 +39,7 @@
         </div>
 
         <div class="commandcell" id="divQueryContainer"> 
-            <uc:mygrid id="query1" runat="server" prefix="p31" masterprefix="" x36key="p31-j70id" OnlyQuery="true"></uc:mygrid>              
+            <uc:mygrid id="query1" runat="server" prefix="p31" masterprefix="" x36key="p31-j70id" ModeFlag="2"></uc:mygrid>              
         </div>
 
         <div class="commandcell">

@@ -184,7 +184,7 @@
             <uc:periodcombo ID="period1" runat="server" Width="180px"></uc:periodcombo>
         </div>
         <div class="commandcell" id="divQueryContainer">     
-            <uc:mygrid id="query1" runat="server" prefix="p31" masterprefix="" x36key="approving_framework-j70id" OnlyQuery="true" ReloadUrl="approving_framework.aspx"></uc:mygrid>       
+            <uc:mygrid id="query1" runat="server" prefix="p31" masterprefix="" x36key="approving_framework-j70id" ModeFlag="2" ReloadUrl="approving_framework.aspx"></uc:mygrid>       
         </div>
 
         <div class="commandcell" style="margin-left: 10px;">

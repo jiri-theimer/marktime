@@ -50,15 +50,12 @@
     End Sub
 
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = .LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p41", BO.p31RecordState.Approved)
-            If cJ74 Is Nothing Then
 
-            End If
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 500, False, True)
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, "p41-approved")
+      
+        basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 500, False, True)
 
-        End With
-
+        
     End Sub
 
 

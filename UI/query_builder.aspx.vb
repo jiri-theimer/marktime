@@ -50,7 +50,8 @@
             ViewState("guid") = BO.BAS.GetGUID()
             ViewState("x36key") = Request.Item("x36key")
             Me.CurrentPrefix = Request.Item("prefix")
-            hidOnlyQuery.Value = Request.Item("onlyquery")
+            hidModeFlag.Value = Request.Item("modeflag")    '1-filtr + sloupce, 2-pouze filtr, 3-pouze sloupce
+            If hidModeFlag.Value = "" Then hidModeFlag.Value = "1"
             hidMasterprefixFlag.Value = Request.Item("masterprefixflag")
             ViewState("masterprefix") = Request.Item("masterprefix")
             If ViewState("x36key") = "" Then ViewState("x36key") = Me.CurrentPrefix & "-j70id"
@@ -84,14 +85,22 @@
                 Case Else
                     RadTabStrip1.SelectedIndex = 1
             End Select
-            If hidOnlyQuery.Value = "1" Then
-                RadTabStrip1.Tabs(1).Visible = False
-                RadMultiPage1.PageViews(1).Visible = False
-                RadTabStrip1.SelectedIndex = 0
-                RadMultiPage1.SelectedIndex = 0
-                lblName.Text = "Název:"
-                lblJ70ID.Text = "Pojmenovaný filtr:"
-            End If
+            Select Case hidModeFlag.Value
+                Case "2"
+                    RadTabStrip1.Tabs(1).Visible = False
+                    RadMultiPage1.PageViews(1).Visible = False
+                    RadTabStrip1.SelectedIndex = 0
+                    RadMultiPage1.SelectedIndex = 0
+                    lblName.Text = "Název:"
+                    lblJ70ID.Text = "Pojmenovaný filtr:"
+                Case "3"
+                    RadTabStrip1.Tabs(0).Visible = False
+                    RadMultiPage1.PageViews(0).Visible = False
+                    RadTabStrip1.SelectedIndex = 1
+                    RadMultiPage1.SelectedIndex = 1
+
+            End Select
+           
         End If
     End Sub
 
@@ -739,7 +748,7 @@
     Private Sub SetupJ70Combo()
         Dim mq As BO.myQuery = Nothing
         Dim onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery
-        If hidOnlyQuery.Value = "1" Then onlyQuery = BO.BooleanQueryMode.TrueQuery
+        If hidModeFlag.Value = "2" Then onlyQuery = BO.BooleanQueryMode.TrueQuery
         Dim s As String = ViewState("masterprefix")
         If hidMasterprefixFlag.Value = "1" And ViewState("masterprefix") <> "" Then s = "-1"
         Dim lisJ70 As IEnumerable(Of BO.j70QueryTemplate) = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, s, onlyQuery)

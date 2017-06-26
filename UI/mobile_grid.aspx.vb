@@ -1,7 +1,7 @@
 ﻿Public Class mobile_grid
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As Mobile
-    Private Property _curJ74 As BO.j74SavedGridColTemplate
+
     Private Property _x29id As BO.x29IdEnum
     Private Property _needFilterIsChanged As Boolean = False
     Private Property _CurFilterDbField As String = ""
@@ -37,32 +37,18 @@
             hidMasterPID.Value = value.ToString
         End Set
     End Property
-    Public Property CurrentJ74ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.hidJ74ID.Value)
-        End Get
-        Set(value As Integer)
-            Me.hidJ74ID.Value = value.ToString
-        End Set
-    End Property
-    Public Property CurrentJ70ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j70ID.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j70ID, value.ToString)
-        End Set
-    End Property
+   
 
     Private Sub mobile_grid_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             If Request.Item("prefix") <> "" Then
                 Me.CurrentX29ID = BO.BAS.GetX29FromPrefix(Request.Item("prefix"))
-                
+
             End If
             If Request.Item("masterpid") <> "" Then
                 Me.CurrentMasterPID = BO.BAS.IsNullInt(Request.Item("masterpid")) : Me.CurrentMasterPrefix = Request.Item("masterprefix")
@@ -79,10 +65,12 @@
                     .StopPage("Nemáte oprávnění k přehledu projektů.")
                 End If
                 .MenuPrefix = Me.CurrentPrefix
+                designer1.x36Key = Me.CurrentPrefix + "_mobile_grid-j70id"
+                designer1.ReloadUrl = "mobile_grid.aspx?" & basUI.GetCompleteQuerystring(Request)
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add(Me.CurrentPrefix + "_mobile_grid-pagesize")
-                    .Add(Me.CurrentPrefix + "_mobile_grid-j70id")
+                    .Add(designer1.x36Key)
                     .Add("periodcombo-custom_query")
                     .Add(Me.CurrentPrefix + "_framework_detail-pid")
                     .Add(Me.CurrentPrefix + "_mobile_grid-sort")
@@ -93,8 +81,9 @@
 
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
-
-                    SetupJ70Combo(BO.BAS.IsNullInt(.GetUserParam(Me.CurrentPrefix + "_mobile_grid-j70id")))
+                    Dim strJ70ID As String = Request.Item("j70id")
+                    If strJ70ID = "" Then strJ70ID = .GetUserParam(designer1.x36Key)
+                    designer1.RefreshData(BO.BAS.IsNullInt(strJ70ID))
                     If Me.CurrentMasterPID <> 0 Then
                         With Me.MasterRecord
                             .Text = Master.Factory.GetRecordCaption(BO.BAS.GetX29FromPrefix(Me.CurrentMasterPrefix), Me.CurrentMasterPID)
@@ -127,18 +116,13 @@
 
 
     Private Sub SetupGrid(strFilterSetting As String, strFilterExpression As String)
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
-            If cJ74 Is Nothing Then
-                cJ74 = .LoadSystemTemplate(Me.CurrentX29ID, Master.Factory.SysUser.PID, "mobile_grid")
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
 
-            End If
-            Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-            Dim strAddtionalSqlFrom As String = ""
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, False, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom)
-            Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
-            Me.hidFirstLinkCol.Value = grid1.radGridOrig.Columns(1).UniqueName
-        End With
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
+        Dim strAddtionalSqlFrom As String = ""
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, False, False, strFilterSetting, strFilterExpression, , strAddtionalSqlFrom)
+        Me.hidAdditionalFrom.Value = strAddtionalSqlFrom
+        Me.hidFirstLinkCol.Value = grid1.radGridOrig.Columns(1).UniqueName
         With grid1
             .AllowFilteringByColumn = False
             .radGridOrig.RenderMode = Telerik.Web.UI.RenderMode.Auto
@@ -150,7 +134,7 @@
             End Select
 
         End With
-       
+
     End Sub
 
     Private Sub grid1_FilterCommand(strFilterFunction As String, strFilterColumn As String, strFilterPattern As String) Handles grid1.FilterCommand
@@ -341,7 +325,7 @@
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP41_SpecificQuery.AllowedForRead
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
         End With
     End Sub
     Private Sub InhaleMyQuery_p28(ByRef mq As BO.myQueryP28)
@@ -364,7 +348,7 @@
 
             .Closed = BO.BooleanQueryMode.NoQuery
             .SpecificQuery = BO.myQueryP28_SpecificQuery.AllowedForRead
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
         End With
     End Sub
     Private Sub InhaleMyQuery_p56(ByRef mq As BO.myQueryP56)
@@ -392,7 +376,7 @@
                 Case Else : .Closed = BO.BooleanQueryMode.NoQuery
             End Select
 
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .SpecificQuery = BO.myQueryP56_SpecificQuery.AllowedForRead
         End With
     End Sub
@@ -410,7 +394,7 @@
                 Case "p91" : .p91ID = Me.CurrentMasterPID
                 Case Else
             End Select
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .ColumnFilteringExpression = grid1.GetFilterExpressionCompleteSql()
 
             .SpecificQuery = BO.myQueryP31_SpecificQuery.AllowedForRead
@@ -443,7 +427,7 @@
             .DateFrom = period1.DateFrom
             .DateUntil = period1.DateUntil
 
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
 
             .MG_SortString = grid1.radGridOrig.MasterTableView.SortExpressions.GetSortString()
             If Me.hidDefaultSorting.Value <> "" Then
@@ -475,7 +459,7 @@
                 End If
             End If
             .Closed = BO.BooleanQueryMode.NoQuery
-            .j70ID = Me.CurrentJ70ID
+            .j70ID = designer1.CurrentJ70ID
             .SpecificQuery = BO.myQueryO23_SpecificQuery.AllowedForRead
         End With
 
@@ -485,16 +469,10 @@
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_mobile_grid-sort", SortExpression)
     End Sub
 
-    Private Sub SetupJ70Combo(intDef As Integer)
-        Dim mq As New BO.myQuery
-        j70ID.DataSource = Master.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID)
-        j70ID.DataBind()
-        j70ID.Items.Insert(0, "--Pojmenovaný filtr--")
-        basUI.SelectDropdownlistValue(Me.j70ID, intDef.ToString)
-    End Sub
+    
 
     Private Sub mobile_grid_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
-        basUIMT.RenderQueryCombo(Me.j70ID)
+
         With Me.period1
             If .SelectedValue <> "" Then
                 .BackColor = Drawing.Color.Red
@@ -504,11 +482,7 @@
         End With
     End Sub
 
-    Private Sub j70ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j70ID.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_mobile_grid-j70id", Me.CurrentJ70ID.ToString)
-        ReloadPage()
-    End Sub
-
+   
     Private Sub period1_OnChanged(DateFrom As Date, DateUntil As Date) Handles period1.OnChanged
         Master.Factory.j03UserBL.SetUserParam(Me.CurrentPrefix + "_mobile_grid-period", period1.SelectedValue)
         ReloadPage()

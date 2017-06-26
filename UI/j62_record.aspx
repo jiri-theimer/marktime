@@ -108,20 +108,13 @@
             <table>
                 <tr>
                     <td>
-                        <asp:Label ID="lblJ70ID" runat="server" CssClass="lbl" Text="Pojmenovaný filtr k přehledu:"></asp:Label>
+                        <asp:Label ID="lblJ70ID" runat="server" CssClass="lbl" Text="Pojmenovaný přehled:"></asp:Label>
                     </td>
                     <td>
                         <uc:datacombo ID="j70ID" runat="server" DataTextField="NameWithCreator" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblJ74ID" runat="server" CssClass="lbl" Text="Pojmenovaná šablona sloupců:"></asp:Label>
-                    </td>
-                    <td>
-                        <uc:datacombo ID="j74ID" runat="server" DataTextField="j74Name" DataValueField="pid" IsFirstEmptyRow="true" Width="400px"></uc:datacombo>
-                    </td>
-                </tr>
+                
                 <tr>
                     <td>
                         <asp:Label ID="Label1" runat="server" CssClass="lbl" Text="Souhrny podle:"></asp:Label>

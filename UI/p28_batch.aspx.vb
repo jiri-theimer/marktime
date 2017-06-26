@@ -90,11 +90,10 @@
         End Select
     End Sub
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = .LoadSystemTemplate(BO.x29IdEnum.p28Contact, Master.Factory.SysUser.PID)
-            cJ74.j74IsFilteringByColumn = False
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, False)
-            grid1.AllowFilteringByColumn = False
+       With Master.Factory.j70QueryTemplateBL
+            Dim cJ70 As BO.j70QueryTemplate = .LoadSystemTemplate(BO.x29IdEnum.p28Contact, Master.Factory.SysUser.PID)
+            cJ70.j70IsFilteringByColumn = False
+            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, False)
         End With
 
         grid1.radGridOrig.ShowFooter = False

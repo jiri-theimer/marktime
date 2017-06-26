@@ -46,22 +46,15 @@ Public Class p91_create_step1
                 End If
                 
                 .HeaderIcon = "Images/invoice_32.png"
-                Dim lisPars As New List(Of String), strGridKey As String = "p91_create-j74id_" & Me.CurrentPrefix & "-" & CInt(BO.p31RecordState.Approved).ToString
+                Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p91_create-period")
                     .Add("periodcombo-custom_query")
                     .Add("p91_create-group")
                     .Add("p91_create-pagesize")
-                    .Add(strGridKey)
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
-                ViewState("j74id") = .Factory.j03UserBL.GetUserParam(strGridKey, "0")
-                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
-                    .Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, .Factory.SysUser.PID, Me.CurrentPrefix, BO.p31RecordState.Approved)
-                    Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, .Factory.SysUser.PID, Me.CurrentPrefix, BO.p31RecordState.Approved)
-                    ViewState("j74id") = cJ74.PID
-                    .Factory.j03UserBL.SetUserParam(strGridKey, ViewState("j74id"))
-                End If
+                
                 .AddToolbarButton("Pokračovat", "continue", , "Images/continue.png")
                 Dim strDefPeriod As String = .Factory.j03UserBL.GetUserParam("p91_create-period")
                 If Request.Item("period") <> "" Then strDefPeriod = Request.Item("period")
@@ -268,9 +261,14 @@ Public Class p91_create_step1
 
 
     Private Sub SetupGrid()
-        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.LoadSystemTemplate(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Master.Factory.SysUser.PID, Me.CurrentPrefix & "-approved")
+        If Not cJ70 Is Nothing Then
+            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 1000, False, False)
+        Else
+            Master.Notify("Nelze najít šablonu přehledu pro master-prefix=" & Me.CurrentPrefix & "-approved")
+            Return
+        End If
 
-        basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 1000, False, False)
 
         Dim strGroupField As String = "", strHeaderText As String = ""
         Select Case Me.opgGroupBy.SelectedValue

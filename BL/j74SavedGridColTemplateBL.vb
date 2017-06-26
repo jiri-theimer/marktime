@@ -1,12 +1,6 @@
 ﻿Public Interface Ij74SavedGridColTemplateBL
     Inherits IFMother
-    Function Save(cRec As BO.j74SavedGridColTemplate, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean
-    Function Load(intPID As Integer) As BO.j74SavedGridColTemplate
-    Function LoadSystemTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "", Optional recState As BO.p31RecordState = BO.p31RecordState._NotExists) As BO.j74SavedGridColTemplate
-    Function Delete(intPID As Integer) As Boolean
-    Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum) As IEnumerable(Of BO.j74SavedGridColTemplate)
-    Function CheckDefaultTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "", Optional recState As BO.p31RecordState = BO.p31RecordState._NotExists) As Boolean
-
+  
     Function ColumnsPallete(x29id As BO.x29IdEnum) As List(Of BO.GridColumn)
     Function GroupByPallet(x29id As BO.x29IdEnum) As List(Of BO.GridGroupByColumn)
 End Interface
@@ -14,229 +8,194 @@ End Interface
 Class j74SavedGridColTemplateBL
     Inherits BLMother
     Implements Ij74SavedGridColTemplateBL
-    Private WithEvents _cDL As DL.j74SavedGridColTemplateDL
+    ''Private WithEvents _cDL As DL.j74SavedGridColTemplateDL
     Private _x29id As BO.x29IdEnum
 
-    Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
-        _Error = strError
-    End Sub
-    Private Sub _cDL_OnSaveRecord(intLastSavedPID As Integer) Handles _cDL.OnSaveRecord
-        _LastSavedPID = intLastSavedPID
-    End Sub
+    ''Private Sub _cDL_OnError(strError As String) Handles _cDL.OnError
+    ''    _Error = strError
+    ''End Sub
+    ''Private Sub _cDL_OnSaveRecord(intLastSavedPID As Integer) Handles _cDL.OnSaveRecord
+    ''    _LastSavedPID = intLastSavedPID
+    ''End Sub
 
     Public Sub New(ServiceUser As BO.j03UserSYS)
-        _cDL = New DL.j74SavedGridColTemplateDL(ServiceUser)
+        ''_cDL = New DL.j74SavedGridColTemplateDL(ServiceUser)
         _cUser = ServiceUser
     End Sub
     
-    Public Function Delete(intPID As Integer) As Boolean Implements Ij74SavedGridColTemplateBL.Delete
-        Return _cDL.Delete(intPID)
-    End Function
+    
 
-    Public Function GetList(myQuery As BO.myQuery, _x29id As BO.x29IdEnum) As System.Collections.Generic.IEnumerable(Of BO.j74SavedGridColTemplate) Implements Ij74SavedGridColTemplateBL.GetList
-        Return _cDL.GetList(myQuery, _x29id)
-    End Function
+    ''Public Function CheckDefaultTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "", Optional recState As BO.p31RecordState = BO.p31RecordState._NotExists) As Boolean Implements Ij74SavedGridColTemplateBL.CheckDefaultTemplate
+    ''    If Not _cDL.LoadSystemTemplate(x29id, intJ03ID, strMasterPrefix, recState) Is Nothing Then Return True 'systém šablona již existuje
 
+    ''    Dim c As New BO.j74SavedGridColTemplate
+    ''    c.x29ID = x29id
+    ''    c.j74IsSystem = True
+    ''    c.j74Name = BL.My.Resources.common.VychoziDatovyPrehled
+    ''    c.j74MasterPrefix = strMasterPrefix
+    ''    c.j74RecordState = recState
+    ''    If c.j74MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j74MasterPrefix = "p31_grid") Or c.j74MasterPrefix = "p31_framework" Then
+    ''        c.j74IsFilteringByColumn = True 'pro hlavní přehledy nahodit sloupcový auto-filter
+    ''        c.j74ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders    'pro hlavní přehledy nastavit ukotvení záhlaví
+    ''    End If
 
-    Public Function Load(intPID As Integer) As BO.j74SavedGridColTemplate Implements Ij74SavedGridColTemplateBL.Load
-        Return _cDL.Load(intPID)
-    End Function
-    Public Function LoadSystemTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "", Optional recState As BO.p31RecordState = BO.p31RecordState._NotExists) As BO.j74SavedGridColTemplate Implements Ij74SavedGridColTemplateBL.LoadSystemTemplate
-        Dim cRec As BO.j74SavedGridColTemplate = _cDL.LoadSystemTemplate(x29id, intJ03ID, strMasterPrefix, recState)
-        If cRec Is Nothing Then
-            If Me.CheckDefaultTemplate(x29id, intJ03ID, strMasterPrefix, recState) Then
-                cRec = _cDL.LoadSystemTemplate(x29id, intJ03ID, strMasterPrefix, recState)
-            End If
-        End If
-        Return cRec
-    End Function
-    Public Function Save(cRec As BO.j74SavedGridColTemplate, lisX69 As List(Of BO.x69EntityRole_Assign)) As Boolean Implements Ij74SavedGridColTemplateBL.Save
-        With cRec
-            If .j03ID = 0 Then .j03ID = _cUser.PID
-            If Trim(.j74Name) = "" Then _Error = "Chybí název šablony sloupců."
-            If .x29ID = BO.x29IdEnum._NotSpecified Then _Error = "Chybí x29ID."
-            If .j74ColumnNames = "" Then
-                _Error = "Ve výběru musí být minimálně jeden sloupec."
-            End If
-        End With
+    ''    Select Case x29id
+    ''        Case BO.x29IdEnum.p31Worksheet
+    ''            Select Case strMasterPrefix
+    ''                Case "j02", "j02-p31"
+    ''                    c.j74Name = String.Format(BL.My.Resources.common.VychoziPrehledOsoby, "osoby")
+    ''                    Select Case c.j74RecordState
+    ''                        Case BO.p31RecordState.Approved
+    ''                            c.j74Name = "Přehled schválených úkonů v detailu osoby"
+    ''                            c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,p31Text"
+    ''                        Case Else
+    ''                            c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                    End Select
+    ''                Case "j02-time"
+    ''                    c.j74Name = "Hodiny osoby"
+    ''                    c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "j02-expense", "j02-fee"
+    ''                    c.j74Name = "Peněžní úkony osoby"
+    ''                    c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+    ''                Case "j02-kusovnik"
+    ''                    c.j74Name = "Kusovníkové úkony osoby"
+    ''                    c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "p28", "p28-p31"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehledKlienta
+    ''                    Select Case c.j74RecordState
+    ''                        Case BO.p31RecordState.Approved
+    ''                            c.j74Name = "Přehled schválených úkonů v detailu klienta"
+    ''                            c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
+    ''                        Case Else
+    ''                            c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                    End Select
+    ''                Case "p28-time"
+    ''                    c.j74Name = "Hodiny klienta"
+    ''                    c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "p28-expense", "p28-fee"
+    ''                    c.j74Name = "Peněžní úkony klienta"
+    ''                    c.j74ColumnNames = "p31Date,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+    ''                Case "p28-kusovnik"
+    ''                    c.j74Name = "Kusovníkové úkony klienta"
+    ''                    c.j74ColumnNames = "p31Date,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "p41", "p41-p31"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehledProjektu
+    ''                    Select Case c.j74RecordState
+    ''                        Case BO.p31RecordState.Approved
+    ''                            c.j74Name = "Přehled schválených úkonů v detailu projektu"
+    ''                            c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
+    ''                        Case Else
+    ''                            c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                    End Select
+    ''                Case "p41-time"
+    ''                    c.j74Name = "Hodiny projektu"
+    ''                    c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "p41-expense", "p41-fee"
+    ''                    c.j74Name = "Peněžní úkony projektu"
+    ''                    c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+    ''                Case "p41-kusovnik"
+    ''                    c.j74Name = "Kusovníkové úkony projektu"
+    ''                    c.j74ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "p56", "p56-p31"
+    ''                    c.j74Name = "Přehled úkonů v úkolu"
+    ''                    Select Case c.j74RecordState
+    ''                        Case BO.p31RecordState.Approved
+    ''                            c.j74Name = "Přehled schválených úkonů v úkolu"
+    ''                            c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
+    ''                        Case Else
+    ''                            c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                    End Select
+    ''                Case "p56-time"
+    ''                    c.j74Name = "Hodiny v úkolu"
+    ''                    c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "p56-expense", "p56-fee"
+    ''                    c.j74Name = "Peněžní úkony v úkolu"
+    ''                    c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
+    ''                Case "p56-kusovnik"
+    ''                    c.j74Name = "Kusovníkové úkony v úkolu"
+    ''                    c.j74ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
 
-        If _Error <> "" Then Return False
+    ''                Case "p91"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehledFaktury
+    ''                    c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Invoiced,p31Rate_Billing_Invoiced,p31Amount_WithoutVat_Invoiced,p31VatRate_Invoiced,p31Amount_WithVat_Invoiced,p31Text"
+    ''                Case "approving_step3"  'schvalovací rozhraní
+    ''                    c.j74Name = "Rozhraní pro schvalování úkonů | Příprava k fakturaci"
+    ''                    c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Orig,p31Amount_WithoutVat_Approved,p31Text"
+    ''                Case "p31_grid"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehled
+    ''                    c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''                Case "mobile_grid"
+    ''                    c.j74ColumnNames = "p31Date,Person,p41Name,p31Value_Orig,p31Text"
+    ''                Case Else
+    ''                    c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
+    ''            End Select
 
-        Return _cDL.Save(cRec, lisX69)
+    ''        Case BO.x29IdEnum.p41Project
+    ''            Select Case strMasterPrefix
+    ''                Case "p31_framework"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
+    ''                Case "mobile_grid"
+    ''                    c.j74ColumnNames = "FullName"
+    ''                Case "p28"
+    ''                    c.j74Name = "Projekty klienta"
+    ''                    c.j74ColumnNames = "p41Name,p41Code,p42Name"    'projekty v záložce pod klientem
+    ''                Case "p41"
+    ''                    c.j74Name = "Pod-projekty"
+    ''                    c.j74ColumnNames = "p41Code,p41Name,p42Name"    'podřízené projekty
+    ''            End Select
+    ''            If c.j74ColumnNames = "" Then c.j74ColumnNames = "Client,p41Name"
+    ''        Case BO.x29IdEnum.p28Contact
+    ''            c.j74ColumnNames = "p28Name"
+    ''        Case BO.x29IdEnum.p91Invoice
 
-    End Function
+    ''            Select Case strMasterPrefix
+    ''                Case "p41"
+    ''                    c.j74Name = "Výchozí přehled v detailu projektu"
+    ''                    c.j74ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+    ''                Case "p28"
+    ''                    c.j74Name = "Výchozí přehled v detailu klienta"
+    ''                    c.j74ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+    ''                Case "j02"
+    ''                    c.j74Name = "Výchozí přehled v detailu osoby"
+    ''                    c.j74ColumnNames = "p91Code,p28Name,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
+    ''                Case "mobile_grid"
+    ''                    c.j74ColumnNames = "p91Code,p91Client,p91Amount_WithoutVat"
+    ''                Case Else
+    ''                    c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat,p91Amount_Debt"
+    ''            End Select
+    ''        Case BO.x29IdEnum.j02Person
+    ''            c.j74ColumnNames = "FullNameDesc"
+    ''        Case BO.x29IdEnum.p56Task
+    ''            Select Case strMasterPrefix
+    ''                Case "j02"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehledOsoby
+    ''                    c.j74ColumnNames = "p57Name,Client,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
+    ''                Case "p28"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehledKlienta
+    ''                    c.j74ColumnNames = "p57Name,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
+    ''                Case "p31_framework"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
+    ''                    c.j74ColumnNames = "p57Name,p56Name"
+    ''                Case "mobile_grid"
+    ''                    c.j74Name = My.Resources.common.VychoziPrehled
+    ''                    c.j74ColumnNames = "p56Code,p56Name"
+    ''                Case Else
+    ''                    c.j74ColumnNames = "p56Code,p56Name,b02Name"
+    ''            End Select
+    ''        Case BO.x29IdEnum.o23Notepad
+    ''            Select Case strMasterPrefix
+    ''                Case "p41"
+    ''                    c.j74ColumnNames = "o24Name,o23Name"
+    ''                Case "mobile_grid"
+    ''                    c.j74ColumnNames = "o24Name,o23Name"
+    ''                Case Else
+    ''                    c.j74ColumnNames = "o24Name,o23Name,Project"
+    ''            End Select
 
-    Public Function CheckDefaultTemplate(x29id As BO.x29IdEnum, intJ03ID As Integer, Optional strMasterPrefix As String = "", Optional recState As BO.p31RecordState = BO.p31RecordState._NotExists) As Boolean Implements Ij74SavedGridColTemplateBL.CheckDefaultTemplate
-        If Not _cDL.LoadSystemTemplate(x29id, intJ03ID, strMasterPrefix, recState) Is Nothing Then Return True 'systém šablona již existuje
-
-        Dim c As New BO.j74SavedGridColTemplate
-        c.x29ID = x29id
-        c.j74IsSystem = True
-        c.j74Name = BL.My.Resources.common.VychoziDatovyPrehled
-        c.j74MasterPrefix = strMasterPrefix
-        c.j74RecordState = recState
-        If c.j74MasterPrefix = "" Or (x29id = BO.x29IdEnum.p31Worksheet And c.j74MasterPrefix = "p31_grid") Or c.j74MasterPrefix = "p31_framework" Then
-            c.j74IsFilteringByColumn = True 'pro hlavní přehledy nahodit sloupcový auto-filter
-            c.j74ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders    'pro hlavní přehledy nastavit ukotvení záhlaví
-        End If
-
-        Select Case x29id
-            Case BO.x29IdEnum.p31Worksheet
-                Select Case strMasterPrefix
-                    Case "j02", "j02-p31"
-                        c.j74Name = String.Format(BL.My.Resources.common.VychoziPrehledOsoby, "osoby")
-                        Select Case c.j74RecordState
-                            Case BO.p31RecordState.Approved
-                                c.j74Name = "Přehled schválených úkonů v detailu osoby"
-                                c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Amount_WithoutVat_Approved,p31Text"
-                            Case Else
-                                c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                        End Select
-                    Case "j02-time"
-                        c.j74Name = "Hodiny osoby"
-                        c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "j02-expense", "j02-fee"
-                        c.j74Name = "Peněžní úkony osoby"
-                        c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
-                    Case "j02-kusovnik"
-                        c.j74Name = "Kusovníkové úkony osoby"
-                        c.j74ColumnNames = "p31Date,ClientName,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "p28", "p28-p31"
-                        c.j74Name = My.Resources.common.VychoziPrehledKlienta
-                        Select Case c.j74RecordState
-                            Case BO.p31RecordState.Approved
-                                c.j74Name = "Přehled schválených úkonů v detailu klienta"
-                                c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
-                            Case Else
-                                c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                        End Select
-                    Case "p28-time"
-                        c.j74Name = "Hodiny klienta"
-                        c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "p28-expense", "p28-fee"
-                        c.j74Name = "Peněžní úkony klienta"
-                        c.j74ColumnNames = "p31Date,p41Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
-                    Case "p28-kusovnik"
-                        c.j74Name = "Kusovníkové úkony klienta"
-                        c.j74ColumnNames = "p31Date,p41Name,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "p41", "p41-p31"
-                        c.j74Name = My.Resources.common.VychoziPrehledProjektu
-                        Select Case c.j74RecordState
-                            Case BO.p31RecordState.Approved
-                                c.j74Name = "Přehled schválených úkonů v detailu projektu"
-                                c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
-                            Case Else
-                                c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                        End Select
-                    Case "p41-time"
-                        c.j74Name = "Hodiny projektu"
-                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "p41-expense", "p41-fee"
-                        c.j74Name = "Peněžní úkony projektu"
-                        c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
-                    Case "p41-kusovnik"
-                        c.j74Name = "Kusovníkové úkony projektu"
-                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "p56", "p56-p31"
-                        c.j74Name = "Přehled úkonů v úkolu"
-                        Select Case c.j74RecordState
-                            Case BO.p31RecordState.Approved
-                                c.j74Name = "Přehled schválených úkonů v úkolu"
-                                c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Amount_WithoutVat_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Approved,p31Amount_WithoutVat_Approved,p31Text"
-                            Case Else
-                                c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                        End Select
-                    Case "p56-time"
-                        c.j74Name = "Hodiny v úkolu"
-                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "p56-expense", "p56-fee"
-                        c.j74Name = "Peněžní úkony v úkolu"
-                        c.j74ColumnNames = "p31Date,Person,p34Name,p32Name,p31Amount_WithoutVat_Orig,p31VatRate_Orig,p31Amount_WithVat_Orig,p31Text"
-                    Case "p56-kusovnik"
-                        c.j74Name = "Kusovníkové úkony v úkolu"
-                        c.j74ColumnNames = "p31Date,Person,p32Name,p31Value_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-
-                    Case "p91"
-                        c.j74Name = My.Resources.common.VychoziPrehledFaktury
-                        c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Invoiced,p31Rate_Billing_Invoiced,p31Amount_WithoutVat_Invoiced,p31VatRate_Invoiced,p31Amount_WithVat_Invoiced,p31Text"
-                    Case "approving_step3"  'schvalovací rozhraní
-                        c.j74Name = "Rozhraní pro schvalování úkonů | Příprava k fakturaci"
-                        c.j74ColumnNames = "p31Date,Person,p41Name,p32Name,p31Hours_Orig,p31Hours_Approved_Billing,p31Rate_Billing_Orig,p31Amount_WithoutVat_Approved,p31Text"
-                    Case "p31_grid"
-                        c.j74Name = My.Resources.common.VychoziPrehled
-                        c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                    Case "mobile_grid"
-                        c.j74ColumnNames = "p31Date,Person,p41Name,p31Value_Orig,p31Text"
-                    Case Else
-                        c.j74ColumnNames = "p31Date,Person,ClientName,p41Name,p32Name,p31Hours_Orig,p31Rate_Billing_Orig,p31Amount_WithoutVat_Orig,p31Text"
-                End Select
-
-            Case BO.x29IdEnum.p41Project
-                Select Case strMasterPrefix
-                    Case "p31_framework"
-                        c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
-                    Case "mobile_grid"
-                        c.j74ColumnNames = "FullName"
-                    Case "p28"
-                        c.j74Name = "Projekty klienta"
-                        c.j74ColumnNames = "p41Name,p41Code,p42Name"    'projekty v záložce pod klientem
-                    Case "p41"
-                        c.j74Name = "Pod-projekty"
-                        c.j74ColumnNames = "p41Code,p41Name,p42Name"    'podřízené projekty
-                End Select
-                If c.j74ColumnNames = "" Then c.j74ColumnNames = "Client,p41Name"
-            Case BO.x29IdEnum.p28Contact
-                c.j74ColumnNames = "p28Name"
-            Case BO.x29IdEnum.p91Invoice
-
-                Select Case strMasterPrefix
-                    Case "p41"
-                        c.j74Name = "Výchozí přehled v detailu projektu"
-                        c.j74ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
-                    Case "p28"
-                        c.j74Name = "Výchozí přehled v detailu klienta"
-                        c.j74ColumnNames = "p91Code,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
-                    Case "j02"
-                        c.j74Name = "Výchozí přehled v detailu osoby"
-                        c.j74ColumnNames = "p91Code,p28Name,p91DateSupply,p91Amount_WithoutVat,p91Amount_Debt"
-                    Case "mobile_grid"
-                        c.j74ColumnNames = "p91Code,p91Client,p91Amount_WithoutVat"
-                    Case Else
-                        c.j74ColumnNames = "p91Code,p28Name,p91Amount_WithoutVat,p91Amount_Debt"
-                End Select
-            Case BO.x29IdEnum.j02Person
-                c.j74ColumnNames = "FullNameDesc"
-            Case BO.x29IdEnum.p56Task
-                Select Case strMasterPrefix
-                    Case "j02"
-                        c.j74Name = My.Resources.common.VychoziPrehledOsoby
-                        c.j74ColumnNames = "p57Name,Client,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
-                    Case "p28"
-                        c.j74Name = My.Resources.common.VychoziPrehledKlienta
-                        c.j74ColumnNames = "p57Name,p41Name,p56Name,p56PlanUntil,ReceiversInLine,Hours_Orig,Owner"
-                    Case "p31_framework"
-                        c.j74Name = My.Resources.common.VychoziPrehledZapisovaniUkonu
-                        c.j74ColumnNames = "p57Name,p56Name"
-                    Case "mobile_grid"
-                        c.j74Name = My.Resources.common.VychoziPrehled
-                        c.j74ColumnNames = "p56Code,p56Name"
-                    Case Else
-                        c.j74ColumnNames = "p56Code,p56Name,b02Name"
-                End Select
-            Case BO.x29IdEnum.o23Notepad
-                Select Case strMasterPrefix
-                    Case "p41"
-                        c.j74ColumnNames = "o24Name,o23Name"
-                    Case "mobile_grid"
-                        c.j74ColumnNames = "o24Name,o23Name"
-                    Case Else
-                        c.j74ColumnNames = "o24Name,o23Name,Project"
-                End Select
-
-        End Select
-        c.j03ID = intJ03ID
-        Return Save(c, Nothing)
-    End Function
+    ''    End Select
+    ''    c.j03ID = intJ03ID
+    ''    Return Save(c, Nothing)
+    ''End Function
 
     Public Function GetColumns(x29id As BO.x29IdEnum) As List(Of BO.GridColumn) Implements Ij74SavedGridColTemplateBL.ColumnsPallete
         _x29id = x29id

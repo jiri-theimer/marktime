@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 <%@ Register TagPrefix="uc" TagName="billingmemo" Src="~/billingmemo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -79,10 +80,7 @@
 
         }
 
-        function griddesigner() {
-            var j74id = "<%=Me.CurrentJ74ID%>";
-            sw_orig("grid_designer.aspx?x29id=331&masterprefix=approving_step3&pid=" + j74id);
-        }
+     
 
         function batch_p31text() {
 
@@ -131,9 +129,7 @@
     <div class="slidingDiv2" style="padding: 10px;">
         <div class="innerform_light">
             <div class="div6">
-                Šablona datového přehledu (sloupce):
-                <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 250px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
-                <button type="button" onclick="griddesigner()">Návrhář sloupců</button>
+                <uc:mygrid id="designer1" runat="server" prefix="p31" x36key="p31_approving_step3-j70id" masterprefix="approving_step3" MasterPrefixFlag="2" reloadurl="javascript:hardrefresh(0, 'j70')" Width="250px" ModeFlag="3"></uc:mygrid>
             </div>
             <div class="div6">
                 <asp:CheckBox ID="chkAutoFilter" runat="server" Text="Nabízet nad sloupci filtrování dat" AutoPostBack="true" CssClass="chk" />

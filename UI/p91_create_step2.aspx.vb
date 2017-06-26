@@ -30,10 +30,9 @@ Public Class p91_create_step2
                 Me.CurrentPrefix = Request.Item("prefix")
 
                 .HeaderIcon = "Images/invoice_32.png"
-                Dim lisPars As New List(Of String), strGridKey As String = "p91_create-j74id_" & Me.CurrentPrefix & "-" & CInt(BO.p31RecordState.Approved).ToString
+                Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p91_create-group")
-                    .Add(strGridKey)
                     .Add("p91_create-pagesize")
                     .Add("p91_create-rememberdates")
                     .Add("p91_create-remembermaturity")
@@ -41,13 +40,7 @@ Public Class p91_create_step2
                     .Add("p91_create-chkSearchByClientOnly")
                 End With
                 .Factory.j03UserBL.InhaleUserParams(lisPars)
-                ViewState("j74id") = .Factory.j03UserBL.GetUserParam(strGridKey, "0")
-                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
-                    .Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p31Worksheet, .Factory.SysUser.PID, Me.CurrentPrefix, BO.p31RecordState.Approved)
-                    Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, .Factory.SysUser.PID, Me.CurrentPrefix, BO.p31RecordState.Approved)
-                    ViewState("j74id") = cJ74.PID
-                    .Factory.j03UserBL.SetUserParam(strGridKey, ViewState("j74id"))
-                End If
+               
                 .AddToolbarButton("Vygenerovat fakturu", "save", , "Images/save.png")
                 Me.chkSearchByClientOnly.Checked = BO.BAS.BG(.Factory.j03UserBL.GetUserParam("p91_create-chkSearchByClientOnly", "0"))
                 basUI.SelectRadiolistValue(Me.opgGroupBy, .Factory.j03UserBL.GetUserParam("p91_create-group"))
@@ -220,9 +213,13 @@ Public Class p91_create_step2
     End Sub
 
     Private Sub SetupGrid()
-        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
-
-        basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), True, True)
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.LoadSystemTemplate(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Master.Factory.SysUser.PID, Me.CurrentPrefix & "-approved")
+        If Not cJ70 Is Nothing Then
+            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, CInt(Me.cbxPaging.SelectedValue), True, True)
+        Else
+            Master.Notify("Nelze najít šablonu přehledu pro master-prefix=" & Me.CurrentPrefix & "-approved")
+            Return
+        End If
 
         Dim strGroupField As String = "", strHeaderText As String = ""
         Select Case Me.opgGroupBy.SelectedValue

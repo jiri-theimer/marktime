@@ -3,7 +3,6 @@
 Public Class o23_queue
     Inherits System.Web.UI.Page
     Protected WithEvents _MasterPage As ModalForm
-    Private Property _curJ74 As BO.j74SavedGridColTemplate
 
     Public Property CurrentMasterPID As Integer
         Get
@@ -34,20 +33,14 @@ Public Class o23_queue
             Me.hidMasterGUID.Value = value
         End Set
     End Property
-    Public Property CurrentJ74ID As Integer
-        Get
-            Return BO.BAS.IsNullInt(Me.j74id.SelectedValue)
-        End Get
-        Set(value As Integer)
-            basUI.SelectDropdownlistValue(Me.j74id, value.ToString)
-        End Set
-    End Property
+    
     
     Private Sub o23_queue_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Master.Factory
         If Not Page.IsPostBack Then
             Dim lisPars As New List(Of String)
             With Master
@@ -70,7 +63,7 @@ Public Class o23_queue
                 .AddToolbarButton(s, "save", , "Images/save.png")
                 With lisPars
                     .Add("o23_queue-pagesize")
-                    .Add("o23_queue-j74id")
+                    .Add(designer1.x36Key)
                     .Add("o23_queue-groupby")
                     .Add("o23_queue-sort")
                     .Add("o23_queue-o24id")
@@ -92,7 +85,8 @@ Public Class o23_queue
                 basUI.SelectDropdownlistValue(Me.o24ID, IIf(Request.Item("o24id") = "", .GetUserParam("o23_queue-o24id"), Request.Item("o24id")))
 
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("o23_queue-groupby"))
-                SetupJ74Combo(BO.BAS.IsNullInt(.GetUserParam("o23_queue-j74id")))
+                designer1.RefreshData(BO.BAS.IsNullInt(.GetUserParam(designer1.x36Key)))
+
             End With
 
             RecalcVirtualRowCount()
@@ -115,17 +109,10 @@ Public Class o23_queue
 
 
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = _curJ74
-            If cJ74 Is Nothing Then
-                cJ74 = .LoadSystemTemplate(BO.x29IdEnum.o23Notepad, Master.Factory.SysUser.PID)
-                If Not cJ74 Is Nothing Then
-                    SetupJ74Combo(cJ74.PID)
-                End If
-            End If
-            Me.hidDefaultSorting.Value = cJ74.j74OrderBy
-            Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, True)
-        End With
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, BO.BAS.IsNullInt(Me.cbxPaging.SelectedValue), True, True, True)
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
+       
         With grid1
             .radGridOrig.ShowFooter = False
             .radGridOrig.SelectedItemStyle.BackColor = Drawing.Color.Red
@@ -216,26 +203,7 @@ Public Class o23_queue
         grid1.Rebind(False)
     End Sub
 
-    Private Sub SetupJ74Combo(intDef As Integer)
-        Dim lisJ74 As IEnumerable(Of BO.j74SavedGridColTemplate) = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.o23Notepad).Where(Function(p) p.j74MasterPrefix = "")
-        If lisJ74.Count = 0 Then
-            'uživatel zatím nemá žádnou šablonu - založit první j74IsSystem=1
-            Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.o23Notepad, Master.Factory.SysUser.PID)
-            lisJ74 = Master.Factory.j74SavedGridColTemplateBL.GetList(New BO.myQuery, BO.x29IdEnum.o23Notepad).Where(Function(p) p.j74MasterPrefix = "")
-        End If
-        j74id.DataSource = lisJ74
-        j74id.DataBind()
-
-        If intDef > 0 Then
-            basUI.SelectDropdownlistValue(Me.j74id, intDef.ToString)
-        End If
-        If Me.CurrentJ74ID > 0 Then
-            _curJ74 = lisJ74.Where(Function(p) p.PID = Me.CurrentJ74ID)(0)
-        End If
-
-
-    End Sub
-
+    
     Private Sub o24ID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles o24ID.SelectedIndexChanged
         Master.Factory.j03UserBL.SetUserParam("o23_queue-o24id", Me.o24ID.SelectedValue)
         ReloadPage()
@@ -307,13 +275,7 @@ Public Class o23_queue
         ReloadPage()
     End Sub
 
-    Private Sub j74id_SelectedIndexChanged(sender As Object, e As EventArgs) Handles j74id.SelectedIndexChanged
-        Master.Factory.j03UserBL.SetUserParam("o23_queue-j74id", Me.CurrentJ74ID.ToString)
-        Master.Factory.j03UserBL.SetUserParam("o23_queue-sort", "")
-        _curJ74 = Master.Factory.j74SavedGridColTemplateBL.Load(Me.CurrentJ74ID)
-        SetupGrid()
-        ReloadPage()
-    End Sub
+   
 
     Private Sub o23_queue_LoadComplete(sender As Object, e As EventArgs) Handles Me.LoadComplete
         If Me.o24ID.SelectedIndex > 0 Then

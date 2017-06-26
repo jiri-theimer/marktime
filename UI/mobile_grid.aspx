@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
 <%@ MasterType VirtualPath="~/Mobile.Master" %>
-
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
@@ -17,13 +17,13 @@
             //nic
         }
         function re(pid) {
-            location.replace("mobile_<%=me.currentprefix%>_framework.aspx?source=mobile_grid&pid=" + pid);
+            location.replace("mobile_<%=Me.CurrentPrefix%>_framework.aspx?source=mobile_grid&pid=" + pid);
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <asp:DropDownList ID="j70ID" runat="server" AutoPostBack="true" DataTextField="NameWithMark" DataValueField="pid" Style="width: 100%;" ToolTip="Pojmenovaný filtr"></asp:DropDownList>
+    <uc:mygrid id="designer1" runat="server" masterprefix="mobile_grid" AllowSettingButton="false" ModeFlag="2"></uc:mygrid>
     <uc:periodcombo ID="period1" runat="server" Width="100%"></uc:periodcombo>
     <div>
         <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">
@@ -52,7 +52,7 @@
     <asp:HiddenField ID="hidCols" runat="server" />
     <asp:HiddenField ID="hidFirstLinkCol" runat="server" />
     <asp:HiddenField ID="hidAdditionalFrom" runat="server" />
-    <asp:HiddenField ID="hidJ74ID" runat="server" />
+    
     <asp:HiddenField ID="hidClosedQueryValue" runat="server" />
     
 </asp:Content>

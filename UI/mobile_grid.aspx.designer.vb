@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class mobile_grid
 
     '''<summary>
-    '''j70ID control.
+    '''designer1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents j70ID As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents designer1 As Global.UI.mygrid
 
     '''<summary>
     '''period1 control.
@@ -156,15 +156,6 @@ Partial Public Class mobile_grid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hidAdditionalFrom As Global.System.Web.UI.WebControls.HiddenField
-
-    '''<summary>
-    '''hidJ74ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents hidJ74ID As Global.System.Web.UI.WebControls.HiddenField
 
     '''<summary>
     '''hidClosedQueryValue control.

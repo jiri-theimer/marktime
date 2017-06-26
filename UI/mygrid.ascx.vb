@@ -1,12 +1,12 @@
 ﻿Public Class mygrid
     Inherits System.Web.UI.UserControl
     Public Property Factory As BL.Factory
-    Public Property OnlyQuery As Boolean
+    Public Property ModeFlag As Integer
         Get
-            Return BO.BAS.BG(hidOnlyQuery.Value)
+            Return BO.BAS.BG(hidModeFlag.Value)
         End Get
-        Set(value As Boolean)
-            hidOnlyQuery.Value = BO.BAS.GB(value)
+        Set(value As Integer)
+            hidModeFlag.Value = BO.BAS.GB(value)
         End Set
     End Property
     Public Property Prefix As String
@@ -109,7 +109,7 @@
     Private Sub SetupJ70Combo(intDef As Integer)
         Dim mq As New BO.myQuery
         Dim onlyQuery As BO.BooleanQueryMode = BO.BooleanQueryMode.NoQuery
-        If hidOnlyQuery.Value = "1" Then
+        If hidModeFlag.Value = "2" Then
             onlyQuery = BO.BooleanQueryMode.TrueQuery
             cmdSetting.InnerHtml = "<img src='Images/query.png'/>"
         End If
@@ -119,7 +119,7 @@
         If Me.MasterPrefix <> "" Then
             lisJ70 = lisJ70.Where(Function(p) p.j70MasterPrefix = Me.MasterPrefix Or (p.j70MasterPrefix = "" And p.j70IsSystem = False))
         End If
-        If hidOnlyQuery.Value <> "1" Then
+        If hidModeFlag.Value <> "2" Then
             If lisJ70.Where(Function(p) p.j70IsSystem = True).Count = 0 Then
                 'uživatel zatím nemá výchozí systémovou šablonu přehledu - založit první j70IsSystem=1
                 If Me.Factory.j70QueryTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Factory.SysUser.PID, Me.MasterPrefix) Then
@@ -130,7 +130,7 @@
         
         j70ID.DataSource = lisJ70
         j70ID.DataBind()
-        If hidOnlyQuery.Value = "1" Then
+        If hidModeFlag.Value = "2" Then
             j70ID.Items.Insert(0, New ListItem("--Pojmenovaný filtr--", ""))
         End If
 

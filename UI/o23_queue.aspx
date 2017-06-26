@@ -4,6 +4,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
@@ -57,8 +58,7 @@
                 </asp:DropDownList>
             </td>
             <td>
-                <asp:DropDownList ID="j74id" runat="server" AutoPostBack="true" DataTextField="j74Name" DataValueField="pid" Style="width: 150px;" ToolTip="Šablony datového přehledu"></asp:DropDownList>
-                <button type="button" onclick="griddesigner()">Sloupce</button>
+                <uc:mygrid id="designer1" runat="server" prefix="o23" masterprefix="" x36key="o23_queue-j70id" AllowSettingButton="false" ReloadUrl="o23_queue.aspx"></uc:mygrid>
             </td>
             <td>
 

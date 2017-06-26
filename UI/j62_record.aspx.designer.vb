@@ -230,24 +230,6 @@ Partial Public Class j62_record
     Protected WithEvents j70ID As Global.UI.datacombo
 
     '''<summary>
-    '''lblJ74ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents lblJ74ID As Global.System.Web.UI.WebControls.Label
-
-    '''<summary>
-    '''j74ID control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents j74ID As Global.UI.datacombo
-
-    '''<summary>
     '''Label1 control.
     '''</summary>
     '''<remarks>

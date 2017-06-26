@@ -10,6 +10,7 @@
         ff1.Factory = Master.Factory
         roles1.Factory = Master.Factory
 
+
         If Not Page.IsPostBack Then
             System.Threading.Thread.Sleep(3000) 'počkat 3 sekundy než se na klientovi uloží seznam PIDů
             Dim cRec As BO.p85TempBox = Master.Factory.p85TempBoxBL.LoadByGUID("p41_batch-pids-" & Master.Factory.SysUser.PID.ToString)
@@ -271,10 +272,10 @@
     End Sub
 
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ74 As BO.j74SavedGridColTemplate = .LoadSystemTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID)
-            cJ74.j74IsFilteringByColumn = False
-            basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, 5000, False, False)
+        With Master.Factory.j70QueryTemplateBL
+            Dim cJ70 As BO.j70QueryTemplate = .LoadSystemTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID)
+            cJ70.j70IsFilteringByColumn = False
+            basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 5000, False, False)
         End With
 
         grid1.radGridOrig.ShowFooter = False
