@@ -119,22 +119,27 @@
         If Me.MasterPrefix <> "" Then
             lisJ70 = lisJ70.Where(Function(p) p.j70MasterPrefix = Me.MasterPrefix Or (p.j70MasterPrefix = "" And p.j70IsSystem = False))
         End If
-        If hidModeFlag.Value <> "2" Then
-            If lisJ70.Where(Function(p) p.j70IsSystem = True).Count = 0 Then
-                'uživatel zatím nemá výchozí systémovou šablonu přehledu - založit první j70IsSystem=1
-                If Me.Factory.j70QueryTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Factory.SysUser.PID, Me.MasterPrefix) Then
-                    lisJ70 = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, s)
+        'If hidModeFlag.Value <> "2" Then
+        If lisJ70.Where(Function(p) p.j70IsSystem = True).Count = 0 Then
+            'uživatel zatím nemá výchozí systémovou šablonu přehledu - založit první j70IsSystem=1
+            If Me.Factory.j70QueryTemplateBL.CheckDefaultTemplate(Me.CurrentX29ID, Factory.SysUser.PID, Me.MasterPrefix) Then
+                If Me.MasterPrefix <> "" Then Threading.Thread.Sleep(1000 * 1) 'počkat  1 sekundu, jinak to zlobí -> pouze pro ne-prázdný masterprefix
+                lisJ70 = Me.Factory.j70QueryTemplateBL.GetList(mq, Me.CurrentX29ID, s, onlyQuery)
+                If Me.MasterPrefix <> "" Then
+                    lisJ70 = lisJ70.Where(Function(p) p.j70MasterPrefix = Me.MasterPrefix Or (p.j70MasterPrefix = "" And p.j70IsSystem = False))
                 End If
             End If
         End If
-        
+        'End If
+
+
         j70ID.DataSource = lisJ70
         j70ID.DataBind()
         If hidModeFlag.Value = "2" Then
             j70ID.Items.Insert(0, New ListItem("--Pojmenovaný filtr--", ""))
         End If
 
-        
+
 
         If hidJ62ID.Value <> "" Then
             Dim cJ62 As BO.j62MenuHome = Me.Factory.j62MenuHomeBL.Load(Me.CurrentJ62ID)

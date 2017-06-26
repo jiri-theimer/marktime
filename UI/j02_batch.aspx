@@ -48,7 +48,10 @@
    
 
     <div class="content-box2" style="margin-top: 20px;">
-        <div class="title">Vybrané osoby (<asp:Label ID="lblCount" runat="server"></asp:Label>)</div>
+        <div class="title">
+            Vybrané osoby (<asp:Label ID="lblCount" runat="server"></asp:Label>)
+            <span style="padding-left:40px;font-style:italic;">Do hromadných operací lze vybrat pouze interní osoby.</span>
+        </div>
         <uc:datagrid ID="grid1" runat="server" ClientDataKeyNames="pid"></uc:datagrid>
     </div>
 </asp:Content>
