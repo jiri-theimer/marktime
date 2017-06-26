@@ -10,141 +10,7 @@ Public Class basUIMT
             Return Drawing.Color.BlueViolet
         End Get
     End Property
-    ''Public Shared Function SetupGrid(factory As BL.Factory, grid As UI.datagrid, cJ74 As BO.j74SavedGridColTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "") As String
-    ''    If cJ74.j74ScrollingFlag = BO.j74ScrollingFlagENUM.Scrolling Then cJ74.j74ScrollingFlag = BO.j74ScrollingFlagENUM.StaticHeaders
-
-    ''    Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
-    ''    Dim lisSqlSumCols As New List(Of String)
-    ''    Dim lisSqlFROM As New List(Of String)   'další nutné SQL FROM klauzule
-    ''    With grid
-    ''        .ClearColumns()
-    ''        .AllowMultiSelect = bolAllowMultiSelect
-    ''        .DataKeyNames = "pid"
-    ''        .AllowCustomSorting = True
-
-    ''        ''If cJ74.j74DrillDownField1 = "" Then
-    ''        'bez drill-down
-    ''        .AllowCustomPaging = bolCustomPaging
-    ''        If bolAllowMultiSelect And bolMultiSelectCheckboxSelector Then .AddCheckboxSelector()
-
-
-    ''        .PageSize = intPageSize
-    ''        If intSysColumnWidth > 0 Then .AddSystemColumn(intSysColumnWidth)
-    ''        .radGridOrig.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.NextPrevAndNumeric
-    ''        .AllowFilteringByColumn = cJ74.j74IsFilteringByColumn
-    ''        Select Case cJ74.j74ScrollingFlag
-    ''            Case BO.j74ScrollingFlagENUM.Scrolling
-    ''                .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
-    ''                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
-    ''            Case BO.j74ScrollingFlagENUM.StaticHeaders
-    ''                .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
-    ''                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
-    ''            Case Else
-    ''                .radGridOrig.ClientSettings.Scrolling.AllowScroll = False
-    ''                .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = False
-    ''        End Select
-    ''        If cJ74.j74IsVirtualScrolling Then
-    ''            .radGridOrig.MasterTableView.TableLayout = GridTableLayout.Fixed
-    ''            .radGridOrig.ClientSettings.Scrolling.AllowScroll = True
-    ''            .radGridOrig.ClientSettings.Scrolling.EnableVirtualScrollPaging = True
-    ''            .radGridOrig.ClientSettings.Scrolling.UseStaticHeaders = True
-    ''            .radGridOrig.ClientSettings.Scrolling.SaveScrollPosition = True
-    ''        End If
-    ''        .radGridOrig.MasterTableView.Name = "grid"
-    ''        If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
-    ''        ''Else
-    ''        ''    'hiearchický grid - drill-down
-    ''        ''    .AddSystemColumn(5)
-    ''        ''    .AllowCustomPaging = False
-    ''        ''    .DataKeyNames = "pid"
-    ''        ''    .PageSize = 100
-    ''        ''    .AllowFilteringByColumn = False
-    ''        ''    .radGridOrig.MasterTableView.Name = "drilldown"
-
-    ''        ''End If
-
-    ''        Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ74.x29ID), bolMobile As Boolean = False
-    ''        If cJ74.j74MasterPrefix = "mobile_grid" Then
-    ''            ''    ''.AddSystemColumn(5, "mob")
-    ''            bolMobile = True
-    ''        End If
-    ''        Dim intIndex As Integer = 0
-    ''        For Each s In Split(cJ74.j74ColumnNames, ",")
-    ''            Dim strField As String = Trim(s)
-
-    ''            Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
-
-    ''            If Not c Is Nothing Then
-    ''                .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering)
-
-    ''                lisSqlSEL.Add(c.ColumnSqlSyntax_Select)
-    ''                If c.IsShowTotals Then
-    ''                    If c.ColumnDBName <> "" Then
-    ''                        lisSqlSumCols.Add("sum(" & c.ColumnDBName & ") as " & c.ColumnName)
-    ''                    Else
-    ''                        lisSqlSumCols.Add("sum(" & c.ColumnName & ") as " & c.ColumnName)
-    ''                    End If
-    ''                End If
-
-    ''                If c.SqlSyntax_FROM <> "" Then lisSqlFROM.Add(c.SqlSyntax_FROM)
-    ''            End If
-    ''            intIndex += 1
-    ''        Next
-    ''        grid.SetFilterSetting(strFilterSetting, strFilterExpression)
-    ''        ''If cJ74.j74DrillDownField1 = "" Then
-
-    ''        ''Else
-    ''        ''    Dim colDrill As BO.GridGroupByColumn = factory.j74SavedGridColTemplateBL.GroupByPallet(cJ74.x29ID).Where(Function(p) p.ColumnField = cJ74.j74DrillDownField1).First
-    ''        ''    .AddColumn(colDrill.ColumnField, colDrill.ColumnHeader)
-    ''        ''    .AddColumn("RowsCount", "Počet", BO.cfENUM.Numeric0, , , , , True)
-    ''        ''    Dim strSumFields As String = ""
-    ''        ''    For Each s In Split(cJ74.j74ColumnNames, ",")   'součtové sloupce
-    ''        ''        Dim strField As String = Trim(s)
-    ''        ''        Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField And p.IsShowTotals = True)
-    ''        ''        If Not c Is Nothing Then
-    ''        ''            .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , True)
-    ''        ''            strSumFields += "|" & c.ColumnName
-    ''        ''        End If
-    ''        ''    Next
-    ''        ''    If strSumFields <> "" Then grid.radGridOrig.MasterTableView.Attributes("sumfields") = BO.BAS.OM1(strSumFields)
-    ''        ''    Dim gtv As New GridTableView(.radGridOrig)
-    ''        ''    With gtv
-    ''        ''        .HierarchyLoadMode = GridChildLoadMode.ServerOnDemand
-    ''        ''        .RetainExpandStateOnRebind = True
-    ''        ''        .Name = "grid"
-    ''        ''        .AllowCustomPaging = True
-    ''        ''        .AllowFilteringByColumn = False
-    ''        ''        .AllowSorting = True
-    ''        ''        .PageSize = intPageSize
-    ''        ''        .DataKeyNames = Split("pid", ",")
-    ''        ''        .ClientDataKeyNames = Split("pid", ",")
-    ''        ''        .ShowHeadersWhenNoRecords = False
-    ''        ''        .ShowFooter = False
-    ''        ''        If strSortExpression <> "" Then .SortExpressions.AddSortExpression(strSortExpression)
-    ''        ''    End With
-
-    ''        ''    .radGridOrig.MasterTableView.DetailTables.Add(gtv)
-    ''        ''    .AddSystemColumn(5, , gtv)
-    ''        ''    For Each s In Split(cJ74.j74ColumnNames, ",")
-    ''        ''        Dim strField As String = Trim(s)
-
-    ''        ''        Dim c As BO.GridColumn = lisCols.Find(Function(p) p.ColumnName = strField)
-    ''        ''        If Not c Is Nothing Then
-    ''        ''            .AddColumn(c.ColumnName, c.ColumnHeader, c.ColumnType, c.IsSortable, , c.ColumnDBName, , c.IsShowTotals, c.IsAllowFiltering, , gtv)
-    ''        ''        End If
-    ''        ''    Next
-    ''        ''End If
-
-    ''    End With
-
-    ''    If lisSqlFROM.Count > 0 Then strGetAdditionalFROM = String.Join(" ", lisSqlFROM.Distinct)
-    ''    strGetSumCols = String.Join("|", lisSqlSumCols)
-    ''    Return String.Join(",", lisSqlSEL)
-
-    ''    'Dim strRet As String = String.Join(",", lisSqlSEL)
-    ''    'If lisSqlFROM.Count > 0 Then strRet += "||" & String.Join(" ", lisSqlFROM)
-    ''    'Return strRet
-    ''End Function
+   
     Public Shared Function SetupDataGrid(factory As BL.Factory, grid As UI.datagrid, cJ70 As BO.j70QueryTemplate, intPageSize As Integer, bolCustomPaging As Boolean, bolAllowMultiSelect As Boolean, Optional bolMultiSelectCheckboxSelector As Boolean = True, Optional strFilterSetting As String = "", Optional strFilterExpression As String = "", Optional strSortExpression As String = "", Optional ByRef strGetAdditionalFROM As String = "", Optional intSysColumnWidth As Integer = 20, Optional ByRef strGetSumCols As String = "", Optional strMasterPrefix As String = "") As String
         If cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.Scrolling Then cJ70.j70ScrollingFlag = BO.j70ScrollingFlagENUM.StaticHeaders
         Dim lisSqlSEL As New List(Of String) 'vrací Sql SELECT syntaxi pro datový zdroj GRIDu
@@ -188,7 +54,7 @@ Public Class basUIMT
             If strSortExpression <> "" Then .radGridOrig.MasterTableView.SortExpressions.AddSortExpression(strSortExpression)
 
 
-            Dim lisCols As List(Of BO.GridColumn) = factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ70.x29ID), bolMobile As Boolean = False
+            Dim lisCols As List(Of BO.GridColumn) = factory.j70QueryTemplateBL.ColumnsPallete(cJ70.x29ID), bolMobile As Boolean = False
             Select Case Left(strMasterPrefix, 3)
                 Case "p41"
                     lisCols = lisCols.Where(Function(p) p.TreeGroup <> "Projekt" And p.TreeGroup <> "Project").ToList   'nezobrazovat sloupce projektu, když uživatel stojí v pod-přehledu v rámci projektu

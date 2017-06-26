@@ -261,7 +261,7 @@ Public Class p91_create_step1
 
 
     Private Sub SetupGrid()
-        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.LoadSystemTemplate(BO.BAS.GetX29FromPrefix(Me.CurrentPrefix), Master.Factory.SysUser.PID, Me.CurrentPrefix & "-approved")
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p31Worksheet, Master.Factory.SysUser.PID, Me.CurrentPrefix & "-approved")
         If Not cJ70 Is Nothing Then
             basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, 1000, False, False)
         Else

@@ -3,10 +3,10 @@
     Public Property Factory As BL.Factory
     Public Property ModeFlag As Integer
         Get
-            Return BO.BAS.BG(hidModeFlag.Value)
+            Return BO.BAS.IsNullInt(hidModeFlag.Value)
         End Get
         Set(value As Integer)
-            hidModeFlag.Value = BO.BAS.GB(value)
+            hidModeFlag.Value = value.ToString
         End Set
     End Property
     Public Property Prefix As String

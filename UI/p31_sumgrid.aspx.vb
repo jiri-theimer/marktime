@@ -222,7 +222,7 @@ Public Class p31_sumgrid
     End Sub
     Private ReadOnly Property lisDD As List(Of BO.GridColumn)
         Get
-            If _lisDD Is Nothing Then _lisDD = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
+            If _lisDD Is Nothing Then _lisDD = Master.Factory.j70QueryTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
             Return _lisDD
         End Get
     End Property

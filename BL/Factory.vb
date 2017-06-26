@@ -47,7 +47,7 @@
     Private Property _x67 As Ix67EntityRoleBL
     Private Property _p95 As Ip95InvoiceRowBL
     Private Property _p85 As Ip85TempBoxBL
-    Private Property _j74 As Ij74SavedGridColTemplateBL
+
     Private Property _j77 As Ij77WorksheetStatTemplateBL
     Private Property _j70 As Ij70QueryTemplateBL
     Private Property _j25 As Ij25ReportCategoryBL
@@ -567,12 +567,7 @@
             Return _b05
         End Get
     End Property
-    Public ReadOnly Property j74SavedGridColTemplateBL As Ij74SavedGridColTemplateBL
-        Get
-            If _j74 Is Nothing Then _j74 = New j74SavedGridColTemplateBL(_cUser)
-            Return _j74
-        End Get
-    End Property
+  
     Public ReadOnly Property j77WorksheetStatTemplateBL As Ij77WorksheetStatTemplateBL
         Get
             If _j77 Is Nothing Then _j77 = New j77WorksheetStatTemplateBL(_cUser)

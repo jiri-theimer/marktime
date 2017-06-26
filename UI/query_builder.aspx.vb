@@ -1000,7 +1000,7 @@
         tr1.Nodes.Clear()
 
 
-        Dim lisAllCols As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(Me.CurrentX29ID)
+        Dim lisAllCols As List(Of BO.GridColumn) = Master.Factory.j70QueryTemplateBL.ColumnsPallete(Me.CurrentX29ID)
         For Each c In lisAllCols.Where(Function(p) p.TreeGroup <> "").Select(Function(p) p.TreeGroup).Distinct
             Dim n As New Telerik.Web.UI.RadTreeNode(c, c)
             n.ImageUrl = "Images/folder.png"

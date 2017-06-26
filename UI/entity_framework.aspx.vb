@@ -89,7 +89,7 @@ Public Class entity_framework
                     .Add("x18_querybuilder-value-" & Me.CurrentPrefix & "-grid")
                     .Add("x18_querybuilder-text-" & Me.CurrentPrefix & "-grid")
                 End With
-                cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
+                cbxGroupBy.DataSource = .Factory.j70QueryTemplateBL.GroupByPallet(Me.CurrentX29ID)
                 cbxGroupBy.DataBind()
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)

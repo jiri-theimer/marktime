@@ -173,7 +173,7 @@
         Me.j70ID.DataBind()
       
         
-        Me.j62GridGroupBy.DataSource = Master.Factory.j74SavedGridColTemplateBL.GroupByPallet(Me.CurrentX29ID)
+        Me.j62GridGroupBy.DataSource = Master.Factory.j70QueryTemplateBL.GroupByPallet(Me.CurrentX29ID)
         Me.j62GridGroupBy.DataBind()
 
     End Sub

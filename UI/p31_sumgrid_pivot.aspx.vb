@@ -72,7 +72,7 @@ Public Class p31_sumgrid_pivot
     End Sub
 
     Private Sub SetupFields()
-        Dim lisAllCols As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
+        Dim lisAllCols As List(Of BO.GridColumn) = Master.Factory.j70QueryTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
 
         Dim dt As New DataTable
         dt.ReadXmlSchema(Master.Factory.x35GlobalParam.TempFolder & "\" & Master.Factory.SysUser.PID.ToString & "_pivot_schema.xml")

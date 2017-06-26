@@ -18,7 +18,7 @@
         var prefix = document.getElementById("<%=me.hidPrefix.clientid%>").value;
         var masterprefix = document.getElementById("<%=Me.hidMasterPrefix.ClientID%>").value;
         var modeflag = document.getElementById("<%=Me.hidModeFlag.ClientID%>").value;
-        alert modeflag;
+        
         var url = "query_builder.aspx?prefix=" + prefix + "&pid=" + j70id + "&masterprefix=" + masterprefix + "&modeflag=" + modeflag;
       
         url = url + "&masterprefixflag="+document.getElementById("<%=Me.hidMasterPrefixFlag.ClientID%>").value;

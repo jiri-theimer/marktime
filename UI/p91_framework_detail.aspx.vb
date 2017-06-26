@@ -359,8 +359,8 @@ Public Class p91_framework_detail
 
 
     Private Sub SetupGrid()
-        With Master.Factory.j74SavedGridColTemplateBL
-            Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+        With Master.Factory.j70QueryTemplateBL
+            Dim cJ70 As BO.j70QueryTemplate = .Load(designer1.CurrentJ70ID)
 
             Dim strF As String = ""
             Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, CInt(Me.cbxPaging.SelectedValue), True, True, , , , , strF, , , "p91")

@@ -113,7 +113,6 @@
     <Compile Include="j61TextTemplateBL.vb" />
     <Compile Include="j62MenuHomeBL.vb" />
     <Compile Include="j70QueryTemplateBL.vb" />
-    <Compile Include="j74SavedGridColTemplateBL.vb" />
     <Compile Include="m62ExchangeRateBL.vb" />
     <Compile Include="Mother\BLMother.vb" />
     <Compile Include="Mother\IFMother.vb" />

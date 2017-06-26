@@ -117,7 +117,7 @@ Public Class clsExportToXls
     Public Function ExportDataGrid(lis As IEnumerable(Of Object), cJ70 As BO.j70QueryTemplate) As String
         Dim sheet As ExcelWorksheet = CreateSheet(), strFields As String = "", strHeaders As String = ""
 
-        Dim lisCols As List(Of BO.GridColumn) = _factory.j74SavedGridColTemplateBL.ColumnsPallete(cJ70.x29ID)
+        Dim lisCols As List(Of BO.GridColumn) = _factory.j70QueryTemplateBL.ColumnsPallete(cJ70.x29ID)
         For Each s In Split(cJ70.j70ColumnNames, ",")
             Dim strField As String = Trim(s)
 
@@ -172,7 +172,7 @@ Public Class clsExportToXls
     Public Function ExportGenericData(lis As IEnumerable(Of Object), strProperties As String, strHeaders As String) As String
         Dim sheet As ExcelWorksheet = CreateSheet()
 
-        Dim lisCols As List(Of BO.GridColumn) = _factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
+        Dim lisCols As List(Of BO.GridColumn) = _factory.j70QueryTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet)
         
        
 

@@ -76,7 +76,7 @@ Public Class p31_grid
                     .Add("x18_querybuilder-text-p31-p31grid")
                     .Add("p31_grid-query-on-top")
                 End With
-                cbxGroupBy.DataSource = .Factory.j74SavedGridColTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
+                cbxGroupBy.DataSource = .Factory.j70QueryTemplateBL.GroupByPallet(BO.x29IdEnum.p31Worksheet)
                 cbxGroupBy.DataBind()
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
@@ -152,7 +152,7 @@ Public Class p31_grid
     End Sub
     Private Sub SetupSG()
         panAdditionalQuery.Visible = True
-        Dim a() As String = Split(hidSGF.Value, "|"), b() As String = Split(hidSGV.Value, "|"), lis As List(Of BO.GridColumn) = Master.Factory.j74SavedGridColTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet), strW As String = ""
+        Dim a() As String = Split(hidSGF.Value, "|"), b() As String = Split(hidSGV.Value, "|"), lis As List(Of BO.GridColumn) = Master.Factory.j70QueryTemplateBL.ColumnsPallete(BO.x29IdEnum.p31Worksheet), strW As String = ""
         For i As Integer = 0 To UBound(a)
             Dim strF As String = a(i)
             Dim c As BO.GridColumn = lis.Where(Function(p) p.ColumnName = strF).First

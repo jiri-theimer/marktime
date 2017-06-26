@@ -8,12 +8,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
-        function griddesigner() {
-            var j74id = "<%=Me.CurrentJ74ID%>";
-            
-            dialog_master("grid_designer.aspx?prefix=o23&pid=" + j74id,  true);
-        }
-
+      
         function periodcombo_setting() {
 
             dialog_master("periodcombo_setting.aspx",false);
