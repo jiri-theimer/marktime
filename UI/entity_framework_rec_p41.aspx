@@ -2,6 +2,7 @@
 <%@ MasterType VirtualPath="~/SubForm.Master" %>
 <%@ Register TagPrefix="uc" TagName="entity_menu" Src="~/entity_menu.ascx" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -22,9 +23,7 @@
 
         }
 
-        function p41_subgrid_setting(j74id) {
-            sw_decide("grid_designer.aspx?prefix=p41&masterprefix=<%=Me.CurrentMasterPrefix%>&pid=" + j74id, "Images/griddesigner.png", true);
-        }
+      
         function RowSelected_p41(sender, args) {
             document.getElementById("<%=hiddatapid_p41.ClientID%>").value = args.getDataKeyValue("pid");
         }
@@ -89,6 +88,9 @@
 
         
     </div>
+    <div class="commandcell">
+        <uc:mygrid id="designer1" runat="server" prefix="p41" MasterPrefixFlag="2" Width="250px"></uc:mygrid>
+    </div>
     <div class="commandcell" style="margin-left: 10px;">
         <telerik:RadMenu ID="recmenu1" RenderMode="Auto" Skin="Metro" style="z-index:2000;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">
             <Items>
@@ -105,10 +107,10 @@
                 <telerik:RadMenuItem Text="Akce" ImageUrl="Images/menuarrow.png">
                     <ContentTemplate>
                         <div class="content-box3">
-                            <div class="title"><img src="Images/griddesigner.png" />Sloupce v přehledu</div>
+                            <div class="title"><img src="Images/griddesigner.png" />Nastavení přehledu</div>
                             
                             <div class="content">
-                                <button type="button" onclick="p41_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
+                                
                                  <div class="div6">
                                     <span><%=Resources.common.Strankovani%>:</span>
                                     <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">

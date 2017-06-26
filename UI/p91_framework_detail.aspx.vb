@@ -24,11 +24,12 @@ Public Class p91_framework_detail
                 If Request.Item("source") = "2" Then
                     .IsHideAllRecZooms = True
                 End If
+                designer1.x36Key = "p91_framework_detail-j70id"
                 Dim lisPars As New List(Of String)
                 With lisPars
                     .Add("p91_framework_detail-pid")
                     .Add("p91_framework_detail-group")
-                    .Add("p91_framework_detail-j70id")
+                    .Add(designer1.x36Key)
                     .Add("p91_framework_detail-pagesize")
                     .Add("p91_framework_detail-chkFFShowFilledOnly")
                     .Add("p91_menu-tabskin")
@@ -62,8 +63,8 @@ Public Class p91_framework_detail
             RefreshRecord()
 
             Dim strJ70ID As String = Request.Item("j70id")
-            If strJ70ID = "" Then strJ70ID = Master.Factory.j03UserBL.GetUserParam("p91_framework_detail-j70id")
-            designer1.RefreshData(CInt(Master.Factory.j03UserBL.GetUserParam("p91_framework_detail-j70id", "0")))
+            If strJ70ID = "" Then strJ70ID = Master.Factory.j03UserBL.GetUserParam(designer1.x36Key, "0")
+            designer1.RefreshData(CInt(strJ70ID))
 
             SetupGrid()
             RecalcVirtualRowCount()
@@ -549,9 +550,11 @@ Public Class p91_framework_detail
         
     End Sub
     Private Sub ReloadPage()
-        Response.Redirect("p91_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & Me.hidSource.Value)
+        Response.Redirect(GetReloadedUrl())
     End Sub
-
+    Private Function GetReloadedUrl() As String
+        Return "p91_framework_detail.aspx?pid=" & Master.DataPID.ToString & "&source=" & Me.hidSource.Value
+    End Function
   
     Private Sub chkFFShowFilledOnly_CheckedChanged(sender As Object, e As EventArgs) Handles chkFFShowFilledOnly.CheckedChanged
         Master.Factory.j03UserBL.SetUserParam("p91_framework_detail-chkFFShowFilledOnly", BO.BAS.GB(Me.chkFFShowFilledOnly.Checked))
@@ -590,6 +593,7 @@ Public Class p91_framework_detail
             End If
            
         End With
+        designer1.ReloadUrl = GetReloadedUrl()
     End Sub
 
     Private Sub cmdRecalcExchangeRate_Click(sender As Object, e As EventArgs) Handles cmdRecalcExchangeRate.Click

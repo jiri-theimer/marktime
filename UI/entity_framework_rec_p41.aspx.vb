@@ -17,6 +17,7 @@ Public Class entity_framework_rec_p41
     Private Sub entity_framework_rec_p41_Init(sender As Object, e As EventArgs) Handles Me.Init
         _MasterPage = Me.Master
         menu1.Factory = Master.Factory
+        designer1.Factory = Master.Factory
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -31,15 +32,18 @@ Public Class entity_framework_rec_p41
                 If Me.menu1.PageSource = "2" Then
                     .IsHideAllRecZooms = True
                 End If
-                ViewState("j74id") = ""
+
                 Dim mq As New BO.myQuery
                 mq.Closed = BO.BooleanQueryMode.FalseQuery
                 x67ID.DataSource = Master.Factory.x67EntityRoleBL.GetList(mq).Where(Function(p) p.x29ID = BO.x29IdEnum.p41Project)
                 x67ID.DataBind()
                 x67ID.Items.Insert(0, "--Filtr podle projektové role osoby--")
 
-                Dim lisPars As New List(Of String), strKey As String = "entiy_framework_p41subform-j74id_" & Me.CurrentMasterPrefix
+                designer1.MasterPrefix = Me.CurrentMasterPrefix
+                designer1.x36Key = "entiy_framework_p41subform-j70id-" & Me.CurrentMasterPrefix
+                Dim lisPars As New List(Of String)
                 With lisPars
+                    .Add(designer1.x36Key)
                     .Add(Me.CurrentMasterPrefix & "_menu-tabskin")
                     .Add("entiy_framework_p41subform-groupby-" & Me.CurrentMasterPrefix)
                     .Add("entiy_framework_p41subform-pagesize")
@@ -47,21 +51,18 @@ Public Class entity_framework_rec_p41
                     .Add("entiy_framework_p41subform-x67id")
                     .Add(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
                     .Add(Me.CurrentMasterPrefix & "_menu-menuskin")
-                    .Add(strKey)
                 End With
                 With .Factory.j03UserBL
                     .InhaleUserParams(lisPars)
                     menu1.TabSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-tabskin")
                     menu1.MenuSkin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-menuskin")
                     menu1.x31ID_Plugin = .GetUserParam(Me.CurrentMasterPrefix & "_menu-x31id-plugin")
-                    ViewState("j74id") = .GetUserParam(strKey, "0")
 
-                    If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
-                        Master.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID, Me.CurrentMasterPrefix)
-                        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID, Me.CurrentMasterPrefix)
-                        ViewState("j74id") = cJ74.PID
-                        .SetUserParam(strKey, ViewState("j74id"))
-                    End If
+                    Dim strJ70ID As String = Request.Item("j70id")
+                    If strJ70ID = "" Then strJ70ID = .GetUserParam(designer1.x36Key, "0")
+                    designer1.RefreshData(CInt(strJ70ID))
+
+                    
                     basUI.SelectDropdownlistValue(Me.x67ID, .GetUserParam("entiy_framework_p41subform-x67id"))
                     basUI.SelectDropdownlistValue(Me.cbxValidity, .GetUserParam("entiy_framework_p41subform-validity", "1"))
                     basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("entiy_framework_p41subform-pagesize", "10"))
@@ -104,14 +105,12 @@ Public Class entity_framework_rec_p41
     End Sub
 
     Private Sub SetupGrid()
-        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
-        If cJ74 Is Nothing Then
-            cJ74 = Master.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p41Project, Master.Factory.SysUser.PID, Me.CurrentMasterPrefix)
-        End If
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+    
 
-        Me.hidDefaultSorting.Value = cJ74.j74OrderBy
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
         Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupGrid(Master.Factory, Me.grid1, cJ74, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Master.Factory, Me.grid1, cJ70, CInt(Me.cbxPaging.SelectedValue), False, Not _curIsExport, True, , , , strAddSqlFrom)
         Me.hidFrom.Value = strAddSqlFrom
         With Me.cbxGroupBy.SelectedItem
             SetupGrouping(.Value, .Text)
@@ -149,11 +148,14 @@ Public Class entity_framework_rec_p41
     End Sub
 
     Private Sub ReloadPage()
-        Response.Redirect("entity_framework_rec_p41.aspx?masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Master.DataPID.ToString, True)
+        Response.Redirect(GetReloadedUrl(), True)
     End Sub
+    Private Function GetReloadedUrl() As String
+        Return "entity_framework_rec_p41.aspx?masterprefix=" & Me.CurrentMasterPrefix & "&masterpid=" & Master.DataPID.ToString
+    End Function
 
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
-        Dim cJ74 As BO.j74SavedGridColTemplate = Master.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
+        Dim cJ70 As BO.j70QueryTemplate = Master.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
         Dim cXLS As New clsExportToXls(Master.Factory)
 
         Dim mq As New BO.myQueryP41
@@ -162,7 +164,7 @@ Public Class entity_framework_rec_p41
 
         Dim dt As DataTable = Master.Factory.p41ProjectBL.GetGridDataSource(mq)
 
-        Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
+        Dim strFileName As String = cXLS.ExportDataGrid(dt.AsEnumerable, cJ70)
         If strFileName = "" Then
             Response.Write(cXLS.ErrorMessage)
         Else
@@ -299,6 +301,6 @@ Public Class entity_framework_rec_p41
         Else
             Me.x67ID.Visible = False
         End If
-     
+        designer1.ReloadUrl = GetReloadedUrl()
     End Sub
 End Class

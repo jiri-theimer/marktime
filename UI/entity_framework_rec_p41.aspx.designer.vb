@@ -59,6 +59,15 @@ Partial Public Class entity_framework_rec_p41
     Protected WithEvents x67ID As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''designer1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents designer1 As Global.UI.mygrid
+
+    '''<summary>
     '''recmenu1 control.
     '''</summary>
     '''<remarks>
