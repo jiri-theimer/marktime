@@ -312,7 +312,7 @@
     <table cellpadding="5" cellspacing="2" id="responsive">
         <tr>
             <td style="width: 120px;">
-                <asp:Label ID="lblJ02ID" runat="server" Text="Osoba:" CssClass="lblReq" meta:resourcekey="lblJ02ID"></asp:Label>
+                <asp:Label ID="lblJ02ID" runat="server" Text="Jméno:" CssClass="lblReq" meta:resourcekey="lblJ02ID"></asp:Label>
             </td>
             <td>
                 <uc:person ID="j02ID" runat="server" Width="400px" AutoPostBack="true" Flag="p31_entry" />

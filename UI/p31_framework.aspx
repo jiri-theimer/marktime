@@ -16,7 +16,7 @@
         var _initResizing = "1";
 
         $(document).ready(function () {
-           
+
 
 
             handleSAW();
@@ -180,14 +180,14 @@
                             <telerik:RadMenuItem Value="more" Text="Nastavení přehledu" ImageUrl="Images/arrow_down_menu.png" Style="padding-right: 0px">
                                 <GroupSettings OffsetX="-50" />
                                 <ContentTemplate>
-                                    <div class="content-box3">
+                                    <div class="content-box3" style="max-width:340px;">
                                         <div class="title">
                                             <img src="Images/griddesigner.png" />
                                             Nastavení přehledu
                                         </div>
                                         <div class="content">
                                             <div class="div6">
-                                                <uc:mygrid ID="designer1" runat="server" MasterPrefix="p31_framework" MasterPrefixFlag="2" ReloadUrl="p31_framework.aspx"></uc:mygrid>
+                                                <uc:mygrid ID="designer1" runat="server" MasterPrefix="p31_framework" MasterPrefixFlag="2" ReloadUrl="p31_framework.aspx" Width="250px"></uc:mygrid>
                                             </div>
                                             <div class="div6">
                                                 <asp:DropDownList ID="cbxGroupBy" runat="server" AutoPostBack="true" ToolTip="Datové souhrny"></asp:DropDownList>
@@ -207,11 +207,11 @@
                                             </div>
 
                                             <div class="div6">
-                                        <img src="Images/help.png" /><i><%=Resources.p31_framework.Napoveda %></i>
-                                    </div>
+                                                <p style="white-space:normal;font-style:italic;"><img src="Images/help.png" /><%=Resources.p31_framework.Napoveda %></p>
+                                            </div>
                                         </div>
                                     </div>
-                                    
+
                                 </ContentTemplate>
                             </telerik:RadMenuItem>
                         </Items>
@@ -224,7 +224,7 @@
 
             </div>
             <div style="clear: both;"></div>
-          
+
             <div style="float: left; padding-left: 6px;">
 
                 <asp:Label ID="CurrentQuery" runat="server" ForeColor="Red"></asp:Label>

@@ -3678,11 +3678,13 @@ if exists(select b07ID from b07Comment WHERE b07ID_Parent=@pid)
 if exists(select b05ID from b05Workflow_History WHERE b07ID=@pid)
  set @err_ret='Nelze odstranit, protože má vazbu na historii workflow stavového mechanismu!'
 
- 
+
 
 if isnull(@err_ret,'')<>''
  return 
 
+if exists(select o27ID FROM o27Attachment WHERE b07ID=@pid)
+ delete from o27Attachment WHERE b07ID=@pid
 
 if exists(select b05id from b05Workflow_History WHERE b07ID=@pid)
  DELETE FROM b07Comment WHERE b07ID=@pid
@@ -8965,12 +8967,12 @@ CREATE  procedure [dbo].[p31_save_freefields_after_approving]
 
 AS
 
-if exists(select p85ID FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
- begin
-  DELETE FROM x19EntityCategory_Binding WHERE x29ID=331 AND x19RecordPID IN (select p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
+--if exists(select p85ID FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
+-- begin
+--  DELETE FROM x19EntityCategory_Binding WHERE x20ID IN (select x20ID FROM x20EntiyToCategory WHERE x29ID=331) AND x19RecordPID IN (select p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19')
 
-  INSERT INTO x19EntityCategory_Binding(x18ID,x25ID,x29ID,x19RecordPID) SELECT p85OtherKey1,p85OtherKey2,331,p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19'
- end
+--  INSERT INTO x19EntityCategory_Binding(x20ID,x25ID,x19RecordPID) SELECT p85OtherKey4,p85OtherKey2,p85OtherKey3 FROM p85TempBox WHERE p85GUID=@guid AND p85Prefix='x19'
+-- end
 
 if not exists(select p31ID FROM p31WorkSheet_FreeField_Temp WHERE p31GUID=@guid)
  return
@@ -9127,10 +9129,10 @@ CREATE procedure [dbo].[p31_setup_temp]
 ,@guid varchar(50)
 AS
 
-if exists(select x19ID FROM x19EntityCategory_Binding WHERE x19RecordPID=@p31id AND x29ID=331)
- begin	---k záznamu existuje vazba na štítky
-  INSERT INTO p85TempBox(p85GUID,p85Prefix,p85OtherKey1,p85OtherKey2,p85OtherKey3) select @guid,'x19',x18ID,x25ID,x19RecordPID FROM x19EntityCategory_Binding WHERE x19RecordPID=@p31id AND x29ID=331
- end
+--if exists(select a.x19ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@p31id AND b.x29ID=331)
+-- begin	---k záznamu existuje vazba na štítky
+--  INSERT INTO p85TempBox(p85GUID,p85Prefix,p85OtherKey1,p85OtherKey2,p85OtherKey3,p85OtherKey4) select @guid,'x19',b.x18ID,x25ID,x19RecordPID,a.x20ID FROM x19EntityCategory_Binding a INNER JOIN x20EntiyToCategory b ON a.x20ID=b.x20ID WHERE a.x19RecordPID=@p31id AND b.x29ID=331
+-- end
 
 if exists(select p31ID FROM p31WorkSheet_FreeField WHERE p31ID=@p31id)
  begin	---k záznamu existují uživatelská pole
