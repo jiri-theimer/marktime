@@ -28,25 +28,24 @@ Public Class p56_subgrid
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Me.Factory
         If Not Page.IsPostBack Then
-            ViewState("j74id") = ""
             With Factory.j03UserBL
-                Dim lisPars As New List(Of String), strKey As String = "p56_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.x29ID)
+                designer1.MasterPrefix = BO.BAS.GetDataPrefix(Me.x29ID)
+                designer1.x36Key = "p56_subgrid-j70id-" & designer1.MasterPrefix
+                Dim lisPars As New List(Of String)
                 With lisPars
+                    .Add(designer1.x36Key)
                     .Add("p56_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID))
                     .Add("p56_subgrid-pagesize")
                     .Add("p56_subgrid-cbxP56Validity")
-                    .Add(strKey)
                 End With
                 .InhaleUserParams(lisPars)
-                ViewState("j74id") = .GetUserParam(strKey, "0")
+                Dim strJ70ID As String = Request.Item("j70id")
+                If strJ70ID = "" Then strJ70ID = .GetUserParam(designer1.x36Key, "0")
+                designer1.RefreshData(CInt(strJ70ID))
 
-                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
-                    Me.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p56Task, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-                    Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p56Task, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-                    ViewState("j74id") = cJ74.PID
-                    .SetUserParam(strKey, ViewState("j74id"))
-                End If
+                
                 basUI.SelectDropdownlistValue(Me.cbxP56Validity, .GetUserParam("p56_subgrid-cbxP56Validity", "1"))
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p56_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxGroupBy, .GetUserParam("p56_subgrid-groupby-" & BO.BAS.GetDataPrefix(Me.x29ID)))
@@ -73,15 +72,13 @@ Public Class p56_subgrid
     End Sub
 
     Private Sub SetupGridP56()
-        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
-        If cJ74 Is Nothing Then
-            cJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p56Task, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-        End If
-        If cJ74.j74ColumnNames.IndexOf("ReceiversInLine") > 0 Then Me.hidReceiversInLine.Value = "1" Else Me.hidReceiversInLine.Value = ""
-        If cJ74.j74ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ74.j74ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
-        Me.hidDefaultSorting.Value = cJ74.j74OrderBy
+        Dim cJ70 As BO.j70QueryTemplate = Me.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+       
+        If cJ70.j70ColumnNames.IndexOf("ReceiversInLine") > 0 Then Me.hidReceiversInLine.Value = "1" Else Me.hidReceiversInLine.Value = ""
+        If cJ70.j70ColumnNames.IndexOf("Hours_Orig") > 0 Or cJ70.j70ColumnNames.IndexOf("Expenses_Orig") > 0 Then Me.hidTasksWorksheetColumns.Value = "1" Else Me.hidTasksWorksheetColumns.Value = ""
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
         Dim strAddSqlFrom As String = "", strSqlSumCols As String = ""
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP56, cJ74, CInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, , , , strAddSqlFrom, , strSqlSumCols)
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridP56, cJ70, CInt(Me.cbxPaging.SelectedValue), True, Not _curIsExport, True, , , , strAddSqlFrom, , strSqlSumCols)
         Me.hidFrom.Value = strAddSqlFrom
         Me.hidSumCols.Value = strSqlSumCols
         With Me.cbxGroupBy.SelectedItem
@@ -261,7 +258,7 @@ Public Class p56_subgrid
     End Sub
 
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
-        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
+        Dim cJ70 As BO.j70QueryTemplate = Me.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
         Dim cXLS As New clsExportToXls(Me.Factory)
 
         Dim mq As New BO.myQueryP56
@@ -270,7 +267,7 @@ Public Class p56_subgrid
 
         Dim dt As DataTable = Me.Factory.p56TaskBL.GetGridDataSource(mq)
 
-        Dim strFileName As String = cXLS.ExportGridData(dt.AsEnumerable, cJ74)
+        Dim strFileName As String = cXLS.ExportDataGrid(dt.AsEnumerable, cJ70)
         If strFileName = "" Then
             Response.Write(cXLS.ErrorMessage)
         Else

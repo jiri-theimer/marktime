@@ -14,9 +14,9 @@ Public Class p91_subgrid
         designer1.Factory = Me.Factory
         If Not Page.IsPostBack Then
 
-            Dim lisPars As New List(Of String)
             designer1.MasterPrefix = BO.BAS.GetDataPrefix(Me.x29ID)
             designer1.x36Key = "p91_subgrid-j70id-" & designer1.MasterPrefix
+            Dim lisPars As New List(Of String)
             With lisPars
                 .Add(designer1.x36Key)
                 .Add("p91_framework-periodtype")

@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="p56_subgrid.ascx.vb" Inherits="UI.p56_subgrid" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <div class="commandcell">
     <img src="Images/task.png" alt="Úkoly" />
@@ -15,6 +16,9 @@
         <asp:ListItem Text="Pouze uzavřené úkoly" Value="3"></asp:ListItem>
     </asp:DropDownList>
 </div>
+<div class="commandcell">
+        <uc:mygrid id="designer1" runat="server" prefix="p56" MasterPrefixFlag="2"></uc:mygrid>
+    </div>
 <div class="commandcell" style="margin-left: 10px;">
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" ClickToOpen="true" EnableRoundedCorners="false" EnableShadows="false" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
@@ -24,7 +28,7 @@
                     <telerik:RadMenuItem Text="Kopírovat úkol" Value="clone" NavigateUrl="javascript:p56_clone()"></telerik:RadMenuItem>
                 </Items>
             </telerik:RadMenuItem>
-            <telerik:RadMenuItem Text="Akce pro vybrané záznamy" Value="akce" ImageUrl="Images/menuarrow.png">
+            <telerik:RadMenuItem Text="Vybrané záznamy" Value="akce" ImageUrl="Images/menuarrow.png">
                 <Items>
                     <telerik:RadMenuItem Text="Zapsat worksheet úkon k úkolu" Value="p31new" NavigateUrl="javascript:p31_entry_p56()"></telerik:RadMenuItem>
                     <telerik:RadMenuItem Text="Schvalovat worksheet úkony za označené úkoly" Value="cmdApprove" NavigateUrl="javascript:approving()"></telerik:RadMenuItem>
@@ -35,7 +39,7 @@
                 <ContentTemplate>
                     <div class="content-box3">
                         <div class="title">
-                            <img src="Images/griddesigner.png" />Sloupce v přehledu
+                            <img src="Images/griddesigner.png" />Nastavení přehledu
                         </div>
                         <div class="content">
                             <div class="div6">
@@ -51,9 +55,7 @@
                                     <asp:ListItem Text="Uzavřeno" Value="IsClosed"></asp:ListItem>
                                 </asp:DropDownList>
                             </div>
-                            <div class="div6">
-                                <button type="button" onclick="p56_subgrid_setting(<%=ViewState("j74id")%>)">Sloupce</button>
-                            </div>
+                            
                             
 
                             <div>
