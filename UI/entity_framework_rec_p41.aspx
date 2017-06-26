@@ -89,7 +89,7 @@
         
     </div>
     <div class="commandcell">
-        <uc:mygrid id="designer1" runat="server" prefix="p41" MasterPrefixFlag="2" Width="250px"></uc:mygrid>
+        <uc:mygrid id="designer1" runat="server" prefix="p41" MasterPrefixFlag="2"></uc:mygrid>
     </div>
     <div class="commandcell" style="margin-left: 10px;">
         <telerik:RadMenu ID="recmenu1" RenderMode="Auto" Skin="Metro" style="z-index:2000;" runat="server" ExpandDelay="0" ExpandAnimation-Type="None" ClickToOpen="true">

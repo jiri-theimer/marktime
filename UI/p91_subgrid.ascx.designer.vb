@@ -41,6 +41,15 @@ Partial Public Class p91_subgrid
     Protected WithEvents period1 As Global.UI.periodcombo
 
     '''<summary>
+    '''designer1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents designer1 As Global.UI.mygrid
+
+    '''<summary>
     '''recmenu1 control.
     '''</summary>
     '''<remarks>

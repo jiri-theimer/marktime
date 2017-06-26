@@ -2,10 +2,11 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="uc" TagName="datagrid" Src="~/datagrid.ascx" %>
 <%@ Register TagPrefix="uc" TagName="periodcombo" Src="~/periodcombo.ascx" %>
+<%@ Register TagPrefix="uc" TagName="mygrid" Src="~/mygrid.ascx" %>
 
 <div class="commandcell">
     <img src="Images/invoice.png" alt="Faktury" />
-    <asp:Label ID="lblHeaderP91" CssClass="framework_header_span" runat="server" Text="Vystavené faktury"></asp:Label>
+    <asp:Label ID="lblHeaderP91" CssClass="framework_header_span" runat="server" Text="Faktury"></asp:Label>
 </div>
 <div class="commandcell" style="margin-left: 10px;">
     <asp:DropDownList ID="cbxPeriodType" AutoPostBack="true" runat="server">
@@ -13,8 +14,11 @@
         <asp:ListItem Text="Datum splatnosti" Value="p91DateMaturity"></asp:ListItem>
         <asp:ListItem Text="Datum vystavení" Value="p91Date"></asp:ListItem>
     </asp:DropDownList>
-    <uc:periodcombo ID="period1" runat="server" Width="200px"></uc:periodcombo>
+    <uc:periodcombo ID="period1" runat="server" Width="170px"></uc:periodcombo>
 </div>
+<div class="commandcell">
+        <uc:mygrid id="designer1" runat="server" prefix="p91" MasterPrefixFlag="2"></uc:mygrid>
+    </div>
 <div class="commandcell" style="margin-left: 10px;">
     <telerik:RadMenu ID="recmenu1" Skin="Metro" runat="server" EnableRoundedCorners="false" EnableShadows="false" ClickToOpen="true" Style="z-index: 2000;" RenderMode="Auto" ExpandDelay="0" ExpandAnimation-Type="None" EnableAutoScroll="true">
         <Items>
@@ -23,12 +27,10 @@
                 <ContentTemplate>
                     <div class="content-box3">
                         <div class="title">
-                            <img src="Images/griddesigner.png" />Sloupce v přehledu
+                            <img src="Images/griddesigner.png" />Nastavení přehledu
                         </div>
                         <div class="content">
-                            <div class="div6">
-                                <button type="button" onclick="p91_subgrid_setting(<%=ViewState("j74id")%>,'<%=BO.BAS.GetDataPrefix(Me.x29ID)%>')">Sloupce</button>
-                            </div>
+                            
                             <div class="div6">
                                 <span>Stránkování:</span>
                                 <asp:DropDownList ID="cbxPaging" runat="server" AutoPostBack="true" ToolTip="Stránkování">

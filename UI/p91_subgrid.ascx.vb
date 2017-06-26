@@ -11,10 +11,14 @@ Public Class p91_subgrid
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        designer1.Factory = Me.Factory
         If Not Page.IsPostBack Then
-            ViewState("j74id") = ""
-            Dim lisPars As New List(Of String), strKey As String = "p91_subgrid-j74id_" & BO.BAS.GetDataPrefix(Me.x29ID)
+
+            Dim lisPars As New List(Of String)
+            designer1.MasterPrefix = BO.BAS.GetDataPrefix(Me.x29ID)
+            designer1.x36Key = "p91_subgrid-j70id-" & designer1.MasterPrefix
             With lisPars
+                .Add(designer1.x36Key)
                 .Add("p91_framework-periodtype")
                 .Add("p91_framework-period")
                 .Add("periodcombo-custom_query")
@@ -22,13 +26,11 @@ Public Class p91_subgrid
             End With
             With Factory.j03UserBL
                 .InhaleUserParams(lisPars)
-                ViewState("j74id") = .GetUserParam(strKey, "0")
-                If ViewState("j74id") = "" Or ViewState("j74id") = "0" Then
-                    Me.Factory.j74SavedGridColTemplateBL.CheckDefaultTemplate(BO.x29IdEnum.p91Invoice, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-                    Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p91Invoice, Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-                    ViewState("j74id") = cJ74.PID
-                    .SetUserParam(strKey, ViewState("j74id"))
-                End If
+                Dim strJ70ID As String = Request.Item("j70id")
+                If strJ70ID = "" Then strJ70ID = .GetUserParam(designer1.x36Key, "0")
+                designer1.RefreshData(CInt(strJ70ID))
+
+                
 
                 basUI.SelectDropdownlistValue(Me.cbxPaging, .GetUserParam("p91_subgrid-pagesize", "10"))
                 basUI.SelectDropdownlistValue(Me.cbxPeriodType, .GetUserParam("p91_framework-periodtype", "p91DateSupply"))
@@ -59,18 +61,14 @@ Public Class p91_subgrid
     Private Sub SetupGridP91()
         
 
-        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
-        If cJ74 Is Nothing Then
-            cJ74 = Me.Factory.j74SavedGridColTemplateBL.LoadSystemTemplate(BO.x29IdEnum.p91Invoice, Me.Factory.SysUser.PID, BO.BAS.GetDataPrefix(Me.x29ID))
-        End If
+        Dim cJ70 As BO.j70QueryTemplate = Me.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
+      
 
-        Me.hidDefaultSorting.Value = cJ74.j74OrderBy
+        Me.hidDefaultSorting.Value = cJ70.j70OrderBy
         Dim strAddSqlFrom As String = ""
-        Me.hidCols.Value = basUIMT.SetupGrid(Me.Factory, Me.gridP91, cJ74, CInt(Me.cbxPaging.SelectedValue), False, False, False, , , , strAddSqlFrom)
+        Me.hidCols.Value = basUIMT.SetupDataGrid(Me.Factory, Me.gridP91, cJ70, CInt(Me.cbxPaging.SelectedValue), False, False, False, , , , strAddSqlFrom)
         Me.hidFrom.Value = strAddSqlFrom
-        'With Me.cbxGroupBy.SelectedItem
-        '    SetupGrouping(.Value, .Text)
-        'End With
+       
     End Sub
 
     Private Sub SetupGroupByCurrency()
@@ -179,7 +177,7 @@ Public Class p91_subgrid
     End Sub
 
     Private Sub cmdExport_Click(sender As Object, e As EventArgs) Handles cmdExport.Click
-        Dim cJ74 As BO.j74SavedGridColTemplate = Me.Factory.j74SavedGridColTemplateBL.Load(ViewState("j74id"))
+        Dim cJ70 As BO.j70QueryTemplate = Me.Factory.j70QueryTemplateBL.Load(designer1.CurrentJ70ID)
         Dim cXLS As New clsExportToXls(Me.Factory)
 
         Dim mq As New BO.myQueryP91
@@ -187,7 +185,7 @@ Public Class p91_subgrid
 
         Dim lis As IEnumerable(Of BO.p91Invoice) = Me.Factory.p91InvoiceBL.GetList(mq)
 
-        Dim strFileName As String = cXLS.ExportGridData(lis, cJ74)
+        Dim strFileName As String = cXLS.ExportDataGrid(lis, cJ70)
         If strFileName = "" Then
             Response.Write(cXLS.ErrorMessage)
         Else
